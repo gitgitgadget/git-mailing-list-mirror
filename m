@@ -1,86 +1,64 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 0/9] Extending the shelf life of "git describe" output
-Date: Tue, 19 Jun 2012 09:14:51 +0200
-Message-ID: <877gv34vtg.fsf@thomas.inf.ethz.ch>
-References: <1340057139-8311-1-git-send-email-gitster@pobox.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: git on 64bit windows - state of the art?
+Date: Tue, 19 Jun 2012 18:40:56 +1000
+Message-ID: <CAH3AnrrzKycCGprrWxiu5S5fuTHA8-cuNTi14Wz5WdtG+6FNJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 09:15:12 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 19 10:41:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgsed-0007zR-0q
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 09:15:11 +0200
+	id 1Sgtzn-00089A-Hg
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 10:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829Ab2FSHOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 03:14:53 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:32487 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752005Ab2FSHOx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 03:14:53 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 09:14:51 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 09:14:51 +0200
-In-Reply-To: <1340057139-8311-1-git-send-email-gitster@pobox.com> (Junio
-	C. Hamano's message of "Mon, 18 Jun 2012 15:05:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753576Ab2FSIlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 04:41:00 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:63931 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553Ab2FSIk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 04:40:58 -0400
+Received: by wibhn6 with SMTP id hn6so2985105wib.1
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 01:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=c7phK0ve8aktae9F0y8Wn6zBZNMSlM2OxJn52ycRumg=;
+        b=NJQTB5xkcdrCTF3TEzmGH8y4mE9TANCyZCeIAj+SCTrdsmd6hPLiQHCtFOACcxRpr8
+         BE+1NYptVIT53kx6G8YMEqtbXoM2j2Iov0Y9q9tVn5oNt08vmRX9zS8jH+moLrb1m4Cf
+         03nyZmvlITp/tuhtULCnWTU6J5f+JenbqptxnWx6dTvJ6qV654ZLiX2oc4l4/Px1WJZZ
+         rWwcl3kbvKMyxMyYETHzj5Xh/3xonDD/5egSPqqOCm6ifXhG1m6VDQg4wPJJx3yvEeRU
+         YqNZVM3dH6lK4V8W7RdBADcxHzoFoFB6FAZYKZ5nUZmMyz2PEohas4VU+P3FJ2GkqM16
+         lAIg==
+Received: by 10.216.216.148 with SMTP id g20mr9833572wep.187.1340095257379;
+ Tue, 19 Jun 2012 01:40:57 -0700 (PDT)
+Received: by 10.180.146.166 with HTTP; Tue, 19 Jun 2012 01:40:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200184>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> This series teaches the sha1_name machinery to only look for
-> unambigous commit object names when the caller knows that the name
-> must refer to a commit object.
-[...]
->  - You will further be able to extend the lifetime of uniqueness of
->    "git describe" output if you take advantage of the "tagname" or
->    "number". The current parser does not do this.
->
->    There are a number of ways to do this, but probably the cleanest
->    would be to (you only can do this when you have "tagname" tag
->    locally; you may not have it) pass the tag and the number down to
->    the find_short_*() routines with commit_only set, and when they
->    find a commit that match the prefix, inside is_commit_object()
->    test, check also that the commit reaches the given tag object in
->    the given number steps (otherwise discard it as it is not the one
->    you are looking for).
->
->  - Some callers that are involved in the get_sha1_1() callpath know
->    that the name they have must be referring to commit objects (e.g.
->    get_parent() and get_nth_ancestor()).  It might be worthwhile to
->    let get_sha1_1() know that the caller knows the name it is
->    feeding must refer to a commit object, and have the uniqueness
->    logic take advantage of it.
->
->    I think that most of these callers are expecting to parse a
->    committish and the user may have given them the name of a a tag
->    object that peels to a commit, so you would need to add a new
->    GET_SHORT_COMMITTISH that allows any committish, in addition to
->    the GET_SHORT_COMMIT_ONLY this series adds, if you want to do
->    this.
+I was wondering what the state of the art for running git on 64 bit Windows is?
 
-Two random thoughts:
+I haven't tried it myself - my Windows VMs are 32bit - but colleagues
+are reporting persistent problems with the cygwin build because of
+(cygwin) rebasing issues [ the issue most often reveals itself as a
+failure to fork subprocesses while executing git svn ]
 
-* The commit_only flag is only one thing you may "know" about the
-  parsing, as you state above.  E.g., we may know the distance from a
-  certain tag.  Given this, wouldn't it be cleaner to patch a struct
-  things_we_know into the call chain instead of only a flag?
+We have tried to use cygwin's rebaseall to address the issue per the
+advice on stackoverflow.com amongst other places, but this "solution"
+doesn't seem to produce permanent results (even if the installed
+cygwin code base remains stable). We tried msysgit to see if this
+provided any relief, but it had similar issues (perhaps because cygwin
+was also active at the time - I haven't had a chance to diagnose this
+particular more thoroughly yet).
 
-* The treeish:path syntax also "knows" that the left side must be or
-  peel to a tree, so it makes no sense to go looking for a blob.
+Has anyone got a recipe that provides a permanent and stable solution
+to the (cygwin) 32/64bit rebasing issues?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+jon.
