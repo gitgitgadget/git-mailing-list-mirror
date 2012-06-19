@@ -1,112 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git branch' when origin branch with same name exists
-Date: Tue, 19 Jun 2012 11:22:46 -0700
-Message-ID: <7vd34v17rd.fsf@alter.siamese.dyndns.org>
-References: <4FE091FB.7020202@desrt.ca>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2] remove the impression of unexpectedness when access is
+	denied
+Date: Tue, 19 Jun 2012 20:24:50 +0200
+Message-ID: <20120619182449.GA99957@book.hvoigt.net>
+References: <20120610182310.GB2427@book.hvoigt.net> <20120611190207.GA20889@sigill.intra.peff.net> <20120614071259.GA51076@book.hvoigt.net> <7v395xg6oh.fsf@alter.siamese.dyndns.org> <20120614203712.GA51783@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ryan Lortie <desrt@desrt.ca>
-X-From: git-owner@vger.kernel.org Tue Jun 19 20:23:10 2012
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 20:25:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh353-0000Ma-07
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:23:09 +0200
+	id 1Sh36t-0004D4-3M
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237Ab2FSSWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 14:22:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49881 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752473Ab2FSSWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 14:22:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C67D080EC;
-	Tue, 19 Jun 2012 14:22:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X08adN6Lx4xrtmnfwgQDA0OVrCM=; b=e8mFJI
-	BebRThGX9QVeA2aA5eXAv7F3SFjWJbAr7G7rlrST0PS5o0l2lyC3mNwgmNlXvZ5D
-	WueDGOE0wtnCxNm3MeUs5EkLrY4GMWxSq4sYLwYh/5oo+sgGLIiCfAyFZ2AN7lk0
-	q+NVm8xkS7WEzhYe7IsjcK4mW2JHDXe58Rg7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s5m6biRbmxj58TLwGq2xtyAnRfIC4y2c
-	yT5mPDz4vTz4YBQRAL8UswwB7QD5fnxqBoFfMELXo01WgTC5cT3CQEuGBIwjxGZb
-	NmwMlEAYtmo9l3gmUyDGfVFyYo8FXkLjBKEfpV17Xuj9wXWwKj+G+UJ4R0DNqTw1
-	h/PV4i0AVxk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD58C80EB;
-	Tue, 19 Jun 2012 14:22:48 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D9E480E8; Tue, 19 Jun 2012
- 14:22:48 -0400 (EDT)
-In-Reply-To: <4FE091FB.7020202@desrt.ca> (Ryan Lortie's message of "Tue, 19
- Jun 2012 10:51:39 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5DD6172-BA3B-11E1-890A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753275Ab2FSSY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 14:24:58 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:33412 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753158Ab2FSSY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 14:24:57 -0400
+Received: from [77.20.33.80] (helo=localhost)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Sh36g-0007R4-Oz; Tue, 19 Jun 2012 20:24:51 +0200
+Content-Disposition: inline
+In-Reply-To: <20120614203712.GA51783@book.hvoigt.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200218>
 
-Ryan Lortie <desrt@desrt.ca> writes:
+If a server accessed through ssh is denying access git will currently
+issue the message
 
-> In this case, the user wanted to checkout a branch of a module.  They did:
->
->   git clone git://git.gnome.org/gtk+
->   cd gtk+
->   git branch gtk-3-4
->
-> Obviously this is a user error, but it's a pretty innocent one, and
-> puts the user in a bad state.  When they figure they should have typed
-> "git checkout gtk-3-4" it is already too late -- they will be taken
-> onto their locally-created copy of the master branch.
->
-> So feature request: 'git branch' should not allow creating a local
-> branch that has the same name as a branch that already exists on
-> origin' (or any remote?) without some sort of --force flag.
+	"fatal: The remote end hung up unexpectedly"
 
-I think "the same name" is missing the point.  It is perfectly fine
-to have your own 'fix' branch that builds on top of what the remote
-side calls 'master', with the intention of testing what you queue on
-your 'fix' branch locally and cherry-picking proven-good ones to
-your 'master' before pushing the result out, even when there happens
-to be a 'fix' branch that your 'fix' branch does not have anything
-to do with on the remote side.  After all, the remote side may start
-using the 'fix' branch _long_ _after_ you start using your 'fix'
-branch, so checking at the branch creation time does not help you
-much, even if it were a problem that your local 'fix' (which you
-have no intention to push it to the remote) and the 'fix' at the
-remote does not have any common purpose.
+as the last line. This sounds as if something really ugly just happened.
+Since this is a quite typical situation in which users regularly get
+we do not say that if it happens at the beginning when reading the
+remote heads.
 
-The same can be said for the gtk-3-4 branch, depending on the
-purpose of 'master' vs purpose of 'gtk-3-4' at the remote side.  If
-'gtk-3-4' branch were the playground to come up with the next great
-version, and 'master' is the continuation of the current version
-with not so earth-shattering changes, it is perfectly normal for
-different contributors to fork from 'master' for their next feature
-that they hope eventually to go to 'gtk-3-4' at the remote, and
-locally name the branch 'gtk-3-4', build their feature, and
-depending on how disruptive the change is, choose to integrate the
-result into either 'master' or'gtk-3-4' at the remote after it is
-done.  So it is not immediately clear if "git branch gtk-3-4" in the
-example is a problem to begin with.
+If its in the very first beginning of reading the remote heads it is
+very likely an authentication error or a missing repository.
 
-Given that "git checkout gtk-3-4" with recent enough Git (since
-1.7.0) DWIMs the command to do the equivalent of
+If it happens later during reading the remote heads we still indicate
+that it happened during this initial contact phase.
 
-	git checkout -t gtk-3-4 origin/gtk-3-4
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ connect.c            | 18 +++++++++++++++++-
+ pkt-line.c           | 32 ++++++++++++++++++++++++++------
+ pkt-line.h           |  1 +
+ t/t5512-ls-remote.sh |  5 ++++-
+ 4 files changed, 48 insertions(+), 8 deletions(-)
 
-that is, to fork, build on top of, and to be integrated with the
-'gtk-3-4' branch at the 'origin', if you know with a reasonable
-degree of certainty that the user should have typed "git checkout
-gtk-3-4" when he typed "git branch gtk-3-4" in the example, then it
-could be argued that "git branch" could offer an advice message, but
-it is unclear how you can be sure if "git checkout gtk-3-4" was what
-the user really wanted to do when he said "git branch gtk-3-4" in
-the first place.
+diff --git a/connect.c b/connect.c
+index 912cdde..3e19d67 100644
+--- a/connect.c
++++ b/connect.c
+@@ -49,6 +49,16 @@ static void add_extra_have(struct extra_have_objects *extra, unsigned char *sha1
+ 	extra->nr++;
+ }
+ 
++static void die_initial_contact(int got_at_least_one_head)
++{
++	if (got_at_least_one_head)
++		die("The remote end hung up upon initial contact");
++	else
++		die("Could not read from remote repository.\n\n"
++		    "Please make sure you have the correct access rights\n"
++		    "and the repository exists.");
++}
++
+ /*
+  * Read all the refs from the other end
+  */
+@@ -56,6 +66,8 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 			      unsigned int flags,
+ 			      struct extra_have_objects *extra_have)
+ {
++	int got_at_least_one_head = 0;
++
+ 	*list = NULL;
+ 	for (;;) {
+ 		struct ref *ref;
+@@ -64,7 +76,10 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 		char *name;
+ 		int len, name_len;
+ 
+-		len = packet_read_line(in, buffer, sizeof(buffer));
++		len = packet_read(in, buffer, sizeof(buffer));
++		if (len < 0)
++			die_initial_contact(got_at_least_one_head);
++
+ 		if (!len)
+ 			break;
+ 		if (buffer[len-1] == '\n')
+@@ -95,6 +110,7 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 		hashcpy(ref->old_sha1, old_sha1);
+ 		*list = ref;
+ 		list = &ref->next;
++		got_at_least_one_head = 1;
+ 	}
+ 	return list;
+ }
+diff --git a/pkt-line.c b/pkt-line.c
+index 5a04984..eaba15f 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -135,13 +135,19 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	strbuf_add(buf, buffer, n);
+ }
+ 
+-static void safe_read(int fd, void *buffer, unsigned size)
++static int safe_read(int fd, void *buffer, unsigned size, int return_line_fail)
+ {
+ 	ssize_t ret = read_in_full(fd, buffer, size);
+ 	if (ret < 0)
+ 		die_errno("read error");
+-	else if (ret < size)
++	else if (ret < size) {
++		if (return_line_fail)
++			return -1;
++
+ 		die("The remote end hung up unexpectedly");
++	}
++
++	return ret;
+ }
+ 
+ static int packet_length(const char *linelen)
+@@ -169,12 +175,14 @@ static int packet_length(const char *linelen)
+ 	return len;
+ }
+ 
+-int packet_read_line(int fd, char *buffer, unsigned size)
++static int packet_read_internal(int fd, char *buffer, unsigned size, int return_line_fail)
+ {
+-	int len;
++	int len, ret;
+ 	char linelen[4];
+ 
+-	safe_read(fd, linelen, 4);
++	ret = safe_read(fd, linelen, 4, return_line_fail);
++	if (return_line_fail && ret < 0)
++		return ret;
+ 	len = packet_length(linelen);
+ 	if (len < 0)
+ 		die("protocol error: bad line length character: %.4s", linelen);
+@@ -185,12 +193,24 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	len -= 4;
+ 	if (len >= size)
+ 		die("protocol error: bad line length %d", len);
+-	safe_read(fd, buffer, len);
++	ret = safe_read(fd, buffer, len, return_line_fail);
++	if (return_line_fail && ret < 0)
++		return ret;
+ 	buffer[len] = 0;
+ 	packet_trace(buffer, len, 0);
+ 	return len;
+ }
+ 
++int packet_read(int fd, char *buffer, unsigned size)
++{
++	return packet_read_internal(fd, buffer, size, 1);
++}
++
++int packet_read_line(int fd, char *buffer, unsigned size)
++{
++	return packet_read_internal(fd, buffer, size, 0);
++}
++
+ int packet_get_line(struct strbuf *out,
+ 	char **src_buf, size_t *src_len)
+ {
+diff --git a/pkt-line.h b/pkt-line.h
+index 1e5dcfe..8cfeb0c 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -13,6 +13,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+ int packet_read_line(int fd, char *buffer, unsigned size);
++int packet_read(int fd, char *buffer, unsigned size);
+ int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+ ssize_t safe_write(int, const void *, ssize_t);
+ 
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 6764d51..2af5c2a 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -87,7 +87,10 @@ test_expect_success 'use branch.<name>.remote if possible' '
+ test_expect_success 'confuses pattern as remote when no remote specified' '
+ 	cat >exp <<-\EOF &&
+ 	fatal: '\''refs*master'\'' does not appear to be a git repository
+-	fatal: The remote end hung up unexpectedly
++	fatal: Could not read from remote repository.
++
++	Please make sure you have the correct access rights
++	and the repository exists.
+ 	EOF
+ 	#
+ 	# Do not expect "git ls-remote <pattern>" to work; ls-remote, correctly,
+-- 
+1.7.11.rc2.3.g49b071d
