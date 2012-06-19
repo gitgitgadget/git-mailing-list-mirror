@@ -1,98 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
- non-tracking branch.
-Date: Tue, 19 Jun 2012 15:26:18 -0700
-Message-ID: <7vobofx7jp.fsf@alter.siamese.dyndns.org>
-References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
- <7vaa004j9f.fsf@alter.siamese.dyndns.org> <4FDFA030.7080408@xiplink.com>
- <7vmx402rru.fsf@alter.siamese.dyndns.org> <4FE08797.50509@xiplink.com>
- <7vipen191a.fsf@alter.siamese.dyndns.org>
- <20120619201259.GB14692@sigill.intra.peff.net> <4FE0F267.5070803@xiplink.com>
- <20120619214646.GA22436@sigill.intra.peff.net>
- <7vsjdrx8tt.fsf@alter.siamese.dyndns.org>
- <20120619220026.GA22852@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/3] sync German translation of git-gui with git-core
+Date: Tue, 19 Jun 2012 15:27:03 -0700
+Message-ID: <7vk3z3x7ig.fsf@alter.siamese.dyndns.org>
+References: <1340130341-5224-1-git-send-email-ralf.thielow@googlemail.com>
+ <87pq8v2c6a.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 20 00:26:30 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Thielow <ralf.thielow@googlemail.com>, stimming@tuhh.de,
+	trast@student.ethz.ch, jk@jk.gs, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Jun 20 00:27:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh6sU-0002pv-Gz
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 00:26:26 +0200
+	id 1Sh6tD-0004Kz-05
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 00:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425Ab2FSW0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 18:26:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57844 "EHLO
+	id S1752873Ab2FSW1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 18:27:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58204 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155Ab2FSW0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 18:26:20 -0400
+	id S1752517Ab2FSW1F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 18:27:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B58B9487;
-	Tue, 19 Jun 2012 18:26:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD8E994D2;
+	Tue, 19 Jun 2012 18:27:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QQJGMABXGbE8MXavdxXNKSNZVPw=; b=K2ilRJ
-	TJcz/G9pCZNI7i/dkSEkApS8aEjyFCVeEg5XiO4mOzhyY8RqrPgDrlQi8TPbMQEG
-	ibuj+OPj44QiU2MQq2GMwNAJr8NATwHdOKTY8s4ORRWp1sNwhjCD+hM8WMBtwV7Q
-	QCgMT8dOM5NJONTI2nuVBQBQrfADbPJCjKVEA=
+	:content-type:content-transfer-encoding; s=sasl; bh=X4HxZEjzTneT
+	0GLfhwR5LyPcRDY=; b=XuRc5uzZ44Kxx4r/kbRz424CxHGKlor586YTscYSugDU
+	9uwap/U+qDzHIp9+UW5QZYuVPJ96LmwhAeBjuCfWbUQRoMESMcpwK7pL0/28d1Kr
+	y1tRHXBC7c+8migUJ4zmEbnhhvBpiHohxdBxfRmH2y12oUOIBaqGQwSBP8QfUKc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fUgwACtPB7sO+72RG5hW7Ev56P+DhkxA
-	63UmxIRlSeqSjIecFjI6OdcWaGWmX5A/GxSROyIQXgRLGLW7QKflAxGxvZdK49ud
-	Pb46T+h/HQgCIV82/D3yGiNpyw4kXeMKU9Yi4EaknUBhjgluKfYzajTNosIMiZm4
-	dXtMpW2hM3U=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sHFoci
+	RHVQ1EW3ayU4j6PGSjRjrbhrPeGA6b6Iy98j7FY24dA5qWpqls1Lzi4wC3dnQboW
+	Cy/kQOJvWBNVhez2omj+yX9GyIyPjTCLH1AqkbZLrIN8qXZpaxChMoXPPL+ntYLv
+	sLI2TicQgX0r+Rvc5/fft5hBYTLXlSbC4+c+Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51A509486;
-	Tue, 19 Jun 2012 18:26:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C46D894D1;
+	Tue, 19 Jun 2012 18:27:04 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D86FF9484; Tue, 19 Jun 2012
- 18:26:19 -0400 (EDT)
-In-Reply-To: <20120619220026.GA22852@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 19 Jun 2012 18:00:26 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BD1794D0; Tue, 19 Jun 2012
+ 18:27:04 -0400 (EDT)
+In-Reply-To: <87pq8v2c6a.fsf@fox.patthoyts.tk> (Pat Thoyts's message of "Tue,
+ 19 Jun 2012 23:02:05 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB09DB36-BA5D-11E1-B71C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E58E8628-BA5D-11E1-B624-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200261>
 
-Jeff King <peff@peff.net> writes:
+Pat Thoyts <patthoyts@users.sourceforge.net> writes:
 
-> On Tue, Jun 19, 2012 at 02:58:38PM -0700, Junio C Hamano wrote:
+> Ralf Thielow <ralf.thielow@googlemail.com> writes:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Tue, Jun 19, 2012 at 05:43:03PM -0400, Marc Branchaud wrote:
->> >
->> >> I suggest git would be better off changing the way it finds the default
->> >> remote to:
->> >> 
->> >> 	Use the currently checked-out branch's remote;
->> >> 	or Use the remote specified in the original clone command[*];
->> >> 	or use "origin".
->> >> 
->> >> [*] With some strong mechanism for identifying this remote.
->> >
->> > Yes, that sounds like a much saner path. I think your [*] is just
->> > "record the different name in remote.default during the clone".
->> >
->> > Then we continue to use "origin" when that is not set (so existing repos
->> > without "-o" see no change at all). New repos cloned with "-o" would be
->> > fixed. Old repos cloned with "-o" are still broken, but there is at
->> > least a simple one-time workaround ("git config remote.default foo").
->> 
->> Yeah, I can certainly buy that.
+>>We should keep the translation of the tools in sync with
+>>git-core. So this patch series sync the German translation
+>>of git-gui with the git-core one.
+>>
+>>Ralf Thielow (3):
+>>  git-gui: de.po: consistently add untranslated hook names within
+>>    braces
+>>  git-gui: de.po: translate "bare" as "blo=C3=9F"
+>>  git-gui: de.po: translate "remote" as "extern"
+>>
+>> po/de.po | 36 ++++++++++++++++++------------------
+>> 1 Datei ge=C3=A4ndert, 18 Zeilen hinzugef=C3=BCgt(+), 18 Zeilen entf=
+ernt(-)
 >
-> It is also a step towards defining remote.defaultFetch and
-> remote.defaultPush if you wanted them to be different, something that
-> has come up in conversation a few times (e.g., when you treat a
-> read-only upstream as your origin, but publish elsewhere).
+> Thank you for this -- applied and pushed.
 
-Yeah, we are on the same page on that one.
+Please make sure to throw a pull-request at me when appropriate.
+
+Thanks.
