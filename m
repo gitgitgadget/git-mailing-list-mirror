@@ -1,89 +1,81 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file>
- <external file>' finds changes
-Date: Tue, 19 Jun 2012 12:47:08 -0400
-Message-ID: <CAFouetgRq1qkqJmThJJeu=Mdx9jS0c9dw7NPSwuJUOSpskCY2A@mail.gmail.com>
-References: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
-	<7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
-	<CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
-	<20120619135814.GA3210@sigill.intra.peff.net>
+From: Ryan Lortie <desrt@desrt.ca>
+Subject: Re: 'git branch' when origin branch with same name exists
+Date: Tue, 19 Jun 2012 13:06:41 -0400
+Message-ID: <4FE0B1A1.9030509@desrt.ca>
+References: <4FE091FB.7020202@desrt.ca> <20120619200648.2cc8a861.kostix@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 19 18:47:15 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Jun 19 19:06:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh1aE-0005ia-U7
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 18:47:15 +0200
+	id 1Sh1tA-000498-5U
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 19:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280Ab2FSQrK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 12:47:10 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35005 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139Ab2FSQrJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 12:47:09 -0400
-Received: by yenl2 with SMTP id l2so4391710yen.19
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 09:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ufOEhA5KszL2QcMHTJ8wMcEojAJVOrzbLe+Y45YyWc0=;
-        b=E7x/1MaiWiuqNeLJW/S+wsW6h6j4PEIV1y+OBaCCwTz7xtCtCcNojz3FQkRQQzw/vK
-         ITg/35Sf0N6EcXjrseILGRzVPBd4i/u8I3Q6ozoMRJnvZen3cT96S4F0VyJtLQICppUd
-         plnt2Uzg461FpuK+f/fra/NEAlWEwFHvFjVmTXqQuxeiuIhIeV/ZZNXFxGt+7zXZKDUv
-         PwIucavsgdVet2z7N+s0WjAKiuAB5UayVRb8ldUCtRk7f4+CXowoX4PlZn9F00Q3y8BB
-         z95OHgP3/0pwz3YZPiCRLvAcCV4nPnW2Cmb7yLavBw6Jr1b++siS5fqfwDdswe4tdvMJ
-         fAww==
-Received: by 10.50.40.194 with SMTP id z2mr1902037igk.67.1340124428319; Tue,
- 19 Jun 2012 09:47:08 -0700 (PDT)
-Received: by 10.231.84.147 with HTTP; Tue, 19 Jun 2012 09:47:08 -0700 (PDT)
-In-Reply-To: <20120619135814.GA3210@sigill.intra.peff.net>
+	id S1752132Ab2FSRGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 13:06:43 -0400
+Received: from manic.desrt.ca ([207.192.74.61]:45195 "EHLO mail.desrt.ca"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751958Ab2FSRGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 13:06:42 -0400
+Received: from [172.16.0.159] (173-230-190-244.cable.teksavvy.com [173.230.190.244])
+	by manic.desrt.ca (Postfix) with ESMTPSA id D13C012CD21;
+	Tue, 19 Jun 2012 12:06:41 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
+In-Reply-To: <20120619200648.2cc8a861.kostix@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200213>
 
-On Tue, Jun 19, 2012 at 9:58 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 19, 2012 at 09:05:40AM -0400, Tim Henigan wrote:
->
->> As a side note, I found that these tests fail if a relative path is
->> used for the file in 'non/git'. =C2=A0In other words, this passes:
->>
->> =C2=A0 =C2=A0 test_expect_code 0 git diff --quiet a
->> "$TRASH_DIRECTORY/test-outside/non/git/matching-file"
->>
->> but this fails:
->>
->> =C2=A0 =C2=A0 test_expect_code 0 git diff --quiet a ../non/git/match=
-ing-file
->>
->> This surprised me, but I have not investigated any further.
->
-> The problem is that path_outside_repo in diff-no-index.c does not bot=
-her
-> handling relative paths at all, and just assumes they are inside the
-> repository. This is obviously not true if the path starts with "..", =
-in
-> which case you would need to compare the number of ".." with the curr=
-ent
-> depth in the repository.
->
-> prefix_path already does this (and is what generates the later
-> "../non/git/matching-file is not in the repository" message). We coul=
-d
-> perhaps get rid of path_outside_repo and just re-use prefix_path's
-> logic, something like (not tested):
+hi,
 
-With your patch applied, I was able to use relative paths in my tests.
- I also confirmed that all the t4*.sh tests pass.
+On 12-06-19 12:06 PM, Konstantin Khomoutov wrote:
+> How bad this state really is?
+> The user is free to do
+> $ git branch -m gtk-3-4 mygtk-3-4
+> at any time after the error was detected.
 
-=46or what its worth, your patch looks correct to me.  Existing
-consumers of 'prefix_path' should get the same results as before and
-the one added xmalloc is paired with a free.
+The user that makes the mistake to type 'git branch' instead of 'git 
+checkout' in the first place is unlikely to know about this.
+
+> This would not protect from the obvious case when a branch has been
+> created on the remote (by someone else) but has not been fetched yet
+> and so the local repo does not know a branch with "conflicting"
+> name do exist.
+
+I consider this to be a far less likely case: more of a race condition, 
+really, and nothing we can do about it.  This is no reason that we 
+should not try to fix the easier case (which is also the far more likely 
+case).
+
+> Your intention is good but I think a safety net of the kind you
+> propose would be slightly over the top.
+> Basically you're trying to compensate for the user error who
+> thinks the "branch" command should take her to an already existing
+> branch while it does something completely different.
+> Hence preventing the `git branch gtk-3-4` command from completion
+> should there be a remote-tracking branch of the same name is just wrong
+> IMO.  On the other hand, posting a hint might be OK.  I'm talking about
+> something like this:
+
+I'll say again: it would still be possible with an appropriate 'force' 
+parameter.
+
+> Anyway, this will make each call to git-branch to perform a crawl over
+> the refs/heads hierarchy which, I think, is not worth the result.
+
+I know branching is lightweight with git, but I don't understand that 
+the operation is so performance-critical that a enumerating a directory 
+and doing a few stats would be a huge issue...
+
+If it is decided to only check the 'origin' remote then we're talking 
+about one single stat() syscall.
+
+Cheers
