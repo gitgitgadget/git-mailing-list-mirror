@@ -1,134 +1,165 @@
-From: Tim Henigan <tim.henigan@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file>
  <external file>' finds changes
-Date: Tue, 19 Jun 2012 09:05:40 -0400
-Message-ID: <CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
+Date: Tue, 19 Jun 2012 09:58:15 -0400
+Message-ID: <20120619135814.GA3210@sigill.intra.peff.net>
 References: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
-	<7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
+ <7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
+ <CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 15:05:51 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 15:58:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sgy7t-0001zm-J3
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 15:05:45 +0200
+	id 1Sgywr-0003Do-Nb
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 15:58:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444Ab2FSNFl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 09:05:41 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:40178 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752209Ab2FSNFl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 09:05:41 -0400
-Received: by gglu4 with SMTP id u4so4571247ggl.19
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 06:05:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Z4h8K6F1Gx0kwkPRiffYuH7bOBL4Yg3MxOdtcRZC9/M=;
-        b=Fzv0Otpcv25kHNzzqsC1v1VUqz9vweoSDE+NZh/62rBN+/J0Y4Jl/mK0pUaLNJ5FP3
-         gc94Ruhq41F1dKrjTaXwMnZr+fafD77IIEI358Z3O67Nbt6IAW8JqM2Lrvkz12Zp6PsW
-         sNpC8Nodee90YlsF0dqfC0LlMQhjex/RHUs1zGCwJquMAKIV28N+W3o9gsxg1kLpYZYi
-         DeFYdMoEfAQlW6GDiaQ/Z/8TdkuPr8qvwVkQvu/+qzKSwcSW6AAaASL3FII7tqcC3dhz
-         KeYXyYkh1RsUcRC70h7oXdzR8YLyyWvZ/H/2HQvqjnS685X5dup7zxn+TV4/J32MsUnp
-         RxfQ==
-Received: by 10.50.40.194 with SMTP id z2mr975168igk.67.1340111140280; Tue, 19
- Jun 2012 06:05:40 -0700 (PDT)
-Received: by 10.231.84.147 with HTTP; Tue, 19 Jun 2012 06:05:40 -0700 (PDT)
-In-Reply-To: <7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
+	id S1752664Ab2FSN6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 09:58:21 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:60981
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831Ab2FSN6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 09:58:21 -0400
+Received: (qmail 9139 invoked by uid 107); 19 Jun 2012 13:58:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Jun 2012 09:58:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jun 2012 09:58:15 -0400
+Content-Disposition: inline
+In-Reply-To: <CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200200>
 
-On Mon, Jun 18, 2012 at 4:09 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Tim Henigan <tim.henigan@gmail.com> writes:
->
->> When running 'git diff --quiet <file1> <file2>', if file1 or file2
->> is outside the repository, it will exit(0) even if the files differ.
->> It should exit(1) when they differ.
->> - =C2=A0 =C2=A0 exit(revs->diffopt.found_changes);
->> + =C2=A0 =C2=A0 int result =3D diff_result_code(&revs->diffopt, 0);
->> + =C2=A0 =C2=A0 exit(result);
->> =C2=A0}
->
-> Decl-after-stmt.
+On Tue, Jun 19, 2012 at 09:05:40AM -0400, Tim Henigan wrote:
 
-Will eliminate intermediate variable in v4.  Thanks to both you and
-Jeff for pointing this out.
+> As a side note, I found that these tests fail if a relative path is
+> used for the file in 'non/git'.  In other words, this passes:
+> 
+>     test_expect_code 0 git diff --quiet a
+> "$TRASH_DIRECTORY/test-outside/non/git/matching-file"
+> 
+> but this fails:
+> 
+>     test_expect_code 0 git diff --quiet a ../non/git/matching-file
+> 
+> This surprised me, but I have not investigated any further.
 
+The problem is that path_outside_repo in diff-no-index.c does not bother
+handling relative paths at all, and just assumes they are inside the
+repository. This is obviously not true if the path starts with "..", in
+which case you would need to compare the number of ".." with the current
+depth in the repository.
 
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "1 1" > a &&
->
-> Please drop extra SP between ">" and "a".
+prefix_path already does this (and is what generates the later
+"../non/git/matching-file is not in the repository" message). We could
+perhaps get rid of path_outside_repo and just re-use prefix_path's
+logic, something like (not tested):
 
-Will fix in v4.
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git add . &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git commit -m 1
->> + =C2=A0 =C2=A0 ) &&
->> + =C2=A0 =C2=A0 mkdir -p test-outside/no-repo && (
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cd test-outside/no-repo =
-&&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "1 1" >a &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "1 1" >matching-fil=
-e &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "1 1 " >trailing-sp=
-ace &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "1 =C2=A0 1" >extra=
--space &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "2" >never-match
->> + =C2=A0 =C2=A0 )
->
-> The inspiration of using CEILING comes from the existing t7810-grep
-> test, and I would have preferred if you used the same non/git for a
-> non-git repository for easier greppability ("git grep CEIL t/" to
-> notice the use of the technique and then "git grep non/git t/" to
-> verify, for example).
-
-Okay.  I still need the non/git directory to be outside the test
-repo's path, so the new layout will be:
-
-    $TRASH_DIRECTORY/
-        test-outside/
-            repo/
-            non/git/
-
-This adds an extra layer to the non git paths, but won't cause any prob=
-lems.
-
-
->> +test_expect_success 'git diff, one file outside repo' '
->> + =C2=A0 =C2=A0 (
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GIT_CEILING_DIRECTORIES=3D=
-"$TRASH_DIRECTORY/test-outside" &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 export GIT_CEILING_DIREC=
-TORIES &&
->
-> Do you even need these two lines for this test? =C2=A0your test runs
-> inside test-outside/repo that _is_ a git repository, and that
-> repository knows that ../no-repo is not part of it already.
-
-You are correct, CEILING does not need to be set for tests where one
-file is inside 'test-outside/repo'.
-
-As a side note, I found that these tests fail if a relative path is
-used for the file in 'non/git'.  In other words, this passes:
-
-    test_expect_code 0 git diff --quiet a
-"$TRASH_DIRECTORY/test-outside/non/git/matching-file"
-
-but this fails:
-
-    test_expect_code 0 git diff --quiet a ../non/git/matching-file
-
-This surprised me, but I have not investigated any further.
+diff --git a/cache.h b/cache.h
+index 0b7ddee..0736bfb 100644
+--- a/cache.h
++++ b/cache.h
+@@ -411,6 +411,7 @@ extern const char *prefix_filename(const char *prefix, int len, const char *path
+ extern int check_filename(const char *prefix, const char *name);
+ extern void verify_filename(const char *prefix, const char *name);
+ extern void verify_non_filename(const char *prefix, const char *name);
++extern int path_inside_repo(const char *prefix, const char *path);
+ 
+ #define INIT_DB_QUIET 0x0001
+ 
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 6911196..9a1b459 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -151,23 +151,6 @@ static int queue_diff(struct diff_options *o,
+ 	}
+ }
+ 
+-static int path_outside_repo(const char *path)
+-{
+-	const char *work_tree;
+-	size_t len;
+-
+-	if (!is_absolute_path(path))
+-		return 0;
+-	work_tree = get_git_work_tree();
+-	if (!work_tree)
+-		return 1;
+-	len = strlen(work_tree);
+-	if (strncmp(path, work_tree, len) ||
+-	    (path[len] != '\0' && path[len] != '/'))
+-		return 1;
+-	return 0;
+-}
+-
+ void diff_no_index(struct rev_info *revs,
+ 		   int argc, const char **argv,
+ 		   int nongit, const char *prefix)
+@@ -197,8 +180,8 @@ void diff_no_index(struct rev_info *revs,
+ 		 * a colourful "diff" replacement.
+ 		 */
+ 		if ((argc != i + 2) ||
+-		    (!path_outside_repo(argv[i]) &&
+-		     !path_outside_repo(argv[i+1])))
++		    (path_inside_repo(prefix, argv[i]) &&
++		     path_inside_repo(prefix, argv[i+1])))
+ 			return;
+ 	}
+ 	if (argc != i + 2)
+diff --git a/setup.c b/setup.c
+index 731851a..2cfa037 100644
+--- a/setup.c
++++ b/setup.c
+@@ -4,7 +4,7 @@
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
+ 
+-char *prefix_path(const char *prefix, int len, const char *path)
++static char *prefix_path_gently(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig = path;
+ 	char *sanitized;
+@@ -31,7 +31,8 @@ char *prefix_path(const char *prefix, int len, const char *path)
+ 		if (strncmp(sanitized, work_tree, len) ||
+ 		    (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
+ 		error_out:
+-			die("'%s' is outside repository", orig);
++			free(sanitized);
++			return NULL;
+ 		}
+ 		if (sanitized[len] == '/')
+ 			len++;
+@@ -40,6 +41,25 @@ char *prefix_path(const char *prefix, int len, const char *path)
+ 	return sanitized;
+ }
+ 
++char *prefix_path(const char *prefix, int len, const char *path)
++{
++	char *r = prefix_path_gently(prefix, len, path);
++	if (!r)
++		die("'%s' is outside repository", path);
++	return r;
++}
++
++int path_inside_repo(const char *prefix, const char *path)
++{
++	int len = prefix ? strlen(prefix) : 0;
++	char *r = prefix_path_gently(prefix, len, path);
++	if (r) {
++		free(r);
++		return 1;
++	}
++	return 0;
++}
++
+ int check_filename(const char *prefix, const char *arg)
+ {
+ 	const char *name;
