@@ -1,81 +1,68 @@
-From: Ryan Lortie <desrt@desrt.ca>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: 'git branch' when origin branch with same name exists
-Date: Tue, 19 Jun 2012 13:06:41 -0400
-Message-ID: <4FE0B1A1.9030509@desrt.ca>
-References: <4FE091FB.7020202@desrt.ca> <20120619200648.2cc8a861.kostix@domain007.com>
+Date: Tue, 19 Jun 2012 19:21:50 +0200
+Message-ID: <87a9zztdxt.fsf@thomas.inf.ethz.ch>
+References: <4FE091FB.7020202@desrt.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Jun 19 19:06:52 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Ryan Lortie <desrt@desrt.ca>
+X-From: git-owner@vger.kernel.org Tue Jun 19 19:22:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh1tA-000498-5U
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 19:06:48 +0200
+	id 1Sh27q-0001Lh-4S
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 19:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132Ab2FSRGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 13:06:43 -0400
-Received: from manic.desrt.ca ([207.192.74.61]:45195 "EHLO mail.desrt.ca"
+	id S1752367Ab2FSRVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 13:21:54 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:54545 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751958Ab2FSRGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 13:06:42 -0400
-Received: from [172.16.0.159] (173-230-190-244.cable.teksavvy.com [173.230.190.244])
-	by manic.desrt.ca (Postfix) with ESMTPSA id D13C012CD21;
-	Tue, 19 Jun 2012 12:06:41 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120430 Thunderbird/12.0.1
-In-Reply-To: <20120619200648.2cc8a861.kostix@domain007.com>
+	id S1751958Ab2FSRVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 13:21:53 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
+ 2012 19:21:50 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
+ 2012 19:21:50 +0200
+In-Reply-To: <4FE091FB.7020202@desrt.ca> (Ryan Lortie's message of "Tue, 19
+	Jun 2012 10:51:39 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200214>
 
-hi,
+Ryan Lortie <desrt@desrt.ca> writes:
 
-On 12-06-19 12:06 PM, Konstantin Khomoutov wrote:
-> How bad this state really is?
-> The user is free to do
-> $ git branch -m gtk-3-4 mygtk-3-4
-> at any time after the error was detected.
+> In this case, the user wanted to checkout a branch of a module.  They did:
+>
+>   git clone git://git.gnome.org/gtk+
+>   cd gtk+
+>   git branch gtk-3-4
+>
+> Obviously this is a user error, but it's a pretty innocent one, and
+> puts the user in a bad state.  When they figure they should have typed
+> "git checkout gtk-3-4" it is already too late -- they will be taken
+> onto their locally-created copy of the master branch.
+>
+> So feature request: 'git branch' should not allow creating a local
+> branch that has the same name as a branch that already exists on
+> origin' (or any remote?) without some sort of --force flag.
 
-The user that makes the mistake to type 'git branch' instead of 'git 
-checkout' in the first place is unlikely to know about this.
+How does this fit with the fact that git has forever(?) created a
+'master' branch when cloning, and usually points it at origin/master
+too?
 
-> This would not protect from the obvious case when a branch has been
-> created on the remote (by someone else) but has not been fetched yet
-> and so the local repo does not know a branch with "conflicting"
-> name do exist.
+I honestly haven't decided whether I should like or hate your proposal,
+but ISTM that outlawing an operation that git does on every clone is a
+bit moot.
 
-I consider this to be a far less likely case: more of a race condition, 
-really, and nothing we can do about it.  This is no reason that we 
-should not try to fix the easier case (which is also the far more likely 
-case).
-
-> Your intention is good but I think a safety net of the kind you
-> propose would be slightly over the top.
-> Basically you're trying to compensate for the user error who
-> thinks the "branch" command should take her to an already existing
-> branch while it does something completely different.
-> Hence preventing the `git branch gtk-3-4` command from completion
-> should there be a remote-tracking branch of the same name is just wrong
-> IMO.  On the other hand, posting a hint might be OK.  I'm talking about
-> something like this:
-
-I'll say again: it would still be possible with an appropriate 'force' 
-parameter.
-
-> Anyway, this will make each call to git-branch to perform a crawl over
-> the refs/heads hierarchy which, I think, is not worth the result.
-
-I know branching is lightweight with git, but I don't understand that 
-the operation is so performance-critical that a enumerating a directory 
-and doing a few stats would be a huge issue...
-
-If it is decided to only check the 'origin' remote then we're talking 
-about one single stat() syscall.
-
-Cheers
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
