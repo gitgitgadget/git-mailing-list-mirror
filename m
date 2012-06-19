@@ -1,93 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
- non-tracking branch.
-Date: Tue, 19 Jun 2012 10:55:13 -0700
-Message-ID: <7vipen191a.fsf@alter.siamese.dyndns.org>
-References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
- <7vaa004j9f.fsf@alter.siamese.dyndns.org> <4FDFA030.7080408@xiplink.com>
- <7vmx402rru.fsf@alter.siamese.dyndns.org> <4FE08797.50509@xiplink.com>
+Subject: Re: 'git branch' when origin branch with same name exists
+Date: Tue, 19 Jun 2012 11:22:46 -0700
+Message-ID: <7vd34v17rd.fsf@alter.siamese.dyndns.org>
+References: <4FE091FB.7020202@desrt.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 19:55:23 2012
+Cc: git@vger.kernel.org
+To: Ryan Lortie <desrt@desrt.ca>
+X-From: git-owner@vger.kernel.org Tue Jun 19 20:23:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh2eA-0002UN-TG
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 19:55:23 +0200
+	id 1Sh353-0000Ma-07
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:23:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752982Ab2FSRzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 13:55:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33823 "EHLO
+	id S1753237Ab2FSSWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 14:22:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49881 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627Ab2FSRzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 13:55:16 -0400
+	id S1752473Ab2FSSWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 14:22:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB4F17662;
-	Tue, 19 Jun 2012 13:55:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C67D080EC;
+	Tue, 19 Jun 2012 14:22:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9aWF9dN4xEhFREmKH8Vr2ys2H2M=; b=gPIq3g
-	7wo6oQhlu5GgAOuUCv+3nQRq0qNnxX9e2WS6K7Io/g9LVc/4sr4aouYT+lEvbRFU
-	wzeoWYyCIJv+6wvRGWH0J5OPN5g/e64wvsSG4KwG9jzthZlq4J4SV7ZheCmUSM+O
-	fzy/NyYISRyvckNBn8Z+3Ahi5bgrqca0tzqYA=
+	:content-type; s=sasl; bh=X08adN6Lx4xrtmnfwgQDA0OVrCM=; b=e8mFJI
+	BebRThGX9QVeA2aA5eXAv7F3SFjWJbAr7G7rlrST0PS5o0l2lyC3mNwgmNlXvZ5D
+	WueDGOE0wtnCxNm3MeUs5EkLrY4GMWxSq4sYLwYh/5oo+sgGLIiCfAyFZ2AN7lk0
+	q+NVm8xkS7WEzhYe7IsjcK4mW2JHDXe58Rg7s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J3qbqnfegz8/hEbl1VikInL7U/DdjrBH
-	1UlZQsEswr+3g55XX9YXBqe89pOr4+D5L/Z/SkOmCyDhZUQDsBvKQOtovJoyr9/7
-	5fvYzbs3BuJcRZZkYXnWSjwUc2C2nhuZSJu7HnYbJP1QIm/5Hu6zBqIFd01nllP1
-	d3iG0WK5pEc=
+	:content-type; q=dns; s=sasl; b=s5m6biRbmxj58TLwGq2xtyAnRfIC4y2c
+	yT5mPDz4vTz4YBQRAL8UswwB7QD5fnxqBoFfMELXo01WgTC5cT3CQEuGBIwjxGZb
+	NmwMlEAYtmo9l3gmUyDGfVFyYo8FXkLjBKEfpV17Xuj9wXWwKj+G+UJ4R0DNqTw1
+	h/PV4i0AVxk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C21DC7661;
-	Tue, 19 Jun 2012 13:55:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD58C80EB;
+	Tue, 19 Jun 2012 14:22:48 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 285DA7660; Tue, 19 Jun 2012
- 13:55:15 -0400 (EDT)
-In-Reply-To: <4FE08797.50509@xiplink.com> (Marc Branchaud's message of "Tue,
- 19 Jun 2012 10:07:19 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D9E480E8; Tue, 19 Jun 2012
+ 14:22:48 -0400 (EDT)
+In-Reply-To: <4FE091FB.7020202@desrt.ca> (Ryan Lortie's message of "Tue, 19
+ Jun 2012 10:51:39 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC82A318-BA37-11E1-B835-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C5DD6172-BA3B-11E1-890A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200217>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Ryan Lortie <desrt@desrt.ca> writes:
 
-> On 12-06-18 06:12 PM, Junio C Hamano wrote:
-> ...
->> That reliance of "origin" is what made me think that "not guessing
->> and blindly assuming" a wrong thing to do.
+> In this case, the user wanted to checkout a branch of a module.  They did:
 >
-> I think git can do better than erroring out, though.
+>   git clone git://git.gnome.org/gtk+
+>   cd gtk+
+>   git branch gtk-3-4
 >
->> It is OK that your build usesdetached HEAD, but if that is the case
->> shoudln't it be the one deciding which specific remote it wants to
->> take the updated sources from, and telling Git to do so?
+> Obviously this is a user error, but it's a pretty innocent one, and
+> puts the user in a bad state.  When they figure they should have typed
+> "git checkout gtk-3-4" it is already too late -- they will be taken
+> onto their locally-created copy of the master branch.
 >
-> Sure, but I feel it did that already when it cloned.  It seems reasonable for
-> the submodules to default to using the remote specified when the super-repo
-> was cloned.
+> So feature request: 'git branch' should not allow creating a local
+> branch that has the same name as a branch that already exists on
+> origin' (or any remote?) without some sort of --force flag.
 
-I do not have a strong opinion either way, other than that I would
-prefer predictable behaviour over "works most of the time provided
-if the user does X, otherwise does this random thing".  And coming
-from that standpoint, erroring out when there needs a guess involved
-is certainly more predictable---it is a cop-out option for me in
-areas of the system I do not have strong preferences.
+I think "the same name" is missing the point.  It is perfectly fine
+to have your own 'fix' branch that builds on top of what the remote
+side calls 'master', with the intention of testing what you queue on
+your 'fix' branch locally and cherry-picking proven-good ones to
+your 'master' before pushing the result out, even when there happens
+to be a 'fix' branch that your 'fix' branch does not have anything
+to do with on the remote side.  After all, the remote side may start
+using the 'fix' branch _long_ _after_ you start using your 'fix'
+branch, so checking at the branch creation time does not help you
+much, even if it were a problem that your local 'fix' (which you
+have no intention to push it to the remote) and the 'fix' at the
+remote does not have any common purpose.
 
-If you can work with submodule people (it is good that you Cc'ed
-Jens) to come up with a solution to make everything always use
-'origin' when unconfigured in a consistent way, without breaking
-existing users who rely on the current behaviour, that would be
-good.  Or a solution with a predictable behaviour you come up with
-may end up being something more involved than "just use 'origin'
-when you do not know". As long as the end result can be easily
-explained to end users, I wouldn't have any objection.
+The same can be said for the gtk-3-4 branch, depending on the
+purpose of 'master' vs purpose of 'gtk-3-4' at the remote side.  If
+'gtk-3-4' branch were the playground to come up with the next great
+version, and 'master' is the continuation of the current version
+with not so earth-shattering changes, it is perfectly normal for
+different contributors to fork from 'master' for their next feature
+that they hope eventually to go to 'gtk-3-4' at the remote, and
+locally name the branch 'gtk-3-4', build their feature, and
+depending on how disruptive the change is, choose to integrate the
+result into either 'master' or'gtk-3-4' at the remote after it is
+done.  So it is not immediately clear if "git branch gtk-3-4" in the
+example is a problem to begin with.
 
-Thanks.
+Given that "git checkout gtk-3-4" with recent enough Git (since
+1.7.0) DWIMs the command to do the equivalent of
+
+	git checkout -t gtk-3-4 origin/gtk-3-4
+
+that is, to fork, build on top of, and to be integrated with the
+'gtk-3-4' branch at the 'origin', if you know with a reasonable
+degree of certainty that the user should have typed "git checkout
+gtk-3-4" when he typed "git branch gtk-3-4" in the example, then it
+could be argued that "git branch" could offer an advice message, but
+it is unclear how you can be sure if "git checkout gtk-3-4" was what
+the user really wanted to do when he said "git branch gtk-3-4" in
+the first place.
