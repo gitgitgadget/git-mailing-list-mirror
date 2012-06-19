@@ -1,94 +1,85 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Blaming differences
-Date: Tue, 19 Jun 2012 09:07:08 +0200
-Message-ID: <87hau76aqr.fsf@thomas.inf.ethz.ch>
-References: <CABURp0omoLoNaOhD3Vx734aVtm5sbk0E7_2uaZJWrWs=_g84iA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] Extending the shelf life of "git describe" output
+Date: Tue, 19 Jun 2012 09:14:51 +0200
+Message-ID: <877gv34vtg.fsf@thomas.inf.ethz.ch>
+References: <1340057139-8311-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Cc: <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 09:07:22 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 09:15:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SgsX4-0006ZK-9v
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 09:07:22 +0200
+	id 1Sgsed-0007zR-0q
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 09:15:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389Ab2FSHHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 03:07:13 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:31894 "EHLO edge20.ethz.ch"
+	id S1752829Ab2FSHOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 03:14:53 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:32487 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752082Ab2FSHHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 03:07:12 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+	id S1752005Ab2FSHOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 03:14:53 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
  (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 09:07:09 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
- 2012 09:07:09 +0200
-In-Reply-To: <CABURp0omoLoNaOhD3Vx734aVtm5sbk0E7_2uaZJWrWs=_g84iA@mail.gmail.com>
-	(Phil Hord's message of "Mon, 18 Jun 2012 18:56:55 -0400")
+ 2012 09:14:51 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 19 Jun
+ 2012 09:14:51 +0200
+In-Reply-To: <1340057139-8311-1-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Mon, 18 Jun 2012 15:05:29 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200183>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I want something like a product of diff and blame.  I want to see some
-> kind of "blame" output for each line of "diff -U0".
+> This series teaches the sha1_name machinery to only look for
+> unambigous commit object names when the caller knows that the name
+> must refer to a commit object.
+[...]
+>  - You will further be able to extend the lifetime of uniqueness of
+>    "git describe" output if you take advantage of the "tagname" or
+>    "number". The current parser does not do this.
 >
-> I tried something like this:
->    git blame $changed_files
+>    There are a number of ways to do this, but probably the cleanest
+>    would be to (you only can do this when you have "tagname" tag
+>    locally; you may not have it) pass the tag and the number down to
+>    the find_short_*() routines with commit_only set, and when they
+>    find a commit that match the prefix, inside is_commit_object()
+>    test, check also that the commit reaches the given tag object in
+>    the given number steps (otherwise discard it as it is not the one
+>    you are looking for).
 >
-> Is there such a command already?
-
-Perhaps the WIP 'log -L' feature can help:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/199385
-
-> I'd also like to do something of the inverse operation:  I want to
-> find commits within a range whose changes are NOT in some other
-> commit.   So, say I have these four commits
->    A---B---C---D
+>  - Some callers that are involved in the get_sha1_1() callpath know
+>    that the name they have must be referring to commit objects (e.g.
+>    get_parent() and get_nth_ancestor()).  It might be worthwhile to
+>    let get_sha1_1() know that the caller knows the name it is
+>    feeding must refer to a commit object, and have the uniqueness
+>    logic take advantage of it.
 >
-> Where D was created by 'git revert B'.
-> I'd like to find out somehow that this is equivalent to
->    A--C
->
-> So that if I remove B and D completely, the with just A and C will get
-> me to the same end result.
->
-> Something like 'git list-contributors HEAD' which would show me A and
-> C, since these are the only commits that appear in any 'git blame
-> $any_file'.
+>    I think that most of these callers are expecting to parse a
+>    committish and the user may have given them the name of a a tag
+>    object that peels to a commit, so you would need to add a new
+>    GET_SHORT_COMMITTISH that allows any committish, in addition to
+>    the GET_SHORT_COMMIT_ONLY this series adds, if you want to do
+>    this.
 
-I wonder if these are really equivalent.  The first one is perhaps not
-feasible: If it can only detect exact reverts, that's not incredibly
-helpful; the commit message will probably tell you that it's a revert
-anyway.  I suspect that distinguishing conflicted reverts from true
-changes is AI-complete.  You're free to go and try, though :-)
+Two random thoughts:
 
-The second one, "find all commits which appear in blame output", is
-different: it would only list commits which have surviving lines.  For
-example,
+* The commit_only flag is only one thing you may "know" about the
+  parsing, as you state above.  E.g., we may know the distance from a
+  certain tag.  Given this, wouldn't it be cleaner to patch a struct
+  things_we_know into the call chain instead of only a flag?
 
-  $ git blame --incremental commit.h | grep -E -o '^[0-9a-f]{40}' | sort -u | wc -l
-  77
-  $ git rev-list --no-merges HEAD -- commit.h | wc -l
-  110
-
-tells me that there are 33 commits changing commit.h without any
-surviving lines.  However there were no reverts:
-
-  $ git log --grep=Revert -- commit.h
-
-comes up empty.
+* The treeish:path syntax also "knows" that the left side must be or
+  peel to a tree, so it makes no sense to go looking for a blob.
 
 -- 
 Thomas Rast
