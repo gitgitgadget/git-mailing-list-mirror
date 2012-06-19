@@ -1,66 +1,89 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: 'git branch' when origin branch with same name exists
-Date: Tue, 19 Jun 2012 18:17:27 +0200
-Message-ID: <CAGK7Mr41h3k=6S6HizAbL_n1Ma8KJkYQuqE6w1=G7DeNrbtLwQ@mail.gmail.com>
-References: <4FE091FB.7020202@desrt.ca> <4FE09C39.50702@elegosoft.com> <4FE0A0C0.2080409@desrt.ca>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file>
+ <external file>' finds changes
+Date: Tue, 19 Jun 2012 12:47:08 -0400
+Message-ID: <CAFouetgRq1qkqJmThJJeu=Mdx9jS0c9dw7NPSwuJUOSpskCY2A@mail.gmail.com>
+References: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
+	<7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
+	<CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
+	<20120619135814.GA3210@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Schubert <mschub@elegosoft.com>, git@vger.kernel.org
-To: Ryan Lortie <desrt@desrt.ca>
-X-From: git-owner@vger.kernel.org Tue Jun 19 18:18:08 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 19 18:47:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh180-0004yx-Jb
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 18:18:04 +0200
+	id 1Sh1aE-0005ia-U7
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 18:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415Ab2FSQR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 12:17:59 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:43050 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003Ab2FSQR7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 12:17:59 -0400
-Received: by ghrr11 with SMTP id r11so4785183ghr.19
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 09:17:58 -0700 (PDT)
+	id S1752280Ab2FSQrK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 12:47:10 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:35005 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752139Ab2FSQrJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 12:47:09 -0400
+Received: by yenl2 with SMTP id l2so4391710yen.19
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 09:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=UKZheLQlBbnNxwZb3NnOUL/6zTWgVZe4pkg8R2Ab1N8=;
-        b=pRqPF155JztoJmn2WHFIFm3H9zIAgNt48XX7UmHDWHoO+1tswep4tHMVYaonAGQ3xm
-         CF1uV5Y++D3iwzH1KzUD12GVvBrcieh4DMwKWU8DhYuXqedLWn8NbvozYWyGDKteDSlo
-         9LiRbVrCVTFRlVsg8FpK1Y+75d35MC3qECHpdtsyeQOkwHkNhmYk2tflxp7mriVbA/Yj
-         heZuTTmJfVEZN5T8eQX/+vh8RgHyY6UGbEl34IHJeeAtCDDNPvxx92YsER2t7qIvXCFo
-         69WHq1AsQIDfl6rOpwmkWd7t7mfoqnLEHpEt4mbplpD75fzDjOu8fjx2GNYsDAP4d6tl
-         dTxg==
-Received: by 10.50.183.228 with SMTP id ep4mr1822240igc.74.1340122678018; Tue,
- 19 Jun 2012 09:17:58 -0700 (PDT)
-Received: by 10.50.99.10 with HTTP; Tue, 19 Jun 2012 09:17:27 -0700 (PDT)
-In-Reply-To: <4FE0A0C0.2080409@desrt.ca>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ufOEhA5KszL2QcMHTJ8wMcEojAJVOrzbLe+Y45YyWc0=;
+        b=E7x/1MaiWiuqNeLJW/S+wsW6h6j4PEIV1y+OBaCCwTz7xtCtCcNojz3FQkRQQzw/vK
+         ITg/35Sf0N6EcXjrseILGRzVPBd4i/u8I3Q6ozoMRJnvZen3cT96S4F0VyJtLQICppUd
+         plnt2Uzg461FpuK+f/fra/NEAlWEwFHvFjVmTXqQuxeiuIhIeV/ZZNXFxGt+7zXZKDUv
+         PwIucavsgdVet2z7N+s0WjAKiuAB5UayVRb8ldUCtRk7f4+CXowoX4PlZn9F00Q3y8BB
+         z95OHgP3/0pwz3YZPiCRLvAcCV4nPnW2Cmb7yLavBw6Jr1b++siS5fqfwDdswe4tdvMJ
+         fAww==
+Received: by 10.50.40.194 with SMTP id z2mr1902037igk.67.1340124428319; Tue,
+ 19 Jun 2012 09:47:08 -0700 (PDT)
+Received: by 10.231.84.147 with HTTP; Tue, 19 Jun 2012 09:47:08 -0700 (PDT)
+In-Reply-To: <20120619135814.GA3210@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200212>
 
->> This very much violates the distributed nature of Git. Everything
->> is allowed, because it's *my* repository.
+On Tue, Jun 19, 2012 at 9:58 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 19, 2012 at 09:05:40AM -0400, Tim Henigan wrote:
 >
+>> As a side note, I found that these tests fail if a relative path is
+>> used for the file in 'non/git'. =C2=A0In other words, this passes:
+>>
+>> =C2=A0 =C2=A0 test_expect_code 0 git diff --quiet a
+>> "$TRASH_DIRECTORY/test-outside/non/git/matching-file"
+>>
+>> but this fails:
+>>
+>> =C2=A0 =C2=A0 test_expect_code 0 git diff --quiet a ../non/git/match=
+ing-file
+>>
+>> This surprised me, but I have not investigated any further.
 >
-> It is certainly allowed, as originally mentioned, with a --force option of some kind.
+> The problem is that path_outside_repo in diff-no-index.c does not bot=
+her
+> handling relative paths at all, and just assumes they are inside the
+> repository. This is obviously not true if the path starts with "..", =
+in
+> which case you would need to compare the number of ".." with the curr=
+ent
+> depth in the repository.
 >
-> It is only prevented by default because it is likely you are making a mistake...
+> prefix_path already does this (and is what generates the later
+> "../non/git/matching-file is not in the repository" message). We coul=
+d
+> perhaps get rid of path_outside_repo and just re-use prefix_path's
+> logic, something like (not tested):
 
+With your patch applied, I was able to use relative paths in my tests.
+ I also confirmed that all the t4*.sh tests pass.
 
-I second that, way more often than not it *is* a mistake to create a
-branch with the same name as one in a remote. In the unlikely scenario
-where it is what you want, I think asking for a -f/--force is not too
-much.
-
-I think the feature request is in sync with "git branch -d" refusing
-to delete an unmerged branch because it's unlikely that it's what you
-want, and forces you to use -D instead.
-
-Philippe
+=46or what its worth, your patch looks correct to me.  Existing
+consumers of 'prefix_path' should get the same results as before and
+the one added xmalloc is paired with a free.
