@@ -1,7 +1,7 @@
 From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH 2/3] =?UTF-8?q?git-gui:=20de.po:=20translate=20"bare"=20as=20?= =?UTF-8?q?"blo=C3=9F"?=
-Date: Tue, 19 Jun 2012 20:25:40 +0200
-Message-ID: <1340130341-5224-3-git-send-email-ralf.thielow@googlemail.com>
+Subject: =?UTF-8?q?=5BPATCH=201/3=5D=20git-gui=3A=20de=2Epo=3A=20consistently=20add=20untranslated=20hook=20names=20within=20braces?=
+Date: Tue, 19 Jun 2012 20:25:39 +0200
+Message-ID: <1340130341-5224-2-git-send-email-ralf.thielow@googlemail.com>
 References: <1340130341-5224-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,69 +9,93 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: trast@student.ethz.ch, jk@jk.gs, git@vger.kernel.org,
 	Ralf Thielow <ralf.thielow@googlemail.com>
 To: patthoyts@users.sourceforge.net, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Tue Jun 19 20:25:59 2012
+X-From: git-owner@vger.kernel.org Tue Jun 19 20:26:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh37m-00062a-S5
+	id 1Sh37n-00062a-E5
 	for gcvg-git-2@plane.gmane.org; Tue, 19 Jun 2012 20:25:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386Ab2FSSZ5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 14:25:57 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:36846 "EHLO
+	id S1753330Ab2FSSZ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 14:25:56 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:50853 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752802Ab2FSSZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 14:25:56 -0400
-Received: by bkcji2 with SMTP id ji2so5415595bkc.19
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 11:25:55 -0700 (PDT)
+	with ESMTP id S1752845Ab2FSSZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 14:25:54 -0400
+Received: by mail-bk0-f46.google.com with SMTP id ji2so5415542bkc.19
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 11:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=nOK0Evct0jxmqzR/Dsf49rVKCmp0loP+ZDVxilZahGE=;
-        b=GBbQD8dNaBCMpIEZH2bfsWZdufh8+fFLjKRvCIDQPyJyDd9oNGzBdyzgMUXCN6cMI1
-         66HjiV7/MPEvbDv9BafhLL+r1iyWxFpsoV/1aqyzTM1T6kA9mR7B/wCczz6lukXJ7qEx
-         hHJAKSohaAnRTg8haK5cGzIvdqwMLIcqd2F5fdNsI6Hc3us6eKSsc8jyGhVeT0WQ938R
-         ybvg78Ypnwc25l7KwbDjq1k9n9naIvbWSCEULRVDFpLEPH90f8AvpznmIZE9BwwJx7F5
-         CovwZ5Uh+UoupT6YeF1o7OlZno399chXCZXJmEUFMB/1QXN7NvQfVM5QvKMsa59Xw9DT
-         TuOA==
-Received: by 10.205.126.8 with SMTP id gu8mr5270720bkc.61.1340130354905;
+        bh=s+Y26L+fuHUqTl3zKuTdb/p9trLtcOSSffzw2SZHj0Q=;
+        b=BNYaclX4wVDnafLFIdO+fDh0rLv3oM08nPbsCEBNaSTZG0fkYDJmrcMdGnDrsVDOtu
+         dQVXmZqMqwE75eiRV/xxzJYGzqLXYH20TF5GfK2baMhi6XFlG+fYXOmx5iCwo9kHT2Yu
+         rg0LXSrI/Xf5styOW/le/NK7BC7EcxMq3EqA4kj7b6knyR2UA5PE032GjmAkkI/jG2jC
+         Xsf+304m8PK4yl0ePB7E6Wal9V2GgGDwamMnA0tO+5V36E63NX6DN5HwKFb338vZkX05
+         FBHDC1ZnxAL/jBXTpA9M6ysYDL6x3jagZes1TfLiYAhixGm2wzrb7B2yQCTIx7tO2ghJ
+         vrfQ==
+Received: by 10.204.143.140 with SMTP id v12mr8236724bku.98.1340130354034;
         Tue, 19 Jun 2012 11:25:54 -0700 (PDT)
 Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id e20sm24459087bkw.3.2012.06.19.11.25.54
+        by mx.google.com with ESMTPS id e20sm24459087bkw.3.2012.06.19.11.25.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Jun 2012 11:25:54 -0700 (PDT)
+        Tue, 19 Jun 2012 11:25:53 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11
 In-Reply-To: <1340130341-5224-1-git-send-email-ralf.thielow@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200221>
 
-According to the translation in git-core, we
-translate "bare" as "blo=C3=9F".
+The user might not really know what hook is
+actually meant if it's translated. To avoid such
+a confusion we should consistently write it untranslated
+within braces after.
 
 Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
 ---
- po/de.po | 2 +-
- 1 Datei ge=C3=A4ndert, 1 Zeile hinzugef=C3=BCgt(+), 1 Zeile entfernt(-=
-)
+ po/de.po | 6 +++---
+ 1 Datei ge=C3=A4ndert, 3 Zeilen hinzugef=C3=BCgt(+), 3 Zeilen entfernt=
+(-)
 
 diff --git a/po/de.po b/po/de.po
-index 91221ef..55fde80 100644
+index d9a9ebd..91221ef 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -72,7 +72,7 @@ msgstr ""
+@@ -88,7 +88,7 @@ msgstr "Nach ge=C3=A4nderten Dateien suchen..."
 =20
- #: git-gui.sh:1154
- msgid "Cannot use bare repository:"
--msgstr "Leeres Projektarchiv kann nicht benutzt werden:"
-+msgstr "Blo=C3=9Fes Projektarchiv kann nicht benutzt werden:"
+ #: git-gui.sh:1454
+ msgid "Calling prepare-commit-msg hook..."
+-msgstr "Aufrufen der Eintragen-Vorbereiten-Kontrolle..."
++msgstr "Aufrufen der Eintragen-Vorbereiten-Kontrolle (=C2=BBprepare-co=
+mmit hook=C2=AB)..."
 =20
- #: git-gui.sh:1162
- msgid "No working directory"
+ #: git-gui.sh:1471
+ msgid "Commit declined by prepare-commit-msg hook."
+@@ -1446,7 +1446,7 @@ msgstr ""
+=20
+ #: lib/commit.tcl:234
+ msgid "Calling pre-commit hook..."
+-msgstr "Aufrufen der Vor-Eintragen-Kontrolle..."
++msgstr "Aufrufen der Vor-Eintragen-Kontrolle (=C2=BBpre-commit hook=C2=
+=AB)..."
+=20
+ #: lib/commit.tcl:249
+ msgid "Commit declined by pre-commit hook."
+@@ -1454,7 +1454,7 @@ msgstr "Eintragen abgelehnt durch Vor-Eintragen-K=
+ontrolle (=C2=BBpre-commit hook=C2=AB).
+=20
+ #: lib/commit.tcl:272
+ msgid "Calling commit-msg hook..."
+-msgstr "Aufrufen der Versionsbeschreibungs-Kontrolle..."
++msgstr "Aufrufen der Versionsbeschreibungs-Kontrolle (=C2=BBcommit-mes=
+sage hook=C2=AB)..."
+=20
+ #: lib/commit.tcl:287
+ msgid "Commit declined by commit-msg hook."
 --=20
 1.7.11
