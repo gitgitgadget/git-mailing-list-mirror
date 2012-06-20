@@ -1,89 +1,94 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 2/2] submodule: Tolerate auto/safecrlf when adding .gitmodules
-Date: Wed, 20 Jun 2012 19:52:19 +0200
-Message-ID: <4FE20DD3.6040607@web.de>
-References: <cover.1340202515.git.brad.king@kitware.com> <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] push: start warning upcoming default change for
+ push.default
+Date: Wed, 20 Jun 2012 10:55:48 -0700
+Message-ID: <7vehp9x3yz.fsf@alter.siamese.dyndns.org>
+References: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
+ <1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 19:53:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 20 19:55:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShP5s-0005qO-2N
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:53:28 +0200
+	id 1ShP8F-00029W-Se
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295Ab2FTRxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 13:53:24 -0400
-Received: from mout.web.de ([212.227.17.11]:58311 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753066Ab2FTRxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 13:53:24 -0400
-Received: from [192.168.178.48] ([91.3.162.199]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LzbDC-1RlusQ3AzS-014wiq; Wed, 20 Jun 2012 19:52:21
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com>
-X-Provags-ID: V02:K0:8Psnbz5ug4IOxINzCfjyod7GnZUhYct3WqpLoX6nsFO
- IGat6Jzzs0418it2WgjXh7hGl0UA8yGMccL61vY8TK4YLnCVSS
- kFHoEja6+X1ii9oAP739kgQJYn4O8eisiEMXEKfyL4UnNHh7KL
- pQuorbQVSi/WjXxtq+0nfFUQYCuo/eORBoscK2gv31NdVklOLm
- HHdHdPEeJpwvSSloMos2A==
+	id S1753225Ab2FTRzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 13:55:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45635 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751797Ab2FTRzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 13:55:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D408B80CF;
+	Wed, 20 Jun 2012 13:55:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4EQ1h+oeBr/wQgxiQ2aWkvJtB6w=; b=TCr0uP
+	QkOTc1K+d020zJzKVizVqzf06fJX5fk+YFeWIJ09puCSm9EQI3DfojmArGZ0VDnL
+	+YBsG9lQw5H0gVWGUwn1aHg6QRu6yiRt1BPaLiXx12WTONVwAXPvYJmdDH/9r9bO
+	XARp32jgOA2Nq9O76vNco76n6m/ZKSj0ks2dM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AM6bZEVCiA9uwDcjvT9RFMgFHkwrw3MG
+	lXkrgry8htWmScj+OZ19mH1UIpqlVqr6GoQho0pZlvmzrJEd5Aa6R12HlDx6rR5z
+	I/OxEPmsgJFERxP5LHGjp3d5RC1LZ87bf2QnMnvZx0EPGo2/QcOl9uXZkUkj1vm9
+	7AoEqCuXJ3c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C958E80CD;
+	Wed, 20 Jun 2012 13:55:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F71880CB; Wed, 20 Jun 2012
+ 13:55:50 -0400 (EDT)
+In-Reply-To: <1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
+ Moy's message of "Wed, 20 Jun 2012 14:35:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2BCD0026-BB01-11E1-A9B9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200309>
 
-Am 20.06.2012 16:43, schrieb Brad King:
-> Temporarily disable 'core.safecrlf' to add '.gitmodules' so that
-> 'git add' does not reject the LF newlines we write to the file
-> even if both 'core.autocrlf' and 'core.safecrlf' are enabled.
-> This fixes known breakage tested in t7400-submodule-basic.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Hmm, I have no objections against the intention of the patch. But
-as I understand it this message will reoccur when the user e.g.
-edits the .gitmodules file later with any editor who just writes
-lfs and adds it.
-
-I don't know terribly much about crlf support but maybe flagging
-the .gitmodules file in .gitattributes would be a better solution
-here? Opinions?
-
-> Signed-off-by: Brad King <brad.king@kitware.com>
+> In preparation for flipping the default to the "simple" mode from
+> the "matching" mode that is the historical default, start warning
+> users when they rely on unconfigured "git push" to default to the
+> "matching" mode.
+>
+> Also, advertise for 'simple' where 'current' and 'upstream' are advised.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  git-submodule.sh           |    2 +-
->  t/t7400-submodule-basic.sh |    2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 5c61ae2..ed9a54a 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -303,7 +303,7 @@ Use -f if you really want to add it." >&2
->  
->  	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
->  	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
-> -	git add --force .gitmodules ||
-> +	git -c core.safecrlf=false add --force .gitmodules ||
->  	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
->  }
->  
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 5eaeb04..9a4da9b 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -99,7 +99,7 @@ test_expect_success 'submodule add' '
->  	test_cmp empty untracked
->  '
->  
-> -test_expect_failure 'submodule add with core.autocrlf and core.safecrlf' '
-> +test_expect_success 'submodule add with core.autocrlf and core.safecrlf' '
->  	(
->  		cd addtest-crlf &&
->  		git config core.autocrlf true &&
-> 
+>> * mm/push-default-switch-warning (2012-06-06) 1 commit
+>>  - push: start warning upcoming default change for push.default
+>> 
+>> Will merge to 'next'.
+>> 
+>> Hopwefully we can have a solidly tested series early in 1.7.12 or
+>> 1.7.13 at the latest.
+>
+> I've made a slightly modified version of the patch which adds these
+> two lines:
+>
+> +   "(the 'simple' mode was introduced in Git 1.7.11. Use 'current' instead if\n"
+> +   "you sometimes use older versions of Git)");
+
+I am not sure who this wants to help.  For people who want to
+anticipate the future, using anything but 'simple' is not living in
+the future and waiting for an additional pain coming from the
+differences between current and simple.  If current and simple are
+similar enough that their differences do not matter, why wait for
+simple to be available everywhere and switch the default to it,
+instead of using current as the default in the first place?
+
+So if anything, I'd prefer the above message without "Use 'current'
+instead" bit.
