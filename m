@@ -1,79 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: 'git branch' when origin branch with same name exists
-Date: Wed, 20 Jun 2012 19:51:21 +0200
-Message-ID: <vpqa9zxan3a.fsf@bauges.imag.fr>
-References: <4FE091FB.7020202@desrt.ca> <87a9zztdxt.fsf@thomas.inf.ethz.ch>
-	<7v8vfj17de.fsf@alter.siamese.dyndns.org> <4FE0E493.1010308@desrt.ca>
-	<CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com>
-	<7vr4t9x51j.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] submodule: Tolerate auto/safecrlf when adding .gitmodules
+Date: Wed, 20 Jun 2012 19:52:19 +0200
+Message-ID: <4FE20DD3.6040607@web.de>
+References: <cover.1340202515.git.brad.king@kitware.com> <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Phil Hord <phil.hord@gmail.com>, Ryan Lortie <desrt@desrt.ca>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 19:53:14 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 19:53:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShP5d-0005T9-FU
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:53:13 +0200
+	id 1ShP5s-0005qO-2N
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713Ab2FTRxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 13:53:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45287 "EHLO rominette.imag.fr"
+	id S1753295Ab2FTRxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 13:53:24 -0400
+Received: from mout.web.de ([212.227.17.11]:58311 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751722Ab2FTRxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 13:53:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5KHp1md029853
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 20 Jun 2012 19:51:01 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1ShP3q-0005WJ-S8; Wed, 20 Jun 2012 19:51:22 +0200
-In-Reply-To: <7vr4t9x51j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 20 Jun 2012 10:32:40 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 20 Jun 2012 19:51:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5KHp1md029853
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340819461.78813@hWBdVcr9yfQL0BumdRtxvQ
+	id S1753066Ab2FTRxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 13:53:24 -0400
+Received: from [192.168.178.48] ([91.3.162.199]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0LzbDC-1RlusQ3AzS-014wiq; Wed, 20 Jun 2012 19:52:21
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com>
+X-Provags-ID: V02:K0:8Psnbz5ug4IOxINzCfjyod7GnZUhYct3WqpLoX6nsFO
+ IGat6Jzzs0418it2WgjXh7hGl0UA8yGMccL61vY8TK4YLnCVSS
+ kFHoEja6+X1ii9oAP739kgQJYn4O8eisiEMXEKfyL4UnNHh7KL
+ pQuorbQVSi/WjXxtq+0nfFUQYCuo/eORBoscK2gv31NdVklOLm
+ HHdHdPEeJpwvSSloMos2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200308>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 20.06.2012 16:43, schrieb Brad King:
+> Temporarily disable 'core.safecrlf' to add '.gitmodules' so that
+> 'git add' does not reject the LF newlines we write to the file
+> even if both 'core.autocrlf' and 'core.safecrlf' are enabled.
+> This fixes known breakage tested in t7400-submodule-basic.
 
-> Requiring starting point and failing without --force will never
-> happen, but it could be a possible approach to issue an additional
-> advice message under reasonably narrow conditions, namely:
->
->  - The starting point was not given explicitly;
->
->  - It would have DWIMed to "git checkout -t -b it origin/it" when
->    creating the branch (I think you need to check configurations
->    like branch.autosetupmerge and existence of the tracking branch
->    remotes/origin/it); and
->
->  - advice.branchNotTrackingCorrespondingRemote is not set to false.
+Hmm, I have no objections against the intention of the patch. But
+as I understand it this message will reoccur when the user e.g.
+edits the .gitmodules file later with any editor who just writes
+lfs and adds it.
 
-I like that. Stg like
+I don't know terribly much about crlf support but maybe flagging
+the .gitmodules file in .gitattributes would be a better solution
+here? Opinions?
 
-$ git branch next
-Creating local branch next starting from <sha1>.
-If you meant to checkout a new branch 'next' to track remote branch
-'next' from 'origin', run these commands now:
-git branch -d next; git checkout next
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Signed-off-by: Brad King <brad.king@kitware.com>
+> ---
+>  git-submodule.sh           |    2 +-
+>  t/t7400-submodule-basic.sh |    2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 5c61ae2..ed9a54a 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -303,7 +303,7 @@ Use -f if you really want to add it." >&2
+>  
+>  	git config -f .gitmodules submodule."$sm_path".path "$sm_path" &&
+>  	git config -f .gitmodules submodule."$sm_path".url "$repo" &&
+> -	git add --force .gitmodules ||
+> +	git -c core.safecrlf=false add --force .gitmodules ||
+>  	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+>  }
+>  
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 5eaeb04..9a4da9b 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -99,7 +99,7 @@ test_expect_success 'submodule add' '
+>  	test_cmp empty untracked
+>  '
+>  
+> -test_expect_failure 'submodule add with core.autocrlf and core.safecrlf' '
+> +test_expect_success 'submodule add with core.autocrlf and core.safecrlf' '
+>  	(
+>  		cd addtest-crlf &&
+>  		git config core.autocrlf true &&
+> 
