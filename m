@@ -1,91 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git branch' when origin branch with same name exists
-Date: Wed, 20 Jun 2012 11:07:52 -0700
-Message-ID: <7v62alx3ev.fsf@alter.siamese.dyndns.org>
-References: <4FE091FB.7020202@desrt.ca> <87a9zztdxt.fsf@thomas.inf.ethz.ch>
- <7v8vfj17de.fsf@alter.siamese.dyndns.org> <4FE0E493.1010308@desrt.ca>
- <CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com>
- <7vr4t9x51j.fsf@alter.siamese.dyndns.org> <vpqa9zxan3a.fsf@bauges.imag.fr>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [PATCH 0/2] submodule add + autocrlf + safecrlf
+Date: Wed, 20 Jun 2012 14:09:12 -0400
+Message-ID: <4FE211C8.3080007@kitware.com>
+References: <cover.1340202515.git.brad.king@kitware.com> <7vipelx49g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>, Ryan Lortie <desrt@desrt.ca>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 20 20:08:00 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 20:09:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShPJw-0007Td-5j
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:08:00 +0200
+	id 1ShPLF-0001Qh-E0
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383Ab2FTSH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 14:07:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52533 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753473Ab2FTSHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 14:07:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4298565;
-	Wed, 20 Jun 2012 14:07:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=trXUvZkS3OetTUw0mlHbzi+zkw0=; b=j7ltj+
-	wnQO3LigkwZl7aFYbq+nHg4z9FVrGnkES0HFAK7T4JxE8QC/3LrHW5s5rbMUPUK2
-	LfPbRed+QRbV04XIbGDK1LWqYhWBjyXG9wGo1z+XmP5PrUGuwRxK6g9uEjttUo6e
-	3+1Bg3u/2+PB9iTwpta8yhxBKua7VOC0uN5TE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X6hLcOlwfFKNrQNgfK4s6ehITcAyfMYS
-	Ok7DUwfoY4iji4M4u4JiGVpQjq0HU3sg2jsg1mwy3WX9t48MDdBqvWY0B3a+4eDv
-	7zC7MUHYsKge1LFPKp3/MP3hHZqwhqisOBdXXTQeGwafzuXopqRn4Z5SgmfivSMw
-	aiv8qlsJ9EQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CABF8563;
-	Wed, 20 Jun 2012 14:07:54 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0474D8560; Wed, 20 Jun 2012
- 14:07:53 -0400 (EDT)
-In-Reply-To: <vpqa9zxan3a.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed, 20 Jun 2012 19:51:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DB3C8CD8-BB02-11E1-8C33-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754551Ab2FTSJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 14:09:16 -0400
+Received: from na3sys009aog127.obsmtp.com ([74.125.149.107]:45040 "HELO
+	na3sys009aog127.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753210Ab2FTSJQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 14:09:16 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]) (using TLSv1) by na3sys009aob127.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKT+IRy5mv64NWcbFBnG8PjimJ+juNPj97@postini.com; Wed, 20 Jun 2012 11:09:15 PDT
+Received: by obbwd20 with SMTP id wd20so2368333obb.37
+        for <git@vger.kernel.org>; Wed, 20 Jun 2012 11:09:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding:x-gm-message-state;
+        bh=nNbq2MI97e9qFZTefvDcZTeVMJ5g/fBPhXd3Xo9enyM=;
+        b=Mkhzq5sEEEpQU741B4XjpSLOPZUkFaUnEN4UXGpVEKLTTMAUkEELVkIhwU4/OlSDaS
+         yjlINQSMEafVktEPUbq3OFVk0mtHwbQVoVfoTvBc1otDsZgBhlOUcM8l7f1phqLhpa9r
+         UDk9RZDRVGKL2snW1QbqQnF7+IzCHBwvD4LyIDaNrdVjCV91Dqt1j2tIE2IMAUYtWtMg
+         U0iiGY6U7gqZGdUjcYII4tjZ+Ou2z6mPT4qXIYWf3PHKNjTQWZXY0K76EHB43eCfz7o9
+         L/K6Sx3ikjGIsdskjvXNU/cRXIkHQyKZ6DR7s/NHihbPOkpGGGJW3ecXffUFPIN7ALmu
+         l3OQ==
+Received: by 10.182.18.137 with SMTP id w9mr24704376obd.75.1340215754628;
+        Wed, 20 Jun 2012 11:09:14 -0700 (PDT)
+Received: from [192.168.1.236] (66-194-253-20.static.twtelecom.net. [66.194.253.20])
+        by mx.google.com with ESMTPS id k8sm16085519oeh.9.2012.06.20.11.09.12
+        (version=SSLv3 cipher=OTHER);
+        Wed, 20 Jun 2012 11:09:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
+In-Reply-To: <7vipelx49g.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4
+X-Gm-Message-State: ALoCoQlanklV3qRP2xoLaWxkzU8/5U7H6RQ3T429wgq0EMVu4jXjr3m3kU9YwdVCTdwkkOBsGHYP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200313>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On 06/20/2012 01:49 PM, Junio C Hamano wrote:
+> I have a suspicion that "git config" should be taught about this
+> kind of thing instead.
+> 
+> Shoudn't your .git/config file that is outside the revision control
+> also end with CRLF if your platform and project prefer CRLF over LF?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Requiring starting point and failing without --force will never
->> happen, but it could be a possible approach to issue an additional
->> advice message under reasonably narrow conditions, namely:
->>
->>  - The starting point was not given explicitly;
->>
->>  - It would have DWIMed to "git checkout -t -b it origin/it" when
->>    creating the branch (I think you need to check configurations
->>    like branch.autosetupmerge and existence of the tracking branch
->>    remotes/origin/it); and
->>
->>  - advice.branchNotTrackingCorrespondingRemote is not set to false.
->
-> I like that. Stg like
->
-> $ git branch next
-> Creating local branch next starting from <sha1>.
-> If you meant to checkout a new branch 'next' to track remote branch
-> 'next' from 'origin', run these commands now:
-> git branch -d next; git checkout next
+That would be reasonable, but is beyond the scope I'm willing to
+tackle myself.
 
-Oh, another precondition would be that --force was _not_ given.
+I don't actually have a project like this so I have no strong
+opinion on this issue.  I discovered the problem by accident
+and have already worked around it in the obscure case it matters
+for me.
 
-It is fairly clear "git branch -f next" is asking to forcibly update
-an existing local 'next' to the current HEAD, not to origin/next,
-and giving the above suggestion will be mildly irritating in such a
-case.
+Perhaps only the first patch in the series is worth inclusion.
+It can become the beginning of a series if someone wants to address
+handling crlf in config files.  Note that in the case I discovered
+this the crlf configuration was in ~/.gitconfig so the project
+knew nothing about it and had no .gitattributes.
+
+-Brad
