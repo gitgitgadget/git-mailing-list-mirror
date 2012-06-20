@@ -1,59 +1,69 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: Editing the root commit
-Date: Wed, 20 Jun 2012 20:39:23 +0100
-Message-ID: <20120620193922.GB3192@arachsys.com>
-References: <20120619091657.GA28005@arachsys.com>
- <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com>
- <20120620093205.GB10579@arachsys.com>
- <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
- <20120620192938.GC31520@sigill.intra.peff.net>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: git-push error handling
+Date: Wed, 20 Jun 2012 14:43:04 -0500
+Message-ID: <jrt949$o3g$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 20 21:39:42 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 20 21:43:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShQkd-0005Ud-P0
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 21:39:40 +0200
+	id 1ShQoI-0003g5-9z
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 21:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757944Ab2FTTja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 15:39:30 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:59349 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752414Ab2FTTj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 15:39:27 -0400
-Received: from [81.2.114.212] (helo=arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1ShQkO-0001Yc-9y; Wed, 20 Jun 2012 20:39:24 +0100
-Content-Disposition: inline
-In-Reply-To: <20120620192938.GC31520@sigill.intra.peff.net>
+	id S1757891Ab2FTTnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 15:43:23 -0400
+Received: from plane.gmane.org ([80.91.229.3]:37930 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752414Ab2FTTnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 15:43:22 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ShQoA-0003Sd-6h
+	for git@vger.kernel.org; Wed, 20 Jun 2012 21:43:18 +0200
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2012 21:43:18 +0200
+Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2012 21:43:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200344>
 
-Jeff King <peff@peff.net> writes:
+Does git push always return an error to "if [ $? -ne 0 ]" when the push 
+fails?  Is this sufficient to verify your git-push worked?  I'm being 
+asked to advise on commands to 'verify the canonical repo is in good 
+working order' immediately before a push and immediately after a push 
+(for total automation).  I'm used to doing pushes manually.  I think 
+git-push itself will tell you if there's a problem, and there's no need 
+for 'before' and 'after' checks.  Correct?
 
-> But if the first commit is deleted (or reordered), then it is not
-> appropriate to detach to the root; we must detach to the first picked
-> commit, which we can only do after we see the final instruction sheet.
+Very Limited Scope of Context:
+We don't do anything special in the push.  We are just fast-forwarding 
+the master branch and there is only one branch (master).  (The 
+powers-that-be are doing their own change control (ie, file locking) and 
+only care to copy files to the worktree of master, git-add, git-commit, 
+and git-push to canonical.)  They have created a change control menu 
+that only uses git to 'check out' source and to 'commit source' 
+automatically via scripts.  They are doing the merges manually and not 
+using git for that so there is no 'merging of master' going on as far as 
+git is concerned.  They're basically using git to replace cvs in their 
+legacy change control so they don't wish to use any git functionality 
+like branches, merges, etc, at this time.  I think they are just using 
+git checkout, git add, git commit, to say they have put the changes into 
+a 'change control repository'.
 
-It's worse than that isn't it? If you have
-
-  A -- B -- C
-
-and the sheet says drop A, pick B, pick C, you can't detach to B. You want
-the commit B as a root (i.e. with no parent), not the commit B with parent
-A. You need to have the patch from A to B replayed as the first commit on an
-empty branch (only without the branch).
-
-Cheers,
-
-Chris.
+v/r,
+neal
