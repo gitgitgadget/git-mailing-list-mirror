@@ -1,97 +1,123 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] push: start warning upcoming default change for push.default
-Date: Wed, 20 Jun 2012 20:24:19 +0200
-Message-ID: <vpqpq8t96zw.fsf@bauges.imag.fr>
-References: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
-	<1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vehp9x3yz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Editing the root commit
+Date: Wed, 20 Jun 2012 11:25:32 -0700
+Message-ID: <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
+References: <20120619091657.GA28005@arachsys.com>
+ <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
+ <20120619111709.GC10692@arachsys.com> <20120620093205.GB10579@arachsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 20:25:51 2012
+To: Chris Webb <chris@arachsys.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 20:26:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShPbB-0004mY-S5
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:25:50 +0200
+	id 1ShPbC-0004mY-R8
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932640Ab2FTSZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 14:25:17 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39610 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932632Ab2FTSZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 14:25:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5KIO1kU019546
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 20 Jun 2012 20:24:01 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1ShPZk-0005rW-7M; Wed, 20 Jun 2012 20:24:20 +0200
-In-Reply-To: <7vehp9x3yz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 20 Jun 2012 10:55:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 20 Jun 2012 20:24:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5KIO1kU019546
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1340821442.63058@USRnBvak+riYJgWFTn6c7A
+	id S932563Ab2FTSZk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jun 2012 14:25:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61674 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932519Ab2FTSZg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 14:25:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D2B68A94;
+	Wed, 20 Jun 2012 14:25:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4HpuoKpCXQTW
+	6YWCgNpdYv3+v/M=; b=ALpbL08xi9EM4mNlwu2TlHmh2471vouxpClLxA0UiM0Q
+	hecqykKHSLC24gxfDSL5et0yvoBoTPoRYzfma/cOaBO315JbY8rturoNRyRsNqph
+	gqsJX7xL6G5+5vxJzuW3D0OG6dj6vkissIpeWmNKfe2LBOrmLoq31M0hNlCSj2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Jpd6Me
+	0CGmdruQ6XNOeiCaQVFO+70+XJgZ9JhNF+xWyoyGm6sO0PqvxOImWvS53g4936jo
+	RexlMPg3pcX0jKwbLPIYT3/nNZeH5LBO97SvHZlRi/ahP2Hnuj8+vA07MwezViqs
+	c581nBEAiMF2eu+MYd0zPAFaKCa0ceuHBUxFA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23EFE8A93;
+	Wed, 20 Jun 2012 14:25:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D7F88A92; Wed, 20 Jun 2012
+ 14:25:34 -0400 (EDT)
+In-Reply-To: <20120620093205.GB10579@arachsys.com> (Chris Webb's message of
+ "Wed, 20 Jun 2012 10:32:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 536AAA12-BB05-11E1-8239-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200315>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Chris Webb <chris@arachsys.com> writes:
 
-> I am not sure who this wants to help.
+> Chris Webb <chris@arachsys.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> > Even though I wouldn't bother doing this myself, I wouldn't mind
+>> > reviewing a patch series ;-)
+>>=20
+>> Okay, I'll take a look when I finish my current project!
+>
+> I had a bit of spare time this morning and had a quick look through
+> git-rebase--interactive.sh.
+>
+> Apart from the validation, message and reflog code in git-rebase.sh a=
+nd
+> git-rebase--interactive.sh that would need fixing up to know about th=
+is
+> case, the essence of this seems to be starting with an orphan commit =
+instead
+> of a commit descended from $onto right at the end of --interactive.
+>
+> I'd love to write something like
+>
+>   git checkout ${onto:---orphan}
+>
+> (or a variant) but can git be persuaded to have an orphan detached HE=
+AD like
+> that?
 
-The target is for people who may use different versions of Git (e.g.
-several installed git on the same machine, several machine, or worse,
-several machines with a shared $HOME/.gitconfig). This includes me.
+=46or the root commit in the history, you check it out on the detached
+HEAD.  Under "--interactive" if the insn sheet tells you to allow
+the user to "edit/amend/reword" it, give control back the user after
+you have detached HEAD at that commit.  The user experience should
+be identical to the case you are replaying on an existing commit
+after that point.
 
-For these people, setting push.default=simple is basically impossible
-since Git errors out when encountering such setting (it's not ignored,
-it really makes Git die).
+But lets step back a bit and look at the whole picture, to make sure
+we are on the same page.
 
-> For people who want to anticipate the future, using anything but
-> 'simple' is not living in the future and waiting for an additional
-> pain coming from the differences between current and simple. If
-> current and simple are similar enough that their differences do not
-> matter, why wait for simple to be available everywhere and switch the
-> default to it, instead of using current as the default in the first
-> place?
+    $ git rebase [-i] frotz
 
-'simple' is an improvement over 'current' as a default, especially for
-beginners, but 'current' is already reasonably good.
+looks at where you are, finds where you forked from 'frotz', and
+replays everything you have done since you forked onto the tip of
+'frotz'.
 
-So, the long term goal is really to switch to 'simple', but people who
-use different versions of Git won't be able to use it before a few
-years. These people have several options:
+    $ git rebase [-i] --onto nitfol frotz
 
-1) Keep push.default unset. This is not acceptable because they don't
-   want the big fat warning each time they push.
+replays the same history onto the tip of 'nitfol' instead.
 
-2) Set push.default to 'matching', to keep the old behavior and squelsh
-   the warning. If they go this way, they will never see the default
-   change.
+    $ git rebase [-i] --root --onto nitfol
 
-3) Set push.default to 'current', in which case they have the same
-   behavior as 'simple', except for the safety feature of 'simple'
-   (refuse to push when the name doesn't match the upstream). They can't
-   expect anything better anyway since they are sometimes using a
-   machine which doesn't support 'simple' anyway.
+looks at the entire history leading to where you are, and replays
+everything you have done onto the tip of 'nitfol'.
 
-To me, option 3) clearly seems to be the best option. I don't understand
-whether you would advise 1), 2), or maybe a 4) that I would have missed.
+What if we do not say --onto here?  I am not asking what the current
+implementation does (we get an error message saying "I want 'onto'
+specified").  What _should_ this command mean to a na=C3=AFve user?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+    $ git rebase [-i] --root
+
+I think it should mean "replay all my history down to root".  The
+original root commit should become the new root commit in the
+rewritten history.
