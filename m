@@ -1,158 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] push: start warning upcoming default change for push.default
-Date: Wed, 20 Jun 2012 14:35:50 +0200
-Message-ID: <1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 20 14:36:16 2012
+From: "J. Bakshi" <joydeep@infoservices.in>
+Subject: Re: git pre-push hook to restrict master branch push !!!
+Date: Wed, 20 Jun 2012 18:09:47 +0530
+Message-ID: <20120620180947.755a96ba@shiva.selfip.org>
+References: <20120611164851.0e4db9f0@shiva.selfip.org>
+	<CAMK1S_jrahLs_86hksb6_pXAxWnrCQ=myfD-mLTpLFjnS3c0kA@mail.gmail.com>
+	<20120611174757.2f0bdd83@shiva.selfip.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Jun 20 14:51:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShK8n-0000mu-Nw
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 14:36:10 +0200
+	id 1ShKN5-0002O8-VD
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 14:50:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752190Ab2FTMgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 08:36:05 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52537 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751930Ab2FTMgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 08:36:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5KCZbW6007094
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 20 Jun 2012 14:35:37 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1ShK8a-0007mC-6o; Wed, 20 Jun 2012 14:35:56 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1ShK8a-0000Ef-3Y; Wed, 20 Jun 2012 14:35:56 +0200
-X-Mailer: git-send-email 1.7.11.rc3.235.gd0d1d08
-In-Reply-To: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 20 Jun 2012 14:35:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5KCZbW6007094
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1340800540.69369@mWC+JXcQoU6olStUmwsO9A
+	id S1754023Ab2FTMuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 08:50:52 -0400
+Received: from static.88-198-19-49.clients.your-server.de ([88.198.19.49]:49000
+	"EHLO zimbra.infoservices.in" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753584Ab2FTMub (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 08:50:31 -0400
+X-Greylist: delayed 635 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jun 2012 08:50:31 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.infoservices.in (Postfix) with ESMTP id 3436BDE31F3;
+	Wed, 20 Jun 2012 14:39:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zimbra.infoservices.in
+Received: from zimbra.infoservices.in ([127.0.0.1])
+	by localhost (zimbra.infoservices.in [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oC1z8waQKvZy; Wed, 20 Jun 2012 14:39:53 +0200 (CEST)
+Received: from shiva.selfip.org (unknown [122.176.30.116])
+	by zimbra.infoservices.in (Postfix) with ESMTPSA id CEA8FDE31E6;
+	Wed, 20 Jun 2012 14:39:51 +0200 (CEST)
+In-Reply-To: <20120611174757.2f0bdd83@shiva.selfip.org>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200296>
 
-In preparation for flipping the default to the "simple" mode from
-the "matching" mode that is the historical default, start warning
-users when they rely on unconfigured "git push" to default to the
-"matching" mode.
+On Mon, 11 Jun 2012 17:47:57 +0530
+"J. Bakshi" <joydeep.bakshi@infoservices.in> wrote:
 
-Also, advertise for 'simple' where 'current' and 'upstream' are advised.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-> * mm/push-default-switch-warning (2012-06-06) 1 commit
->  - push: start warning upcoming default change for push.default
+> On Mon, 11 Jun 2012 17:40:37 +0530
+> Sitaram Chamarty <sitaramc@gmail.com> wrote:
 > 
-> Will merge to 'next'.
+> > On Mon, Jun 11, 2012 at 4:48 PM, J. Bakshi
+> > <joydeep.bakshi@infoservices.in> wrote:
+> > > Hello list,
+> > >
+> > > I have a central server where git repos are located and based on http base push/pull.
+> > > authentication is done by a text based password file, generated by htpasswd.
+> > >
+> > > I am searching for a server side hook (pre-push) which can prevent all push to master,
+> > > except few users found at that password file generated by htpasswd. Is there any such hook
+> > > available ? Some suggest to use gitolite, but it also based on the hooks to do the same.
+> > 
+> > If you don't want to use gitolite, you can roll  your own update hook.
+> >  It can be as simple as
+> > 
+> >   - check $REMOTE_USER to see if the name is in the "allowed" list
+> > (your choice how you want to maintain that list).  If allowed, 'exit
+> > 0".
+> >   - otherwise check $1 (argument 1) to see if it is
+> > "refs/heads/master".  If it is, "exit 1".
+> > 
+> > How difficult is that?
 > 
-> Hopwefully we can have a solidly tested series early in 1.7.12 or
-> 1.7.13 at the latest.
+> Thanks for the clue. I'm not familiar with the hook programming.
+> I'll check further with the clues you have given.
+> 
+> -- with regards.
+> --
 
-I've made a slightly modified version of the patch which adds these
-two lines:
 
-+   "(the 'simple' mode was introduced in Git 1.7.11. Use 'current' instead if\n"
-+   "you sometimes use older versions of Git)");
+The refs/heads/master checking is fine. Can I placed this checking
+in my httpd.conf file to check user against a htpasswd file ?
 
-I actually had problems setting "push.default=upstream" on a
-NFS-shared $HOME, where one machine was running a brand new Git, and
-another the old version from Debian stable, who didn't know about the
-upstream mode. The old machine started refusing pushes because of
-this :-(.
-
-'current' has existed for years (while upstream has been called
-'tracking' before), so it makes more sense to advertise this one for
-people occasionally using old versions of Git.
-
- builtin/push.c       | 29 +++++++++++++++++++++++++++--
- t/t5541-http-push.sh |  5 ++++-
- 2 files changed, 31 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/push.c b/builtin/push.c
-index 08ccb89..2eba331 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -147,12 +147,37 @@ static void setup_push_upstream(struct remote *remote, int simple)
- 	add_refspec(refspec.buf);
- }
- 
-+static char warn_unspecified_push_default_msg[] =
-+N_("push.default is unset; its implicit value is changing in\n"
-+   "Git 2.0 from 'matching' to 'simple'. To squelch this message\n"
-+   "and maintain the current behavior after the default changes, use:\n"
-+   "\n"
-+   "  git config --global push.default matching\n"
-+   "\n"
-+   "To squelch this message and adopt the new behavior now, use:\n"
-+   "\n"
-+   "  git config --global push.default simple\n"
-+   "\n"
-+   "See 'git help config' and search for 'push.default' for further information.\n"
-+   "(the 'simple' mode was introduced in Git 1.7.11. Use 'current' instead if\n"
-+   "you sometimes use older versions of Git)");
-+
-+static void warn_unspecified_push_default_configuration(void)
-+{
-+	static int warn_once;
-+
-+	if (warn_once++)
-+		return;
-+	warning("%s\n", _(warn_unspecified_push_default_msg));
-+}
-+
- static void setup_default_push_refspecs(struct remote *remote)
- {
- 	switch (push_default) {
- 	default:
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 		default_matching_used = 1;
-+		warn_unspecified_push_default_configuration();
- 		/* fallthru */
- 	case PUSH_DEFAULT_MATCHING:
- 		add_refspec(":");
-@@ -186,8 +211,8 @@ static const char message_advice_pull_before_push[] =
- static const char message_advice_use_upstream[] =
- 	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
- 	   "counterpart. If you did not intend to push that branch, you may want to\n"
--	   "specify branches to push or set the 'push.default' configuration\n"
--	   "variable to 'current' or 'upstream' to push only the current branch.");
-+	   "specify branches to push or set the 'push.default' configuration variable\n"
-+	   "to 'simple', 'current' or 'upstream' to push only the current branch.");
- 
- static const char message_advice_checkout_pull_push[] =
- 	N_("Updates were rejected because a pushed branch tip is behind its remote\n"
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index 5b170be..07fa199 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -64,7 +64,10 @@ test_expect_success 'no empty path components' '
- 
- test_expect_success 'clone remote repository' '
- 	rm -rf test_repo_clone &&
--	git clone $HTTPD_URL/smart/test_repo.git test_repo_clone
-+	git clone $HTTPD_URL/smart/test_repo.git test_repo_clone &&
-+	(
-+		cd test_repo_clone && git config push.default matching
-+	)
- '
- 
- test_expect_success 'push to remote repository (standard)' '
--- 
-1.7.11.rc3.235.gd0d1d08
+Thanks
