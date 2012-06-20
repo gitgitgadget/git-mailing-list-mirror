@@ -1,69 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3 06/11] Makefile: split GIT_USER_AGENT from GIT-CFLAGS
-Date: Wed, 20 Jun 2012 17:21:03 -0500
-Message-ID: <20120620222103.GJ6142@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv3 07/11] Makefile: split prefix flags from GIT-CFLAGS
+Date: Wed, 20 Jun 2012 18:22:24 -0400
+Message-ID: <20120620222224.GD3302@sigill.intra.peff.net>
 References: <20120620182855.GA26948@sigill.intra.peff.net>
- <20120620183151.GF30995@sigill.intra.peff.net>
- <20120620212135.GE6142@burratino>
- <20120620221616.GC3302@sigill.intra.peff.net>
+ <20120620183155.GG30995@sigill.intra.peff.net>
+ <20120620212833.GF6142@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 21 00:21:16 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 00:22:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShTH1-0001oE-0y
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 00:21:15 +0200
+	id 1ShTIG-00042j-4O
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 00:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758213Ab2FTWVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 18:21:09 -0400
-Received: from mail-yw0-f51.google.com ([209.85.213.51]:52052 "EHLO
-	mail-yw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754839Ab2FTWVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 18:21:08 -0400
-X-Greylist: delayed 4117 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jun 2012 18:21:08 EDT
-Received: by yhnn12 with SMTP id n12so5598314yhn.10
-        for <git@vger.kernel.org>; Wed, 20 Jun 2012 15:21:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nV4RxkoLCd9noS35XEj+eOFgzBQFAF/wyHE3T+1u9aY=;
-        b=F7egNnTRzaMOJW08KnCOks6T6k1kKBhQ+vx/fMOXDZ1KY6vAHgjEFNCZKU8eClbKvZ
-         rnn212uQ+b7/wH5MsnSPWE8s7he2aWIRmofB7Na6WKzs9h0GBckNweziU3TJrRkw6o3H
-         SQBnjbpVK7Fan8WNKYLHbm1lQnwv5WHgSYV++Prrf5Ai/vk0BeiW2X4KWNWnzV9hX/Ss
-         blQMpC9q5VjEZr0Yy2LLoj1jcGLhI9ASqkUdscVfM3NiEGPJGo/FGG3AJBguaa3flZNO
-         Etc+s59JWPbrxsz8OpVbTSwmyct5ORAnedUSTO+MqP1vmzJM0GZF//nGNnRGdXuhOLnn
-         ZF/w==
-Received: by 10.236.185.198 with SMTP id u46mr29998222yhm.33.1340230867894;
-        Wed, 20 Jun 2012 15:21:07 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id a64sm99655299yhe.11.2012.06.20.15.21.06
-        (version=SSLv3 cipher=OTHER);
-        Wed, 20 Jun 2012 15:21:07 -0700 (PDT)
+	id S1758239Ab2FTWW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 18:22:28 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39357
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757676Ab2FTWW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 18:22:28 -0400
+Received: (qmail 31115 invoked by uid 107); 20 Jun 2012 22:22:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Jun 2012 18:22:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jun 2012 18:22:24 -0400
 Content-Disposition: inline
-In-Reply-To: <20120620221616.GC3302@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20120620212833.GF6142@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200372>
 
-Jeff King wrote:
->> Jeff King wrote:
+On Wed, Jun 20, 2012 at 04:28:33PM -0500, Jonathan Nieder wrote:
 
->>> +	@if test x'$(GIT_USER_AGENT_SQ)' != x"`cat GIT-USER-AGENT 2>/dev/null`"; then \
->>> +		echo >&2 "    * new user-agent flag"; \
-[...]
->           I am tempted to get rid of the informative message altogether.
-> For CFLAGS, you might be confused why everything is being rebuilt, since
-> the dependency chain is not straightforward. For this, it's kind of
-> obvious.
+> Jeff King wrote:
+> 
+> > Most of the build targets do not care about the setting of
+> > $prefix (or its derivative variables), but will be rebuilt
+> > if the prefix changes. For most setups this doesn't matter
+> > (they set prefix once and never change it), but for a setup
+> > which puts each branch or version in its own prefix, this
+> > unnecessarily causes a full rebuild whenever the branc is
+> > changed.
+> 
+> Micronit: s/branc/branch/.
 
-Makes a lot of sense.
+The worst part is that Junio already corrected that in v1 and I didn't
+propagate it into my re-roll. <sigh>
+
+> >  ### Detect prefix changes
+> > -TRACK_CFLAGS = $(CC):$(subst ','\'',$(ALL_CFLAGS)):\
+> > -             $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ):\
+> > -             $(localedir_SQ):$(USE_GETTEXT_SCHEME)
+> > +TRACK_PREFIX = $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ):\
+> > +		$(localedir_SQ)
+> > +
+> > +GIT-PREFIX: FORCE
+> > +	@FLAGS='$(TRACK_PREFIX)'; \
+> > +	if test x"$$FLAGS" != x"`cat GIT-PREFIX 2>/dev/null`" ; then \
+> > +		echo 1>&2 "    * new prefix flags"; \
+> > +		echo "$$FLAGS" >GIT-PREFIX; \
+> > +	fi
+> 
+> Hmm, nothing to do with this particular patch but the above list
+> includes gitexecdir and not htmldir.  Is there any particular logic
+> behind the list of variables?
+
+The list came from what was in CFLAGS before. But looking at it again, I
+think it is not right (e.g., git.o builds with $(htmldir_SQ), but nobody
+actually depends on it). IOW, it was broken before, and I have
+propagated that breakage. But nobody has noticed because they usually
+set prefix and not the htmldir separately.
+
+I probably need to go through the whole Makefile again and make sure
+everything is in the list.  What a royal pain. I can't help but feel
+that there is a better way to do this. GNU make supports user-defined
+functions via the "call" function. Maybe we can turn this into a
+single-line of Makefile per variable, and get per-variable resolution of
+rebuilding, and still end up with fewer lines.
+
+I'll take a look.
+
+> Nit: I think it would be easier to understand a name like GIT-PATHS
+> (making the absence of htmldir a bug, if not a particularly important
+> one).  No other complaints. :)
+
+Yeah, I hate the name GIT-PREFIX. But I was worried people might
+misinterpret GIT-PATHS. Maybe these should all go into a subdir full of
+auto-built file magic, which will make it more obvious what they are
+(and we would want to do that anyway if we start having a larger number
+of them).
+
+-Peff
