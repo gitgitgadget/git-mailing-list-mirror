@@ -1,150 +1,84 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Push to a branch breaks origin, requires a manual gc to fix
-Date: Wed, 20 Jun 2012 15:10:49 -0500
-Message-ID: <4FE22E49.4020400@gmail.com>
-References: <CAMO9iftAP_QKDJwssvPhg0jm8MBjV3isCxKNuP0Ewf-X6kYtxQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] t: Replace 'perl' by $PERL_PATH
+Date: Wed, 20 Jun 2012 22:16:17 +0200
+Message-ID: <4FE22F91.1000809@web.de>
+References: <1339441313-5296-1-git-send-email-vfr@lyx.org> <4FDD7AE6.6000000@web.de> <7vipeq76ke.fsf@alter.siamese.dyndns.org> <4FDD9A4F.2060605@web.de> <7vk3z560i8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sam Varshavchik <sam.varshavchik@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 22:11:03 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	vfr@lyx.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 22:16:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShREy-0007PP-2V
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 22:11:00 +0200
+	id 1ShRKL-0007wX-MR
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 22:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932391Ab2FTUK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 16:10:57 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57827 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932307Ab2FTUKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 16:10:53 -0400
-Received: by obbuo13 with SMTP id uo13so440obb.19
-        for <git@vger.kernel.org>; Wed, 20 Jun 2012 13:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=71HZfpLgwEEPfxHkvqlSWoI+XSq5ZkUJYVYcQdfgvtY=;
-        b=Terrnh9/f4yy7UOpRg9ALXa9KQjf/fpOpjE42XpXWww+Hb5MkQxnKeJ+FvLoOUlQ0A
-         3fEXnqz5V/jXGCpRikUyrUmsHIWVK9sFpngUHm3rzrtHxKLGBH5vCmYpryXQTkYBpHn/
-         HlqnAxRLyzgfGsXt3ce7D+AsbPcnKLROQDWaqbaxQ82iU6o8mR2qzPWjerSNzSPFHs4J
-         pgPT3UvXNNwSpFlMGSLoCsz2CLPwgPSWw4iENj59qd8kP7hoBJGzkJMhTgmpo1JpTGzo
-         HeFb9Ryjij7Oa6Ne1ChsYr8t5mB8JA3RkLaaScS/0iFz3vGtVZ4ZFyZIBiBc2y6h3Ufv
-         4Sww==
-Received: by 10.182.72.42 with SMTP id a10mr24764762obv.22.1340223052883;
-        Wed, 20 Jun 2012 13:10:52 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id hg10sm23937113obb.15.2012.06.20.13.10.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Jun 2012 13:10:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-In-Reply-To: <CAMO9iftAP_QKDJwssvPhg0jm8MBjV3isCxKNuP0Ewf-X6kYtxQ@mail.gmail.com>
+	id S1758015Ab2FTUQ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jun 2012 16:16:29 -0400
+Received: from smtp-out12.han.skanova.net ([195.67.226.212]:58812 "EHLO
+	smtp-out12.han.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754408Ab2FTUQ2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 16:16:28 -0400
+Received: from wanderer.site (194.22.188.61) by smtp-out12.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
+        id 4FAE31D9009995A5; Wed, 20 Jun 2012 22:16:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <7vk3z560i8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200358>
 
-On 6/17/2012 10:07 AM, Sam Varshavchik wrote:
-> Something's goes wrong every time I push a branch to origin.
+On 06/18/2012 12:23 AM, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen<tboegi@web.de>  writes:
 >
-> When I start, everything looks ok:
->
-> $ git remote show origin
-> * remote origin
->    Fetch URL: http://monster/gitrepos/stasher.git/
->    Push  URL: http://monster/gitrepos/stasher.git/
->    HEAD branch: master
->    Remote branches:
->      distreboot tracked
->      master     tracked
->    Local branches configured for 'git pull':
->      distreboot merges with remote distreboot
->      master     merges with remote master
->    Local refs configured for 'git push':
->      distreboot pushes to distreboot (fast-forwardable)
->      master     pushes to master     (up to date)
->
-> I push:
->
-> $ git push
-> Fetching remote heads...
->    refs/
->    refs/heads/
->    refs/tags/
-> updating 'refs/heads/distreboot'
->    from 0000000000000000000000000000000000000000
->    to   e0bce568272859eca817455acafb5f0a52b8fd5a
->      sending 6 objects
->      done
-> Updating remote server info
-> To http://monster/gitrepos/stasher.git/
->     6d4900e..e0bce56  distreboot ->  distreboot
->
-> This breaks something:
->
-> $ git remote show origin
-> * remote origin
->    Fetch URL: http://monster/gitrepos/stasher.git/
->    Push  URL: http://monster/gitrepos/stasher.git/
->    HEAD branch: (unknown)
->    Remote branches:
->      distreboot                 tracked
->      refs/remotes/origin/master stale (use 'git remote prune' to remove)
->    Local branches configured for 'git pull':
->      distreboot merges with remote distreboot
->      master     merges with remote master
->    Local ref configured for 'git push':
->      distreboot pushes to distreboot (up to date)
->
-> Going forward, clone will fail:
->
-> $ git clone http://monster/gitrepos/stasher.git/ stasher-test
-> Cloning into 'stasher-test'...
-> warning: remote HEAD refers to nonexistent ref, unable to checkout.
->
-> If I do some random fiddling in the origin repo (not really knowing
-> what I'm doing, I can usually fix it:
->
-> sh-4.2$ cat HEAD
-> ref: refs/heads/master
-> sh-4.2$ ls -al refs/heads
-> total 16
-> drwxr-xr-x 3 apache apache 4096 Jun 17 10:53 .
-> drwxr-xr-x 4 apache apache 4096 May 24 10:37 ..
-> drwxr-xr-x 2 apache apache 4096 Jun 17 10:53 .DAV
-> -rw-r--r-- 1 apache apache   41 Jun 17 10:53 distreboot
-> sh-4.2$ cat info/refs
-> e0bce568272859eca817455acafb5f0a52b8fd5a	refs/heads/distreboot
-> sh-4.2$ git gc
-> Counting objects: 124, done.
-> Delta compression using up to 8 threads.
-> Compressing objects: 100% (59/59), done.
-> Writing objects: 100% (124/124), done.
-> Total 124 (delta 67), reused 116 (delta 63)
-> sh-4.2$ cat info/refs
-> e0bce568272859eca817455acafb5f0a52b8fd5a	refs/heads/distreboot
-> ee94edb5fcdc7a28ffbdeaabe841e3ecff863983	refs/heads/master
-> sh-4.2$ ls -al refs/heads
-> total 12
-> drwxr-xr-x 3 apache apache 4096 Jun 17 10:54 .
-> drwxr-xr-x 4 apache apache 4096 May 24 10:37 ..
-> drwxr-xr-x 2 apache apache 4096 Jun 17 10:53 .DAV
->
-> git clone starts working again.
->
-> Until I push the branch, and then master breaks again.
+>>> PERL_PATH should be exported from test-lib.sh; we dot-source
+>>> GIT-BUILD-OPTIONS to get its value, but it is not propagated to the
+>>
+>> Thanks, that works for me.
+>> Do you squeeze some like that onto pu?
+>>
+>> @@ -493,6 +493,7 @@ GIT_ATTR_NOSYSTEM=3D1
+>>   export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT=
+_ATTR_NOSYSTEM
+>>
+>>   . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+>> +export PERL_PATH
+ > I see other uses of bare "perl" that the patch forgot to convert,
+ > and the worst part is that one of these uses of bare "perl" appears
+ > in test-lib.sh _before_ it dot-sources GIT-BUILD-OPTIONS to pick up
+ > the correct version of Perl, so the above single liner cannot be the
+ > whole fix.
 
-i don't use http with git, but have you looked at git-config manpage and 
-searched for http?  i know i've heard http has extra considerations. 
-The version of git you are using may be important info also.  there is 
-something in git-config about unclonability problems with older git 
-versions.
+How do you like the following idea:
+- rename t/test-lib.sh into t/test-lib.sh.sh
+- Change perl into @@PERL_PATH@@ in this file
+- Add the missing EXPORT PERL_PATH in test-lib.sh.sh
+- Preprocess t/test-lib.sh from t/test-lib.sh.sh, as seen below
 
-v/r,
-neal
+> diff --git a/Makefile b/Makefile
+index 0914133..765107a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -442,6 +442,7 @@ SCRIPT_LIB +=3D git-rebase--interactive
+  SCRIPT_LIB +=3D git-rebase--merge
+  SCRIPT_LIB +=3D git-sh-setup
+  SCRIPT_LIB +=3D git-sh-i18n
++SCRIPT_LIB +=3D t/test-lib.sh
+
+  SCRIPT_PERL +=3D git-add--interactive.perl
+  SCRIPT_PERL +=3D git-difftool.perl
+@@ -2018,6 +2019,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+      -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
+      -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+      -e 's/@@USE_GETTEXT_SCHEME@@/$(USE_GETTEXT_SCHEME)/g' \
++    -e 's|@@PERL_PATH@@|$(PERL_PATH)|g' \
+      -e $(BROKEN_PATH_FIX) \
+      $@.sh >$@+
+  endef
