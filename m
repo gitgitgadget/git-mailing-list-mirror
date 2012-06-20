@@ -1,79 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv3 08/11] Makefile: do not replace @@GIT_VERSION@@ in shell
- scripts
-Date: Wed, 20 Jun 2012 14:32:10 -0400
-Message-ID: <20120620183209.GH30995@sigill.intra.peff.net>
-References: <20120620182855.GA26948@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is the textconv filter called for each line ? or once for the
+ file ?
+Date: Wed, 20 Jun 2012 11:35:40 -0700
+Message-ID: <7vtxy5vnk3.fsf@alter.siamese.dyndns.org>
+References: <loom.20120620T125636-763@post.gmane.org>
+ <vpqy5nidvnx.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 20:32:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Laurent Alebarde <l.alebarde@free.fr>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 20 20:35:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShPht-0008Kk-RI
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:32:46 +0200
+	id 1ShPku-00057a-B2
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932397Ab2FTScP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 14:32:15 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39028
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932386Ab2FTScN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 14:32:13 -0400
-Received: (qmail 26979 invoked by uid 107); 20 Jun 2012 18:32:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Jun 2012 14:32:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jun 2012 14:32:10 -0400
-Content-Disposition: inline
-In-Reply-To: <20120620182855.GA26948@sigill.intra.peff.net>
+	id S932275Ab2FTSfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 14:35:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33995 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932266Ab2FTSfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 14:35:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14A948D42;
+	Wed, 20 Jun 2012 14:35:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IcitgC3fbZEXeQ9Le/+bIQY+Z5w=; b=g6O9wJ
+	zeQnayVEJj14FCeQzRdOo/0I+/m0Rg810UOV9OFx8wmUrS3SdGqlei9FswRUbjEi
+	vVbnix9Leh3W9CSFF/95w3qXj5KquxJtJf3mJ0umKyV6VvuwALdYZY5atI/pJIDC
+	A3CB3kWYEdBjrEZ2UxVJ/wXNH4q03h5akZGj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G16eon/D1TiKMEB+P7Y1p/xtU3H8nOCv
+	Dis7Isa3tvEWEpAM/b+e3Zhs1xcwzudm2/qPWBHL4jvVRMWgTJayUD7zsIgvbeMM
+	/XDzWKMqq4VW6zsc3iFOakCRPsd4XuxXq4lBSPfHOaqM7OHOsJBbLBMmCG6QaCyu
+	kETiuZoDLhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C3408D41;
+	Wed, 20 Jun 2012 14:35:46 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41CC28D3F; Wed, 20 Jun 2012
+ 14:35:42 -0400 (EDT)
+In-Reply-To: <vpqy5nidvnx.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 20 Jun 2012 14:17:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BD96CE2E-BB06-11E1-8897-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200328>
 
-No shell script actually uses the replacement (it is used in
-some perl scripts, but cmd_munge_script only handles shell
-scripts). We can also therefore drop the dependency on
-GIT-VERSION-FILE.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile | 3 ---
- 1 file changed, 3 deletions(-)
+> Laurent Alebarde <l.alebarde@free.fr> writes:
+>
+>> Hi all,
+>>
+>> Something I need clarification please :
+>>
+>> In the documentation on gitattributes, it is said :
+>>
+>> "A textconv, by comparison, is much more limiting. You provide a transformation
+>> of the data into a line-oriented text format, and git uses its regular diff 
+>> tools to generate the output."
+>>
+>> Does it mean that the textconv filter is called for each line ?
+>
+> No. What would "for each line" mean, since textconv is essentially meant
+> to be called on binary files?
 
-diff --git a/Makefile b/Makefile
-index 957b6a6..b977903 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2016,7 +2016,6 @@ $(RM) $@ $@+ && \
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-     -e 's|@@DIFF@@|$(DIFF_SQ)|' \
--    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-     -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
-     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-     -e 's/@@USE_GETTEXT_SCHEME@@/$(USE_GETTEXT_SCHEME)/g' \
-@@ -2062,7 +2061,6 @@ gitweb:
- git-instaweb: git-instaweb.sh gitweb
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
- 	    -e 's|@@GITWEBDIR@@|$(gitwebdir_SQ)|g' \
- 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
-@@ -2111,7 +2109,6 @@ configure: configure.ac
- 
- # These can record GIT_VERSION
- version.o git.spec \
--	$(patsubst %.sh,%,$(SCRIPT_SH)) \
- 	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
- 	: GIT-VERSION-FILE
- 
--- 
-1.7.11.5.gc0eeaa8
+I think the key phrase Laurent has missed is "*into* a line-oriented
+text format".  The input may or may not be line-oriented.  The
+output is expected to be.
