@@ -1,74 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] submodule add + autocrlf + safecrlf
-Date: Wed, 20 Jun 2012 10:49:31 -0700
-Message-ID: <7vipelx49g.fsf@alter.siamese.dyndns.org>
-References: <cover.1340202515.git.brad.king@kitware.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: 'git branch' when origin branch with same name exists
+Date: Wed, 20 Jun 2012 19:51:21 +0200
+Message-ID: <vpqa9zxan3a.fsf@bauges.imag.fr>
+References: <4FE091FB.7020202@desrt.ca> <87a9zztdxt.fsf@thomas.inf.ethz.ch>
+	<7v8vfj17de.fsf@alter.siamese.dyndns.org> <4FE0E493.1010308@desrt.ca>
+	<CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com>
+	<7vr4t9x51j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 19:49:41 2012
+Content-Type: text/plain
+Cc: Phil Hord <phil.hord@gmail.com>, Ryan Lortie <desrt@desrt.ca>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 19:53:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShP2B-0007Iu-Ql
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:49:40 +0200
+	id 1ShP5d-0005T9-FU
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403Ab2FTRtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 13:49:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42407 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756404Ab2FTRte (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 13:49:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE09F9EDD;
-	Wed, 20 Jun 2012 13:49:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KgVEDILPfS2TTnVKN5drFU01TEU=; b=oaxpGi
-	PmntPmMzChbI/P3EXU7f0NBNLkONTnL5WzPTTpPzJJmS5fPR8R6eA/M6BVNDWtja
-	wwh8HmEY+a+XBrFyOkftFtVM6HWpnxW6t6YickMWc3Of3gsEQgXcwZftBTgRNyzw
-	uPUSd/XNN1+22vDOXHxeRllbIxw25renOA5kk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=enksP4/whLZcLjUPAP0WYJc/KkS6m6/S
-	dbF9jbsQ3JkQylCj002gYDlJ2taeW57GAcy/GhYlgCq2BciiRTaanzZsBuMsvQpV
-	eB0qezHmcMxfHVh9iUsQ0FIDhs97ckh1pI5J+fqYDxHkhkC8TUO9fq/xHN0HSzyM
-	i+umNr0NJgw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4A2A9EDC;
-	Wed, 20 Jun 2012 13:49:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 413569EDB; Wed, 20 Jun 2012
- 13:49:33 -0400 (EDT)
-In-Reply-To: <cover.1340202515.git.brad.king@kitware.com> (Brad King's
- message of "Wed, 20 Jun 2012 10:43:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B22A1DE-BB00-11E1-B8F5-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752713Ab2FTRxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 13:53:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45287 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722Ab2FTRxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 13:53:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5KHp1md029853
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 20 Jun 2012 19:51:01 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1ShP3q-0005WJ-S8; Wed, 20 Jun 2012 19:51:22 +0200
+In-Reply-To: <7vr4t9x51j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 20 Jun 2012 10:32:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 20 Jun 2012 19:51:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5KHp1md029853
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340819461.78813@hWBdVcr9yfQL0BumdRtxvQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200307>
 
-Brad King <brad.king@kitware.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> When 'git submodule add' uses 'git config' to create a
-> '.gitmodules' file it gets LF newlines that the subsequent
-> 'git add --force .gitmodules' rejects if autocrlf and
-> safecrlf are both enabled.  This series adds a test and
-> proposes a fix that simply uses '-c core.safecrlf=false'
-> to disable safecrlf when adding '.gitmodules'.
+> Requiring starting point and failing without --force will never
+> happen, but it could be a possible approach to issue an additional
+> advice message under reasonably narrow conditions, namely:
 >
-> I'm not excited by allowing a LF file in work tree that
-> has clearly been configured to prefer CRLF, but avoiding
-> that for .gitmodules is probably a separate issue.
+>  - The starting point was not given explicitly;
+>
+>  - It would have DWIMed to "git checkout -t -b it origin/it" when
+>    creating the branch (I think you need to check configurations
+>    like branch.autosetupmerge and existence of the tracking branch
+>    remotes/origin/it); and
+>
+>  - advice.branchNotTrackingCorrespondingRemote is not set to false.
 
-I have a suspicion that "git config" should be taught about this
-kind of thing instead.
+I like that. Stg like
 
-Shoudn't your .git/config file that is outside the revision control
-also end with CRLF if your platform and project prefer CRLF over LF?
+$ git branch next
+Creating local branch next starting from <sha1>.
+If you meant to checkout a new branch 'next' to track remote branch
+'next' from 'origin', run these commands now:
+git branch -d next; git checkout next
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
