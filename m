@@ -1,82 +1,91 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH 2/2] submodule: Tolerate auto/safecrlf when adding .gitmodules
-Date: Wed, 20 Jun 2012 14:06:43 -0400
-Message-ID: <4FE21133.2030001@kitware.com>
-References: <cover.1340202515.git.brad.king@kitware.com> <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com> <4FE20DD3.6040607@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'git branch' when origin branch with same name exists
+Date: Wed, 20 Jun 2012 11:07:52 -0700
+Message-ID: <7v62alx3ev.fsf@alter.siamese.dyndns.org>
+References: <4FE091FB.7020202@desrt.ca> <87a9zztdxt.fsf@thomas.inf.ethz.ch>
+ <7v8vfj17de.fsf@alter.siamese.dyndns.org> <4FE0E493.1010308@desrt.ca>
+ <CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com>
+ <7vr4t9x51j.fsf@alter.siamese.dyndns.org> <vpqa9zxan3a.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 20 20:06:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>, Ryan Lortie <desrt@desrt.ca>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 20 20:08:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShPIs-0005cR-Ne
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:06:55 +0200
+	id 1ShPJw-0007Td-5j
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756866Ab2FTSGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 14:06:50 -0400
-Received: from na3sys009aog138.obsmtp.com ([74.125.149.19]:49103 "HELO
-	na3sys009aog138.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756750Ab2FTSGu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 14:06:50 -0400
-Received: from mail-yx0-f172.google.com ([209.85.213.172]) (using TLSv1) by na3sys009aob138.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKT+IROQuxfd9MqsHMgtb8Rft3peiDfdyj@postini.com; Wed, 20 Jun 2012 11:06:49 PDT
-Received: by yenq13 with SMTP id q13so6654260yen.31
-        for <git@vger.kernel.org>; Wed, 20 Jun 2012 11:06:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding:x-gm-message-state;
-        bh=Tc6yhSCYXIy/4qB//m/aQiLH2o56CqV97D5tnSMe0lA=;
-        b=EJOafRguwlCV4pzgzFmG71sJlhZNlXmlGQncoFa+xqebvSh2VF27tz9KJi8LJ+uYxJ
-         Uj3JiARDmuz2yhbzG5RHjgeII7nLSjF11ZQ9ATl8bcXVhs+ZgewOGuZABtaaDrJU0MiU
-         XtZFLYqv+I5EVRyYMEhcONYvYYMjuc31ZiiQcxcIgXv6UTv7vUiteU7sO4Yu0MYbZNkx
-         Fc1G4u898SCL8GOkHC4m5+iCQgd+3KvdmXKpKleXpuevd3c5ErEKCBPlTflxvgadUATs
-         80BNTAyfFTJw++x88sp31U3S3I4cI9G4UxcZ/UL4d+N5UKGuaKZH+dqKlKppq+T+Lffx
-         Pr5Q==
-Received: by 10.60.7.72 with SMTP id h8mr24827182oea.33.1340215605259;
-        Wed, 20 Jun 2012 11:06:45 -0700 (PDT)
-Received: from [192.168.1.236] (66-194-253-20.static.twtelecom.net. [66.194.253.20])
-        by mx.google.com with ESMTPS id u5sm15621127obk.2.2012.06.20.11.06.43
-        (version=SSLv3 cipher=OTHER);
-        Wed, 20 Jun 2012 11:06:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
-In-Reply-To: <4FE20DD3.6040607@web.de>
-X-Enigmail-Version: 1.4
-X-Gm-Message-State: ALoCoQlva64bwO5CGBVjSiQsenqiMj7ZLjO35q8TqKCY7VoAiMISRTQuS1rmor3WQm1hthjxsnEY
+	id S1756383Ab2FTSH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 14:07:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52533 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753473Ab2FTSHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 14:07:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4298565;
+	Wed, 20 Jun 2012 14:07:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=trXUvZkS3OetTUw0mlHbzi+zkw0=; b=j7ltj+
+	wnQO3LigkwZl7aFYbq+nHg4z9FVrGnkES0HFAK7T4JxE8QC/3LrHW5s5rbMUPUK2
+	LfPbRed+QRbV04XIbGDK1LWqYhWBjyXG9wGo1z+XmP5PrUGuwRxK6g9uEjttUo6e
+	3+1Bg3u/2+PB9iTwpta8yhxBKua7VOC0uN5TE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X6hLcOlwfFKNrQNgfK4s6ehITcAyfMYS
+	Ok7DUwfoY4iji4M4u4JiGVpQjq0HU3sg2jsg1mwy3WX9t48MDdBqvWY0B3a+4eDv
+	7zC7MUHYsKge1LFPKp3/MP3hHZqwhqisOBdXXTQeGwafzuXopqRn4Z5SgmfivSMw
+	aiv8qlsJ9EQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CABF8563;
+	Wed, 20 Jun 2012 14:07:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0474D8560; Wed, 20 Jun 2012
+ 14:07:53 -0400 (EDT)
+In-Reply-To: <vpqa9zxan3a.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 20 Jun 2012 19:51:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB3C8CD8-BB02-11E1-8C33-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200312>
 
-On 06/20/2012 01:52 PM, Jens Lehmann wrote:
-> Am 20.06.2012 16:43, schrieb Brad King:
->> Temporarily disable 'core.safecrlf' to add '.gitmodules' so that
->> 'git add' does not reject the LF newlines we write to the file
->> even if both 'core.autocrlf' and 'core.safecrlf' are enabled.
->> This fixes known breakage tested in t7400-submodule-basic.
-> 
-> Hmm, I have no objections against the intention of the patch. But
-> as I understand it this message will reoccur when the user e.g.
-> edits the .gitmodules file later with any editor who just writes
-> lfs and adds it.
-> 
-> I don't know terribly much about crlf support but maybe flagging
-> the .gitmodules file in .gitattributes would be a better solution
-> here? Opinions?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Once a user edits the file with an outside tool it is his/her
-responsibility to add .gitattributes for the file.  In the reported
-case Git is creating the file and already knows the crlf mode when
-creating it.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Requiring starting point and failing without --force will never
+>> happen, but it could be a possible approach to issue an additional
+>> advice message under reasonably narrow conditions, namely:
+>>
+>>  - The starting point was not given explicitly;
+>>
+>>  - It would have DWIMed to "git checkout -t -b it origin/it" when
+>>    creating the branch (I think you need to check configurations
+>>    like branch.autosetupmerge and existence of the tracking branch
+>>    remotes/origin/it); and
+>>
+>>  - advice.branchNotTrackingCorrespondingRemote is not set to false.
+>
+> I like that. Stg like
+>
+> $ git branch next
+> Creating local branch next starting from <sha1>.
+> If you meant to checkout a new branch 'next' to track remote branch
+> 'next' from 'origin', run these commands now:
+> git branch -d next; git checkout next
 
-I think Junio's proposal to teach "git config" to respect crlf
-configuration is a more general solution.
+Oh, another precondition would be that --force was _not_ given.
 
--Brad
+It is fairly clear "git branch -f next" is asking to forcibly update
+an existing local 'next' to the current HEAD, not to origin/next,
+and giving the above suggestion will be mildly irritating in such a
+case.
