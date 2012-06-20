@@ -1,76 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git branch' when origin branch with same name exists
-Date: Wed, 20 Jun 2012 10:32:40 -0700
-Message-ID: <7vr4t9x51j.fsf@alter.siamese.dyndns.org>
-References: <4FE091FB.7020202@desrt.ca> <87a9zztdxt.fsf@thomas.inf.ethz.ch>
- <7v8vfj17de.fsf@alter.siamese.dyndns.org> <4FE0E493.1010308@desrt.ca>
- <CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
+	non-tracking branch.
+Date: Wed, 20 Jun 2012 19:42:35 +0200
+Message-ID: <20120620174213.GA2500@book.hvoigt.net>
+References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com> <7vaa004j9f.fsf@alter.siamese.dyndns.org> <4FDFA030.7080408@xiplink.com> <7vmx402rru.fsf@alter.siamese.dyndns.org> <4FE08797.50509@xiplink.com> <7vipen191a.fsf@alter.siamese.dyndns.org> <20120619193114.GA461@book.hvoigt.net> <4FE0F262.9050404@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Lortie <desrt@desrt.ca>, Thomas Rast <trast@student.ethz.ch>,
-	git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 19:32:52 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 19:42:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShOls-0002zW-M8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:32:49 +0200
+	id 1ShOvY-00042X-9r
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 19:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202Ab2FTRco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 13:32:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32862 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751541Ab2FTRcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 13:32:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1030499D6;
-	Wed, 20 Jun 2012 13:32:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BaGYJYBEx6HZvLcUwjQqDcVE0J8=; b=cE3u08
-	pXwmcWKbnqZQ/bFVfM8w6r+NuSD3ud01koc5uOrAXbp7IfZZXfgaK4aaWsyHWDvW
-	t1AgrW3gaAFG7o+3pbtL8E51xTD/Rsj1eUPTBgNZb5YW7D/MS90Xk1YarlzPhU95
-	NBYbtGKC2JkfjtDlf1hNsxxBvHtGvurD+SSpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f8PWBxAwkLNjq366n5sbGFpH2Cit6qWE
-	BHkvPwkFxL8mXCj3JpgxaGaJ6+7MSi/DRiBSM4+0S4TDifageOKJjmVoVlgr1F/5
-	xePw7ZVyHD0YpYwxkWW3KE7nm/TV9/sUfjs95hTv4xGwzv4Z5M+JqhTjGMnx343H
-	w8S/N8Mh6ec=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0541299D4;
-	Wed, 20 Jun 2012 13:32:43 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C8D799D3; Wed, 20 Jun 2012
- 13:32:42 -0400 (EDT)
-In-Reply-To: <CABURp0p6Hv8=Yg1MNb_DMRM3D2JWZtGNwn_GiOfP_x3MctrJ9A@mail.gmail.com> (Phil
- Hord's message of "Tue, 19 Jun 2012 19:21:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F0AD962A-BAFD-11E1-AEBE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754373Ab2FTRmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 13:42:44 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.99]:35861 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754177Ab2FTRmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 13:42:43 -0400
+Received: from [77.20.33.80] (helo=localhost)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1ShOvM-00027j-Ar; Wed, 20 Jun 2012 19:42:36 +0200
+Content-Disposition: inline
+In-Reply-To: <4FE0F262.9050404@xiplink.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200304>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Hi,
 
-> Maybe you can suggest the advice verbiage which you think would have
-> helped this user.
+On Tue, Jun 19, 2012 at 05:42:58PM -0400, Marc Branchaud wrote:
+> On 12-06-19 03:31 PM, Heiko Voigt wrote:
+> > Using the first configured remote as a fallback also sounds quite
+> > arbitrary to me. Your current HEAD might have nothing to do with that
+> > remote.
+> 
+> Sure, but if it doesn't specify a remote then why not?  (Instead of "first
+> configured remote" think "remote used in the initial clone command".)
 
-Requiring starting point and failing without --force will never
-happen, but it could be a possible approach to issue an additional
-advice message under reasonably narrow conditions, namely:
+Returning the "remote used in the initial clone" sounds ok to me as
+well but that does not have to be the same as "first remote git config
+--list returns".
 
- - The starting point was not given explicitly;
+> > Before falling back to origin how about guessing the remote from the
+> > first branch thats contained in HEAD?
+> >
+> > To me that sounds quite natural. The first branch could be ambiguous so
+> > we would have to come up with some ordering. Maybe a depth search and
+> > first parents first? Or a breadth first search with younger generations
+> > first and then first parents first?
+> 
+> This sounds much harder to explain to a user than "the remote you used when
+> you cloned the repo".
 
- - It would have DWIMed to "git checkout -t -b it origin/it" when
-   creating the branch (I think you need to check configurations
-   like branch.autosetupmerge and existence of the tracking branch
-   remotes/origin/it); and
+Well I think "it uses the remote of the branch that you based your work
+on" is not hard to explain. What's harder is the implementation.
 
- - advice.branchNotTrackingCorrespondingRemote is not set to false.
+> > Would that work for your use case Marc?
+> 
+> Maybe, but it seems much more complicated than necessary.
+
+Git is a tool used in very different workflows so a change needs to be
+quite generic. Make it as simple as possible but *no simpler*. I think
+your patch is currently not respecting the "no simpler".
+
+Cheers Heiko
