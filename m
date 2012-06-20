@@ -1,144 +1,204 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Blaming differences
-Date: Wed, 20 Jun 2012 14:45:46 +1200
-Message-ID: <CAFOYHZD9+P1Gkdu4QE01A+ytJsWdAs4f2f2-=QqHt7-ur092xA@mail.gmail.com>
-References: <CABURp0omoLoNaOhD3Vx734aVtm5sbk0E7_2uaZJWrWs=_g84iA@mail.gmail.com>
-	<CAFOYHZAyRUwnguvbkk_SDqiSJ=Z3mOdtDLZ+yQMep91cgK+Bww@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
+ non-tracking branch.
+Date: Tue, 19 Jun 2012 22:49:22 -0400
+Message-ID: <CABURp0oF8YE2f_a-xLdzM4x5XFdoaJtKCFd-njSdv9g9N_TEzA@mail.gmail.com>
+References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
+ <7vaa004j9f.fsf@alter.siamese.dyndns.org> <4FDFA030.7080408@xiplink.com>
+ <7vmx402rru.fsf@alter.siamese.dyndns.org> <4FE08797.50509@xiplink.com>
+ <4FE0D5D5.3020408@web.de> <4FE0F264.1040703@xiplink.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=f46d04428edc6892dc04c2de6545
-Cc: git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 04:46:35 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 04:49:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShAw8-0001Nq-Ju
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 04:46:29 +0200
+	id 1ShAzM-0007E4-Ch
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 04:49:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754313Ab2FTCps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 22:45:48 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:63567 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472Ab2FTCps (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 22:45:48 -0400
-Received: by wibhn6 with SMTP id hn6so3922480wib.1
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 19:45:46 -0700 (PDT)
+	id S1754421Ab2FTCtn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 22:49:43 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:63302 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754372Ab2FTCtn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 22:49:43 -0400
+Received: by obbtb18 with SMTP id tb18so10916843obb.19
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 19:49:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PAVrcN2Ep6PACC3MINRP0zuj7b0BUq/kuBIN6cwtjlg=;
-        b=M6QFg/E2w4SdiAGGbh/R8JY3mKnfEc3PrvxcsGvKKITDuiM6KxxATYKQ9dPXnjNU9K
-         h0yFYl0O7B3no/JkGca8/o8ZGLLmj8VbnEDYIhji7MgRje6Zuzjh2FqvcsrCa1XEfjC9
-         jPkE+rhgA5rDV0uXRIh9i0SSlBw4cA8QG3N72t6btu0G20zCHkhCZqF6EIyWijr3/NzY
-         k7N0OXoYlG7beZ7AKtkTZenje5TCtF48JrvPPBEzBdcY9IPYVo5AIIVBd20oJ2XRm529
-         fTVBi5/dFAOhNwM0K00W1S9t7gQq2m44VovpbaBBjBoYMMHW1cjxvJdHE1c4htki6+09
-         b6iQ==
-Received: by 10.180.98.201 with SMTP id ek9mr8071982wib.7.1340160346722; Tue,
- 19 Jun 2012 19:45:46 -0700 (PDT)
-Received: by 10.216.4.134 with HTTP; Tue, 19 Jun 2012 19:45:46 -0700 (PDT)
-In-Reply-To: <CAFOYHZAyRUwnguvbkk_SDqiSJ=Z3mOdtDLZ+yQMep91cgK+Bww@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bMD2DngKzpxdSOemCIJZZ/nuNGKcN7BV7gEYt6rGhkk=;
+        b=vSHGMN+DdtYZ5mP7OARNFXgh9gBU5SElNZpxGz5LMyyRWmWwjQGZnlk78iTRY7FNiZ
+         hNDAPT8Jy25nO+ajxELVdb9OTEVpCvmv0cJJbbM+2uiigelaCxVI/EvmAKV4NXZM1iNG
+         iqlD35o6lSIz5xssCvqkZzsotAXoznSvAMMPujSlew1TMHGHHkSsaKhaSxUW9RV1Vme+
+         Q9L4sCCDh7UjfLCbrkevdcxDrU1VuPSAJKJAsOsnAuRanclKo/fkBfhvO2YZipkjWCr9
+         43UUniiP0dXOWEGNg7TmWmwu09CSAi2FEvI550G4geTTfYNWESzstmIIDm1kzEp0ITha
+         4WLA==
+Received: by 10.60.27.134 with SMTP id t6mr21782318oeg.70.1340160582706; Tue,
+ 19 Jun 2012 19:49:42 -0700 (PDT)
+Received: by 10.182.111.99 with HTTP; Tue, 19 Jun 2012 19:49:22 -0700 (PDT)
+In-Reply-To: <4FE0F264.1040703@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200283>
 
---f46d04428edc6892dc04c2de6545
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I mostly want to say "Amen, brother", so if you are not interested in
+a me-too, then feel free to skip this reply.
 
-On Wed, Jun 20, 2012 at 12:35 PM, Chris Packham <judge.packham@gmail.com> w=
-rote:
-> On Tue, Jun 19, 2012 at 10:56 AM, Phil Hord <phil.hord@gmail.com> wrote:
->> I want something like a product of diff and blame. =C2=A0I want to see s=
-ome
->> kind of "blame" output for each line of "diff -U0".
->>
->> I tried something like this:
->> =C2=A0 git blame $changed_files
->>
->> Is there such a command already?
->>
->> I'd also like to do something of the inverse operation: =C2=A0I want to
->> find commits within a range whose changes are NOT in some other
->> commit. =C2=A0 So, say I have these four commits
->> =C2=A0 A---B---C---D
->>
->> Where D was created by 'git revert B'.
->> I'd like to find out somehow that this is equivalent to
->> =C2=A0 A--C
->>
->> So that if I remove B and D completely, the with just A and C will get
->> me to the same end result.
->>
->> Something like 'git list-contributors HEAD' which would show me A and
->> C, since these are the only commits that appear in any 'git blame
->> $any_file'.
->>
->> Do these tools exist? =C2=A0Is it too expensive?
->>
->> Phil
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.html
+On Tue, Jun 19, 2012 at 5:43 PM, Marc Branchaud <marcnarc@xiplink.com> =
+wrote:
 >
-> I've just run into a situation at $dayjob where something like this
-> would be useful for me so I thought I'd throw my use-case into the mix
-> if anyone decides to pick this idea up.
+> On 12-06-19 03:41 PM, Jens Lehmann wrote:
+> > Am 19.06.2012 16:07, schrieb Marc Branchaud:
+> >> On 12-06-18 06:12 PM, Junio C Hamano wrote:
+> >>> Marc Branchaud <marcnarc@xiplink.com> writes:
+> >>>> That would be bad for our situation. =A0As I said, our automated=
+ build
+> >>>> system
+> >>>> uses detached HEADs a lot. =A0Erroring-out in this case would br=
+eak us.
+> >>>> =A0It's
+> >>>> really only the near-ubiquity of the name "origin" that has kept
+> >>>> things
+> >>>> working so far.
+> >
+> > And the "submodule add" documentation clearly talks about relative
+> > submodule URLs being relative to the superproject's origin.
 >
-> I'm doing a peer review of a modest project that's been developed off
-> in a branch of it's own before it will be merged back to master. Our
-> current policy is to let these project merges reflect reality warts an
-> all (e.g. leave in commits and their reverts even if the net result is
-> 0 lines changed). I don't want to waist too much time reviewing commit
-> by commit, especially when one commit might heavily refactor code from
-> an earlier one. However looking at the full 'git diff project
-> ^origin/master' is a bit more code that I can keep in my brain at one
-> time. What I'd find useful is the output of 'git diff project
-> ^origin/master' marked up with the sha1s which I could then use as a
-> leaping off point.
+> This whole thing seems a bit weird...
 >
-> Something like this could get me part way there
+> So user A adds a submodule with <repository> "../others/thing.git".
+> =A0Clearly
+> user A has some remote in mind when they added this submodule.
 >
-> =C2=A0for x in $(git diff --name-only project ^origin/master)
-> =C2=A0do
-> =C2=A0 =C2=A0echo git blame project ^origin/master -- $x >$x.ann
-> =C2=A0done
->
-> But I'd still have to figure out how to reduce the annotated files
-> down to something useful. The git blame -L option might help if I
-> could specify it multiple times and parse the diff output,
-> alternatively since it's not a huge number of revs I multiple
-> invocations of git blame would work for me. I'll have a go at hacking
-> something up after lunch.
+> But consider user B, who cloned the super-repo from the same remote t=
+hat
+> user
+> A had in mind when creating the submodule. =A0If user B then checks o=
+ut a
+> non-tracking branch (or a branch that tracks a different remote) and =
+then
+> tries to initialize/update the submodule, user B will get an error.
 
-So here's my initial attempt. Definitely a long way to go but I think
-it illustrates the concept. It actually throws away the diff output
-and produces blame output for the lines modified as a result it
-doesn't cover annotating lines that have been removed. Ideally the
-whole diff would be marked up and we'd see annotations for lines that
-are added or removed as well as for context lines (if present).
+This specific situation is what makes me think that picking any
+arbitrary remote should work in most cases.  I think this is why
+picking 'origin' works just fine now, except in the special case of
+"no remote named origin and no tracking branch".  If I'm using
+relative urls, I've got to have my associated submodules available at
+each remote I might push to or clone from.  Otherwise I'm just
+shooting my feet for fun.
 
---f46d04428edc6892dc04c2de6545
-Content-Type: application/x-sh; name="git-annotate-diff.sh"
-Content-Disposition: attachment; filename="git-annotate-diff.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_h3nsms5b0
+> To me this is clearly wrong. =A0It's also wrong to error-out and expe=
+ct the
+> user to fix it. =A0Should the user temporarily set their branch's rem=
+ote to
+> the
+> right place, initialize the submodule, then undo the branch setting?
+> =A0Should
+> the user check our a branch that tracks the correct remote, initializ=
+e the
+> submodule, then check out their branch? =A0Both of those "solutions" =
+look
+> pretty weak to me.
+>
+> I'm starting to think that maybe "git submodule init" (and "update")
+> should
+> learn a --remote option. =A0That way at least user B could tell git w=
+hat to
+> do.
 
-IyEvYmluL3NoCiMgQ29weXJpZ2h0IDIwMTIgQ2hyaXMgUGFja2hhbSA8anVkZ2UucGFja2hhbUBn
-bWFpbC5jb20+CiMKIyBUaGlzIGZpbGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEdQTCB2MgoKVVNB
-R0U9J3Jldi1saXN0JwpMT05HX1VTQUdFPSdQcm9kdWNlcyBhbiBhbm5vdGF0ZWQgZGlmZiB3aXRo
-IHRoZSBjb21taXQgaW5mb3JtYXRpb24gdGhhdAppbnRyb2R1Y2VkIHRoZSBjaGFuZ2UnCgouICIk
-KGdpdCAtLWV4ZWMtcGF0aCkvZ2l0LXNoLXNldHVwIgoKcmVxdWlyZV93b3JrX3RyZWUKCnBhcnNl
-X2RpZmZfb3V0cHV0KCkKewoJZmlsZT0KCXdoaWxlIHJlYWQgbWFyayBvcmlnIGN1cnIgcmVzdAoJ
-ZG8KCQljYXNlICIkbWFyayIgaW4KCQkiKysrIikKCQkJZmlsZT0iJHtvcmlnI1thYl1cL30iCgkJ
-CTs7CgkJIkBAIikKCQkJc3RhcnQ9IiQoZWNobyAkY3VyciB8IGN1dCAtZCwgLWYxKSIKCQkJc3Rh
-cnQ9JHtzdGFydCNbKy1dfQoJCQlvZmZzZXQ9IiQoZWNobyAkY3VyciB8IGN1dCAtZCwgLWYyKSIK
-CQkJZ2l0IC0tbm8tcGFnZXIgYmxhbWUgLUwkc3RhcnQsKyRvZmZzZXQgIiRmaWxlIgoJCQk7OwoJ
-CSopCgkJOzsKCQllc2FjCQkKCWRvbmUKfQoKZ2l0IGRpZmYgJEAgfCBwYXJzZV9kaWZmX291dHB1
-dAo=
---f46d04428edc6892dc04c2de6545--
+I like this one.
+
+> > Your buildbot could also check if an origin is configured and use t=
+he
+> > magic in your patch to configure one to the URL of the first remote=
+ it
+> > finds if it isn't before initializing the submodules.
+>
+> Yes, it seems my assumptions about how to determine the default remot=
+e
+> shouldn't be coded into git. =A0But dang it, the current fallback to
+> "origin"
+> is really lame.
+
+Amen!
+
+I also think the assumption of "same as the current tracking branch"
+is lame, too.  (But I have to admit, it works better than 95% of the
+time, and it's easier than erroring out.  If it works for Apple, it
+should work here.)
+
+>
+> >>> That reliance of "origin" is what made me think that "not guessin=
+g
+> >>> and blindly assuming" a wrong thing to do.
+> >>
+> >> I think git can do better than erroring out, though.
+> >
+> > Hmm, but guessing and using the first remote it finds (which might =
+or
+> > might not be the one used in the initial clone) doesn't sound like =
+a
+> > terribly good idea.
+>
+> Fair enough, but I still think it's better than guessing that the rig=
+ht
+> remote is "origin". =A0:)
+>
+> >> Sure, but I feel it did that already when it cloned. =A0It seems
+> >> reasonable for
+> >> the submodules to default to using the remote specified when the
+> >> super-repo
+> >> was cloned.
+> >
+> > Is there a way to reliably tell that remote without relying e.g. on
+> > the implementation details of git config (e.g. it could sort remote=
+s
+> > alphabetically some day)? What happens if someone changes the confi=
+g
+> > later? A lot of ambiguity here ...
+>
+> Yes, I agree.
+>
+> Should there perhaps be some kind of "cloned from this remote" settin=
+g in
+> the
+> config?
+
+I'm not sure I like the "give preference to my original clone source"
+idea.  Who said it could be king? What if it was temporary and I've
+since moved on to a new server? Well, yeah, I can reconfigure my
+default.  So I guess I do like it a little.
+
+>
+> > And I think origin should always be the second choice if it exists,
+> > the first being the remote configured for the checked out branch.
+>
+> Do you mean "the origin(al) remote repository" or just "the remote na=
+med
+> 'origin'"?
+>
+> > This gives the user the opportunity to say "Oh, I screwed up using
+> > 'git clone -o', let's set origin to the upstream repo". But should =
+we
+> > try to guess the remote the superproject was cloned from as third
+> > option? I am not convinced.
+>
+> Maybe I'm misinterpreting you. =A0Are you attaching a special meaning=
+ to a
+> remote named "origin"?
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0M.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
