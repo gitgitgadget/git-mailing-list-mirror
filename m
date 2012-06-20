@@ -1,55 +1,106 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH 0/2] submodule add + autocrlf + safecrlf
-Date: Wed, 20 Jun 2012 10:43:31 -0400
-Message-ID: <cover.1340202515.git.brad.king@kitware.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 20 16:58:54 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file>
+ <external file>' finds changes
+Date: Wed, 20 Jun 2012 12:06:08 -0400
+Message-ID: <20120620160607.GA12856@sigill.intra.peff.net>
+References: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
+ <7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
+ <CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
+ <20120619135814.GA3210@sigill.intra.peff.net>
+ <CAFouetgRq1qkqJmThJJeu=Mdx9jS0c9dw7NPSwuJUOSpskCY2A@mail.gmail.com>
+ <CAFouetgXkqJPYwjr5ob5ed_ooL-D56zXyjnOAWrVPdt_eZqw7g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 18:06:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShMMw-00016u-13
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 16:58:54 +0200
+	id 1ShNQC-0006U2-3H
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 18:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756696Ab2FTO6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 10:58:49 -0400
-Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:57644 "EHLO
-	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756603Ab2FTO6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 10:58:49 -0400
-Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 82BE014C2; Wed, 20 Jun 2012 10:43:33 -0400 (EDT)
-X-Mailer: git-send-email 1.7.10
+	id S1756981Ab2FTQGQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jun 2012 12:06:16 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:38827
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756951Ab2FTQGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 12:06:15 -0400
+Received: (qmail 24966 invoked by uid 107); 20 Jun 2012 16:06:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Jun 2012 12:06:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jun 2012 12:06:08 -0400
+Content-Disposition: inline
+In-Reply-To: <CAFouetgXkqJPYwjr5ob5ed_ooL-D56zXyjnOAWrVPdt_eZqw7g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200301>
 
-Hi Folks,
+On Wed, Jun 20, 2012 at 09:38:15AM -0400, Tim Henigan wrote:
 
-When 'git submodule add' uses 'git config' to create a
-'.gitmodules' file it gets LF newlines that the subsequent
-'git add --force .gitmodules' rejects if autocrlf and
-safecrlf are both enabled.  This series adds a test and
-proposes a fix that simply uses '-c core.safecrlf=false'
-to disable safecrlf when adding '.gitmodules'.
+> > With your patch applied, I was able to use relative paths in my tes=
+ts.
+> > =C2=A0I also confirmed that all the t4*.sh tests pass.
+> >
+> > For what its worth, your patch looks correct to me. =C2=A0Existing
+> > consumers of 'prefix_path' should get the same results as before an=
+d
+> > the one added xmalloc is paired with a free.
+>=20
+> Jeff,
+>=20
+> Are you planning to send this patch to the list?  If not, can I
+> include it as 1 of 2 before my patch?  If we go that route, I'm not
+> sure how to properly show you as the author...
 
-I'm not excited by allowing a LF file in work tree that
-has clearly been configured to prefer CRLF, but avoiding
-that for .gitmodules is probably a separate issue.
+I'd probably get to it eventually, but I haven't touched it since I sen=
+t
+it. If you want to include some tests and package it with a commit
+message, that would make me very happy.
 
--Brad
+You can override the author by including a "From: " header as the first
+line in the body of the email (which git-am will use rather than the
+identity in the email's From header). If you use git-send-email, it wil=
+l
+do this automatically when the patch author does not match your
+identity.
 
-Brad King (2):
-  submodule: Demonstrate failure to add with auto/safecrlf
-  submodule: Tolerate auto/safecrlf when adding .gitmodules
+I didn't sign-off the original, but please feel free to include my
+sign-off, as well as add your own. And note your own contributions in
+the commit message. So the resulting email would be something like:
 
- git-submodule.sh           |    2 +-
- t/t7400-submodule-basic.sh |   13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
 
--- 
-1.7.10
+   From: Tim Henigan <tim.henigan@gmail.com>
+   Date: ...
+   Subject: [PATCH 1/2] diff: handle relative paths in no-index
+
+   From: Jeff King <peff@peff.net>
+
+   ... some commit message body ...
+
+   Tests and commit message by Tim Henigan.
+
+   Signed-off-by: Jeff King <peff@peff.net>
+   Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+   ---
+   ... the actual patch ...
+
+> Also, in an earlier email [1] you mentioned that it may be a good ide=
+a
+> to rename 'found_changes' to something like 'xdiff_found_changes'.  I
+> like the idea...I could submit this change as another patch in the
+> series, if you have no objections.
+
+=46ine by me. I think "xdiff_found_changes" is not quite accurate; it i=
+s
+really "did builtin_diff find any changes?" since we might never call
+into xdiff (e.g., for binary files). I'm not sure what the best name is=
+=2E
+
+-Peff
