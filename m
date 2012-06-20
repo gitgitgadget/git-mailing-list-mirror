@@ -1,123 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Editing the root commit
-Date: Wed, 20 Jun 2012 11:25:32 -0700
-Message-ID: <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
-References: <20120619091657.GA28005@arachsys.com>
- <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com> <20120620093205.GB10579@arachsys.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 1/8] Makefile: apply dependencies consistently to
+ sparse/asm targets
+Date: Wed, 20 Jun 2012 14:28:55 -0400
+Message-ID: <20120620182855.GA26948@sigill.intra.peff.net>
+References: <20120619232231.GA6328@sigill.intra.peff.net>
+ <20120619232310.GA6496@sigill.intra.peff.net>
+ <20120620035015.GA4213@burratino>
+ <20120620042607.GA10414@sigill.intra.peff.net>
+ <20120620102750.GB4579@burratino>
+ <20120620163714.GB12856@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 20:26:00 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 20:29:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShPbC-0004mY-R8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:25:51 +0200
+	id 1ShPeS-0002Zx-0K
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 20:29:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932563Ab2FTSZk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jun 2012 14:25:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61674 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932519Ab2FTSZg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2012 14:25:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D2B68A94;
-	Wed, 20 Jun 2012 14:25:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4HpuoKpCXQTW
-	6YWCgNpdYv3+v/M=; b=ALpbL08xi9EM4mNlwu2TlHmh2471vouxpClLxA0UiM0Q
-	hecqykKHSLC24gxfDSL5et0yvoBoTPoRYzfma/cOaBO315JbY8rturoNRyRsNqph
-	gqsJX7xL6G5+5vxJzuW3D0OG6dj6vkissIpeWmNKfe2LBOrmLoq31M0hNlCSj2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Jpd6Me
-	0CGmdruQ6XNOeiCaQVFO+70+XJgZ9JhNF+xWyoyGm6sO0PqvxOImWvS53g4936jo
-	RexlMPg3pcX0jKwbLPIYT3/nNZeH5LBO97SvHZlRi/ahP2Hnuj8+vA07MwezViqs
-	c581nBEAiMF2eu+MYd0zPAFaKCa0ceuHBUxFA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23EFE8A93;
-	Wed, 20 Jun 2012 14:25:35 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D7F88A92; Wed, 20 Jun 2012
- 14:25:34 -0400 (EDT)
-In-Reply-To: <20120620093205.GB10579@arachsys.com> (Chris Webb's message of
- "Wed, 20 Jun 2012 10:32:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 536AAA12-BB05-11E1-8239-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932514Ab2FTS3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jun 2012 14:29:02 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:38979
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932407Ab2FTS27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 14:28:59 -0400
+Received: (qmail 26668 invoked by uid 107); 20 Jun 2012 18:28:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Jun 2012 14:28:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jun 2012 14:28:55 -0400
+Content-Disposition: inline
+In-Reply-To: <20120620163714.GB12856@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200316>
 
-Chris Webb <chris@arachsys.com> writes:
+On Wed, Jun 20, 2012 at 12:37:14PM -0400, Jeff King wrote:
 
-> Chris Webb <chris@arachsys.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > Even though I wouldn't bother doing this myself, I wouldn't mind
->> > reviewing a patch series ;-)
->>=20
->> Okay, I'll take a look when I finish my current project!
->
-> I had a bit of spare time this morning and had a quick look through
-> git-rebase--interactive.sh.
->
-> Apart from the validation, message and reflog code in git-rebase.sh a=
-nd
-> git-rebase--interactive.sh that would need fixing up to know about th=
-is
-> case, the essence of this seems to be starting with an orphan commit =
-instead
-> of a commit descended from $onto right at the end of --interactive.
->
-> I'd love to write something like
->
->   git checkout ${onto:---orphan}
->
-> (or a variant) but can git be persuaded to have an orphan detached HE=
-AD like
-> that?
+> > But suggesting that we are supposed to ignore the FORCE just leaves
+> > the reader wondering why the same patch does not also urgently need
+> > to make additional changes such as the following, no?
+> > 
+> > 	builtin/branch.o builtin/checkout.o builtin/clone.o \
+> > 	builtin/reset.o branch.o transport.o: branch.h
+> > 
+> > to
+> > 
+> > 	builtin/branch.sp builtin/branch.o builtin/branch.s \
+> > [...]
+> 
+> Those lines were not updated because I did not notice them, as I was
+> keeping the scope of the updates to generated headers and files like
+> GIT-CFLAGS. IOW, my patch is a step in what I think is the right
+> direction, but it does not remove all issues, only one class of them.
+> 
+> As a side note, I have to wonder if those lines are really worthwhile.
+> [...]
 
-=46or the root commit in the history, you check it out on the detached
-HEAD.  Under "--interactive" if the insn sheet tells you to allow
-the user to "edit/amend/reword" it, give control back the user after
-you have detached HEAD at that commit.  The user experience should
-be identical to the case you are replaying on an existing commit
-after that point.
+Here's an updated series that drops these lines and I hope will address
+the commit message issues you brought up:
 
-But lets step back a bit and look at the whole picture, to make sure
-we are on the same page.
+  [01/11]: Makefile: sort LIB_H list
+  [02/11]: Makefile: fold MISC_H into LIB_H
 
-    $ git rebase [-i] frotz
+New in this iteration to get rid of these largely pointless manual
+dependencies.
 
-looks at where you are, finds where you forked from 'frotz', and
-replays everything you have done since you forked onto the tip of
-'frotz'.
+  [03/11]: Makefile: do not have git.o depend on common-cmds.h
 
-    $ git rebase [-i] --onto nitfol frotz
+New in this iteration.  I noticed while double-checking that this
+dependency is pointless.
 
-replays the same history onto the tip of 'nitfol' instead.
+  [04/11]: Makefile: apply dependencies consistently to sparse/asm targets
 
-    $ git rebase [-i] --root --onto nitfol
+Updated based on earlier patches, and with a new commit message
+explaining a little more of what's going on.
 
-looks at the entire history leading to where you are, and replays
-everything you have done onto the tip of 'nitfol'.
+  [05/11]: Makefile: do not replace @@GIT_USER_AGENT@@ in scripts
+  [06/11]: Makefile: split GIT_USER_AGENT from GIT-CFLAGS
+  [07/11]: Makefile: split prefix flags from GIT-CFLAGS
+  [08/11]: Makefile: do not replace @@GIT_VERSION@@ in shell scripts
+  [09/11]: Makefile: update scripts when build-time parameters change
+  [10/11]: Makefile: build instaweb similar to other scripts
+  [11/11]: Makefile: move GIT-VERSION-FILE dependencies closer to use
 
-What if we do not say --onto here?  I am not asking what the current
-implementation does (we get an error message saying "I want 'onto'
-specified").  What _should_ this command mean to a na=C3=AFve user?
+The rest are largely the same, but with a few minor textual updates to
+accomodate the earlier changes.
 
-    $ git rebase [-i] --root
-
-I think it should mean "replay all my history down to root".  The
-original root commit should become the new root commit in the
-rewritten history.
+-Peff
