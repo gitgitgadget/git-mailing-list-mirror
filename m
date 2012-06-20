@@ -1,84 +1,89 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: Editing the root commit
-Date: Wed, 20 Jun 2012 20:35:14 +0100
-Message-ID: <20120620193513.GA3192@arachsys.com>
-References: <20120619091657.GA28005@arachsys.com>
- <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com>
- <20120620093205.GB10579@arachsys.com>
- <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 1/8] Makefile: apply dependencies consistently to
+ sparse/asm targets
+Date: Wed, 20 Jun 2012 15:36:39 -0400
+Message-ID: <20120620193638.GA32418@sigill.intra.peff.net>
+References: <20120619232231.GA6328@sigill.intra.peff.net>
+ <20120619232310.GA6496@sigill.intra.peff.net>
+ <20120620035015.GA4213@burratino>
+ <20120620042607.GA10414@sigill.intra.peff.net>
+ <20120620102750.GB4579@burratino>
+ <20120620163714.GB12856@sigill.intra.peff.net>
+ <20120620182855.GA26948@sigill.intra.peff.net>
+ <CAFzf2Xw3TdvZCFLvbqKY5F9b+0hTzTQEEfmqjL9u=uvyc7mZ5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 21:35:26 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 21:36:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShQgW-0006bH-GF
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 21:35:24 +0200
+	id 1ShQhq-0000Z0-Fk
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 21:36:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757912Ab2FTTfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jun 2012 15:35:21 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:59102 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757885Ab2FTTfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2012 15:35:20 -0400
-Received: from [81.2.114.212] (helo=arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1ShQgR-0005Ti-31; Wed, 20 Jun 2012 20:35:19 +0100
+	id S1757939Ab2FTTgn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jun 2012 15:36:43 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39155
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757919Ab2FTTgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2012 15:36:42 -0400
+Received: (qmail 28366 invoked by uid 107); 20 Jun 2012 19:36:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Jun 2012 15:36:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jun 2012 15:36:39 -0400
 Content-Disposition: inline
-In-Reply-To: <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CAFzf2Xw3TdvZCFLvbqKY5F9b+0hTzTQEEfmqjL9u=uvyc7mZ5w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200342>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jun 20, 2012 at 02:30:40PM -0500, Jonathan Nieder wrote:
 
-> What if we do not say --onto here?  I am not asking what the current
-> implementation does (we get an error message saying "I want 'onto'
-> specified").  What _should_ this command mean to a na??ve user?
-> 
->     $ git rebase [-i] --root
-> 
-> I think it should mean "replay all my history down to root".  The
-> original root commit should become the new root commit in the
-> rewritten history.
+> Jeff King wrote:
+>=20
+> > Here's an updated series that drops these lines and I hope will add=
+ress
+> > the commit message issues you brought up:
+> >
+> > =C2=A0[01/11]: Makefile: sort LIB_H list
+> > =C2=A0[02/11]: Makefile: fold MISC_H into LIB_H
+>=20
+> Please no.  Progress would be teaching the remaining compilers to
+> autocompute header dependencies so there would be no need to maintain
+> a master header list at all. I would understand if the headers had
+> been falling out of date and this were a way of saying "we give up",
+> but given that that is not happening, why would this change be a good
+> thing?
 
-Yes, I definitely agree with everything you say here. That's exactly what
-I'd expect from git rebase --root without --onto, and what I'd hope to be
-able to implement in a patch series.
+Did you read the argument in patch 2? They are almost certainly not
+helping anyone, anyway. Forward progress would be to split all of LIB_H
+out into specific targets. But keeping that up to date manually is
+insanity, so we have this silly half-hearted attempt.
 
-> For the root commit in the history, you check it out on the detached
-> HEAD.  Under "--interactive" if the insn sheet tells you to allow
-> the user to "edit/amend/reword" it, give control back the user after
-> you have detached HEAD at that commit.  The user experience should
-> be identical to the case you are replaying on an existing commit
-> after that point.
+I would much rather "include header-deps.mk", and then periodically
+rebuild and commit it using "gcc -M" (and cleaning up and canonicalizin=
+g
+the result) for the benefit of those without access to a compiler that
+can do header dependencies.
 
-I think it might a little more complicated than detecting when we have to do
-a commit --amend on the root commit though? The user might have reordered
-the first commit (introducing A and B, say) with the second commit
-(introducing C and D), or dropped the original root commit entirely.
+In an ideal world, all compilers could do it, but I am not volunteering
+to patch MSVC. ;)
 
-My understanding of the way --interactive works at the moment is that it
-checks out the starting commit (whether given explicitly by --onto or taken
-from <upstream>) and then 'plays out' the commits as described in the
-instruction sheet.
+> My comments were only about explaining what I found hard to understan=
+d
+> in the commit message. The patch was good. Please don't retaliate thi=
+s
+> way. :)
 
-I could re-use this unchanged if I could do a git checkout --orphan without
-having to create a new branch, but I don't think this is allowed: I can have
-a detached head or make an orphan checkout onto a new branch, but not both
-at the same time? Would you prefer that I create a temporary branch just to
-be able to git checkout --orphan onto it here, or that I add support for
-this kind of 'detached HEAD with no parent' state, or is there a natural way
-to rework --interactive without needing to do this which I'm missing?
+:) The revised commit message in patch 4 should make sense with or
+without these patches, so it really is a separate issue.
 
-Best wishes,
-
-Chris.
+-Peff
