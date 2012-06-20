@@ -1,204 +1,99 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] Try harder to find a remote when on a detached HEAD or
- non-tracking branch.
-Date: Tue, 19 Jun 2012 22:49:22 -0400
-Message-ID: <CABURp0oF8YE2f_a-xLdzM4x5XFdoaJtKCFd-njSdv9g9N_TEzA@mail.gmail.com>
-References: <1340038866-24552-1-git-send-email-marcnarc@xiplink.com>
- <7vaa004j9f.fsf@alter.siamese.dyndns.org> <4FDFA030.7080408@xiplink.com>
- <7vmx402rru.fsf@alter.siamese.dyndns.org> <4FE08797.50509@xiplink.com>
- <4FE0D5D5.3020408@web.de> <4FE0F264.1040703@xiplink.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2 1/8] Makefile: apply dependencies consistently to
+ sparse/asm targets
+Date: Tue, 19 Jun 2012 22:50:15 -0500
+Message-ID: <20120620035015.GA4213@burratino>
+References: <20120619232231.GA6328@sigill.intra.peff.net>
+ <20120619232310.GA6496@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 04:49:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 20 05:50:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShAzM-0007E4-Ch
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 04:49:48 +0200
+	id 1ShBw5-0003ob-FO
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 05:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421Ab2FTCtn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 22:49:43 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:63302 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754372Ab2FTCtn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 22:49:43 -0400
-Received: by obbtb18 with SMTP id tb18so10916843obb.19
-        for <git@vger.kernel.org>; Tue, 19 Jun 2012 19:49:42 -0700 (PDT)
+	id S1754585Ab2FTDuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jun 2012 23:50:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:64017 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754100Ab2FTDuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2012 23:50:24 -0400
+Received: by yhmm54 with SMTP id m54so5459465yhm.19
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 20:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=bMD2DngKzpxdSOemCIJZZ/nuNGKcN7BV7gEYt6rGhkk=;
-        b=vSHGMN+DdtYZ5mP7OARNFXgh9gBU5SElNZpxGz5LMyyRWmWwjQGZnlk78iTRY7FNiZ
-         hNDAPT8Jy25nO+ajxELVdb9OTEVpCvmv0cJJbbM+2uiigelaCxVI/EvmAKV4NXZM1iNG
-         iqlD35o6lSIz5xssCvqkZzsotAXoznSvAMMPujSlew1TMHGHHkSsaKhaSxUW9RV1Vme+
-         Q9L4sCCDh7UjfLCbrkevdcxDrU1VuPSAJKJAsOsnAuRanclKo/fkBfhvO2YZipkjWCr9
-         43UUniiP0dXOWEGNg7TmWmwu09CSAi2FEvI550G4geTTfYNWESzstmIIDm1kzEp0ITha
-         4WLA==
-Received: by 10.60.27.134 with SMTP id t6mr21782318oeg.70.1340160582706; Tue,
- 19 Jun 2012 19:49:42 -0700 (PDT)
-Received: by 10.182.111.99 with HTTP; Tue, 19 Jun 2012 19:49:22 -0700 (PDT)
-In-Reply-To: <4FE0F264.1040703@xiplink.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8/EHY3y6uIfjgnP/A9ItQUoihNIfSG/IuTWH0BajZ7w=;
+        b=yyOuQFB9Pwwl7MtmXgnHdr1srTUv7uP34fP0be0p0/9tvg/2hbWHYnHVin95SAme22
+         DV4tnNkbGoBD/mVYIvDCd/p1CIbNV6TrmwQay9CB7m8FUvykXuM+16Zuks/zDYzobKQr
+         xKUaX6OoMQ+WcShDnyql8wSe07r/Nd0DJ3yRG4UHSBb3e6WmGTYQfzl4GrQZTfDUFOzc
+         Qf4dh8WuNcBjeeFKu+WZLVzwBMVd7Giw6lZBwggyY1kDAZcXbGgYLtackF+zMQ4vtrZg
+         7G33CSFtpXzK1m1v2HMm56555cEk+cPhRsi+qo/bXNdUnKgsJ2WlI86HZ87n8Blk06dz
+         YNbA==
+Received: by 10.50.217.137 with SMTP id oy9mr3230099igc.56.1340164222642;
+        Tue, 19 Jun 2012 20:50:22 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id y5sm25169667igb.11.2012.06.19.20.50.21
+        (version=SSLv3 cipher=OTHER);
+        Tue, 19 Jun 2012 20:50:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120619232310.GA6496@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200284>
 
-I mostly want to say "Amen, brother", so if you are not interested in
-a me-too, then feel free to skip this reply.
+Hi,
 
-On Tue, Jun 19, 2012 at 5:43 PM, Marc Branchaud <marcnarc@xiplink.com> =
-wrote:
->
-> On 12-06-19 03:41 PM, Jens Lehmann wrote:
-> > Am 19.06.2012 16:07, schrieb Marc Branchaud:
-> >> On 12-06-18 06:12 PM, Junio C Hamano wrote:
-> >>> Marc Branchaud <marcnarc@xiplink.com> writes:
-> >>>> That would be bad for our situation. =A0As I said, our automated=
- build
-> >>>> system
-> >>>> uses detached HEADs a lot. =A0Erroring-out in this case would br=
-eak us.
-> >>>> =A0It's
-> >>>> really only the near-ubiquity of the name "origin" that has kept
-> >>>> things
-> >>>> working so far.
-> >
-> > And the "submodule add" documentation clearly talks about relative
-> > submodule URLs being relative to the superproject's origin.
->
-> This whole thing seems a bit weird...
->
-> So user A adds a submodule with <repository> "../others/thing.git".
-> =A0Clearly
-> user A has some remote in mind when they added this submodule.
->
-> But consider user B, who cloned the super-repo from the same remote t=
-hat
-> user
-> A had in mind when creating the submodule. =A0If user B then checks o=
-ut a
-> non-tracking branch (or a branch that tracks a different remote) and =
-then
-> tries to initialize/update the submodule, user B will get an error.
+Jeff King wrote:
 
-This specific situation is what makes me think that picking any
-arbitrary remote should work in most cases.  I think this is why
-picking 'origin' works just fine now, except in the special case of
-"no remote named origin and no tracking branch".  If I'm using
-relative urls, I've got to have my associated submodules available at
-each remote I might push to or clone from.  Otherwise I'm just
-shooting my feet for fun.
+> When a C file includes a header file or depends on a
+> command-line "-D" macro, we note it in the Makefile like:
+>
+>   git.o: common-cmds.h
+>
+> However, other targets built from the C file should also
+> know about this dependency (in particular, .sp and .s files
+> that are not part of the usual build process). We sometimes
+> noted these and sometimes not; let's make sure they are
+> always included.
 
-> To me this is clearly wrong. =A0It's also wrong to error-out and expe=
-ct the
-> user to fix it. =A0Should the user temporarily set their branch's rem=
-ote to
-> the
-> right place, initialize the submodule, then undo the branch setting?
-> =A0Should
-> the user check our a branch that tracks the correct remote, initializ=
-e the
-> submodule, then check out their branch? =A0Both of those "solutions" =
-look
-> pretty weak to me.
->
-> I'm starting to think that maybe "git submodule init" (and "update")
-> should
-> learn a --remote option. =A0That way at least user B could tell git w=
-hat to
-> do.
+First reactions:
 
-I like this one.
+This improves consistency.  Yay!
 
-> > Your buildbot could also check if an origin is configured and use t=
-he
-> > magic in your patch to configure one to the URL of the first remote=
- it
-> > finds if it isn't before initializing the submodules.
->
-> Yes, it seems my assumptions about how to determine the default remot=
-e
-> shouldn't be coded into git. =A0But dang it, the current fallback to
-> "origin"
-> is really lame.
+Making .sp and .s targets depend on generated .h files like
+common-cmds.h is very important.  Otherwise, I would not be able to
+generate my git.s assembler listing or sparse-check git.c unless
+common-cmds.h has already been generated as a side-effect of some
+earlier build process.
 
-Amen!
+On the other hand, making .sp and .s targets depend on preexisting .h
+files and files like GIT-CFLAGS would not have any effect at all,
+because:
 
-I also think the assumption of "same as the current tracking branch"
-is lame, too.  (But I have to admit, it works better than 95% of the
-time, and it's easier than erroring out.  If it works for Apple, it
-should work here.)
+ - .sp targets are phony --- there is no stamp file that certifies
+   a given file has been checked by a "make sparse" run.  Maybe that
+   will change some day.
 
->
-> >>> That reliance of "origin" is what made me think that "not guessin=
-g
-> >>> and blindly assuming" a wrong thing to do.
-> >>
-> >> I think git can do better than erroring out, though.
-> >
-> > Hmm, but guessing and using the first remote it finds (which might =
-or
-> > might not be the one used in the initial clone) doesn't sound like =
-a
-> > terribly good idea.
->
-> Fair enough, but I still think it's better than guessing that the rig=
-ht
-> remote is "origin". =A0:)
->
-> >> Sure, but I feel it did that already when it cloned. =A0It seems
-> >> reasonable for
-> >> the submodules to default to using the remote specified when the
-> >> super-repo
-> >> was cloned.
-> >
-> > Is there a way to reliably tell that remote without relying e.g. on
-> > the implementation details of git config (e.g. it could sort remote=
-s
-> > alphabetically some day)? What happens if someone changes the confi=
-g
-> > later? A lot of ambiguity here ...
->
-> Yes, I agree.
->
-> Should there perhaps be some kind of "cloned from this remote" settin=
-g in
-> the
-> config?
+ - .s targets are rebuilt every time.  Maybe I am just weird, but I
+   find myself upgrading my compiler pretty often, so when I manually
+   ask for an assembler listing I am happy to see it regenerated
+   unconditionally using the new code generation rules.
 
-I'm not sure I like the "give preference to my original clone source"
-idea.  Who said it could be king? What if it was temporary and I've
-since moved on to a new server? Well, yeah, I can reconfigure my
-default.  So I guess I do like it a little.
+It turns out that this patch is only about common-cmds.h, which was
+the straightforward case.  Why not say so and save the reader from
+having to think so hard? ;)
 
->
-> > And I think origin should always be the second choice if it exists,
-> > the first being the remote configured for the checked out branch.
->
-> Do you mean "the origin(al) remote repository" or just "the remote na=
-med
-> 'origin'"?
->
-> > This gives the user the opportunity to say "Oh, I screwed up using
-> > 'git clone -o', let's set origin to the upstream repo". But should =
-we
-> > try to guess the remote the superproject was cloned from as third
-> > option? I am not convinced.
->
-> Maybe I'm misinterpreting you. =A0Are you attaching a special meaning=
- to a
-> remote named "origin"?
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0M.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+Hope that helps,
+Jonathan
