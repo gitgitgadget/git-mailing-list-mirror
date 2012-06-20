@@ -1,111 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] Makefile: split prefix flags from GIT-CFLAGS
-Date: Tue, 19 Jun 2012 16:58:07 -0700
-Message-ID: <7vy5nix3ao.fsf@alter.siamese.dyndns.org>
-References: <20120619195229.GA14692@sigill.intra.peff.net>
- <20120619200354.GC14714@sigill.intra.peff.net>
- <7vmx3zyqil.fsf@alter.siamese.dyndns.org>
- <20120619210426.GA21838@sigill.intra.peff.net>
- <7vzk7zx9pz.fsf@alter.siamese.dyndns.org>
- <20120619233659.GA6621@sigill.intra.peff.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Blaming differences
+Date: Wed, 20 Jun 2012 12:35:33 +1200
+Message-ID: <CAFOYHZAyRUwnguvbkk_SDqiSJ=Z3mOdtDLZ+yQMep91cgK+Bww@mail.gmail.com>
+References: <CABURp0omoLoNaOhD3Vx734aVtm5sbk0E7_2uaZJWrWs=_g84iA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 20 01:58:17 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 02:35:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sh8JL-0004Ll-FZ
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 01:58:15 +0200
+	id 1Sh8tX-0000bl-J3
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jun 2012 02:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281Ab2FSX6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jun 2012 19:58:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37406 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466Ab2FSX6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2012 19:58:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9035B8F01;
-	Tue, 19 Jun 2012 19:58:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u4ejPlgLeFEWM3eecUkxiYczGeA=; b=SABZ6m
-	umvFzxphCxXXGOS8yERX1RGsncPMbO1bT1zcjPy4wyzq6QIOVjaXxHMhZuvjBe/A
-	u39KhZsK+oftt5G5Vi77as3GWxmiwET+46TlJ6LZdqVI20lKwzZHDIAxCpzNe7EY
-	sL8a7M/Dv9dSQDKLJaCsypAWtETJ+1MrI+iqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rs/sg3hG2TN32HPCbgg+5bdv0avEarAc
-	OZLSgespVmyxuBpFVMcw7gIz0va0Brb69tokvYv5pWeBLFLbonY5VgNbSa0pbnxT
-	gMMr9WbMMfVn3sAYOivwH9naPGqP3NfILlz8HAK/v7gactwiE8uhS0MA/KnqqD74
-	Rh4uau8VvUk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86F7D8F00;
-	Tue, 19 Jun 2012 19:58:09 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E08978EFD; Tue, 19 Jun 2012
- 19:58:08 -0400 (EDT)
-In-Reply-To: <20120619233659.GA6621@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 19 Jun 2012 19:36:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EAD9F3E-BA6A-11E1-BDB7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751996Ab2FTAff convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jun 2012 20:35:35 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:34060 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881Ab2FTAfe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jun 2012 20:35:34 -0400
+Received: by wgbdr13 with SMTP id dr13so7360730wgb.1
+        for <git@vger.kernel.org>; Tue, 19 Jun 2012 17:35:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7NB6rHD2dSUibn5XXf1HUvqzj4141PXKsvoJ7sCozRY=;
+        b=DyW/zE8Yr6he6MrOMOk7TSMm1vIftHJeuJJBfZyJI2Gr8gMoQ6g3apZxSgeyN+hZdT
+         /9QaT8o7DKm9JbhgYasxgYNmTgMoMPsdPbNV4GAfee/FkmP8d2/dvp+rvUakhtxYsdn2
+         z/e2rnOVtHV8uyomoE5xA9UP7BahKc+howqIH94E8MUtGlWOElx77GwjuLQLiIDSSn3W
+         MOwOFfVlL2tft5heNw2jTEZEcvTHuMvM6NgelnUYPDy80AfdEK8KXx/d6sHEH7cb6kzU
+         ks0gixJmpKB0R3WHVH8pMz2kj75yxws9E6XlByOcpc46wh4jzSqZ/2PTrEjjtdViLXcr
+         NK7A==
+Received: by 10.216.142.200 with SMTP id i50mr12598905wej.47.1340152533504;
+ Tue, 19 Jun 2012 17:35:33 -0700 (PDT)
+Received: by 10.216.4.134 with HTTP; Tue, 19 Jun 2012 17:35:33 -0700 (PDT)
+In-Reply-To: <CABURp0omoLoNaOhD3Vx734aVtm5sbk0E7_2uaZJWrWs=_g84iA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200279>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jun 19, 2012 at 10:56 AM, Phil Hord <phil.hord@gmail.com> wrote=
+:
+> I want something like a product of diff and blame. =C2=A0I want to se=
+e some
+> kind of "blame" output for each line of "diff -U0".
+>
+> I tried something like this:
+> =C2=A0 git blame $changed_files
+>
+> Is there such a command already?
+>
+> I'd also like to do something of the inverse operation: =C2=A0I want =
+to
+> find commits within a range whose changes are NOT in some other
+> commit. =C2=A0 So, say I have these four commits
+> =C2=A0 A---B---C---D
+>
+> Where D was created by 'git revert B'.
+> I'd like to find out somehow that this is equivalent to
+> =C2=A0 A--C
+>
+> So that if I remove B and D completely, the with just A and C will ge=
+t
+> me to the same end result.
+>
+> Something like 'git list-contributors HEAD' which would show me A and
+> C, since these are the only commits that appear in any 'git blame
+> $any_file'.
+>
+> Do these tools exist? =C2=A0Is it too expensive?
+>
+> Phil
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
 
-> Of course, I am probably one of the few people in the world who actually
-> wants to have 50 built versions of git on hand.
+I've just run into a situation at $dayjob where something like this
+would be useful for me so I thought I'd throw my use-case into the mix
+if anyone decides to pick this idea up.
 
-I have this script as "rungit" on my PATH and "rungit -l" shows 110+
-variants.  So at least there are two ;-)
+I'm doing a peer review of a modest project that's been developed off
+in a branch of it's own before it will be merged back to master. Our
+current policy is to let these project merges reflect reality warts an
+all (e.g. leave in commits and their reverts even if the net result is
+0 lines changed). I don't want to waist too much time reviewing commit
+by commit, especially when one commit might heavily refactor code from
+an earlier one. However looking at the full 'git diff project
+^origin/master' is a bit more code that I can keep in my brain at one
+time. What I'd find useful is the output of 'git diff project
+^origin/master' marked up with the sha1s which I could then use as a
+leaping off point.
 
--- >8 --
-#!/bin/sh
-# Run various vintage of git
+Something like this could get me part way there
 
-variant="${0##*/}" &&
-: ${RUNGIT_BASE=$HOME/g} &&
-case "$variant" in
-rungit)
-	case $# in 
-	0)
-		echo >&2 "which version?"
-		exit 1
-		;;
-	esac
-	variant=$1
-	shift
-	;;
-esac &&
-case "$variant" in
--l)
-	for d in "$RUNGIT_BASE/"git-*/bin/git
-	do
-		d=$(basename ${d%/bin/git})
-		d=${d#git-}
-		d=${d#snap-}
-		echo "$d"
-	done
-	exit
-	;;
-git-*)
-	variant=${variant#git-} ;;
-v[0-9]*)
-	variant=snap-$variant ;;
-esac &&
-d="$RUNGIT_BASE/git-$variant" &&
-if test -f "$d/bin/git"
-then
-	exec "$d/bin/git" "$@"
-else
-	echo >&2 "$variant: No such variant for $a"
-	exit 1
-fi
+  for x in $(git diff --name-only project ^origin/master)
+  do
+    echo git blame project ^origin/master -- $x >$x.ann
+  done
+
+But I'd still have to figure out how to reduce the annotated files
+down to something useful. The git blame -L option might help if I
+could specify it multiple times and parse the diff output,
+alternatively since it's not a huge number of revs I multiple
+invocations of git blame would work for me. I'll have a go at hacking
+something up after lunch.
