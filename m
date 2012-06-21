@@ -1,103 +1,88 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Automatic dependency tracking in the Git build system (was: Re: [PATCHv2
- 1/8] Makefile: apply dependencies consistently to sparse/asm targets)
-Date: Thu, 21 Jun 2012 10:52:55 +0200
-Message-ID: <4FE2E0E7.3040009@gmail.com>
-References: <20120619232231.GA6328@sigill.intra.peff.net> <20120619232310.GA6496@sigill.intra.peff.net> <20120620035015.GA4213@burratino> <20120620042607.GA10414@sigill.intra.peff.net> <20120620102750.GB4579@burratino> <20120620163714.GB12856@sigill.intra.peff.net> <20120620182855.GA26948@sigill.intra.peff.net> <CAFzf2Xw3TdvZCFLvbqKY5F9b+0hTzTQEEfmqjL9u=uvyc7mZ5w@mail.gmail.com> <20120620193638.GA32418@sigill.intra.peff.net> <CAFzf2XwmZo4ErG_9w0m66k4OPtDr_4_xvATL_6sOo8QVg0DhJA@mail.gmail.com> <20120620195709.GB32228@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v2 9/9] sha1_name.c: get_describe_name() by definition
+ groks only commits
+Date: Thu, 21 Jun 2012 11:22:07 +0200
+Message-ID: <CABPQNSZ246Y80WJN+u2OR8_3KWE_1=8F6WbTgVX-8wqyecGPkg@mail.gmail.com>
+References: <1340260532-11378-1-git-send-email-gitster@pobox.com> <1340260532-11378-10-git-send-email-gitster@pobox.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Automake List <automake@gnu.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 21 10:53:15 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 11:23:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Shd8c-0002LQ-7e
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 10:53:14 +0200
+	id 1ShdbJ-0006N6-FC
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 11:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758999Ab2FUIxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jun 2012 04:53:08 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:61167 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758987Ab2FUIxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2012 04:53:03 -0400
-Received: by bkcji2 with SMTP id ji2so283645bkc.19
-        for <git@vger.kernel.org>; Thu, 21 Jun 2012 01:53:01 -0700 (PDT)
+	id S932472Ab2FUJWt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jun 2012 05:22:49 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:47788 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932465Ab2FUJWs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jun 2012 05:22:48 -0400
+Received: by dady13 with SMTP id y13so614406dad.19
+        for <git@vger.kernel.org>; Thu, 21 Jun 2012 02:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=MIBbtBsr6GpWS7X2th27U2sgqEFbYU1p8SpOwLWKsmM=;
-        b=J3hE10/dVc+CjHcZgUGRwFb+a1b3ABWJW2ZLWw11pcmNUGAoAea1mupP+RlpesM2LX
-         AYYnXTPRsyPauBt7uxZhXo3AojjnR7z7c9KVzEr3EOLgSBQnSzzR+vmW52VDMeMlc2EC
-         ZKWQgoEE7Y0Av+jNM9RrY/jYOqH15gwC9OicVTQ0sP4B5WYYEY4sJs2cl/asqdccmGjC
-         NXRWyrTdGJ8RepCv0rmAEqndCEvcUpXWEiegMdqVCeCAFMuUDHeTesVaAj38UTI/05uI
-         4nh5x+irSIB0xt8UnCm0LZ78LTXJvzArI7EoHNecGAYZcO7S7TMu7JJ43sZMzXfs8FN4
-         2WXw==
-Received: by 10.204.153.193 with SMTP id l1mr11580304bkw.120.1340268781418;
-        Thu, 21 Jun 2012 01:53:01 -0700 (PDT)
-Received: from [79.7.93.8] (host8-93-dynamic.7-79-r.retail.telecomitalia.it. [79.7.93.8])
-        by mx.google.com with ESMTPS id m2sm31028460bkm.2.2012.06.21.01.52.57
-        (version=SSLv3 cipher=OTHER);
-        Thu, 21 Jun 2012 01:52:59 -0700 (PDT)
-In-Reply-To: <20120620195709.GB32228@sigill.intra.peff.net>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=RgWow8vTc7EMdIZRQHCL0Y4GgUY5+qSnBYirk36F7nk=;
+        b=OE61BNSi3YiZQt3RrpYOU9SE1WD7dDc6GpHZaPWIn46f3VxP5qVkxhCFYKChVNp3j+
+         2TUTlCgLcL5wY6cYGhLQwpOMIcL18klYXtc/NedDUYFihnIyYdv/AYCSC2quoJMgvdjD
+         gu2+HMuYAGocKI42ThR/KN4A6+vgEg6NspXbNiV2Qzckna8dfM6Br/dfb7wXAEv/fRHY
+         sihv1P/t3iGLwkTM6JRI5pv/DFWK1gmoP7Ypaw1u6E4MR5RdFWpJnKuynY991jVBMo02
+         3U+QM3AJrs7Bnu3Cw97RdyLu8Glym2y/JN3wmxPbT86TWYICmZnau0g3hGX0Ijpk5CiO
+         OpBQ==
+Received: by 10.68.134.201 with SMTP id pm9mr87527808pbb.49.1340270568009;
+ Thu, 21 Jun 2012 02:22:48 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Thu, 21 Jun 2012 02:22:07 -0700 (PDT)
+In-Reply-To: <1340260532-11378-10-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200399>
 
-[Adding the Automake list in CC:]
-
-On 06/20/2012 09:57 PM, Jeff King wrote:
-> On Wed, Jun 20, 2012 at 02:45:31PM -0500, Jonathan Nieder wrote:
-> 
->> Jeff King wrote:
->>
->>> Did you read the argument in patch 2? They are almost certainly not
->>> helping anyone, anyway.
->>
->> Yes, I read patch 2. I hacked on git from time to time in the days
->> before COMPUTE_HEADER_DEPENDENCIES, and it sometimes involved changing
->> header files. When they were not in LIB_H, the experience was much
->> nicer.
->>
->> Is that called "not helping"? I'm afraid I don't follow this line of
->> argument at all.
-> 
-> I just assumed that people who are actively hacking on individual header
-> files in git actually have a compiler that can do COMPUTE_HEADER_DEPENDENCIES.
-> Maybe that is not the case. If it were such a big deal, then why is
-> everything in LIB_H? Why don't people use these manual rules, or convert
-> existing LIB_H entries to use them?
-> 
-> For people who are not actively hacking on header files in git, the
-> arguments from that patch apply (namely that LIB_H is so gigantic that
-> you are unlikely to hit a specific change where one of the few manual
-> rules is triggered, but LIB_H is not).
-> 
->> On the other hand, if someone were proposing adding a simple awk
->> script to implement a "make dep" fallback, I would understand that.
-> 
-> I'd be OK with that. Do you have one in mind, or do we need to write it
-> from scratch? Surely somebody else has solved this problem before.
+On Thu, Jun 21, 2012 at 8:35 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> =A0sha1_name.c | 3 ++-
+> =A01 file changed, 2 insertions(+), 1 deletion(-)
 >
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 58dbbe2..15e97eb 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -606,6 +606,7 @@ static int peel_onion(const char *name, int len, =
+unsigned char *sha1)
+> =A0static int get_describe_name(const char *name, int len, unsigned c=
+har *sha1)
+> =A0{
+> =A0 =A0 =A0 =A0const char *cp;
+> + =A0 =A0 =A0 unsigned flags =3D GET_SHORT_QUIETLY | GET_SHORT_COMMIT=
+_ONLY;
+>
+> =A0 =A0 =A0 =A0for (cp =3D name + len - 1; name + 2 <=3D cp; cp--) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0char ch =3D *cp;
+> @@ -616,7 +617,7 @@ static int get_describe_name(const char *name, in=
+t len, unsigned char *sha1)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (ch =3D=3D 'g' && c=
+p[-1] =3D=3D '-') {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cp++;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0len -=3D=
+ cp - name;
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return =
+get_short_sha1(cp, len, sha1, GET_SHORT_QUIETLY);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return =
+get_short_sha1(cp, len, sha1, flags);
 
-[begin shameless plug]
-
-Have you taken a look at the 'depcomp' script that comes with Automake?
- <http://git.savannah.gnu.org/cgit/automake.git/tree/lib/depcomp>
-Once you get past some of its idiosyncrasies and few historical warts,
-it has a lot of built-in knowledge about automatic dependency tracking
-for a lot of different compilers.
-
-[end shameless plug]
-
-HTH,
-  Stefano
+Is there a reason why you chose to put the definition in the
+root-scope of the function? There's an excellent opportunity just a
+few lines above the only place it's used, and I suspect it would
+increase readability to put it there...
