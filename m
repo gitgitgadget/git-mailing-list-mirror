@@ -1,182 +1,69 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 2/2] diff-no-index: exit(1) if 'diff --quiet <repo file> <external file>' finds changes
-Date: Thu, 21 Jun 2012 14:09:51 -0400
-Message-ID: <1340302191-23444-2-git-send-email-tim.henigan@gmail.com>
-References: <1340302191-23444-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-X-From: git-owner@vger.kernel.org Thu Jun 21 20:10:39 2012
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] submodule: Tolerate auto/safecrlf when adding .gitmodules
+Date: Thu, 21 Jun 2012 21:06:28 +0200
+Message-ID: <4FE370B4.60404@web.de>
+References: <cover.1340202515.git.brad.king@kitware.com> <eebc8b3692f8fcb95cf75278f7c9f9982e8f2cd6.1340202515.git.brad.king@kitware.com> <4FE20DD3.6040607@web.de> <4FE21133.2030001@kitware.com> <20120620191132.GB31520@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Brad King <brad.king@kitware.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 21 21:07:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Shlq1-0002wK-Fo
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 20:10:38 +0200
+	id 1Shmiv-0002VZ-5G
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 21:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760106Ab2FUSKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jun 2012 14:10:32 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33466 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760093Ab2FUSKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2012 14:10:31 -0400
-Received: by yenl2 with SMTP id l2so758091yen.19
-        for <git@vger.kernel.org>; Thu, 21 Jun 2012 11:10:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=TEjIAwUhsV+AHQSMvv913eue3z/kgdaPdeegQh4iUkY=;
-        b=EC6Wncp7KgqFhdU0OuOXhD4E2g7s3I02e4KgaftYNE9cckc+eKqBvOIoUNcBhVuJVB
-         QGCUHXu1iV24wQa33Pm7UDmHoI2RaErMzHUfLpf0v9SaCtWh3k0Hp5Lz7AEHC7jDTGl2
-         C5mO2ABdJFN7rIZfFdfr1F6YnakGb4Bn5nxQAGCAdSa0tvRJUFcjQ/V6OOUxJfKdQE/S
-         E3slCFHQwGby3yAEKWsZDe6B26zJ64TIfuV1BPUsHVL52CoeknDsoOmU3Q8HaxwnxqPc
-         1/GTCQG6vSgsXA7FzOg7LVx327u8MjkOrRCvcgdm+bgiR2rlJTfyL4GUeZuECEaBCpAm
-         c0Fg==
-Received: by 10.42.155.73 with SMTP id t9mr13887094icw.48.1340302230271;
-        Thu, 21 Jun 2012 11:10:30 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id z3sm18516132igc.7.2012.06.21.11.10.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Jun 2012 11:10:29 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.3.gf4ddae1
-In-Reply-To: <1340302191-23444-1-git-send-email-tim.henigan@gmail.com>
+	id S1759929Ab2FUTHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jun 2012 15:07:11 -0400
+Received: from mout.web.de ([212.227.17.11]:59287 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759873Ab2FUTHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2012 15:07:06 -0400
+Received: from [192.168.178.48] ([91.3.170.98]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0LbrQm-1S0zhL3MMG-00jQrK; Thu, 21 Jun 2012 21:06:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <20120620191132.GB31520@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:t7oLJqUBqZe4QYLUoLp/r+aCFBojC+KUJKw9bbM5EYE
+ 4JXVUDaXQfA9Ndo1S0jQqODJz3IJTkFV5V7br/Omg0kbqHadns
+ 6xXYlVa1caA4sxWaA444kshhLFRVjBXIgGFySoE2ak9sX1JLEZ
+ VKy21VO+Dha9iNw9Oco3Ki92HQQZg7cgVHDth1TUOfq6wn1uVa
+ PpSdoBITKmM6uoyNMvAfA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200414>
 
-When running 'git diff --quiet <file1> <file2>', if file1 or file2
-is outside the repository, it will exit(0) even if the files differ.
-It should exit(1) when they differ.
+Am 20.06.2012 21:11, schrieb Jeff King:
+> The only sane thing is to have a canonical in-repo representation.
+> Fortunately we already have the infrastructure for that, and in theory
+> it should be as easy as adding ".gitmodules text" to our built-in
+> gitattributes (you could even do "eol=lf", but I don't see a reason not
+> to respect the native line endings in the working tree, given that git
+> can handle the CRLFs just fine).
+> 
+> I say "in theory" there because I am not sure whether specifying a file
+> as definitely text via attributes will actually suppress the safecrlf
+> check or not. IMHO, it should, since safecrlf is really about preventing
+> false positives via autocrlf or text=auto.
 
-This happens because 'diff_no_index' uses the 'found_changes' member
-from 'diff_options' to determine if changes were made. This is the
-wrong flag, since it is only set if xdiff is actually run and it
-finds a change. The diff machinery will optimize out the xdiff call
-when it is not necessary.
+A quick test shows that unfortunately theory differs from practice here.
+Adding ".gitmodules text" to the built-in gitattributes lets the test
+Brad wrote still fail. You have to use ".gitmodules eol=lf" to make it
+pass. I stopped digging deeper at this point.
 
-'diff_no_index' needs to check the 'HAS_CHANGES' flag instead, which
-is done in the 'diff_result_code' function. This matches the code
-paths used for regular index-aware diff.
+> I don't see any reason for each individual repo to have to add these
+> attributes manually. This is a git-specific file, and the format is
+> dictated by git. We know that it's a text file, so why not help out the
+> user? We should possibly do the same thing for .gitattributes and
+> .gitignore.
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
-
-Patch 1/2 is new to this series, but 3 earlier drafts of this patch
-(2/2) were sent to the list for review.
-
-Changes in this version:
-  - Improved commit message based on suggestions from Jeff King.
-  - Removed declaration after statement in diff-no-index.c.
-  - Removed space after redirection operator in t4035.
-  - Changed non-git paths in t4035 to match naming used in t7810.
-  - Changed non-git paths to be relative rather than absolute.
-
-
- diff-no-index.c       |  2 +-
- t/t4035-diff-quiet.sh | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 73 insertions(+), 2 deletions(-)
-
-diff --git a/diff-no-index.c b/diff-no-index.c
-index e6b9952..63c31cc 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -256,5 +256,5 @@ void diff_no_index(struct rev_info *revs,
- 	 * The return code for --no-index imitates diff(1):
- 	 * 0 = no changes, 1 = changes, else error
- 	 */
--	exit(revs->diffopt.found_changes);
-+	exit(diff_result_code(&revs->diffopt, 0));
- }
-diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
-index cdb9202..231412d 100755
---- a/t/t4035-diff-quiet.sh
-+++ b/t/t4035-diff-quiet.sh
-@@ -10,7 +10,22 @@ test_expect_success 'setup' '
- 	git commit -m first &&
- 	echo 2 >b &&
- 	git add . &&
--	git commit -a -m second
-+	git commit -a -m second &&
-+	mkdir -p test-outside/repo && (
-+		cd test-outside/repo &&
-+		git init &&
-+		echo "1 1" >a &&
-+		git add . &&
-+		git commit -m 1
-+	) &&
-+	mkdir -p test-outside/non/git && (
-+		cd test-outside/non/git &&
-+		echo "1 1" >a &&
-+		echo "1 1" >matching-file &&
-+		echo "1 1 " >trailing-space &&
-+		echo "1   1" >extra-space &&
-+		echo "2" >never-match
-+	)
- '
- 
- test_expect_success 'git diff-tree HEAD^ HEAD' '
-@@ -77,4 +92,60 @@ test_expect_success 'git diff-index --cached HEAD' '
- 	}
- '
- 
-+test_expect_success 'git diff, one file outside repo' '
-+	(
-+		cd test-outside/repo &&
-+		test_expect_code 0 git diff --quiet a ../non/git/matching-file &&
-+		test_expect_code 1 git diff --quiet a ../non/git/extra-space
-+	)
-+'
-+
-+test_expect_success 'git diff, both files outside repo' '
-+	(
-+		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd test-outside/non/git &&
-+		test_expect_code 0 git diff --quiet a matching-file &&
-+		test_expect_code 1 git diff --quiet a extra-space
-+	)
-+'
-+
-+test_expect_success 'git diff --ignore-space-at-eol, one file outside repo' '
-+	(
-+		cd test-outside/repo &&
-+		test_expect_code 0 git diff --quiet --ignore-space-at-eol a ../non/git/trailing-space &&
-+		test_expect_code 1 git diff --quiet --ignore-space-at-eol a ../non/git/extra-space
-+	)
-+'
-+
-+test_expect_success 'git diff --ignore-space-at-eol, both files outside repo' '
-+	(
-+		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd test-outside/non/git &&
-+		test_expect_code 0 git diff --quiet --ignore-space-at-eol a trailing-space &&
-+		test_expect_code 1 git diff --quiet --ignore-space-at-eol a extra-space
-+	)
-+'
-+
-+test_expect_success 'git diff --ignore-all-space, one file outside repo' '
-+	(
-+		cd test-outside/repo &&
-+		test_expect_code 0 git diff --quiet --ignore-all-space a ../non/git/trailing-space &&
-+		test_expect_code 0 git diff --quiet --ignore-all-space a ../non/git/extra-space &&
-+		test_expect_code 1 git diff --quiet --ignore-all-space a ../non/git/never-match
-+	)
-+'
-+
-+test_expect_success 'git diff --ignore-all-space, both files outside repo' '
-+	(
-+		GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/test-outside" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd test-outside/non/git &&
-+		test_expect_code 0 git diff --quiet --ignore-all-space a trailing-space &&
-+		test_expect_code 0 git diff --quiet --ignore-all-space a extra-space &&
-+		test_expect_code 1 git diff --quiet --ignore-all-space a never-match
-+	)
-+'
-+
- test_done
--- 
-1.7.11.3.gf4ddae1
+I really like this approach. (And in the long run would like to see a
+ini-file aware merge driver being used for the .gitmodules file too,
+which would just merge submodules added in different branches instead
+of producing a conflict)
