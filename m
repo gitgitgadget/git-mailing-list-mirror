@@ -1,87 +1,85 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH v3] diff-no-index: exit(1) if 'diff --quiet <repo file>
- <external file>' finds changes
-Date: Thu, 21 Jun 2012 11:07:12 -0400
-Message-ID: <CAFouethNTzcWq_YKzGz+jRTeCjKZEC2ZYMZuQxkF+5AOTC=x-A@mail.gmail.com>
-References: <1340047704-8752-1-git-send-email-tim.henigan@gmail.com>
-	<7vr4tc2xhy.fsf@alter.siamese.dyndns.org>
-	<CAFouethcrw3vOF7SPwHxjH4ABmF8U1df0MfyzcUGq2yTYxs4ow@mail.gmail.com>
-	<20120619135814.GA3210@sigill.intra.peff.net>
-	<CAFouetgRq1qkqJmThJJeu=Mdx9jS0c9dw7NPSwuJUOSpskCY2A@mail.gmail.com>
-	<CAFouetgXkqJPYwjr5ob5ed_ooL-D56zXyjnOAWrVPdt_eZqw7g@mail.gmail.com>
-	<20120620160607.GA12856@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push: start warning upcoming default change for push.default
+Date: Thu, 21 Jun 2012 17:50:55 +0200
+Message-ID: <vpqd34su0io.fsf@bauges.imag.fr>
+References: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
+	<1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vehp9x3yz.fsf@alter.siamese.dyndns.org>
+	<vpqpq8t96zw.fsf@bauges.imag.fr>
+	<7va9zxvkyp.fsf@alter.siamese.dyndns.org>
+	<7v62alvk2e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 21 17:07:28 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 17:54:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Shiyi-0006Rq-I7
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 17:07:24 +0200
+	id 1ShjiI-00061M-64
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jun 2012 17:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759207Ab2FUPHP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jun 2012 11:07:15 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:38112 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758948Ab2FUPHN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jun 2012 11:07:13 -0400
-Received: by yenl2 with SMTP id l2so551343yen.19
-        for <git@vger.kernel.org>; Thu, 21 Jun 2012 08:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SIUt1COUO2+1wzxS5+8eL88cLg7Z0RChw7wn6CkuVP8=;
-        b=GlhwXmExVDBstUJT0gWKxAfLnbnEmH7OByYYnlwbBeQkVemojSClZfq2DvVYz6O8+X
-         VEoCSyhxG4F3JpKrA+UtZ73wcTlpsnaaFgiTTFcrMj4QyMZM+BPkWQheCDNjLE9K1j3g
-         RqqkvO4pGgU5oFBxloRHmukwWDjtcyfA16Ic724V4ec2v7fdAloEwIFWECTap74/V86b
-         ABAMk69QqPJIqKOKynamEGZ+ewtH83Wlq5UEmGrv2EsAlOonxgCQb+xoiEBY/IZDpbc/
-         Frx1FW55PwfsWUhPwI6evIipjBu1jKg1+mkhIHTiSoF2p2RFmDRDIOD4ceAt22zBjC2j
-         7CHA==
-Received: by 10.42.80.6 with SMTP id t6mr8593401ick.15.1340291232737; Thu, 21
- Jun 2012 08:07:12 -0700 (PDT)
-Received: by 10.231.84.147 with HTTP; Thu, 21 Jun 2012 08:07:12 -0700 (PDT)
-In-Reply-To: <20120620160607.GA12856@sigill.intra.peff.net>
+	id S1756020Ab2FUPyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jun 2012 11:54:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46053 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755968Ab2FUPxi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2012 11:53:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5LFoVvr020056
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 21 Jun 2012 17:50:31 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Shjep-0007PJ-QD; Thu, 21 Jun 2012 17:50:55 +0200
+In-Reply-To: <7v62alvk2e.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 20 Jun 2012 12:51:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 21 Jun 2012 17:50:31 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5LFoVvr020056
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340898632.65256@0awIZEn3VUFnQ3yMDeRsXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200404>
 
-On Wed, Jun 20, 2012 at 12:06 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jun 20, 2012 at 09:38:15AM -0400, Tim Henigan wrote:
->>
->> Are you planning to send this patch to the list? =C2=A0If not, can I
->> include it as 1 of 2 before my patch? =C2=A0If we go that route, I'm=
- not
->> sure how to properly show you as the author...
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Perhaps we should say more to help people decide which one to choose
+> in this message.
+[...]
+>     You can squelch this message by picking your preferred default now,
+>     e.g. running one of these:
 >
-> I'd probably get to it eventually, but I haven't touched it since I s=
-ent
-> it. If you want to include some tests and package it with a commit
-> message, that would make me very happy.
+>             git config push.default matching
+>             git config push.default simple
+>             git config push.default current
 
-Thanks, I will do that.
+I don't see any added value. Seeing this, it's less clear to the user,
+and he may chose 'simple', and then complain that it breaks his older
+Git. Really, if 'simple' isn't an option for someone, why should we make
+this someone think before chosing between 'current' an 'simple'?
 
-It looks like the best place to add tests is t4010-diff-pathspec.sh.
-The only cases not tested through other means appear to be:
+Also, my version purposely made 'simple' more visible than 'current'
+(cut-and-paste ready alone on its line Vs within parenthesis), because
+this is the one we want to advertise. Putting the 3 options at the same
+level is a regression to me.
 
-    git diff <file in repo> <relative path outside repo>
-    git diff <relative path outside repo> <relative path outside repo>
+We can rephrase the advice to make it clearer that 'simple' !=
+'current', like
 
-Other pathspec variations seem to be covered extensively by other
-tests (mostly as a side effect).  Am I missing other variations that
-should be checked?
+  (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+  'current' instead if you sometimes use older versions of Git)
 
-In both cases shown above, we are simply verifying that giving a
-relative path to diff does not cause it to abort.  So it may be
-sufficient to only test one of the above.
-
-The tests that I added to t4035-diff-quiet.sh already cover both of
-the cases listed above.  Is it worthwhile to duplicate some of those
-tests in t4010?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
