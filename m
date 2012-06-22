@@ -1,110 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] revision: ignore side parents while running
- simplify-merges
-Date: Fri, 22 Jun 2012 15:27:40 -0700
-Message-ID: <1340404061-11619-4-git-send-email-gitster@pobox.com>
-References: <1340404061-11619-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 23 00:28:01 2012
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Master and origin/master diverged
+Date: Fri, 22 Jun 2012 15:33:05 -0700
+Message-ID: <CAE1pOi0zkDa=scowaaT=VdLjdYL2UPW++e0ZXLrzU6kncX8-ow@mail.gmail.com>
+References: <CAE1pOi1Ot0Fyv=2_XYKyUcsKp-m+CkT-miF=jC=wt9Rbz_dXqQ@mail.gmail.com>
+ <CABURp0oCrmJzfFtX9UujMfoTPeCBPeuri6pb4nTq57XvuO98aQ@mail.gmail.com>
+ <CAE1pOi3pe4KKeJ4B74T8besvbiJh-dJz5efB-qJLsbmK+f_YLQ@mail.gmail.com> <CABURp0rhVi+pi4YjCfQqMpcjV2rYKQHPQ3QUZ49h0gjERAS4Qg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 23 00:33:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiCKd-0007ix-CS
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 00:27:59 +0200
+	id 1SiCPz-0005Ds-NA
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 00:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759243Ab2FVW1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 18:27:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38041 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753246Ab2FVW1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 18:27:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B3FF9499
-	for <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Vvcp
-	wCo3wtw6P8nc5hpj1c0b4eU=; b=nrX9YPmc+LQMBrfL7gSY8dzsid4dco0DlN+Y
-	Pvrzl9eR2+sPuq7BthwDUepMF3PpsE5eU0/qJDTzYMSGrgPI+enMDWa+Cpfe8Tjg
-	ApZ/BVm8Mv26kaSvqHJSQRgrvklGEsyVDsSMw2zGVfYnodViLgaF0mMS9MZOCThl
-	sF3NBLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=gXfNRQ
-	AsxgeYkqxabH+Si2kkq8yvp+lTb69MrR7CeKoqyvNsjBNp/vkL144jjPs0ZAcsnx
-	mhY03k8v0i6tF1PDJZqTi9FnunZEZHlzS9JrcbkD9kwdMQWtaUhgKWEt+i7w6Y5X
-	1uuB1JGIxQ0pXXhq40HfRVVH7xpxePpvmq6UQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 132559498
-	for <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:48 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98CFF9497 for
- <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:47 -0400 (EDT)
-X-Mailer: git-send-email 1.7.11.1.29.gf71be5c
-In-Reply-To: <1340404061-11619-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 7E92E618-BCB9-11E1-979E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755430Ab2FVWd1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jun 2012 18:33:27 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:57082 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754775Ab2FVWd1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jun 2012 18:33:27 -0400
+Received: by gglu4 with SMTP id u4so1966649ggl.19
+        for <git@vger.kernel.org>; Fri, 22 Jun 2012 15:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZDGv7qwaTjAiWLq6HxSDmC1FBs+Niuf1dH+mvFkOQgE=;
+        b=XNdgzyPwirBQ4hu9lDvOt5F7iZCs1aqWVA9SY9Da+DQRXZuBDn84yABON/UognRSWs
+         gCQ1skw2HKGMMeU6pXK05HtHnejVWLodrH1j4wQiRdsMX17/cV1hhWN5mWEHhwH+Izpg
+         Ql2vOa2XBUVys6MR79HtcgHBx6bisCpcmHNtKSiNTFIQ/6nzoEXXbqOhGaxlElVpoMuo
+         gZs0TJWObr7k9j2gokTiaytAH5h/9goq2s75YAtReeaBTwy6OZKmKoJhFzjdHZI5f6z3
+         A3eHSb2JFaJTUVXPlYcISZurMayWvdDJfbjCf0qxumfpAjF/nfZ4ib4BagV8oG/MruFd
+         KQPQ==
+Received: by 10.236.185.198 with SMTP id u46mr4358547yhm.33.1340404406415;
+ Fri, 22 Jun 2012 15:33:26 -0700 (PDT)
+Received: by 10.236.29.230 with HTTP; Fri, 22 Jun 2012 15:33:05 -0700 (PDT)
+In-Reply-To: <CABURp0rhVi+pi4YjCfQqMpcjV2rYKQHPQ3QUZ49h0gjERAS4Qg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200482>
 
-The simplify_merges() function needs to look at all history chain to
-find the closest ancestor that is relevant after the simplification,
-but after --first-parent traversal, side parents haven't been marked
-for relevance (they are irrelevant by definition due to the nature
-of first-parent-only traversal) nor culled from the parents list of
-resulting commits.
+On 22 June 2012 15:10, Phil Hord <phil.hord@gmail.com> wrote:
+> On Fri, Jun 22, 2012 at 4:14 PM, Hilco Wijbenga
+> <hilco.wijbenga@gmail.com> wrote:
+>>> You can also compare the commits to see what the differences are.
+>>> This may trigger =C2=A0the developer's memory about how it might ha=
+ve
+>>> happened.
+>>
+>> The only differences seem to be the SHA-1s.
+>
+> Can you tell me which SHA-1s they are? =C2=A0It will be easier for me=
+ to
+> guess at the reflog contents, then.
 
-We cannot simply remove these side parents from the parents list, as
-the output phase still wants to see the parents.  Instead, teach
-simplify_one() and its callees to ignore the later parents.
+You mean which SHA-1s in the reflog? It's the ones listed as @{"18
+hours ago"}: rebase: ... Sorry, I should have pointed that out.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- revision.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 814b96f..d1a4ef5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1949,8 +1949,9 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
- 	}
- 
- 	/*
--	 * Do we know what commit all of our parents should be rewritten to?
--	 * Otherwise we are not ready to rewrite this one yet.
-+	 * Do we know what commit all of our parents that matter
-+	 * should be rewritten to?  Otherwise we are not ready to
-+	 * rewrite this one yet.
- 	 */
- 	for (cnt = 0, p = commit->parents; p; p = p->next) {
- 		pst = locate_simplify_state(revs, p->item);
-@@ -1958,6 +1959,8 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
- 			tail = &commit_list_insert(p->item, tail)->next;
- 			cnt++;
- 		}
-+		if (revs->first_parent_only)
-+			break;
- 	}
- 	if (cnt) {
- 		tail = &commit_list_insert(commit, tail)->next;
-@@ -1970,8 +1973,13 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
- 	for (p = commit->parents; p; p = p->next) {
- 		pst = locate_simplify_state(revs, p->item);
- 		p->item = pst->simplified;
-+		if (revs->first_parent_only)
-+			break;
- 	}
--	cnt = remove_duplicate_parents(commit);
-+	if (!revs->first_parent_only)
-+		cnt = remove_duplicate_parents(commit);
-+	else
-+		cnt = 1;
- 
- 	/*
- 	 * It is possible that we are a merge and one side branch
--- 
-1.7.11.1.29.gf71be5c
+The reflog lists the SHA-1s that the dev had and that were pushed to
+origin/master (so B', C', and D' in my original description). The ones
+that were on origin/master originally (and are/were on my local
+master) are different (B, C, and D).
