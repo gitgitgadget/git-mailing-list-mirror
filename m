@@ -1,66 +1,90 @@
-From: Chris Angelico <rosuav@gmail.com>
-Subject: git bisect/checkout and changes to .gitignore
-Date: Fri, 22 Jun 2012 17:51:00 +1000
-Message-ID: <CAPTjJmq4zv6dBR2Z-HfM7CJoxfprSdJEYYELuyBfahw2PkZ4Lw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push: start warning upcoming default change for push.default
+Date: Fri, 22 Jun 2012 09:57:36 +0200
+Message-ID: <vpqlijfrd73.fsf@bauges.imag.fr>
+References: <7vbokeyie3.fsf@alter.siamese.dyndns.org>
+	<1340195750-846-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vehp9x3yz.fsf@alter.siamese.dyndns.org>
+	<vpqpq8t96zw.fsf@bauges.imag.fr>
+	<7va9zxvkyp.fsf@alter.siamese.dyndns.org>
+	<7v62alvk2e.fsf@alter.siamese.dyndns.org>
+	<vpqd34su0io.fsf@bauges.imag.fr>
+	<7vobocsipo.fsf@alter.siamese.dyndns.org>
+	<vpq62aksicy.fsf@bauges.imag.fr>
+	<7vk3z0shri.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 22 09:51:13 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 22 09:57:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Shye6-0002xT-VR
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 09:51:11 +0200
+	id 1ShykW-0003x6-Ke
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 09:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761552Ab2FVHvC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 03:51:02 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:60031 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761550Ab2FVHvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 03:51:01 -0400
-Received: by obbuo13 with SMTP id uo13so1591405obb.19
-        for <git@vger.kernel.org>; Fri, 22 Jun 2012 00:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Ic9tvCAQ98bqWrY9S+b2rgB634CkFGTrKePLjQuNtq8=;
-        b=tPCnrKxBIgyxzCdHq+QRxDEXnd7q73G2/iLEoyunmcjfF3Bl4LdOfHcFEiGwPiZNez
-         1XXhbDJRNKa8kZRLW80Noq0NzhomyM0zOkFXipX/p6BS5j272VZ2e8K7qaB8s6g50V1O
-         UNVXEvL8EO7Ay9d/LWdGBZ4UZ1TUrSjMxR10YMbqDRu6XwjUy/bqbaRlM30nTAiYWciE
-         XO80MAlvukr26Oj2a1tkxianygqmv0YR6EqkRA6G/XKRSCGaWpfSVPRDy9ODOTHDDjqJ
-         zh4GJ97lmVRo5m9xrbbaF9iGuDHoK5Tj4iVuZLjpX+G/kJP2dTj/uRb+Awfk3KPMbK/o
-         4UiA==
-Received: by 10.182.18.137 with SMTP id w9mr866577obd.75.1340351460603; Fri,
- 22 Jun 2012 00:51:00 -0700 (PDT)
-Received: by 10.182.232.6 with HTTP; Fri, 22 Jun 2012 00:51:00 -0700 (PDT)
+	id S1761567Ab2FVH5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 03:57:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47663 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761559Ab2FVH5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 03:57:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5M7vDZC016142
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 22 Jun 2012 09:57:13 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1ShykL-0001NT-8a; Fri, 22 Jun 2012 09:57:37 +0200
+In-Reply-To: <7vk3z0shri.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 21 Jun 2012 10:21:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 22 Jun 2012 09:57:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5M7vDZC016142
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1340956636.10075@RcapZuSM50lFu2hG5GWipA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200423>
 
-Greetings! I'm not certain if this list or the git-users group is more
-appropriate; my apologies if I've picked wrong.
+Junio C Hamano <gitster@pobox.com> writes:
 
-At my workplace we use git to manage all of our source code. Every now
-and then, we decide that some particular file oughtn't to be
-git-managed, and add it into .gitignore and remove it from the
-repository (for instance, configuration files that become
-per-developer).
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Re-read the part you omitted with [...].  Doesn't it say something
+>>> about "only available"?
+>>
+>> It does, but it seems you're trying hard to avoid telling the user "you
+>> should use 'current'", where 'current' is the only reasonable option for
+>> this user. I still don't understand what problem you're trying to solve.
+>
+> I am avoiding to say "you should use simple/current".  Choice
+> between matching and simple/current is for the user to make (mostly
+> dictated by the project's workflow) and we cannot make a suggestion
+> better than what user knows.
+>
+> Choice between simple and current is mechanically derivable. If the
+> user also uses older version of git, simple is not an option.
 
-Is there a way to checkout an old version of the repository (before
-the file was added to .gitignore), then return to the current state,
-without destroying these sorts of files? Currently, checking out the
-old version quietly "takes control" of the file, and then checking out
-a newer one deletes it.
+I do agree with that. My message tells the user to use 'current' instead
+of 'simple' when not appropriate, not to use 'current' instead of
+'matching', which would indeed be a nonsense. I thought it was clear
+enough, but we can make that more explicit. How about:
 
-I've read through the man pages for 'git checkout' and 'gitignore' and
-searched the one for 'git config' (it's a little large to read all
-of), without seeing an option to preserve files on checkout. Is there
-a way to do this, and if so, where can I find it?
+  (the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+  'current' instead of 'simple' if you sometimes use older versions of Git)
 
-Thanks in advance!
-
-Chris Angelico
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
