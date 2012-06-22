@@ -1,74 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFE] option for find branches in a remote repo which contain a
- certain commit
-Date: Fri, 22 Jun 2012 11:14:59 -0700
-Message-ID: <7vtxy3p61o.fsf@alter.siamese.dyndns.org>
-References: <CAKkAvazNqZWk=QRmSFsFL33M6z+nZZ_yyxxbxwAh=fQk5DVt-Q@mail.gmail.com>
- <CAKkAvazRfb0kTphLKoRQxSEBZwHfVZeaM0xEbcxEw7Mt5RMg8A@mail.gmail.com>
- <CACBZZX6nbWCFWWy5NTMSAPOf4RHUAbC9TuffPPy=2Ehn7KSnaA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ryenus <ryenus@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 20:15:13 2012
+From: Leila Muhtasib <muhtasib@gmail.com>
+Subject: [PATCH] Documentation: Fix misspellings
+Date: Fri, 22 Jun 2012 14:22:09 -0400
+Message-ID: <1340389329-18325-1-git-send-email-muhtasib@gmail.com>
+Cc: Leila Muhtasib <muhtasib@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 22 20:30:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Si8O0-0005fR-9B
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 20:15:12 +0200
+	id 1Si8ct-0001Fz-Tx
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 20:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974Ab2FVSPF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jun 2012 14:15:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53371 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752345Ab2FVSPE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jun 2012 14:15:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4623A7C99;
-	Fri, 22 Jun 2012 14:15:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=GbdUNkTI2E8I
-	QFUrtgsQMzIEMYM=; b=hlwbBErsQs+ds0YNE4uXThcPbk57u7tcOT9aWXW47afT
-	nYbwN5dns6r+HChVJJawUqbqYvI8ai9Vo0vAtQWqQaOtGL2cxbQayHar9h7U6d0t
-	SgtJshYtAmn2wVVr/MiSPQq+4gAoLBigpipFVC+Mo6UwNQzdiFv97C8qRqVPzmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=S8vShH
-	0QNcty/IkAmiioOaAKcOTvu7R+StTpqFMTSHuANB4YZv6I0+oAmIJ+v7ZqEGvWJN
-	NPF2gEzOLFRlyPtmHI3YPHt+gx3XuUn9NDudoeTInzebFi9qIWVtizsULXu6RcTK
-	Ut64Cj90bl+cE0SFmWKeqPHBJ8qLIXhvLDloE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D3AD7C98;
-	Fri, 22 Jun 2012 14:15:03 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EBDB7C8D; Fri, 22 Jun 2012
- 14:15:00 -0400 (EDT)
-In-Reply-To: <CACBZZX6nbWCFWWy5NTMSAPOf4RHUAbC9TuffPPy=2Ehn7KSnaA@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 22 Jun
- 2012 17:24:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E98DADC-BC96-11E1-AC22-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754845Ab2FVSa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 14:30:29 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:50651 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511Ab2FVSa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 14:30:28 -0400
+Received: by qadb17 with SMTP id b17so519757qad.19
+        for <git@vger.kernel.org>; Fri, 22 Jun 2012 11:30:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Taylgcvhc1f9rXRiDG4RH1FG9nuxKJ9X0vRuJpnMbAY=;
+        b=PJaycgoA2OnPysTvH/kiHe4L4OPsnBCQmds36VCL03qAYt0n5K4/XT5aPy0hN1a4o6
+         QxEQ/wgtCwmaP+fbdivXuClgWWdHju0zt+dTy5L5K4CK+6bhTeJG3DL4RkC8NetI3VTx
+         HLMYi4/EXVagCjWSog0Uuz3letgtcVL1hgWTB3Nx1C+iummSbhXW3JZ57ydBb417zeBY
+         /U5HPvsTwUVyvuzwKo7Uj0JKiIUCO4GIRKtQmJ7bkgNevo55eNFaHEkHAyhfMdusjoqA
+         Ld2IGc0eHL/0fkKx6hnwCWLMK/3CS8fiuavcg2xLQu7INWhqm6Sp4x7+jPi4Tfk+MXQx
+         Gvvw==
+Received: by 10.229.135.196 with SMTP id o4mr1581830qct.154.1340389336573;
+        Fri, 22 Jun 2012 11:22:16 -0700 (PDT)
+Received: from localhost ([38.117.156.148])
+        by mx.google.com with ESMTPS id gv1sm3654923qab.8.2012.06.22.11.22.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 22 Jun 2012 11:22:16 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.5 (Apple Git-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200456>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Fri, Jun 22, 2012 at 4:58 PM, ryenus <ryenus@gmail.com> wrote:
->> Given a certain commit, I want there's a command/option for git to
->> make it search the remote repo (e.g. origin) and tell me the
->> branches there which contain that commit.
->
-> git branch --contains <commit>
-> git branch -a --contains <commit>
-> git tag --contains <commit>
+Signed-off-by: Leila Muhtasib <muhtasib@gmail.com>
+---
+ Documentation/diff-options.txt  |    2 +-
+ Documentation/git-submodule.txt |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Yes and no.  These are all local operations, so you would need to do
-a "git clone" before starting to dig history like that.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 6cfedd8..cf4b216 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -59,7 +59,7 @@ endif::git-format-patch[]
+ 	Generate a diffstat. By default, as much space as necessary
+ 	will be used for the filename part, and the rest for the graph
+ 	part. Maximum width defaults to terminal width, or 80 columns
+-	if not connected to a terminal, and can be overriden by
++	if not connected to a terminal, and can be overridden by
+ 	`<width>`. The width of the filename part can be limited by
+ 	giving another width `<name-width>` after a comma. The width
+ 	of the graph part can be limited by using
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 9e488c0..fbbbcb2 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -140,7 +140,7 @@ update::
+ 	checkout the commit specified in the index of the containing repository.
+ 	This will make the submodules HEAD be detached unless `--rebase` or
+ 	`--merge` is specified or the key `submodule.$name.update` is set to
+-	`rebase`, `merge` or `none`. `none` can be overriden by specifying
++	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+ 	`--checkout`.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+-- 
+1.7.7.5 (Apple Git-26)
