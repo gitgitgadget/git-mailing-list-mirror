@@ -1,71 +1,68 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: Editing the root commit
-Date: Fri, 22 Jun 2012 23:26:34 +0100
-Message-ID: <20120622222633.GH25478@arachsys.com>
-References: <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com>
- <20120620093205.GB10579@arachsys.com>
- <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
- <20120620192938.GC31520@sigill.intra.peff.net>
- <20120620193922.GB3192@arachsys.com>
- <20120620194824.GA32228@sigill.intra.peff.net>
- <20120622205026.GI32205@arachsys.com>
- <7vobobm3mi.fsf@alter.siamese.dyndns.org>
- <20120622220231.GG25478@arachsys.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 23 00:26:57 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/3] "log --first-parent --simplify-merges/by-decoration"
+Date: Fri, 22 Jun 2012 15:27:37 -0700
+Message-ID: <1340404061-11619-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 23 00:27:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiCJb-0006RR-TW
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 00:26:56 +0200
+	id 1SiCKT-0007W8-JN
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 00:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759034Ab2FVW0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 18:26:52 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:33496 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759050Ab2FVW0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 18:26:37 -0400
-Received: from [81.2.114.212] (helo=arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1SiCJG-0006u0-TQ; Fri, 22 Jun 2012 23:26:35 +0100
-Content-Disposition: inline
-In-Reply-To: <20120622220231.GG25478@arachsys.com>
+	id S1754304Ab2FVW1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 18:27:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37984 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753246Ab2FVW1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 18:27:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8D4A9490
+	for <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=L9ThoCEUjH3KWXcjCFGrfUrfQ0c
+	=; b=Fd7VrAuOM2TgtJ2P+Vm/A700WXOCtZDqPha4F6TZy0uHX+edxduZDnZ44xo
+	ABNPBFTw1MbpHfr2/StCNqvik87je/sg559FyaVB+MbA09MtYY0CP1AKE6pvskOl
+	scUYgjOpSIW5m72+2p0ZO96QG82k3F3fBqzOrGBBm15cl7Og=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=x8sB3fONjRRBQEHCorquDZaRD5Sul
+	5JVLDNTH+A6Xb8/FU/P6NQgddWqK+eX+PutU9cs73n65ehPp7rTJA5oVg+tHGCA+
+	FvBbHVwWOCrWfrs02OfDGkOS+BsBfQSaYKRqBciupYnF0/7cXn569L57llvvvYlD
+	JhdxiRjR9CGYko=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0944948F
+	for <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59210948E for
+ <git@vger.kernel.org>; Fri, 22 Jun 2012 18:27:42 -0400 (EDT)
+X-Mailer: git-send-email 1.7.11.1.29.gf71be5c
+X-Pobox-Relay-ID: 7B70153C-BCB9-11E1-A860-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200478>
 
-Chris Webb <chris@arachsys.com> writes:
+It is unclear what it means to "simplify-merges" while traversing
+only the "first-parent" ancestry chain, but the combination of the
+options makes the simplification logic to use in-core commit objects
+that haven't been examined for relevance, either producing incorrect
+result or taking too long to produce any output.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > It would be a lot more palatable approach to teach "rebase -i" defer
-> > its "detaching HEAD to the onto commit" step before starting to read
-> > the insn sheet.  Would such a change be too involved for it to be
-> > worth supporting "rebase --root -i"?
-> 
-> I'm not sure as I don't really know the rebase shell scripts well at all,
-> but I'm happy to take a look and see.
+Teach the simplification logic to ignore commits that the
+first-parent traversal logic ignored when both are in effect to work
+around the issue.
 
-Ignoring the implementation, I think the nastiest bit here is what happens
-for the user if there's a conflict, as Peff pointed out. Ideally, we want to
-checkout a state we're going to replay the patch onto, so that if we drop
-out because there's conflict (e.g. the patch modifies a file which doesn't
-exist yet), git diff and git diff --cached do something sensible.
+Junio C Hamano (3):
+  revision: "simplify" options imply topo-order sort
+  revision: note the lack of free() in simplify_merges()
+  revision: ignore side parents while running simplify-merges
 
-Without a detached orphan checkout, as Peff says, we'd have to put a
-temporary empty commit in and then manually make the first commit avoiding
-using it as a parent, which is very ugly. I'll take a look, but might be too
-complex to be worth doing for this corner-case.
+ revision.c | 41 +++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
-Cheers,
-
-Chris.
+-- 
+1.7.11.1.29.gf71be5c
