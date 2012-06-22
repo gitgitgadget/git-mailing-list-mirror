@@ -1,94 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pre-receive hook ; how to detect file and append code ?
-Date: Fri, 22 Jun 2012 11:02:41 -0700
-Message-ID: <7v395nql6m.fsf@alter.siamese.dyndns.org>
-References: <20120622183709.2f0beaa6@shiva.selfip.org>
+Subject: Re: [PATCH] Restore use of 'help.format' configuration property in
+ 'git help'
+Date: Fri, 22 Jun 2012 11:06:29 -0700
+Message-ID: <7vy5nfp6fu.fsf@alter.siamese.dyndns.org>
+References: <1340369326-1840-1-git-send-email-patthoyts@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Fri Jun 22 20:02:50 2012
+Cc: git@vger.kernel.org, Vincent van Ravesteijn <vfr@lyx.org>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Jun 22 20:06:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Si8C0-0005YN-Ou
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 20:02:49 +0200
+	id 1Si8Ff-0002IG-V5
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 20:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755960Ab2FVSCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 14:02:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48325 "EHLO
+	id S1756007Ab2FVSGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 14:06:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50081 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755838Ab2FVSCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 14:02:43 -0400
+	id S1751561Ab2FVSGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 14:06:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5118579F4;
-	Fri, 22 Jun 2012 14:02:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 132977AB3;
+	Fri, 22 Jun 2012 14:06:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ruqqO1c1NRX/B0YGinDL2V/uql8=; b=H5JU8s
-	HE3hs8kl+rBwQLtTFXXWU3vz8mC+pr0lGgtHLQF9voBrvcXrOScjirmdZqGjbck9
-	EPNwDOzYUUFay+K8b7kgruVjlSXDXr+6wYD43Cpcu5cECPQG/LebQ+9YXDtis8AL
-	FHI24vTOAksJhvJxHYknp43TJkRmC7waCSs80=
+	:content-type; s=sasl; bh=SWdBBOCoF2mJq5/oZ5KUkEW1YHg=; b=xKXnGO
+	l8fEVnvGMe1rxfwGCHwk4qqiKUCEKk/Lf22UDIVkr06tLB1ui5lWINqKa8xh3Iqo
+	oeXDG5cggLvT+4JI5wAZme62KYHNyq7TtVeuMjYFZhIuANr0P0En5/DnJa+sJtlt
+	gGOjy8E3QBxrYu9Cy8k3pAM26OGvYJOI3x0Ns=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nfmEzI/d1p//QvG4APNIB8pVym7FxUpL
-	BK/SXqSJRyRxxuNeejl3AN/eAasr2mbDpa8pqpZTNQCGEZ4dzU7z4nn6Hy8aeGf3
-	oqpngK3Gp4SrYzUVOWvCVXXbGKL/i/eNnfKWWl5Kap/v9ie0Kc9KS8k4klilHU1z
-	wn9oEt+8LOo=
+	:content-type; q=dns; s=sasl; b=BI5vTp9xkS1eHN+WF0Lz01pi81HLFkcP
+	RCMm2TvjJVFHzx6nsFZLaxVbdLH3PBWST9zqzblD7L7PH1AD18tHl4859KCheykZ
+	qWKqMGCkxZ9/QyZozeIfwGBJkdGs8Q7JC+qb30up2uhEW4ZGoQZS/rrzdDO9P6CD
+	B9vSTksPnj8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 484DA79F2;
-	Fri, 22 Jun 2012 14:02:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09BBA7AB2;
+	Fri, 22 Jun 2012 14:06:31 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF56979F1; Fri, 22 Jun 2012
- 14:02:42 -0400 (EDT)
-In-Reply-To: <20120622183709.2f0beaa6@shiva.selfip.org> (J. Bakshi's message
- of "Fri, 22 Jun 2012 18:37:09 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65B207AB1; Fri, 22 Jun 2012
+ 14:06:30 -0400 (EDT)
+In-Reply-To: <1340369326-1840-1-git-send-email-patthoyts@users.sourceforge.net> (Pat
+ Thoyts's message of "Fri, 22 Jun 2012 13:48:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7696BBD0-BC94-11E1-A9C8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FE3ABB7C-BC94-11E1-B3B1-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200454>
 
-"J. Bakshi" <joydeep.bakshi@infoservices.in> writes:
+Pat Thoyts <patthoyts@users.sourceforge.net> writes:
 
-> How can I detect a specific file during push, if it is modified or not ?
-> And how can I then append a block of code into that file; if modified
-> during push ? I think pre-receive hook is the best for this operation.
+> Commit 1cc8af0 "help: use HTML as the default help format on Windows"
+> lost the ability to make use of the help.format config value by forcing
+> the use of a compiled in default if no command-line argument was provided.
+> This commit restores the use of the help.format value if one is
+> available, overriding the compiled default.
 
-The purpose of the "pre-receive" hook is to either approve or reject
-a proposed change made by the push.  When it runs, the repository
-already has received all the objects necessary to inspect the
-proposed change locally (from the receiving repository's point of
-view).
+Of course.  Sorry for not catching it earlier.
 
-A proposed change comes in the form of <old> <new> <refname> that
-says "The pusher saw <old> at <refname> when he started this push,
-and it wants to update the ref to <new>".  So any of the following
-standard techniques (note: not exhaustive) to inspect the changes
-between <old> and <new> can be used:
-
-    # are log messages sane?
-    git log <old>..<new>
-
-    # are the changes sane?
-    git diff <old>..<new>
-
-    # does it leave forbidden paths intact
-    git diff --name-only <old>..<new>
-
-If your script likes the proposed change, exit with 0.  If it does
-not, exit with non-zero.
-
-That is all it can do.  It is not supposed to change <new> to some
-other value, and there is no interface to do so.
-
-If you want to rewrite the history pushed into the repository after
-a push is accepted, you would want to run it from post-receive or
-something.  All the usual warning about rewriting published history
-will apply if you do so, however.  After all, the history is already
-published immediately before post-recieve (or post-update) runs.
+>
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> ---
+>  builtin/help.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 536d4fd..8f9cd60 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -449,10 +449,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+>  	setup_git_directory_gently(&nongit);
+>  	git_config(git_help_config, NULL);
+>  
+> -	if (parsed_help_format == HELP_FORMAT_NONE)
+> -		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
+> -	else
+> +	if (parsed_help_format != HELP_FORMAT_NONE)
+>  		help_format = parsed_help_format;
+> +	if (help_format == HELP_FORMAT_NONE)
+> +		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
+>  
+>  	alias = alias_lookup(argv[0]);
+>  	if (alias && !is_git_command(argv[0])) {
