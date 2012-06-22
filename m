@@ -1,71 +1,61 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Chris Angelico <rosuav@gmail.com>
 Subject: Re: git bisect/checkout and changes to .gitignore
-Date: Fri, 22 Jun 2012 12:31:31 +0200
-Message-ID: <4FE44983.30209@viscovery.net>
+Date: Fri, 22 Jun 2012 22:07:52 +1000
+Message-ID: <CAPTjJmqw6hC_SnWiNOfcebzu4ywWkvLNOG8pbi_D+rBnQYenMw@mail.gmail.com>
 References: <CAPTjJmq4zv6dBR2Z-HfM7CJoxfprSdJEYYELuyBfahw2PkZ4Lw@mail.gmail.com>
+	<4FE44983.30209@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Angelico <rosuav@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 12:31:41 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 22 14:08:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Si19Q-0008Nm-Rd
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 12:31:41 +0200
+	id 1Si2ef-0007Ag-3I
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 14:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762042Ab2FVKbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 06:31:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:18509 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1762034Ab2FVKbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 06:31:35 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Si19I-0004My-AA; Fri, 22 Jun 2012 12:31:32 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E47731660F;
-	Fri, 22 Jun 2012 12:31:31 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <CAPTjJmq4zv6dBR2Z-HfM7CJoxfprSdJEYYELuyBfahw2PkZ4Lw@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S932648Ab2FVMHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 08:07:53 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41938 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932573Ab2FVMHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 08:07:53 -0400
+Received: by obbuo13 with SMTP id uo13so1863249obb.19
+        for <git@vger.kernel.org>; Fri, 22 Jun 2012 05:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=lThvOyV3aClZ+LEsqYYcofP0cFgkGZpafRMBoewnA9U=;
+        b=AG+ehMVXZr/VoJ0XvkmaAf9kRrFtnj6hG+Yp8zCAibih7iQyTdwinv/w0qVMECZUbO
+         Tu+133hRGUnZggzbdjLyHOQUI3clv0G08AoQSPjplUWXe9zZ2umPIrUwyU0bVy/glj0o
+         NS66O7e6B7l76VcRTwXuBmV93UQrhdAl8EZ2ruvwZ7X7Buo+zdBPeOoLClA4klr0Q3ng
+         HTKQLh1dqfxNAMn281ZQpCt7a1VmLFEZYRTFthFCowixbFNGGkAirOnVum+qq/q/5JFT
+         eSHWpN4FviGQodM3WRXPaF0h7bxVi+moc+aNV/xGHC+BCnpa/jxT5cbD/NDF+vUlABlb
+         91tg==
+Received: by 10.182.18.137 with SMTP id w9mr1657894obd.75.1340366872630; Fri,
+ 22 Jun 2012 05:07:52 -0700 (PDT)
+Received: by 10.182.232.6 with HTTP; Fri, 22 Jun 2012 05:07:52 -0700 (PDT)
+In-Reply-To: <4FE44983.30209@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200434>
 
-Am 6/22/2012 9:51, schrieb Chris Angelico:
-> At my workplace we use git to manage all of our source code. Every now
-> and then, we decide that some particular file oughtn't to be
-> git-managed, and add it into .gitignore and remove it from the
-> repository (for instance, configuration files that become
-> per-developer).
-> 
-> Is there a way to checkout an old version of the repository (before
-> the file was added to .gitignore), then return to the current state,
-> without destroying these sorts of files? Currently, checking out the
-> old version quietly "takes control" of the file, and then checking out
-> a newer one deletes it.
-> 
-> I've read through the man pages for 'git checkout' and 'gitignore' and
-> searched the one for 'git config' (it's a little large to read all
-> of), without seeing an option to preserve files on checkout. Is there
-> a way to do this, and if so, where can I find it?
+On Fri, Jun 22, 2012 at 8:31 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Files mentioned in .gitignore are considered garbage. But your file is
+> precious, hence, you should not list it in .gitignore.
 
-Files mentioned in .gitignore are considered garbage. But your file is
-precious, hence, you should not list it in .gitignore.
+An important distinction! Thanks for the thread pointer.
 
-Here is a thread that is worthwhile to read. I posted a patch
+The --no-overwrite-ignore flag is part of what I want. It at least
+gives protection against accidentally losing things (on Wednesday, I
+unwittingly disposed of several large binary files, and didn't even
+know about it until a chance discovery of directory size). Is there a
+way to specify that this flag always be used, even when the checkout
+doesn't happen on the command line but through (eg) git bisect?
 
-http://thread.gmane.org/gmane.comp.version-control.git/185724/focus=185733
-
-but it was dismissed, see
-
-http://thread.gmane.org/gmane.comp.version-control.git/185724/focus=185746
-
--- Hannes
+Chris Angelico
