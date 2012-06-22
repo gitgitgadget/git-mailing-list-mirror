@@ -1,57 +1,202 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFE] option for find branches in a remote repo which contain a
- certain commit
-Date: Fri, 22 Jun 2012 17:24:41 +0200
-Message-ID: <CACBZZX6nbWCFWWy5NTMSAPOf4RHUAbC9TuffPPy=2Ehn7KSnaA@mail.gmail.com>
-References: <CAKkAvazNqZWk=QRmSFsFL33M6z+nZZ_yyxxbxwAh=fQk5DVt-Q@mail.gmail.com>
- <CAKkAvazRfb0kTphLKoRQxSEBZwHfVZeaM0xEbcxEw7Mt5RMg8A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: ryenus <ryenus@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 17:25:13 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 3/3] git-remote-mediawiki: add credential support
+Date: Fri, 22 Jun 2012 18:07:11 +0200
+Message-ID: <1340381231-9522-4-git-send-email-Matthieu.Moy@imag.fr>
+References: <1340381231-9522-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Javier.Roucher-Iglesias@ensimag.imag.fr,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 22 18:07:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Si5jS-0005hK-SU
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 17:25:11 +0200
+	id 1Si6Oc-0008Pz-Uo
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 18:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762353Ab2FVPZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 11:25:04 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:62541 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762296Ab2FVPZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 11:25:03 -0400
-Received: by obbuo13 with SMTP id uo13so2077280obb.19
-        for <git@vger.kernel.org>; Fri, 22 Jun 2012 08:25:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sy3qfc8zwUGbIMW7cMsp1d2XdUDrCIarK4Gsh0HY/oA=;
-        b=xAbhHiqe99kXwrpXCvWXcvKzpglM6q7+GgXi1HoVGfzCpL4k5J4uob7T8CzjXrcPgB
-         XF0h7S1JTKUIbceszOyU7o3VAtyaUrug2qNBUf9jPyoWbNOuCHJPY8pKzO4opy3owlrW
-         OGUsld8z9wbPLxX4g9P16QXOOThTEYNN5iE49D+UoyXSy/DNhFpRcB8izo6flVvjiC3F
-         sU+jRuoTJu/v85hxAb49t9B/n3wvRcVLRBKTHHqQJtk+vGeqRDzgeKK+UBYM88IATVyY
-         XRyrs4eZP7saP8U6nat6MmK6HvLsd4IDg++5Lko8MWsI0t4d0uZqE0qlFDm2F+vfdwlI
-         YGCw==
-Received: by 10.182.76.169 with SMTP id l9mr2364175obw.44.1340378702203; Fri,
- 22 Jun 2012 08:25:02 -0700 (PDT)
-Received: by 10.182.167.65 with HTTP; Fri, 22 Jun 2012 08:24:41 -0700 (PDT)
-In-Reply-To: <CAKkAvazRfb0kTphLKoRQxSEBZwHfVZeaM0xEbcxEw7Mt5RMg8A@mail.gmail.com>
+	id S1755918Ab2FVQHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 12:07:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48533 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755813Ab2FVQHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 12:07:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5MG77u3006012
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 22 Jun 2012 18:07:07 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Si6OS-0004vy-4b; Fri, 22 Jun 2012 18:07:32 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Si6OS-0002UO-3J; Fri, 22 Jun 2012 18:07:32 +0200
+X-Mailer: git-send-email 1.7.11.5.g0c7e058.dirty
+In-Reply-To: <1340381231-9522-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 22 Jun 2012 18:07:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q5MG77u3006012
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1340986029.04844@EYZzCjHaTEpjzjCd6fX35g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200441>
 
-On Fri, Jun 22, 2012 at 4:58 PM, ryenus <ryenus@gmail.com> wrote:
-> Given a certain commit, I want there's a command/option for git to
-> make it search the remote repo (e.g. origin) and tell me the
-> branches there which contain that commit.
+The previous version implemented the possibility to log in a wiki, but
+the username and password had to be provided as configuration variables.
+We add the possibility to use the Git credential system to prompt
+the password.
 
-git branch --contains <commit>
-git branch -a --contains <commit>
-git tag --contains <commit>
+The support if implemented with generic functions that mimic the C API,
+designed to be usable from other contexts in the future (i.e. they may
+migrate to Git.pm if someone is interested).
+
+While we're there, do a bit of refactoring in mw_connect_maybe.
+
+Based on patch by: Javier Roucher Iglesias <Javier.Roucher-Iglesias@ensimag.imag.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki | 106 +++++++++++++++++++++++++++++----
+ 1 file changed, 94 insertions(+), 12 deletions(-)
+
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index c18bfa1..a34f53f 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -43,6 +43,8 @@ use encoding 'utf8';
+ binmode STDERR, ":utf8";
+ 
+ use URI::Escape;
++use IPC::Open2;
++
+ use warnings;
+ 
+ # Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
+@@ -151,28 +153,108 @@ while (<STDIN>) {
+ 
+ ########################## Functions ##############################
+ 
++## credential API management (generic functions)
++
++sub credential_from_url {
++	my $url = shift;
++	my $parsed = URI->new($url);
++	my %credential;
++
++	if ($parsed->scheme) {
++		$credential{protocol} = $parsed->scheme;
++	}
++	if ($parsed->host) {
++		$credential{host} = $parsed->host;
++	}
++	if ($parsed->path) {
++		$credential{path} = $parsed->path;
++	}
++	if ($parsed->userinfo) {
++		if ($parsed->userinfo =~ /([^:]*):(.*)/) {
++			$credential{username} = $1;
++			$credential{password} = $2;
++		} else {
++			$credential{username} = $parsed->userinfo;
++		}
++	}
++
++	return %credential;
++}
++
++sub credential_read {
++	my %credential;
++	my $reader = shift;
++	my $op = shift;
++	while (<$reader>) {
++		my ($key, $value) = /([^=]*)=(.*)/;
++		if (not defined $key) {
++			die "ERROR receiving response from git credential $op:\n$_\n";
++		}
++		$credential{$key} = $value;
++	}
++	return %credential;
++}
++
++sub credential_write {
++	my $credential = shift;
++	my $writer = shift;
++	while (my ($key, $value) = each(%$credential) ) {
++		if ($value) {
++			print $writer "$key=$value\n";
++		}
++	}
++}
++
++sub credential_run {
++	my $op = shift;
++	my $credential = shift;
++	my $pid = open2(my $reader, my $writer, "git credential $op");
++	credential_write($credential, $writer);
++	print $writer "\n";
++	close($writer);
++	
++	if ($op eq "fill") {
++		%$credential = credential_read($reader, $op);
++	} else {
++		if (<$reader>) {
++			die "ERROR while running git credential $op:\n$_";
++		}
++	}
++	close($reader);
++	waitpid($pid, 0);
++	my $child_exit_status = $? >> 8;
++	if ($child_exit_status != 0) {
++		die "'git credential $op' failed with code $child_exit_status.";
++	}
++}
++
+ # MediaWiki API instance, created lazily.
+ my $mediawiki;
+ 
+ sub mw_connect_maybe {
+ 	if ($mediawiki) {
+-	    return;
++		return;
+ 	}
+ 	$mediawiki = MediaWiki::API->new;
+ 	$mediawiki->{config}->{api_url} = "$url/api.php";
+ 	if ($wiki_login) {
+-		if (!$mediawiki->login({
+-			lgname => $wiki_login,
+-			lgpassword => $wiki_passwd,
+-			lgdomain => $wiki_domain,
+-		})) {
+-			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $url\n";
+-			print STDERR "(error " .
+-			    $mediawiki->{error}->{code} . ': ' .
+-			    $mediawiki->{error}->{details} . ")\n";
+-			exit 1;
++		my %credential = credential_from_url($url);
++		$credential{username} = $wiki_login;
++		$credential{password} = $wiki_passwd;
++		credential_run("fill", \%credential);
++		my $request = {lgname => $credential{username},
++			       lgpassword => $credential{password},
++			       lgdomain => $wiki_domain};
++		if ($mediawiki->login($request)) {
++			credential_run("approve", \%credential);
++			print STDERR "Logged in mediawiki user \"$credential{username}\".\n";
+ 		} else {
+-			print STDERR "Logged in with user \"$wiki_login\".\n";
++			print STDERR "Failed to log in mediawiki user \"$credential{username}\" on $url\n";
++			print STDERR "  (error " .
++				$mediawiki->{error}->{code} . ': ' .
++				$mediawiki->{error}->{details} . ")\n";
++			credential_run("reject", \%credential);
++			exit 1;
+ 		}
+ 	}
+ }
+-- 
+1.7.11.5.g0c7e058.dirty
