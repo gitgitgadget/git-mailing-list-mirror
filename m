@@ -1,413 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/3] add 'git credential' plumbing command
-Date: Fri, 22 Jun 2012 18:07:09 +0200
-Message-ID: <1340381231-9522-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1340381231-9522-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Javier.Roucher-Iglesias@ensimag.imag.fr,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	Kim Thuat Nguyen <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jun 22 18:13:18 2012
+From: Michael Horowitz <mike@horowitz.name>
+Subject: git-p4: Jobs and skipSubmitEdit
+Date: Fri, 22 Jun 2012 12:15:11 -0400
+Message-ID: <CAFLRbop2aETNp0-6AdvSTx7Jmh7epYZ6rQc6hhFHbxZrGdEo9g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 22 18:16:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Si6Tw-0007aK-A2
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 18:13:12 +0200
+	id 1Si6XG-0003l8-Ed
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 18:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762476Ab2FVQNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 12:13:07 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50624 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758348Ab2FVQNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 12:13:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5MG72lo005986
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 22 Jun 2012 18:07:02 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Si6OM-0004vL-S4; Fri, 22 Jun 2012 18:07:26 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Si6OM-0002UI-Qs; Fri, 22 Jun 2012 18:07:26 +0200
-X-Mailer: git-send-email 1.7.11.5.g0c7e058.dirty
-In-Reply-To: <1340381231-9522-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 22 Jun 2012 18:07:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5MG72lo005986
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1340986024.0339@8OBozujyBtlYP9TFCkjmEw
+	id S1762626Ab2FVQQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 12:16:33 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:40892 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762511Ab2FVQPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 12:15:12 -0400
+Received: by dady13 with SMTP id y13so2522068dad.19
+        for <git@vger.kernel.org>; Fri, 22 Jun 2012 09:15:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=VEpLdalAHLmPaRtObNJ0KlDtKicpeFzbaV1M+sZmNa8=;
+        b=I/fWHLiZvWvLmqyJ5aPWCjFumjf09oARCO0dJz2M/wTaCb8IfvwnKV+3B5xKS0QzeN
+         nhzCKuQMCskG1sMpt3aNBUjA4SVUUIQ3w0KpMyxylXKbiYHHYA5mx38lOpN5fb1Y+Db9
+         f7d5wA7NXbDXNXFsECQcKBsGj+nuv+H+mSREg4fHds1/nQH/f5EYkIvs7RhlMxTP3FH5
+         20tfVVUwVLmwuI5bGmsyga3Idu8PvVceAwYUBiiMgCPblfgB7jPGz/FkBNc3muwgx9Li
+         HxJa+qa+P1gpvPo0SEJK0dXs3nrpUbok+cP0mkRJYm0wB5tu9httIRG9MCO6Sg3NO9oP
+         Afnw==
+Received: by 10.68.227.197 with SMTP id sc5mr12334663pbc.58.1340381711902;
+ Fri, 22 Jun 2012 09:15:11 -0700 (PDT)
+Received: by 10.68.44.73 with HTTP; Fri, 22 Jun 2012 09:15:11 -0700 (PDT)
+X-Google-Sender-Auth: 082bnFqrWtdVAUNb64eu9_xSBcI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200445>
 
-From: Javier Roucher Iglesias <Javier.Roucher-Iglesias@ensimag.imag.fr>
+Hello,
 
-The credential API is in C, and not available to scripting languages.
-Expose the functionalities of the API by wrapping them into a new
-plumbing command "git credentials".
+I've written a git prepare-commit-msg hook to do what the Perforce
+JobsView would essentially do, so I can include the jobs directly in
+my git commit message, and then use git-p4.skipSubmitEdit=true, so I
+can just push things into Perforce directly from git without ever
+being prompted by Perforce.
 
-In other words, replace the internal "test-credential" by an official Git
-command.
+Problem is that this doesn't work, because git-p4 tabs in the entire
+commit message to put it in the "Description:" section of the Perforce
+changelist, and my "Jobs:" ends up tabbed in, and it it required by
+Perforce to be at the beginning of the line.  The submit ends up
+failing, because "Jobs:" is required.  I am forced to turn off
+skipSubmitEdit and edit the message to remove the tab from the "Jobs:"
+line each commit.
 
-Most documentation writen by: Jeff King <peff@peff.net>
-Signed-off-by: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
-Signed-off-by: Kim Thuat Nguyen <Kim-Thuat.Nguyen@ensimag.imag.fr>
-Signed-off-by: Javier Roucher Iglesias <Javier.Roucher-Iglesias@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- .gitignore                                  |   2 +-
- Documentation/git-credential.txt            | 126 ++++++++++++++++++++++++++++
- Documentation/technical/api-credentials.txt |  39 +--------
- Makefile                                    |   2 +-
- builtin.h                                   |   1 +
- test-credential.c => builtin/credential.c   |  20 ++---
- git.c                                       |   1 +
- t/lib-credential.sh                         |  14 +++-
- 8 files changed, 153 insertions(+), 52 deletions(-)
- create mode 100644 Documentation/git-credential.txt
- rename test-credential.c => builtin/credential.c (63%)
+Is there any option to make this work right, or does the git-p4 not
+support this?
 
-diff --git a/.gitignore b/.gitignore
-index bf66648..c188d0b 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -31,6 +31,7 @@
- /git-commit-tree
- /git-config
- /git-count-objects
-+/git-credential
- /git-credential-cache
- /git-credential-cache--daemon
- /git-credential-store
-@@ -172,7 +173,6 @@
- /gitweb/static/gitweb.js
- /gitweb/static/gitweb.min.*
- /test-chmtime
--/test-credential
- /test-ctype
- /test-date
- /test-delta
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-new file mode 100644
-index 0000000..b64ac30
---- /dev/null
-+++ b/Documentation/git-credential.txt
-@@ -0,0 +1,126 @@
-+git-credential(7)
-+=================
-+
-+NAME
-+----
-+git-credential - retrieve and store user credentials
-+
-+SYNOPSIS
-+--------
-+------------------
-+git credential <fill|approve|reject>
-+------------------
-+
-+DESCRIPTION
-+-----------
-+
-+Git has an internal interface for storing and retrieving credentials
-+from system-specific helpers, as well as prompting the user for
-+usernames and passwords. The git-credential command exposes this
-+interface to scripts which may want to retrieve, store, or prompt for
-+credentials in the same manner as git. The design of this scriptable
-+interface models the internal C API; see
-+link:technical/api-credentials.txt[the git credential API] for more
-+background on the concepts.
-+
-+git-credential takes an "action" option on the command-line (one of
-+`fill`, `approve`, or `reject`) and reads a credential description
-+on stdin (see <<IOFMT,INPUT/OUTPUT FORMAT>>).
-+
-+If the action is `fill`, git-credential will attempt to add "username"
-+and "password" attributes to the description by reading config files,
-+by contacting any configured credential helpers, or by prompting the
-+user. The username and password attributes of the credential
-+description are then printed to stdout together with the attributes
-+already provided.
-+
-+If the action is `approve`, git-credential will send the description
-+to any configured credential helpers, which may store the credential
-+for later use. 
-+
-+If the action is `reject`, git-credential will send the description to
-+any configured credential helpers, which may erase any stored
-+credential matching the description.
-+
-+If the action is `approve` or `reject`, no output should be emitted.
-+
-+TYPICAL WORKFLOW
-+----------------
-+
-+An application using git-credential will typically follow this
-+workflow:
-+
-+  1. Generate a credential description based on the context.
-++
-+For example, if we want a password for
-+`https://example.com/foo.git`, we might generate the following
-+credential description (don't forget the blank line at the end):
-+
-+         protocol=https
-+         host=example.com
-+         path=foo.git
-+
-+  2. Ask git-credential to give us a username and password for this
-+     description. This is done by running `git credential fill`,
-+     feeding the description from step (1) to its stdin. The username
-+     and password will be produced on stdout, like:
-+
-+	username=bob
-+	password=secr3t
-+
-+  3. Try to use the credential (e.g., by accessing the URL with the
-+     username and password from step (2)).
-+
-+  4. Report on the success or failure of the password. If the
-+     credential allowed the operation to complete successfully, then
-+     it can be marked with an "approve" action. If the credential was
-+     rejected during the operation, use the "reject" action. In either
-+     case, `git credential` should be fed with the credential
-+     description obtained from step (2) together with the ones already
-+     provided in step (1).
-+
-+[[IOFMT]]
-+INPUT/OUTPUT FORMAT
-+-------------------
-+
-+`git credential` reads and/or writes (depending on the action used)
-+credential information in its standard input/output. These information
-+can correspond either to keys from which `git credential` will obtain
-+the login/password information (e.g. host, protocol, path), or to the
-+actual credential data to be obtained (login/password).
-+
-+The credential is split into a set of named attributes.
-+Attributes are provided to the helper, one per line. Each attribute is
-+specified by a key-value pair, separated by an `=` (equals) sign,
-+followed by a newline. The key may contain any bytes except `=`,
-+newline, or NUL. The value may contain any bytes except newline or NUL.
-+In both cases, all bytes are treated as-is (i.e., there is no quoting,
-+and one cannot transmit a value with newline or NUL in it). The list of
-+attributes is terminated by a blank line or end-of-file.
-+Git will send the following attributes (but may not send all of
-+them for a given credential; for example, a `host` attribute makes no
-+sense when dealing with a non-network protocol):
-+
-+`protocol`::
-+
-+	The protocol over which the credential will be used (e.g.,
-+	`https`).
-+
-+`host`::
-+
-+	The remote hostname for a network credential.
-+
-+`path`::
-+
-+	The path with which the credential will be used. E.g., for
-+	accessing a remote https repository, this will be the
-+	repository's path on the server.
-+
-+`username`::
-+
-+	The credential's username, if we already have one (e.g., from a
-+	URL, from the user, or from a previously run helper).
-+
-+`password`::
-+
-+	The credential's password, if we are asking it to be stored.
-diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
-index adb6f0c..5977b58 100644
---- a/Documentation/technical/api-credentials.txt
-+++ b/Documentation/technical/api-credentials.txt
-@@ -241,42 +241,9 @@ appended to its command line, which is one of:
- 	Remove a matching credential, if any, from the helper's storage.
- 
- The details of the credential will be provided on the helper's stdin
--stream. The credential is split into a set of named attributes.
--Attributes are provided to the helper, one per line. Each attribute is
--specified by a key-value pair, separated by an `=` (equals) sign,
--followed by a newline. The key may contain any bytes except `=`,
--newline, or NUL. The value may contain any bytes except newline or NUL.
--In both cases, all bytes are treated as-is (i.e., there is no quoting,
--and one cannot transmit a value with newline or NUL in it). The list of
--attributes is terminated by a blank line or end-of-file.
--
--Git will send the following attributes (but may not send all of
--them for a given credential; for example, a `host` attribute makes no
--sense when dealing with a non-network protocol):
--
--`protocol`::
--
--	The protocol over which the credential will be used (e.g.,
--	`https`).
--
--`host`::
--
--	The remote hostname for a network credential.
--
--`path`::
--
--	The path with which the credential will be used. E.g., for
--	accessing a remote https repository, this will be the
--	repository's path on the server.
--
--`username`::
--
--	The credential's username, if we already have one (e.g., from a
--	URL, from the user, or from a previously run helper).
--
--`password`::
--
--	The credential's password, if we are asking it to be stored.
-+stream. The exact format is the same as the input/output format of the
-+`git credential` plumbing command (see the section `INPUT/OUTPUT
-+FORMAT` in linkgit:git-credential[7] for a detailed specification).
- 
- For a `get` operation, the helper should produce a list of attributes
- on stdout in the same format. A helper is free to produce a subset, or
-diff --git a/Makefile b/Makefile
-index 4592f1f..670366b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -480,7 +480,6 @@ X =
- PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- 
- TEST_PROGRAMS_NEED_X += test-chmtime
--TEST_PROGRAMS_NEED_X += test-credential
- TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
-@@ -827,6 +826,7 @@ BUILTIN_OBJS += builtin/commit-tree.o
- BUILTIN_OBJS += builtin/commit.o
- BUILTIN_OBJS += builtin/config.o
- BUILTIN_OBJS += builtin/count-objects.o
-+BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
- BUILTIN_OBJS += builtin/diff-files.o
- BUILTIN_OBJS += builtin/diff-index.o
-diff --git a/builtin.h b/builtin.h
-index 338f540..48feddc 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -66,6 +66,7 @@ extern int cmd_commit(int argc, const char **argv, const char *prefix);
- extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_config(int argc, const char **argv, const char *prefix);
- extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
-+extern int cmd_credential(int argc, const char **argv, const char *prefix);
- extern int cmd_describe(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_files(int argc, const char **argv, const char *prefix);
- extern int cmd_diff_index(int argc, const char **argv, const char *prefix);
-diff --git a/test-credential.c b/builtin/credential.c
-similarity index 63%
-rename from test-credential.c
-rename to builtin/credential.c
-index dee200e..4147314 100644
---- a/test-credential.c
-+++ b/builtin/credential.c
-@@ -1,21 +1,18 @@
--#include "cache.h"
-+#include <stdio.h>
- #include "credential.h"
--#include "string-list.h"
-+#include "builtin.h"
- 
- static const char usage_msg[] =
--"test-credential <fill|approve|reject> [helper...]";
-+	"credential <fill|approve|reject>";
- 
--int main(int argc, const char **argv)
-+int cmd_credential (int argc, const char **argv, const char *prefix)
- {
- 	const char *op;
- 	struct credential c = CREDENTIAL_INIT;
--	int i;
- 
- 	op = argv[1];
- 	if (!op)
- 		usage(usage_msg);
--	for (i = 2; i < argc; i++)
--		string_list_append(&c.helpers, argv[i]);
- 
- 	if (credential_read(&c, stdin) < 0)
- 		die("unable to read credential from stdin");
-@@ -26,13 +23,12 @@ int main(int argc, const char **argv)
- 			printf("username=%s\n", c.username);
- 		if (c.password)
- 			printf("password=%s\n", c.password);
--	}
--	else if (!strcmp(op, "approve"))
-+	} else if (!strcmp(op, "approve")) {
- 		credential_approve(&c);
--	else if (!strcmp(op, "reject"))
-+	} else if (!strcmp(op, "reject")) {
- 		credential_reject(&c);
--	else
-+	} else {
- 		usage(usage_msg);
--
-+	}
- 	return 0;
- }
-diff --git a/git.c b/git.c
-index d232de9..660c926 100644
---- a/git.c
-+++ b/git.c
-@@ -353,6 +353,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 		{ "config", cmd_config, RUN_SETUP_GENTLY },
- 		{ "count-objects", cmd_count_objects, RUN_SETUP },
-+		{ "credential", cmd_credential, RUN_SETUP_GENTLY },
- 		{ "describe", cmd_describe, RUN_SETUP },
- 		{ "diff", cmd_diff },
- 		{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index 4a37cd7..7c4826e 100755
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -4,10 +4,20 @@
- # stdout and stderr should be provided on stdin,
- # separated by "--".
- check() {
-+	credential_opts=
-+	credential_cmd=$1
-+	shift
-+	for arg in "$@"; do
-+		credential_opts="$credential_opts -c credential.helper='$arg'"
-+	done
- 	read_chunk >stdin &&
- 	read_chunk >expect-stdout &&
- 	read_chunk >expect-stderr &&
--	test-credential "$@" <stdin >stdout 2>stderr &&
-+	if ! eval "git $credential_opts credential $credential_cmd <stdin >stdout 2>stderr"; then
-+		echo "git credential failed with code $?" &&
-+		cat stderr &&
-+		false
-+	fi &&
- 	test_cmp expect-stdout stdout &&
- 	test_cmp expect-stderr stderr
- }
-@@ -41,7 +51,7 @@ reject() {
- 		echo protocol=$2
- 		echo host=$3
- 		echo username=$4
--	) | test-credential reject $1
-+	) | git -c credential.helper=$1 credential reject
- }
- 
- helper_test() {
--- 
-1.7.11.5.g0c7e058.dirty
+Thanks,
+
+Mike
