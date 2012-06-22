@@ -1,53 +1,53 @@
-From: Michael Hertling <mhertling@online.de>
-Subject: Re: Missing hyperlinks in HTML docs
-Date: Fri, 22 Jun 2012 01:58:05 +0200
-Message-ID: <4FE3B50D.2070200@online.de>
-References: <4FE235DC.9080202@online.de> <20120621062410.GB19485@sigill.intra.peff.net>
+From: Wesley Shields <wxs@FreeBSD.org>
+Subject: Problem using curl + c-ares
+Date: Thu, 21 Jun 2012 22:03:08 -0400
+Message-ID: <20120622020308.GA31477@atarininja.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 22 01:56:22 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 22 04:12:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ShrEb-0002XJ-7Z
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 01:56:21 +0200
+	id 1ShtMo-0001ov-QA
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 04:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760678Ab2FUX4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jun 2012 19:56:16 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:61672 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760673Ab2FUX4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2012 19:56:15 -0400
-Received: from [192.168.178.21] (p57A29E97.dip0.t-ipconnect.de [87.162.158.151])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0ME88h-1SftAB2XNv-00HMgx; Fri, 22 Jun 2012 01:56:05 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101211 Lightning/1.0b2 Lanikai/3.1.7
-In-Reply-To: <20120621062410.GB19485@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:aQ6pBh032+BsBH8d7fw63J134z4B5zGbTvWYeYtZSEK
- jE4/4dEkhunWF5LLhtNoGXko62gnkZPJgVekutE8bk2iOgNXdW
- VZwo2kaHtBA4qmxlJSqyZ1Zx6LRd/HxD8D23HASlo326R3PuOL
- 5f1O2yOxl8sk4hN87DRM/CFyV14HF3TxK0SWKCNFH4B64G7/fh
- qQYRXKLBar+h2zjyPsJ+0/TXtH5/8EIaJd27G8zysFiYabnBiE
- 58yi8Tfe56X2s5KoiN21xnQchGO9BVY49JHXGWmuyarbJSpxfI
- ZbRUHoDtnjpOQV1sVXR2FUISf4Zi1xSo7bF7gcvdkft2F+rOFs
- NH6EMtrcYZ+i0q9duEqo=
+	id S1753011Ab2FVCMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jun 2012 22:12:55 -0400
+Received: from syn.csh.rit.edu ([129.21.49.45]:51911 "EHLO syn.atarininja.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750785Ab2FVCMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2012 22:12:54 -0400
+X-Greylist: delayed 585 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2012 22:12:54 EDT
+Received: by syn.atarininja.org (Postfix, from userid 1001)
+	id BA6395C34; Thu, 21 Jun 2012 22:03:08 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200421>
 
-On 06/21/2012 08:24 AM, Jeff King wrote:
+I'm trying to debug a problem that came to my attention when using git
+to clone a repository over HTTP or HTTPS if curl is built to use the
+c-ares bindings.
 
-> The patch below should solve it.
+The symptom is well documented at:
 
-Yes, it does. Many thanks for your quick reply and the patch.
+http://www.freebsd.org/cgi/query-pr.cgi?pr=ports/167517
 
-Regards,
+If you run tcpdump while triggering this problem you will see that the
+bytes for the destination port in the packet for the A record query are
+swapped. I'm not familiar enough with the git code to debug it fully but
+I would be happy to provide any information needed to help.
 
-Michael
+Just using curl on the box works fine so I suspect it's not a problem
+with curl, but with how git is using curl? I'd appreciate any pointers
+with this!
+
+Please keep me on CC as I am not subscribed to this list. Thanks!
+
+-- WXS
