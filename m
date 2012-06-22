@@ -1,59 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git credential fill: output the whole 'struct
- credential'
-Date: Fri, 22 Jun 2012 13:26:27 -0700
-Message-ID: <7vvcijnle4.fsf@alter.siamese.dyndns.org>
-References: <1340381231-9522-1-git-send-email-Matthieu.Moy@imag.fr>
- <1340381231-9522-3-git-send-email-Matthieu.Moy@imag.fr>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: Editing the root commit
+Date: Fri, 22 Jun 2012 21:50:27 +0100
+Message-ID: <20120622205026.GI32205@arachsys.com>
+References: <20120619091657.GA28005@arachsys.com>
+ <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
+ <20120619111709.GC10692@arachsys.com>
+ <20120620093205.GB10579@arachsys.com>
+ <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
+ <20120620192938.GC31520@sigill.intra.peff.net>
+ <20120620193922.GB3192@arachsys.com>
+ <20120620194824.GA32228@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Javier.Roucher-Iglesias@ensimag.imag.fr
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 22 22:26:40 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 22 22:50:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiAR8-0007bH-5p
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 22:26:34 +0200
+	id 1SiAof-0002do-5r
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 22:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608Ab2FVU0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 16:26:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50673 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753807Ab2FVU03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 16:26:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 821D37C4E;
-	Fri, 22 Jun 2012 16:26:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WIMVOjJs4IhYVLnLEZD1lSR4bjc=; b=FrRnoy
-	Ycc0YkMGCKK9ysENKFZ7v4x/VDTiaPeEyXvWvW3Kdn3+Tc/IpgrWkM1WOuZQJO7r
-	PKc3K96R4YS/mPHtpj1Lbr/OYEtLJLV399yu4o61vFa44z9R88eOFDvOmawOSR2P
-	C1Gn+yS6rF/ZlFcGmq27hzpCiohDqvwsZpNIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rtFCh670K2JE5fDuG0Nn2VdTt37pQOiA
-	ZSqWZS31VG7UkPGqU+1Hx9PFR1h6SCHHDvRlYT4zkMCBSEdz4cUq9DfEzH5mlfoJ
-	QezMhGdl5xv3krh4gz5FC59eu8zBduErlbLcdd/C+qknXWmiWZThn2dMjqOJAUYF
-	rjYZN/tOeFQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79C8C7C4D;
-	Fri, 22 Jun 2012 16:26:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECE547C4A; Fri, 22 Jun 2012
- 16:26:28 -0400 (EDT)
-In-Reply-To: <1340381231-9522-3-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Fri, 22 Jun 2012 18:07:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C286872-BCA8-11E1-B975-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755692Ab2FVUug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 16:50:36 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:56046 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754538Ab2FVUuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 16:50:35 -0400
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.72)
+	(envelope-from <chris@arachsys.com>)
+	id 1SiAoJ-00043r-VY; Fri, 22 Jun 2012 21:50:32 +0100
+Content-Disposition: inline
+In-Reply-To: <20120620194824.GA32228@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200469>
 
-Looks very straightforward and clean.  Thanks.
+Jeff King <peff@peff.net> writes:
+
+> I think the only thing you can do is make a fake sentinel commit (with
+> an empty tree) to put in HEAD, and then remove the sentinel immediately
+> after the first commit is put in place (making sure not to include it in
+> the first commit's parent list). Yuck.
+
+If I do this:
+
+diff --git a/path.c b/path.c
+index 6f2aa69..1b3b6f3 100644
+--- a/path.c
++++ b/path.c
+@@ -169,8 +169,9 @@ int validate_headref(const char *path)
+ 	int fd;
+ 	ssize_t len;
+ 
++	/* Allow HEAD to be entirely missing for detached orphan state */
+ 	if (lstat(path, &st) < 0)
+-		return -1;
++		return errno == ENOENT ? 0 : -1;
+ 
+ 	/* Make sure it is a "refs/.." symlink */
+ 	if (S_ISLNK(st.st_mode)) {
+
+
+to thwart the sanity check, I can do 'rm $GIT_DIR/HEAD' to put my HEAD into a
+state where it is both detached and unborn, i.e. so that my next commit will
+result in a detached HEAD pointing at a root commit.
+
+Surprisingly, this check appears to be the only thing disallowing such a state,
+and the result behaves as sanely as a normal git-checkout --orphan <branch>
+does! Using a detached unborn HEAD like this would avoid any need for sentinel
+commits or the like in generalising rebase: we'd just do
+
+  git rm -rf .
+  rm -f $GIT_DIR/index $GIT_DIR/HEAD
+
+instead of git checkout $onto, and be away replaying the commits or executing
+the instruction sheet as normal.
+
+If I prepared a proper patch series with docs and tests, would allowing this be
+acceptable? I don't want to work on it if there's an intentional design
+decision to explicitly disallow it. However, apart from just rebase and
+rebase--interactive, I suspect other scripts which operate on history will be
+more easily generalised to work on history right up to the root commit if such
+a state were allowed.
+
+PS Whilst experimenting, I also noticed a (presumably unintentional) behaviour:
+
+  $ git init .
+  Initialized empty Git repository in /tmp/foo/.git/
+  $ git checkout --detach
+  $ touch bar
+  $ git add bar
+  $ git commit -m test
+  [(null) (root-commit) 17b5bf9] test
+   0 files changed
+   create mode 100644 bar
+  $ ls .git/refs/heads/
+  (null)
+  $
+
+Here we've created a branch with the strange name '(null)' instead of actually
+detaching, or refusing to detach because we're on an unborn branch.
+
+Assuming this is a bug, I'll cook up a patch to fix it either way, either by
+entering a detached unborn state if we're allowing that, or to refuse to detach
+if we're not allowing that state.
+
+Best wishes,
+
+Chris.
