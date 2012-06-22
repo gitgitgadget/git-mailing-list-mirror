@@ -1,11 +1,11 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4 v8] Let core.attributesfile default to
- $XDG_CONFIG_HOME/git/ignore
-Date: Fri, 22 Jun 2012 14:20:19 -0700
-Message-ID: <7v4nq3niwc.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 4/4 v8] config: write to $XDG_CONFIG_HOME/git/config file
+ if appropriate
+Date: Fri, 22 Jun 2012 14:20:29 -0700
+Message-ID: <7vwr2zm4bm.fsf@alter.siamese.dyndns.org>
 References: <7vfw9oshpz.fsf@alter.siamese.dyndns.org>
  <1340355806-6894-1-git-send-email-Matthieu.Moy@imag.fr>
- <1340355806-6894-4-git-send-email-Matthieu.Moy@imag.fr>
+ <1340355806-6894-5-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr,
@@ -18,81 +18,59 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiBHG-0004g7-Qs
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 23:20:27 +0200
+	id 1SiBHQ-0004kW-7h
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 23:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997Ab2FVVUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 17:20:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41363 "EHLO
+	id S1756337Ab2FVVUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 17:20:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41505 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755529Ab2FVVUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 17:20:22 -0400
+	id S1756001Ab2FVVUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 17:20:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 100EE8802;
-	Fri, 22 Jun 2012 17:20:22 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C657880A;
+	Fri, 22 Jun 2012 17:20:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=iKVHMHCqcyCW3eTsgmZy2BlvmD0=; b=c2BrOXsdnaA3g/XiQWdI
-	e+vlQKgNZy3WOSXu3hbwBPE86AjRCAmOv+3rhoUPTubi+6Q8tyfxo7MudrbECCfI
-	dBd1S6EoK320Dkd5DSBXSe+WLVB+7CEx7+jSLnjLv36Wjsa1glrGd196k/DAqn7c
-	rPw4RZ1tjF6XjJvrKalUdBE=
+	 s=sasl; bh=w5fLNcSrJHwoedDRaHC7KVgUSX4=; b=VfzC+9IqRUfLgLyABaFD
+	CKlImtwtJZDQtzP3SOZYHj0M/99ofpixwTX4GkOCqhTVitasuZGbj5tQ9wyE9ztV
+	GoVzXZTnsSFyUsHBBK75fKFztGyaLzb7f/4WaQSW5ehiwhuwKTlSQYYD+kfjq+pJ
+	kT2sa0coa4PWBYyN11PY+ZI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=MxrcC5O1FL9xw5+Jh5gN009YeJqR2Gzeo25OftwWcFMdLD
-	kqhyJVNjPUXtTMCpYAURHqw+wca9QXioOzOEr5UWSlvWq0IHSxPCMV40ukcVrUxT
-	Wf/VqfpjxF/8F1DisfyOr5lWRelYf66Beh52weRTTLh1UFoLyAWfoPdoIJWb4=
+	 q=dns; s=sasl; b=VawBAdpULGIHf1qp8APEDL4Q6cmRu9EYxSzYwr/au42iYc
+	rYBGYrnA7AIGsztRlU/sAg819vOHZxIAjG6mpJdUw8J49qqWBMMh067nlJ/LRx6T
+	IHs5rBaEknbHEoluW55hjap3S/NaOOLwstQE0X9dSlEI26XZMhiHMIwn8Itzg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02F0D87FF;
-	Fri, 22 Jun 2012 17:20:22 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42BA28809;
+	Fri, 22 Jun 2012 17:20:31 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46FD087F9; Fri, 22 Jun 2012
- 17:20:21 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADD808807; Fri, 22 Jun 2012
+ 17:20:30 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 12C9BECE-BCB0-11E1-AF96-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1867F184-BCB0-11E1-BB24-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200472>
 
 Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
 > From: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
 >
-> To use the feature of core.attributesfile, the user needs:
->
->  1. to create such a file,
->
->  2. and add configuration variable to point at it.
->
-> Instead, we can make this a one-step process by choosing a default value
-> which points to a filename in the user's $HOME, that is unlikely to
-> already exist on the system, and only use the presence of the file as a
-> cue that the user wants to use that feature.
->
-> We use "${XDG_CONFIG_HOME:-$HOME/.config/git}/ignore" as a default value.
-> It goes in the same directory as the newly added configuration
-> file ("${XDG_CONFIG_HOME:-$HOME/.config/git}/config), and follows the XDG
-> specification.
+> Git will be able to write to $XDG_CONFIG_HOME/git/config, a new
+> ...
+> Advice for users who often come back to an old version of Git: you
+> shouldn't create this file.
 
-The patch text may be OK but look at the Subject: line and notice
-something funny ;-)
+Hrm, is there a better way to give this advice to the _users_?  The
+log message is primarily for people who need to dig the development
+history of Git, and they are not the people who will be hurt by this
+change.  Perhaps the change to Documentation/git-config.txt in this
+patch needs to be a bit more detailed?
 
-Given the root cause of that "something funny", I'll reduce the log
-message of this one down to:
-
-    Let core.attributesfile default to $XDG_CONFIG_HOME/git/attributes
-    
-    This gives the default value for the core.attributesfile variable
-    following the exact same logic of the previous change for the
-    core.excludesfile setting.
-    
-    Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
-    ...
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-I am not sure about use of git/ignore in [2/2], though.
-
-Shouldn't the default value for core.excludesfile be git/exclude,
-not git/ignore?
+Ideally, it would be nice if we could do the usual "advise" thing
+by detecting a possible confusion, but I do not offhand see a clever
+way to do so.
