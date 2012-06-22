@@ -1,116 +1,113 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: Editing the root commit
-Date: Fri, 22 Jun 2012 21:50:27 +0100
-Message-ID: <20120622205026.GI32205@arachsys.com>
-References: <20120619091657.GA28005@arachsys.com>
- <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com>
- <20120620093205.GB10579@arachsys.com>
- <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
- <20120620192938.GC31520@sigill.intra.peff.net>
- <20120620193922.GB3192@arachsys.com>
- <20120620194824.GA32228@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4 v8] Git configuration directory
+Date: Fri, 22 Jun 2012 14:19:21 -0700
+Message-ID: <7vbokbnixy.fsf@alter.siamese.dyndns.org>
+References: <7vfw9oshpz.fsf@alter.siamese.dyndns.org>
+ <1340355806-6894-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 22 22:50:56 2012
+Cc: git@vger.kernel.org, Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr,
+	Valentin.Duperray@ensimag.imag.fr, Franck.Jonas@ensimag.imag.fr,
+	Lucien.Kong@ensimag.imag.fr, Thomas.Nguy@ensimag.imag.fr
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 22 23:19:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiAof-0002do-5r
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 22:50:53 +0200
+	id 1SiBGL-0003R5-Ef
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jun 2012 23:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755692Ab2FVUug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 16:50:36 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:56046 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754538Ab2FVUuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 16:50:35 -0400
-Received: from [81.2.114.212] (helo=arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1SiAoJ-00043r-VY; Fri, 22 Jun 2012 21:50:32 +0100
-Content-Disposition: inline
-In-Reply-To: <20120620194824.GA32228@sigill.intra.peff.net>
+	id S1755875Ab2FVVTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jun 2012 17:19:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41004 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755529Ab2FVVTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2012 17:19:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EC2487D0;
+	Fri, 22 Jun 2012 17:19:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=u6Vz//o2dgWst/KfgOo5uTdSH80=; b=C9Afgpv9eJw5lafMcjBV
+	b5h+DIvq7bDe/Mt4MTT/9daaUMBJH1zL9lCZZiQTS075k4b63sUdUZtisrZDwy0u
+	EsrihnKea/2sNuLOumvojtT684m+WiOefi2IOkx7n3/P4McQxemEWrNAgNcVTXLP
+	hrN6vYtQAzwUXIon7/7IIcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=l/PFRfNE/POfIQ10k2+iSgTOop1GO7nOyj+vRBESeOoKWe
+	AW9KPrs+S+t0g6+kgjVB8jLmo3OiOAK7GL3wDahKiDN1ptActwpsea+BrWtfmcDY
+	fqUhrZvyMVZiu9TQdA5NKecMIPoEu4EhmPUDwE5YghT3AaqvuDdR8VynNdQQc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 950ED87CF;
+	Fri, 22 Jun 2012 17:19:23 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0841687CE; Fri, 22 Jun 2012
+ 17:19:23 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F01A7B20-BCAF-11E1-8895-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200470>
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> I think the only thing you can do is make a fake sentinel commit (with
-> an empty tree) to put in HEAD, and then remove the sentinel immediately
-> after the first commit is put in place (making sure not to include it in
-> the first commit's parent list). Yuck.
+> I took the liberty of rewording the commit messages, and change a few
+> words in the documentation (changed some "will be used" to "is used
+> instead", which sounded more consistant with the context).
 
-If I do this:
+Thanks; the series overall looks good.
 
-diff --git a/path.c b/path.c
-index 6f2aa69..1b3b6f3 100644
---- a/path.c
-+++ b/path.c
-@@ -169,8 +169,9 @@ int validate_headref(const char *path)
- 	int fd;
- 	ssize_t len;
- 
-+	/* Allow HEAD to be entirely missing for detached orphan state */
- 	if (lstat(path, &st) < 0)
--		return -1;
-+		return errno == ENOENT ? 0 : -1;
- 
- 	/* Make sure it is a "refs/.." symlink */
- 	if (S_ISLNK(st.st_mode)) {
+I may have made further tweaks by the time I push the result
+out.  Please watch 'pu' and holler if you find anything objectionable.
 
 
-to thwart the sanity check, I can do 'rm $GIT_DIR/HEAD' to put my HEAD into a
-state where it is both detached and unborn, i.e. so that my next commit will
-result in a detached HEAD pointing at a root commit.
 
-Surprisingly, this check appears to be the only thing disallowing such a state,
-and the result behaves as sanely as a normal git-checkout --orphan <branch>
-does! Using a detached unborn HEAD like this would avoid any need for sentinel
-commits or the like in generalising rebase: we'd just do
-
-  git rm -rf .
-  rm -f $GIT_DIR/index $GIT_DIR/HEAD
-
-instead of git checkout $onto, and be away replaying the commits or executing
-the instruction sheet as normal.
-
-If I prepared a proper patch series with docs and tests, would allowing this be
-acceptable? I don't want to work on it if there's an intentional design
-decision to explicitly disallow it. However, apart from just rebase and
-rebase--interactive, I suspect other scripts which operate on history will be
-more easily generalised to work on history right up to the root commit if such
-a state were allowed.
-
-PS Whilst experimenting, I also noticed a (presumably unintentional) behaviour:
-
-  $ git init .
-  Initialized empty Git repository in /tmp/foo/.git/
-  $ git checkout --detach
-  $ touch bar
-  $ git add bar
-  $ git commit -m test
-  [(null) (root-commit) 17b5bf9] test
-   0 files changed
-   create mode 100644 bar
-  $ ls .git/refs/heads/
-  (null)
-  $
-
-Here we've created a branch with the strange name '(null)' instead of actually
-detaching, or refusing to detach because we're on an unborn branch.
-
-Assuming this is a bug, I'll cook up a patch to fix it either way, either by
-entering a detached unborn state if we're allowing that, or to refuse to detach
-if we're not allowing that state.
-
-Best wishes,
-
-Chris.
+> A reminder of the context and objectives of the serie:
+>
+> Git currently stores its configuration file in ~/.gitconfig, which is
+> nice and customary on Unix, as long as one has only one configuration
+> file.
+>
+> But a typical user may want to store not only the config file, but
+> also the files pointed to by core.excludesfile and
+> core.attributesfile, which currently have no default values. To store
+> several configuration files, it makes sense to have a configuration
+> _directory_ instead of a set of configuration files, all right into
+> $HOME. Calling this configuration directory ~/.git or ~/.gitconfig is
+> not an option, since these paths already have another meaning. Using
+> the XDG specification (in short: ~/.config/git) doesn't have this
+> drawback, and allows the user to store his configuration files right
+> next to files from other applications following the XDG standard.
+>
+> The first 3 patches add read support for this "configuration
+> directory", and the last one gives opt-in write support, allowing
+> users to make this "configuration directory" their way of life, and
+> never hear again about ~/.gitconfig if (and only if) they do not want to.
+>
+> None of the patches change the behavior for people who do not create
+> the new configuration files.
+>
+> Huynh Khoi Nguyen Nguyen (4):
+>   config: read (but not write) from $XDG_CONFIG_HOME/git/config file
+>   Let core.excludesfile default to $XDG_CONFIG_HOME/git/ignore
+>   Let core.attributesfile default to $XDG_CONFIG_HOME/git/ignore
+>   config: write to $XDG_CONFIG_HOME/git/config file if appropriate
+>
+>  Documentation/config.txt        |   8 +-
+>  Documentation/git-config.txt    |  15 +++-
+>  Documentation/gitattributes.txt |   2 +
+>  Documentation/gitignore.txt     |   4 +-
+>  attr.c                          |  17 +++--
+>  builtin/config.c                |  25 ++++---
+>  cache.h                         |   3 +
+>  config.c                        |  23 +++---
+>  dir.c                           |   7 +-
+>  path.c                          |  41 +++++++++++
+>  t/t1306-xdg-files.sh            | 158 ++++++++++++++++++++++++++++++++++++++++
+>  11 files changed, 270 insertions(+), 33 deletions(-)
+>  create mode 100755 t/t1306-xdg-files.sh
