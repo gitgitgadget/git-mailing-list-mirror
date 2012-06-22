@@ -1,83 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Leila <muhtasib@gmail.com>
 Subject: Re: [PATCH/RFC] Documentation and Code: Fix misspellings and grammar
-Date: Fri, 22 Jun 2012 15:55:19 -0700
-Message-ID: <7vd34rlzxk.fsf@alter.siamese.dyndns.org>
-References: <1340404814-29790-1-git-send-email-muhtasib@gmail.com>
+Date: Fri, 22 Jun 2012 19:24:56 -0400
+Message-ID: <CAA3EhHJx7N=T77CRb=SfqOmaEFf8bHN5NZdx1u=q6+0d-fQcpA@mail.gmail.com>
+References: <1340404814-29790-1-git-send-email-muhtasib@gmail.com> <7vd34rlzxk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Leila Muhtasib <muhtasib@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 23 00:55:38 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 23 01:25:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiClM-0005ut-F3
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 00:55:36 +0200
+	id 1SiDEB-0004dN-Oj
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 01:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289Ab2FVWzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jun 2012 18:55:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48876 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751600Ab2FVWzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2012 18:55:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BB65990A;
-	Fri, 22 Jun 2012 18:55:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A6h78rfP2gdg4K4ikS5P0peVldY=; b=AIzqKr
-	r9+wvavN18IDa+GkIw/qSDUCWaH4g/h2+uFKbfmFOWgOQhZlHrhJjc+DvqHlt5l9
-	KdvopKEf/QlUR2JuTjraKIboPGP07ZtWiH87UP/7CPFN3VN5vhg+QBTmtay5o7Ti
-	wqMeZiAHUZCFo+3AvPuqieHA59M2ijZOuaH0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SoH98cWYOsyRNAnfhJQzpRdWEBTZ5j9t
-	y3mIIufoURYnn6yJUdYi4eK1J1SHCtkpx2xZFN4YF4dssrHLagY/hoxRWJ5+PRju
-	xq2b6V9crzZn/HVVeJbemdATuTOk7uqyPe+GdAyRdTdDxXgF+Q7fhkt0rqmQufgC
-	390A9tPmhTc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 121E89909;
-	Fri, 22 Jun 2012 18:55:21 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 960BD9907; Fri, 22 Jun 2012
- 18:55:20 -0400 (EDT)
-In-Reply-To: <1340404814-29790-1-git-send-email-muhtasib@gmail.com> (Leila
- Muhtasib's message of "Fri, 22 Jun 2012 18:40:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 57D52032-BCBD-11E1-8B99-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756310Ab2FVXZS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jun 2012 19:25:18 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:46058 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756254Ab2FVXZR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jun 2012 19:25:17 -0400
+Received: by vbbff1 with SMTP id ff1so1132263vbb.19
+        for <git@vger.kernel.org>; Fri, 22 Jun 2012 16:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=C2PGwiT7tMdLKj8kiSEV/t/3NLyfA8qdMluFbCt1EVE=;
+        b=BCWW0qCbdKBXBS1td1W1LzgT2ePBAuuwMVuO466l4VIkdHuZcob27g4eiKQr5eFRou
+         cLsV1FKmuyBRvpI6xghXpnNdkec4K5HoNxw3S32Bsqi4r8d/n0mYU5Idvm0xIlfWJion
+         vlyzIccp4y4Rd6WOvY67EWz231Qz7gTy/YdN7uX5x/prwWEENn78IiVBdZYD8oE/DVNb
+         bpGiLTZpJg2OVEZaTz4nKmk2B7BYbIfpDnyiKX60dn2uGWUsAGAEXe+WlBbMdUgV7/kv
+         XNycrmCVPKcBZOXmqhBHEGeFRnblW3Z6YYnIPQM4y/b0fK1Okj2IYCTW2c086qEtRUm7
+         QQ3g==
+Received: by 10.220.214.139 with SMTP id ha11mr2050202vcb.16.1340407517070;
+ Fri, 22 Jun 2012 16:25:17 -0700 (PDT)
+Received: by 10.52.37.233 with HTTP; Fri, 22 Jun 2012 16:24:56 -0700 (PDT)
+In-Reply-To: <7vd34rlzxk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200486>
 
-Leila Muhtasib <muhtasib@gmail.com> writes:
+On Fri, Jun 22, 2012 at 6:55 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> I am tempted to suggest "one word per patch" ;-)
 
-> Signed-off-by: Leila Muhtasib <muhtasib@gmail.com>
-> ---
-> Let me know if you'd like me to break this up into separate patches.
-> I ran 'git grep occured' to make sure I got all of them.
+I can do that, no problem. That's my preference too.
 
-I am tempted to suggest "one word per patch" ;-)
+>
+> Also you might want to take a look at
+>
+> =A0 =A0http://thread.gmane.org/gmane.comp.version-control.git/199033
 
-Also you might want to take a look at 
+Context is important, I agree.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/199033
+>
+>> Do you think it's a problem to fix misspellings in printf output?
+>
+> It depends, but in a sense, typos in comments are a lot lower
+> priority (nobody is hurt if we do not fix them, and if such a fix
+> interferes with topics in flight, it is more nuisance than it is
+> worth and it would be greatly appreciated if you hold off typofixes
+> until the dust settles).
+>
 
-> Do you think it's a problem to fix misspellings in printf output?
+That makes total sense. I'll hold off on typos in comments. Actually,
+the only reason I included them was because they showed up when I did
+a 'git grep <misspelled word>', so I went ahead and fixed everything.
+How do I know when the dust has settled? Is that after you release a
+version? 1.7.11 released on June 17, so that wasn't that long ago?
 
-It depends, but in a sense, typos in comments are a lot lower
-priority (nobody is hurt if we do not fix them, and if such a fix
-interferes with topics in flight, it is more nuisance than it is
-worth and it would be greatly appreciated if you hold off typofixes
-until the dust settles).
 
-Program output affects the end user experience, so it is more
-important.
+> Program output affects the end user experience, so it is more
+> important.
+>
+> Changes to strings marked with _() for l10n should come early in the
+> development cycle so that translators have enough time to prepare
+> for it before the release.
 
-Changes to strings marked with _() for l10n should come early in the
-development cycle so that translators have enough time to prepare
-for it before the release.
+Are we early in the dev cycle? Should I prepare a separate patch with
+just the misspellings that affect end user experience?
+
+Thanks!
+Leila
