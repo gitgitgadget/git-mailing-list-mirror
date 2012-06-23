@@ -1,99 +1,58 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: [PATCH] Fix formatting in git-config(1)
-Date: Sat, 23 Jun 2012 15:18:00 +0200
-Message-ID: <m27guy5fqv.fsf@igel.home>
+From: bmitic <bj@infomitic.com>
+Subject: Problem pulling large repo, Error: /usr/bin/git-pull: line 277:
+  5401 Terminated              git read-tree --reset -u HEAD
+Date: Sat, 23 Jun 2012 09:39:28 -0700 (PDT)
+Message-ID: <1340469568490-7562027.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 23 15:18:24 2012
+X-From: git-owner@vger.kernel.org Sat Jun 23 18:39:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiQED-0004mA-Fo
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 15:18:17 +0200
+	id 1SiTN0-0001t5-EK
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 18:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119Ab2FWNSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jun 2012 09:18:03 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:53337 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049Ab2FWNSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2012 09:18:01 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WKHJJ2F8Yz3hhcq
-	for <git@vger.kernel.org>; Sat, 23 Jun 2012 15:17:52 +0200 (CEST)
-Received: from igel.home (ppp-88-217-109-173.dynamic.mnet-online.de [88.217.109.173])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WKHJS3hxZz4KKBF
-	for <git@vger.kernel.org>; Sat, 23 Jun 2012 15:18:00 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 1FD1ECA2A5; Sat, 23 Jun 2012 15:18:00 +0200 (CEST)
-X-Yow: Yow!!  "Janitor trapped in sewer uses ESP to find decayed burger"!!
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1755102Ab2FWQj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jun 2012 12:39:29 -0400
+Received: from sam.nabble.com ([216.139.236.26]:55963 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754496Ab2FWQj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2012 12:39:29 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <bj@infomitic.com>)
+	id 1SiTMu-0006v6-I1
+	for git@vger.kernel.org; Sat, 23 Jun 2012 09:39:28 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200502>
 
-This fixes two formatting bugs in the git-config documentation:
+I can't really explain it, but basically every time I try to pull this
+specific repo from my other servers I get the results bellow.  I have two
+identical servers where this works, but for some reason on the third one it
+doesn't.  I even got another virtual server and tried it and I was getting
+the same error.  I don't know how to troubleshoot this. 
+If anyone has a suggestion I would appreciate it:  
 
-- in the column.ui entry don't indent the last paragraph so that it isn't
-  formatted as a literal paragraph
-- in the push.default entry separate the last paragraph from the
-  nested list.
+[root@myserver gittestremote]# git pull -v tst1 master
+xxx@xxxxx.xxxxxxxx.com's password: 
+remote: Counting objects: 20095, done.
+remote: Compressing objects: 100% (18794/18794), done.
+remote: Total 20095 (delta 1005), reused 20095 (delta 1005)
+Receiving objects: 100% (20095/20095), 1.11 GiB | 11.46 MiB/s, done.
+Resolving deltas: 100% (1005/1005), done.
+From xxxxxx.xxxxxx.com:/var/www/GITREPO3/fullsites/prd_biq
+ * branch            master     -> FETCH_HEAD
+/usr/bin/git-pull: line 277:  5401 Terminated              git read-tree
+--reset -u HEAD
+[root@myserver gittestremote]# 
 
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
----
- Documentation/config.txt | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 915cb5a..b059851 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -880,7 +880,7 @@ column.ui::
- 	make equal size columns
- --
- +
--	This option defaults to 'never'.
-+This option defaults to 'never'.
- 
- column.branch::
- 	Specify whether to output branch listing in `git branch` in columns.
-@@ -1720,6 +1720,7 @@ push.default::
- 	no refspec is implied by any of the options given on the command
- 	line. Possible values are:
- +
-+--
- * `nothing` - do not push anything.
- * `matching` - push all branches having the same name in both ends.
-   This is for those who prepare all the branches into a publishable
-@@ -1739,12 +1740,13 @@ push.default::
-   option and is well-suited for beginners. It will become the default
-   in Git 2.0.
- * `current` - push the current branch to a branch of the same name.
--  +
--  The `simple`, `current` and `upstream` modes are for those who want to
--  push out a single branch after finishing work, even when the other
--  branches are not yet ready to be pushed out. If you are working with
--  other people to push into the same shared repository, you would want
--  to use one of these.
-+--
-++
-+The `simple`, `current` and `upstream` modes are for those who want to
-+push out a single branch after finishing work, even when the other
-+branches are not yet ready to be pushed out. If you are working with
-+other people to push into the same shared repository, you would want
-+to use one of these.
- 
- rebase.stat::
- 	Whether to show a diffstat of what changed upstream since the last
--- 
-1.7.11.1
-
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+--
+View this message in context: http://git.661346.n2.nabble.com/Problem-pulling-large-repo-Error-usr-bin-git-pull-line-277-5401-Terminated-git-read-tree-reset-u-HEAD-tp7562027.html
+Sent from the git mailing list archive at Nabble.com.
