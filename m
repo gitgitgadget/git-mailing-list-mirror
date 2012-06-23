@@ -1,65 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix formatting in git-config(1)
-Date: Sat, 23 Jun 2012 11:27:28 -0700
-Message-ID: <7vy5ndkhnz.fsf@alter.siamese.dyndns.org>
-References: <m2vcil4n0w.fsf@igel.home>
- <7v4nq5twwg.fsf@alter.siamese.dyndns.org>
- <7v62ainbub.fsf@alter.siamese.dyndns.org> <m2y5neqwwj.fsf@linux-m68k.org>
- <7vbokala5e.fsf@alter.siamese.dyndns.org> <m2boka5i0a.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Jun 23 20:27:38 2012
+From: Leila Muhtasib <muhtasib@gmail.com>
+Subject: [PATCH/RFC] revision: Show friendlier message.
+Date: Sat, 23 Jun 2012 15:11:21 -0400
+Message-ID: <1340478681-58476-1-git-send-email-muhtasib@gmail.com>
+Cc: Leila Muhtasib <muhtasib@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 23 21:12:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiV3Y-0000k7-8Y
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 20:27:36 +0200
+	id 1SiVka-0002fC-Eq
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jun 2012 21:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590Ab2FWS1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jun 2012 14:27:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46882 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755305Ab2FWS1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2012 14:27:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D96C93C4;
-	Sat, 23 Jun 2012 14:27:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gYrhBi5azcaFoawvl3DjSVfkAOc=; b=HYtlT/
-	awRzg4I7sQkC89Myu9WInWMwjVL3hWyTil4am0KwTJWQCpvdZ2n+pEfCWn/UML/k
-	yz5LSsho125FidJr/w9y1HmyeuA5IM5pk1fub0lgoS1Qq3Z9/wZ9iPkXK42VEZCq
-	UcVcPw2OjYn+K6+phJTJWOH5O6Sffyr8lLIvU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xS7mF0zXzfxVjic/+Xmv+OqUJ5Vopacv
-	s5JtKPe63efTgMbbGM26FDtDYlbvqYWIDWzX7OwA/6zUXikHd8jaGyiWzHnp6A7s
-	t7bysax+O+NTzTW2xqu00E/TuCzI47zU0RDxmG8ckWeU/GIoENte/AqCmvN3DOoE
-	BrPP7NbixuM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8500293C2;
-	Sat, 23 Jun 2012 14:27:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E48B93C1; Sat, 23 Jun 2012
- 14:27:30 -0400 (EDT)
-In-Reply-To: <m2boka5i0a.fsf@igel.home> (Andreas Schwab's message of "Sat, 23
- Jun 2012 14:29:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 177CB564-BD61-11E1-ADAA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755841Ab2FWTL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jun 2012 15:11:58 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:64271 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755827Ab2FWTLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2012 15:11:24 -0400
+Received: by qcmt36 with SMTP id t36so2180977qcm.1
+        for <git@vger.kernel.org>; Sat, 23 Jun 2012 12:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=x9rleFKgD/TAkbn38hRkMdyVT8C5AYbsFug9vknEqEo=;
+        b=ZcnBkH5qaDW4VcS16YQ7XI52FjyYR1nwDGQGf9RlMF6XjaMM6CbnYp23u9a/psNV1Y
+         qA50iKdFfqgFRAiiroHcJPWUP6v4BTSu9pPQnKLXA71xBer+FhoMLSohwiTXh6kJ/3UF
+         n7DnrAow0DqttHtvlFYm54QlUZdafVdcJICwolnvELC2vbTYwHm4AH2UuK5Q1h1SoZ4y
+         lTOXHIp3LCUkNxglPuG+ceoM7WI/cCFiCYrQEQx6pChexvcBgjnelpkQ9G2ffZqV8GTM
+         rISETgDMW/bzMMb7xBAtk8TKOrvOds6seG+zzraDlPsLF2rS8ntMYCXEl69xoWOmM/0S
+         c5PQ==
+Received: by 10.229.105.158 with SMTP id t30mr3175329qco.16.1340478683469;
+        Sat, 23 Jun 2012 12:11:23 -0700 (PDT)
+Received: from localhost ([38.117.156.148])
+        by mx.google.com with ESMTPS id ej2sm4839844qab.7.2012.06.23.12.11.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 23 Jun 2012 12:11:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.7.5 (Apple Git-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200504>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+'git log' on a newly initialized repository
+(before any commits) shows an ugly message.
 
-> I've now found out that this is a bug in the docbook-xsl stylesheets,
-> updating to 1.77.1 fixed the formatting.
+Signed-off-by: Leila Muhtasib <muhtasib@gmail.com>
+---
+I found this bug on the debian git bug list.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=412890
 
-Thanks for digging!
+See scenario below:
+
+% mkdir test
+% cd test
+% git init
+Initialized empty Git repository in .git/
+% git log
+fatal: bad default revision 'HEAD'
+
+I've reworded the error message to something friendlier.
+I can change the message or add something like the link
+suggests about 'Create or switch to an existent branch."
+But I don't feel like that message quite captures the
+scenario of initializing a new repository. Alternatively,
+we can print the message using printf and exit successfully
+instead of using 'die'.
+
+Thanks,
+Leila
+
+ revision.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 935e7a7..96add37 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1821,8 +1821,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		unsigned char sha1[20];
+ 		struct object *object;
+ 		unsigned mode;
+-		if (get_sha1_with_mode(revs->def, sha1, &mode))
+-			die("bad default revision '%s'", revs->def);
++		if (get_sha1_with_mode(revs->def, sha1, &mode)) {
++			if (!strcmp(argv[0], "log") && !strcmp(revs->def, "HEAD"))
++				die("No commits to display.");
++			else
++				die("bad default revision '%s'", revs->def);
++		}
+ 		object = get_reference(revs, revs->def, sha1, 0);
+ 		add_pending_object_with_mode(revs, object, revs->def, mode);
+ 	}
+-- 
+1.7.7.5 (Apple Git-26)
