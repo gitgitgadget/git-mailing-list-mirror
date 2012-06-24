@@ -1,81 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/9] Extending the shelf-life of "git describe" output
-Date: Sat, 23 Jun 2012 22:30:03 -0700
-Message-ID: <7vk3yxjmzo.fsf@alter.siamese.dyndns.org>
-References: <1340496691-12258-1-git-send-email-gitster@pobox.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Problem pulling large repo, Error: /usr/bin/git-pull: line 277:
+  5401 Terminated              git read-tree --reset -u HEAD
+Date: Sun, 24 Jun 2012 01:15:37 -0500
+Message-ID: <4FE6B089.1000705@gmail.com>
+References: <1340469568490-7562027.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Simpkins <simpkins@facebook.com>,
-	Allan Caffee <allan.caffee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 24 07:30:15 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: bmitic <bj@infomitic.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 08:16:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SifOo-0006ML-PU
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jun 2012 07:30:15 +0200
+	id 1Sig7S-0003z2-0T
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jun 2012 08:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117Ab2FXFaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jun 2012 01:30:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56921 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779Ab2FXFaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2012 01:30:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADCEF9A98;
-	Sun, 24 Jun 2012 01:30:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hQrk7HtbBa5QHW5TG6dukQXjLVo=; b=EoJrlQ
-	len/0wDZniPNBddxtZSJcSlNYfeuStAesTBJ+ey/f19xqLuMJ0wv7ZX4Q1ZKNFGW
-	6c/i1lAy0TgYYFPVP7MJ5URg2TO8/As5gfn0lu4K7VVe9ixkrk3me/NuOJWqZibx
-	BJRL7OjN+fqr3dyPBqFHY9F3yO9t4TKTmTvx8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AZlEhqLIDI0vohGwinlh1a1dZwjW1adm
-	DCgAedzKFeNlIIm6iBtb4SxeE4VzErlUCYjzHvWtI93CIKPPSp9beFi/xUPC17kn
-	tPQaZw5ubPI8E2tbYs/sNnz7uR7CMsEPV1R9rVP6ZT56gyx+uc8jOTqIp6b3m4ip
-	icK1eWwFwDU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A35169A97;
-	Sun, 24 Jun 2012 01:30:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39BD89A96; Sun, 24 Jun 2012
- 01:30:05 -0400 (EDT)
-In-Reply-To: <1340496691-12258-1-git-send-email-gitster@pobox.com> (Junio C.
- Hamano's message of "Sat, 23 Jun 2012 17:11:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A761C384-BDBD-11E1-95BC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752354Ab2FXGPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jun 2012 02:15:40 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:42857 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779Ab2FXGPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2012 02:15:39 -0400
+Received: by obbuo13 with SMTP id uo13so4535173obb.19
+        for <git@vger.kernel.org>; Sat, 23 Jun 2012 23:15:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Hqt4doGuk3Npddt3dpATbUGYisnVB9sTnVPnZu0+Hv4=;
+        b=Ihihg7+eqSGYNw8WNcrikUju4gVX2+L1FPp4bQ/7H3upgiQ4PjedzY8ZET/pCzq7+S
+         h7i71UPTfeKxyqq3FZBgX+rqdJgSqf0hUrUdy+GTUM9nnD2rUD3xoURCOhf4dC4enBgK
+         q/mdx9e6BZ44pwjKvz/1cpj3+IHpbc1tB1yuJLXZquntar+YQuWGPKN9fX29IJ/IW8J6
+         A5ZVUOo3ozaPRRd7BCG5Etaw6h/T6pAg6VB0fhWShsh22easc3B1EbimnvvcjAeifS+J
+         przeQK6yee87UzQvtFXvMuB+FyhJc9k/Cp1w3/85tCXVvpgR5NYahEO66cdeYbMneGFL
+         p8uQ==
+Received: by 10.182.164.69 with SMTP id yo5mr8013629obb.17.1340518537982;
+        Sat, 23 Jun 2012 23:15:37 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id dk15sm32400865obc.10.2012.06.23.23.15.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 23 Jun 2012 23:15:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <1340469568490-7562027.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200517>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> This is take 3.  The earlier rounds were $gmane/200165 and 200387.
+On 6/23/2012 11:39 AM, bmitic wrote:
+> I can't really explain it, but basically every time I try to pull this
+> specific repo from my other servers I get the results bellow.  I have two
+> identical servers where this works, but for some reason on the third one it
+> doesn't.  I even got another virtual server and tried it and I was getting
+> the same error.  I don't know how to troubleshoot this.
+> If anyone has a suggestion I would appreciate it:
 >
-> Only the [9/9] is different.  It adds a test that creates a history
-> with many objects whose names share the same prefix, and tries to
-> check how the implementation employs various possible
-> disambiguations, e.g.
+> [root@myserver gittestremote]# git pull -v tst1 master
+> xxx@xxxxx.xxxxxxxx.com's password:
+> remote: Counting objects: 20095, done.
+> remote: Compressing objects: 100% (18794/18794), done.
+> remote: Total 20095 (delta 1005), reused 20095 (delta 1005)
+> Receiving objects: 100% (20095/20095), 1.11 GiB | 11.46 MiB/s, done.
+> Resolving deltas: 100% (1005/1005), done.
+>  From xxxxxx.xxxxxx.com:/var/www/GITREPO3/fullsites/prd_biq
+>   * branch            master     -> FETCH_HEAD
+> /usr/bin/git-pull: line 277:  5401 Terminated              git read-tree
+> --reset -u HEAD
+> [root@myserver gittestremote]#
+>
+> --
+> View this message in context: http://git.661346.n2.nabble.com/Problem-pulling-large-repo-Error-usr-bin-git-pull-line-277-5401-Terminated-git-read-tree-reset-u-HEAD-tp7562027.html
+> Sent from the git mailing list archive at Nabble.com.
+>
+What is your version of git (git --version), and what are the specs of 
+the machines where it worked and didn't work?  The 1.11 GiB in your 
+output looks pretty big.
 
-By the way, I noticed that "log --graph" is horribly broken when
-used with "-p -m" to show a history with a merge.  For example, try
-running the following:
-
-	$ cd t
-        $ sh t1512-rev-parse-disambiguation.sh -d
-        $ cd tras*tory.t1512-*tion/
-        $ git log --oneline -p -m -M
-
-and then run the last one with "--graph":
-
-	$ git log --oneline -p -m -M --graph
-
-Two people who worked heavily on the --graph option in the past
-CC'ed.
+v/r,
+neal
