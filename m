@@ -1,84 +1,93 @@
-From: "Thomas \"Enki\" Badie" <thomas.badie@gmail.com>
-Subject: [PATCH] git-add--interactive.perl: Remove two unused variables
-Date: Sun, 24 Jun 2012 23:37:34 +0200
-Message-ID: <4FE7889E.2020009@gmail.com>
+From: Marcin Owsiany <marcin@owsiany.pl>
+Subject: [PATCH/RFC] git-svn: don't create master if another head exists
+Date: Sun, 24 Jun 2012 23:08:35 +0100
+Message-ID: <20120624220835.GA4762@beczulka>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 24 23:37:56 2012
+X-From: git-owner@vger.kernel.org Mon Jun 25 00:09:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SiuVG-0006mt-By
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jun 2012 23:37:54 +0200
+	id 1Siuzf-00043j-EI
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 00:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227Ab2FXVhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jun 2012 17:37:39 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63073 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751329Ab2FXVhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2012 17:37:38 -0400
-Received: by eeit10 with SMTP id t10so1008618eei.19
-        for <git@vger.kernel.org>; Sun, 24 Jun 2012 14:37:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=9i7XG0ZKBljT1nksIQ1DVoUFcXLxGM5BQbTsPbwCh0E=;
-        b=Xi2bvnPuO1AKOiLEIEh/AyQb/l4uxORh4pJgkFUbIFz+4WytjDg7rYbszWlkChUeMl
-         Qv84w3Xd8hZKR97L2efFGkxT5JPrDp1JNWIt2D8RYxsmzxrON0hP/sk8yzwlxexTeIr4
-         pIugFw0shnydOteuclKi4tZJGvYz4arhmeOnlq78K/MiUplI+xd070FcGSmlODdE2AQw
-         38vFRkuCYpD48bj4S367lugOHnSy1HR17aTDjHb9t+YJQwEs3GFr3TLyFdER4bpTeJve
-         mYYIG+Tv2MKOvWOS4sBWF3daq+N/qjTosScWVBdL+tcs1IMUCPM0O99A6M3P6uXfjKlB
-         hIOA==
-Received: by 10.14.27.201 with SMTP id e49mr1856262eea.230.1340573857180;
-        Sun, 24 Jun 2012 14:37:37 -0700 (PDT)
-Received: from [192.168.0.12] (mna75-12-88-165-241-47.fbx.proxad.net. [88.165.241.47])
-        by mx.google.com with ESMTPS id g46sm132469449eea.14.2012.06.24.14.37.35
-        (version=SSLv3 cipher=OTHER);
-        Sun, 24 Jun 2012 14:37:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+	id S1753800Ab2FXWIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jun 2012 18:08:41 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:61805 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753340Ab2FXWIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2012 18:08:40 -0400
+Received: by weyu7 with SMTP id u7so2388081wey.19
+        for <git@vger.kernel.org>; Sun, 24 Jun 2012 15:08:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent:x-gm-message-state;
+        bh=lQ5fpVEEGYBCQgZwD3bg0eTityKHxUPcr+vQHA0Eapc=;
+        b=bCeCV4SfhHPsurUiA20idtbXdnhlygNgnlawV4cyUp2Sc0gg3xlpxwtRdPSVsoRxU4
+         oo0+eS97FebB/4mXXM3pFNXieXhPgIk8v/QQz5Of5ZfqN3c1MVrJnxYp6KQm9/kRvsZx
+         VOVz8+AhiBP9shv6pqOPajc6BihMMVMDsmFNxzxnN5ZVnW8mK0KgnKG2B6BU6/QHv4Dz
+         mqqThEror4W7LQw4uEkgk0DAHNC/nMPOIRUmF2Y4LAqAIMgOmpiOdPYFI/BUsoozUy++
+         K8AvrXT+zrpuN6pNoVskXmGcjmQm9dQzdJn+bXmj0p328wdx3x6IljnTmWrYzeyz16Sz
+         zlqQ==
+Received: by 10.180.81.65 with SMTP id y1mr19817720wix.1.1340575719318;
+        Sun, 24 Jun 2012 15:08:39 -0700 (PDT)
+Received: from beczulka ([89.100.125.149])
+        by mx.google.com with ESMTPS id eu4sm5829335wib.2.2012.06.24.15.08.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 24 Jun 2012 15:08:38 -0700 (PDT)
+Received: from mowsiany by beczulka with local (Exim 4.71)
+	(envelope-from <marcin@owsiany.pl>)
+	id 1Siuyx-0006cg-O5; Sun, 24 Jun 2012 23:08:35 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Gm-Message-State: ALoCoQlnCM2+9bqDw7OIiAPF49ioUTjEPRNnCfxgCGql/mWUrw4DKauBGnB7LNz43w21lCXHSDQO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200541>
 
-The patch 8f0bef6 refactors this script and leaves the `$fh' variable
-unused in `diff_applies' and `patch_update_file'.
+git-svn insists on creating the "master" head (unless it exists) on every
+"fetch". While it is useful that it gets created initially (users expect this
+git convention), some users find it annoying that it gets recreated, especially
+when they would like the git branch names to follow SVN repository branch
+names. More background in
+http://thread.gmane.org/gmane.comp.version-control.git/115030
 
-Signed-off-by: Thomas Badie <badie@lrde.epita.fr>
+Make git-svn skip the "master" creation if there is another head ref pointing
+to the same place. This means "master" does get created on initial "clone" but
+does not get recreated once a user deletes it.
+
+Signed-off-by: Marcin Owsiany <marcin@owsiany.pl>
 ---
-Hello,
-This is my first patch. It introduces a really minor change, and I
-also want to be sure the way I submit it is the right way. Thanks :)
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-  git-add--interactive.perl |    2 --
-  1 files changed, 0 insertions(+), 2 deletions(-)
+diff --git a/git-svn.perl b/git-svn.perl
+index 0b074c4..90f3d06 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1613,6 +1613,8 @@ sub post_fetch_checkout {
+ 	}
+ 
+ 	my $valid_head = verify_ref('HEAD^0');
++	my @heads_commits = eval { command(qw(show-ref --heads --hash)) };
++	return if $valid_head and grep { $_ eq $valid_head } @heads_commits;
+ 	command_noisy(qw(update-ref refs/heads/master), $gs->refname);
+ 	return if ($valid_head || !verify_ref('HEAD^0'));
+ 
+-- 
+1.7.7.3
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index d948aa8..710764a 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1067,7 +1067,6 @@ EOF
-  }
-
-  sub diff_applies {
--       my $fh;
-        return run_git_apply($patch_mode_flavour{APPLY_CHECK} . '--check',
-                             map { @{$_->{TEXT}} } @_);
-  }
-@@ -1514,7 +1513,6 @@ sub patch_update_file {
-        }
-
-        if (@result) {
--               my $fh;
-                my @patch = reassemble_patch($head->{TEXT}, @result);
-                my $apply_routine = $patch_mode_flavour{APPLY};
-                &$apply_routine(@patch);
 
 -- 
-1.7.5.4
+Marcin Owsiany <marcin@owsiany.pl>              http://marcin.owsiany.pl/
+GnuPG: 2048R/02F946FC  35E9 1344 9F77 5F43 13DD  6423 DBF4 80C6 02F9 46FC
+
+"Every program in development at MIT expands until it can read mail."
+                                                              -- Unknown
