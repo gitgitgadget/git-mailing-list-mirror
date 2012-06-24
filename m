@@ -1,202 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/3] git-remote-mediawiki: add credential support
-Date: Sun, 24 Jun 2012 13:40:01 +0200
-Message-ID: <1340538001-18625-3-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqr4t5j5yw.fsf@bauges.imag.fr>
- <1340538001-18625-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: peff@peff.net, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jun 24 13:40:44 2012
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Makefile: limit specifying -DGIT_USER_AGENT=... to keep ccache efficient
+Date: Sun, 24 Jun 2012 19:37:37 +0700
+Message-ID: <1340541457-9056-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 24 14:42:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SilBM-0007X1-21
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jun 2012 13:40:44 +0200
+	id 1Sim95-0002N8-0f
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jun 2012 14:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872Ab2FXLki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jun 2012 07:40:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39584 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755661Ab2FXLkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2012 07:40:36 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5OBdw2B000459
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 24 Jun 2012 13:39:58 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SilB6-0006QK-HC; Sun, 24 Jun 2012 13:40:28 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1SilB6-0004r9-Fy; Sun, 24 Jun 2012 13:40:28 +0200
-X-Mailer: git-send-email 1.7.11.5.g0c7e058.dirty
-In-Reply-To: <1340538001-18625-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 24 Jun 2012 13:39:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5OBdw2B000459
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1341142800.76614@GfSxkkl+LpAGh1fzIOBkPg
+	id S1753820Ab2FXMmW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jun 2012 08:42:22 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:51056 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752416Ab2FXMmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2012 08:42:21 -0400
+Received: by pbbrp8 with SMTP id rp8so5410996pbb.19
+        for <git@vger.kernel.org>; Sun, 24 Jun 2012 05:42:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=BHT9Mo6TAQW21BSCQfoZOOEceDl/vA7b8SwZ4CI85J0=;
+        b=Fj8JaT4fowGZZvP8lrWYPfO1IUROeeoHg7V0bPuW8udfzRMI1h4FUjNB1sRqtxfr2N
+         6TYjub2Ysd14U7SntnvR/TZoqF1FZMmgfljrRTMCiyNpdnpzikGcHvA/g8lB/UQRSbSG
+         29ma7u9B3fkP4VX3w3CZKqZvXCXpCs1TNOfvqpwQkR8J9cDEyi0ZmsV12BylIUKURAFx
+         0k1t37mmCG9goKnIJo0i0N90Z7Xfkkl4XPbTDUovrPSY5lpV2KOhy4yiru9JinG7P3V+
+         XZtBJjPvkVYa+5/R3VWRxiyEsjBwbhJn9lyN1ztkE8Tk6aXNlCVNWNqlyK9Dps5aRsUW
+         bGDg==
+Received: by 10.68.232.201 with SMTP id tq9mr30020320pbc.70.1340541740782;
+        Sun, 24 Jun 2012 05:42:20 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.50.32])
+        by mx.google.com with ESMTPS id sk5sm5265398pbc.7.2012.06.24.05.42.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 24 Jun 2012 05:42:19 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Jun 2012 19:37:38 +0700
+X-Mailer: git-send-email 1.7.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200525>
 
-The previous version implemented the possibility to log in a wiki, but
-the username and password had to be provided as configuration variables.
-We add the possibility to use the Git credential system to prompt
-the password.
+GIT_USER_AGENT changes as HEAD changes. Defining it in BASIC_FLAGS
+means every time HEAD changes, the compiling options for every object
+file is changed, which defeats the purpose of using ccache.
 
-The support if implemented with generic functions that mimic the C API,
-designed to be usable from other contexts in the future (i.e. they may
-migrate to Git.pm if someone is interested).
+As version.c is the only file that uses this definition, limit
+defining only when compiling this file.
 
-While we're there, do a bit of refactoring in mw_connect_maybe.
-
-Based on patch by: Javier Roucher Iglesias <Javier.Roucher-Iglesias@ensimag.imag.fr>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- contrib/mw-to-git/git-remote-mediawiki | 106 +++++++++++++++++++++++++++++----
- 1 file changed, 94 insertions(+), 12 deletions(-)
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index c18bfa1..a34f53f 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -43,6 +43,8 @@ use encoding 'utf8';
- binmode STDERR, ":utf8";
- 
- use URI::Escape;
-+use IPC::Open2;
-+
- use warnings;
- 
- # Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
-@@ -151,28 +153,108 @@ while (<STDIN>) {
- 
- ########################## Functions ##############################
- 
-+## credential API management (generic functions)
-+
-+sub credential_from_url {
-+	my $url = shift;
-+	my $parsed = URI->new($url);
-+	my %credential;
-+
-+	if ($parsed->scheme) {
-+		$credential{protocol} = $parsed->scheme;
-+	}
-+	if ($parsed->host) {
-+		$credential{host} = $parsed->host;
-+	}
-+	if ($parsed->path) {
-+		$credential{path} = $parsed->path;
-+	}
-+	if ($parsed->userinfo) {
-+		if ($parsed->userinfo =~ /([^:]*):(.*)/) {
-+			$credential{username} = $1;
-+			$credential{password} = $2;
-+		} else {
-+			$credential{username} = $parsed->userinfo;
-+		}
-+	}
-+
-+	return %credential;
-+}
-+
-+sub credential_read {
-+	my %credential;
-+	my $reader = shift;
-+	my $op = shift;
-+	while (<$reader>) {
-+		my ($key, $value) = /([^=]*)=(.*)/;
-+		if (not defined $key) {
-+			die "ERROR receiving response from git credential $op:\n$_\n";
-+		}
-+		$credential{$key} = $value;
-+	}
-+	return %credential;
-+}
-+
-+sub credential_write {
-+	my $credential = shift;
-+	my $writer = shift;
-+	while (my ($key, $value) = each(%$credential) ) {
-+		if ($value) {
-+			print $writer "$key=$value\n";
-+		}
-+	}
-+}
-+
-+sub credential_run {
-+	my $op = shift;
-+	my $credential = shift;
-+	my $pid = open2(my $reader, my $writer, "git credential $op");
-+	credential_write($credential, $writer);
-+	print $writer "\n";
-+	close($writer);
-+	
-+	if ($op eq "fill") {
-+		%$credential = credential_read($reader, $op);
-+	} else {
-+		if (<$reader>) {
-+			die "ERROR while running git credential $op:\n$_";
-+		}
-+	}
-+	close($reader);
-+	waitpid($pid, 0);
-+	my $child_exit_status = $? >> 8;
-+	if ($child_exit_status != 0) {
-+		die "'git credential $op' failed with code $child_exit_status.";
-+	}
-+}
-+
- # MediaWiki API instance, created lazily.
- my $mediawiki;
- 
- sub mw_connect_maybe {
- 	if ($mediawiki) {
--	    return;
-+		return;
- 	}
- 	$mediawiki = MediaWiki::API->new;
- 	$mediawiki->{config}->{api_url} = "$url/api.php";
- 	if ($wiki_login) {
--		if (!$mediawiki->login({
--			lgname => $wiki_login,
--			lgpassword => $wiki_passwd,
--			lgdomain => $wiki_domain,
--		})) {
--			print STDERR "Failed to log in mediawiki user \"$wiki_login\" on $url\n";
--			print STDERR "(error " .
--			    $mediawiki->{error}->{code} . ': ' .
--			    $mediawiki->{error}->{details} . ")\n";
--			exit 1;
-+		my %credential = credential_from_url($url);
-+		$credential{username} = $wiki_login;
-+		$credential{password} = $wiki_passwd;
-+		credential_run("fill", \%credential);
-+		my $request = {lgname => $credential{username},
-+			       lgpassword => $credential{password},
-+			       lgdomain => $wiki_domain};
-+		if ($mediawiki->login($request)) {
-+			credential_run("approve", \%credential);
-+			print STDERR "Logged in mediawiki user \"$credential{username}\".\n";
- 		} else {
--			print STDERR "Logged in with user \"$wiki_login\".\n";
-+			print STDERR "Failed to log in mediawiki user \"$credential{username}\" on $url\n";
-+			print STDERR "  (error " .
-+				$mediawiki->{error}->{code} . ': ' .
-+				$mediawiki->{error}->{details} . ")\n";
-+			credential_run("reject", \%credential);
-+			exit 1;
- 		}
- 	}
- }
--- 
-1.7.11.5.g0c7e058.dirty
+diff --git a/Makefile b/Makefile
+index f62ca2a..b3ce00d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1929,7 +1929,6 @@ endif
+ GIT_USER_AGENT_SQ =3D $(subst ','\'',$(GIT_USER_AGENT))
+ GIT_USER_AGENT_CQ =3D "$(subst ",\",$(subst \,\\,$(GIT_USER_AGENT)))"
+ GIT_USER_AGENT_CQ_SQ =3D $(subst ','\'',$(GIT_USER_AGENT_CQ))
+-BASIC_CFLAGS +=3D -DGIT_USER_AGENT=3D'$(GIT_USER_AGENT_CQ_SQ)'
+=20
+ ifdef DEFAULT_HELP_FORMAT
+ BASIC_CFLAGS +=3D -DDEFAULT_HELP_FORMAT=3D'"$(DEFAULT_HELP_FORMAT)"'
+@@ -2000,7 +1999,8 @@ builtin/help.sp builtin/help.s builtin/help.o: EX=
+TRA_CPPFLAGS =3D \
+ 	'-DGIT_INFO_PATH=3D"$(infodir_SQ)"'
+=20
+ version.sp version.s version.o: EXTRA_CPPFLAGS =3D \
+-	'-DGIT_VERSION=3D"$(GIT_VERSION)"'
++	'-DGIT_VERSION=3D"$(GIT_VERSION)"' \
++	'-DGIT_USER_AGENT=3D"$(GIT_USER_AGENT)"'
+=20
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+--=20
+1.7.8
