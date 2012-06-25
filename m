@@ -1,72 +1,70 @@
-From: Angus Hammond <angusgh@gmail.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
 Subject: Re: Urgent: Issue with GIT ...
-Date: Mon, 25 Jun 2012 14:14:32 +0100
-Message-ID: <CAOBOgRb9bMHSmMrj2tw56U_eSYjR+93=9ryE9YOcCsX+mVYeRA@mail.gmail.com>
-References: <1340624980925-7562097.post@n2.nabble.com> <20120625160734.d8227e5d.kostix@domain007.com>
- <1340628925770-7562100.post@n2.nabble.com>
+Date: Mon, 25 Jun 2012 17:29:57 +0400
+Message-ID: <20120625172957.b73effa9.kostix@domain007.com>
+References: <1340624980925-7562097.post@n2.nabble.com>
+	<20120625160734.d8227e5d.kostix@domain007.com>
+	<1340628925770-7562100.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: guruprasad <guruprasadkinI@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 15:15:04 2012
+X-From: git-owner@vger.kernel.org Mon Jun 25 15:30:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sj986-0006Oc-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 15:14:59 +0200
+	id 1Sj9Mn-00083h-Fe
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 15:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755957Ab2FYNOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jun 2012 09:14:55 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:43420 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753496Ab2FYNOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2012 09:14:54 -0400
-Received: by bkcji2 with SMTP id ji2so3106420bkc.19
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 06:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8MkMDSyTFAGfh3QuYq3vcKiSwE89ZHiD4SPqcSQwq2I=;
-        b=xGFU+LYtYcE+b8OtfNJde/q2SV0r3wW2IF4EzIJgr5NNAN2JUtORBlBRF8q4Tg7ReR
-         4XgQJJXvKqMsQ94SMSisuEWQuUDCGYH9ThGYJ6KC/hQJnqRmXVEK2sH5MtTzZScmewZM
-         g2zNzLKflv7lO9P5KCpkqz16Rr8svTm73KOWKdgU1H4AHRJfaqHQPRIIjo73yTvtRKj+
-         A4u6OocgDC4vOGHc/WIj32kAat+BjXiM7jScceqaIKmjP9+mHsRIagE9neQDL4q/lu30
-         zYVXaeLAiXyv+us7X4eJAFXtE/lnsJEeSXgXatzM10PgKZr71KeGn3D2w0rg0rlpfToc
-         /DgA==
-Received: by 10.152.122.12 with SMTP id lo12mr12185057lab.3.1340630092861;
- Mon, 25 Jun 2012 06:14:52 -0700 (PDT)
-Received: by 10.114.12.1 with HTTP; Mon, 25 Jun 2012 06:14:32 -0700 (PDT)
+	id S1756517Ab2FYNaD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 09:30:03 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:36244 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756365Ab2FYNaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 09:30:01 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q5PDTvvm004640;
+	Mon, 25 Jun 2012 17:29:58 +0400
 In-Reply-To: <1340628925770-7562100.post@n2.nabble.com>
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200580>
 
-On 25 June 2012 13:55, guruprasad <guruprasadkinI@gmail.com> wrote:
-> remote: error: its current branch; however, this is not recommended unless
-> you
-> remote: error: arranged to update its work tree to match what you pushed in
-> some
+On Mon, 25 Jun 2012 05:55:25 -0700 (PDT)
+guruprasad <guruprasadkinI@gmail.com> wrote:
 
-> 4) But, modified things in files did not get reflected. i tried to push from
-> A-->B and B-->A. both dint work.
+[...]
+> 1) Pull command is working fine with both the Linux box. Comp A can
+> pull updates from comp B, vise versa.
+>=20
+> 2) Push command is not working with both Linux box, command given
+> below. git push A master/git push B master
+>=20
+> 3) When i tried above command first time got an error saying=20
+> remote: error: refusing to update checked out branch:
+> refs/heads/master remote: error: By default, updating the current
+> branch in a non-bare repository
+[...]
+> so i added receive.denyCurrentBranch =3D ignore into git config and
+> tried again. I dint get any error.
+>=20
+> 4) But, modified things in files did not get reflected. i tried to
+> push from A-->B and B-->A. both dint work.
 > 5) Push command i tried after modifying file, staging and committing.
->
 
-I *THINK* the problem you're having is that the push to A updates the
-repository itself, but doesn't update the working directory unless you
-explicitly tell it to from machine A later on. This is why you got
-that horrible long error message when you did the git push, git was
-trying to stop you from creating a state where the repository and the
-working directory were different.
+This is covered in the Git FAQ [1] -- see the question
+=C2=ABWhy won't I see changes in the remote repo after "git push"?=C2=BB
 
-It seems like the solution would be to checkout master on machine A
-after you push, or even better, set up a bare repository somewhere on
-one of the systems and arrange for both of the repositories you work
-in to push/pull to that one.
+Supposedly you should either stick to pulling or start using a
+"reference" repository (some prefer to call it "central") as already
+suggested in [2].  In your case, I don't see why you really need pushes
+so I'd stick to pulling.
 
-Angus
+1. https://git.wiki.kernel.org/index.php/GitFaq
+2. http://groups.google.com/group/git-users/msg/5b545f06510c7e2d
