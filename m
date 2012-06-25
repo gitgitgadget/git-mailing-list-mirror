@@ -1,217 +1,217 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] compat/terminal: support echoing on windows
-Date: Mon, 25 Jun 2012 17:06:47 +0200
-Message-ID: <CABPQNSYX9vZT0A4v5MMvC=yanNsLu7JMFoH1ZYy=vtaE7mwPpQ@mail.gmail.com>
-References: <1340544903-37016-1-git-send-email-kusmabite@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] git-submodule: support 'rm' command.
+Date: Mon, 25 Jun 2012 18:58:36 +0200
+Message-ID: <4FE898BC.2020307@web.de>
+References: <1340621820-19448-1-git-send-email-mgorny@gentoo.org> <1340621820-19448-2-git-send-email-mgorny@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: msysgit@googlegroups.com, peff@peff.net
-To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxCw_aH_BBoEg8FG-g@googlegroups.com Mon Jun 25 17:07:29 2012
-Return-path: <msysgit+bncCOPdven-DxCw_aH_BBoEg8FG-g@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+X-From: git-owner@vger.kernel.org Mon Jun 25 18:58:57 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCw_aH_BBoEg8FG-g@googlegroups.com>)
-	id 1SjAsy-0002Vm-Db
-	for gcvm-msysgit@m.gmane.org; Mon, 25 Jun 2012 17:07:28 +0200
-Received: by mail-qc0-f186.google.com with SMTP id c2sf4508261qcs.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 25 Jun 2012 08:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=yzpnASFDbrcfIPwQ6o8hmyXDGD3L/HNqkVw2tYYkHvA=;
-        b=xaTe4gbdnWqW+VB34PruUYIMT9B8eaeU4QZMjaaARF9i4Yv5MAPdBLG2NdE5TKCp9Y
-         SqIuMzEn6/RxJVLDhWR2USLMIQfoqCwLvnKe6X+ZnNIz+jv8ZKjRPYkQgDw0NELYMMgP
-         wv3TCNlNWlTuf7YBSx3l7zugMgig/kqIKKly4=
-Received: by 10.224.33.6 with SMTP id f6mr240102qad.16.1340636848565;
-        Mon, 25 Jun 2012 08:07:28 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.224.198.129 with SMTP id eo1ls1709273qab.9.gmail; Mon, 25 Jun
- 2012 08:07:27 -0700 (PDT)
-Received: by 10.68.223.40 with SMTP id qr8mr13455186pbc.0.1340636847610;
-        Mon, 25 Jun 2012 08:07:27 -0700 (PDT)
-Received: by 10.68.223.40 with SMTP id qr8mr13455184pbc.0.1340636847600;
-        Mon, 25 Jun 2012 08:07:27 -0700 (PDT)
-Received: from mail-pb0-f47.google.com (mail-pb0-f47.google.com [209.85.160.47])
-        by gmr-mx.google.com with ESMTPS id iq5si550250pbc.1.2012.06.25.08.07.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Jun 2012 08:07:27 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.160.47 as permitted sender) client-ip=209.85.160.47;
-Received: by mail-pb0-f47.google.com with SMTP id rq2so6672044pbb.20
-        for <msysgit@googlegroups.com>; Mon, 25 Jun 2012 08:07:27 -0700 (PDT)
-Received: by 10.68.134.201 with SMTP id pm9mr42856851pbb.49.1340636847399;
- Mon, 25 Jun 2012 08:07:27 -0700 (PDT)
-Received: by 10.68.40.98 with HTTP; Mon, 25 Jun 2012 08:06:47 -0700 (PDT)
-In-Reply-To: <1340544903-37016-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.160.47 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200583>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1SjCcm-0003lv-2O
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 18:58:52 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757325Ab2FYQ6r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 12:58:47 -0400
+Received: from mout.web.de ([212.227.17.11]:50970 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753768Ab2FYQ6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 12:58:46 -0400
+Received: from [192.168.178.48] ([91.3.156.12]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0MOj14-1SpF2N0YMw-005lMK; Mon, 25 Jun 2012 18:58:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <1340621820-19448-2-git-send-email-mgorny@gentoo.org>
+X-Provags-ID: V02:K0:Fn5HvIJkQ2ypXr61t0RNn45nUxyiv39m5g26U2QQqWR
+ JlvVVRcAI2QFrU8pFVKaC9B/2nbcp9iz7Fu1E5bMjY7Tg++IdZ
+ cyILUVcg2iPLzjQ6CikqPIw3ThAESMqjdjPe8LYh7F/EkFiY9b
+ lPaYzXudi2+TWLJQ9eVoCR0PGpPkKBFKGPspQK2Nu3+1WPiGiU
+ tm1+3YEXFX05nIDd7X5fg==
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200584>
 
-On Sun, Jun 24, 2012 at 3:35 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote=
-:
-> Without /dev/tty support, git_terminal_prompt simply ignores the
-> 'echo'-parameter. On Windows we can do better by clevering up our
-> getpass-implementation a bit so it can conditionally echo.
->
-> While we're at it, plug a small memory-leak by returning a pointer
-> to a static strbuf instead of detaching it. This is the same thing
-> the /dev/tty-version of git_terminal_prompt does, and the callee
-> doesn't expect to have to free it's memory.
->
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Am 25.06.2012 12:57, schrieb Micha=C5=82 G=C3=B3rny:
+> Add an 'rm' command to git-submodule which provides means to
+> (semi-)easily remove git submodules.
+>=20
+> Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
 > ---
-> =A0compat/mingw.c =A0 =A0| 15 ---------------
-> =A0compat/mingw.h =A0 =A0| =A02 --
-> =A0compat/terminal.c | 20 ++++++++++++++++++++
-> =A03 files changed, 20 insertions(+), 17 deletions(-)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index afc892d..56ab74c 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1699,21 +1699,6 @@ int link(const char *oldpath, const char *newpath)
-> =A0 =A0 =A0 =A0return 0;
-> =A0}
->
-> -char *getpass(const char *prompt)
-> -{
-> - =A0 =A0 =A0 struct strbuf buf =3D STRBUF_INIT;
-> -
-> - =A0 =A0 =A0 fputs(prompt, stderr);
-> - =A0 =A0 =A0 for (;;) {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 char c =3D _getch();
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (c =3D=3D '\r' || c =3D=3D '\n')
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addch(&buf, c);
-> - =A0 =A0 =A0 }
-> - =A0 =A0 =A0 fputs("\n", stderr);
-> - =A0 =A0 =A0 return strbuf_detach(&buf, NULL);
-> -}
-> -
-> =A0pid_t waitpid(pid_t pid, int *status, int options)
-> =A0{
-> =A0 =A0 =A0 =A0HANDLE h =3D OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFOR=
-MATION,
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 61a6521..5e64a98 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -55,8 +55,6 @@ struct passwd {
-> =A0 =A0 =A0 =A0char *pw_dir;
-> =A0};
->
-> -extern char *getpass(const char *prompt);
-> -
-> =A0typedef void (__cdecl *sig_handler_t)(int);
-> =A0struct sigaction {
-> =A0 =A0 =A0 =A0sig_handler_t sa_handler;
-> diff --git a/compat/terminal.c b/compat/terminal.c
-> index 6d16c8f..53c5166 100644
-> --- a/compat/terminal.c
-> +++ b/compat/terminal.c
-> @@ -71,6 +71,26 @@ char *git_terminal_prompt(const char *prompt, int echo=
-)
-> =A0 =A0 =A0 =A0return buf.buf;
-> =A0}
->
-> +#elif defined(WIN32)
-> +
-> +char *git_terminal_prompt(const char *prompt, int echo)
+> Right now, it requires the submodule checkout to be removed manually
+> first (so it does not remove unstaged commits), and just removes
+> the index entry and module information from config.
+>=20
+> I based it on 'cmd_add' code trying to preserve the original coding
+> standards.
+
+I really like the goal of this patch but would prefer that "git rm"
+learns how to remove submodules instead of adding more code to the
+git-submodule.sh script.
+
+Also it shouldn't be necessary for the user to remove the directory
+by hand before running "git rm". At least all files recorded in the
+submodule can be removed (and if the submodule uses a gitfile that
+can be removed too). Then all that is left are untracked files the
+user has to decide what to do with (which might be removed too when
+running "git rm --recurse-submodules=3Duntracked").
+
+>  Documentation/git-submodule.txt |   12 +++++++
+>  git-submodule.sh                |   68 +++++++++++++++++++++++++++++=
++++++++++-
+>  2 files changed, 79 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-subm=
+odule.txt
+> index fbbbcb2..293c1bf 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -11,6 +11,7 @@ SYNOPSIS
+>  [verse]
+>  'git submodule' [--quiet] add [-b branch] [-f|--force]
+>  	      [--reference <repository>] [--] <repository> [<path>]
+> +'git submodule' [--quiet] rm <path>...
+>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<pat=
+h>...]
+>  'git submodule' [--quiet] init [--] [<path>...]
+>  'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+> @@ -104,6 +105,17 @@ together in the same relative location, and only=
+ the
+>  superproject's URL needs to be provided: git-submodule will correctl=
+y
+>  locate the submodule using the relative URL in .gitmodules.
+> =20
+> +rm::
+> +	Remove and unregister the submodules at given paths.
+> ++
+> +This requires at least one <path> argument. The repository checkout
+> +existing at that directory needs to be removed manually from
+> +the filesystem prior to calling this command. Note that all local
+> +changes will be lost.
+
+Me thinks without -f a "git rm" should only then remove a submodule
+if no local modifications exist and current HEAD is part of a remote
+branch (so you can't loose unpushed commits by accident). If the
+submodule uses a gitfile a local branch might be sufficient for that,
+as the git directory lives on.
+
+> ++
+> +This command removes the submodule from the current git index,
+> +the .gitmodules file and the local repository config.
+
+It should not be removed from .git/config by default. The user may
+have special settings there and the presence in .git/config shows
+he cared about having the submodule checked out, which should not
+be revoked by just removing the submodule from the work tree.
+Unless he removes the config from there himself he should get back
+a populated submodule when he checks out an earlier commit and says
+"git submodule update".
+
+>  status::
+>  	Show the status of the submodules. This will print the SHA-1 of the
+>  	currently checked out commit for each submodule, along with the
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index fbf2faf..88fd414 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -6,6 +6,7 @@
+> =20
+>  dashless=3D$(basename "$0" | sed -e 's/-/ /')
+>  USAGE=3D"[--quiet] add [-b branch] [-f|--force] [--reference <reposi=
+tory>] [--] <repository> [<path>]
+> +   or: $dashless [--quiet] rm [--] <path>...
+>     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<pa=
+th>...]
+>     or: $dashless [--quiet] init [--] [<path>...]
+>     or: $dashless [--quiet] update [--init] [-N|--no-fetch] [-f|--for=
+ce] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] =
+[<path>...]
+> @@ -308,6 +309,71 @@ Use -f if you really want to add it." >&2
+>  }
+> =20
+>  #
+> +# Remove submodules from the working tree, .gitmodules and the index
+> +#
+> +# $@ =3D submodule paths
+> +#
+> +cmd_rm()
 > +{
-> + =A0 =A0 =A0 static struct strbuf buf =3D STRBUF_INIT;
+> +	# parse $args after "submodule ... rm".
+> +	while test $# -ne 0
+> +	do
+> +		case "$1" in
+> +		--)
+> +			shift
+> +			break
+> +			;;
+> +		-*)
+> +			usage
+> +			;;
+> +		*)
+> +			break
+> +			;;
+> +		esac
+> +		shift
+> +	done
 > +
-> + =A0 =A0 =A0 fputs(prompt, stderr);
-> + =A0 =A0 =A0 strbuf_reset(&buf);
-> + =A0 =A0 =A0 for (;;) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 int c =3D _getch();
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (c =3D=3D '\n' || c =3D=3D '\r')
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (echo)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 putc(c, stderr);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addch(&buf, c);
-> + =A0 =A0 =A0 }
-> + =A0 =A0 =A0 putc('\n', stderr);
-> + =A0 =A0 =A0 return buf.buf;
+> +	if test -z "$1"; then
+> +		usage
+> +	fi
+> +
+> +	while test $# -ne 0
+> +	do
+> +		sm_path=3D$1
+> +		shift
+> +
+> +		# normalize path:
+> +		# multiple //; leading ./; /./; /../; trailing /
+> +		sm_path=3D$(printf '%s/\n' "$sm_path" |
+> +			sed -e '
+> +				s|//*|/|g
+> +				s|^\(\./\)*||
+> +				s|/\./|/|g
+> +				:start
+> +				s|\([^/]*\)/\.\./||
+> +				tstart
+> +				s|/*$||
+> +			')
+> +		git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 ||
+> +		die "$(eval_gettext "'\$sm_path' does not exist in the index")"
+> +
+> +		if test -e "$sm_path"
+> +		then
+> +			die "$(eval_gettext "'\$sm_path' needs to be removed manually fir=
+st")"
+> +		fi
+> +
+> +		git rm --cached "$sm_path" ||
+> +		die "$(eval_gettext "Failed to remove submodule '\$sm_path'")"
+> +
+> +		git config -f .gitmodules --remove-section submodule."$sm_path" &&
+> +		git add --force .gitmodules ||
+> +		die "$(eval_gettext "Failed to unregister submodule '\$sm_path'")"
+> +
+> +		git config --remove-section submodule."$sm_path"
+> +	done
 > +}
 > +
-> =A0#else
->
-> =A0char *git_terminal_prompt(const char *prompt, int echo)
-> --
-> 1.7.11.1.27.gdae0dbb
->
-
-Turns out, this patch is incorrect; _getch is defined in conio.h,
-which is only included in compat/mingw.c and compat/msvc.c.
-
-This patch on top fixes it:
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 56ab74c..d7d4aea 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1,6 +1,5 @@
- #include "../git-compat-util.h"
- #include "win32.h"
--#include <conio.h>
- #include "../strbuf.h"
- #include "../run-command.h"
-
-diff --git a/compat/msvc.c b/compat/msvc.c
-index 71843d7..a3a4e0e 100644
---- a/compat/msvc.c
-+++ b/compat/msvc.c
-@@ -1,6 +1,5 @@
- #include "../git-compat-util.h"
- #include "win32.h"
--#include <conio.h>
- #include "../strbuf.h"
-
- #include "mingw.c"
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 5bd9ad7..fa3e1a9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -88,6 +88,7 @@
- #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
- #include <winsock2.h>
- #include <windows.h>
-+#include <conio.h>
- #endif
-
- #include <unistd.h>
-
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+> +#
+>  # Execute an arbitrary command sequence in each checked out
+>  # submodule
+>  #
+> @@ -996,7 +1062,7 @@ cmd_sync()
+>  while test $# !=3D 0 && test -z "$command"
+>  do
+>  	case "$1" in
+> -	add | foreach | init | update | status | summary | sync)
+> +	add | rm | foreach | init | update | status | summary | sync)
+>  		command=3D$1
+>  		;;
+>  	-q|--quiet)
+>=20
