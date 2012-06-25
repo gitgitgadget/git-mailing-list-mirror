@@ -1,78 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4 v8] config: write to $XDG_CONFIG_HOME/git/config file
- if appropriate
-Date: Mon, 25 Jun 2012 11:08:31 -0700
-Message-ID: <7v1ul3gt7k.fsf@alter.siamese.dyndns.org>
-References: <7vfw9oshpz.fsf@alter.siamese.dyndns.org>
- <1340355806-6894-1-git-send-email-Matthieu.Moy@imag.fr>
- <1340355806-6894-5-git-send-email-Matthieu.Moy@imag.fr>
- <7vwr2zm4bm.fsf@alter.siamese.dyndns.org> <vpq395jj3dt.fsf@bauges.imag.fr>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: MERGE_RR droppings
+Date: Mon, 25 Jun 2012 14:36:39 -0400
+Message-ID: <CABURp0rBRnFjJaXO3BUYWcyXEAsLZeEv05z-hMi8aW9SPTCPqA@mail.gmail.com>
+References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
+ <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com> <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr,
-	Valentin.Duperray@ensimag.imag.fr, Franck.Jonas@ensimag.imag.fr,
-	Lucien.Kong@ensimag.imag.fr, Thomas.Nguy@ensimag.imag.fr
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 25 20:08:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 20:37:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjDiI-0002az-5D
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 20:08:38 +0200
+	id 1SjE9r-0001rV-Ny
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 20:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394Ab2FYSIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jun 2012 14:08:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47334 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752113Ab2FYSId (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2012 14:08:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E1C871BB;
-	Mon, 25 Jun 2012 14:08:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5zBEMFnAk5L6CNBfNbtL+POilO4=; b=EFZZWC
-	9zUUUonSbigjCqddOrGM2wysqME7BQ6vcQ5cgfN3pcIW81CJwXqzfcQ3mwrLfYAC
-	YqL8Uasdpsq8Pqcsxc7eGVNIgtn+r0XLS7LzNcVAxDw2a4uMtDa4f3sxf3VEB7jo
-	6Gve+Uw/zoRkrsWHMatXSjPNK5cEVvjbVYiFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SAnzI3jj3WMc5YyjRjrJJK6yd+dE6EIX
-	mEApvTDCGb+zU0KQ9RdaD/tJ61+3lf0WFpMZA/LCAz+9YFKBNbAJJaEMZJQu++sV
-	6agPQO5HGOdyXyXp4sgXwjT3Dt5S87nSidUdYCbqrV0LiAEIYijEXuw3E/S3we8l
-	1Pzs/SQcymI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54B9E71BA;
-	Mon, 25 Jun 2012 14:08:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFD3971B9; Mon, 25 Jun 2012
- 14:08:32 -0400 (EDT)
-In-Reply-To: <vpq395jj3dt.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 25 Jun 2012 08:45:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C67C2A64-BEF0-11E1-B2DE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755761Ab2FYShB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 14:37:01 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:40576 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754750Ab2FYShA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 14:37:00 -0400
+Received: by obbuo13 with SMTP id uo13so6806969obb.19
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 11:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WWseHaN6hisC3Z6GI9qVEjXdGj8RwIbfOfzl0m/rsYU=;
+        b=BVShw2W2KaEz7oM97qDzBWNtU7BlRiJDL+x93Xrl3QUEW6DHvAEbIMYj9sdaui98jF
+         t/LbZj5D5omn171K/9fgfdviVDzvzaPX3AzzHNjHALtVmbkIg+avceEICj2lAbt4KWbq
+         X33ESbompDDme1fGPzQJC8doTPI7UxTJEY/xpMzcIuPKbMk5OR20Bc2PXVezREM7ugUh
+         CSH9d7Cbp8ITv9BBxOEkF0nKBk3gGSHT9Yd3bayYFqio6ML9rlMyVHF8GeAuzj/6FElB
+         Zs7UC8OhUngicCfjoNKXUe0B/uJaUo/UlmsDw5nFbd8me2YH23l8CMGekBURAKC9IBNd
+         qxag==
+Received: by 10.182.50.103 with SMTP id b7mr13066326obo.15.1340649419936; Mon,
+ 25 Jun 2012 11:36:59 -0700 (PDT)
+Received: by 10.182.111.99 with HTTP; Mon, 25 Jun 2012 11:36:39 -0700 (PDT)
+In-Reply-To: <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200590>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> We can squash this into PATCH 1:
+On Mon, Jun 18, 2012 at 7:05 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Phil Hord <phil.hord@gmail.com> writes:
 >
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -209,7 +209,9 @@ $XDG_CONFIG_HOME/git/config::
->         Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
->         or empty, $HOME/.config/git/config will be used. Any single-valued
->         variable set in this file will be overwritten by whatever is in
-> -       ~/.gitconfig.
-> +       ~/.gitconfig. Support for this file was added after Git
-> +       1.7.11, so if you sometimes use older versions of Git, it's a
-> +       good idea not to create this file.
+>> git mergetool decides to use rerere-remaining based on the existence
+>> of the .git/MERGE_RR file:
+>>
+>> =A0 =A0 if test -e "$GIT_DIR/MERGE_RR"
+>
+> This is correct, I would probably write it with "test -f" if I were
+> writing this line today, though. =A0After you commit to conclude the
+> merge, the MERGE_RR marker should disappear. =A0Isn't it happening fo=
+r
+> you?
 
-Okay.  Thanks.
+I was able to isolate this today to cherry-pick.
+
+When I successfully cherry-pick a change (no conflicts, no merges), I
+get a .git/MERGE_RR file left over.  After this happens, git-mergetool
+will think there are no unresolved conflicts unless git (or I) first
+removes the .git/MERGE_RR.
+
+Maybe this only causes trouble for 'git stash apply' since it does not
+employ rerere machinery, or because it takes some other code path
+which does not begin by removing .git/MERGE_RR.
+
+A naive fix would be to remove MERGE_RR at the conclusion of
+'stash-apply', but I do not think that is the right place for it to
+go.
+
+Suggestions?
+
+Phil
