@@ -1,96 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] Add C_LOCALE_OUTPUT prereq to test cases that require
- English text matching
-Date: Mon, 25 Jun 2012 18:32:30 +0700
-Message-ID: <CACsJy8DpOL+V=sVZt3B-7OQ=POHtu1bovFB-sQ9HwPpmdKmN-A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] i18n: leave \n out of translated diffstat
+Date: Mon, 25 Jun 2012 06:33:29 -0500
+Message-ID: <20120625113328.GA9270@burratino>
 References: <1340541692-10834-1-git-send-email-pclouds@gmail.com>
- <1340541692-10834-2-git-send-email-pclouds@gmail.com> <20120624162807.GB18791@burratino>
+ <20120624160411.GA18791@burratino>
+ <7vzk7shvd0.fsf@alter.siamese.dyndns.org>
+ <CACsJy8De_Toy+7jvsBueYZpcuakTxZupmwLYZVm29Ni3+1QuMw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 13:33:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 13:33:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sj7XY-00043J-OV
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 13:33:09 +0200
+	id 1Sj7Y6-0004K0-Np
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 13:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429Ab2FYLdD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 07:33:03 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63906 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677Ab2FYLdB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 07:33:01 -0400
-Received: by wgbdr13 with SMTP id dr13so4007841wgb.1
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 04:33:00 -0700 (PDT)
+	id S1752919Ab2FYLdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 07:33:39 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:51267 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677Ab2FYLdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 07:33:38 -0400
+Received: by gglu4 with SMTP id u4so2668265ggl.19
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 04:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=TGd1SuYtwQQXdjs5zMW8ellPWB7/EyIwmuCmlppQ4cs=;
-        b=r8FW49+I8iUcIi6JQGdcfGHXOy+NGtGgxCtcjnMAKbaK7boK1AKwqb9N8XkXlalV7g
-         5Co3ZQDpdYqZuRh8MmC4P1/bfJO+PZAaOJhEdaBVg4io+8ARbh6qOvIER/93pM7q2QX/
-         v5i+fr/3M3jWuOkkV/A4I6JsKgL+iVcJxjEZTkmQ6HGaBbO8e2BZjbWdl0hw8vd36/cp
-         f2FkWwJwvRYNr37TdJdGs2DBa+cVDf7nKP/RXmDqh+oU7RFBXdz4hwgsTuep1MEQRLqt
-         Et9wbL3IXEbmZrRrf0cx6siZQ6cWwX84x4SbXIyU8LY6pA9LupCs/9+UzdkgQqzVc8QG
-         A2Lg==
-Received: by 10.180.76.135 with SMTP id k7mr24362453wiw.7.1340623980601; Mon,
- 25 Jun 2012 04:33:00 -0700 (PDT)
-Received: by 10.223.79.76 with HTTP; Mon, 25 Jun 2012 04:32:30 -0700 (PDT)
-In-Reply-To: <20120624162807.GB18791@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NxzLKtzNXd7y/ZOlWlZDUCbcvYzb3vF4E7rIPx+dn0w=;
+        b=P4RrrVRl1S7mUiaibXGG3j7SDnEW+yBDcw2VilS/LjG4wQaKVa0osal/m8P7bcp2lU
+         sD69rzyzbdNGrfFPezCE3xISP9nuzGr0D/TlvHl4tBbSQVkEBvWWRkXVvYGzr5Yo2/1n
+         FnV1sgFiI6CuycixEeJ6h/Zwl5Pn/YT23GYmZv/xsmp8kjobKoX2QW74BTgKlGsUOFS3
+         QZkvXRO7O1rFjj/lgUjB6c3nUuZGNOF4JJ9v/O/wL2A/GSO/4QlZEDDnWKddBWoP+Ng/
+         ftmhywKxZDOzztKHc2UWqOgEVRDhLrIZ9Xz7I7VnCuVpSY4qN+mOk8KJM+kxkVtUyME+
+         FYdg==
+Received: by 10.50.42.165 with SMTP id p5mr7740997igl.68.1340624017433;
+        Mon, 25 Jun 2012 04:33:37 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id yg6sm16011963igb.6.2012.06.25.04.33.36
+        (version=SSLv3 cipher=OTHER);
+        Mon, 25 Jun 2012 04:33:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8De_Toy+7jvsBueYZpcuakTxZupmwLYZVm29Ni3+1QuMw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200569>
 
-On Sun, Jun 24, 2012 at 11:28 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
->> This fixes all GETTEXT_POISON breakages caused by recent i18n change=
-s.
->
-> First, thanks much for this.
->
-> Lots of these could be fixed in a more targetted way by using
-> test_i18ngrep, but the C_LOCALE_OUTPUT prereq works just as well as a
-> way to double-check that the newly translated strings are hopefully
-> not disrupting any functionality people rely on.
+Nguyen Thai Ngoc Duy wrote:
 
-I probably still don't grasp the principles behind gettext-poison.
-Pretending success quietly in test_i18ngrep and test_i18ncmp makes me
-uncomfortable. At least C_LOCAL_OUTPUT clearly shows the test is
-skipped, which is why I prefer it over test_i18n*. Letting it run to
-catch crashes is good, but not enough (it's more likely to crash with
-wrong printf format specifiers for example, which gettext-poison won't
-catch). Will update it according to your comments.
+> That prints "0 files changed, 0 insertions(+), 0 deletions(-)" instead
+> of "0 files changed". Two more changed lines to make it the latter.
 
-> [...]
->> --- a/t/t0006-date.sh
->> +++ b/t/t0006-date.sh
->> @@ -9,7 +9,7 @@ TEST_DATE_NOW=3D1251660000; export TEST_DATE_NOW
->> =C2=A0check_show() {
->> =C2=A0 =C2=A0 =C2=A0 t=3D$(($TEST_DATE_NOW - $1))
->> =C2=A0 =C2=A0 =C2=A0 echo "$t -> $2" >expect
->> - =C2=A0 =C2=A0 test_expect_${3:-success} "relative date ($2)" "
->> + =C2=A0 =C2=A0 test_expect_${3:-success} C_LOCALE_OUTPUT "relative =
-date ($2)" "
->> =C2=A0 =C2=A0 =C2=A0 test-date show $t >actual &&
->> =C2=A0 =C2=A0 =C2=A0 test_cmp expect actual
->> =C2=A0 =C2=A0 =C2=A0 "
->
-> Could use test_i18ncmp so we catch if test-date crashes, but anyway,
-> yeah, we can't expect to be able to meaningfully test date formatting
-> in another language.
+Sloppy of me.  Yes, I meant
 
-This reminds me of an inkscape crash I encountered long ago because of
-a mistake in Vietnamese translation. Too bad we can't test all locales
-for similar bugs (or we would need to i18n-ize expected results in the
-test suite too)
---=20
-Duy
+diff --git i/diff.c w/diff.c
+index 1a594df4..287f310d 100644
+--- i/diff.c
++++ w/diff.c
+@@ -1395,11 +1395,6 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret;
+ 
+-	if (!files) {
+-		assert(insertions == 0 && deletions == 0);
+-		return fputs(_(" 0 files changed\n"), fp);
+-	}
+-
+ 	strbuf_addf(&sb,
+ 		    Q_(" %d file changed", " %d files changed", files),
+ 		    files);
+@@ -1412,7 +1407,7 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
+ 	 * is probably less confusing (i.e skip over "2 files changed
+ 	 * but nothing about added/removed lines? Is this a bug in Git?").
+ 	 */
+-	if (insertions || deletions == 0) {
++	if (insertions || (files && deletions == 0)) {
+ 		/*
+ 		 * TRANSLATORS: "+" in (+) is a line addition marker;
+ 		 * do not translate it.
+@@ -1423,7 +1418,7 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
+ 			    insertions);
+ 	}
+ 
+-	if (deletions || insertions == 0) {
++	if (deletions || (files && insertions == 0)) {
+ 		/*
+ 		 * TRANSLATORS: "-" in (-) is a line removal marker;
+ 		 * do not translate it.
