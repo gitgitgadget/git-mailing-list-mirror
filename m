@@ -1,87 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: checking for 'clean' bare repo before push
-Date: Sun, 24 Jun 2012 22:35:51 -0700
-Message-ID: <7vk3ywhs20.fsf@alter.siamese.dyndns.org>
-References: <js6pnt$28f$1@dough.gmane.org>
+Subject: Re: [PATCH] git-add--interactive.perl: Remove two unused variables
+Date: Sun, 24 Jun 2012 22:41:58 -0700
+Message-ID: <7vfw9khrrt.fsf@alter.siamese.dyndns.org>
+References: <4FE7889E.2020009@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 07:36:03 2012
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: "Thomas \"Enki\" Badie" <thomas.badie@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 07:42:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sj1xu-0002Ml-8d
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 07:35:58 +0200
+	id 1Sj23s-0004Zg-G8
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 07:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988Ab2FYFfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jun 2012 01:35:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53926 "EHLO
+	id S1754131Ab2FYFmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 01:42:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56147 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752862Ab2FYFfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2012 01:35:53 -0400
+	id S1752176Ab2FYFmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 01:42:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74C503E24;
-	Mon, 25 Jun 2012 01:35:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 208143F42;
+	Mon, 25 Jun 2012 01:42:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NWgrkLT069iCWkNkwSslIj5+Q78=; b=dLpJlF
-	P29Gm3Woy9hYju7tFkIp9e886q+Z1Nbpik4Ukg/QNu0aH/r4IVG2dbDARbnuRSsc
-	ADDTaX6eWTfYp5SR2ZRv7N/rLva/z3gfJAEHGeG9KcHYoQaE7dFfR8I0DrVC9u2+
-	cPE/U4kEC3bUbBFiVBuCN1PBpW+D9ocTLfH3s=
+	:content-type; s=sasl; bh=nLxo626ZYMpp70TUUiOIl1BwH+k=; b=qEPhqR
+	1QZ5YNmCp+1b5ueMKXuWOteR7kKH0hudIpG0Tu8cq47ijwV7D06S8ZVcYNx4zcDo
+	ZHXr52s1AogaumrixEbsf4vuIcWbO1HdLDiEg8treG5nfcTrxugLzbRhJpIH/b+1
+	9CRicyUrYVcOkA5ZwIt83tMCiJWf4smYBQ1Rk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oV6IoCA80Rja/9P8w238v9QzBn5TIbds
-	2AtC6LHK2JOk8e9KAhXuOB9APmwTLlotPzGuq0Am4oE2It/Pczh6+mRfmSMOg61l
-	DSgk7AXlgVK3+zC1RtjqNbnyduWlXqIGb9widvbZHd8wF2Wb370CKuP3KseBMMFJ
-	YH3BfvZoG6g=
+	:content-type; q=dns; s=sasl; b=wCxGf0uawzcIOYTIafXgQspT6GCdN63O
+	ZVVrfB8IYXOD737OypG3TPTlFtzCqUYYlZEViMBULPBTu0lOWLMW7QrDi1c5Z4v5
+	Gsih1omPK4cXFdeUznUuq6RULKhzf3UFeMwFuIrpRMpMiJHFI0+QiyJiN8VPkq7q
+	0BIYdSaLulk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AE5D3E23;
-	Mon, 25 Jun 2012 01:35:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 121D73F41;
+	Mon, 25 Jun 2012 01:42:01 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2CA93E22; Mon, 25 Jun 2012
- 01:35:52 -0400 (EDT)
-In-Reply-To: <js6pnt$28f$1@dough.gmane.org> (Neal Kreitzinger's message of
- "Sun, 24 Jun 2012 05:21:49 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 686E33F40; Mon, 25 Jun 2012
+ 01:42:00 -0400 (EDT)
+In-Reply-To: <4FE7889E.2020009@gmail.com> (Thomas Badie's message of "Sun, 24
+ Jun 2012 23:37:34 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A112BEE6-BE87-11E1-AEE4-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7C14CEDA-BE88-11E1-B0C2-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200546>
 
-Neal Kreitzinger <nkreitzinger@gmail.com> writes:
+"Thomas \"Enki\" Badie" <thomas.badie@gmail.com> writes:
 
-> I'm being asked to provide commands to check for 'clean' state of bare
-> repo before and after a git-push.  This request is based on the notion
-> of checking for a clean worktree (git status) before a checkout,
-> merge, etc on a non-bare repo and checking the worktree state after
-> such operations.
+> The patch 8f0bef6 refactors this script and leaves the `$fh' variable
+> unused in `diff_applies' and `patch_update_file'.
 >
-> Context:
-> Since the bare repo and non-bare clone repos in question only have
-> branch master, and deny-non-ff is set for the bare repo, I don't think
-> there are checks to be done before and after git-push in our
-> case. git-gc and git-fsck could be possible, but don't seem normative
-> for every single push.  git-gc has auto configurations, and git fsck
-> is expensive.  It seems like routine git-gc obviates the need for git
-> fsck.
+> Signed-off-by: Thomas Badie <badie@lrde.epita.fr>
+> ---
+> Hello,
+> This is my first patch. It introduces a really minor change, and I
+> also want to be sure the way I submit it is the right way. Thanks :)
+
+The patch submission is almost perfect, except that:
+
+ (1) the patch seems to be whitespace damaged; and
+
+ (2) the author of the problematic commit should have been Cc'ed
+     (especially when he is still an active participant on the list)
+     to give him a chance to Ack it (I'm adding Thomas for this).
+
+Thanks.  I like that you identified why this is a good thing by
+quoting the problematic change.
+
+>  git-add--interactive.perl |    2 --
+>  1 files changed, 0 insertions(+), 2 deletions(-)
 >
-> Am I correct on this?
-
-I agree 100% with you that it is entirely unclear what 'clean'-ness
-your requestor wants from your description.
-
-At a higher conceptual level, "before I do merge I want to check if
-the working tree is clean" is a wish to avoid "overwriting" things,
-and in that sense, perhaps the requestor wants to make sure that a
-push she accepts does not overwrite somebody else's work.
-
-Such a 'clean'ness is called "fast-forward", and by default a push
-has to be a fast-forward to be accepted.  The pusher can "force" a
-push that is not fast-forward, but there is a way to forbid such a
-forced push (receive.denyNonFastForwards).
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index d948aa8..710764a 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1067,7 +1067,6 @@ EOF
+>  }
+>
+>  sub diff_applies {
+> -       my $fh;
+>        return run_git_apply($patch_mode_flavour{APPLY_CHECK} . '--check',
+>                             map { @{$_->{TEXT}} } @_);
+>  }
+> @@ -1514,7 +1513,6 @@ sub patch_update_file {
+>        }
+>
+>        if (@result) {
+> -               my $fh;
+>                my @patch = reassemble_patch($head->{TEXT}, @result);
+>                my $apply_routine = $patch_mode_flavour{APPLY};
+>                &$apply_routine(@patch);
