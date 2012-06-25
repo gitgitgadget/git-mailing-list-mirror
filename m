@@ -1,82 +1,83 @@
-From: Phil Hord <phil.hord@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: MERGE_RR droppings
-Date: Mon, 25 Jun 2012 14:36:39 -0400
-Message-ID: <CABURp0rBRnFjJaXO3BUYWcyXEAsLZeEv05z-hMi8aW9SPTCPqA@mail.gmail.com>
+Date: Mon, 25 Jun 2012 12:04:47 -0700
+Message-ID: <7vwr2vfc1c.fsf@alter.siamese.dyndns.org>
 References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
- <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com> <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
+ <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com>
+ <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, davvid@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 20:37:08 2012
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 21:04:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjE9r-0001rV-Ny
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 20:37:08 +0200
+	id 1SjEak-0008DN-Iv
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 21:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755761Ab2FYShB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 14:37:01 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:40576 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754750Ab2FYShA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 14:37:00 -0400
-Received: by obbuo13 with SMTP id uo13so6806969obb.19
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 11:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WWseHaN6hisC3Z6GI9qVEjXdGj8RwIbfOfzl0m/rsYU=;
-        b=BVShw2W2KaEz7oM97qDzBWNtU7BlRiJDL+x93Xrl3QUEW6DHvAEbIMYj9sdaui98jF
-         t/LbZj5D5omn171K/9fgfdviVDzvzaPX3AzzHNjHALtVmbkIg+avceEICj2lAbt4KWbq
-         X33ESbompDDme1fGPzQJC8doTPI7UxTJEY/xpMzcIuPKbMk5OR20Bc2PXVezREM7ugUh
-         CSH9d7Cbp8ITv9BBxOEkF0nKBk3gGSHT9Yd3bayYFqio6ML9rlMyVHF8GeAuzj/6FElB
-         Zs7UC8OhUngicCfjoNKXUe0B/uJaUo/UlmsDw5nFbd8me2YH23l8CMGekBURAKC9IBNd
-         qxag==
-Received: by 10.182.50.103 with SMTP id b7mr13066326obo.15.1340649419936; Mon,
- 25 Jun 2012 11:36:59 -0700 (PDT)
-Received: by 10.182.111.99 with HTTP; Mon, 25 Jun 2012 11:36:39 -0700 (PDT)
-In-Reply-To: <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
+	id S1754002Ab2FYTEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 15:04:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37775 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751088Ab2FYTEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 15:04:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DDC68169;
+	Mon, 25 Jun 2012 15:04:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ktd/zW5BrPWfxfubJJVZ6S5tLWY=; b=QiVGxd
+	LdqMAr0XxCPhJa7CyS2/OUbSR+IKk12dTz1WDmdgeedWR+r9O2estA2LpFyp87KI
+	Ct5KlMgSlOlI3NhP9hixSPaT7LWFg6F+mxloQMflt1+xmNHu+J4EAoIb1IS2INzY
+	CZPlFGIoNnACaN7fmVporRLSsL5wi7fa/vuEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bBePcJTU59ZZzHJeD88OtouJpJZDha9S
+	IfPK0LtClyC+DugAFojyD+svVH9tjBH16I7nJR30933hmVRJ3v5wOG85qmqF1NnU
+	Q0wLscldX4lzTPxLYsYronN2kvcrn3/MM7aGIJqSt8nm+zrzt0BwfZjvXxchQXZi
+	ms7jdKryhcE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 030D78167;
+	Mon, 25 Jun 2012 15:04:49 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BA748164; Mon, 25 Jun 2012
+ 15:04:48 -0400 (EDT)
+In-Reply-To: <7v8vfk2pby.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 18 Jun 2012 16:05:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A288310E-BEF8-11E1-B581-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200591>
 
-On Mon, Jun 18, 2012 at 7:05 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Phil Hord <phil.hord@gmail.com> writes:
 >
 >> git mergetool decides to use rerere-remaining based on the existence
 >> of the .git/MERGE_RR file:
 >>
->> =A0 =A0 if test -e "$GIT_DIR/MERGE_RR"
+>>     if test -e "$GIT_DIR/MERGE_RR"
 >
 > This is correct, I would probably write it with "test -f" if I were
-> writing this line today, though. =A0After you commit to conclude the
-> merge, the MERGE_RR marker should disappear. =A0Isn't it happening fo=
-r
+> writing this line today, though.  After you commit to conclude the
+> merge, the MERGE_RR marker should disappear.  Isn't it happening for
 > you?
 
-I was able to isolate this today to cherry-pick.
+Oops.  It actually does not happen for _me_. An empty MERGE_RR is
+left in the working tree after rerere has dealt with the conflicts.
+There seems to be only three codepaths that explicitly remove
+MERGE_RR that is stale:
 
-When I successfully cherry-pick a change (no conflicts, no merges), I
-get a .git/MERGE_RR file left over.  After this happens, git-mergetool
-will think there are no unresolved conflicts unless git (or I) first
-removes the .git/MERGE_RR.
+ - (obviously) "rerere clear"
+ - "git reset"
+ - "git checkout otherbranch"
 
-Maybe this only causes trouble for 'git stash apply' since it does not
-employ rerere machinery, or because it takes some other code path
-which does not begin by removing .git/MERGE_RR.
-
-A naive fix would be to remove MERGE_RR at the conclusion of
-'stash-apply', but I do not think that is the right place for it to
-go.
-
-Suggestions?
-
-Phil
+Perhaps mergetool should consider a missing MERGE_RR and an empty
+one the same way?
