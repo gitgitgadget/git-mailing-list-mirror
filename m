@@ -1,142 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v5] git on Mac OS and precomposed unicode
-Date: Mon, 25 Jun 2012 15:33:32 -0700
-Message-ID: <7vwr2vdnsz.fsf@alter.siamese.dyndns.org>
-References: <201206241747.06525.tboegi@web.de>
+From: Thomas Badie <thomas.badie@gmail.com>
+Subject: Re: [PATCH] git-add--interactive.perl: Remove two unused variables
+Date: Tue, 26 Jun 2012 00:41:56 +0200
+Message-ID: <4FE8E934.4090604@gmail.com>
+References: <4FE7889E.2020009@gmail.com> <7vfw9khrrt.fsf@alter.siamese.dyndns.org> <CAFjFENo7qLTZHrEtPPBLGzp=h0w69C+7C2zfiJJmqFANmaWAgg@mail.gmail.com> <7v7guvgtbi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 26 00:33:42 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 00:42:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjHqn-0004EX-Lg
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 00:33:41 +0200
+	id 1SjHyy-000385-93
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 00:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757753Ab2FYWdg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 18:33:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36688 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757697Ab2FYWdf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 18:33:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B03989980;
-	Mon, 25 Jun 2012 18:33:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=lXTLpFaWr5ct
-	fX5wCxW7mKDjmC4=; b=F9AlA7uSDqRG+IolBwSQ5ERg0fq3oLI3D3zoh8pNiZoQ
-	BZuidWz1Li5OGuM+23hNDQTUGwiEh0NRtOfEG4v8jQxGohReqZIrCUFfjJ18wiP4
-	qCuQ0e6ACnIBT9dJ82NOrM1Rxnl3OCx4dpFcvT7IbXhDyEFWomeWTJWOghHvGP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PhUDBD
-	e657Ou+FT65CXdopOqu2OPpN+sMbISZInytoraV0m9mOdDfkXUKICremMd+k6rBf
-	nC1aKXgA9t/4lIro9GrTikUsprT63FIxIeDKIdq8/QE/Q/z1kH2BUMIJ1K3PV1BS
-	3cnDNEci+myp7K+jeVWG3lGzagTYUVwZkPFbg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A752A997F;
-	Mon, 25 Jun 2012 18:33:34 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 137E5997E; Mon, 25 Jun 2012
- 18:33:33 -0400 (EDT)
-In-Reply-To: <201206241747.06525.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?= message of "Sun, 24 Jun 2012 17:47:05
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC50E5FE-BF15-11E1-9DAB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757540Ab2FYWmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 18:42:03 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:33798 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754151Ab2FYWmC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 18:42:02 -0400
+Received: by wibhr14 with SMTP id hr14so1592112wib.1
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 15:42:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Pg95sloyvF0AUqfcfjveRi2f6PejUZeGojIRIcl9Xac=;
+        b=RtGxKBIUMG08gvHeL24s2Ed6pcp4PNA/O31c5nlA5e9ottcVJeVrDY51zKJgaGkxdH
+         FJ9WMlMOeaQoPJQRE3MlZIPT4eE+yMIhH3SFJi4Q32vSGHV9C4a0p59lHh12NiJfMTQt
+         2YeX9rQzx1BU8XoW8gJKfDw9IF67D4QVr0IGvbcqst57CqP07oTSNl4AqK532k9BF3ec
+         qYDZmnT5NiLc9eI9FMk68JbrRzUeK2t11XdvKkmetgoJdEjDyLztfvak/Pi6BR1VUCqS
+         Yv7KX9n1vgxIIwIhw2ueQMRZxVFoRzeWwBQTYLbldUr1Wb1lr4mvOznajSuy2h5Ohuf/
+         8zKQ==
+Received: by 10.180.101.103 with SMTP id ff7mr27721518wib.6.1340664120519;
+        Mon, 25 Jun 2012 15:42:00 -0700 (PDT)
+Received: from [192.168.0.10] (mna75-12-88-165-241-47.fbx.proxad.net. [88.165.241.47])
+        by mx.google.com with ESMTPS id gv7sm585830wib.4.2012.06.25.15.41.59
+        (version=SSLv3 cipher=OTHER);
+        Mon, 25 Jun 2012 15:41:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7v7guvgtbi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200602>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On 25/06/2012 20:06, Junio C Hamano wrote:
+> Thomas Badie <thomas.badie@gmail.com> writes:
+> 
+>> 2012/6/25 Junio C Hamano <gitster@pobox.com>:
+>>> "Thomas \"Enki\" Badie" <thomas.badie@gmail.com> writes:
+>>>
+>>>> The patch 8f0bef6 refactors this script and leaves the `$fh' variable
+>>>> unused in `diff_applies' and `patch_update_file'.
+>>>>
+>>>> Signed-off-by: Thomas Badie <badie@lrde.epita.fr>
+>>>> ---
+>>>> Hello,
+>>>> This is my first patch. It introduces a really minor change, and I
+>>>> also want to be sure the way I submit it is the right way. Thanks :)
+>>>
+>>> The patch submission is almost perfect, except that:
+>>>
+>>> (1) the patch seems to be whitespace damaged; and
+>>>
+>>
+>> The only damage I see is a space on the deleted lines which doesn't
+>> exist in the patch. Is that you're talking about ?
+>> I need to investigate why it appears...
+> 
+> A typical context line would begin with SP and typically then tab
+> (because our code is indented with leading tabs) but your context
+> lines all have two SPs in front and indented with more SPs.  This is
+> a symptom of your MUA mangling your patch, and the reason can be seen
+> in the "Content-Type: text/plain; charset=ISO-8859-1; format=flowed"
+> header.
+> 
 
-> The problem:
+I follow the first approach in the tutorial in
+`git format-patch --help`, and I hope it works as expected :)
 
-As to the log message, I've rewritten it a bit by reordering
-paragraphs and cutting redundant sentences. For exact wording nits,
-please check 'pu' when I finish today's integration cycle and push
-the results out, but I'll justify the reasoning behind my rewrite
-here.
+I wonder what is the next step, should I repost the previous patch with
+the line "Acked-by: Thomas Rast <trast@student.ethz.ch>" or it is okay
+right now?
 
-> Mac OS X may manipulate file names containing unicode on file systems
-> HFS+, VFAT or SAMBA.
->
-> When a file using unicode code points outside ASCII is created on a H=
-=46S+ drive,
-> the file name is converted into decomposed unicode and written to dis=
-k.
-> No conversion is done if the file name is already decomposed unicode.
+Thanks a lot for your help on this first patch,
 
-I do not think it matters very much if it is written decomposed
-(HFS+) or precomposed (VFAT). The important glitch that affects us
-is that readdir(3) on Mac OS X gives the readers decomposed form,
-unless over NFS, and the important saving grace that your patch
-exploits is that stat/open/etc. will take either form and name the
-same file.  So I tried to minimize the description on how it is
-written to disk in my rewrite.
-
-> The unicode decomposition creates some problems:
-> - "git add" needs the decomposed form on the command line,
->   so that the file name is picked up when readdir() is called
->   to build a list of files on disk.
-> - The decomposed form is not (easily) available on the keyboard.
->   To work around this, a wildcard could be used in "git add":
->   Instead of using "git add M=C3=A4rchen.txt" the user needs to enter
->   "git add M*rchen", "git add M<TAB>" or "git add *".
-> - "git log", "git mv" and all other commands needs the decomposed for=
-m
->   to find the file name which is stored as decomposed in the index.
-> - The file names are stored in decomposed unicode in the index, but
->   precomposed on disk.
->     This makes it impossible to use this repository under e.g.
->     Linux or Windows:
->     All files appear to be deleted in the decomposed form and
->     untracked in the precomposed form.
-
-I do not think "workaround" deserves a mention; presense of mixture
-of precomposed and decomposed forms is the root cause of the
-problem, and even if we prefer to use precomposed form (for
-interoperability if nothing else), the "workaround" to force more
-decomposed input will make the problem worse, not better.
-
-> Knowing that Mac OS X writes file names as precomposed to disk,
-
-Again, how it writes is not important; readdir(3) giving us what is
-different from what we used for creat(2) is.
-
-> The argv[] conversion allows to use the TAB filename completion done =
-by the
-> shell on command line.
-
-Yes, this is exactly why "workaround" is not a workaround, but is
-yet another problem.
-
-> When creating a new git repository with "git init" or "git clone",
-> "core.precomposedunicode" will be set "false".
->
-> The user needs to activate this feature manually.
-> She typically sets core.precomposedunicode to "true" on HFS and VFAT,
-> or file systems mounted via SAMBA onto a Linux box.
-
-This we might want to change it in a couple of cycles after this
-feature hits 'next' and people gain experience with it.
-
-I think the reason to choose the safer "false" default is to keep
-the behaviours between an old repository on Mac OS X and a new
-repository cloned from it also on Mac OS X the same, but if we can
-detect that the filesystem is broken, and have a code to work around
-the breakage, I think the longer term direction would be to set it
-to ensure that the resulting history records paths consistently in
-precomposed form (another choice might be to normalize to decomposed
-form, but my understanding is that it would not help anybody, as
-nobody other than Mac OS X uses it).
-
-Thanks.
+-- 
+Thomas "Enki" Badie
