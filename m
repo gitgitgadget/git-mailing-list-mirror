@@ -1,86 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] log: Handle new repository case.
-Date: Mon, 25 Jun 2012 16:13:22 -0700
-Message-ID: <7vobo7dlyl.fsf@alter.siamese.dyndns.org>
-References: <1340664813-96891-1-git-send-email-muhtasib@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Leila Muhtasib <muhtasib@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 01:13:32 2012
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] add: listen to --ignore-errors for submodule-errors
+Date: Tue, 26 Jun 2012 01:21:59 +0200
+Message-ID: <1340666519-41804-1-git-send-email-kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 26 01:22:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjITJ-0005BY-8V
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 01:13:29 +0200
+	id 1SjIbo-0004f3-BA
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 01:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757185Ab2FYXNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jun 2012 19:13:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51991 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757166Ab2FYXNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2012 19:13:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85B7580D9;
-	Mon, 25 Jun 2012 19:13:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2+PViiNRD+EtpxhTj+F1XUM0aic=; b=eZHLq8
-	JleaDnz+LZ48MAEa+3TpK4ZIbtKcPCoCAAgxSbt8NpBOjlSyZD+Ol+8MwC4/3etb
-	0sCo+ILMVPUt+fdwb9sCLFJZPVPlZkjoARwG5wuuSmaoX/VR8aPDdupbtMYbzNH4
-	2qEWM9tH/2AZdCQa1iQ2WIPZi7ao/my/BuLjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hzjtrx6iPwk1i7YHKoejGNPwezAOt7JM
-	oBwlwtLKTdcmbyAqmVAJepr88Bv2v42i0//q8tQT8m/UyICK1wQxxAMf/TZXizTZ
-	i64BzEZjBheb3fdmoYc3kTTwHaIe3UeAhqm5Wod3wNKUzkLjm+i/nDyuhF2t9Ckf
-	cXZWTqWDm5k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DBA780D8;
-	Mon, 25 Jun 2012 19:13:24 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1216080D7; Mon, 25 Jun 2012
- 19:13:23 -0400 (EDT)
-In-Reply-To: <1340664813-96891-1-git-send-email-muhtasib@gmail.com> (Leila
- Muhtasib's message of "Mon, 25 Jun 2012 18:53:33 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CDCF338-BF1B-11E1-B10A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932087Ab2FYXWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 19:22:08 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:43271 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932078Ab2FYXWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 19:22:04 -0400
+Received: by lbbgm6 with SMTP id gm6so7197282lbb.19
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 16:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=JlDPpFcVz7uYbwYvvQmB/S5WQhYDvdGbyVmgLK8uCt0=;
+        b=Qajio+hvy2+ujXbMHseSLZltGrjDeVH2RLQjWtJLv00+cFEKVToir81kTjq9K88eW+
+         P3wMLOpg6O1zZSTmTpMW1MOu0ftwSCCckw1/ai4NBvnHkuvoXsouK6wmubJr6ns0mEQ2
+         arwz/yNnBSU24oqyBbqHn/a7OxzyximMz4KxsZY1pqsY48Ms4EKlBPS5OSPai8+OhFhS
+         PoERdQe4lr37BPfFNPIlpUOSc4rRP//WUajQpbduos4zFB9RaMgP+QkSAE1ek28PMMIO
+         FzUTKnnZlUPNtJ/K1pKWAbBHjyHXiZURHp/aEyuc6/I54/RbiBVVeYbuyuBom1OUmJjY
+         6WLw==
+Received: by 10.152.148.161 with SMTP id tt1mr14161631lab.4.1340666522784;
+        Mon, 25 Jun 2012 16:22:02 -0700 (PDT)
+Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
+        by mx.google.com with ESMTPS id h6sm7343634lbl.13.2012.06.25.16.22.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Jun 2012 16:22:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.msysgit.0.3.g3006a55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200607>
 
-Leila Muhtasib <muhtasib@gmail.com> writes:
+"git add --ignore-errors -- some-submodule/foo" surprisingly
+throws an error saying "fatal: Path 'some-submodule/foo' is in
+submodule 'some-submodule/foo'".
 
-> @@ -553,8 +562,13 @@ int cmd_log(int argc, const char **argv, const char *prefix)
->  	init_revisions(&rev, prefix);
->  	rev.always_show_header = 1;
->  	memset(&opt, 0, sizeof(opt));
-> -	opt.def = "HEAD";
-> +	opt.def = default_to_head_if_exists();
-> +
->  	cmd_log_init(argc, argv, prefix, &rev, &opt);
-> +
-> +	if (!opt.def && !rev.cmdline.nr)
-> +		return 0;
-> +
->  	return cmd_log_walk(&rev);
+Fix this by making sure we consult the flag, and propagate the
+error code properly.
 
-Do you even need these four new lines if you do not error out?
-Doesn't log_walk() return successfully if there is nothing in the
-queue anyway?
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
-> @@ -1128,7 +1142,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
->  	rev.subject_prefix = fmt_patch_subject_prefix;
->  	memset(&s_r_opt, 0, sizeof(s_r_opt));
-> -	s_r_opt.def = "HEAD";
-> +	s_r_opt.def = default_to_head_if_exists();
+I recently tried to do the following in the msysGit-repo:
 
-I didn't think about other commands, but I do not think format-patch
-wants to silently succeed without doing anything---it is definitely
-a user error, no?
+ $ git add --ignore-errors -- */.gitignore
+ fatal: Path 'src/git-cheetah/.gitignore' is in submodule 'src/git-cheetah'
+
+I was a bit puzzled by this; I explicitly specified --ignore-errors
+because I did not want to be stopped due to src/git-cheetah/.gitignore
+being located in a submodule.
+
+The documentation seems to suggest that this is what is supposed to
+happen, and this seems like the most likely behavior that the user
+wanted. After all, there's no good reason submodules are special
+in this regard, no?
+
+ builtin/add.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index 87446cf..6e6feb0 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -20,7 +20,7 @@ static const char * const builtin_add_usage[] = {
+ 	NULL
+ };
+ static int patch_interactive, add_interactive, edit_interactive;
+-static int take_worktree_changes;
++static int take_worktree_changes, ignore_add_errors;
+ 
+ struct update_callback_data {
+ 	int flags;
+@@ -153,9 +153,9 @@ static char *prune_directory(struct dir_struct *dir, const char **pathspec, int
+ 	return seen;
+ }
+ 
+-static void treat_gitlinks(const char **pathspec)
++static int treat_gitlinks(const char **pathspec)
+ {
+-	int i;
++	int i, exit_status = 0;
+ 
+ 	if (!pathspec || !*pathspec)
+ 		return;
+@@ -172,12 +172,15 @@ static void treat_gitlinks(const char **pathspec)
+ 				if (len2 == len + 1)
+ 					/* strip trailing slash */
+ 					pathspec[j] = xstrndup(ce->name, len);
+-				else
++				else if (!ignore_add_errors)
+ 					die (_("Path '%s' is in submodule '%.*s'"),
+ 						pathspec[j], len, ce->name);
++				else
++					exit_status = 1;
+ 			}
+ 		}
+ 	}
++	return exit_status;
+ }
+ 
+ static void refresh(int verbose, const char **pathspec)
+@@ -312,7 +315,7 @@ static const char ignore_error[] =
+ N_("The following paths are ignored by one of your .gitignore files:\n");
+ 
+ static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
+-static int ignore_add_errors, addremove, intent_to_add, ignore_missing = 0;
++static int addremove, intent_to_add, ignore_missing = 0;
+ 
+ static struct option builtin_add_options[] = {
+ 	OPT__DRY_RUN(&show_only, "dry run"),
+@@ -418,7 +421,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+-	treat_gitlinks(pathspec);
++	exit_status |= treat_gitlinks(pathspec);
+ 
+ 	if (add_new_files) {
+ 		int baselen;
+-- 
+1.7.11.msysgit.0.3.g3006a55
