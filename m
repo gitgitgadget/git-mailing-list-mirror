@@ -1,115 +1,107 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4 v8] Let core.attributesfile default to $XDG_CONFIG_HOME/git/ignore
-Date: Mon, 25 Jun 2012 08:32:28 +0200
-Message-ID: <vpqehp3j403.fsf@bauges.imag.fr>
+Subject: Re: [PATCH 4/4 v8] config: write to $XDG_CONFIG_HOME/git/config file if appropriate
+Date: Mon, 25 Jun 2012 08:45:50 +0200
+Message-ID: <vpq395jj3dt.fsf@bauges.imag.fr>
 References: <7vfw9oshpz.fsf@alter.siamese.dyndns.org>
 	<1340355806-6894-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1340355806-6894-4-git-send-email-Matthieu.Moy@imag.fr>
-	<7v4nq3niwc.fsf@alter.siamese.dyndns.org>
+	<1340355806-6894-5-git-send-email-Matthieu.Moy@imag.fr>
+	<7vwr2zm4bm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr,
 	Valentin.Duperray@ensimag.imag.fr, Franck.Jonas@ensimag.imag.fr,
 	Lucien.Kong@ensimag.imag.fr, Thomas.Nguy@ensimag.imag.fr
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 08:32:44 2012
+X-From: git-owner@vger.kernel.org Mon Jun 25 08:46:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sj2qq-00077W-1s
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 08:32:44 +0200
+	id 1Sj33i-0004DA-8v
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jun 2012 08:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239Ab2FYGck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jun 2012 02:32:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58604 "EHLO rominette.imag.fr"
+	id S1754145Ab2FYGp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 02:45:57 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58081 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751087Ab2FYGcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2012 02:32:39 -0400
+	id S1753339Ab2FYGp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 02:45:56 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q5P6VqSD020019
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5P6jIlV012816
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 25 Jun 2012 08:31:52 +0200
+	Mon, 25 Jun 2012 08:45:18 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
 	(Exim 4.72)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sj2qb-0005GP-Nd; Mon, 25 Jun 2012 08:32:29 +0200
-In-Reply-To: <7v4nq3niwc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 22 Jun 2012 14:20:19 -0700")
+	id 1Sj33X-0005iV-Dp; Mon, 25 Jun 2012 08:45:51 +0200
+In-Reply-To: <7vwr2zm4bm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 22 Jun 2012 14:20:29 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 25 Jun 2012 08:31:53 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 25 Jun 2012 08:45:19 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5P6VqSD020019
+X-MailScanner-ID: q5P6jIlV012816
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1341210717.84937@8KXK23/I/OEShXykt/oo9w
+MailScanner-NULL-Check: 1341211519.58045@n9gGpNUz3K3G72rz4FpaeA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200552>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> The patch text may be OK but look at the Subject: line and notice
-> something funny ;-)
-
-Nice catch.
-
-> Given the root cause of that "something funny", I'll reduce the log
-> message of this one down to:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
->     Let core.attributesfile default to $XDG_CONFIG_HOME/git/attributes
->     
->     This gives the default value for the core.attributesfile variable
->     following the exact same logic of the previous change for the
->     core.excludesfile setting.
->     
->     Signed-off-by: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
->     ...
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Good (I see you did the change yourself in pu).
-
-> I am not sure about use of git/ignore in [2/2], though.
+>> From: Huynh Khoi Nguyen Nguyen <Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>
+>>
+>> Git will be able to write to $XDG_CONFIG_HOME/git/config, a new
+>> ...
+>> Advice for users who often come back to an old version of Git: you
+>> shouldn't create this file.
 >
-> Shouldn't the default value for core.excludesfile be git/exclude,
-> not git/ignore?
+> Hrm, is there a better way to give this advice to the _users_?  The
+> log message is primarily for people who need to dig the development
+> history of Git, and they are not the people who will be hurt by this
+> change.  Perhaps the change to Documentation/git-config.txt in this
+> patch needs to be a bit more detailed?
 
-Both are valid options, and unfortunately, Git currently use both
-"ignore" and "exclude" to mean the same thing. 
+We can squash this into PATCH 1:
 
-I have a slight preference for "ignore", because this file is the
-user-wide version of the .gitignore file. I think most non-advanced
-users have already been exposed to the wording "ignore" with this file,
-but much less have been exposed to "exclude" (for example, I don't
-remember having ever used the per-directory .git/info/exclude). So,
-going for "ignore" means that the wording used for the most common
-operations will be consistant, and only relatively advanced users (who
-use .git/info/exclude, or "git ls-files --exclude-standard", or need to
-set core.excludesfile to some value other than the default) will need to
-learn that "exclude" is synonym for "ignore" in the Git world.
-
-Actually, it would even make sense to reduce the number of occurences of
-"excludes" in the UI, e.g. support something like core.ignoresfile as an
-alias for core.excludesfile, along the lines of:
-
---- a/config.c
-+++ b/config.c
-@@ -723,7 +723,7 @@ static int git_default_core_config(const char *var, const char *value)
-        if (!strcmp(var, "core.askpass"))
-                return git_config_string(&askpass_program, var, value);
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -209,7 +209,9 @@ $XDG_CONFIG_HOME/git/config::
+        Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
+        or empty, $HOME/.config/git/config will be used. Any single-valued
+        variable set in this file will be overwritten by whatever is in
+-       ~/.gitconfig.
++       ~/.gitconfig. Support for this file was added after Git
++       1.7.11, so if you sometimes use older versions of Git, it's a
++       good idea not to create this file.
  
--       if (!strcmp(var, "core.excludesfile"))
-+       if (!strcmp(var, "core.excludesfile") || !strcmp(var, "core.ignoresfile"))
-                return git_config_pathname(&excludes_file, var, value);
- 
-        if (!strcmp(var, "core.whitespace")) {
+ $(prefix)/etc/gitconfig::
+        System-wide configuration file.
 
-(which would off course require some documentation)
+(If your cristal ball tells you what version number will follow 1.7.11
+(1.7.12 or 1.8.0?), we can change "after 1.7.11" to "in X". Do you want
+to squash it yourself, or shall I resend?
+
+> Ideally, it would be nice if we could do the usual "advise" thing
+> by detecting a possible confusion, but I do not offhand see a clever
+> way to do so.
+
+I don't see either, since the advice should be given only to people who
+use various versions of Git.
+
+Anyway, I don't think we should bother too much with this: it's really
+an opt-in feature, Git will never create the new file for you (it will
+only write in it if it exists). So, people potentially harmed by this
+change are only those who read the documentation. If the documentation
+warns them, I think it's sufficient. It's not very different from any
+new feature actually.
 
 -- 
 Matthieu Moy
