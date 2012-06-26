@@ -1,103 +1,72 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: [PATCH v2 2/2] Add tests for rebase -i --root without --onto
-Date: Tue, 26 Jun 2012 22:55:24 +0100
-Message-ID: <f4be13ed5005aefce11e21cbba47b0dc2f743d3e.1340747724.git.chris@arachsys.com>
-References: <8d50b9665c6b31af25464f92ada57da90c2ca8a7.1340747724.git.chris@arachsys.com>
-Cc: Jeff King <peff@peff.net>, Chris Webb <chris@arachsys.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 23:56:23 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] add 'git credential' plumbing command
+Date: Tue, 26 Jun 2012 14:58:23 -0700
+Message-ID: <7vk3ytag74.fsf@alter.siamese.dyndns.org>
+References: <vpqr4t5j5yw.fsf@bauges.imag.fr>
+ <1340538001-18625-1-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net,
+	Javier Roucher Iglesias 
+	<Javier.Roucher-Iglesias@ensimag.imag.fr>,
+	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
+	Kim Thuat Nguyen <Kim-Thuat.Nguyen@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 26 23:58:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjdkE-00056x-Fy
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:56:22 +0200
+	id 1Sjdma-000899-3g
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754305Ab2FZVzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 17:55:42 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:45014 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754234Ab2FZVzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 17:55:41 -0400
-Received: from [81.2.114.212] (helo=miranda.home.)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1SjdjW-00053x-80; Tue, 26 Jun 2012 22:55:38 +0100
-X-Mailer: git-send-email 1.7.10
-In-Reply-To: <8d50b9665c6b31af25464f92ada57da90c2ca8a7.1340747724.git.chris@arachsys.com>
+	id S1754231Ab2FZV6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 17:58:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55782 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754165Ab2FZV6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 17:58:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C7FE9CF7;
+	Tue, 26 Jun 2012 17:58:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=HJ4mzuZlPhgJLDt7qqhtKVa/ezA=; b=ecGmPhAolzbTYrOYdI2Z
+	uMp3ln2yBJSnNy/Mm4mJYQXe78jXpCz190KdbPCW125dn2is+PCN9fyZoPaYGrq8
+	1Vi66fMcIK9UoeSAlDbZuzOPfu7Urd06Pr7SEtJe9AmoDUhtwP1mX3Lh6Qmhu5s5
+	z3HhW9Z5I9MUvcUGBcV0Nws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Vqc6T8MSotTPiSTYpmsBWki/47PQkRf4NU9TYT8/YNjoYn
+	b8IUmbrqFNenEwGkrX8Fynr1Iyy70CiiVBNUe7pYVBZhHnMn2Cqg8w0lMJob6EiT
+	oReSHPAvql+aci9yHgz/EgrGc5sXai5yeSMxozpt3uIr0BxlXUUtLdKl+PCmE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 928F99CF6;
+	Tue, 26 Jun 2012 17:58:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D48B9CF5; Tue, 26 Jun 2012
+ 17:58:34 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13A7C6CE-BFDA-11E1-9904-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200689>
 
-Test for likely breakages in t3404, including successful reordering of
-non-conflicting changes with a new root, correct preservation of commit
-message and author in a root commit when it is squashed with the
-sentinel, and presence of the sentinel following a conflicting
-cherry-pick of a new root.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Remove test_must_fail for git rebase --root without --onto from t3412 as
-this case will now be successfully handled by an implicit git rebase -i.
+> diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+> new file mode 100644
+> index 0000000..d5228a3
+> --- /dev/null
+> +++ b/Documentation/git-credential.txt
+> @@ -0,0 +1,136 @@
+> +git-credential(7)
+> +=================
 
-Signed-off-by: Chris Webb <chris@arachsys.com>
----
- t/t3404-rebase-interactive.sh |   27 +++++++++++++++++++++++++++
- t/t3412-rebase-root.sh        |    4 ----
- 2 files changed, 27 insertions(+), 4 deletions(-)
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 025c1c6..6ffc9c2 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -755,4 +755,31 @@ test_expect_success 'rebase-i history with funny messages' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rebase -i --root re-order and drop commits' '
-+	git checkout E &&
-+	FAKE_LINES="3 1 2 5" git rebase -i --root &&
-+	test E = $(git cat-file commit HEAD | sed -ne \$p) &&
-+	test B = $(git cat-file commit HEAD^ | sed -ne \$p) &&
-+	test A = $(git cat-file commit HEAD^^ | sed -ne \$p) &&
-+	test C = $(git cat-file commit HEAD^^^ | sed -ne \$p) &&
-+	test 0 = $(git cat-file commit HEAD^^^ | grep -c ^parent\ )
-+'
-+
-+test_expect_success 'rebase -i --root retain root commit author and message' '
-+	git checkout A &&
-+	echo B >file7 &&
-+	git add file7 &&
-+	GIT_AUTHOR_NAME="Twerp Snog" git commit -m "different author" &&
-+	FAKE_LINES="2" git rebase -i --root &&
-+	git cat-file commit HEAD | grep -q "^author Twerp Snog" &&
-+	git cat-file commit HEAD | grep -q "^different author$"
-+'
-+
-+test_expect_success 'rebase -i --root temporary sentinel commit' '
-+	git checkout B &&
-+	FAKE_LINES="2" test_must_fail git rebase -i --root &&
-+	git cat-file commit HEAD | grep "^tree 4b825dc642cb" &&
-+	git rebase --abort
-+'
-+
- test_done
-diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-index 086c91c..e4f9da8 100755
---- a/t/t3412-rebase-root.sh
-+++ b/t/t3412-rebase-root.sh
-@@ -22,10 +22,6 @@ test_expect_success 'prepare repository' '
- 	test_commit 4 B
- '
- 
--test_expect_success 'rebase --root expects --onto' '
--	test_must_fail git rebase --root
--'
--
- test_expect_success 'setup pre-rebase hook' '
- 	mkdir -p .git/hooks &&
- 	cat >.git/hooks/pre-rebase <<EOF &&
--- 
-1.7.10
+Thanks.  I'll update this with s/7/1/ to make it consistent with
+what the Makefile expects (my build of 'pu' was failing without the
+fixup).
