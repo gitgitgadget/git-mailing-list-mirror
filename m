@@ -1,92 +1,81 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v2 1/1] index-pack: Disable threading on cygwin
-Date: Wed, 27 Jun 2012 00:57:26 +0200
-Message-ID: <CABPQNSaqxouhpsHBN5uVCiaRpkuR65uNNn6c30CxEx3zGbJrSg@mail.gmail.com>
-References: <4FE9FD34.5020406@ramsay1.demon.co.uk> <7vk3ytc0es.fsf@alter.siamese.dyndns.org>
- <CABPQNSZ7=kqSjXPLior+LXqAt4AzcybOjJ1P8ZLQ+J-9gCgvdw@mail.gmail.com> <7v62adaee3.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9010: Open backflow FIFO once to work around kernel
+ race condition
+Date: Tue, 26 Jun 2012 15:58:39 -0700
+Message-ID: <7vsjdh8yu8.fsf@alter.siamese.dyndns.org>
+References: <1340749806-22734-1-git-send-email-andersk@mit.edu>
+ <20120626224053.GA7155@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 00:58:16 2012
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Anders Kaseorg <andersk@MIT.EDU>,
+	David Barr <david.barr@cordelta.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 00:58:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjei6-0006O3-Hq
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 00:58:14 +0200
+	id 1Sjeif-00077K-Hj
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 00:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214Ab2FZW6J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 18:58:09 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:57671 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841Ab2FZW6G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 18:58:06 -0400
-Received: by dady13 with SMTP id y13so532705dad.19
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 15:58:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=XvmAqcKVlfNLJqXQV87Ef9+JBfFUS94KiK0rKax8Jps=;
-        b=DwfJ0uJ9j5N88Z7MDdsWezlzW6esg1CMgGsZu2Z6EDpURUuKAdQOajUQSfXKjPRARI
-         KLKb5TrrHWV11Xu6/uUtH+W/edRn5MNw+EmnWwU+jX50yOF2Kw27TdedVbiGozo/V1cJ
-         1IRcwObOAOH2BP4s1DOJiLseLTu6kaaegOXXQYUfpMqnABwX18nUG8QIMMd2tkPHS23A
-         WRoCYSu4hHoBq2kdS9DbbieoQWf4sT4kjrexf+7n0jEgaQkYxE6lgPbpXvR/nQYQsBTl
-         VEOSr3dzmneAlUykrYFzQc/A4fS0659CLcixaxtSARlE+n6c0Y6idsw61pdCcHZ0McdO
-         +4pQ==
-Received: by 10.68.132.166 with SMTP id ov6mr57993108pbb.24.1340751486393;
- Tue, 26 Jun 2012 15:58:06 -0700 (PDT)
-Received: by 10.68.40.98 with HTTP; Tue, 26 Jun 2012 15:57:26 -0700 (PDT)
-In-Reply-To: <7v62adaee3.fsf@alter.siamese.dyndns.org>
+	id S1754508Ab2FZW6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 18:58:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52845 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754357Ab2FZW6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 18:58:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC29B8A89;
+	Tue, 26 Jun 2012 18:58:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZyUeVIjgDkTB+ILhrkn9/bIOqJE=; b=ad2mi7
+	eQoduzYQMWROoPl+2ld0D7XiybZl9uSPWFcitYzYGgZjZ7AWXF4uSKYw+D2zrNfg
+	LjapOaPKlZGfLWnpS1rOrAR6bOPM1MkYPgZGV14PULtht5zfYlDuXa7HlTrnJERu
+	qexkRxznxLijNfBgyjsOQCq2cTHdkSbYfMe48=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LkBpTLqj+Em0t0xJdg9tPPVKXxAWKjSx
+	ovQRN/+f9lri+WRZdV0lpUgeKVtM9VwNtQsXwinGGQ2nY4w7Zq1DzyDXeoJ9dxbI
+	cb5HDfyMiTVwxvbZBCvKKZ7wLNXAvI/znQz+g81jesHhS3Wc3k59/wu2WhJarMAU
+	t5l7ip0nxa8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C38568A88;
+	Tue, 26 Jun 2012 18:58:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36A148A86; Tue, 26 Jun 2012
+ 18:58:41 -0400 (EDT)
+In-Reply-To: <20120626224053.GA7155@burratino> (Jonathan Nieder's message of
+ "Tue, 26 Jun 2012 17:40:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 790EC2E4-BFE2-11E1-BF17-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200700>
 
-On Wed, Jun 27, 2012 at 12:37 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> On Tue, Jun 26, 2012 at 9:56 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->>>
->>>> =A0 =A0- renamed FAKE_PREAD_NOT_THREAD_SAFE to NO_THREAD_SAFE_PREA=
-D
->>>
->>> Sensible.
->>>
->>>> =A0 =A0- when NO_PREAD, set NO_THREAD_SAFE_PREAD in the Makefile, =
-rather
->>>> =A0 =A0 =A0than in git-compat-util.h
->>>
->>> I think it is a bad change. =A0When compat/ pread gets improved to =
-be
->>> thread-safe, this will surely be missed.
->>
->> But CAN it be fixed? I don't think it could, at least not without
->> wrapping ALL calls to functions that perform IO on file handles or
->> file descriptors...
->
-> Is that relevant? =A0It may be true that both Erik and Junio are not
-> being clever enough to come up with a solution offhand. =A0But is tha=
-t
-> a good justification to go against a sound engineering practice?
->
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I didn't really mean to argue for or against this particular solution,
-sorry if I was unclear. I'm more interested in actually fixing the
-issue without disabling threading ;)
+> Hi,
+>
+> Quick first impressions:
+>
+> Anders Kaseorg wrote:
+>
+>> Sidestep this problem by opening the backflow FIFO once for
+>> read+write.
+>
+> Is that portable?
 
-At least on Windows, the CRT actually does take a lock for the
-file-handle for all standard IO opterations. Perhaps we can somehow
-take it ourselves? I'm not entirely sure how to get hold of it, but it
-would probably require quite a deep-dive into the CRT sources...
+If you mean [n]<>word, it probably is, even though it is somewhat
+unusual and I wouldn't be surprised if implementations get wrong.
+
+>>             Also, replace the stream FIFO with a shell pipe so we
+>> don’t have to do manual process management.
+>
+> Doesn't this mean we wouldn't notice if test-svn-fe crashes?
+
+Very good point.
