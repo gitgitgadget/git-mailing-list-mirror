@@ -1,125 +1,82 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20i18n=3A=20mark=20outputs=20of=20mode=20changes=20for=20i18n?=
-Date: Tue, 26 Jun 2012 20:21:50 +0200
-Message-ID: <1340734910-7180-1-git-send-email-ralf.thielow@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git submodule vs GIT_WORK_TREE
+Date: Tue, 26 Jun 2012 20:27:24 +0200
+Message-ID: <4FE9FF0C.8050409@web.de>
+References: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com> <7vobo6cazk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jun 26 20:22:09 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 20:27:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjaOr-0004uS-ER
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 20:22:05 +0200
+	id 1SjaUA-0003Gy-HM
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 20:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758809Ab2FZSWA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 14:22:00 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:57323 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758703Ab2FZSV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 14:21:58 -0400
-Received: by bkcji2 with SMTP id ji2so234978bkc.19
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=gIG2mAvBQW8q5HYlPOTIpIarpq/wxdWlrSaIFD6r9AU=;
-        b=1F/GfO0FRwxZ5EU1eIRBqYN0DTjb81GydUuA6IBRX9vKnHtzn2H8amDPz/vgsu/Wx6
-         KuLynnB9gHwcbok94Tynebx0oaa7e9TtYE5fnBDXpZ4mVCwkGGgYXNB7Q1hg27RbpvI3
-         XmfkQ1xp198leEhIshuk7MdT64kbY5eR+6tGZ1Ox72CmoLvlJ0d2brioc2glhX6Q2q7+
-         HmAS7LtkMFTY9QExByz9stI4eAy4yAAmM3ZioK2vfQJmllAJDXJE0ngqsbuzApVkxpsO
-         Nv9wR36Nt90Jdi124y/Ad7HInJuU6JG/7G579lo2P8NOlQF6fuIDwAjDl9fg/MXWCRPI
-         SPSw==
-Received: by 10.205.33.136 with SMTP id so8mr5690522bkb.1.1340734916744;
-        Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
-        by mx.google.com with ESMTPS id ig1sm51839006bkc.4.2012.06.26.11.21.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.1
+	id S1755600Ab2FZS1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 14:27:30 -0400
+Received: from mout.web.de ([212.227.15.3]:59468 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753136Ab2FZS13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 14:27:29 -0400
+Received: from [192.168.178.48] ([79.193.92.179]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MdLo7-1SSBxP2VJz-00IMzY; Tue, 26 Jun 2012 20:27:24
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <7vobo6cazk.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:He7eOMoCH41D6bXFW8eD1LN726sD6UBCeIPtMoWXRDm
+ +LwS0vPbsqZlT0AER9tHWFTiJjz1wiGxulo0OUFm/jR0D/ulEB
+ xHih0YnMeZIBt+y3ChWfLL9NLWt3mckylSgJYsqoO/4HTvBgxR
+ KodCClczC011jT58cK7D6ASi77luGCptnm/MjveXu/DXR1cUYI
+ qgk3ptqCdZMboVgxpBXoQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200666>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- combine-diff.c |  2 +-
- diff.c         | 10 +++++-----
- 2 Dateien ge=C3=A4ndert, 6 Zeilen hinzugef=C3=BCgt(+), 6 Zeilen entfer=
-nt(-)
+Am 26.06.2012 18:07, schrieb Junio C Hamano:
+> Richard Hartmann <richih.mailinglist@gmail.com> writes:
+> 
+>> As you are most likely aware, `git submodule` allows you to access a
+>> separate git repository in a sub-directory, e.g. $submodule, while
+>> $GIT_WORK_TREE forces git to operate in a specific directory. Combine
+>> the two and the result is less than ideal. git is forced to operate in
+>> $GIT_WORK_TREE while it should operate on $GIT_WORK_TREE/$submodule,
+>> instead.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 9786680..bf534e4 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -734,7 +734,7 @@ static void show_combined_header(struct combine_dif=
-f_path *elem,
- 			    DIFF_STATUS_ADDED)
- 				added =3D 0;
- 		if (added)
--			printf("%snew file mode %06o",
-+			printf(_("%snew file mode %06o"),
- 			       c_meta, elem->mode);
- 		else {
- 			if (deleted)
-diff --git a/diff.c b/diff.c
-index 1a594df..25fcb6f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2264,21 +2264,21 @@ static void builtin_diff(const char *name_a,
- 	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix, set, a_=
-one, b_two, reset);
- 	if (lbl[0][0] =3D=3D '/') {
- 		/* /dev/null */
--		strbuf_addf(&header, "%s%snew file mode %06o%s\n", line_prefix, set,=
- two->mode, reset);
-+		strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("new fil=
-e mode"), two->mode, reset);
- 		if (xfrm_msg)
- 			strbuf_addstr(&header, xfrm_msg);
- 		must_show_header =3D 1;
- 	}
- 	else if (lbl[1][0] =3D=3D '/') {
--		strbuf_addf(&header, "%s%sdeleted file mode %06o%s\n", line_prefix, =
-set, one->mode, reset);
-+		strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("deleted=
- file mode"), one->mode, reset);
- 		if (xfrm_msg)
- 			strbuf_addstr(&header, xfrm_msg);
- 		must_show_header =3D 1;
- 	}
- 	else {
- 		if (one->mode !=3D two->mode) {
--			strbuf_addf(&header, "%s%sold mode %06o%s\n", line_prefix, set, one=
-->mode, reset);
--			strbuf_addf(&header, "%s%snew mode %06o%s\n", line_prefix, set, two=
-->mode, reset);
-+			strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("old mo=
-de"), one->mode, reset);
-+			strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("new mo=
-de"), two->mode, reset);
- 			must_show_header =3D 1;
- 		}
- 		if (xfrm_msg)
-@@ -4130,7 +4130,7 @@ static void show_mode_change(FILE *file, struct d=
-iff_filepair *p, int show_name,
- 		const char *line_prefix)
- {
- 	if (p->one->mode && p->two->mode && p->one->mode !=3D p->two->mode) {
--		fprintf(file, "%s mode change %06o =3D> %06o%c", line_prefix, p->one=
-->mode,
-+		fprintf(file, _("%s mode change %06o =3D> %06o%c"), line_prefix, p->=
-one->mode,
- 			p->two->mode, show_name ? ' ' : '\n');
- 		if (show_name) {
- 			write_name_quoted(p->two->path, file, '\n');
---=20
-1.7.11.1
+Richard, could you please tell us what git commands behave strange
+in what way and what your expectations were? A short test shows e.g.
+"git submodule foreach" operates on $(pwd)/submodule even though
+GIT_WORK_TREE is set while at the same time git status shows the same
+submodule as missing because it is looking for it in $GIT_WORK_TREE.
+Is that what you are talking about?
+
+> The end user should not be asked to anything special.
+> 
+> When the user exports GIT_WORK_TREE to tell git that the root of the
+> working tree the user wants to work on resides there (which is
+> needed when the user exports GIT_DIR to tell git that the user wants
+> to work on that repository), that wish obviously applies only to
+> that repository.  If git decides to visit the working tree of a
+> different repository (e.g. a checkout of a submodule bound to the
+> project GIT_WORK_TREE points at), even if it is done in response to
+> the user action (e.g. like passing "--recurse-submodules" option),
+> it should adjust GIT_WORK_TREE and GIT_DIR to be appropriate for
+> operations in the submodule repository while doing so.  If the more
+> recent "recursive" behaviour forgets to do so, it simply is a bug.
+
+I'm not sure what you mean by "appropriate for operations in the
+submodule repository". Should the submodule work tree be searched
+for under $GIT_WORK_TREE of the superproject or under $(pwd)?
+
+As far as I can see all submodule code consistently clears all
+environment variables used by git before descending into a
+submodule (at least since February 2010 and 5ce9086dd). Maybe we
+should change that so it sets the GIT_WORK_TREE environment to
+"$GIT_WORK_TREE/submodule" to be consistent?
