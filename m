@@ -1,72 +1,65 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: git submodule vs GIT_WORK_TREE
-Date: Tue, 26 Jun 2012 14:28:55 +0200
-Message-ID: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: Editing the root commit
+Date: Tue, 26 Jun 2012 14:33:40 +0100
+Message-ID: <20120626133339.GT9682@arachsys.com>
+References: <20120619091657.GA28005@arachsys.com>
+ <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
+ <20120619111709.GC10692@arachsys.com>
+ <20120620093205.GB10579@arachsys.com>
+ <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
+ <20120620192938.GC31520@sigill.intra.peff.net>
+ <20120620193922.GB3192@arachsys.com>
+ <20120620194824.GA32228@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 26 14:29:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 26 15:33:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjUtV-0006nu-QW
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 14:29:22 +0200
+	id 1SjVtx-0006DO-6G
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 15:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756455Ab2FZM3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 08:29:17 -0400
-Received: from mail-yw0-f51.google.com ([209.85.213.51]:41548 "EHLO
-	mail-yw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756425Ab2FZM3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 08:29:16 -0400
-Received: by yhnn12 with SMTP id n12so4382730yhn.10
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 05:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=LRKJ1WBAA2ROKJ6HWTWL+U6UeuEofIMkUddXkKxQvok=;
-        b=lZcG4ME9gfiLsDFHt96X9yWGBSw6Nz/hJcytMTqow/I/vu+2Fdh1l5XsGERZgzUNFh
-         ia7mKKV6AyhNx2MTiIOc3a1IoL06+0qQZgljohM/wWEvOm+pj7IePBSTJlDYnedPufxv
-         JM0xme7skf3aRUuhh0UvZNu3y+DD3ElMppZOspQNH1yuQ4YOC38LCqMYGQzA0DFqymn8
-         D0mfqyQGDg0bV2iE6tecmoEg4dEBzh0eGr81zi+gSB1aL3Qbcd70G1I66eNeOTyOWDXd
-         w3sn8hQ4acZ5vLigijabaTxa+jSqgYyJsqtYmlBXkWJ5giFqB3UToswRu1kpjgFdWt4c
-         OJJQ==
-Received: by 10.42.62.195 with SMTP id z3mr8054659ich.9.1340713756037; Tue, 26
- Jun 2012 05:29:16 -0700 (PDT)
-Received: by 10.50.135.97 with HTTP; Tue, 26 Jun 2012 05:28:55 -0700 (PDT)
+	id S1756914Ab2FZNdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 09:33:47 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:41506 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756797Ab2FZNdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 09:33:47 -0400
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.72)
+	(envelope-from <chris@arachsys.com>)
+	id 1SjVtm-0003No-HT; Tue, 26 Jun 2012 14:33:42 +0100
+Content-Disposition: inline
+In-Reply-To: <20120620194824.GA32228@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200641>
 
-Hi all,
+Jeff King <peff@peff.net> writes:
 
-vcsh [1] has had an open bug[2] filed against it for some time now. I
-came to the conclusion that I can not properly work around this within
-the scope of vcsh so I am hoping for help on this list.
+> I think the only thing you can do is make a fake sentinel commit (with
+> an empty tree) to put in HEAD, and then remove the sentinel immediately
+> after the first commit is put in place (making sure not to include it in
+> the first commit's parent list). Yuck.
 
-As you are most likely aware, `git submodule` allows you to access a
-separate git repository in a sub-directory, e.g. $submodule, while
-$GIT_WORK_TREE forces git to operate in a specific directory. Combine
-the two and the result is less than ideal. git is forced to operate in
-$GIT_WORK_TREE while it should operate on $GIT_WORK_TREE/$submodule,
-instead.
+I thought this would turn out far more horrible than it actually did in
+practice.
 
-I think there are two options, here:
+The follow-up patch adds this empty sentinel and then automatically squashes
+it into the root commit(s) as they're picked. The resulting rebase -i --root
+can handle re-ordering of commits (picking a new root), editing of the root
+commit, dropping the root commit, and so on.
 
-* Make git append $submodule to $GIT_WORK_TREE, i.e. operate on
-$GIT_WORK_TREE/$submodule
-* Introduce $GIT_WORK_TREE_RELATIVE which allows submodule and
-potentially other commands to append to it
+In the second patch, I've written some simple tests to demonstrate this and
+to cover cases that seem particularly likely to break, as well as removing a
+test_must_fail for --root without --onto, because it no longer does!
 
+Cheers,
 
-Did I miss another option? Would anyone be willing to fix/implement this?
-
-
-Thanks,
-Richard
-
-[1] https://github.com/RichiH/vcsh
-[2] https://github.com/RichiH/vcsh/issues/27
+Chris.
