@@ -1,96 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git submodule vs GIT_WORK_TREE
-Date: Tue, 26 Jun 2012 15:53:15 -0700
-Message-ID: <7vzk7p8z38.fsf@alter.siamese.dyndns.org>
-References: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com>
- <7vobo6cazk.fsf@alter.siamese.dyndns.org> <4FE9FF0C.8050409@web.de>
- <7vobo5c0n0.fsf@alter.siamese.dyndns.org> <4FEA380D.8070001@web.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v2 1/1] index-pack: Disable threading on cygwin
+Date: Wed, 27 Jun 2012 00:57:26 +0200
+Message-ID: <CABPQNSaqxouhpsHBN5uVCiaRpkuR65uNNn6c30CxEx3zGbJrSg@mail.gmail.com>
+References: <4FE9FD34.5020406@ramsay1.demon.co.uk> <7vk3ytc0es.fsf@alter.siamese.dyndns.org>
+ <CABPQNSZ7=kqSjXPLior+LXqAt4AzcybOjJ1P8ZLQ+J-9gCgvdw@mail.gmail.com> <7v62adaee3.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 27 00:53:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 00:58:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjedY-0000lq-EC
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 00:53:32 +0200
+	id 1Sjei6-0006O3-Hq
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 00:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579Ab2FZWx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 18:53:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50468 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754111Ab2FZWx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 18:53:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9DA28977;
-	Tue, 26 Jun 2012 18:53:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6gdGYad7cm6P/N9Fu+GnOKDoU3w=; b=ow2F/X
-	vjAcAv5QQB+ITa3JkgpKhroiTJ1b3CRr7JF6Ch1tTn+t0zeqJvIpbqee0vgdjyhL
-	+Fe8vmONXEWD3dP+EY8MN1GPiC4tPfAzDV9qUldM9HI0Nebeh4WJeX7hx/I3hWU+
-	QIoJqseJY76BtV88uqVushhn61Z8wpcArS0yg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uNZh1WtOcA68aXJlAhM0XLhmfJrB0HFy
-	x/SHKgnqasAuOOmWRnsBBIii7L+tiwxzVgkhOJPT7FG+Ci93FOhsPqpARRvD49+G
-	QWCOAMdbIFbI7apRJYiVHoVrKB9CcXK3BoSz3sxwFWcStZzCYdelKbInh68GJgGI
-	cdGtKwO2PYM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0CD08976;
-	Tue, 26 Jun 2012 18:53:26 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A19DE8975; Tue, 26 Jun 2012
- 18:53:22 -0400 (EDT)
-In-Reply-To: <4FEA380D.8070001@web.de> (Jens Lehmann's message of "Wed, 27
- Jun 2012 00:30:37 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB2E0906-BFE1-11E1-9843-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754214Ab2FZW6J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 18:58:09 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:57671 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab2FZW6G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 18:58:06 -0400
+Received: by dady13 with SMTP id y13so532705dad.19
+        for <git@vger.kernel.org>; Tue, 26 Jun 2012 15:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=XvmAqcKVlfNLJqXQV87Ef9+JBfFUS94KiK0rKax8Jps=;
+        b=DwfJ0uJ9j5N88Z7MDdsWezlzW6esg1CMgGsZu2Z6EDpURUuKAdQOajUQSfXKjPRARI
+         KLKb5TrrHWV11Xu6/uUtH+W/edRn5MNw+EmnWwU+jX50yOF2Kw27TdedVbiGozo/V1cJ
+         1IRcwObOAOH2BP4s1DOJiLseLTu6kaaegOXXQYUfpMqnABwX18nUG8QIMMd2tkPHS23A
+         WRoCYSu4hHoBq2kdS9DbbieoQWf4sT4kjrexf+7n0jEgaQkYxE6lgPbpXvR/nQYQsBTl
+         VEOSr3dzmneAlUykrYFzQc/A4fS0659CLcixaxtSARlE+n6c0Y6idsw61pdCcHZ0McdO
+         +4pQ==
+Received: by 10.68.132.166 with SMTP id ov6mr57993108pbb.24.1340751486393;
+ Tue, 26 Jun 2012 15:58:06 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Tue, 26 Jun 2012 15:57:26 -0700 (PDT)
+In-Reply-To: <7v62adaee3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200699>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> Am 26.06.2012 21:51, schrieb Junio C Hamano:
-> ...
->> If the user has to use GIT_WORK_TREE to mark the root level of the
->> superproject working tree as such, it is very likely that the
->> controlling repository of the superproject does not live in the
->> $GIT_WORK_TREE/.git directory (in other words, $GIT_DIR points at
->> somewhere else).  Exporting GIT_WORK_TREE/submodule as the new value
->> of GIT_WORK_TREE is sensible, but I do not see a reasonable way to
->> deduce the value of GIT_DIR for the submodule in such a case.  The
->> controlling repository of the superproject is located somewhere
->> random; there is no reason to assume the repository for the
->> submodule is somewhere at fixed relation to it.
->> 
->> Does it mean the short answer to Richard's situation is "Don't do
->> it"?  I am not sure, but it is starting to sound like it.
+On Wed, Jun 27, 2012 at 12:37 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
 >
-> Not at all, I was just trying to reach consensus on what the user
-> can reasonably expect when setting GIT_WORK_TREE in the presence of
-> submodules. I will look into it to see how we can handle the cases
-> where GIT_WORK_TREE and/or GIT_DIR are set.
+>> On Tue, Jun 26, 2012 at 9:56 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>>>
+>>>> =A0 =A0- renamed FAKE_PREAD_NOT_THREAD_SAFE to NO_THREAD_SAFE_PREA=
+D
+>>>
+>>> Sensible.
+>>>
+>>>> =A0 =A0- when NO_PREAD, set NO_THREAD_SAFE_PREAD in the Makefile, =
+rather
+>>>> =A0 =A0 =A0than in git-compat-util.h
+>>>
+>>> I think it is a bad change. =A0When compat/ pread gets improved to =
+be
+>>> thread-safe, this will surely be missed.
+>>
+>> But CAN it be fixed? I don't think it could, at least not without
+>> wrapping ALL calls to functions that perform IO on file handles or
+>> file descriptors...
+>
+> Is that relevant? =A0It may be true that both Erik and Junio are not
+> being clever enough to come up with a solution offhand. =A0But is tha=
+t
+> a good justification to go against a sound engineering practice?
+>
 
-Thanks, then I'll let you look into it.  I do not see how you could
-determine GIT_DIR for the submodule sensibly if the superproject's
-working tree does not have its GIT_DIR as ".git" at the top-level,
-though.
+I didn't really mean to argue for or against this particular solution,
+sorry if I was unclear. I'm more interested in actually fixing the
+issue without disabling threading ;)
 
-Declaring that a checked out submodule _must_ have its controlling
-repository as ".git" at its root level, i.e. it should be accessible
-without using GIT_WORK_TREE/GIT_DIR at all just like a normal Git
-repository is, would be a clean way to avoid the issue altogether
-and it still will allow the top-level superproject to be structured
-in a funny way to require GIT_WORK_TREE/GIT_DIR to access it, but I
-am not sure if that is too restrictive for people who for some
-unknown reason want to use these environment variables to create
-repositories with a strange layout.
+At least on Windows, the CRT actually does take a lock for the
+file-handle for all standard IO opterations. Perhaps we can somehow
+take it ourselves? I'm not entirely sure how to get hold of it, but it
+would probably require quite a deep-dive into the CRT sources...
