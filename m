@@ -1,7 +1,7 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH v2 0/1] v1.7.11 index-pack failures on Cygwin
-Date: Tue, 26 Jun 2012 19:04:38 +0100
-Message-ID: <4FE9F9B6.4080805@ramsay1.demon.co.uk>
+Subject: [PATCH v2 1/1] index-pack: Disable threading on cygwin
+Date: Tue, 26 Jun 2012 19:19:32 +0100
+Message-ID: <4FE9FD34.5020406@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
@@ -9,197 +9,117 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 21:03:32 2012
+X-From: git-owner@vger.kernel.org Tue Jun 26 21:03:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjb2x-0007ZV-7y
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:03:31 +0200
+	id 1Sjb32-0007f7-BL
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118Ab2FZTD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 15:03:27 -0400
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:34525 "EHLO
+	id S1753432Ab2FZTDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 15:03:31 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:34540 "EHLO
 	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750887Ab2FZTD0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 15:03:26 -0400
+	by vger.kernel.org with ESMTP id S1751159Ab2FZTD3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 15:03:29 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1Sjb2q-0005Ra-aW; Tue, 26 Jun 2012 19:03:25 +0000
+	id 1Sjb2t-0005U0-c7; Tue, 26 Jun 2012 19:03:28 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200670>
 
-[This is exactly the same as last time, except I remembered to post
-it to the list this time! The patch is different, of course :-) ]
+From: Junio C Hamano <gitster@pobox.com>
+
+The Cygwin implementation of pread() is not thread-safe since, just
+like the emulation provided by compat/pread.c, it uses a sequence of
+seek-read-seek calls. In order to avoid failues due to thread-safety
+issues, commit b038a61 disables threading when NO_PREAD is defined.
+(ie when using the emulation code in compat/pread.c).
+
+We introduce a new build variable, NO_THREAD_SAFE_PREAD, which allows
+use to disable the threaded index-pack code on cygwin, in addition to
+the above NO_PREAD case.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
 Hi Junio,
 
-Having just installed v1.7.11 on cygwin, I discover that git is
-failing intermittently while fetching:
+I made some small changes to your patch:
 
-    ramsay $ cd ../ffmpeg/
-    ramsay $ git fetch origin
-    remote: Counting objects: 569, done.
-    remote: Compressing objects: 100% (363/363), done.
-    remote: Total 363 (delta 294), reused 0 (delta 0)Receiving objects:   9% (33/363
-    ), 12.00 KiB | 5 KiB/s
-    Receiving objects: 100% (363/363), 69.27 KiB | 4 KiB/s, done.
-    error: inflate: data stream error (incorrect header check)
-    fatal: serious inflate inconsistency
-    fatal: index-pack failed
-    ramsay $ git fetch origin
-    remote: Counting objects: 569, done.
-    remote: Compressing objects: 100% (363/363), done.
-    Receiving objects:   9% (33/363), 12.00 KiB | 5 KiB/s   remote: Total 363 (delta
-    Receiving objects: 100% (363/363), 69.27 KiB | 5 KiB/s, done.
-    fatal: premature end of pack file, 1111 bytes missing
-    fatal: serious inflate inconsistency
-    fatal: index-pack failed
-    ramsay $ 
+   - renamed FAKE_PREAD_NOT_THREAD_SAFE to NO_THREAD_SAFE_PREAD
+   - when NO_PREAD, set NO_THREAD_SAFE_PREAD in the Makefile, rather
+     than in git-compat-util.h
+   - set NO_THREAD_SAFE_PREAD in the non-conditional part of the
+     cygwin config section (ie not just versions before 1.7.x)
 
-I immediately suspected the new threaded index-pack. In particular, the
-thread-safely (or otherwise) of pread(); ie exactly the same problem
-reported by Johannes on MinGW, which lead to commit b038a61 ("index-pack:
-disable threading if NO_PREAD is defined", 06-05-2012).
-
-Note that I did not see any test failures on MinGW or Cygwin (still don't!)
-relating to index-pack. However, I had a look at the cygwin source and
-found that the cygwin pread() implementation for disk files is essentially
-the same as compat/pread.c (look in ../winsup/cygwin/fhandler_disk_file.cc).
-
-Also, I hacked up a small test (attached below) to confirm that pread() is
-not thread-safe:
-
-    ramsay $ gcc -I. -o test-pread test-pread.c
-    ramsay $ ./test-pread.exe
-     0: trials 524288, failed 524283
-     1: trials 500000, failed 191184
-     2: trials 500000, failed 195607
-     3: trials 500000, failed 192931
-    ramsay $
-
-I had a "fix pread() on MinGW" item low down on my todo list; I guess I need
-to address cygwin too! :D
-
-As a short term fix, I've created a patch to disable threading in index-pack
-on cygwin (ala commit b038a61).
+I can only test this by using it (all relevant tests pass with or without
+this patch, after all), so I have installed it for day-to-day use. I don't
+anticipate any problems, but I guess this patch has not actually been
+tested yet ... :-D
 
 HTH
 
 ATB,
 Ramsay Jones
 
+ Makefile             | 8 ++++++++
+ builtin/index-pack.c | 4 ++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
--- >8 --
-#include "git-compat-util.h"
-#include "thread-utils.h"
-
-#define DATA_FILE "junk.data"
-#define MAX_DATA 256 * 1024
-#define NUM_THREADS 3
-#define TRIALS 500000
-
-struct thread_data {
-	pthread_t t;
-	int fd;
-	int cnt;
-	int fails;
-	unsigned long n;
-};
-
-static struct thread_data t[NUM_THREADS+1];
-
-int create_data_file(void)
-{
-	int i, fd = open(DATA_FILE, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-	if (fd < 0)
-		return -1;
-	for (i = 0; i < MAX_DATA; i++)
-		if (write(fd, &i, sizeof(int)) < 0) {
-			close(fd);
-			unlink(DATA_FILE);
-			return -1;
-		}
-	close(fd);
-	return 0;
-}
-
-void *read_thread(void *data)
-{
-	struct thread_data *d = (struct thread_data *)data;
-	int i, j, rd;
-	for (i = 0; i < TRIALS; i += MAX_DATA) {
-		for (j = 0; j < MAX_DATA; j++) {
-			ssize_t sz = read(d->fd, &rd, sizeof(int));
-			if (sz < 0 || rd != j)
-				d->fails++;
-			d->cnt++;
-		}
-		lseek(d->fd, 0, SEEK_SET);
-	}
-	return NULL;
-}
-
-void *pread_thread(void *data)
-{
-	struct thread_data *d = (struct thread_data *)data;
-	int i, j, rd;
-	for (i = 0; i < TRIALS; i++) {
-		ssize_t sz;
-		d->n = d->n * 1103515245 + 12345;
-		j = d->n % MAX_DATA;
-		sz = pread(d->fd, &rd, sizeof(int), j * sizeof(int));
-		if (sz < 0 || rd != j)
-			d->fails++;
-		d->cnt++;
-	}
-	return NULL;
-}
-
-int main(int argc, char *argv[])
-{
-	int fd, i;
-
-	if (create_data_file() < 0) {
-		printf("can't create data file\n");
-		return 1;
-	}
-
-	if ((fd = open(DATA_FILE, O_RDONLY)) < 0) {
-		printf("can't open data file\n");
-		unlink(DATA_FILE);
-		return 1;
-	}
-
-	for (i = 0; i < NUM_THREADS+1; i++) {
-		int ret;
-
-		t[i].fd = fd;
-		t[i].cnt = 0;
-		t[i].fails = 0;
-		t[i].n = i * 16381;
-		ret = pthread_create(&t[i].t, NULL,
-				(i == 0) ? read_thread : pread_thread,
-				&t[i]);
-		if (ret) {
-			printf("can't create thread %d (%s)\n", i, strerror(ret));
-			unlink(DATA_FILE);
-			return 1;
-		}
-	}
-
-	for (i = 0; i < NUM_THREADS+1; i++)
-		pthread_join(t[i].t, NULL);
-	close(fd);
-
-	for (i = 0; i < NUM_THREADS+1; i++)
-		printf("%2d: trials %d, failed %d\n", i, t[i].cnt, t[i].fails);
-
-	unlink(DATA_FILE);
-	return 0;
-}
+diff --git a/Makefile b/Makefile
+index 4592f1f..67d761e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -158,6 +158,9 @@ all::
+ # Define NO_PREAD if you have a problem with pread() system call (e.g.
+ # cygwin1.dll before v1.5.22).
+ #
++# Define NO_THREAD_SAFE_PREAD if your pread() implementation is not
++# thread-safe. (e.g. compat/pread.c or cygwin)
++#
+ # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
+ # generally faster on your platform than accessing the working directory.
+ #
+@@ -1051,6 +1054,7 @@ ifeq ($(uname_O),Cygwin)
+ 		NO_IPV6 = YesPlease
+ 		OLD_ICONV = UnfortunatelyYes
+ 	endif
++	NO_THREAD_SAFE_PREAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
+@@ -1659,6 +1663,10 @@ endif
+ ifdef NO_PREAD
+ 	COMPAT_CFLAGS += -DNO_PREAD
+ 	COMPAT_OBJS += compat/pread.o
++	NO_THREAD_SAFE_PREAD = YesPlease
++endif
++ifdef NO_THREAD_SAFE_PREAD
++	BASIC_CFLAGS += -DNO_THREAD_SAFE_PREAD
+ endif
+ ifdef NO_FAST_WORKING_DIRECTORY
+ 	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index dc2cfe6..4705478 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -39,8 +39,8 @@ struct base_data {
+ 	int ofs_first, ofs_last;
+ };
+ 
+-#if !defined(NO_PTHREADS) && defined(NO_PREAD)
+-/* NO_PREAD uses compat/pread.c, which is not thread-safe. Disable threading. */
++#if !defined(NO_PTHREADS) && defined(NO_THREAD_SAFE_PREAD)
++/* pread() emulation is not thread-safe. Disable threading. */
+ #define NO_PTHREADS
+ #endif
+ 
+-- 
+1.7.11.1.gef8c760
