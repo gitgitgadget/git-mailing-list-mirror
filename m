@@ -1,176 +1,83 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: [PATCH 1/2] rebase -i: support --root without --onto
-Date: Tue, 26 Jun 2012 14:36:32 +0100
-Message-ID: <bdb45972685db8899a46ebc62213e56c9a3d0c94.1340717793.git.chris@arachsys.com>
-References: <20120626133339.GT9682@arachsys.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Chris Webb <chris@arachsys.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 0/5] rebase: calculate patches in upstream correctly
+Date: Tue, 26 Jun 2012 07:51:53 -0700
+Message-ID: <1340722318-24392-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 26 15:36:50 2012
+X-From: git-owner@vger.kernel.org Tue Jun 26 16:52:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjVwm-0001gA-Ur
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 15:36:49 +0200
+	id 1SjX7r-0005TR-8N
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 16:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756898Ab2FZNgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 09:36:45 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:41704 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756718Ab2FZNgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 09:36:44 -0400
-Received: from [81.2.114.212] (helo=miranda.home.)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1SjVwh-0004JU-8Y; Tue, 26 Jun 2012 14:36:44 +0100
-X-Mailer: git-send-email 1.7.10
-In-Reply-To: <20120626133339.GT9682@arachsys.com>
+	id S1757759Ab2FZOwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 10:52:15 -0400
+Received: from mail-lb0-f202.google.com ([209.85.217.202]:52873 "EHLO
+	mail-lb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755973Ab2FZOwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 10:52:14 -0400
+Received: by lbbgp10 with SMTP id gp10so12021lbb.1
+        for <git@vger.kernel.org>; Tue, 26 Jun 2012 07:52:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=/JuNRl6WpIJStUXXL9lwmURcr/Th5SfHe3nYSd5f9qM=;
+        b=ChaH/ONq54iWvBsuk5SiFoH69sU1wT3C88Ql0WnfZr+O7aLbrqJNrS+28eFKKqFMsO
+         22c/c87Q/Kqp6sh5wot3pFNl+OkQye0QPV4L88EelFSX7+aWy0MKuTSZ0hFofMIXhbzX
+         lirFsyK98MLc3XvMpqRiKJB8rXhOorfU/bdpkSjBDIS8zw7kndPNhxoTCf2fHgbPku3s
+         jgUP7Sg740wYCwDl7z1MsP7gF1ycOd919bGiFcFDjNj7fXlqbMcnEBbKxGTj+1YPlzpE
+         rBmulPn+Izgm8Gtj6W1VuuUlcM8bvXMKT8cJBQW/QHaaNempSVi4arGYTuRJK+RpAe08
+         rjbw==
+Received: by 10.14.185.140 with SMTP id u12mr4904894eem.0.1340722333189;
+        Tue, 26 Jun 2012 07:52:13 -0700 (PDT)
+Received: by 10.14.185.140 with SMTP id u12mr4904889eem.0.1340722333103;
+        Tue, 26 Jun 2012 07:52:13 -0700 (PDT)
+Received: from hpza9.eem.corp.google.com ([74.125.121.33])
+        by gmr-mx.google.com with ESMTPS id b16si37898390eeg.3.2012.06.26.07.52.13
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Tue, 26 Jun 2012 07:52:13 -0700 (PDT)
+Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.98.93])
+	by hpza9.eem.corp.google.com (Postfix) with ESMTP id E1BEF5C0050;
+	Tue, 26 Jun 2012 07:52:12 -0700 (PDT)
+Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
+	id DCFD4C19F8; Tue, 26 Jun 2012 07:52:11 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.3.327.g2980b
+X-Gm-Message-State: ALoCoQkgqiDzbruKx1bKKBT/RWGo2bkRRVIJgoeG5g+KzO9iwPoCjw2YceNXReUFbb5rJXJsb3d45+C5elnq4t+/yObyU3g5sWLHom3a0dRxZXCQyUe6cVr5odZbxusPtiyyKoEc4A5gx1FJh3ndedZw0NAcUp/YTYf3+4NpXwl9dx3GrgpTTSdBRvQfNuHvbU3U+Kg2Qbxc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200644>
 
-Allow --root to be specified to rebase -i without --onto, making it
-possible to edit and re-order all commits right back to the root(s).
+I worked on these patches last year but never sent them because I
+wasn't sure how they impact performance. I was hoping that getting the
+patch body from the commit and avoiding the call to mailinfo would
+make am-based rebase a little faster, but if I remember correctly, it
+got a little slower instead (not by much, though). I was also working
+on a way to implement the 'git cherry' functionality in 'git
+rev-list', but I wasn't sure how that would work and I ran out of
+time. I hope at least some of these patches can still be useful.
 
-If there is a conflict to be resolved when applying the first change,
-the user will expect a sane index and working tree to get sensible
-behaviour from git-diff and friends, so create a sentinel commit with an
-empty tree to rebase onto. Automatically squash the sentinel with any
-commits rebased directly onto it, so they end up as root commits in
-their own right and retain their authorship and commit message.
+Martin von Zweigbergk (5):
+  rebase: don't source git-sh-setup twice
+  rebase --root: print usage on too many args
+  am --rebasing: get patch body from commit, not from mailbox
+  am: don't call mailinfo if $rebasing
+  rebase [-m]: calculate patches in upstream correctly
 
-Signed-off-by: Chris Webb <chris@arachsys.com>
----
- Documentation/git-rebase.txt |    9 +++++----
- git-rebase--interactive.sh   |   24 ++++++++++++++++++------
- git-rebase.sh                |   14 ++++++++++++--
- 3 files changed, 35 insertions(+), 12 deletions(-)
+ git-am.sh                   |   48 ++++++++++++++++++++++---------------------
+ git-rebase--am.sh           |    8 ++------
+ git-rebase--interactive.sh  |    4 +---
+ git-rebase--merge.sh        |    4 +---
+ git-rebase.sh               |   13 ++++++------
+ t/t3401-rebase-partial.sh   |   17 +++++++++++++++
+ t/t3405-rebase-malformed.sh |   32 +++++++++++++++++++++++++----
+ t/t3406-rebase-message.sh   |   14 ++++++-------
+ t/t3412-rebase-root.sh      |    8 +++++++-
+ 9 files changed, 94 insertions(+), 54 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 147fa1a..85b5e44 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git rebase' [-i | --interactive] [options] [--onto <newbase>]
- 	[<upstream>] [<branch>]
--'git rebase' [-i | --interactive] [options] --onto <newbase>
-+'git rebase' [-i | --interactive] [options] [--onto <newbase>]
- 	--root [<branch>]
- 'git rebase' --continue | --skip | --abort
- 
-@@ -348,10 +348,11 @@ idea unless you know what you are doing (see BUGS below).
- --root::
- 	Rebase all commits reachable from <branch>, instead of
- 	limiting them with an <upstream>.  This allows you to rebase
--	the root commit(s) on a branch.  Must be used with --onto, and
-+	the root commit(s) on a branch.  When used with --onto, it
- 	will skip changes already contained in <newbase> (instead of
--	<upstream>).  When used together with --preserve-merges, 'all'
--	root commits will be rewritten to have <newbase> as parent
-+	<upstream>) whereas without --onto it will operate on every change.
-+	When used together with both --onto and --preserve-merges,
-+	'all' root commits will be rewritten to have <newbase> as parent
- 	instead.
- 
- --autosquash::
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0c19b7c..ed5a6ba 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -417,6 +417,21 @@ record_in_rewritten() {
- 	esac
- }
- 
-+do_pick () {
-+	if test "$(git rev-parse HEAD)" = "$squash_onto"
-+	then
-+		git commit --allow-empty --allow-empty-message --amend \
-+			   --no-post-rewrite -n -q -C $1 &&
-+			pick_one -n $1 &&
-+			git commit --allow-empty --allow-empty-message \
-+				   --amend --no-post-rewrite -n -q -C $1 ||
-+			die_with_patch $1 "Could not apply $1... $2"
-+	else
-+		pick_one $1 ||
-+			die_with_patch $1 "Could not apply $1... $2"
-+	fi
-+}
-+
- do_next () {
- 	rm -f "$msg" "$author_script" "$amend" || exit
- 	read -r command sha1 rest < "$todo"
-@@ -428,16 +443,14 @@ do_next () {
- 		comment_for_reflog pick
- 
- 		mark_action_done
--		pick_one $sha1 ||
--			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		do_pick $sha1 "$rest"
- 		record_in_rewritten $sha1
- 		;;
- 	reword|r)
- 		comment_for_reflog reword
- 
- 		mark_action_done
--		pick_one $sha1 ||
--			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		do_pick $sha1 "$rest"
- 		git commit --amend --no-post-rewrite || {
- 			warn "Could not amend commit after successfully picking $sha1... $rest"
- 			warn "This is most likely due to an empty commit message, or the pre-commit hook"
-@@ -451,8 +464,7 @@ do_next () {
- 		comment_for_reflog edit
- 
- 		mark_action_done
--		pick_one $sha1 ||
--			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		do_pick $sha1 "$rest"
- 		warn "Stopped at $sha1... $rest"
- 		exit_with_patch $sha1 0
- 		;;
-diff --git a/git-rebase.sh b/git-rebase.sh
-index e616737..bde2be8 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -31,7 +31,7 @@ SUBDIRECTORY_OK=Yes
- OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git rebase [-i] [options] [--onto <newbase>] [<upstream>] [<branch>]
--git rebase [-i] [options] --onto <newbase> --root [<branch>]
-+git rebase [-i] [options] [--onto <newbase>] --root [<branch>]
- git-rebase [-i] --continue | --abort | --skip
- --
-  Available options are
-@@ -364,6 +364,11 @@ and run me again.  I am stopping in case you still have something
- valuable there.'
- fi
- 
-+if test -n "$rebase_root" && test -z "$onto"
-+then
-+	test -z "$interactive_rebase" && interactive_rebase=implied
-+fi
-+
- if test -n "$interactive_rebase"
- then
- 	type=interactive
-@@ -397,7 +402,12 @@ then
- 	die "invalid upstream $upstream_name"
- 	upstream_arg="$upstream_name"
- else
--	test -z "$onto" && die "You must specify --onto when using --root"
-+	if test -z "$onto"
-+	then
-+		empty_tree=`git hash-object -t tree /dev/null`
-+		onto=`git commit-tree $empty_tree </dev/null`
-+		squash_onto="$onto"
-+	fi
- 	unset upstream_name
- 	unset upstream
- 	upstream_arg=--root
 -- 
-1.7.10
+1.7.9.3.327.g2980b
