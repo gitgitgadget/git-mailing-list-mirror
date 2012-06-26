@@ -1,132 +1,74 @@
-From: Marcin Owsiany <marcin@owsiany.pl>
-Subject: Re: [PATCH/RFC] git-svn: don't create master if another head exists
-Date: Tue, 26 Jun 2012 22:21:08 +0100
-Message-ID: <20120626212108.GR3125@beczulka>
-References: <20120624220835.GA4762@beczulka>
- <7v4nq0hrjb.fsf@alter.siamese.dyndns.org>
- <20120625075726.GO3125@beczulka>
- <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] rebase -i: support --root without --onto
+Date: Tue, 26 Jun 2012 14:24:07 -0700
+Message-ID: <7vwr2tahs8.fsf@alter.siamese.dyndns.org>
+References: <20120626133339.GT9682@arachsys.com>
+ <bdb45972685db8899a46ebc62213e56c9a3d0c94.1340717793.git.chris@arachsys.com>
+ <7vtxxxc22x.fsf@alter.siamese.dyndns.org>
+ <20120626193817.GD30779@arachsys.com>
+ <7vfw9hbzz5.fsf@alter.siamese.dyndns.org>
+ <20120626201155.GE5864@arachsys.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 23:21:20 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Chris Webb <chris@arachsys.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 23:24:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjdCJ-0002bH-5t
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:21:19 +0200
+	id 1SjdFC-00065J-IY
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023Ab2FZVVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 17:21:15 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:65436 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219Ab2FZVVO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 17:21:14 -0400
-Received: by wibhm11 with SMTP id hm11so4584960wib.1
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 14:21:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent
-         :x-gm-message-state;
-        bh=zC9JAKIDY9DCULmcitUCfk8e6HBgWRbwnDx6etRyiY8=;
-        b=Y09s2Ljt5y6Vz+8qGE4S5DH0PJbaYznWoPn/E8YN5J63iR/1aNvDCrI6ww2KdLtgFx
-         sqwS3db/ve7u/Q0r+89le4WyEPAB38lFETsh5zJQQI0e/yVQSvnX9GeOaJRQ7Zu5bt2D
-         +Y9gEBdl3mDdWjRz8u3TIHErCe626qKK+lki+o5Eq+Gf41gMDT2hOv9JSzfc2VqtcpsP
-         8ZhFolFum9uydiYzmmlKX1SJx1vVJQv7qFztDSh3BwpqEDr7oaBt3OPM3pYyOYc8FF1n
-         O9lEPIIsnyu30OSVdm6aeh0N+vQBb719yvJYHNrWXYWVuZNfV4bXPx87EoWH/zfBzIKe
-         OSFg==
-Received: by 10.180.84.35 with SMTP id v3mr35627036wiy.20.1340745672950;
-        Tue, 26 Jun 2012 14:21:12 -0700 (PDT)
-Received: from beczulka ([89.100.125.149])
-        by mx.google.com with ESMTPS id k8sm11731379wia.6.2012.06.26.14.21.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jun 2012 14:21:11 -0700 (PDT)
-Received: from mowsiany by beczulka with local (Exim 4.71)
-	(envelope-from <marcin@owsiany.pl>)
-	id 1SjdC8-0006SL-FQ; Tue, 26 Jun 2012 22:21:08 +0100
-Content-Disposition: inline
-In-Reply-To: <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Gm-Message-State: ALoCoQlqk7DMGfVXc2lXdLsHi7GK5UqgsuuiyjffupSFjctHptIk/M1W8BRCp6W0Tu1ISQefp7YA
+	id S1753634Ab2FZVYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 17:24:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36723 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752054Ab2FZVYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 17:24:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 136899484;
+	Tue, 26 Jun 2012 17:24:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zalwABmWnuCF+fZeB4OtiYVGnY8=; b=cIvK3w
+	Aza8Lf5SURgmpdn6xLWM8y943+i6NE/xrfbO+4YRYkn9ZnCffoZCDPENcaHboeFZ
+	unKCdhRLAlx/X0b+8waE+1Fgk1kfeOPAT3hhH40Ngmu2rPsAFNXUFw21yOWo+Q6e
+	fB2h+MvNfnIDsNs8ImGopkM4FRarLyLx6EYfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hTrCpRBjM1j8Ncn6+Kj+jwOYsWhe/w6N
+	AemmulxprFCM7hR22znMIyziBmh1f9Fq8IYN7gATvrrsKOy+CHLBKIevfbDXzcBh
+	GgBeYtPBFMgqaCwsp409xtipf7ecAF78h8mHW1edsBcx2G1NAipAqKQ0PPVSv2Na
+	+Ihy08fysz8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09EC29483;
+	Tue, 26 Jun 2012 17:24:13 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAA07947D; Tue, 26 Jun 2012
+ 17:24:08 -0400 (EDT)
+In-Reply-To: <20120626201155.GE5864@arachsys.com> (Chris Webb's message of
+ "Tue, 26 Jun 2012 21:11:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 44B89E8C-BFD5-11E1-BF9B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200684>
 
-On Mon, Jun 25, 2012 at 10:01:06AM -0700, Junio C Hamano wrote:
-> Marcin Owsiany <marcin@owsiany.pl> writes:
-> 
-> >>  What are you really trying
-> >> to validate?  "HEAD" points at an existing branch and you do not
-> >> care what branch it is?
-> >
-> > Yes. I think.
-> 
-> Why do you even care about the value of HEAD, i.e. the output from
-> "rev-parse HEAD", if that is the case?
+Chris Webb <chris@arachsys.com> writes:
 
-I don't!
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Very understandable.  Perhaps in-code comments would have helped.
+>
+> Shall I re-spin this with a comment to explain what's going on, and to
+> mention the implicit -i with rebase --root without -i, or would you prefer
+> to queue the existing version with any clarifications you think appropriate?
 
-> Wouldn't you rather be
-> reading from the output "symbolic-ref HEAD" to see if it points at
-> any branch?
+A reroll would be preferred, as it would be less work for me ;-)
 
-Sure, I was simply not aware of its existence.
-
-However after actually trying this approach I have found out that when
-post_fetch_checkout runs at initial "clone", HEAD points at
-refs/heads/master, but refs/heads/master does not exist! So just
-checking HEAD is not enough, I need to verify that it points to
-something valid. How about this:
-
-From: Marcin Owsiany <marcin@owsiany.pl>
-Date: Sun, 24 Jun 2012 22:40:05 +0100
-Subject: [PATCH] git-svn: don't create master if another head exists
-
-git-svn insists on creating the "master" head (unless it exists) on every
-"fetch". While it is useful that it gets created initially (users expect this
-git convention), some users find it annoying that it gets recreated, especially
-when they would like the git branch names to follow SVN repository branch
-names. More background in
-http://thread.gmane.org/gmane.comp.version-control.git/115030
-
-Make git-svn skip the "master" creation if HEAD points at a valid head. This
-means "master" does get created on initial "clone" but does not get recreated
-once a user deletes it.
-
-Signed-off-by: Marcin Owsiany <marcin@owsiany.pl>
----
- git-svn.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 0b074c4..2379a71 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1612,9 +1612,9 @@ sub post_fetch_checkout {
- 		}
- 	}
- 
--	my $valid_head = verify_ref('HEAD^0');
-+	return if verify_ref('HEAD^0');
- 	command_noisy(qw(update-ref refs/heads/master), $gs->refname);
--	return if ($valid_head || !verify_ref('HEAD^0'));
-+	return unless verify_ref('HEAD^0');
- 
- 	return if $ENV{GIT_DIR} !~ m#^(?:.*/)?\.git$#;
- 	my $index = $ENV{GIT_INDEX_FILE} || "$ENV{GIT_DIR}/index";
--- 
-1.7.7.3
-
-
--- 
-Marcin Owsiany <marcin@owsiany.pl>              http://marcin.owsiany.pl/
-GnuPG: 2048R/02F946FC  35E9 1344 9F77 5F43 13DD  6423 DBF4 80C6 02F9 46FC
-
-"Every program in development at MIT expands until it can read mail."
-                                                              -- Unknown
+Thanks.
