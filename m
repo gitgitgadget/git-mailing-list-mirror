@@ -1,136 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] index-pack: Disable threading on cygwin
-Date: Tue, 26 Jun 2012 12:56:27 -0700
-Message-ID: <7vk3ytc0es.fsf@alter.siamese.dyndns.org>
-References: <4FE9FD34.5020406@ramsay1.demon.co.uk>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] git-submodule: support 'rm' command.
+Date: Tue, 26 Jun 2012 21:59:16 +0200
+Message-ID: <4FEA1494.404@web.de>
+References: <1340621820-19448-1-git-send-email-mgorny@gentoo.org> <1340621820-19448-2-git-send-email-mgorny@gentoo.org> <4FE898BC.2020307@web.de> <CABURp0od-nNFVhLQU9BsiJ=wXkdneJfhxun_PHOfV=sgzOFShg@mail.gmail.com> <4FE8D380.20803@web.de> <CABURp0qFXGs6wqFbz28OKywVsFu23JKfhS8uLsen-nqhBvDAiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 26 21:56:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 21:59:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjbsM-000730-6G
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:56:38 +0200
+	id 1Sjbv4-00026T-49
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113Ab2FZT4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 15:56:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52623 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751617Ab2FZT4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 15:56:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 346009CB0;
-	Tue, 26 Jun 2012 15:56:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AcXSxOSX3VCm6gRoR+AVcNpWe6U=; b=ahCWJG
-	Z2JKh8L3JSQByVzujBCYpg8Y7WzRCcQpAt4OsP3v+HwUfrvsV8R8mw1N20L244Sc
-	rFrDEOP2D9QKjIapDFjL9ERu3to5/faII+wmBw4wkSHmpTxDYiUOcI6wNgGjZmOq
-	cLJVs8C7Bbihnh8r6aKaSWH/nP6x/L3Yr2ayI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YNEUwk8aDv1r5JKgpqSH5x/8PDWRZQh5
-	S7fHzf4w4niPJGA9x7TusfBsG9YmwyoZ3issFQor7xeviU8SulJmLPdGU5I5nh3V
-	TOVfuz3H1PbK0Yh6U+GnFNgWSueefDS1mHAtkcWNywMFPOV+mxTYTUOkvE/BYnho
-	EDcV+TGRO18=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B3459CAF;
-	Tue, 26 Jun 2012 15:56:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 145749CA3; Tue, 26 Jun 2012
- 15:56:28 -0400 (EDT)
-In-Reply-To: <4FE9FD34.5020406@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Tue, 26 Jun 2012 19:19:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 04FE82FE-BFC9-11E1-A2C6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751850Ab2FZT7W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 15:59:22 -0400
+Received: from mout.web.de ([212.227.15.4]:64011 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751416Ab2FZT7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 15:59:21 -0400
+Received: from [192.168.178.48] ([79.193.92.179]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0MOipW-1SoXas2l1i-006U2w; Tue, 26 Jun 2012 21:59:16
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <CABURp0qFXGs6wqFbz28OKywVsFu23JKfhS8uLsen-nqhBvDAiw@mail.gmail.com>
+X-Provags-ID: V02:K0:11AsIv95oVMaq1LzatZCReBE3LEgQQtDR192FP+3fnL
+ AcEEsHMpK9TKk58numoQL36ZAISYlBwgeiMeAXqu7fE37/NPXZ
+ udf2Vx/5ssvzEwNCgHeXPhsKBBXDrSNJogsQC1z3KUioZ2BLyW
+ wJ64zhcx0CAmTlyIBc5gcYFzxxf+Zdg49Js16yZp/LH4VVAf+m
+ /lGHaP3no6rYG1ts3+G3g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200678>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Am 26.06.2012 21:12, schrieb Phil Hord:
+> On Mon, Jun 25, 2012 at 5:09 PM, Jens Lehmann <Jens.Lehmann@web.de> w=
+rote:
+>> Am 25.06.2012 22:53, schrieb Phil Hord:
+>>> On Mon, Jun 25, 2012 at 12:58 PM, Jens Lehmann <Jens.Lehmann@web.de=
+> wrote:
+>>>> Am 25.06.2012 12:57, schrieb Micha=C5=82 G=C3=B3rny:
+>>>>> Add an 'rm' command to git-submodule which provides means to
+>>>>> (semi-)easily remove git submodules.
+>>>>>
+>>>>> Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
+>>>>> ---
+>>>>> Right now, it requires the submodule checkout to be removed manua=
+lly
+>>>>> first (so it does not remove unstaged commits), and just removes
+>>>>> the index entry and module information from config.
+>>>>>
+>>>>> I based it on 'cmd_add' code trying to preserve the original codi=
+ng
+>>>>> standards.
+>>>>
+>>>> I really like the goal of this patch but would prefer that "git rm=
+"
+>>>> learns how to remove submodules instead of adding more code to the
+>>>> git-submodule.sh script.
+>>>
+>>> I would like to see both supported, eventually. That is, git-rm and
+>>> git-submodule-rm should both work.  It would make sense to me when =
+I
+>>> am looking for the counterpart to 'git submodule add' to find it un=
+der
+>>> 'git submodule rm', and also under 'git submodule --help'.
+>>
+>> Hmm, as long as "git submodule rm" would just use "git rm" under the
+>> hood and not its own scripting that would be ok.
+>=20
+> Maybe it would be better if 'git-rm' would use 'git submodule rm'
+> under the covers.  This would keep the .gitmodules (etc.)
+> manipulations out of the hair of the git-rm machinery.
 
->    - renamed FAKE_PREAD_NOT_THREAD_SAFE to NO_THREAD_SAFE_PREAD
+I disagree, me thinks submodules should become first class citizens.
 
-Sensible.
+> Also, I hope 'git submodule rm foo' would fail if 'foo' were not a su=
+bmodule.
 
->    - when NO_PREAD, set NO_THREAD_SAFE_PREAD in the Makefile, rather
->      than in git-compat-util.h
+Yes, it should. But that'd be easy to test there.
 
-I think it is a bad change.  When compat/ pread gets improved to be
-thread-safe, this will surely be missed.
+>>> In the special case of a submodule which does not use a gitfile, I =
+am
+>>> not even sure if any of the submodule files should be removed. If t=
+hey
+>>> are, what state does that leave the submodule repository in?  A
+>>> checked-out workdir whose files are all removed?  'git-status' woul=
+d
+>>> be very noisy in this case.  I'd rather expect this to behave the s=
+ame
+>>> as if I checked out a previous commit which did not have the submod=
+ule
+>>> added yet.  Today, this leaves the submodule in-place and it shows =
+up
+>>> as an untracked file.  I don't know a better way to handle that,
+>>> though I expect it would be ok remove all the files even in this ca=
+se
+>>> (if the workdir is not dirty and if the head commit is current in t=
+he
+>>> superproject).  But it seems extreme to do all of that and then lea=
+ve
+>>> the .git directory lying about in the former submodule directory.
+>>
+>> Good point. Another option would be to move the git directory into
+>> .git/modules of the superproject before removing the files, then nex=
+t
+>> time it's updated it'll use gitfile. But maybe that's a problem whic=
+h
+>> will go away anyways as all submodules cloned with newer git use
+>> gitfiles anyway.
+>=20
+> I like this idea, but it seems a little presumptuous.  The new
+> behavior might cause a few panicked users to spend the day rebuilding
+> their "lost" repository.
 
->    - set NO_THREAD_SAFE_PREAD in the non-conditional part of the
->      cygwin config section (ie not just versions before 1.7.x)
+Me thinks we should teach "git rm" only to remove the submodule when
+the --recurse-submodules option is used with it (which is what "git
+submodule rm" would do). Then later the to be added "autoupdate"
+submodule config  setting (which I intend to use for automatic
+submodule updates during checkout, merge, etc. too) could enable this.
+No surprises for users who didn't ask for it.
 
-Sorry that I missed it, and thanks for fixing it.
+>  Maybe we can make this an explicit action.
+> "git submodule convert-to-gitfile"  :-)
 
-> I can only test this by using it (all relevant tests pass with or without
-> this patch, after all), so I have installed it for day-to-day use. I don't
-> anticipate any problems, but I guess this patch has not actually been
-> tested yet ... :-D
->
-> HTH
->
-> ATB,
-> Ramsay Jones
->
->  Makefile             | 8 ++++++++
->  builtin/index-pack.c | 4 ++--
->  2 files changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 4592f1f..67d761e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -158,6 +158,9 @@ all::
->  # Define NO_PREAD if you have a problem with pread() system call (e.g.
->  # cygwin1.dll before v1.5.22).
->  #
-> +# Define NO_THREAD_SAFE_PREAD if your pread() implementation is not
-> +# thread-safe. (e.g. compat/pread.c or cygwin)
-> +#
->  # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
->  # generally faster on your platform than accessing the working directory.
->  #
-> @@ -1051,6 +1054,7 @@ ifeq ($(uname_O),Cygwin)
->  		NO_IPV6 = YesPlease
->  		OLD_ICONV = UnfortunatelyYes
->  	endif
-> +	NO_THREAD_SAFE_PREAD = YesPlease
->  	NEEDS_LIBICONV = YesPlease
->  	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
->  	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
-> @@ -1659,6 +1663,10 @@ endif
->  ifdef NO_PREAD
->  	COMPAT_CFLAGS += -DNO_PREAD
->  	COMPAT_OBJS += compat/pread.o
-> +	NO_THREAD_SAFE_PREAD = YesPlease
-> +endif
-> +ifdef NO_THREAD_SAFE_PREAD
-> +	BASIC_CFLAGS += -DNO_THREAD_SAFE_PREAD
->  endif
->  ifdef NO_FAST_WORKING_DIRECTORY
->  	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index dc2cfe6..4705478 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -39,8 +39,8 @@ struct base_data {
->  	int ofs_first, ofs_last;
->  };
->  
-> -#if !defined(NO_PTHREADS) && defined(NO_PREAD)
-> -/* NO_PREAD uses compat/pread.c, which is not thread-safe. Disable threading. */
-> +#if !defined(NO_PTHREADS) && defined(NO_THREAD_SAFE_PREAD)
-> +/* pread() emulation is not thread-safe. Disable threading. */
->  #define NO_PTHREADS
->  #endif
+I like it!
