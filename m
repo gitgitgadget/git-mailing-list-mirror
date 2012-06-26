@@ -1,96 +1,130 @@
-From: Leila <muhtasib@gmail.com>
-Subject: Re: [PATCH v2] log: Handle new repository case.
-Date: Mon, 25 Jun 2012 22:42:11 -0400
-Message-ID: <CAA3EhHK25rLU-gQNUG0cmJ4E1g+Ce6AHcMF6jzcco5QaTJE+jA@mail.gmail.com>
-References: <1340664813-96891-1-git-send-email-muhtasib@gmail.com> <7vobo7dlyl.fsf@alter.siamese.dyndns.org>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Master and origin/master diverged
+Date: Mon, 25 Jun 2012 19:49:18 -0700
+Message-ID: <CAE1pOi24EVq__XzxtBoAryzQ+F=sAy8-hY23M-P4YoQFXdpSSw@mail.gmail.com>
+References: <CAE1pOi1Ot0Fyv=2_XYKyUcsKp-m+CkT-miF=jC=wt9Rbz_dXqQ@mail.gmail.com>
+ <4FE4C0F7.2080309@gmail.com> <CAE1pOi2MN_c76UBeRzdRbU8s+0LzYVoVcJ13V0di=HQobj+aDg@mail.gmail.com>
+ <4FE50411.8080800@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 04:48:04 2012
+Cc: Git Users <git@vger.kernel.org>
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 04:51:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjLoy-0007Gd-2N
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 04:48:04 +0200
+	id 1SjLr7-0007Gd-Ff
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 04:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755839Ab2FZCmd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 22:42:33 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:56289 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755420Ab2FZCmc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 22:42:32 -0400
-Received: by vbbff1 with SMTP id ff1so2386092vbb.19
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 19:42:31 -0700 (PDT)
+	id S1756373Ab2FZCtk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 22:49:40 -0400
+Received: from mail-yw0-f51.google.com ([209.85.213.51]:36157 "EHLO
+	mail-yw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755736Ab2FZCtj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 22:49:39 -0400
+Received: by yhnn12 with SMTP id n12so4047129yhn.10
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 19:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=aJXJAAnaFSnwLjCmFkd5qCzW9aKSjNKyXCReJSHCabw=;
-        b=dTzS7E/MZRVRfVJvH8yKRXE9M5IIjr2mIjFPgUTBIs6+3cUM7oedPYY+2/j8c+izli
-         tUNWBZZDYeRjslPDktu+3Y+mqKAm19tmuR194jLHtganmSti5+WjCD5ffXQqJTgfws7A
-         msQW/9ZxT2D9t3f5sukn/OepnQBD0CraxavUrjiLhGdx/s8ORUYWLch6qV1JuADmZ+e5
-         ZClYGg5DFoCDOWTvS4rLHn5648Xjr5ZDHKVbPjD35fO7do4thHVOlbpUPFEA11sLhCcI
-         XeHoc+fYjBs5DF7eb1Cy53R7MIU4omf8Jt/kMRutl4lDrKcAAxYapbGriz4NS25hbMIp
-         Aopw==
-Received: by 10.52.143.73 with SMTP id sc9mr7897884vdb.46.1340678551679; Mon,
- 25 Jun 2012 19:42:31 -0700 (PDT)
-Received: by 10.52.37.233 with HTTP; Mon, 25 Jun 2012 19:42:11 -0700 (PDT)
-In-Reply-To: <7vobo7dlyl.fsf@alter.siamese.dyndns.org>
+        bh=DT+z2W+CPj8ZXYpwRy8la46T4LHwXzcCX9Aq/czspZQ=;
+        b=xebK2fFiOxd7gztKNI6HdZCtULiVtz0jItKOnk5Cu6gdkAJCn5cObhLZXQlxSUsW6+
+         9exurh8GqLE3Mk17RSBnMjyuZ5I9YKS9QWH/sQzKyD4vGm2oUVK3gXPSf0qdthtWvZq6
+         vPpXNja/WrcEqkUEYSp6yaCmmZh8qG1joHHyHR22G3cMF2SAheEbTxHsn7i/YtJO3IW3
+         t+TzHfWDoWKyWHnRGLtNYW9btjNCaw95Q9Q/CWvud0oIZWiVPceEZ3CfTR1UNrAnzhN8
+         Rxy9RjGN0io2iTJpi5Yzj54gfUi7rpeKSSqwlXiH9gjwUp+dkD0vV5JYEHqyts0OnBJt
+         QkXQ==
+Received: by 10.236.185.198 with SMTP id u46mr16063598yhm.33.1340678978442;
+ Mon, 25 Jun 2012 19:49:38 -0700 (PDT)
+Received: by 10.236.29.230 with HTTP; Mon, 25 Jun 2012 19:49:18 -0700 (PDT)
+In-Reply-To: <4FE50411.8080800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200621>
 
-On Mon, Jun 25, 2012 at 7:13 PM, Junio C Hamano <gitster@pobox.com> wro=
+On 22 June 2012 16:47, Neal Kreitzinger <nkreitzinger@gmail.com> wrote:
+> On 6/22/2012 3:18 PM, Hilco Wijbenga wrote:
+>>
+>>
+>> On 22 June 2012 12:01, Neal Kreitzinger <nkreitzinger@gmail.com> wro=
 te:
-> Leila Muhtasib <muhtasib@gmail.com> writes:
+>>>
+>>> On 6/22/2012 12:53 PM, Hilco Wijbenga wrote:
+>>>>
+>>>>
+>>>> One of my developers managed to push something that somehow "diver=
+ged"
+>>>> origin/master from everyone else's local master.
+>>>>
+>>>> A --> B --> C --> D (everybody's local master)
+>>>> |
+>>>> \--> B' --> C' --> D' --> E (origin/master)
+>>>>
+>>>> (i.e., A is the commit where things diverged; everyone's local mas=
+ter
+>>>> points to D but the new commit (E) that was pushed to origin/maste=
+r
+>>>> uses different SHA1s for B, C, and D)...
+>>>>
+>>>>
+>>>> Now running git pull creates a merge commit joining D and E.
+>>>>
+>>>> ...Does anyone have any idea as to what might have happened? Perha=
+ps if
+>>>> I
+>>>>
+>>>> understand how this happened I might be able to prevent it from
+>>>> happening again.
+>>>>
+>>> Some ways you can prevent it from happening again:
+>>
+>>
+>>> (2) have your devs do git pull --ff-only
+>>
+>>
+>> Is this something that can be set in git config? I looked but didn't
+>> see anything obvious.
 >
->> @@ -553,8 +562,13 @@ int cmd_log(int argc, const char **argv, const =
-char *prefix)
->> =A0 =A0 =A0 init_revisions(&rev, prefix);
->> =A0 =A0 =A0 rev.always_show_header =3D 1;
->> =A0 =A0 =A0 memset(&opt, 0, sizeof(opt));
->> - =A0 =A0 opt.def =3D "HEAD";
->> + =A0 =A0 opt.def =3D default_to_head_if_exists();
->> +
->> =A0 =A0 =A0 cmd_log_init(argc, argv, prefix, &rev, &opt);
->> +
->> + =A0 =A0 if (!opt.def && !rev.cmdline.nr)
->> + =A0 =A0 =A0 =A0 =A0 =A0 return 0;
->> +
->> =A0 =A0 =A0 return cmd_log_walk(&rev);
 >
-> Do you even need these four new lines if you do not error out?
-> Doesn't log_walk() return successfully if there is nothing in the
-> queue anyway?
+> OTTOMH, you could change the git fetch config for master and take awa=
+y the
+> leading '+' sign which would not allow non-fastforward fetches of mas=
+ter.
+> =C2=A0That in turn would prevent merging such a non-ff remote trackin=
+g branch of
+> master into your branch master.
+>
+>
+> Actually, I guess what I really want is
+>>
+>> something for git push, right?
+>>
+> Some ways to do it:
+> (1) I think you could have rebase and commit hooks locally that preve=
+nt
+> someone from rewriting history on master. =C2=A0That in turn would pr=
+event
+> someone from pushing a rewritten history.
 
-Actually, yes. This was left behind because I was printing a success
-message "No commit(s) to display". Thanks for catching this.
+Yes, I have been thinking about that.
 
->
->> @@ -1128,7 +1142,7 @@ int cmd_format_patch(int argc, const char **ar=
-gv, const char *prefix)
->> =A0 =A0 =A0 DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
->> =A0 =A0 =A0 rev.subject_prefix =3D fmt_patch_subject_prefix;
->> =A0 =A0 =A0 memset(&s_r_opt, 0, sizeof(s_r_opt));
->> - =A0 =A0 s_r_opt.def =3D "HEAD";
->> + =A0 =A0 s_r_opt.def =3D default_to_head_if_exists();
->
-> I didn't think about other commands, but I do not think format-patch
-> wants to silently succeed without doing anything---it is definitely
-> a user error, no?
->
+How does one create "portable" hooks? I have to deal with GNU/Linux,
+OS X, and MS Windows. We all have Java installed so I first thought of
+using JGit but I am not clear on how well JGit supports using it in a
+hooks. Should I make Ruby a required part of the dev environment and
+use Ruby hooks?
 
-The other changed commands are git show, git whatchanged, git reflog.
-And I think for the initial repo case, they can just silently succeed
-vs display that error message.
+> (2) When merging topic branches to master use git merge --ff-only. =C2=
+=A0Then
+> when you push it to remote master you know it's a fastforward and not=
+ a
+> history rewrite.
 
-'git format-patch' on a regular repo with commits, did nothing for me.
-That's why I had originally included it. Though I think I'm changing
-my mind about this because it's about generating a patch -- not just
-displaying info.
+Given how hard it is to teach devs to only push fast-forward merges, I
+am not sure how well this would work.
