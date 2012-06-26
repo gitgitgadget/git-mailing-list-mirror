@@ -1,80 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: MERGE_RR droppings
-Date: Mon, 25 Jun 2012 22:30:32 -0700
-Message-ID: <7vtxxyd4hz.fsf@alter.siamese.dyndns.org>
-References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
- <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com>
- <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
- <7vwr2vfc1c.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7Hj4f-Gww4j89kppR8g1vzmhmydsFnG0ecjzL5WrRP4g@mail.gmail.com>
+From: Kevin <ikke@ikke.info>
+Subject: Re: Urgent: Issue with GIT ...
+Date: Tue, 26 Jun 2012 08:08:26 +0200
+Message-ID: <CAO54GHA=R1CyspFrC1n-JLVbm5eE+roXLBv6hFL5M1BHGAcVBA@mail.gmail.com>
+References: <1340624980925-7562097.post@n2.nabble.com> <slrnjugobd.8ie.andy@atom.gently.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 07:30:42 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Andy Hawkins <andy@gently.org.uk>
+X-From: git-owner@vger.kernel.org Tue Jun 26 08:08:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjOMJ-0001bb-SD
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 07:30:40 +0200
+	id 1SjOxI-00012v-V7
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 08:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756333Ab2FZFag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 01:30:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36952 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809Ab2FZFaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 01:30:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4D955998;
-	Tue, 26 Jun 2012 01:30:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cg/j2DGzhUj8jJo8yBOQUyTk8Hs=; b=WFH1sY
-	XolHo1MFW/0qU3FRGveZnRfnNty5WNvSahttCS7cbwZhgODi7djyGnFwQMCoNVBV
-	jhrx99nTWqSiMdWuMt+uS19A+C9TjSO2FPbe0niCZ2tPm53QuwlZLfBkc9T5v1JV
-	ie6zUMBo1YXB0VYSNo5V1QESczfjREULO1UI8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OvOhKTI2ESNaji/BROvFWblLf8HG67m/
-	z8cEZ43TzfKrY+c+7JnhidZ+D7CgTJXvQw9Eigqc/LPsuUOg+4EwtKD55A8RV3hy
-	bc/rruYt0BJhkgj9SNeR7oExj5Ym1wijtJWUrAt9lBWu/GwCoBqx+WqrA+okLzCF
-	Y848nWtIK08=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B0365997;
-	Tue, 26 Jun 2012 01:30:34 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2694B5995; Tue, 26 Jun 2012
- 01:30:34 -0400 (EDT)
-In-Reply-To: <CAJDDKr7Hj4f-Gww4j89kppR8g1vzmhmydsFnG0ecjzL5WrRP4g@mail.gmail.com> (David
- Aguilar's message of "Mon, 25 Jun 2012 21:31:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D71F624-BF50-11E1-B240-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758058Ab2FZGIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 02:08:49 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:60443 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757942Ab2FZGIs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 02:08:48 -0400
+Received: by wgbdr13 with SMTP id dr13so4857074wgb.1
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 23:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=R3BbSfMA0BMcFovykNJq1NcQKe8zz1XceD9CgufWxC4=;
+        b=x9V3Kfc0omZjRcS8Oybf4uOhPxxnmeGsbw7t4QmAlZbpVudFQAjF1L8LboZTd+iBCL
+         hzd0/DWzoeJCD4OtIOmrHq7wk3gTjOpJxTulQp1krlWmwPGEAk6nRyzDOXq3k6oq1aX+
+         R4JBz6eNm59LMEnw7eE2t5fO/EuB90K/Q9U4XkIuEFA6nCxTNgfbxNmdJ/hNql4grnvU
+         MbNA4mE7B+DYEVc0P8135Wc7fYoJ2auArSwAPEzJs7pxJw42RxNyl5dDAIXXkotKcVnm
+         4iNuZdFKpJADrs1mftq8UR6n52kp9l54FVRRkQ371Hc9WmI8jtUMeVvnV2o5KAfK6xjE
+         EZHA==
+Received: by 10.216.143.195 with SMTP id l45mr7842280wej.49.1340690926981;
+ Mon, 25 Jun 2012 23:08:46 -0700 (PDT)
+Received: by 10.227.35.202 with HTTP; Mon, 25 Jun 2012 23:08:26 -0700 (PDT)
+In-Reply-To: <slrnjugobd.8ie.andy@atom.gently.org.uk>
+X-Google-Sender-Auth: _828HnDYRvh25UPYyLTpjk4Htyo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200632>
 
-David Aguilar <davvid@gmail.com> writes:
+The difference between bare and non-bare repositories is explained here=
+ [1].
 
->> Perhaps mergetool should consider a missing MERGE_RR and an empty
->> one the same way?
+In this setup, you should only pull from both repositories, not push to=
+ the
+other repository. If you want to push things, you should use a bare rep=
+ository
+that both repositories can access and push to.
+
+[1]: http://bare-vs-nonbare.gitrecipes.de/
+
+
+
+On Mon, Jun 25, 2012 at 3:02 PM, Andy Hawkins <andy@gently.org.uk> wrot=
+e:
 >
-> Would that test look (roughly) like this?
+> Hi,
 >
->     if test -f "$GIT_DIR/MERGE_RR" && test -n "$(cat "$GIT_DIR/MERGE_RR")"
-
-Hrm, would "test -s $that_file" be simpler?
-
-
->     then
-> 	files=$(git rerere remaining)
->     else
-> 	files=$(git ls-files -u | sed -e 's/^[^	]*	//' | sort -u)
->     fi
->     ...
+> In article <1340624980925-7562097.post@n2.nabble.com>,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 guruprasad<guruprasadkinI@gmail.co=
+m> wrote:
+> > 5) If i do some changes to files in B, commit and push to remote br=
+anch,
+> > I
+> > am unable to pull the changes done and merge into A. I have set
+> > "receive.denycurrentbranch=3Dignore" in git config.
 >
-> If so I'll throw together a patch.
+> Sounds like you're trying to push into a remote non-bare repository.
+>
+> What I'd do is:
+>
+> 1. On 'A', create a bare repository.
+> 2. Somewhere else on 'A', clone this repository. Work and push to the=
+ bare
+> in step 1 when necessary.
+> 3. On 'B', also clone the repository from 1. Work and push to the bar=
+e
+> when
+> necessary.
+>
+> I don't think it's a good idea to push to a repository that has check=
+ed
+> out
+> files. I seem to remember this being mentioned in Pro Git.
+>
+> Andy
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
