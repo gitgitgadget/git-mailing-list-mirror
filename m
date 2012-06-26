@@ -1,93 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] rebase [-m]: calculate patches in upstream correctly
-Date: Tue, 26 Jun 2012 14:13:07 -0700
-Message-ID: <7v8vf9bwv0.fsf@alter.siamese.dyndns.org>
-References: <1340722318-24392-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1340722318-24392-6-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Marcin Owsiany <marcin@owsiany.pl>
+Subject: Re: [PATCH/RFC] git-svn: don't create master if another head exists
+Date: Tue, 26 Jun 2012 22:21:08 +0100
+Message-ID: <20120626212108.GR3125@beczulka>
+References: <20120624220835.GA4762@beczulka>
+ <7v4nq0hrjb.fsf@alter.siamese.dyndns.org>
+ <20120625075726.GO3125@beczulka>
+ <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 23:13:23 2012
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 23:21:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjd4c-0000pq-Ej
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:13:22 +0200
+	id 1SjdCJ-0002bH-5t
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 23:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030Ab2FZVNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 17:13:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63288 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754013Ab2FZVNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 17:13:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0933B91DA;
-	Tue, 26 Jun 2012 17:13:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n1EKiMD7ykFLG1GSgYcJeatlfHU=; b=ceHD2+
-	liXV4129KkW4u17Umo0ORUqopyOqbxhoEvkGBPrvl+yTi0nPxj8dHLA978ykwRTr
-	uxD9w8KqcFsb//Pvav8uH/Yelc7eou/lplumY9OFKrWxUFGMh4BOMhoQn3BNBdfS
-	iuESq5/e/UZwxTSBY7hZ1wSwg7rIgoT2LfIgQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eKyT8MhTR4GHBWrJ0PARZbOUwV1h/3U7
-	CVZJPr1T6TZQSliW4Bip3YFKKvfbNq6NruSY2o96igh5S/UntjnY7fnZz+H3ag2i
-	YEAjgs3LnSpIkJJ1WpsEGwhJVjZeP+dvBjTMSuHS4X7l1LjkTKU1OoyIJUR/ymmf
-	d3hdNrbDta8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F388691D9;
-	Tue, 26 Jun 2012 17:13:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8666091D8; Tue, 26 Jun 2012
- 17:13:14 -0400 (EDT)
-In-Reply-To: <1340722318-24392-6-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
- von Zweigbergk's message of "Tue, 26 Jun 2012 07:51:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE10D292-BFD3-11E1-B274-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754023Ab2FZVVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 17:21:15 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:65436 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752219Ab2FZVVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 17:21:14 -0400
+Received: by wibhm11 with SMTP id hm11so4584960wib.1
+        for <git@vger.kernel.org>; Tue, 26 Jun 2012 14:21:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent
+         :x-gm-message-state;
+        bh=zC9JAKIDY9DCULmcitUCfk8e6HBgWRbwnDx6etRyiY8=;
+        b=Y09s2Ljt5y6Vz+8qGE4S5DH0PJbaYznWoPn/E8YN5J63iR/1aNvDCrI6ww2KdLtgFx
+         sqwS3db/ve7u/Q0r+89le4WyEPAB38lFETsh5zJQQI0e/yVQSvnX9GeOaJRQ7Zu5bt2D
+         +Y9gEBdl3mDdWjRz8u3TIHErCe626qKK+lki+o5Eq+Gf41gMDT2hOv9JSzfc2VqtcpsP
+         8ZhFolFum9uydiYzmmlKX1SJx1vVJQv7qFztDSh3BwpqEDr7oaBt3OPM3pYyOYc8FF1n
+         O9lEPIIsnyu30OSVdm6aeh0N+vQBb719yvJYHNrWXYWVuZNfV4bXPx87EoWH/zfBzIKe
+         OSFg==
+Received: by 10.180.84.35 with SMTP id v3mr35627036wiy.20.1340745672950;
+        Tue, 26 Jun 2012 14:21:12 -0700 (PDT)
+Received: from beczulka ([89.100.125.149])
+        by mx.google.com with ESMTPS id k8sm11731379wia.6.2012.06.26.14.21.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Jun 2012 14:21:11 -0700 (PDT)
+Received: from mowsiany by beczulka with local (Exim 4.71)
+	(envelope-from <marcin@owsiany.pl>)
+	id 1SjdC8-0006SL-FQ; Tue, 26 Jun 2012 22:21:08 +0100
+Content-Disposition: inline
+In-Reply-To: <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Gm-Message-State: ALoCoQlqk7DMGfVXc2lXdLsHi7GK5UqgsuuiyjffupSFjctHptIk/M1W8BRCp6W0Tu1ISQefp7YA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200683>
 
-Hrm, why does this break 9140.6?  Has the test been expecting a
-wrong result?
+On Mon, Jun 25, 2012 at 10:01:06AM -0700, Junio C Hamano wrote:
+> Marcin Owsiany <marcin@owsiany.pl> writes:
+> 
+> >>  What are you really trying
+> >> to validate?  "HEAD" points at an existing branch and you do not
+> >> care what branch it is?
+> >
+> > Yes. I think.
+> 
+> Why do you even care about the value of HEAD, i.e. the output from
+> "rev-parse HEAD", if that is the case?
 
--- >8 --
+I don't!
 
-expecting success: 
-        ( cd g &&
-          git svn fetch &&
-          git svn rebase &&
-          fgrep "mod hidden" hid/hid.txt
-        )
+> Wouldn't you rather be
+> reading from the output "symbolic-ref HEAD" to see if it points at
+> any branch?
 
-Index mismatch: a4b5c203f79112e92d530cb82366ca4d706fa4a8 != 6b5a1244749c8cdb5442eefd0abc3689d666322d
-rereading 6f980d1f3188db5082d5bfd2f28b317b6e7b8893
-        A       hid/hid.txt
-r2 = 9c02870abb807d33b84cc36ab2f2384bf01448f8 (refs/remotes/git-svn)
-        M       vis/vis.txt
-r3 = 26a2abacc1ca26dde5a0b18a73f0b2d306dc95d1 (refs/remotes/git-svn)
-        M       hid/hid.txt
-r4 = 9299b4c6227b8efcc64ec5e867f0eeae4d1c96ec (refs/remotes/git-svn)
-First, rewinding head to replay your work on top of it...
-Applying: create initially hidden files
-fatal: unrecognized input
-Repository lacks necessary blobs to fall back on 3-way merge.
-Cannot fall back to three-way merge.
-Patch failed at 0001 create initially hidden files
+Sure, I was simply not aware of its existence.
 
-When you have resolved this problem run "git rebase --continue".
-If you would prefer to skip this patch, instead run "git rebase
---skip".
-To check out the original branch and stop rebasing run "git rebase
---abort".
+However after actually trying this approach I have found out that when
+post_fetch_checkout runs at initial "clone", HEAD points at
+refs/heads/master, but refs/heads/master does not exist! So just
+checking HEAD is not enough, I need to verify that it points to
+something valid. How about this:
 
-rebase refs/remotes/git-svn: command returned error: 1
+From: Marcin Owsiany <marcin@owsiany.pl>
+Date: Sun, 24 Jun 2012 22:40:05 +0100
+Subject: [PATCH] git-svn: don't create master if another head exists
 
-not ok - 6 refetch succeeds not ignoring any files
+git-svn insists on creating the "master" head (unless it exists) on every
+"fetch". While it is useful that it gets created initially (users expect this
+git convention), some users find it annoying that it gets recreated, especially
+when they would like the git branch names to follow SVN repository branch
+names. More background in
+http://thread.gmane.org/gmane.comp.version-control.git/115030
+
+Make git-svn skip the "master" creation if HEAD points at a valid head. This
+means "master" does get created on initial "clone" but does not get recreated
+once a user deletes it.
+
+Signed-off-by: Marcin Owsiany <marcin@owsiany.pl>
+---
+ git-svn.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 0b074c4..2379a71 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1612,9 +1612,9 @@ sub post_fetch_checkout {
+ 		}
+ 	}
+ 
+-	my $valid_head = verify_ref('HEAD^0');
++	return if verify_ref('HEAD^0');
+ 	command_noisy(qw(update-ref refs/heads/master), $gs->refname);
+-	return if ($valid_head || !verify_ref('HEAD^0'));
++	return unless verify_ref('HEAD^0');
+ 
+ 	return if $ENV{GIT_DIR} !~ m#^(?:.*/)?\.git$#;
+ 	my $index = $ENV{GIT_INDEX_FILE} || "$ENV{GIT_DIR}/index";
+-- 
+1.7.7.3
+
+
+-- 
+Marcin Owsiany <marcin@owsiany.pl>              http://marcin.owsiany.pl/
+GnuPG: 2048R/02F946FC  35E9 1344 9F77 5F43 13DD  6423 DBF4 80C6 02F9 46FC
+
+"Every program in development at MIT expands until it can read mail."
+                                                              -- Unknown
