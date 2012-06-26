@@ -1,114 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-commit bug
-Date: Tue, 26 Jun 2012 11:08:10 -0700
-Message-ID: <7vy5naaqut.fsf@alter.siamese.dyndns.org>
-References: <20120619091657.GA28005@arachsys.com>
- <7vy5nj1uld.fsf@alter.siamese.dyndns.org>
- <20120619111709.GC10692@arachsys.com> <20120620093205.GB10579@arachsys.com>
- <7vy5nhvo0z.fsf@alter.siamese.dyndns.org>
- <20120620192938.GC31520@sigill.intra.peff.net>
- <20120620193922.GB3192@arachsys.com>
- <20120620194824.GA32228@sigill.intra.peff.net>
- <20120622205026.GI32205@arachsys.com> <20120626150436.GU9682@arachsys.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20i18n=3A=20mark=20outputs=20of=20mode=20changes=20for=20i18n?=
+Date: Tue, 26 Jun 2012 20:21:50 +0200
+Message-ID: <1340734910-7180-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 20:08:40 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jun 26 20:22:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjaBp-0004D2-I9
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 20:08:37 +0200
+	id 1SjaOr-0004uS-ER
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 20:22:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758886Ab2FZSIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 14:08:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33889 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758916Ab2FZSIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 14:08:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A9849EFE;
-	Tue, 26 Jun 2012 14:08:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=isuP53l+zxxNykvH7BSZz1HNM3I=; b=NhJ+FK
-	pQ/98YwpQs51BwCan54nhVmrWWFz5f7fwiNSZV/5NXqEuq60UkcCmPfr8Scug67C
-	gIY/gSCrj0MFTKBTamVLmK/vA8CJhqFj2wRzHs3wIDfrx4b7njW4aL0lZxl0mWEX
-	c+pKaIjBDU0UaWmKHjnVX7kYbyP+JEKcuu2OU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B8BGu1LvewNlCQFksL0qqhi1ND46s1ut
-	Y+kDcGDCOb/sp118DStpbqyJuCcGbpfB/ole9yJm/VuLHrEF1rI/8CM3Gc2ukvEp
-	bKjJnqaOw6yGoD/UHSeyxuLCqA2bpd3k0eSElNRCZ51rpbEoV0kwcR2dxbILRbpd
-	TKIYwPyieA0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F2859EFD;
-	Tue, 26 Jun 2012 14:08:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 245C79EFC; Tue, 26 Jun 2012
- 14:08:12 -0400 (EDT)
-In-Reply-To: <20120626150436.GU9682@arachsys.com> (Chris Webb's message of
- "Tue, 26 Jun 2012 16:04:37 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E51D91B4-BFB9-11E1-8857-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758809Ab2FZSWA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 14:22:00 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:57323 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758703Ab2FZSV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 14:21:58 -0400
+Received: by bkcji2 with SMTP id ji2so234978bkc.19
+        for <git@vger.kernel.org>; Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=gIG2mAvBQW8q5HYlPOTIpIarpq/wxdWlrSaIFD6r9AU=;
+        b=1F/GfO0FRwxZ5EU1eIRBqYN0DTjb81GydUuA6IBRX9vKnHtzn2H8amDPz/vgsu/Wx6
+         KuLynnB9gHwcbok94Tynebx0oaa7e9TtYE5fnBDXpZ4mVCwkGGgYXNB7Q1hg27RbpvI3
+         XmfkQ1xp198leEhIshuk7MdT64kbY5eR+6tGZ1Ox72CmoLvlJ0d2brioc2glhX6Q2q7+
+         HmAS7LtkMFTY9QExByz9stI4eAy4yAAmM3ZioK2vfQJmllAJDXJE0ngqsbuzApVkxpsO
+         Nv9wR36Nt90Jdi124y/Ad7HInJuU6JG/7G579lo2P8NOlQF6fuIDwAjDl9fg/MXWCRPI
+         SPSw==
+Received: by 10.205.33.136 with SMTP id so8mr5690522bkb.1.1340734916744;
+        Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-223-205-117.pools.arcor-ip.net. [94.223.205.117])
+        by mx.google.com with ESMTPS id ig1sm51839006bkc.4.2012.06.26.11.21.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Jun 2012 11:21:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200665>
 
-Chris Webb <chris@arachsys.com> writes:
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ combine-diff.c |  2 +-
+ diff.c         | 10 +++++-----
+ 2 Dateien ge=C3=A4ndert, 6 Zeilen hinzugef=C3=BCgt(+), 6 Zeilen entfer=
+nt(-)
 
-> Chris Webb <chris@arachsys.com> writes:
->
->> PS Whilst experimenting, I also noticed a (presumably unintentional)
->> behaviour:
->> 
->>   $ git init .
->>   Initialized empty Git repository in /tmp/foo/.git/
->>   $ git checkout --detach
->>   $ touch bar
->>   $ git add bar
->>   $ git commit -m test
->>   [(null) (root-commit) 17b5bf9] test
->>    0 files changed
->>    create mode 100644 bar
->>   $ ls .git/refs/heads/
->>   (null)
->>   $
->> 
->> Here we've created a branch with the strange name '(null)' instead of
->> actually detaching, or refusing to detach because we're on an unborn
->> branch.
->
-> This was introduced by abe199808c, which is intended to allow
->
->   git init . && git checkout --orphan newbranch
->
-> but presumably wasn't also meant to enable
->
->   git checkout --orphan foo
->   git checkout --detach
-
-Correct.
-
-On days like this, I really regret accepting that --orphan crap in
-the first place.
-
-Thanks for fixing things up.
-
-> This leads to a printf("%s", NULL) and thus
->
->   $ git symbolic-ref HEAD
->   refs/heads/(null)
->
-> I've followed up to this message with a patch including a test to catch this
-> in future.
->
-> Best wishes,
->
-> Chris.
+diff --git a/combine-diff.c b/combine-diff.c
+index 9786680..bf534e4 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -734,7 +734,7 @@ static void show_combined_header(struct combine_dif=
+f_path *elem,
+ 			    DIFF_STATUS_ADDED)
+ 				added =3D 0;
+ 		if (added)
+-			printf("%snew file mode %06o",
++			printf(_("%snew file mode %06o"),
+ 			       c_meta, elem->mode);
+ 		else {
+ 			if (deleted)
+diff --git a/diff.c b/diff.c
+index 1a594df..25fcb6f 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2264,21 +2264,21 @@ static void builtin_diff(const char *name_a,
+ 	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix, set, a_=
+one, b_two, reset);
+ 	if (lbl[0][0] =3D=3D '/') {
+ 		/* /dev/null */
+-		strbuf_addf(&header, "%s%snew file mode %06o%s\n", line_prefix, set,=
+ two->mode, reset);
++		strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("new fil=
+e mode"), two->mode, reset);
+ 		if (xfrm_msg)
+ 			strbuf_addstr(&header, xfrm_msg);
+ 		must_show_header =3D 1;
+ 	}
+ 	else if (lbl[1][0] =3D=3D '/') {
+-		strbuf_addf(&header, "%s%sdeleted file mode %06o%s\n", line_prefix, =
+set, one->mode, reset);
++		strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("deleted=
+ file mode"), one->mode, reset);
+ 		if (xfrm_msg)
+ 			strbuf_addstr(&header, xfrm_msg);
+ 		must_show_header =3D 1;
+ 	}
+ 	else {
+ 		if (one->mode !=3D two->mode) {
+-			strbuf_addf(&header, "%s%sold mode %06o%s\n", line_prefix, set, one=
+->mode, reset);
+-			strbuf_addf(&header, "%s%snew mode %06o%s\n", line_prefix, set, two=
+->mode, reset);
++			strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("old mo=
+de"), one->mode, reset);
++			strbuf_addf(&header, "%s%s%s %06o%s\n", line_prefix, set, _("new mo=
+de"), two->mode, reset);
+ 			must_show_header =3D 1;
+ 		}
+ 		if (xfrm_msg)
+@@ -4130,7 +4130,7 @@ static void show_mode_change(FILE *file, struct d=
+iff_filepair *p, int show_name,
+ 		const char *line_prefix)
+ {
+ 	if (p->one->mode && p->two->mode && p->one->mode !=3D p->two->mode) {
+-		fprintf(file, "%s mode change %06o =3D> %06o%c", line_prefix, p->one=
+->mode,
++		fprintf(file, _("%s mode change %06o =3D> %06o%c"), line_prefix, p->=
+one->mode,
+ 			p->two->mode, show_name ? ' ' : '\n');
+ 		if (show_name) {
+ 			write_name_quoted(p->two->path, file, '\n');
+--=20
+1.7.11.1
