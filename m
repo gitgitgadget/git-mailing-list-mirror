@@ -1,130 +1,82 @@
 From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
 Subject: Re: Master and origin/master diverged
-Date: Mon, 25 Jun 2012 19:49:18 -0700
-Message-ID: <CAE1pOi24EVq__XzxtBoAryzQ+F=sAy8-hY23M-P4YoQFXdpSSw@mail.gmail.com>
+Date: Mon, 25 Jun 2012 19:58:09 -0700
+Message-ID: <CAE1pOi1JU1QvYOJeV2qC3EN=b==HE1nn+DvXBGNro0mROctsvQ@mail.gmail.com>
 References: <CAE1pOi1Ot0Fyv=2_XYKyUcsKp-m+CkT-miF=jC=wt9Rbz_dXqQ@mail.gmail.com>
  <4FE4C0F7.2080309@gmail.com> <CAE1pOi2MN_c76UBeRzdRbU8s+0LzYVoVcJ13V0di=HQobj+aDg@mail.gmail.com>
- <4FE50411.8080800@gmail.com>
+ <7v1ul6nbju.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 04:51:16 2012
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 04:59:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjLr7-0007Gd-Ff
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 04:51:10 +0200
+	id 1SjLzx-0001Pq-K8
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 04:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756373Ab2FZCtk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 22:49:40 -0400
-Received: from mail-yw0-f51.google.com ([209.85.213.51]:36157 "EHLO
-	mail-yw0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755736Ab2FZCtj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 22:49:39 -0400
-Received: by yhnn12 with SMTP id n12so4047129yhn.10
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 19:49:38 -0700 (PDT)
+	id S1755891Ab2FZC6a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 22:58:30 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43234 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755420Ab2FZC63 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 22:58:29 -0400
+Received: by yenl2 with SMTP id l2so3428810yen.19
+        for <git@vger.kernel.org>; Mon, 25 Jun 2012 19:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=DT+z2W+CPj8ZXYpwRy8la46T4LHwXzcCX9Aq/czspZQ=;
-        b=xebK2fFiOxd7gztKNI6HdZCtULiVtz0jItKOnk5Cu6gdkAJCn5cObhLZXQlxSUsW6+
-         9exurh8GqLE3Mk17RSBnMjyuZ5I9YKS9QWH/sQzKyD4vGm2oUVK3gXPSf0qdthtWvZq6
-         vPpXNja/WrcEqkUEYSp6yaCmmZh8qG1joHHyHR22G3cMF2SAheEbTxHsn7i/YtJO3IW3
-         t+TzHfWDoWKyWHnRGLtNYW9btjNCaw95Q9Q/CWvud0oIZWiVPceEZ3CfTR1UNrAnzhN8
-         Rxy9RjGN0io2iTJpi5Yzj54gfUi7rpeKSSqwlXiH9gjwUp+dkD0vV5JYEHqyts0OnBJt
-         QkXQ==
-Received: by 10.236.185.198 with SMTP id u46mr16063598yhm.33.1340678978442;
- Mon, 25 Jun 2012 19:49:38 -0700 (PDT)
-Received: by 10.236.29.230 with HTTP; Mon, 25 Jun 2012 19:49:18 -0700 (PDT)
-In-Reply-To: <4FE50411.8080800@gmail.com>
+        bh=HA7zcWPNZ5FxHkG9juY6iipRh38WgF3ND3j1RHGvKVg=;
+        b=l/LL2ctvZBBm2F6gnq/N8nsFPZGDgs1qH9z5oVZWFGj0CkYI4FX9chTscUOU0d9e/g
+         3SeHVwv9uXV+IalMNveGUJaMsO9wdPSqb6KNfXOBxun20Wvt4And+EagqQF7lkxQ9H3X
+         kV0xac03Z+OVdzi0Yz6/A7hmMwLPzHQm91FYLwqHaBITC02Obk6sW7h5VTucZiBeOOvu
+         IlpEKYELaKOcLBa91At8XAtuIke59RAgtYDH50L7TkLN0z3QZISCty2yhrfTgcs/NUlw
+         GJRcVprw1ENeIHIWvlq1W19QgWJSu0vNOOolW5lOldG7TlCVvEtDAr1ElylIceWTq2HQ
+         bgPA==
+Received: by 10.236.175.226 with SMTP id z62mr11017484yhl.39.1340679509170;
+ Mon, 25 Jun 2012 19:58:29 -0700 (PDT)
+Received: by 10.236.29.230 with HTTP; Mon, 25 Jun 2012 19:58:09 -0700 (PDT)
+In-Reply-To: <7v1ul6nbju.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200622>
 
-On 22 June 2012 16:47, Neal Kreitzinger <nkreitzinger@gmail.com> wrote:
-> On 6/22/2012 3:18 PM, Hilco Wijbenga wrote:
->>
->>
->> On 22 June 2012 12:01, Neal Kreitzinger <nkreitzinger@gmail.com> wro=
-te:
->>>
->>> On 6/22/2012 12:53 PM, Hilco Wijbenga wrote:
->>>>
->>>>
->>>> One of my developers managed to push something that somehow "diver=
-ged"
->>>> origin/master from everyone else's local master.
->>>>
->>>> A --> B --> C --> D (everybody's local master)
->>>> |
->>>> \--> B' --> C' --> D' --> E (origin/master)
->>>>
->>>> (i.e., A is the commit where things diverged; everyone's local mas=
-ter
->>>> points to D but the new commit (E) that was pushed to origin/maste=
-r
->>>> uses different SHA1s for B, C, and D)...
->>>>
->>>>
->>>> Now running git pull creates a merge commit joining D and E.
->>>>
->>>> ...Does anyone have any idea as to what might have happened? Perha=
-ps if
->>>> I
->>>>
->>>> understand how this happened I might be able to prevent it from
->>>> happening again.
->>>>
+On 22 June 2012 16:59, Junio C Hamano <gitster@pobox.com> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>
 >>> Some ways you can prevent it from happening again:
+>>> (1) setting your canonical repo config to deny non-ff, and deny del=
+etes:
+>>> [receive]
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0denyDeletes =3D true
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0denyNonFastforwards =3D true
 >>
->>
->>> (2) have your devs do git pull --ff-only
->>
->>
->> Is this something that can be set in git config? I looked but didn't
->> see anything obvious.
+>> I would *really* like to do that but I need access to the server for
+>> that, right? Unfortunately, we use Unfuddle and that means no such
+>> access. So no server config changes and no Git hooks.
 >
->
-> OTTOMH, you could change the git fetch config for master and take awa=
-y the
-> leading '+' sign which would not allow non-fastforward fetches of mas=
-ter.
-> =C2=A0That in turn would prevent merging such a non-ff remote trackin=
-g branch of
-> master into your branch master.
->
->
-> Actually, I guess what I really want is
->>
->> something for git push, right?
->>
-> Some ways to do it:
-> (1) I think you could have rebase and commit hooks locally that preve=
-nt
-> someone from rewriting history on master. =C2=A0That in turn would pr=
-event
-> someone from pushing a rewritten history.
+> receive.denyNonFastforwards is a reasonable thing to ask for
+> projects with a shared repository workflow, so I suspect hosting
+> service providers may want to race adding support for it to win
+> customers. =C2=A0Have you asked them?
 
-Yes, I have been thinking about that.
+I agree and I was thinking of doing exactly that. So after your
+friendly nudge I sent them an email.
 
-How does one create "portable" hooks? I have to deal with GNU/Linux,
-OS X, and MS Windows. We all have Java installed so I first thought of
-using JGit but I am not clear on how well JGit supports using it in a
-hooks. Should I make Ruby a required part of the dev environment and
-use Ruby hooks?
+The first (very prompt) reply said they didn't support "custom hooks".
+When I explained that I was not asking for a custom hook but that I
+simply wanted a Git setting changed, I was informed (again, very
+promptly)  that that was quite impossible. :-(
 
-> (2) When merging topic branches to master use git merge --ff-only. =C2=
-=A0Then
-> when you push it to remote master you know it's a fastforward and not=
- a
-> history rewrite.
-
-Given how hard it is to teach devs to only push fast-forward merges, I
-am not sure how well this would work.
+In my opinion, it should be fairly simple for them to create a web UI
+to set Git config settings (I can understand they do not want to do it
+manually) but they do not seem very interested. A bit surprising and
+certainly very disappointing.
