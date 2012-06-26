@@ -1,89 +1,101 @@
-From: Leila <muhtasib@gmail.com>
-Subject: Re: [PATCH/RFC] revision: Show friendlier message.
-Date: Mon, 25 Jun 2012 23:46:16 -0400
-Message-ID: <CAA3EhHJfRY=UpuriqB-ARdui3BS6tCpn+Zoi_ccJ15181qGMaw@mail.gmail.com>
-References: <1340478681-58476-1-git-send-email-muhtasib@gmail.com>
- <7vobo8hsee.fsf@alter.siamese.dyndns.org> <CAA3EhHJbKj+nbVsZtijsH+h7sFcyeBwT9K=BTeqAuMzSH0RGmg@mail.gmail.com>
- <7vr4t3f9y6.fsf@alter.siamese.dyndns.org> <CAA3EhHLy+5Vfw0T=7VEBi+2ZxjS4x2dndox+M_E06v3FtoNQXg@mail.gmail.com>
- <7vsjdjdm7v.fsf@alter.siamese.dyndns.org>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: fast-import [mis?]-honors core.ignorecase
+Date: Mon, 25 Jun 2012 21:45:52 -0600
+Message-ID: <4FE93070.1050507@workspacewhiz.com>
+References: <CAG+J_DygPXtjD-0gv8XXpV0JErw_jpwRLOZ00H9bem5hN8g7ZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 05:47:53 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 06:01:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjMkq-000696-9y
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 05:47:52 +0200
+	id 1SjMxV-0008Ff-Vh
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 06:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634Ab2FZDqz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jun 2012 23:46:55 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:57738 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865Ab2FZDqh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2012 23:46:37 -0400
-Received: by vcbf11 with SMTP id f11so2391835vcb.19
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 20:46:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iq70jRsU5ugIOwC9G/tJGDl4iw6hVfNbl2q+FnqMl1I=;
-        b=KCPAFo8PkDEyNXWEjJPoQw0yAaU6KUwNh/F/JLq0kValJwMcf2Ef2ltUM49RieeCU+
-         dDlGjG20F6Vt+AnHIcmWGPNmTKtMGgKuUjhDPLDEBTtHOoqxGR4XfJe85RzhggRYXAzg
-         eU0tYL9pi4Xm7oz7UoczW5CpgOnPRjhxiHvWRdfCe1b90vrV9/sXrI5W8OgUNoYiLmkI
-         czrbZakHm4C0dJ26rrskuyFimrc6nk6g9QHvWA1boaHMK5YkMs02Wv8Wy963kSNgx0OJ
-         8Gonc0GcjxQXV+O9wyox3lJ+btuZsqAdFZIxEKVWmDfV9siMct20fpFUtW+vS10tspEC
-         g4ew==
-Received: by 10.52.97.230 with SMTP id ed6mr8003371vdb.65.1340682396407; Mon,
- 25 Jun 2012 20:46:36 -0700 (PDT)
-Received: by 10.52.37.233 with HTTP; Mon, 25 Jun 2012 20:46:16 -0700 (PDT)
-In-Reply-To: <7vsjdjdm7v.fsf@alter.siamese.dyndns.org>
+	id S1754798Ab2FZDwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jun 2012 23:52:41 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:33098 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754627Ab2FZDwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2012 23:52:41 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Jun 2012 23:52:40 EDT
+Received: (qmail 3263 invoked by uid 399); 25 Jun 2012 21:45:59 -0600
+Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@67.182.221.164)
+  by hsmail.qwknetllc.com with ESMTPAM; 25 Jun 2012 21:45:59 -0600
+X-Originating-IP: 67.182.221.164
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <CAG+J_DygPXtjD-0gv8XXpV0JErw_jpwRLOZ00H9bem5hN8g7ZA@mail.gmail.com>
+X-Antivirus: avast! (VPS 120625-1, 06/25/2012), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200625>
 
-On Mon, Jun 25, 2012 at 7:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> The "bad HEAD and no revs..." part, if we choose not to even error
->>> on this, can be removed.
->>
->> Yea, I think we should return successfully, and warning() does that.
->> But if we choose to display a message, I don't think it should be a
->> warning (esp for the empty repo case). It should look like the sample
->> printf below, but the v2 of the patch I submitted doesn't include the
->> message.
+----- Original Message -----
+From: Jay Soffian
+Date: 6/25/2012 2:48 PM
+> I was using a "fast-export | <filter program> | fast-import" as a much
+> faster filter-branch --env-filter (I needed to rewrite
+> author/committer email-addresses) and was surprised that after the
+> pipeline was done, the new ref's trees didn't match the old ref's
+> trees. i.e.:
 >
-> I said "*if* we choose not to" for a reason.  It can be argued that
-> it technically is a regression that "git log" does *not* error out
-> for an unborn history, as that is different from the way the command
-> has behaved forever.
+>    $ cmp <(git log old-ref --pretty='%T')  <(git log --pretty='%T' new-ref)
 >
-
-Yes, this is def a concern. Ok here are my thoughts on the four options:
-1) Display error message and error. (current behavior)
-I don't agree with this, thus the patch I'm creating.
-2) Display a friendlier message and error.
-I think this is a good option, and preserving the return code will be
-less likely to break things (this idea was present in my first patch).
-3) Display success message and succeed.
-This makes sense to me, but this would be changing the behavior drastically.
-4) Succeed silently
-I created my second patch to follow this model. I eventually chose
-this over 3, because I figured it was more in-tune with the rest of
-git's behavior with succeeding silently.
-
-So how do we break the tie between #2 and #4? I think #2 is playing it
-safer than #4, even though #4 is more ideal.
-
-> Again, "might want" was a key phrase.  I didn't look at each and
-> every one of them and thought if it made sense to change their
-> behaviour.
+> didn't return 0. Comparing one of the differing tree-pairs indicated
+> it was due to a case-difference in a file which had been renamed.
+> After some experimenting I finally tracked this down to having
+> core.ignorecase set to "true" on the repo in which I was running the
+> pipeline. By setting it to "false" the filtering pipeline completes
+> with new-ref (and all its ancestors) being tree-identical to old-ref.
 >
+> Is there any reason for fast-import to honor ignorecase?
+I provided this change in ac1c80f7645b6fa90534890e1f83005d40d98281.
 
-Yes, I understood that. I believe I left one out.
+In my mind, core.ignorecase=true means that the file system cannot 
+handle case-sensitive filenames.  Files held in the repository should 
+conform to a single case.
+
+When I was getting a 'fast export' of our Perforce repository, I found 
+file case was all over the map.  Perforce internally handles its files 
+for a case preserving case insensitive file system in a case insensitive 
+manner.  File case can change from changelist to changelist!  The 
+fast-exported file was a mess.  In the original fast-imported version, 
+'git status' thought that one case of file was modified when another 
+case of the same file was the same.  Git could not follow the history 
+over all of the filename case changes.
+
+The case folding patches were created to handle this.  Specifically, the 
+fast-import patch serves as a catch-all to handle repositories that do 
+not conform to a single case as they were created and in operation.  It 
+folds the incoming file case to match that of what is in the existing 
+repository.  The end result is a clean repository with one file case for 
+a given filename.  'git status' works.  File history can be followed.  
+'git add' knows which name to match against.
+
+(I am a firm believer that Git should handle *all* case _internally_ as 
+insensitive when core.ignorecase=true, and I have work-in-progress 
+patches that illustrate this behavior.  Others here (particularly on the 
+msysgit mailing list) are adamantly against those patches.  Nonetheless, 
+there would be no need to fold case if the Git internals handled 
+comparisons in a case insensitive fashion.)
+
+I do understand your point above, and I have no good answer.  Your file 
+case was changed during a rename.  The fast-import core.ignorecase=true 
+process did not preserve that case change despite it being right and 
+appropriate for your repository. core.ignorecase=false did preserve the 
+case.  I guess the solution here depends on what core.ignorecase=true 
+should mean.
+
+Nevertheless, I am certain Git fast-import needs to retain the case 
+folding behavior during fast-import, even if it means enabling it via a 
+command-line flag instead of core.ignorecase=true.
+
+-Josh
