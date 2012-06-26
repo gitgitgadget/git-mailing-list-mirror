@@ -1,78 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git submodule vs GIT_WORK_TREE
-Date: Tue, 26 Jun 2012 09:07:59 -0700
-Message-ID: <7vobo6cazk.fsf@alter.siamese.dyndns.org>
-References: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com>
+Subject: Re: [PATCH 3/9] git p4 test: simplify quoting involving
+ TRASH_DIRECTORY
+Date: Tue, 26 Jun 2012 09:26:53 -0700
+Message-ID: <7vk3yuca42.fsf@alter.siamese.dyndns.org>
+References: <1340673505-10551-1-git-send-email-pw@padd.com>
+ <1340673505-10551-4-git-send-email-pw@padd.com>
+ <4FE95586.8090803@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 18:08:23 2012
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jun 26 18:27:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjYJS-00020T-Ot
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 18:08:23 +0200
+	id 1SjYbh-0000uT-3s
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 18:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758418Ab2FZQIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jun 2012 12:08:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56038 "EHLO
+	id S1758436Ab2FZQ1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 12:27:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38420 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757594Ab2FZQIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2012 12:08:18 -0400
+	id S1757161Ab2FZQ1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 12:27:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E1E692D8;
-	Tue, 26 Jun 2012 12:08:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9D709B78;
+	Tue, 26 Jun 2012 12:27:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=94YQcsfKki02Mix6qwufv9SwwpE=; b=h5dXmh
-	iX4HcThDx+oCOfEUGAr0k1afp1uCuKL3vbN8t6zKroJ92ktg2iCToZ7/SSjl2LZh
-	1lEkRzfDuf2z+wTdg0Yb3ZZqt/gl4pDD+ie3hS6UNifrb93jnEcv2D5vsLMyiAx4
-	IMFoYYV+3Ac0vueOZzTQyLNpwfT9uhQXS+E4A=
+	:content-type; s=sasl; bh=0z/JLKT2/pEn8Kq6jzhJfBZtnXM=; b=ooVx/Q
+	TyrLXMnoeHO4P85Hf/fC8Y32kpzoUgUkPCosI5FtV7E2O7unqERRnZH8S8tFpPHW
+	UM5xo2zN1sUwb0I48WnvaXKL/vlNB9KFZWiWl5OAp73aPUXq6rlAzg5WITRyBpnz
+	JnnztL1Rj8CoOpxmWp3A45gycXbf7tdR/NX58=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p7m9HaB7cluXCw/3aOJ4FDhVZoyNWGMh
-	ICVop529lAy/4aWlcKmSHF8DHkiNtFyo2nppVo+JSLGlq/0MqdIL9MUsKH9lsToS
-	pdokYvgg0Kgm/S/aElBfZOhQ3D5lat1v0QUVXlBjW6jTnVLEhH824LltrRSPFKPb
-	zOsqgD16sNg=
+	:content-type; q=dns; s=sasl; b=ZAAjjDuejMqijV43kS00S2bBjhLGMOPh
+	O8vXyeTyZarSqT8Tm/KUONY5z4V3oV/L7JdKN0cS+eoa0VjDSPyom69jbSttB1hh
+	akswjvWpUYO0ZCfChzfjhCx8YYk9F8OcZ0NDOIpEBRhm0NBr2LtFGUPva/Cfrjpj
+	nCuCMkaHtVc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 940A992D7;
-	Tue, 26 Jun 2012 12:08:15 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A09659B77;
+	Tue, 26 Jun 2012 12:27:06 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AA9792D1; Tue, 26 Jun 2012
- 12:08:11 -0400 (EDT)
-In-Reply-To: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com> (Richard
- Hartmann's message of "Tue, 26 Jun 2012 14:28:55 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 26F929B57; Tue, 26 Jun 2012
+ 12:26:54 -0400 (EDT)
+In-Reply-To: <4FE95586.8090803@viscovery.net> (Johannes Sixt's message of
+ "Tue, 26 Jun 2012 08:24:06 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 20856AA8-BFA9-11E1-BFFA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BE59F35A-BFAB-11E1-9864-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200660>
 
-Richard Hartmann <richih.mailinglist@gmail.com> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> As you are most likely aware, `git submodule` allows you to access a
-> separate git repository in a sub-directory, e.g. $submodule, while
-> $GIT_WORK_TREE forces git to operate in a specific directory. Combine
-> the two and the result is less than ideal. git is forced to operate in
-> $GIT_WORK_TREE while it should operate on $GIT_WORK_TREE/$submodule,
-> instead.
+> Am 6/26/2012 3:18, schrieb Pete Wyckoff:
+>>  test_expect_success 'exit when p4 fails to produce marshaled output' '
+>> -	badp4dir="$TRASH_DIRECTORY/badp4dir" &&
+>> -	mkdir "$badp4dir" &&
+>> -	test_when_finished "rm \"$badp4dir/p4\" && rmdir \"$badp4dir\"" &&
+>> -	cat >"$badp4dir"/p4 <<-EOF &&
+>> +	mkdir badp4dir &&
+>> +	test_when_finished "rm badp4dir/p4 && rmdir badp4dir" &&
+>> +	cat >badp4dir/p4 <<-EOF &&
+>>  	#!$SHELL_PATH
+>>  	exit 1
+>>  	EOF
+>> -	chmod 755 "$badp4dir"/p4 &&
+>> -	PATH="$badp4dir:$PATH" git p4 clone --dest="$git" //depot >errs 2>&1 ; retval=$? &&
+>> +	chmod 755 badp4dir/p4 &&
+>> +	PATH="$TRASH_DIRECTORY/badp4dir:$PATH" git p4 clone --dest="$git" //depot >errs 2>&1 ; retval=$? &&
+>>  	test $retval -eq 1 &&
+>
+> The long line here is severly broken, because the semicolon breaks the &&
+> chain; retval would be assigned to even if one of the earlier commands
+> fails, and that you don't want to treat as success. The least that is
+> needed is to put the line in braces. But I suggest to rewrite the two
+> lines above as
+>
+> 	(
+> 		PATH="$TRASH_DIRECTORY/badp4dir:$PATH" &&
+> 		export PATH &&
+> 		test_expect_code 1 git p4 clone --dest="$git" //depot >errs 2>&1
+> 	) &&
+>
+>>  	test_must_fail grep -q Traceback errs
+>
+> We don't expect that grep fails due to segfault or something. Write this
+> line as
+>
+> 	! grep Traceback errs
+>
+> Also drop the -q; if the test detects a failure, you do want to see the
+> grep output in a verbose test run.
 
-The end user should not be asked to anything special.
-
-When the user exports GIT_WORK_TREE to tell git that the root of the
-working tree the user wants to work on resides there (which is
-needed when the user exports GIT_DIR to tell git that the user wants
-to work on that repository), that wish obviously applies only to
-that repository.  If git decides to visit the working tree of a
-different repository (e.g. a checkout of a submodule bound to the
-project GIT_WORK_TREE points at), even if it is done in response to
-the user action (e.g. like passing "--recurse-submodules" option),
-it should adjust GIT_WORK_TREE and GIT_DIR to be appropriate for
-operations in the submodule repository while doing so.  If the more
-recent "recursive" behaviour forgets to do so, it simply is a bug.
+All true.  Thanks for carefully reading.
