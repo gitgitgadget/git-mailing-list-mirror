@@ -1,112 +1,205 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: MERGE_RR droppings
-Date: Tue, 26 Jun 2012 15:00:59 -0400
-Message-ID: <CABURp0qr7dZfEJZ7oDfG4ftm+cvQO1A9OG4Cv0wid3Mz8j7-iA@mail.gmail.com>
-References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
- <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com> <7v395ic5kq.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH v2 0/1] v1.7.11 index-pack failures on Cygwin
+Date: Tue, 26 Jun 2012 19:04:38 +0100
+Message-ID: <4FE9F9B6.4080805@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, davvid@gmail.com,
-	martin.von.zweigbergk@gmail.com
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 21:01:35 2012
+X-From: git-owner@vger.kernel.org Tue Jun 26 21:03:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjb0w-00050z-MR
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:01:27 +0200
+	id 1Sjb2x-0007ZV-7y
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 21:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180Ab2FZTBV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 15:01:21 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:65339 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026Ab2FZTBU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 15:01:20 -0400
-Received: by obbuo13 with SMTP id uo13so271174obb.19
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 12:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UbW+zbj8YsSBrHYw7Y1/VYADZ5mIk1ZU8EPR40CenrM=;
-        b=os8PlABi9tSHLQO840S5HXdrKyJ65amoZCjldVKqWlrqPLoe8RWCuY8HzoOz3o66u7
-         XMw3OOZjtIvO9c2hkZrCQ4JALoOahVeyNdmp/qT1p4zD/jF8XrTJMrxV0R15s+VyT9pc
-         iOJa+s5LUVsYCZ5DnTTawkswY1EungYrWTlEQjtK0TUxSEfTLr7DL5BLePvkrFO9Hign
-         WBqLs4PKiYcuyWPuajUdlWPV6cLM+p9Qsey3QAc5h3xIS1OnqHBNQF5wzN+/A0jp/rLx
-         Sf6pOqM6Z7O0nfvfc1zbKnDYbsIM9TArkdFjuowl7lhlET9CYp5cepAyzd+0NSQhPEs2
-         TTwQ==
-Received: by 10.182.16.70 with SMTP id e6mr17749259obd.24.1340737279419; Tue,
- 26 Jun 2012 12:01:19 -0700 (PDT)
-Received: by 10.182.111.99 with HTTP; Tue, 26 Jun 2012 12:00:59 -0700 (PDT)
-In-Reply-To: <7v395ic5kq.fsf@alter.siamese.dyndns.org>
+	id S1753118Ab2FZTD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 15:03:27 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:34525 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750887Ab2FZTD0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 15:03:26 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1Sjb2q-0005Ra-aW; Tue, 26 Jun 2012 19:03:25 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200669>
 
-On Tue, Jun 26, 2012 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Phil Hord <phil.hord@gmail.com> writes:
->
->> git mergetool decides to use rerere-remaining based on the existence
->> of the .git/MERGE_RR file:
->>
->> =A0 =A0 if test -e "$GIT_DIR/MERGE_RR"
->> =A0 =A0 then
->> =A0 =A0 =A0 =A0 files=3D$(git rerere remaining)
->> =A0 =A0 else
->> =A0 =A0 =A0 =A0 files=3D$(git ls-files -u | sed -e 's/^[^ ]* =A0 =A0=
- =A0//' | sort -u)
->> =A0 =A0 fi
->>
->> But when I disabled rerere, I still had MERGE_RR files left over in =
-my
->> .git directory. =A0 This causes git-mergetool to do the wrong thing.
->>
->> I do not know if the correct fix for this is to check rerere.enabled=
- instead.
->
-> I do not think basing the decision to use "ls-files -u" output upon
-> the use of "rerere" is a good thing for this script to do in the
-> first place. =A0Doesn't it close the door to future enhancements and
-> third-party mechanisms that do better job than rerere to help the
-> users auto-resolve conflicted merges? =A0They certainly do not have t=
-o
-> use GIT_DIR/MERGE_RR nor GIT_DIR/rr-cache, and "rerere remaining"
-> would not know which paths they handled already.
->
-> After all, the user may have resolved the conflicts in his editor
-> but hasn't recorded the resolution to the index yet when he runs
-> mergetool, and the tool should handle such a path exactly like how
-> it currently handles the paths resolved by rerere in the working
-> tree. =A0But the above code will include such paths in the $files lis=
-t
-> and throw them at the mergetool backends when rerere is not in use.
->
-> This part of the code probably should be _inspecting_ the files and
-> the index to find out what still needs to be fed to the mergetools
-> itself. =A0Asking "rerere remaining" about things that it may not hav=
-e
-> done (either the user edited the paths in the editor, or some
-> third-party mechanism resolved the conflicts already) does not make
-> much sense, methinks.
+[This is exactly the same as last time, except I remembered to post
+it to the list this time! The patch is different, of course :-) ]
+
+Hi Junio,
+
+Having just installed v1.7.11 on cygwin, I discover that git is
+failing intermittently while fetching:
+
+    ramsay $ cd ../ffmpeg/
+    ramsay $ git fetch origin
+    remote: Counting objects: 569, done.
+    remote: Compressing objects: 100% (363/363), done.
+    remote: Total 363 (delta 294), reused 0 (delta 0)Receiving objects:   9% (33/363
+    ), 12.00 KiB | 5 KiB/s
+    Receiving objects: 100% (363/363), 69.27 KiB | 4 KiB/s, done.
+    error: inflate: data stream error (incorrect header check)
+    fatal: serious inflate inconsistency
+    fatal: index-pack failed
+    ramsay $ git fetch origin
+    remote: Counting objects: 569, done.
+    remote: Compressing objects: 100% (363/363), done.
+    Receiving objects:   9% (33/363), 12.00 KiB | 5 KiB/s   remote: Total 363 (delta
+    Receiving objects: 100% (363/363), 69.27 KiB | 5 KiB/s, done.
+    fatal: premature end of pack file, 1111 bytes missing
+    fatal: serious inflate inconsistency
+    fatal: index-pack failed
+    ramsay $ 
+
+I immediately suspected the new threaded index-pack. In particular, the
+thread-safely (or otherwise) of pread(); ie exactly the same problem
+reported by Johannes on MinGW, which lead to commit b038a61 ("index-pack:
+disable threading if NO_PREAD is defined", 06-05-2012).
+
+Note that I did not see any test failures on MinGW or Cygwin (still don't!)
+relating to index-pack. However, I had a look at the cygwin source and
+found that the cygwin pread() implementation for disk files is essentially
+the same as compat/pread.c (look in ../winsup/cygwin/fhandler_disk_file.cc).
+
+Also, I hacked up a small test (attached below) to confirm that pread() is
+not thread-safe:
+
+    ramsay $ gcc -I. -o test-pread test-pread.c
+    ramsay $ ./test-pread.exe
+     0: trials 524288, failed 524283
+     1: trials 500000, failed 191184
+     2: trials 500000, failed 195607
+     3: trials 500000, failed 192931
+    ramsay $
+
+I had a "fix pread() on MinGW" item low down on my todo list; I guess I need
+to address cygwin too! :D
+
+As a short term fix, I've created a patch to disable threading in index-pack
+on cygwin (ala commit b038a61).
+
+HTH
+
+ATB,
+Ramsay Jones
 
 
-I'll buy that.  But what should we be inspecting the files for?  What
-indicates the conflicts are resolved if not 'git add/rm'?
+-- >8 --
+#include "git-compat-util.h"
+#include "thread-utils.h"
 
-Meanwhile, I run into this trouble when I get a conflicted
-git-stash-pop.  The first thing I do is invoke git-mergetool.  This
-fails with "No files need merging" in the case of a GIT_DIR/MERGE_RR
-leave-behind from some previous activity.  This is quite itchy, and so
-I am looking for the correct thing to do.
+#define DATA_FILE "junk.data"
+#define MAX_DATA 256 * 1024
+#define NUM_THREADS 3
+#define TRIALS 500000
 
-Does the MERGE_RR file need to be deleted more often?
-Do we need some extensible way to indicate currently-unresolved files?
-Or something in-between these two?
+struct thread_data {
+	pthread_t t;
+	int fd;
+	int cnt;
+	int fails;
+	unsigned long n;
+};
 
-P
+static struct thread_data t[NUM_THREADS+1];
+
+int create_data_file(void)
+{
+	int i, fd = open(DATA_FILE, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+	if (fd < 0)
+		return -1;
+	for (i = 0; i < MAX_DATA; i++)
+		if (write(fd, &i, sizeof(int)) < 0) {
+			close(fd);
+			unlink(DATA_FILE);
+			return -1;
+		}
+	close(fd);
+	return 0;
+}
+
+void *read_thread(void *data)
+{
+	struct thread_data *d = (struct thread_data *)data;
+	int i, j, rd;
+	for (i = 0; i < TRIALS; i += MAX_DATA) {
+		for (j = 0; j < MAX_DATA; j++) {
+			ssize_t sz = read(d->fd, &rd, sizeof(int));
+			if (sz < 0 || rd != j)
+				d->fails++;
+			d->cnt++;
+		}
+		lseek(d->fd, 0, SEEK_SET);
+	}
+	return NULL;
+}
+
+void *pread_thread(void *data)
+{
+	struct thread_data *d = (struct thread_data *)data;
+	int i, j, rd;
+	for (i = 0; i < TRIALS; i++) {
+		ssize_t sz;
+		d->n = d->n * 1103515245 + 12345;
+		j = d->n % MAX_DATA;
+		sz = pread(d->fd, &rd, sizeof(int), j * sizeof(int));
+		if (sz < 0 || rd != j)
+			d->fails++;
+		d->cnt++;
+	}
+	return NULL;
+}
+
+int main(int argc, char *argv[])
+{
+	int fd, i;
+
+	if (create_data_file() < 0) {
+		printf("can't create data file\n");
+		return 1;
+	}
+
+	if ((fd = open(DATA_FILE, O_RDONLY)) < 0) {
+		printf("can't open data file\n");
+		unlink(DATA_FILE);
+		return 1;
+	}
+
+	for (i = 0; i < NUM_THREADS+1; i++) {
+		int ret;
+
+		t[i].fd = fd;
+		t[i].cnt = 0;
+		t[i].fails = 0;
+		t[i].n = i * 16381;
+		ret = pthread_create(&t[i].t, NULL,
+				(i == 0) ? read_thread : pread_thread,
+				&t[i]);
+		if (ret) {
+			printf("can't create thread %d (%s)\n", i, strerror(ret));
+			unlink(DATA_FILE);
+			return 1;
+		}
+	}
+
+	for (i = 0; i < NUM_THREADS+1; i++)
+		pthread_join(t[i].t, NULL);
+	close(fd);
+
+	for (i = 0; i < NUM_THREADS+1; i++)
+		printf("%2d: trials %d, failed %d\n", i, t[i].cnt, t[i].fails);
+
+	unlink(DATA_FILE);
+	return 0;
+}
