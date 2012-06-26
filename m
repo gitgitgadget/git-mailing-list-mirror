@@ -1,75 +1,111 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: Urgent: Issue with GIT ...
-Date: Tue, 26 Jun 2012 11:01:10 +0200
-Message-ID: <CAO54GHBqe9jj1sZtLcRZRhdJJEWwuTesFNgUBSZVnBnNtJvpCQ@mail.gmail.com>
-References: <1340624980925-7562097.post@n2.nabble.com> <slrnjugobd.8ie.andy@atom.gently.org.uk>
- <CAO54GHA=R1CyspFrC1n-JLVbm5eE+roXLBv6hFL5M1BHGAcVBA@mail.gmail.com> <slrnjuiqt9.jhd.andy@atom.gently.org.uk>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4: Jobs and skipSubmitEdit
+Date: Tue, 26 Jun 2012 07:21:15 -0400
+Message-ID: <20120626112115.GA3439@padd.com>
+References: <CAFLRbop2aETNp0-6AdvSTx7Jmh7epYZ6rQc6hhFHbxZrGdEo9g@mail.gmail.com>
+ <20120624202445.GA27664@padd.com>
+ <CAFLRbootAje0BvLOYiH2xOagfUsQ+a_d+9YeTuG1C0a1Pg__Rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andy Hawkins <andy@gently.org.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 26 11:01:39 2012
+Cc: git <git@vger.kernel.org>
+To: Michael Horowitz <mike@horowitz.name>
+X-From: git-owner@vger.kernel.org Tue Jun 26 13:21:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjReT-0003YJ-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 11:01:37 +0200
+	id 1SjTpn-0006to-OI
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 13:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131Ab2FZJBd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 05:01:33 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:56362 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754103Ab2FZJBc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 05:01:32 -0400
-Received: by weyu7 with SMTP id u7so3407985wey.19
-        for <git@vger.kernel.org>; Tue, 26 Jun 2012 02:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=V0ox9sTPbokhncldHZnzvJ7OKdN3mIh/ggt+phDd+qg=;
-        b=DpkTqAu0Owk2INJc3gNnswzqPBzokH9RCT9WA0arAn4UekxJmHJrNYXeQDlxnNdw2H
-         LoRapJRTcDG2cUW0G4DRlgjnJkO6l1Ad4t4hVnePmKSJ6VXeG+9aS8QNOzBbRXWOu987
-         876PURAz2gRT4KLhQkwoO0kFekprVagUHjYtDNBbWbXhBtmQc1e+LBDODEMLUI/8zlNm
-         sJ4Czeah9TExbRWHzIF2+KL3NzQLm1SqkjU4T1priS5KpSpTl0PclnCRHVYeyHPyVpfI
-         sdV5a3rfNcKCXXVtPGVh00bj4OB+0ylASGjqtG8b4LsZkEe5bukPdEuGsgxrVWywlQpB
-         ireA==
-Received: by 10.216.145.24 with SMTP id o24mr7162026wej.110.1340701291385;
- Tue, 26 Jun 2012 02:01:31 -0700 (PDT)
-Received: by 10.227.35.202 with HTTP; Tue, 26 Jun 2012 02:01:10 -0700 (PDT)
-In-Reply-To: <slrnjuiqt9.jhd.andy@atom.gently.org.uk>
-X-Google-Sender-Auth: xdO_GEvBQyQv1AKGAMUm432GuJE
+	id S1754204Ab2FZLVU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 07:21:20 -0400
+Received: from honk.padd.com ([74.3.171.149]:43923 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752711Ab2FZLVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 07:21:19 -0400
+Received: from arf.padd.com (unknown [50.55.159.91])
+	by honk.padd.com (Postfix) with ESMTPSA id 85E341E43;
+	Tue, 26 Jun 2012 04:21:18 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 90FE231383; Tue, 26 Jun 2012 07:21:15 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAFLRbootAje0BvLOYiH2xOagfUsQ+a_d+9YeTuG1C0a1Pg__Rg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200639>
 
-Yes, indeed. Read over your reply.
+mike@horowitz.name wrote on Tue, 26 Jun 2012 01:07 -0400:
+> Well, "Jobs:" is the only thing I use.  Everything else is filled in
+> automatically by git-p4.
+>=20
+> Yeah, so "Jobs:" appears once on a line by itself, and then multiple
+> lines tabbed in of whatever the Job ids are, in our case they are JIR=
+A
+> issue numbers.  So, it might look like:
+>=20
+> Jobs:
+>     PROJECTNAME-123
+>     PROJECTNAME-456
+>=20
+> I think that if someone is using git-p4 and they have "Jobs:" at the
+> beginning of a line by itself in a git commit message, then it is saf=
+e
+> to stop pre-pending tabs to the lines from there on.  It can also be
+> an option to turn this behavior on.
 
-On Tue, Jun 26, 2012 at 9:58 AM, Andy Hawkins <andy@gently.org.uk> wrot=
-e:
-> Hi,
->
-> In article <CAO54GHA=3DR1CyspFrC1n-JLVbm5eE+roXLBv6hFL5M1BHGAcVBA@mai=
-l.gmail.com>,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Kevin<ikke@ikke.info> wrote:
->> In this setup, you should only pull from both repositories, not push=
- to the
->> other repository. If you want to push things, you should use a bare =
-repository
->> that both repositories can access and push to.
->
-> Errr, isn't that what I said?
->
-> Andy
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+I agree that it is simpler to explain if Jobs: must come last.
+=46or the option, I'd prefer not to add another one, and instead
+hope that it's unlikely to find such a construct in a commit
+message that does not want this feature to happen.
+
+I coded it up already, but with a couple little differences.
+Once I get a couple more of the series on which it depends mailed
+out, I'll send it along for you to play with.
+
+		-- Pete
+
+> On Sun, Jun 24, 2012 at 4:24 PM, Pete Wyckoff <pw@padd.com> wrote:
+> > mike@horowitz.name wrote on Fri, 22 Jun 2012 12:15 -0400:
+> >> I've written a git prepare-commit-msg hook to do what the Perforce
+> >> JobsView would essentially do, so I can include the jobs directly =
+in
+> >> my git commit message, and then use git-p4.skipSubmitEdit=3Dtrue, =
+so I
+> >> can just push things into Perforce directly from git without ever
+> >> being prompted by Perforce.
+> >>
+> >> Problem is that this doesn't work, because git-p4 tabs in the enti=
+re
+> >> commit message to put it in the "Description:" section of the Perf=
+orce
+> >> changelist, and my "Jobs:" ends up tabbed in, and it it required b=
+y
+> >> Perforce to be at the beginning of the line. =A0The submit ends up
+> >> failing, because "Jobs:" is required. =A0I am forced to turn off
+> >> skipSubmitEdit and edit the message to remove the tab from the "Jo=
+bs:"
+> >> line each commit.
+> >>
+> >> Is there any option to make this work right, or does the git-p4 no=
+t
+> >> support this?
+> >
+> > This is a great idea, and something I've thought would be useful
+> > too. =A0There's no code to handle it currently, but it shouldn't be
+> > too hard.
+> >
+> > I'm imagining that special strings in the git commit are hoisted
+> > up out of the description when building the p4 change message,
+> > as you describe. =A0Are there any more than "Jobs:"? =A0Is it just
+> > a single instance that might appear?
+> >
+> > An easy way to do this is to change prepareLogMessage to alter
+> > or add a Jobs line. =A0Unless we decide this needs to be more
+> > general.
+> >
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0-- Pete
+>=20
