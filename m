@@ -1,106 +1,80 @@
-From: Michael Horowitz <mike@horowitz.name>
-Subject: Re: git-p4: Jobs and skipSubmitEdit
-Date: Tue, 26 Jun 2012 01:07:49 -0400
-Message-ID: <CAFLRbootAje0BvLOYiH2xOagfUsQ+a_d+9YeTuG1C0a1Pg__Rg@mail.gmail.com>
-References: <CAFLRbop2aETNp0-6AdvSTx7Jmh7epYZ6rQc6hhFHbxZrGdEo9g@mail.gmail.com>
-	<20120624202445.GA27664@padd.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: MERGE_RR droppings
+Date: Mon, 25 Jun 2012 22:30:32 -0700
+Message-ID: <7vtxxyd4hz.fsf@alter.siamese.dyndns.org>
+References: <CABURp0omkVoLrz29GeOjjoZOpN238Rm6Nu5aOKQyVxFVnPihsw@mail.gmail.com>
+ <CABURp0os2no40BW0P-biG_fXyi7MHRcLLYWmCbLTdBv1o1OXcg@mail.gmail.com>
+ <7v8vfk2pby.fsf@alter.siamese.dyndns.org>
+ <7vwr2vfc1c.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr7Hj4f-Gww4j89kppR8g1vzmhmydsFnG0ecjzL5WrRP4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 07:07:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 07:30:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjO0I-00025Y-FT
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 07:07:54 +0200
+	id 1SjOMJ-0001bb-SD
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jun 2012 07:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755175Ab2FZFHu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jun 2012 01:07:50 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:36836 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab2FZFHt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2012 01:07:49 -0400
-Received: by dady13 with SMTP id y13so6287175dad.19
-        for <git@vger.kernel.org>; Mon, 25 Jun 2012 22:07:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TABk9TZ6e3jV9j0FgOBQ2sLG0uxLTbyo9fdMU8KDmWg=;
-        b=U81GdALnNjr4jPOsfTidTWvp8cSvngZTmMNg2js16DAg/SuxmiZerM+7t0oZjb5tkR
-         BqKswHQFc3KRkziv3kpf3fqkpXMMSroqc1E1xomQFzOVQeNqkphCM8/wd+5w8VUeQr7a
-         tumwMBno1nv36bA31waswsnQwAWJUunJf6sxwY10EliA8v4XmmSyp5YWOOIz5Vnf8J2P
-         ASeNhkegYcAFGydKCcCPMmrsVVqKY25a0CwxJJnjAVB3HIk4ThRFiYPdi0qdMcVcmiM4
-         RpoP7vI2NFK4Wzm9V1uJXTSdffmbBETMja7nSoKgxJcrwdCqPJADKXyhNEwZywMJerDs
-         gRyA==
-Received: by 10.68.220.231 with SMTP id pz7mr47106839pbc.110.1340687269122;
- Mon, 25 Jun 2012 22:07:49 -0700 (PDT)
-Received: by 10.68.44.73 with HTTP; Mon, 25 Jun 2012 22:07:49 -0700 (PDT)
-In-Reply-To: <20120624202445.GA27664@padd.com>
-X-Google-Sender-Auth: xRGOZWj1EjXAI_TRRLH4ww5NgkE
+	id S1756333Ab2FZFag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jun 2012 01:30:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36952 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750809Ab2FZFaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2012 01:30:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4D955998;
+	Tue, 26 Jun 2012 01:30:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cg/j2DGzhUj8jJo8yBOQUyTk8Hs=; b=WFH1sY
+	XolHo1MFW/0qU3FRGveZnRfnNty5WNvSahttCS7cbwZhgODi7djyGnFwQMCoNVBV
+	jhrx99nTWqSiMdWuMt+uS19A+C9TjSO2FPbe0niCZ2tPm53QuwlZLfBkc9T5v1JV
+	ie6zUMBo1YXB0VYSNo5V1QESczfjREULO1UI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OvOhKTI2ESNaji/BROvFWblLf8HG67m/
+	z8cEZ43TzfKrY+c+7JnhidZ+D7CgTJXvQw9Eigqc/LPsuUOg+4EwtKD55A8RV3hy
+	bc/rruYt0BJhkgj9SNeR7oExj5Ym1wijtJWUrAt9lBWu/GwCoBqx+WqrA+okLzCF
+	Y848nWtIK08=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B0365997;
+	Tue, 26 Jun 2012 01:30:34 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2694B5995; Tue, 26 Jun 2012
+ 01:30:34 -0400 (EDT)
+In-Reply-To: <CAJDDKr7Hj4f-Gww4j89kppR8g1vzmhmydsFnG0ecjzL5WrRP4g@mail.gmail.com> (David
+ Aguilar's message of "Mon, 25 Jun 2012 21:31:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D71F624-BF50-11E1-B240-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200631>
 
-Well, "Jobs:" is the only thing I use.  Everything else is filled in
-automatically by git-p4.
+David Aguilar <davvid@gmail.com> writes:
 
-Yeah, so "Jobs:" appears once on a line by itself, and then multiple
-lines tabbed in of whatever the Job ids are, in our case they are JIRA
-issue numbers.  So, it might look like:
-
-Jobs:
-    PROJECTNAME-123
-    PROJECTNAME-456
-
-I think that if someone is using git-p4 and they have "Jobs:" at the
-beginning of a line by itself in a git commit message, then it is safe
-to stop pre-pending tabs to the lines from there on.  It can also be
-an option to turn this behavior on.
-
-Mike
-
-
-On Sun, Jun 24, 2012 at 4:24 PM, Pete Wyckoff <pw@padd.com> wrote:
-> mike@horowitz.name wrote on Fri, 22 Jun 2012 12:15 -0400:
->> I've written a git prepare-commit-msg hook to do what the Perforce
->> JobsView would essentially do, so I can include the jobs directly in
->> my git commit message, and then use git-p4.skipSubmitEdit=3Dtrue, so=
- I
->> can just push things into Perforce directly from git without ever
->> being prompted by Perforce.
->>
->> Problem is that this doesn't work, because git-p4 tabs in the entire
->> commit message to put it in the "Description:" section of the Perfor=
-ce
->> changelist, and my "Jobs:" ends up tabbed in, and it it required by
->> Perforce to be at the beginning of the line. =A0The submit ends up
->> failing, because "Jobs:" is required. =A0I am forced to turn off
->> skipSubmitEdit and edit the message to remove the tab from the "Jobs=
-:"
->> line each commit.
->>
->> Is there any option to make this work right, or does the git-p4 not
->> support this?
+>> Perhaps mergetool should consider a missing MERGE_RR and an empty
+>> one the same way?
 >
-> This is a great idea, and something I've thought would be useful
-> too. =A0There's no code to handle it currently, but it shouldn't be
-> too hard.
+> Would that test look (roughly) like this?
 >
-> I'm imagining that special strings in the git commit are hoisted
-> up out of the description when building the p4 change message,
-> as you describe. =A0Are there any more than "Jobs:"? =A0Is it just
-> a single instance that might appear?
+>     if test -f "$GIT_DIR/MERGE_RR" && test -n "$(cat "$GIT_DIR/MERGE_RR")"
+
+Hrm, would "test -s $that_file" be simpler?
+
+
+>     then
+> 	files=$(git rerere remaining)
+>     else
+> 	files=$(git ls-files -u | sed -e 's/^[^	]*	//' | sort -u)
+>     fi
+>     ...
 >
-> An easy way to do this is to change prepareLogMessage to alter
-> or add a Jobs line. =A0Unless we decide this needs to be more
-> general.
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0-- Pete
+> If so I'll throw together a patch.
