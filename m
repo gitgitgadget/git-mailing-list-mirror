@@ -1,102 +1,91 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v2 2/3] fast-import: allow "merge $null_sha1" command
-Date: Wed, 27 Jun 2012 23:40:24 +0600
-Message-ID: <1340818825-13754-3-git-send-email-divanorama@gmail.com>
-References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 27 19:40:09 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: problem with file named with dash character
+Date: Wed, 27 Jun 2012 11:28:21 -0700
+Message-ID: <7vk3ys8v96.fsf@alter.siamese.dyndns.org>
+References: <52ae7682-3e9a-4b52-bec1-08ba3aadffc0@office.digitalus.nl>
+ <80a7ce17-3ee7-4f09-b984-b6685e163b87@office.digitalus.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: Daniel Lyubomirov <daniel@digitalus.bg>
+X-From: git-owner@vger.kernel.org Wed Jun 27 20:28:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjwDe-0000ud-EA
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 19:39:58 +0200
+	id 1Sjwyc-000828-RX
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 20:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757772Ab2F0Rjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 13:39:53 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:47318 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757437Ab2F0Rju (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 13:39:50 -0400
-Received: by mail-lb0-f174.google.com with SMTP id gm6so1909447lbb.19
-        for <git@vger.kernel.org>; Wed, 27 Jun 2012 10:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=x2IYb39QJ10pKnGCBz0Yj18JIaWiIJLu5I3SbGSdvT8=;
-        b=hZ6SgV7AbohMzX2FmUfZaac7TglfKkX/XB8iL/zjuvdunA+JyKsAdJBxXVGNZECsHS
-         r5VEqb2FhdfHnexzcA7IDNKWqpZZg1yb4Q2plY9SiucyI7YkzBVNBkRbDR8hfPPVy4bG
-         G2+0bVe+Tu0L9TPfFuoaqihuO4REqMK4e2eJAWzXsTC2iH45xqNxfyMdKhletuqsYh/s
-         rK9x2Se9KLAxDrVYngNRkiG/aj1De4OBZ5g9VoVx8/sv/V39KW234h7Jsu0R/GviZavm
-         TgqaJIPjq/p/b+lz/k3iK0LH/HAkyAkaeAtFaIzGEkjguxA9mJ7lUSycxIX005JcJXG2
-         AqJw==
-Received: by 10.152.136.18 with SMTP id pw18mr21481350lab.17.1340818790021;
-        Wed, 27 Jun 2012 10:39:50 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru. [79.172.62.237])
-        by mx.google.com with ESMTPS id pp2sm84780930lab.3.2012.06.27.10.39.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Jun 2012 10:39:49 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
+	id S1756113Ab2F0S2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 14:28:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34317 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753386Ab2F0S2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 14:28:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A692972CF;
+	Wed, 27 Jun 2012 14:28:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5HTzVK7UyFGsFG1SvxN5gplIZEI=; b=Af6ZlM
+	35DTM9XttvSligT4Fe0MZ2vSGgseldxJw08vDTYe5wj1aycI+QReREFJ8mh67H2R
+	GBVCy/yzlbf3SRd8xf4smq3Xi0CU6K3ic7jgZokulvgYCHHXMvRxR8kZTcPfD6r1
+	EAiovdcHUfc4RTv+b0yQaWpw1NaQIh2zrI5Iw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OF1cVAdkhrW52wjgbMfXjQUoNzeugjO7
+	6k8cL1uDYNKAlp+D6XJG2UpuN6TctpfNcPp2qXBi6jx6Agh02VfS0P+kHRiqYOhn
+	Uh0EPeFW3zi9k8LlW7IYi4A8vVsXE0sVPOOMIO410TpH92Y+uaueXtI7ZDs7Kxiq
+	G0Kc5nDgvSk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D98C72CE;
+	Wed, 27 Jun 2012 14:28:23 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2247472CD; Wed, 27 Jun 2012
+ 14:28:23 -0400 (EDT)
+In-Reply-To: <80a7ce17-3ee7-4f09-b984-b6685e163b87@office.digitalus.nl>
+ (Daniel Lyubomirov's message of "Wed, 27 Jun 2012 09:32:21 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0BD68D4-C085-11E1-BF48-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200734>
 
-"from $null_sha1" and "merge $empty_branch" are already allowed so
-allow "merge $null_sha1" command too.
+Daniel Lyubomirov -|- Digitalus Bulgaria <daniel@digitalus.bg>
+writes:
 
-However such 'merge' has no effect on the import. It's made allowed
-just to unify null_sha1 commits handling a little bit.
+> Аccidentally my colleague created a file in the root dir of the git repo called - (just dash).
+> As result for every commit having this file, diff , merge, cherry-pick maybe others just hang.
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
- fast-import.c          |   14 ++++++++------
- t/t9300-fast-import.sh |    1 +
- 2 files changed, 9 insertions(+), 6 deletions(-)
+Thanks for a report.  I think the "diff" callchain should be
+refactored so that the caller can mark the special "stdin" token in
+a saner way, but until it happens, the following one-liner should
+do.
 
-diff --git a/fast-import.c b/fast-import.c
-index 419e435..f03da1e 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2631,12 +2631,14 @@ static struct hash_list *parse_merge(unsigned int *count)
- 				die("Mark :%" PRIuMAX " not a commit", idnum);
- 			hashcpy(n->sha1, oe->idx.sha1);
- 		} else if (!get_sha1(from, n->sha1)) {
--			unsigned long size;
--			char *buf = read_object_with_reference(n->sha1,
--				commit_type, &size, n->sha1);
--			if (!buf || size < 46)
--				die("Not a valid commit: %s", from);
--			free(buf);
-+			if (!is_null_sha1(n->sha1)) {
-+				unsigned long size;
-+				char *buf = read_object_with_reference(n->sha1,
-+					commit_type, &size, n->sha1);
-+				if (!buf || size < 46)
-+					die("Not a valid commit: %s", from);
-+				free(buf);
-+			}
- 		} else
- 			die("Invalid ref name or SHA1 expression: %s", from);
+
+ diff.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/diff.c b/diff.c
+index 1a594df..caa2309 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2589,6 +2589,14 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
+ 		return 0;
  
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 5716420..6f4c988 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -864,6 +864,7 @@ Merge J3, J4 into fresh J5.
- COMMIT
- merge refs/heads/J3
- merge refs/heads/J4
-+merge 0000000000000000000000000000000000000000
- 
- INPUT_END
- test_expect_success \
--- 
-1.7.3.4
++	/*
++	 * And asking to read "-" from the working tree triggers stdin
++	 * input (which needs to be fixed separately by refactoring the
++	 * callchain), forbid "reuse" for now.
++	 */
++	if (!strcmp(name, "-"))
++		return 0;
++
+ 	len = strlen(name);
+ 	pos = cache_name_pos(name, len);
+ 	if (pos < 0)
