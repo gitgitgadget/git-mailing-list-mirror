@@ -1,91 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: problem with file named with dash character
-Date: Wed, 27 Jun 2012 11:28:21 -0700
-Message-ID: <7vk3ys8v96.fsf@alter.siamese.dyndns.org>
-References: <52ae7682-3e9a-4b52-bec1-08ba3aadffc0@office.digitalus.nl>
- <80a7ce17-3ee7-4f09-b984-b6685e163b87@office.digitalus.nl>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH 2/2] git-submodule: support 'rm' command.
+Date: Wed, 27 Jun 2012 14:48:49 -0400
+Message-ID: <CABURp0p-PL3E2wfPptL7KcwQaiK+p3oAa_aQ7R=Jge6oVvJ8iA@mail.gmail.com>
+References: <1340621820-19448-1-git-send-email-mgorny@gentoo.org>
+ <1340621820-19448-2-git-send-email-mgorny@gentoo.org> <4FE898BC.2020307@web.de>
+ <CABURp0od-nNFVhLQU9BsiJ=wXkdneJfhxun_PHOfV=sgzOFShg@mail.gmail.com>
+ <4FE8D380.20803@web.de> <CABURp0qFXGs6wqFbz28OKywVsFu23JKfhS8uLsen-nqhBvDAiw@mail.gmail.com>
+ <4FEA1494.404@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: Daniel Lyubomirov <daniel@digitalus.bg>
-X-From: git-owner@vger.kernel.org Wed Jun 27 20:28:33 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 27 20:49:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjwyc-000828-RX
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 20:28:31 +0200
+	id 1SjxIq-0000N6-Rz
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 20:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756113Ab2F0S2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 14:28:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34317 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753386Ab2F0S2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 14:28:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A692972CF;
-	Wed, 27 Jun 2012 14:28:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5HTzVK7UyFGsFG1SvxN5gplIZEI=; b=Af6ZlM
-	35DTM9XttvSligT4Fe0MZ2vSGgseldxJw08vDTYe5wj1aycI+QReREFJ8mh67H2R
-	GBVCy/yzlbf3SRd8xf4smq3Xi0CU6K3ic7jgZokulvgYCHHXMvRxR8kZTcPfD6r1
-	EAiovdcHUfc4RTv+b0yQaWpw1NaQIh2zrI5Iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OF1cVAdkhrW52wjgbMfXjQUoNzeugjO7
-	6k8cL1uDYNKAlp+D6XJG2UpuN6TctpfNcPp2qXBi6jx6Agh02VfS0P+kHRiqYOhn
-	Uh0EPeFW3zi9k8LlW7IYi4A8vVsXE0sVPOOMIO410TpH92Y+uaueXtI7ZDs7Kxiq
-	G0Kc5nDgvSk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D98C72CE;
-	Wed, 27 Jun 2012 14:28:23 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2247472CD; Wed, 27 Jun 2012
- 14:28:23 -0400 (EDT)
-In-Reply-To: <80a7ce17-3ee7-4f09-b984-b6685e163b87@office.digitalus.nl>
- (Daniel Lyubomirov's message of "Wed, 27 Jun 2012 09:32:21 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E0BD68D4-C085-11E1-BF48-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754115Ab2F0StL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jun 2012 14:49:11 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:56053 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751969Ab2F0StK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2012 14:49:10 -0400
+Received: by gglu4 with SMTP id u4so1206436ggl.19
+        for <git@vger.kernel.org>; Wed, 27 Jun 2012 11:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=S/o5YISAPPmZ8SW31Y845BhHSjSUED72aauWIqr9HFM=;
+        b=MO178XhdU7pT+OfY8jdHeNXBMqTYYdjleyX/VNAJzbmFif3DdZZoHRyrzZaWWAVIDd
+         fVfMz/nhx13WRhp00smj11MYCK5qPc8Bl4PlJ7u3Fk6RsbQ17SndTBylc2hotzGHTW8d
+         RB++obKGbgzb4KUxAAnHRwVvZUvTg2v5FOenU4zvQZfnHQFLKfL30yILXaoYwIau5ZCA
+         B7Bf9EQiLVXwh+jOAbjwZfcMjXPs/WvrYTS8bcp7wexoOUIgo+UQ1W+rsc8NXjAA82eF
+         tLz7f13HNdHFsEKYk2j+O3FJvDnxOSPDUOouTHvjjw/8kVJcFPGbYywZO9adkJ5PUuo8
+         Myrw==
+Received: by 10.236.153.8 with SMTP id e8mr24712023yhk.80.1340822949621; Wed,
+ 27 Jun 2012 11:49:09 -0700 (PDT)
+Received: by 10.146.150.18 with HTTP; Wed, 27 Jun 2012 11:48:49 -0700 (PDT)
+In-Reply-To: <4FEA1494.404@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200735>
 
-Daniel Lyubomirov -|- Digitalus Bulgaria <daniel@digitalus.bg>
-writes:
+On Tue, Jun 26, 2012 at 3:59 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
+te:
+> Am 26.06.2012 21:12, schrieb Phil Hord:
+>> On Mon, Jun 25, 2012 at 5:09 PM, Jens Lehmann <Jens.Lehmann@web.de> =
+wrote:
+>>> Am 25.06.2012 22:53, schrieb Phil Hord:
+>>>> On Mon, Jun 25, 2012 at 12:58 PM, Jens Lehmann <Jens.Lehmann@web.d=
+e> wrote:
+>>>>> Am 25.06.2012 12:57, schrieb Micha=C5=82 G=C3=B3rny:
+>>>>>> Add an 'rm' command to git-submodule which provides means to
+>>>>>> (semi-)easily remove git submodules.
+>>>>>>
+>>>>>> Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
+>>>>>> ---
+>>>>>> Right now, it requires the submodule checkout to be removed manu=
+ally
+>>>>>> first (so it does not remove unstaged commits), and just removes
+>>>>>> the index entry and module information from config.
+>>>>>>
+>>>>>> I based it on 'cmd_add' code trying to preserve the original cod=
+ing
+>>>>>> standards.
+>>>>>
+>>>>> I really like the goal of this patch but would prefer that "git r=
+m"
+>>>>> learns how to remove submodules instead of adding more code to th=
+e
+>>>>> git-submodule.sh script.
+>>>>
+>>>> I would like to see both supported, eventually. That is, git-rm an=
+d
+>>>> git-submodule-rm should both work. =C2=A0It would make sense to me=
+ when I
+>>>> am looking for the counterpart to 'git submodule add' to find it u=
+nder
+>>>> 'git submodule rm', and also under 'git submodule --help'.
+>>>
+>>> Hmm, as long as "git submodule rm" would just use "git rm" under th=
+e
+>>> hood and not its own scripting that would be ok.
+>>
+>> Maybe it would be better if 'git-rm' would use 'git submodule rm'
+>> under the covers. =C2=A0This would keep the .gitmodules (etc.)
+>> manipulations out of the hair of the git-rm machinery.
+>
+> I disagree, me thinks submodules should become first class citizens.
 
-> Аccidentally my colleague created a file in the root dir of the git repo called - (just dash).
-> As result for every commit having this file, diff , merge, cherry-pick maybe others just hang.
+Sounds ok to me.  But maybe keep it in a separate module just for
+manipulating submodules; you know, to reduce our spaghetti score.
 
-Thanks for a report.  I think the "diff" callchain should be
-refactored so that the caller can mark the special "stdin" token in
-a saner way, but until it happens, the following one-liner should
-do.
+>> Also, I hope 'git submodule rm foo' would fail if 'foo' were not a s=
+ubmodule.
+>
+> Yes, it should. But that'd be easy to test there.
+>
+>>>> In the special case of a submodule which does not use a gitfile, I=
+ am
+>>>> not even sure if any of the submodule files should be removed. If =
+they
+>>>> are, what state does that leave the submodule repository in? =C2=A0=
+A
+>>>> checked-out workdir whose files are all removed? =C2=A0'git-status=
+' would
+>>>> be very noisy in this case. =C2=A0I'd rather expect this to behave=
+ the same
+>>>> as if I checked out a previous commit which did not have the submo=
+dule
+>>>> added yet. =C2=A0Today, this leaves the submodule in-place and it =
+shows up
+>>>> as an untracked file. =C2=A0I don't know a better way to handle th=
+at,
+>>>> though I expect it would be ok remove all the files even in this c=
+ase
+>>>> (if the workdir is not dirty and if the head commit is current in =
+the
+>>>> superproject). =C2=A0But it seems extreme to do all of that and th=
+en leave
+>>>> the .git directory lying about in the former submodule directory.
+>>>
+>>> Good point. Another option would be to move the git directory into
+>>> .git/modules of the superproject before removing the files, then ne=
+xt
+>>> time it's updated it'll use gitfile. But maybe that's a problem whi=
+ch
+>>> will go away anyways as all submodules cloned with newer git use
+>>> gitfiles anyway.
+>>
+>> I like this idea, but it seems a little presumptuous. =C2=A0The new
+>> behavior might cause a few panicked users to spend the day rebuildin=
+g
+>> their "lost" repository.
+>
+> Me thinks we should teach "git rm" only to remove the submodule when
+> the --recurse-submodules option is used with it (which is what "git
+> submodule rm" would do). Then later the to be added "autoupdate"
+> submodule config =C2=A0setting (which I intend to use for automatic
+> submodule updates during checkout, merge, etc. too) could enable this=
+=2E
+> No surprises for users who didn't ask for it.
 
+I like that, though I despise the --recurse-submodules option because
+A) it is too long, and B) it is sometimes spelled "--recurse" (for
+good reasons, I'm sure, but it's irritating nonetheless).
 
- diff.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/diff.c b/diff.c
-index 1a594df..caa2309 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2589,6 +2589,14 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
- 		return 0;
- 
-+	/*
-+	 * And asking to read "-" from the working tree triggers stdin
-+	 * input (which needs to be fixed separately by refactoring the
-+	 * callchain), forbid "reuse" for now.
-+	 */
-+	if (!strcmp(name, "-"))
-+		return 0;
-+
- 	len = strlen(name);
- 	pos = cache_name_pos(name, len);
- 	if (pos < 0)
+>> =C2=A0Maybe we can make this an explicit action.
+>> "git submodule convert-to-gitfile" =C2=A0:-)
+>
+> I like it!
