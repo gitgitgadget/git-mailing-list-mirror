@@ -1,84 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] Allow help.htmlpath to be an http: URL
-Date: Wed, 27 Jun 2012 18:52:49 -0400
-Message-ID: <20120627225248.GB27566@sigill.intra.peff.net>
-References: <8d3c71d21710c66e4d5560cec958552b69a22338.1340830514.git.chris@arachsys.com>
- <233b27a14d16a2a1cb38b9f3e07a3a79b09a3256.1340830514.git.chris@arachsys.com>
- <20120627210502.GB2292@sigill.intra.peff.net>
- <7vbok4785a.fsf@alter.siamese.dyndns.org>
- <20120627221106.GE2292@sigill.intra.peff.net>
- <20120627221938.GA1742@arachsys.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 2/3] fast-import: allow "merge $null_sha1" command
+Date: Wed, 27 Jun 2012 18:39:31 -0500
+Message-ID: <20120627233931.GA3014@burratino>
+References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
+ <1340818825-13754-3-git-send-email-divanorama@gmail.com>
+ <7v395g75gg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 00:53:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 28 01:39:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sk179-0005FB-6m
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 00:53:35 +0200
+	id 1Sk1pq-0006XA-V6
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 01:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757918Ab2F0WxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 18:53:16 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:47359
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757751Ab2F0Www (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 18:52:52 -0400
-Received: (qmail 5582 invoked by uid 107); 27 Jun 2012 22:52:55 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Jun 2012 18:52:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jun 2012 18:52:49 -0400
+	id S1754816Ab2F0Xjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 19:39:41 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47392 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753768Ab2F0Xjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 19:39:40 -0400
+Received: by yenl2 with SMTP id l2so1414301yen.19
+        for <git@vger.kernel.org>; Wed, 27 Jun 2012 16:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8nN5Px/oQVgPV88rput7bsu+MMUuT7kZWodHdudfjKk=;
+        b=DuRLwO2gVhNP5hmI3jFVW3GVsUTONo17qyrWq/VV1Np2/8ixKjuu3nAZAKhuXPrBUM
+         ju512nEWJnlyVt2+UXi8Uk+h3BOG8eOUJm5zaadJuzzF373VPzYw/9etcblXMgE0A2wx
+         I69HRPaS4r2C1e71+IUlakbyJtKOzm2sWAQTb6LPiIqvGSDg3hDXHGrEM3MD/QhXIjIR
+         LbX5wr/xVQWnQ5MK76lpSmz/+osU/Cmn4FG5xkN87YGK4Bq49grcNhbQr0zDdmVwCDqA
+         q7Id92MsWBZ5LKdzouAafR/ArCxFGbyxvd/hfVTGaAHemarCx8XvwP83d5bSHcQmw+VS
+         eNRA==
+Received: by 10.236.200.199 with SMTP id z47mr25826519yhn.82.1340840379912;
+        Wed, 27 Jun 2012 16:39:39 -0700 (PDT)
+Received: from burratino (adsl-99-41-41-208.dsl.chcgil.sbcglobal.net. [99.41.41.208])
+        by mx.google.com with ESMTPS id v61sm150530170yhi.17.2012.06.27.16.39.38
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Jun 2012 16:39:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20120627221938.GA1742@arachsys.com>
+In-Reply-To: <7v395g75gg.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200771>
 
-On Wed, Jun 27, 2012 at 11:19:39PM +0100, Chris Webb wrote:
+Junio C Hamano wrote:
+> Dmitry Ivankov <divanorama@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I don't know that configured vs compiled-in is the right distinction
-> > there, though. If I'm building a minimal git for a stripped-down machine
-> > and I don't want to include the HTML pages locally, I might want to set
-> > the html path to a URL at build-time. That saves each user from having
-> > to configure it.
-> 
-> How about only testing for a git documentation directory if both
-> help.htmlpath isn't set (so we're using the compiled-in version) and the
-> compiled-in version doesn't contain ://?
+>> "from $null_sha1" and "merge $empty_branch" are already allowed so
+>> allow "merge $null_sha1" command too.
+>
+> Would accepting such a "merge oops-do-not-do-anything" allow
+> exporters' job to be simpler?
 
-That just seems needlessly complex. Why not just check for "://" and be
-done?
+Good question.
 
-Let's take a step back for a moment. Why is that check even there? You
-can always just hand the path (or URL, or whatever) to the browser
-command and hope it can make sense of it. If it can't, it will give you
-an error.
+I was uncomfortable with the patch and couldn't pin down why and I
+think you've hit it.
 
-I think the check is purely about being slightly nicer when there are no
-HTML docs at all (e.g., because you didn't bother building them, or your
-binary distribution didn't include them). If your browser is graphical,
-we'll spawn it with a bogus URL, and the error message will be in some
-window elsewhere on your desktop. Git will happily exit without a
-further message. By adding in that check, we can detect that situation
-and produce an error message immediately.
+I can imagine an importer that does
 
-So one solution would be to simply remove the check entirely. It was a
-slight nicety in some situations, but expanding the definition of the
-HTML path to include full URLs means we can no longer accurately
-determine what exists and what does not. So we can just stop trying and
-let the browser handle it completely.
+	cat <<EOF
+	commit refs/heads/master
+	from $parent
+	merge $second_parent
+[etc]
+	EOF
 
-Another option would be to introduce a new "net" type of help format
-which accepts a URL instead of a path. That would leave the existing
-code-path untouched. But it does seem needlessly complex, as it would do
-more or less the same thing as the "html" format.
+and uses parent=0000000000000000000000000000000000000000 in the
+degenerate case, but it is not hard to use
 
--Peff
+	cat <<EOF
+	commit refs/heads/master
+	$optional_from_line$optional_second_parent
+[etc]
+	EOF
+
+so this is not a very strong justification.  Mostly it felt like a
+step in the right direction because once you can do it for "from",
+someone might try it with "merge" and it's simplest to explain the
+syntax if we're consistent.
+
+On the other side to be weighed against that is the danger that
+someone might actually start using "merge" this way.  They would be
+making their frontend break compatibility with old versions of git
+fast-import for no good reason.
+
+So on second thought, it does not seem like a good direction at all.
+[Though the cleanup I mentioned might be nice in any case. ;-)]
+
+I wonder if anyone using "from" with a branch name that resolves in
+the internal branch table to $null_sha1 was actually intending that.
+Would any importers break if we started to forbid it?  Would it make
+sense to add that check in "next" for a release or two and see if
+anyone complains?
+
+Looking at the patch for 00e2b884 (Remove branch creation command from
+fast-import, 2006-08-24), it looks like support for "from $null_sha1"
+was intentional.  Maybe mailing list discussions from around then have
+insight.
+
+Thanks for some food for thought,
+Jonathan
