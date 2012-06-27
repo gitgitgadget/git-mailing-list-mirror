@@ -1,89 +1,116 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH/RFC v2 0/3] fast-import: disallow empty branches as parents
-Date: Wed, 27 Jun 2012 23:40:22 +0600
-Message-ID: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
+Subject: [PATCH v2 1/3] fast-import: do not write null_sha1 as a merge parent
+Date: Wed, 27 Jun 2012 23:40:23 +0600
+Message-ID: <1340818825-13754-2-git-send-email-divanorama@gmail.com>
+References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Shawn Pearce <spearce@spearce.org>,
 	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 27 19:39:54 2012
+X-From: git-owner@vger.kernel.org Wed Jun 27 19:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjwDW-0000nZ-Lf
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 19:39:51 +0200
+	id 1SjwDd-0000ud-A6
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 19:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757154Ab2F0Rjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 13:39:46 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:47318 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753403Ab2F0Rjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 13:39:45 -0400
-Received: by lbbgm6 with SMTP id gm6so1909447lbb.19
-        for <git@vger.kernel.org>; Wed, 27 Jun 2012 10:39:44 -0700 (PDT)
+	id S1757619Ab2F0Rjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 13:39:51 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:62882 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757339Ab2F0Rjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 13:39:49 -0400
+Received: by bkcji2 with SMTP id ji2so1242963bkc.19
+        for <git@vger.kernel.org>; Wed, 27 Jun 2012 10:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=SjvBlksg+AhS3NowroRGIiPKYAvbsC3YgKn2hvnoqEQ=;
-        b=l1eCe1o27WLu6FPQO3aCElGVAwfvXbdCgcst9WyTV9CUvYyMuyzDsMRQyVpf/cluUI
-         CFHlDxx0gX8rC8hQFnpYAfPA9v28Mu3Zgd5TFFgVA5sAql+y7YqFArp5ZAlhb/E6c/GG
-         sIyVs8CGRLqAu5NwqEM9j1Eu2yzcsG0fEzGHoIk6UbXrtDmKU2045iN60aVesyHf1GZO
-         JvzOJfpeCgM93qh9qzq0G0pG4at8p563Kfd/XZ3EXuo9RGfRR0ACmL9AxKt+S0k9Rix/
-         SNJnOH8ma7pWajuB9aEoTw03P3Am3DFsyypUC/bBc5pskmk07FJDnZaxKCI4OZ23W6dU
-         6ltw==
-Received: by 10.152.144.168 with SMTP id sn8mr21659146lab.1.1340818784301;
-        Wed, 27 Jun 2012 10:39:44 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=zBSXMWWud5+ZIRYVbDtSo7x7oyWzd/SO8Zdd8PWJb2M=;
+        b=tt4ccVYmQH8PpQ7ocum74QItcvRIyeHB/T7lBOfeMbcBO2yyv5yDmeFL2hr5oMdARC
+         v0VkC5WbeRg9D7atLvxTKmP4TqUUoZrE47S0ndX/6Hg9vrVMjbPirXuIiJgK6PwclGv/
+         rQQ2v5ekD1CDLZhVXMl7NYCu2951Qtebtukwei1KBybCTQrZny/sR1Cmb2Y/BK6o/aE7
+         FQDB985uPvWh/9xlJrAqeYzKySqBSKgvjTPHrMZikyCria5xB9ZvYhTmki9Iv7Aap0YH
+         nAhd0/zbLAhfn/BLenDxPyEbLZp04qWp2yYM2xpl8Y2PS+eC21gML+cQIux4DcollBeF
+         Gl8g==
+Received: by 10.152.112.34 with SMTP id in2mr21453817lab.6.1340818787964;
+        Wed, 27 Jun 2012 10:39:47 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru. [79.172.62.237])
-        by mx.google.com with ESMTPS id pp2sm84780930lab.3.2012.06.27.10.39.41
+        by mx.google.com with ESMTPS id pp2sm84780930lab.3.2012.06.27.10.39.44
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Jun 2012 10:39:42 -0700 (PDT)
+        Wed, 27 Jun 2012 10:39:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200731>
 
-This is a rewrite of [1].
+null_sha1 is used in fast-import to indicate "empty" branches and
+should never be actually written out as a commit parent. 'merge'
+command lacks is_null_sha1 checks and must be fixed.
 
-First of all the patch is split into several parts now.
+It looks like using null_sha1 or empty branches in 'from' command
+is legal and/or an intended option (it has been here from the very
+beginning and survived). So leave it allowed for 'merge' command too,
+and just like with 'from' command silently skip null_sha1 parents.
 
-1/3 prevents writing invalid commit objects (with null_sha1 parents)
+Add a simple test for null_sha1 merge parents.
 
-For 2/3 and 3/3 I've changed my mind almost completely. The commands
-in question are:
-A 'from null_sha1'
-B 'from empty_branch'
-C 'from itself'
-D 'merge null_sha1'
-E 'merge empty_branch'
-F 'merge itself'
+Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+---
+ fast-import.c          |    3 ++-
+ t/t9300-fast-import.sh |   21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletions(-)
 
-Currently C is disallowed, D and E lead to 1/3 bug, F looks broken, A and B are allowed.
-
-In [1] I kept A allowed, but made B, C, D, E disallowed and "fixed" F.
-The idea was too keep A as legacy, fix F as it may have applications and disallow others
-as they look like errors in import stream.
-
-This time I keep A and B allowed, allow D and E, disallow F.
-Now I think of null_sha1 as of a special feature, empty_branch things as a mix of legacy
-and this feature (one can 'reset' branch to null_sha1, then use it's name and expect it
-to work as if null_sha1 was used, and null_sha1 is allowed). "Fix" for F is dropped for
-now and will later go separately with it's own set of tests and a new discussion I guess.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/200339
-
-Dmitry Ivankov (3):
-  fast-import: do not write null_sha1 as a merge parent
-  fast-import: allow "merge $null_sha1" command
-  fast-import: disallow "merge $itself" command
-
- fast-import.c          |   29 +++++++++++++++++++----------
- t/t9300-fast-import.sh |   35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 10 deletions(-)
-
+diff --git a/fast-import.c b/fast-import.c
+index eed97c8..419e435 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2734,7 +2734,8 @@ static void parse_new_commit(void)
+ 		strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(b->sha1));
+ 	while (merge_list) {
+ 		struct hash_list *next = merge_list->next;
+-		strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(merge_list->sha1));
++		if (!is_null_sha1(merge_list->sha1))
++			strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(merge_list->sha1));
+ 		free(merge_list);
+ 		merge_list = next;
+ 	}
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index c17f52e..5716420 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -850,6 +850,27 @@ INPUT_END
+ test_expect_success \
+ 	'J: tag must fail on empty branch' \
+ 	'test_must_fail git fast-import <input'
++
++cat >input <<INPUT_END
++reset refs/heads/J3
++
++reset refs/heads/J4
++from 0000000000000000000000000000000000000000
++
++commit refs/heads/J5
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++Merge J3, J4 into fresh J5.
++COMMIT
++merge refs/heads/J3
++merge refs/heads/J4
++
++INPUT_END
++test_expect_success \
++	'J: allow merge with empty branch' \
++	'git fast-import <input &&
++	git rev-parse --verify J5 &&
++	test_must_fail git rev-parse --verify J5^'
+ ###
+ ### series K
+ ###
 -- 
 1.7.3.4
