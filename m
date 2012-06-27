@@ -1,104 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Allow help.htmlpath to be an http: URL
-Date: Wed, 27 Jun 2012 14:32:49 -0700
-Message-ID: <7vbok4785a.fsf@alter.siamese.dyndns.org>
-References: <8d3c71d21710c66e4d5560cec958552b69a22338.1340830514.git.chris@arachsys.com>
- <233b27a14d16a2a1cb38b9f3e07a3a79b09a3256.1340830514.git.chris@arachsys.com>
- <20120627210502.GB2292@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 2/3] fast-import: allow "merge $null_sha1" command
+Date: Wed, 27 Jun 2012 16:33:55 -0500
+Message-ID: <20120627213355.GO12774@burratino>
+References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
+ <1340818825-13754-3-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Webb <chris@arachsys.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 27 23:32:57 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 23:34:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sjzr7-0000Im-54
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 23:32:57 +0200
+	id 1SjzsC-0001hF-KA
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 23:34:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757174Ab2F0Vcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 17:32:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51558 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756462Ab2F0Vcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 17:32:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32C688176;
-	Wed, 27 Jun 2012 17:32:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PqN/Zl3uppy02AG9vKsLetFY6zc=; b=W0LN/9
-	UNZuxv9r3W1F+MwLhH0GyFHj3j4Y4jo/ZQLoVfsqFEzoLDc/Gh+MIHrNgBo1urkL
-	J9aDbllMU1Pc1Mvc2diCiLU5v2SVlRs+zuUVu9KHWBYQAvsBufOsEa4csIXXxLt6
-	aARTzm/wtD+ZbL7tKiZYzqDmODXfre2pFA91w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EsY+X/9SigBO8KiP4QYPwUKu62s6i30o
-	1Kd50sJ5OcZVYDO9a3o6gHggUw1sxWdLRsIGJa3daL89yEfmRuHNPEc8VBPcL5ae
-	23LNKsTA1eCcdiO4UO0c7wnHJ9+9tjEFJfQHnxLBN4PMgScL5h6bGQ017hOSNy+q
-	5KmCjPtWz7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27C8C8175;
-	Wed, 27 Jun 2012 17:32:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A86628174; Wed, 27 Jun 2012
- 17:32:50 -0400 (EDT)
-In-Reply-To: <20120627210502.GB2292@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 27 Jun 2012 17:05:02 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A5835AA2-C09F-11E1-BA26-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757336Ab2F0VeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 17:34:00 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:36890 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756382Ab2F0VeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 17:34:00 -0400
+Received: by gglu4 with SMTP id u4so1345477ggl.19
+        for <git@vger.kernel.org>; Wed, 27 Jun 2012 14:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=uR2k9vwevtlU0tTk8eXhR507hIWd5xP+dFAPeUWEhVI=;
+        b=zLbJweZkfbevXHPFdeSkYck2TatLeIRBCslQbVflBQnNGopURhHQHzknEqjISJKJKz
+         8CFx5fOncGlvZ0JQ5xBBchQMzR4GK25QRYfvJTb/cRMSNOv6lizv0MNkzXj9LA+D2eRu
+         TSdMKpDOPuUFYKKtdUCDZAvvsZax9ZYsKXYqqgSyOrwmQ/bmxDikiYLACIOnZgt1T5A+
+         T00tHPImJ1+3DHpcc4m5ZSYtryLQ6ttwutjzezhjIiWMeEeoW49GskVwR48vKjxCNK/b
+         xtbktyhR+kG/T1Uh+KIwWNN/tfbGyS0OmNvV4+bSvpbrdIkSJDZH/ct2x54teXCnzYZW
+         hS5w==
+Received: by 10.236.73.6 with SMTP id u6mr25382977yhd.31.1340832839351;
+        Wed, 27 Jun 2012 14:33:59 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id c28sm113344350yhk.2.2012.06.27.14.33.58
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Jun 2012 14:33:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1340818825-13754-3-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200760>
 
-Jeff King <peff@peff.net> writes:
+Dmitry Ivankov wrote:
 
-> On Wed, Jun 27, 2012 at 09:55:13PM +0100, Chris Webb wrote:
->
->> Setting this to a URL prefix instead of a path to a local directory allows
->> git-help --web to work even when HTML docs aren't locally installed, by
->> pointing the browser at a copy accessible on the web. For example,
->> 
->>     [help]
->>       format = html
->>       htmlpath = http://git-scm.com/docs
->> 
->> will use the publicly available documentation on the git homepage.
->
-> Nice.
->
->>  	/* Check that we have a git documentation directory. */
->> -	if (stat(mkpath("%s/git.html", html_path), &st)
->> -	    || !S_ISREG(st.st_mode))
->> -		die(_("'%s': not a documentation directory."), html_path);
->> +	if (prefixcmp(html_path, "http:")) {
->> +		if (stat(mkpath("%s/git.html", html_path), &st)
->> +				|| !S_ISREG(st.st_mode))
->> +			die("'%s': not a documentation directory.", html_path);
->> +	}
->
-> I'd rather not tie this directly to http. Is there any reason not to
-> allow https, for example? Can we maybe just look for strstr("://")
-> instead? That's the same magic we use to differentiate URLs from paths
-> when looking for repositories.
+> "from $null_sha1" and "merge $empty_branch" are already allowed so
+> allow "merge $null_sha1" command too.
 
-One part of me says "any non-standard html-path should be sent to
-the browser".  Another part of me says "what if network is
-unavailable?  Wouldn't it be nice to fall back to use the local
-copy?"
+The reader might not realize that null_sha1 means
+0000000000000000000000000000000000000000 until she reads the test
+script.  Is it possible to help her save time?
 
-And a small voice in me responds to the latter with "If you have a
-local copy anyway, why would you want to go to the network even if
-you could?"
+[...]
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2631,12 +2631,14 @@ static struct hash_list *parse_merge(unsigned int *count)
+>  				die("Mark :%" PRIuMAX " not a commit", idnum);
+>  			hashcpy(n->sha1, oe->idx.sha1);
+>  		} else if (!get_sha1(from, n->sha1)) {
+> -			unsigned long size;
+> -			char *buf = read_object_with_reference(n->sha1,
+> -				commit_type, &size, n->sha1);
+> -			if (!buf || size < 46)
+> -				die("Not a valid commit: %s", from);
+> -			free(buf);
+> +			if (!is_null_sha1(n->sha1)) {
+> +				unsigned long size;
+> +				char *buf = read_object_with_reference(n->sha1,
+> +					commit_type, &size, n->sha1);
+> +				if (!buf || size < 46)
+> +					die("Not a valid commit: %s", from);
+> +				free(buf);
+> +			}
 
-Which leads me to conclude that it is the right thing to do if
-html_path came from the configuration, not from the compiled-in
-default, to always ask browser to do its thing, and let it fail if
-it has to fail---it is not Git's problem anymore at that point.
+Hm, ok.  Maybe the "peel onion" call guarded by this "if" could be a
+separate function to make this cleaner (and avoid some duplication of
+code with other functions while at it)?
 
-It also is the simplest.
+e.g.,
+
+	static int peel_to_commit(unsigned char sha1[20])
+	{
+		unsigned long size;
+
+		char *buf = read_object_with_reference(...);
+		if (!buf)
+			return -1;
+		free(buf);
+		if (size < strlen("commit ") + 40)
+			return -1;
+		return 0;
+	}
+
+	...
+		if (is_null_sha1(n->sha1))
+			; /* ok */
+		else if (peel_to_commit(n->sha1))
+			die("Not a valid commit: %s", from);
+
+I like the direction, but as it is, this patch feels kind of "meh" to
+me.
+
+Thanks again and hope that helps,
+Jonathan
