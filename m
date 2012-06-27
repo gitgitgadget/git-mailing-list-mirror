@@ -1,228 +1,412 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/5] git-remote-mediawiki: send "File:" attachments to a remote wiki
-Date: Wed, 27 Jun 2012 11:10:18 +0200
-Message-ID: <1340788220-10084-4-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 5/5] git-remote-mediawiki: import "File:" attachments
+Date: Wed, 27 Jun 2012 11:10:20 +0200
+Message-ID: <1340788220-10084-6-git-send-email-Matthieu.Moy@imag.fr>
 References: <1340726673-25496-1-git-send-email-Matthieu.Moy@imag.fr>
  <1340788220-10084-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Pavel.Volek@ensimag.imag.fr, Kim-Thuat.Nguyen@ensimag.imag.fr,
 	roucherj@ensimag.imag.fr, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 27 11:11:07 2012
+X-From: git-owner@vger.kernel.org Wed Jun 27 11:11:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SjoHB-0005rw-NR
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 11:11:06 +0200
+	id 1SjoHC-0005rw-O0
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jun 2012 11:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756452Ab2F0JKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 05:10:48 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52346 "EHLO shiva.imag.fr"
+	id S1756504Ab2F0JKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 05:10:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50983 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756051Ab2F0JKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 05:10:44 -0400
+	id S1755159Ab2F0JKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 05:10:47 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5R99xjx020049
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q5R9A5gP020098
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 27 Jun 2012 11:09:59 +0200
+	Wed, 27 Jun 2012 11:10:05 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1SjoGk-0003Of-2E; Wed, 27 Jun 2012 11:10:38 +0200
+	id 1SjoGp-0003Pr-Ss; Wed, 27 Jun 2012 11:10:43 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1SjoGk-0002dm-15; Wed, 27 Jun 2012 11:10:38 +0200
+	id 1SjoGp-0002ds-RZ; Wed, 27 Jun 2012 11:10:43 +0200
 X-Mailer: git-send-email 1.7.11.5.g0c7e058.dirty
 In-Reply-To: <1340788220-10084-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 Jun 2012 11:09:59 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 Jun 2012 11:10:05 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q5R99xjx020049
+X-MailScanner-ID: q5R9A5gP020098
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1341393001.13264@6PMQ/nW60ETnf7TShMj1vA
+MailScanner-NULL-Check: 1341393006.16216@f3wf1XYIXVQB2zL3thgpyg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200706>
 
-From: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
+From: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
 
-The current version of the git-remote-mediawiki supports only import and
-export of plain wiki pages. This patch adds the functionality to export
-file attachments (i.e. the content of the File: MediaWiki namespace),
-which are also exposed by MediaWiki API.
-
-This requires a recent version of MediaWiki::API (Version 0.37 works.
-Version 0.34 doesn't).
+Add the symmetrical feature to the "File:" export support in the previous
+patch. Download files from the wiki as needed, and feed them into the
+fast-import stream. Import both the file itself, and the corresponding
+description page.
 
 Signed-off-by: Pavel Volek <Pavel.Volek@ensimag.imag.fr>
 Signed-off-by: NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>
 Signed-off-by: ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki | 98 +++++++++++++++++++++++++++++++---
- 1 file changed, 90 insertions(+), 8 deletions(-)
+ contrib/mw-to-git/git-remote-mediawiki | 255 +++++++++++++++++++++++++++++++--
+ 1 file changed, 247 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index f2e841e..3405772 100755
+index 76d8824..15a55ba 100755
 --- a/contrib/mw-to-git/git-remote-mediawiki
 +++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -348,8 +348,12 @@ sub get_mw_pages {
+@@ -13,9 +13,6 @@
+ #
+ # Known limitations:
+ #
+-# - Only wiki pages are managed, no support for [[File:...]]
+-#   attachments.
+-#
+ # - Poor performance in the best case: it takes forever to check
+ #   whether we're up-to-date (on fetch or push) or to fetch a few
+ #   revisions from a large wiki, because we use exclusively a
+@@ -36,6 +33,7 @@
+ use strict;
+ use MediaWiki::API;
+ use DateTime::Format::ISO8601;
++use FileHandle;
+ 
+ # By default, use UTF-8 to communicate with Git and the user
+ binmode STDERR, ":utf8";
+@@ -72,6 +70,11 @@ chomp(@tracked_pages);
+ my @tracked_categories = split(/[ \n]/, run_git("config --get-all remote.". $remotename .".categories"));
+ chomp(@tracked_categories);
+ 
++# Import media files too.
++my $import_media = run_git("config --get --bool remote.". $remotename .".mediaimport");
++chomp($import_media);
++$import_media = ($import_media eq "true");
++
+ my $wiki_login = run_git("config --get remote.". $remotename .".mwLogin");
+ # TODO: ideally, this should be able to read from keyboard, but we're
+ # inside a remote helper, so our stdin is connect to git, not to a
+@@ -87,6 +90,9 @@ my $shallow_import = run_git("config --get --bool remote.". $remotename .".shall
+ chomp($shallow_import);
+ $shallow_import = ($shallow_import eq "true");
+ 
++# Cache for MediaWiki namespace ids.
++my %namespace_id;
++
+ # Dumb push: don't update notes and mediawiki ref to reflect the last push.
+ #
+ # Configurable with mediawiki.dumbPush, or per-remote with
+@@ -363,6 +369,14 @@ sub get_mw_pages {
+ 	if (!$user_defined) {
+ 		get_mw_all_pages(\%pages);
+ 	}
++	if ($import_media) {
++		print STDERR "Getting media files for selected pages...\n";
++		if ($user_defined) {
++			get_linked_mediafiles(\%pages);
++		} else {
++			get_all_mediafiles(\%pages);
++		}
++	}
  	return values(%pages);
  }
  
-+# usage: $out = run_git("command args");
-+#        $out = run_git("command args", "raw"); # don't interpret output as UTF-8.
- sub run_git {
--	open(my $git, "-|:encoding(UTF-8)", "git " . $_[0]);
-+	my $args = shift;
-+	my $encoding = (shift || "encoding(UTF-8)");
-+	open(my $git, "-|:$encoding", "git " . $args);
- 	my $res = do { local $/; <$git> };
- 	close($git);
- 
-@@ -705,6 +709,63 @@ sub error_non_fast_forward {
- 	return 0;
+@@ -379,6 +393,152 @@ sub run_git {
  }
  
-+sub mw_upload_file {
-+	my $complete_file_name = shift;
-+	my $new_sha1 = shift;
-+	my $extension = shift;
-+	my $file_deleted = shift;
-+	my $summary = shift;
-+	my $newrevid;
-+	my $path = "File:" . $complete_file_name;
-+	my %hashFiles = get_allowed_file_extensions();
-+	if (!exists($hashFiles{$extension})) {
-+		print STDERR "$complete_file_name is not a permitted file on this wiki.\n";
-+		print STDERR "Check the configuration of file uploads in your mediawiki.\n";
-+		return $newrevid;
+ 
++sub get_all_mediafiles {
++	my $pages = shift;
++	# Attach list of all pages for media files from the API,
++	# they are in a different namespace, only one namespace
++	# can be queried at the same moment
++	my $mw_pages = $mediawiki->list({
++		action => 'query',
++		list => 'allpages',
++		apnamespace => get_mw_namespace_id("File"),
++		aplimit => 'max'
++	});
++	if (!defined($mw_pages)) {
++		print STDERR "fatal: could not get the list of pages for media files.\n";
++		print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
++		print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
++		exit 1;
 +	}
-+	# Deleting and uploading a file requires a priviledged user
-+	if ($file_deleted) {
-+		mw_connect_maybe();
-+		my $query = {
-+			action => 'delete',
-+			title => $path,
-+			reason => $summary
-+		};
-+		if (!$mediawiki->edit($query)) {
-+			print STDERR "Failed to delete file on remote wiki\n";
-+			print STDERR "Check your permissions on the remote site. Error code:\n";
-+			print STDERR $mediawiki->{error}->{code} . ':' . $mediawiki->{error}->{details};
-+			exit 1;
-+		}
-+	} else {
-+		# Don't let perl try to interpret file content as UTF-8 => use "raw"
-+		my $content = run_git("cat-file blob $new_sha1", "raw");
-+		if ($content ne "") {
-+			mw_connect_maybe();
-+			$mediawiki->{config}->{upload_url} =
-+				"$url/index.php/Special:Upload";
-+			$mediawiki->edit({
-+				action => 'upload',
-+				filename => $complete_file_name,
-+				comment => $summary,
-+				file => [undef,
-+					 $complete_file_name,
-+					 Content => $content],
-+				ignorewarnings => 1,
-+			}, {
-+				skip_encoding => 1
-+			} ) || die $mediawiki->{error}->{code} . ':'
-+				 . $mediawiki->{error}->{details};
-+			my $last_file_page = $mediawiki->get_page({title => $path});
-+			$newrevid = $last_file_page->{revid};
-+			print STDERR "Pushed file: $new_sha1 - $complete_file_name.\n";
-+		} else {
-+			print STDERR "Empty file $complete_file_name not pushed.\n";
-+		}
++	foreach my $page (@{$mw_pages}) {
++		$pages->{$page->{title}} = $page;
 +	}
-+	return $newrevid;
 +}
 +
- sub mw_push_file {
- 	my $diff_info = shift;
- 	# $diff_info contains a string in this format:
-@@ -717,7 +778,8 @@ sub mw_push_file {
- 	my $summary = shift;
- 	# MediaWiki revision number. Keep the previous one by default,
- 	# in case there's no edit to perform.
--	my $newrevid = shift;
-+	my $oldrevid = shift;
-+	my $newrevid;
- 
- 	my $new_sha1 = $diff_info_split[3];
- 	my $old_sha1 = $diff_info_split[2];
-@@ -725,9 +787,11 @@ sub mw_push_file {
- 	my $page_deleted = ($new_sha1 eq NULL_SHA1);
- 	$complete_file_name = mediawiki_clean_filename($complete_file_name);
- 
--	if (substr($complete_file_name,-3) eq ".mw") {
--		my $title = substr($complete_file_name,0,-3);
--
-+	my ($title, $extension) = $complete_file_name =~ /^(.*)\.([^\.]*)$/;
-+	if (!defined($extension)) {
-+		$extension = "";
++sub get_linked_mediafiles {
++	my $pages = shift;
++	my @titles = map $_->{title}, values(%{$pages});
++
++	# The query is split in small batches because of the MW API limit of
++	# the number of links to be returned (500 links max).
++	my $batch = 10;
++	while (@titles) {
++		if ($#titles < $batch) {
++			$batch = $#titles;
++		}
++		my @slice = @titles[0..$batch];
++
++		# pattern 'page1|page2|...' required by the API
++		my $mw_titles = join('|', @slice);
++
++		# Media files could be included or linked from
++		# a page, get all related
++		my $query = {
++			action => 'query',
++			prop => 'links|images',
++			titles => $mw_titles,
++			plnamespace => get_mw_namespace_id("File"),
++			pllimit => 'max'
++		};
++		my $result = $mediawiki->api($query);
++
++		while (my ($id, $page) = each(%{$result->{query}->{pages}})) {
++			my @titles;
++			if (defined($page->{links})) {
++				my @link_titles = map $_->{title}, @{$page->{links}};
++				push(@titles, @link_titles);
++			}
++			if (defined($page->{images})) {
++				my @image_titles = map $_->{title}, @{$page->{images}};
++				push(@titles, @image_titles);
++			}
++			if (@titles) {
++				get_mw_first_pages(\@titles, \%{$pages});
++			}
++		}
++
++		@titles = @titles[($batch+1)..$#titles];
 +	}
-+	if ($extension eq "mw") {
- 		my $file_content;
- 		if ($page_deleted) {
- 			# Deleting a page usually requires
-@@ -745,7 +809,7 @@ sub mw_push_file {
- 			action => 'edit',
- 			summary => $summary,
- 			title => $title,
--			basetimestamp => $basetimestamps{$newrevid},
-+			basetimestamp => $basetimestamps{$oldrevid},
- 			text => mediawiki_clean($file_content, $page_created),
- 				  }, {
- 					  skip_encoding => 1 # Helps with names with accentuated characters
-@@ -757,7 +821,7 @@ sub mw_push_file {
- 				    $mediawiki->{error}->{code} .
- 				    ' from mediwiki: ' . $mediawiki->{error}->{details} .
- 				    ".\n";
--				return ($newrevid, "non-fast-forward");
-+				return ($oldrevid, "non-fast-forward");
- 			} else {
- 				# Other errors. Shouldn't happen => just die()
- 				die 'Fatal: Error ' .
-@@ -768,8 +832,11 @@ sub mw_push_file {
- 		$newrevid = $result->{edit}->{newrevid};
- 		print STDERR "Pushed file: $new_sha1 - $title\n";
- 	} else {
--		print STDERR "$complete_file_name not a mediawiki file (Not pushable on this version of git-remote-mediawiki).\n"
-+		$newrevid = mw_upload_file($complete_file_name, $new_sha1,
-+					   $extension, $page_deleted,
-+					   $summary);
- 	}
-+	$newrevid = ($newrevid or $oldrevid);
- 	return ($newrevid, "ok");
- }
- 
-@@ -906,3 +973,18 @@ sub mw_push_revision {
- 	print STDOUT "ok $remote\n";
- 	return 1;
- }
++}
 +
-+sub get_allowed_file_extensions {
-+	mw_connect_maybe();
++sub get_mw_mediafile_for_page_revision {
++	# Name of the file on Wiki, with the prefix.
++	my $mw_filename = shift;
++	my $timestamp = shift;
++	my %mediafile;
 +
++	# Search if on MediaWiki exists a media file with given
++	# timestamp. In that case download the file.
 +	my $query = {
 +		action => 'query',
-+		meta => 'siteinfo',
-+		siprop => 'fileextensions'
-+		};
++		prop => 'imageinfo',
++		titles => $mw_filename,
++		iistart => $timestamp,
++		iiend => $timestamp,
++		iiprop => 'timestamp|archivename|url',
++		iilimit => 1
++	};
 +	my $result = $mediawiki->api($query);
-+	my @file_extensions= map $_->{ext},@{$result->{query}->{fileextensions}};
-+	my %hashFile = map {$_ => 1}@file_extensions;
 +
-+	return %hashFile;
++	my ($fileid, $file) = each ( %{$result->{query}->{pages}} );
++	# If not defined it means there is no revision of the file for
++	# given timestamp.
++	if (defined($file->{imageinfo})) {
++		# Get real name of media file.
++		my $filename;
++		if (index($mw_filename, 'File:') == 0) {
++			$filename = substr $mw_filename, 5;
++		} else {
++			$filename = substr $mw_filename, 6;
++		}
++		$mediafile{title} = $filename;
++
++		my $fileinfo = pop(@{$file->{imageinfo}});
++		$mediafile{timestamp} = $fileinfo->{timestamp};
++		# If this is an old version of the file, the file has to be
++		# obtained from the archive. Otherwise it can be downloaded
++		# by MediaWiki API download() function.
++		if (defined($fileinfo->{archivename})) {
++			$mediafile{content} = download_mw_mediafile_from_archive($fileinfo->{url});
++		} else {
++			$mediafile{content} = download_mw_mediafile($mw_filename);
++		}
++	}
++	return %mediafile;
++}
++
++sub download_mw_mediafile_from_archive {
++	my $url = shift;
++	my $file;
++
++	my $ua = LWP::UserAgent->new;
++	my $response = $ua->get($url);
++	if ($response->code) {
++		$file = $response->decoded_content;
++	} else {
++		print STDERR "Error downloading a file from archive.\n";
++	}
++
++	return $file;
++}
++
++sub download_mw_mediafile {
++	my $filename = shift;
++
++	$mediawiki->{config}->{files_url} = $url;
++
++	my $file_content = $mediawiki->download( { title => $filename } );
++	if (!defined($file_content)) {
++		print STDERR "\tFile \'$filename\' could not be downloaded.\n";
++		exit 1;
++	} elsif ($file_content eq "") {
++		print STDERR "\tFile \'$filename\' does not exist on the wiki.\n";
++		exit 1;
++	} else {
++		return $file_content;
++	}
++}
++
+ sub get_last_local_revision {
+ 	# Get note regarding last mediawiki revision
+ 	my $note = run_git("notes --ref=$remotename/mediawiki show refs/mediawiki/$remotename/master 2>/dev/null");
+@@ -482,6 +642,14 @@ sub literal_data {
+ 	print STDOUT "data ", bytes::length($content), "\n", $content;
+ }
+ 
++sub literal_data_raw {
++	# Output possibly binary content.
++	my ($content) = @_;
++	binmode STDOUT, ":raw";
++	print STDOUT "data ", bytes::length($content), "\n", $content;
++	binmode STDOUT, ":utf8";
++}
++
+ sub mw_capabilities {
+ 	# Revisions are imported to the private namespace
+ 	# refs/mediawiki/$remotename/ by the helper and fetched into
+@@ -569,6 +737,11 @@ sub import_file_revision {
+ 	my %commit = %{$commit};
+ 	my $full_import = shift;
+ 	my $n = shift;
++	my $mediafile = shift;
++	my %mediafile;
++	if ($mediafile) {
++		%mediafile = %{$mediafile};
++	}
+ 
+ 	my $title = $commit{title};
+ 	my $comment = $commit{comment};
+@@ -588,6 +761,10 @@ sub import_file_revision {
+ 	if ($content ne DELETED_CONTENT) {
+ 		print STDOUT "M 644 inline $title.mw\n";
+ 		literal_data($content);
++		if (%mediafile) {
++			print STDOUT "M 644 inline $mediafile{title}\n";
++			literal_data_raw($mediafile{content});
++		}
+ 		print STDOUT "\n\n";
+ 	} else {
+ 		print STDOUT "D $title.mw\n";
+@@ -683,12 +860,11 @@ sub mw_import_ref {
+ 
+ 		$n++;
+ 
++		my $page_title = $result->{query}->{pages}->{$pagerevid->{pageid}}->{title};
+ 		my %commit;
+ 		$commit{author} = $rev->{user} || 'Anonymous';
+ 		$commit{comment} = $rev->{comment} || '*Empty MediaWiki Message*';
+-		$commit{title} = mediawiki_smudge_filename(
+-			$result->{query}->{pages}->{$pagerevid->{pageid}}->{title}
+-		    );
++		$commit{title} = mediawiki_smudge_filename($page_title);
+ 		$commit{mw_revision} = $pagerevid->{revid};
+ 		$commit{content} = mediawiki_smudge($rev->{'*'});
+ 
+@@ -699,9 +875,25 @@ sub mw_import_ref {
+ 		}
+ 		$commit{date} = DateTime::Format::ISO8601->parse_datetime($last_timestamp);
+ 
+-		print STDERR "$n/", scalar(@revisions), ": Revision #$pagerevid->{revid} of $commit{title}\n";
++		# Differentiates classic pages and media files.
++		my @prefix = split(":", $page_title);
+ 
+-		import_file_revision(\%commit, ($fetch_from == 1), $n);
++		my %mediafile;
++		if ($prefix[0] eq "File" || $prefix[0] eq "Image") {
++			# The name of the file is the same as the media page.
++			my $filename = $page_title;
++			%mediafile = get_mw_mediafile_for_page_revision($filename, $rev->{timestamp});
++		}
++		# If this is a revision of the media page for new version
++		# of a file do one common commit for both file and media page.
++		# Else do commit only for that page.
++		print STDERR "$n/", scalar(@revisions), ": Revision #$pagerevid->{revid} of $commit{title}\n";
++		if (%mediafile) {
++			print STDERR "\tDownloading file $mediafile{title}, version $mediafile{timestamp}\n";
++			import_file_revision(\%commit, ($fetch_from == 1), $n, \%mediafile);
++		} else {
++			import_file_revision(\%commit, ($fetch_from == 1), $n);
++		}
+ 	}
+ 
+ 	if ($fetch_from == 1 && $n == 0) {
+@@ -1006,3 +1198,50 @@ sub get_allowed_file_extensions {
+ 
+ 	return %hashFile;
+ }
++
++# Return MediaWiki id for a canonical namespace name.
++# Ex.: "File", "Project".
++# Looks for the namespace id in the local configuration
++# variables, if it is not found asks MW API.
++sub get_mw_namespace_id {
++	mw_connect_maybe();
++	my $name = shift;
++
++	if (!exists $namespace_id{$name}) {
++		# Look at configuration file, if the record for that namespace is
++		# already stored. Namespaces are stored in form:
++		# "Name_of_namespace:Id_namespace", ex.: "File:6".
++		my @temp = split(/[ \n]/, run_git("config --get-all remote."
++						. $remotename .".namespaces"));
++		chomp(@temp);
++		foreach my $ns (@temp) {
++			my ($n, $s) = split(/:/, $ns);
++			$namespace_id{$n} = $s;
++		}
++	}
++
++	if (!exists $namespace_id{$name}) {
++		# NS not found => get namespace id from MW and store it in
++	        # configuration file.
++	        my $query = {
++	                action => 'query',
++	                meta => 'siteinfo',
++	                siprop => 'namespaces'
++	        };
++	        my $result = $mediawiki->api($query);
++
++	        while (my ($id, $ns) = each(%{$result->{query}->{namespaces}})) {
++	                if (defined($ns->{canonical}) && ($ns->{canonical} eq $name)) {
++	                        run_git("config --add remote.". $remotename
++					.".namespaces ". $name .":". $ns->{id});
++				$namespace_id{$name} = $ns->{id};
++	                }
++	        }
++	}
++
++	if (exists $namespace_id{$name}) {
++		return $namespace_id{$name};
++	} else {
++		die "No such namespace $name on MediaWiki.";
++	}
 +}
 -- 
 1.7.11.5.g0c7e058.dirty
