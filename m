@@ -1,64 +1,57 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH] add test case for rebase of empty commit
-Date: Thu, 28 Jun 2012 07:30:57 -0400
-Message-ID: <20120628113057.GA29277@hmsreliant.think-freely.org>
-References: <1340814121-23813-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <7vr4t079jp.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] Allow help.htmlpath to be an http: URL
+Date: Thu, 28 Jun 2012 13:50:41 -0400
+Message-ID: <20120628175041.GA4731@sigill.intra.peff.net>
+References: <7vwr2s5f9v.fsf@alter.siamese.dyndns.org>
+ <20120627225248.GB27566@sigill.intra.peff.net>
+ <20120628065623.GB1742@arachsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 13:31:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Chris Webb <chris@arachsys.com>
+X-From: git-owner@vger.kernel.org Thu Jun 28 19:50:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SkCwN-0008NV-RU
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 13:31:16 +0200
+	id 1SkIrl-0004K8-Ap
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 19:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711Ab2F1LbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jun 2012 07:31:08 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:39934 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751036Ab2F1LbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2012 07:31:07 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SkCw6-0005GA-0A; Thu, 28 Jun 2012 07:30:59 -0400
+	id S1755438Ab2F1Rut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jun 2012 13:50:49 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:48043
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754878Ab2F1Rus (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2012 13:50:48 -0400
+Received: (qmail 1737 invoked by uid 107); 28 Jun 2012 17:50:51 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Jun 2012 13:50:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jun 2012 13:50:41 -0400
 Content-Disposition: inline
-In-Reply-To: <7vr4t079jp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <20120628065623.GB1742@arachsys.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200790>
 
-On Wed, Jun 27, 2012 at 02:02:34PM -0700, Junio C Hamano wrote:
-> Thanks.
-> 
-> We recently had a topic to add an option to allow rebase to carry
-> empty commits forward, but I notice that it only had tests for the
-> component cherry-pick to keep empty or redundant commits, so it may
-> not be a bad idea to add tests for that series to the same t3401
-> after this commit (Neil Horman CC'ed).
-> 
-> 
-So if I understand correctly, the desire is to augment t3401 such that it adds a
-test in which both of the commits in the local branch are empty, and still
-correctly identifies the one that was cherry-picked and only adds the remaining
-one during the rebase?
+On Thu, Jun 28, 2012 at 07:56:23AM +0100, Chris Webb wrote:
 
-Yes, I think that sounds like a good idea.  I'm in the middle of an sctp project
-at the moment, but I expect to complete it in the next few days.  I can look
-into writing this next week if you like.
+> > This, and "://", both sound sensible.
+> 
+> I have no real preference between any of the suggestions so far: they'd all
+> be completely fine with me. Peff's :// test for a URL is much better than my
+> http: prefix, so should replace the latter if we need a test at all, but
+> apart from that I don't mind at all.
+> 
+> Okay, I'll re-send now the :// version I did in response to Peff's first
+> email purely on the basis that it doesn't change the behaviour at all for
+> existing users who don't set htmlpath at all, plus it's already sat in my
+> reflog!
 
-Thanks & Regards
-Neil
- 
+I think the "://" one is my preference. I just looked over your v3
+series, and the patches look good to me.
+
+-Peff
