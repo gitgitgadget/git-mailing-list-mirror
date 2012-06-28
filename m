@@ -1,99 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] difftool: handle uninitialized variable on empty
- diff
-Date: Thu, 28 Jun 2012 13:00:40 -0700
-Message-ID: <7v7gur5hqv.fsf@alter.siamese.dyndns.org>
-References: <1340912395-16990-1-git-send-email-tim.henigan@gmail.com>
- <1340912395-16990-2-git-send-email-tim.henigan@gmail.com>
+From: =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Subject: Re: [PATCH 2/2] git-submodule: support 'rm' command.
+Date: Thu, 28 Jun 2012 22:31:06 +0200
+Organization: Gentoo
+Message-ID: <20120628223106.5bc9735e@pomiocik.lan>
+References: <1340621820-19448-1-git-send-email-mgorny@gentoo.org>
+	<1340621820-19448-2-git-send-email-mgorny@gentoo.org>
+	<4FE898BC.2020307@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, davvid@gmail.com
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 22:00:52 2012
+Content-Type: multipart/signed; micalg=PGP-SHA256;
+ boundary="Sig_/0dZhIz.aHyFmoF=ilqPkx2U"; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Jun 28 22:31:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SkKtW-00031M-Mj
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 22:00:51 +0200
+	id 1SkLNM-0003Wh-7f
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 22:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111Ab2F1UAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jun 2012 16:00:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63989 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769Ab2F1UAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2012 16:00:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD6768F34;
-	Thu, 28 Jun 2012 16:00:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HSxWslN29S4UlooJ1Bxs9lVqnz4=; b=NwTyXu
-	mj+M+F9P1xfpqaEKzTIL4IK9uYrfumIw0LWlQWOab9F/75LzahM85B9iw5O+t3GI
-	LccAE+s3cuBkzrqPiutlav1BID+7Zo38Hr6TTwHQY86Nf5lYOGZEu9EOqpmUrQU+
-	ZTmi9nV+NVWfbdLgwaF72hpS00qDU3Isz9q0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kAgkf3rOHzttmPXiYUay/d6w+WSdPQ6j
-	aLDs6Oa8IQzCbwkRgrmfheD62rLnq81ONZcLKl2TCrcm9IWBIg9rx4d12k4hU73B
-	YhLzl55ekHZ7uRsxAy997DQA7fHCw+5YXaolzygnY+560dj8oRcjwQXeIuLWQTNB
-	jPyfOmIU6ZE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC8D48F33;
-	Thu, 28 Jun 2012 16:00:45 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 387C48F2D; Thu, 28 Jun 2012
- 16:00:42 -0400 (EDT)
-In-Reply-To: <1340912395-16990-2-git-send-email-tim.henigan@gmail.com> (Tim
- Henigan's message of "Thu, 28 Jun 2012 15:39:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F0B53434-C15B-11E1-9597-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752923Ab2F1Ubd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jun 2012 16:31:33 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:52105 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750769Ab2F1Ubc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2012 16:31:32 -0400
+Received: from pomiocik.lan (unknown [83.238.241.18])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mgorny)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 4B60A1B400C;
+	Thu, 28 Jun 2012 20:31:31 +0000 (UTC)
+In-Reply-To: <4FE898BC.2020307@web.de>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200795>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+--Sig_/0dZhIz.aHyFmoF=ilqPkx2U
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> When 'difftool --dir-diff' finds no changes, it results in an
-> uninitialized variable warning.
->
-> Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
-> ---
->  git-difftool.perl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index 679a56d..c94557d 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -117,7 +117,7 @@ sub setup_dir_diff
->  	# by Git->repository->command*.
->  	my $diffrepo = Git->repository(Repository => $repo_path, WorkingCopy => $workdir);
->  	my $diffrtn = $diffrepo->command_oneline('diff', '--raw', '--no-abbrev', '-z', @ARGV);
-> -	exit(0) if (length($diffrtn) == 0);
-> +	exit(0) if ((not defined($diffrtn)) or (length($diffrtn) == 0));
+On Mon, 25 Jun 2012 18:58:36 +0200
+Jens Lehmann <Jens.Lehmann@web.de> wrote:
 
-Wouldn't it be far more readable to say something like
+> Am 25.06.2012 12:57, schrieb Micha=C5=82 G=C3=B3rny:
+> > Add an 'rm' command to git-submodule which provides means to
+> > (semi-)easily remove git submodules.
+> >=20
+> > Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
+> > ---
+> > Right now, it requires the submodule checkout to be removed manually
+> > first (so it does not remove unstaged commits), and just removes
+> > the index entry and module information from config.
+> >=20
+> > I based it on 'cmd_add' code trying to preserve the original coding
+> > standards.
+>=20
+> I really like the goal of this patch but would prefer that "git rm"
+> learns how to remove submodules instead of adding more code to the
+> git-submodule.sh script.
 
-        if (!$diffrtn) {
-        	exit(0);
-	}
+My main intent was, like Phil already pointed out, to provide
+a counterpart to 'git submodule add'. I don't mind 'git rm' supporting
+removing submodules but that's not exactly what I would consider...
+friendly?
 
-instead, as "diff --raw" output, when not empty, cannot be a single
-"0"?
+What I'm trying to express is that if I added a submodule using 'git
+submodule add', I would expect to have 'git submodule rm'. Honestly, I
+didn't even think about trying using 'git rm' on a submodule.
+The correct results of such a call are hard to predict to me.
 
-By the way, I suspect that the use of command_oneline() here is
-wrong.  It uses '-z' so that it can handle whitespace characters in
-pathnames sensibly (in other words, the output does not use LF as a
-record separator), so pathnames with LF in them will be output
-literally.  Taking only the first line of the "diff -z" output would
-mean that you will stop when you see the first pathname with LF in
-it.
+> Also it shouldn't be necessary for the user to remove the directory
+> by hand before running "git rm". At least all files recorded in the
+> submodule can be removed (and if the submodule uses a gitfile that
+> can be removed too). Then all that is left are untracked files the
+> user has to decide what to do with (which might be removed too when
+> running "git rm --recurse-submodules=3Duntracked").
 
-This is not a new problem with this patch, but came from your
-7e0abce (difftool: teach difftool to handle directory diffs,
-2012-04-23).
+Except for the untracked files there may also be commits which were not
+pushed anywhere. Honestly, I didn't want to get into that risky area in
+the first patch.
+
+As the next step, I'd see adding a '--force' option to actually enforce
+removing the directory. But I'd like the basics to start working first,
+then consider harder things.
+
+> > ++
+> > +This command removes the submodule from the current git index,
+> > +the .gitmodules file and the local repository config.
+>=20
+> It should not be removed from .git/config by default. The user may
+> have special settings there and the presence in .git/config shows
+> he cared about having the submodule checked out, which should not
+> be revoked by just removing the submodule from the work tree.
+> Unless he removes the config from there himself he should get back
+> a populated submodule when he checks out an earlier commit and says
+> "git submodule update".
+
+Ok, I will change that.
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--Sig_/0dZhIz.aHyFmoF=ilqPkx2U
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.19 (GNU/Linux)
+
+iJwEAQEIAAYFAk/svwoACgkQfXuS5UK5QB0cfgP/drUIBH2bS3XdmL9UkXgC+FFQ
+9TIIrK3CBIdpUeeQxHhfimL1TCPKtOKbWvroZZ8NpFepF3qJy7sr29lLVberRgEs
+6992e6x6hj2CZAi1qjhqZQVlMyj5pzNkI/l986D8N3zsiU8jia03hyujks/ngNv3
+47apWXve05TfA+1GFm0=
+=Rl9U
+-----END PGP SIGNATURE-----
+
+--Sig_/0dZhIz.aHyFmoF=ilqPkx2U--
