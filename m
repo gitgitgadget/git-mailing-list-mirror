@@ -1,77 +1,81 @@
-From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-Subject: can I always ignore a file during a merge?
-Date: Wed, 27 Jun 2012 19:39:03 -0400
-Message-ID: <p06240817cc114629c20f@[192.168.1.122]>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] Allow help.htmlpath to be an http: URL
+Date: Wed, 27 Jun 2012 19:41:48 -0700
+Message-ID: <7vwr2s5f9v.fsf@alter.siamese.dyndns.org>
+References: <8d3c71d21710c66e4d5560cec958552b69a22338.1340830514.git.chris@arachsys.com>
+ <233b27a14d16a2a1cb38b9f3e07a3a79b09a3256.1340830514.git.chris@arachsys.com>
+ <20120627210502.GB2292@sigill.intra.peff.net>
+ <7vbok4785a.fsf@alter.siamese.dyndns.org>
+ <20120627221106.GE2292@sigill.intra.peff.net>
+ <20120627221938.GA1742@arachsys.com>
+ <20120627225248.GB27566@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii" ; format="flowed"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 28 01:45:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Webb <chris@arachsys.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 28 04:42:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sk1vB-0005KB-UM
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 01:45:18 +0200
+	id 1Sk4gk-0003WB-RA
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jun 2012 04:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756076Ab2F0XpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jun 2012 19:45:11 -0400
-Received: from deanbrook.org ([72.52.70.192]:41410 "HELO deanbrook.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754013Ab2F0XpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2012 19:45:10 -0400
-X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jun 2012 19:45:10 EDT
-Received: from ::ffff:96.240.224.49 ([96.240.224.49]) by deanbrook.org for <git@vger.kernel.org>; Wed, 27 Jun 2012 16:39:22 -0700
+	id S1751564Ab2F1Cl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jun 2012 22:41:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51498 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757917Ab2F1Clv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2012 22:41:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6604C8085;
+	Wed, 27 Jun 2012 22:41:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FBxw7NEsTp51g0GP/8kT0eORB2Y=; b=INP0qD
+	LSsE7XSB3KYuuMs8xJFLQ+NBPzYRZkS/F78gzckoe5wSfqv/Ia/bPokWqymnpOi/
+	YZhBxiZPReS8HjSAclsTxhp+M7Dj4Z8kVvMgXDMERF/CtFQx2DcPGKbghrGZa8iq
+	E1egJXpkoDQ9sFPEcsN+7UE2XnTTJ9Hvwtmzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I0DQRhDksqKCq5DaBHeWYqXlpZ+GIZIr
+	LZKQIw9W6RhFJmVT+wAcZ/RH/2G/RzE1zySAM97SRbt2+/d4CEbrXGirujPL0Bbp
+	S0MxLDgYpjFJ+eol3vZhSCJbjYGL0i2dZWivchuV95lK5fuVwjNp2znZLkyf3DOR
+	C9cdaXT9ezs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E18B8084;
+	Wed, 27 Jun 2012 22:41:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E616C8083; Wed, 27 Jun 2012
+ 22:41:49 -0400 (EDT)
+In-Reply-To: <20120627225248.GB27566@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 27 Jun 2012 18:52:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CFC4FE76-C0CA-11E1-8C61-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200773>
 
-Is there a way to merge from branchA to branchB and from branchB to branchA while completely ignoring changes to a file that is 
-tracked and exists in both branches?
+Jeff King <peff@peff.net> writes:
 
----- details ----
+> So one solution would be to simply remove the check entirely. It was a
+> slight nicety in some situations, but expanding the definition of the
+> HTML path to include full URLs means we can no longer accurately
+> determine what exists and what does not. So we can just stop trying and
+> let the browser handle it completely.
 
-I have two branches in my project (master and energy2d)  automatically being built and tested on travis-ci:
+This, and "://", both sound sensible.
 
-   http://travis-ci.org/#!/concord-consortium/lab
+> Another option would be to introduce a new "net" type of help format
+> which accepts a URL instead of a path. That would leave the existing
+> code-path untouched. But it does seem needlessly complex, as it would do
+> more or less the same thing as the "html" format.
 
-When failures in tests occur notifications are sent to emails in a configuration file checked into each branch:
+Yeah, that does not sound like a good reason to have such a complex
+scheme.
 
-   master:
-   https://github.com/concord-consortium/lab/blob/master/.travis.yml
-
-   energy2d:
-   https://github.com/concord-consortium/lab/blob/energy2d/.travis.yml
-
-I regularly merge work in the energy2d branch into master and the Google Summero of Code student I am working with regularly 
-merges changes in master into energy2d.
-
-I would like to be able to merge both directions while completely ignoring changes in the travis-ci configuration files in each 
-branch.
-
-I have tried creating a .gitattributes file in each branch with the following content:
-
-   .travis.yml merge=ours
-
-But when interpreted by the default merge strategy "recursive" this only applies when there are conflicts -- however this 
-current difference is not seen as a conflict:
-
-   $ git diff energy2d .travis.yml
-   diff --git a/.travis.yml b/.travis.yml
-   index 8ea58dc..ec89f91 100644
-   --- a/.travis.yml
-   +++ b/.travis.yml
-   @@ -8,7 +8,8 @@ notifications:
-      email:
-        recipients:
-          - stephen.bannasch@gmail.com
-   -      - janikpiotrek@gmail.com
-   +      - sfentress@concord.org
-   +      - rpk@pobox.com
-    language: node_js
-    node_js:
-      - 0.6
-
-Which means every time we merge the .travis.yml file is updated on the branch we are merging to.
+Thanks.
