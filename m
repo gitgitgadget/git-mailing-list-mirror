@@ -1,73 +1,84 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: Does "git config --local core.excludefiles" exclude files in a
- single repository?
-Date: Fri, 29 Jun 2012 18:11:06 +0000
-Message-ID: <A0DB01D693D8EF439496BC8B037A0AEF02C738@xmb-rcd-x15.cisco.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Apostrophe at the end of author name
+Date: Fri, 29 Jun 2012 14:29:44 -0400
+Message-ID: <20120629182944.GA20346@sigill.intra.peff.net>
+References: <20120629124122.GG1258@camk.edu.pl>
+ <robbat2-20120629T170457-788694600Z@orbis-terrarum.net>
+ <20120629174358.GB3804@sigill.intra.peff.net>
+ <20120629181701.GB6533@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"git-users(mailer list)" <git-users@cisco.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 20:20:44 2012
+Content-Type: text/plain; charset=utf-8
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kacper Kornet <draenog@pld-linux.org>
+X-From: git-owner@vger.kernel.org Fri Jun 29 20:30:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SkfoB-0002iy-3r
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jun 2012 20:20:43 +0200
+	id 1SkfxY-0006Hn-FR
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jun 2012 20:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486Ab2F2SUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jun 2012 14:20:39 -0400
-Received: from rcdn-iport-2.cisco.com ([173.37.86.73]:60236 "EHLO
-	rcdn-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754240Ab2F2SUi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jun 2012 14:20:38 -0400
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jun 2012 14:20:38 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=matseitz@cisco.com; l=731; q=dns/txt;
-  s=iport; t=1340994038; x=1342203638;
-  h=from:to:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=EU46qaSiVA0daYL5RkUhuDEwbFMPe3IfD0jJm9R/zPY=;
-  b=d6S61QLmxixpLJ/lkVyBh2nePy+qTVckK7b0c765gFXhYBsjiMdUo/7W
-   9geH7h6OQpOXvLVH5Dd5bYpAMBTbEblumg25qmx95EjtKRHMvT0Yudri3
-   YAr8IbGYq4mJMBvE/7BYA6j9QnI5idCJnPEkfUVx6LFbyk23aQe/RWXyA
-   8=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAGjv7U+tJV2b/2dsb2JhbABFtlaBB4IaAQQSASdRASoUQiYBBAEaGodoAZthoD6QYWADo1CBZoJf
-X-IronPort-AV: E=Sophos;i="4.77,498,1336348800"; 
-   d="scan'208";a="97330066"
-Received: from rcdn-core-4.cisco.com ([173.37.93.155])
-  by rcdn-iport-2.cisco.com with ESMTP; 29 Jun 2012 18:11:07 +0000
-Received: from xhc-aln-x10.cisco.com (xhc-aln-x10.cisco.com [173.36.12.84])
-	by rcdn-core-4.cisco.com (8.14.5/8.14.5) with ESMTP id q5TIB7oZ028750
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 29 Jun 2012 18:11:07 GMT
-Received: from xmb-rcd-x15.cisco.com ([169.254.5.185]) by
- xhc-aln-x10.cisco.com ([173.36.12.84]) with mapi id 14.02.0298.004; Fri, 29
- Jun 2012 13:11:07 -0500
-Thread-Topic: Does "git config --local core.excludefiles" exclude files in a
- single repository?
-Thread-Index: Ac1WIo0tIuG0O/jAQuOj6NlKwHx2Eg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-Auto-Response-Suppress: DR, OOF, AutoReply
-X-MS-TNEF-Correlator: 
-x-originating-ip: [171.71.137.42]
-x-tm-as-product-ver: SMEX-10.2.0.1135-7.000.1014-19004.005
-x-tm-as-result: No--23.417800-8.000000-31
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
+	id S1756030Ab2F2SaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jun 2012 14:30:01 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:49533
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755945Ab2F2S3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2012 14:29:47 -0400
+Received: (qmail 14891 invoked by uid 107); 29 Jun 2012 18:29:52 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Jun 2012 14:29:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jun 2012 14:29:44 -0400
+Content-Disposition: inline
+In-Reply-To: <20120629181701.GB6533@camk.edu.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200823>
 
-Will git ignore files in an exclusion file that is specified in a local ($GIT_DIR/config) "core.excludefiles" configuration option?
+On Fri, Jun 29, 2012 at 08:17:01PM +0200, Kacper Kornet wrote:
 
-I mistakenly ran "git config core.excludefiles=<file>", and I was curious whether this command actually has any effect.
+> >  as strbuf_addstr_without_crud was
+> > only added recently (but it is a refactoring of older code which should
+> > have the same behavior).
+> 
+> It depends what you call recently. It was refactored in July 2005
+> (commit: 6aa33f4035d5). But it looks like the previous code (before
+> refactoring) removed only comma, dot and semicolon from the end of the
+> author name.
 
-I know that "$GIT_DIR/info/exclude" is normally used for listing files that a single user wants exclude from a single repository.  And I know that "git config --global core.excludefiles=<file>" is normally used for listing files that a single user wants to exclude from all repositories.  But I didn't see any explicit documentation for whether "git config core.excludefiles=<file>" would exclude files for a single user in a single repository.
+I meant the name strbuf_addstr_without_crud did not exist until I added
+it in c96f0c8, about a month ago. But yes, the functionality of the code
+has been there since the very early days.
+
+I'm tempting by the patch below, which would remove only the
+syntactically significant meta-characters ("\n", "<", and ">"), as well
+as trimming any stray whitespace at the edges. The problem is that we
+don't really have a clue how many people were relying on this trimming
+to clean up their names or emails, so there may be regressions for other
+people.
+
+diff --git a/ident.c b/ident.c
+index 443c075..4552f8d 100644
+--- a/ident.c
++++ b/ident.c
+@@ -127,15 +127,8 @@ const char *ident_default_date(void)
+ static int crud(unsigned char c)
+ {
+ 	return  c <= 32  ||
+-		c == '.' ||
+-		c == ',' ||
+-		c == ':' ||
+-		c == ';' ||
+ 		c == '<' ||
+-		c == '>' ||
+-		c == '"' ||
+-		c == '\\' ||
+-		c == '\'';
++		c == '>';
+ }
+ 
+ /*
