@@ -1,66 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH jn/perl-makemaker-leading-paths] perl/Makefile: Fix a
- missing double-quote
-Date: Fri, 29 Jun 2012 03:55:44 -0500
-Message-ID: <20120629085544.GC3430@burratino>
-References: <1339781427-10568-1-git-send-email-adam@roben.org>
- <20120615180505.GH10752@burratino>
- <7vwr388dyp.fsf@alter.siamese.dyndns.org>
- <20120615230234.GA3547@burratino>
- <4FED6250.7010103@viscovery.net>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: git submodule vs GIT_WORK_TREE
+Date: Fri, 29 Jun 2012 11:10:31 +0200
+Message-ID: <CAD77+gSKsU6T8P6dQeZofkh3jhrKbW3yVy1XqJ0J_K-bDt-H8A@mail.gmail.com>
+References: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com>
+ <7vobo6cazk.fsf@alter.siamese.dyndns.org> <4FE9FF0C.8050409@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Adam Roben <adam@roben.org>,
-	git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 29 10:56:08 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Jun 29 11:11:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SkWzn-00058s-Kq
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jun 2012 10:56:07 +0200
+	id 1SkXE8-0001Ik-Fj
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jun 2012 11:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847Ab2F2Izu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jun 2012 04:55:50 -0400
-Received: from mail-yw0-f42.google.com ([209.85.213.42]:32861 "EHLO
-	mail-yw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677Ab2F2Izt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2012 04:55:49 -0400
-Received: by yhfq11 with SMTP id q11so3544873yhf.1
-        for <git@vger.kernel.org>; Fri, 29 Jun 2012 01:55:48 -0700 (PDT)
+	id S1753188Ab2F2JKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jun 2012 05:10:53 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:39140 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677Ab2F2JKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2012 05:10:52 -0400
+Received: by yenl2 with SMTP id l2so2485489yen.19
+        for <git@vger.kernel.org>; Fri, 29 Jun 2012 02:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=YVxZsGmZvU9lLWmzcIuSyJVdiUC3w/oWOyNXNpK8/1M=;
-        b=GKyfTiRRD4NfuFS91bMoVXwFanWb5+wl2+6nwgtxl1F+syfh6AX6DqJ5pMxSA/DOHo
-         j7TmmzNZTQezNro9cEAvWF4fChlUy4GL/4u6wwzLMKvfrPq+ko2aqMXUuAtWUHwABq7I
-         vOdnmQuDoEXxqn1uPmFjDzVne37fEiPnbqt5MG84LCgYvvrQJIcwgmR2nfnmG586mWw+
-         2g9KC3ZJJbYdRw5icjiMgAdfRLyvImxuToiG8CO2RTc4q1oAvoxtor8535EkNMro7ysl
-         xgZBSUkf09F4RF2x2XErhBitcWXqyl/5DVZVPT//FJmZ47hstsPiABx3TSlfZno7gXeR
-         eouQ==
-Received: by 10.42.61.134 with SMTP id u6mr387944ich.11.1340960148074;
-        Fri, 29 Jun 2012 01:55:48 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id if4sm1448797igc.10.2012.06.29.01.55.47
-        (version=SSLv3 cipher=OTHER);
-        Fri, 29 Jun 2012 01:55:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4FED6250.7010103@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4RhKjID7FOxNVyttghRKeOYTmmcrpdYHw4sxSqIdBa8=;
+        b=JE6gUfV5xYSJU55ED2ahIJOolslS3NYrQuoaEB8Z8k9Nhky+z86e+ODRwsCwXuB9SJ
+         jqMAw/3eEBAh6rvvAenGGlAkxgVi68T0ULb8ZS7W+fJ2HwDGZYyPUtHYpY1kv6vlttjh
+         s7+06HVTZWxG4WkSvDIdwtJyjj1yyyN8gyd1ct1izfYFW6RpB7DBSCVltylOICy3AYlC
+         sA588d16UrajqbM/YtWeLQZ0Pn+OVO5yRavnQ7xOoOab2EgEi8E9xDEux915iyjIE0TU
+         MOgLT+T7ffa6b1WvuMvzD9CE1kA8AISqevsS55FHSgBteXQWv+oGrIGpMjlYR1EJ5YHm
+         nt3A==
+Received: by 10.50.212.70 with SMTP id ni6mr468959igc.30.1340961051339; Fri,
+ 29 Jun 2012 02:10:51 -0700 (PDT)
+Received: by 10.50.135.97 with HTTP; Fri, 29 Jun 2012 02:10:31 -0700 (PDT)
+In-Reply-To: <4FE9FF0C.8050409@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200812>
 
-Johannes Sixt wrote:
+On Tue, Jun 26, 2012 at 8:27 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> Richard, could you please tell us what git commands behave strange
+> in what way and what your expectations were?
 
-Yes, not sure how I missed that. :(
+A real-life example can be found at:
 
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+  https://gist.github.com/2992239
+
+lines 354 in the second and 353 in the third paste block.
+
+
+> As far as I can see all submodule code consistently clears all
+> environment variables used by git before descending into a
+> submodule (at least since February 2010 and 5ce9086dd). Maybe we
+> should change that so it sets the GIT_WORK_TREE environment to
+> "$GIT_WORK_TREE/submodule" to be consistent?
+
+>From how I understand the problem, this would solve it.
+
+-- 
+Richard
