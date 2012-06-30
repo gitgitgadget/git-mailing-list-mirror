@@ -1,157 +1,240 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git submodule vs GIT_WORK_TREE
-Date: Fri, 29 Jun 2012 14:03:15 -0700
-Message-ID: <7vvci93k6k.fsf@alter.siamese.dyndns.org>
-References: <CAD77+gTVLsEOgWo+WDafzNOYOwSZQ2KkgBuibBXemVmGu_Fzgw@mail.gmail.com>
- <7vobo6cazk.fsf@alter.siamese.dyndns.org> <4FE9FF0C.8050409@web.de>
- <7vobo5c0n0.fsf@alter.siamese.dyndns.org> <4FEA380D.8070001@web.de>
- <7vzk7p8z38.fsf@alter.siamese.dyndns.org>
- <CAD77+gSyhR+4vdv3dEVSuEvyt7mT9ojT-F2BrwTL4FsXpNFeHA@mail.gmail.com>
- <7v8vf551iu.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git_getpass regression?
+Date: Sat, 30 Jun 2012 13:27:09 +0200
+Message-ID: <CABPQNSY3hJse6J7fDo0S5=ySZA4_7=JisfzLBUu135gR2nSF-w@mail.gmail.com>
+References: <CABPQNSa4uvgijjGCSJDXDMqHC3UkqQKKujG3xDFqnQ13LNrKdQ@mail.gmail.com>
+ <20120629173954.GA3804@sigill.intra.peff.net> <CABPQNSZ4NhEA1CBiCBD_YNJZcnK8u=NtQ3PeDa5c0NDROPDyrQ@mail.gmail.com>
+ <20120629203001.GA12937@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 23:03:24 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jun 30 13:28:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SkiLb-0006Cc-Av
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jun 2012 23:03:23 +0200
+	id 1SkvqG-00079d-7c
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jun 2012 13:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756374Ab2F2VDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jun 2012 17:03:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41222 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755973Ab2F2VDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2012 17:03:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB5AB8585;
-	Fri, 29 Jun 2012 17:03:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PBpt0VEpwSq++0zCxik8kZs4iSU=; b=D62ksT
-	xDlNST/w9E8bPUi/8JQbx2KN9wsTW+5FZ/3dMgounHma6KgG758NXWiyy4em4/lP
-	qCEf9hpU2zSpQ3t5+FVFPF8e4TEiMPZWw8q7kCSs9A4bcAyS+bbihOdImsfs0E0y
-	iL2uqBV1MnOy5XdhOMsmBc1+/LtofrNEH7SCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yf547nAA1tXf/4Svu0D3UHRkLhQcmV0p
-	5GpPnwF4xWrxG0JpfosRkYYC6DbfdCB9Ckx+Bibe3CwIahZ0iJ67+styc/uX1e5x
-	pJu4u2uLgV5dDKceT3qaX6C6iGgAYx+uV4EHamNVh5QehJ7iLtA8P+JQLONrmM5n
-	jzqqUmNXV4o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDEF58584;
-	Fri, 29 Jun 2012 17:03:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C11C8582; Fri, 29 Jun 2012
- 17:03:17 -0400 (EDT)
-In-Reply-To: <7v8vf551iu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 29 Jun 2012 13:03:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D93EDA3A-C22D-11E1-8F78-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753715Ab2F3L1v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jun 2012 07:27:51 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:34905 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753484Ab2F3L1u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Jun 2012 07:27:50 -0400
+Received: by pbbrp8 with SMTP id rp8so5614426pbb.19
+        for <git@vger.kernel.org>; Sat, 30 Jun 2012 04:27:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=XGg5aY3UHo66Ysfq4A5YasMsMqlf4w2gg362m7zZJoI=;
+        b=P8IdHk6pp6NrJxxEdYvpNHcSpV6wF9Gt2LV03sSbm6Jlj8x8cBxQMlDRwntx+Q4D6G
+         KMAHvujjoMYWH7Iw4c6XhnrAkA3bSrlgYKU8DDGlOV95/Iob0zSvnKZcrCaY1oT9c2wh
+         f1Rn9h/b74b2/kQl3vioLVOKMQX+upAcHe/vayS6wGP5eBXj8Hp+hxsFS2e1f5Xkj5BB
+         0HUkqHk69DNp0qUzty2gRly2S/b2mDVJdQiLSVfLp+dJaAmV7RhB+Sk+4+p/jUs2Ass9
+         RjdJ1GxbS4VKjk3giOHLfMNCo1LQmjvtuBRd0wwGQ0m1ebgurPOd1x5A8nNMY7nrM8z7
+         lTMw==
+Received: by 10.68.197.70 with SMTP id is6mr14032549pbc.64.1341055670005; Sat,
+ 30 Jun 2012 04:27:50 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Sat, 30 Jun 2012 04:27:09 -0700 (PDT)
+In-Reply-To: <20120629203001.GA12937@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200833>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jun 29, 2012 at 10:30 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jun 29, 2012 at 10:14:35PM +0200, Erik Faye-Lund wrote:
+>
+>> > Backspace shouldn't be making it to git at all; it should be handl=
+ed at
+>> > the terminal input layer, because we are not putting the terminal =
+into
+>> > raw mode.
+>>
+>> I don't get it. How can the terminal ever interpret the backspace, w=
+hen
+>> we've already put the character it's supposed to erase in a strbuf? =
+Sure,
+>> the echo can be correctly dealt with (probably with the exception of=
+ the
+>> border case of erasing characters from the prompt text), but once we=
+'ve put
+>> the characters into a buffer, the terminal cannot erase it.
+>
+> Because a terminal in non-raw mode is typically line-oriented, and yo=
+ur
+> program doesn't get to see any input at all until the user hits enter=
+=2E
+>
+> Try this on your linux box:
+>
+> =A0strace -e read cat
+>
+> You should be able to type characters and backspace erase them, all
+> without seeing any activity from strace. When you hit enter, you shou=
+ld
+> see the full text you typed read as a single syscall.
+>
 
->>> Declaring that a checked out submodule _must_ have its controlling
->>> repository as ".git" at its root level, i.e. it should be accessible
->>> without using GIT_WORK_TREE/GIT_DIR at all just like a normal Git
->>> repository is, would be a clean way to avoid the issue altogether
->>> and it still will allow the top-level superproject to be structured
->>> in a funny way to require GIT_WORK_TREE/GIT_DIR to access it,
+Thanks for the explanation.
 
-Let's think aloud a bit with a simple example.  Imagine there is a
-directory hierarchy $HOME/a/b with a file $HOME/a/b/c in it.
+> If the backspacing doesn't work, then there is a configuration mismat=
+ch
+> between what linux's tty driver expects and what your terminal emulat=
+or
+> is sending (the former is probably expecting ^? as the erase characte=
+r,
+> and the latter is sending ^H).
+>
 
-'$HOME/a' is a working tree of a Git managed project.  In a normal
-layout, there is a $HOME/a/.git directory there that houses its Git
-repository, and everything (recursively) outside $HOME/a/.git in the
-directory $HOME/a are working tree files of that repository.  You
-can
+The only thing I actually tested, was that getpass behaved correctly.
+I just assumed fgetc returned the input right away. I had no idea that
+fgetc didn't fetch characters until a whole line was entered. I guess
+you learn something every day ;)
 
-	cd $HOME/a
-        git add b/c
+I have now written a small test-application that confirms that the
+prompt works just fine; I was making conclusions without testing
+properly, my bad. So I'm sorry for the noise. But please read on ;)
 
-to add the file at path b/c, and commit the changes to it.
+>> > If that is the case, I wonder if your 'stty erase' settings
+>> > do not match what your terminal emulator is sending.
+>>
+>> I have no idea what that even means. And having to fiddle around wit=
+h
+>> terminal settings just makes git feel cheap.
+>
+> But it's not git that is broken. It's your configuration. Fixing git =
+is
+> a band-aid, and other programs will still be broken. Of course, I may=
+ be
+> mis-diagnosing your problem. Did you try this:
+>
+>> > If you run "stty erase ^H" and then run git, does it work?
+>
+> ?
+>
 
-You can relocate $HOME/a/.git elsewhere, say $HOME/git/a.git, by
-exporting GIT_DIR=$HOME/git/a.git as long as you work at the top
-level of the working tree.  When GIT_DIR alone is set this way, you
-are giving no clue to Git where the top-level of the working tree is
-(remember, you relocated $HOME/a/.git away so there is no ".git" in
-the $HOME/a directory), so your $(cwd) will be always taken as the
-top level of the working tree.
+I'm sorry, I didn't have access to a box at that time, that's why I
+didn't answer that part.
 
-It is inconvenient if you want to work in $HOME/a/b.  So you can do
-this:
+But now, I see that "stty erase ^H" makes the terminal behave all
+strange when it comes to the backspace character; it starts printing
+"^?" instead.
 
-	GIT_WORK_TREE=$HOME/a
-        export GIT_WORK_TREE
-        cd $HOME/a/b
-	git add c
+>> > =A0I think (3) is the only sane thing,
+>> > though.
 
-and everything works again.
+Yes, you are right. But perhaps with one exception: we probably want
+to piggy-back on those terminal-handling goodies on Windows. If only
+to get git to behave more consistently with other applications.
 
-Or $HOME/a/b may be a separate project, and $HOME/a/.git repository
-binds that as a submodule.  In a normal layout, a $HOME/a/b/.git
-directory is there that houses its Git repository.  'c' is a file
-that appears at the top level of that working tree.  When you are at
-the top-level of the superproject's working tree, you see b/ and Git
-knows it is a submodule, not a subdirectory of the superproject.  It
-cannot allow "git add b/c" to the superproject.
+So perhaps we should do something like this?
 
-And this will continue to work with GIT_DIR/GIT_WORK_TREE when you
-move $HOME/a/.git elsewhere.
+---8<---
+diff --git a/compat/terminal.c b/compat/terminal.c
+index 53c5166..2f44fb5 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -76,18 +76,58 @@ char *git_terminal_prompt(const char *prompt, int e=
+cho)
+ char *git_terminal_prompt(const char *prompt, int echo)
+ {
+ 	static struct strbuf buf =3D STRBUF_INIT;
++	int r;
++	FILE *input_fh, *output_fh;
++	DWORD cmode =3D 0;
++	HANDLE hconin;
++
++	input_fh =3D fopen("CONIN$", "r");
++	if (!input_fh)
++		return NULL;
++
++	output_fh =3D fopen("CONOUT$", "w");
++	if (!output_fh) {
++		fclose(input_fh);
++		return NULL;
++	}
 
-What happens if you also moved $HOME/a/b/.git elsewhere?
+-	fputs(prompt, stderr);
+-	strbuf_reset(&buf);
+-	for (;;) {
+-		int c =3D _getch();
+-		if (c =3D=3D '\n' || c =3D=3D '\r')
+-			break;
+-		if (echo)
+-			putc(c, stderr);
+-		strbuf_addch(&buf, c);
++	if (!echo) {
++		hconin =3D CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
++		    FILE_SHARE_READ, NULL, OPEN_EXISTING,
++		    FILE_ATTRIBUTE_NORMAL, NULL);
++		if (hconin =3D=3D INVALID_HANDLE_VALUE) {
++			fclose(input_fh);
++			fclose(output_fh);
++			return NULL;
++		}
++		GetConsoleMode(hconin, &cmode);
++		if (!SetConsoleMode(hconin, cmode & (~ENABLE_ECHO_INPUT))) {
++			fclose(input_fh);
++			fclose(output_fh);
++			return NULL;
++		}
+ 	}
+-	putc('\n', stderr);
++
++	fputs(prompt, output_fh);
++	fflush(output_fh);
++
++	r =3D strbuf_getline(&buf, input_fh, '\n');
++	if (!echo) {
++		putc('\n', output_fh);
++		fflush(output_fh);
++
++		SetConsoleMode(hconin, cmode);
++		CloseHandle(hconin);
++	}
++
++	if (buf.buf[buf.len - 1] =3D=3D '\r')
++		strbuf_setlen(&buf, buf.len - 1);
++
++	fclose(input_fh);
++	fclose(output_fh);
++
++	if (r =3D=3D EOF)
++		return NULL;
+ 	return buf.buf;
+ }
 
-This will still work when you want to work inside the submodule:
+---8<---
 
-	GIT_WORK_TREE=$HOME/a/b
-        export GIT_WORK_TREE
-        cd $HOME/a/b
-	git add c
+Notice how this looks very similar to the HAVE_TTY code-path, with the
+exception of needing two file handles instead of one, and the actual
+enabling/resetting of the prompt-setting. So the code-paths can
+probably be refactored to share code...
 
-to record the change to 'c' at the top-level of the working tree of
-the submodule.
+>> As I already said, I don't think this is the case. Inserting 0x7f in=
+ a
+>> strbuf does not delete the preceding char...
+>
+> Of course not. Control characters should be handled by the terminal
+> driver, and shouldn't make it to git at all. Backspacing works perfec=
+tly
+> well on correctly configured systems, and it should not be git's
+> responsibility to care about it at all for line-oriented input (and i=
+f
+> we _did_ want to handle it ourselves, we should use a real terminal
+> library like readline or curses).
 
-*BUT*
+Yes, I absolutely agree. Sorry for getting confused and wasting your
+time with unfounded accusations.
 
-There is no ".git" in $HOME/a anywhere, so this breaks when you are
-in the superproject's working tree. There is no longer anything that
-tells Git that the $HOME/a/b path is a project boundary.
-
-You could look at the index to notice b is known as a submodule, but
-that is not a usable solution in general.  You could have done "git
-rm --cached" it, perhaps because you wanted to do something clever
-with it, e.g. in preparation to move it, in which case we still
-would want to treat it as the working tree of a separate Git
-repository that is not yet (or no longer) connected to the working
-tree of the $HOME/a/ repository.
-
-By the way, without any of the GIT_DIR/GIT_WORK_TREE hack, the
-following sequence does not work correctly (it is a bug nobody cares
-about), and we may want to correct it.
-
-	mkdir -p /var/tmp/x/a/b
-        cd /var/tmp/x/a
-        git init ;# create a/.git
-        git init ;# create a/b/.git
-        >c && git add c ;# a/b/.git knows about c at the toplevel
-        cd .. ;# back at a
-        git add b/c
-
-Even though a/b/.git does not yet have a commit and 'b' has not been
-registered as a submodule to its index, Git run in 'a' should notice
-that b/c belongs to somebody else, and refuse to grab it.  It has
-enough cue (namely, the presense of a/b/.git and the directory being
-a proper Git repository) to do so, but it currently does not use
-that clue.
+But perhaps something good came from it; the Windows-prompt doesn't
+support erasing until the patch above is applied. I don't know if you
+care or not, but I certainly do ;)
