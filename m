@@ -1,58 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please pull git-po maint branch with Swedish update
-Date: Mon, 02 Jul 2012 15:37:21 -0700
-Message-ID: <7vmx3hyela.fsf@alter.siamese.dyndns.org>
-References: <CANYiYbFuOM5r-x0ozxuw3tSju4QNBn=nZOv5CydnB2BO-NQ6hQ@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: bug: "fatal: cannot pread pack file", version 1.7.5.4
+Date: Tue, 03 Jul 2012 00:43:42 +0200
+Message-ID: <m2vci5n5r5.fsf@igel.home>
+References: <5638dec6e156f83385a3baa01cf9ac4d@localhost>
+	<20120702215736.GA5790@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:37:31 2012
+Content-Type: text/plain
+Cc: Lars Winterfeld <lars.winterfeld@tu-ilmenau.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:43:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpFI-0007Ts-Ho
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:37:28 +0200
+	id 1SlpLU-0001De-TO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029Ab2GBWhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:37:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41046 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753118Ab2GBWhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:37:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DF9A913C;
-	Mon,  2 Jul 2012 18:37:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=G3lB6U
-	vxAcNNrwGdLKWG5g4Ybr0ZNR0fO1oEkjnQwuF3ycvQ67yZKCrctQc0ib+7Fn7/qS
-	O+gZBVbzZ03haM1GWB5Gz90R+XljhijINaS0VKlbf3zCNM8tbu80i2doi58P106g
-	qmOmUvuMAUg3PYPfq/Do/V1IpTQ6m/IlwU72E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Afir7ir9VY3B3SkYi2sF034wAl1qpdNt
-	bi/2H/R2SjMU07OQYXd8MnndkpA2IXF82KbC+Em8oe9DKv7tXr4wGCdxv6YU2urW
-	z34e3rB1tUagPv3y5erG11i9i+kEpKJB6tFp6ii++QOHr9zoqBpup4VILnG+PIcr
-	LMIei/Bz6og=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01A2B913A;
-	Mon,  2 Jul 2012 18:37:23 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A9079137; Mon,  2 Jul 2012
- 18:37:22 -0400 (EDT)
-In-Reply-To: <CANYiYbFuOM5r-x0ozxuw3tSju4QNBn=nZOv5CydnB2BO-NQ6hQ@mail.gmail.com> (Jiang
- Xin's message of "Mon, 2 Jul 2012 09:43:45 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7D65ADC2-C496-11E1-B4F3-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753972Ab2GBWnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 18:43:47 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:36445 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755085Ab2GBWnq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 18:43:46 -0400
+Received: from frontend4.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3WR3Rf2v4fz3hhXB;
+	Tue,  3 Jul 2012 00:44:14 +0200 (CEST)
+Received: from igel.home (ppp-88-217-119-150.dynamic.mnet-online.de [88.217.119.150])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3WR3R30S7pzbbrW;
+	Tue,  3 Jul 2012 00:43:43 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id B0CB0CA2A4; Tue,  3 Jul 2012 00:43:42 +0200 (CEST)
+X-Yow: I need to discuss BUY-BACK PROVISIONS with at least
+ six studio SLEAZEBALLS!!
+In-Reply-To: <20120702215736.GA5790@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 2 Jul 2012 17:57:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200888>
 
-Thanks.
+Jeff King <peff@peff.net> writes:
+
+> It's very odd for pread to report ENOENT (since it is always operating
+> on an already-opened file descriptor).
+
+It doesn't, but gettext will clobber errno:
+
+		n = pread(pack_fd, inbuf, n, from);
+		if (n < 0)
+			die_errno(_("cannot pread pack file"));
+
+There is nothing that saves errno.  This isn't limited to i18n though,
+any function call in the arguments may potentially clobber errno.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
