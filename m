@@ -1,71 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug: "fatal: cannot pread pack file", version 1.7.5.4
-Date: Mon, 2 Jul 2012 17:57:36 -0400
-Message-ID: <20120702215736.GA5790@sigill.intra.peff.net>
-References: <5638dec6e156f83385a3baa01cf9ac4d@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Incorrect v1.7.10.4 tag on github?
+Date: Mon, 02 Jul 2012 14:58:48 -0700
+Message-ID: <7vy5n1ygdj.fsf@alter.siamese.dyndns.org>
+References: <77A5E1CD-836A-4747-9E62-42C25C0D8B7D@sfu.ca>
+ <20120615182534.GB14843@sigill.intra.peff.net>
+ <7vvcis9ylx.fsf@alter.siamese.dyndns.org>
+ <CAPBPrnspD3uC6_wd7nqMUVgHSt4Frwy8UaYL6fU73kJKX6=XWQ@mail.gmail.com>
+ <7v7gulzxme.fsf@alter.siamese.dyndns.org>
+ <CAP2yMaLy3sBwybMH2LYs9Sg0AigZ-_tAx4SbHOrwr3T6GfLSaw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Lars Winterfeld <lars.winterfeld@tu-ilmenau.de>
-X-From: git-owner@vger.kernel.org Mon Jul 02 23:57:53 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan Johnson <computerdruid@gmail.com>, Jeff King <peff@peff.net>,
+	Graham Ballantyne <grahamb@sfu.ca>, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 02 23:58:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Slocw-0005Ra-EV
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jul 2012 23:57:50 +0200
+	id 1Sloe0-0007MO-6u
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jul 2012 23:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933014Ab2GBV5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 17:57:40 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:51821
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932549Ab2GBV5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 17:57:39 -0400
-Received: (qmail 13204 invoked by uid 107); 2 Jul 2012 21:57:46 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Jul 2012 17:57:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2012 17:57:36 -0400
-Content-Disposition: inline
-In-Reply-To: <5638dec6e156f83385a3baa01cf9ac4d@localhost>
+	id S932549Ab2GBV6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 17:58:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56712 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755629Ab2GBV6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 17:58:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B87B48822;
+	Mon,  2 Jul 2012 17:58:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PGz10FZYm/ZSckvGtFhLMpHE+xg=; b=X2/ktJ
+	6+tkRPvvNtxllizaw/kieLkppYNDSsqJ36KidsRyyY2H8mDoz9+ODddPT8EEwBU1
+	yROVMaqvcwD6zGE6aIKv0jM/0/Sc5LRhemJcFdgCUH+OTbgWPp2E3lprJB/teLJE
+	OFeEJ9OoS4lCQIUUAjP/Hpi+qzhc55EqauxKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=obMRyojQGICwb9/pj7jUil4Tap3nKS9b
+	W1YtNCWo/WuvSPQgKSnmDZofPiML+FuQGApXkLWIfd20wSSFrz3/JjTO7kLp0snJ
+	J0a+r6i8Ni3nc5Uojm8o3xrhyLBPB7imllXCct60vcHECLdnV9oMW+Y6MtQoSTeB
+	fkxfuFUoHgY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEAD48821;
+	Mon,  2 Jul 2012 17:58:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44CA68820; Mon,  2 Jul 2012
+ 17:58:50 -0400 (EDT)
+In-Reply-To: <CAP2yMaLy3sBwybMH2LYs9Sg0AigZ-_tAx4SbHOrwr3T6GfLSaw@mail.gmail.com> (Scott
+ Chacon's message of "Mon, 2 Jul 2012 14:11:32 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B2AF2E8-C491-11E1-9422-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200866>
 
-On Mon, Jul 02, 2012 at 12:03:13PM -0700, Lars Winterfeld wrote:
+Scott Chacon <schacon@gmail.com> writes:
 
-> I have used git for some time and regularly pushed changes to another
-> server (as some kind of backup), but today I got this error during
-> `git push`:
-> 
-> Counting objects: 1293, done.
-> Compressing objects: 100% (1027/1027), done.
-> Writing objects: 100% (1229/1229), 70.83 MiB | 364 KiB/s, done.
-> Total 1229 (delta 343), reused 0 (delta 0)
-> fatal: cannot pread pack file: No such file or directory
-> error: unpack failed: index-pack abnormal exit
-> To user@host:~/path/
-> ! [remote rejected] master -> master (n/a (unpacker error))
-> error: failed to push some refs to 'user@host:~/path/'
-> 
-> I found similar bug reports suggesting to upgrade too version 1.7.x,
-> but I am already using git version 1.7.5.4. Can somebody explain to
-> me what this error is about? What can I do to resolve it / is there a
-> workaround?
+> Thanks for letting me know - I didn't realize that the built tarballs
+> were different from the tagged commit trees.  I will update the links.
 
-It's very odd for pread to report ENOENT (since it is always operating
-on an already-opened file descriptor). Older versions of git would
-sometimes sometimes report errno even when we get a return of 0 (when
-errno is bogus, and they should say "truncated file" or similar), but
-that was long ago fixed in fb74243 (Do not use errno when pread()
-returns 0, 2008-10-06). There was also an actual bug fixed by a91d49c
-(index-pack: Loop over pread until data loading is complete.,
-2007-02-27) that I think could also generate this error.
-
-What OS is the server running? Is it using NFS? Are you sure that the
-server version is also v1.7.5.4?
-
--Peff
+Thanks.
