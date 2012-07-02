@@ -1,65 +1,96 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: bug: "fatal: cannot pread pack file", version 1.7.5.4
-Date: Tue, 03 Jul 2012 00:43:42 +0200
-Message-ID: <m2vci5n5r5.fsf@igel.home>
-References: <5638dec6e156f83385a3baa01cf9ac4d@localhost>
-	<20120702215736.GA5790@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 14/18] sha1_name.c: many short names can only be
+ committish
+Date: Mon, 02 Jul 2012 16:01:52 -0700
+Message-ID: <7vipe5ydgf.fsf@alter.siamese.dyndns.org>
+References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
+ <1341268449-27801-15-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Winterfeld <lars.winterfeld@tu-ilmenau.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:43:55 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 03 01:02:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpLU-0001De-TO
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:43:53 +0200
+	id 1Slpd9-0006KO-Na
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 01:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972Ab2GBWnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:43:47 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:36445 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755085Ab2GBWnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:43:46 -0400
-Received: from frontend4.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WR3Rf2v4fz3hhXB;
-	Tue,  3 Jul 2012 00:44:14 +0200 (CEST)
-Received: from igel.home (ppp-88-217-119-150.dynamic.mnet-online.de [88.217.119.150])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WR3R30S7pzbbrW;
-	Tue,  3 Jul 2012 00:43:43 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id B0CB0CA2A4; Tue,  3 Jul 2012 00:43:42 +0200 (CEST)
-X-Yow: I need to discuss BUY-BACK PROVISIONS with at least
- six studio SLEAZEBALLS!!
-In-Reply-To: <20120702215736.GA5790@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 2 Jul 2012 17:57:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S932456Ab2GBXCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 19:02:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51094 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751328Ab2GBXBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 19:01:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D59409653;
+	Mon,  2 Jul 2012 19:01:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ixj51j50H4Z2jHig8PEhGqTN0YQ=; b=fqoTqZ
+	XDXKZmWrzETgVvcgFSiwSsth7B25zh9glk2kOi/5s7o/xY7sinhnlvCpgLscvamj
+	mY16bAPKNaaEeeDqNE6D5gfRSSdw6JeCEdIvDaAfCmZOjpG+CLP5Rag/UuTc2iez
+	whDFaSBLN8Uj4cQfaA3PORRmAoLvv79Tqes+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lvgF9bpXngiH5isXObjUhW4bxCcqe0l1
+	SYBWo1bjza656f1AAAIFAPWPA4m1aXcipqOZkiIeZX5D0M5HCVxvADEFBoO2i/aj
+	/rv5jcokj4WslygsXFil08olDayvw69JeMfF+PlpdoaKHsv5JVtNL1N/VaQfgn7/
+	/vaOtH7x41k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC9D29652;
+	Mon,  2 Jul 2012 19:01:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60A2F9651; Mon,  2 Jul 2012
+ 19:01:54 -0400 (EDT)
+In-Reply-To: <1341268449-27801-15-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Mon, 2 Jul 2012 15:34:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EAACCC1E-C499-11E1-B5B6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200889>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It's very odd for pread to report ENOENT (since it is always operating
-> on an already-opened file descriptor).
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 6f6c49c..35ad473 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -519,6 +539,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+>  	unsigned char outer[20];
+>  	const char *sp;
+>  	unsigned int expected_type = 0;
+> +	unsigned lookup_flags;
 
-It doesn't, but gettext will clobber errno:
+This needs to be initialized to 0, i.e.
 
-		n = pread(pack_fd, inbuf, n, from);
-		if (n < 0)
-			die_errno(_("cannot pread pack file"));
+	unsigned lookup_flags = 0;
 
-There is nothing that saves errno.  This isn't limited to i18n though,
-any function call in the arguments may potentially clobber errno.
+for the following two hunks to make sense.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> @@ -554,7 +575,10 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+>  	else
+>  		return -1;
+>  
+> -	if (get_sha1_1(name, sp - name - 2, outer, 0))
+> +	if (expected_type == OBJ_COMMIT)
+> +		lookup_flags = GET_SHA1_COMMITTISH;
+> +
+> +	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
+>  		return -1;
+>  
+>  	o = parse_object(outer);
+> @@ -666,7 +690,7 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
+>  	if (!ret)
+>  		return 0;
+>  
+> -	return get_short_sha1(name, len, sha1, 0);
+> +	return get_short_sha1(name, len, sha1, lookup_flags);
+>  }
+>  
+>  /*
