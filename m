@@ -1,207 +1,141 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 08/18] sha1_name.c: correct misnamed "canonical" and "res"
-Date: Mon,  2 Jul 2012 15:33:59 -0700
-Message-ID: <1341268449-27801-9-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 03/18] sha1_name.c: get rid of ugly get_sha1_with_mode_1()
+Date: Mon,  2 Jul 2012 15:33:54 -0700
+Message-ID: <1341268449-27801-4-git-send-email-gitster@pobox.com>
 References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:51 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:36:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpDi-0004j4-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:51 +0200
+	id 1SlpDp-00052K-2Q
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933126Ab2GBWey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:34:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39791 "EHLO
+	id S1756365Ab2GBWet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 18:34:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39654 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756313Ab2GBWe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:34:28 -0400
+	id S1756061Ab2GBWeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 18:34:17 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B8CB907F
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 718F1906F
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=fpvY
-	114L2t3HYKOwpJ8mL23EaE8=; b=XDDYmVDwYEuv8utOffW/2J9wzHBjKMOkahrq
-	0/wXVEL8easrHCWQqrrxex+3W5nfFDx9C/Yfitq+PEVpKObrFsJpuB/k7TOUjudq
-	Mz4eO5emlaHRi4hWfPW1aBI1h/F5PLghbN5PHDwMbbYhyFd5ZemYsRa942jasZG2
-	1s5W0+s=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=45Hr
+	NvrEqeIg0tZ7TrQYmCdnZOU=; b=W9RTXogWQDOas9ruFzKGokw7UWR99WPOS1WO
+	OxB7Yvgo5475LBhdiyo2c441Y3OngxnBHsiSzQHSAAo7P52SLN75WqS0wbRHbpld
+	Jp5rN6sftz5THkA+STPtVkQO9dXHsTC2zAwRkcjfZbVEyNotJJpNq+vqQYzK4vMz
+	1ZFbxp8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ttQgpN
-	hp0vbDgESAuJHCyWPgo7cRmoHLUblhgYRqVNlCPx8Ee5CkE3haDPTCoMRGK5UtOV
-	NZmMz72wiODSptQU8jYVt2D8r4XJcmgguBAhKM7N0BagqrTj4v0Rn39bslcPxF/C
-	vaZ5Y5dJZ/x0q+GMMBOS01HLTe3jG7SPvpvj4=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=FnrDne
+	oIUeEhivAuZioY4eE3m2rEV2KpXNZ8DJaEF7ITsifMUnIxSrDzAl1hAZqVsgWBIF
+	jtrua2Dh76Tm3cH8YixkUG2T6Hw5QBE+33YPmH9E9VHo8QM+3JURoyPnerrU3lPq
+	4ELPOipkHc6j8DplGqSeXxfhgd/MPMvcdoO/Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12708907E
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65F24906E
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:17 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A0CE907D for
- <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:27 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 794D1906B for
+ <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:16 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.212.g52fe12e
 In-Reply-To: <1341268449-27801-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 14F84560-C496-11E1-A370-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0E7D69E0-C496-11E1-9FDA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200885>
 
-These are hexadecimal and binary representation of the short object
-name given to the callchain as its input.  Rename them with _pfx
-suffix to make it clear they are prefixes, and call them hex and bin
-respectively.
+The only external caller is setup.c that tries to give a nicer error
+message when an object name is misspelt (e.g. "HEAD:cashe.h").
+Retire it and give the caller a dedicated and more intuitive API
+function die_on_misspelt_object_name().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sha1_name.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ cache.h     |  7 ++-----
+ setup.c     |  8 ++------
+ sha1_name.c | 20 ++++++++++++++++----
+ 3 files changed, 20 insertions(+), 15 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 9ee470c..2200110 100644
+--- a/cache.h
++++ b/cache.h
+@@ -812,11 +812,8 @@ struct object_context {
+ };
+ 
+ extern int get_sha1(const char *str, unsigned char *sha1);
+-extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int only_to_die, const char *prefix);
+-static inline int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
+-{
+-	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
+-}
++extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
++extern void die_on_misspelt_object_name(const char *name, const char *prefix);
+ extern int get_sha1_with_context(const char *str, unsigned char *sha1, struct object_context *orc);
+ 
+ /*
+diff --git a/setup.c b/setup.c
+index 61c22e6..979a26b 100644
+--- a/setup.c
++++ b/setup.c
+@@ -55,18 +55,14 @@ int check_filename(const char *prefix, const char *arg)
+ 
+ static void NORETURN die_verify_filename(const char *prefix, const char *arg)
+ {
+-	unsigned char sha1[20];
+-	unsigned mode;
+-
+ 	/*
+ 	 * Saying "'(icase)foo' does not exist in the index" when the
+ 	 * user gave us ":(icase)foo" is just stupid.  A magic pathspec
+ 	 * begins with a colon and is followed by a non-alnum; do not
+-	 * let get_sha1_with_mode_1(only_to_die=1) to even trigger.
++	 * let die_on_misspelt_object_name() even trigger.
+ 	 */
+ 	if (!(arg[0] == ':' && !isalnum(arg[1])))
+-		/* try a detailed diagnostic ... */
+-		get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
++		die_on_misspelt_object_name(arg, prefix);
+ 
+ 	/* ... or fall back the most general message. */
+ 	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
 diff --git a/sha1_name.c b/sha1_name.c
-index b78a2c3..dc20730 100644
+index 10932bf..01ed48b 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -9,7 +9,7 @@
- 
- static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
- 
--static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
-+static int find_short_object_filename(int len, const char *hex_pfx, unsigned char *sha1)
- {
- 	struct alternate_object_database *alt;
- 	char hex[40];
-@@ -34,18 +34,18 @@ static int find_short_object_filename(int len, const char *name, unsigned char *
- 	}
- 	fakeent->next = alt_odb_list;
- 
--	sprintf(hex, "%.2s", name);
-+	sprintf(hex, "%.2s", hex_pfx);
- 	for (alt = fakeent; alt && found < 2; alt = alt->next) {
- 		struct dirent *de;
- 		DIR *dir;
--		sprintf(alt->name, "%.2s/", name);
-+		sprintf(alt->name, "%.2s/", hex_pfx);
- 		dir = opendir(alt->base);
- 		if (!dir)
- 			continue;
- 		while ((de = readdir(dir)) != NULL) {
- 			if (strlen(de->d_name) != 38)
- 				continue;
--			if (memcmp(de->d_name, name + 2, len - 2))
-+			if (memcmp(de->d_name, hex_pfx + 2, len - 2))
- 				continue;
- 			if (!found) {
- 				memcpy(hex + 2, de->d_name, 38);
-@@ -79,7 +79,7 @@ static int match_sha(unsigned len, const unsigned char *a, const unsigned char *
+@@ -1125,12 +1125,24 @@ static int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 	return ret;
  }
  
- static int unique_in_pack(int len,
--			  const unsigned char *match,
-+			  const unsigned char *bin_pfx,
- 			  struct packed_git *p,
- 			  const unsigned char **found_sha1,
- 			  int seen_so_far)
-@@ -96,7 +96,7 @@ static int unique_in_pack(int len,
- 		int cmp;
- 
- 		current = nth_packed_object_sha1(p, mid);
--		cmp = hashcmp(match, current);
-+		cmp = hashcmp(bin_pfx, current);
- 		if (!cmp) {
- 			first = mid;
- 			break;
-@@ -110,12 +110,12 @@ static int unique_in_pack(int len,
- 
- 	/*
- 	 * At this point, "first" is the location of the lowest object
--	 * with an object name that could match "match".  See if we have
-+	 * with an object name that could match "bin_pfx".  See if we have
- 	 * 0, 1 or more objects that actually match(es).
- 	 */
- 	for (i = first; i < num; i++) {
- 		current = nth_packed_object_sha1(p, first);
--		if (!match_sha(len, match, current))
-+		if (!match_sha(len, bin_pfx, current))
- 			break;
- 
- 		/* current matches */
-@@ -131,7 +131,7 @@ static int unique_in_pack(int len,
- 	return seen_so_far;
+-int get_sha1_with_mode_1(const char *name, unsigned char *sha1, unsigned *mode,
+-			 int only_to_die, const char *prefix)
++/*
++ * Call this function when you know "name" given by the end user must
++ * name an object but it doesn't; the function _may_ die with a better
++ * diagnostic message than "no such object 'name'", e.g. "Path 'doc' does not
++ * exist in 'HEAD'" when given "HEAD:doc", or it may return in which case
++ * you have a chance to diagnose the error further.
++ */
++void die_on_misspelt_object_name(const char *name, const char *prefix)
+ {
+ 	struct object_context oc;
+-	int ret;
+-	ret = get_sha1_with_context_1(name, sha1, &oc, only_to_die, prefix);
++	unsigned char sha1[20];
++	get_sha1_with_context_1(name, sha1, &oc, 1, prefix);
++}
++
++int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
++{
++	struct object_context oc;
++	int ret = get_sha1_with_context_1(str, sha1, &oc, 0, NULL);
+ 	*mode = oc.mode;
+ 	return ret;
  }
- 
--static int find_short_packed_object(int len, const unsigned char *match, unsigned char *sha1)
-+static int find_short_packed_object(int len, const unsigned char *bin_pfx, unsigned char *sha1)
- {
- 	struct packed_git *p;
- 	const unsigned char *found_sha1 = NULL;
-@@ -139,7 +139,7 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
- 
- 	prepare_packed_git();
- 	for (p = packed_git; p && found < 2; p = p->next)
--		found = unique_in_pack(len, match, p, &found_sha1, found);
-+		found = unique_in_pack(len, bin_pfx, p, &found_sha1, found);
- 
- 	if (found == 1)
- 		hashcpy(sha1, found_sha1);
-@@ -149,15 +149,15 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
- #define SHORT_NAME_NOT_FOUND (-1)
- #define SHORT_NAME_AMBIGUOUS (-2)
- 
--static int find_unique_short_object(int len, char *canonical,
--				    unsigned char *res, unsigned char *sha1)
-+static int find_unique_short_object(int len, char *hex_pfx,
-+				    unsigned char *bin_pfx, unsigned char *sha1)
- {
- 	int has_unpacked, has_packed;
- 	unsigned char unpacked_sha1[20], packed_sha1[20];
- 
- 	prepare_alt_odb();
--	has_unpacked = find_short_object_filename(len, canonical, unpacked_sha1);
--	has_packed = find_short_packed_object(len, res, packed_sha1);
-+	has_unpacked = find_short_object_filename(len, hex_pfx, unpacked_sha1);
-+	has_packed = find_short_packed_object(len, bin_pfx, packed_sha1);
- 	if (!has_unpacked && !has_packed)
- 		return SHORT_NAME_NOT_FOUND;
- 	if (1 < has_unpacked || 1 < has_packed)
-@@ -177,13 +177,13 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 			  int quietly)
- {
- 	int i, status;
--	char canonical[40];
--	unsigned char res[20];
-+	char hex_pfx[40];
-+	unsigned char bin_pfx[20];
- 
- 	if (len < MINIMUM_ABBREV || len > 40)
- 		return -1;
--	hashclr(res);
--	memset(canonical, 'x', 40);
-+	hashclr(bin_pfx);
-+	memset(hex_pfx, 'x', 40);
- 	for (i = 0; i < len ;i++) {
- 		unsigned char c = name[i];
- 		unsigned char val;
-@@ -197,15 +197,15 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 		}
- 		else
- 			return -1;
--		canonical[i] = c;
-+		hex_pfx[i] = c;
- 		if (!(i & 1))
- 			val <<= 4;
--		res[i >> 1] |= val;
-+		bin_pfx[i >> 1] |= val;
- 	}
- 
--	status = find_unique_short_object(i, canonical, res, sha1);
-+	status = find_unique_short_object(i, hex_pfx, bin_pfx, sha1);
- 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS))
--		return error("short SHA1 %.*s is ambiguous.", len, canonical);
-+		return error("short SHA1 %.*s is ambiguous.", len, hex_pfx);
- 	return status;
- }
- 
 -- 
 1.7.11.1.212.g52fe12e
