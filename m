@@ -1,8 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 17/18] revision.c: allow handle_revision_arg() to take
- other flags
-Date: Mon,  2 Jul 2012 15:34:08 -0700
-Message-ID: <1341268449-27801-18-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 18/18] revision.c: the "log" family, except for "show",
+ takes committish
+Date: Mon,  2 Jul 2012 15:34:09 -0700
+Message-ID: <1341268449-27801-19-git-send-email-gitster@pobox.com>
 References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:18 2012
@@ -11,142 +11,156 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpDB-0003t5-0r
+	id 1SlpDB-0003t5-HD
 	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933173Ab2GBWfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:35:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40029 "EHLO
+	id S933176Ab2GBWfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 18:35:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40054 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756357Ab2GBWeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:34:46 -0400
+	id S1756360Ab2GBWes (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 18:34:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D8790A7
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCBE590AD
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=vYuE
-	wFnFqs5HfUFScOc9+bcO/w8=; b=g6+5cZ8EHMSMRnDutGf3OK/bJf57VR4LMUqF
-	Bmn8EfMghP4BCAB/TToc4b1oMnT3c/7F/gt9fuRPqJ3wQslwHbgcfoqi6l3kfeU5
-	AO96057Q1Z2dJN1KDF+mlDJQqNOp9HQP6q4xfrm8RJLl4EEKs4hD2b4UllYfrX7j
-	64KF5vY=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=P7tv
+	O94/wiANi5Sm2EjNaeLsR0k=; b=R6d3wfx81cPzFH699/Hk/nCgnD1KdvZcfP98
+	x5Ih/VuQ2iTSTAykBg2Ixb6AXHUS4Ef9rXwfTlvkWVVCExpKfIBOlAo+uvbBS9DR
+	1oyYjXF28ZR6ivvfbGrNgGq+EFVWHZNroyGkr4yOjaz/SXMBEDA9J1x/KFTCDWjJ
+	MYY/D+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=IaiyBF
-	j3YXHOuF5W6CLOeGGJyWv5UBs/Q+Y7oqliyNwryAwlqGPGV0RAnpBtzV7uOoQVwE
-	2Q6jg5J01TS6xN23Knl6MOde43vqyMKMHAVNYWMxrV/CR+D/lKlLfQE4o9nUIGQG
-	VYOtX2PG975Lw8S3++b6ZlQH5lMPeVk+cizbw=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=fqpHJf
+	m+bg991yoK16H5Ysf3txClYfYpO++Bqea/WZWmKwrDbaElEL+Yvy8t9NB3CHSrnM
+	LidyFuX7YxMAZ/ms0XzrwTA8M/J64pv5U2nWzKW4XfLOlyhCdp/ISbQpu8BRSaGE
+	bwNv3+enj1RmJVX4IngmgbXx7Y4+bDK6ppGE4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D228A90A6
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C34BD90AC
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:47 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 370EE90A5 for
- <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E48390AB for
+ <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:47 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.212.g52fe12e
 In-Reply-To: <1341268449-27801-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1F9D193C-C496-11E1-A8CB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 20C8B6EA-C496-11E1-A0D7-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200876>
 
-The existing "cant_be_filename" that tells the function that the
-caller knows the arg is not a path (hence it does not have to be
-checked for absense of the file whose name matches it) is made into
-a bit in the flag word.
+Add a field to setup_revision_opt structure and allow these callers
+to tell the setup_revisions command parsing machinery that short SHA1
+it encounters are meant to name committish.
+
+This step does not go all the way to connect the setup_revisions()
+to sha1_name.c yet.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/pack-objects.c |  2 +-
- revision.c             | 13 +++++++------
- revision.h             |  3 ++-
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ builtin/log.c                       |  3 +++
+ revision.c                          | 11 +++++++++--
+ revision.h                          |  2 ++
+ t/t1512-rev-parse-disambiguation.sh |  2 +-
+ 4 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0f2e7b8..48ccadd 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2290,7 +2290,7 @@ static void get_object_list(int ac, const char **av)
- 			}
- 			die("not a rev '%s'", line);
- 		}
--		if (handle_revision_arg(line, &revs, flags, 1))
-+		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
- 			die("bad revision '%s'", line);
- 	}
+diff --git a/builtin/log.c b/builtin/log.c
+index 7d1f6f8..9363f39 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -363,6 +363,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	rev.simplify_history = 0;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
++	opt.revarg_opt = REVARG_COMMITTISH;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+@@ -543,6 +544,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	rev.always_show_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
++	opt.revarg_opt = REVARG_COMMITTISH;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
+ 	return cmd_log_walk(&rev);
+ }
+@@ -1144,6 +1146,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.subject_prefix = fmt_patch_subject_prefix;
+ 	memset(&s_r_opt, 0, sizeof(s_r_opt));
+ 	s_r_opt.def = "HEAD";
++	s_r_opt.revarg_opt = REVARG_COMMITTISH;
  
+ 	if (default_attach) {
+ 		rev.mime_boundary = default_attach;
 diff --git a/revision.c b/revision.c
-index c3160f2..929497f 100644
+index 929497f..ec6f0c8 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1093,9 +1093,7 @@ static void prepare_show_merge(struct rev_info *revs)
- 	revs->limited = 1;
- }
- 
--int handle_revision_arg(const char *arg_, struct rev_info *revs,
--			int flags,
--			int cant_be_filename)
-+int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsigned revarg_opt)
- {
- 	struct object_context oc;
- 	char *dotdot;
-@@ -1103,6 +1101,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs,
- 	unsigned char sha1[20];
+@@ -1102,6 +1102,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
  	int local_flags;
  	const char *arg = arg_;
-+	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
+ 	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
++	unsigned get_sha1_flags = 0;
  
  	dotdot = strstr(arg, "..");
  	if (dotdot) {
-@@ -1236,7 +1235,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 			}
- 			die("options not supported in --stdin mode");
- 		}
--		if (handle_revision_arg(sb.buf, revs, 0, 1))
-+		if (handle_revision_arg(sb.buf, revs, 0, REVARG_CANNOT_BE_FILENAME))
- 			die("bad revision '%s'", sb.buf);
+@@ -1179,7 +1180,11 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 		local_flags = UNINTERESTING;
+ 		arg++;
  	}
- 	if (seen_dashdash)
-@@ -1684,7 +1683,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
-  */
- int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *opt)
- {
--	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0;
-+	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0, revarg_opt;
- 	struct cmdline_pathspec prune_data;
- 	const char *submodule = NULL;
- 
-@@ -1708,6 +1707,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+-	if (get_sha1_with_context(arg, 0, sha1, &oc))
++
++	if (revarg_opt & REVARG_COMMITTISH)
++		get_sha1_flags = GET_SHA1_COMMITTISH;
++
++	if (get_sha1_with_context(arg, get_sha1_flags, sha1, &oc))
+ 		return revs->ignore_missing ? 0 : -1;
+ 	if (!cant_be_filename)
+ 		verify_non_filename(revs->prefix, arg);
+@@ -1707,7 +1712,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  
  	/* Second, deal with arguments and options */
  	flags = 0;
-+	revarg_opt = seen_dashdash ? REVARG_CANNOT_BE_FILENAME : 0;
+-	revarg_opt = seen_dashdash ? REVARG_CANNOT_BE_FILENAME : 0;
++	revarg_opt = opt ? opt->revarg_opt : 0;
++	if (seen_dashdash)
++		revarg_opt |= REVARG_CANNOT_BE_FILENAME;
  	read_from_stdin = 0;
  	for (left = i = 1; i < argc; i++) {
  		const char *arg = argv[i];
-@@ -1743,7 +1743,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			continue;
- 		}
- 
--		if (handle_revision_arg(arg, revs, flags, seen_dashdash)) {
-+
-+		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
- 			int j;
- 			if (seen_dashdash || *arg == '^')
- 				die("bad revision '%s'", arg);
 diff --git a/revision.h b/revision.h
-index b8e9223..8eceaec 100644
+index 8eceaec..402f10d 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -190,7 +190,8 @@ extern int setup_revisions(int argc, const char **argv, struct rev_info *revs, s
- extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+@@ -183,6 +183,7 @@ struct setup_revision_opt {
+ 	const char *def;
+ 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
+ 	const char *submodule;
++	unsigned revarg_opt;
+ };
+ 
+ extern void init_revisions(struct rev_info *revs, const char *prefix);
+@@ -191,6 +192,7 @@ extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ct
  				 const struct option *options,
  				 const char * const usagestr[]);
--extern int handle_revision_arg(const char *arg, struct rev_info *revs,int flags,int cant_be_filename);
-+#define REVARG_CANNOT_BE_FILENAME 01
-+extern int handle_revision_arg(const char *arg, struct rev_info *revs, int flags, unsigned revarg_opt);
+ #define REVARG_CANNOT_BE_FILENAME 01
++#define REVARG_COMMITTISH 02
+ extern int handle_revision_arg(const char *arg, struct rev_info *revs, int flags, unsigned revarg_opt);
  
  extern int prepare_revision_walk(struct rev_info *revs);
- extern struct commit *get_revision(struct rev_info *revs);
+diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+index 6ced848..aec3e1d 100755
+--- a/t/t1512-rev-parse-disambiguation.sh
++++ b/t/t1512-rev-parse-disambiguation.sh
+@@ -75,7 +75,7 @@ test_expect_success 'name1..name2 takes only commit-ishes on both ends' '
+ 	git log 11021982...
+ '
+ 
+-test_expect_failure 'git log takes only commit-ish' '
++test_expect_success 'git log takes only commit-ish' '
+ 	git log 11021982
+ '
+ 
 -- 
 1.7.11.1.212.g52fe12e
