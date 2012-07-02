@@ -1,104 +1,152 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 06/18] sha1_name.c: rename "now" to "current"
-Date: Mon,  2 Jul 2012 15:33:57 -0700
-Message-ID: <1341268449-27801-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 17/18] revision.c: allow handle_revision_arg() to take
+ other flags
+Date: Mon,  2 Jul 2012 15:34:08 -0700
+Message-ID: <1341268449-27801-18-git-send-email-gitster@pobox.com>
 References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:09 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpD1-0003YV-7t
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:07 +0200
+	id 1SlpDB-0003t5-0r
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933111Ab2GBWew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:34:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39755 "EHLO
+	id S933173Ab2GBWfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 18:35:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40029 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756291Ab2GBWeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:34:24 -0400
+	id S1756357Ab2GBWeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 18:34:46 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 189819079
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D8790A7
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Dxyn
-	XC+zg2hUUto2l/Ogaha9g10=; b=OhCuU6XFgTxMw0l7dWBc9Sgd1NmC3BPYDpwH
-	YvsBGbPICC4Vn58un4N8oEonZaXNLL5W2xc/8VvKHsj+/t07+dziZuW4yottBDqv
-	9tMY0xI6FwdBokiFUQmyF54Xlw0B7L1npjMvsn357qtLFmWlwl7aoKrl2w4ap2Uh
-	jPImcHo=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=vYuE
+	wFnFqs5HfUFScOc9+bcO/w8=; b=g6+5cZ8EHMSMRnDutGf3OK/bJf57VR4LMUqF
+	Bmn8EfMghP4BCAB/TToc4b1oMnT3c/7F/gt9fuRPqJ3wQslwHbgcfoqi6l3kfeU5
+	AO96057Q1Z2dJN1KDF+mlDJQqNOp9HQP6q4xfrm8RJLl4EEKs4hD2b4UllYfrX7j
+	64KF5vY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ObRo7k
-	5hsmRgpUCla05wNkTYGQgBp0gkNHvwIgRaWdN5I3CZk0aft8nHFrDW+WgAwpZeBG
-	4D7OGNXWffi8KWUxNfb0QoFwZpz/DK5I/N8M365CrbYz/Q7SSI2CS2aUgb0SU8qs
-	Av4O40rXt0yaUujyxzf1uMDnQeNNnKxSogG+U=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=IaiyBF
+	j3YXHOuF5W6CLOeGGJyWv5UBs/Q+Y7oqliyNwryAwlqGPGV0RAnpBtzV7uOoQVwE
+	2Q6jg5J01TS6xN23Knl6MOde43vqyMKMHAVNYWMxrV/CR+D/lKlLfQE4o9nUIGQG
+	VYOtX2PG975Lw8S3++b6ZlQH5lMPeVk+cizbw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F41C9078
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D228A90A6
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C5639077 for
- <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:23 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 370EE90A5 for
+ <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:45 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.212.g52fe12e
 In-Reply-To: <1341268449-27801-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 12B583DA-C496-11E1-8CD9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1F9D193C-C496-11E1-A8CB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200875>
 
-This variable points at the element we are currently looking at, and
-does not have anything to do with the current time which the name
-"now" implies.
+The existing "cant_be_filename" that tells the function that the
+caller knows the arg is not a path (hence it does not have to be
+checked for absense of the file whose name matches it) is made into
+a bit in the flag word.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sha1_name.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ revision.c             | 13 +++++++------
+ revision.h             |  3 ++-
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 6eb3280..49d2403 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -93,11 +93,11 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
- 		last = num;
- 		while (first < last) {
- 			uint32_t mid = (first + last) / 2;
--			const unsigned char *now;
-+			const unsigned char *current;
- 			int cmp;
- 
--			now = nth_packed_object_sha1(p, mid);
--			cmp = hashcmp(match, now);
-+			current = nth_packed_object_sha1(p, mid);
-+			cmp = hashcmp(match, current);
- 			if (!cmp) {
- 				first = mid;
- 				break;
-@@ -109,17 +109,17 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
- 			last = mid;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0f2e7b8..48ccadd 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2290,7 +2290,7 @@ static void get_object_list(int ac, const char **av)
+ 			}
+ 			die("not a rev '%s'", line);
  		}
- 		if (first < num) {
--			const unsigned char *now, *next;
--			now = nth_packed_object_sha1(p, first);
--			if (match_sha(len, match, now)) {
-+			const unsigned char *current, *next;
-+			current = nth_packed_object_sha1(p, first);
-+			if (match_sha(len, match, current)) {
- 				next = nth_packed_object_sha1(p, first+1);
- 				if (!next|| !match_sha(len, match, next)) {
- 					/* unique within this pack */
- 					if (!found) {
--						found_sha1 = now;
-+						found_sha1 = current;
- 						found++;
- 					}
--					else if (hashcmp(found_sha1, now)) {
-+					else if (hashcmp(found_sha1, current)) {
- 						found = 2;
- 						break;
- 					}
+-		if (handle_revision_arg(line, &revs, flags, 1))
++		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
+ 			die("bad revision '%s'", line);
+ 	}
+ 
+diff --git a/revision.c b/revision.c
+index c3160f2..929497f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1093,9 +1093,7 @@ static void prepare_show_merge(struct rev_info *revs)
+ 	revs->limited = 1;
+ }
+ 
+-int handle_revision_arg(const char *arg_, struct rev_info *revs,
+-			int flags,
+-			int cant_be_filename)
++int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsigned revarg_opt)
+ {
+ 	struct object_context oc;
+ 	char *dotdot;
+@@ -1103,6 +1101,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs,
+ 	unsigned char sha1[20];
+ 	int local_flags;
+ 	const char *arg = arg_;
++	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
+ 
+ 	dotdot = strstr(arg, "..");
+ 	if (dotdot) {
+@@ -1236,7 +1235,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 			}
+ 			die("options not supported in --stdin mode");
+ 		}
+-		if (handle_revision_arg(sb.buf, revs, 0, 1))
++		if (handle_revision_arg(sb.buf, revs, 0, REVARG_CANNOT_BE_FILENAME))
+ 			die("bad revision '%s'", sb.buf);
+ 	}
+ 	if (seen_dashdash)
+@@ -1684,7 +1683,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
+  */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *opt)
+ {
+-	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0;
++	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0, revarg_opt;
+ 	struct cmdline_pathspec prune_data;
+ 	const char *submodule = NULL;
+ 
+@@ -1708,6 +1707,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	/* Second, deal with arguments and options */
+ 	flags = 0;
++	revarg_opt = seen_dashdash ? REVARG_CANNOT_BE_FILENAME : 0;
+ 	read_from_stdin = 0;
+ 	for (left = i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+@@ -1743,7 +1743,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			continue;
+ 		}
+ 
+-		if (handle_revision_arg(arg, revs, flags, seen_dashdash)) {
++
++		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
+ 			int j;
+ 			if (seen_dashdash || *arg == '^')
+ 				die("bad revision '%s'", arg);
+diff --git a/revision.h b/revision.h
+index b8e9223..8eceaec 100644
+--- a/revision.h
++++ b/revision.h
+@@ -190,7 +190,8 @@ extern int setup_revisions(int argc, const char **argv, struct rev_info *revs, s
+ extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 				 const struct option *options,
+ 				 const char * const usagestr[]);
+-extern int handle_revision_arg(const char *arg, struct rev_info *revs,int flags,int cant_be_filename);
++#define REVARG_CANNOT_BE_FILENAME 01
++extern int handle_revision_arg(const char *arg, struct rev_info *revs, int flags, unsigned revarg_opt);
+ 
+ extern int prepare_revision_walk(struct rev_info *revs);
+ extern struct commit *get_revision(struct rev_info *revs);
 -- 
 1.7.11.1.212.g52fe12e
