@@ -1,179 +1,304 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 14/18] sha1_name.c: many short names can only be
- committish
-Date: Mon,  2 Jul 2012 15:34:05 -0700
-Message-ID: <1341268449-27801-15-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 12/18] sha1_name.c: get_describe_name() by definition
+ groks only commits
+Date: Mon,  2 Jul 2012 15:34:03 -0700
+Message-ID: <1341268449-27801-13-git-send-email-gitster@pobox.com>
 References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:29 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:35:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlpDM-0004CJ-HG
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:28 +0200
+	id 1SlpDS-0004Mi-Ak
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 00:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933164Ab2GBWe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 18:34:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39953 "EHLO
+	id S933158Ab2GBWe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 18:34:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39906 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756346Ab2GBWek (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 18:34:40 -0400
+	id S1756338Ab2GBWeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 18:34:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB9299095
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:39 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B53D908E
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=aXit
-	SPE1N2PngEBAlcjrq11gRvA=; b=retNM9WnYYlFR1A0Dv5YNPYC8yG6kTGAKOL5
-	OcbMKC5a1jHWYkToJsVQp+42JhvneNyEZpS0BC+oGTOVhpQ/LKjA0QCMbd8I1Tjs
-	cboFl1Ruy6Gg8mKTH/ZOa7VvzC2oxtPBzF50nPMLQoO3cpC8aSa1aVQgJ+6zMQh2
-	O5nww5s=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=DfoX
+	2v2m7PY2qMKHsIC9tCFM/SA=; b=lgSjTc/EV6Aj1mF2GDR1L/dU4h1o/8X94VIX
+	+DwUqtn56z0cw3uHZgpJyDLMOv4j5otMb1YXifK1XNk8YZW+bz6Jlebwkdb2mlAP
+	oXt9fCT6lsfKHO18Sw4w5Q/CioAueApSDhQpiXxkcSu+n7+MoB39UP1XdByedj7S
+	Y/a0Vo4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=lv+ejA
-	fNcc7PIbrUeEsvEf7NttXCNGfMQmLMYuxuoIFS3Ol9UDqckopT3OG8qqRreYU9ts
-	mQWGvCB76FHXbpLZt4Q1bjUsElnyHWnnF41UNe0wUd2xHw5wfooSTal9vQouHY5j
-	XSlFiS96Pcnumz0nYjm6ryjIOUyYeOSrfrGpQ=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=JHg2Ty
+	6N8ccifDuLNKfLfhJWqL4/5a9foIzbLi5Ir3xIISsIV/VTL5IaklMPUlRjKQiuiI
+	BTDqZ6ed22mOZjKiL4//5DEiiAqbkmVAibZAa4LN13ijAceoHOBOa/2+k2V0+6nC
+	gYIuKT7el4NcR3WyEX2kZSxHDGzuI+z5b1YDY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E32E59094
-	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:39 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11F65908D
+	for <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:36 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49C409093 for
- <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:39 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52EF1908C for
+ <git@vger.kernel.org>; Mon,  2 Jul 2012 18:34:35 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.212.g52fe12e
 In-Reply-To: <1341268449-27801-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1C153952-C496-11E1-A093-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 19B883A8-C496-11E1-A88A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200879>
 
-We know that the token "$name" that appear in "$name^{commit}",
-"$name^4", "$name~4" etc. can only name a committish (either a
-commit or a tag that peels to a commit).  Teach get_short_sha1() to
-take advantage of that knowledge when disambiguating an abbreviated
-SHA-1 given as an object name.
+Teach get_describe_name() to pass the disambiguation hint down the
+callchain to get_short_sha1().
+
+Also add tests to show various syntactic elements that we could take
+advantage of the object type information to help disambiguration of
+abbreviated object names.  Many of them are marked as broken, and
+some of them will be fixed in later patches in this series.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h                             |  1 +
- sha1_name.c                         | 32 ++++++++++++++++++++++++++++----
- t/t1512-rev-parse-disambiguation.sh |  2 +-
- 3 files changed, 30 insertions(+), 5 deletions(-)
+ sha1_name.c                         |   3 +-
+ t/t1512-rev-parse-disambiguation.sh | 208 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 210 insertions(+), 1 deletion(-)
+ create mode 100755 t/t1512-rev-parse-disambiguation.sh
 
-diff --git a/cache.h b/cache.h
-index 29f0b2a..1acf3b4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -813,6 +813,7 @@ struct object_context {
- 
- #define GET_SHA1_QUIETLY 01
- #define GET_SHA1_COMMIT 02
-+#define GET_SHA1_COMMITTISH 04
- 
- extern int get_sha1(const char *str, unsigned char *sha1);
- extern void die_on_misspelt_object_name(const char *name, const char *prefix);
 diff --git a/sha1_name.c b/sha1_name.c
-index 6f6c49c..35ad473 100644
+index be15d94..9af84b1 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -224,6 +224,24 @@ static int disambiguate_commit_only(const unsigned char *sha1, void *cb_data_unu
- 	return kind == OBJ_COMMIT;
- }
- 
-+static int disambiguate_committish_only(const unsigned char *sha1, void *cb_data_unused)
-+{
-+	struct object *obj;
-+	int kind;
-+
-+	kind = sha1_object_info(sha1, NULL);
-+	if (kind == OBJ_COMMIT)
-+		return 1;
-+	if (kind != OBJ_TAG)
-+		return 0;
-+
-+	/* We need to do this the hard way... */
-+	obj = deref_tag(lookup_object(sha1), NULL, 0);
-+	if (obj && obj->type == OBJ_COMMIT)
-+		return 1;
-+	return 0;
-+}
-+
- static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 			  unsigned flags)
+@@ -603,6 +603,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+ static int get_describe_name(const char *name, int len, unsigned char *sha1)
  {
-@@ -261,6 +279,8 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 	memset(&ds, 0, sizeof(ds));
- 	if (flags & GET_SHA1_COMMIT)
- 		ds.fn = disambiguate_commit_only;
-+	else if (flags & GET_SHA1_COMMITTISH)
-+		ds.fn = disambiguate_committish_only;
+ 	const char *cp;
++	unsigned flags = GET_SHA1_QUIETLY | GET_SHA1_COMMIT;
  
- 	find_short_object_filename(len, hex_pfx, &ds);
- 	find_short_packed_object(len, bin_pfx, &ds);
-@@ -440,9 +460,9 @@ static int get_parent(const char *name, int len,
- 		      unsigned char *result, int idx)
- {
- 	unsigned char sha1[20];
--	int ret = get_sha1_1(name, len, sha1, 0);
- 	struct commit *commit;
- 	struct commit_list *p;
-+	int ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
- 
- 	if (ret)
- 		return ret;
-@@ -473,7 +493,7 @@ static int get_nth_ancestor(const char *name, int len,
- 	struct commit *commit;
- 	int ret;
- 
--	ret = get_sha1_1(name, len, sha1, 0);
-+	ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
- 	if (ret)
- 		return ret;
- 	commit = lookup_commit_reference(sha1);
-@@ -519,6 +539,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	unsigned char outer[20];
- 	const char *sp;
- 	unsigned int expected_type = 0;
-+	unsigned lookup_flags;
- 	struct object *o;
- 
- 	/*
-@@ -554,7 +575,10 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	else
- 		return -1;
- 
--	if (get_sha1_1(name, sp - name - 2, outer, 0))
-+	if (expected_type == OBJ_COMMIT)
-+		lookup_flags = GET_SHA1_COMMITTISH;
-+
-+	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
- 		return -1;
- 
- 	o = parse_object(outer);
-@@ -666,7 +690,7 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
- 	if (!ret)
- 		return 0;
- 
--	return get_short_sha1(name, len, sha1, 0);
-+	return get_short_sha1(name, len, sha1, lookup_flags);
- }
- 
- /*
+ 	for (cp = name + len - 1; name + 2 <= cp; cp--) {
+ 		char ch = *cp;
+@@ -613,7 +614,7 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
+ 			if (ch == 'g' && cp[-1] == '-') {
+ 				cp++;
+ 				len -= cp - name;
+-				return get_short_sha1(cp, len, sha1, GET_SHA1_QUIETLY);
++				return get_short_sha1(cp, len, sha1, flags);
+ 			}
+ 		}
+ 	}
 diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 42701ad..823e288 100755
---- a/t/t1512-rev-parse-disambiguation.sh
+new file mode 100755
+index 0000000..42701ad
+--- /dev/null
 +++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -54,7 +54,7 @@ test_expect_success 'first commit' '
- 	git commit -m d8znjge0
- '
- 
--test_expect_failure 'disambiguate commit-ish' '
-+test_expect_success 'disambiguate commit-ish' '
- 	# feed commit-ish in an unambiguous way
- 	git rev-parse --verify 1102198268^{commit} &&
- 
+@@ -0,0 +1,208 @@
++#!/bin/sh
++
++test_description='object name disambiguation
++
++Create blobs, trees, commits and a tag that all share the same
++prefix, and make sure "git rev-parse" can take advantage of
++type information to disambiguate short object names that are
++not necessarily unique.
++
++The final history used in the test has five commits, with the bottom
++one tagged as v1.0.0.  They all have one regular file each.
++
++  +-------------------------------------------+
++  |                                           |
++  |           .-------cs60sb5----- d59np2z    |
++  |          /                   /            |
++  |  d8znjge0 ---a2dit76---b4crl15            |
++  |                                           |
++  +-------------------------------------------+
++
++'
++
++. ./test-lib.sh
++
++test_expect_success 'blob and tree' '
++	(
++		for i in 0 1 2 3 4 5 6 7 8 9
++		do
++			echo $i
++		done
++		echo
++		echo cbpkuqa
++	) >bz01t33 &&
++
++	# create one blob 1102198254
++	git add bz01t33 &&
++
++	# create one tree 1102198206
++	git write-tree
++'
++
++test_expect_failure 'disambiguate tree-ish' '
++	# feed tree-ish in an unambiguous way
++	git rev-parse --verify 1102198206:bz01t33 &&
++
++	# ambiguous at the object name level, but there is only one
++	# such tree-ish (the other is a blob)
++	git rev-parse --verify 11021982:bz01t33
++'
++
++test_expect_success 'first commit' '
++	# create one commit 1102198268
++	test_tick &&
++	git commit -m d8znjge0
++'
++
++test_expect_failure 'disambiguate commit-ish' '
++	# feed commit-ish in an unambiguous way
++	git rev-parse --verify 1102198268^{commit} &&
++
++	# ambiguous at the object name level, but there is only one
++	# such commit (the others are tree and blob)
++	git rev-parse --verify 11021982^{commit} &&
++
++	# likewise
++	git rev-parse --verify 11021982^0
++'
++
++test_expect_failure 'name1..name2 takes only commit-ishes on both ends' '
++	git log 11021982..11021982 &&
++	git log ..11021982 &&
++	git log 11021982.. &&
++	git log 11021982...11021982 &&
++	git log ...11021982 &&
++	git log 11021982...
++'
++
++test_expect_failure 'git log takes only commit-ish' '
++	git log 11021982
++'
++
++test_expect_success 'first tag' '
++	# create one tag 1102198256
++	git tag -a -m d3g97ek v1.0.0
++'
++
++test_expect_failure 'two semi-ambiguous commit-ish' '
++	# Once the parser becomes ultra-smart, it could notice that
++	# 110282 before ^{commit} name many different objects, but
++	# that only two (HEAD and v1.0.0 tag) can be peeled to commit,
++	# and that peeling them down to commit yield the same commit
++	# without ambiguity.
++	git rev-parse --verify 110282^{commit} &&
++
++	# likewise
++	git log 11021982..11021982 &&
++	git log ..11021982 &&
++	git log 11021982.. &&
++	git log 11021982...11021982 &&
++	git log ...11021982 &&
++	git log 11021982...
++'
++
++test_expect_failure 'three semi-ambiguous tree-ish' '
++	# Likewise for tree-ish.  HEAD, v1.0.0 and HEAD^{tree} share
++	# the prefix but peeling them to tree yields the same thing
++	git rev-parse --verify 110282^{tree}
++'
++
++test_expect_success 'parse describe name' '
++	# feed an unambiguous describe name
++	git rev-parse --verify v1.0.0-0-g1102198268 &&
++
++	# ambiguous at the object name level, but there is only one
++	# such commit (others are blob, tree and tag)
++	git rev-parse --verify v1.0.0-0-g11021982
++'
++
++test_expect_success 'more history' '
++	# commit 110219822
++	git mv bz01t33 b90au8x &&
++	echo bdc8xi8 >>b90au8x &&
++	git add b90au8x &&
++
++	test_tick &&
++	git commit -m a2dit76 &&
++
++	# commit 110219828
++	git mv b90au8x djintr2 &&
++	echo a2a49zt >>djintr2 &&
++	git add djintr2 &&
++
++	test_tick &&
++	git commit -m b4crl15 &&
++
++	# commit 11021982d
++	git checkout v1.0.0^0 &&
++	git mv bz01t33 ddp2qt1 &&
++
++	for i in bdc8xi8 a2a49zt c0l9aeu
++	do
++		echo $i
++	done >>ddp2qt1 &&
++	git add ddp2qt1 &&
++
++	test_tick &&
++	git commit -m cs60sb5 &&
++	side=$(git rev-parse HEAD) &&
++
++	# commit 11021982a
++	git checkout master &&
++
++	# If you use recursive, merge will fail and you will need to
++	# clean up bz01t33 as well.  If you use resolve, merge will
++	# succeed.
++	test_might_fail git merge --no-commit -s resolve $side &&
++	git rm -f ddp2qt1 djintr2 &&
++	test_might_fail git rm -f bz01t33 &&
++	(
++		git cat-file blob $side:ddp2qt1
++		echo d4o8f4f
++	) >c3q9963 &&
++	git add c3q9963 &&
++
++	test_tick &&
++	git commit -m d59np2z
++
++'
++
++test_expect_failure 'parse describe name taking advantage of generation' '
++	# ambiguous at the object name level, but there is only one
++	# such commit at generation 0
++	git rev-parse --verify v1.0.0-0-g11021982 &&
++
++	# likewise for generation 2 and 4
++	git rev-parse --verify v1.0.0-2-g11021982 &&
++	git rev-parse --verify v1.0.0-4-g11021982
++'
++
++# Note: because rev-parse does not even try to disambiguate based on
++# the generation number, this test currently succeeds for a wrong
++# reason.  When it learns to use the generation number, the previous
++# test should succeed, and also this test should fail because the
++# describe name used in the test with generation number can name two
++# commits.  Make sure that such a future enhancement does not randomly
++# pick one.
++test_expect_success 'parse describe name not ignoring ambiguity' '
++	# ambiguous at the object name level, and there are two such
++	# commits at generation 1
++	test_must_fail git rev-parse --verify v1.0.0-1-g11021982
++'
++
++test_expect_success 'ambiguous commit-ish' '
++	# Now there are many commits that begin with the
++	# common prefix, none of these should pick one at
++	# random.  They all should result in ambiguity errors.
++	test_must_fail git rev-parse --verify 110282^{commit} &&
++
++	# likewise
++	test_must_fail git log 11021982..11021982 &&
++	test_must_fail git log ..11021982 &&
++	test_must_fail git log 11021982.. &&
++	test_must_fail git log 11021982...11021982 &&
++	test_must_fail git log ...11021982 &&
++	test_must_fail git log 11021982...
++'
++
++test_done
 -- 
 1.7.11.1.212.g52fe12e
