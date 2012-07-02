@@ -1,87 +1,114 @@
-From: Dan Johnson <computerdruid@gmail.com>
-Subject: Re: Incorrect v1.7.10.4 tag on github?
-Date: Mon, 2 Jul 2012 15:52:31 -0400
-Message-ID: <CAPBPrnspD3uC6_wd7nqMUVgHSt4Frwy8UaYL6fU73kJKX6=XWQ@mail.gmail.com>
-References: <77A5E1CD-836A-4747-9E62-42C25C0D8B7D@sfu.ca>
-	<20120615182534.GB14843@sigill.intra.peff.net>
-	<7vvcis9ylx.fsf@alter.siamese.dyndns.org>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC] Designing a faster index format - Progress report week 11
+Date: Mon, 2 Jul 2012 21:55:49 +0200
+Message-ID: <20120702195549.GA666@tgummerer.surfnet.iacbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Graham Ballantyne <grahamb@sfu.ca>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 02 21:52:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, mhagger@alum.mit.edu, pclouds@gmail.com,
+	trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 02 21:56:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Slmfm-0003H5-A4
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jul 2012 21:52:38 +0200
+	id 1Slmj0-0000eX-Ts
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jul 2012 21:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393Ab2GBTwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jul 2012 15:52:33 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:49895 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753291Ab2GBTwc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2012 15:52:32 -0400
-Received: by eeit10 with SMTP id t10so2221126eei.19
-        for <git@vger.kernel.org>; Mon, 02 Jul 2012 12:52:31 -0700 (PDT)
+	id S1754148Ab2GBTzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jul 2012 15:55:54 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50205 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985Ab2GBTzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2012 15:55:53 -0400
+Received: by werb14 with SMTP id b14so2767230wer.19
+        for <git@vger.kernel.org>; Mon, 02 Jul 2012 12:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yWIKSR023bTwspDyVADCyE2vT1uQ7l9b1GtMvVa0qDQ=;
-        b=k+cXAJgsegFsj4K0MIzTmDB/zMN8MvHWgKbaihVhybtKo7RSx8o+MFywz9NLkSY+Gi
-         4RsyhRKGVKf5uJZirUloKx3mW9lSbWZol0Urg/oVEodJP0+mV68O9MD6LpB61bMOtRoA
-         9wF8Ve0eKXc7qlorYIqQUsYXfuNdF0ZYcCIMRpYCIcK5o9Rtpcq9RY8aA4PInNBqw8fv
-         I1aVhLYw8LSm/5Ec312eBepeZ/QPcgz3yTZembgZE1UU+H1rCVHmxfuF/2cVgVvB9Et3
-         VL/Dp/WqR+fr+iDThGimwSP9Amecoc7PsJjZ/W78MThc9H3Wb66FSIAOcvdMKxdOMVwl
-         aOjw==
-Received: by 10.14.95.67 with SMTP id o43mr3634868eef.13.1341258751076; Mon,
- 02 Jul 2012 12:52:31 -0700 (PDT)
-Received: by 10.14.37.77 with HTTP; Mon, 2 Jul 2012 12:52:31 -0700 (PDT)
-In-Reply-To: <7vvcis9ylx.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=+Hc5hsNnoOuZbU1b0S4hFYUnL/IbPwto3ydq2RzHs7U=;
+        b=PEb7wehBgZeWve/IhBxJHlLl9D47rbaQQ9Ov/mV6VkeooMO8LP3qhF1Rk9Gyeta/hg
+         OCnAiVqSRPGz6McZc5NXNdH+kFrDw1D9Tye1zVxrCUglsLCBEWUMkxAu590kEODjxh0/
+         8EtJI9MbxaAa0mtlwiiiOYEn9QyJlMdOBSNb3rMy8kvs1EsMJ/95vSOHfdfZf9vpmIxA
+         hNBGVlvdwQAc7vsYvO2B/5rvlKJf0hK+jMckLq1ahslqeCZak6HY41RpE1ftjLkcCgDz
+         ycfPUflJVydzCCIuE/5xBLyQSd9riHA/e/TLHiUZNffKQd58WR6im3kY4ut6M5o8EKuJ
+         eGqA==
+Received: by 10.180.80.134 with SMTP id r6mr25773305wix.1.1341258951899;
+        Mon, 02 Jul 2012 12:55:51 -0700 (PDT)
+Received: from localhost ([95.171.54.129])
+        by mx.google.com with ESMTPS id j6sm13060171wiy.4.2012.07.02.12.55.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 02 Jul 2012 12:55:51 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200858>
 
-On Fri, Jun 15, 2012 at 3:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> On Fri, Jun 15, 2012 at 09:51:00AM -0700, Graham Ballantyne wrote:
->>
->>> I just downloaded the 1.7.10.4 tag from github. After compiling and
->>> installing, git --version returns "git version 1.7.10.3". I think that
->>> tag might be pointing to the wrong commit?
->>
->> Looks like 121f71f (Git 1.7.10.4, 2012-06-03) forgot to update DEF_VAR
->> in GIT-VERSION-GEN. Operator error from the maintainer?
->
-> Thanks for noticing.
->
->> It builds with the right version from the git repository (which runs
->> git-describe and sees we are on the v1.7.10.4 tag), but exporting the
->> tag's contents and building fails. I suspect that the git-1.7.10.4
->> tarball on kernel.org would also have the same problem.
->
-> It builds correctly if you download the tarball from the official
-> location in the [ANNOUNCE] message.  This is because the build
-> procedure for the official tarball does a bit more than just running
-> "git archive-tar", which is what gitweb download interface does
-> (namely, it adds the correct "version" file).
+== Work done in the previous 10 weeks ==
 
-Junio,
-I just noticed that the download buttons (for tarballs) on gitscm.com
-all point to the github tag list ( https://github.com/git/git/tags )
-instead of the location pointed to by your [ANNOUNCE] message (
-http://code.google.com/p/git-core/downloads/list )
+- Definition of a tentative index file v5 format [1]. This differs
+  from the proposal in making it possible to bisect the directory
+  entries and file entries, to do a binary search. The exact bits
+  for each section were also defined. To further compress the index,
+  along with prefix compression, the stat data is hashed, since
+  it's only used for comparison, but the plain data is never used.
+  Thanks to Michael Haggerty, Nguyen Thai Ngoc Duy, Thomas Rast
+  and Robin Rosenberg for feedback.
+- Prototype of a converter from the index format v2/v3 to the index
+  format v5. [2] The converter reads the index from a git repository,
+  can output parts of the index (header, index entries as in
+  git ls-files --debug, cache tree as in test-dump-cache-tree, or
+  the reuc data). Then it writes the v5 index file format to
+  .git/index-v5. Thanks to Michael Haggerty for the code review.
+- Prototype of a reader for the new index file format. [3] The
+  reader has mainly the purpose to show the algorithm used to read
+  the index lexicographically sorted after the full name which is
+  required by the current internal memory format. Big thanks for
+  reviewing this code and giving me advice on refactoring goes
+  to Michael Haggerty.
+- Read the index format format and translate it to the current in
+  memory format. This doesn't include reading any of the current
+  extensions, which are now part of the main index. The code again
+  is on github. [4] Thanks for reviewing the first steps to Thomas
+  Rast.
+- Read the cache-tree data (formerly an extension, now it's integrated
+  with the rest of the directory data) from the new ondisk format.
+  There are still a few optimizations to do in this algorithm.
+- Started implementing the API (suggested by Duy), but it's still
+  in the very early stages. There is one commit for this on GitHub [1],
+  but it's a very early work in progress.
+- Started implementing the writer, which extracts the directories from
+  the in-memory format, and writes the header and the directories to
+  disk.
 
-If you do something special as part of releasing these tarballs, is
-this something that should be corrected? I can look at the source and
-do a pull request for gitscm.com a little later, if needed.
+== Work done in the last 2 weeks ==
 
--- 
--Dan Johnson
+- I found a few bugs in the algorithm for extracting the directories
+  and decided to completely rewrite it, using a hash table instead of
+  simple lists, since the old one would have to many corner cases to
+  handle.
+- Implemented writing the file block to disk, and basic tests from the
+  test suite are running fine, not including tests that require
+  conflicted data or the cache-tree to work, which both are not
+  implemented yet.
+
+== Outlook for the next week ==
+
+- Implement a patch to replace the ce_namelen() function with a field
+  ce_namelen field in struct cache_entry. This will both give us some
+  extra bits of performance in some (rare) cases with the old index
+  format, and is a refactoring for index-v5, which won't store the
+  length in the flags. This patch will be sent to the list once it's
+  done.
+- Depending how long the patch takes, I'll try implementing the
+  cache-tree and conflict data writing to the index file.
+
+[1] https://github.com/tgummerer/git/wiki/Index-file-format-v5
+[2] https://github.com/tgummerer/git/blob/pythonprototype/git-convert-index.py
+[3] https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
+[4] https://github.com/tgummerer/git/tree/index-v5
