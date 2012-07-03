@@ -1,70 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 03/18] sha1_name.c: get rid of ugly get_sha1_with_mode_1()
-Date: Tue, 03 Jul 2012 10:01:14 +0200
-Message-ID: <vpqsjd9nuid.fsf@bauges.imag.fr>
-References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
-	<1341268449-27801-4-git-send-email-gitster@pobox.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] Fix Q-encoded multi-octet-char split in email.
+Date: Tue, 3 Jul 2012 11:52:20 +0200
+Message-ID: <CABPQNSYbdjzrHyjsXu23ARFBEiZ_a6S+iEn0Pwy-1HaKTTAheQ@mail.gmail.com>
+References: <1341279697-4596-1-git-send-email-gkatsu.ne@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 10:01:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Takeharu Katsuyama <tkatsu.ne@gmail.com>
+To: katsu <gkatsu.ne@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 11:53:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sly3L-0005Wo-40
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 10:01:43 +0200
+	id 1SlznA-0002Mx-MD
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 11:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030202Ab2GCIBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 04:01:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33303 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030198Ab2GCIBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 04:01:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6380CWZ021082
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 3 Jul 2012 10:00:12 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sly2t-0008HQ-6r; Tue, 03 Jul 2012 10:01:15 +0200
-In-Reply-To: <1341268449-27801-4-git-send-email-gitster@pobox.com> (Junio C.
-	Hamano's message of "Mon, 2 Jul 2012 15:33:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Jul 2012 10:00:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6380CWZ021082
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1341907213.84716@9YZCHvzkfSNPrpE+rFuyTw
+	id S1750972Ab2GCJxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 05:53:03 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:49640 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759Ab2GCJxC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 05:53:02 -0400
+Received: by ghrr11 with SMTP id r11so5058424ghr.19
+        for <git@vger.kernel.org>; Tue, 03 Jul 2012 02:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=vqZHkfwLvtUAxhszNtaPqgzVDzdNgqZdisHUvx5cOUw=;
+        b=KaBwBjZdKvohQ4xwjf+aDDZDp/IFR8gxguzfWtnPC/wWWu4CWwQqIhXsQ4a0B7Pl9y
+         KXQnRSjVmRFoi7MGvMtkVeD/piqyO4Gqd0LoUFVYJgsRYUhiKQYEqwggi8eRwZfSjPzB
+         q16WqA1yS0oRcCbILoZm6KFJ1MTh9Oq/yM5zE8LrCyYERv4N+ZVlN7UNpb6LDO/W5AVE
+         WwTeRGMOLzTYfjDuARCoi2jyzmd6NBl0L/I+b02O4wjXBkr5eBLDfQW4YsauZodaYVyp
+         1GbGU1Aqv3QYWckQa1J6fisqFhdofq24/zT80nv38W0y5eiDgo4/3w2pMkuNiai1Gt5o
+         vDBA==
+Received: by 10.66.73.40 with SMTP id i8mr12864893pav.2.1341309180709; Tue, 03
+ Jul 2012 02:53:00 -0700 (PDT)
+Received: by 10.68.40.98 with HTTP; Tue, 3 Jul 2012 02:52:20 -0700 (PDT)
+In-Reply-To: <1341279697-4596-1-git-send-email-gkatsu.ne@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200908>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jul 3, 2012 at 3:41 AM, katsu <gkatsu.ne@gmail.com> wrote:
+> Issue: Email subject written in multi-octet language like japanese cannot
+> be displayed in correct at destinations's email client, because the
+> Q-encoded subject which is longer than 78 octets is split by a octet not by
+> a character at line breaks.
+> e.g.)
+>    "=?utf-8?q? [PATCH] ... =E8=83=86=E8=81=A9?="
+>                     |
+>                     V
+>    "=?utf-8?q? [PATCH] ... =E8=83=86=E8?="
+>    "=?utf-8?q?=81=A9=?"
+>
+> Changes: Add a judge if a character is an part of utf-8 muti-octet, and
+> split the characters by a character not by a octet at line breaks in
+> function add_rfc2407() in pretty.c.
 
-> +/*
-> + * Call this function when you know "name" given by the end user must
-> + * name an object but it doesn't; the function _may_ die with a better
-> + * diagnostic message than "no such object 'name'", e.g. "Path 'doc' does not
-> + * exist in 'HEAD'" when given "HEAD:doc", or it may return in which case
-> + * you have a chance to diagnose the error further.
-> + */
-> +void die_on_misspelt_object_name(const char *name, const char *prefix)
+You mean add_rfc2047(), right?
 
-It seems unusual to have a function named die_* that is not a noreturn
-function. I'd call it die_*_maybe, or diagnose_* instead.
-
-(but as the comment above documents the behavior, it's not terribly
-important, you may ignore my comment if you whish)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Anyway, I'm not an expert here, but can't a "soft" newline (as
+specified in rfc 2045) be used in message headers? If it could, then
+we wouldn't need to grok the underlying encoding when wrapping, which
+strikes me as slightly better...
