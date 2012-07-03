@@ -1,350 +1,207 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 13/25] sha1_name.c: get_describe_name() by definition
- groks only commits
-Date: Tue,  3 Jul 2012 14:37:03 -0700
-Message-ID: <1341351435-31011-14-git-send-email-gitster@pobox.com>
+Subject: [PATCH v5 08/25] sha1_name.c: correct misnamed "canonical" and "res"
+Date: Tue,  3 Jul 2012 14:36:58 -0700
+Message-ID: <1341351435-31011-9-git-send-email-gitster@pobox.com>
 References: <1341351435-31011-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 23:39:12 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 23:39:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmAoQ-0006e0-Ip
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:39:10 +0200
+	id 1SmAoi-0007F5-Qk
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:39:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932482Ab2GCViS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 17:38:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35062 "EHLO
+	id S1756452Ab2GCViM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 17:38:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34939 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756531Ab2GCVhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 17:37:43 -0400
+	id S1756514Ab2GCVhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 17:37:32 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A6AE8661
-	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F84A864A
+	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=6ntd
-	P1RcQejVK4xaaKG8hF2Dyd0=; b=CcEM4NQSQgjpBR7DvELMdB82Xh8WvFH0j7/B
-	1u31r5751wdQTI64XC2ITrJaFwxBFc6NUAu2XbBgVym+ZXE/yyox2f7sCqcZ7g1D
-	yn/hGS0lMnNLRS38Da6XtMzgBDD0oc+SLEg8XlivB7s7qZaC8E+tG5p8dWdE6dY4
-	xaHl27Y=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=YJNM
+	cyG37fVXcSGUBId4cU7rmlg=; b=l2rbboVpWoYY6FqCy5UzlhQOnSpg0xVDe6aE
+	64wUNz425UR0aUSHqkXKjGSgglQr4iNGFQyeEds2+n9N7VxTT/hGbQnb34Ptjm0p
+	R0SJd4eO29ISRWTT5u9xPhG874QBiF961VQNqCD4ryF4kvrraJ6RVuYk/Nny6XXH
+	MXz7vSw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ZaInMK
-	zKooBw4It8OaJ5qIwWZxGBfE+M47V9L4wMlQNk42vNtwGOtkhWizFhlRv7Y0S70t
-	xqJAr+PsZugBfspEuujP/JaEAXL9MNxQziOs5vi3XZfUVgomXdYCbFvROraPz5Rm
-	Crew4BEC7PP6RTpp2pFKiitsRTXM7ezrJT6vU=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ISWJIq
+	DGAAp0Mu3uY6K+D/dbfAvp4+LhpwnPRiz9XpZJIWybELiWngpUNKmoyfA8WQBA4J
+	eJDNx/cOURubz/Q8c2GtvQonsJiV/yiauz5pdnqn0nGLRdUX0KSriAXxw8vuLwvh
+	yPf/d6A/oMKpN3t8uWGXr0hxOzhlJpRRWIwms=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6184F8660
-	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4663D8649
+	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:32 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 91DFC865E for
- <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:42 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3739D8648 for
+ <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:31 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.229.g706c98f
 In-Reply-To: <1341351435-31011-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 51FB3438-C557-11E1-96BC-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4B3416D8-C557-11E1-89B8-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200966>
 
-Teach get_describe_name() to pass the disambiguation hint down the
-callchain to get_short_sha1().
-
-Also add tests to show various syntactic elements that we could take
-advantage of the object type information to help disambiguration of
-abbreviated object names.  Many of them are marked as broken, and
-some of them will be fixed in later patches in this series.
+These are hexadecimal and binary representation of the short object
+name given to the callchain as its input.  Rename them with _pfx
+suffix to make it clear they are prefixes, and call them hex and bin
+respectively.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sha1_name.c                         |   3 +-
- t/t1512-rev-parse-disambiguation.sh | 254 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 256 insertions(+), 1 deletion(-)
- create mode 100755 t/t1512-rev-parse-disambiguation.sh
+ sha1_name.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/sha1_name.c b/sha1_name.c
-index 174d3df..caef6e5 100644
+index 7bef45f..db8ac83 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -603,6 +603,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- static int get_describe_name(const char *name, int len, unsigned char *sha1)
- {
- 	const char *cp;
-+	unsigned flags = GET_SHA1_QUIETLY | GET_SHA1_COMMIT;
+@@ -9,7 +9,7 @@
  
- 	for (cp = name + len - 1; name + 2 <= cp; cp--) {
- 		char ch = *cp;
-@@ -613,7 +614,7 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
- 			if (ch == 'g' && cp[-1] == '-') {
- 				cp++;
- 				len -= cp - name;
--				return get_short_sha1(cp, len, sha1, GET_SHA1_QUIETLY);
-+				return get_short_sha1(cp, len, sha1, flags);
- 			}
- 		}
+ static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
+ 
+-static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
++static int find_short_object_filename(int len, const char *hex_pfx, unsigned char *sha1)
+ {
+ 	struct alternate_object_database *alt;
+ 	char hex[40];
+@@ -34,18 +34,18 @@ static int find_short_object_filename(int len, const char *name, unsigned char *
  	}
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-new file mode 100755
-index 0000000..de45468
---- /dev/null
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -0,0 +1,254 @@
-+#!/bin/sh
-+
-+test_description='object name disambiguation
-+
-+Create blobs, trees, commits and a tag that all share the same
-+prefix, and make sure "git rev-parse" can take advantage of
-+type information to disambiguate short object names that are
-+not necessarily unique.
-+
-+The final history used in the test has five commits, with the bottom
-+one tagged as v1.0.0.  They all have one regular file each.
-+
-+  +-------------------------------------------+
-+  |                                           |
-+  |           .-------cs60sb5----- d59np2z    |
-+  |          /                   /            |
-+  |  d8znjge0 ---a2dit76---b4crl15            |
-+  |                                           |
-+  +-------------------------------------------+
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'blob and tree' '
-+	(
-+		for i in 0 1 2 3 4 5 6 7 8 9
-+		do
-+			echo $i
-+		done
-+		echo
-+		echo cbpkuqa
-+	) >bz01t33 &&
-+
-+	# create one blob 1102198254
-+	git add bz01t33 &&
-+
-+	# create one tree 1102198206
-+	git write-tree
-+'
-+
-+test_expect_success 'warn ambiguity when no candidate matches type hint' '
-+	test_must_fail git rev-parse --verify 11021982^{commit} 2>actual &&
-+	grep "short SHA1 11021982 is ambiguous" actual
-+'
-+
-+test_expect_failure 'disambiguate tree-ish' '
-+	# feed tree-ish in an unambiguous way
-+	git rev-parse --verify 1102198206:bz01t33 &&
-+
-+	# ambiguous at the object name level, but there is only one
-+	# such tree-ish (the other is a blob)
-+	git rev-parse --verify 11021982:bz01t33
-+'
-+
-+test_expect_failure 'disambiguate blob' '
-+	sed -e "s/|$//" >patch <<-EOF &&
-+	diff --git a/frotz b/frotz
-+	index 11021982..11021982 100644
-+	--- a/frotz
-+	+++ b/frotz
-+	@@ -10,3 +10,4 @@
-+	 9
-+	 |
-+	 cbpkuqa
-+	+aqukpbc
-+	EOF
-+	(
-+		GIT_INDEX_FILE=frotz &&
-+		export GIT_INDEX_FILE &&
-+		git apply --build-fake-ancestor frotz patch &&
-+		git cat-file blob :frotz >actual
-+	) &&
-+	test_cmp bz01t33 actual
-+'
-+
-+test_expect_failure 'disambiguate tree' '
-+	commit=$(echo "frotz" | git commit-tree 11021982) &&
-+	test $(git rev-parse $commit^{tree}) = $(git rev-parse 1102198206)
-+'
-+
-+test_expect_success 'first commit' '
-+	# create one commit 1102198268
-+	test_tick &&
-+	git commit -m d8znjge0
-+'
-+
-+test_expect_failure 'disambiguate commit-ish' '
-+	# feed commit-ish in an unambiguous way
-+	git rev-parse --verify 1102198268^{commit} &&
-+
-+	# ambiguous at the object name level, but there is only one
-+	# such commit (the others are tree and blob)
-+	git rev-parse --verify 11021982^{commit} &&
-+
-+	# likewise
-+	git rev-parse --verify 11021982^0
-+'
-+
-+test_expect_failure 'disambiguate commit' '
-+	commit=$(echo "frotz" | git commit-tree 11021982 -p 11021982) &&
-+	test $(git rev-parse $commit^) = $(git rev-parse 1102198268)
-+'
-+
-+test_expect_failure 'log name1..name2 takes only commit-ishes on both ends' '
-+	git log 11021982..11021982 &&
-+	git log ..11021982 &&
-+	git log 11021982.. &&
-+	git log 11021982...11021982 &&
-+	git log ...11021982 &&
-+	git log 11021982...
-+'
-+
-+test_expect_failure 'rev-parse name1..name2 takes only commit-ishes on both ends' '
-+	git rev-parse 11021982..11021982 &&
-+	git rev-parse ..11021982 &&
-+	git rev-parse 11021982..
-+'
-+
-+test_expect_failure 'git log takes only commit-ish' '
-+	git log 11021982
-+'
-+
-+test_expect_failure 'git reset takes only commit-ish' '
-+	git reset 11021982
-+'
-+
-+test_expect_success 'first tag' '
-+	# create one tag 1102198256
-+	git tag -a -m d3g97ek v1.0.0
-+'
-+
-+test_expect_failure 'two semi-ambiguous commit-ish' '
-+	# Once the parser becomes ultra-smart, it could notice that
-+	# 110282 before ^{commit} name many different objects, but
-+	# that only two (HEAD and v1.0.0 tag) can be peeled to commit,
-+	# and that peeling them down to commit yield the same commit
-+	# without ambiguity.
-+	git rev-parse --verify 110282^{commit} &&
-+
-+	# likewise
-+	git log 11021982..11021982 &&
-+	git log ..11021982 &&
-+	git log 11021982.. &&
-+	git log 11021982...11021982 &&
-+	git log ...11021982 &&
-+	git log 11021982...
-+'
-+
-+test_expect_failure 'three semi-ambiguous tree-ish' '
-+	# Likewise for tree-ish.  HEAD, v1.0.0 and HEAD^{tree} share
-+	# the prefix but peeling them to tree yields the same thing
-+	git rev-parse --verify 110282^{tree}
-+'
-+
-+test_expect_success 'parse describe name' '
-+	# feed an unambiguous describe name
-+	git rev-parse --verify v1.0.0-0-g1102198268 &&
-+
-+	# ambiguous at the object name level, but there is only one
-+	# such commit (others are blob, tree and tag)
-+	git rev-parse --verify v1.0.0-0-g11021982
-+'
-+
-+test_expect_success 'more history' '
-+	# commit 110219822
-+	git mv bz01t33 b90au8x &&
-+	echo bdc8xi8 >>b90au8x &&
-+	git add b90au8x &&
-+
-+	test_tick &&
-+	git commit -m a2dit76 &&
-+
-+	# commit 110219828
-+	git mv b90au8x djintr2 &&
-+	echo a2a49zt >>djintr2 &&
-+	git add djintr2 &&
-+
-+	test_tick &&
-+	git commit -m b4crl15 &&
-+
-+	# commit 11021982d
-+	git checkout v1.0.0^0 &&
-+	git mv bz01t33 ddp2qt1 &&
-+
-+	for i in bdc8xi8 a2a49zt c0l9aeu
-+	do
-+		echo $i
-+	done >>ddp2qt1 &&
-+	git add ddp2qt1 &&
-+
-+	test_tick &&
-+	git commit -m cs60sb5 &&
-+	side=$(git rev-parse HEAD) &&
-+
-+	# commit 11021982a
-+	git checkout master &&
-+
-+	# If you use recursive, merge will fail and you will need to
-+	# clean up bz01t33 as well.  If you use resolve, merge will
-+	# succeed.
-+	test_might_fail git merge --no-commit -s resolve $side &&
-+	git rm -f ddp2qt1 djintr2 &&
-+	test_might_fail git rm -f bz01t33 &&
-+	(
-+		git cat-file blob $side:ddp2qt1
-+		echo d4o8f4f
-+	) >c3q9963 &&
-+	git add c3q9963 &&
-+
-+	test_tick &&
-+	git commit -m d59np2z
-+
-+'
-+
-+test_expect_failure 'parse describe name taking advantage of generation' '
-+	# ambiguous at the object name level, but there is only one
-+	# such commit at generation 0
-+	git rev-parse --verify v1.0.0-0-g11021982 &&
-+
-+	# likewise for generation 2 and 4
-+	git rev-parse --verify v1.0.0-2-g11021982 &&
-+	git rev-parse --verify v1.0.0-4-g11021982
-+'
-+
-+# Note: because rev-parse does not even try to disambiguate based on
-+# the generation number, this test currently succeeds for a wrong
-+# reason.  When it learns to use the generation number, the previous
-+# test should succeed, and also this test should fail because the
-+# describe name used in the test with generation number can name two
-+# commits.  Make sure that such a future enhancement does not randomly
-+# pick one.
-+test_expect_success 'parse describe name not ignoring ambiguity' '
-+	# ambiguous at the object name level, and there are two such
-+	# commits at generation 1
-+	test_must_fail git rev-parse --verify v1.0.0-1-g11021982
-+'
-+
-+test_expect_success 'ambiguous commit-ish' '
-+	# Now there are many commits that begin with the
-+	# common prefix, none of these should pick one at
-+	# random.  They all should result in ambiguity errors.
-+	test_must_fail git rev-parse --verify 110282^{commit} &&
-+
-+	# likewise
-+	test_must_fail git log 11021982..11021982 &&
-+	test_must_fail git log ..11021982 &&
-+	test_must_fail git log 11021982.. &&
-+	test_must_fail git log 11021982...11021982 &&
-+	test_must_fail git log ...11021982 &&
-+	test_must_fail git log 11021982...
-+'
-+
-+test_done
+ 	fakeent->next = alt_odb_list;
+ 
+-	sprintf(hex, "%.2s", name);
++	sprintf(hex, "%.2s", hex_pfx);
+ 	for (alt = fakeent; alt && found < 2; alt = alt->next) {
+ 		struct dirent *de;
+ 		DIR *dir;
+-		sprintf(alt->name, "%.2s/", name);
++		sprintf(alt->name, "%.2s/", hex_pfx);
+ 		dir = opendir(alt->base);
+ 		if (!dir)
+ 			continue;
+ 		while ((de = readdir(dir)) != NULL) {
+ 			if (strlen(de->d_name) != 38)
+ 				continue;
+-			if (memcmp(de->d_name, name + 2, len - 2))
++			if (memcmp(de->d_name, hex_pfx + 2, len - 2))
+ 				continue;
+ 			if (!found) {
+ 				memcpy(hex + 2, de->d_name, 38);
+@@ -79,7 +79,7 @@ static int match_sha(unsigned len, const unsigned char *a, const unsigned char *
+ }
+ 
+ static int unique_in_pack(int len,
+-			  const unsigned char *match,
++			  const unsigned char *bin_pfx,
+ 			  struct packed_git *p,
+ 			  const unsigned char **found_sha1,
+ 			  int seen_so_far)
+@@ -96,7 +96,7 @@ static int unique_in_pack(int len,
+ 		int cmp;
+ 
+ 		current = nth_packed_object_sha1(p, mid);
+-		cmp = hashcmp(match, current);
++		cmp = hashcmp(bin_pfx, current);
+ 		if (!cmp) {
+ 			first = mid;
+ 			break;
+@@ -110,12 +110,12 @@ static int unique_in_pack(int len,
+ 
+ 	/*
+ 	 * At this point, "first" is the location of the lowest object
+-	 * with an object name that could match "match".  See if we have
++	 * with an object name that could match "bin_pfx".  See if we have
+ 	 * 0, 1 or more objects that actually match(es).
+ 	 */
+ 	for (i = first; i < num; i++) {
+ 		current = nth_packed_object_sha1(p, first);
+-		if (!match_sha(len, match, current))
++		if (!match_sha(len, bin_pfx, current))
+ 			break;
+ 
+ 		/* current matches */
+@@ -131,7 +131,7 @@ static int unique_in_pack(int len,
+ 	return seen_so_far;
+ }
+ 
+-static int find_short_packed_object(int len, const unsigned char *match, unsigned char *sha1)
++static int find_short_packed_object(int len, const unsigned char *bin_pfx, unsigned char *sha1)
+ {
+ 	struct packed_git *p;
+ 	const unsigned char *found_sha1 = NULL;
+@@ -139,7 +139,7 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
+ 
+ 	prepare_packed_git();
+ 	for (p = packed_git; p && found < 2; p = p->next)
+-		found = unique_in_pack(len, match, p, &found_sha1, found);
++		found = unique_in_pack(len, bin_pfx, p, &found_sha1, found);
+ 
+ 	if (found == 1)
+ 		hashcpy(sha1, found_sha1);
+@@ -149,15 +149,15 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
+ #define SHORT_NAME_NOT_FOUND (-1)
+ #define SHORT_NAME_AMBIGUOUS (-2)
+ 
+-static int find_unique_short_object(int len, char *canonical,
+-				    unsigned char *res, unsigned char *sha1)
++static int find_unique_short_object(int len, char *hex_pfx,
++				    unsigned char *bin_pfx, unsigned char *sha1)
+ {
+ 	int has_unpacked, has_packed;
+ 	unsigned char unpacked_sha1[20], packed_sha1[20];
+ 
+ 	prepare_alt_odb();
+-	has_unpacked = find_short_object_filename(len, canonical, unpacked_sha1);
+-	has_packed = find_short_packed_object(len, res, packed_sha1);
++	has_unpacked = find_short_object_filename(len, hex_pfx, unpacked_sha1);
++	has_packed = find_short_packed_object(len, bin_pfx, packed_sha1);
+ 	if (!has_unpacked && !has_packed)
+ 		return SHORT_NAME_NOT_FOUND;
+ 	if (1 < has_unpacked || 1 < has_packed)
+@@ -177,13 +177,13 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
+ 			  int quietly)
+ {
+ 	int i, status;
+-	char canonical[40];
+-	unsigned char res[20];
++	char hex_pfx[40];
++	unsigned char bin_pfx[20];
+ 
+ 	if (len < MINIMUM_ABBREV || len > 40)
+ 		return -1;
+-	hashclr(res);
+-	memset(canonical, 'x', 40);
++	hashclr(bin_pfx);
++	memset(hex_pfx, 'x', 40);
+ 	for (i = 0; i < len ;i++) {
+ 		unsigned char c = name[i];
+ 		unsigned char val;
+@@ -197,15 +197,15 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
+ 		}
+ 		else
+ 			return -1;
+-		canonical[i] = c;
++		hex_pfx[i] = c;
+ 		if (!(i & 1))
+ 			val <<= 4;
+-		res[i >> 1] |= val;
++		bin_pfx[i >> 1] |= val;
+ 	}
+ 
+-	status = find_unique_short_object(i, canonical, res, sha1);
++	status = find_unique_short_object(i, hex_pfx, bin_pfx, sha1);
+ 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS))
+-		return error("short SHA1 %.*s is ambiguous.", len, canonical);
++		return error("short SHA1 %.*s is ambiguous.", len, hex_pfx);
+ 	return status;
+ }
+ 
 -- 
 1.7.11.1.229.g706c98f
