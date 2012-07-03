@@ -1,68 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I delete a remote branch with a period in the name?
-Date: Mon, 02 Jul 2012 21:14:43 -0700
-Message-ID: <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: bug: "fatal: cannot pread pack file", version 1.7.5.4
+Date: Tue, 3 Jul 2012 11:25:16 +0700
+Message-ID: <CACsJy8AmCo82YxHA_6+rkbuJOjOG-HqCgjoP2tz753SXH5w8_Q@mail.gmail.com>
+References: <5638dec6e156f83385a3baa01cf9ac4d@localhost> <20120702215736.GA5790@sigill.intra.peff.net>
+ <m2vci5n5r5.fsf@igel.home> <20120703032345.GA7143@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "jonsmirl\@gmail.com" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 06:14:54 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Lars Winterfeld <lars.winterfeld@tu-ilmenau.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 06:26:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SluVn-00087z-OT
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 06:14:52 +0200
+	id 1Slugd-0002AV-I0
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 06:26:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751627Ab2GCEOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 00:14:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38958 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750735Ab2GCEOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 00:14:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 399548F42;
-	Tue,  3 Jul 2012 00:14:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cVLPEdpj8FkoklK46NyESnZCiSk=; b=R910hY
-	Qs7NEECbFSjP0F2t2xK+7UPyDX/tm2SU4ND4EhiEaYdn46qMEYP0ac1UjM+DcLM5
-	FwONaR55ewjSIVeIbgGNXMC9G5U9i88PS/5wp/Fru4VlnJ0o0kY3n3O1Px0jICYq
-	USEHjoZu0D00ymMBsmPo4B6z7qTaul1ZLXd/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xPjA3CaX/ahoQAYbmKvJUo/0tWvbzUU6
-	Eqbqudj9mpiUtDTsQSXyJW4ZJTLwhN3kOHXt/1EXAknWfGtH3XA4x3e8VkKmBV6G
-	1OLEBcP9fVzEp9h9qVYgrn+vx9zTTAfega306tGrbbm5dczdYaEymuCvwKANHD1+
-	iGZux5CSLyg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F21E8F41;
-	Tue,  3 Jul 2012 00:14:45 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA5D78F40; Tue,  3 Jul 2012
- 00:14:44 -0400 (EDT)
-In-Reply-To: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
- (jonsmirl@gmail.com's message of "Mon, 2 Jul 2012 23:09:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EAF9CF2-C4C5-11E1-A7B0-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751724Ab2GCEZs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jul 2012 00:25:48 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:59081 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735Ab2GCEZs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 00:25:48 -0400
+Received: by wgbdr13 with SMTP id dr13so5864282wgb.1
+        for <git@vger.kernel.org>; Mon, 02 Jul 2012 21:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5cv8aIsM+LG6gZHIok0s2xx3G3sJ+u3gdjxVbU4Muj4=;
+        b=kgaA/vP/d2kSrXUdMB5m3iV/meq+jE82y+My/IkybAw71x9p6MPLiv5kvrjBF57VwV
+         zurCQjf7mddMOD7hSv/Yg2/YEcR/ERvL6QVqjj0Ybq09sXQWcdCYx4dw2YeKep4Nf1/W
+         EliRuIw33p+F2ZyriRWJw1Bey1cvFooOW6rfullg5lHlzEqf3Sa69O3RrrPSBqxbOL9e
+         Fe36mTlQ5V4vfiNyNfgB8IOTwLHRqPSc5VLoGOmfokSK7EQEQbLT3T0MyKhmk1CeSzaC
+         X0JOE+FBZEOdXpeVoM1zbw44phX0MTVma729aKyJ8bpTHtY+M3GerioMBw6oeh07NLJA
+         MfDw==
+Received: by 10.180.81.10 with SMTP id v10mr28437905wix.17.1341289546816; Mon,
+ 02 Jul 2012 21:25:46 -0700 (PDT)
+Received: by 10.223.79.76 with HTTP; Mon, 2 Jul 2012 21:25:16 -0700 (PDT)
+In-Reply-To: <20120703032345.GA7143@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200896>
 
-"jonsmirl@gmail.com" <jonsmirl@gmail.com> writes:
+On Tue, Jul 3, 2012 at 10:45 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jul 03, 2012 at 12:43:42AM +0200, Andreas Schwab wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > It's very odd for pread to report ENOENT (since it is always opera=
+ting
+>> > on an already-opened file descriptor).
+>>
+>> It doesn't, but gettext will clobber errno:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 n =3D pread(pack_fd=
+, inbuf, n, from);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (n < 0)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 die_errno(_("cannot pread pack file"));
+>>
+>> There is nothing that saves errno. =C2=A0This isn't limited to i18n =
+though,
+>> any function call in the arguments may potentially clobber errno.
+>
+> That's horribly lame of gettext. I don't expect arbitrary functions t=
+o
+> save errno, but when the entire purpose of a function is to be a
+> non-intrusive wrapper to massage messages to the user, it seems kind =
+of
+> evil to overwrite errno. Isn't the whole point of calling it "_" that
+> you don't want to or have to notice it?
 
-> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git push origin :fl.stg
-> error: unable to push to unqualified destination: fl.stg
-> The destination refspec neither matches an existing ref on the remote nor
-> begins with refs/, and we are unable to guess a prefix based on the source ref.
+Agreed.
 
-The message seems to be saying that fl.stg is not specific enough
-perhaps?  What does "git ls-remote origin | grep fl.stg" say?  If it
-says refs/smirl/fl.stg, for example, you can be specific as the
-message suggests, e.g. "git push origin :refs/smirl/fl.stg" or
-something like that?
+> Can we do something like this to get around it?
+>
+> diff --git a/gettext.h b/gettext.h
+> index 57ba8bb..b7c3ae5 100644
+> --- a/gettext.h
+> +++ b/gettext.h
+> @@ -44,7 +44,10 @@ extern int use_gettext_poison(void);
+>
+> =C2=A0static inline FORMAT_PRESERVING(1) const char *_(const char *ms=
+gid)
+> =C2=A0{
+> - =C2=A0 =C2=A0 =C2=A0 return use_gettext_poison() ? "# GETTEXT POISO=
+N #" : gettext(msgid);
+> + =C2=A0 =C2=A0 =C2=A0 int saved_errno =3D errno;
+> + =C2=A0 =C2=A0 =C2=A0 const char *r =3D use_gettext_poison() ? "# GE=
+TTEXT POISON #" : gettext(msgid);
+> + =C2=A0 =C2=A0 =C2=A0 errno =3D saved_errno;
+> + =C2=A0 =C2=A0 =C2=A0 return r;
+> =C2=A0}
+>
+> =C2=A0static inline FORMAT_PRESERVING(1) FORMAT_PRESERVING(2)
+
+The last line belongs to Q_(), which needs the same treatment.
+--=20
+Duy
