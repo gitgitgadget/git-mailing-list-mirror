@@ -1,143 +1,78 @@
-From: Brian Foster <brian.foster@maxim-ic.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [Q] Branch aliases (synonyms)?
-Date: Tue, 3 Jul 2012 15:40:13 +0200
-Message-ID: <4261222.bYBuBBxnOa@laclwks004>
-References: <1919214.YKUdgul2iY@laclwks004> <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no>
+Date: Tue, 03 Jul 2012 17:29:26 +0200
+Message-ID: <4FF30FD6.6020501@alum.mit.edu>
+References: <1919214.YKUdgul2iY@laclwks004> <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no> <4261222.bYBuBBxnOa@laclwks004>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Tue Jul 03 15:40:49 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
+	git mailing list <git@vger.kernel.org>
+To: Brian Foster <brian.foster@maxim-ic.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 17:36:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm3LP-00005r-1D
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 15:40:43 +0200
+	id 1Sm59Z-0003h7-Gt
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 17:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654Ab2GCNkT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jul 2012 09:40:19 -0400
-Received: from antispam01.maxim-ic.com ([205.153.101.182]:51915 "EHLO
-	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840Ab2GCNkS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 09:40:18 -0400
-X-ASG-Debug-ID: 1341322816-02ae98587c260ac0001-QuoKaX
-Received: from maxdalex02.maxim-ic.internal (maxdalex02.maxim-ic.internal [10.16.15.104]) by antispam01.maxim-ic.com with ESMTP id sZ3vZYfLy3vtceth; Tue, 03 Jul 2012 08:40:16 -0500 (CDT)
-X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
-Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
- maxdalex02.maxim-ic.internal (10.16.15.104) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Tue, 3 Jul 2012 08:40:16 -0500
-Received: from laclwks004.localnet (10.201.0.45) by
- maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Tue, 3 Jul 2012 06:40:15 -0700
-X-ASG-Orig-Subj: Re: [Q] Branch aliases (synonyms)?
-User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no>
-X-Barracuda-Connect: maxdalex02.maxim-ic.internal[10.16.15.104]
-X-Barracuda-Start-Time: 1341322816
-X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at maxim-ic.com
-X-Barracuda-Spam-Score: 0.12
-X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.101637
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.12 CN_BODY_332            BODY: CN_BODY_332
+	id S932182Ab2GCPgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 11:36:32 -0400
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:64264 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753616Ab2GCPgb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 11:36:31 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jul 2012 11:36:31 EDT
+X-AuditID: 1207440e-b7f036d0000008b5-d7-4ff30fd9d257
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B7.34.02229.9DF03FF4; Tue,  3 Jul 2012 11:29:29 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q63FTRkr032758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 3 Jul 2012 11:29:28 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <4261222.bYBuBBxnOa@laclwks004>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFIsWRmVeSWpSXmKPExsUixO6iqHuT/7O/wZkOMYuXUyosuq50M1ms
+	nvSTxYHZY/u816we3d1v2Dw+b5ILYI7itklKLCkLzkzP07dL4M44u3sNW8E1toq+Lc2sDYxd
+	rF2MnBwSAiYSW3fcZIGwxSQu3FvP1sXIxSEkcJlR4vasY1DOMSaJrxteg3XwCmhLPDl/mQ3E
+	ZhFQldh8agdYnE1AV2JRTzNTFyMHh6hAmMT0newQ5YISJ2c+AVsgIqAjMf/eCTCbWSBD4vjW
+	22A1wkAj72x+ywhiCwlUSyz6NJMJxOYEqm+YdowVot5MomtrFyOELS+x/e0c5gmMArOQrJiF
+	pGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUJCl28HY/t6mUOM
+	AhyMSjy8UtM++QuxJpYVV+YeYpTkYFIS5dUHBr4QX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV7u
+	M0DlvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJXjOQoYJFqempFWmZ
+	OSUIaSYOThDBBbKBB2iDCUghb3FBYm5xZjpE0SlGRSlx3jd8QAkBkERGaR7cAFiSecUoDvSP
+	MC83SDsPMEHBdb8CGswENDhvMcjpxSWJCCmpBkbxiB81UkaCu3b0Lmp+6ftD6BbTzC8lj0Lb
+	HtX7vVh17gFLJ/91LkPfE5J+KtJlUm/WCrse3579PM+wSuE088rJbC4Hyq3WmHKtPizd+8J5
+	0v4Vvs+63rH0HtQSmyzofWviq6k3d/gvV3r1a5KS4rH3RQvMtzrptp3qnv1t2ZQF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200914>
 
-On Tuesday 03-July-2012 05:23:29 Hallvard Breien Furuseth wrote:
-> Brian Foster wrote:
-> > (...)
-> >  The catch is a desire(? requirement?) that, when the
-> >  transition ends, people used to using B can continue
-> >  to use B, people used to using A can continue to use A,
-> >  and there is no difference.  That is, after the end of
-> >  transition, branch names A and B are the same thing.
-> >  Always.  Automatically.
-> >
-> >  Using a symref seems a working answer.  That is,
-> >  after the merge, change B from a true branch head
-> >  into a symref pointing to A:
-> >
-> >       git merge ...
-> >       git symbolic-ref refs/heads/B refs/heads/A
-> >
-> >   =E2=96=B6 What are the gotchas?
->=20
->  Git clone will turn symref B into a regular branch,
->  which will not move in parallel with A.
+On 07/03/2012 03:40 PM, Brian Foster wrote:
+> On Tuesday 03-July-2012 05:23:29 Hallvard Breien Furuseth wrote:
+>>              E.g. if it's hard to teach developers to switch
+>>   from B to A, a hook which rejects pushes to B might help.
+>
+>   Whilst we _may_ have problems with some of the
+>   internal developers (this can be managed so I'm
+>   not worried about it), the concern is about the
+>   external users (clients who clone but never push)
+>   becoming confused.  Hence the requirement about
+>   continuing to use the same branch name as you are
+>   used to using.  That's it!  It's that simple.
 
- Yes, I realize that (and my test script shows it).
- But I'm not concerned about it  =E2=80=94 albeit I've yet
- to check with my colleagues =E2=80=94  because it matters
- only if you _expect_ the two to be identical in
- clones at all times.  That wasn't the requirement.
- The (and I must say I _do_ think this is silly!)
- requirement is =E2=80=9CPeople used to using A can still
- use A.  People used to using B can still use B.=E2=80=9D
+Maybe create a new branch B (an orphan commit unconnected to the old 
+branch B) with a single README file telling the person that from now on 
+they should be using branch A.
 
- ( Having said that, I now realize my comment
-  that =E2=80=9C... and there is no difference=E2=80=9D could be
-  misconstrued.  My apologies.  Sorry!  What I _meant_
-  was the two classes of user (A users and B users)
-  could work in an identical fashion except for
-  the name difference. )
+Michael
 
->  People may have private scripts which will
->  be surprised when they encounter B.  E.g. when
->  parsing the output from 'git branch'.
-
- YES.  This is a good point, but in this case
- should not apply:  The only repository with
- the symref is not directly accessible, so,
- with a few expert exceptions, everyone is
- using clones (often cloned from a mirror,
- which doesn't have the symref being a clone).
-
->[ ... ]
-> >   =E2=96=B6 Are there other solutions?
->=20
->  You haven't explained the problem which led you to want "equal"
->  branches.
-
- People who don't know what they are doing
- making detailed technical requirements and
- not listening-to advice from the experts.
- I myself want to avoid the whole two-branch
- merge business, or, if not possible, then
- do the obvious thing and delete one of the
- branch names (B) after the merge, yadda-yadda.
- ( I do have a vague hope of removing this
-  branch alias =E2=80=9Crequirement=E2=80=9D, but not of
-  removing the two-branches-then-merge plan. )
-
->             E.g. if it's hard to teach developers to switch
->  from B to A, a hook which rejects pushes to B might help.
-
- Whilst we _may_ have problems with some of the
- internal developers (this can be managed so I'm
- not worried about it), the concern is about the
- external users (clients who clone but never push)
- becoming confused.  Hence the requirement about
- continuing to use the same branch name as you are
- used to using.  That's it!  It's that simple.
-
-Thanks,
-	-blf-
-
->  Possibly in addition to them using a private symref.  In this
->  case, [ suggestion deleted as the author confirms it is in error ].
->=20
->  Hallvard
-
---=20
-Brian Foster
-Principal MTS, Software        |  La Ciotat, France
-Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
