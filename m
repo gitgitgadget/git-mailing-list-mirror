@@ -1,61 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: can I always ignore a file during a merge?
-Date: Tue, 3 Jul 2012 03:38:47 -0400
-Message-ID: <20120703073847.GD16679@sigill.intra.peff.net>
-References: <p06240817cc114629c20f@[192.168.1.122]>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: How do I delete a remote branch with a period in the name?
+Date: Tue, 03 Jul 2012 09:56:46 +0200
+Message-ID: <m23959e0qp.fsf@igel.home>
+References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-X-From: git-owner@vger.kernel.org Tue Jul 03 09:38:57 2012
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "jonsmirl\@gmail.com" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 09:56:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SlxhI-00008z-PF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 09:38:57 +0200
+	id 1Slxyk-000686-2I
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 09:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966Ab2GCHiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 03:38:51 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52141
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753277Ab2GCHiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 03:38:51 -0400
-Received: (qmail 19245 invoked by uid 107); 3 Jul 2012 07:38:58 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jul 2012 03:38:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2012 03:38:47 -0400
-Content-Disposition: inline
-In-Reply-To: <p06240817cc114629c20f@[192.168.1.122]>
+	id S933505Ab2GCH4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 03:56:51 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:56313 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756361Ab2GCH4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 03:56:50 -0400
+Received: from frontend4.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3WRHjs6sLWz4KKCq;
+	Tue,  3 Jul 2012 09:57:21 +0200 (CEST)
+Received: from igel.home (ppp-88-217-101-196.dynamic.mnet-online.de [88.217.101.196])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3WRHjB3CZDzbbvw;
+	Tue,  3 Jul 2012 09:56:46 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 20E1DCA2A4; Tue,  3 Jul 2012 09:56:46 +0200 (CEST)
+X-Yow: OVER the undertow!  UNDER the overpass!  Around the FUTURE
+ and BEYOND REPAIR!!
+In-Reply-To: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+	(jonsmirl@gmail.com's message of "Mon, 2 Jul 2012 23:09:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200906>
 
-On Wed, Jun 27, 2012 at 07:39:03PM -0400, Stephen Bannasch wrote:
+"jonsmirl@gmail.com" <jonsmirl@gmail.com> writes:
 
-> Is there a way to merge from branchA to branchB and from branchB to
-> branchA while completely ignoring changes to a file that is tracked
-> and exists in both branches?
+> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git push origin :fl.stg
+> error: unable to push to unqualified destination: fl.stg
+> The destination refspec neither matches an existing ref on the remote nor
+> begins with refs/, and we are unable to guess a prefix based on the source ref.
+> error: failed to push some refs to 'git@github.com:jonsmirl/lpc31xx.git'
+> jonsmirl@smirl2:/home/apps/florida/lpc31xx$
+>
+> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git branch -r
+>   linus/master
+>   origin/HEAD -> origin/master
+>   origin/bar.stgit
+>   origin/dt-test
+>   origin/fl.stgit
+>   origin/foo.stgit
+>   origin/lpc313x-stg
+>   origin/lpc313x-stg.stgit
+>   origin/master
+>   origin/master.stgit
+>   origin/temp.stgit
+>   origin/v3.4-stg
+>   origin/v3.4-stg.stgit
+>   origin/v3.5-stg
+>   origin/v3.5-stg.stgit
 
-No. Fundamentally, a commit object in git consists of a content state
-(i.e., a pointer to a tree object) and a pointer to all previous history
-(i.e., zero or more "parent" pointers to commit objects). The semantics
-of a commit object can be thought of as "I have looked at all of the
-history in all of the parent commits, and the state contained in my tree
-pointer supersedes them all".
+There doesn't appear to be a remote branch with that name.
 
-So you could make merge B into A, but keep A's copy of the file (e.g.,
-using the "ours" strategy). But that is saying that you considered the
-state of both A and B, and decided that A's version supersedes what
-happened in B. If you later wanted to merge from A to B, B's version of
-the file would not even be considered as an outcome for the merge.
+Andreas.
 
-There isn't really a clever way to work around this via a different
-merge strategy; it's a fundamental aspect of git's data structure for
-storing history.
-
--Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
