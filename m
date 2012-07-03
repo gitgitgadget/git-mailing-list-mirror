@@ -1,129 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] push: don't guess at qualifying remote refs on deletion
-Date: Tue, 3 Jul 2012 14:04:39 -0400
-Message-ID: <20120703180439.GC3294@sigill.intra.peff.net>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
- <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
- <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 00/18] Extending the shelf-life of "git describe"
+ output
+Date: Tue, 03 Jul 2012 11:20:10 -0700
+Message-ID: <7v3958wvtx.fsf@alter.siamese.dyndns.org>
+References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
+ <20120703071940.GB16679@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 20:04:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 20:20:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm7Sx-00044q-R3
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 20:04:48 +0200
+	id 1Sm7i2-0005sh-IJ
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 20:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754689Ab2GCSEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 14:04:42 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52435
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751089Ab2GCSEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 14:04:42 -0400
-Received: (qmail 23912 invoked by uid 107); 3 Jul 2012 18:04:49 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jul 2012 14:04:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2012 14:04:39 -0400
-Content-Disposition: inline
-In-Reply-To: <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+	id S1754256Ab2GCSUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 14:20:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46099 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752876Ab2GCSUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 14:20:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 046EE97A3;
+	Tue,  3 Jul 2012 14:20:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=nKMpVEfltR1O8ObbzrJI+RTb9Ok=; b=EOU/T0JA3+iEjWFdHADU
+	puo5+eQELxrL0KYm/eIzIELqGomhyayG5lfBC4tvYoYCXjnHrOVXCgEPnkj4HMAn
+	hr+PvwqueKd5ncmbTdchdqniGK+s/Ftp6WXzcL3qL8UcOB3QCjVdJjlEFxrw7uq2
+	ZdHQcq7Pzsc2Tdf+pqhU1DI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=LalGIgMwy6+K6oF0ggaBxLDQhR/6O5zEMzcLGE3fjttoEe
+	GmjRB9KY1XbmP9XcDqa5E4WE66qEclIWNMv6OXlCvGdSUBSaDeL6PhjMy+qCypOy
+	NcziBPC03zQ2x51qsbw4TuaBRszayCkFFNp6HB0jCV+V9nOLsB94PxfdgQzv4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF2EE97A2;
+	Tue,  3 Jul 2012 14:20:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55F7397A0; Tue,  3 Jul 2012
+ 14:20:12 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BAAF6E52-C53B-11E1-BFAA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200926>
 
-When we try to push a ref and the right-hand side of the
-refspec does not find a match, we try to create it. If it is
-not fully qualified, we try to guess where it would go in
-the refs hierarchy based on the left-hand source side. If
-the source side is not a ref, then we give up and give a
-long explanatory message.
+Jeff King <peff@peff.net> writes:
 
-For deletions, however, this doesn't make any sense. We
-would never want to create on the remote side, and if an
-unqualified ref can't be matched, it is simply an error. The
-current code handles this already because the left-hand side
-is empty, and therefore does not give us a hint as to where
-the right-hand side should go, and we properly error out.
-Unfortunately, the error message is the long "we tried to
-qualify this, but the source side didn't let us guess"
-message, which is quite confusing.
+> However, if you feed a partial sha1 for which there are
+> multiple matches, none of which satisfy the disambiguation hint, then we
+> used to say "short SHA1 is ambiguous", and now we don't.
 
-Instead, we can just be more succinct and say "we can't
-delete this because we couldn't find it". So before:
+In finish_object_disambiguation(), if the candidate hasn't been
+checked, there are two cases:
 
-  $ git push origin :bogus
-  error: unable to push to unqualified destination: bogus
-  The destination refspec neither matches an existing ref on the remote nor
-  begins with refs/, and we are unable to guess a prefix based on the source ref.
-  error: failed to push some refs to '$URL'
+ - It is the first and only object that match the prefix; or
+ - It replaced another object that matched the prefix but that
+   object did not satisfy ds->fn() callback.
 
-and now:
+And the former case we set ds->candidate_ok to true without doing
+anything else, while for the latter we check the candidate, which
+may set ds->candidate_ok to false.
 
-  $ git push origin :bogus
-  error: unable to delete 'bogus': remote ref does not exist
-  error: failed to push some refs to '$URL'
+At this point in the code, ds->candidate_ok can be false only if
+this last-round check found that the candidate does not pass the
+check, because the state after update_candidates() returns cannot
+satisfy
 
-It is tempting to also catch a fully-qualified ref like
-"refs/heads/bogus" and generate the same error message.
-However, that currently does not error out at all, and
-instead gets sent to the remote side, which typically
-generates a warning:
+    !ds->ambiguous && ds->candidate_exists && ds->candidate_checked
 
-  $ git push origin:refs/heads/bogus
-  remote: warning: Deleting a non-existent ref.
-  To $URL
-   - [deleted]         bogus
+and !ds->canidate_ok at the same time.
 
-While it would be nice to catch this error early, a
-client-side error would mean aborting the push entirely and
-changing push's exit code. For example, right now you can
-do:
+Hence, when we execute this "return", we know we have seen more than
+one object that match the prefix (and none of them satisfied ds->fn),
+meaning that we should say "the short name is ambiguous", not "there
+is no object that matches the prefix".
 
-  $ git push origin refs/heads/foo refs/heads/bar
+Please sanity check; I think it is just this one-liner, but I am
+having hard time convincing myself that it can be that simple.
 
-and end up in a state where "foo" and "bar" are deleted,
-whether both of them currently exist or not (and see an
-error only if we actually failed to contact the server).
-Generating an error would cause a regression for this use
-case.
+ sha1_name.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On Tue, Jul 03, 2012 at 07:42:07AM -0400, jonsmirl@gmail.com wrote:
-
-> I have the branch name wrong. It is fl.stgit not fl.stg.
-> But the error message sent me off in the wrong direction looking for an answer.
-
-I think this would help. I used "remote ref does not exist"
-because that is the simplest explanation for the user.
-However, given that we will try to push a fully qualified
-ref that does not exist, a more accurate message might
-"destination refspec did not match" or something similar.  I
-prefer the former, though, as it less arcane.
-
- remote.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/remote.c b/remote.c
-index 6833538..04fd9ea 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1100,6 +1100,9 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 	case 0:
- 		if (!memcmp(dst_value, "refs/", 5))
- 			matched_dst = make_linked_ref(dst_value, dst_tail);
-+		else if (is_null_sha1(matched_src->new_sha1))
-+			error("unable to delete '%s': remote ref does not exist",
-+			      dst_value);
- 		else if ((dst_guess = guess_ref(dst_value, matched_src)))
- 			matched_dst = make_linked_ref(dst_guess, dst_tail);
- 		else
--- 
-1.7.11.rc1.21.g3c8d91e
+diff --git a/sha1_name.c b/sha1_name.c
+index 2e2dbb8..c824bdd 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -212,7 +212,7 @@ static int finish_object_disambiguation(struct disambiguate_state *ds,
+ 				    ds->fn(ds->candidate, ds->cb_data));
+ 
+ 	if (!ds->candidate_ok)
+-		return SHORT_NAME_NOT_FOUND;
++		return SHORT_NAME_AMBIGUOUS;
+ 
+ 	hashcpy(sha1, ds->candidate);
+ 	return 0;
