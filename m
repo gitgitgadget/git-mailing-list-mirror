@@ -1,158 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: [BUG] serious inflate inconsistency on master
-Date: Tue, 3 Jul 2012 18:19:01 -0400
-Message-ID: <20120703221900.GA28897@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] serious inflate inconsistency on master
+Date: Tue, 03 Jul 2012 15:40:07 -0700
+Message-ID: <7vipe4tqns.fsf@alter.siamese.dyndns.org>
+References: <20120703221900.GA28897@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 00:19:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 04 00:40:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmBRU-0000vE-Uf
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 00:19:33 +0200
+	id 1SmBlZ-0003rR-Gy
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 00:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756739Ab2GCWTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 18:19:05 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52613
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756580Ab2GCWTE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 18:19:04 -0400
-Received: (qmail 27191 invoked by uid 107); 3 Jul 2012 22:19:11 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jul 2012 18:19:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2012 18:19:01 -0400
-Content-Disposition: inline
+	id S1756580Ab2GCWkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 18:40:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61515 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756267Ab2GCWkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 18:40:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 841EA94C5;
+	Tue,  3 Jul 2012 18:40:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=grj++Ch6YHBxVGgh1m/EJhdNyxs=; b=OMus5x
+	NMh247dvToxdcWzV5v4GgUrHGv3GYLK8yAeNI6gmKi1SlrUiLLzbwm3aNhqj7pU2
+	zrQlB2rKUZEdKXFofLrdB3t1x6NKe2au13UkKbpTpeHhcuMrbMWZXJyikr7nsHWi
+	+utYCfZyKztph6SWAdgpPfctaw3Muszn6L/4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wFP2uPK2Tb4Kv+eXde1zc3+oKYChRynD
+	tp8huOd3W17HDMqRL5Jo9enNBTP6N1JFGA7fm9Z627EbnY5f4qnTTZrPp8mK9xN9
+	fQp22aYwxnztRKw/npx76THd3YcpebJCHajRyQLsHOSlcJDQGgowSsJxA7/eL0R4
+	7UpqhxZrRYc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74AFA94C4;
+	Tue,  3 Jul 2012 18:40:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0411794C2; Tue,  3 Jul 2012
+ 18:40:08 -0400 (EDT)
+In-Reply-To: <20120703221900.GA28897@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 3 Jul 2012 18:19:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B05B9DC-C560-11E1-9A8A-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200974>
 
-I'm getting a 'serious inflate consistency' error while running "git
-verify-pack" (actually, "git index-pack --verify" under the hood). It
-bisects to 4614043 (index-pack: use streaming interface for collision
-test on large blobs, 2012-05-24).
+Jeff King <peff@peff.net> writes:
 
-The interesting thing about this repository is that it has a 2.8G text
-file in it which compresses down to only about 420M. I'm not sure that
-4614043 actually introduces the bug, but rather just triggers the code
-path.
-
-I'm able to reproduce it with the following script:
-
-  # empty repo...
-  git init repo &&
-  cd repo &&
-
-  # set this low to make sure we follow the unpack_data code-path
-  git config core.bigfilethreshold 100k &&
-
-  # now make a file bigger than our threshold, but that will compress
-  # well
-  perl -le 'print for (1..100000)' >file &&
-
-  # and then make a commit
-  git add file &&
-  git commit -m file &&
-
-  # and a pack with it
-  git repack -ad &&
-
-  # and then verify that pack
-  git verify-pack .git/objects/pack/*.pack
-
-The problem seems to be in index-pack.c:unpack_data, which does this:
-
->	git_inflate_init(&stream);
->	stream.next_out = data;
->	stream.avail_out = consume ? 64*1024 : obj->size;
+> The problem seems to be in index-pack.c:unpack_data, which does this:
 >
->	do {
->		unsigned char *last_out = stream.next_out;
->		ssize_t n = (len < 64*1024) ? len : 64*1024;
->		n = pread(pack_fd, inbuf, n, from);
->		if (n < 0)
->			die_errno(_("cannot pread pack file"));
->		if (!n)
->			die(Q_("premature end of pack file, %lu byte missing",
->			       "premature end of pack file, %lu bytes missing",
->			       len),
->			    len);
->		from += n;
->		len -= n;
->		stream.next_in = inbuf;
->		stream.avail_in = n;
->		status = git_inflate(&stream, 0);
->		if (consume) {
->			if (consume(last_out, stream.next_out - last_out, cb_data)) {
->				free(inbuf);
->				free(data);
->				return NULL;
->			}
->			stream.next_out = data;
->			stream.avail_out = 64*1024;
->		}
->	} while (len && status == Z_OK && !stream.avail_in);
->
->	/* This has been inflated OK when first encountered, so... */
->	if (status != Z_STREAM_END || stream.total_out != obj->size)
->		die(_("serious inflate inconsistency"));
+>>	git_inflate_init(&stream);
+>>	stream.next_out = data;
+>>	stream.avail_out = consume ? 64*1024 : obj->size;
+>>
+>>	do {
+>>		unsigned char *last_out = stream.next_out;
+>>		ssize_t n = (len < 64*1024) ? len : 64*1024;
+>>		n = pread(pack_fd, inbuf, n, from);
+>>		if (n < 0)
+>>			die_errno(_("cannot pread pack file"));
+>>		if (!n)
+>>			die(Q_("premature end of pack file, %lu byte missing",
+>>			       "premature end of pack file, %lu bytes missing",
+>>			       len),
+>>			    len);
+>>		from += n;
+>>		len -= n;
+>>		stream.next_in = inbuf;
+>>		stream.avail_in = n;
+>>		status = git_inflate(&stream, 0);
+>>		if (consume) {
+>>			if (consume(last_out, stream.next_out - last_out, cb_data)) {
+>>				free(inbuf);
+>>				free(data);
+>>				return NULL;
+>>			}
+>>			stream.next_out = data;
+>>			stream.avail_out = 64*1024;
+>>		}
+>>	} while (len && status == Z_OK && !stream.avail_in);
+>>
+>>	/* This has been inflated OK when first encountered, so... */
+>>	if (status != Z_STREAM_END || stream.total_out != obj->size)
+>>		die(_("serious inflate inconsistency"));
 
-We limit ourselves to handling just 64K at a time. So we read in 64K and
-stuff it in the next_in/avail_in buffer. And then we make 64K of buffer
-available for zlib to write into via the next_out/avail_out buffer. So
-zlib reads the first chunk, and after reading 28K or so fills up the 64K
-output buffer and returns. We call consume on the chunk, but when we hit
-the outer loop condition, stream.avail_in still mentions the 36K we
-haven't processed yet, and the loop ends with status == Z_OK, which
-triggers the assertion below it.
+Yeah, that "if (consume)" part is clearly bogus.  It should feed
+what it read in "inbuf" fully to git_inflate() in a (missing) inner
+loop and keep feeding consume() with the inflated data, but instead
+happily goes on to read more from the packfile once the initial part
+of the inflated data is fed to consume, ignoring the remainder.
 
-So I don't really understand what this !stream.avail_in is doing there
-in the do-while loop.  Don't we instead need to have an inner loop that
-keeps feeding the result of pread into git_inflate until we don't have
-any available data left?
+> So I don't really understand what this !stream.avail_in is doing there
+> in the do-while loop.  Don't we instead need to have an inner loop that
+> keeps feeding the result of pread into git_inflate until we don't have
+> any available data left?
 
-Something like the patch below, which seems to work for me, but I still
-don't understand the function of the !stream.avail_in check in the outer
-loop.
-
--Peff
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 8b5c1eb..0db1923 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -538,15 +538,19 @@ static void *unpack_data(struct object_entry *obj,
- 		len -= n;
- 		stream.next_in = inbuf;
- 		stream.avail_in = n;
--		status = git_inflate(&stream, 0);
--		if (consume) {
--			if (consume(last_out, stream.next_out - last_out, cb_data)) {
--				free(inbuf);
--				free(data);
--				return NULL;
--			}
--			stream.next_out = data;
--			stream.avail_out = 64*1024;
-+		if (!consume)
-+			status = git_inflate(&stream, 0);
-+		else {
-+			do {
-+				status = git_inflate(&stream, 0);
-+				if (consume(last_out, stream.next_out - last_out, cb_data)) {
-+					free(inbuf);
-+					free(data);
-+					return NULL;
-+				}
-+				stream.next_out = data;
-+				stream.avail_out = 64*1024;
-+			} while (status == Z_OK && stream.avail_in);
- 		}
- 	} while (len && status == Z_OK && !stream.avail_in);
- 
+Exactly.  I do not think the avain_in check should be done at the
+end of the outer loop at all.  When we are buffering the entire
+inflated data in core without using consume, we allocate enough
+memory to "data" to hold the whole thing, so in that case, it may be
+OK to expect that git_inflate() would never return without consuming
+the input bytes (i.e. stream.avail_in would always be zero at the
+site of the check), but with consume(), we give small piece of
+memory as a temporary output area and call git_inflate(), and it is
+entirely possible and normal for it to run out of output before
+inflating all the input bytes.
