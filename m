@@ -1,68 +1,91 @@
-From: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
-Subject: Re: How do I delete a remote branch with a period in the name?
-Date: Tue, 3 Jul 2012 07:42:07 -0400
-Message-ID: <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
-	<7vsjd9wkek.fsf@alter.siamese.dyndns.org>
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: [Q] Branch aliases =?UTF-8?Q?=28synonyms=29=3F?=
+Date: Tue, 03 Jul 2012 14:23:29 +0200
+Message-ID: <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no>
+References: <1919214.YKUdgul2iY@laclwks004>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 13:42:16 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
+To: Brian Foster <brian.foster@maxim-ic.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 14:23:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm1Ul-0006eZ-Qj
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 13:42:16 +0200
+	id 1Sm290-00072r-Va
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 14:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab2GCLmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 07:42:10 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:34514 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751444Ab2GCLmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 07:42:08 -0400
-Received: by vcbf11 with SMTP id f11so4108838vcb.19
-        for <git@vger.kernel.org>; Tue, 03 Jul 2012 04:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=VO56qlqWSdoGPC1FW28gk4+QmzogKV6HOyN8QPm5X8s=;
-        b=curL/oOEb7tuabcQcjPLV7YK+9tFeR0JvndsNmQJQs7Q8fRRj2WTdh0ZsJ3zLWJ00v
-         Tng6ttTYu7tIvsgFBxx5G3GsF2n/tdf0Uv/Z2X7W/EUM4S7C06t9jpVgn0FFBVnhuIgg
-         kH7i7f4TyeScZZYbBJRNP5MhiHwJXO6i7CNW0f+B/jxbHIbT3TuXGN0gXpg5Fe8m1/aD
-         u1wOF44gthy48e+q2KMLG2RdIlukmtB20eNp1lH0cA9XF4EAbvLc52BgWisAQtDvT8ZB
-         UD81tD3YipHtVvbRDKw67gMDJPFKhPYgrHD4NJehqeQGkY6IzAf9CcvZ0JRf9gArD7ZP
-         hKcg==
-Received: by 10.52.176.66 with SMTP id cg2mr6642688vdc.121.1341315727663; Tue,
- 03 Jul 2012 04:42:07 -0700 (PDT)
-Received: by 10.52.65.143 with HTTP; Tue, 3 Jul 2012 04:42:07 -0700 (PDT)
-In-Reply-To: <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
+	id S1751395Ab2GCMXf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jul 2012 08:23:35 -0400
+Received: from mail-out2.uio.no ([129.240.10.58]:44313 "EHLO mail-out2.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750749Ab2GCMXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 08:23:34 -0400
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by mail-out2.uio.no with esmtp (Exim 4.75)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1Sm28j-0005dr-3u; Tue, 03 Jul 2012 14:23:33 +0200
+Received: from w3prod-wm02.uio.no ([129.240.4.215] helo=webmail.uio.no)
+	by mail-mx2.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	user hbf (Exim 4.76)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1Sm28i-0008Mz-OR; Tue, 03 Jul 2012 14:23:33 +0200
+Received: from bombur.uio.no ([129.240.6.233])
+ by webmail.uio.no
+ with HTTP (HTTP/1.1 POST); Tue, 03 Jul 2012 14:23:29 +0200
+In-Reply-To: <1919214.YKUdgul2iY@laclwks004>
+X-Sender: h.b.furuseth@usit.uio.no
+User-Agent: Roundcube Webmail/0.4.2
+X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 2 sum msgs/h 1 total rcpts 2503 max rcpts/h 20 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 8D5502AADC12480FCBA7FA8A6B3F839088D2F3F6
+X-UiO-SPAM-Test: remote_host: 129.240.4.215 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 70 total 2469745 max/h 641 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200911>
 
-On Tue, Jul 3, 2012 at 12:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "jonsmirl@gmail.com" <jonsmirl@gmail.com> writes:
+ Brian Foster wrote:
+> (...)
+>  The catch is a desire(? requirement?) that, when the
+>  transition ends, people used to using B can continue
+>  to use B, people used to using A can continue to use A,
+>  and there is no difference.  That is, after the end of
+>  transition, branch names A and B are the same thing.
+>  Always.  Automatically.
 >
->> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git push origin :fl.stg
->> error: unable to push to unqualified destination: fl.stg
->> The destination refspec neither matches an existing ref on the remote nor
->> begins with refs/, and we are unable to guess a prefix based on the source ref.
+>  Using a symref seems a working answer.  That is,
+>  after the merge, change B from a true branch head
+>  into a symref pointing to A:
 >
-> The message seems to be saying that fl.stg is not specific enough
-> perhaps?  What does "git ls-remote origin | grep fl.stg" say?  If it
-> says refs/smirl/fl.stg, for example, you can be specific as the
-> message suggests, e.g. "git push origin :refs/smirl/fl.stg" or
-> something like that?
+>       git merge ...
+>       git symbolic-ref refs/heads/B refs/heads/A
+>
+>   =E2=96=B6 What are the gotchas?
 
-I have the branch name wrong. It is fl.stgit not fl.stg.
-But the error message sent me off in the wrong direction looking for an answer.
+ Git clone will turn symref B into a regular branch,
+ which will not move in parallel with A.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+ People may have private scripts which will
+ be surprised when they encounter B.  E.g. when
+ parsing the output from 'git branch'.
+ Check out B, then you expect B rather than A
+ to be reported as the current branch:
+   git checkout B
+   git branch
+   * A
+     B -> A
+
+>   =E2=96=B6 Are there other solutions?
+
+ You haven't explained the problem which led you to want "equal"
+ branches.  E.g. if it's hard to teach developers to switch
+ from B to A, a hook which rejects pushes to B might help.
+ Possibly in addition to them using a private symref.  In this
+ case, 'git symbolic-ref B refs/heads/A' might work better.
+
+ Hallvard
