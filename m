@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 17/25] sha1_name.c: introduce get_sha1_committish()
-Date: Tue,  3 Jul 2012 14:37:07 -0700
-Message-ID: <1341351435-31011-18-git-send-email-gitster@pobox.com>
+Subject: [PATCH v5 14/25] sha1_name.c: get_sha1_1() takes lookup flags
+Date: Tue,  3 Jul 2012 14:37:04 -0700
+Message-ID: <1341351435-31011-15-git-send-email-gitster@pobox.com>
 References: <1341351435-31011-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Jul 03 23:38:50 2012
@@ -10,170 +10,129 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmAo4-00061R-RQ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:38:49 +0200
+	id 1SmAo5-00061R-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546Ab2GCViV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 17:38:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35171 "EHLO
+	id S932576Ab2GCViT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 17:38:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35111 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756551Ab2GCVhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 17:37:51 -0400
+	id S1756534Ab2GCVhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 17:37:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31AD38670
-	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45EE48664
+	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=LTmw
-	nU7p6lTConMSJPzg3aaMxQE=; b=KMvNXkdP6kmhEyn93YVEtGH21bmSlvYlALQj
-	7gFYO2aeZBqIHaNdSXDmeevH/gYjetNWC2+pk2C91NOXxq1VTbjZudACn/gNNjWZ
-	b47X9hW4XMk6DBojfEUATrKSX5dO8N/Lp2lYJ8t9HGePLx36IWyYz3rD2ORHtSJF
-	oxpsjY4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=mpI0
+	WUdXGGYFDIyY4CNVfHe6cFk=; b=ySw4CYAK3dbjv2QvCYm8QS99wfOngftvyP/l
+	vkaNstSsqzwEfyqcJ7aldTi9KiJ4vNYnEPWTMQV02NT1IE+Usfu1UbaDn61RJKu6
+	LtaZ3eV1zwSnIB4ePu+Z8YSteCAZMGy+je7vgaPFr+8bdC7O/oToOD9zp8vjKjw5
+	375b8uw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ZFITKx
-	wnTa+aJ10SaeQPl19rAtQeCqvZ6GNZ4Xkej74PZamjhA56sIRE86r7Ui/9ccwtLo
-	hn0HgKWqGMFXU5IuoEIWYiiDiMocOFNcpiSLLZU5yVDvxUYvqmp/nGGCanTzHpXK
-	fTDBu/77c8b1xb1WEJCv1Ttb3fMH8dO6hRu5k=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=vYeH/4
+	WJNi+XAdR6+kago4L84rtb4Y4Fpoj7L/Jmt3Al8OBpwdYioLkthBX4ewzO1aKB/S
+	tpX4GrhZ/NlC/G0eIcQL1JfIetfPHybv4Jw82RjikCMmGztE9wfkFRFqYjFTUx6k
+	pKCxBMCd+GwxnrhCAwY6ZCR48N1YN41uCrzm8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 294B2866F
-	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D7628663
+	for <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:45 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8287A866E for
- <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:50 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A75FE8662 for
+ <git@vger.kernel.org>; Tue,  3 Jul 2012 17:37:44 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.229.g706c98f
 In-Reply-To: <1341351435-31011-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 56B660E2-C557-11E1-8E6F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5339DCF0-C557-11E1-A9AB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200961>
 
-Many callers know that the user meant to name a committish by
-syntactical positions where the object name appears.  Calling this
-function allows the machinery to disambiguate shorter-than-unique
-abbreviated object names between committish and others.
-
-Note that this does NOT error out when the named object is not a
-committish. It is merely to give a hint to the disambiguation
-machinery.
+This is to pass the disambiguation hints from the caller down the
+callchain.  Nothing is changed in this step, as everybody just
+passes 0 in the flag.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h                             |  1 +
- commit.c                            |  2 +-
- revision.c                          |  6 +++---
- sha1_name.c                         | 21 +++++++++++++++++++--
- t/t1512-rev-parse-disambiguation.sh |  2 +-
- 5 files changed, 25 insertions(+), 7 deletions(-)
+ sha1_name.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index e1fa63b..e947b48 100644
---- a/cache.h
-+++ b/cache.h
-@@ -817,6 +817,7 @@ struct object_context {
- #define GET_SHA1_ONLY_TO_DIE 04000
- 
- extern int get_sha1(const char *str, unsigned char *sha1);
-+extern int get_sha1_committish(const char *str, unsigned char *sha1);
- extern void maybe_die_on_misspelt_object_name(const char *name, const char *prefix);
- extern int get_sha1_with_context(const char *str, unsigned flags, unsigned char *sha1, struct object_context *orc);
- 
-diff --git a/commit.c b/commit.c
-index 35af498..8b84eff 100644
---- a/commit.c
-+++ b/commit.c
-@@ -67,7 +67,7 @@ struct commit *lookup_commit_reference_by_name(const char *name)
- 	unsigned char sha1[20];
- 	struct commit *commit;
- 
--	if (get_sha1(name, sha1))
-+	if (get_sha1_committish(name, sha1))
- 		return NULL;
- 	commit = lookup_commit_reference(sha1);
- 	if (!commit || parse_commit(commit))
-diff --git a/revision.c b/revision.c
-index 7444f2e..c3160f2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -979,7 +979,7 @@ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags)
- 		flags ^= UNINTERESTING;
- 		arg++;
- 	}
--	if (get_sha1(arg, sha1))
-+	if (get_sha1_committish(arg, sha1))
- 		return 0;
- 	while (1) {
- 		it = get_reference(revs, arg, sha1, 0);
-@@ -1120,8 +1120,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs,
- 			next = "HEAD";
- 		if (dotdot == arg)
- 			this = "HEAD";
--		if (!get_sha1(this, from_sha1) &&
--		    !get_sha1(next, sha1)) {
-+		if (!get_sha1_committish(this, from_sha1) &&
-+		    !get_sha1_committish(next, sha1)) {
- 			struct commit *a, *b;
- 			struct commit_list *exclude;
- 
 diff --git a/sha1_name.c b/sha1_name.c
-index c045be8..9e13d60 100644
+index caef6e5..8feb9b5 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -872,7 +872,7 @@ int get_sha1_mb(const char *name, unsigned char *sha1)
- 		struct strbuf sb;
- 		strbuf_init(&sb, dots - name);
- 		strbuf_add(&sb, name, dots - name);
--		st = get_sha1(sb.buf, sha1_tmp);
-+		st = get_sha1_committish(sb.buf, sha1_tmp);
- 		strbuf_release(&sb);
- 	}
- 	if (st)
-@@ -881,7 +881,7 @@ int get_sha1_mb(const char *name, unsigned char *sha1)
- 	if (!one)
- 		return -1;
- 
--	if (get_sha1(dots[3] ? (dots + 3) : "HEAD", sha1_tmp))
-+	if (get_sha1_committish(dots[3] ? (dots + 3) : "HEAD", sha1_tmp))
- 		return -1;
- 	two = lookup_commit_reference_gently(sha1_tmp, 0);
- 	if (!two)
-@@ -999,6 +999,23 @@ int get_sha1(const char *name, unsigned char *sha1)
- 	return get_sha1_with_context(name, 0, sha1, &unused);
+@@ -333,7 +333,7 @@ static inline int upstream_mark(const char *string, int len)
+ 	return 0;
  }
  
-+/*
-+ * Many callers know that the user meant to name a committish by
-+ * syntactical positions where the object name appears.  Calling this
-+ * function allows the machinery to disambiguate shorter-than-unique
-+ * abbreviated object names between committish and others.
-+ *
-+ * Note that this does NOT error out when the named object is not a
-+ * committish. It is merely to give a hint to the disambiguation
-+ * machinery.
-+ */
-+int get_sha1_committish(const char *name, unsigned char *sha1)
-+{
-+	struct object_context unused;
-+	return get_sha1_with_context(name, GET_SHA1_COMMITTISH,
-+				     sha1, &unused);
-+}
-+
- /* Must be called only when object_name:filename doesn't exist. */
- static void diagnose_invalid_sha1_path(const char *prefix,
- 				       const char *filename,
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 1a736b0..7c92451 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -102,7 +102,7 @@ test_expect_failure 'disambiguate commit' '
- 	test $(git rev-parse $commit^) = $(git rev-parse 1102198268)
- '
+-static int get_sha1_1(const char *name, int len, unsigned char *sha1);
++static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
  
--test_expect_failure 'log name1..name2 takes only commit-ishes on both ends' '
-+test_expect_success 'log name1..name2 takes only commit-ishes on both ends' '
- 	git log 11021982..11021982 &&
- 	git log ..11021982 &&
- 	git log 11021982.. &&
+ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ {
+@@ -370,7 +370,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		ret = interpret_branch_name(str+at, &buf);
+ 		if (ret > 0) {
+ 			/* substitute this branch name and restart */
+-			return get_sha1_1(buf.buf, buf.len, sha1);
++			return get_sha1_1(buf.buf, buf.len, sha1, 0);
+ 		} else if (ret == 0) {
+ 			return -1;
+ 		}
+@@ -440,7 +440,7 @@ static int get_parent(const char *name, int len,
+ 		      unsigned char *result, int idx)
+ {
+ 	unsigned char sha1[20];
+-	int ret = get_sha1_1(name, len, sha1);
++	int ret = get_sha1_1(name, len, sha1, 0);
+ 	struct commit *commit;
+ 	struct commit_list *p;
+ 
+@@ -473,7 +473,7 @@ static int get_nth_ancestor(const char *name, int len,
+ 	struct commit *commit;
+ 	int ret;
+ 
+-	ret = get_sha1_1(name, len, sha1);
++	ret = get_sha1_1(name, len, sha1, 0);
+ 	if (ret)
+ 		return ret;
+ 	commit = lookup_commit_reference(sha1);
+@@ -554,7 +554,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+ 	else
+ 		return -1;
+ 
+-	if (get_sha1_1(name, sp - name - 2, outer))
++	if (get_sha1_1(name, sp - name - 2, outer, 0))
+ 		return -1;
+ 
+ 	o = parse_object(outer);
+@@ -621,7 +621,7 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
+ 	return -1;
+ }
+ 
+-static int get_sha1_1(const char *name, int len, unsigned char *sha1)
++static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags)
+ {
+ 	int ret, has_suffix;
+ 	const char *cp;
+@@ -1098,7 +1098,7 @@ static int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 
+ 	memset(oc, 0, sizeof(*oc));
+ 	oc->mode = S_IFINVALID;
+-	ret = get_sha1_1(name, namelen, sha1);
++	ret = get_sha1_1(name, namelen, sha1, 0);
+ 	if (!ret)
+ 		return ret;
+ 	/* sha1:path --> object name of path in ent sha1
+@@ -1176,7 +1176,7 @@ static int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 			strncpy(object_name, name, cp-name);
+ 			object_name[cp-name] = '\0';
+ 		}
+-		if (!get_sha1_1(name, cp-name, tree_sha1)) {
++		if (!get_sha1_1(name, cp-name, tree_sha1, 0)) {
+ 			const char *filename = cp+1;
+ 			char *new_filename = NULL;
+ 
 -- 
 1.7.11.1.229.g706c98f
