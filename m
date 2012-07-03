@@ -1,74 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 00/18] Extending the shelf-life of "git describe"
- output
-Date: Tue, 3 Jul 2012 16:24:52 -0400
-Message-ID: <20120703202452.GA24984@sigill.intra.peff.net>
-References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
- <20120703071940.GB16679@sigill.intra.peff.net>
- <7v3958wvtx.fsf@alter.siamese.dyndns.org>
- <20120703183839.GA5765@sigill.intra.peff.net>
- <7vy5n0vg9l.fsf@alter.siamese.dyndns.org>
- <20120703193410.GA20503@sigill.intra.peff.net>
- <7vtxxotx2n.fsf@alter.siamese.dyndns.org>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH] add test case for rebase of empty commit
+Date: Tue, 3 Jul 2012 16:31:36 -0400
+Message-ID: <20120703203136.GC10864@hmsreliant.think-freely.org>
+References: <1340814121-23813-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <7vr4t079jp.fsf@alter.siamese.dyndns.org>
+ <20120703182000.GB10864@hmsreliant.think-freely.org>
+ <7vtxxovfec.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 22:25:03 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 22:31:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm9ee-0008T4-Sp
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 22:25:01 +0200
+	id 1Sm9lJ-0002T5-GO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 22:31:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756025Ab2GCUY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 16:24:56 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52533
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751409Ab2GCUYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 16:24:55 -0400
-Received: (qmail 25740 invoked by uid 107); 3 Jul 2012 20:25:02 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jul 2012 16:25:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2012 16:24:52 -0400
+	id S932724Ab2GCUbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 16:31:48 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:41881 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932216Ab2GCUbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 16:31:48 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1Sm9l5-0000BY-8e; Tue, 03 Jul 2012 16:31:41 -0400
 Content-Disposition: inline
-In-Reply-To: <7vtxxotx2n.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vtxxovfec.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200944>
 
-On Tue, Jul 03, 2012 at 01:21:36PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On Tue, Jul 03, 2012 at 12:00:27PM -0700, Junio C Hamano wrote:
+> Neil Horman <nhorman@tuxdriver.com> writes:
 > 
-> > What happens if I set multiple flags? One or more of them will be
-> > ignored (you _could_ try to establish a hierarchy, for example that
-> > TREEISH is a superset of COMMITISH, but that could not handle the *_only
-> > cases, which really are mutually exclusive). IOW, I think these are not
-> > really flags but rather enum elements.
+> > So, I've been thinking about this some, and I'm a bit stuck on it.  Reading the
+> > test description for t3401, I see that we're testing gits ability to detect
+> > patches merged upstream when doing a rebase.  That said, how are we supposed to
+> > differentiate between upstream empty patches that have been cherry-picked or
+> > merged, and local branch empty changes that haven't.  As humans we can see that
+> > the changelog might be the same, but git has no way to detect that, and if
+> > --allow-empty is specified will just apply any empty patch it finds between the
+> > two branches merge base and the topic branch head.  Does anyone have an idea as
+> > to how we should detect such duplication?
 > 
-> Yes, I was aware of that.  I counted five useful ones (see the new
-> ones near the tip of 'pu') but there may be others, so you cannot
-> fit in 2 bits and would need 3 bits.
-
-I am not worried about the bits, only that adding a new 'enum
-disambiguation_type' parameter would be a pain, as most places would
-just be passing 0. But it would enforce the mutual exclusion at compile
-time.
-
-> I actually am thinking to move these bit assignments backto
-> sha1_name.c and make them private, as get_sha1_tree() and friends
-> are easier to understand public interface functions than
-> get_sha1_typish(... I_WANT_COMMIT|I_WANT_COMMITTISH|...).
-
-Yeah, I think that might be sane. If you really wanted to be flexible
-anyway, you would let the caller pass a custom disambiguation function
-(which I suspect describe would want for handling the "must come at this
-point in the history" rule).
-
--Peff
+> The changelog might be similar or textually identical, but it is
+> entirely a different matter if it makes sense taken out of the
+> context (i.e. cherry-picked).  So I would personally do not bother
+> "filtering" about them too much---if you ask for empties, you will
+> get all empties.
+> 
+Ok, copy that.
+Thanks!
+Neil
