@@ -1,74 +1,96 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git_getpass regression?
-Date: Tue, 3 Jul 2012 19:37:23 +0200
-Message-ID: <CABPQNSZjZtRxf1=cdKqgp3FwP6Fw2W876si9=OpyHmZ6mjHRsw@mail.gmail.com>
-References: <CABPQNSa4uvgijjGCSJDXDMqHC3UkqQKKujG3xDFqnQ13LNrKdQ@mail.gmail.com>
- <20120629173954.GA3804@sigill.intra.peff.net> <CABPQNSZ4NhEA1CBiCBD_YNJZcnK8u=NtQ3PeDa5c0NDROPDyrQ@mail.gmail.com>
- <20120629203001.GA12937@sigill.intra.peff.net> <CABPQNSY3hJse6J7fDo0S5=ySZA4_7=JisfzLBUu135gR2nSF-w@mail.gmail.com>
- <20120630183607.GA19739@sigill.intra.peff.net> <CABPQNSYP6mUZb-1dCifytRxqP7_grzYzON2bjevK2zsGawb-yg@mail.gmail.com>
- <CABPQNSZGcReC4CgaYcmwsXyGSqzQgHKQceZ2M5D=zQmyAs8_Ug@mail.gmail.com> <20120703171121.GA3294@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: [Q] Branch aliases =?UTF-8?Q?=28synonyms=29=3F?=
+Date: Tue, 03 Jul 2012 19:49:39 +0200
+Message-ID: <93495bc04d9f7426bef1b1de1b202280@ulrik.uio.no>
+References: <1919214.YKUdgul2iY@laclwks004>
+ <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no>
+ <4261222.bYBuBBxnOa@laclwks004>
+ <CALKQrgeAXLSwsqwTe_FZN0aNHwnoSBHBt+PO9jpCtzRM1Aeyrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 03 19:38:16 2012
+Content-Type: text/plain;
+ charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Brian Foster <brian.foster@maxim-ic.com>,
+	git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 19:49:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm73E-0008Px-19
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 19:38:12 +0200
+	id 1Sm7ER-0003KA-Gg
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 19:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668Ab2GCRiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 13:38:06 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38727 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168Ab2GCRiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 13:38:05 -0400
-Received: by yhmm54 with SMTP id m54so6348298yhm.19
-        for <git@vger.kernel.org>; Tue, 03 Jul 2012 10:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=U42Rpm7lYxQHP/8bDsVnQl//m5ouxECCJCVJeuSMuMo=;
-        b=KB0LovCHDSX28v2wjWdQeovGuVswcI84LH88pOyyrrQuad5Sk72CIX3w2IBU9IrGY4
-         5HgnvcnoNZv2/+ezP6FjTDnEhrCIutnaK0pp6MtiRGoB341JEzTOgvj923OWU8gffYzZ
-         /lK122scv7TSJhvfRxKFmOoAR86kUo5X2If24x6pSLaano8fgic+MVVyqIfnQcXjgNkS
-         cKqwpFHyFvvoKzLVhrVGfFe41RzZCjo5tg9bpf994sJmLrzgkkFulpliDlsc5+aJ3HTw
-         vHMNKXiQ29tIy3Ql6fI/2JR2Z5coO/xZbQrPXkSiQMOGpVUipioUqcSVCHkc6qtWwmpU
-         v7rw==
-Received: by 10.68.201.195 with SMTP id kc3mr9133704pbc.33.1341337083908; Tue,
- 03 Jul 2012 10:38:03 -0700 (PDT)
-Received: by 10.68.40.98 with HTTP; Tue, 3 Jul 2012 10:37:23 -0700 (PDT)
-In-Reply-To: <20120703171121.GA3294@sigill.intra.peff.net>
+	id S932097Ab2GCRtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 13:49:42 -0400
+Received: from mail-out1.uio.no ([129.240.10.57]:44595 "EHLO mail-out1.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752632Ab2GCRtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 13:49:42 -0400
+Received: from mail-mx3.uio.no ([129.240.10.44])
+	by mail-out1.uio.no with esmtp (Exim 4.75)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1Sm7EL-0004Va-1D; Tue, 03 Jul 2012 19:49:41 +0200
+Received: from w3prod-wm03.uio.no ([129.240.4.40] helo=webmail.uio.no)
+	by mail-mx3.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
+	user hbf (Exim 4.76)
+	(envelope-from <h.b.furuseth@usit.uio.no>)
+	id 1Sm7EK-000337-JV; Tue, 03 Jul 2012 19:49:40 +0200
+Received: from c766A01C3.dhcp.bluecom.no ([195.1.106.118])
+ by webmail.uio.no
+ with HTTP (HTTP/1.1 POST); Tue, 03 Jul 2012 19:49:39 +0200
+In-Reply-To: <CALKQrgeAXLSwsqwTe_FZN0aNHwnoSBHBt+PO9jpCtzRM1Aeyrw@mail.gmail.com>
+X-Sender: h.b.furuseth@usit.uio.no
+User-Agent: Roundcube Webmail/0.4.2
+X-UiO-Ratelimit-Test: rcpts/h 3 msgs/h 1 sum rcpts/h 5 sum msgs/h 2 total rcpts 2509 max rcpts/h 20 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, FSL_RCVD_USER=0.001,T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: F10BFFA02D949EBF6724D44980F5B1F071C69392
+X-UiO-SPAM-Test: remote_host: 129.240.4.40 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 58 total 1445949 max/h 475 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200924>
 
-On Tue, Jul 3, 2012 at 7:11 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 03, 2012 at 06:28:11PM +0200, Erik Faye-Lund wrote:
->
->> Is there some other way of getting EOF from the console than Ctrl+C?
->> If not, perhaps we can disable the Ctrl+C handling altogether for the
->> current process, and restore the console mode on EOF? That only leaves
->> the "Bash kills our process"-case, but Bash seems to set a sane
->> console mode anyway.
->
-> On unix systems, you can generally send EOF on a terminal using Ctrl+D
-> (and strbuf_getline should handle it properly).  I have no clue if that
-> works on a Windows console, though.
+ On Tue, 3 Jul 2012 18:22:43 +0200, Johan Herland <johan@herland.net> 
+ wrote:
+> FWIW, we have done a similar thing at $dayjob: A git repo (originally
+> converted form Subversion) still used "trunk" as the main development
+> branch. We wanted to start following Git conventions, so we renamed 
+> it
+> to "master", and set up "trunk" as a symref to "master". We then told
+> all the other developers that "trunk" is now "master", and that they
+> should switch at their own leisure. After a grace period, we will
+> remove the "trunk" symref.
+> (...)
 
-Nope. On Windows, Ctrl+D seens to give EOT (0x4).
+ Yes, a symref in the master repo only seems tidy enough.
+ I should have realized that's what he meant.
 
-> Also, I wonder if these kind of
-> terminal issues are different based on the terminal emulator you are
-> using (e.g., msys bash window versus something like pterm).
+ I can think of one irritant to warn developers of:
 
-No, they should not. Windows doesn't have a concept of different
-terminal emulators. There's only ever one, which is built into
-windows.
+ git fetch           # Fetches both A and B
+ git checkout A      # Lemme see how this looks for A users...
+ ...
+ git checkout B      # My scripts are still using B though...
+ ...commit something...
+ git push            # Pushes B, doesn't know remote A is forwarded
+ git push            # Rejected, non-fast-forward of your old A
+
+ "WTF, why does that keep happening all the time?"
+
+ git branch -d A     # Fixes the above (if A is not checked out:)
+
+
+ And if you haven't already, it may be best to do
+
+ git config --bool receive.denyNonFastForwards  true
+ git config --bool receive.denyDeletes          true
+
+ just in case someone gets too clever and does something like:
+ "Now how do I get rid of the remote A?  Google... Aha"
+ git push origin :refs/heads/A  # whoops, wrong A deleted:-)
+
+ Hallvard
