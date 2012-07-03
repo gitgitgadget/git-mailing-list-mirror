@@ -1,90 +1,77 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [RFC] l10n: de.po: translate 29 new messages
-Date: Tue, 03 Jul 2012 22:03:50 +0200
-Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
-Message-ID: <2021839.rMjHRWft8I@cs-pc>
-References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add test case for rebase of empty commit
+Date: Tue, 03 Jul 2012 14:13:57 -0700
+Message-ID: <7vpq8ctune.fsf@alter.siamese.dyndns.org>
+References: <1340814121-23813-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <7vr4t079jp.fsf@alter.siamese.dyndns.org>
+ <20120703182000.GB10864@hmsreliant.think-freely.org>
+ <7vtxxovfec.fsf@alter.siamese.dyndns.org>
+ <20120703203136.GC10864@hmsreliant.think-freely.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
 	git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 23:04:46 2012
+To: Neil Horman <nhorman@tuxdriver.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 23:14:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmAH6-0007t0-SZ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:04:45 +0200
+	id 1SmAQB-00072W-TE
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 23:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757273Ab2GCVEI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jul 2012 17:04:08 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:50858 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899Ab2GCVEG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 17:04:06 -0400
-X-Greylist: delayed 3594 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jul 2012 17:04:06 EDT
-Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q63K3uG7001150
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 3 Jul 2012 22:03:56 +0200
-Received: from cs-pc.localnet (e182110175.adsl.alicedsl.de [85.182.110.175])
-	(user=alucst mech=LOGIN bits=0)
-	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q63K3tCk014686
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 Jul 2012 22:03:55 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-27;
-	t=1341345836; bh=UtYG5ftEejzTPAoFeWwbg+UUphxCI7ZaKXeIQ7HT/Ho=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding:Content-Type;
-	b=DspXUjqnDUYpFkkGG11RTm9E87OBaa3oTLbE4gO1LWNWs4dFmAuj6Hyh4WEVQ2YAr
-	 mSznTfGXyNzPE6rUeeVi+v4f2eqezCQH+4QlazfvyOuEEIpD2PiWyBofSSJyUrntOF
-	 iY2npyijtFfXdfjhJnCQsfhyzCqvAKt4fClv49Ws=
-User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+	id S1757292Ab2GCVOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 17:14:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57641 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757266Ab2GCVOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 17:14:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56FD59FE9;
+	Tue,  3 Jul 2012 17:13:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U3tjbXx/eTJER8jYuzv/DUbJQbA=; b=GTzQdo
+	mTA9psHCza55Y8ani1I+PjwDD6bkoQ5WOCNjqr3siQRYy+8A8sN2l6MBB+MXfQxQ
+	8ZAbiIDJWMxo5H0rKM+GVl+2VUOPmKEEtu2nOZIQyAbZK587+5F7sVzkuhXE7sLx
+	ePolagYULH50xSfgX/P+E3pjTq4jsDfgRuxdc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ETTh1zvGQJ73FFxFUYrOAY0kTju8DbpU
+	2hh7L7vRVWdlBuplWa2NNTEZq6yzf6QvEXVhJhuoVDIxRvySWZg5w8q3S35JzSw1
+	/zq0rbdIwPloGb3BPNSFaWuoQty9z1dKFJcZWVlWuthQJCQNhixqrpS7Hh88iIbB
+	bPxyu45+u1o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F5F59FE8;
+	Tue,  3 Jul 2012 17:13:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC0119FE6; Tue,  3 Jul 2012
+ 17:13:58 -0400 (EDT)
+In-Reply-To: <20120703203136.GC10864@hmsreliant.think-freely.org> (Neil
+ Horman's message of "Tue, 3 Jul 2012 16:31:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 01649116-C554-11E1-97F4-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200946>
 
-Hi Ralf,
+Neil Horman <nhorman@tuxdriver.com> writes:
 
-very good. I have a few remarks, though, on particularly chosen word=20
-translations:
+> On Tue, Jul 03, 2012 at 12:00:27PM -0700, Junio C Hamano wrote:
+>> 
+>> The changelog might be similar or textually identical, but it is
+>> entirely a different matter if it makes sense taken out of the
+>> context (i.e. cherry-picked).  So I would personally do not bother
+>> "filtering" about them too much---if you ask for empties, you will
+>> get all empties.
+>> 
+> Ok, copy that.
 
-Am Dienstag, 3. Juli 2012, 19:04:46 schrieb Ralf Thielow:
->  #: wt-status.c:874 wt-status.c:884
-> -#, fuzzy
->  msgid "You are currently rebasing."
-> -msgstr "Du befindest dich auf keinem Zweig."
-> +msgstr "Du bist gerade beim Neuaufbau."
-
-Is "rebase" =3D "Neuaufbau"? My last thought on this wording was "rebas=
-e" =3D=20
-"Umpflanzen".
-
->  #: wt-status.c:889
->  msgid "You are currently splitting a commit during a rebase."
-> -msgstr ""
-> +msgstr "Du teilst gerade eine Version w=E4hrend eines Neuaufbaus auf=
-=2E"
-
-Maybe
-"Du teilst gerade eine Version auf w=E4hrend eines Neuaufbaus."
-
->  #: wt-status.c:909
->  msgid "You are currently cherry-picking."
-> -msgstr ""
-> +msgstr "Du f=FChrst gerade \"cherry-pick\" aus."
-
-I thought "cherry-pick" =3D "pfl=FCcken", or is there a different gloss=
-ary choice?
-
-Thanks!
-
-Christian
+That was somewhat unexpected, though ;-) It was 30% tongue-in-cheek
+comment.  People who want to keep the empty commits in the history
+may want some filtering. As I am not among them, I do not think of
+anything useful (other than "filter all empty ones away", that is).
