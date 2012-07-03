@@ -1,77 +1,70 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: How do I delete a remote branch with a period in the name?
-Date: Tue, 03 Jul 2012 09:56:46 +0200
-Message-ID: <m23959e0qp.fsf@igel.home>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 03/18] sha1_name.c: get rid of ugly get_sha1_with_mode_1()
+Date: Tue, 03 Jul 2012 10:01:14 +0200
+Message-ID: <vpqsjd9nuid.fsf@bauges.imag.fr>
+References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
+	<1341268449-27801-4-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "jonsmirl\@gmail.com" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 09:56:58 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 10:01:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Slxyk-000686-2I
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 09:56:58 +0200
+	id 1Sly3L-0005Wo-40
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 10:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933505Ab2GCH4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 03:56:51 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:56313 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756361Ab2GCH4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 03:56:50 -0400
-Received: from frontend4.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WRHjs6sLWz4KKCq;
-	Tue,  3 Jul 2012 09:57:21 +0200 (CEST)
-Received: from igel.home (ppp-88-217-101-196.dynamic.mnet-online.de [88.217.101.196])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WRHjB3CZDzbbvw;
-	Tue,  3 Jul 2012 09:56:46 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 20E1DCA2A4; Tue,  3 Jul 2012 09:56:46 +0200 (CEST)
-X-Yow: OVER the undertow!  UNDER the overpass!  Around the FUTURE
- and BEYOND REPAIR!!
-In-Reply-To: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
-	(jonsmirl@gmail.com's message of "Mon, 2 Jul 2012 23:09:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1030202Ab2GCIBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 04:01:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33303 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030198Ab2GCIBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 04:01:21 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6380CWZ021082
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Jul 2012 10:00:12 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sly2t-0008HQ-6r; Tue, 03 Jul 2012 10:01:15 +0200
+In-Reply-To: <1341268449-27801-4-git-send-email-gitster@pobox.com> (Junio C.
+	Hamano's message of "Mon, 2 Jul 2012 15:33:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Jul 2012 10:00:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6380CWZ021082
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1341907213.84716@9YZCHvzkfSNPrpE+rFuyTw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200907>
 
-"jonsmirl@gmail.com" <jonsmirl@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git push origin :fl.stg
-> error: unable to push to unqualified destination: fl.stg
-> The destination refspec neither matches an existing ref on the remote nor
-> begins with refs/, and we are unable to guess a prefix based on the source ref.
-> error: failed to push some refs to 'git@github.com:jonsmirl/lpc31xx.git'
-> jonsmirl@smirl2:/home/apps/florida/lpc31xx$
->
-> jonsmirl@smirl2:/home/apps/florida/lpc31xx$ git branch -r
->   linus/master
->   origin/HEAD -> origin/master
->   origin/bar.stgit
->   origin/dt-test
->   origin/fl.stgit
->   origin/foo.stgit
->   origin/lpc313x-stg
->   origin/lpc313x-stg.stgit
->   origin/master
->   origin/master.stgit
->   origin/temp.stgit
->   origin/v3.4-stg
->   origin/v3.4-stg.stgit
->   origin/v3.5-stg
->   origin/v3.5-stg.stgit
+> +/*
+> + * Call this function when you know "name" given by the end user must
+> + * name an object but it doesn't; the function _may_ die with a better
+> + * diagnostic message than "no such object 'name'", e.g. "Path 'doc' does not
+> + * exist in 'HEAD'" when given "HEAD:doc", or it may return in which case
+> + * you have a chance to diagnose the error further.
+> + */
+> +void die_on_misspelt_object_name(const char *name, const char *prefix)
 
-There doesn't appear to be a remote branch with that name.
+It seems unusual to have a function named die_* that is not a noreturn
+function. I'd call it die_*_maybe, or diagnose_* instead.
 
-Andreas.
+(but as the comment above documents the behavior, it's not terribly
+important, you may ignore my comment if you whish)
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
