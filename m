@@ -1,154 +1,87 @@
-From: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
-Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
-Date: Tue, 3 Jul 2012 14:34:59 -0400
-Message-ID: <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
-	<7vsjd9wkek.fsf@alter.siamese.dyndns.org>
-	<CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
-	<20120703180439.GC3294@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 00/18] Extending the shelf-life of "git describe"
+ output
+Date: Tue, 3 Jul 2012 14:38:40 -0400
+Message-ID: <20120703183839.GA5765@sigill.intra.peff.net>
+References: <1341268449-27801-1-git-send-email-gitster@pobox.com>
+ <20120703071940.GB16679@sigill.intra.peff.net>
+ <7v3958wvtx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 03 20:35:11 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 20:38:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm7wJ-0006iH-Kk
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 20:35:07 +0200
+	id 1Sm7zs-0004a6-TP
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 20:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755253Ab2GCSfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 14:35:01 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:63590 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752872Ab2GCSfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2012 14:35:00 -0400
-Received: by vbbff1 with SMTP id ff1so4433125vbb.19
-        for <git@vger.kernel.org>; Tue, 03 Jul 2012 11:34:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ceKbDq3GNChei39377q/aAFSr0Krixb22D7439t/L24=;
-        b=Sn7PA2lPclpJCWC8FvqhqpooZ5vtkNYJ6eZVEpQt8qBYFxUvegmN1X99bi0SgCTwvm
-         ta5eR8UrQaM2676XK4cAtNWymJj4x2JmUJyFWVUOwAAMpaG2LiPSfpiA6DqOa+wrYLig
-         I9QKdANM5MasSfvH8U2lMfsipMEjz60c+BBDX3qM2WRJCKYTdr9Mwttidj3DKBdhwxZV
-         qj27p5jrtufI1EKoNdR7lrVf1g2iubuRQb8cbj81fhIiJHMr9fJWfASRVdAlnRhvyYUR
-         oVKT5SvAUH5PQfURzJK8AAZNOmZ2Xs51aijyuZlUi8ASaCwBJ2DTiZT2o8pBpMMS5NJG
-         sJog==
-Received: by 10.52.176.66 with SMTP id cg2mr7258049vdc.121.1341340499495; Tue,
- 03 Jul 2012 11:34:59 -0700 (PDT)
-Received: by 10.52.65.143 with HTTP; Tue, 3 Jul 2012 11:34:59 -0700 (PDT)
-In-Reply-To: <20120703180439.GC3294@sigill.intra.peff.net>
+	id S1756219Ab2GCSin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jul 2012 14:38:43 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52456
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755159Ab2GCSin (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2012 14:38:43 -0400
+Received: (qmail 24399 invoked by uid 107); 3 Jul 2012 18:38:50 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jul 2012 14:38:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2012 14:38:40 -0400
+Content-Disposition: inline
+In-Reply-To: <7v3958wvtx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200929>
 
-On Tue, Jul 3, 2012 at 2:04 PM, Jeff King <peff@peff.net> wrote:
-> When we try to push a ref and the right-hand side of the
-> refspec does not find a match, we try to create it. If it is
-> not fully qualified, we try to guess where it would go in
-> the refs hierarchy based on the left-hand source side. If
-> the source side is not a ref, then we give up and give a
-> long explanatory message.
->
-> For deletions, however, this doesn't make any sense. We
-> would never want to create on the remote side, and if an
-> unqualified ref can't be matched, it is simply an error. The
-> current code handles this already because the left-hand side
-> is empty, and therefore does not give us a hint as to where
-> the right-hand side should go, and we properly error out.
-> Unfortunately, the error message is the long "we tried to
-> qualify this, but the source side didn't let us guess"
-> message, which is quite confusing.
->
-> Instead, we can just be more succinct and say "we can't
-> delete this because we couldn't find it". So before:
->
->   $ git push origin :bogus
->   error: unable to push to unqualified destination: bogus
->   The destination refspec neither matches an existing ref on the remote nor
->   begins with refs/, and we are unable to guess a prefix based on the source ref.
->   error: failed to push some refs to '$URL'
->
-> and now:
->
->   $ git push origin :bogus
->   error: unable to delete 'bogus': remote ref does not exist
->   error: failed to push some refs to '$URL'
+On Tue, Jul 03, 2012 at 11:20:10AM -0700, Junio C Hamano wrote:
 
-This error return would have made my mistake obvious.
+> Jeff King <peff@peff.net> writes:
+> 
+> > However, if you feed a partial sha1 for which there are
+> > multiple matches, none of which satisfy the disambiguation hint, then we
+> > used to say "short SHA1 is ambiguous", and now we don't.
+> 
+> In finish_object_disambiguation(), if the candidate hasn't been
+> checked, there are two cases:
+> 
+>  - It is the first and only object that match the prefix; or
+>  - It replaced another object that matched the prefix but that
+>    object did not satisfy ds->fn() callback.
+> 
+> And the former case we set ds->candidate_ok to true without doing
+> anything else, while for the latter we check the candidate, which
+> may set ds->candidate_ok to false.
 
-Might want to add a paragraph to the doc saying this is how you delete
-remote branches since it is not an obvious solution. I found it via
-Google and a question asked on stackoverflow.com
+Yeah, I think this is right.
 
-> It is tempting to also catch a fully-qualified ref like
-> "refs/heads/bogus" and generate the same error message.
-> However, that currently does not error out at all, and
-> instead gets sent to the remote side, which typically
-> generates a warning:
->
->   $ git push origin:refs/heads/bogus
->   remote: warning: Deleting a non-existent ref.
->   To $URL
->    - [deleted]         bogus
->
-> While it would be nice to catch this error early, a
-> client-side error would mean aborting the push entirely and
-> changing push's exit code. For example, right now you can
-> do:
->
->   $ git push origin refs/heads/foo refs/heads/bar
->
-> and end up in a state where "foo" and "bar" are deleted,
-> whether both of them currently exist or not (and see an
-> error only if we actually failed to contact the server).
-> Generating an error would cause a regression for this use
-> case.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> On Tue, Jul 03, 2012 at 07:42:07AM -0400, jonsmirl@gmail.com wrote:
->
->> I have the branch name wrong. It is fl.stgit not fl.stg.
->> But the error message sent me off in the wrong direction looking for an answer.
->
-> I think this would help. I used "remote ref does not exist"
-> because that is the simplest explanation for the user.
-> However, given that we will try to push a fully qualified
-> ref that does not exist, a more accurate message might
-> "destination refspec did not match" or something similar.  I
-> prefer the former, though, as it less arcane.
->
->  remote.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/remote.c b/remote.c
-> index 6833538..04fd9ea 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1100,6 +1100,9 @@ static int match_explicit(struct ref *src, struct ref *dst,
->         case 0:
->                 if (!memcmp(dst_value, "refs/", 5))
->                         matched_dst = make_linked_ref(dst_value, dst_tail);
-> +               else if (is_null_sha1(matched_src->new_sha1))
-> +                       error("unable to delete '%s': remote ref does not exist",
-> +                             dst_value);
->                 else if ((dst_guess = guess_ref(dst_value, matched_src)))
->                         matched_dst = make_linked_ref(dst_guess, dst_tail);
->                 else
-> --
-> 1.7.11.rc1.21.g3c8d91e
->
+> At this point in the code, ds->candidate_ok can be false only if
+> this last-round check found that the candidate does not pass the
+> check, because the state after update_candidates() returns cannot
+> satisfy
+> 
+>     !ds->ambiguous && ds->candidate_exists && ds->candidate_checked
+> 
+> and !ds->canidate_ok at the same time.
+> 
+> Hence, when we execute this "return", we know we have seen more than
+> one object that match the prefix (and none of them satisfied ds->fn),
+> meaning that we should say "the short name is ambiguous", not "there
+> is no object that matches the prefix".
 
+Right. Per the comment just above your change, we are explicitly "ok"
+whether or not we meet the criteria in the hint function if we have seen
+only one. Which means the function is entirely about _disambiguating_.
+It is never about filtering. Which is a good thing, because it leaves
+the semantics of get_sha1 otherwise intact.
 
+> Please sanity check; I think it is just this one-liner, but I am
+> having hard time convincing myself that it can be that simple.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+It looks right to me (and certainly fixes the behavior I mentioned).
+
+-Peff
