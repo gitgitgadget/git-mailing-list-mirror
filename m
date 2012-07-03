@@ -1,78 +1,109 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Johan Herland <johan@herland.net>
 Subject: Re: [Q] Branch aliases (synonyms)?
-Date: Tue, 03 Jul 2012 17:29:26 +0200
-Message-ID: <4FF30FD6.6020501@alum.mit.edu>
-References: <1919214.YKUdgul2iY@laclwks004> <93cfd6eb9045585728dfe649359a103c@ulrik.uio.no> <4261222.bYBuBBxnOa@laclwks004>
+Date: Tue, 3 Jul 2012 18:22:43 +0200
+Message-ID: <CALKQrgeAXLSwsqwTe_FZN0aNHwnoSBHBt+PO9jpCtzRM1Aeyrw@mail.gmail.com>
+References: <1919214.YKUdgul2iY@laclwks004>
+	<93cfd6eb9045585728dfe649359a103c@ulrik.uio.no>
+	<4261222.bYBuBBxnOa@laclwks004>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
 	git mailing list <git@vger.kernel.org>
 To: Brian Foster <brian.foster@maxim-ic.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 17:36:41 2012
+X-From: git-owner@vger.kernel.org Tue Jul 03 18:23:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sm59Z-0003h7-Gt
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 17:36:37 +0200
+	id 1Sm5sW-0002ZH-7L
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jul 2012 18:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932182Ab2GCPgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jul 2012 11:36:32 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:64264 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753616Ab2GCPgb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 11:36:31 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jul 2012 11:36:31 EDT
-X-AuditID: 1207440e-b7f036d0000008b5-d7-4ff30fd9d257
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B7.34.02229.9DF03FF4; Tue,  3 Jul 2012 11:29:29 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q63FTRkr032758
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 3 Jul 2012 11:29:28 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+	id S933141Ab2GCQWv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Jul 2012 12:22:51 -0400
+Received: from mail10.copyleft.no ([188.94.218.231]:63892 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933056Ab2GCQWt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2012 12:22:49 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Sm5sF-000DXh-LR
+	for git@vger.kernel.org; Tue, 03 Jul 2012 18:22:47 +0200
+Received: from mail-qa0-f53.google.com ([209.85.216.53])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Sm5sF-000FwM-E4
+	for git@vger.kernel.org; Tue, 03 Jul 2012 18:22:47 +0200
+Received: by qaas11 with SMTP id s11so2762214qaa.19
+        for <git@vger.kernel.org>; Tue, 03 Jul 2012 09:22:44 -0700 (PDT)
+Received: by 10.60.1.40 with SMTP id 8mr18974032oej.70.1341332563918; Tue, 03
+ Jul 2012 09:22:43 -0700 (PDT)
+Received: by 10.76.138.167 with HTTP; Tue, 3 Jul 2012 09:22:43 -0700 (PDT)
 In-Reply-To: <4261222.bYBuBBxnOa@laclwks004>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFIsWRmVeSWpSXmKPExsUixO6iqHuT/7O/wZkOMYuXUyosuq50M1ms
-	nvSTxYHZY/u816we3d1v2Dw+b5ILYI7itklKLCkLzkzP07dL4M44u3sNW8E1toq+Lc2sDYxd
-	rF2MnBwSAiYSW3fcZIGwxSQu3FvP1sXIxSEkcJlR4vasY1DOMSaJrxteg3XwCmhLPDl/mQ3E
-	ZhFQldh8agdYnE1AV2JRTzNTFyMHh6hAmMT0newQ5YISJ2c+AVsgIqAjMf/eCTCbWSBD4vjW
-	22A1wkAj72x+ywhiCwlUSyz6NJMJxOYEqm+YdowVot5MomtrFyOELS+x/e0c5gmMArOQrJiF
-	pGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUJCl28HY/t6mUOM
-	AhyMSjy8UtM++QuxJpYVV+YeYpTkYFIS5dUHBr4QX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV7u
-	M0DlvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJXjOQoYJFqempFWmZ
-	OSUIaSYOThDBBbKBB2iDCUghb3FBYm5xZjpE0SlGRSlx3jd8QAkBkERGaR7cAFiSecUoDvSP
-	MC83SDsPMEHBdb8CGswENDhvMcjpxSWJCCmpBkbxiB81UkaCu3b0Lmp+6ftD6BbTzC8lj0Lb
-	HtX7vVh17gFLJ/91LkPfE5J+KtJlUm/WCrse3579PM+wSuE088rJbC4Hyq3WmHKtPizd+8J5
-	0v4Vvs+63rH0HtQSmyzofWviq6k3d/gvV3r1a5KS4rH3RQvMtzrptp3qnv1t2ZQF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200915>
 
-On 07/03/2012 03:40 PM, Brian Foster wrote:
+On Tue, Jul 3, 2012 at 3:40 PM, Brian Foster <brian.foster@maxim-ic.com=
+> wrote:
 > On Tuesday 03-July-2012 05:23:29 Hallvard Breien Furuseth wrote:
->>              E.g. if it's hard to teach developers to switch
->>   from B to A, a hook which rejects pushes to B might help.
+>> Brian Foster wrote:
+>> > (...)
+>> >  The catch is a desire(? requirement?) that, when the
+>> >  transition ends, people used to using B can continue
+>> >  to use B, people used to using A can continue to use A,
+>> >  and there is no difference.  That is, after the end of
+>> >  transition, branch names A and B are the same thing.
+>> >  Always.  Automatically.
+>> >
+>> >  Using a symref seems a working answer.  That is,
+>> >  after the merge, change B from a true branch head
+>> >  into a symref pointing to A:
+>> >
+>> >       git merge ...
+>> >       git symbolic-ref refs/heads/B refs/heads/A
+>> >
+>> >   =E2=96=B6 What are the gotchas?
+>>
+>>  Git clone will turn symref B into a regular branch,
+>>  which will not move in parallel with A.
 >
->   Whilst we _may_ have problems with some of the
->   internal developers (this can be managed so I'm
->   not worried about it), the concern is about the
->   external users (clients who clone but never push)
->   becoming confused.  Hence the requirement about
->   continuing to use the same branch name as you are
->   used to using.  That's it!  It's that simple.
+>  Yes, I realize that (and my test script shows it).
+>  But I'm not concerned about it  =E2=80=94 albeit I've yet
+>  to check with my colleagues =E2=80=94  because it matters
+>  only if you _expect_ the two to be identical in
+>  clones at all times.  That wasn't the requirement.
+>  The (and I must say I _do_ think this is silly!)
+>  requirement is =E2=80=9CPeople used to using A can still
+>  use A.  People used to using B can still use B.=E2=80=9D
 
-Maybe create a new branch B (an orphan commit unconnected to the old 
-branch B) with a single README file telling the person that from now on 
-they should be using branch A.
+=46WIW, we have done a similar thing at $dayjob: A git repo (originally
+converted form Subversion) still used "trunk" as the main development
+branch. We wanted to start following Git conventions, so we renamed it
+to "master", and set up "trunk" as a symref to "master". We then told
+all the other developers that "trunk" is now "master", and that they
+should switch at their own leisure. After a grace period, we will
+remove the "trunk" symref.
 
-Michael
+AFAICS, this seems to work very well. People in old clones keep
+working on "trunk" for as long as they like. They push their work back
+to "trunk" on the server, which follows/preserves the symref, and
+updates the "master" branch. People in new clones get the "master"
+branch automatically, and push their work directly back to the
+server's "master". Obviously, all clones also get the other branch
+when they fetch from the server, but so far nobody has gotten confused
+by this other branch that "mysteriously" follows their "main" branch.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+
+Have fun! :)
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
