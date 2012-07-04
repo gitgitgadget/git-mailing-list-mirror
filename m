@@ -1,57 +1,158 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 0/2] git p4: use "move" command for renames
-Date: Wed,  4 Jul 2012 09:40:18 -0400
-Message-ID: <1341409220-27954-1-git-send-email-pw@padd.com>
+Subject: [PATCH 1/2] git p4: refactor diffOpts calculation
+Date: Wed,  4 Jul 2012 09:40:19 -0400
+Message-ID: <1341409220-27954-2-git-send-email-pw@padd.com>
+References: <1341409220-27954-1-git-send-email-pw@padd.com>
 Cc: Gary Gibbons <ggibbons@perforce.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 15:40:48 2012
+X-From: git-owner@vger.kernel.org Wed Jul 04 15:40:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmPot-00062b-9f
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 15:40:39 +0200
+	id 1SmPp5-0006EL-Af
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 15:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab2GDNkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 09:40:33 -0400
-Received: from honk.padd.com ([74.3.171.149]:37564 "EHLO honk.padd.com"
+	id S1753172Ab2GDNks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 09:40:48 -0400
+Received: from honk.padd.com ([74.3.171.149]:37565 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753118Ab2GDNka (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 09:40:30 -0400
+	id S1752835Ab2GDNkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 09:40:46 -0400
 Received: from arf.padd.com (unknown [50.55.159.91])
-	by honk.padd.com (Postfix) with ESMTPSA id 73CA71FED;
-	Wed,  4 Jul 2012 06:40:25 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id CD47E1FED;
+	Wed,  4 Jul 2012 06:40:44 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id DCF2F313C0; Wed,  4 Jul 2012 09:40:20 -0400 (EDT)
+	id EAE345A90B; Wed,  4 Jul 2012 09:40:40 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.125.g4a65fea
+In-Reply-To: <1341409220-27954-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201009>
 
-Recent p4 supports a "move" command that records explicitly that
-a file was moved from one place to another.  It can be changed a bit
-during the move, too.  Use this feature, if it exists, when renames
-are detected.
+From: Gary Gibbons <ggibbons@perforce.com>
 
-Gary sent these patches months ago, and I've been sitting on them
-far too long.  Was hoping to move some other work out first, but it
-was not ready.
+P4Submit.applyCommit()
 
-These commits are on origin/next, as they depend on changes
-in pw/git-p4-tests that was merged into next on Jul 3.  They
-do not conflict with the other series in flight, "notice Jobs: ...".
+To avoid recalculating the same diffOpts for each commit, move it
+out of applyCommit() and into the top-level run().  Also fix a bug
+in that code which interpreted the value of detectRenames as a
+string rather than as a boolean.
 
-Gary Gibbons (2):
-  git p4: refactor diffOpts calculation
-  git p4: add support for 'p4 move' in P4Submit
+[pw: fix documentation, rearrange code a bit]
 
- Documentation/git-p4.txt | 10 +++---
- git-p4.py                | 86 ++++++++++++++++++++++++++++++++----------------
- t/t9814-git-p4-rename.sh | 16 ++++-----
- 3 files changed, 72 insertions(+), 40 deletions(-)
+Signed-off-by: Gary Gibbons <ggibbons@perforce.com>
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ Documentation/git-p4.txt | 10 ++++++----
+ git-p4.py                | 52 +++++++++++++++++++++++++++++-------------------
+ 2 files changed, 38 insertions(+), 24 deletions(-)
 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index fe1f49b..8228f33 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -255,7 +255,7 @@ These options can be used to modify 'git p4 submit' behavior.
+ 	p4.  By default, this is the most recent p4 commit reachable
+ 	from 'HEAD'.
+ 
+--M[<n>]::
++-M::
+ 	Detect renames.  See linkgit:git-diff[1].  Renames will be
+ 	represented in p4 using explicit 'move' operations.  There
+ 	is no corresponding option to detect copies, but there are
+@@ -465,13 +465,15 @@ git-p4.useClientSpec::
+ Submit variables
+ ~~~~~~~~~~~~~~~~
+ git-p4.detectRenames::
+-	Detect renames.  See linkgit:git-diff[1].
++	Detect renames.  See linkgit:git-diff[1].  This can be true,
++	false, or a score as expected by 'git diff -M'.
+ 
+ git-p4.detectCopies::
+-	Detect copies.  See linkgit:git-diff[1].
++	Detect copies.  See linkgit:git-diff[1].  This can be true,
++	false, or a score as expected by 'git diff -C'.
+ 
+ git-p4.detectCopiesHarder::
+-	Detect copies harder.  See linkgit:git-diff[1].
++	Detect copies harder.  See linkgit:git-diff[1].  A boolean.
+ 
+ git-p4.preserveUser::
+ 	On submit, re-author changes to reflect the git author,
+diff --git a/git-p4.py b/git-p4.py
+index f895a24..5fe509f 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1046,27 +1046,8 @@ class P4Submit(Command, P4UserMap):
+ 
+         (p4User, gitEmail) = self.p4UserForCommit(id)
+ 
+-        if not self.detectRenames:
+-            # If not explicitly set check the config variable
+-            self.detectRenames = gitConfig("git-p4.detectRenames")
+-
+-        if self.detectRenames.lower() == "false" or self.detectRenames == "":
+-            diffOpts = ""
+-        elif self.detectRenames.lower() == "true":
+-            diffOpts = "-M"
+-        else:
+-            diffOpts = "-M%s" % self.detectRenames
+-
+-        detectCopies = gitConfig("git-p4.detectCopies")
+-        if detectCopies.lower() == "true":
+-            diffOpts += " -C"
+-        elif detectCopies != "" and detectCopies.lower() != "false":
+-            diffOpts += " -C%s" % detectCopies
+ 
+-        if gitConfig("git-p4.detectCopiesHarder", "--bool") == "true":
+-            diffOpts += " --find-copies-harder"
+-
+-        diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (diffOpts, id, id))
++        diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (self.diffOpts, id, id))
+         filesToAdd = set()
+         filesToDelete = set()
+         editedFiles = set()
+@@ -1433,6 +1414,37 @@ class P4Submit(Command, P4UserMap):
+         if self.preserveUser:
+             self.checkValidP4Users(commits)
+ 
++        #
++        # Build up a set of options to be passed to diff when
++        # submitting each commit to p4.
++        #
++        if self.detectRenames:
++            # command-line -M arg
++            self.diffOpts = "-M"
++        else:
++            # If not explicitly set check the config variable
++            detectRenames = gitConfig("git-p4.detectRenames")
++
++            if detectRenames.lower() == "false" or detectRenames == "":
++                self.diffOpts = ""
++            elif detectRenames.lower() == "true":
++                self.diffOpts = "-M"
++            else:
++                self.diffOpts = "-M%s" % detectRenames
++
++        # no command-line arg for -C or --find-copies-harder, just
++        # config variables
++        detectCopies = gitConfig("git-p4.detectCopies")
++        if detectCopies.lower() == "false" or detectCopies == "":
++            pass
++        elif detectCopies.lower() == "true":
++            self.diffOpts += " -C"
++        else:
++            self.diffOpts += " -C%s" % detectCopies
++
++        if gitConfig("git-p4.detectCopiesHarder", "--bool") == "true":
++            self.diffOpts += " --find-copies-harder"
++
+         while len(commits) > 0:
+             commit = commits[0]
+             commits = commits[1:]
 -- 
 1.7.11.1.125.g4a65fea
