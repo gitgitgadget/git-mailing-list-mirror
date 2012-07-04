@@ -1,83 +1,76 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
-Date: Wed, 04 Jul 2012 09:21:52 +0200
-Message-ID: <1341386512.3871.4.camel@flaca.cmartin.tk>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
-	 <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
-	 <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
-	 <20120703180439.GC3294@sigill.intra.peff.net>
-	 <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
-	 <20120703184018.GB5765@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] serious inflate inconsistency on master
+Date: Wed, 4 Jul 2012 03:24:12 -0400
+Message-ID: <20120704072412.GC24807@sigill.intra.peff.net>
+References: <20120703221900.GA28897@sigill.intra.peff.net>
+ <7vipe4tqns.fsf@alter.siamese.dyndns.org>
+ <CACsJy8AFs6PV8XCAUar9KadE8g-WSaZofKQAGPB6VjbhVpSRig@mail.gmail.com>
+ <7vy5n0rq9c.fsf@alter.siamese.dyndns.org>
+ <CACsJy8AH6HHxE-P4j4O_VtVzz6-pe2VWk5ZayOfbZomfX2z7sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "jonsmirl@gmail.com" <jonsmirl@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:22:05 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 09:24:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmJuW-0005oU-Kn
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:22:04 +0200
+	id 1SmJwj-0001nM-Ch
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:24:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756030Ab2GDHV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 03:21:59 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:43303 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755765Ab2GDHV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 03:21:58 -0400
-Received: from [87.77.57.197] (z39c5.pia.fu-berlin.de [87.77.57.197])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 93CC946057;
-	Wed,  4 Jul 2012 09:21:56 +0200 (CEST)
-In-Reply-To: <20120703184018.GB5765@sigill.intra.peff.net>
-X-Mailer: Evolution 3.4.3-1 
+	id S932986Ab2GDHYQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jul 2012 03:24:16 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52841
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755946Ab2GDHYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 03:24:16 -0400
+Received: (qmail 31082 invoked by uid 107); 4 Jul 2012 07:24:23 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jul 2012 03:24:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jul 2012 03:24:12 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AH6HHxE-P4j4O_VtVzz6-pe2VWk5ZayOfbZomfX2z7sg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200991>
 
-On Tue, 2012-07-03 at 14:40 -0400, Jeff King wrote:
-> On Tue, Jul 03, 2012 at 02:34:59PM -0400, jonsmirl@gmail.com wrote:
-> 
-> > > and now:
-> > >
-> > >   $ git push origin :bogus
-> > >   error: unable to delete 'bogus': remote ref does not exist
-> > >   error: failed to push some refs to '$URL'
-> > 
-> > This error return would have made my mistake obvious.
-> 
-> Thanks for confirming.
-> 
-> > Might want to add a paragraph to the doc saying this is how you delete
-> > remote branches since it is not an obvious solution. I found it via
-> > Google and a question asked on stackoverflow.com
-> 
-> It's already in git-push(1):
-> 
->   OPTIONS
->      ...
->      <refspec>
->        ...
->        Pushing an empty <src> allows you to delete the <dst> ref from
->        the remote repository.
-> 
+On Wed, Jul 04, 2012 at 02:01:06PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-There is also a flag you can pass, which you can see a few paragraphs
-under it which. It explains what it does underneath but removes the need
-to know that an empty source will delete the ref.
+> On Wed, Jul 4, 2012 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> > Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> >
+> >> By the way I searched the commit that introduces that check with "=
+git
+> >> log --follow -p builtin/index-pack.c" but I could not find it. Wha=
+t
+> >> did I do wrong?
+> >
+> > Your commit 8a2e163cc shows changes to the file at ll.535-540; thes=
+e
+> > come from 776ea370 builtin-index-pack.c ll.383-388.
+> >
+> > =C2=A0 $ git show 776ea370:builtin-index-pack.c
+>=20
+> git newbie's hat's on. How do you find 776ea370, git-blame? Another
+> question is why doesn't git-log show that commit?
 
-    --delete
-       All listed refs are deleted from the remote repository. This is
-       the same as prefixing all refs with a colon.
+I used git-blame to find it. As to your second question, I believe it i=
+s
+one of the side-effects of the way --follow is bolted onto the revision
+traversal. Look at:
 
-I suppose "delete" rather than "remove" as we have for remotes could
-cause some confusion, as it's inconsistent, but it's all there in the
-manpage.
+  gitk -- builtin/index-pack.c builtin-index-pack.c
 
-   cmn
+and you will see that the commit in question happened on a simultaneous
+branch with the big builtin rename commit. Since we process 776ea370
+before we hit the rename commit, we do not yet realize that
+builtin-index-pack.c is of interest to us.
+
+-Peff
