@@ -1,88 +1,97 @@
-From: Brian Foster <brian.foster@maxim-ic.com>
-Subject: Re: [Q] Branch aliases (synonyms)?
-Date: Wed, 4 Jul 2012 09:31:40 +0200
-Message-ID: <4417201.NtYkVMYjv0@laclwks004>
-References: <1919214.YKUdgul2iY@laclwks004> <4261222.bYBuBBxnOa@laclwks004> <4FF30FD6.6020501@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
+Date: Wed, 4 Jul 2012 03:37:59 -0400
+Message-ID: <20120704073758.GA23473@sigill.intra.peff.net>
+References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+ <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
+ <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+ <20120703180439.GC3294@sigill.intra.peff.net>
+ <7vipe4vdnh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git mailing list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:31:52 2012
+Cc: "jonsmirl@gmail.com" <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 09:38:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmK3y-000713-Kj
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:31:50 +0200
+	id 1SmKA6-0001UH-Mu
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:38:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097Ab2GDHbq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jul 2012 03:31:46 -0400
-Received: from antispam01.maxim-ic.com ([205.153.101.182]:60464 "EHLO
-	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752000Ab2GDHbp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2012 03:31:45 -0400
-X-ASG-Debug-ID: 1341387104-02ae985855284140001-QuoKaX
-Received: from maxdalex02.maxim-ic.internal (maxdalex02.maxim-ic.internal [10.16.15.104]) by antispam01.maxim-ic.com with ESMTP id AFNGFh2mmCSO90ML; Wed, 04 Jul 2012 02:31:44 -0500 (CDT)
-X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
-Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
- maxdalex02.maxim-ic.internal (10.16.15.104) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Wed, 4 Jul 2012 02:31:43 -0500
-Received: from laclwks004.localnet (10.201.0.45) by
- maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Wed, 4 Jul 2012 00:31:42 -0700
-X-ASG-Orig-Subj: Re: [Q] Branch aliases (synonyms)?
-User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <4FF30FD6.6020501@alum.mit.edu>
-X-Barracuda-Connect: maxdalex02.maxim-ic.internal[10.16.15.104]
-X-Barracuda-Start-Time: 1341387104
-X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at maxim-ic.com
-X-Barracuda-Spam-Score: 0.12
-X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.101708
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.12 CN_BODY_332            BODY: CN_BODY_332
+	id S933389Ab2GDHiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 03:38:05 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52854
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752642Ab2GDHiC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 03:38:02 -0400
+Received: (qmail 31239 invoked by uid 107); 4 Jul 2012 07:38:09 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jul 2012 03:38:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jul 2012 03:37:59 -0400
+Content-Disposition: inline
+In-Reply-To: <7vipe4vdnh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200995>
 
-On Tuesday 03-July-2012 08:29:26 Michael Haggerty wrote:
-> On 07/03/2012 03:40 PM, Brian Foster wrote:
-> > On Tuesday 03-July-2012 05:23:29 Hallvard Breien Furuseth wrote:
-> >>              E.g. if it's hard to teach developers to switch
-> >>   from B to A, a hook which rejects pushes to B might help.
+On Tue, Jul 03, 2012 at 12:38:10PM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > Instead, we can just be more succinct and say "we can't
+> > delete this because we couldn't find it". So before:
 > >
-> >   Whilst we _may_ have problems with some of the
-> >   internal developers [...], the concern is about the
-> >   external users (clients who clone but never push)
-> >   becoming confused.  Hence the requirement about
-> >   continuing to use the same branch name as you are
-> >   used to using.  That's it!  It's that simple.
->=20
-> Maybe create a new branch B (an orphan commit unconnected
-> to the old branch B) with a single README file telling the
-> person that from now on they should be using branch A.
+> >   $ git push origin :bogus
+> >   error: unable to push to unqualified destination: bogus
+> >   The destination refspec neither matches an existing ref on the remote nor
+> >   begins with refs/, and we are unable to guess a prefix based on the source ref.
+> >   error: failed to push some refs to '$URL'
+> >
+> > and now:
+> >
+> >   $ git push origin :bogus
+> >   error: unable to delete 'bogus': remote ref does not exist
+> >   error: failed to push some refs to '$URL'
+> 
+> This is telling a truth ($GIT_DIR/refs/bogus does not exist) but not
+> the whole truth; while I tend to agree that it is better than the
+> original (especially with ", and we are unable to guess..." part),
+> given that the above request would delete refs/tags/bogus or
+> refs/heads/bogus if they existed on the "origin", I am a bit worried
+> that it may send an incorrect message to novice users.
+> 
+>     unable to delete 'bogus': no branch or tag with that name
+> 
+> might allay my worries, but I am not extremely happy with that
+> wording, either.
 
- Hum....  This idea, at first glance, looks
- extremely intriguing (with, perhaps, the minor
- tweak there is also a =E2=80=98Makefile=E2=80=99 which shows
- the =E2=80=98READ_ME=E2=80=99 and then always =E2=80=9Cfails=E2=80=9D =
- =E2=80=94  That
- would fit better into how the overall system
- works / is typically used).  I will run it by
- my colleagues, and if they think it can fly,
- will try some tests.  Many Thanks!
+I think the most accurate explanation of the behavior is "the
+destination refspec does not match an existing ref, and it is not fully
+qualified, so I didn't know what you meant to delete". But that is a
+pretty awful message (only slightly less awful than the original one,
+but I think that one is pretty bad).
 
-cheers!
-	-blf-
---=20
-Brian Foster
-Principal MTS, Software        |  La Ciotat, France
-Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
+The really interesting part is that we tried to match "bogus" against
+all of the usual ref lookup rules, and it didn't match anything. But we
+have the same issue when we say "git show bogus" and it does not match
+anything, and we simply say "bad revision 'bogus'".
+
+Maybe:
+
+  unable to delete 'bogus': no matching remote ref found
+
+would be a reasonably short way of saying that?
+
+That still leaves out the second half, that it was not fully qualified
+and therefore we could not even transmit an attempt to delete (even
+though that attempt would clearly not succeed!). But that is really not
+a subtlety that I think is worth putting in the error message, as it is
+way more likely to confuse somebody.
+
+-Peff
