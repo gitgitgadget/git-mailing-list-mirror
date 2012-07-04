@@ -1,97 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
-Date: Wed, 4 Jul 2012 03:37:59 -0400
-Message-ID: <20120704073758.GA23473@sigill.intra.peff.net>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
- <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
- <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
- <20120703180439.GC3294@sigill.intra.peff.net>
- <7vipe4vdnh.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [RFC] l10n: de.po: translate 29 new messages
+Date: Wed, 04 Jul 2012 10:22:35 +0200
+Message-ID: <m28vf0aqb8.fsf@igel.home>
+References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
+	<2021839.rMjHRWft8I@cs-pc>
+	<CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "jonsmirl@gmail.com" <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:38:13 2012
+Content-Type: text/plain
+Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
+	jk@jk.gs, worldhello.net@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 10:22:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmKA6-0001UH-Mu
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:38:11 +0200
+	id 1SmKrL-0004ir-O3
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 10:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933389Ab2GDHiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 03:38:05 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52854
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752642Ab2GDHiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 03:38:02 -0400
-Received: (qmail 31239 invoked by uid 107); 4 Jul 2012 07:38:09 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jul 2012 03:38:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jul 2012 03:37:59 -0400
-Content-Disposition: inline
-In-Reply-To: <7vipe4vdnh.fsf@alter.siamese.dyndns.org>
+	id S1756532Ab2GDIWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 04:22:44 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:46862 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753035Ab2GDIWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 04:22:41 -0400
+Received: from frontend4.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3WRwFH4dm0z4KKSd;
+	Wed,  4 Jul 2012 10:23:15 +0200 (CEST)
+Received: from igel.home (ppp-88-217-122-48.dynamic.mnet-online.de [88.217.122.48])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3WRwDX4B2hzbbnW;
+	Wed,  4 Jul 2012 10:22:36 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 0D099CA2A3; Wed,  4 Jul 2012 10:22:35 +0200 (CEST)
+X-Yow: My DIGITAL WATCH has an automatic SNOOZE FEATURE!!
+In-Reply-To: <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
+	(Ralf Thielow's message of "Wed, 4 Jul 2012 09:20:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200996>
 
-On Tue, Jul 03, 2012 at 12:38:10PM -0700, Junio C Hamano wrote:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Instead, we can just be more succinct and say "we can't
-> > delete this because we couldn't find it". So before:
-> >
-> >   $ git push origin :bogus
-> >   error: unable to push to unqualified destination: bogus
-> >   The destination refspec neither matches an existing ref on the remote nor
-> >   begins with refs/, and we are unable to guess a prefix based on the source ref.
-> >   error: failed to push some refs to '$URL'
-> >
-> > and now:
-> >
-> >   $ git push origin :bogus
-> >   error: unable to delete 'bogus': remote ref does not exist
-> >   error: failed to push some refs to '$URL'
-> 
-> This is telling a truth ($GIT_DIR/refs/bogus does not exist) but not
-> the whole truth; while I tend to agree that it is better than the
-> original (especially with ", and we are unable to guess..." part),
-> given that the above request would delete refs/tags/bogus or
-> refs/heads/bogus if they existed on the "origin", I am a bit worried
-> that it may send an incorrect message to novice users.
-> 
->     unable to delete 'bogus': no branch or tag with that name
-> 
-> might allay my worries, but I am not extremely happy with that
-> wording, either.
+> Hi Christian,
+>
+> thanks for your review.
+>
+> On Tue, Jul 3, 2012 at 10:03 PM, Christian Stimming <stimming@tuhh.de> wrote:
+>> Hi Ralf,
+>
+>> Am Dienstag, 3. Juli 2012, 19:04:46 schrieb Ralf Thielow:
+>>>  #: wt-status.c:874 wt-status.c:884
+>>> -#, fuzzy
+>>>  msgid "You are currently rebasing."
+>>> -msgstr "Du befindest dich auf keinem Zweig."
+>>> +msgstr "Du bist gerade beim Neuaufbau."
+>>
+>> Is "rebase" = "Neuaufbau"? My last thought on this wording was "rebase" =
+>> "Umpflanzen".
 
-I think the most accurate explanation of the behavior is "the
-destination refspec does not match an existing ref, and it is not fully
-qualified, so I didn't know what you meant to delete". But that is a
-pretty awful message (only slightly less awful than the original one,
-but I think that one is pretty bad).
+"Basisumbau"?
 
-The really interesting part is that we tried to match "bogus" against
-all of the usual ref lookup rules, and it didn't match anything. But we
-have the same issue when we say "git show bogus" and it does not match
-anything, and we simply say "bad revision 'bogus'".
+Andreas.
 
-Maybe:
-
-  unable to delete 'bogus': no matching remote ref found
-
-would be a reasonably short way of saying that?
-
-That still leaves out the second half, that it was not fully qualified
-and therefore we could not even transmit an attempt to delete (even
-though that attempt would clearly not succeed!). But that is really not
-a subtlety that I think is worth putting in the error message, as it is
-way more likely to confuse somebody.
-
--Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
