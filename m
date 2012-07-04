@@ -1,100 +1,70 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 1/3] git p4: remove unused P4Submit interactive setting
-Date: Wed, 4 Jul 2012 09:49:18 -0400
-Message-ID: <20120704134918.GA28164@padd.com>
-References: <1341408860-26965-1-git-send-email-pw@padd.com>
- <1341408860-26965-2-git-send-email-pw@padd.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Replace ce_namelen() with a ce_namelen field
+Date: Wed, 04 Jul 2012 12:26:07 -0700
+Message-ID: <7vtxxns4z4.fsf@alter.siamese.dyndns.org>
+References: <1341393528-21037-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Horowitz <mike@horowitz.name>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 15:49:34 2012
+Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	pclouds@gmail.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 21:26:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmPxQ-0004Ka-In
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 15:49:28 +0200
+	id 1SmVDx-0000le-2B
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 21:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720Ab2GDNtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 09:49:23 -0400
-Received: from honk.padd.com ([74.3.171.149]:44735 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751357Ab2GDNtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 09:49:22 -0400
-Received: from arf.padd.com (unknown [50.55.159.91])
-	by honk.padd.com (Postfix) with ESMTPSA id 996971FED;
-	Wed,  4 Jul 2012 06:49:21 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 419215A90B; Wed,  4 Jul 2012 09:49:18 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1341408860-26965-2-git-send-email-pw@padd.com>
+	id S932117Ab2GDT0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 15:26:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37583 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753276Ab2GDT0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 15:26:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C7ED8E10;
+	Wed,  4 Jul 2012 15:26:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4t+Db3ZyzKCb4bujlMujXBMTjoc=; b=MJOrPk
+	Pleptc7JQoNdYE1phcDSxH7pd/nZYEsWB8aKEYCQPT3pKAaDfGoMBr2ONkHV6JU9
+	Zq8/iLbJInHr5wYWRq3JJF695ssMttR565wOFGGXkBr00fzlok+2h/aDQAHHOReT
+	ONW2X8UYcsN9iROeVZtQK4UJH/rgQ8LR6G9+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uAFc37wyyBVae3PEoPvhcNkHcoCYqHfP
+	MtcDWneG29/TpvrSacMud2nBkbOjDJVidr9FJ5L7pr5BbgyQkO+nndloMkseYUag
+	qJTyduEVOzS4czCKVlz6m4ZejVjTACCQ5m0aKZTozojozPZERtvhMfWiYunezdrP
+	Hr9E25TQQx4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31E458E0F;
+	Wed,  4 Jul 2012 15:26:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B347E8E0E; Wed,  4 Jul 2012
+ 15:26:08 -0400 (EDT)
+In-Reply-To: <1341393528-21037-1-git-send-email-t.gummerer@gmail.com> (Thomas
+ Gummerer's message of "Wed, 4 Jul 2012 11:18:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B494D0A-C60E-11E1-8078-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201012>
 
-The "diff -w" version looks like this.  A bit easier to review.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
---->8---
+> Replace the ce_namelen() function in cache.h with a ce_namelen
+> field in struct cache_entry.
 
->From 3327945176be35081f2c86bc40b294ed9f73ea9a Mon Sep 17 00:00:00 2001
-From: Pete Wyckoff <pw@padd.com>
-Date: Sun, 24 Jun 2012 15:39:18 -0400
-Subject: [PATCH] git p4: remove unused P4Submit interactive setting
+NAK, at least in this form that duplicates the same information in
+ce_namelen (new field) and bits in ce_flags, making it easier for
+them to go out of sync with new bugs (or misconversions in this
+patch, if there is one).
 
-The code is unused.  Delete.
-
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- git-p4.py | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index f895a24..542c20a 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -844,7 +844,6 @@ class P4Submit(Command, P4UserMap):
-         ]
-         self.description = "Submit changes from git to the perforce depot."
-         self.usage += " [name of git branch to submit into perforce depot]"
--        self.interactive = True
-         self.origin = ""
-         self.detectRenames = False
-         self.preserveUser = gitConfig("git-p4.preserveUser").lower() == "true"
-@@ -1209,7 +1208,6 @@ class P4Submit(Command, P4UserMap):
- 
-         template = self.prepareSubmitTemplate()
- 
--        if self.interactive:
-         submitTemplate = self.prepareLogMessage(template, logMessage)
- 
-         if self.preserveUser:
-@@ -1281,14 +1279,6 @@ class P4Submit(Command, P4UserMap):
-                 os.remove(f)
- 
-         os.remove(fileName)
--        else:
--            fileName = "submit.txt"
--            file = open(fileName, "w+")
--            file.write(self.prepareLogMessage(template, logMessage))
--            file.close()
--            print ("Perforce submit template written as %s. "
--                   + "Please review/edit and then use p4 submit -i < %s to submit directly!"
--                   % (fileName, fileName))
- 
-     # Export git tags as p4 labels. Create a p4 label and then tag
-     # with that.
-@@ -1437,8 +1427,6 @@ class P4Submit(Command, P4UserMap):
-             commit = commits[0]
-             commits = commits[1:]
-             self.applyCommit(commit)
--            if not self.interactive:
--                break
- 
-         if len(commits) == 0:
-             print "All changes applied!"
--- 
-1.7.11.1.125.g4a65fea
+At least, keep the ce_namelen() inline used in the existing calling
+site, as the whole point of it is that they do not have to care how
+the name length is stored or computed.
