@@ -1,70 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Replace ce_namelen() with a ce_namelen field
-Date: Wed, 04 Jul 2012 12:26:07 -0700
-Message-ID: <7vtxxns4z4.fsf@alter.siamese.dyndns.org>
-References: <1341393528-21037-1-git-send-email-t.gummerer@gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [RFC] l10n: de.po: translate 29 new messages
+Date: Wed, 04 Jul 2012 22:14:03 +0200
+Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
+Message-ID: <1819393.sAuVItIfZO@cs-pc>
+References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com> <2021839.rMjHRWft8I@cs-pc> <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 21:26:57 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
+	git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 22:15:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmVDx-0000le-2B
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 21:26:53 +0200
+	id 1SmVyV-0008L5-Ee
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 22:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932117Ab2GDT0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 15:26:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37583 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753276Ab2GDT0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 15:26:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C7ED8E10;
-	Wed,  4 Jul 2012 15:26:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4t+Db3ZyzKCb4bujlMujXBMTjoc=; b=MJOrPk
-	Pleptc7JQoNdYE1phcDSxH7pd/nZYEsWB8aKEYCQPT3pKAaDfGoMBr2ONkHV6JU9
-	Zq8/iLbJInHr5wYWRq3JJF695ssMttR565wOFGGXkBr00fzlok+2h/aDQAHHOReT
-	ONW2X8UYcsN9iROeVZtQK4UJH/rgQ8LR6G9+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uAFc37wyyBVae3PEoPvhcNkHcoCYqHfP
-	MtcDWneG29/TpvrSacMud2nBkbOjDJVidr9FJ5L7pr5BbgyQkO+nndloMkseYUag
-	qJTyduEVOzS4czCKVlz6m4ZejVjTACCQ5m0aKZTozojozPZERtvhMfWiYunezdrP
-	Hr9E25TQQx4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31E458E0F;
-	Wed,  4 Jul 2012 15:26:09 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B347E8E0E; Wed,  4 Jul 2012
- 15:26:08 -0400 (EDT)
-In-Reply-To: <1341393528-21037-1-git-send-email-t.gummerer@gmail.com> (Thomas
- Gummerer's message of "Wed, 4 Jul 2012 11:18:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B494D0A-C60E-11E1-8078-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754299Ab2GDUOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 16:14:19 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:41527 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753821Ab2GDUOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 16:14:18 -0400
+Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q64KE9fL002385
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 4 Jul 2012 22:14:09 +0200
+Received: from cs-pc.localnet (e182111061.adsl.alicedsl.de [85.182.111.61])
+	(user=alucst mech=LOGIN bits=0)
+	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q64KE8wq013830
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 4 Jul 2012 22:14:08 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-27;
+	t=1341432849; bh=31csAESwWgm2BcuZ0qKAzIAMloqE+wYIgZkjn9Y8ZkU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding:Content-Type;
+	b=CTsnI74JaqvW8aOiVvsGcnNgFpc8ovFqIdRr6cemDKJnkzYQY1YNEg7SuGxzmbuV1
+	 tgAsGo4PRbBGjUl+ihVLNv5xo5Wp4vePQ/Sm9EfUCYQDHmq6jn7wsw0Xz2rcelY3qr
+	 LEFsiQWof5xYDamdDb72on8MGjQek5X9EfaV6oNA=
+User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201014>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi Ralf,
 
-> Replace the ce_namelen() function in cache.h with a ce_namelen
-> field in struct cache_entry.
+Am Mittwoch, 4. Juli 2012, 09:20:40 schrieb Ralf Thielow:
+> >> -msgstr "Du befindest dich auf keinem Zweig."
+> >> +msgstr "Du bist gerade beim Neuaufbau."
+> > 
+> > Is "rebase" = "Neuaufbau"? My last thought on this wording was "rebase"
+> > = "Umpflanzen".
+> 
+> According to the current state of the glossary on GitHub, "rebase" as a
+> verb is translated as "neu aufbauen". There are already translations using
+> this. For example:
+> 
+> #: builtin/remote.c:998
+> #, c-format
+> msgid "rebases onto remote %s"
+> msgstr "baut neu auf externen Zweig %s auf"
+> 
+> In this translation, "rebase" is used as a noun for the very first time.
+> So, I simply translate it with "Neuaufbau". In fact, we can use different
+> translations for verbs and nouns. Not really sure whether we should do this
+> for "rebase".
+> 
+> Using "Umpflanzen" for "rebase" as a noun, would result in
+> msgstr "Du bist gerade beim Umplanzen."
+> Using "Umplanzen" was a verb, would result in
+> msgstr "Du planzt gerade um."
+> 
+> For me, "Umpflanzen" sounds a bit like "working with plants
+> in the garden". I do not have a strong opinion on this, though.
 
-NAK, at least in this form that duplicates the same information in
-ce_namelen (new field) and bits in ce_flags, making it easier for
-them to go out of sync with new bugs (or misconversions in this
-patch, if there is one).
+That's true. The wording goes very far into gardening, which is an argument 
+against it. An argument for it is that it consequently re-uses the tree and 
+branch metaphor, which is indeed also related to gardening.
 
-At least, keep the ce_namelen() inline used in the existing calling
-site, as the whole point of it is that they do not have to care how
-the name length is stored or computed.
+I thought "neu aufbauen" is probably useful in the context of the gc or fsck 
+command... no strong opinion on this, too, though.
+
+Thanks for the reminder of the glossary - indeed I forgot to check that first.
+
+Regards,
+
+Christian
