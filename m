@@ -1,127 +1,83 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [RFC] l10n: de.po: translate 29 new messages
-Date: Wed, 4 Jul 2012 09:20:40 +0200
-Message-ID: <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
-References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
-	<2021839.rMjHRWft8I@cs-pc>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
+Date: Wed, 04 Jul 2012 09:21:52 +0200
+Message-ID: <1341386512.3871.4.camel@flaca.cmartin.tk>
+References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+	 <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
+	 <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+	 <20120703180439.GC3294@sigill.intra.peff.net>
+	 <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
+	 <20120703184018.GB5765@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
-	git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:20:53 2012
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "jonsmirl@gmail.com" <jonsmirl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 04 09:22:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmJtH-0003gf-FY
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:20:47 +0200
+	id 1SmJuW-0005oU-Kn
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:22:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755961Ab2GDHUn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jul 2012 03:20:43 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:60614 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755765Ab2GDHUm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2012 03:20:42 -0400
-Received: by wgbdr13 with SMTP id dr13so7066337wgb.1
-        for <git@vger.kernel.org>; Wed, 04 Jul 2012 00:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CbirjVHFnP3QhJtYor7DmgScHo6PA7fEw2tNfkcqCGo=;
-        b=H0VUjS4KxNVX3cIkXTUVsuosNU0GqMnOfgdZz7irGu8hA4qrJ7LnYpEjUxZdw0F0A0
-         1yNQYcCezlV4QRhSE00LtT4zQ8Wb6iPP1yScWnD0rDwVGqT6Js+w7e9Nct96iXO4+tdP
-         rEUIk5+p0+MSx9etaBm/g7MtxLi0OO2l9bKNENltSd3r4+dXxXqv9EyPrbQoO64JA0px
-         WstiaLLIPgsiFSicvxhqb6ZdKFcvD8oHemJRfTTxC36NROv2ZbXVWKleNcD1ZS0TNgc/
-         FcSUhnMMaXIMiOGajg5hwFdeiIGxoG0NI3Yr97bCQmeCwqrcFKkzg+09U0ZNG4BEjTPH
-         6K1g==
-Received: by 10.180.95.135 with SMTP id dk7mr37962859wib.14.1341386441002;
- Wed, 04 Jul 2012 00:20:41 -0700 (PDT)
-Received: by 10.194.7.8 with HTTP; Wed, 4 Jul 2012 00:20:40 -0700 (PDT)
-In-Reply-To: <2021839.rMjHRWft8I@cs-pc>
+	id S1756030Ab2GDHV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 03:21:59 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:43303 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755765Ab2GDHV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 03:21:58 -0400
+Received: from [87.77.57.197] (z39c5.pia.fu-berlin.de [87.77.57.197])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 93CC946057;
+	Wed,  4 Jul 2012 09:21:56 +0200 (CEST)
+In-Reply-To: <20120703184018.GB5765@sigill.intra.peff.net>
+X-Mailer: Evolution 3.4.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200990>
 
-Hi Christian,
+On Tue, 2012-07-03 at 14:40 -0400, Jeff King wrote:
+> On Tue, Jul 03, 2012 at 02:34:59PM -0400, jonsmirl@gmail.com wrote:
+> 
+> > > and now:
+> > >
+> > >   $ git push origin :bogus
+> > >   error: unable to delete 'bogus': remote ref does not exist
+> > >   error: failed to push some refs to '$URL'
+> > 
+> > This error return would have made my mistake obvious.
+> 
+> Thanks for confirming.
+> 
+> > Might want to add a paragraph to the doc saying this is how you delete
+> > remote branches since it is not an obvious solution. I found it via
+> > Google and a question asked on stackoverflow.com
+> 
+> It's already in git-push(1):
+> 
+>   OPTIONS
+>      ...
+>      <refspec>
+>        ...
+>        Pushing an empty <src> allows you to delete the <dst> ref from
+>        the remote repository.
+> 
 
-thanks for your review.
+There is also a flag you can pass, which you can see a few paragraphs
+under it which. It explains what it does underneath but removes the need
+to know that an empty source will delete the ref.
 
-On Tue, Jul 3, 2012 at 10:03 PM, Christian Stimming <stimming@tuhh.de> =
-wrote:
-> Hi Ralf,
+    --delete
+       All listed refs are deleted from the remote repository. This is
+       the same as prefixing all refs with a colon.
 
-> Am Dienstag, 3. Juli 2012, 19:04:46 schrieb Ralf Thielow:
->>  #: wt-status.c:874 wt-status.c:884
->> -#, fuzzy
->>  msgid "You are currently rebasing."
->> -msgstr "Du befindest dich auf keinem Zweig."
->> +msgstr "Du bist gerade beim Neuaufbau."
->
-> Is "rebase" =3D "Neuaufbau"? My last thought on this wording was "reb=
-ase" =3D
-> "Umpflanzen".
+I suppose "delete" rather than "remove" as we have for remotes could
+cause some confusion, as it's inconsistent, but it's all there in the
+manpage.
 
-According to the current state of the glossary on GitHub, "rebase" as a
-verb is translated as "neu aufbauen". There are already translations us=
-ing
-this. For example:
-
-#: builtin/remote.c:998
-#, c-format
-msgid "rebases onto remote %s"
-msgstr "baut neu auf externen Zweig %s auf"
-
-In this translation, "rebase" is used as a noun for the very first time=
-=2E
-So, I simply translate it with "Neuaufbau". In fact, we can use differe=
-nt
-translations for verbs and nouns. Not really sure whether we should do =
-this
-for "rebase".
-
-Using "Umpflanzen" for "rebase" as a noun, would result in
-msgstr "Du bist gerade beim Umplanzen."
-Using "Umplanzen" was a verb, would result in
-msgstr "Du planzt gerade um."
-
-=46or me, "Umpflanzen" sounds a bit like "working with plants
-in the garden". I do not have a strong opinion on this, though.
-
-Are there thoughts from others?
-
->>  #: wt-status.c:889
->>  msgid "You are currently splitting a commit during a rebase."
->> -msgstr ""
->> +msgstr "Du teilst gerade eine Version w=C3=A4hrend eines Neuaufbaus=
- auf."
->
-> Maybe
-> "Du teilst gerade eine Version auf w=C3=A4hrend eines Neuaufbaus."
->
-
-I don't think that this is grammatically correct.
-
->>  #: wt-status.c:909
->>  msgid "You are currently cherry-picking."
->> -msgstr ""
->> +msgstr "Du f=C3=BChrst gerade \"cherry-pick\" aus."
->
-> I thought "cherry-pick" =3D "pfl=C3=BCcken", or is there a different =
-glossary choice?
-
-At the moment we do not have a translation for "cherry-pick" in the glo=
-ssary.
-In older parts of the translation we left it as it is, and I prefer to
-follow this
-for now. If we decide to translate it, we should do this in the whole
-translation.
-I've added your suggestion to the glossary.
-
-Thanks,
-Ralf
+   cmn
