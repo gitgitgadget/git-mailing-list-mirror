@@ -1,96 +1,100 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: [RFC] l10n: de.po: translate 29 new messages
-Date: Wed, 04 Jul 2012 22:14:03 +0200
-Organization: Alumni Technische =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg-Harburg
-Message-ID: <1819393.sAuVItIfZO@cs-pc>
-References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com> <2021839.rMjHRWft8I@cs-pc> <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC PATCH 0/2] Teach rm to better handle submodules
+Date: Wed, 04 Jul 2012 22:43:19 +0200
+Message-ID: <4FF4AAE7.40604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: trast@student.ethz.ch, jk@jk.gs, worldhello.net@gmail.com,
-	git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 22:15:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 22:44:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmVyV-0008L5-Ee
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 22:14:59 +0200
+	id 1SmWQZ-0006sJ-Fu
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 22:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754299Ab2GDUOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jul 2012 16:14:19 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:41527 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753821Ab2GDUOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 16:14:18 -0400
-Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q64KE9fL002385
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 4 Jul 2012 22:14:09 +0200
-Received: from cs-pc.localnet (e182111061.adsl.alicedsl.de [85.182.111.61])
-	(user=alucst mech=LOGIN bits=0)
-	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id q64KE8wq013830
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 4 Jul 2012 22:14:08 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuhh.de; s=x2012-27;
-	t=1341432849; bh=31csAESwWgm2BcuZ0qKAzIAMloqE+wYIgZkjn9Y8ZkU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding:Content-Type;
-	b=CTsnI74JaqvW8aOiVvsGcnNgFpc8ovFqIdRr6cemDKJnkzYQY1YNEg7SuGxzmbuV1
-	 tgAsGo4PRbBGjUl+ihVLNv5xo5Wp4vePQ/Sm9EfUCYQDHmq6jn7wsw0Xz2rcelY3qr
-	 LEFsiQWof5xYDamdDb72on8MGjQek5X9EfaV6oNA=
-User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+	id S932239Ab2GDUnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jul 2012 16:43:53 -0400
+Received: from mout.web.de ([212.227.15.3]:60090 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755801Ab2GDUne (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2012 16:43:34 -0400
+Received: from [192.168.178.48] ([91.3.155.233]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LwI2w-1Rk5Bq0qPW-018IWy; Wed, 04 Jul 2012 22:43:25
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+X-Provags-ID: V02:K0:y1wCewNfgD7SGkLoObSJOUP0vciGtJd60eM7UN7aWcR
+ wjepJ0KodLrB42J0wCvzxkwUR1WvBR4ffoTo+UZn1osRi8FeHw
+ Hg72Df0u7eyNDtbrETsmAnA7LL547ePWagidGVi7TztQsu/g3I
+ bQqpztRCTqqbCdW7864HEUb+WOahxX9REBs0o4Y+dafx07XJIH
+ TFD18yIIZvcD/KDE/QKxg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201015>
 
-Hi Ralf,
+This is a follow-up to gmane thread 200564 about teaching "git
+submodule" the "rm" command. It has the intention to only having
+to add a small amount of new code to the submodule script while
+handling the heavy lifting in core git.
 
-Am Mittwoch, 4. Juli 2012, 09:20:40 schrieb Ralf Thielow:
-> >> -msgstr "Du befindest dich auf keinem Zweig."
-> >> +msgstr "Du bist gerade beim Neuaufbau."
-> > 
-> > Is "rebase" = "Neuaufbau"? My last thought on this wording was "rebase"
-> > = "Umpflanzen".
-> 
-> According to the current state of the glossary on GitHub, "rebase" as a
-> verb is translated as "neu aufbauen". There are already translations using
-> this. For example:
-> 
-> #: builtin/remote.c:998
-> #, c-format
-> msgid "rebases onto remote %s"
-> msgstr "baut neu auf externen Zweig %s auf"
-> 
-> In this translation, "rebase" is used as a noun for the very first time.
-> So, I simply translate it with "Neuaufbau". In fact, we can use different
-> translations for verbs and nouns. Not really sure whether we should do this
-> for "rebase".
-> 
-> Using "Umpflanzen" for "rebase" as a noun, would result in
-> msgstr "Du bist gerade beim Umplanzen."
-> Using "Umplanzen" was a verb, would result in
-> msgstr "Du planzt gerade um."
-> 
-> For me, "Umpflanzen" sounds a bit like "working with plants
-> in the garden". I do not have a strong opinion on this, though.
+With this series I also intend to make submodule handling a bit
+easier for users by teaching "git rm" to remove the submodule
+section from the .gitmodules file, no matter if the submodule is
+populated or not. Not being able to do that because the section
+is not found there or the .gitmodules file is already deleted
+will only issue a warning (with the intent to make the user aware
+that "git rm" would do that for him in case he did that himself).
 
-That's true. The wording goes very far into gardening, which is an argument 
-against it. An argument for it is that it consequently re-uses the tree and 
-branch metaphor, which is indeed also related to gardening.
+The first patch introduces a change in behavior: Using rm on a
+populated submodule will not error out anymore but just issue a
+warning instead (In a subsequent series I intend to teach rm the
+--recurse-submodule option to really remove the submodule when
+its .git is a gitfile. Then the usual checks for a submodule to
+not accidentally loose any changes will be added, for now it just
+compares the submodules HEAD to the commit recorded in the index).
+Me thinks this change should be ok as it makes a former failing
+call succeed, but maybe others disagree here.
 
-I thought "neu aufbauen" is probably useful in the context of the gc or fsck 
-command... no strong opinion on this, too, though.
+The second patch removes the corresponding submodule section from
+.gitmodules, which should be done when removing a submodule so it
+can be done by git itself to help the user ("git submodule add"
+automatically adds it, so "git [submodule] rm" should also remove
+it).
 
-Thanks for the reminder of the glossary - indeed I forgot to check that first.
+This series adds some extra cost to a "git rm" because of the
+parsing of the .gitmodules file and keeping track of which of the
+to-be-deleted entries are submodules, but I don't expect that to
+be noticeable. Parsing .gitmodules is needed in the long run
+anyways to detect submodules whose work tree is configured to be
+removed automatically (or not) and the extra 'is_submodule' flag
+is only added for the files to be removed and setting and testing
+it is fast.
 
-Regards,
+I would appreciate if someone with more knowledge of the index
+api than I have to review the stage_updated_gitmodules() in patch
+2 to see if I'm doing something stupid there.
 
-Christian
+Opinions?
+
+
+Jens Lehmann (2):
+  rm: don't fail when removing populated submodules
+  rm: remove submodules from the index and the .gitmodules file
+
+ builtin/rm.c         | 42 +++++++++++++++++---------
+ submodule.c          | 55 ++++++++++++++++++++++++++++++++++
+ submodule.h          |  2 ++
+ t/t3600-rm.sh        | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t7610-mergetool.sh |  6 ++--
+ 5 files changed, 172 insertions(+), 17 deletions(-)
+
+-- 
+1.7.11.1.105.g9f6831b
