@@ -1,76 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] serious inflate inconsistency on master
-Date: Wed, 4 Jul 2012 03:24:12 -0400
-Message-ID: <20120704072412.GC24807@sigill.intra.peff.net>
-References: <20120703221900.GA28897@sigill.intra.peff.net>
- <7vipe4tqns.fsf@alter.siamese.dyndns.org>
- <CACsJy8AFs6PV8XCAUar9KadE8g-WSaZofKQAGPB6VjbhVpSRig@mail.gmail.com>
- <7vy5n0rq9c.fsf@alter.siamese.dyndns.org>
- <CACsJy8AH6HHxE-P4j4O_VtVzz6-pe2VWk5ZayOfbZomfX2z7sg@mail.gmail.com>
+From: Brian Foster <brian.foster@maxim-ic.com>
+Subject: Re: [Q] Branch aliases (synonyms)?
+Date: Wed, 4 Jul 2012 09:24:27 +0200
+Message-ID: <1352871.G8Zbg5HGke@laclwks004>
+References: <1919214.YKUdgul2iY@laclwks004> <CALKQrgeAXLSwsqwTe_FZN0aNHwnoSBHBt+PO9jpCtzRM1Aeyrw@mail.gmail.com> <93495bc04d9f7426bef1b1de1b202280@ulrik.uio.no>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:24:22 2012
+Cc: Johan Herland <johan@herland.net>,
+	git mailing list <git@vger.kernel.org>
+To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Wed Jul 04 09:24:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmJwj-0001nM-Ch
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:24:21 +0200
+	id 1SmJx2-0002Ni-Le
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jul 2012 09:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932986Ab2GDHYQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jul 2012 03:24:16 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:52841
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755946Ab2GDHYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2012 03:24:16 -0400
-Received: (qmail 31082 invoked by uid 107); 4 Jul 2012 07:24:23 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jul 2012 03:24:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jul 2012 03:24:12 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AH6HHxE-P4j4O_VtVzz6-pe2VWk5ZayOfbZomfX2z7sg@mail.gmail.com>
+	id S933632Ab2GDHYg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jul 2012 03:24:36 -0400
+Received: from antispam02.maxim-ic.com ([205.153.101.183]:35142 "EHLO
+	antispam02.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933452Ab2GDHYf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2012 03:24:35 -0400
+X-ASG-Debug-ID: 1341387044-0520cc55ee1f5380001-QuoKaX
+Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam02.maxim-ic.com with ESMTP id TsIPSlPnMZK90q1u; Wed, 04 Jul 2012 02:30:44 -0500 (CDT)
+X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
+Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
+ maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Wed, 4 Jul 2012 02:24:31 -0500
+Received: from laclwks004.localnet (10.201.0.45) by
+ maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Wed, 4 Jul 2012 00:24:29 -0700
+X-ASG-Orig-Subj: Re: [Q] Branch aliases (synonyms)?
+User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <93495bc04d9f7426bef1b1de1b202280@ulrik.uio.no>
+X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
+X-Barracuda-Start-Time: 1341387044
+X-Barracuda-URL: http://192.168.10.183:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at maxim-ic.com
+X-Barracuda-Spam-Score: 0.12
+X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.101708
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.12 CN_BODY_332            BODY: CN_BODY_332
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/200992>
 
-On Wed, Jul 04, 2012 at 02:01:06PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Tuesday 03-July-2012 10:49:39 Hallvard Breien Furuseth wrote:
+>[ ... ]
+>  Yes, a symref in the master repo only seems tidy enough.
+>  I should have realized that's what he meant.
 
-> On Wed, Jul 4, 2012 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> > Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-> >
-> >> By the way I searched the commit that introduces that check with "=
-git
-> >> log --follow -p builtin/index-pack.c" but I could not find it. Wha=
-t
-> >> did I do wrong?
-> >
-> > Your commit 8a2e163cc shows changes to the file at ll.535-540; thes=
-e
-> > come from 776ea370 builtin-index-pack.c ll.383-388.
-> >
-> > =C2=A0 $ git show 776ea370:builtin-index-pack.c
+ My apologies.  I just re-read my original Question,
+ and realize I failed to make that clear.  YES, the
+ only place there would be a symref is in the master
+ repo (we call it the =E2=80=9Cmain=E2=80=9D repo).
+
+>  I can think of one irritant to warn developers of:
 >=20
-> git newbie's hat's on. How do you find 776ea370, git-blame? Another
-> question is why doesn't git-log show that commit?
+>    git fetch           # Fetches both A and B
+>    git checkout A      # Lemme see how this looks for A users...
+>    ...
+>    git checkout B      # My scripts are still using B though...
+>    ...commit something...
+>    git push            # Pushes B, doesn't know remote A is forwarded
+>    git push            # Rejected, non-fast-forward of your old A
+>=20
+>  "WTF, why does that keep happening all the time?"
+>=20
+>    git branch -d A     # Fixes the above (if A is not checked out:)
 
-I used git-blame to find it. As to your second question, I believe it i=
-s
-one of the side-effects of the way --follow is bolted onto the revision
-traversal. Look at:
+ No developer can push to =E2=80=9Cmain=E2=80=9D (we use Gerrit as
+ a front-end / staging-area),  Approved Patches go
+ from Gerrit =E2=86=92 =E2=80=9Cmain=E2=80=9D (both internal) and then =
+on
+ to the externally-accessible mirrors.  The clients
+ pull/fetch from the mirrors, and cannot push to any
+ of the Gerrit, =E2=80=9Cmain=E2=80=9D, or the mirrors.
+=20
+ Any feedback from the clients  =E2=80=94 which is Very Rare
+ (not sure if that's Good or Bad?) =E2=80=94  is currently
+ done via e-mail, which is put into Gerrit as per
+ the usual process.
 
-  gitk -- builtin/index-pack.c builtin-index-pack.c
+ Nonetheless, your point is quite valid.  We would
+ have to warn developers (and the clients) about
+ switch-ing back and forth between A and B.  This
+ is one reason I myself am less-than-keen on the
+ idea, along with not liking the merge plan anyways.
 
-and you will see that the commit in question happened on a simultaneous
-branch with the big builtin rename commit. Since we process 776ea370
-before we hit the rename commit, we do not yet realize that
-builtin-index-pack.c is of interest to us.
+>  And if you haven't already, it may be best to do
+>=20
+>    git config --bool receive.denyNonFastForwards  true
+>    git config --bool receive.denyDeletes          true
 
--Peff
+ Ah!  That seems like a Good Idea, regardless of whether
+ we do this symref'ing or not.  Many Thanks for the tip!
+
+ We do have some access controls, both a front-end and
+ hook(s?), on the mirrors which are supposed to prevent
+ those sort of things (and other abuses), but I have no
+ objection to yet another barrier / protective measure.
+
+cheers!
+	-blf-
+
+--=20
+Brian Foster
+Principal MTS, Software        |  La Ciotat, France
+Office:  +33 (0)4 42 98 15 35  |  Fax:  +33 (0)4 42 08 33 19
+Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
