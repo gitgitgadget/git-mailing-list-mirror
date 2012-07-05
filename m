@@ -1,94 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve revisions.txt
-Date: Thu, 05 Jul 2012 11:06:48 -0700
-Message-ID: <7vpq8aqdzb.fsf@alter.siamese.dyndns.org>
-References: <1341506716-97920-1-git-send-email-max@quendi.de>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [RFC] l10n: de.po: translate 29 new messages
+Date: Thu, 5 Jul 2012 20:16:49 +0200
+Message-ID: <CAN0XMOJF8+iJqyiqvBxEHOVGMB17rPnO9Pnu29LY1fMDBopKGw@mail.gmail.com>
+References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
+	<2021839.rMjHRWft8I@cs-pc>
+	<CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
+	<m28vf0aqb8.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Thu Jul 05 20:07:00 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
+	jk@jk.gs, worldhello.net@gmail.com, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Jul 05 20:17:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmqSB-0005mH-1F
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 20:06:59 +0200
+	id 1Smqbr-0003uW-VO
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 20:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580Ab2GESGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 14:06:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49869 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846Ab2GESGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 14:06:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8ECF9945;
-	Thu,  5 Jul 2012 14:06:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5dxzMMki73sRulgQtGSiumxv2XM=; b=xevQ89
-	z7dqMsmx4zA0MTgsHipAWYiKSD2rQzFIC+svKJLY9zDdQ1zezzalsXbdAV3kSRsT
-	oerdvZAeYyQyQXLlGb9bB2cL1rDhYq7jqZv8vXq0qDy3s/FNqNbQe27DKoDLR/rJ
-	BJqOYL7D7KuzohqwTCXRJl+Pe82F9QwTjfZgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Iq5vJ/pSPJWaUn+BR4qUC4DwohecZZZD
-	ZKN90N9U//xZ96crZeFpDFuK1z3LBCNDQ9FppzZfmPdFB0DpdTz/DuYF+PYzoatG
-	8pG9RqsjitQJ3oXkz2I7+MdguLjKJBKMZ3fzB808eKQMotfORsJvfrvY/eRQZ5V9
-	0967hJh18Ew=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF90F9944;
-	Thu,  5 Jul 2012 14:06:50 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1946F9940; Thu,  5 Jul 2012
- 14:06:50 -0400 (EDT)
-In-Reply-To: <1341506716-97920-1-git-send-email-max@quendi.de> (Max Horn's
- message of "Thu, 5 Jul 2012 18:45:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31557484-C6CC-11E1-8DFA-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752481Ab2GESQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 14:16:54 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:50044 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751845Ab2GESQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 14:16:53 -0400
+Received: by wibhq12 with SMTP id hq12so333080wib.1
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 11:16:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=eaWSLgAX88rTjdinO6FQ/6HgBQqUbjsX6qta/vh3HRU=;
+        b=TYRSoEMwbiMKseFZr2ngf/l7azbIb6YMFIOGEvpn3T9lq5yhYPhoT/dwo8f9Jvf8G0
+         wmLEC6mzjZ1R2hn48cZU1dbJAie0WNqDz0Aju7nzbmJVKk5VJoXe3pj48ECIsn1aYPbk
+         +c/SQecGSM8oBsVk++AL7F/8KRU9C+Ae8PMbSZlX/2BGPtzyQzEinB6VLKxMSHSEr0WZ
+         +kxki428C4EasXOloGwrzTL//05zx4Q/8DeXNahn/bXR+9118nEpQovCCdIpxH66gxK3
+         GQF8mCYogE1fS3GiDqo1ZpDRStn/mQwYr3v8fSyvFLQ4P9MSz2AiCr5561ciaWiOaxJB
+         oZpA==
+Received: by 10.216.192.85 with SMTP id h63mr3074558wen.7.1341512209382; Thu,
+ 05 Jul 2012 11:16:49 -0700 (PDT)
+Received: by 10.194.7.8 with HTTP; Thu, 5 Jul 2012 11:16:49 -0700 (PDT)
+In-Reply-To: <m28vf0aqb8.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201058>
 
-Max Horn <max@quendi.de> writes:
+>>> Is "rebase" = "Neuaufbau"? My last thought on this wording was "rebase" =
+>>> "Umpflanzen".
+>
+> "Basisumbau"?
+>
 
-> One section talked about <name> when only <refname> was defined.
+I have added both suggestions to the glossary that they don't get lost when
+we discuss about non-optimal and/or missing parts within the glossary.
 
-Thanks.  This is a definite improvement.
-
-> And the description for r1^! was incorrect, talking about "parents"
-> (which I understand as meaning direct parent commits),
-> when really all ancestors were meant.
-
-What makes ^! exclude "all ancestors" is that you fed it to rev-list
-or log.  r1^! really means "mark r1 as interesting, but mark its
-direct parents as uninteresting".  r1^@ means "r1's direct parents
-are interesting".  For example, "git show -s r1^@" will show the
-direct parents of r1 but not its ancestors.
-
-While there is nothing wrong in the updated descriptin per-se
-(because it is about "specifying ranges", aka "feeding these to
-rev-list or log, here is what happens"), I am torn about this part
-of the patch.  Perhaps ^! and ^@ may also deserve to be described as
-a way to give individual revisions (not "specifying ranges")?
-
-I dunno.
-
-> Finally I added a few more examples (in particular one for "B..C")
-> that helped me understand the whole thing.
-> ...
-> @@ -224,7 +225,10 @@ Here are a handful of examples:
->     D F              G H I J D F
->     ^G D             H D
->     ^D B             E I J F B
-> +   B..C             C
->     B...C            G H D E B C
->     ^D B C           E I J F B C
-> +   C                I J F C
->     C^@              I J F
-> +   B^! C            B C
->     F^! D            G H D F
+Ralf
