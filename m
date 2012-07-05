@@ -1,290 +1,695 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 11/12] git-remote-mediawiki: more efficient 'pull' in the best case
-Date: Thu,  5 Jul 2012 09:36:11 +0200
-Message-ID: <1341473772-28023-12-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 02/12] git-remote-mediawiki: test environment of git-remote-mediawiki
+Date: Thu,  5 Jul 2012 09:36:02 +0200
+Message-ID: <1341473772-28023-3-git-send-email-Matthieu.Moy@imag.fr>
 References: <1341473772-28023-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Simon Perrat <simon.perrat@ensimag.imag.fr>,
+Cc: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
 	Simon CATHEBRAS <Simon.Cathebras@ensimag.imag.fr>,
 	Julien KHAYAT <Julien.Khayat@ensimag.imag.fr>,
+	Simon Perrat <simon.perrat@ensimag.imag.fr>,
 	Charles ROUSSEL <Charles.Roussel@ensimag.imag.fr>,
-	Guillaume SASDY <Guillaume.Sasdy@ensimag.imag.fr>
+	Guillaume SASDY <Guillaume.Sasdy@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 05 09:37:29 2012
+X-From: git-owner@vger.kernel.org Thu Jul 05 09:37:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smgcw-0001cS-Uz
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:37:27 +0200
+	id 1SmgdE-0002Jm-S7
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754823Ab2GEHhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 03:37:16 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58615 "EHLO shiva.imag.fr"
+	id S1754254Ab2GEHgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 03:36:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38969 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754718Ab2GEHhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 03:37:05 -0400
+	id S1753713Ab2GEHgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 03:36:40 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q657ZxPa029259
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q657ZJbB011160
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Jul 2012 09:35:59 +0200
+	Thu, 5 Jul 2012 09:35:19 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1SmgcX-0006dp-C7; Thu, 05 Jul 2012 09:37:01 +0200
+	id 1Smgc1-0006Wt-DP; Thu, 05 Jul 2012 09:36:29 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.72)
 	(envelope-from <moy@imag.fr>)
-	id 1SmgcX-0007mX-9r; Thu, 05 Jul 2012 09:37:01 +0200
+	id 1Smgc1-0007hk-Be; Thu, 05 Jul 2012 09:36:29 +0200
 X-Mailer: git-send-email 1.7.11.1.147.g47a574d
 In-Reply-To: <1341473772-28023-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Jul 2012 09:36:00 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Jul 2012 09:35:20 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q657ZxPa029259
+X-MailScanner-ID: q657ZJbB011160
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1342078560.50236@1uJZX8tbOiAbXjMA77l8IA
+MailScanner-NULL-Check: 1342078520.95887@LmsPueMUD2EUShv+y8P5EQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201035>
 
-The only way to fetch new revisions from a wiki before this patch was to
-query each page for new revisions. This is good when tracking a small set
-of pages on a large wiki, but very inefficient when tracking many pages
-on a wiki with little activity.
+From: Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
 
-Implement a new strategy that queries the wiki for its last global
-revision, queries each new revision, and filter out pages that are not
-tracked.
+In order to test git-remote-mediawiki, a set of functions is needed to
+manage a MediaWiki: edit a page, remove a page, fetch a page, fetch all
+pages on a given wiki.
 
-Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
+We also provide a few helper function to check the content of
+directories.
+
+In addition, this patch provides Makefiles to execute tests.
+See the README file for more details.
+
 Signed-off-by: Simon CATHEBRAS <Simon.Cathebras@ensimag.imag.fr>
 Signed-off-by: Julien KHAYAT <Julien.Khayat@ensimag.imag.fr>
+Signed-off-by: Simon Perrat <simon.perrat@ensimag.imag.fr>
 Signed-off-by: Charles ROUSSEL <Charles.Roussel@ensimag.imag.fr>
 Signed-off-by: Guillaume SASDY <Guillaume.Sasdy@ensimag.imag.fr>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- contrib/mw-to-git/git-remote-mediawiki   | 116 +++++++++++++++++++++++++------
- contrib/mw-to-git/t/t9364-pull-by-rev.sh |  17 +++++
- 2 files changed, 111 insertions(+), 22 deletions(-)
- create mode 100755 contrib/mw-to-git/t/t9364-pull-by-rev.sh
+ contrib/mw-to-git/Makefile            |  48 ++++++++
+ contrib/mw-to-git/t/.gitignore        |   2 +
+ contrib/mw-to-git/t/Makefile          |  32 ++++++
+ contrib/mw-to-git/t/README            | 124 ++++++++++++++++++++
+ contrib/mw-to-git/t/test-gitmw-lib.sh | 143 +++++++++++++++++++++++
+ contrib/mw-to-git/t/test-gitmw.pl     | 209 ++++++++++++++++++++++++++++++++++
+ 6 files changed, 558 insertions(+)
+ create mode 100644 contrib/mw-to-git/Makefile
+ create mode 100644 contrib/mw-to-git/t/Makefile
+ create mode 100644 contrib/mw-to-git/t/README
+ create mode 100755 contrib/mw-to-git/t/test-gitmw.pl
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index beb4566..dd18142 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -13,12 +13,9 @@
- #
- # Known limitations:
- #
--# - Poor performance in the best case: it takes forever to check
--#   whether we're up-to-date (on fetch or push) or to fetch a few
--#   revisions from a large wiki, because we use exclusively a
--#   page-based synchronization. We could switch to a wiki-wide
--#   synchronization when the synchronization involves few revisions
--#   but the wiki is large.
-+# - Several strategies are provided to fetch modifications from the
-+#   wiki, but no automatic heuristics is provided, the user has
-+#   to understand and chose which strategy is appropriate for him.
- #
- # - Git renames could be turned into MediaWiki renames (see TODO
- #   below)
-@@ -93,6 +90,21 @@ $shallow_import = ($shallow_import eq "true");
- # Cache for MediaWiki namespace ids.
- my %namespace_id;
- 
-+# Fetch (clone and pull) by revisions instead of by pages. This behavior
-+# is more efficient when we have a wiki with lots of pages and we fetch
-+# the revisions quite often so that they concern only few pages.
-+# Possible values:
-+# - by_rev: perform one query per new revision on the remote wiki
-+# - by_page: query each tracked page for new revision
-+my $fetch_strategy = run_git("config --get remote.$remotename.fetchStrategy");
-+unless ($fetch_strategy) {
-+	$fetch_strategy = run_git("config --get mediawiki.fetchStrategy");
-+}
-+chomp($fetch_strategy);
-+unless ($fetch_strategy) {
-+	$fetch_strategy = "by_page";
-+}
-+
- # Dumb push: don't update notes and mediawiki ref to reflect the last push.
- #
- # Configurable with mediawiki.dumbPush, or per-remote with
-@@ -560,6 +572,26 @@ sub get_last_local_revision {
- # Remember the timestamp corresponding to a revision id.
- my %basetimestamps;
- 
-+# Get the last remote revision without taking in account which pages are
-+# tracked or not. This function makes a single request to the wiki thus
-+# avoid a loop onto all tracked pages. This is useful for the fetch-by-rev
-+# option.
-+sub get_last_global_remote_rev {
-+	mw_connect_maybe();
-+
-+	my $query = {
-+		action => 'query',
-+		list => 'recentchanges',
-+		prop => 'revisions',
-+		rclimit => '1',
-+		rcdir => 'older',
-+	};
-+	my $result = $mediawiki->api($query);
-+	return $result->{query}->{recentchanges}[0]->{revid};
-+}
-+
-+# Get the last remote revision concerning the tracked pages and the tracked
-+# categories.
- sub get_last_remote_revision {
- 	mw_connect_maybe();
- 
-@@ -830,9 +862,6 @@ sub mw_import_ref {
- 
- 	mw_connect_maybe();
- 
--	my %pages_hash = get_mw_pages();
--	my @pages = values(%pages_hash);
--
- 	print STDERR "Searching revisions...\n";
- 	my $last_local = get_last_local_revision();
- 	my $fetch_from = $last_local + 1;
-@@ -841,10 +870,35 @@ sub mw_import_ref {
- 	} else {
- 		print STDERR ", fetching from here.\n";
- 	}
--	my ($n, @revisions) = fetch_mw_revisions(\@pages, $fetch_from);
- 
--	# Creation of the fast-import stream
--	print STDERR "Fetching & writing export data...\n";
-+	my $n = 0;
-+	if ($fetch_strategy eq "by_rev") {
-+		print STDERR "Fetching & writing export data by revs...\n";
-+		$n = mw_import_ref_by_revs($fetch_from);
-+	} elsif ($fetch_strategy eq "by_page") {
-+		print STDERR "Fetching & writing export data by pages...\n";
-+		$n = mw_import_ref_by_pages($fetch_from);
-+	} else {
-+		print STDERR "fatal: invalid fetch strategy \"$fetch_strategy\".\n";
-+		print STDERR "Check your configuration variables remote.$remotename.fetchStrategy and mediawiki.fetchStrategy\n";
-+		exit 1;
-+	}
-+
-+	if ($fetch_from == 1 && $n == 0) {
-+		print STDERR "You appear to have cloned an empty MediaWiki.\n";
-+		# Something has to be done remote-helper side. If nothing is done, an error is
-+		# thrown saying that HEAD is refering to unknown object 0000000000000000000
-+		# and the clone fails.
-+	}
-+}
-+
-+sub mw_import_ref_by_pages {
-+
-+	my $fetch_from = shift;
-+	my %pages_hash = get_mw_pages();
-+	my @pages = values(%pages_hash);
-+
-+	my ($n, @revisions) = fetch_mw_revisions(\@pages, $fetch_from);
- 
- 	@revisions = sort {$a->{revid} <=> $b->{revid}} @revisions;
- 	my @revision_ids = map $_->{revid}, @revisions;
-@@ -852,12 +906,26 @@ sub mw_import_ref {
- 	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
- }
- 
-+sub mw_import_ref_by_revs {
-+
-+	my $fetch_from = shift;
-+	my %pages_hash = get_mw_pages();
-+
-+	my $last_remote = get_last_global_remote_rev();
-+	my @revision_ids = $fetch_from..$last_remote;
-+	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
-+}
-+
-+# Import revisions given in second argument (array of integers).
-+# Only pages appearing in the third argument (hash indexed by page titles)
-+# will be imported.
- sub mw_import_revids {
- 	my $fetch_from = shift;
- 	my $revision_ids = shift;
- 	my $pages = shift;
- 
- 	my $n = 0;
-+	my $n_actual = 0;
- 	my $last_timestamp = 0; # Placeholer in case $rev->timestamp is undefined
- 
- 	foreach my $pagerevid (@$revision_ids) {
-@@ -875,9 +943,20 @@ sub mw_import_revids {
- 		my $result_page = $result_pages[0];
- 		my $rev = $result_pages[0]->{revisions}->[0];
- 
-+	        # Count page even if we skip it, since we display
-+		# $n/$total and $total includes skipped pages.
- 		$n++;
- 
- 		my $page_title = $result_page->{title};
-+
-+		if (!exists($pages->{$page_title})) {
-+			print STDERR "$n/", scalar(@$revision_ids),
-+				": Skipping revision #$rev->{revid} of $page_title\n";
-+			next;
-+		}
-+
-+		$n_actual++;
-+
- 		my %commit;
- 		$commit{author} = $rev->{user} || 'Anonymous';
- 		$commit{comment} = $rev->{comment} || '*Empty MediaWiki Message*';
-@@ -907,20 +986,13 @@ sub mw_import_revids {
- 		print STDERR "$n/", scalar(@$revision_ids), ": Revision #$rev->{revid} of $commit{title}\n";
- 		if (%mediafile) {
- 			print STDERR "\tDownloading file $mediafile{title}, version $mediafile{timestamp}\n";
--			import_file_revision(\%commit, ($fetch_from == 1), $n, \%mediafile);
-+			import_file_revision(\%commit, ($fetch_from == 1), $n_actual, \%mediafile);
- 		} else {
--			import_file_revision(\%commit, ($fetch_from == 1), $n);
-+			import_file_revision(\%commit, ($fetch_from == 1), $n_actual);
- 		}
- 	}
- 
--	if ($fetch_from == 1 && $n == 0) {
--		print STDERR "You appear to have cloned an empty MediaWiki.\n";
--		# Something has to be done remote-helper side. If nothing is done, an error is
--		# thrown saying that HEAD is refering to unknown object 0000000000000000000
--		# and the clone fails.
--	}
--
--	return $n;
-+	return $n_actual;
- }
- 
- sub error_non_fast_forward {
-diff --git a/contrib/mw-to-git/t/t9364-pull-by-rev.sh b/contrib/mw-to-git/t/t9364-pull-by-rev.sh
-new file mode 100755
-index 0000000..5c22457
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+new file mode 100644
+index 0000000..c9b1795
 --- /dev/null
-+++ b/contrib/mw-to-git/t/t9364-pull-by-rev.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
++++ b/contrib/mw-to-git/Makefile
+@@ -0,0 +1,48 @@
++#
++# Copyright (C) 2012
++#     Charles Roussel <charles.roussel@ensimag.imag.fr>
++#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
++#     Julien Khayat <julien.khayat@ensimag.imag.fr>
++#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
++#     Simon Perrat <simon.perrat@ensimag.imag.fr>
++#
++## Build git-remote-mediawiki
 +
-+test_description='Test the Git Mediawiki remote helper: git pull by revision'
++-include ../../config.mak.autogen
++-include ../../config.mak
 +
-+. ./test-gitmw-lib.sh
-+. ./push-pull-tests.sh
-+. $TEST_DIRECTORY/test-lib.sh
++ifndef PERL_PATH
++	PERL_PATH = /usr/bin/perl
++endif
++ifndef gitexecdir
++	gitexecdir = $(shell git --exec-path)
++endif
 +
-+test_check_precond
++PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
++SCRIPT = git-remote-mediawiki
 +
-+test_expect_success 'configuration' '
-+	git config --global mediawiki.fetchStrategy by_rev
-+'
++.PHONY: install help doc test clean
 +
-+test_push_pull
++help:
++	@echo 'This is the help target of the Makefile. Current configuration:'
++	@echo '  gitexecdir = $(gitexecdir_SQ)'
++	@echo '  PERL_PATH = $(PERL_PATH_SQ)'
++	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir'
++	@echo 'Run "$(MAKE) test" to run the testsuite'
 +
-+test_done
++install:
++	sed -e '1s|#!.*/perl|#!$(PERL_PATH_SQ)|' $(SCRIPT) \
++            > '$(gitexecdir_SQ)/$(SCRIPT)'
++	chmod +x '$(gitexecdir)/$(SCRIPT)'
++
++doc:
++	@echo 'Sorry, "make doc" is not implemented yet for $(SCRIPT)'
++
++test:
++	$(MAKE) -C t/ test
++
++clean:
++	$(RM) '$(gitexecdir)/$(SCRIPT)'
++	$(MAKE) -C t/ clean
++
+diff --git a/contrib/mw-to-git/t/.gitignore b/contrib/mw-to-git/t/.gitignore
+index a060414..a7a40b4 100644
+--- a/contrib/mw-to-git/t/.gitignore
++++ b/contrib/mw-to-git/t/.gitignore
+@@ -1,2 +1,4 @@
+ WEB/
+ wiki/
++trash directory.t*/
++test-results/
+diff --git a/contrib/mw-to-git/t/Makefile b/contrib/mw-to-git/t/Makefile
+new file mode 100644
+index 0000000..1ebe1c7
+--- /dev/null
++++ b/contrib/mw-to-git/t/Makefile
+@@ -0,0 +1,32 @@
++#
++# Copyright (C) 2012
++#     Charles Roussel <charles.roussel@ensimag.imag.fr>
++#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
++#     Julien Khayat <julien.khayat@ensimag.imag.fr>
++#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
++#     Simon Perrat <simon.perrat@ensimag.imag.fr>
++#
++## Test git-remote-mediawiki
++
++all: test
++
++-include ../../../config.mak.autogen
++-include ../../../config.mak
++
++T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
++
++.PHONY: help test clean all
++
++help:
++	@echo 'Run "$(MAKE) test" to launch test scripts'
++	@echo 'Run "$(MAKE) clean" to remove trash folders'
++
++test:
++	@for t in $(T); do \
++		echo "$$t"; \
++		"./$$t" || exit 1; \
++	done
++
++clean:
++	$(RM) -r 'trash directory'.*
++
+diff --git a/contrib/mw-to-git/t/README b/contrib/mw-to-git/t/README
+new file mode 100644
+index 0000000..96e9739
+--- /dev/null
++++ b/contrib/mw-to-git/t/README
+@@ -0,0 +1,124 @@
++Tests for Mediawiki-to-Git
++==========================
++
++Introduction
++------------
++This manual describes how to install the git-remote-mediawiki test
++environment on a machine with git installed on it.
++
++Prerequisite
++------------
++
++In order to run this test environment correctly, you will need to
++install the following packages (Debian/Ubuntu names, may need to be
++adapted for another distribution):
++
++* lighttpd
++* php5
++* php5-cgi
++* php5-cli
++* php5-curl
++* php5-sqlite
++
++Principles and Technical Choices
++--------------------------------
++
++The test environment makes it easy to install and manipulate one or
++several MediaWiki instances. To allow developers to run the testsuite
++easily, the environment does not require root priviledge (except to
++install the required packages if needed). It starts a webserver
++instance on the user's account (using lighttpd greatly helps for
++that), and does not need a separate database daemon (thanks to the use
++of sqlite).
++
++Run the test environment
++------------------------
++
++Install a new wiki
++~~~~~~~~~~~~~~~~~~
++
++Once you have all the prerequisite, you need to install a MediaWiki
++instance on your machine. If you already have one, it is still
++strongly recommended to install one with the script provided. Here's
++how to work it:
++
++a. change directory to contrib/mw-to-git/t/
++b. if needed, edit test.config to choose your installation parameters
++c. run `./install-wiki.sh install`
++d. check on your favourite web browser if your wiki is correctly
++   installed.
++
++Remove an existing wiki
++~~~~~~~~~~~~~~~~~~~~~~~
++
++Edit the file test.config to fit the wiki you want to delete, and then
++execute the command `./install-wiki.sh delete` from the
++contrib/mw-to-git/t directory.
++
++Run the existing tests
++~~~~~~~~~~~~~~~~~~~~~~
++
++The provided tests are currently in the `contrib/mw-to-git/t` directory.
++The files are all the t936[0-9]-*.sh shell scripts.
++
++a. Run all tests:
++To do so, run "make test" from the contrib/mw-to-git/ directory.
++
++b. Run a specific test:
++To run a given test <test_name>, run ./<test_name> from the
++contrib/mw-to-git/t directory.
++
++How to create new tests
++-----------------------
++
++Available functions
++~~~~~~~~~~~~~~~~~~~
++
++The test environment of git-remote-mediawiki provides some functions
++useful to test its behaviour. for more details about the functions'
++parameters, please refer to the `test-gitmw-lib.sh` and
++`test-gitmw.pl` files.
++
++** `test_check_wiki_precond`:
++Check if the tests must be skipped or not. Please use this function
++at the beggining of each new test file.
++
++** `wiki_getpage`:
++Fetch a given page from the wiki and puts its content in the
++directory in parameter.
++
++** `wiki_delete_page`:
++Delete a given page from the wiki.
++
++** `wiki_edit_page`:
++Create or modify a given page in the wiki. You can specify several
++parameters like a summary for the page edition, or add the page to a
++given category.
++See test-gitmw.pl for more details.
++
++** `wiki_getallpage`:
++Fetch all pages from the wiki into a given directory. The directory
++is created if it does not exists.
++
++** `test_diff_directories`:
++Compare the content of two directories. The content must be the same.
++Use this function to compare the content of a git directory and a wiki
++one created by wiki_getallpage.
++
++** `test_contains_N_files`:
++Check if the given directory contains a given number of file.
++
++** `wiki_page_exists`:
++Tests if a given page exists on the wiki.
++
++** `wiki_reset`:
++Reset the wiki, i.e. flush the database. Use this function at the
++begining of each new test, except if the test re-uses the same wiki
++(and history) as the previous test.
++
++How to write a new test
++~~~~~~~~~~~~~~~~~~~~~~~
++
++Please, follow the standards given by git. See git/t/README.
++New file should be named as t936[0-9]-*.sh.
++Be sure to reset your wiki regulary with the function `wiki_reset`.
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index 47341f7..14f6577 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -13,6 +13,7 @@
+ 
+ . ./test.config
+ 
++WIKI_URL=http://"$SERVER_ADDR:$PORT/$WIKI_DIR_NAME"
+ CURR_DIR=$(pwd)
+ TEST_OUTPUT_DIRECTORY=$(pwd)
+ TEST_DIRECTORY="$CURR_DIR"/../../../t
+@@ -25,6 +26,148 @@ else
+ 	WIKI_DIR_INST="$CURR_DIR/$WEB_WWW"
+ fi
+ 
++
++wiki_getpage () {
++	"$CURR_DIR"/test-gitmw.pl get_page "$@"
++}
++
++wiki_delete_page () {
++	"$CURR_DIR"/test-gitmw.pl delete_page "$@"
++}
++
++wiki_editpage () {
++	"$CURR_DIR"/test-gitmw.pl edit_page "$@"
++}
++
++die () {
++	die_with_status 1 "$@"
++}
++
++die_with_status () {
++	status=$1
++	shift
++	echo >&2 "$*"
++	exit "$status"
++}
++
++
++# Check the preconditions to run git-remote-mediawiki's tests
++test_check_precond () {
++	if ! test_have_prereq PERL
++	then
++		skip_all='skipping gateway git-mw tests, perl not available'
++		test_done
++	fi
++
++	if [ ! -f "$GIT_BUILD_DIR"/git-remote-mediawiki ];
++	then
++		echo "No remote mediawiki for git found. Copying it in git"
++		echo "cp $GIT_BUILD_DIR/contrib/mw-to-git/git-remote-mediawiki $GIT_BUILD_DIR/"
++		ln -s "$GIT_BUILD_DIR"/contrib/mw-to-git/git-remote-mediawiki "$GIT_BUILD_DIR"
++	fi
++
++	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ];
++	then
++		skip_all='skipping gateway git-mw tests, no mediawiki found'
++		test_done
++	fi
++}
++
++# test_diff_directories <dir_git> <dir_wiki>
++#
++# Compare the contents of directories <dir_git> and <dir_wiki> with diff
++# and errors if they do not match. The program will
++# not look into .git in the process.
++# Warning: the first argument MUST be the directory containing the git data
++test_diff_directories () {
++	rm -rf "$1_tmp"
++	mkdir -p "$1_tmp"
++	cp "$1"/*.mw "$1_tmp"
++	diff -r -b "$1_tmp" "$2"
++}
++
++# $1=<dir>
++# $2=<N>
++#
++# Check that <dir> contains exactly <N> files
++test_contains_N_files () {
++	if test `ls -- "$1" | wc -l` -ne "$2"; then
++		echo "directory $1 sould contain $2 files"
++		echo "it contains these files:"
++		ls "$1"
++		false
++	fi
++}
++
++
++# wiki_check_content <file_name> <page_name>
++#
++# Compares the contents of the file <file_name> and the wiki page
++# <page_name> and exits with error 1 if they do not match.
++wiki_check_content () {
++	mkdir -p wiki_tmp
++	wiki_getpage "$2" wiki_tmp
++	# replacement of forbidden character in file name
++	page_name=$(printf "%s\n" "$2" | sed -e "s/\//%2F/g")
++
++	diff -b "$1" wiki_tmp/"$page_name".mw
++	if test $? -ne 0
++	then
++		rm -rf wiki_tmp
++		error "ERROR: file $2 not found on wiki"
++	fi
++	rm -rf wiki_tmp
++}
++
++# wiki_page_exist <page_name>
++#
++# Check the existence of the page <page_name> on the wiki and exits
++# with error if it is absent from it.
++wiki_page_exist () {
++	mkdir -p wiki_tmp
++	wiki_getpage "$1" wiki_tmp
++	page_name=$(printf "%s\n" "$1" | sed "s/\//%2F/g")
++	if test -f wiki_tmp/"$page_name".mw ; then
++		rm -rf wiki_tmp
++	else
++		rm -rf wiki_tmp
++		error "test failed: file $1 not found on wiki"
++	fi
++}
++
++# wiki_getallpagename
++#
++# Fetch the name of each page on the wiki.
++wiki_getallpagename () {
++	"$CURR_DIR"/test-gitmw.pl getallpagename
++}
++
++# wiki_getallpagecategory <category>
++#
++# Fetch the name of each page belonging to <category> on the wiki.
++wiki_getallpagecategory () {
++	"$CURR_DIR"/test-gitmw.pl getallpagename "$@"
++}
++
++# wiki_getallpage <dest_dir> [<category>]
++#
++# Fetch all the pages from the wiki and place them in the directory
++# <dest_dir>.
++# If <category> is define, then wiki_getallpage fetch the pages included
++# in <category>.
++wiki_getallpage () {
++	if test -z "$2";
++	then
++		wiki_getallpagename
++	else
++		wiki_getallpagecategory "$2"
++	fi
++	mkdir -p "$1"
++	while read -r line; do
++		wiki_getpage "$line" $1;
++	done < all.txt
++}
++
+ # ================= Install part =================
+ 
+ error () {
+diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
+new file mode 100755
+index 0000000..2611991
+--- /dev/null
++++ b/contrib/mw-to-git/t/test-gitmw.pl
+@@ -0,0 +1,209 @@
++#!/usr/bin/perl -w -s
++# Copyright (C) 2012
++#     Charles Roussel <charles.roussel@ensimag.imag.fr>
++#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
++#     Julien Khayat <julien.khayat@ensimag.imag.fr>
++#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
++#     Simon Perrat <simon.perrat@ensimag.imag.fr>
++# License: GPL v2 or later
++
++# Usage:
++#       ./test-gitmw.pl <command> [argument]*
++# Execute in terminal using the name of the function to call as first
++# parameter, and the function's arguments as following parameters
++#
++# Example:
++#     ./test-gitmw.pl "get_page" foo .
++# will call <wiki_getpage> with arguments <foo> and <.>
++#
++# Available functions are:
++#     "get_page"
++#     "delete_page"
++#     "edit_page"
++#     "getallpagename"
++
++use MediaWiki::API;
++use Getopt::Long;
++use encoding 'utf8';
++use DateTime::Format::ISO8601;
++use open ':encoding(utf8)';
++use constant SLASH_REPLACEMENT => "%2F";
++
++#Parsing of the config file
++
++my $configfile = "$ENV{'CURR_DIR'}/test.config";
++my %config;
++open my $CONFIG, "<",  $configfile or die "can't open $configfile: $!";
++while (<$CONFIG>)
++{
++        chomp;
++        s/#.*//;
++        s/^\s+//;
++        s/\s+$//;
++        next unless length;
++        my ($key, $value) = split (/\s*=\s*/,$_, 2);
++        $config{$key} = $value;
++	last if ($key eq 'LIGHTTPD' and $value eq 'false');
++	last if ($key eq 'PORT');
++}
++close $CONFIG or die "can't close $configfile: $!";
++
++my $wiki_address = "http://$config{'SERVER_ADDR'}".":"."$config{'PORT'}";
++my $wiki_url = "$wiki_address/$config{'WIKI_DIR_NAME'}/api.php";
++my $wiki_admin = "$config{'WIKI_ADMIN'}";
++my $wiki_admin_pass = "$config{'WIKI_PASSW'}";
++my $mw = MediaWiki::API->new;
++$mw->{config}->{api_url} = $wiki_url;
++
++
++# wiki_login <name> <password>
++#
++# Logs the user with <name> and <password> in the global variable
++# of the mediawiki $mw
++sub wiki_login {
++	$mw->login( { lgname => "$_[0]",lgpassword => "$_[1]" } )
++	|| die "getpage: login failed";
++}
++
++# wiki_getpage <wiki_page> <dest_path>
++#
++# fetch a page <wiki_page> from the wiki referenced in the global variable
++# $mw and copies its content in directory dest_path
++sub wiki_getpage {
++	my $pagename = $_[0];
++	my $destdir = $_[1];
++
++	my $page = $mw->get_page( { title => $pagename } );
++	if (!defined($page)) {
++		die "getpage: wiki does not exist";
++	}
++
++	my $content = $page->{'*'};
++	if (!defined($content)) {
++		die "getpage: page does not exist";
++	}
++
++	$pagename=$page->{'title'};
++	# Replace spaces by underscore in the page name
++	$pagename =~ s/ /_/g;
++	$pagename =~ s/\//%2F/g;
++	open(my $file, ">$destdir/$pagename.mw");
++	print $file "$content";
++	close ($file);
++
++}
++
++# wiki_delete_page <page_name>
++#
++# delete the page with name <page_name> from the wiki referenced
++# in the global variable $mw
++sub wiki_delete_page {
++	my $pagename = $_[0];
++
++	my $exist=$mw->get_page({title => $pagename});
++
++	if (defined($exist->{'*'})){
++		$mw->edit({ action => 'delete',
++				title => $pagename})
++		|| die $mw->{error}->{code} . ": " . $mw->{error}->{details};
++	} else {
++		die "no page with such name found: $pagename\n";
++	}
++}
++
++# wiki_editpage <wiki_page> <wiki_content> <wiki_append> [-c=<category>] [-s=<summary>]
++#
++# Edit a page named <wiki_page> with content <wiki_content> on the wiki
++# referenced with the global variable $mw
++# If <wiki_append> == true : append <wiki_content> at the end of the actual
++# content of the page <wiki_page>
++# If <wik_page> doesn't exist, that page is created with the <wiki_content>
++sub wiki_editpage {
++	my $wiki_page = $_[0];
++	my $wiki_content = $_[1];
++	my $wiki_append = $_[2];
++	my $summary = "";
++	my ($summ, $cat) = ();
++	GetOptions('s=s' => \$summ, 'c=s' => \$cat);
++
++	my $append = 0;
++	if (defined($wiki_append) && $wiki_append eq 'true') {
++		$append=1;
++	}
++
++	my $previous_text ="";
++
++	if ($append) {
++		my $ref = $mw->get_page( { title => $wiki_page } );
++		$previous_text = $ref->{'*'};
++	}
++
++	my $text = $wiki_content;
++	if (defined($previous_text)) {
++		$text="$previous_text$text";
++	}
++
++	# Eventually, add this page to a category.
++	if (defined($cat)) {
++		my $category_name="[[Category:$cat]]";
++		$text="$text\n $category_name";
++	}
++	if(defined($summ)){
++		$summary=$summ;
++	}
++
++	$mw->edit( { action => 'edit', title => $wiki_page, summary => $summary, text => "$text"} );
++}
++
++# wiki_getallpagename [<category>]
++#
++# Fetch all pages of the wiki referenced by the global variable $mw
++# and print the names of each one in the file all.txt with a new line
++# ("\n") between these.
++# If the argument <category> is defined, then this function get only the pages
++# belonging to <category>.
++sub wiki_getallpagename {
++	# fetch the pages of the wiki
++	if (defined($_[0])) {
++		my $mw_pages = $mw->list ( { action => 'query',
++				list => 'categorymembers',
++				cmtitle => "Category:$_[0]",
++				cmnamespace => 0,
++				cmlimit => 500 },
++		)
++		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
++		open(my $file, ">all.txt");
++		foreach my $page (@{$mw_pages}) {
++			print $file "$page->{title}\n";
++		}
++		close ($file);
++
++	} else {
++		my $mw_pages = $mw->list({
++				action => 'query',
++				list => 'allpages',
++				aplimit => 500,
++			})
++		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
++		open(my $file, ">all.txt");
++		foreach my $page (@{$mw_pages}) {
++			print $file "$page->{title}\n";
++		}
++		close ($file);
++	}
++}
++
++# Main part of this script: parse the command line arguments
++# and select which function to execute
++my $fct_to_call = shift;
++
++wiki_login($wiki_admin, $wiki_admin_pass);
++
++my %functions_to_call = qw(
++    get_page       wiki_getpage
++    delete_page    wiki_delete_page
++    edit_page      wiki_editpage
++    getallpagename wiki_getallpagename
++);
++die "$0 ERROR: wrong argument" unless exists $functions_to_call{$fct_to_call};
++&{$functions_to_call{$fct_to_call}}(@ARGV);
 -- 
 1.7.11.1.147.g47a574d
