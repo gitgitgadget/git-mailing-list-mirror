@@ -1,90 +1,251 @@
-From: Brian Foster <brian.foster@maxim-ic.com>
-Subject: Re: [Q] Branch aliases (synonyms)?
-Date: Thu, 5 Jul 2012 09:06:19 +0200
-Message-ID: <4406023.HK6z7GB5ye@laclwks004>
-References: <1919214.YKUdgul2iY@laclwks004> <4FF30FD6.6020501@alum.mit.edu> <4417201.NtYkVMYjv0@laclwks004>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 1/3] git p4: remove unused P4Submit interactive setting
+Date: Thu, 05 Jul 2012 08:20:33 +0100
+Message-ID: <4FF54041.2000507@diamand.org>
+References: <1341408860-26965-1-git-send-email-pw@padd.com> <1341408860-26965-2-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git mailing list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 05 09:06:38 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael Horowitz <mike@horowitz.name>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Thu Jul 05 09:20:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smg97-00043t-2U
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:06:37 +0200
+	id 1SmgMw-00052R-T1
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853Ab2GEHG3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jul 2012 03:06:29 -0400
-Received: from antispam01.maxim-ic.com ([205.153.101.182]:51925 "EHLO
-	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869Ab2GEHG2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2012 03:06:28 -0400
-X-ASG-Debug-ID: 1341471986-02ae9858582a1fc0001-QuoKaX
-Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam01.maxim-ic.com with ESMTP id akcfXD8KQdGbnPDA; Thu, 05 Jul 2012 02:06:26 -0500 (CDT)
-X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
-Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
- maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Thu, 5 Jul 2012 02:06:22 -0500
-Received: from laclwks004.localnet (10.201.0.45) by
- maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Thu, 5 Jul 2012 00:06:22 -0700
-X-ASG-Orig-Subj: Re: [Q] Branch aliases (synonyms)?
-User-Agent: KMail/4.7.3 (Linux/3.0.0-22-generic; KDE/4.7.4; x86_64; ; )
-In-Reply-To: <4417201.NtYkVMYjv0@laclwks004>
-X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
-X-Barracuda-Start-Time: 1341471986
-X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at maxim-ic.com
-X-Barracuda-Spam-Score: 0.12
-X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.101792
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.12 CN_BODY_332            BODY: CN_BODY_332
+	id S1752720Ab2GEHUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 03:20:50 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:62572 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004Ab2GEHUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 03:20:48 -0400
+Received: by eeit10 with SMTP id t10so3093267eei.19
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 00:20:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=rLDLJdAn476v07G61PBM5XWwOAmrHiWG5jdr0jRTenM=;
+        b=YaIwvq/6mxL5RjHU3I9ywXy+75iJ8EDhcnvdpq84xMtJvXjW/8ujj2DcySQ5FZuQcL
+         jSDtoIIDHgy2E2qKouKUcI26jrEcQ4DZ//2qVCovQMSL0LT/m6xws+u4pG/Y0T/3Xr9T
+         sCWP6wYemzw/4cJ50c4MF5lEEC5n4KjEDPMydRf1w3WWhcOouJygLogX4Nb0mGxJY/w0
+         o6ZWKKFPSy78edBv0wFBMqMM35OfoR9AmvDMi/y9fgoWwqI6Elyzhu0AQfwNWrX/hvt8
+         qLtqhkpLZTt4r5o79J9zdIQuk+3Ff4AOVMuaAlXwf6Vfg36yKN/5L0GLkK6gnW7BZa40
+         cA1Q==
+Received: by 10.14.188.129 with SMTP id a1mr5913478een.183.1341472846800;
+        Thu, 05 Jul 2012 00:20:46 -0700 (PDT)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id y54sm60122832eef.10.2012.07.05.00.20.45
+        (version=SSLv3 cipher=OTHER);
+        Thu, 05 Jul 2012 00:20:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
+In-Reply-To: <1341408860-26965-2-git-send-email-pw@padd.com>
+X-Gm-Message-State: ALoCoQldWQtzPkFc+uEZjeWixgph9FXfR7ZuUSEMUB4AWnfbxO6MEUmtzVTOWt3W/WSaSLWPhk1G
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201022>
 
-On Wednesday 04-July-2012 00:31:40 Brian Foster wrote:
-> On Tuesday 03-July-2012 08:29:26 Michael Haggerty wrote:
-> > On 07/03/2012 03:40 PM, Brian Foster wrote:
-> > > On Tuesday 03-July-2012 05:23:29 Hallvard Breien Furuseth wrote:
-> > >>              E.g. if it's hard to teach developers to switch
-> > >>   from B to A, a hook which rejects pushes to B might help.
-> > >
-> > > [ ... ]                    the concern is about the
-> > >  external users (clients who clone but never push)
-> > >  becoming confused.  [ ... ]
-> >=20
-> > Maybe create a new branch B (an orphan commit unconnected
-> > to the old branch B) with a single README file telling the
-> > person that from now on they should be using branch A.
->=20
->  Hum....  This idea, at first glance, looks
->  extremely intriguing (with, perhaps, the minor
->  tweak there is also a =E2=80=98Makefile=E2=80=99 which shows
->  the =E2=80=98READ_ME=E2=80=99 and then always =E2=80=9Cfails=E2=80=9D=
-  [ ... ]).
+On 04/07/12 14:34, Pete Wyckoff wrote:
+> The code is unused.  Delete.
 
-Michael,
+I've used that non-interactive code path in the past, in the very early 
+days of using it (setting interactive to false manually).
 
- Thanks for this idea!  With my =E2=80=98Makefile=E2=80=99 tweak,
- the idea has caught fire, and is now the preferred
- solution.  Whilst I have not yet finished updating
- my model to test it, it is extremely promising.
+The nice thing about it is that if you're using git-p4 for the very 
+first time it lets you do the final submission to p4 by hand, without 
+having to trust the script to do the right thing. Once I convinced 
+myself that git-p4 was doing the right thing, I then stopped using it.
 
-cheers,
-	-blf-
+Is it worth retaining, perhaps fixed so that it can be set on the 
+command line and documented? Or just discard?
 
---=20
-Brian Foster
-Principal MTS, Software        |  La Ciotat, France
-Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
+Thanks
+Luke
+
+>
+> Signed-off-by: Pete Wyckoff<pw@padd.com>
+> ---
+>   git-p4.py | 144 ++++++++++++++++++++++++++++----------------------------------
+>   1 file changed, 66 insertions(+), 78 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index f895a24..542c20a 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -844,7 +844,6 @@ class P4Submit(Command, P4UserMap):
+>           ]
+>           self.description = "Submit changes from git to the perforce depot."
+>           self.usage += " [name of git branch to submit into perforce depot]"
+> -        self.interactive = True
+>           self.origin = ""
+>           self.detectRenames = False
+>           self.preserveUser = gitConfig("git-p4.preserveUser").lower() == "true"
+> @@ -1209,86 +1208,77 @@ class P4Submit(Command, P4UserMap):
+>
+>           template = self.prepareSubmitTemplate()
+>
+> -        if self.interactive:
+> -            submitTemplate = self.prepareLogMessage(template, logMessage)
+> +        submitTemplate = self.prepareLogMessage(template, logMessage)
+>
+> -            if self.preserveUser:
+> -               submitTemplate = submitTemplate + ("\n######## Actual user %s, modified after commit\n" % p4User)
+> -
+> -            if os.environ.has_key("P4DIFF"):
+> -                del(os.environ["P4DIFF"])
+> -            diff = ""
+> -            for editedFile in editedFiles:
+> -                diff += p4_read_pipe(['diff', '-du',
+> -                                      wildcard_encode(editedFile)])
+> -
+> -            newdiff = ""
+> -            for newFile in filesToAdd:
+> -                newdiff += "==== new file ====\n"
+> -                newdiff += "--- /dev/null\n"
+> -                newdiff += "+++ %s\n" % newFile
+> -                f = open(newFile, "r")
+> -                for line in f.readlines():
+> -                    newdiff += "+" + line
+> -                f.close()
+> -
+> -            if self.checkAuthorship and not self.p4UserIsMe(p4User):
+> -                submitTemplate += "######## git author %s does not match your p4 account.\n" % gitEmail
+> -                submitTemplate += "######## Use option --preserve-user to modify authorship.\n"
+> -                submitTemplate += "######## Variable git-p4.skipUserNameCheck hides this message.\n"
+> -
+> -            separatorLine = "######## everything below this line is just the diff #######\n"
+> -
+> -            (handle, fileName) = tempfile.mkstemp()
+> -            tmpFile = os.fdopen(handle, "w+")
+> -            if self.isWindows:
+> -                submitTemplate = submitTemplate.replace("\n", "\r\n")
+> -                separatorLine = separatorLine.replace("\n", "\r\n")
+> -                newdiff = newdiff.replace("\n", "\r\n")
+> -            tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
+> +        if self.preserveUser:
+> +           submitTemplate = submitTemplate + ("\n######## Actual user %s, modified after commit\n" % p4User)
+> +
+> +        if os.environ.has_key("P4DIFF"):
+> +            del(os.environ["P4DIFF"])
+> +        diff = ""
+> +        for editedFile in editedFiles:
+> +            diff += p4_read_pipe(['diff', '-du',
+> +                                  wildcard_encode(editedFile)])
+> +
+> +        newdiff = ""
+> +        for newFile in filesToAdd:
+> +            newdiff += "==== new file ====\n"
+> +            newdiff += "--- /dev/null\n"
+> +            newdiff += "+++ %s\n" % newFile
+> +            f = open(newFile, "r")
+> +            for line in f.readlines():
+> +                newdiff += "+" + line
+> +            f.close()
+> +
+> +        if self.checkAuthorship and not self.p4UserIsMe(p4User):
+> +            submitTemplate += "######## git author %s does not match your p4 account.\n" % gitEmail
+> +            submitTemplate += "######## Use option --preserve-user to modify authorship.\n"
+> +            submitTemplate += "######## Variable git-p4.skipUserNameCheck hides this message.\n"
+> +
+> +        separatorLine = "######## everything below this line is just the diff #######\n"
+> +
+> +        (handle, fileName) = tempfile.mkstemp()
+> +        tmpFile = os.fdopen(handle, "w+")
+> +        if self.isWindows:
+> +            submitTemplate = submitTemplate.replace("\n", "\r\n")
+> +            separatorLine = separatorLine.replace("\n", "\r\n")
+> +            newdiff = newdiff.replace("\n", "\r\n")
+> +        tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
+> +        tmpFile.close()
+> +
+> +        if self.edit_template(fileName):
+> +            # read the edited message and submit
+> +            tmpFile = open(fileName, "rb")
+> +            message = tmpFile.read()
+>               tmpFile.close()
+> +            submitTemplate = message[:message.index(separatorLine)]
+> +            if self.isWindows:
+> +                submitTemplate = submitTemplate.replace("\r\n", "\n")
+> +            p4_write_pipe(['submit', '-i'], submitTemplate)
+>
+> -            if self.edit_template(fileName):
+> -                # read the edited message and submit
+> -                tmpFile = open(fileName, "rb")
+> -                message = tmpFile.read()
+> -                tmpFile.close()
+> -                submitTemplate = message[:message.index(separatorLine)]
+> -                if self.isWindows:
+> -                    submitTemplate = submitTemplate.replace("\r\n", "\n")
+> -                p4_write_pipe(['submit', '-i'], submitTemplate)
+> -
+> -                if self.preserveUser:
+> -                    if p4User:
+> -                        # Get last changelist number. Cannot easily get it from
+> -                        # the submit command output as the output is
+> -                        # unmarshalled.
+> -                        changelist = self.lastP4Changelist()
+> -                        self.modifyChangelistUser(changelist, p4User)
+> -
+> -                # The rename/copy happened by applying a patch that created a
+> -                # new file.  This leaves it writable, which confuses p4.
+> -                for f in pureRenameCopy:
+> -                    p4_sync(f, "-f")
+> -
+> -            else:
+> -                # skip this patch
+> -                print "Submission cancelled, undoing p4 changes."
+> -                for f in editedFiles:
+> -                    p4_revert(f)
+> -                for f in filesToAdd:
+> -                    p4_revert(f)
+> -                    os.remove(f)
+> +            if self.preserveUser:
+> +                if p4User:
+> +                    # Get last changelist number. Cannot easily get it from
+> +                    # the submit command output as the output is
+> +                    # unmarshalled.
+> +                    changelist = self.lastP4Changelist()
+> +                    self.modifyChangelistUser(changelist, p4User)
+> +
+> +            # The rename/copy happened by applying a patch that created a
+> +            # new file.  This leaves it writable, which confuses p4.
+> +            for f in pureRenameCopy:
+> +                p4_sync(f, "-f")
+>
+> -            os.remove(fileName)
+>           else:
+> -            fileName = "submit.txt"
+> -            file = open(fileName, "w+")
+> -            file.write(self.prepareLogMessage(template, logMessage))
+> -            file.close()
+> -            print ("Perforce submit template written as %s. "
+> -                   + "Please review/edit and then use p4 submit -i<  %s to submit directly!"
+> -                   % (fileName, fileName))
+> +            # skip this patch
+> +            print "Submission cancelled, undoing p4 changes."
+> +            for f in editedFiles:
+> +                p4_revert(f)
+> +            for f in filesToAdd:
+> +                p4_revert(f)
+> +                os.remove(f)
+> +
+> +        os.remove(fileName)
+>
+>       # Export git tags as p4 labels. Create a p4 label and then tag
+>       # with that.
+> @@ -1437,8 +1427,6 @@ class P4Submit(Command, P4UserMap):
+>               commit = commits[0]
+>               commits = commits[1:]
+>               self.applyCommit(commit)
+> -            if not self.interactive:
+> -                break
+>
+>           if len(commits) == 0:
+>               print "All changes applied!"
