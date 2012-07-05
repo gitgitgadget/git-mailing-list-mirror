@@ -1,98 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] stash: Delete MERGE_RR before stash apply
-Date: Thu, 05 Jul 2012 10:15:15 -0700
-Message-ID: <7v7guiruxo.fsf@alter.siamese.dyndns.org>
-References: <CABURp0pNsRQgbf7_iYc-xVaySa9-gGiA++Lw4-WgSCQ4QGCXsA@mail.gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
+Date: Thu, 05 Jul 2012 19:24:11 +0200
+Message-ID: <1341509051.10752.34.camel@flaca.cmartin.tk>
+References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+	 <7vsjd9wkek.fsf@alter.siamese.dyndns.org>
+	 <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+	 <20120703180439.GC3294@sigill.intra.peff.net>
+	 <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
+	 <20120703184018.GB5765@sigill.intra.peff.net>
+	 <1341386512.3871.4.camel@flaca.cmartin.tk>
+	 <CABURp0rVPAvxP1sp_nmoNYd+F+OsvWeHgUAeo7-VTnQhdebFeg@mail.gmail.com>
+	 <1341472926.10752.5.camel@flaca.cmartin.tk>
+	 <CABURp0r8EfShHVE-Vycz3g8-WPXFzs1-WOT7LRwh-XOuWVYG+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	martin.von.zweigbergk@gmail.com, tytso@mit.edu
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	"jonsmirl@gmail.com" <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 19:15:26 2012
+X-From: git-owner@vger.kernel.org Thu Jul 05 19:24:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmpeH-0003ne-66
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 19:15:25 +0200
+	id 1Smpmt-0000p4-0c
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 19:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093Ab2GERPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 13:15:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57086 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751694Ab2GERPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 13:15:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50E778823;
-	Thu,  5 Jul 2012 13:15:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HL6QsJbhGIvgLprZFHvbguXiMS4=; b=GesCfM
-	ILm+T5P5C7lrSP2flyghKHPj3kAoIkJigSjQy3LpyNQ19vmZCNEjk3mtX5IVlSlK
-	GdgLbjZJn1WaL85Ytx9niYJKNPiumV/aq3C4XKcdy0wEYWf6AOxyFz/FC+0rqN6g
-	fQGndh7vRLTJF0YZaCbxZVVvuMFDwGXo8+Zk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hp+eDDnEe9wRPYd59t/jd5e539ogyUVC
-	P3048Vmd32n/WJ6B06gQ5sijoMkQRBrad5a4rL2gz7DuyiIBH2LdS9ZR+g7SLplR
-	ZUHDaRdrjMoaMtG0oNtDX1YiSmZzzLgBFuUY3rTMCQD1tLZ9RfRVOr6idF9rMPIF
-	kwuJlGC5Uhs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46FDB8822;
-	Thu,  5 Jul 2012 13:15:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF9CE8820; Thu,  5 Jul 2012
- 13:15:16 -0400 (EDT)
-In-Reply-To: <CABURp0pNsRQgbf7_iYc-xVaySa9-gGiA++Lw4-WgSCQ4QGCXsA@mail.gmail.com> (Phil
- Hord's message of "Thu, 5 Jul 2012 09:48:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD9CB85C-C6C4-11E1-95E9-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751645Ab2GERYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 13:24:14 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:60663 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751184Ab2GERYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 13:24:13 -0400
+Received: from [141.23.102.101] (unknown [141.23.102.101])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 1EFA146057;
+	Thu,  5 Jul 2012 19:24:11 +0200 (CEST)
+In-Reply-To: <CABURp0r8EfShHVE-Vycz3g8-WPXFzs1-WOT7LRwh-XOuWVYG+Q@mail.gmail.com>
+X-Mailer: Evolution 3.4.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201053>
 
-Phil Hord <phil.hord@gmail.com> writes:
+On Thu, 2012-07-05 at 11:32 -0400, Phil Hord wrote:
+> 
+> The possible enhancements to cover this I can think of are mostly in
+> the form of enhanced help or advice.  For example, I could imagine
+> these:
+> 
+> 1. Add a link to 'git push' on the 'git-branch' man page.   I suspect
+> this is where newbies would go to look for this feature, but I am only
+> guessing.  The git-branch help discusses deleting branches and even
+> deleting remote-tracking branches.  But it does not discuss deleting
+> branches on a remote repository, even to say "this is not the command
+> you want" for that action, but "see this other one instead".
 
-> The presence of a GIT_DIR/MERGE_RR file indicates we
-> were resolving a merge which had rerere candidates for
-> recording.  But the file does not get deleted after
-> all resolutions are completed.  This is ok for most
-> cases because the file will get replaced when the
-> next merge happens.  But stash apply does not use
-> a merge that supports rerere, and so the old
-> MERGE_RR does not get replaced with a current one.
+Yeah, that seems like a good addition.
 
-Thanks for digging to the real cause.  It does use merge-recursive
-backend directly, and as a backend, it probably is correct that it
-does not invoke rerere itself.
+> 
+> 2. Add 'apropos' behavior for git help.
+>    $ git apropos delete
+> 
+> Except I notice that the system 'apropos' does not turn up 'git-push'
+> for either of these:
+>    $ apropos delete
+>    $ apropos branch
 
-In your patch, you are removing the state before you check and
-notice that the user is in the middle of a merge and give control
-back with "Cannot apply a stash in the middle of a merge".  Wouldn't
-it be nicer to the user if you didn't remove the rerere state when
-this happens (i.e. the user mistakenly said "stash apply" after a
-conflicted merge), as that rerere state likely is from that merge
-that produced the conflicted state?
+Huh, I don't think I've used apropos in years. I guess changing the
+subject to include removing/deleting would be conceivable, but we still
+have the issue that branches are a particular form of ref, which is what
+push acts on.
 
-Would an obvious alternative of running "git rerere" ourselves after
-running "git merge-recursive" in this script work?
+> 
+> 3. Add a search feature for help.  Currently this feature is provided
+> instead by Google and StackOverflow.
+>    $ git help --find delete --and branch --and remote
+> Except I don't expect this "advanced" form of help, if it existed, to
+> be noticed by newbies early enough on the learning curve.
+> 
+> 4. Add advice in appropriate locations.
+> Instead of this:
+>    $ git remote rm origin/foo
+>    error: Could not remove config section 'remote.origin/foo'
 
- git-stash.sh | 1 +
- 1 file changed, 1 insertion(+)
+Ugh, this is horrible. We should definitely do better than this error
+message.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 4e2c7f8..bbefdf6 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -469,6 +469,7 @@ apply_stash () {
- 	else
- 		# Merge conflict; keep the exit status from merge-recursive
- 		status=$?
-+		git rerere
- 		if test -n "$INDEX_OPTION"
- 		then
- 			gettextln "Index was not unstashed." >&2
+>    $ git branch -d origin/foo
+>    error: branch 'origin/foo' not found.
+> 
+> Do this:
+>    $ git remote rm origin/foo
+>    error: There is no remote named 'origin/foo'
+>    hint: Did you mean to remove the remote tracking branch 'origin/foo'?
+>    hint: Try "git branch --delete --remotes origin/foo" instead.
+>    hint: Did you mean to remove the branch 'foo' on the remote
+> 'origin' repository?
+>    hint: Try "git push --delete origin foo" instead.
+> 
+>    $ git branch -d origin/foo
+>    error: branch 'origin/foo' not found.
+>    hint: To delete the remote-tracking branch origin/foo,
+>    hint:  use git branch --delete --remotes origin/foo
+> 
+>    $ git branch -dr origin/foo
+>    Deleted remote branch origin/foo (was fadda12).
+
+If we're changing error messages, this could probably do with an update
+to say "remote-tracking" branch so it's clearer that it didn't affect
+the branch on the remote.
+
+>    hint: This deleted your remote-tracking branch but
+>    hint:  did not affect the branch on the remote server.
+>    hint:  To remove the branch from the remote server,
+>    hint:  use "git push".  See '--delete' in "git help push" .
+> 
+
+IMO these seem too verbose (but maybe I've just seen people post the old
+'git pull' error message without even reading it too many times).
+
+   cmn
