@@ -1,84 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] Teach clone to set remote.default.
-Date: Thu, 05 Jul 2012 15:52:51 -0700
-Message-ID: <7vzk7dq0qk.fsf@alter.siamese.dyndns.org>
-References: <1341526277-17055-1-git-send-email-marcnarc@xiplink.com>
- <1341526277-17055-4-git-send-email-marcnarc@xiplink.com>
+From: Max Horn <max@quendi.de>
+Subject: =?UTF-8?q?=5BPATCH=5D=20Change=20configure=20to=20check=20if=20pthreads=20are=20usable=20without=20any=20extra=20flags?=
+Date: Fri,  6 Jul 2012 01:03:06 +0200
+Message-ID: <1341529386-11589-1-git-send-email-max@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
-	phil.hord@gmail.com
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Fri Jul 06 00:53:07 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Max Horn <max@quendi.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 06 01:04:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smuuy-0004gz-BE
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 00:53:00 +0200
+	id 1Smv5l-00032z-IF
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 01:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933143Ab2GEWwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 18:52:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39837 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932163Ab2GEWwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 18:52:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52B0B96B2;
-	Thu,  5 Jul 2012 18:52:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bwVqxzaorvl8Ja0a99g64zr7wTg=; b=hsrVYy
-	W4wxFgNgc5weNGqCRFRGKOHK0JBrhDX9dyfQQ7UfyLbzskpiOeVcFInVdU+G1FHK
-	uuK+xnrCmrIUfXalpbyu8f/F7A+lv5nD2QcbBhzB5Nq1bibu+PtbPcOSlg3cpp/4
-	ngwxMz+euKGQcfpqCpEFblTKmH1g8ph8c7RF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eSHX0NJ9tupcTKhi+a8tw3y9oBggOdHF
-	F3IOnErpB7zvwlzCcBj2BHsiO30ah5ZYARibWF5XlpMqqwgxKhWhKtPsWVMjIveG
-	LgegF+WboWoUSLSBmMKUzsqBUcr4zJcAwO6v5ubuaH3UdT9ejQEDTYNtKsvx5M43
-	B1PPC/5f6IY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4907F96B1;
-	Thu,  5 Jul 2012 18:52:53 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D32D096AF; Thu,  5 Jul 2012
- 18:52:52 -0400 (EDT)
-In-Reply-To: <1341526277-17055-4-git-send-email-marcnarc@xiplink.com>
- (marcnarc@xiplink.com's message of "Thu, 5 Jul 2012 18:11:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 27231066-C6F4-11E1-91F5-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933281Ab2GEXEE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jul 2012 19:04:04 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:50398 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933237Ab2GEXED (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2012 19:04:03 -0400
+Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1Smv5Z-0000Kq-6t; Fri, 06 Jul 2012 01:03:57 +0200
+X-Mailer: git-send-email 1.7.11.1.145.g4722b29.dirty
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341529442;6a428aa4;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201075>
 
-marcnarc@xiplink.com writes:
+The configure script checks whether certain flags / libraries are
+required to use pthreads. But so far it did not consider the possibilit=
+y
+that no extra compiler flags are needed (as is the case on Mac OS X). A=
+s
+a result, configure would always add "-mt" to the list of flags. This i=
+n
+turn triggered a warning in clang about an unknown argument.
+To solve this, we now first check if pthreads work without extra flags.
 
-> From: Marc Branchaud <marcnarc@xiplink.com>
->
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> ---
->  builtin/clone.c          |  2 ++
->  t/t5601-clone.sh         | 10 ++++++++++
->  t/t5702-clone-options.sh |  7 +++++--
->  3 files changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index a4d8d25..b198456 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -770,6 +770,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	git_config_set(key.buf, repo);
->  	strbuf_reset(&key);
->  
-> +	git_config_set("remote.default", option_origin);
-> +
+Signed-off-by: Max Horn <max@quendi.de>
+---
+ configure.ac | 2 +-
+ 1 Datei ge=C3=A4ndert, 1 Zeile hinzugef=C3=BCgt(+), 1 Zeile entfernt(-=
+)
 
-Is this something we would want to do unconditionally?  If so why?
-
-Or is this what we want to do only when the "--origin name" option
-is used?
+diff --git a/configure.ac b/configure.ac
+index 4e9012f..d767ef3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1002,7 +1002,7 @@ if test -n "$USER_NOPTHREAD"; then
+ # -D_REENTRANT' or some such.
+ elif test -z "$PTHREAD_CFLAGS"; then
+   threads_found=3Dno
+-  for opt in -mt -pthread -lpthread; do
++  for opt in "" -mt -pthread -lpthread; do
+      old_CFLAGS=3D"$CFLAGS"
+      CFLAGS=3D"$opt $CFLAGS"
+      AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
+--=20
+1.7.11.1.145.g4722b29.dirty
