@@ -1,156 +1,254 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
-Date: Thu, 5 Jul 2012 11:32:55 -0400
-Message-ID: <CABURp0r8EfShHVE-Vycz3g8-WPXFzs1-WOT7LRwh-XOuWVYG+Q@mail.gmail.com>
-References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
- <7vsjd9wkek.fsf@alter.siamese.dyndns.org> <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
- <20120703180439.GC3294@sigill.intra.peff.net> <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
- <20120703184018.GB5765@sigill.intra.peff.net> <1341386512.3871.4.camel@flaca.cmartin.tk>
- <CABURp0rVPAvxP1sp_nmoNYd+F+OsvWeHgUAeo7-VTnQhdebFeg@mail.gmail.com> <1341472926.10752.5.camel@flaca.cmartin.tk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>,
-	"jonsmirl@gmail.com" <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Jul 05 17:33:25 2012
+From: Tom Xue <tomxue0126@gmail.com>
+Subject: [PATCH] Can show relative date of the commit with future timestamp
+Date: Fri,  6 Jul 2012 00:18:07 +0800
+Message-ID: <1341505087-13632-1-git-send-email-tomxue0126@gmail.com>
+Cc: Tom Xue <tomxue0126@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 05 18:18:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smo3X-0006UA-Oo
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 17:33:24 +0200
+	id 1Smol7-0008IX-04
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 18:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755909Ab2GEPdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 11:33:17 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:63476 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752286Ab2GEPdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 11:33:16 -0400
-Received: by gglu4 with SMTP id u4so7504506ggl.19
-        for <git@vger.kernel.org>; Thu, 05 Jul 2012 08:33:16 -0700 (PDT)
+	id S1756166Ab2GEQST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 12:18:19 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:36406 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab2GEQSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 12:18:18 -0400
+Received: by pbbrp8 with SMTP id rp8so12999394pbb.19
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 09:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CLNhDvA8fCkPXHdTf/UWJ+KIczb4wWnZO/wN188s3Tg=;
-        b=AXByXuiMb9rRlxTj585AoEOZoXZgLudMDT02gRzi20V1BiQDb5yOwFfzG/wS14GkVL
-         cm/U6vTIxnL7/N9xlylJ4BdLe4+qvCAEEaymNvuFhK1wwiZ+C4V7q3glm/EK6RGXe8eQ
-         u1QgdcN8IV0EHEUBvy03EYE5I6c4VLCL7VVO73E11/CrxXGAMzFUr0BrpX+gn9CnR/CJ
-         Gk2zpKKfd+iiREiRgJhfWAsJl2RKp2OtnWV9uLl8eFEQIm9DZoOorQeYhWIP60JxXq9Z
-         eLZkPmCKGdhrrxoekitbTqptQXylWgdTWwD8nE76f+6+lkr3PLSk2vdC8KULTO9E1MRu
-         D6Vg==
-Received: by 10.236.79.67 with SMTP id h43mr30755204yhe.122.1341502396019;
- Thu, 05 Jul 2012 08:33:16 -0700 (PDT)
-Received: by 10.146.150.18 with HTTP; Thu, 5 Jul 2012 08:32:55 -0700 (PDT)
-In-Reply-To: <1341472926.10752.5.camel@flaca.cmartin.tk>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=GgxjHLFs9Pml6c+iWGk3kBBRoOBpBOCZwFUgI+kIXjI=;
+        b=o1abshTlJ3qCCwpREtwnZr4TC50U55N8LMJmCCdrrYfgG2HSQFU+7P7c+CVFZPSTJg
+         KGetmJg+3cp1xghCs0MDUBEL53qkxukPWOipMhl1TvF2hMUOZhMyNWOK8ZNhbcBW8APa
+         wPQrnTYFwKfM/1pbd18OMBvZjzsQ1X4LKTD5tpeaNi8qX1J4u7P4cq8Ur5CnGI9+1KEF
+         Fnlx4c/9zeXLlQv14RDGjtBpthwjA4GqiTeilUCgEzZqqqkmRsG/Mt0F49VZVsOQk91Z
+         Ygxl0EloghmJGxXr5bpqxthCvILuPRasOE0kZOHRqD6xFaqIOmcc//uQ2OQPu4AMQgPJ
+         Hx4g==
+Received: by 10.68.228.2 with SMTP id se2mr29456800pbc.109.1341505098539;
+        Thu, 05 Jul 2012 09:18:18 -0700 (PDT)
+Received: from localhost ([106.3.60.94])
+        by mx.google.com with ESMTPS id np8sm20007642pbc.71.2012.07.05.09.18.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 Jul 2012 09:18:17 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201048>
 
->> > There is also a flag you can pass, which you can see a few
->> paragraphs
->> > under it which. It explains what it does underneath but removes the
->> need
->> > to know that an empty source will delete the ref.
->> >
->> >     --delete
->> >        All listed refs are deleted from the remote repository. This
->> is
->> >        the same as prefixing all refs with a colon.
->>
->>
->> I do like that, but I agree with OP that 'git push' is not an obvious
->> to look for delete branch functionality for new users.
+---
+ date.c | 186 ++++++++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 125 insertions(+), 61 deletions(-)
 
-s/obvious/obvious place/
-
-> Like it? I don't get what you mean, it's a quote of what's already
-> there.
-
-Yes.  I didn't mean I like "the change".  I meant that I appreciate
-this being in the documentation.   But it seems insufficient.
-
-> The reason that it's in git-push is because that's the only git command
-> that modifies another repository. There isn't another git command where
-> it would fit.
-
-Yes, and that's why I said, in the part of my email you did not quote:
-
-"I do not have a good suggestion for improving the situation, however."
-
-> You could try to put it somewhere under git-remote, but
-> then you'd have a single subcommand that affects a remote among a lot of
-> others that don't, introducing an inconsistency in the command.
-
-git-remote is the wrong place for anything like this.  I think
-git-push is really the correct place for it.  I do not think it should
-be moved.
-
-But this is a common problem in git for newbies, I think.  Features
-are in "the right place" in the command structure, but it is difficult
-to find where that right place is when you are new to the system,
-especially when the feature is tucked neatly away as a switch on some
-other feature.
-
-The possible enhancements to cover this I can think of are mostly in
-the form of enhanced help or advice.  For example, I could imagine
-these:
-
-1. Add a link to 'git push' on the 'git-branch' man page.   I suspect
-this is where newbies would go to look for this feature, but I am only
-guessing.  The git-branch help discusses deleting branches and even
-deleting remote-tracking branches.  But it does not discuss deleting
-branches on a remote repository, even to say "this is not the command
-you want" for that action, but "see this other one instead".
-
-2. Add 'apropos' behavior for git help.
-   $ git apropos delete
-
-Except I notice that the system 'apropos' does not turn up 'git-push'
-for either of these:
-   $ apropos delete
-   $ apropos branch
-
-3. Add a search feature for help.  Currently this feature is provided
-instead by Google and StackOverflow.
-   $ git help --find delete --and branch --and remote
-Except I don't expect this "advanced" form of help, if it existed, to
-be noticed by newbies early enough on the learning curve.
-
-4. Add advice in appropriate locations.
-Instead of this:
-   $ git remote rm origin/foo
-   error: Could not remove config section 'remote.origin/foo'
-   $ git branch -d origin/foo
-   error: branch 'origin/foo' not found.
-
-Do this:
-   $ git remote rm origin/foo
-   error: There is no remote named 'origin/foo'
-   hint: Did you mean to remove the remote tracking branch 'origin/foo'?
-   hint: Try "git branch --delete --remotes origin/foo" instead.
-   hint: Did you mean to remove the branch 'foo' on the remote
-'origin' repository?
-   hint: Try "git push --delete origin foo" instead.
-
-   $ git branch -d origin/foo
-   error: branch 'origin/foo' not found.
-   hint: To delete the remote-tracking branch origin/foo,
-   hint:  use git branch --delete --remotes origin/foo
-
-   $ git branch -dr origin/foo
-   Deleted remote branch origin/foo (was fadda12).
-   hint: This deleted your remote-tracking branch but
-   hint:  did not affect the branch on the remote server.
-   hint:  To remove the branch from the remote server,
-   hint:  use "git push".  See '--delete' in "git help push" .
-
-
-I rather like this last bit.  I'll try to roll a patch later on.
-
-Phil
+diff --git a/date.c b/date.c
+index 1fdcf7c..f1ed2ba 100644
+--- a/date.c
++++ b/date.c
+@@ -92,72 +92,136 @@ void show_date_relative(unsigned long time, int tz,
+ {
+ 	unsigned long diff;
+ 	if (now->tv_sec < time) {
+-		strbuf_addstr(timebuf, _("in the future"));
+-		return;
+-	}
+-	diff = now->tv_sec - time;
+-	if (diff < 90) {
+-		strbuf_addf(timebuf,
+-			 Q_("%lu second ago", "%lu seconds ago", diff), diff);
+-		return;
+-	}
+-	/* Turn it into minutes */
+-	diff = (diff + 30) / 60;
+-	if (diff < 90) {
+-		strbuf_addf(timebuf,
+-			 Q_("%lu minute ago", "%lu minutes ago", diff), diff);
+-		return;
+-	}
+-	/* Turn it into hours */
+-	diff = (diff + 30) / 60;
+-	if (diff < 36) {
+-		strbuf_addf(timebuf,
+-			 Q_("%lu hour ago", "%lu hours ago", diff), diff);
+-		return;
+-	}
+-	/* We deal with number of days from here on */
+-	diff = (diff + 12) / 24;
+-	if (diff < 14) {
+-		strbuf_addf(timebuf,
+-			 Q_("%lu day ago", "%lu days ago", diff), diff);
+-		return;
+-	}
+-	/* Say weeks for the past 10 weeks or so */
+-	if (diff < 70) {
+-		strbuf_addf(timebuf,
+-			 Q_("%lu week ago", "%lu weeks ago", (diff + 3) / 7),
+-			 (diff + 3) / 7);
+-		return;
+-	}
+-	/* Say months for the past 12 months or so */
+-	if (diff < 365) {
++		strbuf_addstr(timebuf, _("in the future: "));
++		diff = time - now->tv_sec;
++		if (diff < 90) {
++			strbuf_addf(timebuf,
++				 Q_("%lu second later", "%lu seconds later", diff), diff);
++			return;
++		}
++		/* Turn it into minutes */
++		diff = (diff + 30) / 60;
++		if (diff < 90) {
++			strbuf_addf(timebuf,
++				 Q_("%lu minute later", "%lu minutes later", diff), diff);
++			return;
++		}
++		/* Turn it into hours */
++		diff = (diff + 30) / 60;
++		if (diff < 36) {
++			strbuf_addf(timebuf,
++				 Q_("%lu hour later", "%lu hours later", diff), diff);
++			return;
++		}
++		/* We deal with number of days from here on */
++		diff = (diff + 12) / 24;
++		if (diff < 14) {
++			strbuf_addf(timebuf,
++				 Q_("%lu day later", "%lu days later", diff), diff);
++			return;
++		}
++		/* Say weeks for the past 10 weeks or so */
++		if (diff < 70) {
++			strbuf_addf(timebuf,
++				 Q_("%lu week later", "%lu weeks later", (diff + 3) / 7),
++				 (diff + 3) / 7);
++			return;
++		}
++		/* Say months for the past 12 months or so */
++		if (diff < 365) {
++			strbuf_addf(timebuf,
++				 Q_("%lu month later", "%lu months later", (diff + 15) / 30),
++				 (diff + 15) / 30);
++			return;
++		}
++		/* Give years and months for 5 years or so */
++		if (diff < 1825) {
++			unsigned long totalmonths = (diff * 12 * 2 + 365) / (365 * 2);
++			unsigned long years = totalmonths / 12;
++			unsigned long months = totalmonths % 12;
++			if (months) {
++				struct strbuf sb = STRBUF_INIT;
++				strbuf_addf(&sb, Q_("%lu year", "%lu years", years), years);
++				/* TRANSLATORS: "%s" is "<n> years" */
++				strbuf_addf(timebuf,
++					 Q_("%s, %lu month later", "%s, %lu months later", months),
++					 sb.buf, months);
++				strbuf_release(&sb);
++			} else
++				strbuf_addf(timebuf,
++					 Q_("%lu year later", "%lu years later", years), years);
++			return;
++		}
++		/* Otherwise, just years. Centuries is probably overkill. */
+ 		strbuf_addf(timebuf,
+-			 Q_("%lu month ago", "%lu months ago", (diff + 15) / 30),
+-			 (diff + 15) / 30);
+-		return;
++			 Q_("%lu year later", "%lu years later", (diff + 183) / 365),
++			 (diff + 183) / 365);
+ 	}
+-	/* Give years and months for 5 years or so */
+-	if (diff < 1825) {
+-		unsigned long totalmonths = (diff * 12 * 2 + 365) / (365 * 2);
+-		unsigned long years = totalmonths / 12;
+-		unsigned long months = totalmonths % 12;
+-		if (months) {
+-			struct strbuf sb = STRBUF_INIT;
+-			strbuf_addf(&sb, Q_("%lu year", "%lu years", years), years);
+-			/* TRANSLATORS: "%s" is "<n> years" */
++	else {
++		diff = now->tv_sec - time;
++		if (diff < 90) {
++			strbuf_addf(timebuf,
++				 Q_("%lu second ago", "%lu seconds ago", diff), diff);
++			return;
++		}
++		/* Turn it into minutes */
++		diff = (diff + 30) / 60;
++		if (diff < 90) {
++			strbuf_addf(timebuf,
++				 Q_("%lu minute ago", "%lu minutes ago", diff), diff);
++			return;
++		}
++		/* Turn it into hours */
++		diff = (diff + 30) / 60;
++		if (diff < 36) {
+ 			strbuf_addf(timebuf,
+-				 Q_("%s, %lu month ago", "%s, %lu months ago", months),
+-				 sb.buf, months);
+-			strbuf_release(&sb);
+-		} else
++				 Q_("%lu hour ago", "%lu hours ago", diff), diff);
++			return;
++		}
++		/* We deal with number of days from here on */
++		diff = (diff + 12) / 24;
++		if (diff < 14) {
+ 			strbuf_addf(timebuf,
+-				 Q_("%lu year ago", "%lu years ago", years), years);
+-		return;
++				 Q_("%lu day ago", "%lu days ago", diff), diff);
++			return;
++		}
++		/* Say weeks for the past 10 weeks or so */
++		if (diff < 70) {
++			strbuf_addf(timebuf,
++				 Q_("%lu week ago", "%lu weeks ago", (diff + 3) / 7),
++				 (diff + 3) / 7);
++			return;
++		}
++		/* Say months for the past 12 months or so */
++		if (diff < 365) {
++			strbuf_addf(timebuf,
++				 Q_("%lu month ago", "%lu months ago", (diff + 15) / 30),
++				 (diff + 15) / 30);
++			return;
++		}
++		/* Give years and months for 5 years or so */
++		if (diff < 1825) {
++			unsigned long totalmonths = (diff * 12 * 2 + 365) / (365 * 2);
++			unsigned long years = totalmonths / 12;
++			unsigned long months = totalmonths % 12;
++			if (months) {
++				struct strbuf sb = STRBUF_INIT;
++				strbuf_addf(&sb, Q_("%lu year", "%lu years", years), years);
++				/* TRANSLATORS: "%s" is "<n> years" */
++				strbuf_addf(timebuf,
++					 Q_("%s, %lu month ago", "%s, %lu months ago", months),
++					 sb.buf, months);
++				strbuf_release(&sb);
++			} else
++				strbuf_addf(timebuf,
++					 Q_("%lu year ago", "%lu years ago", years), years);
++			return;
++		}
++		/* Otherwise, just years. Centuries is probably overkill. */
++		strbuf_addf(timebuf,
++			 Q_("%lu year ago", "%lu years ago", (diff + 183) / 365),
++			 (diff + 183) / 365);
+ 	}
+-	/* Otherwise, just years. Centuries is probably overkill. */
+-	strbuf_addf(timebuf,
+-		 Q_("%lu year ago", "%lu years ago", (diff + 183) / 365),
+-		 (diff + 183) / 365);
+ }
+ 
+ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+-- 
+1.7.11.GIT
