@@ -1,61 +1,76 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [RFC] l10n: de.po: translate 29 new messages
-Date: Thu, 5 Jul 2012 20:16:49 +0200
-Message-ID: <CAN0XMOJF8+iJqyiqvBxEHOVGMB17rPnO9Pnu29LY1fMDBopKGw@mail.gmail.com>
-References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
-	<2021839.rMjHRWft8I@cs-pc>
-	<CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
-	<m28vf0aqb8.fsf@igel.home>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git-submodule path computation bug with recursive submodules
+Date: Thu, 05 Jul 2012 20:34:24 +0200
+Message-ID: <4FF5DE30.6030100@web.de>
+References: <0B4C40CC-862E-4B15-9A4F-903DC8DBBAEC@play-bow.org> <CABURp0qtbSsiRX9sJ1F5WS3wtKq32hpV=3pGmM6Ysn=9Nvw_nQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
-	jk@jk.gs, worldhello.net@gmail.com, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Jul 05 20:17:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <phil.hord@gmail.com>, Bob Halley <halley@play-bow.org>
+X-From: git-owner@vger.kernel.org Thu Jul 05 20:35:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smqbr-0003uW-VO
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 20:17:00 +0200
+	id 1SmqtP-0005AN-8f
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 20:35:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481Ab2GESQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 14:16:54 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:50044 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751845Ab2GESQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 14:16:53 -0400
-Received: by wibhq12 with SMTP id hq12so333080wib.1
-        for <git@vger.kernel.org>; Thu, 05 Jul 2012 11:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=eaWSLgAX88rTjdinO6FQ/6HgBQqUbjsX6qta/vh3HRU=;
-        b=TYRSoEMwbiMKseFZr2ngf/l7azbIb6YMFIOGEvpn3T9lq5yhYPhoT/dwo8f9Jvf8G0
-         wmLEC6mzjZ1R2hn48cZU1dbJAie0WNqDz0Aju7nzbmJVKk5VJoXe3pj48ECIsn1aYPbk
-         +c/SQecGSM8oBsVk++AL7F/8KRU9C+Ae8PMbSZlX/2BGPtzyQzEinB6VLKxMSHSEr0WZ
-         +kxki428C4EasXOloGwrzTL//05zx4Q/8DeXNahn/bXR+9118nEpQovCCdIpxH66gxK3
-         GQF8mCYogE1fS3GiDqo1ZpDRStn/mQwYr3v8fSyvFLQ4P9MSz2AiCr5561ciaWiOaxJB
-         oZpA==
-Received: by 10.216.192.85 with SMTP id h63mr3074558wen.7.1341512209382; Thu,
- 05 Jul 2012 11:16:49 -0700 (PDT)
-Received: by 10.194.7.8 with HTTP; Thu, 5 Jul 2012 11:16:49 -0700 (PDT)
-In-Reply-To: <m28vf0aqb8.fsf@igel.home>
+	id S1754108Ab2GESfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 14:35:00 -0400
+Received: from mout.web.de ([212.227.15.4]:50719 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753669Ab2GESe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 14:34:59 -0400
+Received: from [192.168.178.48] ([91.3.174.47]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0LeLmv-1S19Hb1VYD-00pwvz; Thu, 05 Jul 2012 20:34:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <CABURp0qtbSsiRX9sJ1F5WS3wtKq32hpV=3pGmM6Ysn=9Nvw_nQ@mail.gmail.com>
+X-Provags-ID: V02:K0:eMqEPuewTYZ2uzA639X6RaLzFJbc2gfhpBrDwwtNbIG
+ OzyNDnotA37sErTfuVcJB76j+jWKiiH2DGvurF+YA11kf4FuKe
+ Uxn9Z6lK84VXC98lh7HGfIl5663QFysJUzdEI2YwxJGmAY8Cfn
+ rhRiSEDQwAp+XAgq6CPV4GdO1TRIxiw9c9H/5/8RJazd6FYtE7
+ nxQa3In3k8yH9IoJi7kSg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201059>
 
->>> Is "rebase" = "Neuaufbau"? My last thought on this wording was "rebase" =
->>> "Umpflanzen".
->
-> "Basisumbau"?
->
+Am 05.07.2012 16:18, schrieb Phil Hord:
+> On Thu, Jul 5, 2012 at 8:09 AM, Bob Halley <halley@play-bow.org> wrote:
+>> The first level of submodule clones successfully, but submodule 'foo'
+>> contains submodule 'bar', and cloning it fails.
+> 
+> It fails for me too, running zsh and stock Linux.
+> 
+> Seems to originate here.
+> 
+> Commit: 69c3051780d6cacfe242563296160634dc667a90:
+> Author: Jens Lehmann <Jens.Lehmann@web.de>
+> Date:   Sun Mar 4 22:15:36 2012 +0100
+> 
+>     submodules: refactor computation of relative gitdir path
 
-I have added both suggestions to the glossary that they don't get lost when
-we discuss about non-optimal and/or missing parts within the glossary.
+Yup, thanks both for reporting and nailing that one down.
 
-Ralf
+This diff fixes the problem for me and should be a portable way to
+avoid "pwd -P" or "cd -P", I'll cook up a patch with test for that:
+
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5c61ae2..4a22555 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -150,8 +150,8 @@ module_clone()
+                die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_
+        fi
+
+-       a=$(cd "$gitdir" && pwd)/
+-       b=$(cd "$sm_path" && pwd)/
++       a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
++       b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
+        # normalize Windows-style absolute paths to POSIX-style absolute paths
+        case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
+        case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
