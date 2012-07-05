@@ -1,112 +1,156 @@
 From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: git-submodule path computation bug with recursive submodules
-Date: Thu, 5 Jul 2012 10:18:59 -0400
-Message-ID: <CABURp0qtbSsiRX9sJ1F5WS3wtKq32hpV=3pGmM6Ysn=9Nvw_nQ@mail.gmail.com>
-References: <0B4C40CC-862E-4B15-9A4F-903DC8DBBAEC@play-bow.org>
+Subject: Re: [PATCH] push: don't guess at qualifying remote refs on deletion
+Date: Thu, 5 Jul 2012 11:32:55 -0400
+Message-ID: <CABURp0r8EfShHVE-Vycz3g8-WPXFzs1-WOT7LRwh-XOuWVYG+Q@mail.gmail.com>
+References: <CAKON4OwnUKQ6MT8HBNDyfhZLZS5xGKA2Ss1krY9OQGG1gaFhDw@mail.gmail.com>
+ <7vsjd9wkek.fsf@alter.siamese.dyndns.org> <CAKON4OxBo7XiF5c60oyEUMR1xCh16n5BZCz-mmcUc0V9X7D32A@mail.gmail.com>
+ <20120703180439.GC3294@sigill.intra.peff.net> <CAKON4Oy0YBVTAhZPU=1B=yYY4t2O_uRWDW1zOMaC5iCb=kRQ2w@mail.gmail.com>
+ <20120703184018.GB5765@sigill.intra.peff.net> <1341386512.3871.4.camel@flaca.cmartin.tk>
+ <CABURp0rVPAvxP1sp_nmoNYd+F+OsvWeHgUAeo7-VTnQhdebFeg@mail.gmail.com> <1341472926.10752.5.camel@flaca.cmartin.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+Cc: Jeff King <peff@peff.net>,
+	"jonsmirl@gmail.com" <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Bob Halley <halley@play-bow.org>
-X-From: git-owner@vger.kernel.org Thu Jul 05 16:19:32 2012
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Jul 05 17:33:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smmty-00035Q-0z
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 16:19:26 +0200
+	id 1Smo3X-0006UA-Oo
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 17:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754165Ab2GEOTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 10:19:21 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43433 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab2GEOTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 10:19:20 -0400
-Received: by yhmm54 with SMTP id m54so8210297yhm.19
-        for <git@vger.kernel.org>; Thu, 05 Jul 2012 07:19:19 -0700 (PDT)
+	id S1755909Ab2GEPdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 11:33:17 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:63476 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752286Ab2GEPdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 11:33:16 -0400
+Received: by gglu4 with SMTP id u4so7504506ggl.19
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 08:33:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=QxCT/6qedbtJ4QH6tQQO7DJRM93OEsd2KX2cGHF8LjE=;
-        b=xuFF9y0Mj3uA8PNT4Njg8twNm49UU9KyofPSc4zCjjrrGvTbFyZWA3+pmQzPTd60Fm
-         MN+lTEhrK2YQp6p2bQFAatqsCj6VBvcchxVZPc6Vs9QHHjjiQXDik0QPqxtdpK5QwqjM
-         Way3qGVx8X4Nwpqq4NReFBHD5yPM+U3Hoew2NdVoIdHISK+rWkDBCrcG3wgPhKl6ZXLe
-         W0YMJp+TCKA70oZlLS6Vzms3FFTO60jOWB7FxZZ4FcqaD/q9OVsvpsC91kfCf9+lBdyC
-         Pj+CtuxxsUuidUdDKXRfEB357hdMC6pfDUhS/IpWq3nKGyQuBGrPWzctVsfJZV/q8+o9
-         laXw==
-Received: by 10.236.46.74 with SMTP id q50mr30891116yhb.30.1341497959843; Thu,
- 05 Jul 2012 07:19:19 -0700 (PDT)
-Received: by 10.146.150.18 with HTTP; Thu, 5 Jul 2012 07:18:59 -0700 (PDT)
-In-Reply-To: <0B4C40CC-862E-4B15-9A4F-903DC8DBBAEC@play-bow.org>
+        bh=CLNhDvA8fCkPXHdTf/UWJ+KIczb4wWnZO/wN188s3Tg=;
+        b=AXByXuiMb9rRlxTj585AoEOZoXZgLudMDT02gRzi20V1BiQDb5yOwFfzG/wS14GkVL
+         cm/U6vTIxnL7/N9xlylJ4BdLe4+qvCAEEaymNvuFhK1wwiZ+C4V7q3glm/EK6RGXe8eQ
+         u1QgdcN8IV0EHEUBvy03EYE5I6c4VLCL7VVO73E11/CrxXGAMzFUr0BrpX+gn9CnR/CJ
+         Gk2zpKKfd+iiREiRgJhfWAsJl2RKp2OtnWV9uLl8eFEQIm9DZoOorQeYhWIP60JxXq9Z
+         eLZkPmCKGdhrrxoekitbTqptQXylWgdTWwD8nE76f+6+lkr3PLSk2vdC8KULTO9E1MRu
+         D6Vg==
+Received: by 10.236.79.67 with SMTP id h43mr30755204yhe.122.1341502396019;
+ Thu, 05 Jul 2012 08:33:16 -0700 (PDT)
+Received: by 10.146.150.18 with HTTP; Thu, 5 Jul 2012 08:32:55 -0700 (PDT)
+In-Reply-To: <1341472926.10752.5.camel@flaca.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201047>
 
-On Thu, Jul 5, 2012 at 8:09 AM, Bob Halley <halley@play-bow.org> wrote:
->
-> The git-submodule command has problems in some cases when there is a symlink
-> in the path returned by pwd.
->
-> I've created a repository at http://www.play-bow.org/repos/product to
-> demonstrate the issue.
->
-> $ git --version
-> git version 1.7.11.1.116.g8228a23
->
-> I copied and built the head of the master branch today.
->
-> First we need a symlink.  I discovered this problem because I had a symlink
-> in / to a directory under my home directory for typing convenience.
->
-> $ ls -al /bug
-> lrwxr-xr-x  1 root  admin  17  5 Jul 12:26 /bug@ -> /Users/halley/bug
->
-> $ cd /bug
-> $ pwd
-> /bug
->
-> Note that pwd does not resolve the symlink (though pwd -P would on many
-> platforms)
->
-> $ pwd -P
-> /Users/halley/bug/product
->
-> $ git clone http://www.play-bow.org/repos/product
-> Cloning into 'product'...
->
-> I'm purposely not using 'clone --recursive' as the bug doesn't appear if you
-> do that.
->
-> $ cd product/
-> $ ls
-> file1   file2   foo/
->
-> Let's get those submodules...
->
-> $ git submodule update --init --recursive
-> Submodule 'foo' (http://www.play-bow.org/repos/foo) registered for path 'foo'
-> Cloning into 'foo'...
-> Submodule path 'foo': checked out '2b02e1eb2e34961d807cfc5fc7e477e0ca844600'
-> Submodule 'bar' (http://www.play-bow.org/repos/bar) registered for path 'bar'
-> Cloning into 'bar'...
-> fatal: Not a git repository: ../../../../Users/halley/bug/product/.git/modules/foo/modules/bar
-> Failed to recurse into submodule path 'foo'
->
-> The first level of submodule clones successfully, but submodule 'foo'
-> contains submodule 'bar', and cloning it fails.
+>> > There is also a flag you can pass, which you can see a few
+>> paragraphs
+>> > under it which. It explains what it does underneath but removes the
+>> need
+>> > to know that an empty source will delete the ref.
+>> >
+>> >     --delete
+>> >        All listed refs are deleted from the remote repository. This
+>> is
+>> >        the same as prefixing all refs with a colon.
+>>
+>>
+>> I do like that, but I agree with OP that 'git push' is not an obvious
+>> to look for delete branch functionality for new users.
 
-It fails for me too, running zsh and stock Linux.
+s/obvious/obvious place/
 
-Seems to originate here.
+> Like it? I don't get what you mean, it's a quote of what's already
+> there.
 
-Commit: 69c3051780d6cacfe242563296160634dc667a90:
-Author: Jens Lehmann <Jens.Lehmann@web.de>
-Date:   Sun Mar 4 22:15:36 2012 +0100
+Yes.  I didn't mean I like "the change".  I meant that I appreciate
+this being in the documentation.   But it seems insufficient.
 
-    submodules: refactor computation of relative gitdir path
+> The reason that it's in git-push is because that's the only git command
+> that modifies another repository. There isn't another git command where
+> it would fit.
+
+Yes, and that's why I said, in the part of my email you did not quote:
+
+"I do not have a good suggestion for improving the situation, however."
+
+> You could try to put it somewhere under git-remote, but
+> then you'd have a single subcommand that affects a remote among a lot of
+> others that don't, introducing an inconsistency in the command.
+
+git-remote is the wrong place for anything like this.  I think
+git-push is really the correct place for it.  I do not think it should
+be moved.
+
+But this is a common problem in git for newbies, I think.  Features
+are in "the right place" in the command structure, but it is difficult
+to find where that right place is when you are new to the system,
+especially when the feature is tucked neatly away as a switch on some
+other feature.
+
+The possible enhancements to cover this I can think of are mostly in
+the form of enhanced help or advice.  For example, I could imagine
+these:
+
+1. Add a link to 'git push' on the 'git-branch' man page.   I suspect
+this is where newbies would go to look for this feature, but I am only
+guessing.  The git-branch help discusses deleting branches and even
+deleting remote-tracking branches.  But it does not discuss deleting
+branches on a remote repository, even to say "this is not the command
+you want" for that action, but "see this other one instead".
+
+2. Add 'apropos' behavior for git help.
+   $ git apropos delete
+
+Except I notice that the system 'apropos' does not turn up 'git-push'
+for either of these:
+   $ apropos delete
+   $ apropos branch
+
+3. Add a search feature for help.  Currently this feature is provided
+instead by Google and StackOverflow.
+   $ git help --find delete --and branch --and remote
+Except I don't expect this "advanced" form of help, if it existed, to
+be noticed by newbies early enough on the learning curve.
+
+4. Add advice in appropriate locations.
+Instead of this:
+   $ git remote rm origin/foo
+   error: Could not remove config section 'remote.origin/foo'
+   $ git branch -d origin/foo
+   error: branch 'origin/foo' not found.
+
+Do this:
+   $ git remote rm origin/foo
+   error: There is no remote named 'origin/foo'
+   hint: Did you mean to remove the remote tracking branch 'origin/foo'?
+   hint: Try "git branch --delete --remotes origin/foo" instead.
+   hint: Did you mean to remove the branch 'foo' on the remote
+'origin' repository?
+   hint: Try "git push --delete origin foo" instead.
+
+   $ git branch -d origin/foo
+   error: branch 'origin/foo' not found.
+   hint: To delete the remote-tracking branch origin/foo,
+   hint:  use git branch --delete --remotes origin/foo
+
+   $ git branch -dr origin/foo
+   Deleted remote branch origin/foo (was fadda12).
+   hint: This deleted your remote-tracking branch but
+   hint:  did not affect the branch on the remote server.
+   hint:  To remove the branch from the remote server,
+   hint:  use "git push".  See '--delete' in "git help push" .
+
+
+I rather like this last bit.  I'll try to roll a patch later on.
 
 Phil
