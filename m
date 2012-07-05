@@ -1,72 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4] git-remote-mediawiki: import "File:" attachments
-Date: Thu, 05 Jul 2012 09:42:50 +0200
-Message-ID: <vpqtxxmejr9.fsf@bauges.imag.fr>
-References: <1340806889-23081-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1341406416-1251-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vk3yisnhe.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] branch: add -u as a shortcut for --set-upstream
+Date: Thu,  5 Jul 2012 09:57:15 +0200
+Message-ID: <1341475035-14310-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	ROUCHER IGLESIAS Javier <roucherj@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 09:43:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 09:57:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmgiN-0003fS-0p
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:43:03 +0200
+	id 1SmgwE-0004IZ-AM
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jul 2012 09:57:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848Ab2GEHm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 03:42:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56364 "EHLO rominette.imag.fr"
+	id S1754074Ab2GEH5R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jul 2012 03:57:17 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:37969 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754404Ab2GEHm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 03:42:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q657ff29012357
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Jul 2012 09:41:41 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SmgiA-0006tf-VV; Thu, 05 Jul 2012 09:42:51 +0200
-In-Reply-To: <7vk3yisnhe.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 04 Jul 2012 23:58:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Jul 2012 09:41:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q657ff29012357
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1342078902.79232@EeuwY5DZnI3Ql0VSp5ztTA
+	id S1752423Ab2GEH5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 03:57:17 -0400
+Received: from flaca.cmartin.tk (unknown [141.23.102.101])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 2663846057
+	for <git@vger.kernel.org>; Thu,  5 Jul 2012 09:57:15 +0200 (CEST)
+Received: (nullmailer pid 14345 invoked by uid 1000);
+	Thu, 05 Jul 2012 07:57:15 -0000
+X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201039>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Add this shortcut just like git-push has it.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> This is meant to replace commit 6a9e55b0fc5df40 in branch
->> mm/mediawiki-file-attachments in pu.
->
-> Bad timing for our mails to cross; it is already on 'next'.
->
-> Would the following be a good "incremental update" on top of the
-> named commit?
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
 
-Yes, that is perfect.
+I've seen threads commenting how it's odd that this doesn't exist[0],
+but nobody seems to have done anything about it yet.
 
-Thanks,
+This may need some updates to the shell completions, but I've no idea
+how those work and I'd rather not change things randomly.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[0] see e.g. http://thread.gmane.org/gmane.comp.version-control.git/165=
+794/focus=3D165856
+
+ Documentation/git-branch.txt | 1 +
+ builtin/branch.c             | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
+t
+index 47235be..447325f 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -167,6 +167,7 @@ start-point is either a local or remote-tracking br=
+anch.
+ 	Do not set up "upstream" configuration, even if the
+ 	branch.autosetupmerge configuration variable is true.
+=20
++-u::
+ --set-upstream::
+ 	If specified branch does not exist yet or if `--force` has been
+ 	given, acts exactly like `--track`. Otherwise sets up configuration
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0e060f2..9f2bb6f 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -724,7 +724,7 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 		OPT__QUIET(&quiet, "suppress informational messages"),
+ 		OPT_SET_INT('t', "track",  &track, "set up tracking mode (see git-pu=
+ll(1))",
+ 			BRANCH_TRACK_EXPLICIT),
+-		OPT_SET_INT( 0, "set-upstream",  &track, "change upstream info",
++		OPT_SET_INT('u', "set-upstream",  &track, "change upstream info",
+ 			BRANCH_TRACK_OVERRIDE),
+ 		OPT__COLOR(&branch_use_color, "use colored output"),
+ 		OPT_SET_INT('r', "remotes",     &kinds, "act on remote-tracking bran=
+ches",
+--=20
+1.7.11.1.104.ge7b44f1
