@@ -1,73 +1,77 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [RFC] l10n: de.po: translate 29 new messages
-Date: Fri, 6 Jul 2012 22:12:59 +0200
-Message-ID: <CAN0XMOLW_S0Py+zeWaNVcMm18OLG4Kx6vU+gvS5yrVn1nVxWBQ@mail.gmail.com>
-References: <1341335086-6767-1-git-send-email-ralf.thielow@gmail.com>
-	<2021839.rMjHRWft8I@cs-pc>
-	<CAN0XMO+R3+JiuHSZ0O46py2WbXVh8D2Z+f7t_xofsN6ZrFwnQQ@mail.gmail.com>
-	<m28vf0aqb8.fsf@igel.home>
-	<CAN0XMOJF8+iJqyiqvBxEHOVGMB17rPnO9Pnu29LY1fMDBopKGw@mail.gmail.com>
-	<4FF72C70.1010202@drmicha.warpmail.net>
-	<CAN0XMO+wz-2EGcX+KoLQLYDsG7Kz1T7YujxdJTUo1Yvqx=A4tg@mail.gmail.com>
-	<20120706191829.GA20919@m62s10.vlinux.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GIT PULL] vcs-svn housekeeping
+Date: Fri, 06 Jul 2012 13:28:13 -0700
+Message-ID: <7vy5mwmy76.fsf@alter.siamese.dyndns.org>
+References: <7v62b4ksw2.fsf@alter.siamese.dyndns.org>
+ <CAFfmPPOWZz8JF_BVKvnAVp0VUDzxPiVSqjG7ATPx3CVztDF=cw@mail.gmail.com>
+ <20120607003904.GB4065@burratino> <7vtxynk81p.fsf@alter.siamese.dyndns.org>
+ <20120706171040.GA31001@burratino>
+ <CAFfmPPOWfYhZyrsvg8eeisdNLb4gyEMJ5kYfVhcSR3KNa-QjCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
-	jk@jk.gs, worldhello.net@gmail.com, git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 06 22:13:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	git@vger.kernel.org
+To: David Michael Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 22:28:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnEto-0007F8-A2
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 22:13:08 +0200
+	id 1SnF8m-0001v8-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 22:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655Ab2GFUNC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jul 2012 16:13:02 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:43144 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751108Ab2GFUNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2012 16:13:01 -0400
-Received: by wibhr14 with SMTP id hr14so1204914wib.1
-        for <git@vger.kernel.org>; Fri, 06 Jul 2012 13:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2G1OsbRQffXBExYuKvAJcbSGf6yF89xq1qpo48yURpw=;
-        b=PGhiMGCfhBIHfFXaG5VlYtRCFn7E+t2mVOyHT/KpcvbbJ8x8GQabi98ef2vWtg8p2U
-         6yUgWgBwExYLCA2zQx6tsEMlWpuGw8CIXrVsYN3YPdh9lfEiWDHYvIDborLUbE0SgXYr
-         YLKr2r75lTUj5PwBY4RMk9GeOf7mhRAAmVo6dc3oshCWQktaiqJJVOr32kqisJRe3Dvm
-         RJRPLK/3uuKjFktNMPBP/32LwpCu9/60/YWHyORUP6cAjrp1L3Kn8BubTQykecm7jNXc
-         2po7qx6xMSuWhGdiEyu5wpbOpH8rYyZ4+e0WwudqBKGNteEaJKr7xsu108eR6Yly+dWD
-         Olxg==
-Received: by 10.216.211.19 with SMTP id v19mr10994210weo.89.1341605579780;
- Fri, 06 Jul 2012 13:12:59 -0700 (PDT)
-Received: by 10.194.7.8 with HTTP; Fri, 6 Jul 2012 13:12:59 -0700 (PDT)
-In-Reply-To: <20120706191829.GA20919@m62s10.vlinux.de>
+	id S1754114Ab2GFU2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jul 2012 16:28:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62116 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752684Ab2GFU2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2012 16:28:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD5F19D7F;
+	Fri,  6 Jul 2012 16:28:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b/EDiJ68hXRpTZo0WEHvU1/yLZc=; b=tXfupE
+	aYWXFehCnuuNkL0g/5LJnT9joZPA6yDlwZL2pwYja0gBkPkHXrCSEUA4jfIJ9hfp
+	mmgibTHNApGHX342Qjjsm6It69aWpICuT1vFaXeTri3tYyvKGeF6fllL5WyOFAoZ
+	6QSrP8AzrndoLvWUyGWWuUEIdH7j0sna9iYAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ctnYwGptENCW6jBzSbYAnfR+L0ejah4+
+	9Z2BaNR0EYrvwwn+Op/S9bkuVGu0YUYHhlNn/Z1yn/+TjJaED17ner01oa+VgQL/
+	87omSrTaJxKSAZpi5ZfDpaHLMkt5h1stTjL93A6tLf1Lt+SKmzVpv8Tf35lLvFPs
+	QI8TSjk/ZyI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4ECD9D7E;
+	Fri,  6 Jul 2012 16:28:15 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38E069D7D; Fri,  6 Jul 2012
+ 16:28:15 -0400 (EDT)
+In-Reply-To: <CAFfmPPOWfYhZyrsvg8eeisdNLb4gyEMJ5kYfVhcSR3KNa-QjCQ@mail.gmail.com> (David
+ Michael Barr's message of "Sat, 7 Jul 2012 05:41:51 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D4763AC-C7A9-11E1-8EEE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201149>
 
-> AFAIK it makes no senes to translate terms like "commit" to "Abzeichen" like it is used
-> in git gui. I don't know *anybody* here in my IT business environment who uses this word
-> or even would guess what it means.  Everyone is used to the Denglisch Version "committen"
-> or "einchecken".
+David Michael Barr <davidbarr@google.com> writes:
 
-As far as i can see, "Abzeichen" is only used as translation for "Sign off".
-"commit" is translated as "eintragen". So i don't see what your
-problem is, actually.
+> On Sat, Jul 7, 2012 at 3:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> ...
+>> Some of the patches had to change a little since v2 of db/vcs-svn, so
+>> I'll be replying with a copy of the patches for reference.
+>>
+>> David has looked the branch over and acked and tested it.
+>> ...
+>
+> Thank you Jonathan for doing this. Definitely the result of
+> collaborating on a series is gorgeous. I do wish I could absorb your
+> flair for polish.
 
-If you have a problem caused by translation, please send a bug-report
-to the GIT ML
-that we are able to detect and fix them.
-
-Thanks
-
-Ralf
+Thanks, both.  Will be pulled and pushed out by tonight.
