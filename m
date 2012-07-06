@@ -1,87 +1,81 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: The order of multiple remote.xx.fetch is significant for some operations
-Date: Fri, 6 Jul 2012 10:06:58 +0800
-Message-ID: <CANYiYbEH_qxj40SiVeYgLT_fYiRSh7O+wwSim1u=dBDfoZMiFA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git p4: add support for 'p4 move' in P4Submit
+Date: Thu, 05 Jul 2012 23:28:48 -0700
+Message-ID: <7v7guhpfmn.fsf@alter.siamese.dyndns.org>
+References: <1341409220-27954-1-git-send-email-pw@padd.com>
+ <1341409220-27954-3-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 04:07:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 08:28:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smxwq-0004xt-LG
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 04:07:08 +0200
+	id 1Sn22D-0006ar-FM
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 08:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932340Ab2GFCHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 22:07:00 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:53330 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754935Ab2GFCG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 22:06:59 -0400
-Received: by ghrr11 with SMTP id r11so8135114ghr.19
-        for <git@vger.kernel.org>; Thu, 05 Jul 2012 19:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Z6ZQ7OfUbKMsy9IJboJvA2cAehpVXTOMPNmhA9cwLn0=;
-        b=yNHGpqC/Gqt7CaUac+PK4qP1IxoyHG0Edgypck+oxr3LF4rHCArG1+N5GmF21lfiPv
-         LCw3rnK3I7Ai8SVIDmYrLr3kKcJiVuPrpNc7ExWrnmWYT7uBJWK0hPJtPWk3oLjdnaMh
-         guKijutC31Fbfk+bUuZnK8YKyvsSECFCcfsyftZb2+jMgo+uHEOnMBX5butHiT5xsK0O
-         Y+q/R7aKPHVYcgbxK6FzoEH34wO2dz7pEQOLC0M0GmJnWlQrIfuyYwUnHnjiR/bu5BKG
-         CocoXShE+nbVtTlY9WzyjOtmpxNFSzFVdU15rfBnZ4R+tktjopywuTQFuxdYSaGU/6J6
-         NPig==
-Received: by 10.50.89.130 with SMTP id bo2mr1362970igb.19.1341540418742; Thu,
- 05 Jul 2012 19:06:58 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Thu, 5 Jul 2012 19:06:58 -0700 (PDT)
+	id S932554Ab2GFG2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jul 2012 02:28:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59967 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932139Ab2GFG2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2012 02:28:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66BE18E1B;
+	Fri,  6 Jul 2012 02:28:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wLUlM/0KayMrs6LZAoGcIwtaDgE=; b=Rl0S5d
+	sIQCuBbKIVAXUHSkY8MydgGsTHnTG9MdzZPD1I3Fwzju0hlvjNm7R0/mTpy5eoCa
+	0iLhUk8CE66dikysfK6ENc5r54qQFmSZZ6omahfMRoTG0wsi8NPgEGwmZLr8Q+dw
+	25o/MqFdvjwTh2+2gtPDts7KQhRa2nUcsnJqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KQ2AVhiPMPGI01hoAMJ00nksdBoICPr1
+	TFl/btFtV20jJ8COpDhzYY5fyAicUt2K3OiHjQT6CmQmRYpw9y1LRsBZZfMfCSe5
+	YF8giMLoYYXEeFP80+6Ido2ChmZeKEwq4W1r2RnLC/YWIswJy9gKZON0JznZMK2a
+	157mAvpNL8I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E69A8E19;
+	Fri,  6 Jul 2012 02:28:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E09128E18; Fri,  6 Jul 2012
+ 02:28:49 -0400 (EDT)
+In-Reply-To: <1341409220-27954-3-git-send-email-pw@padd.com> (Pete Wyckoff's
+ message of "Wed, 4 Jul 2012 09:40:20 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D936685E-C733-11E1-A804-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201085>
 
-Someone asked me how to remove obsolete topgit feature branches from
-the remote topgit controlled git repo. I found we can not run
-"git fetch --prune" directly to delete stale remote branches from
-local, because of the wrong order of multiple "remote.XX.fetch" config
-variable.
+Pete Wyckoff <pw@padd.com> writes:
 
-For example, config variables for remote "origin":
+> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+> index 84fffb3..8be74b6 100755
+> --- a/t/t9814-git-p4-rename.sh
+> +++ b/t/t9814-git-p4-rename.sh
+> @@ -77,16 +77,16 @@ test_expect_success 'detect renames' '
+>  		git commit -a -m "Rename file1 to file4" &&
+>  		git diff-tree -r -M HEAD &&
+>  		git p4 submit &&
+> -		p4 filelog //depot/file4 &&
+> -		p4 filelog //depot/file4 | test_must_fail grep -q "branch from" &&
+> +		p4 filelog //depot/file4 | tee filelog &&
+> +		! grep -q " from //depot" filelog &&
 
-    [remote "origin"]
-          fetch = +refs/heads/*:refs/remotes/origin/*
-          url = git@github.com:ossxp-com/topgit.git
-          fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
+I am not a huge fan of using "tee" in our test scripts, especially
+as it means piping output of another command whose output (and
+presumably the behaviour) we care about, hiding its exit status.
 
-When running "git fetch --prune", will check all local refs, and delete
-stale remote branches from local if their conterparts do not exist in
-remote repo. But in this case, all remote branches under
-"refs/remotes/origin/top-bases/" namespace will be deleted, even their
-remote conterparts "refs/top-bases/*" still exist in remote repo.
+Fixing the incorrect use of piping to "test_must_fail grep" is a
+good change, but is there anything wrong to do the above like this?
 
-How does this happen? e.g. a local ref:
-"refs/remotes/origin/top-bases/t/featureX"
-
- * First make a reverse look up according to the remote.origin.fetch
-   config variables;
-
- * The first remote.origin.fetch matches, and this local ref is mapped
-   as "refs/heads/top-bases/t/featureX";
-
- * The remote repo does not have ref "refs/heads/top-bases/t/featureX",
-   (it should be "refs/top-bases/t/featureX"), then this local refs is
-   deleted as a stale remote branch.
-
- * While if we change the order of remote.origin.fetch config variables,
-   The result is different. This local ref will map to
-   "refs/top-bases/t/featureX", and won't be deleted.
-
-So, it's not a bug of git, but a flaw of user generated config variables.
-The hacks for Topgit are simple, see:
-
- * https://github.com/ossxp-com/topgit/blob/master/debian/patches/t/delete-remote-branch.diff
- * https://github.com/ossxp-com/topgit/blob/master/debian/patches/t/prune-stale-remote-branch.diff
-
---
-Jiang Xin
+	p4 filelog //depot/file4 >filelog &&
+	! grep -q " from //depot" filelog &&
