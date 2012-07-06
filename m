@@ -1,129 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] branch: add -u as a shortcut for --set-upstream
-Date: Fri, 6 Jul 2012 10:32:39 -0500
-Message-ID: <20120706153239.GA29362@burratino>
-References: <1341475035-14310-1-git-send-email-cmn@elego.de>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [RFC/PATCH] stash: Delete MERGE_RR before stash apply
+Date: Fri, 6 Jul 2012 11:53:23 -0400
+Message-ID: <CABURp0rOfr=c-TcF7O6Ms=2iRA3SC9ckt_ukeozBS5vGqaKZaQ@mail.gmail.com>
+References: <CABURp0pNsRQgbf7_iYc-xVaySa9-gGiA++Lw4-WgSCQ4QGCXsA@mail.gmail.com>
+ <7v7guiruxo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Fri Jul 06 17:33:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	martin.von.zweigbergk@gmail.com, tytso@mit.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 17:54:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnAWn-0002I4-63
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 17:33:05 +0200
+	id 1SnAqs-0007TG-4c
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 17:53:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757749Ab2GFPct convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jul 2012 11:32:49 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:65457 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757630Ab2GFPcs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jul 2012 11:32:48 -0400
-Received: by yenl2 with SMTP id l2so8703816yen.19
-        for <git@vger.kernel.org>; Fri, 06 Jul 2012 08:32:47 -0700 (PDT)
+	id S1757792Ab2GFPxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jul 2012 11:53:45 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:36796 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753766Ab2GFPxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2012 11:53:44 -0400
+Received: by yhmm54 with SMTP id m54so9532842yhm.19
+        for <git@vger.kernel.org>; Fri, 06 Jul 2012 08:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=3ZPLDrqKqjoyy+hyQ0YCO4wOdKVD9Vt8prMHH310oQs=;
-        b=DS48qzMhSJfWh7IQVHVJkAk+NNCWYnEGt7qVlRn0eoB+eo7lWhx2biA2XMQxEvxueo
-         um1BzYFqDyM32P1pm4Wwt+LWZ/CszzKsWU1E6av/WPVwG1vuNAtccDQf1auDlETSqOp2
-         p4bkIhHmulUxJ5qRKkP28zGEWBYBO9MXtnmZtYbE0satGz2VNrXD9xzQTTEqe3czbltw
-         xmoTPqk9q4RoCCvHWP+gumCG9S1Ie53FigQHVShRMH9+syW/3FRGp+A8gpvuzfHXwnGe
-         YY3ak8LUj+vPZj7NnVYGKQHUsx9x99PyUEmQOgvtoMHEpYzrx4f0Ug1a3t8aIyegZXcy
-         dcIQ==
-Received: by 10.50.135.74 with SMTP id pq10mr2769385igb.48.1341588767357;
-        Fri, 06 Jul 2012 08:32:47 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id k6sm5552080igw.14.2012.07.06.08.32.46
-        (version=SSLv3 cipher=OTHER);
-        Fri, 06 Jul 2012 08:32:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1341475035-14310-1-git-send-email-cmn@elego.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L86nszvuIeAL54DjXg4wr9pN9l7niZvOJZ2KYzA6LFE=;
+        b=dtU+/bv+LvkZyJDHO6btY8VMlzPNO/4+WoohdeCtoCXaHxKPCvfBYZn8efWLMdn+2i
+         UM6UoxPYtDKRfu0M9Q3SAJH8NnDHrAs2PP1bEaxwUyuLpmXkM0QJ8DDFXGPyztDHF1FC
+         vnrVUoTcszxXYHka2oRPQCxWWU5WSAbgPdq1hDj94d6NouMalVGMo4r628JySiRyf3Tv
+         s6KOV1v5CgkBYulP1l5rv+tXmqIunGuRNORIsWBpuRmjVTBx+Y10RyRKLTrqiUuNrt+Z
+         NwzaQvVXKUPcudR1Lfp/NltkJB0qmviuREUVOE0XfWIhUC4c2kgBbzQV5B1x4JhXS9tl
+         cKmw==
+Received: by 10.100.213.1 with SMTP id l1mr10661069ang.42.1341590023489; Fri,
+ 06 Jul 2012 08:53:43 -0700 (PDT)
+Received: by 10.146.150.18 with HTTP; Fri, 6 Jul 2012 08:53:23 -0700 (PDT)
+In-Reply-To: <7v7guiruxo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201116>
 
-Hi Carlos,
+On Thu, Jul 5, 2012 at 1:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Phil Hord <phil.hord@gmail.com> writes:
+>
+>> The presence of a GIT_DIR/MERGE_RR file indicates we
+>> were resolving a merge which had rerere candidates for
+>> recording.  But the file does not get deleted after
+>> all resolutions are completed.  This is ok for most
+>> cases because the file will get replaced when the
+>> next merge happens.  But stash apply does not use
+>> a merge that supports rerere, and so the old
+>> MERGE_RR does not get replaced with a current one.
+>
+> Thanks for digging to the real cause.
 
-Carlos Mart=C3=ADn Nieto wrote:
+Well, it only took me a year.
+http://permalink.gmane.org/gmane.comp.version-control.git/177224
 
-> Add this shortcut just like git-push has it.
-[...]
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -724,7 +724,7 @@ int cmd_branch(int argc, const char **argv, const=
- char *prefix)
->  		OPT__QUIET(&quiet, "suppress informational messages"),
->  		OPT_SET_INT('t', "track",  &track, "set up tracking mode (see git-=
-pull(1))",
->  			BRANCH_TRACK_EXPLICIT),
-> -		OPT_SET_INT( 0, "set-upstream",  &track, "change upstream info",
-> +		OPT_SET_INT('u', "set-upstream",  &track, "change upstream info",
->  			BRANCH_TRACK_OVERRIDE),
+> It does use merge-recursive
+> backend directly, and as a backend, it probably is correct that it
+> does not invoke rerere itself.
+>
+> In your patch, you are removing the state before you check and
+> notice that the user is in the middle of a merge and give control
+> back with "Cannot apply a stash in the middle of a merge".  Wouldn't
+> it be nicer to the user if you didn't remove the rerere state when
+> this happens (i.e. the user mistakenly said "stash apply" after a
+> conflicted merge), as that rerere state likely is from that merge
+> that produced the conflicted state?
+>
+> Would an obvious alternative of running "git rerere" ourselves after
+> running "git merge-recursive" in this script work?
+>
+>  git-stash.sh | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 4e2c7f8..bbefdf6 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -469,6 +469,7 @@ apply_stash () {
+>         else
+>                 # Merge conflict; keep the exit status from merge-recursive
+>                 status=$?
+> +               git rerere
+>                 if test -n "$INDEX_OPTION"
+>                 then
+>                         gettextln "Index was not unstashed." >&2
 
-I think this is a bad idea.  The --set-upstream option is confusing:
+Yes, except it needs "git rerere clear".  "git rerere" is not enough
+to cause the clean-up to occur.
 
-	$ git branch --set-upstream=3Dfoo
-	error: option 'set-upstream' takes no value
-	$ ???
+I'll roll a patch.
 
--u to set the corresponding upstream branch at the same time as
-creating a branch, analagous to "git push -u" might seem intuitive:
-
-	# create foo branch, setting its upstream at the same time
-	git branch -u foo origin/foo
-
-But that is what --track does and is not what --set-upstream is for.
-
-Unlike --track, I don't think --set-upstream is a common enough
-operation to deserve a one-letter synonym.
-
-Instead, I'd suggest the following changes:
-
- 1) Add support for
-
-	# change upstream info
-	git branch --set-upstream=3Dorigin/foo foo
-
-    for existing branches only.
-
- 2) Introduce an --unset-upstream option which removes the
-    "corresponding upstream branch" configuration for an existing
-    branch.
-
- 3) Warn on
-
-	# acts just like --track
-	git branch --set-upstream foo origin/foo
-
-    for branches that do not exist yet.  Plan to make this a hard
-    error in the future.
-
- 4) Warn on
-
-	# sets upstream for "foo" to the current branch
-	git branch --set-upstream foo
-
-    and plan to make it a hard error in the future.
-
- 5) Warn on
-
-	git branch --set-upstream origin/foo foo
-
-  which is almost certainly a typo for
-
-	git branch --set-upstream=3Dorigin/foo foo
-
- 6) Perhaps, make -u a synonym for -t for consistency with "git push".
-
-What do you think?
-Jonathan
+Phil
