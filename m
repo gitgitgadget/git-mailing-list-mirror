@@ -1,77 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] vcs-svn housekeeping
-Date: Fri, 06 Jul 2012 13:28:13 -0700
-Message-ID: <7vy5mwmy76.fsf@alter.siamese.dyndns.org>
-References: <7v62b4ksw2.fsf@alter.siamese.dyndns.org>
- <CAFfmPPOWZz8JF_BVKvnAVp0VUDzxPiVSqjG7ATPx3CVztDF=cw@mail.gmail.com>
- <20120607003904.GB4065@burratino> <7vtxynk81p.fsf@alter.siamese.dyndns.org>
- <20120706171040.GA31001@burratino>
- <CAFfmPPOWfYhZyrsvg8eeisdNLb4gyEMJ5kYfVhcSR3KNa-QjCQ@mail.gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH 3/6] Teach clone to set remote.default.
+Date: Fri, 06 Jul 2012 16:43:00 -0400
+Message-ID: <4FF74DD4.1060800@xiplink.com>
+References: <1341526277-17055-1-git-send-email-marcnarc@xiplink.com> <1341526277-17055-4-git-send-email-marcnarc@xiplink.com> <7vzk7dq0qk.fsf@alter.siamese.dyndns.org> <4FF6F811.7000808@xiplink.com> <7vd348of0z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
-	git@vger.kernel.org
-To: David Michael Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 22:28:40 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
+	phil.hord@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 22:43:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnF8m-0001v8-Pl
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 22:28:37 +0200
+	id 1SnFMg-0002Ac-Bi
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 22:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114Ab2GFU2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jul 2012 16:28:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62116 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752684Ab2GFU2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2012 16:28:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD5F19D7F;
-	Fri,  6 Jul 2012 16:28:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=b/EDiJ68hXRpTZo0WEHvU1/yLZc=; b=tXfupE
-	aYWXFehCnuuNkL0g/5LJnT9joZPA6yDlwZL2pwYja0gBkPkHXrCSEUA4jfIJ9hfp
-	mmgibTHNApGHX342Qjjsm6It69aWpICuT1vFaXeTri3tYyvKGeF6fllL5WyOFAoZ
-	6QSrP8AzrndoLvWUyGWWuUEIdH7j0sna9iYAA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ctnYwGptENCW6jBzSbYAnfR+L0ejah4+
-	9Z2BaNR0EYrvwwn+Op/S9bkuVGu0YUYHhlNn/Z1yn/+TjJaED17ner01oa+VgQL/
-	87omSrTaJxKSAZpi5ZfDpaHLMkt5h1stTjL93A6tLf1Lt+SKmzVpv8Tf35lLvFPs
-	QI8TSjk/ZyI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4ECD9D7E;
-	Fri,  6 Jul 2012 16:28:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38E069D7D; Fri,  6 Jul 2012
- 16:28:15 -0400 (EDT)
-In-Reply-To: <CAFfmPPOWfYhZyrsvg8eeisdNLb4gyEMJ5kYfVhcSR3KNa-QjCQ@mail.gmail.com> (David
- Michael Barr's message of "Sat, 7 Jul 2012 05:41:51 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D4763AC-C7A9-11E1-8EEE-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753358Ab2GFUmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jul 2012 16:42:53 -0400
+Received: from smtp146.ord.emailsrvr.com ([173.203.6.146]:56213 "EHLO
+	smtp146.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108Ab2GFUmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2012 16:42:52 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp23.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 71F101C809D;
+	Fri,  6 Jul 2012 16:42:51 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp23.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C6E081C807E;
+	Fri,  6 Jul 2012 16:42:50 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <7vd348of0z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201150>
 
-David Michael Barr <davidbarr@google.com> writes:
+On 12-07-06 03:39 PM, Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+>> If remote.default isn't set, then if someone does
+>> 		git remote rename origin foo
+>> the default remote will still be "origin" (modulo the currently-checked-out
+>> branch stuff).
+> 
+> Why?
 
-> On Sat, Jul 7, 2012 at 3:10 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> ...
->> Some of the patches had to change a little since v2 of db/vcs-svn, so
->> I'll be replying with a copy of the patches for reference.
->>
->> David has looked the branch over and acked and tested it.
->> ...
->
-> Thank you Jonathan for doing this. Definitely the result of
-> collaborating on a series is gorgeous. I do wish I could absorb your
-> flair for polish.
+Erm, actually, my statement is incorrect.  Doh!
 
-Thanks, both.  Will be pulled and pushed out by tonight.
+> I thought the proposed semantics was "if remote.default is
+> unset, the default value of 'origin' is used where remote.default
+> would have been used _everywhere_".
+
+Yes, true.
+
+> If "remote rename" wants to
+> update the value of remote.default from 'origin' to 'foo' (which may
+> or may not be the right thing to do, for which a separate discussion
+> seems to exist already),
+
+Are you talking about the sub-thread Phil Hord & I spawned about patch #4?  I
+think Phil & I are in agreement there that it is the right thing to do.  If
+anyone disagrees please speak up!
+
+> and if it sees that the repository does not
+> have remote.default, shouldn't it still set it to 'foo', just like
+> the case where remote.default exists and set to 'origin'?
+
+The proposed code actually already does that.  I'll add a unit test for this
+case.
+
+So why change "git clone" to always set remote.default if the functionality
+remains the same either way?
+
+To me it makes a more consistent implementation.  Since "git remote add" sets
+remote.default if it's adding the first remote to the repository, when clone
+itself adds the first remote it should do the same.
+
+Plus this approach makes "clone -o" also work without any special-casing, so
+the code is cleaner, IMHO.
+
+If this justification is adequate, I'll add it to the commit message.  It may
+then make more sense to have this commit come after the "git remote" changes
+in the series.
+
+> Your updated "remote rename" must work correctly in a repository
+> that was created long ago, where remote.default was not set to
+> anything (and default 'origin' was used) after all.
+> 
+> Or am I missing some subtle issues?
+
+I agree with that requirement, and believe the proposed code fulfils it.
+
+		M.
