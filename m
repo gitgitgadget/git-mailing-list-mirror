@@ -1,89 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/12] git-remote-mediawiki: change return type of
- get_mw_pages
-Date: Thu, 05 Jul 2012 16:18:38 -0700
-Message-ID: <7vehoppzjl.fsf@alter.siamese.dyndns.org>
-References: <1341473772-28023-1-git-send-email-Matthieu.Moy@imag.fr>
- <1341473772-28023-9-git-send-email-Matthieu.Moy@imag.fr>
+From: Max Horn <max@quendi.de>
+Subject: =?UTF-8?q?=5BPATCH=201/2=5D=20Make=20=3Crefname=3E=20documentation=20more=20consistent=2E?=
+Date: Fri,  6 Jul 2012 02:01:29 +0200
+Message-ID: <1341532890-13829-1-git-send-email-max@quendi.de>
+References: <7vpq8aqdzb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 06 01:18:48 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Max Horn <max@quendi.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 06 02:01:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SmvJv-0006UV-AV
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 01:18:47 +0200
+	id 1SmvzZ-0004io-Lj
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 02:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933435Ab2GEXSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 19:18:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51603 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933323Ab2GEXSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2012 19:18:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EFF09CDF;
-	Thu,  5 Jul 2012 19:18:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/tW/zkE78f42oO3UAoNDiE5brWM=; b=W6VJGj
-	SsBxi8z9rrP95l3ILazxoW5TyC0rxyDyM5nIsnO5LFD+AXoZDpoUypJdrmH/a0w8
-	OYJEOA1i+Q+VVKYQeojMC7FKOpNWCoy3yeAPnGVpABbpiZSmZeKjuTqD3/vp66dk
-	dllLxYdQLDJ86HyeFSbf94Yoo8uU+pJBCD+2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DswePM0ylBRCIEgvMzD6GrqTKUuQJq8k
-	dPHi6ScAK/q1oCfaipXp6nrm+wjbdKGxUpCs5ai9mimbREoFkAtIEAg8DmdOqDE1
-	xsOZKvk7DZs1VoPspY3CqVpRsO5tXDd/jQunWFbYhDK+6fXYNwbXaQVOvv5C6PN+
-	DzveCoATD0U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 671139CDE;
-	Thu,  5 Jul 2012 19:18:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE8719CDC; Thu,  5 Jul 2012
- 19:18:39 -0400 (EDT)
-In-Reply-To: <1341473772-28023-9-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Thu, 5 Jul 2012 09:36:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C149B250-C6F7-11E1-BB84-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932540Ab2GFABn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jul 2012 20:01:43 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:35262 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756324Ab2GFABm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2012 20:01:42 -0400
+Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1SmvzQ-00007R-1b; Fri, 06 Jul 2012 02:01:40 +0200
+X-Mailer: git-send-email 1.7.11.1.145.g4722b29.dirty
+In-Reply-To: <7vpq8aqdzb.fsf@alter.siamese.dyndns.org>
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341532902;82ff331b;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201079>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+=46ormerly, the documentation for <refname> would occasionally say
+<name> instead of <refname>. Now it uniformly uses <refname>.
 
-> The previous version was returning the list of pages to be fetched, but
-> we are going to need an efficient membership test (i.e. is the page
-> $title tracked), hence exposing a hash will be more convenient.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->  contrib/mw-to-git/git-remote-mediawiki | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-> index 76b78bc..3f57598 100755
-> --- a/contrib/mw-to-git/git-remote-mediawiki
-> +++ b/contrib/mw-to-git/git-remote-mediawiki
-> @@ -377,7 +377,7 @@ sub get_mw_pages {
->  			get_all_mediafiles(\%pages);
->  		}
->  	}
-> -	return values(%pages);
-> +	return %pages;
->  }
->  
->  # usage: $out = run_git("command args");
+Signed-off-by: Max Horn <max@quendi.de>
+---
+ Documentation/revisions.txt | 12 ++++++------
+ 1 Datei ge=C3=A4ndert, 6 Zeilen hinzugef=C3=BCgt(+), 6 Zeilen entfernt=
+(-)
 
-This suggests the series is not based on 'master', which is not
-fatal per-se ("am -3" guesses that came from b3d98595), but then
-applying the series on mm/mediawiki-file-attachments topic will show
-that the index line recorded in [PATCH 09/12] is useless.
-
-On what commit was this meant to be applied???
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 1725661..f4f6f28 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -24,22 +24,22 @@ blobs contained in a commit.
+   object referenced by 'refs/heads/master'.  If you
+   happen to have both 'heads/master' and 'tags/master', you can
+   explicitly say 'heads/master' to tell git which one you mean.
+-  When ambiguous, a '<name>' is disambiguated by taking the
++  When ambiguous, a '<refname>' is disambiguated by taking the
+   first match in the following rules:
+=20
+-  . If '$GIT_DIR/<name>' exists, that is what you mean (this is usuall=
+y
++  . If '$GIT_DIR/<refname>' exists, that is what you mean (this is usu=
+ally
+     useful only for 'HEAD', 'FETCH_HEAD', 'ORIG_HEAD', 'MERGE_HEAD'
+     and 'CHERRY_PICK_HEAD');
+=20
+-  . otherwise, 'refs/<name>' if it exists;
++  . otherwise, 'refs/<refname>' if it exists;
+=20
+   . otherwise, 'refs/tags/<refname>' if it exists;
+=20
+-  . otherwise, 'refs/heads/<name>' if it exists;
++  . otherwise, 'refs/heads/<refname>' if it exists;
+=20
+-  . otherwise, 'refs/remotes/<name>' if it exists;
++  . otherwise, 'refs/remotes/<refname>' if it exists;
+=20
+-  . otherwise, 'refs/remotes/<name>/HEAD' if it exists.
++  . otherwise, 'refs/remotes/<refname>/HEAD' if it exists.
+ +
+ 'HEAD' names the commit on which you based the changes in the working =
+tree.
+ 'FETCH_HEAD' records the branch which you fetched from a remote reposi=
+tory
+--=20
+1.7.11.1.145.g4722b29.dirty
