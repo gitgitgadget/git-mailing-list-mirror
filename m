@@ -1,56 +1,87 @@
-From: Max Horn <max@quendi.de>
-Subject: On git-remote-hg (the "native" one)
-Date: Fri, 6 Jul 2012 03:14:09 +0200
-Message-ID: <36B95782-DE96-4BCB-8919-4AB2160C8CDD@quendi.de>
-Mime-Version: 1.0 (Apple Message framework v1280)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 03:14:33 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: The order of multiple remote.xx.fetch is significant for some operations
+Date: Fri, 6 Jul 2012 10:06:58 +0800
+Message-ID: <CANYiYbEH_qxj40SiVeYgLT_fYiRSh7O+wwSim1u=dBDfoZMiFA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 06 04:07:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smx7s-0006bk-KS
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 03:14:28 +0200
+	id 1Smxwq-0004xt-LG
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 04:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755607Ab2GFBOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jul 2012 21:14:22 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:50039 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755881Ab2GFBOO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 Jul 2012 21:14:14 -0400
-Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1Smx7a-0001o7-9R; Fri, 06 Jul 2012 03:14:10 +0200
-X-Mailer: Apple Mail (2.1280)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341537254;ed80b998;
+	id S932340Ab2GFCHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 22:07:00 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:53330 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754935Ab2GFCG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 22:06:59 -0400
+Received: by ghrr11 with SMTP id r11so8135114ghr.19
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 19:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Z6ZQ7OfUbKMsy9IJboJvA2cAehpVXTOMPNmhA9cwLn0=;
+        b=yNHGpqC/Gqt7CaUac+PK4qP1IxoyHG0Edgypck+oxr3LF4rHCArG1+N5GmF21lfiPv
+         LCw3rnK3I7Ai8SVIDmYrLr3kKcJiVuPrpNc7ExWrnmWYT7uBJWK0hPJtPWk3oLjdnaMh
+         guKijutC31Fbfk+bUuZnK8YKyvsSECFCcfsyftZb2+jMgo+uHEOnMBX5butHiT5xsK0O
+         Y+q/R7aKPHVYcgbxK6FzoEH34wO2dz7pEQOLC0M0GmJnWlQrIfuyYwUnHnjiR/bu5BKG
+         CocoXShE+nbVtTlY9WzyjOtmpxNFSzFVdU15rfBnZ4R+tktjopywuTQFuxdYSaGU/6J6
+         NPig==
+Received: by 10.50.89.130 with SMTP id bo2mr1362970igb.19.1341540418742; Thu,
+ 05 Jul 2012 19:06:58 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Thu, 5 Jul 2012 19:06:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201084>
 
-Dear all,
+Someone asked me how to remove obsolete topgit feature branches from
+the remote topgit controlled git repo. I found we can not run
+"git fetch --prune" directly to delete stale remote branches from
+local, because of the wrong order of multiple "remote.XX.fetch" config
+variable.
 
-as you may know, Johannes Schindelin and Sverre Rabbelier (with help by Michael J Gruber) create some time ago a remote helper for mercurial repositories. Unlike the one https://github.com/rfk/git-remote-hg (which is based on hg-git), this one directly uses the Mercurial python code, and as a result is often much faster, e.g. when cloning big repositories.
+For example, config variables for remote "origin":
 
-This is a *very* interesting project for anybody (like me ;) who is a git fan but for some reason is forced to work with Mercurial repositories. Just like hg-git is useful in the converse situation. If like me you would like to know more about its status, on how to use it in the first place, and what is missing, take a look here:
+    [remote "origin"]
+          fetch = +refs/heads/*:refs/remotes/origin/*
+          url = git@github.com:ossxp-com/topgit.git
+          fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
 
-  <https://github.com/msysgit/msysgit/wiki/Guide-to-git-remote-hg>
+When running "git fetch --prune", will check all local refs, and delete
+stale remote branches from local if their conterparts do not exist in
+remote repo. But in this case, all remote branches under
+"refs/remotes/origin/top-bases/" namespace will be deleted, even their
+remote conterparts "refs/top-bases/*" still exist in remote repo.
 
-I tried to collect everything I could find about git-remote-hg on this page, and begun a list of things that need to be done to make git-remote-hg useful for a wider audience. And things blocking its inclusion into git. BTW, it was Johannes who suggested to me that I should add this to the msysgit wiki.
+How does this happen? e.g. a local ref:
+"refs/remotes/origin/top-bases/t/featureX"
 
-In addition, I made some small tweaks and also fixed the commit message of at least one old committed that apparently got messed up during some rebasing. You can find it here:
-  <https://github.com/fingolfin/git/tree/remote-hg>
+ * First make a reverse look up according to the remote.origin.fetch
+   config variables;
 
-Unfortunately, I myself can't dedicate much time to this project :-(, nor am I a git expert in the first place. But perhaps this Wiki page will attract some people to git-remote-hg who otherwise might not have known about it, respectively about what needs to be done. I am not expecting miracles, but I think this minor contribution will at least very slightly improve the chances for git-remote-hg being developed further.
+ * The first remote.origin.fetch matches, and this local ref is mapped
+   as "refs/heads/top-bases/t/featureX";
 
-So, your help is warmly welcome :-).
+ * The remote repo does not have ref "refs/heads/top-bases/t/featureX",
+   (it should be "refs/top-bases/t/featureX"), then this local refs is
+   deleted as a stale remote branch.
 
-Cheers,
-Max
+ * While if we change the order of remote.origin.fetch config variables,
+   The result is different. This local ref will map to
+   "refs/top-bases/t/featureX", and won't be deleted.
+
+So, it's not a bug of git, but a flaw of user generated config variables.
+The hacks for Topgit are simple, see:
+
+ * https://github.com/ossxp-com/topgit/blob/master/debian/patches/t/delete-remote-branch.diff
+ * https://github.com/ossxp-com/topgit/blob/master/debian/patches/t/prune-stale-remote-branch.diff
+
+--
+Jiang Xin
