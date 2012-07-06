@@ -1,113 +1,84 @@
-From: Max Horn <max@quendi.de>
-Subject: =?UTF-8?q?=5BPATCH=202/2=5D=20Document=20rev=5E!=20and=20rev=5E=40=20as=20revision=20specifiers?=
-Date: Fri,  6 Jul 2012 02:01:30 +0200
-Message-ID: <1341532890-13829-2-git-send-email-max@quendi.de>
-References: <7vpq8aqdzb.fsf@alter.siamese.dyndns.org>
- <1341532890-13829-1-git-send-email-max@quendi.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
+Date: Thu, 5 Jul 2012 19:30:24 -0500
+Message-ID: <20120706003023.GA15387@burratino>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1374057.qfvOg1c6C6@flobuntu>
+ <23122876.7xH9dZiP4M@flobuntu>
+ <20120702110741.GA3527@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Max Horn <max@quendi.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 02:01:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 02:30:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Smvza-0004io-4h
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 02:01:50 +0200
+	id 1SmwRY-0007a3-95
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 02:30:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559Ab2GFABo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jul 2012 20:01:44 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:35266 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756324Ab2GFABo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2012 20:01:44 -0400
-Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	id 1SmvzT-00007R-0G; Fri, 06 Jul 2012 02:01:43 +0200
-X-Mailer: git-send-email 1.7.11.1.145.g4722b29.dirty
-In-Reply-To: <1341532890-13829-1-git-send-email-max@quendi.de>
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341532904;fb23f14d;
+	id S932952Ab2GFAaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jul 2012 20:30:39 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:65228 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932793Ab2GFAac (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2012 20:30:32 -0400
+Received: by yhmm54 with SMTP id m54so8863865yhm.19
+        for <git@vger.kernel.org>; Thu, 05 Jul 2012 17:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=OvJNDq7UftHaC5Hz4ryb4gnUo74mJSO01yuADP0WG4M=;
+        b=cVTjCW/NRHUVDLD46/bVxCfp+kJpQBEQzf2Ek5lmlR6B9PR3G2xpR+OUrsF7zKeaDT
+         taTEWNQbcKbnCQfvQmQ2w75pky4+l00Nmp3hEx4WRj86hy6aWvU8bga26WKjto3ivHap
+         yKTv27JkSJ9UOA24efBieAjZ5b3k7MdGHygj72ZQJ0ZVNAOl2v1Zf5cNUxchAd1H6MVW
+         72oe4AA9Hw4hI5QUGkDh/qg/+QK8eDrs9iI7RrT/fKYg1wQnkEwfHKhQQ7V/1r91UUI3
+         jEoVoyePePK7c11pHxE0vMaKkUICEs5N02hgGEsLBBV8UAZ15hyY6UWMAihnxvTo8OOE
+         mygQ==
+Received: by 10.50.168.1 with SMTP id zs1mr1175172igb.45.1341534631274;
+        Thu, 05 Jul 2012 17:30:31 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id ai6sm2460394igc.0.2012.07.05.17.30.30
+        (version=SSLv3 cipher=OTHER);
+        Thu, 05 Jul 2012 17:30:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120702110741.GA3527@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201081>
 
-Previously, the rev^! and rev^@ syntax were only described in the
-SPECIFYING RANGES section of revisions.txt, making it a bit harder to
-find information about it. Moreover, that description was slightly
-confusing as it described the technical definition of rev^! and rev^@
-without making it completely clear what the end effect was.
-This patch attempts to address this by adding dedicate entries
-for rev^! and rev^@ in the SPECIFYING REVISIONS section, rewording
-the existing explanation, and adding two select additional examples.
+Jonathan Nieder wrote:
+> Florian Achleitner wrote:
 
-=46inally, it also adds an example for the B..C range syntax, to
-help illustrate how it differs from B...C.
+>> Experimental implementation.
+>
+> Ok, so this adds a new program named "remote-svn".  How do I build it?
+> What does it do?  Will it make my life better?
+[...]
 
-Signed-off-by: Max Horn <max@quendi.de>
----
- Documentation/revisions.txt | 24 +++++++++++++++++++++---
- 1 Datei ge=C3=A4ndert, 21 Zeilen hinzugef=C3=BCgt(+), 3 Zeilen entfern=
-t(-)
+I forgot to say: thanks for working on this!  I hope my comments are
+not demoralizing.  They are meant in the opposite vein --- if I
+expected you to be a one-time contributor then I would just take what
+is useful from the patch and let it be, but I would be happy to see
+more changes from you in the future so I gave some hints to explain
+how.
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index f4f6f28..2784298 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -128,6 +128,20 @@ the '$GIT_DIR/refs' directory or from the '$GIT_DI=
-R/packed-refs' file.
-   it returns the youngest matching commit which is reachable from
-   the '<rev>' before '{caret}'.
-=20
-+'<rev>{caret}@', e.g. 'HEAD{caret}@'::
-+  A suffix '{caret}' followed by an at sign
-+  means all parents of '<rev>'.
-+  This is somewhat different from the other specifiers in this
-+  section in that it may refer to multiple commits at once.
-+  See also the next section on SPECIFYING RANGES.
-+
-+'<rev>{caret}!', e.g. 'HEAD{caret}!'::
-+  A suffix '{caret}' followed by an exclamation mark
-+  means commit '<rev>' but forces all of its parents to be excluded. F=
-or
-+  commands that deal with a single revision, this is the same as '<rev=
->".
-+  Hence it is primarily used with commands expecting commit ranges.
-+  See also the next section on SPECIFYING RANGES.
-+
- ':/<text>', e.g. ':/fix nasty bug'::
-   A colon, followed by a slash, followed by a text, names
-   a commit whose commit message matches the specified regular expressi=
-on.
-@@ -214,9 +228,10 @@ It is the set of commits that are reachable from e=
-ither one of
- 'r1' or 'r2' but not from both.
-=20
- Two other shorthands for naming a set that is formed by a commit
--and its parent commits exist.  The 'r1{caret}@' notation means all
--parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
--all of its parents.
-+and its parent commits exist.  Recall that 'r1{caret}@' means all
-+parents of 'r1'. When specifying ranges, this effectively includes
-+all ancestors of 'r1' but excludes 'r1' itself. In contrast to this,
-+'r1{caret}!' includes commit 'r1' but excludes all of its ancestors.
-=20
- Here are a handful of examples:
-=20
-@@ -224,7 +239,10 @@ Here are a handful of examples:
-    D F              G H I J D F
-    ^G D             H D
-    ^D B             E I J F B
-+   B..C             C
-    B...C            G H D E B C
-    ^D B C           E I J F B C
-+   C                I J F C
-    C^@              I J F
-+   C^!              C
-    F^! D            G H D F
---=20
-1.7.11.1.145.g4722b29.dirty
+The next step is to work with the list to figure out what a second
+version of the patch should do, and then to send that with something
+like "RFC/PATCH v2" in the subject line to clarify that it supersedes
+this one.
+
+If you have any questions about the review or the codebase in general,
+please don't hesitate to ask.  Especially, if you get stuck on
+something and documentation is unhelpful, please do complain. :)
+
+Hope that helps,
+Jonathan
