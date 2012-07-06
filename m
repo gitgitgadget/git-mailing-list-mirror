@@ -1,105 +1,110 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: [PATCH 2/2] Clear rerere status during stash conflict
-Date: Fri,  6 Jul 2012 12:22:52 -0400
-Message-ID: <1341591772-26251-3-git-send-email-hordp@cisco.com>
-References: <1341591772-26251-1-git-send-email-hordp@cisco.com>
-Cc: gitster@pobox.com, Phil Hord <hordp@cisco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 18:32:58 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [GIT PULL] vcs-svn housekeeping
+Date: Fri, 6 Jul 2012 12:10:40 -0500
+Message-ID: <20120706171040.GA31001@burratino>
+References: <7v62b4ksw2.fsf@alter.siamese.dyndns.org>
+ <CAFfmPPOWZz8JF_BVKvnAVp0VUDzxPiVSqjG7ATPx3CVztDF=cw@mail.gmail.com>
+ <20120607003904.GB4065@burratino>
+ <7vtxynk81p.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: David Michael Barr <davidbarr@google.com>,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 19:10:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnBSj-0003GR-2l
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 18:32:57 +0200
+	id 1SnC3V-0008Jd-HI
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jul 2012 19:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757957Ab2GFQcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jul 2012 12:32:41 -0400
-Received: from rcdn-iport-3.cisco.com ([173.37.86.74]:27735 "EHLO
-	rcdn-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757934Ab2GFQcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2012 12:32:39 -0400
-X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Jul 2012 12:32:38 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=2095; q=dns/txt;
-  s=iport; t=1341592359; x=1342801959;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=3Om31yYJ9vfPiyNSNd5O3dlaANas3+Lc9DFDBFRVnxw=;
-  b=kLMFZV2QA5juIYzbOLTzvkAtE/zsn8w/8mRLChyBHA4GlU08TQmzCumn
-   xSAEDMw3S9oSkeXz7GkaVvDzRPbJtO/UsYYhasMVtmR6TQwfEmAb/LuyK
-   VtHY/tWGbY6ESp5jEP6uyZTbsyrhI3XuqohJHUiua2pxx7Xa7pi3zyxi8
-   M=;
-X-IronPort-AV: E=Sophos;i="4.77,537,1336348800"; 
-   d="scan'208";a="99461769"
-Received: from rcdn-core-1.cisco.com ([173.37.93.152])
-  by rcdn-iport-3.cisco.com with ESMTP; 06 Jul 2012 16:23:13 +0000
-Received: from iptv-lnx-hordp.cisco.com (dhcp-64-100-104-40.cisco.com [64.100.104.40])
-	by rcdn-core-1.cisco.com (8.14.5/8.14.5) with ESMTP id q66GNASf020339;
-	Fri, 6 Jul 2012 16:23:13 GMT
-X-Mailer: git-send-email 1.7.11.1.213.gb567ea5.dirty
-In-Reply-To: <1341591772-26251-1-git-send-email-hordp@cisco.com>
+	id S1756258Ab2GFRKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jul 2012 13:10:52 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:50111 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407Ab2GFRKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2012 13:10:51 -0400
+Received: by gglu4 with SMTP id u4so8820901ggl.19
+        for <git@vger.kernel.org>; Fri, 06 Jul 2012 10:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=k3XDLZeyX1QyYo7N2h2PA4mB4pcXpuqYfFqfHpR9D6M=;
+        b=YOVwJMEpYjZDDeUBwoikzbdpa5NQOc3TdQECJB3ncvLV4qbujfWaJPa3Ja6gowMg4I
+         mttmMO1w0OIhLcsWa7E1Mocn4znC0s0tpoooBflIYKjSZg1lo+A95hdMuEzog/bXDMNa
+         10+1ys0WaZjc8blaaIaFHEfbuNB+vzdpL+bLR3P+DkhihwOXcOP8OE8xyT2RrOpHgPZX
+         InilsAM1ytGpacLEjXtQwbsEkUwZnZLrGM6ADzDEesGoAwBTaFt/DdinNT501nWSBdd3
+         Kw0dOisca3nKAHTZE3I4/tJZcfqSZIffWptoKYxYuDUTSEqluS+ryB2MwQVa6qRgg8SH
+         bQog==
+Received: by 10.42.158.10 with SMTP id f10mr16020188icx.51.1341594649969;
+        Fri, 06 Jul 2012 10:10:49 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id z3sm2811747igc.7.2012.07.06.10.10.48
+        (version=SSLv3 cipher=OTHER);
+        Fri, 06 Jul 2012 10:10:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vtxynk81p.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201124>
 
-The presence of a GIT_DIR/MERGE_RR file indicates we
-were resolving a merge which had rerere candidates for
-recording.  But the file does not get deleted after
-all resolutions are completed.  This is ok for most
-cases because the file will get replaced when the
-next merge happens.  But stash apply directly uses
-a merge backend, which is not supported by rerere.
-The prior rerere state is left behind (in MERGE_RR)
-rather than being cleaned up or overwritten as it
-would with a normal merge.
+Hi Junio,
 
-This then confuses mergetool who thinks a rerere
-operation is in play when it is not.
+The following changes since commit 58ebd9865d2bb9d42842fbac5a1c4eae49e92859:
 
-When we encounter a conflicted stash,  ask rerere to
-clean up with 'git rerere clear'.  This is safe to do
-since we know that rerere is not taking part in this
-conflict resolution, and any previous unresolved rerere
-activity would have prevented us from attempting the
-stash apply in the first place.
+  vcs-svn/svndiff.c: squelch false "unused" warning from gcc (2012-01-27 11:58:56 -0800)
 
-Change the test for this flaw to expect success.
+are available at:
 
-Signed-off-by: Phil Hord <hordp@cisco.com>
-Mentored-by: Junio C Hamano <gitster@pobox.com>
----
- git-stash.sh         | 1 +
- t/t7610-mergetool.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+  git://repo.or.cz/git/jrn.git svn-fe
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 4e2c7f8..5bd45ef 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -469,6 +469,7 @@ apply_stash () {
- 	else
- 		# Merge conflict; keep the exit status from merge-recursive
- 		status=$?
-+		git rerere clear
- 		if test -n "$INDEX_OPTION"
- 		then
- 			gettextln "Index was not unstashed." >&2
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 2796c53..99e8c1d 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -203,7 +203,7 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
-     git reset --hard
- '
- 
--test_expect_failure 'mergetool ignores rerere in git-stash conflicts'  '
-+test_expect_success 'mergetool ignores rerere in git-stash conflicts'  '
-     git checkout -b stash3 stash1 &&
-     git config rerere.enabled true &&
-     echo "Conflicting stash content" >file11 &&
--- 
-1.7.11.1.213.gb567ea5.dirty
+The first three commits duplicate changes that are already in master
+but were committed independently on the svn-fe branch last February.
+The rest are David's db/vcs-svn series which aims to address various
+nits noticed when merging the code back into svn-dump-fast-export:
+unnecessary use of git-specific functions (prefixcmp, memmem) and
+warnings reported by clang.
+
+Some of the patches had to change a little since v2 of db/vcs-svn, so
+I'll be replying with a copy of the patches for reference.
+
+David has looked the branch over and acked and tested it.
+
+Thoughts welcome, as usual.  I think these are ready for pulling into
+master.  Sorry to be so slow at this.
+
+David Barr (7):
+      vcs-svn: drop no-op reset methods
+      vcs-svn: avoid self-assignment in dummy initialization of pre_off
+      vcs-svn: simplify cleanup in apply_one_window
+      vcs-svn: use constcmp instead of prefixcmp
+      vcs-svn: use strstr instead of memmem
+      vcs-svn: suppress signed/unsigned comparison warnings
+      vcs-svn: suppress a signed/unsigned comparison warning
+
+Jonathan Nieder (4):
+      vcs-svn: allow import of > 4GiB files
+      vcs-svn: suppress -Wtype-limits warning
+      vcs-svn: suppress a signed/unsigned comparison warning
+      vcs-svn: allow 64-bit Prop-Content-Length
+
+Ramsay Allan Jones (1):
+      vcs-svn: rename check_overflow and its arguments for clarity
+
+ test-line-buffer.c       |    1 -
+ test-svn-fe.c            |    2 --
+ vcs-svn/fast_export.c    |   26 ++++++++++++--------------
+ vcs-svn/fast_export.h    |    5 ++---
+ vcs-svn/line_buffer.c    |    4 ----
+ vcs-svn/line_buffer.h    |    1 -
+ vcs-svn/sliding_window.c |   16 ++++++++--------
+ vcs-svn/svndiff.c        |   15 ++++++++-------
+ vcs-svn/svndump.c        |   46 ++++++++++++++++++++++++++++------------------
+ 9 files changed, 58 insertions(+), 58 deletions(-)
