@@ -1,61 +1,56 @@
-From: Leonid Volnitsky <leonid@volnitsky.com>
-Subject: bug report: git status --porcelain inconsistent quoting
-Date: Sat, 7 Jul 2012 23:25:20 +0300
-Message-ID: <CAMECdFuJMya-4sknmaT0iAXcs997zXTo1Ewt_H3pF-uUwjVncA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCH v2 0/2] stash: invoke rerere in case of conflict
+Date: Sat,  7 Jul 2012 16:46:00 -0400
+Message-ID: <1341693962-17090-1-git-send-email-hordp@cisco.com>
+References: <CABURp0oXhZ5ysm4b3Z=7o+2TB+3wFdMjj4oEwxafApjD4c7ozA@mail.gmail.com>
+Cc: gitster@pobox.com, phil.hord@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 07 22:26:42 2012
+X-From: git-owner@vger.kernel.org Sat Jul 07 22:47:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnbaO-0002JC-6r
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 22:26:36 +0200
+	id 1SnbuK-0000wH-RU
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 22:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454Ab2GGUZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jul 2012 16:25:51 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:62749 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751390Ab2GGUZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2012 16:25:51 -0400
-Received: by obbuo13 with SMTP id uo13so17417719obb.19
-        for <git@vger.kernel.org>; Sat, 07 Jul 2012 13:25:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :x-gm-message-state;
-        bh=mGPli8M8CoQmU5tBzH135ChIaUHjY5zkCWmto895kLo=;
-        b=JTaku9z6X5L8OjTiE4nVzjQINFJtOqG6QarWy4DXx1bjGqLE7CO7Msbc04Acp15Ogc
-         XUPGfkUp/ICtD69UMYG/0PXQ+K/oM7kfcoZUd2DiFawRRzrurQy0oCGNi2zqK0iJCKWf
-         qiWPPLwRZXdVwjK+6ko5E88/tPav5CfpjkA2JcG2fgGObb3QgSTDAGVrKOW9dsLg308m
-         N5YVoZM+yW4nMDAqjbmLHtU8Xghu8Ao3p+K4Wnnq9LhBg6AiVXuxbQCzelgQdAKm6d0d
-         UMca6oDBLkD31Qot7/leflxjCMRAtV2HNvtyauDPMeRJwDFdkvyK/z4rt6wFBRw5Vdm7
-         Oxvg==
-Received: by 10.182.174.68 with SMTP id bq4mr30596988obc.53.1341692750650;
- Sat, 07 Jul 2012 13:25:50 -0700 (PDT)
-Received: by 10.76.139.103 with HTTP; Sat, 7 Jul 2012 13:25:20 -0700 (PDT)
-X-Gm-Message-State: ALoCoQkSIp/ZbG+KwQLJCkfDmsZb69UcUK0qSU4bDEgDjFRFcQtaMLPVibXTHVwip567/yzQ8hHU
+	id S1751629Ab2GGUrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jul 2012 16:47:06 -0400
+Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:13659 "EHLO
+	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751519Ab2GGUqh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2012 16:46:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=277; q=dns/txt;
+  s=iport; t=1341693997; x=1342903597;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references;
+  bh=9FMY4PrswDmZ3xMggMO0JAX2exA2gQYBbQxLitOjbA0=;
+  b=MiCeje/lO8DZFi+lhGY7jjqG3Bu6PrMO5aM3v6FTsbbqYS2h4bPGcgCB
+   +rCBHXUa1nhAqaHITrJZ0A4n6Z3MafloTbA4zSEHrBOp8FDxTc0H85k5i
+   cgR5shS4qgEi5ANC70dcEAFN85mjYFuCf1nvpO33M1JIXInYf0AfkzqXR
+   Y=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAOuf+E+tJXG8/2dsb2JhbABFt1yBB4IhAQEEEgFmEFFXO4drmi2fFI4wgxwDlTaOH4Fmgns
+X-IronPort-AV: E=Sophos;i="4.77,543,1336348800"; 
+   d="scan'208";a="99675772"
+Received: from rcdn-core2-1.cisco.com ([173.37.113.188])
+  by rcdn-iport-7.cisco.com with ESMTP; 07 Jul 2012 20:46:21 +0000
+Received: from iptv-lnx-hordp.cisco.com (rtp-hordp-8912.cisco.com [10.117.80.99])
+	by rcdn-core2-1.cisco.com (8.14.5/8.14.5) with ESMTP id q67KkKss026361;
+	Sat, 7 Jul 2012 20:46:20 GMT
+X-Mailer: git-send-email 1.7.11.1.213.gb567ea5.dirty
+In-Reply-To: <CABURp0oXhZ5ysm4b3Z=7o+2TB+3wFdMjj4oEwxafApjD4c7ozA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201165>
 
-mkdir D
-cd D
-git init
-Initialized empty Git repository in /tmp/D/.git/
-echo 1 > "with space"
-git status --porcelain
-?? with space                   <------------ NO QOUTES
-git add with\ space
-git status --porcelain
-A  "with space"                 <------------- WITH QOUTES
+[PATCH v2 1/2] test: git-stash conflict sets up rerere
+A rewritten failing test to verify rerere is used during 
+'stash apply' conflicts.
 
-git --version
-git version 1.7.9.7
-
-git config -l |grep quote
-core.quotepath=on
+[PATCH v2 2/2] stash: invoke rerere in case of conflict
+The fix (written entirely by JCH) and switched the test
+to expect success.
