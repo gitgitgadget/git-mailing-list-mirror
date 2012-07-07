@@ -1,52 +1,52 @@
-From: Vladimir Shvets <stormherz@gmail.com>
-Subject: Git commit list
-Date: Sat, 7 Jul 2012 12:59:55 +0700
-Message-ID: <C2975467-A75A-463C-93AB-1CD777A5D7C7@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1278)
+From: Thomas Hochstein <thh@inter.net>
+Subject: Re: git with uucp for deployment
+Date: Sat, 07 Jul 2012 08:06:17 +0200
+Message-ID: <gcvg.1207070806.980@landroval.ancalagon.de>
+References: <jt5crg$ku1$1@dough.gmane.org> <863954ai7l.fsf@red.stonehenge.com> <7v3954odyc.fsf@alter.siamese.dyndns.org> <86txxk8xml.fsf@red.stonehenge.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 07 08:00:18 2012
+X-From: git-owner@vger.kernel.org Sat Jul 07 10:00:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnO3x-0003Wx-GZ
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 08:00:13 +0200
+	id 1SnPwI-0007By-UB
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 10:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382Ab2GGGAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jul 2012 02:00:05 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:41103 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751314Ab2GGGAE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jul 2012 02:00:04 -0400
-Received: by lbbgm6 with SMTP id gm6so16570374lbb.19
-        for <git@vger.kernel.org>; Fri, 06 Jul 2012 23:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        bh=HBl8z6o7CfnFDQ1xN8M3R4C/XmFenUokvgCv/yKdECA=;
-        b=oRyrIYcePfleU4FbV7Padr3msf6+1oqkTd9tTo9FZiYDPVq4pq7wpnpp5bEPqQ66GP
-         ee9ebvtm/qY0GvK110bDoZz6WnSa2Srl26arguMJGmIMKt7B7n0YFzQWQwqa5fIcNUHa
-         7jlexrd04q/kamxPPrxH+PCKYn40tGYmit/yB+Mx8vF7Sw10JsE7Ojn7JhAtyEgAXRz6
-         Z4m5QVQTr+5t5uVOCX0txP7LYGr/KR3AHGJeNioEFkkE9Aydo1hIoXN9X5dnqKsGjEhJ
-         QJJCjCXwINBWBss/CnWLe6F+DtSdDOFgaCl7PHY16AL3xtmMpkGfSb/Vo6a0Vskuedt2
-         n9HA==
-Received: by 10.112.25.100 with SMTP id b4mr14686775lbg.55.1341640802330;
-        Fri, 06 Jul 2012 23:00:02 -0700 (PDT)
-Received: from [192.168.1.106] (l49-35-99.cn.ru. [178.49.35.99])
-        by mx.google.com with ESMTPS id ta2sm40775603lab.15.2012.07.06.23.00.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 06 Jul 2012 23:00:01 -0700 (PDT)
-X-Mailer: Apple Mail (2.1278)
+	id S1752015Ab2GGIAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jul 2012 04:00:19 -0400
+Received: from plane.gmane.org ([80.91.229.3]:36921 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751133Ab2GGIAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2012 04:00:18 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SnPw9-00072D-4j
+	for git@vger.kernel.org; Sat, 07 Jul 2012 10:00:17 +0200
+Received: from p4fcce630.dip.t-dialin.net ([79.204.230.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Jul 2012 10:00:17 +0200
+Received: from thh by p4fcce630.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Jul 2012 10:00:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: p4fcce630.dip.t-dialin.net
+User-Agent: ForteAgent/6.00-32.1186  Hamster/2.1.0.11
+X-Uptime: 1 day(s), 18 hour(s), 11 minute(s), 7 second(s) [landroval | 67450]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201159>
 
-Good day, everyone.
- 
-I have some kind of a confusion here, explained it in details here: http://stackoverflow.com/questions/11289124/git-commit-list but didn't get any answers, maybe someone could give me a hint about that?
+Randal L. Schwartz schrieb:
+
+> I am unaware of *anyone* using uucp these days,
+
+UUCP over TCP/IP is still in use for transmission of mail and Usenet
+news.
