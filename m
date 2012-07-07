@@ -1,73 +1,123 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Egit/Jgit support for relocated .git directories
-Date: Sat, 07 Jul 2012 12:18:12 +0200
-Message-ID: <4FF80CE4.60303@dewire.com>
-References: <4FE97057.3040609@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC PATCH 1/2] rm: don't fail when removing populated submodules
+Date: Sat, 07 Jul 2012 14:51:34 +0200
+Message-ID: <4FF830D6.7080708@web.de>
+References: <4FF4AAE7.40604@web.de> <4FF4AB1B.60805@web.de> <7v1ukppear.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, jgit-dev@eclipse.org,
-	egit-dev@eclipse.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 07 12:42:38 2012
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 07 14:52:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnSTE-00045z-2u
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 12:42:36 +0200
+	id 1SnUV2-0005HN-0q
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jul 2012 14:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668Ab2GGKma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jul 2012 06:42:30 -0400
-Received: from mail.dewire.com ([83.140.172.130]:2165 "EHLO dewire.com"
+	id S1750985Ab2GGMvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jul 2012 08:51:49 -0400
+Received: from mout.web.de ([212.227.17.12]:55722 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751515Ab2GGKm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2012 06:42:29 -0400
-X-Greylist: delayed 1452 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Jul 2012 06:42:29 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C4BA58FC8F;
-	Sat,  7 Jul 2012 12:18:15 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qr5b-qhz41xF; Sat,  7 Jul 2012 12:18:13 +0200 (CEST)
-Received: from Robin-Rosenbergs-MacBook-Pro.local (h102n2fls33o828.telia.com [213.67.12.102])
-	by dewire.com (Postfix) with ESMTP id 181258FC97;
-	Sat,  7 Jul 2012 12:18:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120529 Thunderbird/13.0
-In-Reply-To: <4FE97057.3040609@gmail.com>
+	id S1750916Ab2GGMvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2012 08:51:48 -0400
+Received: from [192.168.178.48] ([91.3.183.25]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MddFQ-1SQSLn3Z3k-00Pmcs; Sat, 07 Jul 2012 14:51:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <7v1ukppear.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:KsFGgbtOn+97vLHB43VgQ4GmqnI96poMOjyM9Awksdh
+ HUGHx12wiHSuwbIkiImCHcpuT4b0fy7rY3lTaxfcYY2WqiaNhj
+ 18BjgcT988Mk+tWAMP81t1/MBupXqheQZW5o6LvAluv4k2mO9T
+ kVKfUeGW6lii0k+D5/D5R1GSHdyuTqujWvoTsBDKtnMKGtjWRU
+ UhMP74zwEv9xtkBIsZvWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201162>
 
-Chris Packham skrev 2012-06-26 10.18:
-> Hi,
+Am 06.07.2012 08:57, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> Also apply the same policy as for regular files and
+>> require forcing when the submodules HEAD is different than what is
+>> recorded in the index. 
+> 
+> I think the "policy" for regular files is that "git rm $path" errors
+> out to avoid losing information in $path.  Even if the HEAD in the
+> submodule points at the same commit as recorded in the index, if the
+> submodule directory has other changes that (cd $path && git status)
+> would report, we would not want to remove it, no?
 >
-> This is a bit of a secondhand bug report/query so sorry if the details
-> are a bit sketchy.
->
-> Since git 1.7.8:
->
-> ``When populating a new submodule directory with "git submodule init",
-> the $GIT_DIR metainformation directory for submodules is created inside
-> $GIT_DIR/modules/<name>/ directory of the superproject and referenced
-> via the gitfile mechanism. This is to make it possible to switch
-> between commits in the superproject that has and does not have the
-> submodule in the tree without re-cloning.''
->
-> I've had several colleagues at work tell me that with the relocated
-> $GIT_DIR the Egit integration with eclipse doesn't work. I can't really
-> qualify "doesn't work" but from what I've been told importing the
-> project works but blaming/annotating doesn't.
->
-> I believe the gitfile mechanism isn't new but it possibly hasn't been
-> used by many Egit/Jgit users. Can anyone confirm if it is supported by
-> Egit/Jgit (and I'm barking up the wrong tree).
+> I am not sure if the difference between $path/.git/HEAD and :$path
+> (the version in the index) matters.  Maybe it does, maybe it
+> doesn't.
 
-It is supported. There is however a commit as late as in May that relates
-to gitfile, so you may need 2.0.
+Doh. I don't know how I got the idea it would be so, but a quick
+test with checkout and rebase showed they ignore if a submodules
+HEAD is different from the commit recorded. So plain rm should do
+the same as long as it doesn't touch the submodule work tree and
+I'll remove checking the HEAD from patch 1. I'll prepare v2 which
+will also include an updated commit message.
 
--- robin
+> One possible sane behaviour of "git rm $path" might be:
+> 
+>  - If --force is given, remove it from the index and from the
+>    working tree (i.e. "rm -rf $path"), but use the "gitfile"
+>    facility to save $path/.git away to $GIT_DIR/modules/$name; error
+>    out if the submodule directory $path cannot be removed like this.
+>    We would probably want to remove "submodule.<name>.*" entries in
+>    .gitmodules for <name> for which "submodule.<name>.path" matches
+>    the $path.
+> 
+>  - If --cached is given, remove it from the index if the version in
+>    the index match either HEAD or the $path/.git/HEAD, without
+>    touching the working tree.  This is consistent with what happens
+>    to a regular file.
+> 
+>  - If neither --force nor --cached is given, run an equivalent of
+>    (cd $path && git status), and also check if $path/.git/HEAD
+>    matches the index version.  Error out if the submodule directory
+>    is dirty (again I am not sure about this part).  If the submodule
+>    directory is clean, do the same as the case with --force.
+
+What you describe here is exactly how I think "git submodule rm" and
+"git rm --recurse-submodules" should behave.
+
+The questions remaining for me are:
+
+* What should a "git rm --no-recurse-submodules" do?
+
+  I think it should try to follow the policy git core commands use:
+
+  - don't touch the submodule's work tree
+
+  - remove the submodule directory if it is empty and warn if not
+    (currently it dies if not, to change that to a warning is the
+    subject of patch 1)
+
+  The more difficult question is if it should remove the submodule
+  entry from .gitmodules (patch 2). As that file is part of the
+  superproject's work tree and core git already learned to read
+  configuration options for status, diff and fetch from it I think
+  it's a good idea to help the user by doing so (but maybe we should
+  make this configurable and/or add an option to enable/disable it).
+  But on the other hand maybe users expect this only to happen when
+  they use "git submodule rm" and "git rm" should leave .gitmodules
+  alone?
+
+* What should the default behavior of "git rm" be.
+
+  I tend to think that as all other core git commands never
+  manipulate a submodule's work tree without the --recurse-submodules
+  option, rm should do the same. So I think we should default to
+  the --no-recure-submodules case described above to not surprise the
+  user. That makes checking the submodule for modifications unnecessary
+  until the --recure-submodules option is implemented.
+
+
+Does that make sense?
