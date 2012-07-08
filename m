@@ -1,100 +1,76 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Problems pushing???
-Date: Sun, 08 Jul 2012 23:20:25 +0200
-Message-ID: <4FF9F999.9030808@ira.uka.de>
-References: <1341738766823-7562695.post@n2.nabble.com> <4FF97463.90002@ira.uka.de> <1341759063006-7562705.post@n2.nabble.com> <1341762216101-7562707.post@n2.nabble.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: On using receive.denyNonFastForwards and advice.pushNonFastForward
+Date: Sun, 8 Jul 2012 14:26:50 -0700
+Message-ID: <CAE1pOi1M-fdMJtZw9MNL2R6zWvpXvWVo4ros_NSCQtLmQb6TOQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: pbGit <pblakeley@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 23:20:43 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 08 23:27:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SnyuE-00070a-S9
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Jul 2012 23:20:39 +0200
+	id 1Snz0j-0003YC-84
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Jul 2012 23:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752474Ab2GHVUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jul 2012 17:20:33 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52002 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752431Ab2GHVUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Jul 2012 17:20:33 -0400
-Received: from dslb-088-066-042-202.pools.arcor-ip.net ([88.66.42.202] helo=[192.168.2.231])
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 465 
-	id 1Snyu1-0002cc-M5; Sun, 08 Jul 2012 23:20:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <1341762216101-7562707.post@n2.nabble.com>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1341782431.171065000
+	id S1752169Ab2GHV1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jul 2012 17:27:12 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:57460 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752066Ab2GHV1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2012 17:27:12 -0400
+Received: by ghrr11 with SMTP id r11so9603469ghr.19
+        for <git@vger.kernel.org>; Sun, 08 Jul 2012 14:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=WuWwVB15om0Q2GMvyt/LSOlBtfCrEq8oCPVYGFvoKQM=;
+        b=eulTBJzEYOi2f6j8znJyGfhUdEQ7yf1KBgn+0PY5o2ABYajBDcD7ySJDFXD6usJowe
+         mNHvR2joejHdLFdg70l+BIIMSXBCqrH4zVeL0MSlWQN5oCeznBsREsIo+kdrdjtIi77k
+         k6tOnxkNB5Ga+bdi4hhAxo4cctiLjq7UEwohx3FU8uWd7RbB1a1izlvGn/5SpvlBAaLn
+         lY0WOJEiuG8DClVQ7+IHCMFgkyxOoU4O7+1BB95wYavtEdBiPWj8ZsJ04cKb0xGcE8Ra
+         vZphhprUD0ey10eJU+Rrnyfd4FWte+IJj41j+TMnYzspPEMLMXPiglPBSpVxDhsscB6P
+         ZAJg==
+Received: by 10.236.180.40 with SMTP id i28mr44713331yhm.22.1341782831083;
+ Sun, 08 Jul 2012 14:27:11 -0700 (PDT)
+Received: by 10.236.80.1 with HTTP; Sun, 8 Jul 2012 14:26:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201185>
 
-Am 08.07.2012 17:43, schrieb pbGit:
-> Just tried starting again on my local machine because when I tried pushing,
-> git said that it local was also set to bare init.  When I looked this was
-> the case.  Silly me.
->
-> So I deleted on my local and added a single file and when I try pushing this
-> I get the following:
->   ! [rejected]        master ->  master (non-fast-forward)
-> error: failed to push some refs to 'paul@localhost:/Users/paul/<prject>'
-> hint: Updates were rejected because the tip of your current branch is behind
-> hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
-> hint: before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
->
-> When I try and pull I then get the following:
-> fatal: No remote repository specified.  Please, specify either a URL or a
-> remote name from which new revisions should be fetched.
->
-> I then addded my repo with the following command, but  this is the wrong
-> syntax!!!
-> git pull --repo=<project>
->
-> What the hell am I doing wrong???
+Hi all,
 
-This is the moment where you have to begin reading man pages, i.e. "git 
-fetch", "git help pull", "git help remote" "git help push" (read the 
-examples as they show typical use cases) or preferably read about it in 
-books like Pro Git (git-scm.com/book/) or tutorials.
+I was wondering how hard it would be to make "git push" more adamant
+about not pushing non-ff updates. So I wanted to see the effects of
+receive.denyNonFastForwards and advice.pushNonFastForward. (By the
+way, why is one plural and the other singular? That doesn't seem
+consistent?)
 
-For example the --repo parameter in "git push --repo=<project>" doesn't 
-exactly do what you think it does. It only sets the default remote repo 
-from "origin" to <project>. Normally you would just use "git push 
-<project>". And the equivalent pull command would be "git pull <project>".
+HERE=$(pwd) &&
+git init --bare remote-repo &&
+cd remote-repo/ &&
+git config --add receive.denyNonFastForwards true &&
+cd .. &&
+git clone file://$HERE/remote-repo local-repo &&
+cd local-repo/ &&
+git config --add advice.pushNonFastForward true &&
+echo "1" > one.txt &&
+git add -A . && git commit -m 1 && git push origin master &&
+git checkout -b next &&
+echo "a" > two.txt &&
+git add -A . && git commit -m 2 &&
+git checkout master &&
+echo "2" > one.txt &&
+git add -A . && git commit -m 3 && git push origin master &&
+git merge next &&
+git push
 
-Naturally you can configure that git pull or git push will just do what 
-you want, but for that you need to know what a refspec is and how to use 
-"git remote".
+To my surprise there was neither warning nor error. Does this last
+push really qualify as a FF update? Apparently, linear history and
+FF-only updates are not the same thing?
 
-Generally git pull and git push are not complementary. Neither in effect 
-nor in parameters they take.
-
-For example assume you have just cloned a remote repository. This will 
-add configuration that connects both repositories and adds a default 
-remote repo named origin and adds default refspecs
-
-"git pull" without parameters will then fetch all remote branches into 
-correpondingly named local remote tracking branches (under 
-.git/refs/remotes/, do a git branch -a to list them too), but then only 
-merge one of them with the branch you are in at the moment.
-
-But "git push" will push *all* your local branches into branches of the 
-same name on the remote repository.
-
-Another difference: If you pull, the merge might fail because of merge 
-conflicts and you have to manually merge conflicting files. If you push, 
-this manual merge is not possible so usually only trivial merges called 
-fast-forward-merges are allowed. That is what happened on your push
-
-Something like "git remote add -m master origin <urlofyourrepo>" does 
-the same configuration as a "git clone" would do and would allow you to 
-just use "git pull" without parameters.
+Cheers,
+Hilco
