@@ -1,76 +1,92 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: On using receive.denyNonFastForwards and advice.pushNonFastForward
-Date: Sun, 8 Jul 2012 14:26:50 -0700
-Message-ID: <CAE1pOi1M-fdMJtZw9MNL2R6zWvpXvWVo4ros_NSCQtLmQb6TOQ@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Please pull git-po master branch with l10n updates for several languages
+Date: Mon, 9 Jul 2012 09:21:07 +0800
+Message-ID: <CANYiYbEiZLOfaNeBa-udERaMH1PTV4_oWtZPLHC7WEtiO_o_Eg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 08 23:27:21 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Riku <lu.riku@gmail.com>, Zhuang Ya <zhuangya@me.com>,
+	Lian Cheng <rhythm.mail@gmail.com>,
+	Yichao Yu <yyc1992@gmail.com>,
+	ws3389 <willsmith3389@gmail.com>, Thynson <lanxingcan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 03:21:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Snz0j-0003YC-84
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Jul 2012 23:27:21 +0200
+	id 1So2fA-0005AN-N1
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 03:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169Ab2GHV1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jul 2012 17:27:12 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:57460 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752066Ab2GHV1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2012 17:27:12 -0400
-Received: by ghrr11 with SMTP id r11so9603469ghr.19
-        for <git@vger.kernel.org>; Sun, 08 Jul 2012 14:27:11 -0700 (PDT)
+	id S1751429Ab2GIBVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jul 2012 21:21:10 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:46531 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191Ab2GIBVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2012 21:21:08 -0400
+Received: by gglu4 with SMTP id u4so9641204ggl.19
+        for <git@vger.kernel.org>; Sun, 08 Jul 2012 18:21:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=WuWwVB15om0Q2GMvyt/LSOlBtfCrEq8oCPVYGFvoKQM=;
-        b=eulTBJzEYOi2f6j8znJyGfhUdEQ7yf1KBgn+0PY5o2ABYajBDcD7ySJDFXD6usJowe
-         mNHvR2joejHdLFdg70l+BIIMSXBCqrH4zVeL0MSlWQN5oCeznBsREsIo+kdrdjtIi77k
-         k6tOnxkNB5Ga+bdi4hhAxo4cctiLjq7UEwohx3FU8uWd7RbB1a1izlvGn/5SpvlBAaLn
-         lY0WOJEiuG8DClVQ7+IHCMFgkyxOoU4O7+1BB95wYavtEdBiPWj8ZsJ04cKb0xGcE8Ra
-         vZphhprUD0ey10eJU+Rrnyfd4FWte+IJj41j+TMnYzspPEMLMXPiglPBSpVxDhsscB6P
-         ZAJg==
-Received: by 10.236.180.40 with SMTP id i28mr44713331yhm.22.1341782831083;
- Sun, 08 Jul 2012 14:27:11 -0700 (PDT)
-Received: by 10.236.80.1 with HTTP; Sun, 8 Jul 2012 14:26:50 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=J7yKQO9iWnPlbYBLT8ImpY2OFY0TJ0aqsCed4Q511tw=;
+        b=eygackO0Mn01Vq9++4/FrUTAesK1BNWU88kBxNnRrBTyPog4IZqhVQ6DD9INRDWEyn
+         gsmcNQ27W2Gzziu3AhjMEBy4yu/2Ljo60oiiBn/khN9T7FHm6OLtghAAlZN2R7TweTZ7
+         iVkcUYmHBo2vQq6aDT3dP+cvgHhUPrIQyEIxDhtjmuWc6WLhd1OBPf/I9guBooG4MRoL
+         lJIT7a5q3/kglcB/xZjk5/4wJHCOng+vnkn58ERxrby9geXEadhJM3Zh59WVbWnpbgne
+         aZsNHUT8D0/ev8G71XWAGbAzhdvYqN2HPJr3dkwDiGxdj2UBvNHiAyAcQEKU3OEmFvtd
+         QRCA==
+Received: by 10.43.49.67 with SMTP id uz3mr19471866icb.47.1341796867899; Sun,
+ 08 Jul 2012 18:21:07 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Sun, 8 Jul 2012 18:21:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201186>
 
-Hi all,
+Hi Junio,
 
-I was wondering how hard it would be to make "git push" more adamant
-about not pushing non-ff updates. So I wanted to see the effects of
-receive.denyNonFastForwards and advice.pushNonFastForward. (By the
-way, why is one plural and the other singular? That doesn't seem
-consistent?)
+The following changes since commit 726016725d45894c061e8d187385327f82803c9f:
 
-HERE=$(pwd) &&
-git init --bare remote-repo &&
-cd remote-repo/ &&
-git config --add receive.denyNonFastForwards true &&
-cd .. &&
-git clone file://$HERE/remote-repo local-repo &&
-cd local-repo/ &&
-git config --add advice.pushNonFastForward true &&
-echo "1" > one.txt &&
-git add -A . && git commit -m 1 && git push origin master &&
-git checkout -b next &&
-echo "a" > two.txt &&
-git add -A . && git commit -m 2 &&
-git checkout master &&
-echo "2" > one.txt &&
-git add -A . && git commit -m 3 && git push origin master &&
-git merge next &&
-git push
+  Sync with i18n-po updates in maint (2012-07-02 15:37:54 -0700)
 
-To my surprise there was neither warning nor error. Does this last
-push really qualify as a FF update? Apparently, linear history and
-FF-only updates are not the same thing?
+are available in the git repository at:
 
-Cheers,
-Hilco
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 6792b93b1965561e85be3733bb3ab00b2e598119:
+
+  l10n: zh_CN.po: translate 29 new messages (2012-07-06 09:11:15 +0800)
+
+----------------------------------------------------------------
+Jiang Xin (2):
+      l10n: Update git.pot (29 new messages)
+      l10n: zh_CN.po: translate 29 new messages
+
+Peter Krefting (1):
+      Update Swedish translation (1095t0f0u)
+
+Ralf Thielow (1):
+      l10n: de.po: translate 29 new messages
+
+Tran Ngoc Quan (1):
+      l10n: Update translation for Vietnamese
+
+ po/de.po    | 569 ++++++++++++++++++++++++++++++++++----------------------
+ po/git.pot  | 537 ++++++++++++++++++++++++++++++++---------------------
+ po/sv.po    | 545 +++++++++++++++++++++++++++++++++---------------------
+ po/vi.po    | 600 ++++++++++++++++++++++++++++++++++++------------------------
+ po/zh_CN.po | 566 ++++++++++++++++++++++++++++++++++----------------------
+ 5 files changed, 1727 insertions(+), 1090 deletions(-)
+
+-- 
+Jiang Xin
