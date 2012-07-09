@@ -1,69 +1,125 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Git and Quilt
-Date: Mon, 9 Jul 2012 23:38:45 +0800
-Message-ID: <CANYiYbG2UuHJOU7b_jR7E5N6WxJqUK_URXkN2zrz+z3JEukOzw@mail.gmail.com>
-References: <1341835029.10119.36.camel@sysadmin>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH] Change configure to check if pthreads are usable without any extra flags
+Date: Mon, 9 Jul 2012 17:39:26 +0200
+Message-ID: <C56B4151-8912-4B3A-8A97-E769A878AE68@quendi.de>
+References: <1341529386-11589-1-git-send-email-max@quendi.de> <7vk3ydkmzq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1280)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jimmy Thrasibule <thrasibule.jimmy@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 17:38:54 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:39:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoG32-0007tZ-S9
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 17:38:53 +0200
+	id 1SoG3j-0000jj-U3
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 17:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521Ab2GIPir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 11:38:47 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55151 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824Ab2GIPir (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 11:38:47 -0400
-Received: by yenl2 with SMTP id l2so10182955yen.19
-        for <git@vger.kernel.org>; Mon, 09 Jul 2012 08:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yi5ADcAm7/ZohWZkeeZlaw2jnujNZpWUJKkKV/YvpP4=;
-        b=rKcs/99UHBtkuo+zS9TTsZr/RYocEYUlvkCbjrZphEzYjCKIjodJJAiIXyws5bRywf
-         4756/0pzk5OOejibjPrm5HsZhT1J6QwN2C90lVhPUk/AGRa0oO2DAuxtPJyG9dEBdva/
-         OADzwqvjw3I4uK0PKWLcRXSsZbVTUHt8HgrZS8W9kl/yckrcYkrwRY1/Gs+Zb5oICjZr
-         FEs4hSzl4b+YkWv+I47SqkdAflvfmeZ+in2vm3X3O+uC+nWZRd0LfTsNZkeHQjssFd1o
-         BvlOECo63k7ZfK3B718uKScjUMhtK+qCdbZa3mN1hP0gA/HWmk0EkiG3wRERL7hOMNh6
-         9wwg==
-Received: by 10.50.237.34 with SMTP id uz2mr8925168igc.19.1341848325981; Mon,
- 09 Jul 2012 08:38:45 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Mon, 9 Jul 2012 08:38:45 -0700 (PDT)
-In-Reply-To: <1341835029.10119.36.camel@sysadmin>
+	id S1751869Ab2GIPja convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jul 2012 11:39:30 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:56999 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751569Ab2GIPja convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Jul 2012 11:39:30 -0400
+Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1SoG3b-000747-ON; Mon, 09 Jul 2012 17:39:27 +0200
+In-Reply-To: <7vk3ydkmzq.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1280)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341848370;230bebd1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201210>
 
-2012/7/9 Jimmy Thrasibule <thrasibule.jimmy@gmail.com>:
-> I have a core project on which I maintain a set of patches using Quilt.
 
-Git + Topgit is a better solution for your case. See:
+On 09.07.2012, at 16:50, Junio C Hamano wrote:
 
- * http://repo.or.cz/w/topgit.git/blob/HEAD:/README
+> Max Horn <max@quendi.de> writes:
+>=20
+>> The configure script checks whether certain flags / libraries are
+>> required to use pthreads. But so far it did not consider the possibi=
+lity
+>> that no extra compiler flags are needed (as is the case on Mac OS X)=
+=2E As
+>> a result, configure would always add "-mt" to the list of flags. Thi=
+s in
+>> turn triggered a warning in clang about an unknown argument.
+>> To solve this, we now first check if pthreads work without extra fla=
+gs.
+>>=20
+>> Signed-off-by: Max Horn <max@quendi.de>
+>> ---
+>> configure.ac | 2 +-
+>> 1 Datei ge=E4ndert, 1 Zeile hinzugef=FCgt(+), 1 Zeile entfernt(-)
+>>=20
+>> diff --git a/configure.ac b/configure.ac
+>> index 4e9012f..d767ef3 100644
+>> --- a/configure.ac
+>> +++ b/configure.ac
+>> @@ -1002,7 +1002,7 @@ if test -n "$USER_NOPTHREAD"; then
+>> # -D_REENTRANT' or some such.
+>> elif test -z "$PTHREAD_CFLAGS"; then
+>>   threads_found=3Dno
+>> -  for opt in -mt -pthread -lpthread; do
+>> +  for opt in "" -mt -pthread -lpthread; do
+>=20
+> Hmph.  Would it work to append the new empty string at the end of
+> the existing list, as opposed to prepending it?
 
-E.g. In my fork of topgit, quilt patches resident in "debian/patches" directory:
+No, because that loop aborts on the first match that "works". Since no =
+flags are necessary on OS X, but adding "-mt" to the flags "works" in t=
+he sense that it does nothing (except triggering a warning about an unk=
+nown argument), we need to check the empty string before "-mt" that.=20
 
- * https://github.com/ossxp-com/topgit/tree/master/debian/patches/t
+>  I'd prefer a
+> solution that is order independent, or if the change is order
+> dependent, then a comment to warn others from changing it later.
 
-And these patches are exported from the topic branches using this command:
+Well, such checks are normally always order dependant, too (looking at =
+many other autoconf tests out there). OK, so we could first test all fo=
+ur possibilities, recording for each whether it works or not. But after=
+ doing that, we still need to establish an order, in case more than one=
+ "works" according to the linker test. Simply using the order is the ea=
+siest way for that and works well in practice. And it avoid unnecessary=
+, time consuming checks ;).
 
- * https://github.com/ossxp-com/topgit/blob/master/debian/rules#L53
+Regardless of all that, of course I can add a comment emphasising that =
+the order here is important. (Although IMHO that should be self-evident=
+ for an autoconf test.)
 
-Git also has a command which can import quilt patches as commits
-on to the current branch:
 
-    $ git quiltimport
 
--- 
-Jiang Xin
+>=20
+>>      old_CFLAGS=3D"$CFLAGS"
+>>      CFLAGS=3D"$opt $CFLAGS"
+>>      AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
+>=20
+> Perhaps "for linking with POSIX Threads" would make it clearer, as
+> CFLAGS (rather, PTHREAD_CFLAGS) has been checked earlier separately.
+
+Well, talking about clarity, looking at line 188 it says
+   AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Thre=
+ads])
+
+which is also bad: It is out-of-date (even before my patch, as it doesn=
+'t mention -mt), will easily get out of sync with reality again, and in=
+ any case contains information that normally shouldn't be printed anywa=
+y.=20
+
+Beyond that, the pthread code checks only for -pthread and -lpthread, t=
+hus leaving many systems out. Indeed, it might be worth a thought dropp=
+ing the custom pthread detection code in git's configure.ac and instead=
+ using AX_PTHREAD <http://www.gnu.org/software/autoconf-archive/ax_pthr=
+ead.html>, which covers many more systems out of the box.=20
+
+But for now, I really would just want to make this simple trivial fix t=
+hat avoids tons of pointless warnings when compiling git on Mac OS X 10=
+=2E7 ... ;).
+
+
+Cheers,
+Max
