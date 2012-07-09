@@ -1,74 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: On using receive.denyNonFastForwards and advice.pushNonFastForward
-Date: Mon, 09 Jul 2012 10:36:55 +0200
-Message-ID: <vpqobnpz5y0.fsf@bauges.imag.fr>
-References: <CAE1pOi1M-fdMJtZw9MNL2R6zWvpXvWVo4ros_NSCQtLmQb6TOQ@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 2/2] git p4: add support for 'p4 move' in P4Submit
+Date: Mon, 9 Jul 2012 06:56:29 -0400
+Message-ID: <20120709105629.GA23746@padd.com>
+References: <1341409220-27954-1-git-send-email-pw@padd.com>
+ <1341409220-27954-3-git-send-email-pw@padd.com>
+ <7v7guhpfmn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 10:37:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Gary Gibbons <ggibbons@perforce.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 12:56:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1So9St-0007RS-2S
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 10:37:07 +0200
+	id 1SoBdv-0006vE-JB
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 12:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446Ab2GIIhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 04:37:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35694 "EHLO rominette.imag.fr"
+	id S1753087Ab2GIK4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jul 2012 06:56:34 -0400
+Received: from honk.padd.com ([74.3.171.149]:34580 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751764Ab2GIIg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 04:36:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q698ZWHE020714
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 9 Jul 2012 10:35:32 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1So9Si-0005Vc-2L; Mon, 09 Jul 2012 10:36:56 +0200
-In-Reply-To: <CAE1pOi1M-fdMJtZw9MNL2R6zWvpXvWVo4ros_NSCQtLmQb6TOQ@mail.gmail.com>
-	(Hilco Wijbenga's message of "Sun, 8 Jul 2012 14:26:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Jul 2012 10:35:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q698ZWHE020714
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1342427732.66184@i6srFvlPijKbkKxZTq3pSQ
+	id S1752128Ab2GIK4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2012 06:56:34 -0400
+Received: from arf.padd.com (unknown [50.55.159.91])
+	by honk.padd.com (Postfix) with ESMTPSA id 0F8853162;
+	Mon,  9 Jul 2012 03:56:33 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id E26AB313C9; Mon,  9 Jul 2012 06:56:29 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7v7guhpfmn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201198>
 
-Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+gitster@pobox.com wrote on Thu, 05 Jul 2012 23:28 -0700:
+> Pete Wyckoff <pw@padd.com> writes:
+> 
+> > diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+> > index 84fffb3..8be74b6 100755
+> > --- a/t/t9814-git-p4-rename.sh
+> > +++ b/t/t9814-git-p4-rename.sh
+> > @@ -77,16 +77,16 @@ test_expect_success 'detect renames' '
+> >  		git commit -a -m "Rename file1 to file4" &&
+> >  		git diff-tree -r -M HEAD &&
+> >  		git p4 submit &&
+> > -		p4 filelog //depot/file4 &&
+> > -		p4 filelog //depot/file4 | test_must_fail grep -q "branch from" &&
+> > +		p4 filelog //depot/file4 | tee filelog &&
+> > +		! grep -q " from //depot" filelog &&
+> 
+> I am not a huge fan of using "tee" in our test scripts, especially
+> as it means piping output of another command whose output (and
+> presumably the behaviour) we care about, hiding its exit status.
+> 
+> Fixing the incorrect use of piping to "test_must_fail grep" is a
+> good change, but is there anything wrong to do the above like this?
+> 
+> 	p4 filelog //depot/file4 >filelog &&
+> 	! grep -q " from //depot" filelog &&
 
-> I was wondering how hard it would be to make "git push" more adamant
-> about not pushing non-ff updates. So I wanted to see the effects of
-> receive.denyNonFastForwards
+I'd started growing fond of "tee" as it shows all the
+output, and isolates the grep as a separate step.  Much
+easier to see the bad output when a test fails.
 
-This changes the behavior only if you use --force (or some magic refspec
-starting with +). If you never used --force or +refspecs, you never did
-a non-fast-forward push.
+I'll switch around to your approach, adding a "cat filelog" line
+for interesting cases.
 
-> and advice.pushNonFastForward.
-
-Activated by default, so if you never did anything about it, it was
-already active.
-
-> Apparently, linear history and FF-only updates are not the same thing?
-
-No, they are not. non-FF means you're trying to push a commit which is
-not a direct descendant of the remote one, i.e. you're trying to
-override the remote history with yours. See 'NOTE ABOUT FAST-FORWARDS'
-in "man git-push".
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+		-- Pete
