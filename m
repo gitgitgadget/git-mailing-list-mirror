@@ -1,175 +1,99 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH v2 1/2] test: git-stash conflict sets up rerere
-Date: Mon, 9 Jul 2012 10:41:32 -0400
-Message-ID: <CABURp0rrTvQcjHLsVwXC5hfBOuRmFG4AzSj6ZQwM=MXn0FAUCQ@mail.gmail.com>
-References: <CABURp0oXhZ5ysm4b3Z=7o+2TB+3wFdMjj4oEwxafApjD4c7ozA@mail.gmail.com>
- <1341693962-17090-1-git-send-email-hordp@cisco.com> <1341693962-17090-2-git-send-email-hordp@cisco.com>
- <7v8vetmzgz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Change configure to check if pthreads are usable without
+ any extra flags
+Date: Mon, 09 Jul 2012 07:50:01 -0700
+Message-ID: <7vk3ydkmzq.fsf@alter.siamese.dyndns.org>
+References: <1341529386-11589-1-git-send-email-max@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 16:42:14 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Mon Jul 09 16:50:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoFA8-0003TB-OW
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 16:42:09 +0200
+	id 1SoFIZ-0001KW-Ug
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 16:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754545Ab2GIOly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 10:41:54 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:38879 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750790Ab2GIOlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 10:41:52 -0400
-Received: by yenl2 with SMTP id l2so10114876yen.19
-        for <git@vger.kernel.org>; Mon, 09 Jul 2012 07:41:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=guaJH3HCggpS0keJNbUrZ4wUVqNNQOU0g2SffSnBaV8=;
-        b=ZxZmKuMm0fAY3eeadm+RQpx5ddrtvIW5aX071xf62xNmLndZiJaWKfrBcC5knqwPih
-         ipDatE49Bu68KzOEZORm3TG/75jzTa6LQ41ReffXALHB4icyq/GaMEOt/A5HBNzxGuUf
-         v2V3ahZe9+C/yzXflzulUHPMWYTeV8ZfORCymITKI/d/yQFqmqu3e7JIc/ink2XRWkAb
-         2FfCGUO7bcopPh+5ilB9nDB/liXY4z1apGDG4N95oNTZRFyKFgTMz0JIL98KESlwNVbd
-         EA9l145yXoNOmO+7f5m5/stz9MZ2PDWTnmWPIxBBXElHcGM+bPTEZVcIrVWIgENQxD/R
-         LDSQ==
-Received: by 10.236.197.65 with SMTP id s41mr10996236yhn.122.1341844912183;
- Mon, 09 Jul 2012 07:41:52 -0700 (PDT)
-Received: by 10.146.150.18 with HTTP; Mon, 9 Jul 2012 07:41:32 -0700 (PDT)
-In-Reply-To: <7v8vetmzgz.fsf@alter.siamese.dyndns.org>
+	id S1754943Ab2GIOuq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jul 2012 10:50:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63662 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754342Ab2GIOuG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2012 10:50:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 732A175EC;
+	Mon,  9 Jul 2012 10:50:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=q5SrDa9R78Ri
+	47F/i/2LTOjjB60=; b=bKOObu1gOREV97kZQLRp2+9epp3kBxyBRerLQaTnjNtf
+	LatwD50vkZIcsBM6B+4135bu1VAfpR0bwb3Of0P5TVggXQ3YSNOZdZXrC/zrD0E4
+	A43RNWrtvpd2BZckUnQ2dTmqSMrwboMkclB/1LIJt0v7rC9rXJv50P1atLBFV/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=n+Xb1j
+	Isnx1TRpPSDolKb9nCHU682Jpa44HpngmILfVANj0w8r/7jzpgfjUUijyfltBMTb
+	hG+4fNMJvj29b5pG+tHj7SidL92OShINGvzGl/KxPuTCRxlZnjyN5f+YZu60qLsp
+	DZsJAfbDbJzZ87RshWNk+vTpi1Nq9AgqnXhdk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68DC475EB;
+	Mon,  9 Jul 2012 10:50:05 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF71875E7; Mon,  9 Jul 2012
+ 10:50:03 -0400 (EDT)
+In-Reply-To: <1341529386-11589-1-git-send-email-max@quendi.de> (Max Horn's
+ message of "Fri, 6 Jul 2012 01:03:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5DF323E0-C9D5-11E1-9D20-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201206>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Phil Hord <hordp@cisco.com> writes:
+Max Horn <max@quendi.de> writes:
+
+> The configure script checks whether certain flags / libraries are
+> required to use pthreads. But so far it did not consider the possibil=
+ity
+> that no extra compiler flags are needed (as is the case on Mac OS X).=
+ As
+> a result, configure would always add "-mt" to the list of flags. This=
+ in
+> turn triggered a warning in clang about an unknown argument.
+> To solve this, we now first check if pthreads work without extra flag=
+s.
 >
-> > Add a failing test to confirm a conflicted stash apply invokes
-> > rerere to record the conflicts and resolve the the files it can.
+> Signed-off-by: Max Horn <max@quendi.de>
+> ---
+>  configure.ac | 2 +-
+>  1 Datei ge=C3=A4ndert, 1 Zeile hinzugef=C3=BCgt(+), 1 Zeile entfernt=
+(-)
 >
-> OK.
->
-> > In this failing state, mergetool may be confused by a left-over
-> > state from previous rerere activity.
->
-> It is unclear to me what relevance this has to this patch.  Does it
-> have this sequence:
->
->     "previous rerere activity" (whatever that is)
->     test_must_fail git stash apply &&
->     git mergetool
->
-> and demonstrate that "git mergetool" fails because there is a wrong
-> rerere state in the repository after "git stash apply" returns?
->
-> Or perhaps you are relying on the state that is left by the previous
-> test piece?
+> diff --git a/configure.ac b/configure.ac
+> index 4e9012f..d767ef3 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -1002,7 +1002,7 @@ if test -n "$USER_NOPTHREAD"; then
+>  # -D_REENTRANT' or some such.
+>  elif test -z "$PTHREAD_CFLAGS"; then
+>    threads_found=3Dno
+> -  for opt in -mt -pthread -lpthread; do
+> +  for opt in "" -mt -pthread -lpthread; do
 
-The previous edition of this patch explicitly created the condition
-which would confuse mergetool by creating a conflict and resolving it.
- The mergetool confusion is what I was testing and is what lead to
-this patch series.
+Hmph.  Would it work to append the new empty string at the end of
+the existing list, as opposed to prepending it?  I'd prefer a
+solution that is order independent, or if the change is order
+dependent, then a comment to warn others from changing it later.
 
-But I have since learned that rerere _can_ be effective after a stash
-conflict, but it was not invoked automatically. This series aims to
-fix that instead of simply forcing rerere to clean up in the stash
-conflict case.
+>       old_CFLAGS=3D"$CFLAGS"
+>       CFLAGS=3D"$opt $CFLAGS"
+>       AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
 
-I left the concern in the commit message because this is more than a
-missing feature; under certain conditions, it is a bug.  But I could
-have reworded it to be more clear.
-
-I am not relying on a prior condition to exist.  In fact the 'git
-reset' at the start of this test will clear the previous rerere state
-that I am testing for in this test.
-
-In the previous edition, the test was this:
-  Verify mergetool is (not) confused by unclean rerere behavior:
-        1. Set up a normal merge-conflict with rerere so that MERGE_RR exists
-        2. Set up a conflicted stash-pop
-        3. Confirm/test the aberrant behavior of mergetool
-
-In this edition, the aim of the test is different:
-  Verify rerere is (not) called by a conflict stash-apply:
-        1. Set up a conflicted stash-pop
-        2. Confirm/test whether rerere tracks the result
-
-> > Also, the next test expected us to finish up with a reset, which
-> > is impossible to do if we fail (as we must) and it's an
-> > unreasonable expectation anyway.  Begin the next test with a reset
-> > of his own instead.
->
-> Yes, it is always a good discipline to start a new test piece from a
-> known state.
->
-> > @@ -193,7 +203,37 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
-> >      git reset --hard
-> >  '
-> >
-> > +test_expect_failure 'conflicted stash sets up rerere'  '
-> > +    git config rerere.enabled true &&
-> > +    git checkout stash1 &&
-> > +    echo "Conflicting stash content" >file11 &&
-> > +    git stash &&
-> > +
-> > +    git checkout --detach stash2 &&
-> > +    test_must_fail git stash apply &&
-> > +
-> > +    test -e .git/MERGE_RR &&
-> > +    test -n "$(git ls-files -u)" &&
-> > +    conflicts="$(git rerere remaining)" &&
->
-> Checking that the index is conflicted with "ls-files -u" and asking
-> the public API "git rerere remaining" to see what paths rerere
-> thinks it did not touch, like you do in the second and third lines,
-> are very sensible, but it is probably not a good idea for this test
-> to check implementation details with "test -f .git/MERGE_RR".
-
-I tend to agree.  However, it is the presence of .git/MERGE_RR which
-will cause mergetool to take the 'rerere remaining' path.  I wanted to
-ensure that mergetool is going to go the way I expected.  In light of
-the later actions in this test, that is probably overkill.  I can
-remove it.
-
-> > +    test "$conflicts" = "file11" &&
-> > +    output="$(git mergetool --no-prompt)" &&
-> > +    test "$output" != "No files need merging" &&
-> > +
-> > +    git commit -am "save the stash resolution" &&
-> > +
-> > +    git reset --hard stash2 &&
-> > +    test_must_fail git stash apply &&
-> > +
-> > +    test -e .git/MERGE_RR &&
-> > +    test -n "$(git ls-files -u)" &&
-> > +    conflicts="$(git rerere remaining)" &&
->
-> Likewise.
-
-And ditto.
-
-
-> > +    test -z "$conflicts" &&
-> > +    output="$(git mergetool --no-prompt)" &&
-> > +    test "$output" = "No files need merging"
-> > +'
-> > +
-> >  test_expect_success 'mergetool takes partial path' '
-> > +    git reset --hard
-> >      git config rerere.enabled false &&
-> >      git checkout -b test12 branch1 &&
-> >      git submodule update -N &&
-
-So, the next roll will remove the tests for MERGE_RR and will be more
-explicit about the potential for mergetool confusion and/or the fact
-that it is not explicitly tested here.
-
-I'll wait a little longer for any further comments.
-
-Phil
+Perhaps "for linking with POSIX Threads" would make it clearer, as
+CFLAGS (rather, PTHREAD_CFLAGS) has been checked earlier separately.
