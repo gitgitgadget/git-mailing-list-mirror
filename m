@@ -1,99 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change configure to check if pthreads are usable without
- any extra flags
-Date: Mon, 09 Jul 2012 07:50:01 -0700
-Message-ID: <7vk3ydkmzq.fsf@alter.siamese.dyndns.org>
-References: <1341529386-11589-1-git-send-email-max@quendi.de>
+Subject: Re: [PATCH 02.5/11] Makefile: fold XDIFF_H and VCSSVN_H into LIB_H
+Date: Mon, 09 Jul 2012 07:59:57 -0700
+Message-ID: <7vfw91kmj6.fsf@alter.siamese.dyndns.org>
+References: <20120620182855.GA26948@sigill.intra.peff.net>
+ <20120620183055.GB30995@sigill.intra.peff.net>
+ <20120620210730.GB6142@burratino>
+ <20120620221125.GA3302@sigill.intra.peff.net>
+ <20120707033918.GB3574@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Mon Jul 09 16:50:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:00:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoFIZ-0001KW-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 16:50:52 +0200
+	id 1SoFRa-0000Tc-0w
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 17:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943Ab2GIOuq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jul 2012 10:50:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63662 "EHLO
+	id S1751317Ab2GIPAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jul 2012 11:00:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35440 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754342Ab2GIOuG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jul 2012 10:50:06 -0400
+	id S1750754Ab2GIPAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2012 11:00:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 732A175EC;
-	Mon,  9 Jul 2012 10:50:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C223E7951;
+	Mon,  9 Jul 2012 10:59:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=q5SrDa9R78Ri
-	47F/i/2LTOjjB60=; b=bKOObu1gOREV97kZQLRp2+9epp3kBxyBRerLQaTnjNtf
-	LatwD50vkZIcsBM6B+4135bu1VAfpR0bwb3Of0P5TVggXQ3YSNOZdZXrC/zrD0E4
-	A43RNWrtvpd2BZckUnQ2dTmqSMrwboMkclB/1LIJt0v7rC9rXJv50P1atLBFV/g=
+	:content-type; s=sasl; bh=zhurgaKm1QBRZWQNekTyjBH9T/Q=; b=f+8vNS
+	sW9MymcoEPCprbcy72ICKRfdbO3CjzyQciTIp4w7lIY3ab/J887SELEM6aMZx//9
+	acM7oNlyb1YZUnfvXiVNTSoLQOz/39bWLD8h9skMAwx/xUIgEEVPWhDxoeD9rX2n
+	WE9PFV8qB7olo573wKX+Ss2YqNONaPx6s8AvU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=n+Xb1j
-	Isnx1TRpPSDolKb9nCHU682Jpa44HpngmILfVANj0w8r/7jzpgfjUUijyfltBMTb
-	hG+4fNMJvj29b5pG+tHj7SidL92OShINGvzGl/KxPuTCRxlZnjyN5f+YZu60qLsp
-	DZsJAfbDbJzZ87RshWNk+vTpi1Nq9AgqnXhdk=
+	:content-type; q=dns; s=sasl; b=WoXGEJQ7mWpCw4Ox6AkNOt2gF3qhpBZo
+	8KxMyyULKGrTKXcAJv276wjOeUGH8j5F+cG5aEhdCjKGEgCkAEAdLBx+R6B3Wgjr
+	fFU4xtbZCn4l9eEME892EA2o9DLsK5VyXELN7AjnVmHwdDu8Pbd/Ei42CqHHL82t
+	t9ZyUoPI3gw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68DC475EB;
-	Mon,  9 Jul 2012 10:50:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B68657950;
+	Mon,  9 Jul 2012 10:59:59 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF71875E7; Mon,  9 Jul 2012
- 10:50:03 -0400 (EDT)
-In-Reply-To: <1341529386-11589-1-git-send-email-max@quendi.de> (Max Horn's
- message of "Fri, 6 Jul 2012 01:03:06 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AD30794F; Mon,  9 Jul 2012
+ 10:59:59 -0400 (EDT)
+In-Reply-To: <20120707033918.GB3574@burratino> (Jonathan Nieder's message of
+ "Fri, 6 Jul 2012 22:39:18 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5DF323E0-C9D5-11E1-9D20-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C0D4A26C-C9D6-11E1-813E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201207>
 
-Max Horn <max@quendi.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> The configure script checks whether certain flags / libraries are
-> required to use pthreads. But so far it did not consider the possibil=
-ity
-> that no extra compiler flags are needed (as is the case on Mac OS X).=
- As
-> a result, configure would always add "-mt" to the list of flags. This=
- in
-> turn triggered a warning in clang about an unknown argument.
-> To solve this, we now first check if pthreads work without extra flag=
-s.
+> Just like MISC_H (see previous commit), there is no reason to track
+> xdiff and vcs-svn headers separately from the rest of the headers.
+> The only purpose of these variables is to keep track of recompilation
+> dependencies.
 >
-> Signed-off-by: Max Horn <max@quendi.de>
+> As a pleasant side effect, folding these into LIB_H lets us stop
+> tracking GIT_OBJS and VCSSVN_TEST_OBJS separately from the list of all
+> OBJECTS.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 > ---
->  configure.ac | 2 +-
->  1 Datei ge=C3=A4ndert, 1 Zeile hinzugef=C3=BCgt(+), 1 Zeile entfernt=
-(-)
+> Jeff King wrote:
+>> On Wed, Jun 20, 2012 at 04:07:30PM -0500, Jonathan Nieder wrote:
 >
-> diff --git a/configure.ac b/configure.ac
-> index 4e9012f..d767ef3 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -1002,7 +1002,7 @@ if test -n "$USER_NOPTHREAD"; then
->  # -D_REENTRANT' or some such.
->  elif test -z "$PTHREAD_CFLAGS"; then
->    threads_found=3Dno
-> -  for opt in -mt -pthread -lpthread; do
-> +  for opt in "" -mt -pthread -lpthread; do
+>>> Should XDIFF_H and VCSSVN_H be folded into STATIC_HEADERS, too?
+>>
+>> I stopped short of that, but I'd be tempted to do so.
+>
+> Here goes.
 
-Hmph.  Would it work to append the new empty string at the end of
-the existing list, as opposed to prepending it?  I'd prefer a
-solution that is order independent, or if the change is order
-dependent, then a comment to warn others from changing it later.
-
->       old_CFLAGS=3D"$CFLAGS"
->       CFLAGS=3D"$opt $CFLAGS"
->       AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
-
-Perhaps "for linking with POSIX Threads" would make it clearer, as
-CFLAGS (rather, PTHREAD_CFLAGS) has been checked earlier separately.
+Very tempting.  Will try squeezing this in between 2/11 and 3/11 and
+see how the result looks.
