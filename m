@@ -1,60 +1,88 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: Git and Quilt
-Date: Mon, 9 Jul 2012 16:20:42 +0400
-Message-ID: <20120709162042.0149100574d2d04497a952fc@domain007.com>
-References: <1341835029.10119.36.camel@sysadmin>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Student project in Ensimag: thanks all!
+Date: Mon, 09 Jul 2012 14:36:58 +0200
+Message-ID: <vpq7gudxg9h.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jimmy Thrasibule <thrasibule.jimmy@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 14:21:00 2012
+Content-Type: text/plain
+Cc: Kim Thuat NGUYEN <Kim-Thuat.Nguyen@ensimag.imag.fr>,
+	Javier ROUCHER IGLESIAS 
+	<Javier.Roucher-Iglesias@ensimag.imag.fr>,
+	Pavel VOLEK <Pavel.Volek@ensimag.imag.fr>,
+	Simon CATHEBRAS <Simon.Cathebras@ensimag.imag.fr>,
+	Julien KHAYAT <Julien.Khayat@ensimag.imag.fr>,
+	Simon PERRAT <Simon.Perrat@ensimag.imag.fr>,
+	Charles ROUSSEL <Charles.Roussel@ensimag.imag.fr>,
+	Guillaume SASDY <Guillaume.Sasdy@ensimag.imag.fr>,
+	Valentin DUPERRAY <Valentin.Duperray@phelma.grenoble-inp.fr>,
+	Franck JONAS <Franck.Jonas@phelma.grenoble-inp.fr>,
+	Lucien KONG <Lucien.Kong@phelma.grenoble-inp.fr>,
+	Thomas NGUY <Thomas.Nguy@phelma.grenoble-inp.fr>,
+	Huynh Khoi Nguyen NGUYEN 
+	<Huynh-Khoi-Nguyen.Nguyen@phelma.grenoble-inp.fr>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 09 14:37:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoCxT-0005ky-40
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 14:20:55 +0200
+	id 1SoDDF-0000DS-09
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 14:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753513Ab2GIMUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 08:20:49 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:42108 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753184Ab2GIMUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 08:20:48 -0400
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q69CKhip031069;
-	Mon, 9 Jul 2012 16:20:44 +0400
-In-Reply-To: <1341835029.10119.36.camel@sysadmin>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1753665Ab2GIMhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jul 2012 08:37:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37204 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753497Ab2GIMhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jul 2012 08:37:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q69CZZBW028603
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 9 Jul 2012 14:35:35 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SoDD1-0001G4-J1; Mon, 09 Jul 2012 14:36:59 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Jul 2012 14:35:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q69CZZBW028603
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1342442137.43692@R3PNcuZWEI1JsqPjuaWwdQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201201>
 
-On Mon, 09 Jul 2012 13:57:09 +0200
-Jimmy Thrasibule <thrasibule.jimmy@gmail.com> wrote:
+Hi,
 
-> I have a core project on which I maintain a set of patches using
-> Quilt. This allows me to make changes to the project without touching
-> the files so I can upgrade to new versions easily.
-> 
-> I keep my patches and the core project in a Git repository. When I
-> want to change something, I apply my patches using Quilt, then I
-> revert all my changes and I just commit the resulting patch.
-> 
-> I would like to have a branch where all my patches are applied to
-> deploy the code but I can't find any good way to do this.
-> 
-> If I create a new branch from master and apply the patches, I will
-> have conflicts on the next merge. I need something to apply the
-> patches before the merge (maybe using one of the hooks?).
+For the third year, I offered my students to contribute to open-source
+software as part of a school project. This year, we had one team on the
+core of Git (who implemented better advices for "git status", the XDG
+configuration directory, and "git rebase -i --exec"), and two working on
+the Git-mediawiki interface (one worked on new features like support for
+mediafiles and authentication using the git credentials mechanism, and
+another on an automated testsuite).
 
-Isn't what you're doing a perfect fit for rebasing [1]?
-That is, you keep your changes as a series of commits on top of your
-"upstream" branch and each time you're about to bring upstream changes
-in, you rebase your local branch on top on the updated upstream branch.
+The project itself ended a while ago, but some of the patch series
+needed extra care to end up in pu. This is now done :-).
 
-1. http://git-scm.com/book/en/Git-Branching-Rebasing
+A few series have been abandoned ("bisect old/new", and "warn before
+rebase/commit"), I've added pointers to the gmane threads on the page
+https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+in case someone wants to continue the work.
+
+To conclude the project, I would like to thank everybody for their
+participation: the students for their hard work, reviewers for their
+support and patience, and of course Junio for being such a good
+maintainer!
+
+Looking forward to next years' project!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
