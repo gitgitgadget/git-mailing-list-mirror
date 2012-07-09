@@ -1,85 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02.5/11] Makefile: fold XDIFF_H and VCSSVN_H into LIB_H
-Date: Mon, 09 Jul 2012 07:59:57 -0700
-Message-ID: <7vfw91kmj6.fsf@alter.siamese.dyndns.org>
-References: <20120620182855.GA26948@sigill.intra.peff.net>
- <20120620183055.GB30995@sigill.intra.peff.net>
- <20120620210730.GB6142@burratino>
- <20120620221125.GA3302@sigill.intra.peff.net>
- <20120707033918.GB3574@burratino>
-Mime-Version: 1.0
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH 2/2] Document rev^! and rev^@ as revision specifiers
+Date: Mon, 9 Jul 2012 17:02:19 +0200
+Message-ID: <05708C97-7925-4E45-BA16-374FB38F54D1@quendi.de>
+References: <7vpq8aqdzb.fsf@alter.siamese.dyndns.org> <1341532890-13829-1-git-send-email-max@quendi.de> <1341532890-13829-2-git-send-email-max@quendi.de> <7vtxxlnyn1.fsf@alter.siamese.dyndns.org> <D8DF0AED-91D3-45C0-B49E-97E07D21350C@quendi.de> <7vliiwog0a.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1280)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 09 17:00:13 2012
+Content-Transfer-Encoding: 8BIT
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Mon Jul 09 17:02:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoFRa-0000Tc-0w
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 17:00:10 +0200
+	id 1SoFTn-0004Ul-Hf
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jul 2012 17:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab2GIPAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 11:00:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35440 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754Ab2GIPAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 11:00:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C223E7951;
-	Mon,  9 Jul 2012 10:59:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zhurgaKm1QBRZWQNekTyjBH9T/Q=; b=f+8vNS
-	sW9MymcoEPCprbcy72ICKRfdbO3CjzyQciTIp4w7lIY3ab/J887SELEM6aMZx//9
-	acM7oNlyb1YZUnfvXiVNTSoLQOz/39bWLD8h9skMAwx/xUIgEEVPWhDxoeD9rX2n
-	WE9PFV8qB7olo573wKX+Ss2YqNONaPx6s8AvU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WoXGEJQ7mWpCw4Ox6AkNOt2gF3qhpBZo
-	8KxMyyULKGrTKXcAJv276wjOeUGH8j5F+cG5aEhdCjKGEgCkAEAdLBx+R6B3Wgjr
-	fFU4xtbZCn4l9eEME892EA2o9DLsK5VyXELN7AjnVmHwdDu8Pbd/Ei42CqHHL82t
-	t9ZyUoPI3gw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B68657950;
-	Mon,  9 Jul 2012 10:59:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AD30794F; Mon,  9 Jul 2012
- 10:59:59 -0400 (EDT)
-In-Reply-To: <20120707033918.GB3574@burratino> (Jonathan Nieder's message of
- "Fri, 6 Jul 2012 22:39:18 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C0D4A26C-C9D6-11E1-813E-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754246Ab2GIPCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jul 2012 11:02:23 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:35408 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752523Ab2GIPCW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Jul 2012 11:02:22 -0400
+Received: from 77-22-67-26-dynip.superkabel.de ([77.22.67.26] helo=kaitain-wlan.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1SoFTg-0000SX-LY; Mon, 09 Jul 2012 17:02:20 +0200
+In-Reply-To: <7vliiwog0a.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1280)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1341846142;e3e5a862;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201208>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+On 06.07.2012, at 21:18, Junio C Hamano wrote:
 
-> Just like MISC_H (see previous commit), there is no reason to track
-> xdiff and vcs-svn headers separately from the rest of the headers.
-> The only purpose of these variables is to keep track of recompilation
-> dependencies.
->
-> As a pleasant side effect, folding these into LIB_H lets us stop
-> tracking GIT_OBJS and VCSSVN_TEST_OBJS separately from the list of all
-> OBJECTS.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Jeff King wrote:
->> On Wed, Jun 20, 2012 at 04:07:30PM -0500, Jonathan Nieder wrote:
->
->>> Should XDIFF_H and VCSSVN_H be folded into STATIC_HEADERS, too?
->>
->> I stopped short of that, but I'd be tempted to do so.
->
-> Here goes.
+> Max Horn <max@quendi.de> writes:
+> 
+>>>> +'<rev>{caret}!', e.g. 'HEAD{caret}!'::
+>>>> +  A suffix '{caret}' followed by an exclamation mark
+>>>> +  means commit '<rev>' but forces all of its parents to be excluded. For
+>>>> +  commands that deal with a single revision, this is the same as '<rev>".
+>>> 
+>>> Is this sentence correct?  "git commit -C 'HEAD^!'" might be a
+>>> command that expects a single revision, but I do not think it is the
+>>> same as "git commit -C HEAD".
+>> 
+>> Ignoring the exact words I used for the moment, what I meant is that these two commands should be functionally equivalent. Aren't they?
+> 
+> No.  When a single commit is wanted HEAD^! shouldn't be used, and
+> they cannot be functionally equivalent.  I haven't tried but I think
+> "commit -C HEAD^!"  would give you a syntax error.
+> 
 
-Very tempting.  Will try squeezing this in between 2/11 and 3/11 and
-see how the result looks.
+Indeed, it says
+ fatal: could not lookup commit HEAD^!
+
+I'll iterate over this once more.
+
+Cheers,
+Max
