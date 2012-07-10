@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 11/19] apply: accept -3/--3way command line option
-Date: Tue, 10 Jul 2012 00:04:04 -0700
-Message-ID: <1341903852-4815-12-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 13/19] apply: plug the three-way merge logic in
+Date: Tue, 10 Jul 2012 00:04:06 -0700
+Message-ID: <1341903852-4815-14-git-send-email-gitster@pobox.com>
 References: <1341903852-4815-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Jul 10 09:05:18 2012
@@ -10,139 +10,165 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoUVY-0000bE-6A
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 09:05:16 +0200
+	id 1SoUVZ-0000bE-7z
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 09:05:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151Ab2GJHEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jul 2012 03:04:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53232 "EHLO
+	id S1754158Ab2GJHEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jul 2012 03:04:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53266 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754141Ab2GJHEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2012 03:04:46 -0400
+	id S1754152Ab2GJHEv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2012 03:04:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B67987DEB
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E1F57DF2
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=2/xL
-	hpcWFPUN9Z9WgDxPJJLGBv8=; b=xspHvu3m2tEZIN05fLZd1vSYhEaBVJfJuqyv
-	REr8Mqxy+Qe4wgePxrK3msdVlsuGgRR0DrzKUD3X4eFjP8a5pXO/Gqjxzedv+NHK
-	8QVvG4sSmJ9tRHkZohqYA/xUlkpvpl98wQpsedFKK7Lp5o/yf6lnjLiWH8kUI4U8
-	TZ2u6d4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Z5og
+	Ty8qnBTjDhEKnKu3XqWJUZQ=; b=NrFA2sL3qKxZmGdDT9zMRWpDRWQb1HEIlGo+
+	XCPfnp/SgeykIxLPpNWbOLmli1mppfmBz96GSLCDWxXGbYhkYYHB4K9pNf9YJBJS
+	jz/nxlrvzF1xRP9AEUS5RUlrQ0+YPsii8Z5t1CXlRRySdbOPaQpdDyumwIp7Mo86
+	+x6P26A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DBLNKc
-	zmPrBqFK/5o4rz2KsJRg1dkP0gtPagwWeJKvgv+p7+f00kN/sHLG/rC2pVnHopTI
-	U4VVo+3ybUg2aeams9hBIoC1msjiJWxdTpXW6mpZljjq5+FAImCzRnlVYlIJS/og
-	Hi3pUBFQ0l3n9zsrzjG2P0iTanm600a0BnLc4=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=px/1cw
+	QxCdD2WTs7MEbDN4JQSiZG9B0utMa2iNjDJLzCmxS5dJL286ZdueTFQ8rG6tL0se
+	/fUUKBxqQPbQIDkKIOvWQnUZmSdmGF+AiB5w26mWdk8ZujQOmcTGxR01ZgUPHaDD
+	yp/wy/Gv6eqOHLxIW1MXlo5je6ZNfzrjBF8BI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD55D7DEA
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85D607DF1
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:50 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2552C7DE9 for
- <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:45 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93AE47DF0 for
+ <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:49 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.294.g68a9409
 In-Reply-To: <1341903852-4815-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 877BA894-CA5D-11E1-A6E6-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8A22EA26-CA5D-11E1-9D2D-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201248>
 
-Begin teaching the three-way merge fallback logic "git am -3" uses
-to the underlying "git apply".  It only implements the command line
-parsing part, and does not do anything interesting yet, other than
-making sure that "--reject" and "--3way" are not given together, and
-making "--3way" imply "--index".
+When a patch does not apply to what we have, but we know the preimage the
+patch was made against, we apply the patch to the preimage to compute what
+the patch author wanted the result to look like, and attempt a three-way
+merge between the result and our version, using the intended preimage as
+the base version.
+
+When we are applying the patch using the index, we would additionally need
+to add the object names of these three blobs involved in the merge, which
+is not yet done in this step, but we add a field to "struct patch" so that
+later write-out step can use it.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c         | 25 +++++++++++++++++++++++--
- t/t4117-apply-reject.sh |  8 ++++++++
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ builtin/apply.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 50 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 7379687..51b695b 100644
+index 5a7201f..d84958b 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -46,6 +46,7 @@ static int apply_with_reject;
- static int apply_verbosely;
- static int allow_overlap;
- static int no_add;
-+static int threeway;
- static const char *fake_ancestor;
- static int line_termination = '\n';
- static unsigned int p_context = UINT_MAX;
-@@ -3139,6 +3140,12 @@ static int load_preimage(struct image *image,
- 	return 0;
+@@ -16,6 +16,8 @@
+ #include "dir.h"
+ #include "diff.h"
+ #include "parse-options.h"
++#include "xdiff-interface.h"
++#include "ll-merge.h"
+ 
+ /*
+  *  --check turns on checking that the working tree matches the
+@@ -194,12 +196,16 @@ struct patch {
+ 	unsigned int is_copy:1;
+ 	unsigned int is_rename:1;
+ 	unsigned int recount:1;
++	unsigned int conflicted_threeway:1;
+ 	struct fragment *fragments;
+ 	char *result;
+ 	size_t resultsize;
+ 	char old_sha1_prefix[41];
+ 	char new_sha1_prefix[41];
+ 	struct patch *next;
++
++	/* three-way fallback result */
++	unsigned char threeway_stage[3][20];
+ };
+ 
+ static void free_fragment_list(struct fragment *list)
+@@ -3146,7 +3152,29 @@ static int three_way_merge(struct image *image,
+ 			   const unsigned char *ours,
+ 			   const unsigned char *theirs)
+ {
+-	return -1; /* for now */
++	mmfile_t base_file, our_file, their_file;
++	mmbuffer_t result = { NULL };
++	int status;
++
++	read_mmblob(&base_file, base);
++	read_mmblob(&our_file, ours);
++	read_mmblob(&their_file, theirs);
++	status = ll_merge(&result, path,
++			  &base_file, "base",
++			  &our_file, "ours",
++			  &their_file, "theirs", NULL);
++	free(base_file.ptr);
++	free(our_file.ptr);
++	free(their_file.ptr);
++	if (status < 0 || !result.ptr) {
++		free(result.ptr);
++		return -1;
++	}
++	clear_image(image);
++	image->buf = result.ptr;
++	image->len = result.size;
++
++	return status;
  }
  
-+static int try_threeway(struct image *image, struct patch *patch,
-+			struct stat *st, struct cache_entry *ce)
-+{
-+	return -1; /* for now */
-+}
+ static int try_threeway(struct image *image, struct patch *patch,
+@@ -3155,6 +3183,7 @@ static int try_threeway(struct image *image, struct patch *patch,
+ 	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t len;
++	int status;
+ 	char *img;
+ 	struct image tmp_image;
+ 
+@@ -3167,6 +3196,9 @@ static int try_threeway(struct image *image, struct patch *patch,
+ 	if (get_sha1(patch->old_sha1_prefix, pre_sha1) ||
+ 	    read_blob_object(&buf, pre_sha1, patch->old_mode))
+ 		return error("repository lacks the necessary blob to fall back on 3-way merge.");
 +
++	fprintf(stderr, "Falling back to three-way merge...\n");
++
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+ 	/* Apply the patch to get the post image */
+@@ -3186,8 +3218,23 @@ static int try_threeway(struct image *image, struct patch *patch,
+ 	clear_image(&tmp_image);
+ 
+ 	/* in-core three-way merge between post and our using pre as base */
+-	return three_way_merge(image,
+-			       patch->new_name, pre_sha1, our_sha1, post_sha1);
++	status = three_way_merge(image, patch->new_name,
++				 pre_sha1, our_sha1, post_sha1);
++	if (status < 0) {
++		fprintf(stderr, "Failed to fall back on three-way merge...\n");
++		return status;
++	}
++
++	if (status) {
++		patch->conflicted_threeway = 1;
++		hashcpy(patch->threeway_stage[0], pre_sha1);
++		hashcpy(patch->threeway_stage[1], our_sha1);
++		hashcpy(patch->threeway_stage[2], post_sha1);
++		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
++	} else {
++		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
++	}
++	return 0;
+ }
+ 
  static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
- {
- 	struct image image;
-@@ -3146,8 +3153,11 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
- 	if (load_preimage(&image, patch, st, ce) < 0)
- 		return -1;
- 
--	if (apply_fragments(&image, patch) < 0)
--		return -1; /* note with --reject this succeeds. */
-+	if (apply_fragments(&image, patch) < 0) {
-+		/* Note: with --reject, apply_fragments() returns 0 */
-+		if (!threeway || try_threeway(&image, patch, st, ce) < 0)
-+			return -1;
-+	}
- 	patch->result = image.buf;
- 	patch->resultsize = image.len;
- 	add_to_fn_table(patch);
-@@ -4079,6 +4089,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			"apply a patch without touching the working tree"),
- 		OPT_BOOLEAN(0, "apply", &force_apply,
- 			"also apply the patch (use with --stat/--summary/--check)"),
-+		OPT_BOOL('3', "3way", &threeway,
-+			 "attempt three-way merge if a patch does not apply"),
- 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
- 			"build a temporary index based on embedded index information"),
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
-@@ -4127,6 +4139,15 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	argc = parse_options(argc, argv, prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
-+	if (apply_with_reject && threeway)
-+		die("--reject and --3way cannot be used together.");
-+	if (cached && threeway)
-+		die("--cached and --3way cannot be used together.");
-+	if (threeway) {
-+		if (is_not_gitdir)
-+			die(_("--3way outside a repository"));
-+		check_index = 1;
-+	}
- 	if (apply_with_reject)
- 		apply = apply_verbosely = 1;
- 	if (!force_apply && (diffstat || numstat || summary || check || fake_ancestor))
-diff --git a/t/t4117-apply-reject.sh b/t/t4117-apply-reject.sh
-index e9ccd16..8e15ecb 100755
---- a/t/t4117-apply-reject.sh
-+++ b/t/t4117-apply-reject.sh
-@@ -46,6 +46,14 @@ test_expect_success setup '
- 	cat file1 >saved.file1
- '
- 
-+test_expect_success 'apply --reject is incompatible with --3way' '
-+	test_when_finished "cat saved.file1 >file1" &&
-+	git diff >patch.0 &&
-+	git checkout file1 &&
-+	test_must_fail git apply --reject --3way patch.0 &&
-+	git diff --exit-code
-+'
-+
- test_expect_success 'apply without --reject should fail' '
- 
- 	if git apply patch.1
 -- 
 1.7.11.1.294.g68a9409
