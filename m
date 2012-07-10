@@ -1,108 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 04/19] apply: refactor read_file_or_gitlink()
-Date: Tue, 10 Jul 2012 00:03:57 -0700
-Message-ID: <1341903852-4815-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 06/19] apply: split load_preimage() helper function out
+Date: Tue, 10 Jul 2012 00:03:59 -0700
+Message-ID: <1341903852-4815-7-git-send-email-gitster@pobox.com>
 References: <1341903852-4815-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 09:04:43 2012
+X-From: git-owner@vger.kernel.org Tue Jul 10 09:04:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoUUz-0008MO-EI
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 09:04:41 +0200
+	id 1SoUV0-0008MO-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 09:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070Ab2GJHEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jul 2012 03:04:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53053 "EHLO
+	id S1754092Ab2GJHEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jul 2012 03:04:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53099 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752152Ab2GJHE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2012 03:04:29 -0400
+	id S1751980Ab2GJHEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2012 03:04:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADE147DD1
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1D87DD9
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=yQrk
-	sRM2mhvUQ6/j5U+nzYnskEA=; b=EVolElEQtNtrlqcur4+Om4BvstHhSZlwrPJg
-	yS1hVzAg8Cf4YfWN1JFh495Fs3nG7lxd+pr8wXafOZWTq6mC2EjPtyA2XI6ZXzrn
-	T+YjL5CTCf37SdF5mS+NM1ES4/dm9TYzsSnlE9hQFLtAxYad6i/TlctBW8TMZg66
-	WPSrBiQ=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=o20D
+	xuBNdx5hxfDwWkwshEXqNnA=; b=WKBHgCXBR1VGMxR8FMfUHdEdqDsMKpq/F7vC
+	LmKMFU6wKRMyHu5LXCNYJsDY1Lo+qg8GzgAH9DYdrwLWURQTNGrhtGwmC0RA8GZB
+	E4mHCu90wLQJyaGmDrmrgylI/+rfrzKelh1ZAF70E+KKpN276wEwUApo5A4Z1hlr
+	xC7+mBM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=pYk49R
-	s4CShuIzOK+dHPCdyJxXp/3OmeV6jHG/GDslGgN1o4ypFwVGyHtlSMHTG1+2DmjG
-	gWfPo5Sdh6hiRwotGSRzf/1zKuz0tiowwbXADLsHwvFzK9R3vl56ZUP9xlxi7SNx
-	ILhw8wKYiT6aEa+xPc3euBOB7TSgFGkbrsLwg=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=HoZsHw
+	hNoHA3Hy2gqPOAyV0/Zm0pFM6lCrBqk2nreZg7b8iEnEQYQ50+AoyIJ0lB0SsXNO
+	Y4Rx6dLFRhEI9Ky7y3eMouz8TICPXcwXZG7OiyJ+mr3UPJDQtlw1E0kckNz2P+tj
+	wxzzgxl4vuDZtU80Dsu4SBlEN91y6cZqL4rvE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A50A87DD0
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2B2E7DD8
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:34 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28B977DCF for
- <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:27 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 652D37DD6 for
+ <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:33 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.294.g68a9409
 In-Reply-To: <1341903852-4815-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 7CC35C1C-CA5D-11E1-9052-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 807CA502-CA5D-11E1-9EEB-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201244>
 
-Reading a blob out of the object store does not have to require that the
-caller has a cache entry for it.
+Given a patch for a single path, the function apply_data() reads the
+preimage in core, and applies the change represented in the patch.
 
-Create a read_blob_object() helper function that takes the object name and
-mode, and use it to reimplement the original function as a thin wrapper to
-it.
+Separate out the first part that reads the preimage into a separate
+helper function load_preimage().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ builtin/apply.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 09f5df3..15bcbb0 100644
+index 487e403..4d2546f 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -2930,20 +2930,17 @@ static int apply_fragments(struct image *img, struct patch *patch)
+@@ -3046,10 +3046,10 @@ static int checkout_target(struct cache_entry *ce, struct stat *st)
  	return 0;
  }
  
--static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
-+static int read_blob_object(struct strbuf *buf, const unsigned char *sha1, unsigned mode)
+-static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
++static int load_preimage(struct image *image,
++			 struct patch *patch, struct stat *st, struct cache_entry *ce)
  {
--	if (!ce)
--		return 0;
--
--	if (S_ISGITLINK(ce->ce_mode)) {
-+	if (S_ISGITLINK(mode)) {
- 		strbuf_grow(buf, 100);
--		strbuf_addf(buf, "Subproject commit %s\n", sha1_to_hex(ce->sha1));
-+		strbuf_addf(buf, "Subproject commit %s\n", sha1_to_hex(sha1));
- 	} else {
- 		enum object_type type;
- 		unsigned long sz;
- 		char *result;
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct image image;
+ 	size_t len;
+ 	char *img;
+ 	struct patch *tpatch;
+@@ -3086,7 +3086,16 @@ static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *
+ 	}
  
--		result = read_sha1_file(ce->sha1, &type, &sz);
-+		result = read_sha1_file(sha1, &type, &sz);
- 		if (!result)
- 			return -1;
- 		/* XXX read_sha1_file NUL-terminates */
-@@ -2952,6 +2949,13 @@ static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
- 	return 0;
- }
- 
-+static int read_file_or_gitlink(struct cache_entry *ce, struct strbuf *buf)
-+{
-+	if (!ce)
-+		return 0;
-+	return read_blob_object(buf, ce->sha1, ce->ce_mode);
+ 	img = strbuf_detach(&buf, &len);
+-	prepare_image(&image, img, len, !patch->is_binary);
++	prepare_image(image, img, len, !patch->is_binary);
++	return 0;
 +}
 +
- static struct patch *in_fn_table(const char *name)
- {
- 	struct string_list_item *item;
++static int apply_data(struct patch *patch, struct stat *st, struct cache_entry *ce)
++{
++	struct image image;
++
++	if (load_preimage(&image, patch, st, ce) < 0)
++		return -1;
+ 
+ 	if (apply_fragments(&image, patch) < 0)
+ 		return -1; /* note with --reject this succeeds. */
 -- 
 1.7.11.1.294.g68a9409
