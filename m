@@ -1,99 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] branch: suggest how to undo a --set-upstream when
- given one branch
-Date: Tue, 10 Jul 2012 15:43:12 -0700
-Message-ID: <7vliirgrun.fsf@alter.siamese.dyndns.org>
-References: <1341939181-8962-1-git-send-email-cmn@elego.de>
- <1341939181-8962-3-git-send-email-cmn@elego.de>
- <20120710192408.GF8439@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 00:43:21 2012
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCH v3 1/2] test: git-stash conflict sets up rerere
+Date: Tue, 10 Jul 2012 18:52:27 -0400
+Message-ID: <1341960748-26949-1-git-send-email-hordp@cisco.com>
+Cc: gitster@pobox.com, phil.hord@gmail.com, Phil Hord <hordp@cisco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 00:53:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Soj9M-0003Lj-SY
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 00:43:21 +0200
+	id 1SojIl-0008FV-TT
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 00:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754580Ab2GJWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jul 2012 18:43:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33448 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753857Ab2GJWnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2012 18:43:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F1A493C4;
-	Tue, 10 Jul 2012 18:43:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=spN0gI/P4JXy4n0Rg1GFMS8A9bA=; b=hqO0ae
-	f2N37WNzrXL5PWMOKdPqLqIKGR8ZTWw3Kv1qlb4CzrRxWzC9JTSM58+j1T1cgxBB
-	rIX5obJ3Jro/q/ns6PTsQ7jVYdXxM7donQxGWcd1ej0hopFgG+A/mVIQwKqmSrVA
-	5qXnCPie1gXwy084gcFDAde+qxLmtesaEwu4M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yAc6lri6Mi4h9V+jTzyJ6dwgTCI9qGHq
-	MEwzjldgCUNRjgx3WhiP2GQCIMLSIIFpnrueFaaxV4kpFIQBsHi+GEEp1IF6fI4U
-	pYaz1aKF1d2RsqhEcvkXp3+3zWCkbHclqDyHP+DB109UaYLMDVcR65y74hSDdXQs
-	s+CzrDLQvDY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46D1993C3;
-	Tue, 10 Jul 2012 18:43:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA36193C1; Tue, 10 Jul 2012
- 18:43:13 -0400 (EDT)
-In-Reply-To: <20120710192408.GF8439@burratino> (Jonathan Nieder's message of
- "Tue, 10 Jul 2012 14:24:08 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A211DC18-CAE0-11E1-971B-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754639Ab2GJWwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jul 2012 18:52:38 -0400
+Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:46939 "EHLO
+	rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753978Ab2GJWwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2012 18:52:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=2644; q=dns/txt;
+  s=iport; t=1341960757; x=1343170357;
+  h=from:to:cc:subject:date:message-id;
+  bh=D3htmaRGYlyDCAFjgeZZ9arm8fj65FBK8P9YsnvvGFI=;
+  b=WlQb7ufx30OfZONLjTl1IkMW7VhApAwhTA7iyAn+0sYbGdCuWzuANNKN
+   a32rnvQ/mwRxO7omVmIu6bHvlCgU3FNtTiY833LgU+Sspih4mkxuqrzWV
+   HQq3bqbibA9DzFq4YRt+qYhKi7AwTolppZl+heXp6e1qia53jZvea4bXR
+   M=;
+X-IronPort-AV: E=Sophos;i="4.77,561,1336348800"; 
+   d="scan'208";a="100606935"
+Received: from rcdn-core-2.cisco.com ([173.37.93.153])
+  by rcdn-iport-7.cisco.com with ESMTP; 10 Jul 2012 22:52:37 +0000
+Received: from iptv-lnx-hordp.cisco.com (dhcp-64-100-104-93.cisco.com [64.100.104.93])
+	by rcdn-core-2.cisco.com (8.14.5/8.14.5) with ESMTP id q6AMqamY018722;
+	Tue, 10 Jul 2012 22:52:36 GMT
+X-Mailer: git-send-email 1.7.11.1.213.gb567ea5.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201282>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Add a failing test to confirm a conflicted stash apply
+invokes rerere to record the conflicts and resolve the
+the files it can.
 
-> Message should go on stderr and be guarded with an advice option (see
-> advice.c).
->
-> Like this:
->
-> 	const char *arg;
->
-> 	...
-> 	if (argc != 1 || !advice_old_fashioned_set_upstream)
-> 		return 0; /* ok. */
->
-> 	arg = argv[0];
-> 	advise("If you wanted to make '%s' track '%s', do this:",
-> 							head, arg);
-> 	if (branch_existed)
-> 		advise(" $ git branch --set-upstream-to='%s' '%s'",
-> 			old_upstream, arg);
-> 	else
-> 		advise(" $ git branch -d '%s'", arg);
-> 	advise(" $ git branch --set-upstream-to='%s'", arg);
->
-> If an argument contains single-quotes, the quoting will be wrong, but
-> that's probably not worth worrying about.
+mergetool may be confused by a left-over
+state from previous rerere activity causing it to
+think no files have conflicts even though they do.
+This condition is not verified by this test since a
+subsequent commit will change the behavior to enable
+rerere for stash conflicts.
 
-In principle, I would agree that this is a kind of thing that falls
-into the "advice" categiry, but with the fact that we plan to
-deprecate "--set-upstream", combined with the fact that [PATCH 1/3]
-introduced the new option --set-upstream-to together with a short
-and sweet -u synonym already at this point in the series, I think it
-is better to leave them emitted unconditionally to the standard
-error stream, in order to train users away from using the old option
-that has its arguments wrong (the option does not take an argument
-it should, and makes the command line to look as if it takes two
-branch arguments in the wrong order).
+Also, the next test expected us to finish up with a reset,
+which is impossible to do if we fail (as we must) and it's
+an unreasonable expectation anyway.  Begin the next test
+with a reset of his own instead.
 
-Actually, we should probably add the deprecation warning in this
-commit.
+Signed-off-by: Phil Hord <hordp@cisco.com>
+---
+ t/t7610-mergetool.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index f5e16fc..725f316 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -55,6 +55,16 @@ test_expect_success 'setup' '
+     git rm file12 &&
+     git commit -m "branch1 changes" &&
+ 
++    git checkout -b stash1 master &&
++    echo stash1 change file11 >file11 &&
++    git add file11 &&
++    git commit -m "stash1 changes" &&
++
++    git checkout -b stash2 master &&
++    echo stash2 change file11 >file11 &&
++    git add file11 &&
++    git commit -m "stash2 changes" &&
++
+     git checkout master &&
+     git submodule update -N &&
+     echo master updated >file1 &&
+@@ -193,7 +203,35 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
+     git reset --hard
+ '
+ 
++test_expect_failure 'conflicted stash sets up rerere'  '
++    git config rerere.enabled true &&
++    git checkout stash1 &&
++    echo "Conflicting stash content" >file11 &&
++    git stash &&
++
++    git checkout --detach stash2 &&
++    test_must_fail git stash apply &&
++
++    test -n "$(git ls-files -u)" &&
++    conflicts="$(git rerere remaining)" &&
++    test "$conflicts" = "file11" &&
++    output="$(git mergetool --no-prompt)" &&
++    test "$output" != "No files need merging" &&
++
++    git commit -am "save the stash resolution" &&
++
++    git reset --hard stash2 &&
++    test_must_fail git stash apply &&
++
++    test -n "$(git ls-files -u)" &&
++    conflicts="$(git rerere remaining)" &&
++    test -z "$conflicts" &&
++    output="$(git mergetool --no-prompt)" &&
++    test "$output" = "No files need merging"
++'
++
+ test_expect_success 'mergetool takes partial path' '
++    git reset --hard
+     git config rerere.enabled false &&
+     git checkout -b test12 branch1 &&
+     git submodule update -N &&
+-- 
+1.7.11.1.213.gb567ea5.dirty
