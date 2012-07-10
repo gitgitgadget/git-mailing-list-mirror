@@ -1,98 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 01/19] apply: fix an incomplete comment in check_patch()
-Date: Tue, 10 Jul 2012 00:03:54 -0700
-Message-ID: <1341903852-4815-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 02/19] apply: a bit more comments on PATH_TO_BE_DELETED
+Date: Tue, 10 Jul 2012 00:03:55 -0700
+Message-ID: <1341903852-4815-3-git-send-email-gitster@pobox.com>
 References: <1341903852-4815-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 09:04:29 2012
+X-From: git-owner@vger.kernel.org Tue Jul 10 09:04:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoUUm-00085p-Re
+	id 1SoUUn-00085p-CX
 	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 09:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754037Ab2GJHEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jul 2012 03:04:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52965 "EHLO
+	id S1754042Ab2GJHEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jul 2012 03:04:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52998 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752152Ab2GJHEU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2012 03:04:20 -0400
+	id S1752152Ab2GJHEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2012 03:04:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A1D67DC6
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0865F7DCA
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=6LYd
-	q6cPGjxvlmY22V1gdPKV0H8=; b=hASdqDhAUK+AMx7N3xPFzSwvbxMX51S1xy92
-	CzHq8SIpGKOzFG+UofS1cAg/Km1Cew7RLX+ez4qV9qV8FcZC5m1Oy9EUstsJgVLH
-	IMs4ORxg8H9e5Duk7B0PxqQ8Dnuag+Qv1nPZfzfdhAnJrexJUx560Fq9x+WuJ7AV
-	kgu7LoY=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=85xr
+	KPeg6xZH3BEr2bGleP53TXg=; b=QI8GskEJRx+WQZGiTTI+VwscTPiSa7qTrhZ0
+	a+eenMYPjQAex+hcy3bMn64AU1QC+qDmFDBznF8fpTxrQEA08oAh5L1GVfUh5zb1
+	y7M6cVnnSEljr1mXi1hb11qvxtEXXdfiB1FF0Uje4B70MSBHbn1z33nixp8MI1aZ
+	4/72miM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=NNeYQB
-	/qRzvUEba+df3jLj4LgQv91TtEsMOkSUUEGNc3ph311AjLlcFC6ohWERRoSb3afL
-	CUYDZievqiBBGLsyy3TMgjxmsy/dZHlp35dNP8hcCJJkcHcYQyNUS2LzDTdbxB9m
-	murRrF/XtGUs8kIYi+G4xRjStYN8GG/ytEPs4=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ZgG7t4
+	WTOepP2WtZd6+ltuGsIqRx5DJYZj7asJWp9LZAqKXwCevIJYjUll3PYKG/jqAsU6
+	y6VDb/f/Y6ehNeb9Zqmlma1jjaQZAEzF4+cYVNO9R994as76gXLJnQO4z93SabVE
+	50qoOLWeRP0cKegRcpxagIOCpLCwBquqAYbrI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 211307DC5
-	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BED7DC9
+	for <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:22 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C3DB7DC4 for
- <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:17 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77E6A7DC7 for
+ <git@vger.kernel.org>; Tue, 10 Jul 2012 03:04:21 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.1.294.g68a9409
 In-Reply-To: <1341903852-4815-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 76E38BFA-CA5D-11E1-84BD-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 79611BF4-CA5D-11E1-BEE2-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201240>
 
-This check is not only about type-change (for which it would be
-sufficient to check only was_deleted()) but is also about a swap
-rename.  Otherwise to_be_deleted() check is not justified.
+The code is littered with to_be_deleted() whose purpose is not so clear.
+Describe where it matters.  Also remove an extra space before "#define"
+that snuck in by mistake at 7fac0ee (builtin-apply: keep information about
+files to be deleted, 2009-04-11).
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ builtin/apply.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 725712d..44f6de9 100644
+index 44f6de9..35460c9 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -3218,16 +3218,22 @@ static int check_patch(struct patch *patch)
- 		return status;
- 	old_name = patch->old_name;
+@@ -2970,9 +2970,15 @@ static struct patch *in_fn_table(const char *name)
+  * item->util in the filename table records the status of the path.
+  * Usually it points at a patch (whose result records the contents
+  * of it after applying it), but it could be PATH_WAS_DELETED for a
+- * path that a previously applied patch has already removed.
++ * path that a previously applied patch has already removed, or
++ * PATH_TO_BE_DELETED for a path that a later patch would remove.
++ *
++ * The latter is needed to deal with a case where two paths A and B
++ * are swapped by first renaming A to B and then renaming B to A;
++ * moving A to B should not be prevented due to presense of B as we
++ * will remove it in a later patch.
+  */
+- #define PATH_TO_BE_DELETED ((struct patch *) -2)
++#define PATH_TO_BE_DELETED ((struct patch *) -2)
+ #define PATH_WAS_DELETED ((struct patch *) -1)
  
-+	/*
-+	 * A type-change diff is always split into a patch to delete
-+	 * old, immediately followed by a patch to create new (see
-+	 * diff.c::run_diff()); in such a case it is Ok that the entry
-+	 * to be deleted by the previous patch is still in the working
-+	 * tree and in the index.
-+	 *
-+	 * A patch to swap-rename between A and B would first rename A
-+	 * to B and then rename B to A.  While applying the first one,
-+	 * the presense of B should not stop A from getting renamed to
-+	 * B; ask to_be_deleted() about the later rename.  Removal of
-+	 * B and rename from A to B is handled the same way by asking
-+	 * was_deleted().
-+	 */
- 	if ((tpatch = in_fn_table(new_name)) &&
--			(was_deleted(tpatch) || to_be_deleted(tpatch)))
--		/*
--		 * A type-change diff is always split into a patch to
--		 * delete old, immediately followed by a patch to
--		 * create new (see diff.c::run_diff()); in such a case
--		 * it is Ok that the entry to be deleted by the
--		 * previous patch is still in the working tree and in
--		 * the index.
--		 */
-+	    (was_deleted(tpatch) || to_be_deleted(tpatch)))
- 		ok_if_exists = 1;
- 	else
- 		ok_if_exists = 0;
+ static int to_be_deleted(struct patch *patch)
 -- 
 1.7.11.1.294.g68a9409
