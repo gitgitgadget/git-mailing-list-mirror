@@ -1,80 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] filter-branch: do not forget the '@' prefix to force
- git-timestamp
-Date: Mon, 09 Jul 2012 16:56:17 -0700
-Message-ID: <7vobnoij4u.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rerere: make rr-cache fanout directory honor umask
+Date: Tue, 10 Jul 2012 02:37:22 -0400
+Message-ID: <20120710063721.GA6347@sigill.intra.peff.net>
+References: <alpine.LNX.2.00.1207061700060.2056@iabervon.org>
+ <20120707215029.GA26819@blimp.dmz>
+ <7vobnpn224.fsf@alter.siamese.dyndns.org>
+ <20120709225829.GA8397@sigill.intra.peff.net>
+ <7v1ukkjzyz.fsf@alter.siamese.dyndns.org>
+ <7vwr2cikwa.fsf@alter.siamese.dyndns.org>
+ <7vsjd0ikfe.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 10 01:56:35 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 10 08:37:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SoNoc-0006ZD-7G
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 01:56:30 +0200
+	id 1SoU4n-0006Im-AJ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 08:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754955Ab2GIX4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jul 2012 19:56:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48357 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754949Ab2GIX4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jul 2012 19:56:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB51896C4;
-	Mon,  9 Jul 2012 19:56:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=5
-	Hlyg2VWKLl32pxlaT+QRLVpgWk=; b=WBfHyBMcEKTo7Kx84ww/a/+MKlkvnlppZ
-	myqghReW4gGVwPxwwKV4P/QQSljWWdD8KeeZSzlqUK3YQKuNk6vAx1YKXiayFGTE
-	6VD0Bjk9jfaQWbChGCaTNdASf3UW8whSsbrWkXOpmFJvYvSmnaEgawbQ1w39uPPX
-	gJAZjAmR2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=H3D
-	1D72qSwZ6C3ex21Ne3j1NIDyhn+JSFzj2/h9tygysraiwanD5SHQIm9srY8xzPLc
-	Kr9ek70yzInac00dAIbkROLjaZm7F8N/8xok64yXe8Vq/kwJh9iLfpyORiQ/uN5M
-	i7nctOqMwTFlPiMCpVYH7Vy5G4CvBqCT+PUM5SKA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A18A396C3;
-	Mon,  9 Jul 2012 19:56:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F09D696C2; Mon,  9 Jul 2012
- 19:56:18 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AD69D0D0-CA21-11E1-909F-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752240Ab2GJGh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jul 2012 02:37:29 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:56439
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751952Ab2GJGh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jul 2012 02:37:28 -0400
+Received: (qmail 26139 invoked by uid 107); 10 Jul 2012 06:37:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jul 2012 02:37:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jul 2012 02:37:22 -0400
+Content-Disposition: inline
+In-Reply-To: <7vsjd0ikfe.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201236>
 
-For some reason, this script reinvents, instead of refactoring the
-existing one in git-sh-setup, in the ident logic, and it was missed
-when git-sh-setup was updated with 2c733fb (parse_date(): '@' prefix
-forces git-timestamp, 2012-02-02).
+On Mon, Jul 09, 2012 at 04:28:21PM -0700, Junio C Hamano wrote:
 
-Teach the script that it is OK to have a way ancient timestamp in
-the commits that are being filtered.
+> This is the last remaining call to mkdir(2) that restricts the permission
+> bits by passing 0755.  Just use the same mkdir_in_gitdir() used to create
+> the leaf directories.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Looks obviously correct to me.
+
+I notice that grepping finds a few 0644 modes, too. Most of them are
+false-positives (e.g., we store and transmit 100644 as a shorthand for
+"normal non-executable permissions"). This is the only one that looked
+legitimate to me:
+
+-- >8 --
+Subject: [PATCH] add: create ADD_EDIT.patch with mode 0666
+
+We should be letting the user's umask take care of
+restricting permissions. Even though this is a temporary
+file and probably nobody would notice, this brings us in
+line with other temporary file creations in git (e.g.,
+choosing "e"dit from git-add--interactive).
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- git-filter-branch.sh | 2 +-
+ builtin/add.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 804a7f4..b9cded5 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -84,7 +84,7 @@ set_ident () {
- 			s/.*/GIT_'$uid'_EMAIL='\''&'\''; export GIT_'$uid'_EMAIL/p
- 
- 			g
--			s/^'$lid' [^<]* <[^>]*> \(.*\)$/\1/
-+			s/^'$lid' [^<]* <[^>]*> \(.*\)$/@\1/
- 			s/'\''/'\''\'\'\''/g
- 			s/.*/GIT_'$uid'_DATE='\''&'\''; export GIT_'$uid'_DATE/p
- 
+diff --git a/builtin/add.c b/builtin/add.c
+index 41edd63..815ac4b 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -287,7 +287,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
+-	out = open(file, O_CREAT | O_WRONLY, 0644);
++	out = open(file, O_CREAT | O_WRONLY, 0666);
+ 	if (out < 0)
+ 		die (_("Could not open '%s' for writing."), file);
+ 	rev.diffopt.file = xfdopen(out, "w");
 -- 
-1.7.11.1.294.gf7b86df
+1.7.10.5.16.ga1c6f1c
