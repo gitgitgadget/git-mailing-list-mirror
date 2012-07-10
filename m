@@ -1,125 +1,107 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] branch: suggest how to undo a --set-upstream when given one branch
-Date: Tue, 10 Jul 2012 19:20:23 +0200
-Message-ID: <vpqpq83mt2g.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] branch: introduce --set-upstream-to
+Date: Tue, 10 Jul 2012 10:26:47 -0700
+Message-ID: <7vehojil2g.fsf@alter.siamese.dyndns.org>
 References: <1341939181-8962-1-git-send-email-cmn@elego.de>
-	<1341939181-8962-3-git-send-email-cmn@elego.de>
+ <1341939181-8962-2-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com
-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Jul 10 19:20:38 2012
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Jul 10 19:26:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Soe73-00082q-Pj
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 19:20:38 +0200
+	id 1SoeD9-00087s-JI
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jul 2012 19:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756507Ab2GJRUc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jul 2012 13:20:32 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35289 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752719Ab2GJRUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jul 2012 13:20:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6AHJ6ok016567
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 10 Jul 2012 19:19:06 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Soe6q-0000Cg-2T; Tue, 10 Jul 2012 19:20:24 +0200
-In-Reply-To: <1341939181-8962-3-git-send-email-cmn@elego.de> ("Carlos
- =?iso-8859-1?Q?Mart=EDn?=
-	Nieto"'s message of "Tue, 10 Jul 2012 18:53:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 10 Jul 2012 19:19:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6AHJ6ok016567
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1342545549.32082@HrIBdEuciq4tl5D6T6H6Ww
+	id S1754281Ab2GJR0u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jul 2012 13:26:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752840Ab2GJR0t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jul 2012 13:26:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FB4F8257;
+	Tue, 10 Jul 2012 13:26:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=D7Nau5txBho8
+	hono+6eukH3uXmU=; b=vOzt70UAlvO/+W6XhYZk/Cg9Vklnl0coDPQ8KZkYBFM2
+	f5GVIu9zM9VICv5azu0weEETsikwXxmIgfaWYhIO3kaJ27glem9ukYuMHDLj/opd
+	KFLOqD9ItCf9nlflGcYP6cwRwX2iITZ4xkzAzEokMPSaNgoARQnrAcKNzQheSBc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jOh1Mb
+	mElMSh0LwOpmFf4JD9JoECDmXq/M+jGlExDOy9JUnQR8X0K0PlwAliSQT3KY33Ov
+	f5FQVOyh5yhSgoD67cuov0PMO5bG6ztc5A28AIxBfqxCo4+NQOpbZ9nS/2ZG/e7v
+	zE7dvLwJGiUZQxwEVrLKmCVSZqHk30fiBvLDM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3666D8256;
+	Tue, 10 Jul 2012 13:26:49 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4E388255; Tue, 10 Jul 2012
+ 13:26:48 -0400 (EDT)
+In-Reply-To: <1341939181-8962-2-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Tue, 10 Jul 2012 18:52:59
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6E136C00-CAB4-11E1-8F9C-FC762E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201266>
 
-Carlos Mart=EDn Nieto <cmn@elego.de> writes:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 0e060f2..c886fc0 100644
 > --- a/builtin/branch.c
 > +++ b/builtin/branch.c
-> @@ -864,10 +864,32 @@ int cmd_branch(int argc, const char **argv, con=
+> @@ -713,6 +713,7 @@ int cmd_branch(int argc, const char **argv, const=
+ char *prefix)
+>  	int verbose =3D 0, abbrev =3D -1, detached =3D 0;
+>  	int reflog =3D 0, edit_description =3D 0;
+>  	int quiet =3D 0;
+> +	const char *new_upstream =3D NULL;
+>  	enum branch_track track;
+>  	int kinds =3D REF_LOCAL_BRANCH;
+>  	struct commit_list *with_commit =3D NULL;
+> @@ -726,6 +727,7 @@ int cmd_branch(int argc, const char **argv, const=
+ char *prefix)
+>  			BRANCH_TRACK_EXPLICIT),
+>  		OPT_SET_INT( 0, "set-upstream",  &track, "change upstream info",
+>  			BRANCH_TRACK_OVERRIDE),
+> +		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "cha=
+nge the upstream info"),
+>  		OPT__COLOR(&branch_use_color, "use colored output"),
+>  		OPT_SET_INT('r', "remotes",     &kinds, "act on remote-tracking br=
+anches",
+>  			REF_REMOTE_BRANCH),
+> @@ -794,10 +796,10 @@ int cmd_branch(int argc, const char **argv, con=
 st char *prefix)
->  		   info and making sure new_upstream is correct */
->  		create_branch(head, branch->name, new_upstream, 0, 0, 0, quiet, BR=
-ANCH_TRACK_OVERRIDE);
->  	} else if (argc > 0 && argc <=3D 2) {
-> +		struct branch *branch =3D branch_get(argv[0]);
-> +		const char *old_upstream =3D NULL;
-> +		int branch_existed =3D 0;
-> +
->  		if (kinds !=3D REF_LOCAL_BRANCH)
->  			die(_("-a and -r options to 'git branch' do not make sense with a=
- branch name"));
-> +
-> +		/* Save what argv[0] was pointing to so we can give
-> +		   the --set-upstream-to hint */
+>  	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_=
+usage,
+>  			     0);
+> =20
+> -	if (!delete && !rename && !edit_description && argc =3D=3D 0)
+> +	if (!delete && !rename && !edit_description && !new_upstream && arg=
+c =3D=3D 0)
+>  		list =3D 1;
+> =20
+> -	if (!!delete + !!rename + !!force_create + !!list > 1)
+> +	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream =
+> 1)
+>  		usage_with_options(builtin_branch_usage, options);
 
-Multi-line comments are usually written in Git as
+It probably is an error to have track and new_upstream together.
 
-/*
- * multi-line
- * comment
- */
+The remainder of [Patch 1/3] looked entirely sensible, including the
+proposed log message (modulo missing sign-off).
 
-> +		if (branch_has_merge_config(branch))
-> +		  old_upstream =3D shorten_unambiguous_ref(branch->merge[0]->dst, =
-0);
-
-Broken indentation.
-
-> +		if (argc =3D=3D 1) {
-> +			printf("If you wanted to make '%s' track '%s', do this:\n", head,=
- argv[0]);
-
-Could be marked for translation with _("...").
-
-> +			if (branch_existed)
-> +				printf(" $ git branch --set-upstream '%s' '%s'\n", argv[0], old_=
-upstream);
-
-old_upstream may be NULL at this point. I guess you want to skip this
-line if old_upsteam is NULL.
-
-The fact that I could find this bug suggests that this lacks a few new
-tests too ;-).
-
-> +			else
-> +				printf(" $ git branch -d '%s'\n", argv[0]);
-> +
-> +			printf(" $ git branch --set-upstream-to '%s'\n", argv[0]);
-
-=46or the 3 printf()s: we usually display commands without the "$", and
-separate them from text with a blank line. See for example what "git
-commit" says when you didn't provide authorship:
-
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
-(the absence of $ sign avoids the temptation to cut-and-paste it)
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
