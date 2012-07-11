@@ -1,117 +1,172 @@
-From: <dag@cray.com>
-Subject: Re: Subtree in Git
-Date: Wed, 11 Jul 2012 11:14:04 -0500
-Message-ID: <nng4npe6zsj.fsf@transit.us.cray.com>
-References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
-	<nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
-	<87fwbgbs0h.fsf@smith.obbligato.org>
-	<7v8vh78dag.fsf@alter.siamese.dyndns.org>
-	<4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com>
-	<nngaa0z3p8b.fsf@transit.us.cray.com>
-	<87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v2 1/2] Strip namelen out of ce_flags into a
+ ce_namelen field
+Date: Wed, 11 Jul 2012 09:29:31 -0700
+Message-ID: <7vsjcyfehg.fsf@alter.siamese.dyndns.org>
+References: <7vtxxns4z4.fsf@alter.siamese.dyndns.org>
+ <1341590850-15653-1-git-send-email-t.gummerer@gmail.com>
+ <1341590850-15653-2-git-send-email-t.gummerer@gmail.com>
+ <7vy5mtlebz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <greened@obbligato.org>, Junio C Hamano <gitster@pobox.com>,
-	"Hilco Wijbenga" <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Herman van Rink <rink@initfour.nl>
-X-From: git-owner@vger.kernel.org Wed Jul 11 18:21:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	pclouds@gmail.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 11 18:29:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SozfY-0000m4-3d
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 18:21:40 +0200
+	id 1SoznI-0004Za-9g
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 18:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072Ab2GKQVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jul 2012 12:21:33 -0400
-Received: from exprod6og105.obsmtp.com ([64.18.1.189]:43391 "EHLO
-	exprod6og105.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755957Ab2GKQVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2012 12:21:32 -0400
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jul 2012 12:21:31 EDT
-Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob105.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKT/2oC4p/6TCAbKq1GEj6oeA6sq+K2JRy@postini.com; Wed, 11 Jul 2012 09:21:31 PDT
-Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
- (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 11 Jul
- 2012 11:14:05 -0500
-In-Reply-To: <4FD89383.70003@initfour.nl> (Herman van Rink's message of "Wed,
-	13 Jun 2012 15:20:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1756338Ab2GKQ3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 12:29:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60188 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756276Ab2GKQ3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 12:29:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56F853E21;
+	Wed, 11 Jul 2012 12:29:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5u6p6WqrUutSLxU4MrwfqXPKIrQ=; b=DOiRjG
+	dXYFrsGB9VplopIAUnvqqZxcmED3FpUeHmdN5LR2+iBa+ExSQ7kExMEzi3uNOAUn
+	CktRpW9gixwEaYxsqPsfst3r2WDzML//SN54EdJ8DVYFC5fYl5tm+38T2EehrenH
+	2ZECq+o63xWwN3YLSlGSireUg8nbUWB2UA+/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qXDpEmBikAfyGULukN4Py118YCszvCXc
+	kotOX/Xt/bpVAm14ItP2nWpi8xYpHlDsFO214BMOhZ+XE1FYAaAAfPyEd5liCkEr
+	sKb5OCITt7sOCAxOxCwNOyq0avcy8/uzTBfmWHnrLfbRP6Ofx+0riZDX53Vze9Bd
+	DJYHaHbnDbY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9943E20;
+	Wed, 11 Jul 2012 12:29:33 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94A393E1E; Wed, 11 Jul 2012
+ 12:29:32 -0400 (EDT)
+In-Reply-To: <7vy5mtlebz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 08 Jul 2012 21:59:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98657EBE-CB75-11E1-8C01-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201313>
 
-Herman van Rink <rink@initfour.nl> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> It's hard to tell what's what with one big diff.  Each command should
->> get its own commit plus more if infrastructure work has to be done.  I
->> realize it's a bit of a pain to reformulate this but git rebase -i makes
->> it easy and the history will be much better long-term.
->>
->> Each command should be described briefly in the commit log.
+>> @@ -395,10 +395,8 @@ int df_name_compare(const char *name1, int len1, int mode1,
+>>  	return c1 - c2;
+>>  }
+>>  
+>> -int cache_name_compare(const char *name1, int flags1, const char *name2, int flags2)
+>> +int cache_name_stage_compare(const char *name1, int stage1, int len1, const char *name2, int stage2, int len2)
+>>  {
+>> -	int len1 = flags1 & CE_NAMEMASK;
+>> -	int len2 = flags2 & CE_NAMEMASK;
+>>  	int len = len1 < len2 ? len1 : len2;
+>>  	int cmp;
 >
-> That would indeed be nice, but as some parts interdependent it would be
-> rather complicated.
+> Isn't this a _BUGFIX_?  It appears to me that the original code
+> would only compare the first 4k bytes and ignore the rest, if two
+> cache entries, both with overlong names, are compared.  Care to come
+> up with a test case to demonstrate the breakage and a bugfix without
+> the remainder of this patch, to be applied to 'master' and older
+> maintenance releases?
 
-Do the interdependent parts first, then.  These should be pure
-infrastructure.
+Perhaps something like this (based on v1.7.0.9 as this may deserve
+to go to older maintenance releases).
 
-> And what is the use if their not fully independently testable.
+-- >8 --
+Subject: [PATCH] cache_name_compare(): do not truncate while comparing paths
 
-The command should be testable as soon as they are fully implemented,
-no?
+We failed to use ce_namelen() equivalent and instead only compared
+up to the CE_NAMEMASK bytes by mistake.  Adding an overlong path
+that shares the same common prefix as an existing entry in the index
+did not add a new entry, but instead replaced the existing one, as
+the result.
 
-I'm thinking about a sequence like this:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ read-cache.c             | 13 +++++++++----
+ t/t3006-ls-files-long.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 4 deletions(-)
+ create mode 100755 t/t3006-ls-files-long.sh
 
-- Infrastructure for command A (and possibly B, C, etc. if they are
-  interdependent).
-- Command A + tests
-- Infrastructure for command B
-- Command B + tests
-- etc.
-
-> If you want to fake a nice history tree then go ahead, I just don't have
-> the energy to go through these commits again just for that.
-
-Well, I can't do this either, both because it would take time to get up
-to speed on the patches and because I have a million other things going
-on at the moment.  So unfortunately, this is going to sit until someone
-can take it up.
-
-Unless Junio accepts your patches, of course.  :)
-
->> Some questions/comments:
->>
->> - Is .gittrees the right solution?  I like the feature it provides but
->>   an external file feels a bit hacky.  I wonder if there is a better way
->>   to track this metadata.  Notes maybe?  Other git experts will have to
->>   chime in with suggestions.
->
-> It's similar to what git submodule does. And when you add this file to
-> the index you can use it on other checkouts as well.
-
-Well, I guess I'm not strongly opposed, I was just asking the question.
-
->> - This code seems to be repeated a lot.  Maybe it should be a utility
->>   function.
->
-> Yes that's there three times...
-
-So you agree it should be factored?
-
->> - I removed all this stuff in favor of the test library.  Please don't
->>   reintroduce it.  These new tests will have to be rewritten in terms of
->>   the existing test infrastructure.  It's not too hard.
->
-> I've left it in to be able to verify your new tests. Once all the new
-> tests are passing we can get rid of the old one, not before.
-> And as all the old tests are contained in test.sh it should not interfere...
-
-No, I'm very strongly against putting this back in.  The new tests will
-have to be updated to the upstream test infrastructure.
-
-                                      -Dave
+diff --git a/read-cache.c b/read-cache.c
+index f1f789b..0cd13aa 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -405,10 +405,15 @@ int df_name_compare(const char *name1, int len1, int mode1,
+ 
+ int cache_name_compare(const char *name1, int flags1, const char *name2, int flags2)
+ {
+-	int len1 = flags1 & CE_NAMEMASK;
+-	int len2 = flags2 & CE_NAMEMASK;
+-	int len = len1 < len2 ? len1 : len2;
+-	int cmp;
++	int len1, len2, len, cmp;
++
++	len1 = flags1 & CE_NAMEMASK;
++	if (CE_NAMEMASK <= len1)
++		len1 = strlen(name1 + CE_NAMEMASK) + CE_NAMEMASK;
++	len2 = flags2 & CE_NAMEMASK;
++	if (CE_NAMEMASK <= len2)
++		len2 = strlen(name2 + CE_NAMEMASK) + CE_NAMEMASK;
++	len = len1 < len2 ? len1 : len2;
+ 
+ 	cmp = memcmp(name1, name2, len);
+ 	if (cmp)
+diff --git a/t/t3006-ls-files-long.sh b/t/t3006-ls-files-long.sh
+new file mode 100755
+index 0000000..202ad65
+--- /dev/null
++++ b/t/t3006-ls-files-long.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++
++test_description='overly long paths'
++. ./test-lib.sh
++
++test_expect_success setup '
++	p=filefilefilefilefilefilefilefile &&
++	p=$p$p$p$p$p$p$p$p$p$p$p$p$p$p$p$p &&
++	p=$p$p$p$p$p$p$p$p$p$p$p$p$p$p$p$p &&
++
++	path_a=${p}_a &&
++	path_z=${p}_z &&
++
++	blob_a=$(echo frotz | git hash-object -w --stdin) &&
++	blob_z=$(echo nitfol | git hash-object -w --stdin) &&
++
++	pat="100644 %s 0\t%s\n"
++'
++
++test_expect_success 'overly-long path by itself is not a problem' '
++	printf "$pat" "$blob_a" "$path_a" |
++	git update-index --add --index-info &&
++	echo "$path_a" >expect &&
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'overly-long path does not replace another by mistake' '
++	printf "$pat" "$blob_a" "$path_a" "$blob_z" "$path_z" |
++	git update-index --add --index-info &&
++	(
++		echo "$path_a"
++		echo "$path_z"
++	) >expect &&
++	git ls-files >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+1.7.11
