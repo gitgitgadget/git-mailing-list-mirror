@@ -1,88 +1,55 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodules: don't stumble over symbolic links when cloning
- recursively
-Date: Wed, 11 Jul 2012 22:06:05 +0200
-Message-ID: <4FFDDCAD.5080001@web.de>
-References: <4FFDC1EE.8080106@web.de> <4FFDCFA4.9060602@kdbg.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Mini bug report origin/pu: t1512 failed on Mac OS X (commit  957d74062c1f0e
+ ?)
+Date: Wed, 11 Jul 2012 22:09:02 +0200
+Message-ID: <4FFDDD5E.3080309@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Bob Halley <halley@play-bow.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 22:06:19 2012
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 11 22:09:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sp3Au-0003FQ-1J
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 22:06:16 +0200
+	id 1Sp3Dk-0007pi-Li
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 22:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933134Ab2GKUGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jul 2012 16:06:10 -0400
-Received: from mout.web.de ([212.227.15.3]:65396 "EHLO mout.web.de"
+	id S932439Ab2GKUJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 16:09:07 -0400
+Received: from mout.web.de ([212.227.15.3]:53489 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932436Ab2GKUGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2012 16:06:08 -0400
-Received: from [192.168.178.48] ([91.3.167.141]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0M25Bz-1Rw7Ik1Q5r-00tV0j; Wed, 11 Jul 2012 22:06:05
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <4FFDCFA4.9060602@kdbg.org>
-X-Provags-ID: V02:K0:cDvlwFAA4OGv8OQeosAJjeyTIncQmhaN8WdgxAKius5
- KhVPggClOVJD61Naxfum5jaZJIQWGE/oDESB/fXct+UpAhUIyD
- hO3vQisqmUV/r5hDQxvQ31fvUKDtenyWeCxCzvkt4puH6QSEf0
- A3EQ1u/+bB/f0zfb1o/8bw2Aojvc3K0Aw4mBsb6WYDhC0KQT6r
- d/Vhw8Myj14jGb5R4jBXg==
+	id S1753318Ab2GKUJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 16:09:06 -0400
+Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0MGRVU-1SbrwN0kpU-00DzdH; Wed, 11 Jul 2012 22:09:04 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+X-Provags-ID: V02:K0:D2evjAV/teRrgau39ghRie5CfVXRUrKf2aiEikXoq4r
+ jmqJN5NjPDUK9ZJ8G8ByUcvr/HaeLCh0zgigmsEh6VuWZijpR2
+ 2ObS0XFzk/04zTwd7zsuo42QoRsYhy+AI13Qnl74/MdE1FVPZr
+ Q0+z0sO8S8Ywu5O2pTrDLZYHWUlBDAD+QIdgf96dECl6FpUMj1
+ bEmKsukzAEi2TaP2x4rHQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201326>
 
-Am 11.07.2012 21:10, schrieb Johannes Sixt:
-> Am 11.07.2012 20:11, schrieb Jens Lehmann:
->> Since 69c305178 (submodules: refactor computation of relative gitdir path)
->> cloning a submodule recursively fails for recursive submodules when a
->> symbolic link is part of the path to the work tree of the superproject.
->>
->> This happens when module_clone() tries to find the relative paths between
->> work tree and git dir. When a symbolic link in current $PWD points to a
->> directory in a different level determining the number of "../" needed to
->> traverse to the superprojects work tree leads to a wrong result.
->>
->> As there is no portable way to say "pwd -P" use cd_to_toplevel to remove
->> the link from the pwd, which fixes this problem.
-> ...
->> -	a=$(cd "$gitdir" && pwd)/
->> -	b=$(cd "$sm_path" && pwd)/
->> +	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
->> +	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
-> 
-> But if you cd out, how can it be correct not to cd in again if $gitdir
-> and/or $sm_path are relative?
+The following tweak will make t1512 work on my Mac OS box:
 
-I'm not sure what you mean by "cd out", but the two "cd_to_toplevel"
-make sure that when $gitdir or $sm_path are relative the symbolic link
-gets removed from the output of pwd. So it's rather "cd into the path
-where the symlink is resolved".
 
-> And if $gitdir and/or $sm_path are absolute, how can the earlier
-> cd_to_toplevel make a difference?
+--- a/t/t1512-rev-parse-disambiguation.sh
++++ b/t/t1512-rev-parse-disambiguation.sh
+@@ -257,7 +257,7 @@ test_expect_success 'rev-parse --disambiguate' '
+        # commits created by commit-tree in earlier tests do not share
+        # the prefix.
+        git rev-parse --disambiguate=000000000 >actual &&
+-       test "$(wc -l <actual)" = 16 &&
++       test "$(wc -l <actual)" -eq  16 &&
+        test "$(sed -e "s/^\(.........\).*/\1/" actual | sort -u)" = 000000000
 
-Then it doesn't, but $sm_path is always relative while $gitdir is
-sometimes (in the superproject it returns ".git"). Just drop either
-of the "cd_to_toplevel" and run the test ;-)
 
-But it looks like the commit message could use some tuning ...
 
->> +test_expect_success 'submodule update can handle symbolic links in pwd' '
-> 
-> Please add a SYMLINKS prerequisite.
-
-Oops. Thanks, will add that.
-
-Will wait some time for other comments before preparing v2.
+/Torsten
