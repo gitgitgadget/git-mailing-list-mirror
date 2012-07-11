@@ -1,70 +1,62 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH 2/3] branch: suggest how to undo a --set-upstream when
- given one branch
-Date: Wed, 11 Jul 2012 16:24:55 +0200
-Message-ID: <1342016695.6458.14.camel@centaur.cmartin.tk>
-References: <1341939181-8962-1-git-send-email-cmn@elego.de>
-	 <1341939181-8962-3-git-send-email-cmn@elego.de>
-	 <7va9z7ikfi.fsf@alter.siamese.dyndns.org>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: Re: [PATCH 2/4] Allow reading svn dumps from files via file:// urls.
+Date: Wed, 11 Jul 2012 14:29:08 +0000 (UTC)
+Message-ID: <loom.20120711T162346-654@post.gmane.org>
+References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1342013933-14381-2-git-send-email-florian.achleitner.2.6.31@gmail.com> <1342013933-14381-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 16:25:22 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 11 16:29:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Soxqv-00054c-6k
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 16:25:17 +0200
+	id 1Soxv0-0003Bq-0x
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 16:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757914Ab2GKOYf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jul 2012 10:24:35 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:49230 "EHLO kimmy.cmartin.tk"
+	id S1757345Ab2GKO3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 10:29:22 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51531 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757695Ab2GKOYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2012 10:24:34 -0400
-Received: from [192.168.1.5] (p4FC5CD3B.dip.t-dialin.net [79.197.205.59])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 4E74C46149;
-	Wed, 11 Jul 2012 16:24:29 +0200 (CEST)
-In-Reply-To: <7va9z7ikfi.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.4.3-1 
+	id S1753968Ab2GKO3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 10:29:21 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Soxuq-00032y-Cd
+	for git@vger.kernel.org; Wed, 11 Jul 2012 16:29:20 +0200
+Received: from 87.250.248.20 ([87.250.248.20])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2012 16:29:20 +0200
+Received: from divanorama by 87.250.248.20 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jul 2012 16:29:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.250.248.20 (Opera/9.80 (X11; Linux x86_64; U; en) Presto/2.10.289 Version/12.00)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201303>
 
-On Tue, 2012-07-10 at 10:40 -0700, Junio C Hamano wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > This interface is error prone, and a better one (--set-upstream-to)
-> > exists. Suggest how to fix a --set-upstream invocation in case the
-> > user only gives one argument, which makes it likely that he meant t=
-o
-> > do the opposite, like with
-> >
-> >     git branch --set-upstream origin/master
-> >
-> > when they meant one of
-> >
-> >     git branch --set-upstream origin/master master
-> >     git branch --set-upstream-to origin/master
-> >
-> > Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
->=20
-> The new code does not seem to depend on the value of "track" (which
-> is set by either -t or --set-upstream) in any way.  Shouldn't it be
-> done only when it is set to track-override?
+Florian Achleitner <florian.achleitner.2.6.31 <at> gmail.com> writes:
 
-Yes, yes it should.
+> 
+> Especially for testing and development it's useful
+> to bypass svnrdump and replay the svndump from a file
+> without connecting to an svn server.
+> 
+> Add support for file:// urls in the remote url.
+> e.g. svn::file:///path/to/dump
+> When the remote helper finds an url starting with
+> file:// it tries to open that file instead of invoking svnrdump.
+file:// is a bad choice because file:// style repo urls are valid for svn and 
+it's for local repos rather than dumpfiles. Maybe something like dumpfile:// 
+instead?
 
->=20
-> Doesn't "git branch [-f] frotz" without any other argument trigger
-> the warning?
-
-It does. Oops. Fixed.
-
-   cmn
+[patch skipped]
