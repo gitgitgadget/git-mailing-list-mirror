@@ -1,105 +1,68 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] submodules: don't stumble over symbolic links when cloning
- recursively
-Date: Wed, 11 Jul 2012 20:11:58 +0200
-Message-ID: <4FFDC1EE.8080106@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/6] Default remote
+Date: Wed, 11 Jul 2012 11:19:07 -0700
+Message-ID: <7vy5mqduuc.fsf@alter.siamese.dyndns.org>
+References: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Bob Halley <halley@play-bow.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 11 20:12:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
+	phil.hord@gmail.com
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Wed Jul 11 20:19:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sp1Oe-0007Ru-Py
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 20:12:21 +0200
+	id 1Sp1Vc-0001r0-8s
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 20:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932199Ab2GKSMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jul 2012 14:12:15 -0400
-Received: from mout.web.de ([212.227.15.3]:55178 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754754Ab2GKSMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2012 14:12:14 -0400
-Received: from [192.168.178.48] ([91.3.167.141]) by smtp.web.de (mrweb003)
- with ESMTPA (Nemesis) id 0M8iK4-1ScyAI36g0-00Ceuf; Wed, 11 Jul 2012 20:12:03
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-X-Provags-ID: V02:K0:+iinm39Gaf5AeqTXx2aFdcywmh82laPR/YHiHTzdCAu
- 7pVqw/VZA9kUTAQvsgVcjnpVrCFLNX8RE0z+mfWZo6v//uIE+I
- yYSYFs+B1jPv67KAkhr7ryiymRfrDW6BPTKUe0CklO3zUqAEPZ
- OWV0KpzQRv3mLG3gXdqoE69l2QffNHhpjFeFxa2/Eq7RQIdcKh
- g0qWZV7AIdwa724OJRUrw==
+	id S964791Ab2GKST1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 14:19:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48387 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751749Ab2GKSTK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 14:19:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A4505E35;
+	Wed, 11 Jul 2012 14:19:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JUpXsXtUMcdzkvyX/ktAKFCt0OY=; b=K29oCT
+	N1WKmIWaeiO2t8BEa9NmvVuJ/Htd4FzpGAQajP7SFShTwHLk1NbinHhH1NUGN5DC
+	37iQ+7+lTYurNaPJI1b6ZJtQZeNpqmLXx9gl2UPMt8s5poSDxGl2mpiVmFgAmT7x
+	6+GvLPtf2I7D5HNO39py3JToCiq9SxY1o4WMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DNLRHbuFbtxdubO9HilV87thtve78zIr
+	nh+X3gSa4lJhJl5Y4OhtygqfO1Q1vF0ybvhTtRB5HnWtV0zCuQQLH4XW76ea5A0Z
+	SaVC4dpQ06wwVbsy6w0g/quuJarMmlVX5IrOmB8+Wi5QbwXdnYHN0w2FnaEnPlxw
+	v5n4y6yqw0g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 915165E34;
+	Wed, 11 Jul 2012 14:19:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BCD05E33; Wed, 11 Jul 2012
+ 14:19:09 -0400 (EDT)
+In-Reply-To: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com>
+ (marcnarc@xiplink.com's message of "Wed, 11 Jul 2012 11:33:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E856522C-CB84-11E1-9941-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201320>
 
-Since 69c305178 (submodules: refactor computation of relative gitdir path)
-cloning a submodule recursively fails for recursive submodules when a
-symbolic link is part of the path to the work tree of the superproject.
+marcnarc@xiplink.com writes:
 
-This happens when module_clone() tries to find the relative paths between
-work tree and git dir. When a symbolic link in current $PWD points to a
-directory in a different level determining the number of "../" needed to
-traverse to the superprojects work tree leads to a wrong result.
+> Incorporated feedback on the first version of this series[1], and also added
+> documentation updates.
+>
+> Note that the documentation changes include 4 minor grammatical fixes (verb
+> tenses, added a "the" in a couple fo places).  
+> ...
+> Patches 5 & 6 are unchanged.
 
-As there is no portable way to say "pwd -P" use cd_to_toplevel to remove
-the link from the pwd, which fixes this problem.
-
-A test for this problem has been added to t7406.
-
-Reported-by: Bob Halley <halley@play-bow.org>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-Thanks to Bob for providing a very detailed bug report and test case!
-
- git-submodule.sh            |  4 ++--
- t/t7406-submodule-update.sh | 13 +++++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5629d87..f73e32e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -186,8 +186,8 @@ module_clone()
- 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
- 	fi
-
--	a=$(cd "$gitdir" && pwd)/
--	b=$(cd "$sm_path" && pwd)/
-+	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
-+	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
- 	# normalize Windows-style absolute paths to POSIX-style absolute paths
- 	case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
- 	case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index dcb195b..05521de 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -636,4 +636,17 @@ test_expect_success 'submodule update properly revives a moved submodule' '
- 	)
- '
-
-+test_expect_success 'submodule update can handle symbolic links in pwd' '
-+	mkdir -p linked/dir &&
-+	ln -s linked/dir linkto &&
-+	(
-+		cd linkto &&
-+		git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
-+		(
-+			cd super &&
-+			git submodule update --init --recursive
-+		)
-+	)
-+'
-+
- test_done
--- 
-1.7.11.1.166.gb8ff004
+Very nicely written summary that describes incremental changes.
