@@ -1,82 +1,144 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodules: don't stumble over symbolic links when cloning
- recursively
-Date: Wed, 11 Jul 2012 23:08:22 +0200
-Message-ID: <4FFDEB46.6010403@web.de>
-References: <4FFDC1EE.8080106@web.de> <4FFDCFA4.9060602@kdbg.org> <4FFDDCAD.5080001@web.de> <4FFDE48B.7060802@kdbg.org>
+From: Marcin Owsiany <marcin@owsiany.pl>
+Subject: Re: [PATCH/RFC] git-svn: don't create master if another head exists
+Date: Wed, 11 Jul 2012 22:40:19 +0100
+Message-ID: <20120711214019.GF30213@beczulka>
+References: <20120624220835.GA4762@beczulka>
+ <7v4nq0hrjb.fsf@alter.siamese.dyndns.org>
+ <20120625075726.GO3125@beczulka>
+ <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
+ <20120626212108.GR3125@beczulka>
+ <7vfw9hafz8.fsf@alter.siamese.dyndns.org>
+ <20120626223215.GB8336@beczulka>
+ <20120709220321.GE30213@beczulka>
+ <7v8vesk12v.fsf@alter.siamese.dyndns.org>
+ <20120711012617.GA18369@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Bob Halley <halley@play-bow.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Jul 11 23:08:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 11 23:41:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sp49N-0003eV-2R
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 23:08:45 +0200
+	id 1Sp4eb-0008GC-Ec
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 23:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757779Ab2GKVIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jul 2012 17:08:34 -0400
-Received: from mout.web.de ([212.227.15.3]:63151 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754993Ab2GKVIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jul 2012 17:08:34 -0400
-Received: from [192.168.178.48] ([91.3.167.141]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0MQepd-1SKz4x17oz-00UkHZ; Wed, 11 Jul 2012 23:08:29
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <4FFDE48B.7060802@kdbg.org>
-X-Provags-ID: V02:K0:tOo/wdoPm2TWi0or6zfNobBDUXWYGbuq5p6A4wMPSfO
- Wh9aM+ZY3ZWK9GjndJtDplp1GTk4Uzxo2gzezESD67StGXHrZj
- H9ZuSLMUAU0Qbi11wuM8xGhbVGW6iFUmVxHBSjkEyTxdSPZAAj
- wJx9SQNVZw6iCFuGjsZ8zywZNokjVbyiMHeMb9rGYCcFe22c2N
- pnerGed9j7fp+9NrEDJrg==
+	id S933235Ab2GKVki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 17:40:38 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:52421 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758138Ab2GKVkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 17:40:24 -0400
+Received: by wgbdr13 with SMTP id dr13so1448075wgb.1
+        for <git@vger.kernel.org>; Wed, 11 Jul 2012 14:40:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent
+         :x-gm-message-state;
+        bh=ZK9dSvv1C1t/zWFOszsfweEes7q0PiLjT8yQc2s1IUk=;
+        b=Fs22Cg2k4wan+dEJKQrGiRxE7AKMGhH2ap92boYa6GVjn5+Er6AYzAj7wPEzn7iSam
+         zu4LdeNx8UoPMcumuHB4blkj9Akx4uV2UsmIk1v1+NL1N7NQBst1IA/WSxlshNNYKrCv
+         fJ0Vr5kEMBUQUlew3ScgPE4whXrEKGxNGj0mxlHOSSAMbJNkwyBGgwkTGgvyPlmp7ZGu
+         UI2WNOaoQyH+8rnYcmSOdl51OgpcxFqFHAfK2I9wxO2kvFVUysoOq7MYMgvVScIfO1DN
+         s+jBSs6aMKz45nFfRaMHZIOuaSqIMh0t5sHcC9AisK7kiNCqVFc4Mn9AgwbCesEIMgJF
+         O1Ew==
+Received: by 10.216.135.158 with SMTP id u30mr9415414wei.55.1342042822325;
+        Wed, 11 Jul 2012 14:40:22 -0700 (PDT)
+Received: from beczulka ([89.100.125.149])
+        by mx.google.com with ESMTPS id k20sm8686161wiv.11.2012.07.11.14.40.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 Jul 2012 14:40:20 -0700 (PDT)
+Received: from mowsiany by beczulka with local (Exim 4.71)
+	(envelope-from <marcin@owsiany.pl>)
+	id 1Sp4dv-0008Or-QK; Wed, 11 Jul 2012 22:40:19 +0100
+Content-Disposition: inline
+In-Reply-To: <20120711012617.GA18369@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Gm-Message-State: ALoCoQnP6vdANOsOJ3N0PTw9TdzCdJnd7NCzZIMnQhM1paz1+qbicg8KwVW4aGzxNUOYv61abEDa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201331>
 
-Am 11.07.2012 22:39, schrieb Johannes Sixt:
-> Am 11.07.2012 22:06, schrieb Jens Lehmann:
->> Am 11.07.2012 21:10, schrieb Johannes Sixt:
->>> Am 11.07.2012 20:11, schrieb Jens Lehmann:
->>>> Since 69c305178 (submodules: refactor computation of relative gitdir path)
->>>> cloning a submodule recursively fails for recursive submodules when a
->>>> symbolic link is part of the path to the work tree of the superproject.
->>>>
->>>> This happens when module_clone() tries to find the relative paths between
->>>> work tree and git dir. When a symbolic link in current $PWD points to a
->>>> directory in a different level determining the number of "../" needed to
->>>> traverse to the superprojects work tree leads to a wrong result.
->>>>
->>>> As there is no portable way to say "pwd -P" use cd_to_toplevel to remove
->>>> the link from the pwd, which fixes this problem.
->>> ...
->>>> -	a=$(cd "$gitdir" && pwd)/
->>>> -	b=$(cd "$sm_path" && pwd)/
->>>> +	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
->>>> +	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
->>>
->>> But if you cd out, how can it be correct not to cd in again if $gitdir
->>> and/or $sm_path are relative?
->>
->> I'm not sure what you mean by "cd out", but the two "cd_to_toplevel"
->> make sure that when $gitdir or $sm_path are relative the symbolic link
->> gets removed from the output of pwd. So it's rather "cd into the path
->> where the symlink is resolved".
+On Wed, Jul 11, 2012 at 01:26:17AM +0000, Eric Wong wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > Marcin Owsiany <marcin@owsiany.pl> writes:
+> > 
+> > >> This makes my idea to do the same to "my something else instead of
+> > >> master" much less attractive. In fact I don't think such behaviour would
+> > >> be useful.
+> > >> 
+> > >> I think with the suggested patch git-svn works as I would like it to:
+> > >>  - creates "master" at initial checkout - consistent with git clone
+> > >>  - using a different "tracking-like" branch is possible with "dcommit"
+> > >>  - does not re-create "master" on fetch - so the annoying part is gone
+> > >
+> > > Any comments?
+> > 
+> > Not from me.  Even though I'd love to hear Eric's opinion, your "I
+> > don't think such behaviour would be useful." gave me an impression
+> > that you would justify the change in a different way (i.e. a rewrite
+> > of proposed log message) or tweak the patch (i.e. a modified
+> > behaviour), or perhaps both, in your re-roll, the ball was in your
+> > court, and we were waiting for such a rerolled patch.
 > 
-> At this point we can be in a subdirectory of the worktree. With
-> cd_to_toplevel we move up in the directory hierarchy ("cd out"). Then a
-> relative $gitdir or $sm_path now points to the wrong directory. No?
+> Sorry, I keep forgetting this topic.  But yes, I thought you would tweak
+> your patch.
 
-Nope, "git submodule" will refuse to run in anything but the root of
-the worktree. So we already are at the toplevel and use "cd_to_toplevel"
-only to resolve any symlinks present in $PWD. Looks like a comment
-explaining that above those lines would be a good idea ... will add one.
+Oh, I guess I got used to projects where people pay no attention to
+patch comments. How about this:
+
+From: Marcin Owsiany <marcin@owsiany.pl>
+Date: Sun, 24 Jun 2012 22:40:05 +0100
+Subject: [PATCH] git-svn: don't create master if another head exists
+
+git-svn insists on creating the "master" head (unless it exists) on every
+"fetch". It is useful that it gets created initially, when no head exists
+- users expect this git convention of having a "master" branch on initial
+clone.
+
+However creating it when there already is another head does not provide any
+value - the ref is never updated, so it just gets stale after a while.  Also,
+some users find it annoying that it gets recreated, especially when they would
+like the git branch names to follow SVN repository branch names. More
+background in http://thread.gmane.org/gmane.comp.version-control.git/115030
+
+Make git-svn skip the "master" creation if HEAD points at a valid head. This
+means "master" does get created on initial "clone" but does not get recreated
+once a user deletes it.
+
+Signed-off-by: Marcin Owsiany <marcin@owsiany.pl>
+---
+ git-svn.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 0b074c4..2379a71 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1612,9 +1612,9 @@ sub post_fetch_checkout {
+ 		}
+ 	}
+ 
+-	my $valid_head = verify_ref('HEAD^0');
++	return if verify_ref('HEAD^0');
+ 	command_noisy(qw(update-ref refs/heads/master), $gs->refname);
+-	return if ($valid_head || !verify_ref('HEAD^0'));
++	return unless verify_ref('HEAD^0');
+ 
+ 	return if $ENV{GIT_DIR} !~ m#^(?:.*/)?\.git$#;
+ 	my $index = $ENV{GIT_INDEX_FILE} || "$ENV{GIT_DIR}/index";
+-- 
+1.7.7.3
+
+
+-- 
+Marcin Owsiany <marcin@owsiany.pl>              http://marcin.owsiany.pl/
+GnuPG: 2048R/02F946FC  35E9 1344 9F77 5F43 13DD  6423 DBF4 80C6 02F9 46FC
+
+"Every program in development at MIT expands until it can read mail."
+                                                              -- Unknown
