@@ -1,192 +1,117 @@
-From: marcnarc@xiplink.com
-Subject: [PATCH 2/6] Teach remote.c about the remote.default configuration setting.
-Date: Wed, 11 Jul 2012 11:33:57 -0400
-Message-ID: <1342020841-24368-3-git-send-email-marcnarc@xiplink.com>
-References: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com>
-Cc: gitster@pobox.com, Jens.Lehmann@web.de, peff@peff.net,
-	phil.hord@gmail.com, Marc Branchaud <marcnarc@xiplink.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 11 17:41:39 2012
+From: <dag@cray.com>
+Subject: Re: Subtree in Git
+Date: Wed, 11 Jul 2012 11:14:04 -0500
+Message-ID: <nng4npe6zsj.fsf@transit.us.cray.com>
+References: <CAE1pOi2uT=wipyrOYCwy9QuXnXFV27F1gN3Ej-RaSr-fegQCfA@mail.gmail.com>
+	<nngk410vrja.fsf@transit.us.cray.com> <4F9FA029.7040201@initfour.nl>
+	<87fwbgbs0h.fsf@smith.obbligato.org>
+	<7v8vh78dag.fsf@alter.siamese.dyndns.org>
+	<4FA82799.1020400@initfour.nl> <nngzk9jvemb.fsf@transit.us.cray.com>
+	<nngaa0z3p8b.fsf@transit.us.cray.com>
+	<87bokpxqoq.fsf@smith.obbligato.org> <4FD89383.70003@initfour.nl>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <greened@obbligato.org>, Junio C Hamano <gitster@pobox.com>,
+	"Hilco Wijbenga" <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Herman van Rink <rink@initfour.nl>
+X-From: git-owner@vger.kernel.org Wed Jul 11 18:21:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Soz2g-0007BM-QM
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 17:41:31 +0200
+	id 1SozfY-0000m4-3d
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jul 2012 18:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932894Ab2GKPlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jul 2012 11:41:17 -0400
-Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:28500 "EHLO
-	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932837Ab2GKPlN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jul 2012 11:41:13 -0400
-Received: from xiplink.com (rincewind.xiplink.com [192.168.1.166])
-	by farnsworth.xiplink.com (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id q6BFY4Ub029776;
-	Wed, 11 Jul 2012 11:34:06 -0400
-X-Mailer: git-send-email 1.7.11.1
-In-Reply-To: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com>
+	id S1756072Ab2GKQVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jul 2012 12:21:33 -0400
+Received: from exprod6og105.obsmtp.com ([64.18.1.189]:43391 "EHLO
+	exprod6og105.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755957Ab2GKQVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jul 2012 12:21:32 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jul 2012 12:21:31 EDT
+Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob105.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKT/2oC4p/6TCAbKq1GEj6oeA6sq+K2JRy@postini.com; Wed, 11 Jul 2012 09:21:31 PDT
+Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
+ (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 11 Jul
+ 2012 11:14:05 -0500
+In-Reply-To: <4FD89383.70003@initfour.nl> (Herman van Rink's message of "Wed,
+	13 Jun 2012 15:20:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201312>
 
-From: Marc Branchaud <marcnarc@xiplink.com>
+Herman van Rink <rink@initfour.nl> writes:
 
-The code now has a default_remote_name and an effective_remote_name:
+>> It's hard to tell what's what with one big diff.  Each command should
+>> get its own commit plus more if infrastructure work has to be done.  I
+>> realize it's a bit of a pain to reformulate this but git rebase -i makes
+>> it easy and the history will be much better long-term.
+>>
+>> Each command should be described briefly in the commit log.
+>
+> That would indeed be nice, but as some parts interdependent it would be
+> rather complicated.
 
- - default_remote_name is set by remote.default in the config, or is "origin"
-   if remote.default doesn't exist ("origin" was the fallback value before
-   this change).
+Do the interdependent parts first, then.  These should be pure
+infrastructure.
 
- - effective_remote_name is the name of the remote tracked by the current
-   branch, or is default_remote_name if the current branch doesn't have a
-   remote.
+> And what is the use if their not fully independently testable.
 
-This has a minor side effect on the default behavior of "git push".  Consider
-the following sequence of commands:
+The command should be testable as soon as they are fully implemented,
+no?
 
-      git config remote.default foo                 # Set default remote
-      git checkout somelocalbranch                  # Does not track a remote
-      git remote add origin ssh://example.com/repo  # Add a new "origin"
-      git push
+I'm thinking about a sequence like this:
 
-Prior to this change, the above "git push" would attempt to push to the new
-"origin" repository at ssh://example.com/repo.  Now instead that "git push"
-will attempt to push to the repository named "foo".
+- Infrastructure for command A (and possibly B, C, etc. if they are
+  interdependent).
+- Command A + tests
+- Infrastructure for command B
+- Command B + tests
+- etc.
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
----
- Documentation/config.txt           |  8 ++++++++
- Documentation/git-pull.txt         |  6 +++++-
- Documentation/git-push.txt         |  8 +++++++-
- Documentation/pull-fetch-param.txt |  6 ++++++
- remote.c                           | 14 +++++++++++---
- 5 files changed, 37 insertions(+), 5 deletions(-)
+> If you want to fake a nice history tree then go ahead, I just don't have
+> the energy to go through these commits again just for that.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 915cb5a..7869e1b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1856,6 +1856,14 @@ remote.<name>.vcs::
- 	Setting this to a value <vcs> will cause git to interact with
- 	the remote with the git-remote-<vcs> helper.
- 
-+remote.default::
-+	This value is the <name> of a remote.  When Git needs to automatically
-+	choose a remote to use, it first tries the 'branch.<branchname>.remote'
-+	value of the currently checked-out branch.  If the currently checked-out
-+	branch has no remote, Git uses the remote named by 'remote.default', or
-+	the remote named "origin" if no value is set (even if there is no
-+	actual remote named "origin").
-+
- remotes.<group>::
- 	The list of remotes which are fetched by "git remote update
- 	<group>".  See linkgit:git-remote[1].
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index defb544..2610253 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -33,7 +33,11 @@ but usually it is the name of a branch in the remote repository.
- 
- Default values for <repository> and <branch> are read from the
- "remote" and "merge" configuration for the current branch
--as set by linkgit:git-branch[1] `--track`.
-+as set by linkgit:git-branch[1] `--track`.  If the current branch
-+has no remote configured, the default for <repository> is read
-+from the "remote.default" configuration variable.  If that variable
-+is not set, the default <repository> is "origin" even if there is no
-+actual remote named "origin".
- 
- Assume the following history exists and the current branch is
- "`master`":
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index cb97cc1..fc17d39 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -27,10 +27,16 @@ documentation for linkgit:git-receive-pack[1].
- OPTIONS[[OPTIONS]]
- ------------------
- <repository>::
--	The "remote" repository that is destination of a push
-+	The "remote" repository that is the destination of the push
- 	operation.  This parameter can be either a URL
- 	(see the section <<URLS,GIT URLS>> below) or the name
- 	of a remote (see the section <<REMOTES,REMOTES>> below).
-+	If this parameter is omitted, git tries to use the remote
-+	associated with the currently checked-out branch.  If there
-+	is no remote associated with the current branch, git uses
-+	the remote named by the "remote.default" configuration variable.
-+	If "remote.default" is not set, git uses the name "origin" even
-+	if there is no actual remote named "origin".
- 
- <refspec>...::
- 	The format of a <refspec> parameter is an optional plus
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 94a9d32..696f1fb 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -3,6 +3,12 @@
- 	or pull operation.  This parameter can be either a URL
- 	(see the section <<URLS,GIT URLS>> below) or the name
- 	of a remote (see the section <<REMOTES,REMOTES>> below).
-+	If this parameter is omitted, git tries to use the remote
-+	associated with the currently checked-out branch.  If there
-+	is no remote associated with the current branch, git uses
-+	the remote named by the "remote.default" configuration variable.
-+	If "remote.default" is not set, git uses the name "origin" even
-+	if there is no actual remote named "origin".
- 
- ifndef::git-pull[]
- <group>::
-diff --git a/remote.c b/remote.c
-index 6f371e0..2ebdbbd 100644
---- a/remote.c
-+++ b/remote.c
-@@ -47,6 +47,7 @@ static int branches_alloc;
- static int branches_nr;
- 
- static struct branch *current_branch;
-+static const char *default_remote_name;
- static const char *effective_remote_name;
- static int explicit_effective_remote_name;
- 
-@@ -397,8 +398,12 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		return 0;
- 	}
- 	subkey = strrchr(name, '.');
--	if (!subkey)
-+	if (!subkey) {
-+		/* Look for remote.default */
-+		if (!strcmp(name, "default"))
-+			default_remote_name = xstrdup(value);
- 		return 0;
-+	}
- 	remote = make_remote(name, subkey - name);
- 	remote->origin = REMOTE_CONFIG;
- 	if (!strcmp(subkey, ".mirror"))
-@@ -481,9 +486,8 @@ static void read_config(void)
- 	unsigned char sha1[20];
- 	const char *head_ref;
- 	int flag;
--	if (effective_remote_name) /* did this already */
-+	if (default_remote_name) /* did this already */
- 		return;
--	effective_remote_name = xstrdup("origin");
- 	current_branch = NULL;
- 	head_ref = resolve_ref_unsafe("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
-@@ -492,6 +496,10 @@ static void read_config(void)
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config, NULL);
-+	if (!default_remote_name)
-+		default_remote_name = "origin";
-+	if (!effective_remote_name)
-+		effective_remote_name = default_remote_name;
- 	alias_all_urls();
- }
- 
--- 
-1.7.11.1
+Well, I can't do this either, both because it would take time to get up
+to speed on the patches and because I have a million other things going
+on at the moment.  So unfortunately, this is going to sit until someone
+can take it up.
+
+Unless Junio accepts your patches, of course.  :)
+
+>> Some questions/comments:
+>>
+>> - Is .gittrees the right solution?  I like the feature it provides but
+>>   an external file feels a bit hacky.  I wonder if there is a better way
+>>   to track this metadata.  Notes maybe?  Other git experts will have to
+>>   chime in with suggestions.
+>
+> It's similar to what git submodule does. And when you add this file to
+> the index you can use it on other checkouts as well.
+
+Well, I guess I'm not strongly opposed, I was just asking the question.
+
+>> - This code seems to be repeated a lot.  Maybe it should be a utility
+>>   function.
+>
+> Yes that's there three times...
+
+So you agree it should be factored?
+
+>> - I removed all this stuff in favor of the test library.  Please don't
+>>   reintroduce it.  These new tests will have to be rewritten in terms of
+>>   the existing test infrastructure.  It's not too hard.
+>
+> I've left it in to be able to verify your new tests. Once all the new
+> tests are passing we can get rid of the old one, not before.
+> And as all the old tests are contained in test.sh it should not interfere...
+
+No, I'm very strongly against putting this back in.  The new tests will
+have to be updated to the upstream test infrastructure.
+
+                                      -Dave
