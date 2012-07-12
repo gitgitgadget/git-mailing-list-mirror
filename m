@@ -1,57 +1,84 @@
-From: Douglas Garstang <doug.garstang@gmail.com>
-Subject: git cloning paths
-Date: Thu, 12 Jul 2012 15:17:09 -0700
-Message-ID: <CANmEAK_jGdzR9R=0DexC+-_0U6mb_7o_v5zSKTuhgoaYCaSiFQ@mail.gmail.com>
+From: Alexander Strasser <eclipse7@gmx.net>
+Subject: Re: [PATCH 7/6?] t4012: use 'printf' instead of 'dd' to generate a
+ binary file
+Date: Fri, 13 Jul 2012 00:25:40 +0200
+Message-ID: <20120712222540.GA2782@akuma>
+References: <20120711221140.GA21303@akuma>
+ <4FFE7913.3090500@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 13 00:17:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jul 13 00:25:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpRhI-0005q4-V2
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 00:17:21 +0200
+	id 1SpRpa-0004HR-SI
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 00:25:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759255Ab2GLWRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 18:17:13 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:53895 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955Ab2GLWRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 18:17:10 -0400
-Received: by ghrr11 with SMTP id r11so2988886ghr.19
-        for <git@vger.kernel.org>; Thu, 12 Jul 2012 15:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=a3K4BrJHNkeq39fUg6MV1X3hbQ/TDWDhan6ke5MtyVs=;
-        b=t+SQguy6adhV4Df00cmVNEgVUrj4+ahE3Ix/4XbqkWn6/wpOZJXk3+yBNEDV/AsMGR
-         zxRgPr/my3J6g71cKLteTDocl8ouEeChpP0xLUg422N/h1QORhL3wwY5GrV3mEsL+aKa
-         SxqP/LNPd8z/XBhvJHm4cTpyU1eFij3TF/ClYevxiv9bdEaC+zwZbNES/hmXvZOgwulV
-         Q9QKTWFp26bQ3Up0KcZtKo813Dkkct/kFGpcQyZEoXEE/sL/NM78f6T5Db8wfoZwjszr
-         /fd3/E8DKpkPnCScor12dKjsfsJKYJ6a9fQS4Gy/5JsIenhqwCC7z93eHyLm9z6Y2HW0
-         85Gg==
-Received: by 10.50.85.230 with SMTP id k6mr18535184igz.49.1342131429898; Thu,
- 12 Jul 2012 15:17:09 -0700 (PDT)
-Received: by 10.231.216.234 with HTTP; Thu, 12 Jul 2012 15:17:09 -0700 (PDT)
+	id S1161578Ab2GLWZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 18:25:49 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:43461 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752323Ab2GLWZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 18:25:48 -0400
+Received: (qmail invoked by alias); 12 Jul 2012 22:25:45 -0000
+Received: from p5DC37306.dip.t-dialin.net (EHLO gmx.net) [93.195.115.6]
+  by mail.gmx.net (mp041) with SMTP; 13 Jul 2012 00:25:45 +0200
+X-Authenticated: #8251126
+X-Provags-ID: V01U2FsdGVkX18/9FkvnA4/vP9pKgy/XIg0blyafH1lzJiUBisl9j
+	BJ/cEwzelYeAKP
+Received: by gmx.net (sSMTP sendmail emulation); Fri, 13 Jul 2012 00:25:40 +0200
+Content-Disposition: inline
+In-Reply-To: <4FFE7913.3090500@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201387>
 
-All,
+Hi, 
 
-I'm a relative newcomer to git and I've just inherited a setup where
-all of the company's code is in a single git repository. Within this
-repository are multiple projects. It seems that git doesn't natively
-allow cloning/checking out of individual paths within the repo (ie
-projects), which would seem to make integrating git with a continuous
-build system rather difficult. That is, the build system has to clone
-the entire repo, and therefore a change to any project will result in
-the entire contents of the repo being built.
+Johannes Sixt wrote:
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> For some reason, 'echo X | dd bs=1k seek=1' creates a file with 2050 bytes
+> on Windows instead of the expected 1026 bytes, so that a test fails. Since
+> the actual contents of the file are irrelevant as long as there is at
+> least one zero byte so that the diff machinery recognizes it as binary,
+> use printf to generate it.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  While the focus is on t4012, maybe you can add this patch to the series.
 
-Correct....?
+  Your patch looks good to me and works here. If I hear no
+objections I will include it as number 7 when resending this
+series.
 
-Doug.
+  Alexander
+
+>  t/t4012-diff-binary.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+> index 6cebb39..8c018ab 100755
+> --- a/t/t4012-diff-binary.sh
+> +++ b/t/t4012-diff-binary.sh
+> @@ -125,7 +125,7 @@ cat >expect <<EOF
+>  EOF
+>  
+>  test_expect_success 'diff --stat with binary files and big change count' '
+> -	echo X | dd of=binfile bs=1k seek=1 &&
+> +	printf "\01\00%1024d" 1 >binfile &&
+>  	git add binfile &&
+>  	i=0 &&
+>  	while test $i -lt 10000; do
+> -- 
+> 1.7.11.1.1304.g11834c6
