@@ -1,117 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] config: fix several access(NULL) calls
-Date: Thu, 12 Jul 2012 21:34:25 +0200
-Message-ID: <vpq1ukgai4e.fsf@bauges.imag.fr>
-References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
-	<1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vtxxcc36v.fsf@alter.siamese.dyndns.org>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: [PATCH] git-am: indicate where a failed patch is to be found.
+Date: Thu, 12 Jul 2012 15:36:00 -0400
+Message-ID: <4FFF2720.6090705@windriver.com>
+References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com> <7vhatcc1ql.fsf@alter.siamese.dyndns.org> <4FFF1821.7030705@windriver.com> <7va9z4byl3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 21:34:51 2012
+X-From: git-owner@vger.kernel.org Thu Jul 12 21:37:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpP9y-0001AA-Bw
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 21:34:46 +0200
+	id 1SpPCY-0005SN-4q
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 21:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755741Ab2GLTej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 15:34:39 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50656 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755310Ab2GLTeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 15:34:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6CJWp4Q014187
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 12 Jul 2012 21:32:51 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SpP9e-00063W-Jd; Thu, 12 Jul 2012 21:34:26 +0200
-In-Reply-To: <7vtxxcc36v.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 12 Jul 2012 10:14:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 12 Jul 2012 21:32:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6CJWp4Q014187
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1342726374.35424@f0XOnN+d4E/fNwkpC70MnA
+	id S1030745Ab2GLThK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 15:37:10 -0400
+Received: from mail1.windriver.com ([147.11.146.13]:33455 "EHLO
+	mail1.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934234Ab2GLThG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 15:37:06 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail1.windriver.com (8.14.5/8.14.3) with ESMTP id q6CJa29R003400
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Thu, 12 Jul 2012 12:36:02 -0700 (PDT)
+Received: from [128.224.146.65] (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server id 14.1.255.0; Thu, 12 Jul 2012
+ 12:36:01 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <7va9z4byl3.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [128.224.146.65]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201376>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> When $HOME is unset, home_config_paths fails and returns NULL pointers
->> for user_config and xdg_config. Valgrind complains with Syscall param
->> access(pathname) points to unaddressable byte(s).
+On 12-07-12 02:53 PM, Junio C Hamano wrote:
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+> 
+>> On 12-07-12 01:45 PM, Junio C Hamano wrote:
+>>> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+>>>
+>>>> If git am wasn't run with --reject, we assume the end user
+>>>> knows where to find the patch.  This is normally true for
+>>>> a single patch,
+>>>
+>>> Not at all.  Whether it is a single or broken, the patch is fed to
+>>> underlying "apply" from an unadvertised place.
 >>
->> Don't call blindly access() on these variables, but test them for
->> NULL-ness before.
+>> What I meant by this was the difference between:
 >>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ---
->>> This patch causes valgrind warnings in t1300.81 (get --path copes with
->>> unset $HOME) about passing NULL to access():
+>> 	git am 0001-some-standalone-single.patch
+>> vs.
+>> 	git am mbox
 >>
->> Indeed. The following patch should fix it.
+>> In the 1st, the standalone patch is 100% clear and easy to access,
+>> because we really don't need/care about the unadvertised place.
+> 
+> It does not matter at all that 0001-foo.patch only has a single
+> patch.  If you are going to fix up the patch after you saw "git am"
+> failed, you will be fixing .git/rebase-apply/patch with your editor
+> and re-run "git am" without arguments, at which point "git am" will
+> not look at your 0001-foo.patch file at all.
+
+I think this is where our two thinking paths diverge.  You are
+suggesting I edit and fix the patch.  Yes, occasionally I do
+that, if it is a trivial context change.  But hand editing a
+patch is not for Joe Average, and gets very complicated in all
+but the trivial cases.  So, what happens _way_ more often, is that
+I want to apply what can be applied, and deal with the rejects
+on a one-by-one basis after that.  (BTW, this is not just me;
+this patch came about from discussions with other kernel folks.)
+
+> 
+>>> This is _NOT_ fine, especially if you suggest "patch" the user may
+>>> not have, and more importantly does not have a clue why "git apply"
+>>> rejected it ("am" does _not_ use "patch" at all).
 >>
->>  builtin/config.c | 3 ++-
->>  config.c         | 4 ++--
->>  2 files changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/builtin/config.c b/builtin/config.c
->> index e8e1c0a..67945b2 100644
->> --- a/builtin/config.c
->> +++ b/builtin/config.c
->> @@ -387,7 +387,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->>  
->>  		home_config_paths(&user_config, &xdg_config, "config");
->>  
->> -		if (access(user_config, R_OK) && !access(xdg_config, R_OK))
->> +		if (user_config && access(user_config, R_OK) &&
->> +		    xdg_config && !access(xdg_config, R_OK))
->>  			given_config_file = xdg_config;
->
-> Shouldn't we be using xdg_config, if user_config is NULL and
-> xdg_config is defined and accessible?
+>> I'm not 100% sure I'm following what part here is not OK.  If you
+>> can help me understand that, I'll respin the change accordingly.
+> 
+> Do not ever mention "patch -p1".  It is not the command that "git
+> am" uses, and it is not what detected the breakage in the patch.
 
-I don't think so. If user_config is NULL, it means something went wrong,
-because $HOME is unset. In this case, I'd rather die than using some
-other configuration file silently (which would be possible if
-$XDG_CONFIG_HOME is set), and this is what the code does:
+This may be true, but it _is_ the command that I (and others) have
+defaulted to using, if for no other reason than ignorance.
 
-		if (user_config && access(user_config, R_OK) &&
-		    xdg_config && !access(xdg_config, R_OK))
-			given_config_file = xdg_config;
-		else if (user_config)
-			given_config_file = user_config;
-		else
-			die("$HOME not set");
+> 
+> The command to guide the user to is "git apply".
+> 
 
-Perhaps it could actually be made even clearer with
+OK.  But I don't see a "--dry-run" equivalent -- and "git apply --check"
+just gives me a repeat of the same fail messages that "git am" did.
 
-		if (!user_config)
-			die("$HOME not set");
-		else if (access(user_config, R_OK) &&
-			 xdg_config && !access(xdg_config, R_OK))
-			given_config_file = xdg_config;
-		else
-			given_config_file = user_config;
+With "patch -p1 --dry-run"  I get information that immediately
+lets me see whether the patch is viable or not.  Is there a way
+to get a similar thing from "git apply" that I've overlooked?
 
-That said, I don't care very strongly about it.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Paul.
+---
