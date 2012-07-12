@@ -1,59 +1,145 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] submodules: don't stumble over symbolic links when cloning
- recursively
-Date: Thu, 12 Jul 2012 19:12:21 +0200
-Message-ID: <4FFF0575.3050203@kdbg.org>
-References: <4FFDC1EE.8080106@web.de> <4FFDCFA4.9060602@kdbg.org> <4FFDDCAD.5080001@web.de> <4FFDE48B.7060802@kdbg.org> <4FFDEB46.6010403@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: fix several access(NULL) calls
+Date: Thu, 12 Jul 2012 10:14:00 -0700
+Message-ID: <7vtxxcc36v.fsf@alter.siamese.dyndns.org>
+References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
+ <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Bob Halley <halley@play-bow.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 12 19:12:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 12 19:14:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpMwI-0005RG-7p
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:12:30 +0200
+	id 1SpMy4-00005M-AY
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161291Ab2GLRMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 13:12:25 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:10321 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932521Ab2GLRMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 13:12:24 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id AFE3810019;
-	Thu, 12 Jul 2012 19:12:21 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 7B65519F3C8;
-	Thu, 12 Jul 2012 19:12:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120601 Thunderbird/13.0
-In-Reply-To: <4FFDEB46.6010403@web.de>
+	id S1161419Ab2GLROJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 13:14:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35352 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161399Ab2GLROF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 13:14:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73B3A86BE;
+	Thu, 12 Jul 2012 13:14:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ebYZno39Wg2Di9f4ZYGktrnY+EI=; b=Q8YO+f
+	9lvAMUmH1wxNF2g7oQJvu4eCYhTcN16dUu9077pAIxecH3SDW9yWT7Yr2Zo5k0sR
+	h4cvCr/d6CRCwzQbxGRCL1+Z47A5xLGwM04jPn8yRfDfCUvdyqDyHFoh3l/eBRf5
+	zpbdfAx8gZpDwhu6WAjxsgrtQXFJ4SmtgjTKA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fn3QOuw/9wL+aDLUEk/tMGV8g6W0CWJs
+	CdFoOP4J/LDBBGCwbMAigQPYGlbw6gYooJMYbmNtjMpnblrJT37ySdZRTXznEtKT
+	o3jsavSnU5J9IHtQ/QhFLPDvcaqFo62HyG36UmOreyx3OkS04pO7AUrRv1Nz42hV
+	2soHheGGuaY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3D5086BA;
+	Thu, 12 Jul 2012 13:14:03 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A30E86B2; Thu, 12 Jul 2012
+ 13:14:02 -0400 (EDT)
+In-Reply-To: <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Thu, 12 Jul 2012 14:04:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA9BF908-CC44-11E1-ADA1-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201367>
 
-Am 11.07.2012 23:08, schrieb Jens Lehmann:
-> Am 11.07.2012 22:39, schrieb Johannes Sixt:
->> At this point we can be in a subdirectory of the worktree. With
->> cd_to_toplevel we move up in the directory hierarchy ("cd out"). Then a
->> relative $gitdir or $sm_path now points to the wrong directory. No?
-> 
-> Nope, "git submodule" will refuse to run in anything but the root of
-> the worktree. So we already are at the toplevel and use "cd_to_toplevel"
-> only to resolve any symlinks present in $PWD. Looks like a comment
-> explaining that above those lines would be a good idea ... will add one.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Ah, OK. I missed the lack of SUBDIRECTORY_OK=Yes, but noticed a few
-cd_to_toplevel sprinkled throughout the script, so I thought it was OK
-to be in a subdirectory.
+> When $HOME is unset, home_config_paths fails and returns NULL pointers
+> for user_config and xdg_config. Valgrind complains with Syscall param
+> access(pathname) points to unaddressable byte(s).
+>
+> Don't call blindly access() on these variables, but test them for
+> NULL-ness before.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>> This patch causes valgrind warnings in t1300.81 (get --path copes with
+>> unset $HOME) about passing NULL to access():
+>
+> Indeed. The following patch should fix it.
+>
+>  builtin/config.c | 3 ++-
+>  config.c         | 4 ++--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index e8e1c0a..67945b2 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -387,7 +387,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  
+>  		home_config_paths(&user_config, &xdg_config, "config");
+>  
+> -		if (access(user_config, R_OK) && !access(xdg_config, R_OK))
+> +		if (user_config && access(user_config, R_OK) &&
+> +		    xdg_config && !access(xdg_config, R_OK))
+>  			given_config_file = xdg_config;
 
--- Hannes
+Shouldn't we be using xdg_config, if user_config is NULL and
+xdg_config is defined and accessible?
+
+In other words, isn't the objective of this "fix" is to replace any
+call to access(PATH, PERM) whose PATH can potentially be NULL with
+
+	(PATH ? access(PATH, PERM) : -1)
+
+because we want to pretend access(PATH, PERM) returned an error,
+saying "The variable PATH holds a path to the file that is not
+accessible", when PATH is NULL?
+
+And that is equivalent to
+
+	(!PATH || access(PATH, PERM))
+
+in the context of boolean.  The original
+
+	if (access(user_config, R_OK) && !access(xdg_config, R_OK))
+
+becomes 
+
+	if ((!user_config || access(user_config, R_OK)) &&
+	    !(!xdg_config || access(xdg_config, R_OK)))
+
+and the latter half of it is the same as
+
+	    (xdg_config && !access(xdg_config, R_OK))
+
+but the former half is not. Shouldn't it be
+
+	if ((!user_config || access(user_config, R_OK)) &&
+	    (xdg_config && !access(xdg_config, R_OK)))
+
+Confused.
+
+> diff --git a/config.c b/config.c
+> index d28a499..6b97503 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -940,12 +940,12 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+>  		found += 1;
+>  	}
+>  
+> -	if (!access(xdg_config, R_OK)) {
+> +	if (xdg_config && !access(xdg_config, R_OK)) {
+>  		ret += git_config_from_file(fn, xdg_config, data);
+>  		found += 1;
+>  	}
+>  
+> -	if (!access(user_config, R_OK)) {
+> +	if (user_config && !access(user_config, R_OK)) {
+>  		ret += git_config_from_file(fn, user_config, data);
+>  		found += 1;
+>  	}
