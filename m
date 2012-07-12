@@ -1,145 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config: fix several access(NULL) calls
-Date: Thu, 12 Jul 2012 10:14:00 -0700
-Message-ID: <7vtxxcc36v.fsf@alter.siamese.dyndns.org>
-References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
- <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: How can I append authentication with "git push" ?
+Date: Thu, 12 Jul 2012 10:22:18 -0700
+Message-ID: <7vpq80c2t1.fsf@alter.siamese.dyndns.org>
+References: <20120712134844.2d1c4378@shiva.selfip.org>
+ <CACnwZYfbbZJV--aaOVH+af+Hxibg7XWvb909kZYWgKXVHexfDw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 12 19:14:22 2012
+Cc: "J. Bakshi" <joydeep.bakshi@infoservices.in>, git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 19:22:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpMy4-00005M-AY
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:14:20 +0200
+	id 1SpN5u-0005SR-5y
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161419Ab2GLROJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 13:14:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35352 "EHLO
+	id S1161407Ab2GLRWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 13:22:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42247 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161399Ab2GLROF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 13:14:05 -0400
+	id S1161288Ab2GLRWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 13:22:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73B3A86BE;
-	Thu, 12 Jul 2012 13:14:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 314088D6D;
+	Thu, 12 Jul 2012 13:22:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ebYZno39Wg2Di9f4ZYGktrnY+EI=; b=Q8YO+f
-	9lvAMUmH1wxNF2g7oQJvu4eCYhTcN16dUu9077pAIxecH3SDW9yWT7Yr2Zo5k0sR
-	h4cvCr/d6CRCwzQbxGRCL1+Z47A5xLGwM04jPn8yRfDfCUvdyqDyHFoh3l/eBRf5
-	zpbdfAx8gZpDwhu6WAjxsgrtQXFJ4SmtgjTKA=
+	:content-type; s=sasl; bh=xbsVEAbvFr7/r96ZLClyyNytGVc=; b=Amkmsh
+	ndz+507dclF4eocCYnNdNlSZwGcceqpB9Ev4yBAshPHj9fpB5k7q0t8whydoIlUe
+	9jBWVpLJ4nhG8SmYXAxwPOPR+odqRPvdYv3gq/duxZsu3Cevgk8bqsnRy719xMeq
+	cVWVpuZKP1GoAfCPblHJydb5dNMBaKsPwYozs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fn3QOuw/9wL+aDLUEk/tMGV8g6W0CWJs
-	CdFoOP4J/LDBBGCwbMAigQPYGlbw6gYooJMYbmNtjMpnblrJT37ySdZRTXznEtKT
-	o3jsavSnU5J9IHtQ/QhFLPDvcaqFo62HyG36UmOreyx3OkS04pO7AUrRv1Nz42hV
-	2soHheGGuaY=
+	:content-type; q=dns; s=sasl; b=k+9Yzq1LuMNQeEfRsALcjVlQV1yCgbAH
+	8kGHWUk+AIs0cC7ivdUch89ixHpNaYZjeYDHUv1E/drWHZXj0lfvYD1xggg91WzT
+	0c9nTobCuIbElk5oQeBI1pllGv4rPe7ZVMH3kgTbkwbzwXaRXWKqIUViuamompF8
+	otA/1ZihcIQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3D5086BA;
-	Thu, 12 Jul 2012 13:14:03 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2857C8D6C;
+	Thu, 12 Jul 2012 13:22:20 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A30E86B2; Thu, 12 Jul 2012
- 13:14:02 -0400 (EDT)
-In-Reply-To: <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Thu, 12 Jul 2012 14:04:20 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1C5D8D67; Thu, 12 Jul 2012
+ 13:22:19 -0400 (EDT)
+In-Reply-To: <CACnwZYfbbZJV--aaOVH+af+Hxibg7XWvb909kZYWgKXVHexfDw@mail.gmail.com> (Thiago
+ Farina's message of "Thu, 12 Jul 2012 12:04:27 -0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA9BF908-CC44-11E1-ADA1-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 228EF446-CC46-11E1-B992-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201368>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Thiago Farina <tfransosi@gmail.com> writes:
 
-> When $HOME is unset, home_config_paths fails and returns NULL pointers
-> for user_config and xdg_config. Valgrind complains with Syscall param
-> access(pathname) points to unaddressable byte(s).
+> On Thu, Jul 12, 2012 at 5:18 AM, J. Bakshi
+> <joydeep.bakshi@infoservices.in> wrote:
+>> Or any repo wise configuration file where I can save the info, so that
+>> it doesn't ask the credential before every push ?
+>>
+> I'd like to know how to do that too.
 >
-> Don't call blindly access() on these variables, but test them for
-> NULL-ness before.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->> This patch causes valgrind warnings in t1300.81 (get --path copes with
->> unset $HOME) about passing NULL to access():
->
-> Indeed. The following patch should fix it.
->
->  builtin/config.c | 3 ++-
->  config.c         | 4 ++--
->  2 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/config.c b/builtin/config.c
-> index e8e1c0a..67945b2 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -387,7 +387,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  
->  		home_config_paths(&user_config, &xdg_config, "config");
->  
-> -		if (access(user_config, R_OK) && !access(xdg_config, R_OK))
-> +		if (user_config && access(user_config, R_OK) &&
-> +		    xdg_config && !access(xdg_config, R_OK))
->  			given_config_file = xdg_config;
+> It's a pain to have to type username and password every time I need to
+> push to github. (Linux here btw).
 
-Shouldn't we be using xdg_config, if user_config is NULL and
-xdg_config is defined and accessible?
+I never type either when pushing to github, and I've been pushing
+there at least twice a day for quite some time (Linux here btw).
 
-In other words, isn't the objective of this "fix" is to replace any
-call to access(PATH, PERM) whose PATH can potentially be NULL with
+I have these in .git/config:
 
-	(PATH ? access(PATH, PERM) : -1)
+        [remote "github2"]
+                url = https://github.com/git/git
+                fetch = +refs/heads/*:refs/remotes/github2/*
+                pushurl = github.com:git/git.git
+                push = refs/heads/maint:refs/heads/maint
+                push = refs/heads/master:refs/heads/master
+                push = refs/heads/next:refs/heads/next
+                push = +refs/heads/pu:refs/heads/pu
 
-because we want to pretend access(PATH, PERM) returned an error,
-saying "The variable PATH holds a path to the file that is not
-accessible", when PATH is NULL?
+        [remote "github"]
+                url = https://github.com/gitster/git
+                pushurl = github.com:gitster/git.git
+                mirror
 
-And that is equivalent to
+and then this in $HOME/.ssh/config:
 
-	(!PATH || access(PATH, PERM))
-
-in the context of boolean.  The original
-
-	if (access(user_config, R_OK) && !access(xdg_config, R_OK))
-
-becomes 
-
-	if ((!user_config || access(user_config, R_OK)) &&
-	    !(!xdg_config || access(xdg_config, R_OK)))
-
-and the latter half of it is the same as
-
-	    (xdg_config && !access(xdg_config, R_OK))
-
-but the former half is not. Shouldn't it be
-
-	if ((!user_config || access(user_config, R_OK)) &&
-	    (xdg_config && !access(xdg_config, R_OK)))
-
-Confused.
-
-> diff --git a/config.c b/config.c
-> index d28a499..6b97503 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -940,12 +940,12 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
->  		found += 1;
->  	}
->  
-> -	if (!access(xdg_config, R_OK)) {
-> +	if (xdg_config && !access(xdg_config, R_OK)) {
->  		ret += git_config_from_file(fn, xdg_config, data);
->  		found += 1;
->  	}
->  
-> -	if (!access(user_config, R_OK)) {
-> +	if (user_config && !access(user_config, R_OK)) {
->  		ret += git_config_from_file(fn, user_config, data);
->  		found += 1;
->  	}
+        Host github.com
+                User git
+                IdentityFile ~/.ssh/github
