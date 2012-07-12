@@ -1,72 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How can I append authentication with "git push" ?
-Date: Thu, 12 Jul 2012 05:40:40 -0400
-Message-ID: <20120712094040.GA5268@sigill.intra.peff.net>
-References: <20120712134844.2d1c4378@shiva.selfip.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH 3/3] branch: add --unset-upstream option
+Date: Thu, 12 Jul 2012 12:27:46 +0200
+Message-ID: <1342088866.6458.24.camel@centaur.cmartin.tk>
+References: <1341939181-8962-1-git-send-email-cmn@elego.de>
+	 <1341939181-8962-4-git-send-email-cmn@elego.de>
+	 <7v629vijf2.fsf@alter.siamese.dyndns.org>
+	 <1342016087.6458.10.camel@centaur.cmartin.tk>
+	 <7vfw8yfde4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
-X-From: git-owner@vger.kernel.org Thu Jul 12 11:40:58 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 12:27:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpFtA-0005nC-Uo
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 11:40:49 +0200
+	id 1SpGcL-0005Hc-OF
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 12:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933043Ab2GLJko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 05:40:44 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57877
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932978Ab2GLJkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 05:40:43 -0400
-Received: (qmail 19616 invoked by uid 107); 12 Jul 2012 09:40:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jul 2012 05:40:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2012 05:40:40 -0400
-Content-Disposition: inline
-In-Reply-To: <20120712134844.2d1c4378@shiva.selfip.org>
+	id S933601Ab2GLK1Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jul 2012 06:27:24 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:55770 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932983Ab2GLK1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 06:27:23 -0400
+Received: from [192.168.1.5] (p57A1FFA4.dip.t-dialin.net [87.161.255.164])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 975D746149;
+	Thu, 12 Jul 2012 12:27:18 +0200 (CEST)
+In-Reply-To: <7vfw8yfde4.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.4.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201355>
 
-On Thu, Jul 12, 2012 at 01:48:44PM +0530, J. Bakshi wrote:
+On Wed, 2012-07-11 at 09:53 -0700, Junio C Hamano wrote:
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>=20
+> > I've added a bit of code to also remove branch.foo.rebase, which
+> > I'd also consider to be part of the upstream information.
+>=20
+> If "git branch -t" or "git branch --set-upstream" took another
+> option "--integrate-with=3D[rebase|merge]" to set the variable, I
+> would agree that removing branch.$name.rebase would be the right
+> thing to do, but because it is not, I do not know if it is sensible
+> to remove it upon --unset-upstream.
 
-> Is there any option to add user-name and password with git push ?
+I'll drop it then.
 
-The username can go in the URL. For example:
-
-  git push user@host:repo.git
-
-for ssh, or:
-
-  git push https://user@host/repo.git
-
-for http.
-
-For ssh, you can't specify a password automatically, but you should look
-into using key authentication (which can then be cached by ssh-agent).
-For http, you can put the password in the URL, but there are some
-security implications (like the fact that your password will be
-cleartext on disk, and visible in the process list to other users on the
-system).
-
-What protocol are you using to push?
-
-> Or any repo wise configuration file where I can save the info, so that
-> it doesn't ask the credential before every push ?
-
-Older versions of git can read from .netrc, but I would not recommend
-that, as it involves storing the password in plaintext on disk.
-
-Newer versions of git (v1.7.9 and up) support "credential helpers" which
-will read from a password wallet or other secure storage provided by the
-OS. There is a helper for OS X Keychain in contrib/, and somebody has
-been working on one for Windows.  What platform are you using?
-
--Peff
+   cmn
