@@ -1,90 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: indicate where a failed patch is to be found.
-Date: Thu, 12 Jul 2012 13:00:35 -0700
-Message-ID: <7v629sbvh8.fsf@alter.siamese.dyndns.org>
-References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
- <7vhatcc1ql.fsf@alter.siamese.dyndns.org> <4FFF1821.7030705@windriver.com>
- <7va9z4byl3.fsf@alter.siamese.dyndns.org> <4FFF2720.6090705@windriver.com>
+Subject: Re: [PATCH] config: fix several access(NULL) calls
+Date: Thu, 12 Jul 2012 13:12:37 -0700
+Message-ID: <7vwr28agcq.fsf@alter.siamese.dyndns.org>
+References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
+ <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vtxxcc36v.fsf@alter.siamese.dyndns.org> <vpq1ukgai4e.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 22:00:49 2012
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 12 22:13:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpPZ6-0003LB-0t
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 22:00:44 +0200
+	id 1SpPlL-0007NF-FM
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 22:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758129Ab2GLUAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 16:00:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41946 "EHLO
+	id S1758140Ab2GLUMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 16:12:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48327 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755748Ab2GLUAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 16:00:38 -0400
+	id S1756026Ab2GLUMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 16:12:39 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6D3A8349;
-	Thu, 12 Jul 2012 16:00:37 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 582A88639;
+	Thu, 12 Jul 2012 16:12:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6KQlPMfTLi5iysJ5uV3O0JYHxig=; b=tbfYe6
-	KW0abmQVSHoREcdSjef+q9H03JEyftj2yrllVjlZJhB1lQahCYYpdf3dj3NTcwoz
-	e30mO1d0PYpbk5vg57yFJoY5PMu4MeyjTeq6bVCUThtarGS8w9YObz5k1YxDF81K
-	yg6HN05nndctrLUwUJi77ZEUHBOrZqX6x8cCA=
+	:content-type; s=sasl; bh=/YlXVX2vKVBjeZI2nduJXZFDWYA=; b=uacuXt
+	s8HS8zDZVhlzJwA0+jZjPGzUkNm7gDvzYmKpRdSCd994FTXMtD7d4fCSUrUkQpyi
+	8JJRdsX+Xwtog7SfDSE7HTEU158oJc1OEYg2MJDZys8EQwhEy5t7ZgXej3dvjry8
+	cmjvw+BcWUBGKwWHi75XV0DQmaQ78WHRgY6hc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YPRSgPCbYKgJj5rlGC6mETBFq/S9/wey
-	3tfklQh0o2I8kAP5Y2TYo6jniTKPf/dWU7ly0xtMPRtTc0oaok8REaTNZF4tAJqK
-	JQFIOWQu1KolUvpcRSv9resfrHnZJu+yVodZwEtFWJkyhpq0PGvjN2yOpCtiyGkQ
-	i+ZtOXmC+G8=
+	:content-type; q=dns; s=sasl; b=daIL9VgI6Tq83CsF6Dqzd6S374H6tzyR
+	64yLxLGJ9sK8CNvPM04hUI1C0ihcOQ3MqLOvo4dB41XtDAK+zVKF92p5m9hfeaqf
+	7KQigXLEEdCE0cKlsFB//KMgxFxVKtIyYeyZLx7bK3WPs1y7NrBhKilt6ohYKBj1
+	b+LJ8nL99wg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B50128348;
-	Thu, 12 Jul 2012 16:00:37 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 468418638;
+	Thu, 12 Jul 2012 16:12:39 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29EF48347; Thu, 12 Jul 2012
- 16:00:37 -0400 (EDT)
-In-Reply-To: <4FFF2720.6090705@windriver.com> (Paul Gortmaker's message of
- "Thu, 12 Jul 2012 15:36:00 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B41B68636; Thu, 12 Jul 2012
+ 16:12:38 -0400 (EDT)
+In-Reply-To: <vpq1ukgai4e.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Thu, 12 Jul 2012 21:34:25 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3F795158-CC5C-11E1-BF73-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ED8F7924-CC5D-11E1-96A7-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201378>
 
-Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
->>>> This is _NOT_ fine, especially if you suggest "patch" the user may
->>>> not have, and more importantly does not have a clue why "git apply"
->>>> rejected it ("am" does _not_ use "patch" at all).
->>>
->>> I'm not 100% sure I'm following what part here is not OK.  If you
->>> can help me understand that, I'll respin the change accordingly.
->> 
->> Do not ever mention "patch -p1".  It is not the command that "git
->> am" uses, and it is not what detected the breakage in the patch.
+>>> +		if (user_config && access(user_config, R_OK) &&
+>>> +		    xdg_config && !access(xdg_config, R_OK))
+>>>  			given_config_file = xdg_config;
+>>
+>> Shouldn't we be using xdg_config, if user_config is NULL and
+>> xdg_config is defined and accessible?
 >
-> This may be true, but it _is_ the command that I (and others) have
-> defaulted to using, if for no other reason than ignorance.
->> 
->> The command to guide the user to is "git apply".
+> I don't think so. If user_config is NULL, it means something went wrong,
+> because $HOME is unset. In this case, I'd rather die than using some
+> other configuration file silently (which would be possible if
+> $XDG_CONFIG_HOME is set), and this is what the code does:
 >
-> OK.  But I don't see a "--dry-run" equivalent -- and "git apply --check"
-> just gives me a repeat of the same fail messages that "git am" did.
+> 		if (user_config && access(user_config, R_OK) &&
+> 		    xdg_config && !access(xdg_config, R_OK))
+> 			given_config_file = xdg_config;
+> 		else if (user_config)
+> 			given_config_file = user_config;
+> 		else
+> 			die("$HOME not set");
 >
-> With "patch -p1 --dry-run"  I get information that immediately
-> lets me see whether the patch is viable or not.
+> Perhaps it could actually be made even clearer with
+>
+> 		if (!user_config)
+> 			die("$HOME not set");
+> 		else if (access(user_config, R_OK) &&
+> 			 xdg_config && !access(xdg_config, R_OK))
+> 			given_config_file = xdg_config;
+> 		else
+> 			given_config_file = user_config;
 
-What do you mean by "viable"?  
+At least the code needs to break lines at different point and a comment.
 
-Independent from the answer to that question...
+	if (user_config &&
+		access(user_config, R_OK) &&
+                (xdg_config && !access(xdg_config, R_OK)))
+                /*
+                 * Even if we have usable XDG stuff, we want to
+		 * error out on missing HOME!!!
+                 */
+		use xdg config;
+	else if (user_config)
+		use user config;
+	else
+		unusable situation;
 
-Running "git apply -p1" would by definition give you the same
-failure without --dry-run (because you know it already failed), no?
-Then you could ask for rejects or attempt to apply with reduced
-contexts to "git apply" all without having to say --dry-run, as
-unapplicable change will not be applied.
+But is it really true that we want to error out on missing HOME if
+we have usable XDG stuff?
