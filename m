@@ -1,74 +1,53 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH 3/6] t4012: Actually quote the sed script
-Date: Thu, 12 Jul 2012 14:15:30 +0200
-Message-ID: <4FFEBFE2.5030206@in.waw.pl>
-References: <20120711221241.GA21342@akuma>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Git Garbage Collect Error.
+Date: Thu, 12 Jul 2012 14:34:30 +0200
+Message-ID: <CAGK7Mr5aAkQOu_LxvW7q13dup5GYpfBQUcUEeWsyYM+9cTYX=g@mail.gmail.com>
+References: <4FD86AF8.1050100@zuken.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Alexander Strasser <eclipse7@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jul 12 14:15:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Thomas Lucas <toml@zuken.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 12 14:35:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpIJ6-0004Zo-44
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:15:44 +0200
+	id 1SpIbv-0007XW-4y
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516Ab2GLMPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 08:15:38 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:51128 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754807Ab2GLMPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 08:15:38 -0400
-Received: from zopt1.fuw.edu.pl ([193.0.81.24] helo=[10.33.8.79])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SpIIx-0004W2-Tb; Thu, 12 Jul 2012 14:15:36 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120329 Icedove/10.0.3
-In-Reply-To: <20120711221241.GA21342@akuma>
-X-Enigmail-Version: 1.4
+	id S1759177Ab2GLMfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 08:35:03 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:43431 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093Ab2GLMfB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 08:35:01 -0400
+Received: by ghrr11 with SMTP id r11so2321495ghr.19
+        for <git@vger.kernel.org>; Thu, 12 Jul 2012 05:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=70ej0BYKgaFLfPVU9w3+xUykAvujNcyuRiu0eBFCV9c=;
+        b=HT8PxHwQypsPFQVGnpbJCYQm5BoliJDj4ESFp10vPk0ecWvaz7+K68EfESO75GCptQ
+         FEnezXK47n60Y2G5/nQ6tYuZ5aE6GoTCVmMXhywTIps/07pSE9yS7JyRBDnyaF4ega4T
+         ATf71TiCin/UF1QZbUeq9yXDeLiRy60PHabUDxQHQ3gkYN1gLRHfNZa2onyXhpcEc3hT
+         P+cbglio2mhRn7zzMQ5hpD0w1ZP5O9qIEX/NgJSOUmZF0+TQUU1ygp0aALF7t9p7Z3Hc
+         OXy8VL6kIJjSnKxnmVL4vOKXsGEi/dR45E6pTA7sqvMVWhxZTunG69NnXuAJFgzscWJ6
+         /T4w==
+Received: by 10.50.149.225 with SMTP id ud1mr17294500igb.74.1342096500347;
+ Thu, 12 Jul 2012 05:35:00 -0700 (PDT)
+Received: by 10.50.99.10 with HTTP; Thu, 12 Jul 2012 05:34:30 -0700 (PDT)
+In-Reply-To: <4FD86AF8.1050100@zuken.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201358>
 
-On 07/12/2012 12:12 AM, Alexander Strasser wrote:
-> The nested quoting is not needed in this cases, thus the previous
-> version did work just fine. Never the less the usage is misleading,
-> so just achieve nested quoting by using double quotes instead. Lower
-> the probability of breakage in the future and make the code easier
-> to read.
+> At the moment the bare repository is about 4Gb in size and about 2/3rds the way through fetching.
 
-Hi,
+That's a big repo. Lots of binary files in it?
+Does git fsck run normally? Does it report a lot of dangling blogs/commits/etc?
 
-I have some spelling corrections (minor, but since you intend to re-roll
-anyway, I'll post them), and one more thing which could be corrected
-(below).
-
-3/6: s/Never the less/Nevertheless/
-4/6: s/masquerading/masking/     (masquerade means to "mask oneself")
-
->  	 if git apply --stat --summary broken 2>detected
->  	 then
->  		echo unhappy - should have detected an error
-> @@ -79,7 +79,7 @@ test_expect_success 'apply detecting corrupt patch correctly' '
->  '
->  
->  test_expect_success 'apply detecting corrupt patch correctly' '
-> -	 git diff --binary | sed -e 's/-CIT/xCIT/' >broken &&
-> +	 git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
->  	 if git apply --stat --summary broken 2>detected
->  	 then
->  		echo unhappy - should have detected an error
-I think this can be changed to:
-   test_must_fail git apply --stat --summary broken 2>detected
-
--
-Zbyszek
+Philippe
