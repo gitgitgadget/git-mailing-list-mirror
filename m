@@ -1,53 +1,64 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: Git Garbage Collect Error.
-Date: Thu, 12 Jul 2012 14:34:30 +0200
-Message-ID: <CAGK7Mr5aAkQOu_LxvW7q13dup5GYpfBQUcUEeWsyYM+9cTYX=g@mail.gmail.com>
-References: <4FD86AF8.1050100@zuken.co.uk>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] config: fix several access(NULL) calls
+Date: Thu, 12 Jul 2012 14:39:21 +0200
+Message-ID: <87mx35rw5i.fsf@thomas.inf.ethz.ch>
+References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
+	<1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Thomas Lucas <toml@zuken.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jul 12 14:35:12 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 12 14:39:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpIbv-0007XW-4y
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:35:11 +0200
+	id 1SpIg6-0005NN-30
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759177Ab2GLMfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 08:35:03 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:43431 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093Ab2GLMfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 08:35:01 -0400
-Received: by ghrr11 with SMTP id r11so2321495ghr.19
-        for <git@vger.kernel.org>; Thu, 12 Jul 2012 05:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=70ej0BYKgaFLfPVU9w3+xUykAvujNcyuRiu0eBFCV9c=;
-        b=HT8PxHwQypsPFQVGnpbJCYQm5BoliJDj4ESFp10vPk0ecWvaz7+K68EfESO75GCptQ
-         FEnezXK47n60Y2G5/nQ6tYuZ5aE6GoTCVmMXhywTIps/07pSE9yS7JyRBDnyaF4ega4T
-         ATf71TiCin/UF1QZbUeq9yXDeLiRy60PHabUDxQHQ3gkYN1gLRHfNZa2onyXhpcEc3hT
-         P+cbglio2mhRn7zzMQ5hpD0w1ZP5O9qIEX/NgJSOUmZF0+TQUU1ygp0aALF7t9p7Z3Hc
-         OXy8VL6kIJjSnKxnmVL4vOKXsGEi/dR45E6pTA7sqvMVWhxZTunG69NnXuAJFgzscWJ6
-         /T4w==
-Received: by 10.50.149.225 with SMTP id ud1mr17294500igb.74.1342096500347;
- Thu, 12 Jul 2012 05:35:00 -0700 (PDT)
-Received: by 10.50.99.10 with HTTP; Thu, 12 Jul 2012 05:34:30 -0700 (PDT)
-In-Reply-To: <4FD86AF8.1050100@zuken.co.uk>
+	id S1751972Ab2GLMjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 08:39:25 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:10198 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751225Ab2GLMjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 08:39:24 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Jul
+ 2012 14:39:21 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Jul
+ 2012 14:39:22 +0200
+In-Reply-To: <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
+	Moy's message of "Thu, 12 Jul 2012 14:04:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201359>
 
-> At the moment the bare repository is about 4Gb in size and about 2/3rds the way through fetching.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-That's a big repo. Lots of binary files in it?
-Does git fsck run normally? Does it report a lot of dangling blogs/commits/etc?
+> When $HOME is unset, home_config_paths fails and returns NULL pointers
+> for user_config and xdg_config. Valgrind complains with Syscall param
+> access(pathname) points to unaddressable byte(s).
+>
+> Don't call blindly access() on these variables, but test them for
+> NULL-ness before.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>> This patch causes valgrind warnings in t1300.81 (get --path copes with
+>> unset $HOME) about passing NULL to access():
+>
+> Indeed. The following patch should fix it.
 
-Philippe
+Thanks!
+
+Tested-by: Thomas Rast <trast@student.ethz.ch>
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
