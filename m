@@ -1,95 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: git-am: indicate where a failed patch is to be
- found.
-Date: Thu, 12 Jul 2012 14:55:17 -0700
-Message-ID: <7vfw8wablm.fsf@alter.siamese.dyndns.org>
-References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
- <7vhatcc1ql.fsf@alter.siamese.dyndns.org> <4FFF1821.7030705@windriver.com>
- <7va9z4byl3.fsf@alter.siamese.dyndns.org> <20120712211835.GA858@vidovic>
+Subject: Re: Question: git clone --no-checkout behavior
+Date: Thu, 12 Jul 2012 15:02:02 -0700
+Message-ID: <7vbojkabad.fsf@alter.siamese.dyndns.org>
+References: <CAGyf7-EZOSiATo3yF5x+FT6_QAkMTJ+AmrE27kwmxLkLXdaJKg@mail.gmail.com>
+ <7vliioc1yn.fsf@alter.siamese.dyndns.org>
+ <CAGyf7-Fkn9bjJ9EZEFNsba8U-RUzrB3TzmB-YbcvwUFRbHXG+Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 12 23:55:49 2012
+Cc: git@vger.kernel.org
+To: Bryan Turner <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 00:02:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpRML-0008T3-E9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 23:55:41 +0200
+	id 1SpRSh-0003n6-VZ
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 00:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815Ab2GLVzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 17:55:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37370 "EHLO
+	id S964821Ab2GLWCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 18:02:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41084 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932998Ab2GLVzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 17:55:22 -0400
+	id S932998Ab2GLWCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 18:02:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCCDC8EC3;
-	Thu, 12 Jul 2012 17:55:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 731878070;
+	Thu, 12 Jul 2012 18:02:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uQFn3dFGe8IU6agtvgxGOB6di+A=; b=giJdVo
-	KRUMm6NHFjiOPFWRUO4efs226kiRpe46qycHO3yBPNo7eLvkqP9zddYZnkvi/V9p
-	B1yXxAJo+rZQx8Iq7VAQVHC8dRiiGdMDGgVojdvSVubw7OS9TtIfsI4sN8H8wqWh
-	LF01dftKoFh2kTuHPkAXYFmxEe+Dz60TX8OSo=
+	:content-type; s=sasl; bh=sEJvS613ZD6EleX8JwZgqFU+nD8=; b=WXxdCV
+	H15ST1nisBrdXsDTBbTBPjpw2GSTOc+N+sfAqZPJsB8R9mVkcg4CRl0cqk+37Hls
+	DarCeVfWLQm7dMNv+Gw/jEO1vaExPgv7UsW1NvoW+72mdsC4SYD/0DJZDy0WwWjC
+	vyiqtDtw87fwN9mN8P80TuSvbOW03KAI2HaqI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wdjfp2YszuYzJYlbna0quTpCDWCRrMeb
-	aMeOoUoNtatQjU8GpwCLM49Xmjisq+5HvNGfjy6aK9RPs0kU72gIFDlnYEZR+p2L
-	/9NNN3zK+uMUnBO/b516uJ6YFeqCMYkesgypoiqUAZUiRJ/M5FJaBU1nxdtlv1Qb
-	FOraTuhfWyM=
+	:content-type; q=dns; s=sasl; b=GUAsuE2gCYinK8Yk+5oFQCJIi6ZCOA8S
+	Xr6pO1P3KAhsO9yPUeqWTZxKLTGfRsx1IN6qd0jQQcUPKu0PdFGgo8X20F0RofHa
+	4XDOi1wjdBUGDFy4tKHY2Boav320/TsLzlIkCyNruJF5BOuYeGuvwHyHHo52WmpG
+	kVjtW9Hf3A0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC0768EC2;
-	Thu, 12 Jul 2012 17:55:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F479806F;
+	Thu, 12 Jul 2012 18:02:05 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D1198EBF; Thu, 12 Jul 2012
- 17:55:19 -0400 (EDT)
-In-Reply-To: <20120712211835.GA858@vidovic> (Nicolas Sebrecht's message of
- "Thu, 12 Jul 2012 23:18:35 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A16B9806E; Thu, 12 Jul 2012
+ 18:02:04 -0400 (EDT)
+In-Reply-To: <CAGyf7-Fkn9bjJ9EZEFNsba8U-RUzrB3TzmB-YbcvwUFRbHXG+Q@mail.gmail.com> (Bryan
+ Turner's message of "Fri, 13 Jul 2012 06:11:03 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 456F16F0-CC6C-11E1-93F1-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 37281EBA-CC6D-11E1-862C-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201385>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Bryan Turner <bturner@atlassian.com> writes:
 
-> The 12/07/12, Junio C Hamano wrote:
+>> If you populated $GIT_DIR/index from the tree of HEAD, you would see
+>> everything is deleted in the working tree.  You can simulate it by
+>> doing this:
+>>
+>>         git clone -n $over_there here
+>>         cd here
+>>         git read-tree HEAD
+>>         git status
+>>
+>> But it would not help people who want to check another branch out
+>> immediately after cloning with -n, which is the whole point of the
+>> option, so...
 >
->> It does not matter at all that 0001-foo.patch only has a single
->> patch.  If you are going to fix up the patch after you saw "git am"
->> failed, you will be fixing .git/rebase-apply/patch with your editor
->> and re-run "git am" without arguments, at which point "git am" will
->> not look at your 0001-foo.patch file at all.
->
-> Hugh! Didn't know that.
->
-> Is it actually expected from users to manually edit
-> .git/rebase-apply/patch path? I can't find any reference about that in
-> the documentation and it really sounds like interfering with the git
-> internals.
->
-> Shouldn't git-am/git-rebase expose this to the user (I'm thinking about
-> something like
->
->   git am --edit-offending-patch
->   git am --fix-patch
+> Is the reset call in my example in essence performing that same read-tree,
+> when it unstages the changes?
 
-I doubt it would be very useful.  As Paul says, it is a powerful way
-to work, but it is not for everybody, and more importantly, it is
-not the only way to work with the patch, once the user knows where
-it is.
-
-The first problem before any of that is that we didn't tell the user
-where the patch is.  You can re-run "git am" with different options
-like reject, "-3", and/or with a reduced context and many cases are
-handled without having to know where the patch is at all, but if the
-user starts wanting to know where the patch is because she wants to
-do things beyond that, we should just tell her where it is, instead
-of adding a yet another option to run an editor on it, still without
-telling her where it is.
+"git reset" (without any other parameters) reads the HEAD tree into
+the index without touching the working tree, so I think it is
+probably equivalent.
