@@ -1,113 +1,77 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2] submodules: don't stumble over symbolic links when cloning
- recursively
-Date: Thu, 12 Jul 2012 19:45:32 +0200
-Message-ID: <4FFF0D3C.2060001@web.de>
+From: Felix Natter <fnatter@gmx.net>
+Subject: Export from bzr / Import to git results in a deleted file re-appearing
+Date: Thu, 12 Jul 2012 20:00:17 +0200
+Message-ID: <87ehogrham.fsf@bitburger.home.felix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Bob Halley <halley@play-bow.org>,
-	Phil Hord <phil.hord@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 19:45:50 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 12 20:05:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpNSR-0002eZ-Le
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:45:44 +0200
+	id 1SpNlJ-0001Lv-T5
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 20:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161498Ab2GLRpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 13:45:39 -0400
-Received: from mout.web.de ([212.227.17.11]:57376 "EHLO mout.web.de"
+	id S934143Ab2GLSFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 14:05:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:59553 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161487Ab2GLRph (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 13:45:37 -0400
-Received: from [192.168.178.48] ([91.3.184.233]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LvB2o-1RpTUl0qCg-010grn; Thu, 12 Jul 2012 19:45:35
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-X-Provags-ID: V02:K0:oaEkBOBw/GrONrM8Hqo9aAPkcpsfePchaAWrHlIWp3N
- cma9g7hKwj2LcajrSlPW26pkhbnvr9KHGZirGEpwk8noSiwD7t
- vxREgSD2pCr6e3UYvUP93nHkUukGdc+g4/v3PKq2158JV9/udN
- u+x6szPLQ3OBDn+oF/TAS83aC9+4ZRySK88HTQgjw7N5QevzKp
- SYVc+lN/BqFnIJ5TZVrMg==
+	id S934079Ab2GLSFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 14:05:07 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SpNlB-0001C1-Lq
+	for git@vger.kernel.org; Thu, 12 Jul 2012 20:05:05 +0200
+Received: from pd9e84f5e.dip.t-dialin.net ([217.232.79.94])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jul 2012 20:05:05 +0200
+Received: from fnatter by pd9e84f5e.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jul 2012 20:05:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: pd9e84f5e.dip.t-dialin.net
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+Cancel-Lock: sha1:elzUbBQr6X19Bj2YO0dC3sW3SA8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201372>
 
-Since 69c3051 (submodules: refactor computation of relative gitdir path)
-cloning a submodule recursively fails for nested submodules when a
-symbolic link is part of the path to the work tree of the superproject.
+hi,
 
-This happens when module_clone() tries to find the relative paths between
-the work tree and the git dir. When a symbolic link in current $PWD points
-to a directory that is at a different level, then determining the number
-of "../" needed to traverse to the superproject's work tree leads to a
-wrong result.
+I am trying to move freeplane's repository (GPL-project) from bzr to
+git, but when I do this:
 
-As there is no portable way to say "pwd -P", use cd_to_toplevel to remove
-the link from $PWD, which fixes this problem.
+$ mkdir freeplane-git1
+$ cd freeplane-git1
+$ git init .
+$ bzr fast-export --export-marks=../marks.bzr ../trunk/ | git fast-import --export-marks=../marks.git
+$ git checkout
 
-A test for this issue has been added to t7406.
+then there are no errors, but the resulting working index is broken:
+ freeplane-git1/freeplane_plugin_formula/src/org/freeplane/plugin/formula
+ contains SpreadSheetUtils.java which belongs to package
+ 'org.freeplane.plugin.spreadsheet' and which is no longer in the bzr
+ trunk that I imported!
 
-Reported-by: Bob Halley <halley@play-bow.org>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+The freeplane repo is publically available, so you should easily be able
+to reproduce this:
+  bzr branch bzr://freeplane.bzr.sourceforge.net/bzrroot/freeplane/freeplane_program/trunk
 
-The changes in this version are:
-- the SYMLINKS prerequisite is used for the new test
-- a comment explaining why cd_to_toplevel is needed has been added
-- small updates to the commit message
+I reported this as a possible bzr-fastimport bug, but didn't get a
+response so far:
+  https://bugs.launchpad.net/bzr-fastimport/+bug/1014291
 
-Thanks to J6t for the input.
+Is there maybe a better way to convert a repo from bzr to git?
+This seems to be the standard solution on the web.
 
- git-submodule.sh            |  6 ++++--
- t/t7406-submodule-update.sh | 13 +++++++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+I am using Bazaar (bzr) 2.5.0dev6, bzr-fastimport 0.13.0 and git 1.7.10.4.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5629d87..dba4d39 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -186,8 +186,10 @@ module_clone()
- 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
- 	fi
-
--	a=$(cd "$gitdir" && pwd)/
--	b=$(cd "$sm_path" && pwd)/
-+	# We already are at the root of the work tree but cd_to_toplevel will
-+	# resolve any symlinks that might be present in $PWD
-+	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
-+	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
- 	# normalize Windows-style absolute paths to POSIX-style absolute paths
- 	case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
- 	case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index dcb195b..ce61d4c 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -636,4 +636,17 @@ test_expect_success 'submodule update properly revives a moved submodule' '
- 	)
- '
-
-+test_expect_success SYMLINKS 'submodule update can handle symbolic links in pwd' '
-+	mkdir -p linked/dir &&
-+	ln -s linked/dir linkto &&
-+	(
-+		cd linkto &&
-+		git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
-+		(
-+			cd super &&
-+			git submodule update --init --recursive
-+		)
-+	)
-+'
-+
- test_done
+Thanks and Best Regards!
 -- 
-1.7.11.1.166.gf56d108
+Felix Natter
