@@ -1,82 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git Garbage Collect Error.
-Date: Thu, 12 Jul 2012 05:32:21 -0400
-Message-ID: <20120712093221.GA4443@sigill.intra.peff.net>
-References: <4FD86AF8.1050100@zuken.co.uk>
+Subject: Re: How can I append authentication with "git push" ?
+Date: Thu, 12 Jul 2012 05:40:40 -0400
+Message-ID: <20120712094040.GA5268@sigill.intra.peff.net>
+References: <20120712134844.2d1c4378@shiva.selfip.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Thomas Lucas <toml@zuken.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jul 12 11:32:40 2012
+To: "J. Bakshi" <joydeep.bakshi@infoservices.in>
+X-From: git-owner@vger.kernel.org Thu Jul 12 11:40:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpFlH-0003mS-KR
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 11:32:39 +0200
+	id 1SpFtA-0005nC-Uo
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 11:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758295Ab2GLJcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 05:32:33 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57872
+	id S933043Ab2GLJko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 05:40:44 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57877
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757206Ab2GLJcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 05:32:25 -0400
-Received: (qmail 19529 invoked by uid 107); 12 Jul 2012 09:32:24 -0000
+	id S932978Ab2GLJkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 05:40:43 -0400
+Received: (qmail 19616 invoked by uid 107); 12 Jul 2012 09:40:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jul 2012 05:32:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2012 05:32:21 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jul 2012 05:40:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2012 05:40:40 -0400
 Content-Disposition: inline
-In-Reply-To: <4FD86AF8.1050100@zuken.co.uk>
+In-Reply-To: <20120712134844.2d1c4378@shiva.selfip.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201354>
 
-On Wed, Jun 13, 2012 at 11:27:04AM +0100, Thomas Lucas wrote:
+On Thu, Jul 12, 2012 at 01:48:44PM +0530, J. Bakshi wrote:
 
-> Hopefully this is the right place to send bug reports... The
-> community page "http://git-scm.com/community" suggests that it is.
+> Is there any option to add user-name and password with git push ?
 
-It is the right place. Sorry that you did not get any response before
-now.
+The username can go in the URL. For example:
 
-> During garbage collection (git gc) it encountered the following error:
-> 
-> git gc | git gc --prune :
-> 
->    Counting objects: 856758, done.
->    Delta compression using up to 2 threads.
->    fatal: Out of memory, malloc failed (tried to allocate 303237121 bytes)
->    error: failed to run repack
+  git push user@host:repo.git
 
-Packing can be memory hungry if you have a lot of large objects (we may
-hold several large objects in memory while comparing them for deltas).
-It is also worse with 2 threads, as they will be working simultaneously,
-but in the same memory space.
+for ssh, or:
 
-> The compression gets over 90% of the way through before this error
-> occurs, but I don't think any compression results are kept, because
-> when you repeat it has the same amount of work to do.
+  git push https://user@host/repo.git
 
-Right. Nothing is written during compression; we are just coming up with
-a list of deltas to perform during the writing phase.
+for http.
 
-> My system is XP64 2 core with 4Gb of memory and plenty of virtual memory.
+For ssh, you can't specify a password automatically, but you should look
+into using key authentication (which can then be cached by ssh-agent).
+For http, you can put the password in the URL, but there are some
+security implications (like the fact that your password will be
+cleartext on disk, and visible in the process list to other users on the
+system).
 
-Unfortunately, I believe that the msysgit build is 32-bit, which means
-you are probably not even getting to use all 4Gb of your address space
-(my impression is that without special flags, 32-bit Windows processes
-are limited to 2Gb of address space).
+What protocol are you using to push?
 
-I'd first try doing the pack single-threaded by setting the pack.threads
-config option to 1. If that doesn't work, you might try setting
-pack.windowMemory to limit the delta search based on available memory
-(usually it is limited by number of objects). If the large blobs are
-ones that do not delta well anyway (e.g., compressed media files), you
-might also consider setting the "-delta" attribute for them to skip
-delta compression entirely.
+> Or any repo wise configuration file where I can save the info, so that
+> it doesn't ask the credential before every push ?
+
+Older versions of git can read from .netrc, but I would not recommend
+that, as it involves storing the password in plaintext on disk.
+
+Newer versions of git (v1.7.9 and up) support "credential helpers" which
+will read from a password wallet or other secure storage provided by the
+OS. There is a helper for OS X Keychain in contrib/, and somebody has
+been working on one for Windows.  What platform are you using?
 
 -Peff
