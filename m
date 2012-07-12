@@ -1,77 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: indicate where a failed patch is to be found.
-Date: Thu, 12 Jul 2012 10:45:22 -0700
-Message-ID: <7vhatcc1ql.fsf@alter.siamese.dyndns.org>
-References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2] submodules: don't stumble over symbolic links when cloning
+ recursively
+Date: Thu, 12 Jul 2012 19:45:32 +0200
+Message-ID: <4FFF0D3C.2060001@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 19:45:38 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Bob Halley <halley@play-bow.org>,
+	Phil Hord <phil.hord@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 19:45:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpNSE-0002Ld-9s
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:45:30 +0200
+	id 1SpNSR-0002eZ-Le
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 19:45:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161481Ab2GLRpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 13:45:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61456 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934158Ab2GLRpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 13:45:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2151C8101;
-	Thu, 12 Jul 2012 13:45:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LvD8gSNWdYS5qCk5NDMvaJ7yQYs=; b=Sz8XkR
-	+VPlTE5d0WGZL7QRQNYWmb8fEoc4VeDd3DzrTzLugxVlPzI0p/GW9IbCmxWwiDRO
-	ju/d/uIta9i4nTsDxEhDjCl+LiAMTtUhtiFtgdaMg468SgPtxEA3cB82I1FIg86O
-	f8imQpThWsQuvYEh9+5X4LAQ7Yz5hSqWqzhIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fk+UhiVbLZG/ZJWLRuwcgqZ09gMeTefv
-	v9dkHyx7nTU7RfPJ6CVjmGiZ9eCIG7RP6wmz7FS7AZ57wmXSNVeSSflhhCCPWe+Q
-	S7a4wea8jrc/CMKZSACFG42dvSEdsRIHHhjNGqpuCaLRHEJ9irDzaMAzWzqbouFF
-	lCeOlTSFcf4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 177C48100;
-	Thu, 12 Jul 2012 13:45:24 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 888ED80FC; Thu, 12 Jul 2012
- 13:45:23 -0400 (EDT)
-In-Reply-To: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
- (Paul Gortmaker's message of "Thu, 12 Jul 2012 11:50:43 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B62CE70-CC49-11E1-885D-C3672E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1161498Ab2GLRpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 13:45:39 -0400
+Received: from mout.web.de ([212.227.17.11]:57376 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161487Ab2GLRph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 13:45:37 -0400
+Received: from [192.168.178.48] ([91.3.184.233]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LvB2o-1RpTUl0qCg-010grn; Thu, 12 Jul 2012 19:45:35
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+X-Provags-ID: V02:K0:oaEkBOBw/GrONrM8Hqo9aAPkcpsfePchaAWrHlIWp3N
+ cma9g7hKwj2LcajrSlPW26pkhbnvr9KHGZirGEpwk8noSiwD7t
+ vxREgSD2pCr6e3UYvUP93nHkUukGdc+g4/v3PKq2158JV9/udN
+ u+x6szPLQ3OBDn+oF/TAS83aC9+4ZRySK88HTQgjw7N5QevzKp
+ SYVc+lN/BqFnIJ5TZVrMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201371>
 
-Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+Since 69c3051 (submodules: refactor computation of relative gitdir path)
+cloning a submodule recursively fails for nested submodules when a
+symbolic link is part of the path to the work tree of the superproject.
 
-> If git am wasn't run with --reject, we assume the end user
-> knows where to find the patch.  This is normally true for
-> a single patch,
+This happens when module_clone() tries to find the relative paths between
+the work tree and the git dir. When a symbolic link in current $PWD points
+to a directory that is at a different level, then determining the number
+of "../" needed to traverse to the superproject's work tree leads to a
+wrong result.
 
-Not at all.  Whether it is a single or broken, the patch is fed to
-underlying "apply" from an unadvertised place.
+As there is no portable way to say "pwd -P", use cd_to_toplevel to remove
+the link from $PWD, which fixes this problem.
 
-> So, provide a helpful hint as to where they can
-> find the patch ...
+A test for this issue has been added to t7406.
 
-This is OK, but you may want to give a way to squelch it once the
-user learns where it is by following the usual "advice.*" thing.
+Reported-by: Bob Halley <halley@play-bow.org>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-> ... to do the manual fixup before eventually
-> continuing with "git add ... ; git am -r".
+The changes in this version are:
+- the SYMLINKS prerequisite is used for the new test
+- a comment explaining why cd_to_toplevel is needed has been added
+- small updates to the commit message
 
-This is _NOT_ fine, especially if you suggest "patch" the user may
-not have, and more importantly does not have a clue why "git apply"
-rejected it ("am" does _not_ use "patch" at all).
+Thanks to J6t for the input.
+
+ git-submodule.sh            |  6 ++++--
+ t/t7406-submodule-update.sh | 13 +++++++++++++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5629d87..dba4d39 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -186,8 +186,10 @@ module_clone()
+ 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
+ 	fi
+
+-	a=$(cd "$gitdir" && pwd)/
+-	b=$(cd "$sm_path" && pwd)/
++	# We already are at the root of the work tree but cd_to_toplevel will
++	# resolve any symlinks that might be present in $PWD
++	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
++	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
+ 	# normalize Windows-style absolute paths to POSIX-style absolute paths
+ 	case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
+ 	case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index dcb195b..ce61d4c 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -636,4 +636,17 @@ test_expect_success 'submodule update properly revives a moved submodule' '
+ 	)
+ '
+
++test_expect_success SYMLINKS 'submodule update can handle symbolic links in pwd' '
++	mkdir -p linked/dir &&
++	ln -s linked/dir linkto &&
++	(
++		cd linkto &&
++		git clone "$TRASH_DIRECTORY"/super_update_r2 super &&
++		(
++			cd super &&
++			git submodule update --init --recursive
++		)
++	)
++'
++
+ test_done
+-- 
+1.7.11.1.166.gf56d108
