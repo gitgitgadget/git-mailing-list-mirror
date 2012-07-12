@@ -1,64 +1,62 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] config: fix several access(NULL) calls
-Date: Thu, 12 Jul 2012 14:39:21 +0200
-Message-ID: <87mx35rw5i.fsf@thomas.inf.ethz.ch>
-References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
-	<1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Question: git clone --no-checkout behavior
+Date: Thu, 12 Jul 2012 22:51:31 +1000
+Message-ID: <CAGyf7-EZOSiATo3yF5x+FT6_QAkMTJ+AmrE27kwmxLkLXdaJKg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 12 14:39:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 12 14:52:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpIg6-0005NN-30
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:39:30 +0200
+	id 1SpIsR-0006S1-SL
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 14:52:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972Ab2GLMjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 08:39:25 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:10198 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751225Ab2GLMjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 08:39:24 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Jul
- 2012 14:39:21 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 12 Jul
- 2012 14:39:22 +0200
-In-Reply-To: <1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Thu, 12 Jul 2012 14:04:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752853Ab2GLMvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 08:51:33 -0400
+Received: from na3sys009aog121.obsmtp.com ([74.125.149.145]:38730 "HELO
+	na3sys009aog121.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752313Ab2GLMvd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jul 2012 08:51:33 -0400
+Received: from mail-yw0-f47.google.com ([209.85.213.47]) (using TLSv1) by na3sys009aob121.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKT/7IVJPYezRM93yLZGtWB4G9tr3N6P/h@postini.com; Thu, 12 Jul 2012 05:51:33 PDT
+Received: by yhjj56 with SMTP id j56so2648511yhj.6
+        for <git@vger.kernel.org>; Thu, 12 Jul 2012 05:51:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :x-gm-message-state;
+        bh=D3WoCoQlum86GUI3nIz0Z02Gvq2o24EaerzWiEb0E/0=;
+        b=FIDaYKsDXVAn74mDgq5mLTdULQpYnijYfYi2VRVdZFGmqQfAgLl9+KTAux5nV/Smz5
+         sXKfCNwb+vbnwfo4p3GByMQmankqaNKAiAzCGVZ432JDQaUK9sFB6Gy7zePa/xn/OI8F
+         rCeLyVbBoypMZfE3SeSaNUMJdhUZ8YcUkWfsZ/3w5vyGSPBwrWnJ9AFVKeRThdIKdtLP
+         U+0y4yA7rYBtoyOKAlfbuE0cJmv6269tErnr7AxOHioLUIyUkPZ4lgJIjK8fWt3hTt3n
+         hZRVsU1Vm188bGNBC19ggSXbzSHN0WmaW0+81Z7El6m2ozgfy6tHRkbMAZVKJFsfNbaa
+         4Tpg==
+Received: by 10.50.161.198 with SMTP id xu6mr17579558igb.40.1342097491697;
+ Thu, 12 Jul 2012 05:51:31 -0700 (PDT)
+Received: by 10.231.65.12 with HTTP; Thu, 12 Jul 2012 05:51:31 -0700 (PDT)
+X-Gm-Message-State: ALoCoQk0K90g8sFeXaWssPX0DFNEHkiCkkv+f13yVuR3iaJxZzpQWI5lkwdeC4v60G/GwUtY+xwo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201360>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+I've witnessed the following behavior in both git 1.7.6 and 1.7.10.4.
 
-> When $HOME is unset, home_config_paths fails and returns NULL pointers
-> for user_config and xdg_config. Valgrind complains with Syscall param
-> access(pathname) points to unaddressable byte(s).
->
-> Don't call blindly access() on these variables, but test them for
-> NULL-ness before.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->> This patch causes valgrind warnings in t1300.81 (get --path copes with
->> unset $HOME) about passing NULL to access():
->
-> Indeed. The following patch should fix it.
+Assume I have a bare clone, some-repo.git. If I run:
+- git clone --shared --no-checkout /path/to/some-repo.git shared-repo
+- cd shared-repo
+- git status
 
-Thanks!
+I see that every file in the repository is _staged_ for deletion. I'm
+not surprised every file shows deleted; I'm surprised that the
+deletion starts out already staged. A git reset unstages all of the
+deletions and I'm good to go. I'm just wondering why they're all
+staged in the first place; it seems counter-intuitive.
 
-Tested-by: Thomas Rast <trast@student.ethz.ch>
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Can anyone shed some light on this?
+Bryan Turner
