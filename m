@@ -1,71 +1,82 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 1/3] branch: introduce --set-upstream-to
-Date: Thu, 12 Jul 2012 17:41:44 +0900
-Message-ID: <874npds75j.fsf@catnip.gol.com>
-References: <1341939181-8962-1-git-send-email-cmn@elego.de>
-	<1341939181-8962-2-git-send-email-cmn@elego.de>
-	<20120710191354.GE8439@burratino>
-	<7v1ukjiehe.fsf@alter.siamese.dyndns.org>
-	<20120710201105.GH8439@burratino>
-	<7vsjczgx3h.fsf@alter.siamese.dyndns.org>
-	<20120710210901.GI8439@burratino>
-	<7vehojgqgk.fsf@alter.siamese.dyndns.org>
-	<20120710234717.GA21467@burratino>
-	<7vzk77f602.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git Garbage Collect Error.
+Date: Thu, 12 Jul 2012 05:32:21 -0400
+Message-ID: <20120712093221.GA4443@sigill.intra.peff.net>
+References: <4FD86AF8.1050100@zuken.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 10:52:36 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Thomas Lucas <toml@zuken.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 12 11:32:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpF8P-0004gV-DN
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 10:52:29 +0200
+	id 1SpFlH-0003mS-KR
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 11:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758342Ab2GLIwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 04:52:24 -0400
-Received: from smtp11.dentaku.gol.com ([203.216.5.73]:44353 "EHLO
-	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753392Ab2GLIwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 04:52:22 -0400
-X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jul 2012 04:52:21 EDT
-Received: from 218.33.195.114.eo.eaccess.ne.jp ([218.33.195.114] helo=catnip.gol.com)
-	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
-	(envelope-from <miles@gnu.org>)
-	id 1SpEy1-0007Hg-1z; Thu, 12 Jul 2012 17:41:45 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 3038CDFF4; Thu, 12 Jul 2012 17:41:44 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <7vzk77f602.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 10 Jul 2012 18:20:29 -0700")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1758295Ab2GLJcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 05:32:33 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:57872
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757206Ab2GLJcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 05:32:25 -0400
+Received: (qmail 19529 invoked by uid 107); 12 Jul 2012 09:32:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jul 2012 05:32:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jul 2012 05:32:21 -0400
+Content-Disposition: inline
+In-Reply-To: <4FD86AF8.1050100@zuken.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201353>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> is easier to understand, while I think
->
-> 	git branch <branch> [<start>]
->         git branch --set-upstream-to=<upstream> [<branch>]
+On Wed, Jun 13, 2012 at 11:27:04AM +0100, Thomas Lucas wrote:
 
-Isn't one problem with this that even if a "--set-upstream-to" option
-exists, inevitably some [and I'm guessing, many] people will not be
-aware of it (after all, nobody reads documentation more than they have
-to), and will attempt to use "--set-upstream" with an argument
-(that's the natural thing to do, after all) -- which may succeed with
-weird results ...?
+> Hopefully this is the right place to send bug reports... The
+> community page "http://git-scm.com/community" suggests that it is.
 
--miles
+It is the right place. Sorry that you did not get any response before
+now.
 
--- 
-One of the lessons of history is that nothing is often a good thing to
-do, and always a clever thing to say.  -- Will Durant
+> During garbage collection (git gc) it encountered the following error:
+> 
+> git gc | git gc --prune :
+> 
+>    Counting objects: 856758, done.
+>    Delta compression using up to 2 threads.
+>    fatal: Out of memory, malloc failed (tried to allocate 303237121 bytes)
+>    error: failed to run repack
+
+Packing can be memory hungry if you have a lot of large objects (we may
+hold several large objects in memory while comparing them for deltas).
+It is also worse with 2 threads, as they will be working simultaneously,
+but in the same memory space.
+
+> The compression gets over 90% of the way through before this error
+> occurs, but I don't think any compression results are kept, because
+> when you repeat it has the same amount of work to do.
+
+Right. Nothing is written during compression; we are just coming up with
+a list of deltas to perform during the writing phase.
+
+> My system is XP64 2 core with 4Gb of memory and plenty of virtual memory.
+
+Unfortunately, I believe that the msysgit build is 32-bit, which means
+you are probably not even getting to use all 4Gb of your address space
+(my impression is that without special flags, 32-bit Windows processes
+are limited to 2Gb of address space).
+
+I'd first try doing the pack single-threaded by setting the pack.threads
+config option to 1. If that doesn't work, you might try setting
+pack.windowMemory to limit the delta search based on available memory
+(usually it is limited by number of objects). If the large blobs are
+ones that do not delta well anyway (e.g., compressed media files), you
+might also consider setting the "-delta" attribute for them to skip
+delta compression entirely.
+
+-Peff
