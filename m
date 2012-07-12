@@ -1,82 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: indicate where a failed patch is to be found.
-Date: Thu, 12 Jul 2012 14:07:43 -0700
-Message-ID: <7vobnkadsw.fsf@alter.siamese.dyndns.org>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH] Re: git-am: indicate where a failed patch is to be found.
+Date: Thu, 12 Jul 2012 23:18:35 +0200
+Message-ID: <20120712211835.GA858@vidovic>
 References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
- <7vhatcc1ql.fsf@alter.siamese.dyndns.org> <4FFF1821.7030705@windriver.com>
- <7va9z4byl3.fsf@alter.siamese.dyndns.org> <4FFF2720.6090705@windriver.com>
+ <7vhatcc1ql.fsf@alter.siamese.dyndns.org>
+ <4FFF1821.7030705@windriver.com>
+ <7va9z4byl3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Thu Jul 12 23:07:54 2012
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 12 23:18:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpQc3-0004Qa-W3
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 23:07:52 +0200
+	id 1SpQmd-0007H9-7o
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jul 2012 23:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934250Ab2GLVHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jul 2012 17:07:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45733 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932936Ab2GLVHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jul 2012 17:07:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B3B4845E;
-	Thu, 12 Jul 2012 17:07:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rEJWxeUkVASyg35/vvfd+lUXztQ=; b=OivrqY
-	76ABZ8f2hkMUNf5f0LbyRwbiSyp4LGgNifiSTaN62RGMuaZ+XDhlxZWuTAtkIgXX
-	xD5zqVByIRb1A3yKs+rSaGETolWvbFGApdAVG/a3UG0QsIgN4RFoiwLSmF0fbmwC
-	d7lOZGSyKokkoL2M8i+gmKMI+jXG64/s4mqEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=awvyjCCA/TEolGjdZ0NevXB2Ns+0vy7O
-	KaYiQoFCmFOVT0FIJV3sR3XuxS28u6rp3V+VuovPU/p5oQuik/2KgmM0N7YZTXpp
-	eV0s+3n2bFV6/DdU8eAnpimiDVeWO9/S4Axvq3UCVsOzcOxZKA8kBF+ZIBdsRMWy
-	6mhEVB9uo48=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 494A58454;
-	Thu, 12 Jul 2012 17:07:45 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC6078453; Thu, 12 Jul 2012
- 17:07:44 -0400 (EDT)
-In-Reply-To: <4FFF2720.6090705@windriver.com> (Paul Gortmaker's message of
- "Thu, 12 Jul 2012 15:36:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A01C32B0-CC65-11E1-8391-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S934253Ab2GLVSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jul 2012 17:18:42 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:54367 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934248Ab2GLVSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jul 2012 17:18:41 -0400
+Received: by weyx8 with SMTP id x8so2021520wey.19
+        for <git@vger.kernel.org>; Thu, 12 Jul 2012 14:18:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=7jxgJqeqLQHw2/3T/gt782fVtwSQX3IytVhdj3rUajs=;
+        b=VCd2zhWcl3WfvidQW5+gaFOZI3abUG+Abd4Wng2VrashqCQFm7K5B/r5SPMF1jj6EA
+         kF+rwu/UV4BbxXoYSJSTHsvKKDl3TeXAO8QdzWXWovUM3+4PrRRnUBwh7pGv1okRQ5oe
+         wPlJk6wQuntz0wnX/ueAd1uW+jwh96ymZSDXbpWDcy91rnjraF+Bxo37IHPdqeWvftX1
+         hSLIVlvgUQsjA3LLX9Qcrg31+sA7X0k/ozFEZdfkbhcekEKTThMqvQpr0a/wTzsZg375
+         SFWln/IePgN2oTex0OC4HChHaUgi9iLQwLAKJM6mU9H2PP8x0Gp0abV/yZPgpPA4ev+b
+         6oyw==
+Received: by 10.216.215.201 with SMTP id e51mr23208087wep.214.1342127920068;
+        Thu, 12 Jul 2012 14:18:40 -0700 (PDT)
+Received: from vidovic (147.214.116.78.rev.sfr.net. [78.116.214.147])
+        by mx.google.com with ESMTPS id eu4sm960109wib.2.2012.07.12.14.18.37
+        (version=SSLv3 cipher=OTHER);
+        Thu, 12 Jul 2012 14:18:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7va9z4byl3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201383>
 
-Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+The 12/07/12, Junio C Hamano wrote:
 
-> I think this is where our two thinking paths diverge.  You are
-> suggesting I edit and fix the patch.  Yes, occasionally I do
-> that, if it is a trivial context change.  But hand editing a
-> patch is not for Joe Average, and gets very complicated in all
-> but the trivial cases.
+> It does not matter at all that 0001-foo.patch only has a single
+> patch.  If you are going to fix up the patch after you saw "git am"
+> failed, you will be fixing .git/rebase-apply/patch with your editor
+> and re-run "git am" without arguments, at which point "git am" will
+> not look at your 0001-foo.patch file at all.
 
-In your patch, you do not special case and refrain from giving the
-location of the patchfile when there is only one patch in the input,
-so the above does not matter anyway.
+Hugh! Didn't know that.
 
-The patch does two unrelated things: reveal the location of the
-actual patchfile that failed to apply which was so far kept sekrit,
-and tell the user what to do with it.
+Is it actually expected from users to manually edit
+.git/rebase-apply/patch path? I can't find any reference about that in
+the documentation and it really sounds like interfering with the git
+internals.
 
-Because a user who _wants to_ use a patch, once she knows where it
-is, would know her favorite way of working with it (be it by editing
-it and reapplying, running "git apply" with --reject or reduced
-context lines, or running "patch"), an advice on _what_ to do is of
-secondary importance between the two.  Perhaps we can postpone the
-discussion on that and first update the code to tell _where_ the
-patch is to the user?  That would be an improvement from the current
-codebase no matter what your faviourite workflow is.
+Shouldn't git-am/git-rebase expose this to the user (I'm thinking about
+something like
+
+  git am --edit-offending-patch
+  git am --fix-patch
+
+)?
+
+-- 
+Nicolas Sebrecht
