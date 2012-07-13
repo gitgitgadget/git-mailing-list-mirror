@@ -1,214 +1,113 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH 3/6] Teach "git remote" about remote.default.
-Date: Fri, 13 Jul 2012 15:54:00 -0400
-Message-ID: <50007CD8.3040802@xiplink.com>
-References: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com> <1342020841-24368-4-git-send-email-marcnarc@xiplink.com> <7vk3yaduh1.fsf@alter.siamese.dyndns.org> <4FFDE4ED.8020502@xiplink.com> <7vd342dku3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-am: indicate where a failed patch is to be found.
+Date: Fri, 13 Jul 2012 12:58:22 -0700
+Message-ID: <7vipdr8mch.fsf@alter.siamese.dyndns.org>
+References: <7vobnkadsw.fsf@alter.siamese.dyndns.org>
+ <1342194690-31578-1-git-send-email-paul.gortmaker@windriver.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
-	phil.hord@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 21:54:42 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 21:58:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Splwl-0006lu-A3
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 21:54:39 +0200
+	id 1Spm0W-0004lz-FA
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 21:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756781Ab2GMTxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 15:53:53 -0400
-Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:33360 "EHLO
-	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756620Ab2GMTxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 15:53:52 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp24.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id EB7BF198182;
-	Fri, 13 Jul 2012 15:53:51 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp24.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 407D1198177;
-	Fri, 13 Jul 2012 15:53:51 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
-In-Reply-To: <7vd342dku3.fsf@alter.siamese.dyndns.org>
+	id S1753475Ab2GMT60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 15:58:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56500 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753204Ab2GMT6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 15:58:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C1E389F7;
+	Fri, 13 Jul 2012 15:58:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W4bLvDD8d7NLncUjAkwuYBuT3rU=; b=qbjnfO
+	lbeG/YQ1v97fvZX5y0PEG2w5r/7MnqpRGcn+5ePzq+fUpr7bDiRfyOjErXq4nU5G
+	avTe36nmNAyQxfs8lme97HCl+gCn1qTSUCODtf6g11+6BsX2JPprHU5pWraFv8fN
+	IZovLXEqi12imYRbbC4KJXaHJmvp6lOYif0FA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ox3C2mjsnEWMTego/4fZb+PG7dvBMNpi
+	q2HVPtjh7Xke5vSZNtsdmDhiZeMMp1FXtdDDQKpElZ4hpW8+E4x3YP58T0EKTis2
+	+Vw7/TXlJIIvuHNLlFkXD6X8KnzDQ5G8//ovIl0lGrHI3d25yytkjQkqXSGugurS
+	gqTcZQOWm70=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1968889F6;
+	Fri, 13 Jul 2012 15:58:25 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B8B889F5; Fri, 13 Jul 2012
+ 15:58:24 -0400 (EDT)
+In-Reply-To: <1342194690-31578-1-git-send-email-paul.gortmaker@windriver.com>
+ (Paul Gortmaker's message of "Fri, 13 Jul 2012 11:51:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1AC5BFC6-CD25-11E1-BFB4-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201421>
 
-On 12-07-11 05:55 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> What about a warning displayed if "remote.default" is not set?  Something like:
->>
->> 	This repository does not have an explicitly configured default
->> 	remote.  Selecting "origin" as the default remote repository.
->> 	To suppress this warning, or if you wish to have a different
->> 	default remote repository, run "git remote default <name>".
->> 	In git X.Y, the default remote will be automatically configured
->> 	as the first remote added to the repository.
-> 
-> When do you plan to issue the above message?  Any time we default to
-> 'origin' without remote.default?  
-> 
-> I do not see a value to it---if the user has been happily using
-> 'origin' as the default remote, there is no reason to give such a
-> noise.  We will keep defaulting to 'origin' even in the version of
-> Git with this series in it.
-> 
-> A warning is necessary if we plan to _later_ add the "first remote
-> created either by 'git clone' or 'git remote add' is automatically
-> set as the value for remote.default configuration" feature, and the
-> place to do so is "git clone" and "git remote add" that creates the
-> first remote for the repository.  If the name of the remote created
-> by them is 'origin', then there is no need for warning, but if the
-> user called that first remote with a name that is _not_ 'origin',
-> later versions of Git will change the behaviour.
-> 
-> I can see a transition plan that goes like this:
+Paul Gortmaker <paul.gortmaker@windriver.com> writes:
 
-I like your plan -- thanks for working it out in such detail!
+> If git am fails to apply something, the end user may need
+> to know where to find the patch.  This is normally known for
+> a single patch, but if the user is processing a mbox with
+> many patches, they may not have a single broken out patch
+> handy.  So, provide a helpful hint as to where they can
+> find the patch to do some sort of manual fixup, if we
+> are processing a mbox with more than one patch in it.
 
-I'll re-roll the series to work like your plan's Step 0, and I'll post a
-separate RFC patch on top of it that initiates the transition, so folks can
-discuss it specifically.
+I would rather see this done even for a single patch mbox.  The
+patch that was fed to "git apply" by "git am" and failed to apply is
+that one, not the one in the mbox you gave "git am".  The latter may
+be ungrokkable with GNU patch or "git apply", if the original was
+sent in Quoted-Printable and such MIME funnies, which is the whole
+point of having a separate file there for "git am", instead of
+feeding the original.
 
-> Step 0.  With this series but without the "first one becomes default"
-> 
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     hint: You may want to run "git remote default upstream" now so that
->     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
->     hint: repository, instead of 'origin' (which you do not yet have).
-> 
->     $ git config --global advice.settingDefaultRemote false
->     $ git remote rm upstream
->     $ git remote add upstream git://over.there.xz/git.git/
->     ... nothing, as the user declined the advice ...
-> 
-> Step 1.  "First one becomes default" as an opt-in feature
-> 
->     $ git config --global --unset advice.settingDefaultRemote
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     hint: You may want to run "git remote default upstream" now so that
->     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
->     hint: repository, instead of 'origin' (which you do not yet have).
->     hint: "git config --global remote.firstRemoteBecomesDefault true" can be
->     hint: used to make the first remote added to the repository the default
->     hint: remote automatically.
->     $ git remote default
->     origin
-> 
->     $ git config --global remote.firstRemoteBecomesDefault true
->     $ git remote rm upstream
->     $ git remote add upstream git://over.there.xz/git.git/
->     ... nothing; user already knows about remote.firstRemoteBecomesDefault
->     $ git remote default
->     upstream
-> 
-> Step 2.  Start warning the default change for "First one becomes default"
-> 
->     $ git config --global --unset advice.settingDefaultRemote
->     $ git config --global --unset remote.firstRemoteBecomesDefault
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     hint: You may want to run "git remote default upstream" now so that
->     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
->     hint: repository, instead of 'origin' (which you do not yet have).
->     hint: "git config --global remote.firstRemoteBecomesDefault true" can be
->     hint: used to make the first remote added to the repository the default
->     hint: remote automatically.
->     hint:
->     hint: In future versions of Git, this will happen automatically.
->     hint: If you do not want the first remote to become default, run
->     hint: "git config --global remote.firstRemoteBecomesDefault false" now.
-> 
-> Step 3. "First one becomes default" is now default
-> 
->     $ git config --global --unset advice.settingDefaultRemote
->     $ git config --global --unset remote.firstRemoteBecomesDefault
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     warning: Made 'upstream' the default remote for this repository.
->     $ git remote default
->     upstream
-> 
->     $ git remote rm upstream
->     $ git config --global remote.firstRemoteBecomesDefault true
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     ... nothing; the user explicitly told us what to do
->     $ git remote default
->     upstream
-> 
->     $ git remote rm upstream
->     $ git config --global remote.firstRemoteBecomesDefault false
->     $ git init
->     $ git remote add upstream git://over.there.xz/git.git/
->     ... nothing; the user explicitly told us what to do
->     $ git remote default
->     origin
-> 
->> Since the "cmd_" prefix is already used for the main commands, perhaps
->> another prefix for subcommands?  Maybe "sub_"?  Some of the shell-based
->> commands use the main command itself as a prefix (e.g. bisect_start()).
->> Doing that here would mean "remote_default()" etc.  Any preference?
-> 
-> No strong preference for file-scope-statics.
-> 
->>>> +{
->>>> +	if (argc < 2)
->>>> +		printf_ln("%s", remote_get_default_name());
->>>
->>> Good.  If somebody anal cares about the vanilla hardcoded default
->>> 'origin' and 'remote.default' having 'origin' as a configured value,
->>> he should be using "git config" to ask the difference.  Users of
->>> "remote default" interface should not have to care.
->>>
->>>> +	else {
->>>> +		const char *name = argv[1];
->>>> +		if (remote_is_configured(name)) {
->>>> +			git_config_set("remote.default", name);
->>>> +			printf_ln(_("Default remote set to '%s'."), name);
->>>> +		} else
->>>> +			return error(_("No remote named '%s'."), name);
->>>> +	}
->>>
->>> I am not sure if this is a good idea.  Shouldn't "git remote default
->>> frotz" followed by "git remote add frotz" work?
->>
->> To me it feels wrong to allow the user to set the default remote to something
->> that doesn't actually exist.  It's like trying to add a non-existent file.
-> 
-> Every few weeks, I do this:
-> 
-> 	ln -f -s Documentation/RelNotes/$new_version.txt RelNotes
->         edit Documentation/RelNotes/$new_version.txt
-> 
->> And what if the user forgets the second step?
-> 
-> That is why we warn on an unusual order.  A lazy "git push" will
-> fail and that would be sufficient clue.
-> 
-> And another reason for the warning (with "you do not yet have") is
-> to prevent this:
-> 
->         git remote add frotz git://over.there.xz/git.git
->         git remote default frozt
+I am not sure if we should limit $patch_format to mbox, but I think
+showing this unconditionally regardless of mbox/stgit/hg will teach
+the user only one location to remember, so perhaps like this?
 
-See, to me an error in this case makes more sense.  But I feel I'm splitting
-hairs now, and I'm happy to go with the warning instead.
+ Documentation/config.txt | 3 +++
+ git-am.sh                | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
->> It seems saner for a command to fail if it knows a change it's about to make
->> will cause problems.
-> 
-> The point is that you do *NOT* know it will cause problems.  People
-> who want to do things in an unusual order *know* what they are doing
-> a lot better than you do.  Don't get in their way.
-
-I'll aim to post a revised series next week.
-
-		M.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e1168c..b1f0a75 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -143,6 +143,9 @@ advice.*::
+ 		Advice shown when you used linkgit:git-checkout[1] to
+ 		move to the detach HEAD state, to instruct how to create
+ 		a local branch after the fact.
++	amWorkDir::
++		Advice that shows the location of the patch file when
++		linkgit:git-am[1] fails to apply it.
+ --
+ 
+ core.fileMode::
+diff --git a/git-am.sh b/git-am.sh
+index dc48f87..f1ae932 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -834,9 +834,9 @@ did you forget to use 'git add'?"
+ 	if test $apply_status != 0
+ 	then
+ 		eval_gettextln 'Patch failed at $msgnum $FIRSTLINE'
+-		if test $patch_format = mbox && test "$last" -ne "1"
++		if test "$(git config --bool advice.amworkdir)" != false
+ 		then
+-			eval_gettextln "You can find the copy of the patch that failed here:
++			eval_gettextln "The copy of the patch that failed is found in:
+    $dotest/patch"
+ 		fi
+ 		stop_here_user_resolve $this
