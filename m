@@ -1,95 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: avoid work after --max-count is reached
-Date: Fri, 13 Jul 2012 15:12:47 -0700
-Message-ID: <7vwr2771k0.fsf@alter.siamese.dyndns.org>
-References: <20120713075023.GA31618@sigill.intra.peff.net>
- <7v7gu78izl.fsf@alter.siamese.dyndns.org>
- <20120713212050.GB10767@sigill.intra.peff.net>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: [PATCH v2] git-am: indicate where a failed patch is to be found.
+Date: Fri, 13 Jul 2012 18:46:03 -0400
+Message-ID: <5000A52B.3090003@windriver.com>
+References: <7vobnkadsw.fsf@alter.siamese.dyndns.org> <1342194690-31578-1-git-send-email-paul.gortmaker@windriver.com> <7vipdr8mch.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, git-dev@github.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 14 00:12:59 2012
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 00:46:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Spo6c-0007ig-RO
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 00:12:59 +0200
+	id 1Spod2-0006ts-Ty
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 00:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737Ab2GMWMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 18:12:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54874 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751185Ab2GMWMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 18:12:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D49FD86B4;
-	Fri, 13 Jul 2012 18:12:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vDArP/2nxO35vANN+L9r+qI3qdQ=; b=EsE8xv
-	uiR6LiYLEW3EHe+zID9hSh1JN9dDfWSIaLsM/FTMzFps1YOfPMfNaVYsqVdLtnIA
-	ndItRJsU6soGBulag+LHBczE9djj6+hXI1LgGupuGMRUpRk4xaYswwoxWEKEQ4S4
-	9cB2yrO5gb+qqgrmBPqeAB6ssKxCHnujLzhMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rdeHosKg0htOGx7W5qRxCz1a0jRT22++
-	sZ9lP9BXDaMKj0wAKF9Gln47kDDlbDTNsse5pwzZ3Sb9P34Ug5F2X8J6oaG3M4Y6
-	/L1WX3kCu570P8AW91w7vlzoDJvsnQ1b4tPrnZHMHgutBBrmkoV2YMEoOlISHTki
-	2J0tKYBeV0M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C280F86B2;
-	Fri, 13 Jul 2012 18:12:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E56E86AD; Fri, 13 Jul 2012
- 18:12:49 -0400 (EDT)
-In-Reply-To: <20120713212050.GB10767@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 13 Jul 2012 17:20:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E1BCE872-CD37-11E1-9530-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754862Ab2GMWqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 18:46:18 -0400
+Received: from mail.windriver.com ([147.11.1.11]:47020 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752578Ab2GMWqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 18:46:17 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.5/8.14.3) with ESMTP id q6DMkEBW008662
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Fri, 13 Jul 2012 15:46:14 -0700 (PDT)
+Received: from [128.224.146.65] (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server id 14.1.255.0; Fri, 13 Jul 2012
+ 15:46:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <7vipdr8mch.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [128.224.146.65]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201426>
 
-Jeff King <peff@peff.net> writes:
+On 12-07-13 03:58 PM, Junio C Hamano wrote:
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+> 
+>> If git am fails to apply something, the end user may need
+>> to know where to find the patch.  This is normally known for
+>> a single patch, but if the user is processing a mbox with
+>> many patches, they may not have a single broken out patch
+>> handy.  So, provide a helpful hint as to where they can
+>> find the patch to do some sort of manual fixup, if we
+>> are processing a mbox with more than one patch in it.
+> 
+> I would rather see this done even for a single patch mbox.  The
 
-> Yeah, this was my analysis, too. Though reading get_revision-1, it seems
-> like we can actually set SHOWN, but I wasn't able to trigger any change
-> of behavior in practice. I think it is because we must set both SHOWN
-> and BOUNDARY to have an effect, and we do not do so.
+OK, I got the opposite impression from your prev. mail when
+you mentioned that I hadn't limited the message output at all.
 
-In principle, SHOWN is only given when get_revision_internal gives
-the commit back to be shown, and the parents of the returned commit
-are painted CHILD_SHOWN.  This should be the only place to paint
-commit as CHILD_SHOWN.
+I'm fine with the changes you've proposed below, and can squash that
+into a v3 and resend again.
 
-A handful of places set the bit to commits that would be shown if
-some options that further limit what is shown by topological
-property (e.g. --left-only, --cherry-pick), which may cause that a
-parent of a commit that was omitted due to these conditions may
-later be marked incorrectly as a boundary inside
-create_boundary_commit_list().
+Paul.
+--
 
-BOUNDARY is only given in create_boundary_commit_list() using
-CHILD_SHOWN and SHOWN, and that should happen only once when
-get_revision_1() runs out of the commits.
-
-By the way, cherry_pick_list() pays attention to BOUNDARY, but I
-think it is written overly defensively to protect itself from future
-callsites.  With the current code structure, it is only called from
-limit_list() and get_revision_*() functions are never called until
-limit_list() returns (and again create_boundary_commit_list() that
-is called from get_revision_internal() is the only place that sets
-BOUNDARY, so the commits cherry_pick_list() sees would never have
-that bit set.
-
-> So the only questionable thing would be: are there commits with BOUNDARY
-> set but not SHOWN that could be affected by calling get_revision_1? For
-> that matter, if such a commit existed, would the current behavior even
-> be correct? We would not have actually shown the commit, so if such a
-> case did exist, I wonder if we would be fixing a bug.
+> patch that was fed to "git apply" by "git am" and failed to apply is
+> that one, not the one in the mbox you gave "git am".  The latter may
+> be ungrokkable with GNU patch or "git apply", if the original was
+> sent in Quoted-Printable and such MIME funnies, which is the whole
+> point of having a separate file there for "git am", instead of
+> feeding the original.
+> 
+> I am not sure if we should limit $patch_format to mbox, but I think
+> showing this unconditionally regardless of mbox/stgit/hg will teach
+> the user only one location to remember, so perhaps like this?
+> 
+>  Documentation/config.txt | 3 +++
+>  git-am.sh                | 4 ++--
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0e1168c..b1f0a75 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -143,6 +143,9 @@ advice.*::
+>  		Advice shown when you used linkgit:git-checkout[1] to
+>  		move to the detach HEAD state, to instruct how to create
+>  		a local branch after the fact.
+> +	amWorkDir::
+> +		Advice that shows the location of the patch file when
+> +		linkgit:git-am[1] fails to apply it.
+>  --
+>  
+>  core.fileMode::
+> diff --git a/git-am.sh b/git-am.sh
+> index dc48f87..f1ae932 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -834,9 +834,9 @@ did you forget to use 'git add'?"
+>  	if test $apply_status != 0
+>  	then
+>  		eval_gettextln 'Patch failed at $msgnum $FIRSTLINE'
+> -		if test $patch_format = mbox && test "$last" -ne "1"
+> +		if test "$(git config --bool advice.amworkdir)" != false
+>  		then
+> -			eval_gettextln "You can find the copy of the patch that failed here:
+> +			eval_gettextln "The copy of the patch that failed is found in:
+>     $dotest/patch"
+>  		fi
+>  		stop_here_user_resolve $this
+> 
