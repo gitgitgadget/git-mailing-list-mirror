@@ -1,84 +1,89 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Export from bzr / Import to git results in a deleted file re-appearing
-Date: Fri, 13 Jul 2012 15:39:50 +0200
-Message-ID: <m2hatbvkyh.fsf@igel.home>
-References: <87ehogrham.fsf@bitburger.home.felix>
-	<20120712210138.GA15283@sigill.intra.peff.net>
-	<m2pq80uj56.fsf@igel.home>
-	<20120713130246.GB2553@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] config: fix several access(NULL) calls
+Date: Fri, 13 Jul 2012 16:05:56 +0200
+Message-ID: <87hatboiwr.fsf@thomas.inf.ethz.ch>
+References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
+	<1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vtxxcc36v.fsf@alter.siamese.dyndns.org>
+	<vpq1ukgai4e.fsf@bauges.imag.fr>
+	<7vwr28agcq.fsf@alter.siamese.dyndns.org>
+	<vpq1ukg82st.fsf@bauges.imag.fr>
+	<20120713130021.GA2553@sigill.intra.peff.net>
+	<vpqliin6bva.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 13 15:40:07 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	<git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 13 16:06:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Spg6B-0006nT-Nw
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 15:40:00 +0200
+	id 1SpgVc-0002US-Qd
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 16:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422669Ab2GMNjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 09:39:54 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:37617 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422666Ab2GMNjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 09:39:53 -0400
-Received: from frontend4.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WYZsp2qQMz4KKCB;
-	Fri, 13 Jul 2012 15:41:02 +0200 (CEST)
-Received: from igel.home (ppp-93-104-150-219.dynamic.mnet-online.de [93.104.150.219])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WYZrR3vbNzbbjp;
-	Fri, 13 Jul 2012 15:39:51 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 1F427CA2A2; Fri, 13 Jul 2012 15:39:51 +0200 (CEST)
-X-Yow: ..  I want a COLOR T.V. and a VIBRATING BED!!!
-In-Reply-To: <20120713130246.GB2553@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 13 Jul 2012 09:02:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1757532Ab2GMOGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 10:06:11 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:14282 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751545Ab2GMOGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 10:06:09 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 13 Jul
+ 2012 16:06:01 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.210.47) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 13 Jul
+ 2012 16:06:00 +0200
+In-Reply-To: <vpqliin6bva.fsf@bauges.imag.fr> (Matthieu Moy's message of "Fri,
+	13 Jul 2012 15:15:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.210.47]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201403>
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Fri, Jul 13, 2012 at 11:04:21AM +0200, Andreas Schwab wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> > If you run only the bzr half of your command and inspect the output, you
->> > will see that the file in question is mentioned twice.  Once in a commit
->> > on "refs/heads/master" that renames into it from another file:
->> >
->> >   R freeplane_plugin_spreadsheet/src/org/freeplane/plugin/spreadsheet/SpreadSheetUtils.java
->> >     freeplane_plugin_formula/src/org/freeplane/plugin/formula/SpreadSheetUtils.java
->> 
->> That same revision also removes it, but is uses the original name for
->> the deletion (the bzr revision actually renames the containing
->> directory).  That's probably what confuses git fast-import.
->> [...]
->> The output contains these lines:
->> 
->> R a/b b/b
->> D a/b
->> 
->> Changing the second line to D b/b fixes the bug.
+>> On Fri, Jul 13, 2012 at 10:48:18AM +0200, Matthieu Moy wrote:
+>>
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>> 
+>>> > But is it really true that we want to error out on missing HOME if
+>>> > we have usable XDG stuff?
+>>> 
+>>> Anyone else have an opinion on this?
+>>> 
+>>> In short, the question is whether
+>>> 
+>>>   export XDG_CONFIG_HOME=some-existing-dir
+>>>   unset HOME
+>>>   git config foo.baz boz
+>>> 
+>>> should die("$HOME is unset") or use the XDG config file.
+>>
+>> What did previous versions of git do? From my reading of 21cf32279, the
+>> previous behavior was that if $HOME was not set, git would silently
+>> avoid reading from $HOME/.gitconfig entirely.
 >
-> Yeah, I agree that is problematic. But I do not think it is a
-> fast-import bug, but rather bogus output generated by bzr fast-export (I
-> am not clear from what you wrote above if you are considering it a bug
-> that fast-import is confused). It seems nonsensical to mention a file
-> both as a rename source and as deleted in the same revision, and
-> certainly I would not expect an importer to deduce a link between the
-> second line and b/b.
+> Yes, and this is still the case for _reading_. But the current case is
+> about deciding which file to use when _writing_. Git was already dying
+> when writing with an unset $HOME.
 
-IMHO fast-import should raise an error in this case, like it does when
-you switch the lines.
+Umm, are you sure?  I may be somewhat confused about this, but the tests
+I used to trigger the access(NULL) were IIRC
 
-Andreas.
+  unset HOME
+  git config --get foo.bar
+  git config --global --get foo.bar
+
+none of which is writing....
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Thomas Rast
+trast@{inf,student}.ethz.ch
