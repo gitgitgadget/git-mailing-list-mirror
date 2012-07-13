@@ -1,93 +1,115 @@
-From: Taylor Hedberg <tmhedberg@gmail.com>
-Subject: Re: Don't share anything but those files
-Date: Fri, 13 Jul 2012 13:53:06 -0400
-Message-ID: <20120713175306.GB30723@euporie>
-References: <500037EB.5030408@modusfx.com>
- <20120713152127.GC17521@phobos.chilli.itwm.local>
- <50004048.9060203@modusfx.com>
- <20120713161432.GA8770@phobos>
- <50005DA8.5020803@modusfx.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: indicate where a failed patch is to be found.
+Date: Fri, 13 Jul 2012 11:06:03 -0700
+Message-ID: <7vtxxb8rjo.fsf@alter.siamese.dyndns.org>
+References: <1342108243-8599-1-git-send-email-paul.gortmaker@windriver.com>
+ <7vhatcc1ql.fsf@alter.siamese.dyndns.org> <4FFF1821.7030705@windriver.com>
+ <7va9z4byl3.fsf@alter.siamese.dyndns.org> <4FFF2720.6090705@windriver.com>
+ <7v629sbvh8.fsf@alter.siamese.dyndns.org> <50005D8E.1020407@windriver.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+pHx0qQiF2pBVqBT"
-Cc: Edward Toroshchin <edward.hades@gmail.com>, git@vger.kernel.org
-To: Yves Perron <yves.perron@modusfx.com>
-X-From: git-owner@vger.kernel.org Fri Jul 13 20:03:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 20:06:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpkCi-0005Mn-2H
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 20:03:00 +0200
+	id 1SpkFu-0002pu-Ak
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 20:06:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030386Ab2GMSCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 14:02:44 -0400
-Received: from tmh.cc ([173.230.128.92]:55229 "EHLO elara.tmh.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932563Ab2GMSCm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 14:02:42 -0400
-X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jul 2012 14:02:42 EDT
-Received: by elara.tmh.cc (Postfix, from userid 1001)
-	id F259730222; Fri, 13 Jul 2012 17:53:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on elara.tmh.cc
-X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=5.0 tests=ALL_TRUSTED,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FROM,NML_ADSP_CUSTOM_MED autolearn=no
-	version=3.3.2
-Received: from euporie (rrcs-70-61-89-106.midsouth.biz.rr.com [70.61.89.106])
-	by elara.tmh.cc (Postfix) with ESMTPSA id D4AE430222;
-	Fri, 13 Jul 2012 17:53:07 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <50005DA8.5020803@modusfx.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1030867Ab2GMSGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 14:06:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35963 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932757Ab2GMSGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 14:06:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DAD681A9;
+	Fri, 13 Jul 2012 14:06:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t/1+qXriyMfuzFGrFJ5YpTM46VQ=; b=tdQCpA
+	UavfDyPqojPRKq9PLvkJGpwWLCwNKw6m2uRKdmu3WRDhKqryXSRY5qP7ES3jNum1
+	nJAA2VkCAXfHtgK6txNUf7E48Xk29AxL84Nzht8UQU44nsQkc+ar1Kb/Yeu+NpUx
+	9FokTeqnij8DR9fRgBRp2J7xR6uRPkjGK4OuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MHAgLp0y5R+x5BmAKrn/pqGZN+JStJxj
+	mHuPbrqPkCDBGHHy+QJkxzcItoIYkvQhD6TX4dSBxoXLfvJRvo7kyrqC4c6VM0aN
+	sYQNtLHGwF2jG+cBPBTKvPlz1IQnqTkra8K960fUrliIUUwhkqI4wGtKFwU3oA/b
+	lYPxMBHnoTc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AB7981A7;
+	Fri, 13 Jul 2012 14:06:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6816881A4; Fri, 13 Jul 2012
+ 14:06:05 -0400 (EDT)
+In-Reply-To: <50005D8E.1020407@windriver.com> (Paul Gortmaker's message of
+ "Fri, 13 Jul 2012 13:40:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A03BD5A-CD15-11E1-A423-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201414>
 
+Paul Gortmaker <paul.gortmaker@windriver.com> writes:
 
---+pHx0qQiF2pBVqBT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Sorry, that description was a bit context free.  Two typical cases:
+>
+> 1) applying a series of commits (e.g. preempt RT feature) to a newer
+> baseline. Some of those commits may have been upstreamed and now
+> present in mainline.  The "git am" failure doesn't really hint that
+> "already applied" may be the case -- e.g. consider and compare the
+> output when we extract and then intentionally try to re-apply something
+> already in tree, created with:
+>
+> -------------
+> $git format-patch 50fb31cf~..50fb31cf
+> 0001-tty-hvc_opal-Fix-debug-function-name.patch
+> -------------
+>
+> With "git am":
+> --------------------------
+> $git am 0001-tty-hvc_opal-Fix-debug-function-name.patch
+> Applying: tty/hvc_opal: Fix debug function name
+> error: patch failed: drivers/tty/hvc/hvc_opal.c:401
+> error: drivers/tty/hvc/hvc_opal.c: patch does not apply
+> Patch failed at 0001 tty/hvc_opal: Fix debug function name
+> When you have resolved this problem run "git am --resolved".
+> If you would prefer to skip this patch, instead run "git am --skip".
+> To restore the original branch and stop patching run "git am --abort".
+> ---------------------------
+>
+> ...versus 
+>
+> ---------------------------
+> $patch -p1 --dry-run < 0001-tty-hvc_opal-Fix-debug-function-name.patch 
+> patching file drivers/tty/hvc/hvc_opal.c
+> Reversed (or previously applied) patch detected!  Assume -R? [n] 
+> Apply anyway? [n] 
+> Skipping patch.
+> 1 out of 1 hunk ignored -- saving rejects to file drivers/tty/hvc/hvc_opal.c.rej
+> ---------------------------
 
-Yves Perron, Fri 2012-07-13 @ 13:40:56-0400:
-> Ok, let me rephrase, is there a way to edit a file where we can put
-> every files/folders we need to add without the need of entering a
-> command for each entry?
+"git am -3" will give you a message "already applied" and moves on,
+or if an already applied stuff is similar but not different would
+stop with conflict, or fail butd the latter two cases GNU patch
+would not say "reversed", so "am -3" would be a win 2 out of 3 cases
+and the remaining 1 out of 3 case would be a tie.
 
-Sure, but you don't need functionality built in to Git to do this. Just
-list the paths you want to add in a file and then:
+> 2) In maintaining linux stable releases (esp older ones), the dry-run
+> output, if say it says something like 23/30 chunks failed, it tells me
+> that the underlying baseline has probably changed too much for a simple
+> backport.  But if only 1/30 chunks fail or similar, I'll simply proceed
+> since the backport is viable and likely trivial.
 
-    xargs git add <filename
-
-But you only have to do this once, so I'm not really sure what that buys
-you.
-
-You can use glob patterns to select groups of files to add as well, if
-there is some similarity in the pathnames.
-
---+pHx0qQiF2pBVqBT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iQIcBAEBAgAGBQJQAGCCAAoJEDTWeng2oxKKjBkP/1JEyBF0vSig4clKDptwmDBq
-SAxMb8G4yTiZCXGl6DgZRFrHDPIVCdCO2EJ8coUxftbJCY2Mavx0nwJmFWNyudgw
-BV0ejTatTTK62XNHq24FkxCulBoPQq1mp6UHzIhLnVWK2mEyJ1gCaQFfSmRBSm/s
-v9e6+/4WhASXzfc44b4nfWHS+lTA/Rm4MPmyA/ZMussK3h8RcfYO1ECIlSgPrcRY
-Br1eI83+zbw1r9ArY8k622k4fuU9jGrcDwnadHEkgtUFai8CTlUxIQatCz1gyiBq
-Si0cBZ6RhqcFK8QHvuSjKomoScSe8C1gwBJOdhyOiLSnT94LR76cGSFk3EuREkNd
-GaHDx78OiIdEbiPRI8LMbgBk007Hv42dBidZWVsejZzTkYi2oCda9iVHRZMStPqc
-I0fwgsLEu5jyFVhG3XnshdPBnHrZpJi48Q/eQ+Ke2DxAK2CTyoIqede9UnotTm/F
-7NyKzPtkn3Y5sCNFaZnM6sQJD67MJ3qBEaCVNPqrTH9wNb8wjXwlSuLJ8n5ZsaGF
-gTTzwVK/k7NLsFfEFg96QvWdhRcfPeXg3LdqD1hpd4w8rPVbEr5eM57xGKN/k1wT
-7DdYJjgkl5k/Ii5cbXbTDzQVlxJfI5rY/p3a7pxVX7W1krh/KeTVi4539FmKC2Wj
-015AgTnMJ8BBiYBy7PMJ
-=gbGs
------END PGP SIGNATURE-----
-
---+pHx0qQiF2pBVqBT--
+Perhaps "git apply" when stops upon unapplicable patch may want to
+be improved to give more detailed diagnostics (I think it stops upon
+first hunk per each file that is touched---it may be able to keep
+going and see if other hunks might apply).  This is in "patches
+welcome" category ;-).
