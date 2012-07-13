@@ -1,162 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Add support for Freescale's mc34708 to mc13xxx
- driver
-Date: Fri, 13 Jul 2012 12:39:34 -0700
-Message-ID: <7vpq7z8n7t.fsf@alter.siamese.dyndns.org>
-References: <1342087073-3892-1-git-send-email-u.kleine-koenig@pengutronix.de>
- <11987916.rOoNGcb1ly@dev1> <20120713084854.GD592@pengutronix.de>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH 3/6] Teach "git remote" about remote.default.
+Date: Fri, 13 Jul 2012 15:54:00 -0400
+Message-ID: <50007CD8.3040802@xiplink.com>
+References: <1342020841-24368-1-git-send-email-marcnarc@xiplink.com> <1342020841-24368-4-git-send-email-marcnarc@xiplink.com> <7vk3yaduh1.fsf@alter.siamese.dyndns.org> <4FFDE4ED.8020502@xiplink.com> <7vd342dku3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Reilly <marc@cpdesign.com.au>,
-	linux-arm-kernel@lists.infradead.org,
-	Samuel Ortiz <samuel.ortiz@intel.com>,
-	"Ying-Chun Liu \(PaulLiu\)" <paulliu@debian.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	linux-kernel@vger.kernel.org, kernel@pengutronix.de,
-	Philippe =?utf-8?Q?R=C3=A9tornaz?= <philippe.retornaz@epfl.ch>,
-	git@vger.kernel.org
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: linux-kernel-owner@vger.kernel.org Fri Jul 13 21:39:49 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
+	phil.hord@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 13 21:54:42 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1SpliN-00072v-Ob
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 13 Jul 2012 21:39:48 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Splwl-0006lu-A3
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 21:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756866Ab2GMTjj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 13 Jul 2012 15:39:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47901 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752645Ab2GMTjh convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 13 Jul 2012 15:39:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 077598621;
-	Fri, 13 Jul 2012 15:39:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VC2zvY4ly40Q
-	yDfjrtHQtZi+96o=; b=ZhgsTNTiWy2HyrJgOWjxGqY3zoy9Lq3sDcj1wEaT3txR
-	pNSXAZtiC/N7Fc5ecgbicJlAGQ8Q2bZ6CAJJdAHnyjHWhIVh2XlVwhtMXTMBDGIg
-	w3vJvzAb0IrG4Z5tp0EEjjEyuepN61NTt1uSQqLdprgbUjzoMAQGHYevKMeR0ks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cUoo1t
-	ksIHTWCBJvx25DUx26rJnciEqsaPgoorw2ADBpq4N0TFmF0DUFLx62R+AeTkqLLv
-	bY5mXQtflw33a6/IZ/+aoeawbbeOVXIsGGwotoLYB9cXHdShE2U117Hj6roXI8Wv
-	6dEkSyM0k6rZdwHwXvpJopjocIMIUIMGMu20c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E90E28620;
-	Fri, 13 Jul 2012 15:39:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2238B861D; Fri, 13 Jul 2012
- 15:39:36 -0400 (EDT)
-In-Reply-To: <20120713084854.GD592@pengutronix.de> ("Uwe =?utf-8?Q?Kleine-?=
- =?utf-8?Q?K=C3=B6nig=22's?= message of "Fri, 13 Jul 2012 10:48:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7A45EA00-CD22-11E1-9CA0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1756781Ab2GMTxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 15:53:53 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:33360 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756620Ab2GMTxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 15:53:52 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp24.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id EB7BF198182;
+	Fri, 13 Jul 2012 15:53:51 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp24.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 407D1198177;
+	Fri, 13 Jul 2012 15:53:51 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <7vd342dku3.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201419>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201420>
 
-Uwe Kleine-K=C3=B6nig  <u.kleine-koenig@pengutronix.de> writes:
+On 12-07-11 05:55 PM, Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+>> What about a warning displayed if "remote.default" is not set?  Something like:
+>>
+>> 	This repository does not have an explicitly configured default
+>> 	remote.  Selecting "origin" as the default remote repository.
+>> 	To suppress this warning, or if you wish to have a different
+>> 	default remote repository, run "git remote default <name>".
+>> 	In git X.Y, the default remote will be automatically configured
+>> 	as the first remote added to the repository.
+> 
+> When do you plan to issue the above message?  Any time we default to
+> 'origin' without remote.default?  
+> 
+> I do not see a value to it---if the user has been happily using
+> 'origin' as the default remote, there is no reason to give such a
+> noise.  We will keep defaulting to 'origin' even in the version of
+> Git with this series in it.
+> 
+> A warning is necessary if we plan to _later_ add the "first remote
+> created either by 'git clone' or 'git remote add' is automatically
+> set as the value for remote.default configuration" feature, and the
+> place to do so is "git clone" and "git remote add" that creates the
+> first remote for the repository.  If the name of the remote created
+> by them is 'origin', then there is no need for warning, but if the
+> user called that first remote with a name that is _not_ 'origin',
+> later versions of Git will change the behaviour.
+> 
+> I can see a transition plan that goes like this:
 
-> It doesn't move it around, that's only how it looks. I removed enum
-> mc13xxx_id (above MC13XXX_NUMREGS) and added struct mc13xxx_variant
-> (below MC13XXX_NUMREGS). Git choosed to use the closing brace of enum
-> mc13xxx_id and struct mc13xxx_variant respectively as context (togeth=
-er
-> with the following empty line).
-> (For the new readers, here is how git represented the relevant part:
->
->  #include <linux/regmap.h>
->  #include <linux/mfd/mc13xxx.h>
->
-> -enum mc13xxx_id {
-> -	MC13XXX_ID_MC13783,
-> -	MC13XXX_ID_MC13892,
-> -	MC13XXX_ID_INVALID,
-> +#define MC13XXX_NUMREGS 0x3f
-> +
-> +struct mc13xxx;
-> +
-> +struct mc13xxx_variant {
-> +	const char *name;
-> +	void (*print_revision)(struct mc13xxx *mc13xxx, u32 revision);
->  };
->
-> -#define MC13XXX_NUMREGS 0x3f
-> +extern struct mc13xxx_variant
-> +		mc13xxx_variant_mc13783,
-> +		mc13xxx_variant_mc13892;
->
->  struct mc13xxx {
->  	struct regmap *regmap;
-> ...
-> )
->
-> The following would be an equivalent and (for humans) easier to revie=
-w
-> patch:
->
->  #include <linux/regmap.h>
->  #include <linux/mfd/mc13xxx.h>
->
-> -enum mc13xxx_id {
-> -	MC13XXX_ID_MC13783,
-> -	MC13XXX_ID_MC13892,
-> -	MC13XXX_ID_INVALID,
-> -};
-> -
->  #define MC13XXX_NUMREGS 0x3f
->
-> +struct mc13xxx;
-> +
-> +struct mc13xxx_variant {
-> +	const char *name;
-> +	void (*print_revision)(struct mc13xxx *mc13xxx, u32 revision);
-> +};
-> +
-> +extern struct mc13xxx_variant
-> +		mc13xxx_variant_mc13783,
-> +		mc13xxx_variant_mc13892;
-> +
->  struct mc13xxx {
->  	struct regmap *regmap;
-> ...
->
-> But as this touches 17 lines compared to only 15 using the way git
-> choosed to represent patch 6, git used the smaller representation.
+I like your plan -- thanks for working it out in such detail!
 
-Yes.  Useful information bits per line count is the primary thing
-our default xdiff based output pays attention to (e.g. we coalesce
-two adjacent hunks that are one missing context line apart into one
-larger hunk by removing the "@@ linenum @@" line from the beginning
-of the latter hunk for this reason).
+I'll re-roll the series to work like your plan's Step 0, and I'll post a
+separate RFC patch on top of it that initiates the transition, so folks can
+discuss it specifically.
 
-> Usually this metric is sane, but here it's not. I don't know if you c=
-an
-> do anything about it? E.g. take the number of +, - and context blocks
-> into account. Then it would be 5 for the patch above vs. 7 for the
-> way git did it.
-> Or weight a context line containing
->
-> 	#define MC13XXX_NUMREGS 0x3f
->
-> more than two lines one of which is empty and the other only contains=
- a
-> }?
+> Step 0.  With this series but without the "first one becomes default"
+> 
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     hint: You may want to run "git remote default upstream" now so that
+>     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
+>     hint: repository, instead of 'origin' (which you do not yet have).
+> 
+>     $ git config --global advice.settingDefaultRemote false
+>     $ git remote rm upstream
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     ... nothing, as the user declined the advice ...
+> 
+> Step 1.  "First one becomes default" as an opt-in feature
+> 
+>     $ git config --global --unset advice.settingDefaultRemote
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     hint: You may want to run "git remote default upstream" now so that
+>     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
+>     hint: repository, instead of 'origin' (which you do not yet have).
+>     hint: "git config --global remote.firstRemoteBecomesDefault true" can be
+>     hint: used to make the first remote added to the repository the default
+>     hint: remote automatically.
+>     $ git remote default
+>     origin
+> 
+>     $ git config --global remote.firstRemoteBecomesDefault true
+>     $ git remote rm upstream
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     ... nothing; user already knows about remote.firstRemoteBecomesDefault
+>     $ git remote default
+>     upstream
+> 
+> Step 2.  Start warning the default change for "First one becomes default"
+> 
+>     $ git config --global --unset advice.settingDefaultRemote
+>     $ git config --global --unset remote.firstRemoteBecomesDefault
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     hint: You may want to run "git remote default upstream" now so that
+>     hint: a lazy 'git push' and 'git fetch' defaults to this 'upstream'
+>     hint: repository, instead of 'origin' (which you do not yet have).
+>     hint: "git config --global remote.firstRemoteBecomesDefault true" can be
+>     hint: used to make the first remote added to the repository the default
+>     hint: remote automatically.
+>     hint:
+>     hint: In future versions of Git, this will happen automatically.
+>     hint: If you do not want the first remote to become default, run
+>     hint: "git config --global remote.firstRemoteBecomesDefault false" now.
+> 
+> Step 3. "First one becomes default" is now default
+> 
+>     $ git config --global --unset advice.settingDefaultRemote
+>     $ git config --global --unset remote.firstRemoteBecomesDefault
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     warning: Made 'upstream' the default remote for this repository.
+>     $ git remote default
+>     upstream
+> 
+>     $ git remote rm upstream
+>     $ git config --global remote.firstRemoteBecomesDefault true
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     ... nothing; the user explicitly told us what to do
+>     $ git remote default
+>     upstream
+> 
+>     $ git remote rm upstream
+>     $ git config --global remote.firstRemoteBecomesDefault false
+>     $ git init
+>     $ git remote add upstream git://over.there.xz/git.git/
+>     ... nothing; the user explicitly told us what to do
+>     $ git remote default
+>     origin
+> 
+>> Since the "cmd_" prefix is already used for the main commands, perhaps
+>> another prefix for subcommands?  Maybe "sub_"?  Some of the shell-based
+>> commands use the main command itself as a prefix (e.g. bisect_start()).
+>> Doing that here would mean "remote_default()" etc.  Any preference?
+> 
+> No strong preference for file-scope-statics.
+> 
+>>>> +{
+>>>> +	if (argc < 2)
+>>>> +		printf_ln("%s", remote_get_default_name());
+>>>
+>>> Good.  If somebody anal cares about the vanilla hardcoded default
+>>> 'origin' and 'remote.default' having 'origin' as a configured value,
+>>> he should be using "git config" to ask the difference.  Users of
+>>> "remote default" interface should not have to care.
+>>>
+>>>> +	else {
+>>>> +		const char *name = argv[1];
+>>>> +		if (remote_is_configured(name)) {
+>>>> +			git_config_set("remote.default", name);
+>>>> +			printf_ln(_("Default remote set to '%s'."), name);
+>>>> +		} else
+>>>> +			return error(_("No remote named '%s'."), name);
+>>>> +	}
+>>>
+>>> I am not sure if this is a good idea.  Shouldn't "git remote default
+>>> frotz" followed by "git remote add frotz" work?
+>>
+>> To me it feels wrong to allow the user to set the default remote to something
+>> that doesn't actually exist.  It's like trying to add a non-existent file.
+> 
+> Every few weeks, I do this:
+> 
+> 	ln -f -s Documentation/RelNotes/$new_version.txt RelNotes
+>         edit Documentation/RelNotes/$new_version.txt
+> 
+>> And what if the user forgets the second step?
+> 
+> That is why we warn on an unusual order.  A lazy "git push" will
+> fail and that would be sufficient clue.
+> 
+> And another reason for the warning (with "you do not yet have") is
+> to prevent this:
+> 
+>         git remote add frotz git://over.there.xz/git.git
+>         git remote default frozt
 
-"GNU diff" gives the same output as ours, and "git diff --patience"
-gives more redundant (it wasts lines by removing "};" and then later
-adding "};" back) output.  I think this is because "patience" pays
-more attention to key off unique lines in the range (e.g. the line
-"#define MC13XXX_NUMREGS 0x3f" appears only once in the preimage and
-also in the postimage, so it must pair with each other).
+See, to me an error in this case makes more sense.  But I feel I'm splitting
+hairs now, and I'm happy to go with the warning instead.
+
+>> It seems saner for a command to fail if it knows a change it's about to make
+>> will cause problems.
+> 
+> The point is that you do *NOT* know it will cause problems.  People
+> who want to do things in an unusual order *know* what they are doing
+> a lot better than you do.  Don't get in their way.
+
+I'll aim to post a revised series next week.
+
+		M.
