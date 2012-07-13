@@ -1,7 +1,7 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] config: fix several access(NULL) calls
-Date: Fri, 13 Jul 2012 16:05:56 +0200
-Message-ID: <87hatboiwr.fsf@thomas.inf.ethz.ch>
+Date: Fri, 13 Jul 2012 16:23:59 +0200
+Message-ID: <vpq1ukf68ow.fsf@bauges.imag.fr>
 References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
 	<1342094660-3052-1-git-send-email-Matthieu.Moy@imag.fr>
 	<7vtxxcc36v.fsf@alter.siamese.dyndns.org>
@@ -9,81 +9,89 @@ References: <877gu9wh05.fsf@thomas.inf.ethz.ch>
 	<7vwr28agcq.fsf@alter.siamese.dyndns.org>
 	<vpq1ukg82st.fsf@bauges.imag.fr>
 	<20120713130021.GA2553@sigill.intra.peff.net>
-	<vpqliin6bva.fsf@bauges.imag.fr>
+	<vpqliin6bva.fsf@bauges.imag.fr> <87hatboiwr.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	<git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 13 16:06:20 2012
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 13 16:24:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SpgVc-0002US-Qd
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 16:06:17 +0200
+	id 1SpgnF-0000H1-IX
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 16:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757532Ab2GMOGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 10:06:11 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:14282 "EHLO edge10.ethz.ch"
+	id S932947Ab2GMOYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 10:24:24 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57926 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751545Ab2GMOGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 10:06:09 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 13 Jul
- 2012 16:06:01 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.210.47) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 13 Jul
- 2012 16:06:00 +0200
-In-Reply-To: <vpqliin6bva.fsf@bauges.imag.fr> (Matthieu Moy's message of "Fri,
-	13 Jul 2012 15:15:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.210.47]
+	id S1751687Ab2GMOYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 10:24:23 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6DEMYmI029430
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 13 Jul 2012 16:22:34 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Spgmm-0003xx-IL; Fri, 13 Jul 2012 16:24:00 +0200
+In-Reply-To: <87hatboiwr.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+	"Fri, 13 Jul 2012 16:05:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 13 Jul 2012 16:22:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6DEMYmI029430
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1342794158.76948@0Rv2dj0ENrJn3/ENNDK9+Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201404>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> Jeff King <peff@peff.net> writes:
+> Umm, are you sure?  I may be somewhat confused about this, but the tests
+> I used to trigger the access(NULL) were IIRC
 >
->> On Fri, Jul 13, 2012 at 10:48:18AM +0200, Matthieu Moy wrote:
->>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>> 
->>> > But is it really true that we want to error out on missing HOME if
->>> > we have usable XDG stuff?
->>> 
->>> Anyone else have an opinion on this?
->>> 
->>> In short, the question is whether
->>> 
->>>   export XDG_CONFIG_HOME=some-existing-dir
->>>   unset HOME
->>>   git config foo.baz boz
->>> 
->>> should die("$HOME is unset") or use the XDG config file.
->>
->> What did previous versions of git do? From my reading of 21cf32279, the
->> previous behavior was that if $HOME was not set, git would silently
->> avoid reading from $HOME/.gitconfig entirely.
+>   unset HOME
+>   git config --get foo.bar
+>   git config --global --get foo.bar
 >
-> Yes, and this is still the case for _reading_. But the current case is
-> about deciding which file to use when _writing_. Git was already dying
-> when writing with an unset $HOME.
+> none of which is writing....
 
-Umm, are you sure?  I may be somewhat confused about this, but the tests
-I used to trigger the access(NULL) were IIRC
+I was inaccurate, but that doesn't change the conclusion: the question
+is not reading Vs writting, but use of --global Vs no use of it (and
+most of the time, --global is used for writing, hence my confusion).
 
-  unset HOME
-  git config --get foo.bar
-  git config --global --get foo.bar
+Both the patch that introduce the NULL bug and the one that fix it touch
+two files: $git/config.c, and $git/builtin/config.c.
 
-none of which is writing....
+My changes to $git/config.c, are straightforward because they touch
+positive tests for file existance. The controversial one is
+$git/builtin/config.c, which is inside a "if (use_global_config)".
+
+This piece of code was already dying on unset $HOME, and in my proposal
+it still is.
+
+The old code was:
+
+        if (use_global_config) {
+                char *home = getenv("HOME");
+                if (home) {
+                        char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+                        given_config_file = user_config;
+                } else {
+                        die("$HOME not set");
+                }
+        }
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
