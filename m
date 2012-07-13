@@ -1,43 +1,63 @@
-From: Yves Perron <yves.perron@modusfx.com>
-Subject: Don't share anything but those files
-Date: Fri, 13 Jul 2012 10:59:55 -0400
-Message-ID: <500037EB.5030408@modusfx.com>
+From: Edward Toroshchin <edward.hades@gmail.com>
+Subject: Re: Don't share anything but those files
+Date: Fri, 13 Jul 2012 17:21:27 +0200
+Message-ID: <20120713152127.GC17521@phobos.chilli.itwm.local>
+References: <500037EB.5030408@modusfx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 13 17:01:02 2012
+Content-Type: text/plain; charset=us-ascii
+To: Yves Perron <yves.perron@modusfx.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 13 17:21:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SphMb-000544-4B
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 17:01:01 +0200
+	id 1SphgX-00084Z-R3
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jul 2012 17:21:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757980Ab2GMPA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jul 2012 11:00:56 -0400
-Received: from modusfx-142-218.cust.b2b2c.ca ([66.158.142.218]:21138 "EHLO
-	modusfx.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757947Ab2GMPAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jul 2012 11:00:50 -0400
-X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jul 2012 11:00:49 EDT
-Received: from [10.1.100.132] [10.1.100.132] by modusfx.com with ESMTP
-  (SMTPD-11.5) id 725200005c0faa10; Fri, 13 Jul 2012 10:59:55 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20120420 Thunderbird/12.0
+	id S1422659Ab2GMPVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jul 2012 11:21:32 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:34537 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755669Ab2GMPVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jul 2012 11:21:32 -0400
+Received: by wgbdr13 with SMTP id dr13so3294810wgb.1
+        for <git@vger.kernel.org>; Fri, 13 Jul 2012 08:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=D2++sIypgyHoo/X/juwWVmF9HTWemR8L3Y9yBD5CQMs=;
+        b=Uipr2js53VodhKSzHBzxw+ArGuvLXkvPwn55dwIoXCP4vUWHq3KUjMLOMt5EwXJnU+
+         ybjckpOcQa4r1RgyS6G9Km+rpREXOYGxPGBX7onAbvKtcy8mIiY1lgqCyYZmBo2o0QEn
+         ret6kYrezMR8El+E1mWu+idSOB+FzQmyPQb/ORnYKYHClPobnNHgmTSE8qE2Xg1l3DRU
+         dgOA7J6zmFRwpVSbE2nAnyx5CaW0THssIoIUkRepK37Yxjl/Nv/WC0RCWmI8XQn48NzI
+         BFu0YNHQvn4d9q3lxAWiBlsLBuJ88U6GdzEGt0RxhAcCQaq/BURvmo3RvEpsx8j0HLdq
+         FzdA==
+Received: by 10.180.107.103 with SMTP id hb7mr3563160wib.3.1342192890349;
+        Fri, 13 Jul 2012 08:21:30 -0700 (PDT)
+Received: from localhost (ganymede.hades.name. [81.17.21.251])
+        by mx.google.com with ESMTPS id fr4sm5788433wib.8.2012.07.13.08.21.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 13 Jul 2012 08:21:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <500037EB.5030408@modusfx.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201407>
 
-Greetings everyone,
+On Fri, Jul 13, 2012 at 10:59:55AM -0400, Yves Perron wrote:
+> I'm wondering how to commit only selected files/folders on GIT, if even 
+> possible.
 
-I'm wondering how to commit only selected files/folders on GIT, if even 
-possible. Note, the ignore list is not a good option for me as I'd like 
-to add a few files in a folder that contains many hundreds for instance.
+Just "git add" only the files you need.
 
-Basically, I'm looking for a way to say, don't share anything but those 
-files.
+If you want git to ignore all the rest, you can write '*' in your
+.gitignore
 
-thx
+-- 
+Edward "Hades" Toroshchin
+dr_lepper on irc.freenode.org
