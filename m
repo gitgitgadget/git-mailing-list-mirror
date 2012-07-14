@@ -1,88 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Zeeshan Ali (Khattak)" <zeeshanak@gnome.org>
 Subject: Re: Support of '^' as alias for 'HEAD^'
-Date: Sat, 14 Jul 2012 13:34:19 -0700
-Message-ID: <7vr4se5bg4.fsf@alter.siamese.dyndns.org>
+Date: Sat, 14 Jul 2012 23:49:11 +0300
+Message-ID: <CAAa3hFOv39DhuEDTyJUm1pzB-X1gBiV8FXuqW6TidOtQw9CUng@mail.gmail.com>
 References: <CAAa3hFMgy66W0dVEGv164Zowfa6Q-5DqgkkLz_1paymU_1SHUw@mail.gmail.com>
- <loom.20120714T114718-783@post.gmane.org>
- <7vzk725c86.fsf@alter.siamese.dyndns.org>
+	<loom.20120714T114718-783@post.gmane.org>
+	<7vzk725c86.fsf@alter.siamese.dyndns.org>
+	<7vr4se5bg4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"Zeeshan Ali \(Khattak\)" <zeeshanak@gnome.org>
-To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 22:34:55 2012
+Cc: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 22:49:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq93H-0004sd-6v
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 22:34:55 +0200
+	id 1Sq9HC-0007KB-4v
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 22:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906Ab2GNUeb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jul 2012 16:34:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63278 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752821Ab2GNUeW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jul 2012 16:34:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F363C70D1;
-	Sat, 14 Jul 2012 16:34:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=L4cHclfStKOe
-	E8s+uhRdbgrhNqE=; b=EZ0DxNAvZx4FbDY4cYZPE0Vb+gbW+Xn6o9YsZPTyhDS+
-	B19DUPOzHXU6mbkoIZfKHFvZcmz1WcWHJjOd5G101O8j+ILjk98mAE8fxWIuVhaQ
-	0ZviemCg6u4Er1HDKpGGt3sTzME4AEN8PCGZGLr42Cn1UcABPhl7zEhyara3IsQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=I+gJ/y
-	tl8zyA0KUCjI36Q454z7dmd6lIEpaLb0gUqpAb/oKFGGeGIcfycrj5p9YKti7XUV
-	SEH/Z3Uf1MTLu9o71eC1IeYqIY1VR9KFkBVC2VmHBMyWgjwehdbVh0qLpTQ9JZX+
-	T1XPBgCd3Zc7+f7vm2QnIsdRnJO7XAnAPMEbI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4F770D0;
-	Sat, 14 Jul 2012 16:34:21 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A08770CF; Sat, 14 Jul 2012
- 16:34:21 -0400 (EDT)
-In-Reply-To: <7vzk725c86.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 14 Jul 2012 13:17:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4AC6AF18-CDF3-11E1-944F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753285Ab2GNUtO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jul 2012 16:49:14 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:35627 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753159Ab2GNUtM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jul 2012 16:49:12 -0400
+Received: by pbbrp8 with SMTP id rp8so7615209pbb.19
+        for <git@vger.kernel.org>; Sat, 14 Jul 2012 13:49:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SYItHuajD9SzKIC/YzPA92yux7zLtAWei8Go8mRkqAM=;
+        b=WXncUd94gABRNaIZsnAGlO3Ot+i5liwJJBZE/xjZtlSZR8HzsCQSGL/s4tPXA8C9+R
+         Oog+1TBKIg3/d+8CZgc98dPauBEnoqNFmx3QUfDOVNWj05VFHbQq4UTYjjS7uR93fgLi
+         8AtV+t2XYmnPnBCUt87geY+GIrvqNGpkpkxpSj6u6Lf4/vzy7t6zRIDyeE7yaaBXZIm9
+         6CVPTsOQUIr6q64DlZTvcy2Ys+T+VI+taQTZAecMJfP4JZcwI1SHfSPA/zv3HrTjmvu1
+         /N3P05R8iTy0KZpKxnHwFSWft4+eGwKYg0SBc2kMD3x5xfivL8MRvfrq48TTISGzbnK5
+         FJoA==
+Received: by 10.68.239.103 with SMTP id vr7mr13699503pbc.0.1342298951485; Sat,
+ 14 Jul 2012 13:49:11 -0700 (PDT)
+Received: by 10.68.231.33 with HTTP; Sat, 14 Jul 2012 13:49:11 -0700 (PDT)
+In-Reply-To: <7vr4se5bg4.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: jlvg4ALtbBBcUqBiq6DVPglf_iw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201455>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Stefan N=C3=A4we <stefan.naewe@gmail.com> writes:
+On Sat, Jul 14, 2012 at 11:34 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Zeeshan Ali (Khattak <zeeshanak <at> gnome.org> writes:
->>>=20
->>> Many times I want to refer to 'HEAD^', 'HEAD^^' and sometimes even
->>> further up the tree. It would be really nice if I didn't have to ty=
-pe
->>> 'HEAD^' but could only type '^'. Bash completion make things easier
->>> but it automatically inserts a space immediately after HEAD so you
->>> have to hit backspace. I think this change would be good in general
->>> anyway.
+>> Stefan N=C3=A4we <stefan.naewe@gmail.com> writes:
 >>
->> Or even '~1', '~3'.
->
-> "^" has a problem when used with other things (does "log ^^2
-> origin" mean "log HEAD^2..origin"?  Or "log HEAD^^2 origin"), so I
-> do not think it would never fly as an abbreviated syntax.
->
-> While I see your "~<N>" much distasteful compared to "^", you still
+>>> Zeeshan Ali (Khattak <zeeshanak <at> gnome.org> writes:
+>>>>
+>>>> Many times I want to refer to 'HEAD^', 'HEAD^^' and sometimes even
+>>>> further up the tree. It would be really nice if I didn't have to t=
+ype
+>>>> 'HEAD^' but could only type '^'. Bash completion make things easie=
+r
+>>>> but it automatically inserts a space immediately after HEAD so you
+>>>> have to hit backspace. I think this change would be good in genera=
+l
+>>>> anyway.
+>>>
+>>> Or even '~1', '~3'.
+>>
+>> "^" has a problem when used with other things (does "log ^^2
+>> origin" mean "log HEAD^2..origin"?  Or "log HEAD^^2 origin"), so I
+>> do not think it would never fly as an abbreviated syntax.
 
-s/dist/less dist/; sorry ;-)
+What about '^' and '^^' that I suggested?
 
-> need to be a bit more careful when analysing the benefit of such an
-> abbreviation.  To shells used by many people, these mean tilde
-> expansion ~<N> to refer to elements on the dirstack and you need to
-> quote, perhaps like \~3.
+>> While I see your "~<N>" much distasteful compared to "^", you still
+>
+> s/dist/less dist/; sorry ;-)
+
+Why?
+
+>> need to be a bit more careful when analysing the benefit of such an
+>> abbreviation.  To shells used by many people, these mean tilde
+>> expansion ~<N> to refer to elements on the dirstack and you need to
+>> quote, perhaps like \~3.
+
+That would kinda beat the purpose I think, would be nice to just type
+1 key rather than 3 to refer to HEAD (2 keys would still be good
+enough IMHO).
+
+--=20
+Regards,
+
+Zeeshan Ali (Khattak)
+=46SF member#5124
