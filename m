@@ -1,71 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH maint-1.6.5] block-sha1: avoid unaligned accesses on some
- big-endian systems
-Date: Sat, 14 Jul 2012 12:55:30 -0700
-Message-ID: <CA+55aFwKYhUtXfaRcbOmMsvQW8p+h8N9PKpxW_y1kj6L=FQQNw@mail.gmail.com>
-References: <20120713233957.6928.87541.reportbug@electro.phys.waikato.ac.nz>
- <20120714002950.GA3159@burratino> <5000CBCA.8020607@orcon.net.nz>
- <20120714021856.GA3062@burratino> <50010B84.5030606@orcon.net.nz>
- <20120714075906.GD3693@burratino> <CA+55aFy+y=TCoJUQarinaduibt4i-46TAuvpp7fsAmjDZj_+3w@mail.gmail.com>
- <20120714195022.GB23242@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jul 2012, #04; Fri, 13)
+Date: Sat, 14 Jul 2012 13:00:04 -0700
+Message-ID: <7vboji6rln.fsf@alter.siamese.dyndns.org>
+References: <7vfw8v6wvl.fsf@alter.siamese.dyndns.org>
+ <20120714141257.GA2553@akuma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Cree <mcree@orcon.net.nz>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 21:56:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Strasser <eclipse7@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Jul 14 22:00:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq8RZ-00035M-GS
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 21:55:57 +0200
+	id 1Sq8Vj-0000Mg-2W
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 22:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821Ab2GNTzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jul 2012 15:55:53 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:52564 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751686Ab2GNTzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2012 15:55:52 -0400
-Received: by wgbdr13 with SMTP id dr13so4130737wgb.1
-        for <git@vger.kernel.org>; Sat, 14 Jul 2012 12:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=dkdGaZIO8ffYnQQiSx0YjfKqR0EqKtSHY5uatTcfNlw=;
-        b=ISW38XHApvXfKPtjpJTUEIz0jQtfTZp3Q0FIzE2wApdkjO4BHkx6+BbbN7fq0AzKC8
-         qev9wZd0cRGkpi7mqNGbgheLXTaXmrA1AFuICEfrS/nLY+XpgtvkYkNZdvj5HXDy7E6m
-         PFy29mmDDSqobqw7/FB6qgYIh5YNpc5lokj9m7zAOHiUSVDt43jcqckpAlOirPquiuJm
-         ZuZheWeLGKuXWlDwe3Li5M0GhaL8KgV5bZK47WmO44VK4xYXpL7ZYp4pF/3Hh110O6eH
-         TZzkmd8Mjaj/9WMX0aYhHnhfgae0LQgcpslbf8v1/3FnSdDyVYIf6o49mQWnVXX9Rh8A
-         WU8Q==
-Received: by 10.216.9.142 with SMTP id 14mr9140wet.112.1342295751194; Sat, 14
- Jul 2012 12:55:51 -0700 (PDT)
-Received: by 10.216.142.14 with HTTP; Sat, 14 Jul 2012 12:55:30 -0700 (PDT)
-In-Reply-To: <20120714195022.GB23242@burratino>
-X-Google-Sender-Auth: UqxOdJvRtSNKaudzyLHO3IG745s
+	id S1751969Ab2GNUAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 16:00:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49809 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751674Ab2GNUAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 16:00:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 189A46A3A;
+	Sat, 14 Jul 2012 16:00:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=84FklHYhl+fiT+uVAJy5pmuwgd0=; b=D/LZfW
+	+Jw61KJlTvtB2sFBFDlUY+IwPOib4HpRbXQZe/9NrZUh6UfJ9m+qAicjzIkoNDke
+	facUkFiTs7uarws/kjRklQv4op8vhPWMOujiNv3Fpu4f8W6/CYBUUosOjf9t6F1n
+	tM2d8g2aMLli7U0md8yNK/lNy71WPxLSxxpNI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PcHvr1YC+dKNCT8bCe6ilSArEMJo9h/T
+	8EH7u2+ciI/nIZZSH8Cs7wad5qDzQoVuL5eNtc0VkV3v77WXWfxwh+FpUEnQaRA8
+	e11ngbGtQ4D0z2RyAEdYjr/wlcLIMq69XMyhAWjF7wP63EgrlScUUHJJskNdaJAO
+	26bFNun5PDU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 028B76A39;
+	Sat, 14 Jul 2012 16:00:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F18646A38; Sat, 14 Jul 2012
+ 16:00:05 -0400 (EDT)
+In-Reply-To: <20120714141257.GA2553@akuma> (Alexander Strasser's message of
+ "Sat, 14 Jul 2012 16:12:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 81B6AB54-CDEE-11E1-A8A7-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201451>
 
-On Sat, Jul 14, 2012 at 12:50 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> After the patch, what reason does gcc have to expect that 'block' is
-> 32-bit aligned except when it is?  The code (including the code I
-> didn't touch) never casts from char * to int * except in get/put_be32
-> on arches that don't mind unaligned accesses.
+Alexander Strasser <eclipse7@gmx.net> writes:
 
-Ahh. I was looking at the cast you added:
+>   As the whole series is not that important I think it should be OK to
+> wait a little longer, isn't it?
 
-    blk_SHA1_Block(ctx, (const unsigned char *) ctx->W);
+I thought the series queued in 'pu' was more or less done from my
+point of view, but wanted to know if you wanted to polish it
+further, as I prefer waiting for perfection in such a case.
 
-but I guess that if gcc inlines that and sees the original int type,
-it doesn't matter, because that *is* aligned.
+At the same time I do not want to wear the contributors out by
+unnecessary rerolls, so I was asking how you and others feel about
+the doneness of the series.
 
-So it's ok, but please just make blk_SHA1_Block() take a "const void
-*" instead and that cast can go away.
-
-               Linus
+Will wait updated patches from you.  Thanks.
