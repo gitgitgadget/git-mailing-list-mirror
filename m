@@ -1,84 +1,86 @@
-From: Stefan Naewe <stefan.naewe@gmail.com>
-Subject: Re: [RFC] Add a new email notification script to "contrib"
-Date: Sat, 14 Jul 2012 14:03:52 +0200
-Message-ID: <CAJzBP5S5mR+D99R6y=CDwf1YArsnuVuDQhw4Lrm72knhnEhZtg@mail.gmail.com>
-References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
-	<loom.20120714T114314-421@post.gmane.org>
-	<CALUzUxoi-X2nTTFF7utJz2DOTDE8-s7QOgR=HmQAkOVkGY17BA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: t1450-fsck (sometimes/often) failes on Mac OS X
+Date: Sat, 14 Jul 2012 14:21:35 +0200
+Message-ID: <5001644F.10901@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 14:04:03 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Jul 14 14:22:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq14p-0004PM-61
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 14:03:59 +0200
+	id 1Sq1Mc-0007oi-BG
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 14:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108Ab2GNMDy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jul 2012 08:03:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48434 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978Ab2GNMDx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jul 2012 08:03:53 -0400
-Received: by yhmm54 with SMTP id m54so4557379yhm.19
-        for <git@vger.kernel.org>; Sat, 14 Jul 2012 05:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ufPdC+cvFlGi5s/bWF0NRhZ9Clpdj5gMJtBT4TAJLj8=;
-        b=Fpu4Gfu1CKyDyee+asTrgFVObcscSYEHmUD51FdoeoH64tOrPsQjHH7WkwLHRpSIiO
-         RQwP9lccRkDHDCc9EFmYCBm0HlfGUthMrZ51MZZp4FtkPDqq/B+w7GYhg15mLVEI7+d+
-         1VWsrNflid6kIGXMh/0gfEeehS0LyWT3mKtX51EkV1a9WOCefFsBR/IXQMftQOSZ1xzx
-         uhXpauIoYHn0t2tA/PmzFaPT6bmemPQZtxBiuh/1VnYUOEg4hVgxhWOuzPXqxWGjFAD1
-         M1DfzUzz648+fUQJqI+B36frmNUdHva05KsLeyAgJ/YXafP3tqncp4uDQ7KMeSFXAKi7
-         uFYw==
-Received: by 10.236.200.167 with SMTP id z27mr4205792yhn.131.1342267432538;
- Sat, 14 Jul 2012 05:03:52 -0700 (PDT)
-Received: by 10.101.213.21 with HTTP; Sat, 14 Jul 2012 05:03:52 -0700 (PDT)
-In-Reply-To: <CALUzUxoi-X2nTTFF7utJz2DOTDE8-s7QOgR=HmQAkOVkGY17BA@mail.gmail.com>
+	id S1755975Ab2GNMVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 08:21:38 -0400
+Received: from mout.web.de ([212.227.15.4]:58403 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753211Ab2GNMVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 08:21:37 -0400
+Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0LcPSk-1TZlm20UXm-00j7qz; Sat, 14 Jul 2012 14:21:36 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+X-Provags-ID: V02:K0:+cceTeHlCUckvcK+jOMXHqvYbKhiqCEZICquOWl3r25
+ GpdTOtHhXveixNth88bNMSMf6dDnge7RSbYWEeEQWQCPkkyp2D
+ d6hdaC5fkTWCat2N74g/md4uLv6u+m71FxJXNZIkxkDPO/BIEG
+ HPF+maq8FhrHYhnrDsFH1jSN2rnLGUfV27qtCi5SUOo5nF852r
+ FHe9gxhW0bHcLvYeJv30Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201439>
 
-On Sat, Jul 14, 2012 at 12:37 PM, Tay Ray Chuan <rctay89@gmail.com> wro=
-te:
-> Hi Stefan,
->
-> On Sat, Jul 14, 2012 at 5:46 PM, Stefan N=C3=A4we <stefan.naewe@gmail=
-=2Ecom> wrote:
->>
->> Do you have a fork of git.git somewhere that contains the script?
->> (I find it so much easier these days to simply fetch another repo in=
-stead
->> of applying patches with 'git am'.)
->
->
-> you can try "Show Original" in gmail's interface and saving the text =
-file,
-> then running git am directly on it. Old gits used to have problems wi=
-th the
-> leading newline, but I don't see this problem nowadays.
+I saw the problem first on pu, some time ago, 
+but it dissappeared after cloning git.git into another directory.
 
-If I only would be subscribed to gitlist with my gmail account...
+Now it appeared on next as well, so it's time to look a little bit deeper.
 
-Anyways, there's a nice script in msysgit.git [1] that makes applying p=
-atches
-from gmane pretty easy. Thanks Dscho!
+This test case of t1450 fails:
+test_expect_success 'tag pointing to something else than its type' '
 
+To debug more, I added an exit 0 here to inspect the file named out:
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5b79c51..f1f45c9 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -179,6 +179,7 @@ test_expect_success 'tag pointing to something else than its type' '
+        test_when_finished "git update-ref -d refs/tags/wrong" &&
+        test_must_fail git fsck --tags 2>out &&
+        cat out &&
++       exit 0
+        grep "error in tag.*broken links" out
+ '
 
-Stefan
+Linux:
+error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, not a commit
+error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
+error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not load tagged object
 
-[1] https://github.com/msysgit/msysgit/blob/devel/bin/apply-from-gmane.=
-sh
---=20
-----------------------------------------------------------------
-python -c "print '73746566616e2e6e6165776540676d61696c2e636f6d'.decode(=
-'hex')"
+Mac OS X:
+error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not a blob
+error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or missing
+
+I reverted the last change in fsck.c (Use the streaming interface), but that doesn't help
+
+Looking into the trash directory and looking at the files, we can see that the .git/index is different
+between Linux and Mac OS X.
+
+Is there a good way to debug the index file?
+
+BTW:  git bisect pointed out: 
+ [76759c7dff53e8c84e975b88cb8245587c14c7ba] git on Mac OS and precomposed unicode
+But re-running t1450 makes it pass, so that bisect went into the wrong direction
+somewhere.
+
+It seems that t1450 is timing depending, sometimes it passes, sometimes not.
+And once it went into the state "non passed", it stays there.
+
+It feels that I got stuck, any hints how to debug this further, please ?
+
+/Torsten
