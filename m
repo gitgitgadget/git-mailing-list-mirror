@@ -1,83 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Support of '^' as alias for 'HEAD^'
-Date: Sat, 14 Jul 2012 13:17:29 -0700
-Message-ID: <7vzk725c86.fsf@alter.siamese.dyndns.org>
-References: <CAAa3hFMgy66W0dVEGv164Zowfa6Q-5DqgkkLz_1paymU_1SHUw@mail.gmail.com>
- <loom.20120714T114718-783@post.gmane.org>
+Subject: Re: [PATCH] status: default in-progress color to header color
+Date: Sat, 14 Jul 2012 13:20:23 -0700
+Message-ID: <7vvchq5c3c.fsf@alter.siamese.dyndns.org>
+References: <20120714122828.GA6259@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"Zeeshan Ali \(Khattak\)" <zeeshanak@gnome.org>
-To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 14 22:17:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 14 22:22:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq8mh-0006rH-Tt
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 22:17:48 +0200
+	id 1Sq8ql-0004AK-Qg
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 22:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591Ab2GNURd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jul 2012 16:17:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56668 "EHLO
+	id S1754227Ab2GNUVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 16:21:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57741 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751583Ab2GNURc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jul 2012 16:17:32 -0400
+	id S1752370Ab2GNUU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 16:20:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A1BC6DA1;
-	Sat, 14 Jul 2012 16:17:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 311906E1B;
+	Sat, 14 Jul 2012 16:20:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8rTokf3lXJyw
-	kVUM6/SQf/aR87k=; b=HGlSWCXWRQzuPhd2c0hdp7BwKMMCCLThHPTMQysegMAS
-	/hyvmQExZZ8HJ1m1mjDmLLBI0yGaptABKW+1EqLt16l3wHzVl4eCaeZAfYIplps6
-	6OtxlYbufzI7mjGOhilJP6KM5BR8Z7y2gG03v0vFPYws2R8cn82PZb25bak8gOA=
+	:content-type; s=sasl; bh=eIve0MMxH02l8qWQX2LezGB6538=; b=fk5gpk
+	6hOMknS26wIA5oOuOAwAYNjQuOUaoQCea1Y0xKvid0e9FeQHUSX15HFvpsFd5lyf
+	7mvrlJCwIsU6t9h38HhiB/v4MufmXZ4LjMXqkI0DiCL+P/RHpvRrS91IAhR6hDi/
+	PVFQZOUu7BZRdGv9TBDjn5zC/7BcttBd4RD7s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HOthOk
-	Wcmo6Lz8/UGy9czrCrJm4aK5G0KkvBFq7mHkLSyc0xqccSypaGZiUy7S3Y/nT/2e
-	mREbntWSoYxtuU2bHAulewmk6lwkj0u72lL6ZMF7PAC0GYd690IEct/Mh6i7q8/Q
-	Z6AxCNJ+0qURzpgVEXYtRIzCKD3OHahzHF8GQ=
+	:content-type; q=dns; s=sasl; b=rfV25PA72Zcj7LXoFyzT6SI3R8NtVjMF
+	u8BjDfyqrUIYvmH6T+3AwCKIMfFHecjuBHFjOc/c6dj11Q8gZb0lpAIOEPpLqA/u
+	0znA1RxAzfkNA/iN9vyTyFHXwEuwXwtrSzsCg8anVz86Z4iMelAI0qdN+JGpAuxD
+	POR8WRq81po=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 873B26D9F;
-	Sat, 14 Jul 2012 16:17:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DABC6E1A;
+	Sat, 14 Jul 2012 16:20:25 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07A7A6D9C; Sat, 14 Jul 2012
- 16:17:30 -0400 (EDT)
-In-Reply-To: <loom.20120714T114718-783@post.gmane.org> ("Stefan
- =?utf-8?Q?N=C3=A4we=22's?= message of "Sat, 14 Jul 2012 09:48:31 +0000
- (UTC)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C24E6E18; Sat, 14 Jul 2012
+ 16:20:24 -0400 (EDT)
+In-Reply-To: <20120714122828.GA6259@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 14 Jul 2012 08:28:29 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F09B860A-CDF0-11E1-8170-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 581AC354-CDF1-11E1-9945-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201453>
 
-Stefan N=C3=A4we <stefan.naewe@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Zeeshan Ali (Khattak <zeeshanak <at> gnome.org> writes:
->>=20
->> Many times I want to refer to 'HEAD^', 'HEAD^^' and sometimes even
->> further up the tree. It would be really nice if I didn't have to typ=
-e
->> 'HEAD^' but could only type '^'. Bash completion make things easier
->> but it automatically inserts a space immediately after HEAD so you
->> have to hit backspace. I think this change would be good in general
->> anyway.
->
-> Or even '~1', '~3'.
+> But given that this is not even configurable in the current code, I
+> really wonder if it needs to have its own color at all. Do people really
+> want to set the color of this message separately? Maybe we should just
+> use WT_STATUS_HEADER instead.
 
-"^" has a problem when used with other things (does "log ^^2
-origin" mean "log HEAD^2..origin"?  Or "log HEAD^^2 origin"), so I
-do not think it would never fly as an abbreviated syntax.
+I would prefer that myself, but let's see if Matthieu's folks have
+opinions on this or something you and I overlooked.
 
-While I see your "~<N>" much distasteful compared to "^", you still
-need to be a bit more careful when analysing the benefit of such an
-abbreviation.  To shells used by many people, these mean tilde
-expansion ~<N> to refer to elements on the dirstack and you need to
-quote, perhaps like \~3.
+Thanks.
