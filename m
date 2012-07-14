@@ -1,63 +1,84 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] t3910: give reason for skipping the test
-Date: Sat, 14 Jul 2012 20:19:23 +0200
-Message-ID: <5001B82B.1060201@web.de>
-References: <71c43b6e469c916f6c41026ad6ed25c1094018be.1342287902.git.git@drmicha.warpmail.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH maint-1.6.5] block-sha1: avoid unaligned accesses on some
+ big-endian systems
+Date: Sat, 14 Jul 2012 12:11:59 -0700
+Message-ID: <CA+55aFy+y=TCoJUQarinaduibt4i-46TAuvpp7fsAmjDZj_+3w@mail.gmail.com>
+References: <20120713233957.6928.87541.reportbug@electro.phys.waikato.ac.nz>
+ <20120714002950.GA3159@burratino> <5000CBCA.8020607@orcon.net.nz>
+ <20120714021856.GA3062@burratino> <50010B84.5030606@orcon.net.nz> <20120714075906.GD3693@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Jul 14 20:20:12 2012
+Cc: Michael Cree <mcree@orcon.net.nz>, git@vger.kernel.org,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 14 21:13:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq6wr-0003zh-Ho
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 20:20:09 +0200
+	id 1Sq7m3-000385-Ct
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 21:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab2GNST2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jul 2012 14:19:28 -0400
-Received: from mout.web.de ([212.227.17.12]:59098 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751478Ab2GNST0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2012 14:19:26 -0400
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0M5fxo-1TnPgz07iK-00yCgh; Sat, 14 Jul 2012 20:19:25 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <71c43b6e469c916f6c41026ad6ed25c1094018be.1342287902.git.git@drmicha.warpmail.net>
-X-Provags-ID: V02:K0:ka/9XcNxBbt3eDIeV1oqfNHFarin8dxWWXWQvg5IyyC
- ogxXfKKJlPUZHsbqAUJZ1VrplCO9lu2r1pB35KsgHp2WjzrXrW
- ZLq5r/LJwj6Gr/Wqv01I+Hh7GiSYekq7JQ4UMF07YtiX+2+mld
- Z2uvejM8/2f5NUtXqqX+iVI/RtxcP2QcDwxt+YICaugAQZHO2r
- 92MhBkHoUi0us9exPhytg==
+	id S1751583Ab2GNTMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 15:12:22 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:58111 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361Ab2GNTMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 15:12:20 -0400
+Received: by weyx8 with SMTP id x8so3167368wey.19
+        for <git@vger.kernel.org>; Sat, 14 Jul 2012 12:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=cOoZe467X1/6B1kn0pi/c9XekPcdejIAklJL9KRymow=;
+        b=kLmhBAcsSzKepG7/eQa+WT0vS1BvOZVxXJ5SAZQRsvdcF4tBZtduGLafGrWKGVdbW9
+         sKjFe2Fyq0YHmZvAnoogbp6cskHcpAuEqahT18lYv/XwxYBIy3fsZeL1sAKYRiQOoJND
+         3xqFxPMVivbfkxPuT7XVSJen6jeGClZoBBJ3qp7xgvLrDDT5w1yBrnGjmiSqeVXtkxER
+         WXQemUR9tU1EgwOUSl/ho4JbCbnG/gZtYRg8Ap7moAlbpLK0lzSdQLTIbhHwh8lcixtR
+         tGJiwRKP5dT+mrfnpfDWbNIWchEUNrZ1NGtw2Weu6y9cd/87pyXKfbV6/kv3hTEuQk0O
+         S8Hg==
+Received: by 10.180.100.35 with SMTP id ev3mr6803146wib.10.1342293139236; Sat,
+ 14 Jul 2012 12:12:19 -0700 (PDT)
+Received: by 10.216.142.14 with HTTP; Sat, 14 Jul 2012 12:11:59 -0700 (PDT)
+In-Reply-To: <20120714075906.GD3693@burratino>
+X-Google-Sender-Auth: XSYJtZffmqxDzWLt1u4Z6qwAMEI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201448>
 
-On 14.07.12 19:52, Michael J Gruber wrote:
-> t3910 is skipped for most users because it requires a filesystem which
-> does automatic conversion between different utf-8 types. Currently, this
-> results in a skipped test with "no reason given".
-> 
-> Use the skip_all mechanism from our test suite so that a reason for
-> skipping the test is given to the user.
-> 
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Alternatively, we could set a prerequisite and mark all tests with that.  Since
-> it's either or for the whole test skip_all seems more appropriate.  In that
-> case, we can also flatten the else branch, of course. The current patch is
-> minimally invasive, though.
+On Sat, Jul 14, 2012 at 12:59 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Unfortunately, on big-endian architectures, if p is a pointer to
+> unsigned int then current gcc assumes it is properly aligned and
+> converts this construct to a 32-bit load.
 
-Good point, thanks.
+This patch seems to entirely depend on the location of the cast. And
+as far as I can tell, that workaround will in turn depend on just what
+gets inlined.
 
-If we spin that idea further,
-we could move the whole t3910 into t0050.
+My gut feel is that this makes the code uglier (the manual "multiply
+by four" being a prime example) while not really even addressing the
+problem.
 
-That would be nice for all non Mac OS X users in a way that we save CPU time. 
-We already detect unicode corruption in t0050. 
+I think a much better approach would be to just mark the unsigned int
+data pointer as being unaligned, or add a "get_unaligned()" helper
+function (you have to do a structure member and mark the structure
+packed, I think - I don't think you can just mark an int pointer
+packed). Sure, that's compiler-dependent, but if a compiler does
+something like gcc apparently does, it had better support the notion
+of unaligned pointers.
+
+And then gcc might actually do the unaligned word read *optimally* on
+big-endian architectures, instead of that idiotic byte-at-a-time crap
+with shifting.
+
+Anyway, the whole "noticed on alpha" makes no sense, since alpha isn't
+even big-endian. So the commit log is insane and misleading too. Alpha
+is very much little-endian, but maybe gcc turns the thing into an
+unaligned load followed by a bswap.
+
+                      Linus
