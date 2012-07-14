@@ -1,86 +1,112 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: t1450-fsck (sometimes/often) failes on Mac OS X
-Date: Sat, 14 Jul 2012 14:21:35 +0200
-Message-ID: <5001644F.10901@web.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] status: default in-progress color to header color
+Date: Sat, 14 Jul 2012 08:28:29 -0400
+Message-ID: <20120714122828.GA6259@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Jul 14 14:22:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
+	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
+	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
+	Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 14 14:29:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq1Mc-0007oi-BG
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 14:22:22 +0200
+	id 1Sq1Td-0002hG-UH
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 14:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975Ab2GNMVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jul 2012 08:21:38 -0400
-Received: from mout.web.de ([212.227.15.4]:58403 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753211Ab2GNMVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2012 08:21:37 -0400
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LcPSk-1TZlm20UXm-00j7qz; Sat, 14 Jul 2012 14:21:36 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-X-Provags-ID: V02:K0:+cceTeHlCUckvcK+jOMXHqvYbKhiqCEZICquOWl3r25
- GpdTOtHhXveixNth88bNMSMf6dDnge7RSbYWEeEQWQCPkkyp2D
- d6hdaC5fkTWCat2N74g/md4uLv6u+m71FxJXNZIkxkDPO/BIEG
- HPF+maq8FhrHYhnrDsFH1jSN2rnLGUfV27qtCi5SUOo5nF852r
- FHe9gxhW0bHcLvYeJv30Q==
+	id S1753397Ab2GNM2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 08:28:37 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:59465
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184Ab2GNM2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 08:28:36 -0400
+Received: (qmail 12706 invoked by uid 107); 14 Jul 2012 12:28:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 14 Jul 2012 08:28:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jul 2012 08:28:29 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201440>
 
-I saw the problem first on pu, some time ago, 
-but it dissappeared after cloning git.git into another directory.
+The "status" command recently learned to describe the
+in-progress operation in its long output format (e.g.,
+rebasing, am, etc). The color for this message defaults to
+"normal" (i.e., no color). However, if the user has set
+their default header color to something besides normal, then
+the message sticks out. A much saner default is to pick the
+user's header color, making this message match the rest of
+the header.
 
-Now it appeared on next as well, so it's time to look a little bit deeper.
+We already do the same trick with the "onbranch" message.
+Rather than expand the current conditional to list all types
+of messages which will default back to the header color, we
+can just default all "nil" colors to do so, simplifying the
+code. That encompasses all of the current nil color slots,
+and will likely cover any future ones that will be added.
 
-This test case of t1450 fails:
-test_expect_success 'tag pointing to something else than its type' '
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This goes on top of lk/more-helpful-status-hints.
 
-To debug more, I added an exit 0 here to inspect the file named out:
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 5b79c51..f1f45c9 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -179,6 +179,7 @@ test_expect_success 'tag pointing to something else than its type' '
-        test_when_finished "git update-ref -d refs/tags/wrong" &&
-        test_must_fail git fsck --tags 2>out &&
-        cat out &&
-+       exit 0
-        grep "error in tag.*broken links" out
- '
+My intent was that this would also let "color.status.inprogress"
+override it, in case a user really wanted a green message or something.
+However, I notice that the original series did not add such a config
+option, so this color cannot be configured at all. Furthermore, I think
+the color formatting for this message is somewhat buggy.  Even if we set
+it to green, you would end up with (imagine our header color is blue):
 
-Linux:
-error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, not a commit
-error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
-error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not load tagged object
+  <blue># On branch master<reset>
+  <green># You are in the middle of a rebase.<reset>
 
-Mac OS X:
-error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not a blob
-error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or missing
+when what you would probably want is:
 
-I reverted the last change in fsck.c (Use the streaming interface), but that doesn't help
+  <blue># On branch master<reset>
+  <blue># <reset><green>You are in the middle of a rebase.<reset>
 
-Looking into the trash directory and looking at the files, we can see that the .git/index is different
-between Linux and Mac OS X.
+I.e., the "#" bit should always be in the header color, and only the
+message text should change colors. This is how the "onbranch" message is
+handled.
 
-Is there a good way to debug the index file?
+But given that this is not even configurable in the current code, I
+really wonder if it needs to have its own color at all. Do people really
+want to set the color of this message separately? Maybe we should just
+use WT_STATUS_HEADER instead.
 
-BTW:  git bisect pointed out: 
- [76759c7dff53e8c84e975b88cb8245587c14c7ba] git on Mac OS and precomposed unicode
-But re-running t1450 makes it pass, so that bisect went into the wrong direction
-somewhere.
+ wt-status.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-It seems that t1450 is timing depending, sometimes it passes, sometimes not.
-And once it went into the state "non passed", it stays there.
-
-It feels that I got stuck, any hints how to debug this further, please ?
-
-/Torsten
+diff --git a/wt-status.c b/wt-status.c
+index c749267..2f724b4 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -24,7 +24,7 @@ static char default_wt_status_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
+ 	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
+ 	GIT_COLOR_NIL,    /* WT_STATUS_ONBRANCH */
+-	GIT_COLOR_NORMAL, /* WT_STATUS_IN_PROGRESS */
++	GIT_COLOR_NIL,    /* WT_STATUS_IN_PROGRESS */
+ };
+ 
+ static const char *color(int slot, struct wt_status *s)
+@@ -32,7 +32,7 @@ static const char *color(int slot, struct wt_status *s)
+ 	const char *c = "";
+ 	if (want_color(s->use_color))
+ 		c = s->color_palette[slot];
+-	if (slot == WT_STATUS_ONBRANCH && color_is_nil(c))
++	if (color_is_nil(c))
+ 		c = s->color_palette[WT_STATUS_HEADER];
+ 	return c;
+ }
+-- 
+1.7.10.5.40.gbbc17de
