@@ -1,88 +1,179 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] block-sha1: put macro arguments in parentheses
-Date: Sat, 14 Jul 2012 16:57:49 -0500
-Message-ID: <20120714215749.GE28502@burratino>
-References: <20120713233957.6928.87541.reportbug@electro.phys.waikato.ac.nz>
- <20120714002950.GA3159@burratino>
- <5000CBCA.8020607@orcon.net.nz>
- <20120714021856.GA3062@burratino>
- <50010B84.5030606@orcon.net.nz>
- <20120714075906.GD3693@burratino>
- <CA+55aFy+y=TCoJUQarinaduibt4i-46TAuvpp7fsAmjDZj_+3w@mail.gmail.com>
- <20120714205049.GA28502@burratino>
- <CA+55aFxHAPJi9cKVy6Mi7gunHT3PPLEQUwJBFQ4ftO2szc_dow@mail.gmail.com>
+From: =?UTF-8?q?=C5=A0t=C4=9Bp=C3=A1n=20N=C4=9Bmec?= <stepnem@gmail.com>
+Subject: [PATCH] doc: A few minor copy edits.
+Date: Sun, 15 Jul 2012 00:20:36 +0200
+Message-ID: <1342304436-29499-1-git-send-email-stepnem@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Cree <mcree@orcon.net.nz>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 14 23:58:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jul 15 00:20:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqALh-0006ks-4C
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 23:58:01 +0200
+	id 1SqAhk-0003Dm-C5
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 00:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165Ab2GNV54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jul 2012 17:57:56 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:40186 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566Ab2GNV5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2012 17:57:54 -0400
-Received: by obbuo13 with SMTP id uo13so6997220obb.19
-        for <git@vger.kernel.org>; Sat, 14 Jul 2012 14:57:54 -0700 (PDT)
+	id S1752165Ab2GNWUo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jul 2012 18:20:44 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:63638 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751310Ab2GNWUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 18:20:42 -0400
+Received: by wgbdr13 with SMTP id dr13so4174521wgb.1
+        for <git@vger.kernel.org>; Sat, 14 Jul 2012 15:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=c8knodpPwKBJPiWUbtDDsWNlZlNp7fGK/hWvm4+jsWg=;
-        b=RDjRH5/Ote9zxcVXkLc4He1V2kVTnpML63wcZrh4ypPpEqw3wWRrdcUfLUVmrYEq1p
-         mflfNOp016+7nXb8NcaC068XW8nfDRAblRKIl7DLX/dCtOeoWUp48S6sO5FQmJawQ8hz
-         gYXH4TgmXyR90tdPqf5hacTDSoKc3dt+FgWaBwfyn/4UqG5V/PTd/Nt33IAEafTt5mzW
-         2tQe/Farx6zh0u4K6484hSEVHYrUfx7hy34seVlF9YSKAowqB+HIz/uF5FVoQoVZbvnV
-         QZIoUwkmN13o8rhw3trQvjjxLsl4xnE4VfhUKBfVBg0g+F9XDPni/7lYjkGKc2ufUGG+
-         mKBg==
-Received: by 10.50.36.227 with SMTP id t3mr2180954igj.13.1342303074013;
-        Sat, 14 Jul 2012 14:57:54 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id k6sm10253192igw.14.2012.07.14.14.57.53
-        (version=SSLv3 cipher=OTHER);
-        Sat, 14 Jul 2012 14:57:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+55aFxHAPJi9cKVy6Mi7gunHT3PPLEQUwJBFQ4ftO2szc_dow@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=1v8H6mR+8ty3Ei+Awckn//AKRbAmE56PGwbvkPSnNyk=;
+        b=oLBQ/50MF2XjQaivMuGHkKMTWzW5z40LT0U8idkksdfJhCobnr81YlbRliSGgMRKjh
+         y6kJMCaDbN1PglvhMqsTFhGMFB5/TOxbakKYR0nerNIaIxQp49XpT6TkOYzy+LgfnYyV
+         6exucsUPZT4Jxyq5UKMBFJof38fPZB2toYFnntAsIzfBuQPSeDNf2Zn+XSm7/rvy6NUI
+         yCj0I+g4pxdi1xQ3/F72CYf7snPkTRQCyFR9pQSEl4ca0xZ36WH4rlQwfmILFO6Nao2C
+         kGXgfuOtD859s/fIoOy0V6BHiRlcS09rhAPZbSaFi6fEa/OcxZiTJgUz3WHCSltiTytS
+         +NbA==
+Received: by 10.217.1.8 with SMTP id m8mr3158380wes.118.1342304440463;
+        Sat, 14 Jul 2012 15:20:40 -0700 (PDT)
+Received: from localhost (176.119.broadband10.iol.cz. [90.177.119.176])
+        by mx.google.com with ESMTPS id w7sm12145232wiz.0.2012.07.14.15.20.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 14 Jul 2012 15:20:39 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201461>
 
-'t' is currently always a numeric constant, but it can't hurt to
-prepare for the day that it becomes useful for a caller to pass in a
-more complex expression.
+- (glossary) the quotes around the Wikipedia URL prevented its
+  linkification in frontends that support it; remove them
 
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+- (manual) newer version (SHA-1) =3D=3D following, older =3D=3D precedi=
+ng, not
+  the other way around
+
+- trivial typo and wording fixes
+
+Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
 ---
- block-sha1/sha1.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-merge.txt        |    2 +-
+ Documentation/git-rebase.txt       |    2 +-
+ Documentation/glossary-content.txt |    2 +-
+ Documentation/rev-list-options.txt |    2 +-
+ Documentation/user-manual.txt      |   12 ++++++------
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 10fd94d1..6f885c43 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -100,8 +100,8 @@
-  * Where do we get the source from? The first 16 iterations get it from
-  * the input data, the next mix it from the 512-bit array.
-  */
--#define SHA_SRC(t) get_be32((unsigned char *) block + t*4)
--#define SHA_MIX(t) SHA_ROL(W(t+13) ^ W(t+8) ^ W(t+2) ^ W(t), 1)
-+#define SHA_SRC(t) get_be32((unsigned char *) block + (t)*4)
-+#define SHA_MIX(t) SHA_ROL(W((t)+13) ^ W((t)+8) ^ W((t)+2) ^ W(t), 1);
- 
- #define SHA_ROUND(t, input, fn, constant, A, B, C, D, E) do { \
- 	unsigned int TEMP = input(t); setW(t, TEMP); \
--- 
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 3ceefb8..20f9228 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -181,7 +181,7 @@ final result verbatim.  When both sides made change=
+s to the same area,
+ however, git cannot randomly pick one side over the other, and asks yo=
+u to
+ resolve it by leaving what both sides did to that area.
+=20
+-By default, git uses the same style as that is used by "merge" program
++By default, git uses the same style as the one used by the "merge" pro=
+gram
+ from the RCS suite to present such a conflicted hunk, like this:
+=20
+ ------------
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
+t
+index 2d71e4b..2cab7e2 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -273,7 +273,7 @@ which makes little sense.
+ 	Pass the <strategy-option> through to the merge strategy.
+ 	This implies `--merge` and, if no strategy has been
+ 	specified, `-s recursive`.  Note the reversal of 'ours' and
+-	'theirs' as noted in above for the `-m` option.
++	'theirs' as noted above for the `-m` option.
+=20
+ -q::
+ --quiet::
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
+y-content.txt
+index 3595b58..f928b57 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -117,7 +117,7 @@ to point at the new commit.
+=20
+ [[def_ent]]ent::
+ 	Favorite synonym to "<<def_tree-ish,tree-ish>>" by some total geeks. =
+See
+-	`http://en.wikipedia.org/wiki/Ent_(Middle-earth)` for an in-depth
++	http://en.wikipedia.org/wiki/Ent_(Middle-earth) for an in-depth
+ 	explanation. Avoid this term, not to confuse people.
+=20
+ [[def_evil_merge]]evil merge::
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-lis=
+t-options.txt
+index 84e34b1..d9b2b5b 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -760,7 +760,7 @@ options may be given. See linkgit:git-diff-files[1]=
+ for more options.
+=20
+ --cc::
+=20
+-	This flag implies the '-c' options and further compresses the
++	This flag implies the '-c' option and further compresses the
+ 	patch output by omitting uninteresting hunks whose contents in
+ 	the parents have only two variants and the merge result picks
+ 	one of them without modification.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
+txt
+index 02ed566..03d95dc 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2870,7 +2870,7 @@ $ git fetch example
+ You can also add a "+" to force the update each time:
+=20
+ -------------------------------------------------
+-$ git config remote.example.fetch +master:ref/remotes/example/master
++$ git config remote.example.fetch +master:refs/remotes/example/master
+ -------------------------------------------------
+=20
+ Don't do this unless you're sure you won't mind "git fetch" possibly
+@@ -2966,7 +2966,7 @@ As you can see, a commit is defined by:
+=20
+ - a tree: The SHA-1 name of a tree object (as defined below), represen=
+ting
+   the contents of a directory at a certain point in time.
+-- parent(s): The SHA-1 name of some number of commits which represent =
+the
++- parent(s): The SHA-1 name(s) of some number of commits which represe=
+nt the
+   immediately previous step(s) in the history of the project.  The
+   example above has one parent; merge commits may have more than
+   one.  A commit with no parents is called a "root" commit, and
+@@ -3363,8 +3363,8 @@ Date:
+ :100644 100644 oldsha... 4b9458b... M somedirectory/myfile
+ ------------------------------------------------
+=20
+-This tells you that the immediately preceding version of the file was
+-"newsha", and that the immediately following version was "oldsha".
++This tells you that the immediately following version of the file was
++"newsha", and that the immediately preceding version was "oldsha".
+ You also know the commit messages that went with the change from oldsh=
+a
+ to 4b9458b and with the change from 4b9458b to newsha.
+=20
+@@ -4035,8 +4035,8 @@ $ git ls-files --unmerged
+ Each line of the `git ls-files --unmerged` output begins with
+ the blob mode bits, blob SHA-1, 'stage number', and the
+ filename.  The 'stage number' is git's way to say which tree it
+-came from: stage 1 corresponds to `$orig` tree, stage 2 `HEAD`
+-tree, and stage3 `$target` tree.
++came from: stage 1 corresponds to the `$orig` tree, stage 2 to
++the `HEAD` tree, and stage 3 to the `$target` tree.
+=20
+ Earlier we said that trivial merges are done inside
+ `git read-tree -m`.  For example, if the file did not change
+--=20
 1.7.10.4
