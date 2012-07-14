@@ -1,130 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] status: default in-progress color to header color
-Date: Sat, 14 Jul 2012 08:36:38 -0400
-Message-ID: <20120714123638.GA10431@sigill.intra.peff.net>
-References: <20120714122828.GA6259@sigill.intra.peff.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 1/3] git p4: remove unused P4Submit interactive setting
+Date: Sat, 14 Jul 2012 09:53:07 -0400
+Message-ID: <20120714135307.GA27609@padd.com>
+References: <1341408860-26965-1-git-send-email-pw@padd.com>
+ <1341408860-26965-2-git-send-email-pw@padd.com>
+ <4FF54041.2000507@diamand.org>
+ <20120705123010.GA31388@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
-	Valentin Duperray <Valentin.Duperray@ensimag.imag.fr>,
-	Franck Jonas <Franck.Jonas@ensimag.imag.fr>,
-	Thomas Nguy <Thomas.Nguy@ensimag.imag.fr>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 14 14:36:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Horowitz <mike@horowitz.name>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sat Jul 14 15:53:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sq1aZ-0005Wb-Ih
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 14:36:47 +0200
+	id 1Sq2mb-0000GQ-Lr
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jul 2012 15:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320Ab2GNMgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jul 2012 08:36:42 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:59492
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752313Ab2GNMgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jul 2012 08:36:42 -0400
-Received: (qmail 12804 invoked by uid 107); 14 Jul 2012 12:36:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 14 Jul 2012 08:36:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jul 2012 08:36:38 -0400
+	id S1753551Ab2GNNxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jul 2012 09:53:12 -0400
+Received: from honk.padd.com ([74.3.171.149]:43032 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752682Ab2GNNxL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jul 2012 09:53:11 -0400
+Received: from arf.padd.com (unknown [50.55.149.165])
+	by honk.padd.com (Postfix) with ESMTPSA id 441C51E43;
+	Sat, 14 Jul 2012 06:53:10 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 275743145C; Sat, 14 Jul 2012 09:53:07 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20120714122828.GA6259@sigill.intra.peff.net>
+In-Reply-To: <20120705123010.GA31388@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201442>
 
-On Sat, Jul 14, 2012 at 08:28:28AM -0400, Jeff King wrote:
-
-> My intent was that this would also let "color.status.inprogress"
-> override it, in case a user really wanted a green message or something.
-> However, I notice that the original series did not add such a config
-> option, so this color cannot be configured at all. Furthermore, I think
-> the color formatting for this message is somewhat buggy.  Even if we set
-> it to green, you would end up with (imagine our header color is blue):
+pw@padd.com wrote on Thu, 05 Jul 2012 08:30 -0400:
+> luke@diamand.org wrote on Thu, 05 Jul 2012 08:20 +0100:
+> > On 04/07/12 14:34, Pete Wyckoff wrote:
+> > >The code is unused.  Delete.
+> > 
+> > I've used that non-interactive code path in the past, in the very
+> > early days of using it (setting interactive to false manually).
+> > 
+> > The nice thing about it is that if you're using git-p4 for the very
+> > first time it lets you do the final submission to p4 by hand,
+> > without having to trust the script to do the right thing. Once I
+> > convinced myself that git-p4 was doing the right thing, I then
+> > stopped using it.
+> > 
+> > Is it worth retaining, perhaps fixed so that it can be set on the
+> > command line and documented? Or just discard?
 > 
->   <blue># On branch master<reset>
->   <green># You are in the middle of a rebase.<reset>
+> My biggest complaint is that there's no way to enable the option.
+> You have to edit the code to change self.interactive to False, as
+> you pointed out.
 > 
-> when what you would probably want is:
+> Then it doesn't help you with the submit message, and doesn't
+> do the little details of cleaning up pure-copied files or
+> changing the username for preserveUser.
 > 
->   <blue># On branch master<reset>
->   <blue># <reset><green>You are in the middle of a rebase.<reset>
+> What you're doing makes sense, though, but maybe there's a
+> cleaner way to provide that functionality.
 > 
-> I.e., the "#" bit should always be in the header color, and only the
-> message text should change colors. This is how the "onbranch" message is
-> handled.
+> We could build the change then say "type p4 submit -c ... if it
+> looks good".  Still doesn't handle the little details.
 > 
-> But given that this is not even configurable in the current code, I
-> really wonder if it needs to have its own color at all. Do people really
-> want to set the color of this message separately? Maybe we should just
-> use WT_STATUS_HEADER instead.
+> We could spawn a shell to let them go inspect.
+> 
+> We could try to implement a "--continue" option, and give them
+> a chance to edit.
+> 
+> I've got an upcoming series that changes the interaction loop on
+> conflict, and makes it easier to do some interaction at each
+> patch, possibly before applying too.  Might make things easier.
 
-And that patch would look like this (directly on top of
-lk/more-helpful-status-hints):
+I did code up two new options to "git p4 submit":
 
--- >8 --
-Subject: [PATCH] status: color in-progress message like other header messages
+    --dry-run : just show the commits that would be submitted
 
-The "status" command recently learned to describe the
-in-progress operation in its long output format (e.g.,
-rebasing, am, etc). This message gets its own slot in the
-color table, even though it is not configurable. As a
-result, if the user has set color.status.header to a
-non-default value, this message will not match (and cannot
-be made to match, as there is no config option).
+    --prepare-p4-only : open/add, apply patch, but do not submit
 
-It is probably more sane to just color it like the rest of
-the text (i.e., just use color.status.header). This would
-not allow users to customize the color of this message
-independently, but it is not likely that anyone will want to
-(and they cannot with the current code, anyway).
+The latter prints a rather lengthy message about how to submit
+or revert the changes.  It fills the role of self.interactive,
+hopefully.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- wt-status.c | 3 +--
- wt-status.h | 1 -
- 2 files changed, 1 insertion(+), 3 deletions(-)
+I'll send the patches out for review once the other in-flight
+changes have settled.
 
-diff --git a/wt-status.c b/wt-status.c
-index c749267..c110cbc 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -24,7 +24,6 @@ static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
- 	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
- 	GIT_COLOR_NIL,    /* WT_STATUS_ONBRANCH */
--	GIT_COLOR_NORMAL, /* WT_STATUS_IN_PROGRESS */
- };
- 
- static const char *color(int slot, struct wt_status *s)
-@@ -931,7 +930,7 @@ static void show_bisect_in_progress(struct wt_status *s,
- 
- static void wt_status_print_state(struct wt_status *s)
- {
--	const char *state_color = color(WT_STATUS_IN_PROGRESS, s);
-+	const char *state_color = color(WT_STATUS_HEADER, s);
- 	struct wt_status_state state;
- 	struct stat st;
- 
-diff --git a/wt-status.h b/wt-status.h
-index c1066a0..f8fc58c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -15,7 +15,6 @@ enum color_wt_status {
- 	WT_STATUS_LOCAL_BRANCH,
- 	WT_STATUS_REMOTE_BRANCH,
- 	WT_STATUS_ONBRANCH,
--	WT_STATUS_IN_PROGRESS,
- 	WT_STATUS_MAXSLOT
- };
- 
--- 
-1.7.10.5.40.gbbc17de
+		-- Pete
