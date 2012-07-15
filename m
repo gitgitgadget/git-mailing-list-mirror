@@ -1,64 +1,90 @@
-From: "Jonas H." <jonas@lophus.org>
-Subject: Implementing authenticated Smart HTTP - which URLs to secure
-Date: Sun, 15 Jul 2012 15:43:15 +0200
-Message-ID: <5002C8F3.6080400@lophus.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 15 15:44:00 2012
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH] Fix overwritten remote ref on with fast-import.
+Date: Sun, 15 Jul 2012 16:26:23 +0200
+Message-ID: <1342362383-31167-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Cc: florian.achleitner.2.6.31@gmail.com, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 16:27:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqP79-0002NM-27
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 15:43:59 +0200
+	id 1SqPnf-0002N4-N3
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 16:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638Ab2GONnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 09:43:18 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:60908 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535Ab2GONnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2012 09:43:17 -0400
-Received: from v216570639.yourvserver.net (static.19.17.47.78.clients.your-server.de [78.47.17.19])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0Lg6qx-1TedLc4C2l-00oyLB; Sun, 15 Jul 2012 15:43:16 +0200
-Received: from [192.168.1.2] (nat-wh-euh.rz.uni-karlsruhe.de [141.70.81.149])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by v216570639.yourvserver.net (Postfix) with ESMTPSA id AADCBDFAA78
-	for <git@vger.kernel.org>; Sun, 15 Jul 2012 15:43:15 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120616 Thunderbird/13.0.1
-X-Provags-ID: V02:K0:mJ9vZdYStwhHVOVjszKvHyj3VxZZDHv+n8VptDmp9mj
- tjdFK/wRAgz6PI/DaaPfDF8JqfnL3LZ2QLFu6snRzJhci19BLb
- GOzlGyUXPHnChENCHhIhUjHskQZL+JX1N9lD+SSwQSKwvqfY8a
- JfGjjH13AOEDUYu/VEaT8PR+HK+ZDtmji5x1tf+MbmkGBw/nDK
- AskgFpZZEvQzd1HkXWwbTOHx3WRyGgB9Mjby1OrZ3ZgzXyQF6a
- R/MtSE/xt2hCM6QfMnTvVC6BRA8nHp8M9SDifYZP0JKnA4FVo0
- PW3tYNVfOrUw7AizjapZ4HL14z06jbqXBbKv/s0POYAxJlSVko
- DbtrpFETl5Pcnh5QbwMQQGHU8C5htA41wqaeqY396
+	id S1751967Ab2GOO1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 10:27:14 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:63444 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751535Ab2GOO1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 10:27:13 -0400
+Received: by bkwj10 with SMTP id j10so4135368bkw.19
+        for <git@vger.kernel.org>; Sun, 15 Jul 2012 07:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=lDHNBCPKsCu3xl92kVALb5A3gDfPPa3a9U9BrTBpBVw=;
+        b=FTypmWsaI7ILyhbjk3kK45xuVi8EZCxqiA6UtV0R7p2z47mq+BCr7dZTRezevg/+UG
+         NddVWadOI7bl9+9zm1Hmk+aiZ4zmwNDJQ+je1J2s4VFUZGpaF3+1shApq7wtH+9Y0Qrs
+         RBVKN/WafLeN8TUwQFlG2Jgyyhan4v8uoss4g+ZKFHFhj9ppa0PQNR47nA7syv80By4v
+         99zt9SxdO7TycFuUth3wkrNmMzm4XKx2DmpnXyyVS8E9X98QbY8oZCxDvWY7Rgv6xkNl
+         vE+IAlF/BSWwI947wkRmX0nPatGtZZKeRjrNTTWFv7HfZrrYtOgFBbufS/nvEoWVj/ka
+         Syug==
+Received: by 10.204.41.206 with SMTP id p14mr3476457bke.54.1342362431555;
+        Sun, 15 Jul 2012 07:27:11 -0700 (PDT)
+Received: from flobuntu.lan (93-82-157-117.adsl.highway.telekom.at. [93.82.157.117])
+        by mx.google.com with ESMTPS id g6sm6675660bkg.2.2012.07.15.07.27.06
+        (version=SSLv3 cipher=OTHER);
+        Sun, 15 Jul 2012 07:27:10 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201480>
 
-Howdy!
+After importing new commits on top of refs/remotes/* the
+ref was overwritten with the local refs/heads/master, because the name
+of the remote reference to fetch, i.e. refs/heads/master, was used to
+retrieve old_sha1 for it's local counterpart. Therefore, old_sha1 pointed
+to the local head which was not contained in the remote branch and couldn't
+be updated (printing a warning ..).
 
-I'd like to implement HTTP authentication for Git Smart HTTP using 
-Dulwich (a Python binding):
+There are some points that are still not completely clear to me:
+- I found, that the remote ref I need is stored in ref->peer_ref. There
+  is one little comment on peer_ref saying /* when renaming */. That doesn't say much
+  to me. Is peer_ref the correct solution?
+- fast-import's commit command does already add a commit to a branch. The
+  remote ref was already correct, but got overwritten by store_updated_refs
+  after fast import terminated. (I figured that out using strace).
+  So the update is somewhat redundant. But probably only in this special case.(?)
 
-1) read-only if unauthenticated and write only if authenticated
-2) read/write only if authenticated
+Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+---
+ transport-helper.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I couldn't find any documentation on which URLs need be secured and what 
-response codes are expected in case the cloner/pusher is unauthenticated.
-
-Is there any documentation on Smart HTTP workflow?  The C sources 
-(vanilla Git and libgit2) didn't help me too much since I found it very 
-difficult to follow the code-flow... it's probably just abstracted too 
-well :-)
-
-Thanks!
-Jonas
+diff --git a/transport-helper.c b/transport-helper.c
+index d6daad5..a0f05ce 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -485,8 +485,10 @@ static int fetch_with_import(struct transport *transport,
+ 			continue;
+ 		if (data->refspecs)
+ 			private = apply_refspecs(data->refspecs, data->refspec_nr, posn->name);
++		else if (posn->peer_ref)
++			private = xstrdup(posn->peer_ref->name);
+ 		else
+-			private = xstrdup(posn->name);
++			private = NULL;
+ 		if (private) {
+ 			read_ref(private, posn->old_sha1);
+ 			free(private);
+-- 
+1.7.9.5
