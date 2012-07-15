@@ -1,85 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Add a new email notification script to "contrib"
-Date: Sun, 15 Jul 2012 00:11:23 -0700
-Message-ID: <7v1ukd5wis.fsf@alter.siamese.dyndns.org>
-References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: Support of '^' as alias for 'HEAD^'
+Date: Sun, 15 Jul 2012 03:44:42 -0400
+Message-ID: <20120715074441.GA18385@sigill.intra.peff.net>
+References: <CAAa3hFMgy66W0dVEGv164Zowfa6Q-5DqgkkLz_1paymU_1SHUw@mail.gmail.com>
+ <loom.20120714T114718-783@post.gmane.org>
+ <7vzk725c86.fsf@alter.siamese.dyndns.org>
+ <7vr4se5bg4.fsf@alter.siamese.dyndns.org>
+ <CAAa3hFOv39DhuEDTyJUm1pzB-X1gBiV8FXuqW6TidOtQw9CUng@mail.gmail.com>
+ <7vmx32590u.fsf@alter.siamese.dyndns.org>
+ <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Sun Jul 15 09:11:39 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@gmail.com>,
+	git@vger.kernel.org
+To: "Zeeshan Ali (Khattak)" <zeeshanak@gnome.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 09:45:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqIzS-0004zt-0t
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 09:11:38 +0200
+	id 1SqJVl-00045Q-6N
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 09:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203Ab2GOHL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 03:11:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47988 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750952Ab2GOHLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2012 03:11:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 628B07A8C;
-	Sun, 15 Jul 2012 03:11:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xwGbIzOLXLIjoh2UsqVJuTPvrek=; b=DiT60b
-	19n3bdOc4Oh2/+gRCHFPb0yzBfmKgkThAj3q3dVxW6i9cY7Cup/rRlVU/3bUd2vh
-	IfkBAQHuxeSeVXRlBbGYc00ArM5+acfxeXdWXlGNQ7RdmH8hOxzVIQvek1I0HAWp
-	KAvCbFhC4NSwP26WMvwxphwQFiPsZJ2TxxTgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j0HLtlsr96sAl9rPymPoTZPOREl85Ksn
-	IEa6522+qOa25AmwevEpzVJyMLvWN2qUkuL5laH+hyEIKrJ0BCnkgnq8p/dOLAFo
-	pf/eaTjm38Go5k/tOTot1wTNdJwW0Plh1iAF/AEQgkBZ5gSHc8WebEVGSZujy5XX
-	AZqUaiRuEJM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F1BB7A8B;
-	Sun, 15 Jul 2012 03:11:25 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9FF97A8A; Sun, 15 Jul 2012
- 03:11:24 -0400 (EDT)
-In-Reply-To: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
- (mhagger@alum.mit.edu's message of "Sat, 14 Jul 2012 08:59:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 49B1B650-CE4C-11E1-8E07-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751487Ab2GOHoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 03:44:46 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:59986
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751060Ab2GOHoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 03:44:44 -0400
+Received: (qmail 18547 invoked by uid 107); 15 Jul 2012 07:44:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 15 Jul 2012 03:44:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Jul 2012 03:44:42 -0400
+Content-Disposition: inline
+In-Reply-To: <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201472>
 
-mhagger@alum.mit.edu writes:
+On Sun, Jul 15, 2012 at 01:24:18AM +0300, Zeeshan Ali (Khattak) wrote:
 
-> From: Michael Haggerty <mhagger@alum.mit.edu>
->
-> Add a new Python script, contrib/hooks/post-receive-multimail.py, that
-> can be used to send notification emails describing pushes into a git
-> repository.  This script is derived from
-> contrib/hooks/post-receive-mail, but has many differences, including:
+> > Think what "log ^^ origin" would mean.  Is it "log ^HEAD^ origin"?
+> > Is it "log HEAD^^ origin"?  They mean totally different things.
+> 
+> Sorry for my ignorance here but what does ^ *before* HEAD even mean? I
 
-The new script (I didn't read it at all) may be useful to some
-people, but I'm fairly negative on adding 47 different "I know there
-is something in contrib/, I looked at it, but I didn't bother
-updating it to fill my needs and wrote a new one instead" at this
-point to my tree.
+It means "not" (before "HEAD" or any other commit specifier). See
+"Specifying Ranges" in "git help revisions".
 
-It is a different matter if the patch was to replace the existing
-one, saying "the users of the old script can use this one, which is
-backward compatible with respect to the external interface such as
-command line, or configuration variables used".  Instead of a total
-backward compatibility, "here is a script to migrate the existing
-set of configuration variables so that users of the old script can
-run it once, and start using this new one" is also perfectly fine.
+> > Compared to that, at least ~<n> does not have such ambiguity within
+> > the context of Git (having to quote is an ambiguity within the
+> > context of using Git with shells that support dirstacks in their
+> > tilde expansion).
+> 
+> Don't know whats dirstacks support either but that I guess just means
+> that bash (the shell I have always used) doesn't do that.
 
-Such an enhancement, especially if the rewritten result is cleaner
-and easier to enhance going forward than the original, would be very
-much appreciated.
+Bash does support them, but you may not use them personally. Here are
+some examples of how a more bare "~" can go wrong:
 
-Thanks.
+  $ set -x
+  [this instructs the shell to show us what it is executing]
+
+  $ git log ~
+  + git log /home/peff
+  [oops, the shell expanded our home directory and passed it to git]
+
+  $ git log ~1
+  + git log '~1'
+  [this one works ok, but...]
+
+  $ pushd /tmp
+  $ pushd $HOME
+  $ git log ~1
+  + git log /tmp
+  [oops, pushd users cannot use ~<n> without quoting]
+
+-Peff
