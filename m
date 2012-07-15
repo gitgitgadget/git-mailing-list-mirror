@@ -1,55 +1,90 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Support of '^' as alias for 'HEAD^'
-Date: Sun, 15 Jul 2012 19:45:35 +0200
-Message-ID: <500301BF.9080505@ira.uka.de>
-References: <CAAa3hFMgy66W0dVEGv164Zowfa6Q-5DqgkkLz_1paymU_1SHUw@mail.gmail.com> <loom.20120714T114718-783@post.gmane.org> <7vzk725c86.fsf@alter.siamese.dyndns.org> <7vr4se5bg4.fsf@alter.siamese.dyndns.org> <CAAa3hFOv39DhuEDTyJUm1pzB-X1gBiV8FXuqW6TidOtQw9CUng@mail.gmail.com> <7vmx32590u.fsf@alter.siamese.dyndns.org> <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] fast-import: catch deletion of non-existent file in input
+Date: Sun, 15 Jul 2012 13:11:51 -0500
+Message-ID: <20120715181151.GA1986@burratino>
+References: <87ehogrham.fsf@bitburger.home.felix>
+ <20120712210138.GA15283@sigill.intra.peff.net>
+ <m2pq80uj56.fsf@igel.home>
+ <20120713130246.GB2553@sigill.intra.peff.net>
+ <m2hatbvkyh.fsf@igel.home>
+ <20120715102300.GA28667@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@gmail.com>,
-	git@vger.kernel.org
-To: "Zeeshan Ali (Khattak)" <zeeshanak@gnome.org>
-X-From: git-owner@vger.kernel.org Sun Jul 15 19:46:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>,
+	Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 15 20:12:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqStU-0008PN-D6
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 19:46:08 +0200
+	id 1SqTJJ-0004oA-OV
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 20:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973Ab2GORqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 13:46:03 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56794 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751757Ab2GORqB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2012 13:46:01 -0400
-Received: from dslb-088-066-028-153.pools.arcor-ip.net ([88.66.28.153] helo=[192.168.2.231])
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 465 
-	id 1SqStB-0001JB-66; Sun, 15 Jul 2012 19:45:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1342374354.796138000
+	id S1751000Ab2GOSMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 14:12:06 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46199 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698Ab2GOSMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 14:12:03 -0400
+Received: by yhmm54 with SMTP id m54so4823099yhm.19
+        for <git@vger.kernel.org>; Sun, 15 Jul 2012 11:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xHSclP7K1o0g5iBuNo8QHOi4f1s4usfAFadxpeuJLTc=;
+        b=h0Lr1/8igKeBmN8mDsX+QFkUrFRyAzmQDRio/MbQ69n4k4LL1zHExfm4wcYjdQUUIX
+         wLy5OHiRdFaLad70QWg2QpWzUCBmlr1iouRE7Pfi/WZYptrLHK7eeYSAtf5CRob8v4Bu
+         CaC63QUxasr1CNVgXyzyCe93JpZCEHIhu0pB/gbJSU9i/p4GS+vOjc8OdQEOSCSNjmmH
+         J3q/TGRryRiPMhqanq+RYZ+GfMsW13dCzc83N+uhRd/24sCaZKi2U1T9wOty62MXGYYE
+         Yhq6fkuUecAa+Qe55Y5Mf7O4mEAqFrX3rbWCqlUUasnLlJG2P2xOBPjQyFiOjuAn1wcs
+         gebw==
+Received: by 10.50.149.225 with SMTP id ud1mr3584365igb.74.1342375921623;
+        Sun, 15 Jul 2012 11:12:01 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id wp10sm14587893igb.6.2012.07.15.11.12.00
+        (version=SSLv3 cipher=OTHER);
+        Sun, 15 Jul 2012 11:12:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120715102300.GA28667@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201482>
 
-Am 15.07.2012 00:24, schrieb Zeeshan Ali (Khattak):
-> On Sun, Jul 15, 2012 at 12:26 AM, Junio C Hamano<gitster@pobox.com>  wrote:
->> "Zeeshan Ali (Khattak)"<zeeshanak@gnome.org>  writes:
->>
->>> What about '^' and '^^' that I suggested?
+Hi,
 
-If you want a shortcut, you might try this:
+Jeff King wrote:
 
-echo "ref: HEAD" > .git/h
+> Subject: fast-import: catch deletion of non-existent file in input
+[...]
+> We silently ignored the bogus "D foo" directive, and the
+> resulting tree incorrectly contained "bar". With this patch,
+> we notice the bogus input and die.
 
-Then you can use 'h' instead of 'HEAD'.
+This breaks svn-fe, which relies on the existing semantics when asked
+to copy an empty directory.
 
-Tested it and it seemed to work. If not someone on this list surely will 
-correct me.
+That's my fault because we never check that in the testsuite, but I
+also wouldn't be surprised if other importers were relying on the same
+thing.
+
+Any API break this big without a justification along the lines
+
+	We can be confident that no existing importer uses this
+	construct because ...
+
+_needs_ to be guarded by a new "feature" to be safe for existing
+importers.
+
+Let's repeat that for emphasis: API breaks in fast-import not guarded
+with a new "feature" type are not ok.
+
+Sorry,
+Jonathan
