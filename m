@@ -1,84 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Support of '^' as alias for 'HEAD^'
-Date: Sun, 15 Jul 2012 03:44:42 -0400
-Message-ID: <20120715074441.GA18385@sigill.intra.peff.net>
-References: <CAAa3hFMgy66W0dVEGv164Zowfa6Q-5DqgkkLz_1paymU_1SHUw@mail.gmail.com>
- <loom.20120714T114718-783@post.gmane.org>
- <7vzk725c86.fsf@alter.siamese.dyndns.org>
- <7vr4se5bg4.fsf@alter.siamese.dyndns.org>
- <CAAa3hFOv39DhuEDTyJUm1pzB-X1gBiV8FXuqW6TidOtQw9CUng@mail.gmail.com>
- <7vmx32590u.fsf@alter.siamese.dyndns.org>
- <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
+From: Kalle Launiala <kalle.launiala@gmail.com>
+Subject: Complete audit trail for embedded (Linux) system lifecycle with Git
+Date: Sun, 15 Jul 2012 11:47:36 +0300
+Message-ID: <CAHLTmjmrXSGQdS-wZ-K23grQTkxHFJzA-u05GJEqrtdLusBb8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@gmail.com>,
-	git@vger.kernel.org
-To: "Zeeshan Ali (Khattak)" <zeeshanak@gnome.org>
-X-From: git-owner@vger.kernel.org Sun Jul 15 09:45:03 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 15 10:48:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqJVl-00045Q-6N
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 09:45:01 +0200
+	id 1SqKV6-0005Ik-DN
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 10:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487Ab2GOHoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 03:44:46 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:59986
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751060Ab2GOHoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2012 03:44:44 -0400
-Received: (qmail 18547 invoked by uid 107); 15 Jul 2012 07:44:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 15 Jul 2012 03:44:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Jul 2012 03:44:42 -0400
-Content-Disposition: inline
-In-Reply-To: <CAAa3hFMNf_wA22ngypSu379jr31r3L3yAjTkvDUd_L-mVwPJkA@mail.gmail.com>
+	id S1751624Ab2GOIrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 04:47:39 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:65448 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab2GOIrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 04:47:37 -0400
+Received: by qaas11 with SMTP id s11so1078643qaa.19
+        for <git@vger.kernel.org>; Sun, 15 Jul 2012 01:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=S6psHoi31V4oqEbwaIp2/LHHG+IPf0tl93fitAr7y2k=;
+        b=gH2B/gYNQVI1s+a49nv5B/GVgjS8pDBekuxo5MtUJ6Be5+ud9rKW5sdYDvWdKylOWw
+         WQgryXvMTo6gRr6MjtK9w5hyrRCirfcBUaFPNkOIzfv9NdNLvcy5D/bS/AghM8UPW+Lg
+         hXdWE7ttRku2QKJnVzwj5htbTxIcHceMdakeXfjTRGv+GNA/utp1p+5s9RZQRJGaFPpl
+         o4JGioL6UFbEmFF0VMihhinpEu/8pWeRVh/vZFtJS2f2vEWK1ZkJoBpewIVd2rZO0hNa
+         QVVbZZBNCgnW23VHXETy/SyuFuAhsHpTQhCkOW2J54QHjFW8ypVqlrZ9LJjmPbfl9rJX
+         Twkg==
+Received: by 10.229.136.132 with SMTP id r4mr3948137qct.95.1342342056145; Sun,
+ 15 Jul 2012 01:47:36 -0700 (PDT)
+Received: by 10.229.47.77 with HTTP; Sun, 15 Jul 2012 01:47:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201473>
 
-On Sun, Jul 15, 2012 at 01:24:18AM +0300, Zeeshan Ali (Khattak) wrote:
+Hello,
 
-> > Think what "log ^^ origin" would mean.  Is it "log ^HEAD^ origin"?
-> > Is it "log HEAD^^ origin"?  They mean totally different things.
-> 
-> Sorry for my ignorance here but what does ^ *before* HEAD even mean? I
+We are to solve a complete audit trail solution for full subcontractor
+value-chain fullfilling European Union machinery directive:
+http://ec.europa.eu/enterprise/sectors/mechanical/machinery/
 
-It means "not" (before "HEAD" or any other commit specifier). See
-"Specifying Ranges" in "git help revisions".
+To summarize, the directive is created to ensure safe operating
+environment for all kind of machinery devices (from industrial
+machinery to consumer shopping-centre lifts/elevators). This also
+includes the embedded software that controls the machinery (which is
+as we know, the make-or-break the true safety of the device).
 
-> > Compared to that, at least ~<n> does not have such ambiguity within
-> > the context of Git (having to quote is an ambiguity within the
-> > context of using Git with shells that support dirstacks in their
-> > tilde expansion).
-> 
-> Don't know whats dirstacks support either but that I guess just means
-> that bash (the shell I have always used) doesn't do that.
+The solution is based on the very core Git functionality, in very
+brief overview explained here:
+http://abstractiondev.wordpress.com/git-based-distribution/
 
-Bash does support them, but you may not use them personally. Here are
-some examples of how a more bare "~" can go wrong:
+As Git is completely file-system based, in our solution it is used as
+the core technology to audit ANY digital document or information. It
+is serving as a distributed set of "master data" repositories,
+including the digital signature repositories and 3rd party validation
+stacks. In the validation chains it is critical to be able to support
+responsible decision makers to approve design choises beyond the
+software, thus the digital signature infrastructure for any
+legal-binding document is as important as the actual embedded software
+stack, that is by its nature version controlled within Git as well.
 
-  $ set -x
-  [this instructs the shell to show us what it is executing]
+While I would hope this post to serve a purpose for demonstrating that
+Git works as a perfect solution in the core, I'd also like to hear if
+there is already established community/ongoing process of achieving
+anything described above?
 
-  $ git log ~
-  + git log /home/peff
-  [oops, the shell expanded our home directory and passed it to git]
+We have no intention of "reinventing the wheel" here, although being
+very core solution for ANY audit trail and being so close based on Git
+- bare functionality, I'm expecting any existing solution to share
+much of similar design. Any existing tooling to support the solution
+(especially dynamic cross-connected metadata repository searches - the
+bottom image of the overview, that indexes the repositories together)
+would be very welcome. The current technical solution is using GnuPG
+for the digital signatures and open-source cross platform XML-database
+for metadata indexing - grid databases being considered for the larger
+implementations.
 
-  $ git log ~1
-  + git log '~1'
-  [this one works ok, but...]
+Any comments and/or feedback would be greatly appreciated.
 
-  $ pushd /tmp
-  $ pushd $HOME
-  $ git log ~1
-  + git log /tmp
-  [oops, pushd users cannot use ~<n> without quoting]
+Cheers,
 
--Peff
+Kalle Launiala
