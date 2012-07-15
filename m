@@ -1,86 +1,78 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC] Add a new email notification script to "contrib"
-Date: Sun, 15 Jul 2012 06:38:09 +0200
-Message-ID: <50024931.6050601@alum.mit.edu>
-References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <loom.20120714T114314-421@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 06:46:03 2012
+From: Wincent Colaiuta <win@wincent.com>
+Subject: (Ab)using filter-branch from a post-receive hook
+Date: Sat, 14 Jul 2012 21:01:52 -0700
+Message-ID: <8D1AF968-AF34-4590-AB8F-E644C534A928@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 15 07:03:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqGiX-0004O0-Da
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 06:46:01 +0200
+	id 1SqGzC-0002Mf-Jr
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 07:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772Ab2GOEpQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jul 2012 00:45:16 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:49952 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750708Ab2GOEpO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2012 00:45:14 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jul 2012 00:45:14 EDT
-X-AuditID: 1207440d-b7f236d000000943-31-500249333f78
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F8.15.02371.33942005; Sun, 15 Jul 2012 00:38:11 -0400 (EDT)
-Received: from [192.168.69.140] (p57A253B5.dip.t-dialin.net [87.162.83.181])
+	id S1750805Ab2GOFDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 01:03:01 -0400
+Received: from outmail148101.authsmtp.com ([62.13.148.101]:53262 "EHLO
+	outmail148101.authsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750708Ab2GOFDA convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 01:03:00 -0400
+X-Greylist: delayed 3664 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jul 2012 01:02:59 EDT
+Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
+	by punt12.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id q6F41r9I059222
+	for <git@vger.kernel.org>; Sun, 15 Jul 2012 05:01:53 +0100 (BST)
+Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
+	(authenticated bits=128)
+	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id q6F41mCr075265
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sun, 15 Jul 2012 05:01:49 +0100 (BST)
+Received: from [192.168.1.131] (c-69-181-20-120.hsd1.ca.comcast.net [69.181.20.120])
 	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q6F4c9FS021986
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 15 Jul 2012 00:38:10 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
-In-Reply-To: <loom.20120714T114314-421@post.gmane.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqGvsyRRgsK5d3qLrSjeTxfuz/5kd
-	mDx2zrrL7vF5k1wAUxS3TVJiSVlwZnqevl0Cd8afNvOCE2wVX079YWxgXMLaxcjJISFgIvH3
-	wiVmCFtM4sK99WxdjFwcQgKXGSVWTj7MBOGcYZLYvewTI0gVr4C2xPaNDSwgNouAqsTWK+1M
-	IDabgK7Eop5mIJuDQ1QgTGL6TnaIckGJkzOfgJWLCFhL/JpwghWkhFlAXKL/H1hYWMBZYuWc
-	HWBThARyJf6e7gDbxClgJtF35TgbRLm1xLfdRSBhZgF5ieats5knMArMQrJgFkLVLCRVCxiZ
-	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGunlZpbopaaUbmKEBCjvDsb/62QOMQpwMCrx8O4U
-	ZgoQYk0sK67MPcQoycGkJMr7ww0oxJeUn1KZkVicEV9UmpNafIhRgoNZSYRX4itjgBBvSmJl
-	VWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJ3sQfQUMGi1PTUirTMnBKENBMH
-	J8hwLimR4tS8lNSixNKSjHhQhMYXA2MUJMUDtHcuSDtvcUFiLlAUovUUoyXHky+3bjFyLNh1
-	D0h2fwGSQix5+XmpUuK8TSANAiANGaV5cOtgaeoVozjQ98K8XSBVPMAUBzf1FdBCJqCFs37+
-	8wdaWJKIkJJqYBRzeRcgvvxuzjzlLZ5JB3bLTpws6z9Pp/9LltjmrBaOjMiXOtrlt/RvG3oz
-	nD23MVDnCNeqUHEJDiX/qNvPd9Z7i26e9KZbLtHnWYXqlHJn9103mPWkks30Xvtu 
+	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id q6F41kfh008251
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sun, 15 Jul 2012 00:01:47 -0400
+X-Mailer: Apple Mail (2.1278)
+X-Server-Quench: cd922a22-ce31-11e1-80b9-0022640b883e
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha Dh4fBRVVLUBPVglL NEteaF1JP0tFGBZ7 RjoUWVRVUk1xXGl1 agBVZEtcak5QWAZ0 UktNXFBTFBpqBAMA SF8YJB1zKnYEeHl1 Z0BnEHRdW0I0JhJ0 QEwFF28bNjJjaX0e URVZagtUIgpXfh9H aFZ7VCEFaWZSKGIR FU4uJDE3Mn1RKSBJ TxtIJ0gbR00LVjAm QBVKFH03GlYZAj8+ JBEnNFNUHEEWMS0A 
+X-Authentic-SMTP: 61633436303433.1015:706
+X-AuthFastPath: 0 (Was 255)
+X-AuthSMTP-Origin: 184.73.234.210/25
+X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201466>
 
-On 07/14/2012 11:46 AM, Stefan N=E4we wrote:
->> From: Michael Haggerty <mhagger <at> alum.mit.edu>
->>
->> Add a new Python script, contrib/hooks/post-receive-multimail.py, th=
-at
->> can be used to send notification emails describing pushes into a git
->> repository.  This script is derived from
->> contrib/hooks/post-receive-mail, but has many differences, including=
-:
->
-> Looks interesting!
->
-> Do you have a fork of git.git somewhere that contains the script?
-> (I find it so much easier these days to simply fetch another repo ins=
-tead
-> of applying patches with 'git am'.)
+Hi,
 
-You can get it at github
+At $day_job we want to start publishing a subtree of our codebase as open source. As we audit and prep more sections of the code base, we'll be broadening the subtree(s) that we export, until eventually we want as close as possible to the whole thing to be open source.
 
-     git://github.com/mhagger/git.git
+The resulting public repo would only contain commits from the master branch that touch the "open" parts of the tree, so while the result wouldn't be complete or coherent, it would produce a "read-only" open source artifact and allow us to start sharing code today rather than a year or two years from now when the entire code base is audited.
 
-branch "git-multimail".  If you try it out, please let me know how it=20
-works for you.
+I'm thinking of (ab)using filter-branch from a post-receive hook as a means to do this. Does this sound sane, or are there better options?
 
-Michael
+Specifically, I was thinking of doing the following:
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+- on pushing into our authoritative repo, we replicate to a second "scratch" repo where all the dirty work gets done
+
+- the scratch repo has a master branch, and an initial "open" branch created using `git filter-branch`
+
+- a post-receive hook in the scratch repo, given a series of commits A..B on the master branch, cherry-picks them onto the "open" branch, producing commits A'..B'
+
+- the hook runs `git filter-branch` on the "open" branch over commits A'..B', filtering the not-yet-open parts of the tree and dropping empty commits
+
+- the hook pushes the resulting HEAD to a public repo
+
+Thoughts? Closest to this idea that I've been able to find online so far is [1].
+
+Cheers,
+Wincent
+
+[1] http://stackoverflow.com/questions/2296047/repeatedly-using-git-filter-branch-to-rewrite-new-commits
