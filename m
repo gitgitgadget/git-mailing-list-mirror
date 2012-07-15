@@ -1,93 +1,234 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Re: [PATCH] doc: A few minor copy edits.
-Date: Sun, 15 Jul 2012 11:43:17 +0200
-Message-ID: <87wr25nyve.fsf@gmail.com>
-References: <1342304436-29499-1-git-send-email-stepnem@gmail.com>
-	<7vehod614a.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fast-import: catch deletion of non-existent file in input
+Date: Sun, 15 Jul 2012 06:23:00 -0400
+Message-ID: <20120715102300.GA28667@sigill.intra.peff.net>
+References: <87ehogrham.fsf@bitburger.home.felix>
+ <20120712210138.GA15283@sigill.intra.peff.net>
+ <m2pq80uj56.fsf@igel.home>
+ <20120713130246.GB2553@sigill.intra.peff.net>
+ <m2hatbvkyh.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 11:44:15 2012
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>,
+	Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Jul 15 12:23:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqLN6-0002MQ-T2
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 11:44:13 +0200
+	id 1SqLyr-0000W6-6x
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 12:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873Ab2GOJnZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jul 2012 05:43:25 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:45565 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab2GOJnX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2012 05:43:23 -0400
-Received: by wgbdr13 with SMTP id dr13so98192wgb.1
-        for <git@vger.kernel.org>; Sun, 15 Jul 2012 02:43:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        bh=qa7HLtDFMtuvtxFBVrmJc29j+IIEDKIDZrgg5ZuMGeo=;
-        b=t016rd+AenNUmmzwMNU+dJZkJYMQrqmtrRnvi6BErxVCWvUAk26aHUncYlWc6aZWTk
-         BUBm5dDmt+gEZkaRgBXyFGb0zELB0r2Ish44/MIoeoOSuXR+UMGC2p0GO/bPWKiY0Izi
-         Fp8s4r9AAQDp9CQpu06lHJmmNQSQsen33MDVCc8PShwO+38YE5u6DwTktWabr0GCrz8S
-         4glVEo1N5JT8bw20B42IjLLACnSyid+3L4mIHjGFbeZIMt9s1r99QFkPQGjO2i8S0Z1N
-         Kg96RIPikaO585nd8sEiw/rzOSXFuKlspCufvytnnlzaP9AVOzqDIM9ZLoGT6wi1QuGU
-         UCdA==
-Received: by 10.180.102.136 with SMTP id fo8mr9900814wib.19.1342345401669;
-        Sun, 15 Jul 2012 02:43:21 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz. [90.177.119.176])
-        by mx.google.com with ESMTPS id eu4sm14653229wib.2.2012.07.15.02.43.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 15 Jul 2012 02:43:20 -0700 (PDT)
-In-Reply-To: <7vehod614a.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 14 Jul 2012 22:32:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1751874Ab2GOKXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 06:23:06 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:60049
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751689Ab2GOKXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 06:23:04 -0400
+Received: (qmail 19525 invoked by uid 107); 15 Jul 2012 10:23:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 15 Jul 2012 06:23:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Jul 2012 06:23:00 -0400
+Content-Disposition: inline
+In-Reply-To: <m2hatbvkyh.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201477>
 
-On Sat, 14 Jul 2012 22:32:05 -0700
-Junio C. Hamano wrote:
+On Fri, Jul 13, 2012 at 03:39:50PM +0200, Andreas Schwab wrote:
 
-> Thanks.  All looked reasonable, except that I've heard nobody says
-> "ent" for the past couple of years, and it might be better to drop
-> the entry altogether.
+> >> The output contains these lines:
+> >> 
+> >> R a/b b/b
+> >> D a/b
+> >> 
+> >> Changing the second line to D b/b fixes the bug.
+> >
+> > Yeah, I agree that is problematic. But I do not think it is a
+> > fast-import bug, but rather bogus output generated by bzr fast-export (I
+> > am not clear from what you wrote above if you are considering it a bug
+> > that fast-import is confused). It seems nonsensical to mention a file
+> > both as a rename source and as deleted in the same revision, and
+> > certainly I would not expect an importer to deduce a link between the
+> > second line and b/b.
+> 
+> IMHO fast-import should raise an error in this case, like it does when
+> you switch the lines.
 
-Yeah, I have no real opinion here. I've never been a Tolkien fan, so I
-had no idea what "ent" even means, let alone its connection to anything
-Git-related (which is why the glossary entry caught my eye in the first
-place). I found it amusing and that's all; maybe other Git oldtimers
-have some kind of personal attachment to it?
+Here's a patch to do so. It means that fast-import is a little more
+strict about deletions than it used to be. I think it's probably a good
+idea for fast-import to err on the side of strictness (since erring on
+the other side may mean corrupt input). I don't know if the omission of
+error checking in the original was a philosophical choice or just
+random. :)
 
-I have to admit that I don't remember seeing the word in any of various
-Git-related texts or discussions I've read in past ~3 years, so I agree
-its educative value is probably dubious nowadays. OTOH it's just a
-couple lines, _and_ amusing... ;-)
+-- >8 --
+Subject: fast-import: catch deletion of non-existent file in input
 
-I'll resend the patch with the entry removed if no break-through occurs
-during the next few days.
+Fast-import does not do a lot of input verification; in
+particular, you can mark a path as deleted by a commit even
+if that files does not exist in the parent at all.
 
->> diff --git a/Documentation/glossary-content.txt b/Documentation/glos=
-sary-content.txt
->> index 3595b58..f928b57 100644
->> --- a/Documentation/glossary-content.txt
->> +++ b/Documentation/glossary-content.txt
->> @@ -117,7 +117,7 @@ to point at the new commit.
->> =20
->>  [[def_ent]]ent::
->>  	Favorite synonym to "<<def_tree-ish,tree-ish>>" by some total geek=
-s. See
->> -	`http://en.wikipedia.org/wiki/Ent_(Middle-earth)` for an in-depth
->> +	http://en.wikipedia.org/wiki/Ent_(Middle-earth) for an in-depth
->>  	explanation. Avoid this term, not to confuse people.
->> =20
->>  [[def_evil_merge]]evil merge::
+On the one hand, it is nice for fast-import to be liberal in
+what it accepts, as it means we are more forgiving of
+exporter bugs or of people slicing and dicing the input. On
+the other hand, this can mask bugs in exporters, leading to
+a subtly wrong import result. In this case, bzr's
+fast-export generated a sequence like:
 
---=20
-=C5=A0t=C4=9Bp=C3=A1n
+  R foo bar
+  D foo
+
+when it meant to say:
+
+  R foo bar
+  D bar
+
+We silently ignored the bogus "D foo" directive, and the
+resulting tree incorrectly contained "bar". With this patch,
+we notice the bogus input and die.
+
+This patch adds a new test script specifically for checking
+bogus inputs to fast-import. We also need to tweak t9300,
+which appeared to be accidentally deleting a non-existent
+path in an otherwise unrelated test.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The tweak in t9300 looks like the "dst2" entry was just leftover cruft
+from writing the test; there is no dst2 mentioned anywhere else. It
+comes from David's 8dc6a37; pleae correct me if my assumptions isn't
+correct.
+
+ fast-import.c                |  5 ++-
+ t/t9300-fast-import.sh       |  1 -
+ t/t9302-fast-import-bogus.sh | 77 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9302-fast-import-bogus.sh
+
+diff --git a/fast-import.c b/fast-import.c
+index eed97c8..779adfc 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2367,6 +2367,7 @@ static void file_change_d(struct branch *b)
+ 	const char *p = command_buf.buf + 2;
+ 	static struct strbuf uq = STRBUF_INIT;
+ 	const char *endp;
++	struct tree_entry leaf;
+ 
+ 	strbuf_reset(&uq);
+ 	if (!unquote_c_style(&uq, p, &endp)) {
+@@ -2374,7 +2375,9 @@ static void file_change_d(struct branch *b)
+ 			die("Garbage after path in: %s", command_buf.buf);
+ 		p = uq.buf;
+ 	}
+-	tree_content_remove(&b->branch_tree, p, NULL);
++	tree_content_remove(&b->branch_tree, p, &leaf);
++	if (!leaf.versions[1].mode)
++		die("Path %s not in branch", p);
+ }
+ 
+ static void file_change_cr(struct branch *b, int rename)
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 2fcf269..7624ba5 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1203,7 +1203,6 @@ test_expect_success PIPE 'N: empty directory reads as missing' '
+ 		printf "%s\n" "$line" >response &&
+ 		cat <<-\EOF
+ 		D dst1
+-		D dst2
+ 		EOF
+ 	) |
+ 	git fast-import --cat-blob-fd=3 3>backflow &&
+diff --git a/t/t9302-fast-import-bogus.sh b/t/t9302-fast-import-bogus.sh
+new file mode 100755
+index 0000000..95c5196
+--- /dev/null
++++ b/t/t9302-fast-import-bogus.sh
+@@ -0,0 +1,77 @@
++#!/bin/sh
++
++test_description='test that fast-import handles bogus input correctly'
++. ./test-lib.sh
++
++# A few shorthands to make writing sample input easier
++counter=0
++mark() {
++	counter=$(( $counter + 1)) &&
++	echo "mark :$counter"
++}
++
++blob() {
++	echo blob &&
++	mark &&
++	cat <<-\EOF
++	data 4
++	foo
++
++	EOF
++}
++
++ident() {
++	test_tick &&
++	echo "author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE"
++	echo "committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE"
++}
++
++commit() {
++	echo "commit refs/heads/master" &&
++	mark &&
++	ident &&
++	cat <<-\EOF
++	data 8
++	message
++	EOF
++}
++
++root() {
++	blob &&
++	m=$counter &&
++	echo "reset refs/heads/master" &&
++	commit &&
++	echo "M 100644 :$m file" &&
++	echo
++}
++
++test_expect_success 'deleting a nonexistent file is an error' '
++	{
++		root &&
++		commit &&
++		echo "D does-not-exist"
++	} >input &&
++	test_must_fail git fast-import --force <input
++'
++
++test_expect_success 'renaming a deleted file is an error' '
++	{
++		root &&
++		commit &&
++		echo "D file" &&
++		echo "R file dest"
++	} >input &&
++	test_must_fail git fast-import --force <input
++'
++
++test_expect_success 'deleting a renamed file is an error' '
++	{
++		root &&
++		commit &&
++		echo "R file dest" &&
++		echo "D file"
++	} >input &&
++	test_must_fail git fast-import --force <input
++'
++
++test_done
+-- 
+1.7.10.5.40.gbbc17de
