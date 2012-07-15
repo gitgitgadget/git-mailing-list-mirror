@@ -1,90 +1,81 @@
-From: Kalle Launiala <kalle.launiala@gmail.com>
-Subject: Complete audit trail for embedded (Linux) system lifecycle with Git
-Date: Sun, 15 Jul 2012 11:47:36 +0300
-Message-ID: <CAHLTmjmrXSGQdS-wZ-K23grQTkxHFJzA-u05GJEqrtdLusBb8Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 15 10:48:25 2012
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: (Ab)using filter-branch from a post-receive hook
+Date: Sun, 15 Jul 2012 01:17:13 -0700
+Message-ID: <11BD88E2-F82C-4CD9-8EA3-1CF263D7C53A@wincent.com>
+References: <8D1AF968-AF34-4590-AB8F-E644C534A928@wincent.com> <7vipdp61fp.fsf@alter.siamese.dyndns.org> <CEAB8F11-05A4-46B4-A0B5-B51B14EAD536@wincent.com> <7va9z15xrc.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1278)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 10:48:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqKV6-0005Ik-DN
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 10:48:24 +0200
+	id 1SqKVN-0005if-0p
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 10:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624Ab2GOIrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 04:47:39 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:65448 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751406Ab2GOIrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jul 2012 04:47:37 -0400
-Received: by qaas11 with SMTP id s11so1078643qaa.19
-        for <git@vger.kernel.org>; Sun, 15 Jul 2012 01:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=S6psHoi31V4oqEbwaIp2/LHHG+IPf0tl93fitAr7y2k=;
-        b=gH2B/gYNQVI1s+a49nv5B/GVgjS8pDBekuxo5MtUJ6Be5+ud9rKW5sdYDvWdKylOWw
-         WQgryXvMTo6gRr6MjtK9w5hyrRCirfcBUaFPNkOIzfv9NdNLvcy5D/bS/AghM8UPW+Lg
-         hXdWE7ttRku2QKJnVzwj5htbTxIcHceMdakeXfjTRGv+GNA/utp1p+5s9RZQRJGaFPpl
-         o4JGioL6UFbEmFF0VMihhinpEu/8pWeRVh/vZFtJS2f2vEWK1ZkJoBpewIVd2rZO0hNa
-         QVVbZZBNCgnW23VHXETy/SyuFuAhsHpTQhCkOW2J54QHjFW8ypVqlrZ9LJjmPbfl9rJX
-         Twkg==
-Received: by 10.229.136.132 with SMTP id r4mr3948137qct.95.1342342056145; Sun,
- 15 Jul 2012 01:47:36 -0700 (PDT)
-Received: by 10.229.47.77 with HTTP; Sun, 15 Jul 2012 01:47:36 -0700 (PDT)
+	id S1751727Ab2GOIsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jul 2012 04:48:37 -0400
+Received: from outmail148093.authsmtp.net ([62.13.148.93]:40251 "EHLO
+	outmail148093.authsmtp.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751685Ab2GOIsf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jul 2012 04:48:35 -0400
+X-Greylist: delayed 1871 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jul 2012 04:48:34 EDT
+Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
+	by punt12.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id q6F8HJbC048903;
+	Sun, 15 Jul 2012 09:17:20 +0100 (BST)
+Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
+	(authenticated bits=128)
+	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id q6F8HHEv078610
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 15 Jul 2012 09:17:18 +0100 (BST)
+Received: from [192.168.1.131] (c-69-181-20-120.hsd1.ca.comcast.net [69.181.20.120])
+	(authenticated bits=0)
+	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id q6F8HECZ023161
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 15 Jul 2012 04:17:16 -0400
+In-Reply-To: <7va9z15xrc.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1278)
+X-Server-Quench: 7e621adc-ce55-11e1-80b9-0022640b883e
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH axsdDEdXdwdEHAsR A28BWlNeUVU/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwTEnNgeWR0 QB4ZWh9zd0tAfnp4 K0E3WHJaDRApaBUo R0tJFGxTZHpoaDIW TUBYdQFSdAMYdhdG Px4dAXkdeRRVfz8j Hgk8dz4wOSlSMmFf WAgLJlJaT1wMG3Y1 DwgFBilqB0AOSiQt IlQmLVkfdAAA
+X-Authentic-SMTP: 61633436303433.1015:706
+X-AuthFastPath: 0 (Was 255)
+X-AuthSMTP-Origin: 184.73.234.210/25
+X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201474>
 
-Hello,
+On Jul 14, 2012, at 11:44 PM, Junio C Hamano wrote:
 
-We are to solve a complete audit trail solution for full subcontractor
-value-chain fullfilling European Union machinery directive:
-http://ec.europa.eu/enterprise/sectors/mechanical/machinery/
+> Wincent Colaiuta <win@wincent.com> writes:
+> 
+>> On Jul 14, 2012, at 10:25 PM, Junio C Hamano wrote:
+>> 
+>>> I did not see anything wrong doing what you described in the
+>>> post-receive, even though having the hook in the "scratch" felt
+>>> strange, as the "copying from authoritative" would also want to be
+>>> automated and the natural triggering mechanism to do so would be a
+>>> post-receive there.  What issues were you worried about?
+>> 
+>> The part that I left out, to keep things simple, is that ...
+> 
+> I said "strange", not "wrong".  If it is undesirable to hook the
+> "authoritative" repository, it is perfectly fine to hook on the
+> receiving end.
+> 
+> So what issues were you worried about?
 
-To summarize, the directive is created to ensure safe operating
-environment for all kind of machinery devices (from industrial
-machinery to consumer shopping-centre lifts/elevators). This also
-includes the embedded software that controls the machinery (which is
-as we know, the make-or-break the true safety of the device).
+I guess I was just a little worried about using filter-branch in a completely automated context (I have used it previously, but always in a manual fashion to do explicit "surgery" on the history), so I really just wanted a sanity check. Thanks for your input; it's much appreciated.
 
-The solution is based on the very core Git functionality, in very
-brief overview explained here:
-http://abstractiondev.wordpress.com/git-based-distribution/
-
-As Git is completely file-system based, in our solution it is used as
-the core technology to audit ANY digital document or information. It
-is serving as a distributed set of "master data" repositories,
-including the digital signature repositories and 3rd party validation
-stacks. In the validation chains it is critical to be able to support
-responsible decision makers to approve design choises beyond the
-software, thus the digital signature infrastructure for any
-legal-binding document is as important as the actual embedded software
-stack, that is by its nature version controlled within Git as well.
-
-While I would hope this post to serve a purpose for demonstrating that
-Git works as a perfect solution in the core, I'd also like to hear if
-there is already established community/ongoing process of achieving
-anything described above?
-
-We have no intention of "reinventing the wheel" here, although being
-very core solution for ANY audit trail and being so close based on Git
-- bare functionality, I'm expecting any existing solution to share
-much of similar design. Any existing tooling to support the solution
-(especially dynamic cross-connected metadata repository searches - the
-bottom image of the overview, that indexes the repositories together)
-would be very welcome. The current technical solution is using GnuPG
-for the digital signatures and open-source cross platform XML-database
-for metadata indexing - grid databases being considered for the larger
-implementations.
-
-Any comments and/or feedback would be greatly appreciated.
+We have a strict fast-forward-only policy on our master branch, so I think the hook will be quite simple to write and won't require us to handle any crazy edge cases.
 
 Cheers,
-
-Kalle Launiala
+Wincent
