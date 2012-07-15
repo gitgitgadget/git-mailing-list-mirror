@@ -1,116 +1,86 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: bzr->git: keep empty directories
-Date: Sat, 14 Jul 2012 21:01:38 -0700
-Message-ID: <2059FC03-7308-4BAD-B90A-451F71791187@gmail.com>
-References: <87sjcuz9q7.fsf@bitburger.home.felix> <CAJDDKr5V++TtS24D=SsaPnkx==Zo8=fpvg2RNod9+-JGxWfhGQ@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1278)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 15 06:02:25 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC] Add a new email notification script to "contrib"
+Date: Sun, 15 Jul 2012 06:38:09 +0200
+Message-ID: <50024931.6050601@alum.mit.edu>
+References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu> <loom.20120714T114314-421@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 15 06:46:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqG2K-0004W8-1f
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 06:02:24 +0200
+	id 1SqGiX-0004O0-Da
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jul 2012 06:46:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750753Ab2GOEBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jul 2012 00:01:42 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:41603 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750703Ab2GOEBk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2012 00:01:40 -0400
-Received: by pbbrp8 with SMTP id rp8so7984988pbb.19
-        for <git@vger.kernel.org>; Sat, 14 Jul 2012 21:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=+bBco+I2FnG0sfz8lceYpwDPtd6+eS0901H6z6Pow4w=;
-        b=yYJxDNyPpriLESKXECYHaEsyIsfQc6Le1BQCHWOudctK51ZO8FJQZW+Y6RGvHAuHO5
-         jiE8yxkWs89HqMdLfhepoMjbilsutDcumXVs4qd3mSJDNA+5Q5NGI67091+Qr2rUFVRp
-         Vraucf/V79W/dvaW1PJdkMifSqjZsu32NGIPKZD91d2BtIf7jSLP/2Cs5E+kP3s7vXct
-         qXZ6VSAkiGNK3EMr7N0a1gVP/BE/D6vRWZrRVKqI2AS8sZ1FyxX9t5+AfmoZI0cQgnYY
-         yNJaVwKL2MkBBcGP+BVDauTIk9LBF8WVn86qVAt1h4SSpbmjHIMp8BZYeDCpIl1yQ1Lx
-         5/fw==
-Received: by 10.68.239.5 with SMTP id vo5mr16099225pbc.125.1342324899764;
-        Sat, 14 Jul 2012 21:01:39 -0700 (PDT)
-Received: from [192.168.1.125] (c-67-161-24-30.hsd1.ca.comcast.net. [67.161.24.30])
-        by mx.google.com with ESMTPS id qx9sm1390480pbc.8.2012.07.14.21.01.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 14 Jul 2012 21:01:38 -0700 (PDT)
-In-Reply-To: <CAJDDKr5V++TtS24D=SsaPnkx==Zo8=fpvg2RNod9+-JGxWfhGQ@mail.gmail.com>
-X-Mailer: Apple Mail (2.1278)
+	id S1750772Ab2GOEpQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jul 2012 00:45:16 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:49952 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750708Ab2GOEpO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jul 2012 00:45:14 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jul 2012 00:45:14 EDT
+X-AuditID: 1207440d-b7f236d000000943-31-500249333f78
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F8.15.02371.33942005; Sun, 15 Jul 2012 00:38:11 -0400 (EDT)
+Received: from [192.168.69.140] (p57A253B5.dip.t-dialin.net [87.162.83.181])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q6F4c9FS021986
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 15 Jul 2012 00:38:10 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
+In-Reply-To: <loom.20120714T114314-421@post.gmane.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqGvsyRRgsK5d3qLrSjeTxfuz/5kd
+	mDx2zrrL7vF5k1wAUxS3TVJiSVlwZnqevl0Cd8afNvOCE2wVX079YWxgXMLaxcjJISFgIvH3
+	wiVmCFtM4sK99WxdjFwcQgKXGSVWTj7MBOGcYZLYvewTI0gVr4C2xPaNDSwgNouAqsTWK+1M
+	IDabgK7Eop5mIJuDQ1QgTGL6TnaIckGJkzOfgJWLCFhL/JpwghWkhFlAXKL/H1hYWMBZYuWc
+	HWBThARyJf6e7gDbxClgJtF35TgbRLm1xLfdRSBhZgF5ieats5knMArMQrJgFkLVLCRVCxiZ
+	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGunlZpbopaaUbmKEBCjvDsb/62QOMQpwMCrx8O4U
+	ZgoQYk0sK67MPcQoycGkJMr7ww0oxJeUn1KZkVicEV9UmpNafIhRgoNZSYRX4itjgBBvSmJl
+	VWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJ3sQfQUMGi1PTUirTMnBKENBMH
+	J8hwLimR4tS8lNSixNKSjHhQhMYXA2MUJMUDtHcuSDtvcUFiLlAUovUUoyXHky+3bjFyLNh1
+	D0h2fwGSQix5+XmpUuK8TSANAiANGaV5cOtgaeoVozjQ98K8XSBVPMAUBzf1FdBCJqCFs37+
+	8wdaWJKIkJJqYBRzeRcgvvxuzjzlLZ5JB3bLTpws6z9Pp/9LltjmrBaOjMiXOtrlt/RvG3oz
+	nD23MVDnCNeqUHEJDiX/qNvPd9Z7i26e9KZbLtHnWYXqlHJn9103mPWkks30Xvtu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201465>
 
-Perhaps having a file named something like:
+On 07/14/2012 11:46 AM, Stefan N=E4we wrote:
+>> From: Michael Haggerty <mhagger <at> alum.mit.edu>
+>>
+>> Add a new Python script, contrib/hooks/post-receive-multimail.py, th=
+at
+>> can be used to send notification emails describing pushes into a git
+>> repository.  This script is derived from
+>> contrib/hooks/post-receive-mail, but has many differences, including=
+:
+>
+> Looks interesting!
+>
+> Do you have a fork of git.git somewhere that contains the script?
+> (I find it so much easier these days to simply fetch another repo ins=
+tead
+> of applying patches with 'git am'.)
 
-.git_foreign_scm_empty_dir  or some shorter name.
+You can get it at github
 
-With the contents of the fast importer empty directory info put in there; If any book keeping is needed.
+     git://github.com/mhagger/git.git
 
-It also looks like you strip out meta-data.
-perhaps a file like:
+branch "git-multimail".  If you try it out, please let me know how it=20
+works for you.
 
-.git_foreign_scm_metadata
+Michael
 
-We could use the .git/config file format for storing the bookkeeping data.
-
-Steve
-
-On Jul 14, 2012, at 3:46 PM, David Aguilar wrote:
-
-> On Sat, Jul 14, 2012 at 7:41 AM, Felix Natter <fnatter@gmx.net> wrote:
->> hello,
->> 
->> when converting a repo from bzr to git:
->> 
->> mkdir freeplane-git1
->> cd freeplane-git1
->> git init .
->> bzr fast-export --plain --export-marks=../marks.bzr ../trunk/ | git fast-import --export-marks=../marks.git
->> git checkout
->> 
->> Empty directories are not contained in the git working index. This is
->> because of the --plain option, which "Excludes metadata to maximise
->> interoperability" and thus does not support empty directories
->> (http://doc.bazaar.canonical.com/plugins/en/fastimport-plugin.html).
->> 
->> However, when I use "--no-plain" (which according to above documentation
->> exports empty directories), git cannot handle it:
->> 
->> $ ./freeplane2git.sh
->> Initialized empty Git repository in /home/felix/git/freeplane-git1/.git/
->> 15:56:09 Calculating the revisions to include ...
->> 15:56:09 Starting export of 4290 revisions ...
->> fatal: This version of fast-import does not support feature commit-properties.
->> fast-import: dumping crash report to .git/fast_import_crash_3915
->> bzr: broken pipe
->> 
->> I already tried to hack bzr-fastimport's exporter.py so that it does not
->> emit commit properties but emits empty directories but i was not
->> successful.
->> 
->> So is there another way to preserve empty directories or shall I report
->> a bug on bzr fast-export?
->> 
->> Many thanks in advance!
-> 
-> I would suggest hacking it to optionally not emit commit properties as step one.
-> 
-> A later enhancement would be to optionally create directories with
-> empty .gitignore files, or something similar. git really doesn't care
-> about empty directories.
-> -- 
-> David
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
