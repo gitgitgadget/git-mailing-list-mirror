@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] refs: disallow ref components starting with hyphen
-Date: Mon, 16 Jul 2012 10:49:26 -0700
-Message-ID: <7vpq7v38bd.fsf@alter.siamese.dyndns.org>
-References: <1342440781-18816-1-git-send-email-mschub@elegosoft.com>
- <1342440781-18816-2-git-send-email-mschub@elegosoft.com>
- <7v7gu34ow0.fsf@alter.siamese.dyndns.org>
+From: Semen Vadishev <semen.vadishev@tmatesoft.com>
+Subject: [ANN] SubGit 1.0.0 RC1
+Date: Mon, 16 Jul 2012 19:57:30 +0200
+Message-ID: <5004560A.2030508@tmatesoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 19:49:41 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 19:57:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqpQN-0005i2-07
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 19:49:35 +0200
+	id 1SqpYD-0005Ms-1D
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 19:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753739Ab2GPRta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 13:49:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47475 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753485Ab2GPRt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 13:49:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5E3C8329;
-	Mon, 16 Jul 2012 13:49:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QbT8PbtgMeihunKnJx9CO28Pv7Q=; b=sGszSP
-	2SfJDoZazMtBJEjQhlIKFlGO8TByTjmNDN0VrPzWcdAivPz2Au/8YplSV2IVTv4d
-	tbMGVHBRVzInz3Y35tLHn3U8pnGZFapwdXME8Ma7oRu9fbTcv6FmHAj2uCeiOVVK
-	YxOMcpemIAGZF3zeXdhl2FYhfijvd6ICF9Id8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ur61tn0uxYZPCDaJ6W17nPM2JozzTbHb
-	2GeZTyvYlS16K9b367p9CwiEzyqhexK+W2yz+vjYoaWUP/UymgvLFgD3Ozn1nksp
-	SpehpyZr+w+P++cQ4wFG43fOo8paAncYQKP5RE+S6Qoqre14KPly6VhP7EOs0hyU
-	oTBQyayy3PA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4CC38328;
-	Mon, 16 Jul 2012 13:49:28 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 561E28327; Mon, 16 Jul 2012
- 13:49:28 -0400 (EDT)
-In-Reply-To: <7v7gu34ow0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 16 Jul 2012 10:06:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96F1C1EE-CF6E-11E1-A49F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753892Ab2GPR5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 13:57:36 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:58826 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753341Ab2GPR5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 13:57:34 -0400
+Received: by bkwj10 with SMTP id j10so4970390bkw.19
+        for <git@vger.kernel.org>; Mon, 16 Jul 2012 10:57:33 -0700 (PDT)
+Received: by 10.205.129.17 with SMTP id hg17mr5441577bkc.88.1342461453246;
+        Mon, 16 Jul 2012 10:57:33 -0700 (PDT)
+Received: from vs.local ([109.80.120.205])
+        by mx.google.com with ESMTPS id o4sm8634516bkv.15.2012.07.16.10.57.31
+        (version=SSLv3 cipher=OTHER);
+        Mon, 16 Jul 2012 10:57:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201538>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello All,
 
-> Michael Schubert <mschub@elegosoft.com> writes:
->
->> Currently, we allow refname components to start with a hyphen. There's
->> no good reason to do so...
->
-> That is way too weak as a justification to potentially break
-> existing repositories.
->
-> Refusal upon attempted creation is probably OK, which is why the two
-> checks you removed in your patches are fine.
+I'm glad to report that SubGit 1.0 RC1 is available for download at
+http://subgit.com/
 
-Just to clarify, I meant that the existing checks were OK because
-they were meant to prevent creation.  I didn't mean removal of them
-was OK.
+SubGit is a server side tool that enables transparent two-way
+synchronization between Subversion and Git.
+Being installed into Subversion repository, SubGit provides safe and
+smooth Svn to Git migration experience.
+
+This first release candidate of SubGit is ready for production use.
+
+Links that you may find useful:
+
+Download: http://www.subgit.com/download/
+Comparison to Git-Svn: http://subgit.com/documentation/gitsvn.html
+Blog on practical SubGit usage: http://blog.subgit.com/
+
+SubGit Issues tracker: http://issues.tmatesoft.com/issues/SGT
+
+Feel free to use SubGit for free and let us know if there is anything 
+you miss. If you have any questions or suggestions on SubGit, we'd love 
+to receive them at support@subgit.com
+
+
+Thanks,
+SubGit Team,
+TMate Software,
+http://subgit.com/ - Safe Svn to Git Migration!
+http://svnkit.com/ - Java [Sub]Versioning Library!
+http://hg4j.com/ - Java Mercurial Library!
+http://sqljet.com/ - Java SQLite Library!
