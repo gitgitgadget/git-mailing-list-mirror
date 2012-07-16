@@ -1,89 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: fatal: patch fragment without header at line
-Date: Mon, 16 Jul 2012 10:19:43 -0700
-Message-ID: <7vy5mj39ow.fsf@alter.siamese.dyndns.org>
-References: <CAK5QfLMs6CMCTtZ3woQfMim1ssYLKEURAMv8+FgqrKJ7otNcnw@mail.gmail.com>
+From: "Jonas H." <jonas@lophus.org>
+Subject: Re: Implementing authenticated Smart HTTP - which URLs to secure
+Date: Mon, 16 Jul 2012 19:36:07 +0200
+Message-ID: <50045107.1080608@lophus.org>
+References: <5002C8F3.6080400@lophus.org> <CAJo=hJv=h-+OsV2K_8VeEdrHoFem-Z7x+tkE7TXj5pNO5LAeow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tuxdna <tuxdna@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 19:19:52 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 19:36:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sqoxb-0001hX-Ec
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 19:19:51 +0200
+	id 1SqpDU-0000nj-1M
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 19:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753081Ab2GPRTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 13:19:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64535 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751337Ab2GPRTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 13:19:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C43C8ACF;
-	Mon, 16 Jul 2012 13:19:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xAZnhg9YsMi7xDysA5/AAntWpBc=; b=thwnc9
-	A5H/AuyNOKg9eb/W4vijWDK6cz1LWWwsEPOgeaTpWqPNOJyIp2ZzkqTXRgUuyjnu
-	7JIs6sJ9j4wKL51Sv5EMnjPmbf22VLTi0a9eTEXbfyxB26N90LqFCLak9/Kus0d5
-	i6bS0JrcbgoaVKA51nf3PGlzDQBm0LnV5RlXA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kvp0+T0njBlaaB3hbUukzpHoJHTe9N8y
-	ONpeqj0vZugjDkf1NlKWtcGfrDRTokBtBnzcpagk6rk8YDzULRAN6bvaae5YpDce
-	PoRx2bPqlvIHOuUoFwjhE7VS+WCWzvRQPLkw+kZrC83qqi1l+ENqbqTbUwJvaZCm
-	dLM21xUpops=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59A858ACE;
-	Mon, 16 Jul 2012 13:19:45 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B5F838ACD; Mon, 16 Jul 2012
- 13:19:44 -0400 (EDT)
-In-Reply-To: <CAK5QfLMs6CMCTtZ3woQfMim1ssYLKEURAMv8+FgqrKJ7otNcnw@mail.gmail.com>
- (tuxdna@gmail.com's message of "Mon, 16 Jul 2012 19:06:51 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6FD4BA66-CF6A-11E1-AC3B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753087Ab2GPRgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 13:36:10 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:58185 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751939Ab2GPRgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 13:36:09 -0400
+Received: from v216570639.yourvserver.net (static.19.17.47.78.clients.your-server.de [78.47.17.19])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0MGi3N-1T4Jcc2cdt-00DWC0; Mon, 16 Jul 2012 19:36:07 +0200
+Received: from [192.168.1.2] (nat-wh-euh.rz.uni-karlsruhe.de [141.70.81.149])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by v216570639.yourvserver.net (Postfix) with ESMTPSA id 549BCDFAA78
+	for <git@vger.kernel.org>; Mon, 16 Jul 2012 19:36:07 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120616 Thunderbird/13.0.1
+In-Reply-To: <CAJo=hJv=h-+OsV2K_8VeEdrHoFem-Z7x+tkE7TXj5pNO5LAeow@mail.gmail.com>
+X-Provags-ID: V02:K0:xaW/4bPBdKlPyQ/1HRj7761WEZuYfg+OrAmiRUaA0l7
+ ysPctye2l1/fQBVINVOe0iqca6D1bbL9ALV8u7CKLXE7hc/4IS
+ 88SSVnoYnZjVjmIOJuCOBKVeqWQjoSiqzO0I6x+FXQc0AV8I3T
+ uG0aNuT7oVRp2GDpE5izw+PW45BzvEUBkZepmmrmMXCUecr/Gp
+ jYkhcc3RevFQ5Z/3rL1yxZaxm7fMQkMyzKxp8culrrrt0JyBxW
+ Yhnblcwieli1WExgccj5v1pA6lhH0108Vxvyo87q3O3iM4VbkA
+ QPDnpMJyT269sTOsa6LhEpLhi5JWYVb1Lyx0Uxa1LeVMB2UEE1
+ dMYTvybH5U6DdyHE2KFtEmnkhoLwGo6xfVODLY0RM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201535>
 
-tuxdna <tuxdna@gmail.com> writes:
-
-> Git version: git-1.7.7.6-1.fc16.x86_64
+On 07/15/2012 10:49 PM, Shawn Pearce wrote:
+> On Sun, Jul 15, 2012 at 6:43 AM, Jonas H. <jonas@lophus.org> wrote:
+>> I'd like to implement HTTP authentication for Git Smart HTTP using Dulwich
+>> (a Python binding):
+>>
+>> 1) read-only if unauthenticated and write only if authenticated
+>> 2) read/write only if authenticated
+>>
+>> I couldn't find any documentation on which URLs need be secured and what
+>> response codes are expected in case the cloner/pusher is unauthenticated.
 >
-> I am getting an error with a patch that I am applying to a git repository.
-> I have created a test case for this issue that I am facing.
+> Smart HTTP uses HTTP authentication, so return 401 with a proper
+> WWW-Authenticate header to prompt the client for authentication, and
+> use the Authorization header to verify the client. Return 403 to tell
+> the client they cannot access the service because the Authorization
+> header is invalid[1].
 >
-> $ git apply --check 0001-modified-README.patch
-> fatal: patch fragment without header at line 7: @@ -635,9 +635,7 @@
-> some_function()
->
-> Clearly line 7 appears to be a patch but it isn't. It is the part of
-> email body or the patch context.
+> You can tell check for a write request by looking at the service
+> parameter on the /info/refs request, if its git-receive-pack, you are
+> about to receive a write, so you want to prompt for authentication.
+> You should also check for authentication on the /git-receive-pack
+> request.
 
-Yes, but the error detection needs to stay for a more common case in
-which the user corrupted the patch by breaking or removing the diff
-header.
+Thanks man! That helped a lot. I figured it has something to do with the 
+argument to /info/refs but didn't make the connection between "I want to 
+upload" and "git-receive-pack" -- it's pretty confusing that the 
+argument is "receive" if I want to *upload*. At least when you don't 
+know the argument is the name of the service the client wants the server 
+to start.
 
-If you want to quote a patch fragment in your log message, it is
-common to indent the part (without removing the "diff" header) which
-also has the benefit of making it stand out in the textual
-description, e.g. here is a sample patch fragment
+> [1] This is actually a lie. The servers I have written over the years
+> return 200 OK with a special Git payload in this case. The payload
+> uses the "ERR" in the /info/refs response to print a message to the
+> client telling the user access is forbidden. This allows a custom
+> message to be sent, and stops the client from discarding the message
+> and falling back to the dumb protocol.
 
-    diff --git a/README b/README
-    index ce01362..d294257 100644
-    --- a/README
-    +++ b/README
-    @@ -1 +1,2 @@
-     hello
-    +this is a readme
+I just experienced that exact problem. What worked for me is just 
+keeping responding with 401 Unauthorized.  Git will give up with a nice 
+error message ("Authentication failed") after a 2 or so tries.
 
-and here comes a paragraph in the log message that can be made more
-understandable by having such a patch fragment.
+Do you know of any better way that does not require using the raw Git 
+protocol?
+
+> There is no authentication/authorization in the server components in
+> git-core. This is delegated to the web server that runs in front of
+> Git, just like with the system SSH server handling authentication for
+> Git over SSH.
+
+Well that explains why I couldn't find anything helpful in the code :-) 
+Though I'm a bit confused by the lack of documentation on the subject 
+since I'm probably not the first one to set up a Git server with 
+authentication?!
+
+Jonas
