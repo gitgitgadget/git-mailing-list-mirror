@@ -1,70 +1,107 @@
-From: Semen Vadishev <semen.vadishev@tmatesoft.com>
-Subject: [ANN] SubGit 1.0.0 RC1
-Date: Mon, 16 Jul 2012 19:57:30 +0200
-Message-ID: <5004560A.2030508@tmatesoft.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/8] git-remote-mediawiki: actually send empty comment
+ when they're empty
+Date: Mon, 16 Jul 2012 11:13:06 -0700
+Message-ID: <7vd33v377x.fsf@alter.siamese.dyndns.org>
+References: <1342440053-3058-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1342440053-3058-3-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 19:57:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Asheesh Laroia <asheesh@asheesh.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 16 20:13:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqpYD-0005Ms-1D
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 19:57:41 +0200
+	id 1SqpnS-0003go-DJ
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 20:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753892Ab2GPR5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 13:57:36 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:58826 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab2GPR5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 13:57:34 -0400
-Received: by bkwj10 with SMTP id j10so4970390bkw.19
-        for <git@vger.kernel.org>; Mon, 16 Jul 2012 10:57:33 -0700 (PDT)
-Received: by 10.205.129.17 with SMTP id hg17mr5441577bkc.88.1342461453246;
-        Mon, 16 Jul 2012 10:57:33 -0700 (PDT)
-Received: from vs.local ([109.80.120.205])
-        by mx.google.com with ESMTPS id o4sm8634516bkv.15.2012.07.16.10.57.31
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Jul 2012 10:57:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+	id S1753305Ab2GPSNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 14:13:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59947 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752356Ab2GPSNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 14:13:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21870894B;
+	Mon, 16 Jul 2012 14:13:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=89ML178l8Ez0WReiaJtd7aRyrFA=; b=W0RQfE
+	y9TQMcFsH4bVgypbSiRqVbn2PyYoksrE5Dg9/kCbcPZnK7DkPTDIksfunNYQiPQw
+	4RlXy8FfptsITzCwTcD+fuFzGORJlTxLi6GfoxXHjHtrJpndPga1xKRl6PSVRufr
+	8mTQmd22Li951JlLJJlbqP6BBXuuNb9fmHwCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=quv3e8+w3AnCeGpzJpGkmIIe8pizPd2A
+	aYl/KcwbP6oyKoF6zZy9hzAYk6bc1W+wDXauJiOgkNcagnjf+NFRhBOxoXdfu/S5
+	1pcrrlvBx1eh/ufoyFOaR1wFjFagZjBgv3NN1MACgJni9GThXpbU0aGK0eM9hle2
+	gS2/++anQo4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F371894A;
+	Mon, 16 Jul 2012 14:13:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BF498949; Mon, 16 Jul 2012
+ 14:13:07 -0400 (EDT)
+In-Reply-To: <1342440053-3058-3-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Mon, 16 Jul 2012 14:00:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4C9B180-CF71-11E1-8734-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201539>
 
-Hello All,
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-I'm glad to report that SubGit 1.0 RC1 is available for download at
-http://subgit.com/
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>  contrib/mw-to-git/git-remote-mediawiki | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+> index a6ad8cf..a2da52f 100755
+> --- a/contrib/mw-to-git/git-remote-mediawiki
+> +++ b/contrib/mw-to-git/git-remote-mediawiki
+> @@ -51,6 +51,9 @@ use constant EMPTY_CONTENT => "<!-- empty page -->\n";
+>  # used to reflect file creation or deletion in diff.
+>  use constant NULL_SHA1 => "0000000000000000000000000000000000000000";
+>  
+> +# Used on Git's side to reflect empty edit messages on the wiki
+> +use constant EMPTY_MESSAGE => '*Empty MediaWiki Message*';
+> +
 
-SubGit is a server side tool that enables transparent two-way
-synchronization between Subversion and Git.
-Being installed into Subversion repository, SubGit provides safe and
-smooth Svn to Git migration experience.
+Is there a reason why this sentinel value cannot be a real empty
+string?
 
-This first release candidate of SubGit is ready for production use.
+Not that I am complaining, as I find it highly unlikely for a
+message stored in mw to be exactly "*Empty MediaWiki Message*", but
+just wondering.
 
-Links that you may find useful:
-
-Download: http://www.subgit.com/download/
-Comparison to Git-Svn: http://subgit.com/documentation/gitsvn.html
-Blog on practical SubGit usage: http://blog.subgit.com/
-
-SubGit Issues tracker: http://issues.tmatesoft.com/issues/SGT
-
-Feel free to use SubGit for free and let us know if there is anything 
-you miss. If you have any questions or suggestions on SubGit, we'd love 
-to receive them at support@subgit.com
-
-
-Thanks,
-SubGit Team,
-TMate Software,
-http://subgit.com/ - Safe Svn to Git Migration!
-http://svnkit.com/ - Java [Sub]Versioning Library!
-http://hg4j.com/ - Java Mercurial Library!
-http://sqljet.com/ - Java SQLite Library!
+>  my $remotename = $ARGV[0];
+>  my $url = $ARGV[1];
+>  
+> @@ -935,7 +938,7 @@ sub mw_import_revids {
+>  
+>  		my %commit;
+>  		$commit{author} = $rev->{user} || 'Anonymous';
+> -		$commit{comment} = $rev->{comment} || '*Empty MediaWiki Message*';
+> +		$commit{comment} = $rev->{comment} || EMPTY_MESSAGE;
+>  		$commit{title} = mediawiki_smudge_filename($page_title);
+>  		$commit{mw_revision} = $rev->{revid};
+>  		$commit{content} = mediawiki_smudge($rev->{'*'});
+> @@ -1050,6 +1053,10 @@ sub mw_push_file {
+>  	my $oldrevid = shift;
+>  	my $newrevid;
+>  
+> +	if ($summary eq EMPTY_MESSAGE) {
+> +		$summary = '';
+> +	}
+> +
+>  	my $new_sha1 = $diff_info_split[3];
+>  	my $old_sha1 = $diff_info_split[2];
+>  	my $page_created = ($old_sha1 eq NULL_SHA1);
