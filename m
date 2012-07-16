@@ -1,67 +1,61 @@
-From: Alexander Strasser <eclipse7@gmx.net>
-Subject: [PATCH v2 2/8] t4012: Unquote git command fragment in test title
-Date: Mon, 16 Jul 2012 22:43:39 +0200
-Message-ID: <5cc05d1229d56ad1577e1f43524a9f9c57f78325.1342468069.git.eclipse7@gmx.net>
-References: <cover.1342468069.git.eclipse7@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/8] Cleaning up t4012
+Date: Mon, 16 Jul 2012 14:11:05 -0700
+Message-ID: <7vsjcrza1i.fsf@alter.siamese.dyndns.org>
+References: <20120711221140.GA21303@akuma>
+ <cover.1342468069.git.eclipse7@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: git@vger.kernel.org,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
 	Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 22:48:28 2012
+To: Alexander Strasser <eclipse7@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Jul 16 23:11:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqsDU-0005YN-9C
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:48:28 +0200
+	id 1SqsZX-0001NL-8b
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 23:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753864Ab2GPUsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 16:48:23 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:40734 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752799Ab2GPUsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 16:48:22 -0400
-Received: (qmail invoked by alias); 16 Jul 2012 20:43:43 -0000
-Received: from p5DC37C42.dip.t-dialin.net (EHLO gmx.net) [93.195.124.66]
-  by mail.gmx.net (mp071) with SMTP; 16 Jul 2012 22:43:43 +0200
-X-Authenticated: #8251126
-X-Provags-ID: V01U2FsdGVkX19+CpFDKsx+Du4wFQgxlIZndVlYKNM7188e+Chq/7
-	ytolAdfIo9f4X7
-Received: by gmx.net (sSMTP sendmail emulation); Mon, 16 Jul 2012 22:43:39 +0200
-Content-Disposition: inline
-In-Reply-To: <cover.1342468069.git.eclipse7@gmx.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Y-GMX-Trusted: 0
+	id S1753284Ab2GPVLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 17:11:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51654 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752291Ab2GPVLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 17:11:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D06288799;
+	Mon, 16 Jul 2012 17:11:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LEMpHqac8bncOOQcybZD1Tb1PJI=; b=LTuugc
+	EAH5/PxVt/g8kr7twtn4v8vStNiZpVhTefvxVrToG0i9lpQ/Mc+lsxd0vEn1l/SK
+	m/G4g6caW/EioxlW/XUqMW/rfq3fTAhs5P721NYlGOPvvh9cV6MRS3D6/I9u3jWW
+	2e7JxY1QQKQz8ETdR1NjRPNj+7TV5GtT0ADhs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V9183huXNbYEVNpW3OPTcU8rtRlnoLxh
+	1jeE94jUXH1lF1LAO29gT8D99xp8nkpuXWteVf9/u9FfOYyYUhdc5QgSAlJGidqa
+	7mgY8T5IMaNftfRR2rnj9n4LQCN0hEv1rG1RmqlckDjynWBAGWMBEPMgoa5rjnmp
+	UW4Kd1Ng0tA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B503A8797;
+	Mon, 16 Jul 2012 17:11:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 368748792; Mon, 16 Jul 2012
+ 17:11:07 -0400 (EDT)
+In-Reply-To: <cover.1342468069.git.eclipse7@gmx.net> (Alexander Strasser's
+ message of "Mon, 16 Jul 2012 22:40:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C26F06DA-CF8A-11E1-B85D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201578>
 
-The command fragments are quoted nowhere else in title texts of
-this file, thus make this one consistent with all other titles.
-
-Signed-off-by: Alexander Strasser <eclipse7@gmx.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4012-diff-binary.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index 2a8b68e..3c54269 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -31,7 +31,7 @@ cat > expected <<\EOF
-  d |  Bin
-  4 files changed, 2 insertions(+), 2 deletions(-)
- EOF
--test_expect_success '"apply --stat" output for binary file change' '
-+test_expect_success 'apply --stat output for binary file change' '
- 	git diff >diff &&
- 	git apply --stat --summary <diff >current &&
- 	test_i18ncmp expected current
--- 
-1.7.10.2.552.gaa3bb87
+All looked reasonable; thanks folks.  Will requeue and advance it to
+'next'.
