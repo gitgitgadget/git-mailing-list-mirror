@@ -1,74 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/8] git-remote-mediawiki: make mediafiles export optional
-Date: Mon, 16 Jul 2012 21:40:35 +0200
-Message-ID: <vpqbojfv6j0.fsf@bauges.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/8 v2] git-remote-mediawiki: fixes, optimizations, and progress report
+Date: Mon, 16 Jul 2012 21:46:34 +0200
+Message-ID: <1342468002-31818-1-git-send-email-Matthieu.Moy@imag.fr>
 References: <1342440053-3058-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1342440053-3058-4-git-send-email-Matthieu.Moy@imag.fr>
-	<7v7gu3373x.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Asheesh Laroia <asheesh@asheesh.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 21:42:16 2012
+Cc: Asheesh Laroia <asheesh@asheesh.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jul 16 21:47:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqrBO-0003ZV-2k
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 21:42:14 +0200
+	id 1SqrGB-0008DP-RY
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 21:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752660Ab2GPTmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 15:42:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:55473 "EHLO rominette.imag.fr"
+	id S1752417Ab2GPTrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 15:47:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56063 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752293Ab2GPTmH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 15:42:07 -0400
+	id S1751337Ab2GPTrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 15:47:05 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6GJclrW014225
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6GJj89U014855
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 16 Jul 2012 21:38:47 +0200
+	Mon, 16 Jul 2012 21:45:08 +0200
 Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sqr9o-0001Ns-Mb; Mon, 16 Jul 2012 21:40:36 +0200
-In-Reply-To: <7v7gu3373x.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 16 Jul 2012 11:15:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 16 Jul 2012 21:38:48 +0200 (CEST)
+	(envelope-from <moy@imag.fr>)
+	id 1SqrFx-0001RE-Ll; Mon, 16 Jul 2012 21:46:57 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SqrFx-0008IG-Ff; Mon, 16 Jul 2012 21:46:57 +0200
+X-Mailer: git-send-email 1.7.11.2.258.g5ff3cdf.dirty
+In-Reply-To: <1342440053-3058-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 16 Jul 2012 21:45:08 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6GJclrW014225
+X-MailScanner-ID: q6GJj89U014855
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343072328.79281@LnfCqu3HKhYOJgsOfrF2Cw
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1343072709.95746@C6l+WmGn9g+Z661bTzjdyg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201555>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Changes since v1: more explanations in commit message for "make
+mediafiles export optional", and use --parents instead of --children
+in "get rid of O(N^2) loop".
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->
-> It would have been nicer to hint why people may want to omit
-> mediafiles from their export under what condition somewhere in the
-> documentation or at least in the proposed commit log message.
+Matthieu Moy (8):
+  git-remote-mediawiki: don't split namespaces with spaces
+  git-remote-mediawiki: actually send empty comment when they're empty
+  git-remote-mediawiki: make mediafiles export optional
+  git-remote-mediawiki: get rid of O(N^2) loop
+  git-remote-mediawiki: use --force when adding notes
+  git-remote-mediawiki: show progress information when listing pages
+  git-remote-mediawiki: show progress information when getting last
+    remote revision
+  git-remote-mediawiki: properly deal with invalid remote revisions
 
-The real use-case for which I implemented is a bit particular (described
-below), but I'll resend with a more general explanation.
-
-For the curious: I have a wiki with ~2Gb of mediafiles, and I want to
-secure it without particular access to the server. I import the wiki on
-a desktop machine with a large disk, and re-export it to another
-webserver with a small disk quota. Importing mediafiles is good because
-it gives me a backup, but exporting them is not an option as my quota on
-the webserver is too small.
+ contrib/mw-to-git/git-remote-mediawiki | 79 +++++++++++++++++++++++++++-------
+ 1 file changed, 63 insertions(+), 16 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.11.2.258.g5ff3cdf.dirty
