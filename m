@@ -1,99 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/8] git-remote-mediawiki: actually send empty comment
- when they're empty
-Date: Mon, 16 Jul 2012 12:17:49 -0700
-Message-ID: <7va9yz1pnm.fsf@alter.siamese.dyndns.org>
-References: <1342440053-3058-1-git-send-email-Matthieu.Moy@imag.fr>
- <1342440053-3058-3-git-send-email-Matthieu.Moy@imag.fr>
- <7vd33v377x.fsf@alter.siamese.dyndns.org> <vpqr4sbv83q.fsf@bauges.imag.fr>
+Subject: Re: [RFC] Add a new email notification script to "contrib"
+Date: Mon, 16 Jul 2012 12:21:23 -0700
+Message-ID: <7v629n1pho.fsf@alter.siamese.dyndns.org>
+References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
+ <vpqhat7wujb.fsf@bauges.imag.fr> <500445CC.2020404@alum.mit.edu>
+ <7vtxx738dz.fsf@alter.siamese.dyndns.org> <500465E3.8040501@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Asheesh Laroia <asheesh@asheesh.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 16 21:17:58 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 16 21:21:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sqqnt-0006SB-Si
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 21:17:58 +0200
+	id 1SqqrM-0001VO-7p
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 21:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330Ab2GPTRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 15:17:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59355 "EHLO
+	id S1751947Ab2GPTV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 15:21:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61016 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890Ab2GPTRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 15:17:52 -0400
+	id S1750890Ab2GPTV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 15:21:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2FC18A66;
-	Mon, 16 Jul 2012 15:17:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC6C18B34;
+	Mon, 16 Jul 2012 15:21:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8N6xnWEgZjBWZ0lLNV/b+cx8zSI=; b=SUIVey
-	0TgAqCbRgJwMJypnww6lsFYMTI3JdzArXTUiyNgR/KdqKh8Syzl63SOvJy3cMqZ9
-	QVCZl2KAyh6HJxpHXAyPrWNc+OGh1XgIPXjXiDi2F0XlsTWmEB8XQY33hQd0Ig0j
-	12uXOhXYUe7RnQO9AKp8NFlZx+EMb6zpz08cc=
+	:content-type; s=sasl; bh=KGh3fEWRBr9MC/TPySJJiXXSa/4=; b=s1GQNl
+	smbazNeNzQFbgzpe4SzLQG/EkYxSkiRfh/Mnz2UpYEx0e6pyYH5OYsCgoxqS3/36
+	bIsxdDZCr82Y/vUjBy9oME+Qh9yYwxq4hdAYErTX9LDJZxCnS6MRIUlLIkp+EK7E
+	UhZD3yhinIiVMgyXrwnZLyaOou+rVV6io+oVo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qn+BzdRlBJUqvh/EYuY3ToWzz/6bAWvM
-	oNW+kFab7odqyUgbBauLDscp2zspSgS0vJOwFk0vd8ExnKAYRBesDk+uLv5E7/+u
-	N1T+lkz58DlDXCMS88mXhsTcJVmv6oWWHKy6gKvYNr82ZaMGHaXJzTpKYHhp4LaA
-	/5AaMBLlqk8=
+	:content-type; q=dns; s=sasl; b=oiP8i7Cpt1btea7X7JJHfwKuxXAzkGNm
+	z2RMKHOPchnPTK3ysahkXG9gPnTqBA9ozE4ouK7z7PKy4g6OfcUODKpwPM0vDIIC
+	ND5uWQDi7VWPkJDcZRmxBxOQysC7zG55zxdedSlxU3O76y89md+HutvS4BdP0Xvr
+	A6EYWz59k/E=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A196D8A65;
-	Mon, 16 Jul 2012 15:17:51 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C91D38B33;
+	Mon, 16 Jul 2012 15:21:25 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04AE28A64; Mon, 16 Jul 2012
- 15:17:50 -0400 (EDT)
-In-Reply-To: <vpqr4sbv83q.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 16 Jul 2012 21:06:33 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 833318B32; Mon, 16 Jul 2012
+ 15:21:24 -0400 (EDT)
+In-Reply-To: <500465E3.8040501@alum.mit.edu> (Michael Haggerty's message of
+ "Mon, 16 Jul 2012 21:05:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EF947B14-CF7A-11E1-AF27-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6ED8D9EC-CF7B-11E1-AACE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201552>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+> On 07/16/2012 07:47 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
 >>
->>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->>> ---
->>>  contrib/mw-to-git/git-remote-mediawiki | 9 ++++++++-
->>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>>> It's already supported:
 >>>
->>> diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
->>> index a6ad8cf..a2da52f 100755
->>> --- a/contrib/mw-to-git/git-remote-mediawiki
->>> +++ b/contrib/mw-to-git/git-remote-mediawiki
->>> @@ -51,6 +51,9 @@ use constant EMPTY_CONTENT => "<!-- empty page -->\n";
->>>  # used to reflect file creation or deletion in diff.
->>>  use constant NULL_SHA1 => "0000000000000000000000000000000000000000";
->>>  
->>> +# Used on Git's side to reflect empty edit messages on the wiki
->>> +use constant EMPTY_MESSAGE => '*Empty MediaWiki Message*';
->>> +
+>>>      git config hooks.announcelist \
+>>>          "nosy@example.com, overwhelmed@example.com, phb@example.com"
+>>>      git config hooks.refchangelist \
+>>>          "nosy@example.com, overwhelmed@example.com"
+>>>      git config hooks.commitlist "nosy@example.com"
 >>
->> Is there a reason why this sentinel value cannot be a real empty
->> string?
+>> Sad.  Is the "post-recieve email" squatting on the _whole_ hooks.*
+>> namespace, not postreceiveemailhook.* or something more reasonably
+>> limited?
 >
-> That would mean having an empty commit message on the Git side, which is
-> against the use (although possible with fast-import).
+> Yes.  I didn't like this either, but I copied this aspect of the old
+> script in the interest of compatibility.
+>
+> If we want to change this, now would be a good time, before the new
+> script starts using more of the hooks namespace.  One could choose a
+> new namespace and deprecate the old one, optionally in multiple steps:
+>
+> 1. Only read new options from new namespace; read old options from new
+> namespace or (if the new names are not set) falling back to the old
+> namespace.
+>
+> 2. Deprecate the old namespace, emitting warnings if the old names are
+> still set but continuing to use them.
+>
+> 3. Stop supporting the old namespace, but emit warnings if the old
+> names are still set.
+>
+> 4. Stop looking in the old namespace altogether.
+>
+> Though, given that hook scripts have to be enabled/upgraded
+> per-repository, usually on a central server, probably doing only steps
+> 2 and 4 would be enough.
 
-It also is possible with "commit --allow-empty-message", no?
-
-> (note that the string was already there, my patch only makes it a
-> constant to be able to use it in two distinct places).
-
-It was clear from the patch text without looking beyond context, but
-after all I thought this was meant to be a clean-up series, and I
-simply wondered why mapping empty to some magic string was not
-considered to be something to be cleaned up.  That's all.
-
-I obviously do not care that deeply either way.
+It would be sufficient to add a README that gives a one-time
+migration instruction (bonus point if a script to automate the
+process is given) in the commit that replaces the old script with
+the new one.
