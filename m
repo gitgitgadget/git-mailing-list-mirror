@@ -1,136 +1,69 @@
-From: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
-Date: Mon, 16 Jul 2012 18:06:26 +0200
-Message-ID: <899A52DB-E548-44CD-8624-A715DDB17032@web.de>
-References: <5001644F.10901@web.de> <87y5mkm935.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jul 16 18:06:53 2012
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Add a new email notification script to "contrib"
+Date: Mon, 16 Jul 2012 18:16:40 +0200
+Message-ID: <vpqhat7wujb.fsf@bauges.imag.fr>
+References: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Mon Jul 16 18:17:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sqnoy-0004zA-Rf
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 18:06:53 +0200
+	id 1Sqnyi-0007Ad-0l
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 18:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211Ab2GPQGn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jul 2012 12:06:43 -0400
-Received: from mout.web.de ([212.227.17.12]:64084 "EHLO mout.web.de"
+	id S1753403Ab2GPQQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 12:16:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48187 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143Ab2GPQGh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jul 2012 12:06:37 -0400
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MZlMw-1TA6qx3Jfi-00L9qA; Mon, 16 Jul 2012 18:06:30
- +0200
-In-Reply-To: <87y5mkm935.fsf@thomas.inf.ethz.ch>
-X-Mailer: Apple Mail (2.1084)
-X-Provags-ID: V02:K0:qQJ+P825qwB1jLEw2hFjZoi6y+xyClO47JvnxxBhcnd
- y73o+WJsVL36mDGAU281YrVmOU0HVu8UzWSQXrbsEI1VRt1/ng
- Hi61GMZCsDyo3zWMlxHi19QsAd1xte2AOtTXE7NPlOe7V9yeqY
- cY1AlobYmUNt4exAtYAzWq08N7hy0Cejsct9ncGurNciQRYFLf
- fAU3k62D0bda/8zFJhJxQ==
+	id S1753379Ab2GPQQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 12:16:46 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6GGEqIF022138
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 16 Jul 2012 18:14:52 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SqnyT-0007mL-Dh; Mon, 16 Jul 2012 18:16:41 +0200
+In-Reply-To: <1342249182-5937-1-git-send-email-mhagger@alum.mit.edu>
+	(mhagger@alum.mit.edu's message of "Sat, 14 Jul 2012 08:59:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 16 Jul 2012 18:14:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6GGEqIF022138
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1343060093.88401@cYqIYUAO0QXgnAU65SDLHQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201526>
 
+mhagger@alum.mit.edu writes:
 
-Am 16.07.2012 um 09:57 schrieb Thomas Rast:
+> From: Michael Haggerty <mhagger@alum.mit.edu>
+>
+> Add a new Python script, contrib/hooks/post-receive-multimail.py, that
+> can be used to send notification emails describing pushes into a git
+> repository.  This script is derived from
+> contrib/hooks/post-receive-mail, but has many differences, including:
+>
+> * One email per commit [1].
 
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->=20
->> Now it appeared on next as well, so it's time to look a little bit d=
-eeper.
->>=20
->> This test case of t1450 fails:
->> test_expect_success 'tag pointing to something else than its type' '
->>=20
->> To debug more, I added an exit 0 here to inspect the file named out:
->> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
->> index 5b79c51..f1f45c9 100755
->> --- a/t/t1450-fsck.sh
->> +++ b/t/t1450-fsck.sh
->> @@ -179,6 +179,7 @@ test_expect_success 'tag pointing to something e=
-lse than its type' '
->>        test_when_finished "git update-ref -d refs/tags/wrong" &&
->>        test_must_fail git fsck --tags 2>out &&
->>        cat out &&
->> +       exit 0
->>        grep "error in tag.*broken links" out
->> '
->>=20
->> Linux:
->> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, no=
-t a commit
->> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
->> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not loa=
-d tagged object
->>=20
->> Mac OS X:
->> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, =
-not a blob
->> error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or m=
-issing
->=20
-> What OS X are you running?  I started a loop
->=20
->  while : ; do ./t1450-fsck.sh || break; done
->=20
-> and it hasn't failed yet.  It is
->=20
->  $ uname -a
->  Darwin mackeller.inf.ethz.ch 11.4.0 Darwin Kernel Version 11.4.0: Mo=
-n Apr  9 19:32:15 PDT 2012; root:xnu-1699.26.8~1/RELEASE_X86_64 x86_64
->=20
- uname -a
-Darwin birne.lan 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:=
-36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386
->=20
-> You can run 'git ls-files --debug' which should give you all the data=
- in
-> the index, and then perhaps run diff over that to determine the
-> differences...
->=20
+It's cool to have it, but it would be nice to allow the "one email per
+push" mode too. I have co-workers who already complain about the number
+of emails sent by the post-receive-mail script. I can't imagine their
+reaction if I set up a one-email-per-commit hook ;-).
 
-That lloks like this:
-
-fileA
-  ctime: 1342453768:0
-  mtime: 1342453768:0
-  dev: 234881026        ino: 92698027
-  uid: 1500     gid: 20
-  size: 4       flags: 5
-fileB
-  ctime: 1342453768:0
-  mtime: 1342453768:0
-  dev: 234881026        ino: 92698053
-  uid: 1500     gid: 20
-  size: 4       flags: 5
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-But what is interesting, is that=20
-a) When I clone a fresh copy from git.git, it works OK. After some acti=
-vity with the working dir,
-  suddenly t1450 fails. Switching back to e.g. v1.7.11 makes t1450  pas=
-s again.
-  Switching to origin/next , running make brings back the problem, t145=
-0 fails
-
-b) The failure seems to be time critical. When I run the test yesterday=
- evening,
-   being logged in via ssh makes the test pass.
-   Sitting at the machine makes it fail.
-
-c) It seems as if there is a problem when writing to disk.
-   Could be the index file
-   (git ls-files --debug does not dump the whole index, does it?)
-
-d) As Peff pointed out, the fsck itself is not time critical.
- =20
-Thanks for looking into it
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
