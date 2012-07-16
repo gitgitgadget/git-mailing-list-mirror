@@ -1,95 +1,120 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH] Escape file:// URL's to meet subversion SVN::Ra
-                     requirements
-Date: Mon, 16 Jul 2012 20:16:38 -0000
-Message-ID: <ab115eb531ab4229a3edb12670ca4179-mfwitten@gmail.com>
-References: <1320251895-6348-2-git-send-email-bwalton@artsci.utoronto.ca>
-            <20111102182015.GA11401@elie.hsd1.il.comcast.net>
-            <1320260449-sup-479@pinkfloyd.chass.utoronto.ca>
-            <20111102220941.GA3925@dcvr.yhbt.net>
-            <1320372215-sup-8341@pinkfloyd.chass.utoronto.ca>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Mon Jul 16 22:17:58 2012
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC] Designing a faster index format - Progress report week 13
+Date: Mon, 16 Jul 2012 22:33:00 +0200
+Message-ID: <20120716203300.GA1849@tgummerer.surfnet.iacbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, mhagger@alum.mit.edu, pclouds@gmail.com,
+	trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 16 22:33:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sqrjx-00021d-Bt
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:17:57 +0200
+	id 1Sqrz5-0008Ig-1L
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209Ab2GPURw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 16:17:52 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:60826 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589Ab2GPURv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 16:17:51 -0400
-Received: by weyx8 with SMTP id x8so4207530wey.19
-        for <git@vger.kernel.org>; Mon, 16 Jul 2012 13:17:49 -0700 (PDT)
+	id S1752231Ab2GPUdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 16:33:24 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:54056 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871Ab2GPUdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 16:33:08 -0400
+Received: by pbbrp8 with SMTP id rp8so10564491pbb.19
+        for <git@vger.kernel.org>; Mon, 16 Jul 2012 13:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=T9/PfUyp1TExT3PhErzX2nvAgx/DSEqsK1tDZj4HJVw=;
-        b=nhhhvwBatIVa3k73G+ddQHV+vzj4WxtIZZ4qMNcNxKffkRp1T4+yi5G0YbYzW97jOH
-         nCl1lJ9v0cYxC6bk43RhcSPuqwvuz0VdA4m3FzZVUuUj7wFK/K3jhfQict0OpFqhw8Wb
-         CSLBPDhxsBz98BldJ/B6vDsKycu2jPIsTBUV/dp3r1w7DAM6tSvbzDAORNxeg/bucg7E
-         p0kHpx5prg54f0uuU3oFqZ/tzfWgIl9Qg9+ZnVCucekajsUjs5bbRlI87rPGoCMX95Ae
-         zBXRaEc34E1uaPODL3vDoyQy+KL0eb28WxrYoUBFSuTahKOpQn1pQE0kAI0C89HB1V1I
-         5Z1Q==
-Received: by 10.216.59.7 with SMTP id r7mr4006345wec.19.1342469869812;
-        Mon, 16 Jul 2012 13:17:49 -0700 (PDT)
-Received: from gmail.com (tor21.anonymizer.ccc.de. [31.172.30.4])
-        by mx.google.com with ESMTPS id y2sm23166593wix.7.2012.07.16.13.17.47
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=3n2mGgwc4hJuTP8HMDFKxRBgFqWl4/LdpbyQnIZBY6c=;
+        b=0cDltg6UrvLBqXvjxFAA7dp4ut+CdoB39Owc6Tuv7uXQ7vr1tl5/apsqQAyfj03ZhQ
+         O7PieDCi5UXZURwOapvnKdKV1y8cPz4LwCNVSxiaQ9+IjewAsLVaUXdeNM6Zi9bwSaH6
+         pb7SHjPZEUuYLae/xk2jY3Xfl59jyk+aD5iz9CI/KmvqdQFrxyUyK3jaZffTmHYZwTmM
+         Tv7LWT0KX/4TDAo7i8r55sciGUHfF98KVasPKKN+/5dESRLHS0GuY86kW2Al0zEG62jG
+         Zo7Wlb9E8ocaxGjbIRFyxbehzvEqgiiuM0o8DOIAd0HpGHlHHj2McnfDfVnfV2RQYb6x
+         yKoQ==
+Received: by 10.68.189.135 with SMTP id gi7mr29714297pbc.68.1342470788246;
+        Mon, 16 Jul 2012 13:33:08 -0700 (PDT)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPS id rd7sm12508838pbc.70.2012.07.16.13.33.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Jul 2012 13:17:48 -0700 (PDT)
-In-Reply-To: <1320372215-sup-8341@pinkfloyd.chass.utoronto.ca>
+        Mon, 16 Jul 2012 13:33:07 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201567>
 
-On 2011-11-04 02:11:49 GMT, Ben Walton wrote:
+== Work done in the previous 12 weeks ==
 
-> Excerpts from Eric Wong's message of Wed Nov 02 18:09:41 -0400 2011:
->
-> Hi Eric,
-> 
->> I don't have much time to help you fix it, but I got numerous errors
->> on SVN 1.6.x (svn 1.6.12).  Can you make sure things continue to
->> work on 1.6 and earlier, also?
->
-> Yes, it's a bit of a mess, I think.  It looks as though the
-> modification required within Git::SVN::Ra is going to negatively
-> impact other code paths that interact with that package from the
-> outside.
->
-> For example, when doing git svn init --minimize-url ..., the minimized
-> url is not escaped while the url is.  The minimized url is used to
-> strip off the head from the full url using a regex.  This now breaks
-> because of the escaping.
->
-> Fixing this locally to the use of the minimized url let me move on
-> farther but I then got another core dump.
->
->> Maybe just enable the escaping for file:// on >= SVN 1.7
->
-> I think that it would be best if this change was only effective for
-> 1.7.
->
-> I wonder if all URL-ish objects should be (conditionally iff svn >=
-> 1.7) subjected to escaping?
->
-> This would require some restructuring and will take me a bit of time
-> to work out as I need to familiarize myself with the code to a deeper
-> level.
->
-> Pointers welcomed. :)
+- Definition of a tentative index file v5 format [1]. This differs
+  from the proposal in making it possible to bisect the directory
+  entries and file entries, to do a binary search. The exact bits
+  for each section were also defined. To further compress the index,
+  along with prefix compression, the stat data is hashed, since
+  it's only used for comparison, but the plain data is never used.
+  Thanks to Michael Haggerty, Nguyen Thai Ngoc Duy, Thomas Rast
+  and Robin Rosenberg for feedback.
+- Prototype of a converter from the index format v2/v3 to the index
+  format v5. [2] The converter reads the index from a git repository,
+  can output parts of the index (header, index entries as in
+  git ls-files --debug, cache tree as in test-dump-cache-tree, or
+  the reuc data). Then it writes the v5 index file format to
+  .git/index-v5. Thanks to Michael Haggerty for the code review.
+- Prototype of a reader for the new index file format. [3] The
+  reader has mainly the purpose to show the algorithm used to read
+  the index lexicographically sorted after the full name which is
+  required by the current internal memory format. Big thanks for
+  reviewing this code and giving me advice on refactoring goes
+  to Michael Haggerty.
+- Read the index format format and translate it to the current in
+  memory format. This doesn't include reading any of the current
+  extensions, which are now part of the main index. The code again
+  is on github. [4] Thanks for reviewing the first steps to Thomas
+  Rast.
+- Read the cache-tree data (formerly an extension, now it's integrated
+  with the rest of the directory data) from the new ondisk format.
+  There are still a few optimizations to do in this algorithm.
+- Started implementing the API (suggested by Duy), but it's still
+  in the very early stages. There is one commit for this on GitHub [1],
+  but it's a very early work in progress.
+- Started implementing the writer, which extracts the directories from
+  the in-memory format, and writes the header and the directories to
+  disk.
+- I found a few bugs in the algorithm for extracting the directories
+  and decided to completely rewrite it, using a hash table instead of
+  simple lists, since the old one would have to many corner cases to
+  handle.
+- Implemented writing the file block to disk, and basic tests from the
+  test suite are running fine, not including tests that require
+  conflicted data or the cache-tree to work, which both are not
+  implemented yet.
+- Started implementing a patch to introduce a ce_namelen field in
+  struct cache_entry and drop the name length from the flags. [5]
 
-This problem still exists. It should be fixed---preferably by the people
-who built this apparently unwieldy contraption.
+== Work done int the last week ==
 
-Sincerely,
-Michael Witten
+- Polished the patch for the ce_namelen field. The thread for the
+  patch can be found at [5]. Again thanks to Junio, Duy and Thomas
+  for reviewing it and giving me suggestions for improving it.
+- Implemented the cache-tree and conflict data writing to the
+  index-v5 file.
+  
+== Outlook for the next week ==
+
+- There are still a few bugs in the conflict writing, which will
+  be fixed, to make the test suite pass with index-v5.
+- Once the test suite passes, the code still needs to be refactored
+  and optimized.
+- If the two points above go well, I'll continue working on the api
+  that Duy suggested.
+
+[1] https://github.com/tgummerer/git/wiki/Index-file-format-v5
+[2] https://github.com/tgummerer/git/blob/pythonprototype/git-convert-index.py
+[3] https://github.com/tgummerer/git/blob/pythonprototype/git-read-index-v5.py
+[4] https://github.com/tgummerer/git/tree/index-v5
+[5] http://thread.gmane.org/gmane.comp.version-control.git/200997
