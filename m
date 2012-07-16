@@ -1,158 +1,106 @@
-From: Alexander Strasser <eclipse7@gmx.net>
-Subject: [PATCH v2 6/8] t4012: Re-indent test snippets
-Date: Mon, 16 Jul 2012 22:45:40 +0200
-Message-ID: <7e7734764f24b17a1d2cd1205de7222a29723d35.1342468069.git.eclipse7@gmx.net>
-References: <cover.1342468069.git.eclipse7@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC] Designing a faster index format - Progress report week 13
+Date: Mon, 16 Jul 2012 13:46:42 -0700
+Message-ID: <7vwr23zb65.fsf@alter.siamese.dyndns.org>
+References: <20120716203300.GA1849@tgummerer.surfnet.iacbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 16 22:45:53 2012
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com,
+	trast@student.ethz.ch
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 16 22:46:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqsAy-00039d-9G
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:45:52 +0200
+	id 1SqsBv-000448-1j
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017Ab2GPUps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 16:45:48 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:56789 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752826Ab2GPUpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 16:45:46 -0400
-Received: (qmail invoked by alias); 16 Jul 2012 20:45:43 -0000
-Received: from p5DC37C42.dip.t-dialin.net (EHLO gmx.net) [93.195.124.66]
-  by mail.gmx.net (mp038) with SMTP; 16 Jul 2012 22:45:43 +0200
-X-Authenticated: #8251126
-X-Provags-ID: V01U2FsdGVkX19v7dESAkFvSSkWgxDV6bBwLZ3ydFdATtaQulonVl
-	Zo9yECDDqt0W/s
-Received: by gmx.net (sSMTP sendmail emulation); Mon, 16 Jul 2012 22:45:40 +0200
-Content-Disposition: inline
-In-Reply-To: <cover.1342468069.git.eclipse7@gmx.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Y-GMX-Trusted: 0
+	id S1752251Ab2GPUqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 16:46:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39795 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751888Ab2GPUqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 16:46:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CFA180E2;
+	Mon, 16 Jul 2012 16:46:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0H1nJiWOYFeIG77WG69X/xXcLxI=; b=rWNPAe
+	oNqFUYUqHV5AIHZ9w6daA798sIDPFk3AL/krLaWSyLk+M1/UtWjOCqVA3/PLs5PV
+	SdUhb60UWmRvU6ifSnzt1/3aRp9HrWR4q1ttRMDIh+kPNl0NxZz4DL6v3zfcK/7X
+	9t80I3iyZwWB/KXxP04ZD+N/L33FiuGwMx7Y4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Sx3W5v0K6tJmclkDfRTbiVmnFFCzLH4J
+	4zMvgsBMmkMsGD/MSMbk+Nyf3FGKgnQ80672rZzQIzCHXe8mRGVyKdOAVL4UKeDR
+	CuaE+aok3/25pfS2xokxTu+BUiGPFeTByDG8amVIEqTfFx5CUlYQ5o9SMIYcwmjY
+	/UzhyhRuZjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39BFD80E1;
+	Mon, 16 Jul 2012 16:46:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B9AE80E0; Mon, 16 Jul 2012
+ 16:46:43 -0400 (EDT)
+In-Reply-To: <20120716203300.GA1849@tgummerer.surfnet.iacbox> (Thomas
+ Gummerer's message of "Mon, 16 Jul 2012 22:33:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5A07898A-CF87-11E1-BFB8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201574>
 
-Most one-level indents were 1 HT (horizontal tab) followed by 1 SP.
-Remove the SP.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Signed-off-by: Alexander Strasser <eclipse7@gmx.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4012-diff-binary.sh | 68 +++++++++++++++++++++++++-------------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+> == Work done in the previous 12 weeks ==
+>
+> - Definition of a tentative index file v5 format [1]. This differs
+>   from the proposal in making it possible to bisect the directory
+>   entries and file entries, to do a binary search. The exact bits
+>   for each section were also defined. To further compress the index,
+>   along with prefix compression, the stat data is hashed, since
+>   it's only used for comparison, but the plain data is never used.
 
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index 4767761..7b0e759 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -16,12 +16,12 @@ cat >expect.binary-numstat <<\EOF
- EOF
- 
- test_expect_success 'prepare repository' '
--	 echo AIT >a && echo BIT >b && echo CIT >c && echo DIT >d &&
--	 git update-index --add a b c d &&
--	 echo git >a &&
--	 cat "$TEST_DIRECTORY"/test-binary-1.png >b &&
--	 echo git >c &&
--	 cat b b >d
-+	echo AIT >a && echo BIT >b && echo CIT >c && echo DIT >d &&
-+	git update-index --add a b c d &&
-+	echo git >a &&
-+	cat "$TEST_DIRECTORY"/test-binary-1.png >b &&
-+	echo git >c &&
-+	cat b b >d
- '
- 
- cat > expected <<\EOF
-@@ -64,52 +64,52 @@ test_expect_success 'apply --numstat understands diff --binary format' '
- # apply needs to be able to skip the binary material correctly
- # in order to report the line number of a corrupt patch.
- test_expect_success 'apply detecting corrupt patch correctly' '
--	 git diff >output &&
--	 sed -e "s/-CIT/xCIT/" <output >broken &&
--	 if git apply --stat --summary broken 2>detected
--	 then
-+	git diff >output &&
-+	sed -e "s/-CIT/xCIT/" <output >broken &&
-+	if git apply --stat --summary broken 2>detected
-+	then
- 		echo unhappy - should have detected an error
- 		(exit 1)
--	 else
-+	else
- 		echo happy
--	 fi &&
--	 detected=`cat detected` &&
--	 detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
--	 detected=`sed -ne "${detected}p" broken` &&
--	 test "$detected" = xCIT
-+	fi &&
-+	detected=`cat detected` &&
-+	detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
-+	detected=`sed -ne "${detected}p" broken` &&
-+	test "$detected" = xCIT
- '
- 
- test_expect_success 'apply detecting corrupt patch correctly' '
--	 git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
--	 if git apply --stat --summary broken 2>detected
--	 then
-+	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
-+	if git apply --stat --summary broken 2>detected
-+	then
- 		echo unhappy - should have detected an error
- 		(exit 1)
--	 else
-+	else
- 		echo happy
--	 fi &&
--	 detected=`cat detected` &&
--	 detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
--	 detected=`sed -ne "${detected}p" broken` &&
--	 test "$detected" = xCIT
-+	fi &&
-+	detected=`cat detected` &&
-+	detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
-+	detected=`sed -ne "${detected}p" broken` &&
-+	test "$detected" = xCIT
- '
- 
- test_expect_success 'initial commit' 'git commit -a -m initial'
- 
- # Try removal (b), modification (d), and creation (e).
- test_expect_success 'diff-index with --binary' '
--	 echo AIT >a && mv b e && echo CIT >c && cat e >d &&
--	 git update-index --add --remove a b c d e &&
--	 tree0=`git write-tree` &&
--	 git diff --cached --binary >current &&
--	 git apply --stat --summary current
-+	echo AIT >a && mv b e && echo CIT >c && cat e >d &&
-+	git update-index --add --remove a b c d e &&
-+	tree0=`git write-tree` &&
-+	git diff --cached --binary >current &&
-+	git apply --stat --summary current
- '
- 
- test_expect_success 'apply binary patch' '
--	 git reset --hard &&
--	 git apply --binary --index <current &&
--	 tree1=`git write-tree` &&
--	 test "$tree1" = "$tree0"
-+	git reset --hard &&
-+	git apply --binary --index <current &&
-+	tree1=`git write-tree` &&
-+	test "$tree1" = "$tree0"
- '
- 
- test_expect_success 'diff --no-index with binary creation' '
--- 
-1.7.10.2.552.gaa3bb87
+s/comparison/equality comparison/ perhaps?
+
+>   Thanks to Michael Haggerty, Nguyen Thai Ngoc Duy, Thomas Rast
+>   and Robin Rosenberg for feedback.
+
+> - Read the index format format and translate it to the current in
+
+s/format format/on-disk file format/ or something?
+
+>   memory format. This doesn't include reading any of the current
+>   extensions, which are now part of the main index. The code again
+>   is on github. [4] Thanks for reviewing the first steps to Thomas
+>   Rast.
+
+> - Started implementing the writer, which extracts the directories from
+>   the in-memory format, and writes the header and the directories to
+>   disk.
+> - I found a few bugs in the algorithm for extracting the directories
+>   and decided to completely rewrite it, using a hash table instead of
+>   simple lists, since the old one would have to many corner cases to
+>   handle.
+
+What does "the algorithm" refer to?  Is it the one described in the
+previous bullet point, or is it the code in production?  If latter,
+it would help to separate out the task to fix the breakage, as
+people with the current or previous versions of Git will be
+negatively affected until that bug is fixed.  If former, I am not
+sure if this task needs to be described in two bullet points ("I did
+X, X had bug so I redid X in a different way" is still a single task
+to do X).
+
+> == Work done int the last week ==
+>
+> - Polished the patch for the ce_namelen field. The thread for the
+>   patch can be found at [5].
+
+Thanks for this one; I think it is ready for 'next', but if you are
+still not satisfied I do not mind waiting for further perfection.
