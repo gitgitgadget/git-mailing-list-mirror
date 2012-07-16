@@ -1,59 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8 v2] git-remote-mediawiki: fixes, optimizations, and
- progress report
-Date: Mon, 16 Jul 2012 12:56:04 -0700
-Message-ID: <7v1ukb1nvv.fsf@alter.siamese.dyndns.org>
-References: <1342440053-3058-1-git-send-email-Matthieu.Moy@imag.fr>
- <1342468002-31818-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Semen Vadishev <semen.vadishev@tmatesoft.com>
+Subject: Re: [ANN] SubGit 1.0.0 RC1
+Date: Mon, 16 Jul 2012 22:05:06 +0200
+Message-ID: <500473F2.6020503@tmatesoft.com>
+References: <5004560A.2030508@tmatesoft.com> <7vmx2z1qoz.fsf@alter.siamese.dyndns.org> <5004660E.5010005@tmatesoft.com> <7vehob1pv1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Asheesh Laroia <asheesh@asheesh.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 16 21:56:17 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 16 22:05:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqrOz-00083k-0l
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 21:56:17 +0200
+	id 1SqrXi-0007kM-Q3
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348Ab2GPT4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 15:56:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46666 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751699Ab2GPT4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 15:56:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 264D0842B;
-	Mon, 16 Jul 2012 15:56:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SuCdN3R1d0NT1d/yQow+jCmg1TM=; b=ipVZP8
-	lcQfeH+trdCxTRFEIzas4zZ9iw3wygnZpbkKdzgow2rCSL62q1EbGHJ0Lk2+GIFB
-	6HrFCA7AV335xzNGIQVFeWjBKosDmyFgCNjNv0dtVE5fFyIRPUS+cpRmIa0s141Q
-	d7k0G8VLPTbpuanQRfkamex5XfASANe4lhuWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H6WISud/4ai6uNGAEgSFlsXWYMW/Y1nK
-	gJrZ75n8Vlj63qiVko6zybeyVxPlJAwmF4tynxhaVWsE4DiKbsA5Q1kHy134cS7o
-	7O+N024KVMZc7lgbuh9lQHugQFb3vN5+JHXPZvO44RV1xVILsX0lOERPm0+Q2UN3
-	hwePBjkaFy0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 129BB842A;
-	Mon, 16 Jul 2012 15:56:06 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 869BE8427; Mon, 16 Jul 2012
- 15:56:05 -0400 (EDT)
-In-Reply-To: <1342468002-31818-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 16 Jul 2012 21:46:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 473A4D12-CF80-11E1-9E83-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753925Ab2GPUFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 16:05:13 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42281 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753749Ab2GPUFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 16:05:10 -0400
+Received: by bkwj10 with SMTP id j10so5083773bkw.19
+        for <git@vger.kernel.org>; Mon, 16 Jul 2012 13:05:09 -0700 (PDT)
+Received: by 10.204.154.211 with SMTP id p19mr2944838bkw.12.1342469109281;
+        Mon, 16 Jul 2012 13:05:09 -0700 (PDT)
+Received: from vs.local (ip-94-112-236-226.net.upcbroadband.cz. [94.112.236.226])
+        by mx.google.com with ESMTPS id n17sm8793670bks.6.2012.07.16.13.05.07
+        (version=SSLv3 cipher=OTHER);
+        Mon, 16 Jul 2012 13:05:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <7vehob1pv1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201565>
 
-Thanks; will replace and requeue.
+>> Where's the source?
+> SubGit is a closed-source project.
+> Ah, OK.  As long as you are using Git in compliance with its
+> licensing terms, it is perfectly fine to be commercial.
+We're careful to the licensing terms of the libraries SubGit is built upon.
+
+> But in that case, could you please mark your messages with [Ad] or
+> [Advertisement] or somesuch, not with [Announce] or [ANN], so that
+> people can filter them more easily?
+Yes, sure.
+
+Semen Vadishev,
+TMate Software,
+http://subgit.com/ - git+svn on the server side!
+
+On 7/16/12 21:13, Junio C Hamano wrote:
+> Semen Vadishev <semen.vadishev@tmatesoft.com> writes:
+>
+>> Hello Junio,
+>>
+>>> Where's the source?
+>> SubGit is a closed-source project.
+> Ah, OK.  As long as you are using Git in compliance with its
+> licensing terms, it is perfectly fine to be commercial.
+>
+> But in that case, could you please mark your messages with [Ad] or
+> [Advertisement] or somesuch, not with [Announce] or [ANN], so that
+> people can filter them more easily?
+>
+> Thanks.
