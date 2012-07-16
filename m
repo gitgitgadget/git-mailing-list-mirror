@@ -1,71 +1,95 @@
-From: Semen Vadishev <semen.vadishev@tmatesoft.com>
-Subject: Re: [ANN] SubGit 1.0.0 RC1
-Date: Mon, 16 Jul 2012 22:05:06 +0200
-Message-ID: <500473F2.6020503@tmatesoft.com>
-References: <5004560A.2030508@tmatesoft.com> <7vmx2z1qoz.fsf@alter.siamese.dyndns.org> <5004660E.5010005@tmatesoft.com> <7vehob1pv1.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 16 22:05:20 2012
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH] Escape file:// URL's to meet subversion SVN::Ra
+                     requirements
+Date: Mon, 16 Jul 2012 20:16:38 -0000
+Message-ID: <ab115eb531ab4229a3edb12670ca4179-mfwitten@gmail.com>
+References: <1320251895-6348-2-git-send-email-bwalton@artsci.utoronto.ca>
+            <20111102182015.GA11401@elie.hsd1.il.comcast.net>
+            <1320260449-sup-479@pinkfloyd.chass.utoronto.ca>
+            <20111102220941.GA3925@dcvr.yhbt.net>
+            <1320372215-sup-8341@pinkfloyd.chass.utoronto.ca>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Mon Jul 16 22:17:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqrXi-0007kM-Q3
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:05:19 +0200
+	id 1Sqrjx-00021d-Bt
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jul 2012 22:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753925Ab2GPUFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 16:05:13 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:42281 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749Ab2GPUFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 16:05:10 -0400
-Received: by bkwj10 with SMTP id j10so5083773bkw.19
-        for <git@vger.kernel.org>; Mon, 16 Jul 2012 13:05:09 -0700 (PDT)
-Received: by 10.204.154.211 with SMTP id p19mr2944838bkw.12.1342469109281;
-        Mon, 16 Jul 2012 13:05:09 -0700 (PDT)
-Received: from vs.local (ip-94-112-236-226.net.upcbroadband.cz. [94.112.236.226])
-        by mx.google.com with ESMTPS id n17sm8793670bks.6.2012.07.16.13.05.07
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Jul 2012 13:05:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <7vehob1pv1.fsf@alter.siamese.dyndns.org>
+	id S1752209Ab2GPURw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 16:17:52 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60826 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589Ab2GPURv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 16:17:51 -0400
+Received: by weyx8 with SMTP id x8so4207530wey.19
+        for <git@vger.kernel.org>; Mon, 16 Jul 2012 13:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=T9/PfUyp1TExT3PhErzX2nvAgx/DSEqsK1tDZj4HJVw=;
+        b=nhhhvwBatIVa3k73G+ddQHV+vzj4WxtIZZ4qMNcNxKffkRp1T4+yi5G0YbYzW97jOH
+         nCl1lJ9v0cYxC6bk43RhcSPuqwvuz0VdA4m3FzZVUuUj7wFK/K3jhfQict0OpFqhw8Wb
+         CSLBPDhxsBz98BldJ/B6vDsKycu2jPIsTBUV/dp3r1w7DAM6tSvbzDAORNxeg/bucg7E
+         p0kHpx5prg54f0uuU3oFqZ/tzfWgIl9Qg9+ZnVCucekajsUjs5bbRlI87rPGoCMX95Ae
+         zBXRaEc34E1uaPODL3vDoyQy+KL0eb28WxrYoUBFSuTahKOpQn1pQE0kAI0C89HB1V1I
+         5Z1Q==
+Received: by 10.216.59.7 with SMTP id r7mr4006345wec.19.1342469869812;
+        Mon, 16 Jul 2012 13:17:49 -0700 (PDT)
+Received: from gmail.com (tor21.anonymizer.ccc.de. [31.172.30.4])
+        by mx.google.com with ESMTPS id y2sm23166593wix.7.2012.07.16.13.17.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 16 Jul 2012 13:17:48 -0700 (PDT)
+In-Reply-To: <1320372215-sup-8341@pinkfloyd.chass.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201566>
 
->> Where's the source?
-> SubGit is a closed-source project.
-> Ah, OK.  As long as you are using Git in compliance with its
-> licensing terms, it is perfectly fine to be commercial.
-We're careful to the licensing terms of the libraries SubGit is built upon.
+On 2011-11-04 02:11:49 GMT, Ben Walton wrote:
 
-> But in that case, could you please mark your messages with [Ad] or
-> [Advertisement] or somesuch, not with [Announce] or [ANN], so that
-> people can filter them more easily?
-Yes, sure.
-
-Semen Vadishev,
-TMate Software,
-http://subgit.com/ - git+svn on the server side!
-
-On 7/16/12 21:13, Junio C Hamano wrote:
-> Semen Vadishev <semen.vadishev@tmatesoft.com> writes:
+> Excerpts from Eric Wong's message of Wed Nov 02 18:09:41 -0400 2011:
 >
->> Hello Junio,
->>
->>> Where's the source?
->> SubGit is a closed-source project.
-> Ah, OK.  As long as you are using Git in compliance with its
-> licensing terms, it is perfectly fine to be commercial.
+> Hi Eric,
+> 
+>> I don't have much time to help you fix it, but I got numerous errors
+>> on SVN 1.6.x (svn 1.6.12).  Can you make sure things continue to
+>> work on 1.6 and earlier, also?
 >
-> But in that case, could you please mark your messages with [Ad] or
-> [Advertisement] or somesuch, not with [Announce] or [ANN], so that
-> people can filter them more easily?
+> Yes, it's a bit of a mess, I think.  It looks as though the
+> modification required within Git::SVN::Ra is going to negatively
+> impact other code paths that interact with that package from the
+> outside.
 >
-> Thanks.
+> For example, when doing git svn init --minimize-url ..., the minimized
+> url is not escaped while the url is.  The minimized url is used to
+> strip off the head from the full url using a regex.  This now breaks
+> because of the escaping.
+>
+> Fixing this locally to the use of the minimized url let me move on
+> farther but I then got another core dump.
+>
+>> Maybe just enable the escaping for file:// on >= SVN 1.7
+>
+> I think that it would be best if this change was only effective for
+> 1.7.
+>
+> I wonder if all URL-ish objects should be (conditionally iff svn >=
+> 1.7) subjected to escaping?
+>
+> This would require some restructuring and will take me a bit of time
+> to work out as I need to familiarize myself with the code to a deeper
+> level.
+>
+> Pointers welcomed. :)
+
+This problem still exists. It should be fixed---preferably by the people
+who built this apparently unwieldy contraption.
+
+Sincerely,
+Michael Witten
