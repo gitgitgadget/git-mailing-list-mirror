@@ -1,117 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff: respect --no-ext-diff with typechange
-Date: Tue, 17 Jul 2012 00:16:03 -0400
-Message-ID: <20120717041603.GD20945@sigill.intra.peff.net>
-References: <000301cd63b2$e39a2130$aace6390$@vrana.cz>
+Subject: Re: Bug: fatal: patch fragment without header at line
+Date: Tue, 17 Jul 2012 00:21:37 -0400
+Message-ID: <20120717042137.GE20945@sigill.intra.peff.net>
+References: <CAK5QfLMs6CMCTtZ3woQfMim1ssYLKEURAMv8+FgqrKJ7otNcnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jakub Vrana <jakub@vrana.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 17 06:16:46 2012
+Cc: git@vger.kernel.org
+To: tuxdna <tuxdna@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 06:21:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqzDI-0003XR-0w
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 06:16:44 +0200
+	id 1SqzIA-0008N7-JL
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 06:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011Ab2GQEQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 00:16:27 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:33889
+	id S1750977Ab2GQEVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 00:21:42 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:33893
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750991Ab2GQEQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 00:16:07 -0400
-Received: (qmail 3560 invoked by uid 107); 17 Jul 2012 04:16:07 -0000
+	id S1750852Ab2GQEVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 00:21:40 -0400
+Received: (qmail 3602 invoked by uid 107); 17 Jul 2012 04:21:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jul 2012 00:16:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jul 2012 00:16:03 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jul 2012 00:21:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jul 2012 00:21:37 -0400
 Content-Disposition: inline
-In-Reply-To: <000301cd63b2$e39a2130$aace6390$@vrana.cz>
+In-Reply-To: <CAK5QfLMs6CMCTtZ3woQfMim1ssYLKEURAMv8+FgqrKJ7otNcnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201589>
 
-On Mon, Jul 16, 2012 at 05:27:00PM -0700, Jakub Vrana wrote:
+On Mon, Jul 16, 2012 at 07:06:51PM +0530, tuxdna wrote:
 
-> If external diff is specified through diff.external then it is used even if
-> `git diff --no-ext-diff` is used when there is a typechange.
-
-Eek. That has some minor security implications, as it means that it is
-dangerous to run even plumbing inspection command in somebody else's
-repository.
-
-However...
-
->  diff.c |    3 +++
->  1 file changed, 3 insertions(+)
+> Git version: git-1.7.7.6-1.fc16.x86_64
 > 
-> diff --git a/diff.c b/diff.c
-> index 208096f..898d610 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3074,6 +3074,9 @@ static void run_diff(struct diff_filepair *p, struct
-> diff_options *o)
->  	if (o->prefix_length)
->  		strip_prefix(o->prefix_length, &name, &other);
->  
-> +	if (!DIFF_OPT_TST(o, ALLOW_EXTERNAL))
-> +		pgm = NULL;
-> +
->  	if (DIFF_PAIR_UNMERGED(p)) {
->  		run_diff_cmd(pgm, name, NULL, attr_path,
->  			     NULL, NULL, NULL, o, p);
+> I am getting an error with a patch that I am applying to a git repository.
+> I have created a test case for this issue that I am facing.
+> 
+> $ git apply --check 0001-modified-README.patch
+> fatal: patch fragment without header at line 7: @@ -635,9 +635,7 @@
+> some_function()
+> 
+> Clearly line 7 appears to be a patch but it isn't. It is the part of
+> email body or the patch context.
+> To my understanding, the patch should always be identified whenever
+> the patch block starts
+> with a "diff --git", which is line 21 as below:
 
-run_diff_cmd already checks the ALLOW_EXTERNAL bit and sets pgm to NULL
-there. So as far as I can tell, we are not actually running the external
-diff. However, there is still a problem. Later in run_diff we do:
+It is identified properly when you use "git am" to apply your patch. It
+will use "git mailinfo" to split on the "---" and feed only the bottom
+half to "git apply". But as a low-level tool, "git apply" looks for a
+patch immediately, and does not know anything about the "---" line. It
+is correct to diagnose a possibly broken patch.
 
-        if (!pgm &&
-            DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
-            (S_IFMT & one->mode) != (S_IFMT & two->mode)) {
-                /*
-                 * a filepair that changes between file and symlink
-                 * needs to be split into deletion and creation.
-                 */
-                struct diff_filespec *null = alloc_filespec(two->path);
-                run_diff_cmd(NULL, name, other, attr_path,
-                             one, null, &msg, o, p);
-                free(null);
-                strbuf_release(&msg);
+> Apart from changing the patch itself, how else can I work-around this problem?
 
-                null = alloc_filespec(one->path);
-                run_diff_cmd(NULL, name, other, attr_path,
-                             null, two, &msg, o, p);
-                free(null);
-        }
-        else
-                run_diff_cmd(pgm, name, other, attr_path,
-                             one, two, &msg, o, p);
+Run "git am 0001-modified-README.patch" to parse it correctly. If for
+some reason you really do not want to make a commit (e.g., you are going
+to squash-apply a bunch of patches together), then either:
 
-IOW, we split up a typechange if we are feeding it to the internal diff
-generator, because builtin_diff will not show diffs between different
-types. But the check for "!pgm" here is not right; we don't know yet
-whether we will be builtin or external, because we have not checked
-ALLOW_EXTERNAL yet.
+  1. Don't use format-patch to generate the patch. Use "git diff-tree",
+     which will omit the commit message (which "git apply" would just
+     inore anyway).
 
-So I think your fix is the right thing, but the bug it is fixing is not
-"do not run external diff even when --no-ext-diff is specified". It is
-"do not accidentally feed typechange diffs to builtin_diff".
-
-You can see the difference in output with this script (and it works fine
-with your patch applied):
-
-    git init -q repo && cd repo &&
-    echo content >file && git add file && git commit -q -m regular &&
-    rm file && ln -s dest file && git commit -q -a -m typechange &&
-    export GIT_PAGER=cat &&
-    export GIT_EXTERNAL_DIFF='echo doing external diff' &&
-    git show HEAD^ --format='=== %s, ext ===' --ext-diff &&
-    git show HEAD^ --format='=== %s, no-ext ===' --no-ext-diff &&
-    git show HEAD  --format='=== %s, ext ===' --ext-diff &&
-    git show HEAD  --format='=== %s, no-ext ===' --no-ext-diff
+  2. Use "git mailinfo" to split the patch out of the email format
+     generated by format-patch, and then "git apply" the result.
 
 -Peff
