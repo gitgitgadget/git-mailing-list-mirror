@@ -1,131 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add explanatory comment for transport-helpers refs
- mapping.
-Date: Tue, 17 Jul 2012 11:04:29 -0500
-Message-ID: <20120717160429.GG3071@burratino>
-References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <11883284.WI8IR4K6qp@flobuntu>
- <20120717032725.GC3071@burratino>
- <13702454.DmcNg44yyH@flobuntu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 18:04:46 2012
+From: Michael Witten <mfwitten@gmail.com>
+Subject: [PATCH 0/3] Testing: XDG config files: Fix broken tests
+Date: Tue, 17 Jul 2012 17:25:49 -0000
+Message-ID: <82316e5034d940e09fed719ae7bfdc3b-mfwitten@gmail.com>
+Cc: Huynh Khoi Nguyen Nguyen 
+	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 19:43:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrAGQ-0001Zf-EG
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 18:04:42 +0200
+	id 1SrBnn-0006ou-0V
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 19:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623Ab2GQQEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 12:04:37 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:50354 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752045Ab2GQQEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 12:04:35 -0400
-Received: by mail-gg0-f174.google.com with SMTP id u4so535490ggl.19
-        for <git@vger.kernel.org>; Tue, 17 Jul 2012 09:04:34 -0700 (PDT)
+	id S1755961Ab2GQRnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 13:43:09 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:53000 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752464Ab2GQRnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 13:43:08 -0400
+Received: by wibhm11 with SMTP id hm11so4007407wib.1
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 10:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=hpNW3O0+JUDEC+ZWDIp4MnCNy8AsW9ZFcum1cJqLIJM=;
-        b=u/Fjcm7gWoQ3OVG214K2pHOVO/21kw1W5BRrOItARwe9zGBh7A2p8V1n1Kq8khKMXg
-         SK3ckiXNFP6ZH2TpZWsdgzGmppuQy3SlP9nDTdlongghtS9bbvi1mAwSNzK3NrNYutH+
-         +6cZOjCBrspk7hk6TbcTm4m7SCFdv75lsnpx2Q6zDMLRRXUkr7ehST7edj6RuctgpPCb
-         sH6HxwLB2MvK0IDHIUAyHfH+QL9bqIGR/U5nCSW4bQKSHiHkD5e0TUg/lVyhsFGyX0an
-         9Vd816BkUVXk1I4q/1/VH04sfulEtJK9PCOe2CjB2k8aYN6CfQR6DeeZCOQQYDYE0Wcm
-         Sqzg==
-Received: by 10.42.140.4 with SMTP id i4mr1850743icu.18.1342541074363;
-        Tue, 17 Jul 2012 09:04:34 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id ay5sm11888749igb.15.2012.07.17.09.04.32
-        (version=SSLv3 cipher=OTHER);
-        Tue, 17 Jul 2012 09:04:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <13702454.DmcNg44yyH@flobuntu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=subject:date:from:to:cc:message-id;
+        bh=DqeyymPq43e3HTf0z23yz4QEb3tNASQx1YlCfBsURg8=;
+        b=KOWCerlPb5Qw/mBgdN43xNzAFopp+JnktY0W8VIqz8Tqdyi5wH6lxOUCxO2D4dFr19
+         ROBxiSCs3fHiIp7X5JJI72nGC5LbhUu3IowXTy4rGw1iQZYhNLbGUASBeaPbsXZXGcNj
+         kFqitA3nwfjrsT/i5LD7yUjyU0ul6R7S3VhYfW/avHJiu/7a03l2i1rGVq3SR05/oPU+
+         LdrAfbrG6VXGU+Z8nalTs6GZp1wxr9w9BN17ZqahVGV6jBvucxzDLINr1VIiztsHzXjk
+         7OL0a4/8/A/lPPn3zkMqHwJJael53fXGPelFWJLNMs/AhLyvkcWlKEhJkUVZNOUBhAwj
+         pMmQ==
+Received: by 10.216.226.78 with SMTP id a56mr1840363weq.133.1342546985978;
+        Tue, 17 Jul 2012 10:43:05 -0700 (PDT)
+Received: from gmail.com (saito.countshockula.com. [65.183.151.13])
+        by mx.google.com with ESMTPS id el6sm28032146wib.8.2012.07.17.10.43.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 17 Jul 2012 10:43:05 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201609>
 
-Hi,
+The tests for the new XDG config file code are broken because the
+environoment variable `XDG_CONFIG_HOME' is never set properly,
+and the tests themselves do not use `XDG_CONFIG_HOME' or `HOME'
+explicitly.
 
-Florian Achleitner wrote:
+The following patch series corrects this brittleness (and the
+failures to which it has led):
 
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -484,8 +484,18 @@ static int fetch_with_import(struct transport *transport,
->  		if (posn->status & REF_STATUS_UPTODATE)
->  			continue;
->  		if (data->refspecs)
-> +			/*
-> +			 * If the remote-helper advertised the refpec capability, we
-> +			 * retrieve the local, private ref from it. The imported data is
-> +			 * expected there. (see Documentation/git-remote-helpers.*).
-> +			 */
->  			private = apply_refspecs(data->refspecs, data->refspec_nr, posn-
->>name);
->  		else
-> +			/*
-> +			 * else, the default refspec *:* is implied. The remote-helper has
-> +			 * to import the remote heads directly to the local heads.
-> +			 * remote-helpers using 'import' should have the refspec capability.
-> +			 */
->  			private = xstrdup(posn->name);
+  t/t1306-xdg-files.sh | 69 +++++++++++++++++++++++++++-------------------------
+  t/test-lib.sh        |  3 +++
+  2 files changed, 39 insertions(+), 33 deletions(-)
 
-What is _exactly_ the information the reader would want to know here?
-Looking at this code:
+  [1] Export a suitable `XDG_CONFIG_HOME' environment variable
+  [2] Use "$HOME" and "$XDG_CONFIG_HOME" explicitly
+  [3] Trivial: `xdg' -> `XDG'
 
-		char *private;
-		posn = to_fetch[i];
-		if (posn->status & REF_STATUS_UPTODATE)
-			continue;
-		if (!data->refspecs)
-			private = xstrdup(...);
-		else
-			private = apply_refspecs(...);
-		if (!private)
-			continue;
-		read_ref(private, posn->old_sha1);
-		free(private);
 
-Despite the misleading "old_sha1" name, this loop runs after
-fast-import has finished, and the values being read into
-to_fetch[]::old_sha1 are object names representing the result.
-
-Callers such as builtin/fetch.c then use these values to write
-feedback to the terminal, to populate FETCH_HEAD, and to
-determine what new value peer_ref should get.
-
-Shouldn't the comment say something about these SHA-1s not actually
-being old?  Something like:
-
-	/*
-	 * If the remote helper advertised the "refspec" capability,
-	 * it will have the written result of the import to the refs
-	 * named on the right hand side of the first refspec matching
-	 * each ref we were fetching.
-	 *
-	 * (If no "refspec" capability was specified, for historical
-	 * reasons we default to *:*.)
-	 *
-	 * Store the result in to_fetch[i].old_sha1.  Callers such
-	 * as "git fetch" can use the value to write feedback to the
-	 * terminal, populate FETCH_HEAD, and determine what new value
-	 * should be written to peer_ref if the update is a
-	 * fast-forward or this is a forced update.
-	 */
-	for (i = 0; ...
-
-Hmm?
-Jonathan
+-- 
+1.7.11.1.29.gf71be5c
