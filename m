@@ -1,125 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: possible bug in autocompletion
-Date: Tue, 17 Jul 2012 08:12:32 -0400
-Message-ID: <20120717121232.GA32571@sigill.intra.peff.net>
-References: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git rebase -i does not rebase if all lines are removed
+Date: Tue, 17 Jul 2012 14:25:15 +0200
+Message-ID: <500559AB.9000304@viscovery.net>
+References: <CAGHpTBKn+avCrWegktoJRurG+oycq6Sb9CiRDCBQG=hSMUkjiA@mail.gmail.com> <1342522535.20671.7.camel@centaur.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeroen Meijer <jjgmeijer@hotmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 14:12:48 2012
+Cc: Orgad and Raizel Shaneh <orgads@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Jul 17 14:25:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sr6dz-0001yK-Js
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 14:12:47 +0200
+	id 1Sr6qE-0002es-80
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 14:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab2GQMMm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jul 2012 08:12:42 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36000
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751800Ab2GQMMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 08:12:40 -0400
-Received: (qmail 5939 invoked by uid 107); 17 Jul 2012 12:12:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jul 2012 08:12:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jul 2012 08:12:32 -0400
-Content-Disposition: inline
-In-Reply-To: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
+	id S1752708Ab2GQMZV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jul 2012 08:25:21 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:50075 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752270Ab2GQMZU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2012 08:25:20 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Sr6ri-0002RK-Ly; Tue, 17 Jul 2012 14:26:59 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id CB0EE1660F;
+	Tue, 17 Jul 2012 14:25:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <1342522535.20671.7.camel@centaur.cmartin.tk>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201602>
 
-On Tue, Jul 17, 2012 at 11:10:39AM +0200, Jeroen Meijer wrote:
+Am 7/17/2012 12:55, schrieb Carlos Mart=C3=ADn Nieto:
+> But more important would be /why/ you feel that rebase -i is the tool
+> you should be using. If you'd like to move the branch pointer back,
+> that's what the reset command is for.
 
-> We have a tag name with some special characters. The tag name is
-> 'Build%20V%20${bamboo.custom.jiraversion.name}%20Build%20721'. In
-> somecases where autocompletion is used an error is given, such as
-> 'bash: Build%20V%20${bamboo.custom.jiraversion.name}%20Build%20721:
-> bad substitution'. This can be invoked by typing 'git checkout B' and
-> then pressing tab.
+Perhaps because that's not what the OP wanted to do?
 
-Hrm. Weird. It is the "${}" in your tag name that causes the problem,
-and it all boils down to bash trying to do parameter expansion on the
-contents of "compgen -W". You can see it in a much simpler example:
+Sometimes it happens that you rebase a bunch of commits, and only a
+handful remains because the others are already in upstream. Looking at
+each remaining one closely, you decide that they don't have to be rebas=
+ed
+(maybe because slightly modified versions are in upstream), so you remo=
+ve
+them one by one, and you end up with an empty list.
 
-  $ echo '${foo.bar}' ;# no expansion, works
-  ${foo.bar}
+This has happened to me at one point, and writing "noop" after the list=
+ is
+empty is a minor nuisance. But I am not complaining. Because being able=
+ to
+abort an interactive rebase by clearing the list is much more important=
+=2E
 
-  $ echo "${foo.bar}" ;# expansion, bash rightfully complains
-  bash: ${foo.bar}: bad substitution
-
-  $ compgen -W '${foo.bar}' f
-  bash: ${foo.bar}: bad substitution
-
-In the final command, we use single-quotes so there is no expansion
-before the command execution. So it happens internally to compgen.
-documentation for compgen says:
-
-  -W wordlist
-          The  wordlist is split using the characters in the IFS specia=
-l vari=E2=80=90
-          able as delimiters, and each resultant word is expanded.  The=
- possi=E2=80=90
-          ble  completions  are  the members of the resultant list whic=
-h match
-          the word being completed.
-
-Which seems kind of crazy to me. It means that we need to be quoting
-everything we feed to compgen to avoid accidental expansion. But I gues=
-s
-bash is not likely to change anytime soon, so we probably need to work
-around it.
-
-> Of course; the tag is useless but still I guess this is a bug in the
-> autocompletion of git.
-
-Yeah, that tag is crazy. But this can happen anywhere that we feed
-arbitrary data to compgen. Try this:
-
-  echo content >'${foo.bar}' &&
-  git add . &&
-  git commit
-
-  git show HEAD:<tab>
-
-which generates the same error. Or even a file named "foo$bar", which i=
-s
-much more likely; that will not generate an error, but it will expand
-$bar and produce erroneous results. I think we also have issues with
-files with single and double quotes in them.
-
-Something like this seems to fix it for me:
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index ffedce7..2d20824 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -261,7 +261,12 @@ __gitcomp ()
- __gitcomp_nl ()
- {
- 	local IFS=3D$'\n'
--	COMPREPLY=3D($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}")=
-)
-+	local words=3D$1
-+	words=3D${words//\\/\\\\}
-+	words=3D${words//\$/\\\$}
-+	words=3D${words//\'/\\\'}
-+	words=3D${words//\"/\\\"}
-+	COMPREPLY=3D($(compgen -P "${2-}" -S "${4- }" -W "$words" -- "${3-$cu=
-r}"))
- }
-=20
- __git_heads ()
-
-but it is awfully ugly. Maybe completion experts can offer a better
-solution.
-
--Peff
+-- Hannes
