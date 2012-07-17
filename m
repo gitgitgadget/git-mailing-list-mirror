@@ -1,92 +1,56 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH] Add explanatory comment for transport-helpers refs mapping.
-Date: Tue, 17 Jul 2012 11:56:56 +0200
-Message-ID: <13702454.DmcNg44yyH@flobuntu>
-References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <11883284.WI8IR4K6qp@flobuntu> <20120717032725.GC3071@burratino>
+From: Orgad and Raizel Shaneh <orgads@gmail.com>
+Subject: git rebase -i does not rebase if all lines are removed
+Date: Tue, 17 Jul 2012 13:46:10 +0300
+Message-ID: <CAGHpTBKn+avCrWegktoJRurG+oycq6Sb9CiRDCBQG=hSMUkjiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 11:57:11 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 17 12:46:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sr4Wi-0002xp-Pm
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 11:57:09 +0200
+	id 1Sr5IH-00017w-Lh
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 12:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988Ab2GQJ5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 05:57:03 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:64199 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752759Ab2GQJ5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 05:57:01 -0400
-Received: by bkwj10 with SMTP id j10so157820bkw.19
-        for <git@vger.kernel.org>; Tue, 17 Jul 2012 02:57:00 -0700 (PDT)
+	id S1754864Ab2GQKqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 06:46:13 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:47613 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752421Ab2GQKqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 06:46:11 -0400
+Received: by lbbgm6 with SMTP id gm6so449710lbb.19
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=dYqNq2JRDTMv/7yDchCxxrzTJ/KL9a2Hfibql/4H8Y8=;
-        b=OioZZhAxRf2Vc+tYUXgDSRYtrSBDbf9X0Qbs5BJeS1Hcx9Vn3INqlAgQ1BBDrxDVZ+
-         xQzYyc7TrFv3bw4VgbPKI1ZnR7ejEURv5b1N7J6rfJhz7OLmAdFhbKIVDV0gNNOojEK4
-         0XiyKtVP2wHVbF/oXC++tPSsyVwlHOj7qwoCiioe6hrNF+kXMKydHgEjUq8a2uyL0alW
-         OTxEO+Av6fMwzUwoSTVAOUsIjw74z2V638HrFtxn4CBAw1R1AGiIyp5YJd314UaN5V4r
-         OQChDhis3oyPhkT3tAuLbRYBwXZEtaQ1yRts2a1CULcuh5bwIFlRVEb+QjTZXDG8pLlK
-         d1jA==
-Received: by 10.205.122.147 with SMTP id gg19mr684681bkc.73.1342519020383;
-        Tue, 17 Jul 2012 02:57:00 -0700 (PDT)
-Received: from flobuntu.localnet (91-115-94-188.adsl.highway.telekom.at. [91.115.94.188])
-        by mx.google.com with ESMTPS id hs2sm9532411bkc.1.2012.07.17.02.56.57
-        (version=SSLv3 cipher=OTHER);
-        Tue, 17 Jul 2012 02:56:58 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120717032725.GC3071@burratino>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ninIqWePyojHbrpIOyOLkqfwtgckyvxrpZaFnBMVVRU=;
+        b=cYGHmNY1TzSmVMyL64OLar8bRQohTaADulu5tKZZ5V61lZZ3qpjx6QmBPYB1h4B43b
+         2L/IjklzTazeP59TSO//LAkzaJxurOL82nbHHUnvkRi2GVhrMeVTy7hSSCBedu9Wx3UE
+         3tuC7Y61N2oBbl4DO+m+gPVUrb67jAyeSMV9zQUtWh231Hso1+PSYHplzNsLeG9LG+Zi
+         ZHkZk0RhgOH+3z0xP6dlZyN2zKQq514R7H/rtH7C/1CvKQ5E8KB+ZFX4rL/7qWh3GN09
+         meTZDxiFekCXuJjQuQBbeH+CmpKnlAKgN6IUt4fWiJFPNojBFv7jPe37pKgI/MiRQE9c
+         QcQw==
+Received: by 10.152.144.234 with SMTP id sp10mr2012483lab.51.1342521970377;
+ Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
+Received: by 10.114.17.35 with HTTP; Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201599>
 
-transport-helpers can advertise the 'refspec' capability,
-if not a default refspec *:* is assumed. This could be helpful
-information for the reader.
+Make a commit on top of master.
 
-Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
----
- transport-helper.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+git rebase -i origin/master
 
-diff --git a/transport-helper.c b/transport-helper.c
-index d6daad5..4a763a7 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -484,8 +484,18 @@ static int fetch_with_import(struct transport *transport,
- 		if (posn->status & REF_STATUS_UPTODATE)
- 			continue;
- 		if (data->refspecs)
-+			/*
-+			 * If the remote-helper advertised the refpec capability, we
-+			 * retrieve the local, private ref from it. The imported data is
-+			 * expected there. (see Documentation/git-remote-helpers.*).
-+			 */
- 			private = apply_refspecs(data->refspecs, data->refspec_nr, posn-
->name);
- 		else
-+			/*
-+			 * else, the default refspec *:* is implied. The remote-helper has
-+			 * to import the remote heads directly to the local heads.
-+			 * remote-helpers using 'import' should have the refspec capability.
-+			 */
- 			private = xstrdup(posn->name);
- 		if (private) {
- 			read_ref(private, posn->old_sha1);
--- 
-1.7.9.5
+Remove the commit.
+
+Git prints "Nothing to do" and does not rebase.
+
+Running 'git rebase -i' when there are no local commits has 'noop' in
+the first line, and with it the rebase is successful. Why is this
+'noop' mandatory?
+
+- Orgad
