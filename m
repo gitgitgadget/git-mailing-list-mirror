@@ -1,8 +1,8 @@
 From: Michael G Schwern <schwern@pobox.com>
-Subject: Find .pm files automatically (was Re: Fix git-svn tests for SVN
- 1.7.5.)
-Date: Tue, 17 Jul 2012 16:05:41 -0700
-Message-ID: <5005EFC5.8060105@pobox.com>
+Subject: Extract Git classes from git-svn (2/10) (was Re: Fix git-svn tests
+ for SVN 1.7.5.)
+Date: Tue, 17 Jul 2012 16:12:36 -0700
+Message-ID: <5005F164.3060300@pobox.com>
 References: <5004B772.3090806@pobox.com> <20120717174446.GA14244@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -11,230 +11,412 @@ Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
 	Eric Wong <normalperson@yhbt.net>,
 	Ben Walton <bwalton@artsci.utoronto.ca>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 01:06:15 2012
+X-From: git-owner@vger.kernel.org Wed Jul 18 01:12:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrGqM-0000YE-8J
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 01:06:14 +0200
+	id 1SrGwe-0001gC-O6
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 01:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586Ab2GQXFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 19:05:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42665 "EHLO
+	id S1754879Ab2GQXMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 19:12:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46181 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750962Ab2GQXFn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 19:05:43 -0400
+	id S1751708Ab2GQXMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 19:12:37 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA4A48269;
-	Tue, 17 Jul 2012 19:05:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25330843E;
+	Tue, 17 Jul 2012 19:12:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
 	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=tLU/Gpcnpc7V
-	Qq8+pm2WPLShTTA=; b=LrCOf2J8Pxi2Ayt9FXIDTq+OKwP15gqukoM7L2TqsgeM
-	PViamNgQ/kjVvQsIvRXUDdDwxAOsczlTGtDA2f/VCrSqi5ZU4ydFGl5iZQqgbIMy
-	ZpsBbJv3wV5WL634by91xB3SvvSxH2pnUk4nBcJ7u6cACugyJPFfJ5jucVwb0Fw=
+	:content-type:content-transfer-encoding; s=sasl; bh=c3DF6vvSH1d+
+	WW0WyNtlNsWEXkk=; b=lURlZQTctUmREbRsEd/8WZU6SMgwMNqICGnsIY0Aaob1
+	BA48a4V6ZJ92Gi0R0voIKgLd0oFT0boy5nCg1OMxrDOtwrUeLAd85dP44GXrWItv
+	hVMsx8bztHgcwK4SPiUo/+ykMdecEi//gfZEE8LdlIhT2ursJGo/NyePQknQM18=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
 	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jEXE7P
-	zK38/5WsAw6Se5ZBiAGkdpaHdqGkQuFH1FZf26WD+XX0cP7+Dj3PKR4SfLjcbt8s
-	LxT5x3ml1soiso5uN0SuC457IWZaBzshYcdBS3DDtxTv8g2XqIhrc+Dp8E9ok4JK
-	tDpMyk0O5IJ00HNmAqLh1OATy6+CuU5at9bKc=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=e0eNbQ
+	A35YxLOZA4ydyCkwHnFsQOz/dk+yWD09XtfNquwCTEb8WsiDBn7q1YiKGLYVRYmL
+	t6wWV0sg7VfBVMINCnDhRA3ZnL2uoM7uvgLTHk92ZqwvACnJD5SYdCUVj1OgVu7r
+	vVFXwDtxOF/I8s70ZjsLbO2be0dWiXOfT/TsM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6EFD8268;
-	Tue, 17 Jul 2012 19:05:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F897843D;
+	Tue, 17 Jul 2012 19:12:37 -0400 (EDT)
 Received: from windhund.local (unknown [67.23.204.5]) (using TLSv1 with
  cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF78D8267; Tue, 17 Jul
- 2012 19:05:41 -0400 (EDT)
+ by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 144D1843C; Tue, 17 Jul
+ 2012 19:12:36 -0400 (EDT)
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0)
  Gecko/20120614 Thunderbird/13.0.1
 In-Reply-To: <20120717174446.GA14244@burratino>
 X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: EEC660C8-D063-11E1-B343-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E5A9DE88-D064-11E1-921B-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201627>
 
-On 2012.7.17 10:44 AM, Jonathan Nieder wrote:
-> My advice would be to send five or so of the patches that you would
-> like to be reviewed first, inline, one per message, in reply to this
-> message so we can start to work on that.  Presumably the patches do
-> not regress git-svn's behavior but only make it saner, so even if this
-> is not a complete fix it should allow us to get started.  See
-> Documentation/SubmittingPatches for more hints.
-
-Ok, here goes.
-
-First patch overhauls perl/Makefile.PL to make it easier to add .pm files,
-which I'm going to be doing a lot of.  Instead of having to manually add to
-the %pm hash, it scans for .pm files.
-
-It also moves Error.pm into a bundle directory.  This both makes it just
-another directory to scan (or not scan), but it also makes it possible to
-bundle additional modules in the future.  ExtUtils::MakeMaker uses this
-technique itself.
-
-You still have to remember to add them to the other Makefile.
-
-This is available as a branch.
-https://github.com/schwern/git/tree/git-svn/easier_modules
-
-
->From 47a723a860cded6b16a716ea74c5bc029ee5b0ac Mon Sep 17 00:00:00 2001
+>From 683a230e439f1d5ac2727ce4c2a74e93804fc72b Mon Sep 17 00:00:00 2001
 From: "Michael G. Schwern" <schwern@pobox.com>
-Date: Thu, 12 Jul 2012 00:05:38 -0700
-Subject: [PATCH 01/11] Make the process of adding a module less blecherous.
+Date: Wed, 11 Jul 2012 22:16:01 -0700
+Subject: [PATCH 03/11] Fix Git::SVN so it can at least compile alone.
 
-* Scan for .pm files and build %pms rather than having to do it by hand.
-* Move the bundled Error into its own directory so we can bundle other modules.
+It's still very intertwined with git-svn, but that's a lot of work.  This
+gets things working and tests passing again (as well as they were).
 
-In addition...
-* Add all the .pm files to the all dependency in the alternative Makefile
+This required some parallel refactorings...
+
+* fatal() moved out of git-svn into a new Git::SVN::Utils
+
+* The $can_compress lexical moved into Git::SVN::Utils::can_compress()
+
+* The $_prefix variable which stores the --prefix option is wrapped
+  in a function (rather than made global) so access to it can be
+  controlled.  Git::SVN does not rely on this function being
+  available so it can work without git-svn loaded.  In general,
+  the options should be put back together into a hash and accessed
+  via an options() function.
+
+* A new tree of unit tests for the Git::SVN modules has been created.
+  It doesn't work with the existing Makefile, that can be worried
+  about later.
+
+* Move initialization of Git::SVN globals into Git::SVN
+
+* Have Git::SVN load the Git command* functions on its own
 ---
- perl/Makefile                                     |  6 ++--
- perl/Makefile.PL                                  | 42 +++++++++++++----------
- perl/{private-Error.pm => bundles/Error/Error.pm} |  0
- perl/bundles/README                               | 10 ++++++
- 4 files changed, 36 insertions(+), 22 deletions(-)
- rename perl/{private-Error.pm => bundles/Error/Error.pm} (100%)
- create mode 100644 perl/bundles/README
+ git-svn.perl                   | 33 ++++++++++++++++++---------------
+ perl/Git/SVN.pm                | 29 ++++++++++++++++++++---------
+ perl/Git/SVN/Utils.pm          | 19 +++++++++++++++++++
+ perl/Makefile                  |  2 ++
+ t/Git-SVN/00compile.t          |  9 +++++++++
+ t/Git-SVN/Utils/can_compress.t | 11 +++++++++++
+ t/Git-SVN/Utils/fatal.t        | 34 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 113 insertions(+), 24 deletions(-)
+ create mode 100644 perl/Git/SVN/Utils.pm
+ create mode 100644 t/Git-SVN/00compile.t
+ create mode 100644 t/Git-SVN/Utils/can_compress.t
+ create mode 100644 t/Git-SVN/Utils/fatal.t
 
+diff --git a/git-svn.perl b/git-svn.perl
+index 59db0a4..8a02d1c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -10,6 +10,9 @@ use vars qw/	$AUTHOR $VERSION
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+ $VERSION = '@@GIT_VERSION@@';
+
++use Git::SVN;
++use Git::SVN::Utils qw(fatal can_compress);
++
+ # From which subdir have we been invoked?
+ my $cmd_dir_prefix = eval {
+ 	command_oneline([qw/rev-parse --show-prefix/], STDERR => 0)
+@@ -17,10 +20,8 @@ my $cmd_dir_prefix = eval {
+
+ my $git_dir_user_set = 1 if defined $ENV{GIT_DIR};
+ $ENV{GIT_DIR} ||= '.git';
+-$Git::SVN::default_repo_id = 'svn';
+-$Git::SVN::default_ref_id = $ENV{GIT_SVN_ID} || 'git-svn';
++
+ $Git::SVN::Ra::_log_window_size = 100;
+-$Git::SVN::_minimize_url = 'unset';
+
+ if (! exists $ENV{SVN_SSH} && exists $ENV{GIT_SSH}) {
+ 	$ENV{SVN_SSH} = $ENV{GIT_SSH};
+@@ -35,8 +36,6 @@ $Git::SVN::Log::TZ = $ENV{TZ};
+ $ENV{TZ} = 'UTC';
+ $| = 1; # unbuffer STDOUT
+
+-sub fatal (@) { print STDERR "@_\n"; exit 1 }
+-
+ # All SVN commands do it.  Otherwise we may die on SIGPIPE when the remote
+ # repository decides to close the connection which we expect to be kept alive.
+ $SIG{PIPE} = 'IGNORE';
+@@ -66,7 +65,7 @@ sub _req_svn {
+ 		fatal "Need SVN::Core 1.1.0 or better (got $SVN::Core::VERSION)";
+ 	}
+ }
+-my $can_compress = eval { require Compress::Zlib; 1};
++
+ use Carp qw/croak/;
+ use Digest::MD5;
+ use IO::File qw//;
+@@ -89,7 +88,7 @@ BEGIN {
+ 	foreach (qw/command command_oneline command_noisy command_output_pipe
+ 	            command_input_pipe command_close_pipe
+ 	            command_bidi_pipe command_close_bidi_pipe/) {
+-		for my $package ( qw(Git::SVN::Migration Git::SVN::Log Git::SVN),
++		for my $package ( qw(Git::SVN::Migration Git::SVN::Log),
+ 			__PACKAGE__) {
+ 			*{"${package}::$_"} = \&{"Git::$_"};
+ 		}
+@@ -109,7 +108,10 @@ my ($_stdin, $_help, $_edit,
+ 	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+ 	$_git_format, $_commit_url, $_tag, $_merge_info, $_interactive);
+-$Git::SVN::_follow_parent = 1;
++
++# This is a refactoring artifact so Git::SVN can get at this variable.
++sub opt_prefix { return $_prefix || '' }
++
+ $Git::SVN::Fetcher::_placeholder_filename = ".gitignore";
+ $_q ||= 0;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+@@ -1578,7 +1580,7 @@ sub cmd_reset {
+ }
+
+ sub cmd_gc {
+-	if (!$can_compress) {
++	if (!can_compress()) {
+ 		warn "Compress::Zlib could not be found; unhandled.log " .
+ 		     "files will not be compressed.\n";
+ 	}
+@@ -2020,7 +2022,7 @@ sub md5sum {
+ }
+
+ sub gc_directory {
+-	if ($can_compress && -f $_ && basename($_) eq "unhandled.log") {
++	if (can_compress() && -f $_ && basename($_) eq "unhandled.log") {
+ 		my $out_filename = $_ . ".gz";
+ 		open my $in_fh, "<", $_ or die "Unable to open $_: $!\n";
+ 		binmode $in_fh;
+@@ -2042,6 +2044,7 @@ sub gc_directory {
+ package Git::SVN::Log;
+ use strict;
+ use warnings;
++use Git::SVN::Utils qw(fatal);
+ use POSIX qw/strftime/;
+ use constant commit_log_separator => ('-' x 72) . "\n";
+ use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
+@@ -2140,15 +2143,15 @@ sub config_pager {
+ sub run_pager {
+ 	return unless defined $pager;
+ 	pipe my ($rfd, $wfd) or return;
+-	defined(my $pid = fork) or ::fatal "Can't fork: $!";
++	defined(my $pid = fork) or fatal "Can't fork: $!";
+ 	if (!$pid) {
+ 		open STDOUT, '>&', $wfd or
+-		                     ::fatal "Can't redirect to stdout: $!";
++		                     fatal "Can't redirect to stdout: $!";
+ 		return;
+ 	}
+-	open STDIN, '<&', $rfd or ::fatal "Can't redirect stdin: $!";
++	open STDIN, '<&', $rfd or fatal "Can't redirect stdin: $!";
+ 	$ENV{LESS} ||= 'FRSX';
+-	exec $pager or ::fatal "Can't run pager: $! ($pager)";
++	exec $pager or fatal "Can't run pager: $! ($pager)";
+ }
+
+ sub format_svn_date {
+@@ -2297,7 +2300,7 @@ sub cmd_show_log {
+ 		} elsif ($::_revision =~ /^\d+$/) {
+ 			$r_min = $r_max = $::_revision;
+ 		} else {
+-			::fatal "-r$::_revision is not supported, use ",
++			fatal "-r$::_revision is not supported, use ",
+ 				"standard 'git log' arguments instead";
+ 		}
+ 	}
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 533f1da..02983d6 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1,11 +1,13 @@
+ package Git::SVN;
++
+ use strict;
+ use warnings;
++
+ use Fcntl qw/:DEFAULT :seek/;
+ use constant rev_map_fmt => 'NH40';
+-use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
++use vars qw/$_no_metadata
+             $_repack $_repack_flags $_use_svm_props $_head
+-            $_use_svnsync_props $no_reuse_existing $_minimize_url
++            $_use_svnsync_props $no_reuse_existing
+ 	    $_use_log_author $_add_author_from $_localtime/;
+ use Carp qw/croak/;
+ use File::Path qw/mkpath/;
+@@ -20,6 +22,14 @@ BEGIN {
+ 	$can_use_yaml = eval { require Git::SVN::Memoize::YAML; 1};
+ }
+
++use Git qw(command command_oneline command_noisy command_output_pipe
+command_close_pipe);
++use Git::SVN::Utils qw(fatal can_compress);
++
++our $_follow_parent  = 1;
++our $_minimize_url   = 'unset';
++our $default_repo_id = 'svn';
++our $default_ref_id  = $ENV{GIT_SVN_ID} || 'git-svn';
++
+ my ($_gc_nr, $_gc_period);
+
+ # properties that we do not log:
+@@ -840,8 +850,8 @@ sub assert_index_clean {
+ 		command_noisy('read-tree', $treeish);
+ 		$x = command_oneline('write-tree');
+ 		if ($y ne $x) {
+-			::fatal "trees ($treeish) $y != $x\n",
+-			        "Something is seriously wrong...";
++			fatal "trees ($treeish) $y != $x\n",
++			      "Something is seriously wrong...";
+ 		}
+ 	});
+ }
+@@ -1196,7 +1206,7 @@ sub mkemptydirs {
+ 	my %empty_dirs = ();
+ 	my $gz_file = "$self->{dir}/unhandled.log.gz";
+ 	if (-f $gz_file) {
+-		if (!$can_compress) {
++		if (!can_compress()) {
+ 			warn "Compress::Zlib could not be found; ",
+ 			     "empty directories in $gz_file will not be read\n";
+ 		} else {
+@@ -1879,7 +1889,7 @@ sub set_tree {
+ 	my ($self, $tree) = (shift, shift);
+ 	my $log_entry = ::get_commit_entry($tree);
+ 	unless ($self->{last_rev}) {
+-		::fatal("Must have an existing revision to commit");
++		fatal("Must have an existing revision to commit");
+ 	}
+ 	my %ed_opts = ( r => $self->{last_rev},
+ 	                log => $log_entry->{log},
+@@ -2237,12 +2247,13 @@ sub find_rev_after {
+ sub _new {
+ 	my ($class, $repo_id, $ref_id, $path) = @_;
+ 	unless (defined $repo_id && length $repo_id) {
+-		$repo_id = $Git::SVN::default_repo_id;
++		$repo_id = $default_repo_id;
+ 	}
+ 	unless (defined $ref_id && length $ref_id) {
+-		$_prefix = '' unless defined($_prefix);
++		# Access the prefix option from the git-svn main program if it's loaded.
++		my $prefix = defined &::opt_prefix ? ::opt_prefix() : "";
+ 		$_[2] = $ref_id =
+-		             "refs/remotes/$_prefix$Git::SVN::default_ref_id";
++		             "refs/remotes/$prefix$default_ref_id";
+ 	}
+ 	$_[1] = $repo_id;
+ 	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
+diff --git a/perl/Git/SVN/Utils.pm b/perl/Git/SVN/Utils.pm
+new file mode 100644
+index 0000000..d8f63e6
+--- /dev/null
++++ b/perl/Git/SVN/Utils.pm
+@@ -0,0 +1,19 @@
++package Git::SVN::Utils;
++
++use strict;
++use warnings;
++
++use base qw(Exporter);
++
++our @EXPORT_OK = qw(fatal can_compress);
++
++sub fatal (@) { print STDERR "@_\n"; exit 1 }
++
++my $can_compress;
++sub can_compress {
++    return $can_compress if defined $can_compress;
++
++    return $can_compress = eval { require Compress::Zlib; } ? 1 : 0;
++}
++
++1;
 diff --git a/perl/Makefile b/perl/Makefile
-index 6ca7d47..4f25930 100644
+index 4f25930..d0a0c5c 100644
 --- a/perl/Makefile
 +++ b/perl/Makefile
-@@ -33,7 +33,7 @@ modules += Git/SVN/Prompt
+@@ -26,11 +26,13 @@ instdir_SQ = $(subst ','\'',$(prefix)/lib)
+
+ modules += Git
+ modules += Git/I18N
++modules += Git/SVN
+ modules += Git/SVN/Memoize/YAML
+ modules += Git/SVN/Fetcher
+ modules += Git/SVN/Editor
+ modules += Git/SVN/Prompt
  modules += Git/SVN/Ra
++modules += Git/SVN/Utils
 
  $(makfile): ../GIT-CFLAGS Makefile
--	echo all: private-Error.pm Git.pm Git/I18N.pm > $@
-+	echo all: bundles/Error/Error.pm $(modules) > $@
- 	set -e; \
- 	for i in $(modules); \
- 	do \
-@@ -49,7 +49,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	done
- 	echo '	$(RM) blib/lib/Error.pm' >> $@
- 	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
--	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
-+	echo '	cp bundles/Error/Error.pm blib/lib/Error.pm' >> $@
- 	echo install: >> $@
- 	set -e; \
- 	for i in $(modules); \
-@@ -66,7 +66,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	done
- 	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
- 	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
--	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
-+	echo '	cp bundles/Error/Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
- 	echo instlibdir: >> $@
- 	echo '	echo $(instdir_SQ)' >> $@
- else
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index b54b04a..000d370 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -2,11 +2,16 @@ use strict;
- use warnings;
- use ExtUtils::MakeMaker;
- use Getopt::Long;
-+use File::Find;
-+
-+# Don't forget to update the perl/Makefile, too.
-+# Don't forget to test with NO_PERL_MAKEMAKER=YesPlease
-
- # Sanity: die at first unknown option
- Getopt::Long::Configure qw/ pass_through /;
-
--GetOptions("localedir=s" => \my $localedir);
-+my $localedir = '';
-+GetOptions("localedir=s" => \$localedir);
-
- sub MY::postamble {
- 	return <<'MAKE_FRAG';
-@@ -24,27 +29,25 @@ endif
- MAKE_FRAG
- }
-
--# XXX. When editing this list:
--#
--# * Please update perl/Makefile, too.
--# * Don't forget to test with NO_PERL_MAKEMAKER=YesPlease
--my %pm = (
--	'Git.pm' => '$(INST_LIBDIR)/Git.pm',
--	'Git/I18N.pm' => '$(INST_LIBDIR)/Git/I18N.pm',
--	'Git/SVN/Memoize/YAML.pm' => '$(INST_LIBDIR)/Git/SVN/Memoize/YAML.pm',
--	'Git/SVN/Fetcher.pm' => '$(INST_LIBDIR)/Git/SVN/Fetcher.pm',
--	'Git/SVN/Editor.pm' => '$(INST_LIBDIR)/Git/SVN/Editor.pm',
--	'Git/SVN/Prompt.pm' => '$(INST_LIBDIR)/Git/SVN/Prompt.pm',
--	'Git/SVN/Ra.pm' => '$(INST_LIBDIR)/Git/SVN/Ra.pm',
--);
--
-+my @pmlibdirs = ("Git");
- # We come with our own bundled Error.pm. It's not in the set of default
- # Perl modules so install it if it's not available on the system yet.
--eval { require Error };
--if ($@ || $Error::VERSION < 0.15009) {
--	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
-+if ( !eval { require Error } || $Error::VERSION < 0.15009) {
-+    push @pmlibdirs, "bundles/Error";
- }
-
-+
-+# Find all the .pm files in @pmlibdirs which includes our bundled modules.
-+my %pms;
-+find sub {
-+    return unless /\.pm$/;
-+
-+    my $inst = $File::Find::name;
-+    $inst =~ s{bundles/[^/]+/?}{};
-+    $pms{$File::Find::name} = '$(INST_LIBDIR)/'.$inst;
-+}, @pmlibdirs;
-+
-+
- # redirect stdout, otherwise the message "Writing perl.mak for Git"
- # disrupts the output for the target 'instlibdir'
- open STDOUT, ">&STDERR";
-@@ -52,8 +55,9 @@ open STDOUT, ">&STDERR";
- WriteMakefile(
- 	NAME            => 'Git',
- 	VERSION_FROM    => 'Git.pm',
--	PM		=> \%pm,
-+	PM              => \%pms,
- 	PM_FILTER	=> qq[\$(PERL) -pe "s<\\Q++LOCALEDIR++\\E><$localedir>"],
- 	MAKEFILE	=> 'perl.mak',
- 	INSTALLSITEMAN3DIR => '$(SITEPREFIX)/share/man/man3'
- );
-+
-diff --git a/perl/private-Error.pm b/perl/bundles/Error/Error.pm
-similarity index 100%
-rename from perl/private-Error.pm
-rename to perl/bundles/Error/Error.pm
-diff --git a/perl/bundles/README b/perl/bundles/README
+ 	echo all: bundles/Error/Error.pm $(modules) > $@
+diff --git a/t/Git-SVN/00compile.t b/t/Git-SVN/00compile.t
 new file mode 100644
-index 0000000..8a9ce39
+index 0000000..c32ee4b
 --- /dev/null
-+++ b/perl/bundles/README
-@@ -0,0 +1,10 @@
-+This is any Perl modules we might want to bundle because Perl doesn't (or didn't)
-+ship with them.  Each directory is a distribution containing all the PM files.
++++ b/t/Git-SVN/00compile.t
+@@ -0,0 +1,9 @@
++#!/usr/bin/env perl
 +
-+For example, if you wanted to bundle URI...
-+1) mkdir bundles/URI/
++use strict;
++use warnings;
 +
-+2) build URI & cp -r blib/lib/* into bundles/URI
++use Test::More tests => 2;
 +
-+3) add bundles/URI to @pmlibdirs in the Makefile.PL with the
-+   appropriate check for existance and high enough version
++require_ok 'Git::SVN';
++require_ok 'Git::SVN::Utils';
+diff --git a/t/Git-SVN/Utils/can_compress.t b/t/Git-SVN/Utils/can_compress.t
+new file mode 100644
+index 0000000..d7b49b8
+--- /dev/null
++++ b/t/Git-SVN/Utils/can_compress.t
+@@ -0,0 +1,11 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++
++use Test::More 'no_plan';
++
++use Git::SVN::Utils qw(can_compress);
++
++# !! is the "convert this to boolean" operator.
++is !!can_compress(), !!eval { require Compress::Zlib };
+diff --git a/t/Git-SVN/Utils/fatal.t b/t/Git-SVN/Utils/fatal.t
+new file mode 100644
+index 0000000..b90746c
+--- /dev/null
++++ b/t/Git-SVN/Utils/fatal.t
+@@ -0,0 +1,34 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++
++use Test::More 'no_plan';
++
++BEGIN {
++    # Override exit at BEGIN time before Git::SVN::Utils is loaded
++    # so it will see our local exit later.
++    *CORE::GLOBAL::exit = sub(;$) {
++        return @_ ? CORE::exit($_[0]) : CORE::exit();
++    };
++}
++
++use Git::SVN::Utils qw(fatal);
++
++# fatal()
++{
++    # Capture the exit code and prevent exit.
++    my $exit_status;
++    no warnings 'redefine';
++    local *CORE::GLOBAL::exit = sub { $exit_status = $_[0] || 0 };
++
++    # Trap fatal's message to STDERR
++    my $stderr;
++    close STDERR;
++    ok open STDERR, ">", \$stderr;
++
++    fatal "Some", "Stuff", "Happened";
++
++    is $stderr, "Some Stuff Happened\n";
++    is $exit_status, 1;
++}
 -- 
 1.7.11.1
-
-
-
-
--- 
-Alligator sandwich, and make it snappy!
