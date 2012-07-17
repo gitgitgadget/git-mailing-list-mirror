@@ -1,101 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix overwritten remote ref on with fast-import.
-Date: Tue, 17 Jul 2012 16:02:12 -0500
-Message-ID: <20120717210212.GB15624@burratino>
-References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1948960.GdZ6fLVixa@flobuntu>
- <20120717134820.GE3071@burratino>
- <1571690.jxJy5HzrPO@flobuntu>
+From: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
+Subject: Re: [PATCH v2] Fix notes handling in rev-list
+Date: Wed, 18 Jul 2012 00:22:32 +0300
+Message-ID: <CAOQ7pMO8w79B1kpztv4a+x8oCSzL4b8t7STyQu2i68ZT6qk_wQ@mail.gmail.com>
+References: <20120325005504.GA27651@sigill.intra.peff.net>
+	<1342463409-6919-1-git-send-email-jukka.lehtniemi@gmail.com>
+	<20120717034640.GB20945@sigill.intra.peff.net>
+	<7vvchnx7tc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 23:02:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 17 23:22:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrEuV-0008OA-Ix
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 23:02:23 +0200
+	id 1SrFE9-0003a4-9g
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 23:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756678Ab2GQVCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 17:02:19 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:34053 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248Ab2GQVCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 17:02:18 -0400
-Received: by gglu4 with SMTP id u4so894080ggl.19
-        for <git@vger.kernel.org>; Tue, 17 Jul 2012 14:02:17 -0700 (PDT)
+	id S1756775Ab2GQVWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 17:22:34 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:64053 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756763Ab2GQVWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 17:22:33 -0400
+Received: by qcro28 with SMTP id o28so607404qcr.19
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 14:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nj/v+9fIHwygUWGRgA0x8TZ3yoO92zJ1UbvcQeCswtU=;
-        b=E1zSHHxuOO/uJcNS2keb5jZphX7z2NSRhFpta0Jo9os1VE1yhSymp6ffa88U+uvfDq
-         /5RhESRb7D7nf5rF6ILrNBIX+z4nyHW52xmkurd9uXjv8CCUYdNvqy60UHBsks0cL9u0
-         eY5PcbmJOj46FjCkv7zbTm6mXOzR4UN5Q2nK1GbGbqWF0Lqr1aZdM22pjfJbvTV1gZxn
-         9/lq+GVfJhZOuGgYmwh72RRPTqLmkzTg2A4cLp1iEhKoWDHGSdm2iR5tKhw0a+AgJEmw
-         RPXbPDdzu15Kv3siffK1EgG7beFHfoXOq7CJFohw8l0whQTfMznIKaDjtlyrHWCfgZAe
-         Y/dA==
-Received: by 10.50.183.200 with SMTP id eo8mr63833igc.63.1342558937193;
-        Tue, 17 Jul 2012 14:02:17 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id gl1sm26091627igc.1.2012.07.17.14.02.15
-        (version=SSLv3 cipher=OTHER);
-        Tue, 17 Jul 2012 14:02:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1571690.jxJy5HzrPO@flobuntu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=l28WPvXYF1lu/RePcN+BVyD7lqWhSmhAoXBiOyjwaAg=;
+        b=roYMKphmrkybPlFrAlM3dfXyOhIdgIVmzYQpjzaK/cd2u5VJzgPo0esdH8EZtXbvHG
+         Cc0xWV77hw0drhtZbfB3P+GDS9o0c9OYNZQwlk0S9JV//CtVggu8doTG0HKEP7yNarsD
+         cZ8kcNduUCjkZAkzyYpRq4YDi4d/tTkspkkHS6oILXfLpIU1wJmRMYc54TmaYGosg3Tq
+         0Tmm4xCjRlOtvYTxl03pkrolIYgU1UQ9/uD4fOOws/rgDe7dD43bE7jhnHYSVAwVCVfO
+         nKFS+wEii6vXifhoenDPzyByOeeecblK38lIqN7ReA7p/J8bTJ+c0/l8qZ0TUSoqnDt3
+         HUSg==
+Received: by 10.224.203.8 with SMTP id fg8mr1981376qab.38.1342560153039; Tue,
+ 17 Jul 2012 14:22:33 -0700 (PDT)
+Received: by 10.224.111.140 with HTTP; Tue, 17 Jul 2012 14:22:32 -0700 (PDT)
+In-Reply-To: <7vvchnx7tc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201623>
 
-Hi,
+First of all, thanks for you feedback, both of you. And sorry for
+wasting your time . I thought that the "In-Reply-To"-header would
+serve as a reference to the original patch but obviously it wasn't
+enough.
 
-Florian Achleitner wrote:
+On Tue, Jul 17, 2012 at 8:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I wonder if we should show the blob object names that store the
+> notes payload if we were given --notes option in a format that is
+> easy for readers to mechanically parse its output.
+>
 
-> So we want the transport-helper to touch only private refs, i.e. some subdir 
-> of refs/, ok.
-> On the other hand I thought we expect git-fetch to update the RHS of the 
-> passed refspec (or the default one ). How?
+Very good point indeed. I think this is how it should be. How would
+you prefer the output format to be? Would e.g.
 
-Now I am getting confused by terminology.  By "the transport-helper"
-do you mean the remote helper (e.g., git-remote-svn) or
-transport-helper.c?
+    189899d229ec Notes: 888ecad77e88
 
-By the "default" refspec do you mean the one specified in .git/config
-or some default when none is specified there?  "git fetch" updates
-refs according to the specified fetch refspec in
-builtin/fetch.c::store_updated_refs().
+be ok?
 
-> Btw, whats FETCH_HEAD for?
+> In any case, the use of format_display_notes() that is meant for
+> human consumption feels very wrong to me, especially it seems to be
+> placed outside the "if (revs->verbose_header && commit->buffer)"
+> block in this patch.  I do not have any problem if the patch makes
+> the notes text shown in the other side of the if block that uses
+> pretty_print_commit(), though.
+>
 
-"grep FETCH_HEAD Documentation/*.txt" gives some hints.  Most notably:
+I think that another place where human readable notes should be shown
+is inside the graph.
 
-	git-fetch(1)
-	------------
-	The ref names and their object names of fetched refs are stored
-	in ".git/FETCH_HEAD".  This information is left for a later merge
-	operation done by 'git merge'.
-
-	gittutorial(7)
-	--------------
-	Alice can peek at what Bob did without merging first, using the "fetch"
-	command; this allows Alice to inspect what Bob did, using a special
-	symbol "FETCH_HEAD", in order to determine if he has anything worth
-	pulling, like this:
-
-	------------------------------------------------
-	alice$ git fetch /home/bob/myrepo master
-	alice$ git log -p HEAD..FETCH_HEAD
-	------------------------------------------------
-
-Hope that helps,
-Jonathan
+-- 
+Jukka
