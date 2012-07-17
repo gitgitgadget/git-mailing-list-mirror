@@ -1,87 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix overwritten remote ref on with fast-import.
-Date: Mon, 16 Jul 2012 22:27:25 -0500
-Message-ID: <20120717032725.GC3071@burratino>
-References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1342362383-31167-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <20120716003024.GA4246@burratino>
- <11883284.WI8IR4K6qp@flobuntu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Fix notes handling in rev-list
+Date: Mon, 16 Jul 2012 20:40:24 -0700
+Message-ID: <7v1ukbys0n.fsf@alter.siamese.dyndns.org>
+References: <20120325005504.GA27651@sigill.intra.peff.net>
+ <1342463409-6919-1-git-send-email-jukka.lehtniemi@gmail.com>
+ <7vipdn1qb7.fsf@alter.siamese.dyndns.org>
+ <20120717031727.GA20945@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 17 05:28:33 2012
+Cc: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 17 05:40:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SqySY-0007Ym-Cn
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 05:28:26 +0200
+	id 1SqyeJ-0002Ry-I4
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 05:40:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590Ab2GQD16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 23:27:58 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:54414 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751719Ab2GQD1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 23:27:30 -0400
-Received: by gglu4 with SMTP id u4so5741352ggl.19
-        for <git@vger.kernel.org>; Mon, 16 Jul 2012 20:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=DyfX5yEXVDLnuD8wD7E0WvQWOjUmRvpjVIAnNV+d3is=;
-        b=ZGED4+Y8Nk4dghSC0x2T7dqr7Yquwz+Snihq+00ofOGXsa5jGjFoIb/RehfR7z5uEO
-         GtdmUHDq6aGYbGGEe9iKHdam7qBwyjpd2a7rcFVctUzmxUIs5sshZcJrsG2dAMGzI/T4
-         KZQhulYfe5jKlC7l1qpuxDfojDFjcP7lAxzikUELyNnEnjqkwMRwlW4JtPVTXMquKXC+
-         uDd18j+nAWzxRN+Sb5j/QZyLt7ZiXroKh7ORWUXud4ZMbIsIBg+e2CBPE/Ujx+w38YYm
-         BLsSyI6OcB7O7CNY/w1fIp4GamgWOk6HjviZHa5WLf7JCZNImr7DP1Yh7PsrWD3OGuYe
-         U3DA==
-Received: by 10.50.100.129 with SMTP id ey1mr124570igb.35.1342495649252;
-        Mon, 16 Jul 2012 20:27:29 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id ch4sm4964083igb.2.2012.07.16.20.27.27
-        (version=SSLv3 cipher=OTHER);
-        Mon, 16 Jul 2012 20:27:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <11883284.WI8IR4K6qp@flobuntu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752593Ab2GQDka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 23:40:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39974 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751202Ab2GQDk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 23:40:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B4358B8C;
+	Mon, 16 Jul 2012 23:40:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/kImSADCt/fHA6wcKp3SAwsceVw=; b=Ag4NVp
+	AwUBJRyzM22zK/QBnZkhX5FdMurGlUf///PfD+4o2IvCG5lNaOycbEn1xH7eQOKp
+	uhwqdN4x3SandaoGQldHb16Q4lOQf0Qvm64ln/fB2/veOiyaoQi8vONv2MHJqc7s
+	/cduKvDLABgBkXcfBVAtzk0dWeJgmUlBmIOJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DbzCoP9aaqhcYdgLtFZqrnCtg741AAXw
+	fE+pTMQ0yaPu2BqFh/FRiIX1JKJ9lXAktV2LYQ6QzzCrHNgOMhwMuo6imiFUbANL
+	+oOb3XYLyGWYK6TQGI4Z0IGy69ZhJ6mrQQeKP5GNmWi0edmTBQEV+tX5svXF6WNb
+	tNP8UGbz3wc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 076B88B8B;
+	Mon, 16 Jul 2012 23:40:27 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A50A8B88; Mon, 16 Jul 2012
+ 23:40:25 -0400 (EDT)
+In-Reply-To: <20120717031727.GA20945@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 16 Jul 2012 23:17:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 253B1A8E-CFC1-11E1-A2D5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201585>
 
-Florian Achleitner wrote:
+Jeff King <peff@peff.net> writes:
 
-> When it does advertise refspec like:
-> Debug: Remote helper: <- refspec refs/heads/master:refs/remotes/svnfile/master
-> it all works. Unfortunatly I didn't understand that a day ago.
+> ... But whatever we call it, I think it is an
+> improvement.
 
-Hm, that still doesn't look right.  The RHS of the refspec is supposed to
-be a _private_ namespace for the remote helper, and refs/remotes/ is
-not private.
+I didn't say it makes things worse in any way, did I?
 
-Would something like
+I was reacting on the Subject: line because that will what I later
+have to work from when reading shortlog, summarizing changes, etc.
 
-	refspec refs/heads/*:refs/svn/<name of remote>/*
+> ... I don't think one more option is going to
+> break the camel's back, but I wonder if "rev-list -h" could use some
+> cleanup. E.g., maybe drop seldom used stuff like --bisect-vars, format
+> similar options on a single line to save space, and add in some missing
+> options.
 
-work?
-
-[...]
-> If yes, it makes sense now! A little comment in the sources would help a lot.
-
-Now that you know what the reader of this code needs to know, a patch
-would be very welcome.
-
-"git blame" or "git log -S" can be useful to find what the authors
-were thinking when they wrote that line, or to find wording to steal
-for a comment. :)
-
-Hope that helps,
-Jonathan
+Sounds good.  The manpage also needs some cleaning up, I would
+think, to omit things that may happen to work (primarily because a
+lot of code is shared with "log") but do not have to, for example.
