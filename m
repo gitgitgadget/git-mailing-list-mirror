@@ -1,131 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] commit-tree: resurrect command line parsing updates
-Date: Tue, 17 Jul 2012 13:22:13 -0700
-Message-ID: <7vd33uxhmy.fsf@alter.siamese.dyndns.org>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [PATCH] Fix overwritten remote ref on with fast-import.
+Date: Tue, 17 Jul 2012 22:52:38 +0200
+Message-ID: <1571690.jxJy5HzrPO@flobuntu>
+References: <1342013933-14381-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1948960.GdZ6fLVixa@flobuntu> <20120717134820.GE3071@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Keshav Kini <keshav.kini@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 17 22:22:24 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 22:52:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrEHn-0002wd-Ch
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 22:22:23 +0200
+	id 1SrElE-0002zT-G2
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 22:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756612Ab2GQUWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 16:22:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46428 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755206Ab2GQUWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 16:22:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E39F06DCF;
-	Tue, 17 Jul 2012 16:22:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=/
-	mGfU/pX1bK8TtilK4xuQmlH3Vo=; b=cxlP+wXRQJFc7YxJ2LIkASYJWvxd2wBQw
-	12ySbjOk7uMGhG2mkX7oasZmzZm6gVeZY5SKpN3mS1j4VcEvqVkwbIModzgPH9zf
-	K2OMEa8Jikw54M/i05Bvq5PnXkWU418R5NZA+ZOOVzTqVaC+J3yuPj8iEMx2Oi8G
-	/fRNsw3czs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=A8WR16KB79e/LwLSsnIFqWHrpZxmhKMtxe7MUE1Rwk2drNOu5BXZO8Hc
-	qE6pxDcppekrpFoYsTQZhDlnqSJD6tF+VGgzmwJdscXiOGj2SYgD8mzPi0WoQr32
-	EYcrDYag9FeTTwebO1HqHWHmS4JZDN9exmjZWlg/5yNDNzkRFXk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D15476DCE;
-	Tue, 17 Jul 2012 16:22:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FE8A6DC9; Tue, 17 Jul 2012
- 16:22:15 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 192ECB5A-D04D-11E1-A9CE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756664Ab2GQUwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 16:52:44 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:52015 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717Ab2GQUwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 16:52:43 -0400
+Received: by bkwj10 with SMTP id j10so855344bkw.19
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 13:52:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=9ulrkW56crXMV+5Hk8xGWgueubPlvtBaE1uOnzU+Ezk=;
+        b=N6gbKBvGvzFc/tHZlzz9DtP8P5Zj6LUrZdMz7WBit1WyLw/9mOCPkRjNgg7vEhHqlA
+         De6Fu9sgw0lH5PZckpTzX5Z/cRHNHP++qR2Qresbg5+YgUTWSZ+jT5AHT3vF5YYdmHpd
+         rNhDOjSNRHamcbUoJZIEux5HGLAbdqzKSstCuMDGroRiiMfSm65t7/ku04NyD0LzPZgX
+         BVow+0ERK9338ChsIfOQ4q/Qb4WMVaoXcgmWMGUgLo75tHM661WztWgyFFVMaJlbDai7
+         E5xA0MmIh/ycbjsTtJYi/kNNE6NwStFBuzxLxrgO7M3jOkT72C/HOuy34E7Lx8uv0AFi
+         xZKw==
+Received: by 10.204.154.214 with SMTP id p22mr163309bkw.111.1342558361784;
+        Tue, 17 Jul 2012 13:52:41 -0700 (PDT)
+Received: from flobuntu.localnet (93-82-150-64.adsl.highway.telekom.at. [93.82.150.64])
+        by mx.google.com with ESMTPS id t23sm10702903bks.4.2012.07.17.13.52.39
+        (version=SSLv3 cipher=OTHER);
+        Tue, 17 Jul 2012 13:52:40 -0700 (PDT)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <20120717134820.GE3071@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201621>
 
-79a9312 (commit-tree: update the command line parsing, 2011-11-09)
-updated the command line parser to understand the usual "flags first
-and then non-flag arguments" order, in addition to the original and
-a bit unusual "tree comes first and then zero or more -p <parent>".
+On Tuesday 17 July 2012 08:48:20 Jonathan Nieder wrote:
+> Florian Achleitner wrote:
+> > On Monday 16 July 2012 22:27:25 Jonathan Nieder wrote:
+> >> Hm, that still doesn't look right.  The RHS of the refspec is supposed to
+> >> be a _private_ namespace for the remote helper, and refs/remotes/ is
+> >> not private.
+> 
+> [...]
+> 
+> > remote-svn now uses get_fetch_map to retrieve the local refs. So it
+> > respects the fetch refspec in the config.
+> 
+> No no no no no.  That's transport-helper's job.
+> 
+> The RHS of the remote helper's refspec really is supposed to be
+> _private_.  Improvements to the documentation to clarify this would be
+> welcome.
 
-Unfortunately, ba3c69a (commit: teach --gpg-sign option, 2011-10-05)
-broke it by mistake.  Resurrect it, and protect the feature with a
-test from future breakages.
+So we want the transport-helper to touch only private refs, i.e. some subdir 
+of refs/, ok.
+On the other hand I thought we expect git-fetch to update the RHS of the 
+passed refspec (or the default one ). How?
 
-Noticed by Keshav Kini <keshav.kini@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Btw, whats FETCH_HEAD for?
 
- * I privately received a patch that is essentially the same from
-   Keshav, but I do not see it either on the list or on gmane.  I
-   suspect the message was sent via gmane's news submission
-   interface and probably it is taking some time propagating back to
-   the list, or something.
+> 
+> Thanks,
+> Jonathan
 
-   The patch in this message is with an updated log message and an
-   additional test. It is meant to apply to the 1.7.9.X maintenance
-   track and upwards.  For 1.7.11.1 and later, we also need to
-   revert d284367 (git-commit-tree(1): update synopsis, 2012-06-19),
-   which was done without realizing that the updated command line
-   argument order was lost by an earlier mistake.
-
- builtin/commit-tree.c          |  3 ---
- t/t1100-commit-tree-options.sh | 17 +++++++++++++++++
- 2 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index d5e19af..792670a 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -48,9 +48,6 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
- 		usage(commit_tree_usage);
- 
--	if (get_sha1(argv[1], tree_sha1))
--		die("Not a valid object name %s", argv[1]);
--
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 		if (!strcmp(arg, "-p")) {
-diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
-index c4414ff..a3b7723 100755
---- a/t/t1100-commit-tree-options.sh
-+++ b/t/t1100-commit-tree-options.sh
-@@ -7,6 +7,9 @@ test_description='git commit-tree options test
- 
- This test checks that git commit-tree can create a specific commit
- object by defining all environment variables that it understands.
-+
-+Also make sure that command line parser understands the normal
-+"flags first and then non flag arguments" command line.
- '
- 
- . ./test-lib.sh
-@@ -42,4 +45,18 @@ test_expect_success \
-     'compare commit' \
-     'test_cmp expected commit'
- 
-+
-+test_expect_success 'flags and then non flags' '
-+	echo comment text |
-+	git commit-tree $(cat treeid) >commitid &&
-+	echo comment text |
-+	git commit-tree $(cat treeid) -p $(cat commitid) >childid-1 &&
-+	echo comment text |
-+	git commit-tree -p $(cat commitid) $(cat treeid) >childid-2 &&
-+	test_cmp childid-1 childid-2 &&
-+	git commit-tree $(cat treeid) -m foo >childid-3 &&
-+	git commit-tree -m foo $(cat treeid) >childid-4 &&
-+	test_cmp childid-3 childid-4
-+'
-+
- test_done
--- 
-1.7.11.2.308.gd5eadba
+Thanks,
+Florian
