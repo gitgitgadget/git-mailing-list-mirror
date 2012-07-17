@@ -1,138 +1,80 @@
-From: Michael G Schwern <schwern@pobox.com>
-Subject: Extract Git classes from git-svn (10/10) (was Re: Fix git-svn tests
- for SVN 1.7.5.)
-Date: Tue, 17 Jul 2012 16:17:54 -0700
-Message-ID: <5005F2A2.9040800@pobox.com>
-References: <5004B772.3090806@pobox.com> <20120717174446.GA14244@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Extract Git classes from git-svn (1/10) (was Re: Fix git-svn
+ tests for SVN 1.7.5.)
+Date: Tue, 17 Jul 2012 18:31:25 -0500
+Message-ID: <20120717233125.GF25325@burratino>
+References: <5004B772.3090806@pobox.com>
+ <20120717174446.GA14244@burratino>
+ <5005F139.8050205@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
 	Eric Wong <normalperson@yhbt.net>,
 	Ben Walton <bwalton@artsci.utoronto.ca>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 01:18:01 2012
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 01:31:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrH1k-0000mb-Ec
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 01:18:00 +0200
+	id 1SrHEu-0003hC-Q7
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 01:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826Ab2GQXR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 19:17:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49264 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756346Ab2GQXRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 19:17:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 056E88664;
-	Tue, 17 Jul 2012 19:17:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=QZv+hIQhKRex
-	+FPO0+I6UXkXmzY=; b=fhFz1Qd6MYj0pTq48Dte/dv5k50HoAn4Kw/dUaW1xSP7
-	EHNgTnNRl/CFhKLMcHDxKg+c1yRsYNuA3oF7hiphsRQqfGGfHSYN2T//JPh7STYs
-	CYbnK0RNR3LFF+mmqIQPlHseQcetwYlNzZMKeWgpa7+yn2KB392nYPYi+jXBc/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wDcNlE
-	ieP2d8uB6JC5BDq+Tu0Xdq9ku1fwaQfbw0bUhWFwH8k0VuLsLwp4AO8KlmxSijCi
-	vAOJREI2CXv53oB/DmZv5U5SQMHvYW6OE1fq58vApdGgfv0zbcgJatb/3xeUC3DR
-	kI8eo4j5mxDJE50yP4H5w4vPZXDXLnBzdst+c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6E558663;
-	Tue, 17 Jul 2012 19:17:54 -0400 (EDT)
-Received: from windhund.local (unknown [67.23.204.5]) (using TLSv1 with
- cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FA1F8660; Tue, 17 Jul
- 2012 19:17:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0)
- Gecko/20120614 Thunderbird/13.0.1
-In-Reply-To: <20120717174446.GA14244@burratino>
-X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: A3323B1C-D065-11E1-AC15-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+	id S1756963Ab2GQXbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 19:31:32 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:49074 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756940Ab2GQXba (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 19:31:30 -0400
+Received: by gglu4 with SMTP id u4so1015532ggl.19
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 16:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=pvNiJcobyZzgzycXzvPNSyTGfFTL6G8lO6/XUkAJUU4=;
+        b=jfF4X6zeQcglzz/uJKZlzXVew0pDDCm5MPxdbimd27svA6qBjAFweV7oeTucY+KH8/
+         xt7+H4WG4m9iYlj1Deq9N4VHsKOaL1DAAxEuSbaR/5Cz6FZ0rW7LCKc7TWY5prOsdaFE
+         BevwpclqSoXkKaM7TMLgOxYkMG61rsn3h2khhN+N9y+1GoC7EIamQi6DSb77CF6GCceP
+         RXrihY7nd6u7OHqiXbRRjJLBEZ2QsnM9YdHhpJb3Y9uA2acqGSQYj1nlc2R7ZgVKMQ/V
+         MgapTH4iRc+NQEJkFBXqN8oCiGuRwXst0ADl1QD/zJ/094UddOvZRjwuDbPYb8J+vVK9
+         Agzw==
+Received: by 10.42.81.17 with SMTP id x17mr2630010ick.5.1342567889903;
+        Tue, 17 Jul 2012 16:31:29 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id z3sm12857608igc.7.2012.07.17.16.31.28
+        (version=SSLv3 cipher=OTHER);
+        Tue, 17 Jul 2012 16:31:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5005F139.8050205@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201636>
 
->From 5152b76800f076ba0bd528664f62d3c67966fa4e Mon Sep 17 00:00:00 2001
-From: "Michael G. Schwern" <schwern@pobox.com>
-Date: Thu, 12 Jul 2012 17:25:25 -0700
-Subject: [PATCH 11/11] Fix Git::SVN::GlobSpec so it works.
+Hi,
 
-Only used in one place in Git::SVN, load it on demand.
+Michael G Schwern wrote:
 
-That should be all the Git classes out of git-svn.
----
- perl/Git/SVN.pm          | 5 ++++-
- perl/Git/SVN/GlobSpec.pm | 1 +
- perl/Makefile            | 1 +
- t/Git-SVN/00compile.t    | 3 ++-
- 4 files changed, 8 insertions(+), 2 deletions(-)
+> There's five classes, so this is ten patches.  Let me go on record again to
+> state that this one-inline-patch-per-email is a lot of busy work for me.
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 02983d6..247ee1d 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -202,11 +202,14 @@ sub read_all_remotes {
- 			    . "must start with 'refs/'\n")
- 				unless $remote_ref =~ m{^refs/};
- 			$local_ref = uri_decode($local_ref);
-+
-+			require Git::SVN::GlobSpec;
- 			my $rs = {
- 			    t => $t,
- 			    remote => $remote,
- 			    path => Git::SVN::GlobSpec->new($local_ref, 1),
--			    ref => Git::SVN::GlobSpec->new($remote_ref, 0) };
-+			    ref => Git::SVN::GlobSpec->new($remote_ref, 0)
-+			};
- 			if (length($rs->{ref}->{right}) != 0) {
- 				die "The '*' glob character must be the last ",
- 				    "character of '$remote_ref'\n";
-diff --git a/perl/Git/SVN/GlobSpec.pm b/perl/Git/SVN/GlobSpec.pm
-index 96cfd98..fede3af 100644
---- a/perl/Git/SVN/GlobSpec.pm
-+++ b/perl/Git/SVN/GlobSpec.pm
-@@ -1,4 +1,5 @@
- package Git::SVN::GlobSpec;
-+
- use strict;
- use warnings;
+Well, there's no need to protest and go along with it if it's a bad
+idea.  It's just what we've found to be the easiest way in the past to
+review and have a discussion about each patch, but if you know a
+better way, I'm happy to hear for next time.
 
-diff --git a/perl/Makefile b/perl/Makefile
-index 6c32918..aa4a28b 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -31,6 +31,7 @@ modules += Git/SVN
- modules += Git/SVN/Memoize/YAML
- modules += Git/SVN/Fetcher
- modules += Git/SVN/Editor
-+modules += Git/SVN/GlobSpec
- modules += Git/SVN/Log
- modules += Git/SVN/Migration
- modules += Git/SVN/Prompt
-diff --git a/t/Git-SVN/00compile.t b/t/Git-SVN/00compile.t
-index 5419438..c92fee4 100644
---- a/t/Git-SVN/00compile.t
-+++ b/t/Git-SVN/00compile.t
-@@ -3,7 +3,7 @@
- use strict;
- use warnings;
+The mailing list archive at
+http://news.gmane.org/gmane.comp.version-control.git might be useful
+for seeing some examples of how it plays out in practice.
 
--use Test::More tests => 6;
-+use Test::More tests => 7;
+You mind find the "git send-email" tool to be helpful for automating
+some of the tedious steps of sending a patch series out.  It also does
+some other nice things, like setting the subject lines in a more
+useful way. :)
 
- require_ok 'Git::SVN';
- require_ok 'Git::SVN::Utils';
-@@ -11,3 +11,4 @@ require_ok 'Git::SVN::Ra';
- require_ok 'Git::SVN::Log';
- require_ok 'Git::SVN::Migration';
- require_ok 'Git::IndexInfo';
-+require_ok 'Git::SVN::GlobSpec';
--- 
-1.7.11.1
+Thanks,
+Jonathan
