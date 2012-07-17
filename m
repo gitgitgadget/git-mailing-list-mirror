@@ -1,114 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Testing: XDG config files: Export a suitable
- `XDG_CONFIG_HOME' environment variable
-Date: Tue, 17 Jul 2012 11:31:24 -0700
-Message-ID: <7vliiixmrn.fsf@alter.siamese.dyndns.org>
-References: <82316e5034d940e09fed719ae7bfdc3b-mfwitten@gmail.com>
- <679ad82bd4604d1c903f3c2fff2a8cfb-mfwitten@gmail.com>
- <vpqmx2yp85z.fsf@bauges.imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [ANNOUNCE] Sharness - Test library derived from Git
+Date: Tue, 17 Jul 2012 20:31:52 +0200
+Message-ID: <CACBZZX6QZACjkFPEsNgAkKgnkZHDsCOEAm=-9rs=PLiSfgsXBw@mail.gmail.com>
+References: <CAMFa-2hS-5CHQj79KMGwY7_qv6nGiK+9cKeDdihMVmSoxfsesQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Huynh Khoi Nguyen Nguyen 
-	<Huynh-Khoi-Nguyen.Nguyen@ensimag.imag.fr>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 17 20:31:34 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Mathias Lafeldt <mathias.lafeldt@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 20:32:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrCYX-0007Pv-Cj
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 20:31:33 +0200
+	id 1SrCZH-0008Td-2b
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 20:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379Ab2GQSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 14:31:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57845 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752059Ab2GQSb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 14:31:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F1616F7F;
-	Tue, 17 Jul 2012 14:31:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XK7z2ytqIVnrjd+a8jumngqpFtc=; b=NmOn11
-	dOY+qfqRhURJYDNOJg9ChDKLS8FOlHsP3pXuWKl9gRG/UvRhLRNfh85WobxRcTTB
-	ldEOQOtXN0NgnWErKFP+dApyHpgURG1GW9YfaXrkV77icdoV1nEahck7TKDkP1f2
-	hIYXOYastvJhwAB2VeD/BJB6ZcrH0BZ+dZNlc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h1MeOi8VoH2fBypVOJNaUbqZGq6eVVTM
-	Z9VEcbT+nmzQdxuiIEvdgQgPglcHjfc/FmXSdks5MVsA8Ix/q1FQmY839wxf0nFc
-	lnV9ecakeqFvLBGQBte6q8MVt6BuLzGpYxT67Lu9qD67Y9+JDLuDf+FNVBSP3fv0
-	h74dnYvso+k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B9CC6F7E;
-	Tue, 17 Jul 2012 14:31:26 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A22B26F7D; Tue, 17 Jul 2012
- 14:31:25 -0400 (EDT)
-In-Reply-To: <vpqmx2yp85z.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Tue, 17 Jul 2012 20:14:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9DCACB30-D03D-11E1-8F4C-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753058Ab2GQScO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 14:32:14 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:33798 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752469Ab2GQScN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 14:32:13 -0400
+Received: by gglu4 with SMTP id u4so714146ggl.19
+        for <git@vger.kernel.org>; Tue, 17 Jul 2012 11:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YE/Q4m+La+IebvbwNxf0L1egiO3EFRRn5JpcDcUpe1c=;
+        b=WzLDQ+cupHKaoy2ONEFJfZ99sILezOipKGezKAZvY+lWsbpWVzCDTg2Qevk2J8AGvP
+         jyGQtmiYVAYgOpIbRySrTsXA8F6t7tLh5ztq4YjZiwkK8i9gPNcl94J05N+Gwsgv/me0
+         EA0M/xCHa9LKDS2k6fpoK1r/1Ae3PaEkh5kjlv51nnKVCzWpEIDpGIr3mU5afeUYxp1U
+         Db85z24Zi5nbqQwq7gAPFNhb6JnvN26nVz6QTbDAEZa7f14+DxCrHT1CIjg1sWPSd+LG
+         uYQZh+ob0AkEvfqprtkppN/Qo2CMENxfPRH7UK1CrsDxZ677lIO+09jAnRLHzb8DtQES
+         WxHQ==
+Received: by 10.60.11.9 with SMTP id m9mr4851530oeb.5.1342549932592; Tue, 17
+ Jul 2012 11:32:12 -0700 (PDT)
+Received: by 10.182.133.38 with HTTP; Tue, 17 Jul 2012 11:31:52 -0700 (PDT)
+In-Reply-To: <CAMFa-2hS-5CHQj79KMGwY7_qv6nGiK+9cKeDdihMVmSoxfsesQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201618>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Before your patches, the correct management of $XDG_CONFIG_HOME to
-> override $HOME/.config/git/ was untested (which is unfortunate, indeed),
-> but after your patch serie, the fact that the default is
-> $HOME/.config/git/ is untested, which IMHO is even worse.
+On Tue, Jul 17, 2012 at 10:06 AM, Mathias Lafeldt
+<mathias.lafeldt@gmail.com> wrote:
+> I've been wanting to announce Sharness [1] on this list for quite some
+> time now, but never managed to do so. With the release of version
+> 0.2.4, I think it's about time to change that.
 >
-> Unsetting XDG_CONFIG_HOME and adding one test like this would be better
-> IMHO.
+> Sharness is a shell-based test harness library. It was derived from
+> the Git project and is basically a generalized and stripped-down
+> version of t/test-lib.sh (I basically removed all things specific to
+> Git). So when you know how to write tests for Git, it should be very
+> familiar.
 
-Absolutely.  We would want to make sure that the new code does not
-interfere with established uses when the user does not ask for the
-new feature (i.e. XDG not set), and also make sure it does what it
-was meant to do when the feature is called for (i.e. XDG set).  It
-might be true that the set of tests in the series did not test the
-full spectrum of the latter, but then we would want to see the gap
-filled by adding missing tests, not by converting tests for former
-into the ones that test for the latter.
+Nice, I thought about doing something like this myself but never had the time.
 
-Even with the patch below there may be other gaps in the test. For
-example, core.excludesfile and core.attributesfile must default to
-the XDG location when they exist, whether these variables are set;
-we may want to make sure that is not broken in the future.
+Perhaps to avoid duplication we could move to this and keep
+Git-specific function in some other file.
 
-Michael, could you change the direction of the patch and look into
-filling such gaps?
-
-Thanks.
-
-> diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-> index 3c75c3f..f1ea9f1 100755
-> --- a/t/t1306-xdg-files.sh
-> +++ b/t/t1306-xdg-files.sh
-> @@ -38,6 +38,19 @@ test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''
->         test_cmp expected actual
->  '
->  
-> +test_expect_success '"$XDG_CONFIG_HOME overrides $HOME/.config/git' '
-> +       mkdir -p "$HOME"/xdg/git/ &&
-> +       echo "[user]" >"$HOME"/xdg/git/config &&
-> +       echo "  name = in_xdg" >>"$HOME"/xdg/git/config &&
-> +       echo in_xdg >expected &&
-> +       (
-> +               XDG_CONFIG_HOME="$HOME"/xdg/ &&
-> +               export XDG_CONFIG_HOME &&
-> +               git config --get-all user.name >actual
-> +       ) &&
-> +       test_cmp expected actual
-> +'
-> +
->  
->  test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
->         >.gitconfig &&
+Do you think that would be sensible, and would you be willing to
+submit patches for that?
