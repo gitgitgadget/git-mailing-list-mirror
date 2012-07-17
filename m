@@ -1,65 +1,88 @@
-From: "Jakub Vrana" <jakub@vrana.cz>
-Subject: [PATCH] diff: respect --no-ext-diff with typechange
-Date: Mon, 16 Jul 2012 17:27:00 -0700
-Message-ID: <000301cd63b2$e39a2130$aace6390$@vrana.cz>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Fix notes handling in rev-list
+Date: Mon, 16 Jul 2012 23:17:28 -0400
+Message-ID: <20120717031727.GA20945@sigill.intra.peff.net>
+References: <20120325005504.GA27651@sigill.intra.peff.net>
+ <1342463409-6919-1-git-send-email-jukka.lehtniemi@gmail.com>
+ <7vipdn1qb7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 17 02:57:26 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 05:17:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sqw6P-0008Bq-SL
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 02:57:26 +0200
+	id 1SqyI8-00061z-T4
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 05:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753641Ab2GQA5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jul 2012 20:57:21 -0400
-Received: from maxipes.logix.cz ([93.89.80.122]:35907 "EHLO maxipes.logix.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753418Ab2GQA5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jul 2012 20:57:20 -0400
-X-Greylist: delayed 1816 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Jul 2012 20:57:20 EDT
-Received: from JAKUBVT420S (unknown [IPv6:2620:0:1cfe:28:9c40:6f50:d34b:ae59])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by maxipes.logix.cz (Postfix) with ESMTP id 6D9A35D3C55;
-	Tue, 17 Jul 2012 12:33:32 +1200 (NZST)
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac1jsuHMiOPiqfzOQVqPrd2M62kLkw==
-Content-Language: en-us
+	id S1753487Ab2GQDRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jul 2012 23:17:36 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:33840
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753112Ab2GQDRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jul 2012 23:17:35 -0400
+Received: (qmail 3017 invoked by uid 107); 17 Jul 2012 03:17:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jul 2012 23:17:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jul 2012 23:17:28 -0400
+Content-Disposition: inline
+In-Reply-To: <7vipdn1qb7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201583>
 
-If external diff is specified through diff.external then it is used even if
-`git diff --no-ext-diff` is used when there is a typechange.
+On Mon, Jul 16, 2012 at 12:03:40PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Jakub Vrana <jakub@vrana.cz>
----
- diff.c |    3 +++
- 1 file changed, 3 insertions(+)
+> Jukka Lehtniemi <jukka.lehtniemi@gmail.com> writes:
+> 
+> > Display notes in the rev-list when switch '--notes' is used.
+> > Also expand notes place holder (%N) in user format.
+> > Previously rev-list ignored both of these.
+> >
+> > Signed-off-by: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>
+> > ---
+> >
+> > Thanks for your feedback Peff!
+> 
+> If it is an update for some old patch (I am guessing that is the
+> case from "v2" and "feedback" above), please hint where the
+> original can be found not to waste reviewers' time.
 
-diff --git a/diff.c b/diff.c
-index 208096f..898d610 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3074,6 +3074,9 @@ static void run_diff(struct diff_filepair *p, struct
-diff_options *o)
- 	if (o->prefix_length)
- 		strip_prefix(o->prefix_length, &name, &other);
- 
-+	if (!DIFF_OPT_TST(o, ALLOW_EXTERNAL))
-+		pgm = NULL;
-+
- 	if (DIFF_PAIR_UNMERGED(p)) {
- 		run_diff_cmd(pgm, name, NULL, attr_path,
- 			     NULL, NULL, NULL, o, p);
--- 
-1.7.10.msysgit.1
+Agreed. For reference, v1 is here:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/193842
+
+> As "git rev-list -h" does not say anything about "notes", I do not
+> think this should be even called "Fix"; rather it is "teach rev-list
+> to show notes with --notes", a new feature.
+
+It does not, but "git rev-list --help" does (and it mentions "%N" for
+the pretty userformat). So it's debatable whether it is a code bug or a
+documentation bug. But whatever we call it, I think it is an
+improvement.
+
+> And as a new feature, "git rev-list -h" should be taught to include
+> this new option in its output.  I didn't check the documentation but
+> you may also want to add --notes there, too (hint: grep for "--pretty"
+> to find where you may need to add the new option).
+
+"rev-list -h" is already an unwieldy 35 lines, yet still manages to miss
+many options (e.g., --grep, --author, --cherry-*, variations of
+--left-right, --boundary, history simplification options like
+--full-history, and so on). I don't think one more option is going to
+break the camel's back, but I wonder if "rev-list -h" could use some
+cleanup. E.g., maybe drop seldom used stuff like --bisect-vars, format
+similar options on a single line to save space, and add in some missing
+options.
+
+My preference would actually be to just give up and refer people to the
+manpage after a one or two line usage. But I think we have had that
+discussion before and you did not agree.
+
+-Peff
