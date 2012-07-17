@@ -1,56 +1,64 @@
-From: Orgad and Raizel Shaneh <orgads@gmail.com>
-Subject: git rebase -i does not rebase if all lines are removed
-Date: Tue, 17 Jul 2012 13:46:10 +0300
-Message-ID: <CAGHpTBKn+avCrWegktoJRurG+oycq6Sb9CiRDCBQG=hSMUkjiA@mail.gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: git rebase -i does not rebase if all lines are removed
+Date: Tue, 17 Jul 2012 12:55:35 +0200
+Message-ID: <1342522535.20671.7.camel@centaur.cmartin.tk>
+References: <CAGHpTBKn+avCrWegktoJRurG+oycq6Sb9CiRDCBQG=hSMUkjiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 17 12:46:21 2012
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Orgad and Raizel Shaneh <orgads@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 17 13:10:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sr5IH-00017w-Lh
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 12:46:17 +0200
+	id 1Sr5fE-0007PH-AL
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jul 2012 13:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864Ab2GQKqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 06:46:13 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:47613 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752421Ab2GQKqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 06:46:11 -0400
-Received: by lbbgm6 with SMTP id gm6so449710lbb.19
-        for <git@vger.kernel.org>; Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ninIqWePyojHbrpIOyOLkqfwtgckyvxrpZaFnBMVVRU=;
-        b=cYGHmNY1TzSmVMyL64OLar8bRQohTaADulu5tKZZ5V61lZZ3qpjx6QmBPYB1h4B43b
-         2L/IjklzTazeP59TSO//LAkzaJxurOL82nbHHUnvkRi2GVhrMeVTy7hSSCBedu9Wx3UE
-         3tuC7Y61N2oBbl4DO+m+gPVUrb67jAyeSMV9zQUtWh231Hso1+PSYHplzNsLeG9LG+Zi
-         ZHkZk0RhgOH+3z0xP6dlZyN2zKQq514R7H/rtH7C/1CvKQ5E8KB+ZFX4rL/7qWh3GN09
-         meTZDxiFekCXuJjQuQBbeH+CmpKnlAKgN6IUt4fWiJFPNojBFv7jPe37pKgI/MiRQE9c
-         QcQw==
-Received: by 10.152.144.234 with SMTP id sp10mr2012483lab.51.1342521970377;
- Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
-Received: by 10.114.17.35 with HTTP; Tue, 17 Jul 2012 03:46:10 -0700 (PDT)
+	id S1755188Ab2GQLJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 07:09:55 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:60983 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754209Ab2GQLJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 07:09:54 -0400
+X-Greylist: delayed 543 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jul 2012 07:09:54 EDT
+Received: from [192.168.1.5] (p57A1FFA4.dip.t-dialin.net [87.161.255.164])
+	by hessy.dwim.me (Postfix) with ESMTPSA id 1CD7C814A7;
+	Tue, 17 Jul 2012 13:00:50 +0200 (CEST)
+In-Reply-To: <CAGHpTBKn+avCrWegktoJRurG+oycq6Sb9CiRDCBQG=hSMUkjiA@mail.gmail.com>
+X-Mailer: Evolution 3.4.3-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201600>
 
-Make a commit on top of master.
+On Tue, 2012-07-17 at 13:46 +0300, Orgad and Raizel Shaneh wrote:
+> Make a commit on top of master.
+> 
+> git rebase -i origin/master
+> 
+> Remove the commit.
+> 
+> Git prints "Nothing to do" and does not rebase.
+> 
+> Running 'git rebase -i' when there are no local commits has 'noop' in
+> the first line, and with it the rebase is successful. Why is this
+> 'noop' mandatory?
 
-git rebase -i origin/master
+If you read the instructions, the last line says
 
-Remove the commit.
+    # However, if you remove everything, the rebase will be aborted
 
-Git prints "Nothing to do" and does not rebase.
+so if you want to do a no-op, then you need to tell it. This is the same
+way you abort a commit, by providing it with an empty message.
 
-Running 'git rebase -i' when there are no local commits has 'noop' in
-the first line, and with it the rebase is successful. Why is this
-'noop' mandatory?
+But more important would be /why/ you feel that rebase -i is the tool
+you should be using. If you'd like to move the branch pointer back,
+that's what the reset command is for. rebase deals with moving commits
+from one base to another and optionally reordering, squashing or
+removing some of them.
 
-- Orgad
+   cmn
