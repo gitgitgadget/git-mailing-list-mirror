@@ -1,70 +1,125 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: Jobs and skipSubmitEdit
-Date: Tue, 17 Jul 2012 21:03:04 -0400
-Message-ID: <20120718010304.GA24602@padd.com>
-References: <CAFLRbop2aETNp0-6AdvSTx7Jmh7epYZ6rQc6hhFHbxZrGdEo9g@mail.gmail.com>
- <20120624202445.GA27664@padd.com>
- <CAFLRbootAje0BvLOYiH2xOagfUsQ+a_d+9YeTuG1C0a1Pg__Rg@mail.gmail.com>
- <20120626112115.GA3439@padd.com>
- <CAFLRbooDpeE0U+sysa=OZ2a1sPvPo9MYTi4KLRgfJxkxw2HQyw@mail.gmail.com>
+From: "Jakub Vrana" <jakub@vrana.cz>
+Subject: RE: [PATCH] diff: respect --no-ext-diff with typechange
+Date: Tue, 17 Jul 2012 18:07:40 -0700
+Message-ID: <000e01cd6481$bbd63970$3382ac50$@vrana.cz>
+References: <000301cd63b2$e39a2130$aace6390$@vrana.cz> <20120717041603.GD20945@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Michael Horowitz <mike@horowitz.name>
-X-From: git-owner@vger.kernel.org Wed Jul 18 03:03:40 2012
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: "'Jeff King'" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 18 03:07:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrIg0-0006Pu-5a
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 03:03:40 +0200
+	id 1SrIk0-0004Lq-1N
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 03:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab2GRBDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 21:03:14 -0400
-Received: from honk.padd.com ([74.3.171.149]:50113 "EHLO honk.padd.com"
+	id S1751152Ab2GRBHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 21:07:44 -0400
+Received: from maxipes.logix.cz ([93.89.80.122]:40133 "EHLO maxipes.logix.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751489Ab2GRBDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 21:03:09 -0400
-Received: from arf.padd.com (unknown [50.55.149.165])
-	by honk.padd.com (Postfix) with ESMTPSA id 4B8331E43;
-	Tue, 17 Jul 2012 18:03:08 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id E47E43145F; Tue, 17 Jul 2012 21:03:04 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAFLRbooDpeE0U+sysa=OZ2a1sPvPo9MYTi4KLRgfJxkxw2HQyw@mail.gmail.com>
+	id S1750863Ab2GRBHm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2012 21:07:42 -0400
+Received: from JAKUBVT420S (unknown [IPv6:2620:0:1cfe:28:9c40:6f50:d34b:ae59])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by maxipes.logix.cz (Postfix) with ESMTP id B8D085D3BBB;
+	Wed, 18 Jul 2012 13:14:16 +1200 (NZST)
+In-Reply-To: <20120717041603.GD20945@sigill.intra.peff.net>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQHNUK23Q4/5aKcOeEiJ6/FPuCGGwQKtnXLzlxjzj3A=
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201641>
 
-mike@horowitz.name wrote on Tue, 17 Jul 2012 04:49 -0400:
-> I gave the patch a try, and it seems to work great.
+Yes, I was fixing the invalid (!pgm) condition, sorry for a non-precise description.
+
+Does it mean that my patch is accepted or is there something else I need to do?
+
+-- 
+Jakub Vrana
+
+
+-----Original Message-----
+From: Jeff King [mailto:peff@peff.net] 
+Sent: Monday, July 16, 2012 9:16 PM
+To: Jakub Vrana
+Cc: git@vger.kernel.org; gitster@pobox.com
+Subject: Re: [PATCH] diff: respect --no-ext-diff with typechange
+
+On Mon, Jul 16, 2012 at 05:27:00PM -0700, Jakub Vrana wrote:
+
+> If external diff is specified through diff.external then it is used 
+> even if `git diff --no-ext-diff` is used when there is a typechange.
+
+Eek. That has some minor security implications, as it means that it is dangerous to run even plumbing inspection command in somebody else's repository.
+
+However...
+
+>  diff.c |    3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> Only problem I realized is that it means that the git commit message
-> and the p4 log message end up different, because to p4 the jobs lines
-> are special and get stripped out, but in git it just stays part of the
-> commit message.  So, when you do a p4 sync/rebase, the commits come
-> back without it.  This doesn't make much of difference now, because
-> the commit messages come back modified with the p4 path and changelist
-> number anyway, but if Luke tries to do that change to store the p4
-> path/changelist in notes instead, then we wouldn't want any
-> differences in the commit messages, because then the commits hashes
-> won't match again.
-> 
-> Not sure what the best thing to do here is, but I guess it doesn't
-> matter until this mythical notes thing happens.
+> diff --git a/diff.c b/diff.c
+> index 208096f..898d610 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3074,6 +3074,9 @@ static void run_diff(struct diff_filepair *p, 
+> struct diff_options *o)
+>  	if (o->prefix_length)
+>  		strip_prefix(o->prefix_length, &name, &other);
+>  
+> +	if (!DIFF_OPT_TST(o, ALLOW_EXTERNAL))
+> +		pgm = NULL;
+> +
+>  	if (DIFF_PAIR_UNMERGED(p)) {
+>  		run_diff_cmd(pgm, name, NULL, attr_path,
+>  			     NULL, NULL, NULL, o, p);
 
-Glad it works.
+run_diff_cmd already checks the ALLOW_EXTERNAL bit and sets pgm to NULL there. So as far as I can tell, we are not actually running the external diff. However, there is still a problem. Later in run_diff we do:
 
-I didn't think about trying to make the commit messages exact.
-That isn't required for, e.g. "git cherry", but might be nice
-just to make git/p4 view of the changes more similar.
+        if (!pgm &&
+            DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
+            (S_IFMT & one->mode) != (S_IFMT & two->mode)) {
+                /*
+                 * a filepair that changes between file and symlink
+                 * needs to be split into deletion and creation.
+                 */
+                struct diff_filespec *null = alloc_filespec(two->path);
+                run_diff_cmd(NULL, name, other, attr_path,
+                             one, null, &msg, o, p);
+                free(null);
+                strbuf_release(&msg);
 
-Okay if we wait and see how the notes stuff goes, like you
-suggest.  Could be that Jobs ends up in a note too.
+                null = alloc_filespec(one->path);
+                run_diff_cmd(NULL, name, other, attr_path,
+                             null, two, &msg, o, p);
+                free(null);
+        }
+        else
+                run_diff_cmd(pgm, name, other, attr_path,
+                             one, two, &msg, o, p);
 
-Thanks for testing.
+IOW, we split up a typechange if we are feeding it to the internal diff generator, because builtin_diff will not show diffs between different types. But the check for "!pgm" here is not right; we don't know yet whether we will be builtin or external, because we have not checked ALLOW_EXTERNAL yet.
 
-		-- Pete
+So I think your fix is the right thing, but the bug it is fixing is not "do not run external diff even when --no-ext-diff is specified". It is "do not accidentally feed typechange diffs to builtin_diff".
+
+You can see the difference in output with this script (and it works fine with your patch applied):
+
+    git init -q repo && cd repo &&
+    echo content >file && git add file && git commit -q -m regular &&
+    rm file && ln -s dest file && git commit -q -a -m typechange &&
+    export GIT_PAGER=cat &&
+    export GIT_EXTERNAL_DIFF='echo doing external diff' &&
+    git show HEAD^ --format='=== %s, ext ===' --ext-diff &&
+    git show HEAD^ --format='=== %s, no-ext ===' --no-ext-diff &&
+    git show HEAD  --format='=== %s, ext ===' --ext-diff &&
+    git show HEAD  --format='=== %s, no-ext ===' --no-ext-diff
+
+-Peff
