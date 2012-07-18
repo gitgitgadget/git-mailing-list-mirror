@@ -1,88 +1,68 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v8 4/4] git-rebase: add keep_empty flag
-Date: Wed, 18 Jul 2012 08:17:58 -0400
-Message-ID: <20120718121758.GA25563@hmsreliant.think-freely.org>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
- <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
- <1334932577-31232-5-git-send-email-nhorman@tuxdriver.com>
- <CAOeW2eEchYzRYYUBySKg5xYY3vBDy8GVcAd=ay-HoAGDLZtORw@mail.gmail.com>
- <5006614E.8090601@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] credential: convert "url" attribute into its parsed subparts
+Date: Wed, 18 Jul 2012 14:24:01 +0200
+Message-ID: <vpqeho9jlzy.fsf@bauges.imag.fr>
+References: <20120718120307.GA6399@sigill.intra.peff.net>
+	<20120718120626.GC6726@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org,
-	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 14:18:26 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 18 14:24:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrTCz-0004Dg-G1
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:18:25 +0200
+	id 1SrTIi-0005MS-8m
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577Ab2GRMSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 08:18:20 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:50041 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871Ab2GRMST (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 08:18:19 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SrTCZ-0002fW-NN; Wed, 18 Jul 2012 08:18:06 -0400
-Content-Disposition: inline
-In-Reply-To: <5006614E.8090601@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1753490Ab2GRMYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 08:24:16 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54376 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753336Ab2GRMYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 08:24:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6ICML7D013298
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Jul 2012 14:22:21 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SrTIQ-0004ti-IL; Wed, 18 Jul 2012 14:24:02 +0200
+In-Reply-To: <20120718120626.GC6726@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 18 Jul 2012 08:06:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 18 Jul 2012 14:22:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6ICML7D013298
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1343218944.92492@unkTG9WFvsubaIwoPRlZpA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201682>
 
-On Wed, Jul 18, 2012 at 09:10:06AM +0200, Johannes Sixt wrote:
-> Am 7/18/2012 8:20, schrieb Martin von Zweigbergk:
-> > On Fri, Apr 20, 2012 at 7:36 AM, Neil Horman <nhorman@tuxdriver.com> wrote:
-> >>  pick_one () {
-> >>         ff=--ff
-> >> +
-> >>         case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
-> >>         case "$force_rebase" in '') ;; ?*) ff= ;; esac
-> >>         output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
-> >> +
-> >> +       if is_empty_commit "$sha1"
-> >> +       then
-> >> +               empty_args="--allow-empty"
-> >> +       fi
-> >> +
-> >>         test -d "$rewritten" &&
-> >>                 pick_one_preserving_merges "$@" && return
-> >> -       output git cherry-pick $ff "$@"
-> >> +       output git cherry-pick $empty_args $ff "$@"
-> > 
-> > The is_empty_commit check seems to mean that if $sha1 is an "empty"
-> > commit, we pass the --allow-empty option to cherry-pick. If it's not
-> > empty, we don't. The word "allow" in "allow-empty" suggests that even
-> > if the commit is not empty, cherry-pick would not mind. So, can we
-> > always pass "allow-empty" to cherry-pick (i.e. even if the commit to
-> > pick is not empty)?
-> 
-> I don't think so. If the commit is not empty, but all its changes are
-> already in HEAD, then it will become "empty" when cherry-picked to HEAD.
-> In such a case, we usually do not want to record an empty commit, but stop
-> rebase to give to user a chance to deal with the situation.
-> 
-> -- Hannes
-> 
+Jeff King <peff@peff.net> writes:
 
-Yes, this is the meaning.  "Allow" was used in the sense of a filter, in that we
-are allowing an empty commit to make it into the history, whereas a rebase or
-cherry-pick would normally exclude it.
-Neil
+>   $ echo https://user@example.com | git credential ident
+>   protocol=https
+>   host=example.com
+>   username=user
+>
+> since I had no use for it, but it would obviously be an easy one-liner
+> to write (it's just "fill" without the actual fill call).
+
+I was thinking the same, except I would have spelled it "git credential
+parse" (but ident is fine too). On the perl side, that would allow
+getting a credential hash very simply (but it was already simple in
+perl, and made useless by your code).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
