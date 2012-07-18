@@ -1,66 +1,57 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] git-svn: don't create master if another head exists
-Date: Wed, 18 Jul 2012 11:27:22 +0000
-Message-ID: <20120718112722.GA22042@dcvr.yhbt.net>
-References: <7vehp3gwbx.fsf@alter.siamese.dyndns.org>
- <20120626212108.GR3125@beczulka>
- <7vfw9hafz8.fsf@alter.siamese.dyndns.org>
- <20120626223215.GB8336@beczulka>
- <20120709220321.GE30213@beczulka>
- <7v8vesk12v.fsf@alter.siamese.dyndns.org>
- <20120711012617.GA18369@dcvr.yhbt.net>
- <20120711214019.GF30213@beczulka>
- <7vmx35dhzo.fsf@alter.siamese.dyndns.org>
- <20120718074908.GA23460@beczulka>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/4] mediawiki/credential cleanups
+Date: Wed, 18 Jul 2012 08:03:07 -0400
+Message-ID: <20120718120307.GA6399@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marcin Owsiany <marcin@owsiany.pl>
-X-From: git-owner@vger.kernel.org Wed Jul 18 13:27:36 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 18 14:03:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrSPj-0005bP-CN
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 13:27:31 +0200
+	id 1SrSyd-0004tB-74
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298Ab2GRL1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 07:27:24 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:60876 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751853Ab2GRL1X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 07:27:23 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD3F1F42A;
-	Wed, 18 Jul 2012 11:27:22 +0000 (UTC)
+	id S1754142Ab2GRMD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 08:03:27 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39065
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753257Ab2GRMDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 08:03:15 -0400
+Received: (qmail 18814 invoked by uid 107); 18 Jul 2012 12:03:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jul 2012 08:03:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2012 08:03:07 -0400
 Content-Disposition: inline
-In-Reply-To: <20120718074908.GA23460@beczulka>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201676>
 
-Marcin Owsiany <marcin@owsiany.pl> wrote:
-> On Wed, Jul 11, 2012 at 03:56:43PM -0700, Junio C Hamano wrote:
-> > If the caller does not handle errors, it could be even clearer to
-> > write it like
-> > 
-> > 	command_noisy(qw(update-ref HEAD), $gs->refname) ||
-> > 		die "Cannot update HEAD!!!";
-> 
-> Turns out that command_noisy()
->  - has a meaningless return value
->  - throws an exception on command failure
-> so the "||" bit does not work.
-> Also, for some reason command_noisy does not check for the command being
-> killed by a signal, so I'd prefer to leave the verify_ref there.
+Hi Matthieu,
 
-Ugh, I always forget the Git.pm API, too.  Perhaps command_noisy should
-be made to respect signals in exit codes (the rest of git-svn is
-compromised by this behavior in command_noisy, too, it turns out... :x)
+Your initial credential plumbing series went by while I was on vacation,
+and I finally got a chance to look at it in more detail. Overall it
+looks very good; thank you (and your students) for working on it. It was
+especially nice to have a test harness with complete instructions. :)
 
-I'm not sure what else would break if command_noisy were changed,
-git-svn appears to be the only user in git.git.
+I came up with a few commits on top. Patches 1 and 2 are cleanups that should
+hopefully be non-controversial. Patch 3 is the "url=" attribute we
+discussed earlier, and then patch 4 makes use of it in mw-to-git.
+
+  [1/4]: docs/credential: minor clarity fixups
+  [2/4]: mw-to-git: check blank credential attributes via length
+  [3/4]: credential: convert "url" attribute into its parsed subparts
+  [4/4]: mw-to-git: use git-credential's URL parser
+
+ Documentation/git-credential.txt       | 22 ++++++++++++++++------
+ contrib/mw-to-git/git-remote-mediawiki | 34 +++++-----------------------------
+ credential.c                           |  2 ++
+ 3 files changed, 23 insertions(+), 35 deletions(-)
+
+-Peff
