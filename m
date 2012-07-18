@@ -1,44 +1,44 @@
 From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH 4/7] autoconf: remove few redundant semicolons
-Date: Thu, 19 Jul 2012 00:34:59 +0200
-Message-ID: <1913417f049bb2cb4786aa82ec49af5ae1238a5b.1342649928.git.stefano.lattarini@gmail.com>
+Subject: [PATCH 6/7] build: "make clean" should not remove configure-generated files
+Date: Thu, 19 Jul 2012 00:35:01 +0200
+Message-ID: <e763e7f466efa34f48589f8353a7316fff469145.1342649928.git.stefano.lattarini@gmail.com>
 References: <cover.1342649928.git.stefano.lattarini@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 00:35:45 2012
+X-From: git-owner@vger.kernel.org Thu Jul 19 00:35:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrcqL-0005Ub-SS
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 00:35:42 +0200
+	id 1SrcqM-0005Ub-VG
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 00:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589Ab2GRWfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755075Ab2GRWfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 18:35:37 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:63398 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754503Ab2GRWfa (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 18 Jul 2012 18:35:30 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:59123 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754403Ab2GRWf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 18:35:26 -0400
-Received: by mail-we0-f174.google.com with SMTP id x8so1272200wey.19
-        for <git@vger.kernel.org>; Wed, 18 Jul 2012 15:35:26 -0700 (PDT)
+Received: by mail-wg0-f44.google.com with SMTP id dr13so1790594wgb.1
+        for <git@vger.kernel.org>; Wed, 18 Jul 2012 15:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=iNf3b37cbj0J3GHPijcWngb2507jyO0f7gmL36M6PW8=;
-        b=pAOrA5iL7Sf2K6Q7KBC2ZJQS4NxMKH3qHEnKtKXnLNUSuT3fEveK2+hvb90BTMku+Q
-         kWjDIlopLQjEeRNn1Ltrq2N0NO4+Ca/MhfFoJXUvx1EagcMmsyJvUqmyUET5/hxBPRQk
-         yB3uykWSgq0e7ReidJaQ0v8J55SwOG4lieH3X8uLcugE3WHdb1fdf3Sq22zho6E1n1eS
-         CiHluCBifEpACYFRdPU+bAv8k9otsEu8v6CuAl5tOuQxmCZ/3xo8TqQCqu89ZChD8lom
-         MS8qEmWhF+xIWAXImsmQw+rE8W2nKhsUaRZ4kYjXpCchKca36xpS3OgjqoZlKWBEUjQq
-         fmVQ==
-Received: by 10.216.135.148 with SMTP id u20mr541898wei.137.1342650926199;
-        Wed, 18 Jul 2012 15:35:26 -0700 (PDT)
+        bh=7qNsEonBAKMpaYKSbiNiPR+xJBUAwjjuKyZHMDFtnLs=;
+        b=roJ8PrxkSnUoISFG3QAt0ZqXR9cQorR09Rvq9ZwRF7OGtQDSCjNwQ7B+VhJeG+OB2F
+         ++4uf4FE5H73Iic0o2q0ZHAQ7YVhm812byhl60HYrlec3pxBwMjgQxhE/ECDnbNxXaMc
+         UY/8VRHqRFqNM3nvGvKgD9tCu5FUgzlgx9zOEDvCr4vD+z3/jCrgVMEt/N7O6l5QjsH/
+         9jWwO0yNHYokjmXNSYc2Li0HRj6wXZsC1lgkdNL7vCerVsi88MdWEu8uLzpYWpD4SSqm
+         aHGkEr+4yb/8vVtBUO1a8bLx01RFjknBJqjbr+jq/ElCaor7mK2ANTARl8V4x7WM4nhk
+         xd9g==
+Received: by 10.216.122.6 with SMTP id s6mr1613224weh.46.1342650930130;
+        Wed, 18 Jul 2012 15:35:30 -0700 (PDT)
 Received: from localhost.localdomain (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
-        by mx.google.com with ESMTPS id el6sm35011908wib.8.2012.07.18.15.35.24
+        by mx.google.com with ESMTPS id el6sm35011908wib.8.2012.07.18.15.35.28
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 18 Jul 2012 15:35:25 -0700 (PDT)
+        Wed, 18 Jul 2012 15:35:29 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2.1067.g553d16e
 In-Reply-To: <cover.1342649928.git.stefano.lattarini@gmail.com>
 In-Reply-To: <cover.1342649928.git.stefano.lattarini@gmail.com>
@@ -47,38 +47,53 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201703>
 
-They are merely useless now, but would get in the way of future changes.
+Those filed hold variables, settings and information set by the
+configuration process run by './configure'; in Autotools-based
+build system that kind of stuff should only be removed by
+"make distclean".  Having it removed by "make clean" is not only
+inconsistent, but causes real confusion for that part of the Git
+audience that is used to the Autotools semantics; for example,
+an autotools old-timer that has run:
 
-No semantic change is intended.
+    ./configure --prefix /opt/git
+
+in the past, without running "make distclean" afterwards, would
+expect a "make install" issued after a "make clean" to rebuild and
+install git in '/opt/git'; but with the current behaviour, the
+"make clean" invocation removes (among the other things) the file
+'config.mak.autogen', so that the "make install" falls back to the
+default prefix of '$HOME', thus installing git in the user's home
+directory -- definitely unexpected.
 
 Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
 ---
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/configure.ac b/configure.ac
-index 9472f6b..5fb9734 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -203,7 +203,7 @@ AC_ARG_ENABLE([jsmin],
- [
-   JSMIN=$enableval;
-   AC_MSG_NOTICE([Setting JSMIN to '$JSMIN' to enable JavaScript minifying])
--  GIT_CONF_SUBST([JSMIN], [$enableval]);
-+  GIT_CONF_SUBST([JSMIN], [$enableval])
- ])
+diff --git a/Makefile b/Makefile
+index 285c660..88a76a3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2742,6 +2742,9 @@ dist-doc:
  
- # Define option to enable CSS minification
-@@ -213,7 +213,7 @@ AC_ARG_ENABLE([cssmin],
- [
-   CSSMIN=$enableval;
-   AC_MSG_NOTICE([Setting CSSMIN to '$CSSMIN' to enable CSS minifying])
--  GIT_CONF_SUBST([CSSMIN], [$enableval]);
-+  GIT_CONF_SUBST([CSSMIN], [$enableval])
- ])
+ distclean: clean
+ 	$(RM) configure
++	$(RM) config.log config.status config.cache
++	$(RM) config.mak.autogen config.mak.append
++	$(RM) -r autom4te.cache
  
- ## Site configuration (override autodetection)
+ profile-clean:
+ 	$(RM) $(addsuffix *.gcda,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
+@@ -2756,8 +2759,6 @@ clean: profile-clean
+ 	$(RM) -r $(dep_dirs)
+ 	$(RM) -r po/build/
+ 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
+-	$(RM) -r autom4te.cache
+-	$(RM) config.log config.mak.autogen config.mak.append config.status config.cache
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
 -- 
 1.7.10.2.1067.g553d16e
