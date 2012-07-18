@@ -1,55 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix Q-encoded multi-octet-char split in email.
-Date: Wed, 18 Jul 2012 03:27:53 -0400
-Message-ID: <20120718072753.GC12942@sigill.intra.peff.net>
-References: <1341279697-4596-1-git-send-email-gkatsu.ne@gmail.com>
- <20120703063511.GA16679@sigill.intra.peff.net>
- <CAGxub4-9E0W8ZgsPHeTyUyxmPD80LUd7NjSezg5Zt2-nZPBMJA@mail.gmail.com>
- <20120704064450.GA24807@sigill.intra.peff.net>
- <7v394py7r2.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 0/7] correctly calculate patches to rebase
+Date: Wed, 18 Jul 2012 00:32:05 -0700
+Message-ID: <CAOeW2eEeOZwcmqVy3pqLdkRRpmdGWdHwvv2cX4YGDxz1Xg-Gaw@mail.gmail.com>
+References: <1342596455-17046-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Takeharu Katsuyama <tkatsu.ne@gmail.com>
-To: Katsuyama Takeharu <gkatsu.ne@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 09:28:20 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 18 09:32:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrOgF-0000Ii-4A
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 09:28:19 +0200
+	id 1SrOk0-0006au-M3
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 09:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752809Ab2GRH2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 03:28:15 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36868
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752779Ab2GRH16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 03:27:58 -0400
-Received: (qmail 16011 invoked by uid 107); 18 Jul 2012 07:27:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jul 2012 03:27:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2012 03:27:53 -0400
-Content-Disposition: inline
-In-Reply-To: <7v394py7r2.fsf@alter.siamese.dyndns.org>
+	id S1752675Ab2GRHcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 03:32:09 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:49614 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751244Ab2GRHcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 03:32:05 -0400
+Received: by pbbrp8 with SMTP id rp8so2171068pbb.19
+        for <git@vger.kernel.org>; Wed, 18 Jul 2012 00:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=fR4rcLHDchkt9FZFeHbPBUewpTC64X/KOPC0ydU4xlY=;
+        b=aHQbwnJiJGrlntQMFIa+KnzWwp8dE9dvObgOPZsluSSNxEZcofpHNlXU4jvx/2ngPI
+         2xU3jqSNrMyd7e6bYF5W1unESg1LZD8iJZ3Z6BS55eCQtc+YOXmJfR6FapaB/LiT+tks
+         lVnCRZ76xZwkITET/XpQAKn60VgcOMmXAezMepqngGQCMV0jZsK92JwY6hA9HfA21HW9
+         9K5aTNBaRLm00+z65uv7dRnQIEwjVIxGPPtMfMLmM1Xi2LYCMYIl6RKfVfaHlD5qjdQl
+         cqnGCsp8TNYkB76qKJfWzu0OPj7+FLjTOV/+bahK7J6HztwJetebpYqLf7N+Mn5A5f+7
+         z9/g==
+Received: by 10.68.190.102 with SMTP id gp6mr5323509pbc.5.1342596725213; Wed,
+ 18 Jul 2012 00:32:05 -0700 (PDT)
+Received: by 10.68.236.138 with HTTP; Wed, 18 Jul 2012 00:32:05 -0700 (PDT)
+In-Reply-To: <1342596455-17046-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201666>
 
-On Tue, Jul 17, 2012 at 10:10:25PM -0700, Junio C Hamano wrote:
-
-> Ping on a seemingly stalled thread.
-
-Hrm. I could swear that Takeharu sent a follow-up using
-pick_one_utf8_char directly that looked OK, but now I can't seem to find
-it in the list archives. I wonder if it was off-list and I didn't
-realize it.
-
-If I did not simply dream it, can you re-post the latest patch you
-sent?
-
--Peff
+Argh! Sorry about the sendemail.chainreplyto=true. I must have read
+that warning message incorrectly :-(.
