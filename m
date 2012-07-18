@@ -1,74 +1,112 @@
 From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH 0/7] build system: support automatic reconfiguration for autotools user
-Date: Thu, 19 Jul 2012 00:34:55 +0200
-Message-ID: <cover.1342649928.git.stefano.lattarini@gmail.com>
+Subject: [PATCH 5/7] autoconf: use AC_CONFIG_COMMANDS instead of ad-hoc 'config.mak.append'
+Date: Thu, 19 Jul 2012 00:35:00 +0200
+Message-ID: <ab3ac81e8e3d40a18390b5be4915a0f3ee24a73e.1342649928.git.stefano.lattarini@gmail.com>
+References: <cover.1342649928.git.stefano.lattarini@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 19 00:35:29 2012
+X-From: git-owner@vger.kernel.org Thu Jul 19 00:35:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Srcq5-00056I-Md
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 00:35:26 +0200
+	id 1SrcqM-0005Ub-EO
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 00:35:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813Ab2GRWfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 18:35:20 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63398 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983Ab2GRWfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 18:35:19 -0400
-Received: by wgbdr13 with SMTP id dr13so1790594wgb.1
-        for <git@vger.kernel.org>; Wed, 18 Jul 2012 15:35:18 -0700 (PDT)
+	id S1754609Ab2GRWfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 18:35:32 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:59123 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754574Ab2GRWf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 18:35:28 -0400
+Received: by mail-we0-f174.google.com with SMTP id x8so1272200wey.19
+        for <git@vger.kernel.org>; Wed, 18 Jul 2012 15:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=gRc2dc9Bx23xbh/FRAXc2GomRM+A7gYOIBMimqbRWVg=;
-        b=TS8iWbg9LlpzjG5K1aG6Ko2/Qe8pyk0xrLQxV+H+J7ZNKU0bl1f5/94IGt/3dhGPCl
-         Ctc/Js0AKlP2hn56FRp/UQh73AUu9j810+9npmbTH8Aj6vndxjKpUcdeCNVEPjWeah/E
-         WLr9t+rnR1R10S61NGjyvJ/tbM4+AfqOxltSL/8x+pHhSDGytFNWlpaTaf6QWLadDb35
-         rbJLD5188sFnXieJwhvaQ4K1yiJVyvyDTUCy85/q4oPlgTWdSaos1QE/RjxvaeHnh9gc
-         jivNBJx//Li1wWlTb7wCGyEk03124xNHqH2N4LQy4zaUXAbjHX8AcKsTfyNNJjY0jT0F
-         AMvg==
-Received: by 10.216.68.18 with SMTP id k18mr1583775wed.74.1342650917937;
-        Wed, 18 Jul 2012 15:35:17 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :in-reply-to:references;
+        bh=4HDFDDvpCotoL4iID36vlBcGa8R2pUj/x4dI6TfkyKI=;
+        b=bkTo8WoA2prg49ZWspO/inAwhepxpbkZgS3HaxA6E8ITkjEMIDXcyiMVzbQ6gYVpK9
+         I6wFONC+d7uGbqFGtOjf710ReivxZgkQdM+I7bdqUFh6/JU09NPDWBhI3yiW0zi8SCmP
+         PlZs+jJx5rXDBjnvwYlqd7NYhbK+ftv80vh2/lSta/fs+tz4vANzUyiWaf4w9vkoAx6f
+         flA+svK+cndbwpkzy1fT7s053Q4lg7jF+0ue5clYo0Nym3zPO2jgYLZNfemTDKI2gkkP
+         7z9nbWjKwIrRHg790UIDEKa3CLpQC4zsYpYAUgGaEh2at1mrf2wb9cKEuUDb8VlpHEb8
+         /lcA==
+Received: by 10.180.94.164 with SMTP id dd4mr10256783wib.1.1342650928174;
+        Wed, 18 Jul 2012 15:35:28 -0700 (PDT)
 Received: from localhost.localdomain (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
-        by mx.google.com with ESMTPS id el6sm35011908wib.8.2012.07.18.15.35.15
+        by mx.google.com with ESMTPS id el6sm35011908wib.8.2012.07.18.15.35.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 18 Jul 2012 15:35:16 -0700 (PDT)
+        Wed, 18 Jul 2012 15:35:27 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2.1067.g553d16e
+In-Reply-To: <cover.1342649928.git.stefano.lattarini@gmail.com>
+In-Reply-To: <cover.1342649928.git.stefano.lattarini@gmail.com>
+References: <cover.1342649928.git.stefano.lattarini@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201699>
 
-This series aims at improving the user experience for those people who
-(like me) use that Autotools-based interface to the build system of Git.
+This will allow "./config.status --recheck; ./config.status" to work
+correctly as a mean of reconfiguring the tree with the same configure
+argument used in the previous "./configure" invocation.
 
-The two actual improvements (equipped with proper explanations and
-rationales) are implemented in the last two patches.  The other five
-patches are just preparatory changes.
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ configure.ac | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-The series as general or as clean as it could actually be, but it's
-enough to scratch the itch that motivated me to write it.
-
-Thanks,
-  Stefano
-
-Stefano Lattarini (7):
-  autoconf: GIT_CONF_APPEND_LINE: change signature
-  autoconf: GIT_CONF_APPEND_LINE -> GIT_CONF_SUBST
-  autoconf: remove some redundant shell indirections
-  autoconf: remove few redundant semicolons
-  autoconf: use AC_CONFIG_COMMANDS instead of ad-hoc 'config.mak.append'
-  build: "make clean" should not remove configure-generated files
-  build: reconfigure automatically if configure.ac changes
-
- Makefile     | 17 +++++++++++++++--
- configure.ac | 53 ++++++++++++++++++++++++++++++-----------------------
- 2 files changed, 45 insertions(+), 25 deletions(-)
-
+diff --git a/configure.ac b/configure.ac
+index 5fb9734..64eecbc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -7,7 +7,21 @@
+ # --------------------------
+ # Append LINE to file ${config_append}
+ AC_DEFUN([GIT_CONF_SUBST],
+-         [echo "$1=$2" >> "${config_append}"])
++   [AC_REQUIRE([GIT_CONF_SUBST_INIT])
++   config_appended_defs="$config_appended_defs${newline}$1=$2"])
++
++
++# GIT_CONF_SUBST_INIT
++# -------------------
++# Prepare shell variables and autoconf machine required by later calls
++# to GIT_CONF_SUBST.
++AC_DEFUN([GIT_CONF_SUBST_INIT], 
++    [config_appended_defs=; newline='
++'
++    AC_CONFIG_COMMANDS([$config_file],
++                       [echo "$config_appended_defs" >> "$config_file"],
++                       [config_file=$config_file
++                        config_appended_defs="$config_appended_defs"])])
+ 
+ # GIT_ARG_SET_PATH(PROGRAM)
+ # -------------------------
+@@ -133,11 +147,8 @@ AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
+ AC_CONFIG_SRCDIR([git.c])
+ 
+ config_file=config.mak.autogen
+-config_append=config.mak.append
+ config_in=config.mak.in
+ 
+-echo "# ${config_append}.  Generated by configure." > "${config_append}"
+-
+ # Directories holding "saner" versions of common or POSIX binaries.
+ AC_ARG_WITH([sane-tool-path],
+   [AS_HELP_STRING(
+@@ -1041,9 +1052,5 @@ AC_SUBST(PTHREAD_LIBS)
+ AC_SUBST(NO_PTHREADS)
+ 
+ ## Output files
+-AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
++AC_CONFIG_FILES(["${config_file}":"${config_in}"])
+ AC_OUTPUT
+-
+-
+-## Cleanup
+-rm -f "${config_append}"
 -- 
 1.7.10.2.1067.g553d16e
