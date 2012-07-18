@@ -1,105 +1,123 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH 2/7] git-rebase--interactive.sh: extract function for
- adding "pick" line
-Date: Wed, 18 Jul 2012 08:48:27 -0400
-Message-ID: <20120718124827.GD25563@hmsreliant.think-freely.org>
-References: <1342596455-17046-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1342596455-17046-2-git-send-email-martin.von.zweigbergk@gmail.com>
- <1342596455-17046-3-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] mw-to-git: use git-credential's URL parser
+Date: Wed, 18 Jul 2012 08:57:41 -0400
+Message-ID: <20120718125741.GA11605@sigill.intra.peff.net>
+References: <20120718120307.GA6399@sigill.intra.peff.net>
+ <20120718120656.GD6726@sigill.intra.peff.net>
+ <vpqd33tjlzm.fsf@bauges.imag.fr>
+ <20120718122848.GB11482@sigill.intra.peff.net>
+ <vpq1uk9jldk.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 14:48:44 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 18 14:57:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrTgC-0002zL-8A
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:48:36 +0200
+	id 1SrTp8-0001WB-1v
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369Ab2GRMsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 08:48:32 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:50373 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753504Ab2GRMsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 08:48:31 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SrTg4-0002mc-0s; Wed, 18 Jul 2012 08:48:30 -0400
+	id S1754411Ab2GRM5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 08:57:46 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39138
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754403Ab2GRM5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 08:57:44 -0400
+Received: (qmail 19635 invoked by uid 107); 18 Jul 2012 12:57:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jul 2012 08:57:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2012 08:57:41 -0400
 Content-Disposition: inline
-In-Reply-To: <1342596455-17046-3-git-send-email-martin.von.zweigbergk@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+In-Reply-To: <vpq1uk9jldk.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201689>
 
-On Wed, Jul 18, 2012 at 12:27:30AM -0700, Martin von Zweigbergk wrote:
-> Extract the code that adds a possibly commented-out "pick" line to the
-> todo file. This lets us reuse it more easily later.
-> ---
->  git-rebase--interactive.sh | 21 ++++++++++++---------
->  1 file changed, 12 insertions(+), 9 deletions(-)
-> 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index bef7bc0..fa722b6 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -828,23 +828,26 @@ else
->  	revisions=$onto...$orig_head
->  	shortrevisions=$shorthead
->  fi
-> -git rev-list $merges_option --pretty=oneline --abbrev-commit \
-> -	--abbrev=7 --reverse --left-right --topo-order \
-> -	$revisions | \
-> -	sed -n "s/^>//p" |
-> -while read -r shortsha1 rest
-> -do
->  
-> -	if test -z "$keep_empty" && is_empty_commit $shortsha1
-> +add_pick_line () {
-> +	if test -z "$keep_empty" && is_empty_commit $1
->  	then
->  		comment_out="# "
->  	else
->  		comment_out=
->  	fi
-> +	printf '%s\n' "${comment_out}pick $1 $2" >>"$todo"
-> +}
->  
-> +git rev-list $merges_option --pretty=oneline --abbrev-commit \
-> +	--abbrev=7 --reverse --left-right --topo-order \
-> +	$revisions | \
-> +	sed -n "s/^>//p" |
-> +while read -r shortsha1 rest
-> +do
->  	if test t != "$preserve_merges"
->  	then
-> -		printf '%s\n' "${comment_out}pick $shortsha1 $rest" >>"$todo"
-> +		add_pick_line $shortsha1 "$rest"
->  	else
->  		sha1=$(git rev-parse $shortsha1)
->  		if test -z "$rebase_root"
-> @@ -863,7 +866,7 @@ do
->  		if test f = "$preserve"
->  		then
->  			touch "$rewritten"/$sha1
-> -			printf '%s\n' "${comment_out}pick $shortsha1 $rest" >>"$todo"
-> +			add_pick_line $shortsha1 "$rest"
->  		fi
->  	fi
->  done
-> -- 
-> 1.7.11.1.104.ge7b44f1
-> 
-> 
+On Wed, Jul 18, 2012 at 02:37:27PM +0200, Matthieu Moy wrote:
 
-Thanks!
-Acked-by: Neil Horman <nhorman@tuxdriver.com>
+> Jeff King <peff@peff.net> writes:
+> 
+> > I started with a version that did that, but there are two complications:
+> >
+> >   1. credential_write needs to know that the 'url' field must come
+> >      first, as it overwrites the other fields. So we end up
+> >      special-casing it either way.
+> 
+> Right, I didn't think of that. But you'd have to special-case it only
+> within credential_run, and not for the caller.
+
+Yeah. It would look like this:
+
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index c9ac416..e1392b0 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -190,9 +190,11 @@ sub credential_write {
+ sub credential_run {
+ 	my $op = shift;
+ 	my $credential = shift;
+-	my $url = shift;
+ 	my $pid = open2(my $reader, my $writer, "git credential $op");
+-	print $writer "url=$url\n" if defined $url;
++	if (exists $credential->{url}) {
++		print $writer "url=$credential->{url}\n";
++		delete $credential->{url};
++	}
+ 	credential_write($credential, $writer);
+ 	print $writer "\n";
+ 	close($writer);
+
+which is still kind of ugly. We could also push it down into
+credential_write, like:
+
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index c9ac416..0a821fd 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -180,8 +180,9 @@ sub credential_read {
+ sub credential_write {
+ 	my $credential = shift;
+ 	my $writer = shift;
++	print $writer "url=$credential->{url}\n" if exists $credential->{url};
+ 	while (my ($key, $value) = each(%$credential) ) {
+-		if (length $value) {
++		if (length $value && $key ne 'url') {
+ 			print $writer "$key=$value\n";
+ 		}
+ 	}
+@@ -190,9 +191,7 @@ sub credential_write {
+ sub credential_run {
+ 	my $op = shift;
+ 	my $credential = shift;
+-	my $url = shift;
+ 	my $pid = open2(my $reader, my $writer, "git credential $op");
+-	print $writer "url=$url\n" if defined $url;
+ 	credential_write($credential, $writer);
+ 	print $writer "\n";
+ 	close($writer);
+
+which is probably the least gross. I was originally hesitant because the
+issue (2) I brought up, but...
+
+> >   2. Git hands us back the broken-down version, which we add to the
+> >      credential.
+> 
+> We don't add it, but already replace the whole structure. This is
+> somehow needed because "git credential fill" can remove fields from the
+> structure (the path attribute is removed with
+> credential.useHttpPath=false). So, this point doesn't seem problematic.
+
+Hmph. I considered that we might do it and even checked, but I somehow
+read the code wrong (I think I was thrown off by the pass-by-reference
+to credential_run, but of course it overwrites it inside that function).
+
+So since that is a non-issue, I think the second diff I provided above
+is a bit nicer.
+
+-Peff
