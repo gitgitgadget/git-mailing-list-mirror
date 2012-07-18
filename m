@@ -1,88 +1,110 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH v8 4/4] git-rebase: add keep_empty flag
-Date: Wed, 18 Jul 2012 00:16:47 -0700
-Message-ID: <CAOeW2eHvDMkX++L386aXaUsMPVbmL-9GvioiUAPGX8PjJ8TNTA@mail.gmail.com>
-References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
-	<1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
-	<1334932577-31232-5-git-send-email-nhorman@tuxdriver.com>
-	<CAOeW2eEchYzRYYUBySKg5xYY3vBDy8GVcAd=ay-HoAGDLZtORw@mail.gmail.com>
-	<5006614E.8090601@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Fix notes handling in rev-list
+Date: Wed, 18 Jul 2012 03:21:04 -0400
+Message-ID: <20120718072104.GB12942@sigill.intra.peff.net>
+References: <20120325005504.GA27651@sigill.intra.peff.net>
+ <1342463409-6919-1-git-send-email-jukka.lehtniemi@gmail.com>
+ <20120717034640.GB20945@sigill.intra.peff.net>
+ <7vvchnx7tc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Neil Horman <nhorman@tuxdriver.com>, git@vger.kernel.org,
-	=?UTF-8?Q?Zbigniew_J=C4=99drzejewski=2DSzmek?= <zbyszek@in.waw.pl>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 09:16:54 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 09:21:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrOVC-0007g9-21
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 09:16:54 +0200
+	id 1SrOZN-000607-P2
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 09:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608Ab2GRHQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 03:16:50 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:42250 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059Ab2GRHQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 03:16:48 -0400
-Received: by lbbgm6 with SMTP id gm6so1703505lbb.19
-        for <git@vger.kernel.org>; Wed, 18 Jul 2012 00:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ZoPcoF0RoE9w6shirDmkDcKzmr0kTSkusvBt9n9jJT0=;
-        b=GhquGKKYqbC+zsYuocaA9oRJMUnAphE6DB2zyrPrm2sbJB/Z451WUqw2k4p+7eZ55O
-         GMhOQuzMIYeLBn4grSoRuoTvrc7WeerRnQ/u2gwgJSivxRzGfol3XHXKi7AYmpgJgGqW
-         ze4Mwykw1wGSMrDGcQhs7RpPyWnA46hfdsszEk2X6NLNd+Cr5poXO3gnxdMcbnTphNqF
-         t9JWbtxpWUeoKlFm0RojUTpC6bcSIMlbhIq+zSlAcvRPqVfCW/jQ9bqylq3dOI92xBIg
-         uxC1WvwCv3Kg8M2to2p0R7PyowcYr6B8JHmg/e8duAIwojhBO1S+WWbYMTm3ZeoMOrVm
-         izeQ==
-Received: by 10.112.98.40 with SMTP id ef8mr1199608lbb.72.1342595807185; Wed,
- 18 Jul 2012 00:16:47 -0700 (PDT)
-Received: by 10.112.39.169 with HTTP; Wed, 18 Jul 2012 00:16:47 -0700 (PDT)
-In-Reply-To: <5006614E.8090601@viscovery.net>
+	id S1752639Ab2GRHVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 03:21:09 -0400
+Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:36860
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752046Ab2GRHVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 03:21:07 -0400
+Received: (qmail 15775 invoked by uid 107); 18 Jul 2012 07:21:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jul 2012 03:21:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2012 03:21:04 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvchnx7tc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201656>
 
-On Wed, Jul 18, 2012 at 12:10 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 7/18/2012 8:20, schrieb Martin von Zweigbergk:
->> On Fri, Apr 20, 2012 at 7:36 AM, Neil Horman <nhorman@tuxdriver.com> wrote:
->>>  pick_one () {
->>>         ff=--ff
->>> +
->>>         case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
->>>         case "$force_rebase" in '') ;; ?*) ff= ;; esac
->>>         output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
->>> +
->>> +       if is_empty_commit "$sha1"
->>> +       then
->>> +               empty_args="--allow-empty"
->>> +       fi
->>> +
->>>         test -d "$rewritten" &&
->>>                 pick_one_preserving_merges "$@" && return
->>> -       output git cherry-pick $ff "$@"
->>> +       output git cherry-pick $empty_args $ff "$@"
->>
->> The is_empty_commit check seems to mean that if $sha1 is an "empty"
->> commit, we pass the --allow-empty option to cherry-pick. If it's not
->> empty, we don't. The word "allow" in "allow-empty" suggests that even
->> if the commit is not empty, cherry-pick would not mind. So, can we
->> always pass "allow-empty" to cherry-pick (i.e. even if the commit to
->> pick is not empty)?
->
-> I don't think so. If the commit is not empty, but all its changes are
-> already in HEAD, then it will become "empty" when cherry-picked to HEAD.
-> In such a case, we usually do not want to record an empty commit, but stop
-> rebase to give to user a chance to deal with the situation.
+On Mon, Jul 16, 2012 at 10:42:07PM -0700, Junio C Hamano wrote:
 
-Ah, makes sense. Thanks!
+> > Just like log, the notes are part of the commit information to the right
+> > of the graph. But this second hunk is for when we are not using the
+> > pretty-printer at all, and the output looks like this:
+> >
+> >   $ git rev-list --graph --notes -2 HEAD
+> >   * f6bbb09529a4cc73446c7c115ac1468477bd0cc6
+> >
+> >   Notes:
+> >       foobar
+> >   * 31c79549b85c6393be4f40432f5b86ebc097fc7e
+> >
+> > which doesn't make sense
+> 
+> I actually have quite a different feeling about this.  As I said in
+> the separate message, I think --graph, or anything that makes the
+> output unparsable or harder to parse for machines for that matter,
+> in rev-list are not something we have because we wanted to support
+> them, but that which just happen to work because the large part of
+> rev-list and log can share building blocks to do similar things.
+> The key phrase is "can share" here; it does not necessarily mean
+> they "should" [*1*].
+
+Somebody went to the trouble to make "rev-list --graph" work[1] (that is
+what the call to graph_show_remainder in the else clause of the
+conditional is about). I agree it seems kind of useless, but it does
+work now, and we should at least not make it worse (and I think we both
+agree that the output above is just wrong).
+
+So whatever we show for a note, it should look like:
+
+  * f6bbb095...
+  | the notes thing to show
+  * 31c79549...
+
+Because that is how graph output is formatted. Either that, or we should
+disallow --graph entirely with rev-list (which I'd also be OK with).
+
+> I do not mind having an option to show the notes text, but I doubt
+> it is a sane thing to do to make "rev-list --notes" unconditionally
+> show the payload of the notes blob.  "rev-list --objects" only shows
+> the object names of trees and blobs, not the payload in these
+> objects, and this is very much on purpuse.  It allows the downstream
+> process that reads its output from the pipe to easily parse the
+> output and choose to do whatever it wants to do using them.
+> 
+> I wonder if we should show the blob object names that store the
+> notes payload if we were given --notes option in a format that is
+> easy for readers to mechanically parse its output.
+
+So leaving aside the --graph issues, we would need to decide what to
+show in the non-graph case. And I think your suggestion is good; there
+is no real need to dereference the blob (if you want that, you can turn
+on the pretty-printer).
+
+I'm just not sure what the output should be. I guess:
+
+  <commit_sha1> <notes sha1s>
+
+is probably the most sensible (it's sort of like --parents). And that
+solves the --graph issue, too, since it continues to take only a single
+line.
+
+-Peff
+
+[1] Looking at the code, I do think somebody wanted "rev-list --graph"
+to work, and it is not an accident. But I think they did not do a very
+thorough job, as things like "git rev-list --objects --graph" produce
+nonsensical output.
