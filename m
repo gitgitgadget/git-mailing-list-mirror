@@ -1,65 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Extract Git classes from git-svn (3/10) (was Re: Fix git-svn
- tests for SVN 1.7.5.)
-Date: Tue, 17 Jul 2012 19:12:01 -0500
-Message-ID: <20120718001201.GI25325@burratino>
-References: <5004B772.3090806@pobox.com>
- <20120717174446.GA14244@burratino>
- <5005F188.1090203@pobox.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4: Jobs and skipSubmitEdit
+Date: Tue, 17 Jul 2012 21:03:04 -0400
+Message-ID: <20120718010304.GA24602@padd.com>
+References: <CAFLRbop2aETNp0-6AdvSTx7Jmh7epYZ6rQc6hhFHbxZrGdEo9g@mail.gmail.com>
+ <20120624202445.GA27664@padd.com>
+ <CAFLRbootAje0BvLOYiH2xOagfUsQ+a_d+9YeTuG1C0a1Pg__Rg@mail.gmail.com>
+ <20120626112115.GA3439@padd.com>
+ <CAFLRbooDpeE0U+sysa=OZ2a1sPvPo9MYTi4KLRgfJxkxw2HQyw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	Eric Wong <normalperson@yhbt.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 18 02:12:20 2012
+Cc: git <git@vger.kernel.org>
+To: Michael Horowitz <mike@horowitz.name>
+X-From: git-owner@vger.kernel.org Wed Jul 18 03:03:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrHsK-0004YT-0d
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 02:12:20 +0200
+	id 1SrIg0-0006Pu-5a
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 03:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757456Ab2GRAMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 20:12:14 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:53241 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757351Ab2GRAMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jul 2012 20:12:06 -0400
-Received: by gglu4 with SMTP id u4so1038810ggl.19
-        for <git@vger.kernel.org>; Tue, 17 Jul 2012 17:12:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5ND2KrxznW6XJecQA/ysq/f4dveAMarJ3Fp9bQlvrsg=;
-        b=nNQ73uPVn7u6v5oVraHguqlix1JFL7SZiCtmsvkZvrGqVM2mKA752MbA9eXNW2hZcC
-         R9+xkN+C8CpDGfZve5dRzse1+TaLM/3vV886Gm0pxQIm4aJlFgMPF3lxH+IDcAvU4jfm
-         haUz+NNBwKuXJ0dGgfIWbhirXjcOJ2hgA1oJRBaRN+3TwnRk0LpYv6w+583eo647njYu
-         ftXicnDk+Eux4ig2U75HyEtk3uCEuU+qRyN1gN8leiwmKqPtHUHjLQEDWk8mQWNUJmfC
-         JxMA4JTe0zDhTxJ87HwXERsl52sSmkbADufzmNCOOUdoH9z4bXTB8qhx9wuqOjMoVanc
-         koAQ==
-Received: by 10.43.85.69 with SMTP id an5mr2588372icc.37.1342570325784;
-        Tue, 17 Jul 2012 17:12:05 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id z3sm12938595igc.7.2012.07.17.17.12.04
-        (version=SSLv3 cipher=OTHER);
-        Tue, 17 Jul 2012 17:12:05 -0700 (PDT)
+	id S1751523Ab2GRBDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 21:03:14 -0400
+Received: from honk.padd.com ([74.3.171.149]:50113 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751489Ab2GRBDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 21:03:09 -0400
+Received: from arf.padd.com (unknown [50.55.149.165])
+	by honk.padd.com (Postfix) with ESMTPSA id 4B8331E43;
+	Tue, 17 Jul 2012 18:03:08 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id E47E43145F; Tue, 17 Jul 2012 21:03:04 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <5005F188.1090203@pobox.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAFLRbooDpeE0U+sysa=OZ2a1sPvPo9MYTi4KLRgfJxkxw2HQyw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201640>
 
-Michael G Schwern wrote:
+mike@horowitz.name wrote on Tue, 17 Jul 2012 04:49 -0400:
+> I gave the patch a try, and it seems to work great.
+> 
+> Only problem I realized is that it means that the git commit message
+> and the p4 log message end up different, because to p4 the jobs lines
+> are special and get stripped out, but in git it just stays part of the
+> commit message.  So, when you do a p4 sync/rebase, the commits come
+> back without it.  This doesn't make much of difference now, because
+> the commit messages come back modified with the p4 path and changelist
+> number anyway, but if Luke tries to do that change to store the p4
+> path/changelist in notes instead, then we wouldn't want any
+> differences in the commit messages, because then the commits hashes
+> won't match again.
+> 
+> Not sure what the best thing to do here is, but I guess it doesn't
+> matter until this mythical notes thing happens.
 
-> This is a straight cut & paste.  Next commit will make it work.
+Glad it works.
 
-As mentioned in reply to patch 3, we can't take this, but by swapping
-the order of the two patches it should be possible to make it work.
+I didn't think about trying to make the commit messages exact.
+That isn't required for, e.g. "git cherry", but might be nice
+just to make git/p4 view of the changes more similar.
 
-Jonathan
+Okay if we wait and see how the notes stuff goes, like you
+suggest.  Could be that Jobs ends up in a note too.
+
+Thanks for testing.
+
+		-- Pete
