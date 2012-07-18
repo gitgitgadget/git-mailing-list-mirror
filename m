@@ -1,107 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] mw-to-git: use git-credential's URL parser
-Date: Wed, 18 Jul 2012 08:06:56 -0400
-Message-ID: <20120718120656.GD6726@sigill.intra.peff.net>
-References: <20120718120307.GA6399@sigill.intra.peff.net>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH v8 4/4] git-rebase: add keep_empty flag
+Date: Wed, 18 Jul 2012 08:17:58 -0400
+Message-ID: <20120718121758.GA25563@hmsreliant.think-freely.org>
+References: <1333136922-12872-1-git-send-email-nhorman@tuxdriver.com>
+ <1334932577-31232-1-git-send-email-nhorman@tuxdriver.com>
+ <1334932577-31232-5-git-send-email-nhorman@tuxdriver.com>
+ <CAOeW2eEchYzRYYUBySKg5xYY3vBDy8GVcAd=ay-HoAGDLZtORw@mail.gmail.com>
+ <5006614E.8090601@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 18 14:07:13 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Jul 18 14:18:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrT21-0002Ag-Qj
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:07:06 +0200
+	id 1SrTCz-0004Dg-G1
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 14:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab2GRMHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 08:07:00 -0400
-Received: from 99-108-225-23.lightspeed.iplsin.sbcglobal.net ([99.108.225.23]:39079
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752565Ab2GRMG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 08:06:59 -0400
-Received: (qmail 19001 invoked by uid 107); 18 Jul 2012 12:07:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jul 2012 08:07:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jul 2012 08:06:56 -0400
+	id S1752577Ab2GRMSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 08:18:20 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:50041 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871Ab2GRMST (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 08:18:19 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SrTCZ-0002fW-NN; Wed, 18 Jul 2012 08:18:06 -0400
 Content-Disposition: inline
-In-Reply-To: <20120718120307.GA6399@sigill.intra.peff.net>
+In-Reply-To: <5006614E.8090601@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201681>
 
-We can just feed our URL straight to git-credential and it
-will parse it for us, saving us some code.
+On Wed, Jul 18, 2012 at 09:10:06AM +0200, Johannes Sixt wrote:
+> Am 7/18/2012 8:20, schrieb Martin von Zweigbergk:
+> > On Fri, Apr 20, 2012 at 7:36 AM, Neil Horman <nhorman@tuxdriver.com> wrote:
+> >>  pick_one () {
+> >>         ff=--ff
+> >> +
+> >>         case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
+> >>         case "$force_rebase" in '') ;; ?*) ff= ;; esac
+> >>         output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
+> >> +
+> >> +       if is_empty_commit "$sha1"
+> >> +       then
+> >> +               empty_args="--allow-empty"
+> >> +       fi
+> >> +
+> >>         test -d "$rewritten" &&
+> >>                 pick_one_preserving_merges "$@" && return
+> >> -       output git cherry-pick $ff "$@"
+> >> +       output git cherry-pick $empty_args $ff "$@"
+> > 
+> > The is_empty_commit check seems to mean that if $sha1 is an "empty"
+> > commit, we pass the --allow-empty option to cherry-pick. If it's not
+> > empty, we don't. The word "allow" in "allow-empty" suggests that even
+> > if the commit is not empty, cherry-pick would not mind. So, can we
+> > always pass "allow-empty" to cherry-pick (i.e. even if the commit to
+> > pick is not empty)?
+> 
+> I don't think so. If the commit is not empty, but all its changes are
+> already in HEAD, then it will become "empty" when cherry-picked to HEAD.
+> In such a case, we usually do not want to record an empty commit, but stop
+> rebase to give to user a chance to deal with the situation.
+> 
+> -- Hannes
+> 
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- contrib/mw-to-git/git-remote-mediawiki | 32 ++++----------------------------
- 1 file changed, 4 insertions(+), 28 deletions(-)
-
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
-index b06f27b..c9ac416 100755
---- a/contrib/mw-to-git/git-remote-mediawiki
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -163,32 +163,6 @@ while (<STDIN>) {
- 
- ## credential API management (generic functions)
- 
--sub credential_from_url {
--	my $url = shift;
--	my $parsed = URI->new($url);
--	my %credential;
--
--	if ($parsed->scheme) {
--		$credential{protocol} = $parsed->scheme;
--	}
--	if ($parsed->host) {
--		$credential{host} = $parsed->host;
--	}
--	if ($parsed->path) {
--		$credential{path} = $parsed->path;
--	}
--	if ($parsed->userinfo) {
--		if ($parsed->userinfo =~ /([^:]*):(.*)/) {
--			$credential{username} = $1;
--			$credential{password} = $2;
--		} else {
--			$credential{username} = $parsed->userinfo;
--		}
--	}
--
--	return %credential;
--}
--
- sub credential_read {
- 	my %credential;
- 	my $reader = shift;
-@@ -216,7 +190,9 @@ sub credential_write {
- sub credential_run {
- 	my $op = shift;
- 	my $credential = shift;
-+	my $url = shift;
- 	my $pid = open2(my $reader, my $writer, "git credential $op");
-+	print $writer "url=$url\n" if defined $url;
- 	credential_write($credential, $writer);
- 	print $writer "\n";
- 	close($writer);
-@@ -246,10 +222,10 @@ sub mw_connect_maybe {
- 	$mediawiki = MediaWiki::API->new;
- 	$mediawiki->{config}->{api_url} = "$url/api.php";
- 	if ($wiki_login) {
--		my %credential = credential_from_url($url);
-+		my %credential;
- 		$credential{username} = $wiki_login;
- 		$credential{password} = $wiki_passwd;
--		credential_run("fill", \%credential);
-+		credential_run("fill", \%credential, $url);
- 		my $request = {lgname => $credential{username},
- 			       lgpassword => $credential{password},
- 			       lgdomain => $wiki_domain};
--- 
-1.7.10.5.40.g059818d
+Yes, this is the meaning.  "Allow" was used in the sense of a filter, in that we
+are allowing an empty commit to make it into the history, whereas a rebase or
+cherry-pick would normally exclude it.
+Neil
