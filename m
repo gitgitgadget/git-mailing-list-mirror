@@ -1,125 +1,153 @@
-From: "Jakub Vrana" <jakub@vrana.cz>
-Subject: RE: [PATCH] diff: respect --no-ext-diff with typechange
-Date: Tue, 17 Jul 2012 18:07:40 -0700
-Message-ID: <000e01cd6481$bbd63970$3382ac50$@vrana.cz>
-References: <000301cd63b2$e39a2130$aace6390$@vrana.cz> <20120717041603.GD20945@sigill.intra.peff.net>
+From: Michael G Schwern <schwern@pobox.com>
+Subject: Re: Find .pm files automatically (was Re: Fix git-svn tests for SVN
+ 1.7.5.)
+Date: Tue, 17 Jul 2012 18:41:09 -0700
+Message-ID: <50061435.1090900@pobox.com>
+References: <5004B772.3090806@pobox.com> <20120717174446.GA14244@burratino>
+ <5005EFC5.8060105@pobox.com> <20120718000120.GG25325@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: "'Jeff King'" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 03:07:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
+	Eric Wong <normalperson@yhbt.net>,
+	Ben Walton <bwalton@artsci.utoronto.ca>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 03:41:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrIk0-0004Lq-1N
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 03:07:48 +0200
+	id 1SrJGy-0005YT-Ot
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 03:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152Ab2GRBHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jul 2012 21:07:44 -0400
-Received: from maxipes.logix.cz ([93.89.80.122]:40133 "EHLO maxipes.logix.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863Ab2GRBHm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jul 2012 21:07:42 -0400
-Received: from JAKUBVT420S (unknown [IPv6:2620:0:1cfe:28:9c40:6f50:d34b:ae59])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by maxipes.logix.cz (Postfix) with ESMTP id B8D085D3BBB;
-	Wed, 18 Jul 2012 13:14:16 +1200 (NZST)
-In-Reply-To: <20120717041603.GD20945@sigill.intra.peff.net>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHNUK23Q4/5aKcOeEiJ6/FPuCGGwQKtnXLzlxjzj3A=
-Content-Language: en-us
+	id S1750906Ab2GRBlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jul 2012 21:41:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58903 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750779Ab2GRBlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jul 2012 21:41:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47D729885;
+	Tue, 17 Jul 2012 21:41:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=sasl; bh=RO0uPmFxajL9
+	6qlZZiQ7QxRy++E=; b=l2ruo+KtM2I9dh7xPcpudbW4HJZrTEgUN5OPHddxrnEV
+	z2k6/uDyJNgONT+RVmpEo9nM6e2H+WtKsgAxMqpWlJDGBkTOSixl6MIv/nv1oUYH
+	2j43w29rUMw0eS5Lwgxht3QjjbsH5CPa/T3YsbfjglHDBYr+PdKAQEvqqt6ifKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=N8UHH6
+	SDvoAHu0voYF10LttTuUdgup4D556XUZo7TrWYthLdjtQkdgBvouXbJj5gLBxr54
+	26X5KS1PxmlqAmBqNhsHpRGbgnOApUY+ddkpnGfXVtkTuty9N3qwn2cr8mC4Pf9+
+	V3Esn7JvL7IXemQ28tHYRaoXSwYV2xn8624rw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34DF39884;
+	Tue, 17 Jul 2012 21:41:09 -0400 (EDT)
+Received: from windhund.local (unknown [71.236.173.173]) (using TLSv1 with
+ cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 439309883; Tue, 17 Jul
+ 2012 21:41:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0)
+ Gecko/20120614 Thunderbird/13.0.1
+In-Reply-To: <20120718000120.GG25325@burratino>
+X-Enigmail-Version: 1.4.3
+X-Pobox-Relay-ID: A5BD74FA-D079-11E1-8A83-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201642>
 
-Yes, I was fixing the invalid (!pgm) condition, sorry for a non-precise description.
+On 2012.7.17 5:01 PM, Jonathan Nieder wrote:
+>> It also moves Error.pm into a bundle directory.  This both makes it just
+>> another directory to scan (or not scan), but it also makes it possible to
+>> bundle additional modules in the future.  ExtUtils::MakeMaker uses this
+>> technique itself.
+> 
+> This is not so much "also" as "as an example to demonstrate the
+> technique", no?  I guess I'd prefer it to be in a separate patch, but
+> this way's fine, too.
 
-Does it mean that my patch is accepted or is there something else I need to do?
+I wrote the MakeMaker system so I was just cribbing off that.  It made more
+sense to build a list of directories to scan and then scan them than to add
+individual file exceptions later.  I could put it in a separate patch, but it
+would require some bending.
+
+
+> You'll probably hate this.  Because we have a bunch of patches to
+> incorporate, I think it's worth spending the time to make that go as
+> smoothly as possible for later patches.
+
+Sorry.  I have lots of experience with git but very little with the email
+submission tools.  I've always either just done everything via repositories or
+used Github.
+
+It sounds like I should figure out the git-send-email tool and do this very
+slowly.
+
+
+> The word "bundles/" left me a little nervous, because I (ignorantly)
+> imagined that this might be some specialized facility like Python eggs
+> or Ruby gems.
+
+Nope, just copy .pm files in.
+
+
+> Is the intent that this directory contains CPAN modules
+> we want to be able to depend on?
+
+Yes.
+
+
+> Is there really any intention of having more of them than Error.pm?
+
+No idea, this is my first look at the code, but now it's possible.  In my
+experience, if there's a barrier to using CPAN modules then people won't use
+them.  They'll rewrite the functionality poorly.
+
+
+> Before this patch, in the default case (with MakeMaker), "make
+> install" wrote a manpage in <mandir>/man3/private-Error.3pm.  Does it
+> still do so after the patch?  Will people who have installation
+> scripts that expected that manpage have to change them, and if so, is
+> the new behavior better to make up for that effort?
+
+The man page is now man3/bundles::Error::Error.3 which is equally as incorrect
+as man3/private-Error.3.  It is possible to correct that so it's man3/Error.3,
+but that's going to require some effort.  Basically its in the same boat as
+PM.  Once you have to change one you have to change them all.
+
+Why do install scripts have specific code to look for that man page?
+
+If it's going to be trouble I can put Error.pm back.  It's just something I
+did in passing.
+
+
+>> +# Don't forget to update the perl/Makefile, too.
+>> +# Don't forget to test with NO_PERL_MAKEMAKER=YesPlease
+> 
+> Now the reader will have no reason to be looking at this file, so
+> these comments are pretty much useless.  In an ideal world, "make
+> test" in the MakeMaker build would automatically "grep perl/Makefile"
+> to catch modules that are not listed there, but that can wait, I
+> imagine.
+> 
+> Alternatively, maybe there could be a perl/modules.list that both
+> makefiles read?  That way, if I drop in an unrelated .pm file for
+> reference while coding the build system would not be confused by
+> it, and since both build systems would use the same module list
+> there would be no risk of it falling out of date.
+
+Ideally, that second Makefile would go away.  Parallel build systems are extra
+work and generate bugs.
+
+The log suggests it might have something to do with people wanting to build
+with an ActiveState Perl on Cygwin or something?  MakeMaker builds different
+Makefiles depending on the OS, so it may be as simple as telling Makefile.PL
+what flavor of make you're using.
+
 
 -- 
-Jakub Vrana
-
-
------Original Message-----
-From: Jeff King [mailto:peff@peff.net] 
-Sent: Monday, July 16, 2012 9:16 PM
-To: Jakub Vrana
-Cc: git@vger.kernel.org; gitster@pobox.com
-Subject: Re: [PATCH] diff: respect --no-ext-diff with typechange
-
-On Mon, Jul 16, 2012 at 05:27:00PM -0700, Jakub Vrana wrote:
-
-> If external diff is specified through diff.external then it is used 
-> even if `git diff --no-ext-diff` is used when there is a typechange.
-
-Eek. That has some minor security implications, as it means that it is dangerous to run even plumbing inspection command in somebody else's repository.
-
-However...
-
->  diff.c |    3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/diff.c b/diff.c
-> index 208096f..898d610 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3074,6 +3074,9 @@ static void run_diff(struct diff_filepair *p, 
-> struct diff_options *o)
->  	if (o->prefix_length)
->  		strip_prefix(o->prefix_length, &name, &other);
->  
-> +	if (!DIFF_OPT_TST(o, ALLOW_EXTERNAL))
-> +		pgm = NULL;
-> +
->  	if (DIFF_PAIR_UNMERGED(p)) {
->  		run_diff_cmd(pgm, name, NULL, attr_path,
->  			     NULL, NULL, NULL, o, p);
-
-run_diff_cmd already checks the ALLOW_EXTERNAL bit and sets pgm to NULL there. So as far as I can tell, we are not actually running the external diff. However, there is still a problem. Later in run_diff we do:
-
-        if (!pgm &&
-            DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
-            (S_IFMT & one->mode) != (S_IFMT & two->mode)) {
-                /*
-                 * a filepair that changes between file and symlink
-                 * needs to be split into deletion and creation.
-                 */
-                struct diff_filespec *null = alloc_filespec(two->path);
-                run_diff_cmd(NULL, name, other, attr_path,
-                             one, null, &msg, o, p);
-                free(null);
-                strbuf_release(&msg);
-
-                null = alloc_filespec(one->path);
-                run_diff_cmd(NULL, name, other, attr_path,
-                             null, two, &msg, o, p);
-                free(null);
-        }
-        else
-                run_diff_cmd(pgm, name, other, attr_path,
-                             one, two, &msg, o, p);
-
-IOW, we split up a typechange if we are feeding it to the internal diff generator, because builtin_diff will not show diffs between different types. But the check for "!pgm" here is not right; we don't know yet whether we will be builtin or external, because we have not checked ALLOW_EXTERNAL yet.
-
-So I think your fix is the right thing, but the bug it is fixing is not "do not run external diff even when --no-ext-diff is specified". It is "do not accidentally feed typechange diffs to builtin_diff".
-
-You can see the difference in output with this script (and it works fine with your patch applied):
-
-    git init -q repo && cd repo &&
-    echo content >file && git add file && git commit -q -m regular &&
-    rm file && ln -s dest file && git commit -q -a -m typechange &&
-    export GIT_PAGER=cat &&
-    export GIT_EXTERNAL_DIFF='echo doing external diff' &&
-    git show HEAD^ --format='=== %s, ext ===' --ext-diff &&
-    git show HEAD^ --format='=== %s, no-ext ===' --no-ext-diff &&
-    git show HEAD  --format='=== %s, ext ===' --ext-diff &&
-    git show HEAD  --format='=== %s, no-ext ===' --no-ext-diff
-
--Peff
+emacs -- THAT'S NO EDITOR... IT'S AN OPERATING SYSTEM!
