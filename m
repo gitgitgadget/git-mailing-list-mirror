@@ -1,74 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2 4/4] mw-to-git: use git-credential's URL parser
-Date: Wed, 18 Jul 2012 15:06:42 +0200
-Message-ID: <vpqmx2xi5gd.fsf@bauges.imag.fr>
-References: <20120718120307.GA6399@sigill.intra.peff.net>
-	<20120718120656.GD6726@sigill.intra.peff.net>
-	<vpqd33tjlzm.fsf@bauges.imag.fr>
-	<20120718122848.GB11482@sigill.intra.peff.net>
-	<vpq1uk9jldk.fsf@bauges.imag.fr>
-	<20120718125741.GA11605@sigill.intra.peff.net>
-	<20120718130308.GA11769@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git_getpass regression?
+Date: Wed, 18 Jul 2012 16:23:55 +0200
+Message-ID: <CABPQNSa1wd8TzQ5-H7HQaVD586POWotMhOWLvC5Y90nBAn4fUQ@mail.gmail.com>
+References: <CABPQNSa4uvgijjGCSJDXDMqHC3UkqQKKujG3xDFqnQ13LNrKdQ@mail.gmail.com>
+ <20120629173954.GA3804@sigill.intra.peff.net> <CABPQNSZ4NhEA1CBiCBD_YNJZcnK8u=NtQ3PeDa5c0NDROPDyrQ@mail.gmail.com>
+ <20120629203001.GA12937@sigill.intra.peff.net> <CABPQNSY3hJse6J7fDo0S5=ySZA4_7=JisfzLBUu135gR2nSF-w@mail.gmail.com>
+ <20120630183607.GA19739@sigill.intra.peff.net> <CABPQNSYP6mUZb-1dCifytRxqP7_grzYzON2bjevK2zsGawb-yg@mail.gmail.com>
+ <CABPQNSZGcReC4CgaYcmwsXyGSqzQgHKQceZ2M5D=zQmyAs8_Ug@mail.gmail.com>
+ <20120703171121.GA3294@sigill.intra.peff.net> <CABPQNSZjZtRxf1=cdKqgp3FwP6Fw2W876si9=OpyHmZ6mjHRsw@mail.gmail.com>
+ <7vtxx5wr6v.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 18 15:06:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 18 16:24:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrTxw-00080f-0c
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 15:06:56 +0200
+	id 1SrVBD-0000bw-Qz
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jul 2012 16:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486Ab2GRNGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jul 2012 09:06:51 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38740 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754465Ab2GRNGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jul 2012 09:06:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6ID52Yu020697
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jul 2012 15:05:02 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SrTxj-0005WO-Mz; Wed, 18 Jul 2012 15:06:43 +0200
-In-Reply-To: <20120718130308.GA11769@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 18 Jul 2012 09:03:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 18 Jul 2012 15:05:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6ID52Yu020697
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343221504.3544@KUTw/dTodRH7YA2m9xlylQ
+	id S1754617Ab2GROYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jul 2012 10:24:38 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:52291 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751556Ab2GROYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jul 2012 10:24:36 -0400
+Received: by vcbfk26 with SMTP id fk26so1142400vcb.19
+        for <git@vger.kernel.org>; Wed, 18 Jul 2012 07:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=DFGhu5ni1IZvNHPEs9IEmRrNB/NIsbQsrHpVXCYp91o=;
+        b=GBI8aaOqBt5V0MJJksi6J7E3JtYwGuQEP4/YiWK/SqpDipHtFkzxkxXKk13V093O6v
+         hURz3DOP6PEa4xrAdnjyq7CmAtQjZjncuGlE8FSnoSOAecsq07tFGhF400fRkzP3O20q
+         V0s28OWQrKPCQCvVF8i3z9BPPy+pdiWAK72WtIf/i751XtsfRZuelx9ixnTqwInDvXLN
+         QjsnLxlQ9BtTaVWeLGqAFdMLlBPx/8NjVv4fBHNCfkWlskt2WB5Yl7u+LHQEvzpj/y+x
+         jvXipKzW/s7X1x/P/vfMZwXXFIKZa7u/04DsBgdegMcrHV8BH14WFUBTt7LVml2xFFIj
+         VeKQ==
+Received: by 10.220.219.140 with SMTP id hu12mr870066vcb.72.1342621475434;
+ Wed, 18 Jul 2012 07:24:35 -0700 (PDT)
+Received: by 10.58.94.13 with HTTP; Wed, 18 Jul 2012 07:23:55 -0700 (PDT)
+In-Reply-To: <7vtxx5wr6v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201693>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jul 18, 2012 at 7:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ping on seemingly stalled discussion.
 
-> On Wed, Jul 18, 2012 at 08:57:41AM -0400, Jeff King wrote:
->
->> So since that is a non-issue, I think the second diff I provided above
->> is a bit nicer.
->
-> And here is a replacement patch 4/4.
->
-> -- >8 --
-> Subject: mw-to-git: use git-credential's URL parser
-
-Perfect, thanks.
-
-(and you've been faster than me about the comment ;-) )
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Just to recap quickly from my point of view:
+1. There's no regression.
+2. There's room for improvement of the prompting on Windows.
+3. I'm not entirely confident that I've found a safe way of improving
+the Windows prompt yet.
+4. I've been busy with other stuff, but I'll get back to hacking soon :)
