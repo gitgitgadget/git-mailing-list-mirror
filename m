@@ -1,84 +1,102 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: Feature request: fetch --prune by default
-Date: Thu, 19 Jul 2012 21:34:38 +0400
-Message-ID: <20120719213438.1cc7ca77a9cb3367a3be0539@domain007.com>
-References: <2C63E314-2EF5-4B8E-B96A-5306E317E045@gmail.com>
-	<20120719115558.GC29774@sigill.intra.peff.net>
-	<88300470-AB41-4317-8B97-81DC18FD5899@gmail.com>
+From: bronek <kenorb@gmail.com>
+Subject: Re: Bug: Git-Svn creates wrong tag when svn tag contains spaces
+Date: Thu, 19 Jul 2012 19:42:57 +0200
+Message-ID: <CANmdXCFFNUk1NntEkJUBjm4XyQPzRUdxDLOksEK63a0B0bTkrQ@mail.gmail.com>
+References: <3760846560270293323@unknownmsgid> <871uk76dxw.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Alexey Muranov <alexey.muranov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 19:34:58 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 19 19:43:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Srucq-0001Nj-Tf
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 19:34:57 +0200
+	id 1Srul3-0004Uv-Eg
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 19:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597Ab2GSRev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jul 2012 13:34:51 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:47717 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752492Ab2GSRes (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2012 13:34:48 -0400
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q6JHYcup007885;
-	Thu, 19 Jul 2012 21:34:39 +0400
-In-Reply-To: <88300470-AB41-4317-8B97-81DC18FD5899@gmail.com>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752477Ab2GSRnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jul 2012 13:43:20 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:52568 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752204Ab2GSRnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2012 13:43:19 -0400
+Received: by qcro28 with SMTP id o28so1861636qcr.19
+        for <git@vger.kernel.org>; Thu, 19 Jul 2012 10:43:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=kS85THN4vgoMsOm/QJjMNNXwE+lV/snwukKHyfkV1Gs=;
+        b=QhsU/qus7QmiB0n4zpQ+xcwG1LsnFhCcpmLzxziwkEVDsBRLD9PySR6gA9J3ushArj
+         1nb0br8YE9iM1VFpKKC2zKWeyXK+jweUE3ZjVJY8ZuZkKk2xUZ7zb3WtTTSdRINc7d7C
+         fdn5sm/xDcICwFohfigRJWzHp6o18SRmU2kLAYe9uB10zbJSurR6E/ifN1GQ/KrSIqgM
+         qWq2ET5Orr+WWgMtMBlUTr9iNXvV2cLjP7eyapA3bX2xrDwOHgKpT/+WSxQ1yzczYFfZ
+         l+iC8zDfU8jrBgrpVBCWMZJHnORuZ0mFYShh9BnpnFBaveiv15qJZtx3fGatul6dFifa
+         RagA==
+Received: by 10.224.184.204 with SMTP id cl12mr5157880qab.55.1342719798443;
+ Thu, 19 Jul 2012 10:43:18 -0700 (PDT)
+Received: by 10.229.248.139 with HTTP; Thu, 19 Jul 2012 10:42:57 -0700 (PDT)
+In-Reply-To: <871uk76dxw.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201749>
 
-On Thu, 19 Jul 2012 18:21:21 +0200
-Alexey Muranov <alexey.muranov@gmail.com> wrote:
+The problem is as follow:
+1. git svn fetch
+2.
+Found possible branch point: https://xxx/svn/xxx/branches/11-07 D t-m
+=> https://xxx/svn/xxx/branches/11-09 S t-m, 4332
+fatal: Not a valid object name refs/remotes/1-11 M R 2.6
+cat-file commit refs/remotes/1-11 M R 2.6: command returned error: 128
 
-[...]
-> I do not still understand very well some aspects of Git, like the
-> exact purpose of "remote tracking branches" (are they for pull or for
-> push?), so i may be wrong.
-This is wery well explained in the Pro Git book, for instance.
-And in numerous blog posts etc.
+I'm using git version 1.7.9.5 on Ubuntu 12.04
 
-> However, i thought that a user was not
-> expected to follow the moves of a remote branch of which the user is
-> not an owner: if the user needs to follow the brach and not lose its
-> commits, he/she should create a remote tracking branch.
-This would present another namespacing issue: how would you name the
-branches you're interested in so that they don't clash with your own
-personal local branches?  You'd have to invent a scheme which would
-encode the remote's name in a branch name.  But remote branches already
-do just this.  So you create a remote tracking branch when you intend
-to actually *develop* something on that branch with the final intention
-to push that work back.
+I've tried to create the tag manually, but it's not allowed.
+$ git tag "11-07 D t-m" remotes/11-07%20D
+fatal: '11-07 D t-m' is not a valid tag name.
 
-> > So I think it would be a lot more palatable if we kept reflogs on
-> > deleted branches. That, in turn, has a few open issues, such as how
-> > to manage namespace conflicts (e.g., the fact that a deleted "foo"
-> > branch can conflict with a new "foo/bar" branch).
-> 
-> I prefer to think of a remote branch and its local copy as the same
-> thing, which are physically different only because of current real
-> world/hardware/software limitations, which make it necessary to keep
-> a local cache of remote data.  With this approach, reflogs should be
-> deleted with the branch, and there will be no namespace conflicts.
-It appears, the distributed nature of a DVCS did not fully sink into
-your mindset yet. ;-)
-Looks like you mentally treat a Git remote as a thing being used to
-access a centralized "reference" server which maintains a master copy
-of a repository, of which you happen to also have a local copy.
-Then it's quite logically to think that if someone deleted a branch in
-the master copy, everyone "downstream" should have the same
-remote branch deleted to be in sync with that master copy.
-But this is not the only way to organize your work.
-You could fetch from someone else's repository and be interested in
-their branch "foo", but think what happens when you fetch next time from
-that repo and see Git happily deleting your local branch thatremote/foo
-simply because someone with push access deleted that branch from the
-repo.  This might *not* be what you really want or expect.
+As workaround I've tried:
+- to create or rename tag manually as suggested here:
+http://stackoverflow.com/questions/11365317/git-svn-clone-fails-fatal-not-a-valid-object-name/11559472#11559472
+- http://qa.celogeek.com/programming/versionning/git/svn/rebase_with_bad_object_after_rm
+But without success.
+
+There is also bug report on lunchpad:
+https://bugs.launchpad.net/ubuntu/+source/git/+bug/786942
+strace log:
+[pid 30618] access(".git/config", R_OK) = 0
+[pid 30618] open(".git/config", O_RDONLY) = 3
+[pid 30618] fstat(3, {st_mode=S_IFREG|0664, st_size=551, ...}) = 0
+[pid 30618] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f2ed01e9000
+[pid 30618] read(3, "[core]\n\trepositoryformatversion "..., 4096) = 551
+[pid 30618] read(3, "", 4096)           = 0
+[pid 30618] close(3)                    = 0
+[pid 30618] munmap(0x7f2ed01e9000, 4096) = 0
+[pid 30618] write(2, "fatal: Not a valid object name r"..., 76fatal:
+Not a valid object name refs/remotes/1-11 M R 2.6
+) = 76
+[pid 30618] exit_group(128)             = ?
+
+---
+Kind regards,
+Rafal
+
+
+
+On 19 July 2012 16:08, Thomas Rast <trast@student.ethz.ch> wrote:
+>
+> "Rafal W." <kenorb@gmail.com> writes:
+>
+> > I've the problem described here:
+> > http://code.google.com/p/git-core/issues/detail?id=16
+>
+> Git does not have a bug tracker.  Please post the issue, description,
+> etc. to this list.
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
