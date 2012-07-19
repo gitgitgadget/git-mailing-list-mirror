@@ -1,73 +1,95 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] git-svn: don't create master if another head exists
-Date: Thu, 19 Jul 2012 08:19:35 +0000
-Message-ID: <20120719081935.GA15414@dcvr.yhbt.net>
-References: <7vfw9hafz8.fsf@alter.siamese.dyndns.org>
- <20120626223215.GB8336@beczulka>
- <20120709220321.GE30213@beczulka>
- <7v8vesk12v.fsf@alter.siamese.dyndns.org>
- <20120711012617.GA18369@dcvr.yhbt.net>
- <20120711214019.GF30213@beczulka>
- <7vmx35dhzo.fsf@alter.siamese.dyndns.org>
- <20120718074908.GA23460@beczulka>
- <20120718112722.GA22042@dcvr.yhbt.net>
- <20120718124723.GA17379@beczulka>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marcin Owsiany <marcin@owsiany.pl>
-X-From: git-owner@vger.kernel.org Thu Jul 19 10:19:59 2012
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2] difftool: only copy back files modified during directory diff
+Date: Thu, 19 Jul 2012 01:27:09 -0700
+Message-ID: <1342686429-87847-1-git-send-email-davvid@gmail.com>
+References: <CAJDDKr4Q+nQapO0aAQmmpj_guR=_tXwareWsn020BckZR5V+uA@mail.gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 10:28:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Srlxl-0003VY-Ex
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 10:19:57 +0200
+	id 1Srm5a-0007R6-GL
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 10:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871Ab2GSITi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jul 2012 04:19:38 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39719 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750866Ab2GSITg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2012 04:19:36 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2E71F451;
-	Thu, 19 Jul 2012 08:19:35 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20120718124723.GA17379@beczulka>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752713Ab2GSI1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jul 2012 04:27:15 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:40431 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572Ab2GSI1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2012 04:27:09 -0400
+Received: by pbbrp8 with SMTP id rp8so4018240pbb.19
+        for <git@vger.kernel.org>; Thu, 19 Jul 2012 01:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Ozgau2qGT6GJyOyZGQxgexv2LhwbSUVDQv7c6+DVRXI=;
+        b=OHW8QEgmm0ZJhpbsNG6YIwyLugDwDPENsW+DptmWt+EgYKX9uarS6Ee93o5zPcIMhh
+         eewwFbFSnQknw1k4AVQAg7nBy6mewXefLayD+Su+vWbR9PzxyQZI2tQIwShcb58/5O6W
+         jqkgeL+rybOIqVINpKhooTxq+9NTxHpS7cuLVbkmgUB5yZ27wicC2oEozdJJkfoU0kz4
+         00W7SuCgmsnKSMjBBdU10NawslygkymzIEkKrGE2AdFzTT/uJoAFNjzkbaRZugKJU/zc
+         f5A3ROI8TFfdjtwigr29xYveRcShsMe8qC3yOyv8xXh3wYMrVuIcORY/fRfzcVrnP0Ru
+         Y63A==
+Received: by 10.68.229.2 with SMTP id sm2mr3356275pbc.57.1342686429176;
+        Thu, 19 Jul 2012 01:27:09 -0700 (PDT)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id oq4sm1354718pbb.21.2012.07.19.01.27.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jul 2012 01:27:08 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.2.250.g00b4b9a
+In-Reply-To: <CAJDDKr4Q+nQapO0aAQmmpj_guR=_tXwareWsn020BckZR5V+uA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201729>
 
-Marcin Owsiany <marcin@owsiany.pl> wrote:
-> On Wed, Jul 18, 2012 at 11:27:22AM +0000, Eric Wong wrote:
-> > Marcin Owsiany <marcin@owsiany.pl> wrote:
-> > > Turns out that command_noisy()
-> > >  - has a meaningless return value
-> > >  - throws an exception on command failure
-> > > so the "||" bit does not work.
-> > > Also, for some reason command_noisy does not check for the command being
-> > > killed by a signal, so I'd prefer to leave the verify_ref there.
-> > 
-> > Ugh, I always forget the Git.pm API, too.  Perhaps command_noisy should
-> > be made to respect signals in exit codes (the rest of git-svn is
-> > compromised by this behavior in command_noisy, too, it turns out... :x)
-> > 
-> > I'm not sure what else would break if command_noisy were changed,
-> > git-svn appears to be the only user in git.git.
-> 
-> Other "command" flavours should probably also be changed to match?
+From: Tim Henigan <tim.henigan@gmail.com>
 
-Probably, I'm not sure if it'd break existing uses.  Anyways, that's a
-separate issue we can deal with another day.
+When 'difftool --dir-diff' is used to compare working tree files,
+it always copies files from the tmp dir back to the working tree
+when the diff tool is closed, even if the files were not modified
+by the diff tool.
 
-I've added my Signed-off-by: to your latest patch and pushed
-to "master" of git://bogomips.org/git-svn.git
-(commit e3bd4ddaa9a60fa4e70efdb143b434b440d6cec4)
+This causes the file timestamp to change. Files should only be
+copied from the tmp dir back to the working copy if they were
+actually modified.
 
-Marcin Owsiany (1):
-      git-svn: don't create master if another head exists
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+
+Perhaps something like this...
+
+ git-difftool.perl | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/git-difftool.perl b/git-difftool.perl
+index ae1e052..c079854 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -15,6 +15,7 @@ use strict;
+ use warnings;
+ use File::Basename qw(dirname);
+ use File::Copy;
++use File::Compare;
+ use File::Find;
+ use File::stat;
+ use File::Path qw(mkpath);
+@@ -336,8 +337,10 @@ if (defined($dirdiff)) {
+ 	# files were modified during the diff, then the changes
+ 	# should be copied back to the working tree
+ 	for my $file (@working_tree) {
+-		copy("$b/$file", "$workdir/$file") or die $!;
+-		chmod(stat("$b/$file")->mode, "$workdir/$file") or die $!;
++		if (-e "$b/$file" && compare("$b/$file", "$workdir/$file")) {
++			copy("$b/$file", "$workdir/$file") or die $!;
++			chmod(stat("$b/$file")->mode, "$workdir/$file") or die $!;
++		}
+ 	}
+ } else {
+ 	if (defined($prompt)) {
+-- 
+1.7.11.2.250.g00b4b9a
