@@ -1,70 +1,85 @@
-From: Alexey Muranov <alexey.muranov@gmail.com>
-Subject: Re: Feature request: fetch --prune by default
-Date: Thu, 19 Jul 2012 18:51:15 +0200
-Message-ID: <733EACD1-353C-4256-BA8B-DFDCE1C7D6F1@gmail.com>
-References: <2C63E314-2EF5-4B8E-B96A-5306E317E045@gmail.com> <20120719115558.GC29774@sigill.intra.peff.net> <CA80E335-AD87-4DFC-9569-A010D3E850C0@gmail.com> <CAPBPrntB3ixuRFDP5fp8saJoEZvYOEd631Nh2=-WGudB-UK=kw@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Fix notes handling in rev-list
+Date: Thu, 19 Jul 2012 10:20:18 -0700
+Message-ID: <7vr4s7vfal.fsf@alter.siamese.dyndns.org>
+References: <20120325005504.GA27651@sigill.intra.peff.net>
+ <1342463409-6919-1-git-send-email-jukka.lehtniemi@gmail.com>
+ <20120717034640.GB20945@sigill.intra.peff.net>
+ <7vvchnx7tc.fsf@alter.siamese.dyndns.org>
+ <20120718072104.GB12942@sigill.intra.peff.net>
+ <7vhat4wv6h.fsf@alter.siamese.dyndns.org>
+ <20120719113535.GA29774@sigill.intra.peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Stefan Haller <lists@haller-berlin.de>,
-	git@vger.kernel.org
-To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 19 18:51:26 2012
+Cc: Jukka Lehtniemi <jukka.lehtniemi@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 19 19:20:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Srtwh-0008Uz-UN
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 18:51:24 +0200
+	id 1SruOq-0006tn-4e
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 19:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064Ab2GSQvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jul 2012 12:51:20 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54041 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab2GSQvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2012 12:51:18 -0400
-Received: by bkwj10 with SMTP id j10so2642276bkw.19
-        for <git@vger.kernel.org>; Thu, 19 Jul 2012 09:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=g2zhoDWhAphdm0UTz09aCLjJ1jKpMpJxAy0/ZzA8hLs=;
-        b=NJHf7u8U4S5hRebro725xllE6w0GWUXv/diAWedy88+ALm9MOBm6ulJwg9UX+EwB9k
-         mIwqqTl/1askiJA6jfr0kJnTEJntTMZBGEJ8vLllXdFfbKG6BtVpUZRtOm9szwLtd7UR
-         u4c0ZkeBcVTcZXV4iAvP1yvfcc/Rc4UJukL2qbRC3QCw3BdYw/prsl7T1mB85+azlCDS
-         ctP3BwVMKihTIU/K5KMinYUgS/1ULKyXkDrWHyRwJ2GojK2FyDpdhidpEJQ9o+453oXu
-         8WsChVs9Six4dWPkeaC/AeId6eLBShdunxYRif31U01Ntdo32PKKq1bZr0semBGlFP/q
-         6Y3g==
-Received: by 10.204.151.81 with SMTP id b17mr1558269bkw.95.1342716676843;
-        Thu, 19 Jul 2012 09:51:16 -0700 (PDT)
-Received: from [192.168.6.127] (bi1.roaming.dfn.de. [195.37.234.61])
-        by mx.google.com with ESMTPS id t23sm1589003bks.4.2012.07.19.09.51.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2012 09:51:16 -0700 (PDT)
-In-Reply-To: <CAPBPrntB3ixuRFDP5fp8saJoEZvYOEd631Nh2=-WGudB-UK=kw@mail.gmail.com>
-X-Mailer: Apple Mail (2.1084)
+	id S1751711Ab2GSRUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jul 2012 13:20:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53655 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751337Ab2GSRUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2012 13:20:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6018B76DF;
+	Thu, 19 Jul 2012 13:20:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3oZHQG5/4VOGi6uElLetPvJWWZQ=; b=OdB0qN
+	wk9ztsfczh+vkg4NIRgCtTmUfO6ZioMGc5jnWdh5QtCmOIrcNz/WyAQLj978F4jd
+	tl+M7FZuAcrT+39SVjZtt4KMIOOFGzYgJmhcgnnIzngsfdOMRJ3hCaD8hSHHVkXm
+	wdeH5nhsTX2D6wJChBYCTxhAFkuXkSASPwlFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fUAFetVEzSc+nnQpOqUY3bc/n+1nvSk2
+	B6jBHVX8vsdF0/Hg4gvTm2hqLqt3wNJMTNfviXiQ63Jl6noER0NztB3RM+8YnCZk
+	n4orokIrj4IOnJH3Wjm4hA15NC9s3Op4X+XWcmXZjz2bwLmXO/4h19fI8oUeBIxB
+	QHwr1uBqzYA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C89476DE;
+	Thu, 19 Jul 2012 13:20:20 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B06B876DD; Thu, 19 Jul 2012
+ 13:20:19 -0400 (EDT)
+In-Reply-To: <20120719113535.GA29774@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 19 Jul 2012 07:35:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 03EB545A-D1C6-11E1-A50A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201742>
 
-On 19 Jul 2012, at 18:48, Dan Johnson wrote:
+Jeff King <peff@peff.net> writes:
 
-> From the git-gc man page:
-> git gc tries very hard to be safe about the garbage it collects. In
-> particular, it will keep not only objects referenced by your current
-> set of branches and tags, but also objects referenced by the index,
-> remote-tracking branches, refs saved by git filter-branch in
-> refs/original/, or reflogs (which may reference commits in branches
-> that were later amended or rewound).
-> 
-> So yes, a reflog entry does stop gc from removing objects, including
-> commits. It will expire old reflog entries (90 days by default)
-> though, so it's not like they will stay around forever.
+> Unlike elements of the commit object itself, like --parents or
+> --timestamp, notes do not really gain any efficiency by being printed as
+> part of the traversal. So modulo the cost of piping the list of commits,
+> it would not really be any more efficient than "git rev-list | git notes
+> list --stdin" (except that the latter does not take a --stdin argument,
+> but could easily do so). And the latter is way more flexible.
 
-Dan, thanks for the explanation.
+Yeah, I prefer that (not that I think we need either badly).
 
-Alexey.
+> So for plumbing, I think this is the wrong direction, anyway. The real
+> value of this patch is that the pretty-printed code path would work more
+> like git-log (especially the "%N" format, which lets callers make their
+> own micro-format for specifying all the bits they are interested in).
+
+Yeah, but at that point the obvious question becomes "why you aren't
+using 'git log' in the first place".
+
+> Maybe the best thing is to simply disallow --notes when not using a
+> pretty-printed format.
+
+Yeah, or simply ignore it.
