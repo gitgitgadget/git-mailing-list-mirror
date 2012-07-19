@@ -1,102 +1,99 @@
-From: bronek <kenorb@gmail.com>
-Subject: Re: Bug: Git-Svn creates wrong tag when svn tag contains spaces
-Date: Thu, 19 Jul 2012 19:42:57 +0200
-Message-ID: <CANmdXCFFNUk1NntEkJUBjm4XyQPzRUdxDLOksEK63a0B0bTkrQ@mail.gmail.com>
-References: <3760846560270293323@unknownmsgid> <871uk76dxw.fsf@thomas.inf.ethz.ch>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH 3/7] autoconf: remove some redundant shell indirections
+Date: Thu, 19 Jul 2012 19:50:51 +0200
+Message-ID: <500848FB.8060907@gmail.com>
+References: <cover.1342649928.git.stefano.lattarini@gmail.com> <4392b87d8e6c73cfa06459a24b1721b8a8e13a81.1342649928.git.stefano.lattarini@gmail.com> <7v394owq3l.fsf@alter.siamese.dyndns.org> <5007B7B1.8000909@gmail.com> <7vfw8nvf3u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 19 19:43:26 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 19 19:51:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Srul3-0004Uv-Eg
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 19:43:25 +0200
+	id 1Srusc-0006Ub-BG
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 19:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477Ab2GSRnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jul 2012 13:43:20 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:52568 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752204Ab2GSRnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jul 2012 13:43:19 -0400
-Received: by qcro28 with SMTP id o28so1861636qcr.19
-        for <git@vger.kernel.org>; Thu, 19 Jul 2012 10:43:18 -0700 (PDT)
+	id S1752825Ab2GSRvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jul 2012 13:51:08 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:56346 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752821Ab2GSRvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2012 13:51:07 -0400
+Received: by bkwj10 with SMTP id j10so2702435bkw.19
+        for <git@vger.kernel.org>; Thu, 19 Jul 2012 10:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=kS85THN4vgoMsOm/QJjMNNXwE+lV/snwukKHyfkV1Gs=;
-        b=QhsU/qus7QmiB0n4zpQ+xcwG1LsnFhCcpmLzxziwkEVDsBRLD9PySR6gA9J3ushArj
-         1nb0br8YE9iM1VFpKKC2zKWeyXK+jweUE3ZjVJY8ZuZkKk2xUZ7zb3WtTTSdRINc7d7C
-         fdn5sm/xDcICwFohfigRJWzHp6o18SRmU2kLAYe9uB10zbJSurR6E/ifN1GQ/KrSIqgM
-         qWq2ET5Orr+WWgMtMBlUTr9iNXvV2cLjP7eyapA3bX2xrDwOHgKpT/+WSxQ1yzczYFfZ
-         l+iC8zDfU8jrBgrpVBCWMZJHnORuZ0mFYShh9BnpnFBaveiv15qJZtx3fGatul6dFifa
-         RagA==
-Received: by 10.224.184.204 with SMTP id cl12mr5157880qab.55.1342719798443;
- Thu, 19 Jul 2012 10:43:18 -0700 (PDT)
-Received: by 10.229.248.139 with HTTP; Thu, 19 Jul 2012 10:42:57 -0700 (PDT)
-In-Reply-To: <871uk76dxw.fsf@thomas.inf.ethz.ch>
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=NS1Q+pgS8fMi20fml6lxnVBXdAEgBI4lHcukoRhSvgk=;
+        b=C64p+2mT8wS3bUM9K8AFKxUTJJ69miRmbzYRZP+QhsAYGkY4FqcnVTH7gVXHwXNIf0
+         7ZsKf7x/Xl9NUyIs0beUBDtEy0FfZK/ffeAHJ5y57Ep2pxL8lLS45azMtKtiShc+sxlJ
+         aJNoqfhB1cFdYXKh0guEtJmJtxB2hWX+1qD3ORb2yVFgvK7vE17DEyQ+iJ2aq/FZ7qTs
+         mIy9k3L7xa6CdoJzGxjNmDfyLpy0ooOOgB5C7ZwA3AsdP72+ceEve3KFtZAz93qrgzin
+         4zEBQBSyyvyPQLJtpbVBO9eHQaNrZmM9d1WnL7hlVekUgXJDuJIOov/Rx/gP3QKpzX5y
+         Dt5w==
+Received: by 10.204.152.6 with SMTP id e6mr1559487bkw.85.1342720265900;
+        Thu, 19 Jul 2012 10:51:05 -0700 (PDT)
+Received: from [192.168.178.21] (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
+        by mx.google.com with ESMTPS id 14sm1655566bkq.12.2012.07.19.10.51.02
+        (version=SSLv3 cipher=OTHER);
+        Thu, 19 Jul 2012 10:51:03 -0700 (PDT)
+In-Reply-To: <7vfw8nvf3u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201750>
 
-The problem is as follow:
-1. git svn fetch
-2.
-Found possible branch point: https://xxx/svn/xxx/branches/11-07 D t-m
-=> https://xxx/svn/xxx/branches/11-09 S t-m, 4332
-fatal: Not a valid object name refs/remotes/1-11 M R 2.6
-cat-file commit refs/remotes/1-11 M R 2.6: command returned error: 128
-
-I'm using git version 1.7.9.5 on Ubuntu 12.04
-
-I've tried to create the tag manually, but it's not allowed.
-$ git tag "11-07 D t-m" remotes/11-07%20D
-fatal: '11-07 D t-m' is not a valid tag name.
-
-As workaround I've tried:
-- to create or rename tag manually as suggested here:
-http://stackoverflow.com/questions/11365317/git-svn-clone-fails-fatal-not-a-valid-object-name/11559472#11559472
-- http://qa.celogeek.com/programming/versionning/git/svn/rebase_with_bad_object_after_rm
-But without success.
-
-There is also bug report on lunchpad:
-https://bugs.launchpad.net/ubuntu/+source/git/+bug/786942
-strace log:
-[pid 30618] access(".git/config", R_OK) = 0
-[pid 30618] open(".git/config", O_RDONLY) = 3
-[pid 30618] fstat(3, {st_mode=S_IFREG|0664, st_size=551, ...}) = 0
-[pid 30618] mmap(NULL, 4096, PROT_READ|PROT_WRITE,
-MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f2ed01e9000
-[pid 30618] read(3, "[core]\n\trepositoryformatversion "..., 4096) = 551
-[pid 30618] read(3, "", 4096)           = 0
-[pid 30618] close(3)                    = 0
-[pid 30618] munmap(0x7f2ed01e9000, 4096) = 0
-[pid 30618] write(2, "fatal: Not a valid object name r"..., 76fatal:
-Not a valid object name refs/remotes/1-11 M R 2.6
-) = 76
-[pid 30618] exit_group(128)             = ?
-
----
-Kind regards,
-Rafal
-
-
-
-On 19 July 2012 16:08, Thomas Rast <trast@student.ethz.ch> wrote:
+On 07/19/2012 07:24 PM, Junio C Hamano wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+> 
+>> On 07/19/2012 02:29 AM, Junio C Hamano wrote:
+>>>
+>>> The inconsistency between the existing one that does not quote the
+>>> string that is not substituted, i.e.
+>>>
+>>> 	GIT_UC_PROGRAM[]_PATH=$withval
+>>>
+>>> and the new one that quotes _PATH, i.e.
+>>>
+>>> 	GIT_CONF_SUBST(GIT_UC_PROGRAM[_PATH], [])
+>>>
+>>> looks somewhat strange, though.
+>>>
+>> Will fix that in the re-roll.
+> 
+> I see you already used the []_PATH in your reroll, and I do not
+> think it matters either way in pracice, but I suspect that it is
+> technically more correct to have _PATH part inside the bra-ket
+> quotes (of course, changing the style to maximally quote like that
+> is a totally different topic, and should be done as a separate
+> patch,
 >
-> "Rafal W." <kenorb@gmail.com> writes:
+Yep, that's what I thought.  Glad I got it right, saved another
+re-roll :-)
+
+>so I think your reroll is the right thing to do within the
+> scope of this series).
 >
-> > I've the problem described here:
-> > http://code.google.com/p/git-core/issues/detail?id=16
+And as an aside, if we'd somehow got '_PATH' to be a defined macro,
+I say that something would be very, very wrong with the current setup
+(Autoconf strives to be very namespace-clean these days, apart from
+some old m4 builtins, which must remain available out of the 'm4_'
+and 'AC_' namespaces for sake of backward-compatibility).
+
+Today, excluding few exceptions, I'd say that the main reason to
+properly quote macro arguments is to avoid commas or quoting characters
+in macro invocations or expansion, or even quoting characters themselves,
+to be spuriously considered as metacharacters and thus processed.
+
+> Thanks.
 >
-> Git does not have a bug tracker.  Please post the issue, description,
-> etc. to this list.
->
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+Thanks to you for the quick feedback.
+
+Regards,
+  Stefano
