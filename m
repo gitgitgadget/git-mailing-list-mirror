@@ -1,7 +1,7 @@
 From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH v2 5/7] autoconf: use AC_CONFIG_COMMANDS instead of ad-hoc 'config.mak.append'
-Date: Thu, 19 Jul 2012 09:50:00 +0200
-Message-ID: <3f038563bcf4aea6bc882e4d565c02976c460cef.1342683786.git.stefano.lattarini@gmail.com>
+Subject: [PATCH v2 3/7] autoconf: remove some redundant shell indirections
+Date: Thu, 19 Jul 2012 09:49:58 +0200
+Message-ID: <edc192e0d37b96c3c7727bd19e4cd3979b579574.1342683786.git.stefano.lattarini@gmail.com>
 References: <7vy5mgvb6f.fsf@alter.siamese.dyndns.org>
  <cover.1342683786.git.stefano.lattarini@gmail.com>
 Cc: gitster@pobox.com, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
@@ -12,34 +12,34 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SrlVG-0006oN-7p
+	id 1SrlVF-0006oN-Ot
 	for gcvg-git-2@plane.gmane.org; Thu, 19 Jul 2012 09:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753531Ab2GSHu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jul 2012 03:50:27 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:44410 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966Ab2GSHuY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753496Ab2GSHuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 19 Jul 2012 03:50:24 -0400
-Received: by mail-bk0-f46.google.com with SMTP id j10so2137707bkw.19
-        for <git@vger.kernel.org>; Thu, 19 Jul 2012 00:50:23 -0700 (PDT)
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:55322 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789Ab2GSHuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jul 2012 03:50:20 -0400
+Received: by bkwj10 with SMTP id j10so2137760bkw.19
+        for <git@vger.kernel.org>; Thu, 19 Jul 2012 00:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=T7vBNTQcZFCwBeHGKbPDysgPcb3n09E0Lvuum+BBBn0=;
-        b=gKziFe1T/A/6FRllQsxI/2zdWUzsTWO50LvMgCYpqyH37HXCaRD2nqzw58zCXaFjoq
-         hhoAH7ZYo3hL5C6YKIvty/UNaOAN3tvGYl5P4XuDb4wob0gNz6h8KczQIokKyHc2T9eN
-         i2rvR6Nd8raUE8Ec+DQeHjVE2bJX+b5G6Fm/nd+e283aqOeP+MeZ07i9OOx9cxoW7ojz
-         1NONUiwrazKssaiEBjeKcnaRFit7Dso5wBWnjcFflab9Po1SxnvSYjojfSlraBBTHsDv
-         475MecX24GPRntl7vl+0+0vHQMslF25s6sIevOnS39VWJSakfOWNCuNU4+VhELQ3bwnk
-         zNaw==
-Received: by 10.204.129.4 with SMTP id m4mr277416bks.55.1342684223376;
-        Thu, 19 Jul 2012 00:50:23 -0700 (PDT)
+        bh=Td+sKY/+vBevQ0bh4gyFZZP5+9wFPoQDNECrAFY4nuw=;
+        b=J3z5Pnfkm9ACanYZoX7Y2QenIRGhf/n7xuYS8kikiIwyDzKcfujxC/BWo8bfCXL9Kh
+         ygwYK3u3spbENTIKyy4oakGB9WV/M5mbz1GgNxkJYwO233DnqefXlTSBdkuqmdWmz9VN
+         R7l8/Pi5/5/r+Q3RqpFhFuUK15FLsVaGVx30YgAsN3VPPaZ5H+fq80p1mdhWLrx6G/Pc
+         /zxhcCbPdsWz/cFQt4ZxfKwE6iZeExx30M75Ci2iM8Fu/4Y4VIdX6lljwRM1mITpv/5l
+         S5B8KFQbFqG75aa7Js43YayHf1eCmx6L49Gse/nYqmZR2IvMIEzck9TTq+RYRId9ZOuK
+         FCJQ==
+Received: by 10.204.148.86 with SMTP id o22mr290621bkv.59.1342684219283;
+        Thu, 19 Jul 2012 00:50:19 -0700 (PDT)
 Received: from localhost.localdomain (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
-        by mx.google.com with ESMTPS id c18sm430224bkv.8.2012.07.19.00.50.21
+        by mx.google.com with ESMTPS id c18sm430224bkv.8.2012.07.19.00.50.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jul 2012 00:50:22 -0700 (PDT)
+        Thu, 19 Jul 2012 00:50:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.2.1067.g553d16e
 In-Reply-To: <cover.1342683786.git.stefano.lattarini@gmail.com>
 In-Reply-To: <cover.1342683786.git.stefano.lattarini@gmail.com>
@@ -48,69 +48,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201722>
 
-This will allow "./config.status --recheck; ./config.status" to work
-correctly as a mean of reconfiguring the tree with the same configure
-argument used in the previous "./configure" invocation.
+They are merely useless now, but would get in the way of future changes.
+
+No semantic change is intended.
 
 Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
 ---
- configure.ac | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ configure.ac | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index b453ba5..a63fe77 100644
+index 02b9a49..200776f 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -5,9 +5,22 @@
+@@ -29,13 +29,12 @@ AC_DEFUN([GIT_ARG_SET_PATH],
+ # --without-PROGRAM is used.
+ AC_DEFUN([GIT_CONF_APPEND_PATH],
+     [m4_pushdef([GIT_UC_PROGRAM], m4_toupper([$1]))dnl
+-    PROGRAM=GIT_UC_PROGRAM
+     if test "$withval" = "no"; then
+ 	if test -n "$2"; then
+ 		GIT_UC_PROGRAM[]_PATH=$withval
+-		AC_MSG_NOTICE([Disabling use of ${PROGRAM}])
+-		GIT_CONF_SUBST([NO_${PROGRAM}], [YesPlease])
+-		GIT_CONF_SUBST([${PROGRAM}_PATH], [])
++		AC_MSG_NOTICE([Disabling use of GIT_UC_PROGRAM])
++		GIT_CONF_SUBST([NO_]GIT_UC_PROGRAM, [YesPlease])
++		GIT_CONF_SUBST(GIT_UC_PROGRAM[]_PATH, [])
+ 	else
+ 		AC_MSG_ERROR([You cannot use git without $1])
+ 	fi
+@@ -45,7 +44,7 @@ AC_DEFUN([GIT_CONF_APPEND_PATH],
+ 	else
+ 		GIT_UC_PROGRAM[]_PATH=$withval
+ 		AC_MSG_NOTICE([Setting GIT_UC_PROGRAM[]_PATH to $withval])
+-		GIT_CONF_SUBST([${PROGRAM}_PATH], [$withval])
++		GIT_CONF_SUBST(GIT_UC_PROGRAM[]_PATH, [$withval])
+ 	fi
+     fi
+     m4_popdef([GIT_UC_PROGRAM])])
+@@ -58,7 +57,6 @@ AC_DEFUN([GIT_CONF_APPEND_PATH],
+ # * Unset NO_PACKAGE for --with-PACKAGE without ARG
+ AC_DEFUN([GIT_PARSE_WITH],
+     [m4_pushdef([GIT_UC_PACKAGE], m4_toupper([$1]))dnl
+-    PACKAGE=GIT_UC_PACKAGE
+     if test "$withval" = "no"; then
+ 	NO_[]GIT_UC_PACKAGE=YesPlease
+     elif test "$withval" = "yes"; then
+@@ -67,7 +65,7 @@ AC_DEFUN([GIT_PARSE_WITH],
+ 	NO_[]GIT_UC_PACKAGE=
+ 	GIT_UC_PACKAGE[]DIR=$withval
+ 	AC_MSG_NOTICE([Setting GIT_UC_PACKAGE[]DIR to $withval])
+-	GIT_CONF_SUBST([${PACKAGE}DIR], [$withval])
++	GIT_CONF_SUBST(GIT_UC_PACKAGE[DIR], [$withval])
+     fi
+     m4_popdef([GIT_UC_PACKAGE])])
  
- # GIT_CONF_SUBST(VAL, VAR)
- # ------------------------
--# Append the line "VAR=VAL" to file ${config_append}
--AC_DEFUN([GIT_CONF_APPEND_LINE],
--         [echo "$1=$2" >> "${config_append}"])
-+# Cause the line "VAR=VAL" to be eventually appended to ${config_file}.
-+AC_DEFUN([GIT_CONF_SUBST],
-+   [AC_REQUIRE([GIT_CONF_SUBST_INIT])
-+   config_appended_defs="$config_appended_defs${newline}$1=$2"])
-+
-+# GIT_CONF_SUBST_INIT
-+# -------------------
-+# Prepare shell variables and autoconf machine required by later calls
-+# to GIT_CONF_SUBST.
-+AC_DEFUN([GIT_CONF_SUBST_INIT],
-+    [config_appended_defs=; newline='
-+'
-+    AC_CONFIG_COMMANDS([$config_file],
-+                       [echo "$config_appended_defs" >> "$config_file"],
-+                       [config_file=$config_file
-+                        config_appended_defs="$config_appended_defs"])])
- 
- # GIT_ARG_SET_PATH(PROGRAM)
- # -------------------------
-@@ -133,11 +146,8 @@ AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
- AC_CONFIG_SRCDIR([git.c])
- 
- config_file=config.mak.autogen
--config_append=config.mak.append
- config_in=config.mak.in
- 
--echo "# ${config_append}.  Generated by configure." > "${config_append}"
--
- # Directories holding "saner" versions of common or POSIX binaries.
- AC_ARG_WITH([sane-tool-path],
-   [AS_HELP_STRING(
-@@ -1041,9 +1051,5 @@ AC_SUBST(PTHREAD_LIBS)
- AC_SUBST(NO_PTHREADS)
- 
- ## Output files
--AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
-+AC_CONFIG_FILES(["${config_file}":"${config_in}"])
- AC_OUTPUT
--
--
--## Cleanup
--rm -f "${config_append}"
 -- 
 1.7.10.2.1067.g553d16e
