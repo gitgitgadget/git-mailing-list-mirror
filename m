@@ -1,83 +1,74 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: pushing branches
-Date: Fri, 20 Jul 2012 12:49:32 -0300
-Message-ID: <CACnwZYchBpSsvfY_-cu33dmPateNPgYaPr822Ri=Xn6=V0OOnA@mail.gmail.com>
-References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
-	<7vhat2toz8.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
+Date: Fri, 20 Jul 2012 11:50:32 -0400
+Message-ID: <20120720155032.GC2862@sigill.intra.peff.net>
+References: <20120719213225.GA20311@sigill.intra.peff.net>
+ <20120719213311.GA20385@sigill.intra.peff.net>
+ <7vy5mftm3q.fsf@alter.siamese.dyndns.org>
+ <20120720144337.GA31946@sigill.intra.peff.net>
+ <7vliietp4u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Alexey Muranov <alexey.muranov@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 17:49:39 2012
+X-From: git-owner@vger.kernel.org Fri Jul 20 17:50:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsFST-0001nv-JV
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:49:38 +0200
+	id 1SsFTU-0003Ye-1j
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240Ab2GTPte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jul 2012 11:49:34 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:54141 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753227Ab2GTPtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 11:49:33 -0400
-Received: by obbuo13 with SMTP id uo13so4992654obb.19
-        for <git@vger.kernel.org>; Fri, 20 Jul 2012 08:49:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TeoCDwKTE2W8u2iR9RrSfMsUB9Ha5DCalor1348ZMr4=;
-        b=qIIBCCmbdnDIAst6XcMBAQzxODdmsb8h+f1TCJzH7/kFnXUUQz+Oa9rfMIU2pWB7vR
-         9dxYG/aqrfVkMTZhHBDLmx+O399Irv/iVtIalvmPXdNcKXq5KezoTT8z3I64lYatjw5P
-         zV5fZcOBpyCTjGbFmfpLqIkJoFiemlkOQUfbnwxcTBHOurmeuwB50RcuEXcMTXRt++FD
-         9GI9FtBaF3JwTCUHuIH8HQKrrA5Z8tgPAq/wNyEJfu7JwpsjGeTRDyOuVF7hxH9KzquU
-         4FskKp9XP2SDVPIcLSXT/T3wJflIKjm+BXDKnPmwVx63GVXmQJEDRwaKe9/63p7zDS5B
-         Wc2w==
-Received: by 10.182.144.104 with SMTP id sl8mr7593565obb.74.1342799372816;
- Fri, 20 Jul 2012 08:49:32 -0700 (PDT)
-Received: by 10.182.212.67 with HTTP; Fri, 20 Jul 2012 08:49:32 -0700 (PDT)
-In-Reply-To: <7vhat2toz8.fsf@alter.siamese.dyndns.org>
+	id S1753263Ab2GTPuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 11:50:35 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56569 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753179Ab2GTPue (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 11:50:34 -0400
+Received: (qmail 11923 invoked by uid 107); 20 Jul 2012 15:50:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Jul 2012 11:50:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2012 11:50:32 -0400
+Content-Disposition: inline
+In-Reply-To: <7vliietp4u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201782>
 
-On Fri, Jul 20, 2012 at 12:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Thiago Farina <tfransosi@gmail.com> writes:
->
->> How can I push a working branch to github inside it?
->>
->> E.g:
->>
->> # On master:
->> $ git checkout -b feature-work
->>
->> # On feature-work
->> # vi, hack, commit, ready to push
->> $ git push origin master # here I expected it would working pushing my
->
-> "git push origin master" is a short-hand for "git push origin
-> refs/heads/master:refs/heads/master" to update their master branch
-> with what you have in your master branch.
->
-> See output from
->
->     $ git push --help
->
-> for details.
->
-> I think you are trying to update, while on your feature-work branch,
-> their master with your feature-work branch (or more generally, the
-> current HEAD), so
->
->     $ git push origin HEAD:master
->
-> is perhaps what you are looking for?
+On Fri, Jul 20, 2012 at 08:42:57AM -0700, Junio C Hamano wrote:
 
-What I'm looking for is to upload/create the remote branch in github
-from inside my local branch, without having to checkout master in
-order to do so.
+> Jeff King <peff@peff.net> writes:
+> 
+> > But it would mean that you cannot naively run
+> >
+> >   echo $sha1 >.git/refs/heads/foo
+> >
+> > anymore. I suspect that the packed-refs conversion rooted out many
+> > scripts that did not use update-ref and rev-parse to access refs, but
+> > the above does still work today. So I suspect there would be some
+> > fallout. Not to mention that older versions of git would be completely
+> > broken, which would mean we need a lengthy deprecation period while
+> > everybody upgrades to versions of git that support the reading side.
+> 
+> We have that "core.repositoryversion" thing, so we could treat it
+> just like "update-index --index-version 4" to make it a "flag day
+> event for each repository, on the day of end-user's choice".
+
+True. The code to handle both cases would be pretty nasty, though,
+mostly because we do not isolate the filesystem calls at all right now
+(i.e., there are a lot of calls to git_path("logs/%s", refname) in the
+code. Which is probably not too bad, but there are a lot of implicit
+reverse-conversions (e.g., walking the hierarchy and assuming that the
+path you find is a refname).
+
+If we are seriously considering doing this for the full refs namespace
+anytime soon, then I'd be tempted to hold off the reflog graveyard until
+then.  The code would be a lot simpler and less error-prone if we
+didn't have to convert between the namespaces (you would simply not get
+the reflog retention behavior in the old repositoryformatversion).
+
+-Peff
