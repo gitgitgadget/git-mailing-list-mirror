@@ -1,91 +1,50 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [ANNOUNCE] Sharness - Test library derived from Git
-Date: Fri, 20 Jul 2012 13:45:26 +0200
-Message-ID: <vpq7gtyr6zt.fsf@bauges.imag.fr>
-References: <CAMFa-2hS-5CHQj79KMGwY7_qv6nGiK+9cKeDdihMVmSoxfsesQ@mail.gmail.com>
-	<CACBZZX6QZACjkFPEsNgAkKgnkZHDsCOEAm=-9rs=PLiSfgsXBw@mail.gmail.com>
-	<CAMFa-2gRWRKgj140i1q9iux=eC6nWxfdUPPhb42xAG1Gr7e4vA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
+Date: Fri, 20 Jul 2012 10:26:43 -0400
+Message-ID: <20120720142630.GA31791@sigill.intra.peff.net>
+References: <20120719213225.GA20311@sigill.intra.peff.net>
+ <20120719213311.GA20385@sigill.intra.peff.net>
+ <7515FF5F-2B4F-4CD0-B4A3-D2B1328AE313@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Mathias Lafeldt <mathias.lafeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 13:46:03 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Alexey Muranov <alexey.muranov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 16:26:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsBej-0004hj-Uk
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 13:46:02 +0200
+	id 1SsEAO-00085g-An
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 16:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880Ab2GTLpd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jul 2012 07:45:33 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37091 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751559Ab2GTLpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 07:45:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6KBheVc023647
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Jul 2012 13:43:40 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SsBeB-00051a-9D; Fri, 20 Jul 2012 13:45:27 +0200
-In-Reply-To: <CAMFa-2gRWRKgj140i1q9iux=eC6nWxfdUPPhb42xAG1Gr7e4vA@mail.gmail.com>
-	(Mathias Lafeldt's message of "Fri, 20 Jul 2012 12:18:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 20 Jul 2012 13:43:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6KBheVc023647
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343389421.97541@UCHNqxD6aG9AVQljuETLAw
+	id S1752585Ab2GTO0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 10:26:46 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56485 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752448Ab2GTO0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 10:26:46 -0400
+Received: (qmail 10389 invoked by uid 107); 20 Jul 2012 14:26:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Jul 2012 10:26:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2012 10:26:43 -0400
+Content-Disposition: inline
+In-Reply-To: <7515FF5F-2B4F-4CD0-B4A3-D2B1328AE313@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201768>
 
-Mathias Lafeldt <mathias.lafeldt@gmail.com> writes:
+On Fri, Jul 20, 2012 at 12:23:12AM +0200, Alexey Muranov wrote:
 
-> On Tue, Jul 17, 2012 at 8:31 PM, =C6var Arnfj=F6r=F0 Bjarmason
-> <avarab@gmail.com> wrote:
->
->> Perhaps to avoid duplication we could move to this and keep
->> Git-specific function in some other file.
->
-> That would be fantastic! From a technical point of view, it would mak=
-e
-> a lot of sense to join forces here.
+> i have no idea about Git source and little idea of how it is working
+> internally, but reading through your message i wonder: wouldn't it be
+> a good idea to timestamp the dead reflogs ?
 
-Seems to be a reasonable goal, yes. The test harness in Git keeps
-improving, and Sharness is likely to improve also, it would be a pity t=
-o
-have them diverge and not benefit from each other.
+Each individual entry in the reflog has its own timestamp, and the
+entries are expired individually over time as "git gc" is run. Or did
+you mean something else?
 
-> How do you think would Sharness fit into the Git project? Is adding i=
-t
-> as an external dependency an option?
-
-It would be nice if the code sharing did not result in extra pain for
-users and testers, so "external dependency" in the sense "not included
-in git.git and ask the user to install it" is IMHO a bad idea.
-Increasing the effort needed to run the testsuite means more people wil=
-l
-give up before running it :-(.
-
-OTOH, having it leave in a subdirectory (e.g. $git/t/Sharness/), and
-synchronize with stg like subtree merge would be nice for the user. We
-already have something similar for gitk and git-gui, except that the
-synchronization is normally one way (subprojects merged into Git, but
-merging back changes that were made in git.git in these subprojects is
-more painful).
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
