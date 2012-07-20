@@ -1,63 +1,55 @@
-From: Dan Johnson <computerdruid@gmail.com>
-Subject: Re: [PATCH 2/2] git-remote-mediawiki: allow page names with a ':'
-Date: Fri, 20 Jul 2012 17:11:44 -0400
-Message-ID: <CAPBPrnvoqh4-6vnhhd67tdBZRSqY-ixkzPxTfJDcchmQYxZghQ@mail.gmail.com>
-References: <1342468002-31818-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1342533960-22123-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1342533960-22123-3-git-send-email-Matthieu.Moy@imag.fr>
+From: <dag@cray.com>
+Subject: Re: [ANNOUNCE] Sharness - Test library derived from Git
+Date: Fri, 20 Jul 2012 16:11:58 -0500
+Message-ID: <nngmx2ujfxd.fsf@transit.us.cray.com>
+References: <CAMFa-2hS-5CHQj79KMGwY7_qv6nGiK+9cKeDdihMVmSoxfsesQ@mail.gmail.com>
+	<CACBZZX6QZACjkFPEsNgAkKgnkZHDsCOEAm=-9rs=PLiSfgsXBw@mail.gmail.com>
+	<CAMFa-2gRWRKgj140i1q9iux=eC6nWxfdUPPhb42xAG1Gr7e4vA@mail.gmail.com>
+	<vpq7gtyr6zt.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 20 23:11:53 2012
+Content-Type: text/plain
+Cc: Mathias Lafeldt <mathias.lafeldt@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 20 23:13:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsKUI-0000Rs-Th
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 23:11:51 +0200
+	id 1SsKVv-0002r1-4x
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 23:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460Ab2GTVLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jul 2012 17:11:46 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:61277 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268Ab2GTVLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 17:11:45 -0400
-Received: by wibhq12 with SMTP id hq12so896093wib.1
-        for <git@vger.kernel.org>; Fri, 20 Jul 2012 14:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PFKwZyY+4/94hMazC6Lqdd+LoNLWByXnroRp4XkcXc4=;
-        b=ZQr+Ibejwja7StrJMiUWqDr9s7PMcizAly7/BrfizoKm/8f1U2XaaNlwrvTXnRv5fR
-         txs1w7jfdFyAD21jyXMnZHGVtLCIIS5byCYT52NGHf7rMQiTqkpInwYAjpp+9SilbEFV
-         6/2HHEOSfMdV4KqgFxGAGsJmyvrLpM0A1PBIH7XsNtjEd+UBYzXLQn+fv6lx2q5gydRX
-         t4r8GFiWXiOMOKGnvybgMefPuNiq0wwcSzAwvg/8HS5zb8+AqHZT9aV0KOeeNmhq9q0W
-         xV/+5LciS5XUrgFQF6WmJtdgBVdjQxHEy7CWsaAmSL3r6+c4+6QQNNKL1s2skjJdA4jF
-         NgSA==
-Received: by 10.216.217.229 with SMTP id i79mr3886178wep.125.1342818704120;
- Fri, 20 Jul 2012 14:11:44 -0700 (PDT)
-Received: by 10.216.224.32 with HTTP; Fri, 20 Jul 2012 14:11:44 -0700 (PDT)
-In-Reply-To: <1342533960-22123-3-git-send-email-Matthieu.Moy@imag.fr>
+	id S1753221Ab2GTVN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 17:13:26 -0400
+Received: from exprod6og113.obsmtp.com ([64.18.1.31]:33551 "EHLO
+	exprod6og113.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752268Ab2GTVNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 17:13:25 -0400
+Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob113.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKUAnJ8Z3VIgwAcIwMBvt9IONvwCNeBZ8Y@postini.com; Fri, 20 Jul 2012 14:13:25 PDT
+Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
+ (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 20 Jul
+ 2012 16:11:58 -0500
+In-Reply-To: <vpq7gtyr6zt.fsf@bauges.imag.fr> (Matthieu Moy's message of "Fri,
+	20 Jul 2012 13:45:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201792>
 
-On Tue, Jul 17, 2012 at 10:06 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Traditionnally, pages named Foo:Bar are page 'Bar' in namespace 'Foo'.
-> However, it is also possible to call a page Foo:Bar if 'Foo' is not a
-> namespace. In this case, the actual name of the page is 'Foo:Bar', in the
-> main namespace. Since we can't tell with only the filename, query the
-> wiki for a namespace 'Foo' in these cases, but deal with the case where
-> no such namespace is found.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Might not be worth fixing, and it's just a typo in the commit message, but:
-s/Traditionnally/Traditionally/
-?
+> OTOH, having it leave in a subdirectory (e.g. $git/t/Sharness/), and
+> synchronize with stg like subtree merge would be nice for the user. We
+> already have something similar for gitk and git-gui, except that the
+> synchronization is normally one way (subprojects merged into Git, but
+> merging back changes that were made in git.git in these subprojects is
+> more painful).
 
--- 
--Dan
+Not really.  contrib/git-subtree can really help with this.
+
+                           -Dave
