@@ -1,78 +1,89 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
-Subject: Re: pushing branches
-Date: Fri, 20 Jul 2012 08:46:39 -0700
-Message-ID: <CAJsNXTk33zN_cWcyyvPz4-FKzGZDB0CBp=YtSDVNix-ynP4-7g@mail.gmail.com>
-References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 4/7] git-rebase--interactive.sh: look up subject in add_pick_line
+Date: Fri, 20 Jul 2012 08:47:58 -0700
+Message-ID: <CAOeW2eHeySzEzj_8BByuz4jrc_CreLtZpTshcYsTxqBrtxyg0g@mail.gmail.com>
+References: <1342596455-17046-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1342596455-17046-2-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1342596455-17046-3-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1342596455-17046-4-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1342596455-17046-5-git-send-email-martin.von.zweigbergk@gmail.com>
+	<5009135C.208@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 17:46:47 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jul 20 17:48:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsFPh-0005lR-Nj
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:46:46 +0200
+	id 1SsFQz-0007qs-E4
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202Ab2GTPql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jul 2012 11:46:41 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:46441 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752599Ab2GTPqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 11:46:40 -0400
-Received: by bkwj10 with SMTP id j10so3523716bkw.19
-        for <git@vger.kernel.org>; Fri, 20 Jul 2012 08:46:39 -0700 (PDT)
+	id S1753204Ab2GTPsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 11:48:00 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:62500 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752599Ab2GTPr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 11:47:59 -0400
+Received: by pbbrp8 with SMTP id rp8so6330808pbb.19
+        for <git@vger.kernel.org>; Fri, 20 Jul 2012 08:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=fWOAhUXr+rofyrYiLWx2r2sD28gemTaFDSYkxg01zmA=;
-        b=vkVV3UEvItFC8Dcih2alCon244S6z+Q1e2R+rqsKa7gahzzFPOJegj382vufIrtE0R
-         HL5aEK45E7S/eRg/osapwkeEug7O69lgyIMvoBEUIdzKZdyidvDJ/g5GkWMKxCXCdttw
-         Wq8FIzq3eM1AzuOE/ZY++YEMx3odrH03TNy2LVYx3fm39Wb63wmh4Agzd/oWupqKpvef
-         00ZRIBAIrK2ahPwLY4uv3ViC3UFA0FI3G/8wAtlfh6+HC1MGrNsUDw2okOhhzDIldICp
-         GaDaRym9ZaH0MQmnLLQUNoW6BLioBMmrh3gmevBZq2ycc3yXcmYasEFghQ98SOmlWQgW
-         k/1A==
-Received: by 10.152.103.109 with SMTP id fv13mr6819830lab.33.1342799199179;
- Fri, 20 Jul 2012 08:46:39 -0700 (PDT)
-Received: by 10.112.5.102 with HTTP; Fri, 20 Jul 2012 08:46:39 -0700 (PDT)
-In-Reply-To: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
-X-Google-Sender-Auth: VK2ylZR29lmVixPRcA-BBPFTM6U
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qrFf+mOanIY6DPm1ndSp2PHkaCnoZiW2O8L/YD3OopM=;
+        b=elGhSG3N4/HcGYOgSGnfqpc8JA+6YzckCWGcmBrGExvrpG/doMYLBQnIOyGmwLHbId
+         BtAlDzDfSFQ59BWSVxPD+OpmfDsas54Lb5eeDYZugneTMkB4XAapDn20vDwX2jhhOnRz
+         8hIYdeGZbn7/jnSLcC0YvQ+S2Yx+XjHaKYYK8hi1wd8iyFXZaJoU6UZUcqsZPVXE0bZd
+         hGdsei7kbjDyebKmwnogybDYKn3HcbDmaXF/eFObFrhm2OTKgIoC7mnWcAdpN3ZNZE+s
+         rBvNmIQnHsCmqQVPi+EVMoAhgpGiUUnbTsCoxHxJ6s/3FdOqGASHM5tvBLL1heQ55MDY
+         Tvfg==
+Received: by 10.68.203.66 with SMTP id ko2mr14928159pbc.84.1342799278890; Fri,
+ 20 Jul 2012 08:47:58 -0700 (PDT)
+Received: by 10.68.236.138 with HTTP; Fri, 20 Jul 2012 08:47:58 -0700 (PDT)
+In-Reply-To: <5009135C.208@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201779>
 
-On Fri, Jul 20, 2012 at 8:26 AM, Thiago Farina <tfransosi@gmail.com> wrote:
-> Hi,
->
-> How can I push a working branch to github inside it?
->
-> E.g:
->
-> # On master:
-> $ git checkout -b feature-work
->
-> # On feature-work
-> # vi, hack, commit, ready to push
-> $ git push origin master # here I expected it would working pushing my
-> commits to a feature-work branch in github. Or if I omit master it
-> gives me a [rejected] error.
-> Everything up-to-date.
->
-> $ git checkout master
-> $ git push origin feature-work # Now the branch is pushed.
+Thanks for reviewing.
 
-???
+On Fri, Jul 20, 2012 at 1:14 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 7/18/2012 9:27, schrieb Martin von Zweigbergk:
+>> @@ -814,7 +814,8 @@ add_pick_line () {
+>>       else
+>>               comment_out=
+>>       fi
+>> -     printf '%s\n' "${comment_out}pick $1 $2" >>"$todo"
+>> +     line=$(git rev-list -1 --pretty=oneline --abbrev-commit --abbrev=7 $1)
+>> +     printf '%s\n' "${comment_out}pick $line" >>"$todo"
+>
+> I don't like this. On Windows, rebase -i is already slow, and these extra
+> processes will make it even slower.
 
-I must be missing something.  It looks like the reason it didn't push
-feature-work the first time is because you told it to push master
-instead.
+I don't like it either :-(.
 
--PJ
+> Anything that can be done about this? Perhaps the rev-list call can
+> generate all of the full SHA1, the short SHA1, and the subject with a
+> --pretty format?
 
-Gehm's Corollary to Clark's Law: Any technology distinguishable from
-magic is insufficiently advanced.
+After patch 7/7, cherry is used instead of rev-list. Ideally, I would
+have liked to teach "git rev-list --cherry-pick" to somehow use a
+<limit> just like cherry does, but I couldn't think of a generic way
+of doing that (in this case, we want to say something like "range
+a..b, but drop commits that are equivalent to any in b..c"). I
+actually don't remember if I gave up because I couldn't think of a
+sensible way of specifying ranges like that, or if I just ran out of
+time (not familiar with the revision-walking code). Now it seems to me
+that something like "git rev-list a..b --not-cherry-picks b..c" makes
+sense, but maybe it's just too specific and we should just support the
+limited (no pun intended) case we need to emulate "git cherry", i.e.
+something like "git rev-list --cherry-with-limit=a c...b". Feedback
+appreciated.
+
+Martin
