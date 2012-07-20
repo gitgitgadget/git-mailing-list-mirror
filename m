@@ -1,69 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: pushing branches
-Date: Fri, 20 Jul 2012 17:53:35 +0200
-Message-ID: <vpqzk6uo2dc.fsf@bauges.imag.fr>
-References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] teach sha1_name to look in graveyard reflogs
+Date: Fri, 20 Jul 2012 11:53:41 -0400
+Message-ID: <20120720155341.GD2862@sigill.intra.peff.net>
+References: <20120719213225.GA20311@sigill.intra.peff.net>
+ <20120719213326.GB20385@sigill.intra.peff.net>
+ <7vtxx3tlyb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 17:53:50 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Alexey Muranov <alexey.muranov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 20 17:53:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsFWW-0008TS-TD
+	id 1SsFWX-0008TS-FF
 	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753227Ab2GTPxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753242Ab2GTPxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 11:53:44 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56573 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753236Ab2GTPxn (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 20 Jul 2012 11:53:43 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:60626 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753161Ab2GTPxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 11:53:42 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6KFpm30029270
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Jul 2012 17:51:48 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SsFWJ-0000lb-PE; Fri, 20 Jul 2012 17:53:35 +0200
-In-Reply-To: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
-	(Thiago Farina's message of "Fri, 20 Jul 2012 12:26:09 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 20 Jul 2012 17:51:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6KFpm30029270
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343404312.02378@lHilFnjaFvBV6y+DGe5q1A
+Received: (qmail 11962 invoked by uid 107); 20 Jul 2012 15:53:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Jul 2012 11:53:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2012 11:53:41 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtxx3tlyb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201784>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+On Thu, Jul 19, 2012 at 03:39:24PM -0700, Junio C Hamano wrote:
 
-> $ git push origin master # here I expected it would working pushing my
-> commits to a feature-work branch in github. Or if I omit master it
-> gives me a [rejected] error.
-> Everything up-to-date.
+> > Similarly, for_each_reflog_ent learns to fallback to
+> > graveyard refs, which allows the reflog walker to work.
+> > However, this is slightly less friendly, as the revision
+> > parser expects the matching ref to exist before it realizes
+> > that we are interested in the reflog. Therefore you must use
+> > "git log -g deleted@{1}" insted of "git log -g deleted" to
+> > walk a deleted reflog.
+> 
+> This may or may not be related, but I vaguely recall that "log -g"
+> traversal hack had a corner case where the walking stops prematurely
+> upon seeing a gap (or creation/deletion that has 0{40})?  Do you
+> recall if we have ever dealt with that?
 
-If your workflow is to push one branch at a time, and you have the same
-naming locally and remotely (i.e. your local branch feature-work should
-be pushed as feature-work on github), then you probably want to set the
-variable 'push.default' to either 'current', 'upstream' or 'simple' if
-you use the last version of Git. Read about it there:
+>From my tests, I think it is probably still broken (if you do a delete,
+create, delete sequence on a branch and then walk the reflog, it stops
+prematurely at the 0{40} sha1).
 
-  http://git-scm.com/docs/git-config
+But what _should_ it show for such an entry? There is no commit to show
+in the reflog walker, but it would still be nice to say "BTW, there was
+a deletion even here". Obviously just skipping it and showing the next
+entry would be better than the current behavior of stopping the
+traversal, but I feel like there must be some better behavior.
 
-(search push.default)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
