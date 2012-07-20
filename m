@@ -1,74 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
-Date: Fri, 20 Jul 2012 11:07:26 -0400
-Message-ID: <20120720150726.GA2862@sigill.intra.peff.net>
-References: <20120719213225.GA20311@sigill.intra.peff.net>
- <20120719213311.GA20385@sigill.intra.peff.net>
- <7vy5mftm3q.fsf@alter.siamese.dyndns.org>
- <20120720144337.GA31946@sigill.intra.peff.net>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: pushing branches
+Date: Fri, 20 Jul 2012 12:26:09 -0300
+Message-ID: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Alexey Muranov <alexey.muranov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 20 17:07:41 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 20 17:26:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsEnm-0003g1-2U
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:07:34 +0200
+	id 1SsF5s-0007dF-80
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jul 2012 17:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752019Ab2GTPH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jul 2012 11:07:29 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56522 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751297Ab2GTPH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 11:07:28 -0400
-Received: (qmail 11355 invoked by uid 107); 20 Jul 2012 15:07:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Jul 2012 11:07:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jul 2012 11:07:26 -0400
-Content-Disposition: inline
-In-Reply-To: <20120720144337.GA31946@sigill.intra.peff.net>
+	id S1752999Ab2GTP0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 11:26:11 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:41056 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752386Ab2GTP0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 11:26:10 -0400
+Received: by obbuo13 with SMTP id uo13so4968708obb.19
+        for <git@vger.kernel.org>; Fri, 20 Jul 2012 08:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=GnASkSJmog3gaLgRZMajx+gIsx3FxWaTv8iUkiw4oG4=;
+        b=i1r6fmsitf8dw4p/RqmSAEyWm+hG0yWh1swPLyYp9vtgzM1M64bFYonHmSdR0F7d4s
+         1Rn1EMPo/o9n7jiAF+GQ49cEKBFrpggVoYQFC+vVRwU2NVydXL3f1JWCzcop1I14cdsT
+         NqUrY9jKOMoxS4oH2A4xcLUQWCqxswm5BbK91vpqC5y+M4kV7Epn8pqZwkvDkb3IHZUy
+         PyxbFUTXwWCGUPVFdz6urSlRt+LAqrNeHIG3/YQkGEWWaJnSYk0jubHiFLUSqlb2fT/z
+         yknvs+RQf0FMz33b/lDz2EBk8uj8SHVQWyYEXBJyQz12XPXK3oomeZ9rK62ygjJcFHsx
+         WRBw==
+Received: by 10.182.17.99 with SMTP id n3mr7708985obd.8.1342797969533; Fri, 20
+ Jul 2012 08:26:09 -0700 (PDT)
+Received: by 10.182.212.67 with HTTP; Fri, 20 Jul 2012 08:26:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201772>
 
-On Fri, Jul 20, 2012 at 10:43:37AM -0400, Jeff King wrote:
+Hi,
 
-> > I think the work-around indicates the need for regular users to be
-> > able to also discover, prune and delete these logs.  Do we have
-> > "prune reflog for _this_ ref (or these refs), removing entries that
-> > are older than this threshold"?  If so the codepath would need to
-> > know about the graveyard and the implementation detail of the tilde
-> > suffix so that the end users do not need to know about them.
-> 
-> We do have it: "git reflog expire --expire=now deleted-branch" is the
-> right way to do it. Unfortunately, it does not work with my patch. The
-> dwim_log correctly notes that a reflog exists (because it checks that
-> the "graveyard" version of the ref exists), but then expire_reflog does
-> not correctly fallback when opening the log (it usually has to do the
-> _reverse_ translation, because it gets the graveyard log name from
-> for_each_reflog, and has to find the correct lock).
-> 
-> I'll fix it in my re-roll, and then have t7701 use it.
+How can I push a working branch to github inside it?
 
-I noticed I ignored the "discover" and "delete" parts of your paragraph.
-As far as deletion goes, I think we can ignore it; expiring all entries
-is equivalent.
+E.g:
 
-Discovery is harder. Certainly these should not show up in normal
-ref-listing output. I'd be content to leave them slightly hidden as a
-first step, and people who know they are looking for the pre-deletion
-contents of the "foo" branch can access it by name. Probably a second
-step would be a fancier interface to help with listing and resurrecting
-dead branches, possibly including branch config.
+# On master:
+$ git checkout -b feature-work
 
-In other words, I want to focus on getting the ref-level plumbing right,
-and then we can care about the porcelain later.
+# On feature-work
+# vi, hack, commit, ready to push
+$ git push origin master # here I expected it would working pushing my
+commits to a feature-work branch in github. Or if I omit master it
+gives me a [rejected] error.
+Everything up-to-date.
 
--Peff
+$ git checkout master
+$ git push origin feature-work # Now the branch is pushed.
+
+Thanks,
