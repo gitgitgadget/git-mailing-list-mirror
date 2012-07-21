@@ -1,269 +1,85 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH 2/7] i18n: rebase: mark strings for translation
-Date: Sat, 21 Jul 2012 23:50:51 +0800
-Message-ID: <0fd901035a418562d3d9282553a96124814a298a.1342884459.git.worldhello.net@gmail.com>
+Subject: [PATCH 6/7] Remove unused and bad gettext block from git-am
+Date: Sat, 21 Jul 2012 23:50:55 +0800
+Message-ID: <d1af1d40b0edbb8e356ecbb700cd0a7c13832a8f.1342884459.git.worldhello.net@gmail.com>
 References: <cover.1342884458.git.worldhello.net@gmail.com>
  <a7d2248051ddc62e38e67d9efbb41c01498c7a4c.1342884459.git.worldhello.net@gmail.com>
+ <0fd901035a418562d3d9282553a96124814a298a.1342884459.git.worldhello.net@gmail.com>
+ <77cbbce0450735a66ef1d9101af0bc82e3fc545c.1342884459.git.worldhello.net@gmail.com>
+ <941f7bd695e8a14c940a5b8e4214d2773ae82557.1342884459.git.worldhello.net@gmail.com>
+ <d5c4000b859f4b30af6fc3faec008403b82246bf.1342884459.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 17:52:41 2012
+X-From: git-owner@vger.kernel.org Sat Jul 21 17:52:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ssbyy-0005VS-1k
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:52:40 +0200
+	id 1Ssbyz-0005VS-RD
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791Ab2GUPwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 11:52:30 -0400
+	id S1751813Ab2GUPwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 11:52:34 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:55391 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525Ab2GUPwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 11:52:00 -0400
+	with ESMTP id S1751757Ab2GUPwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 11:52:25 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so8041000pbb.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:51:59 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=IZljz2lqyyRF1+QHiL4o2Fh6q2EtOA+cXN1j2Kbg0wo=;
-        b=HrpIuwhL96+sFwzkxqFXD5dJxAIT3igr+W3GpRFyZwA+o//CQcjVxrRTWOcH1pW0Va
-         7ZtkWIvg8gbkgKIdOEOj+zLu8N5jtakSF+aF45FmTD32oXid26iqsbqZjk6p6YvOTC52
-         qxxKL13bbtO9IEloMaip9sxJp6IgB9VhNkXV8qX+Fm3huOxK2C5AGIpyMuuwDYDdEenl
-         sj4HCcQwyKxBIRSDUj6AwvYJVLH14rT1SeJ0l+1PC2pGFqGRWPQLd4yxtdyquviqLqoU
-         rBo4i9AOVBHYO28DDmjWP09CzBZZLHFsOqjLTeP8b/WNXMiv7JSoaAAze8moQO/dt8Zv
-         MrkA==
-Received: by 10.68.232.197 with SMTP id tq5mr22480749pbc.53.1342885919815;
-        Sat, 21 Jul 2012 08:51:59 -0700 (PDT)
+        bh=tqXOmhW4RdzRQY5sHzn2IDEOunVUOWzUWn98rp/rrmU=;
+        b=upxIzEHIZHtZgmezzusP0Bn5dprvbFY9f0UPJxm6bSczFjZrqh5iYymqdygYquPjok
+         7kDYT1TGzi+5Z4XyTFhPBpFhecISEcPBsO+k4vOhP94i7XXFpKOW7Wv8H93RTtoZ2KAX
+         HLWiE3fAp4I6QPnRjHsYJv6f4E0hXQoV/VhTlQ/7jdzE5uvDlb5W+akkxcONBjJI4rJg
+         hL8oPFI9PUX47Si5USuLPJuc3PKaE4kjpqjh6MIJBjKBT27qZJ58rBNZIAiGgffLC2b1
+         hbP/hfkaBdRQrpD8BGd87eMBblWNOsGorinpNtitkMJoiXjhVlT5oi05hNSU3l6QSSyM
+         JscQ==
+Received: by 10.66.86.199 with SMTP id r7mr19375749paz.1.1342885945058;
+        Sat, 21 Jul 2012 08:52:25 -0700 (PDT)
 Received: from localhost.localdomain ([123.116.228.123])
-        by mx.google.com with ESMTPS id nj4sm6241849pbc.5.2012.07.21.08.51.53
+        by mx.google.com with ESMTPS id nj4sm6241849pbc.5.2012.07.21.08.52.19
         (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 08:51:59 -0700 (PDT)
+        Sat, 21 Jul 2012 08:52:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.2.259.g37fc0e1
-In-Reply-To: <a7d2248051ddc62e38e67d9efbb41c01498c7a4c.1342884459.git.worldhello.net@gmail.com>
+In-Reply-To: <d5c4000b859f4b30af6fc3faec008403b82246bf.1342884459.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1342884458.git.worldhello.net@gmail.com>
 References: <cover.1342884458.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201816>
+
+Gettext message should not start with '-' nor '--'. Since the '-d' and
+'--dotest' options are not exist in OPTIONS_SPEC variable, so it's safe
+to remove the block.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- git-rebase.sh | 58 ++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 30 insertions(+), 28 deletions(-)
+ git-am.sh | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 1cd06..df5998 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -65,6 +65,7 @@ abort!             abort and check out the original branch
- skip!              skip current patch and continue
- "
- . git-sh-setup
-+. git-sh-i18n
- set_reflog_action rebase
- require_work_tree_exists
- cd_to_toplevel
-@@ -72,11 +73,11 @@ cd_to_toplevel
- LF='
- '
- ok_to_skip_pre_rebase=
--resolvemsg="
-+resolvemsg="$(gettext "
- When you have resolved this problem run \"git rebase --continue\".
- If you would prefer to skip this patch, instead run \"git rebase --skip\".
- To check out the original branch and stop rebasing run \"git rebase --abort\".
--"
-+")"
- unset onto
- cmd=
- strategy=
-@@ -161,7 +162,7 @@ move_to_original_branch () {
- 		git symbolic-ref \
- 			-m "rebase finished: returning to $head_name" \
- 			HEAD $head_name ||
--		die "Could not move back to $head_name"
-+		die "$(gettext "Could not move back to $head_name")"
- 		;;
- 	esac
- }
-@@ -180,12 +181,12 @@ run_pre_rebase_hook () {
- 	   test -x "$GIT_DIR/hooks/pre-rebase"
- 	then
- 		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} ||
--		die "The pre-rebase hook refused to rebase."
-+		die "$(gettext "The pre-rebase hook refused to rebase.")"
- 	fi
- }
- 
- test -f "$apply_dir"/applying &&
--	die 'It looks like git-am is in progress. Cannot rebase.'
-+	die "$(gettext "It looks like git-am is in progress. Cannot rebase.")"
- 
- if test -d "$apply_dir"
- then
-@@ -316,12 +317,12 @@ test $# -gt 2 && usage
- if test -n "$cmd" &&
-    test "$interactive_rebase" != explicit
- then
--	die "--exec option must be used with --interactive option"
-+	die "$(gettext -- "--exec option must be used with --interactive option")"
- fi
- 
- if test -n "$action"
- then
--	test -z "$in_progress" && die "No rebase in progress?"
-+	test -z "$in_progress" && die "$(gettext "No rebase in progress?")"
- 	# Only interactive rebase uses detailed reflog messages
- 	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
- 	then
-@@ -334,11 +335,11 @@ case "$action" in
- continue)
- 	# Sanity check
- 	git rev-parse --verify HEAD >/dev/null ||
--		die "Cannot read HEAD"
-+		die "$(gettext "Cannot read HEAD")"
- 	git update-index --ignore-submodules --refresh &&
- 	git diff-files --quiet --ignore-submodules || {
--		echo "You must edit all merge conflicts and then"
--		echo "mark them as resolved using git add"
-+		echo "$(gettext "You must edit all merge conflicts and then
-+mark them as resolved using git add")"
- 		exit 1
- 	}
- 	read_basic_state
-@@ -355,7 +356,7 @@ abort)
- 	case "$head_name" in
- 	refs/*)
- 		git symbolic-ref -m "rebase: aborting" HEAD $head_name ||
--		die "Could not move back to $head_name"
-+		die "$(eval_gettext "Could not move back to \$head_name")"
- 		;;
- 	esac
- 	output git reset --hard $orig_head
-@@ -367,15 +368,16 @@ esac
- # Make sure no rebase is in progress
- if test -n "$in_progress"
- then
--	die '
--It seems that there is already a '"${state_dir##*/}"' directory, and
-+	state_dir_base=${state_dir##*/}
-+	die "$(eval_gettext "
-+It seems that there is already a \$state_dir_base directory, and
- I wonder if you are in the middle of another rebase.  If that is the
- case, please try
- 	git rebase (--continue | --abort | --skip)
- If that is not the case, please
--	rm -fr '"$state_dir"'
-+	rm -fr \"\$state_dir\"
- and run me again.  I am stopping in case you still have something
--valuable there.'
-+valuable there.")"
- fi
- 
- if test -n "$rebase_root" && test -z "$onto"
-@@ -413,7 +415,7 @@ then
- 		;;
- 	esac
- 	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
--	die "invalid upstream $upstream_name"
-+	die "$(eval_gettext "invalid upstream \$upstream_name")"
- 	upstream_arg="$upstream_name"
- else
- 	if test -z "$onto"
-@@ -437,19 +439,19 @@ case "$onto_name" in
- 	then
- 		case "$onto" in
- 		?*"$LF"?*)
--			die "$onto_name: there are more than one merge bases"
-+			die "$(eval_gettext "\$onto_name: there are more than one merge bases")"
- 			;;
- 		'')
--			die "$onto_name: there is no merge base"
-+			die "$(eval_gettext "\$onto_name: there is no merge base")"
- 			;;
- 		esac
- 	else
--		die "$onto_name: there is no merge base"
-+		die "$(eval_gettext "\$onto_name: there is no merge base")"
- 	fi
- 	;;
- *)
- 	onto=$(git rev-parse --verify "${onto_name}^0") ||
--	die "Does not point to a valid commit: $onto_name"
-+	die "$(eval_gettext "Does not point to a valid commit: \$onto_name")"
- 	;;
- esac
- 
-@@ -472,7 +474,7 @@ case "$#" in
- 	then
- 		head_name="detached HEAD"
- 	else
--		die "fatal: no such branch: $1"
-+		die "$(eval_gettext "fatal: no such branch: \$branch_name")"
- 	fi
- 	;;
- 0)
-@@ -488,11 +490,11 @@ case "$#" in
- 	orig_head=$(git rev-parse --verify "${branch_name}^0") || exit
- 	;;
- *)
--	die "BUG: unexpected number of arguments left to parse"
-+	die "$(gettext "BUG: unexpected number of arguments left to parse")"
- 	;;
- esac
- 
--require_clean_work_tree "rebase" "Please commit or stash them."
-+require_clean_work_tree "rebase" "$(gettext "Please commit or stash them.")"
- 
- # Now we are rebasing commits $upstream..$orig_head (or with --root,
- # everything leading up to $orig_head) on top of $onto
-@@ -510,10 +512,10 @@ then
- 	then
- 		# Lazily switch to the target branch if needed...
- 		test -z "$switch_to" || git checkout "$switch_to" --
--		say "Current branch $branch_name is up to date."
-+		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
- 		exit 0
- 	else
--		say "Current branch $branch_name is up to date, rebase forced."
-+		say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
- 	fi
- fi
- 
-@@ -524,7 +526,7 @@ if test -n "$diffstat"
- then
- 	if test -n "$verbose"
- 	then
--		echo "Changes from $mb to $onto:"
-+		echo "$(eval_gettext "Changes from \$mb to \$onto:")"
- 	fi
- 	# We want color (if set), but no pager
- 	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
-@@ -533,7 +535,7 @@ fi
- test "$type" = interactive && run_specific_rebase
- 
- # Detach HEAD and reset the tree
--say "First, rewinding head to replay your work on top of it..."
-+say "$(gettext "First, rewinding head to replay your work on top of it...")"
- git checkout -q "$onto^0" || die "could not detach HEAD"
- git update-ref ORIG_HEAD $orig_head
- 
-@@ -541,7 +543,7 @@ git update-ref ORIG_HEAD $orig_head
- # we just fast-forwarded.
- if test "$mb" = "$orig_head"
- then
--	say "Fast-forwarded $branch_name to $onto_name."
-+	say "$(eval_gettext "Fast-forwarded \$branch_name to \$onto_name.")"
- 	move_to_original_branch
- 	exit 0
- fi
+diff --git a/git-am.sh b/git-am.sh
+index 20c1a..cfa63 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -413,9 +413,6 @@ it will be removed. Please do not use it anymore.")
+ 		abort=t ;;
+ 	--rebasing)
+ 		rebasing=t threeway=t ;;
+-	-d|--dotest)
+-		die "$(gettext "-d option is no longer supported.  Do not use.")"
+-		;;
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+ 	--whitespace|--directory|--exclude|--include)
 -- 
 1.7.11.2.259.g37fc0e1
