@@ -1,75 +1,93 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] difftool: only copy back files modified during
- directory diff
-Date: Fri, 20 Jul 2012 22:10:53 -0700
-Message-ID: <CAJDDKr7103_S+=THQVLHHXFpiSPjLpDVm8j7Kb-nUh4G=bZa-Q@mail.gmail.com>
-References: <CAJDDKr4Q+nQapO0aAQmmpj_guR=_tXwareWsn020BckZR5V+uA@mail.gmail.com>
-	<1342686429-87847-1-git-send-email-davvid@gmail.com>
-	<7v394nveni.fsf@alter.siamese.dyndns.org>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: git with large files...
+Date: Sat, 21 Jul 2012 09:11:36 +0200
+Message-ID: <CA+EOSBk8XjA5=BO_kVOmfCPT-n2vKV1rbqUHnOnGi-ORF7wKLw@mail.gmail.com>
+References: <A18A933F-5627-4844-A4A6-B3AF244FD211@me.com>
+	<86fw8mf3gp.fsf@red.stonehenge.com>
+	<CACPiFC+a=46n-igTUBSDdpgDQyL4cz5vrcpurNBSsb+D1c0UnA@mail.gmail.com>
+	<CAJDDKr5vZz_DepYKvdu34G60fmm8V_Sv8FU+J6O-DLoum07+jA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 07:11:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: David Aguilar <davvid@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Darek Bridges <darek.bridges@me.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 21 09:11:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsRy0-0003yd-Vb
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 07:11:01 +0200
+	id 1SsTqv-0001LR-0N
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 09:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177Ab2GUFKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 01:10:55 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:40121 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731Ab2GUFKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 01:10:54 -0400
-Received: by vbbff1 with SMTP id ff1so3487941vbb.19
-        for <git@vger.kernel.org>; Fri, 20 Jul 2012 22:10:53 -0700 (PDT)
+	id S1751719Ab2GUHLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 03:11:40 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:63758 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945Ab2GUHLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 03:11:37 -0400
+Received: by yhmm54 with SMTP id m54so4590251yhm.19
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 00:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=99ut4EpB1TV9RknpzFzLOpeJnNtzARqFbU6SYc5v5FM=;
-        b=YabW4VUHYBFzGprpj5A2Bbj0gdSj2xRjoEpFFUX36eMplmDs7W84ttoN3iyBu11KoM
-         COEAKSbCmTgUnSwd/oVTUg0o81HXun/5UPf5NP8nlueIBCYH64CJLF0oySXU2wqsu5XI
-         93uoNoGmYCIJSao4Xa0mJjz7U0lfQqBYcfMpwBCS+SG8HRHsg6xEbuNjb2vqW/YgsMkK
-         SMkl1F2Pa+i8wKAGPcEN0cRWHb6a9/QJlIk6TobRDbC8F8YusJqAFU4SAPhvTHPVmtIM
-         RKQV02A3B7l+euL/hLeLpieI3tlOrzS/3ZCjZPQlOKljqNcSbjsy0E7R0AFnauIdIKAT
-         +8vg==
-Received: by 10.220.148.210 with SMTP id q18mr6467495vcv.6.1342847453565; Fri,
- 20 Jul 2012 22:10:53 -0700 (PDT)
-Received: by 10.52.114.67 with HTTP; Fri, 20 Jul 2012 22:10:53 -0700 (PDT)
-In-Reply-To: <7v394nveni.fsf@alter.siamese.dyndns.org>
+         :content-type;
+        bh=ghpCTZZIizZnM9FVFOGC9KUFiMDUdtxB/SQxB0A3ifA=;
+        b=fkxhWO9uacrNgjOTRIYUOdyTaajCTfky4zlzhykk+k65DvFNjJVtYtoHigoxCJLwKt
+         +Z0UZ7p55OEg9tiEsrA+Hm86bCWL7e4sJPLE/V5h2TSIm5xKpmzxeUVy+wedntPA75Iw
+         PCz83nfE9dg8TKG1fRYeksU3D5NsKhr+Z1EpdycBZf563hHxmwkl9OSYhRt4OuV0j8Ja
+         4FbZfj5lbocrN3IN6nlOAqJ3VtT+yQIzlO0qT31uTEr6IalFZAsSnNLMmMWUfoDwSBAx
+         vOQp2BRuVCX8BMEGcm5jl/jsbrvLStp3+8bH+k/Us+Hziv9s/ic20U5jPoOrL75HXjoA
+         5Ttw==
+Received: by 10.66.78.42 with SMTP id y10mr16694136paw.31.1342854696629; Sat,
+ 21 Jul 2012 00:11:36 -0700 (PDT)
+Received: by 10.66.157.97 with HTTP; Sat, 21 Jul 2012 00:11:36 -0700 (PDT)
+In-Reply-To: <CAJDDKr5vZz_DepYKvdu34G60fmm8V_Sv8FU+J6O-DLoum07+jA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201804>
 
-On Thu, Jul 19, 2012 at 10:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Aguilar <davvid@gmail.com> writes:
+Well, many folks use puppet in serverless configuration pushing the
+manifest from a central git server via cron and applying locally the
+configuration fetched. In this sense git IS used for deployement. And,
+for a configuration management system as puppet this could be a
+sensible thing to do - reduce load, scalability ecc.
+
+Best regards
+
+2012/7/21, David Aguilar <davvid@gmail.com>:
+> On Fri, Jul 20, 2012 at 4:28 PM, Martin Langhoff
+> <martin.langhoff@gmail.com> wrote:
+>> On Fri, Jul 20, 2012 at 6:54 PM, Randal L. Schwartz
+>> <merlyn@stonehenge.com> wrote:
+>>>>>>>> "Darek" == Darek Bridges <darek.bridges@me.com> writes:
+>>>
+>>> Darek> I use git for many things, but I am trying to work out the
+>>> Darek> workflow to use git for deployment.
+>>>
+>>> Don't.
+>>
+>> Heh. Best to keep in mind that it just doesn't work very well.
+>> git-bigfiles, git-annex might help you, but look at the docs and
+>> caveats carefully.
+>>
+>> Perhaps use rsync, unison work better for you.
 >
->> Perhaps something like this...
+> I'm not sure if it was the "big files" part that Randal was responding
+> to.  IIUC it was the "using git for deployment" part.
 >
-> Yeah, like that ;-).
+> Packaging tools (Makefiles, .rpm, .deb, etc) are a better suited for
+> deploying software.
+> --
+> David
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-Hmm.. this one was potentially data-losing.  Sorry for not catching
-that in 7e0abcec103b3649943b236881cf88e8fd6cf3a4.
-
-$ git tag --contains 7e0abcec103b3649943b236881cf88e8fd6cf3a4
-v1.7.11
-v1.7.11.1
-v1.7.11.2
-
-maint, please?
-
-I don't like complexity either, but adding a --symlinks option (and
-making it the default) to create symlinks instead of copies really
-does seem like the way to go long-term.  Then we can avoid the whole
-copy-back business when in this mode.
-
-I'll start exploring this unless you beat me to it, Tim ;-)
 -- 
-David
+Inviato dal mio dispositivo mobile
