@@ -1,74 +1,199 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH 6/7] Remove unused and bad gettext block from git-am
-Date: Sat, 21 Jul 2012 18:29:38 +0200
-Message-ID: <500AD8F2.1000101@gmail.com>
-References: <cover.1342884458.git.worldhello.net@gmail.com> <a7d2248051ddc62e38e67d9efbb41c01498c7a4c.1342884459.git.worldhello.net@gmail.com> <0fd901035a418562d3d9282553a96124814a298a.1342884459.git.worldhello.net@gmail.com> <77cbbce0450735a66ef1d9101af0bc82e3fc545c.1342884459.git.worldhello.net@gmail.com> <941f7bd695e8a14c940a5b8e4214d2773ae82557.1342884459.git.worldhello.net@gmail.com> <d5c4000b859f4b30af6fc3faec008403b82246bf.1342884459.git.worldhello.net@gmail.com> <d1af1d40b0edbb8e356ecbb700cd0a7c13832a8f.1342884459.git.worldhello.net@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [RFC/PATCH] t3300-*.sh: Fix a TAP parse error
+Date: Sat, 21 Jul 2012 18:46:57 +0100
+Message-ID: <500AEB11.4050006@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 18:29:50 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 20:00:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SscYv-0006TJ-2p
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 18:29:49 +0200
+	id 1Ssdy9-0007K4-0c
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 19:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394Ab2GUQ3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 12:29:44 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:33572 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085Ab2GUQ3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 12:29:44 -0400
-Received: by bkwj10 with SMTP id j10so4173214bkw.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 09:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=UQouc73apSLbGmk+P7MKK9tN+YkPzL3WciYYEDp634U=;
-        b=h8QKkkQjmc0cv97z62vW/OoKZIJWhwgio8NG1ZsnHHJ2qRZGoL3Zdn7SoMyxcORZ0U
-         DipBrHv4MTbuy/nCsUsCsEoO5/rT+pBZnZVaiJmjpqHToHQhZtO9sipnRx4JmrlfEEe5
-         yWCEx4TGAh93jhiQXnehKnrJulqvDm/3K07g8oB+MJp3eu6GMAV406uxDf+BuctpJsiX
-         YcOhfrQ1rX1UPlVNOvwxdpuNeNJ6zVD0U5AGyL9VLUySMKnt+HP8Tnb9fTv6u+gtHF1r
-         BRmB8sR69PrpAQ00RYbhxI/1uQJ7pDHmTyquCyvChk/Xw6dbxjSSBJVLNDX1vYHKqw79
-         D4Ng==
-Received: by 10.205.127.77 with SMTP id gz13mr4917641bkc.17.1342888182717;
-        Sat, 21 Jul 2012 09:29:42 -0700 (PDT)
-Received: from [192.168.178.21] (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
-        by mx.google.com with ESMTPS id hg13sm4264283bkc.7.2012.07.21.09.29.41
-        (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 09:29:42 -0700 (PDT)
-In-Reply-To: <d1af1d40b0edbb8e356ecbb700cd0a7c13832a8f.1342884459.git.worldhello.net@gmail.com>
+	id S1752167Ab2GUR7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 13:59:49 -0400
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:55123 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751401Ab2GUR7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 13:59:48 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Jul 2012 13:59:48 EDT
+Received: from smtp.demon.co.uk (unknown [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id E17BB6F80AB
+	for <git@vger.kernel.org>; Sat, 21 Jul 2012 18:52:34 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 73E1EA0C080;
+	Sat, 21 Jul 2012 18:51:53 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 312B1A0C07F;	Sat, 21 Jul 2012 18:51:52 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Sat, 21 Jul 2012 18:51:50 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201828>
 
-On 07/21/2012 05:50 PM, Jiang Xin wrote:
-> Gettext message
->
-s/message/messages/ I think.
 
-> should not start with '-' nor '--'. Since the '-d' and
-> '--dotest' options are not exist
->
-s/are not/do not/
+At present, running the t3300-*.sh test on cygwin looks like:
 
-> in OPTIONS_SPEC variable,
->
-s/OPTIONS_SPEC/the OPTIONS_SPEC/
+    $ cd t
+    $ ./t3300-funny-names.sh
+    ok 1 - setup
+    # passed all 1 test(s)
+    1..1 # SKIP Your filesystem does not allow tabs in filenames
+    $
 
-> so it's safe to remove the block.
->
-This "so" is redundant, in light of the earlier "Since".  I'd just remove it.
+Unfortunately, this is not valid TAP output, which prove notes
+as follows:
 
-Regards,
-  Stefano
+    $ prove --exec sh t3300-funny-names.sh
+    t3300-funny-names.sh .. All 1 subtests passed
+
+    Test Summary Report
+    -------------------
+    t3300-funny-names.sh (Wstat: 0 Tests: 1 Failed: 0)
+      Parse errors: No plan found in TAP output
+    Files=1, Tests=1,  2 wallclock secs ( 0.05 usr  0.00 sys +  \
+        0.90 cusr  0.49 csys =  1.43 CPU)
+    Result: FAIL
+    $
+
+This is due to the 'trailing_plan' having a 'skip_directive'
+attached to it. This is not allowed by the TAP grammar, which
+only allows a 'leading_plan' to be followed by an optional
+'skip_directive'. (see perldoc TAP::Parser::Grammar).
+
+A trailing_plan is one that appears in the TAP output after one or
+more test status lines (that start 'not '? 'ok ' ...), whereas a
+leading_plan must appear before all test status lines (if any).
+
+In practice, this means that the test script cannot contain a use
+of the 'skip all' facility:
+
+    skip_all='Some reason to skip *all* tests in this file'
+    test_done
+
+after having already executed one or more tests with (for example)
+'test_expect_success'. Unfortunately, this is exactly what this
+test script is doing. The first 'setup' test is actually used to
+determine if the test prerequisite is satisfied by the filesystem
+(ie does it allow tabs in filenames?).
+
+In order to fix the parse errors, place the code to determine the
+test prerequisite at the top level of the script, rather than as
+a parameter to test_expect_success. This allows us to correctly
+use 'skip_all', thus:
+
+    $ ./t3300-funny-names.sh
+    # passed all 0 test(s)
+    1..0 # SKIP Your filesystem does not allow tabs in filenames
+    $
+
+    $ prove --exec sh t3300-funny-names.sh
+    t3300-funny-names.sh .. skipped: Your filesystem does not \
+        allow tabs in filenames
+    Files=1, Tests=0,  2 wallclock secs ( 0.02 usr  0.03 sys +  \
+        0.84 cusr  0.41 csys =  1.29 CPU)
+    Result: NOTESTS
+    $
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Jonathan,
+
+This is an RFC because I suspect some people may prefer the much
+simpler patch:
+
+    diff --git a/t/t3300-funny-names.sh b/t/t3300-funny-names.sh
+    index 1f35e55..2a64385 100755
+    --- a/t/t3300-funny-names.sh
+    +++ b/t/t3300-funny-names.sh
+    @@ -34,7 +34,7 @@ test_expect_success 'setup' '
+     if ! test_have_prereq TABS_IN_FILENAMES
+     then
+     	# since FAT/NTFS does not allow tabs in filenames, skip this test
+    -	skip_all='Your filesystem does not allow tabs in filenames'
+    +	say '# SKIP Your filesystem does not allow tabs in filenames'
+     	test_done
+     fi
+     
+... the output of which looks like:
+
+    $ cd t
+    $ ./t3300-funny-names.sh
+    ok 1 - setup
+    # SKIP Your filesystem does not allow tabs in filenames
+    # passed all 1 test(s)
+    1..1
+    $
+
+    $ prove --exec sh t3300-funny-names.sh
+    t3300-funny-names.sh .. ok
+    All tests successful.
+    Files=1, Tests=1,  1 wallclock secs ( 0.03 usr  0.01 sys +  \
+        0.85 cusr  0.34 csys =  1.24 CPU)
+    Result: PASS
+    $
+
+Needless to say, I much prefer the patch below. :-D
+
+ATB,
+Ramsay Jones
+
+ t/t3300-funny-names.sh | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
+
+diff --git a/t/t3300-funny-names.sh b/t/t3300-funny-names.sh
+index 1f35e55..c51674a 100755
+--- a/t/t3300-funny-names.sh
++++ b/t/t3300-funny-names.sh
+@@ -15,28 +15,20 @@ p0='no-funny'
+ p1='tabs	," (dq) and spaces'
+ p2='just space'
+ 
+-test_expect_success 'setup' '
+-	cat >"$p0" <<-\EOF &&
+-	1. A quick brown fox jumps over the lazy cat, oops dog.
+-	2. A quick brown fox jumps over the lazy cat, oops dog.
+-	3. A quick brown fox jumps over the lazy cat, oops dog.
+-	EOF
+-
+-	{ cat "$p0" >"$p1" || :; } &&
+-	{ echo "Foo Bar Baz" >"$p2" || :; } &&
++cat >"$p0" <<\EOF
++1. A quick brown fox jumps over the lazy cat, oops dog.
++2. A quick brown fox jumps over the lazy cat, oops dog.
++3. A quick brown fox jumps over the lazy cat, oops dog.
++EOF
+ 
+-	if test -f "$p1" && cmp "$p0" "$p1"
+-	then
+-		test_set_prereq TABS_IN_FILENAMES
+-	fi
+-'
++cat 2>/dev/null >"$p1" "$p0"
++echo 'Foo Bar Baz' >"$p2"
+ 
+-if ! test_have_prereq TABS_IN_FILENAMES
+-then
++test -f "$p1" && cmp "$p0" "$p1" || {
+ 	# since FAT/NTFS does not allow tabs in filenames, skip this test
+ 	skip_all='Your filesystem does not allow tabs in filenames'
+ 	test_done
+-fi
++}
+ 
+ test_expect_success 'setup: populate index and tree' '
+ 	git update-index --add "$p0" "$p2" &&
+-- 
+1.7.11.2
