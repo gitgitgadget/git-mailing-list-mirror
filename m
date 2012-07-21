@@ -1,65 +1,76 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [RFC 4/4 v3] Add cat-blob report fifo from fast-import to remote-helper.
-Date: Sat, 21 Jul 2012 17:24:45 +0200
-Message-ID: <3246520.u1PcGtbf0N@flobuntu>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <2448876.O3MA5kWbuX@flobuntu> <20120721144834.GB19860@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC 4/4 v3] Add cat-blob report fifo from fast-import to
+ remote-helper.
+Date: Sat, 21 Jul 2012 10:44:37 -0500
+Message-ID: <20120721154437.GC19860@burratino>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <2448876.O3MA5kWbuX@flobuntu>
+ <20120721144834.GB19860@burratino>
+ <3246520.u1PcGtbf0N@flobuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 17:25:02 2012
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 17:44:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsbY8-0005PM-Th
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:24:57 +0200
+	id 1SsbrR-0006jf-8o
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:44:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab2GUPYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 11:24:51 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:33748 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247Ab2GUPYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 11:24:51 -0400
-Received: by bkwj10 with SMTP id j10so4150751bkw.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:24:49 -0700 (PDT)
+	id S1751524Ab2GUPor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 11:44:47 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:37538 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751445Ab2GUPoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 11:44:46 -0400
+Received: by gglu4 with SMTP id u4so4714107ggl.19
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=yglttpKxzDuFcf+62DRBED+YcDvFGyF87JGHry2xIsI=;
-        b=xYwcdUdKc2k20jwANAoXNxXx+5YK+ln2WAbMTpAEjqV/dC4UiRIwLZSxvkoXjG4T3Z
-         SHuN+5Xd80R6bS6mwFgkXSefpnMNUcApVaaJteQwnNKGikP3uwFpwgcq7vujxSxI6fxq
-         v9lbr4BdkOjL9gBONYMzQIfKNQc1TcjUKa5KynrVN8EvmLecZmT0MZrm4r87s7h9EFg5
-         QTyspUg6im33QrekMcuYSZWuWW277nq+s/2KMR7n+bPW7k0VMA9hE3fQ8k8xAblq4OV6
-         hnWhIKJmfHO3DSpIPQ1UBhSe4VpDiz4nzc9Vdh3aOHkjzctNLko09YU8tJ+XROpk7YQn
-         Uvdw==
-Received: by 10.204.130.146 with SMTP id t18mr4848608bks.65.1342884289659;
-        Sat, 21 Jul 2012 08:24:49 -0700 (PDT)
-Received: from flobuntu.localnet (93-82-157-153.adsl.highway.telekom.at. [93.82.157.153])
-        by mx.google.com with ESMTPS id hg13sm4207956bkc.7.2012.07.21.08.24.47
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=b8M0O6IvHExWVslPYIrbaiN5YXfO5aO2+cyFOT4/mvI=;
+        b=dZ2w1he4ie3gOzhqVemZ4N9DB5rcvWDvJTO96G+Emwx+W1MdBUMqGS1/KusH3xJpt+
+         u/jLmYpYZRxfICampALr99wKin6n5gJZnaKvMZewaXJUerM174vvKr6GF0wCPxm0KTBm
+         FctMSYEwcXX7ncsgCb7N98/hqVh7Fxwz4yMWP0mGAh45+dohs2MgRiiXsVCNQTVRx+B6
+         Tcz4AA+uZ6dxfkSc4EC6+YCeZVbr3UjHdiBErTI9o02UgeEpLwpa+rbR7o4hOXldSqts
+         Rv/icgpXzbihmZl49jcdTNCCOcla7KnaYIHJDcq0kG+SkvzKc4++JYbadfL19+cdoCQg
+         YVSg==
+Received: by 10.50.157.196 with SMTP id wo4mr1460664igb.22.1342885485739;
+        Sat, 21 Jul 2012 08:44:45 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id uy3sm1621382igc.14.2012.07.21.08.44.44
         (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 08:24:48 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120721144834.GB19860@burratino>
+        Sat, 21 Jul 2012 08:44:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <3246520.u1PcGtbf0N@flobuntu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201812>
 
-On Saturday 21 July 2012 09:48:34 Jonathan Nieder wrote:
-> To sum up: I think we should just stick to pipes --- why all this fifo
-> complication?
+Florian Achleitner wrote:
+> On Saturday 21 July 2012 09:48:34 Jonathan Nieder wrote:
 
-People didn't like pipe variant (prexec_cb not being compatible to windows' 
-process creation model), so I learned about fifos and implemented a (basic) fifo 
-variant. *shrug*
+>> To sum up: I think we should just stick to pipes --- why all this fifo
+>> complication?
+>
+> People didn't like pipe variant (prexec_cb not being compatible to windows' 
+> process creation model), so I learned about fifos and implemented a (basic) fifo 
+> variant. *shrug*
 
--- 
-Florian
+Ok, can you elaborate on that?  What does it mean that preexec_cb is
+not compatible to windows' process creation model?  Don't the people
+of the future working on this code deserve to know about that, too, so
+they don't break it?
+
+Come on --- I'm not asking these questions just to make your life
+difficult.  Please make it easy to understand your code changes and to
+keep them maintained.
