@@ -1,76 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC 4/4 v3] Add cat-blob report fifo from fast-import to
- remote-helper.
-Date: Sat, 21 Jul 2012 10:44:37 -0500
-Message-ID: <20120721154437.GC19860@burratino>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <2448876.O3MA5kWbuX@flobuntu>
- <20120721144834.GB19860@burratino>
- <3246520.u1PcGtbf0N@flobuntu>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH 0/7] i18n for git-am, git-rebase and git-merge
+Date: Sat, 21 Jul 2012 23:50:49 +0800
+Message-ID: <cover.1342884458.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 17:44:54 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 17:52:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsbrR-0006jf-8o
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:44:53 +0200
+	id 1Ssbyo-0005LB-9d
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 17:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524Ab2GUPor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 11:44:47 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:37538 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445Ab2GUPoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 11:44:46 -0400
-Received: by gglu4 with SMTP id u4so4714107ggl.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:44:46 -0700 (PDT)
+	id S1751491Ab2GUPvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 11:51:47 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:55391 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299Ab2GUPvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 11:51:46 -0400
+Received: by pbbrp8 with SMTP id rp8so8041000pbb.19
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 08:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=b8M0O6IvHExWVslPYIrbaiN5YXfO5aO2+cyFOT4/mvI=;
-        b=dZ2w1he4ie3gOzhqVemZ4N9DB5rcvWDvJTO96G+Emwx+W1MdBUMqGS1/KusH3xJpt+
-         u/jLmYpYZRxfICampALr99wKin6n5gJZnaKvMZewaXJUerM174vvKr6GF0wCPxm0KTBm
-         FctMSYEwcXX7ncsgCb7N98/hqVh7Fxwz4yMWP0mGAh45+dohs2MgRiiXsVCNQTVRx+B6
-         Tcz4AA+uZ6dxfkSc4EC6+YCeZVbr3UjHdiBErTI9o02UgeEpLwpa+rbR7o4hOXldSqts
-         Rv/icgpXzbihmZl49jcdTNCCOcla7KnaYIHJDcq0kG+SkvzKc4++JYbadfL19+cdoCQg
-         YVSg==
-Received: by 10.50.157.196 with SMTP id wo4mr1460664igb.22.1342885485739;
-        Sat, 21 Jul 2012 08:44:45 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id uy3sm1621382igc.14.2012.07.21.08.44.44
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=gX+Tm/bvmicaFbH5Gb4RetifN80/rATLQAxF0zuNbrc=;
+        b=XyOh9oqAu9OYkuHwp4fx0fbnAHDO1EG0zaCfYIOH+dUkMo93LwsvBD5SY7Cmc60gOA
+         U9fWol6hBh88JwLP9xyuIRa1y+cyf0h32JQLk63Rjp9lp1whwqRV5S6Snx41+zZl++WV
+         Dm9q+B/ONQd+pS1Am+cbuGkv2KhZ+CVqwZJN7OyOnqpMy8zBxhJ+lb2jaNwOv8tzT3Zw
+         NHRTlDWeL7fwp281nURbs3y9N92lQeiIxcJE5SsVm4T3pp3RGHPMb2JuGVYhtkwKaCIg
+         cVopclUDKUa4uXzo51fIorIl01e7do0bVfA5X0pSU8D31L+m+jkMAfzyHFwNhcWF0RSV
+         Ij8A==
+Received: by 10.66.88.68 with SMTP id be4mr19281560pab.23.1342885906379;
+        Sat, 21 Jul 2012 08:51:46 -0700 (PDT)
+Received: from localhost.localdomain ([123.116.228.123])
+        by mx.google.com with ESMTPS id nj4sm6241849pbc.5.2012.07.21.08.51.40
         (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 08:44:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <3246520.u1PcGtbf0N@flobuntu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Sat, 21 Jul 2012 08:51:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.2.259.g37fc0e1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201813>
 
-Florian Achleitner wrote:
-> On Saturday 21 July 2012 09:48:34 Jonathan Nieder wrote:
+Mark strings in git-am, git-rebase, and git-merge for translation.
+And contain fixes for shell gettext extraction and xgettext workaround.
 
->> To sum up: I think we should just stick to pipes --- why all this fifo
->> complication?
->
-> People didn't like pipe variant (prexec_cb not being compatible to windows' 
-> process creation model), so I learned about fifos and implemented a (basic) fifo 
-> variant. *shrug*
+Jiang Xin (7):
+  i18n: New keywords for xgettext extraction from sh
+  i18n: rebase: mark strings for translation
+  i18n: Rewrite gettext messages start with dash
+  Remove obsolete LONG_USAGE which breaks xgettext
+  i18n: am: mark more strings for translation
+  Remove unused and bad gettext block from git-am
+  i18n: merge-recursive: mark strings for translation
 
-Ok, can you elaborate on that?  What does it mean that preexec_cb is
-not compatible to windows' process creation model?  Don't the people
-of the future working on this code deserve to know about that, too, so
-they don't break it?
+ Makefile                      |   3 +-
+ git-am.sh                     |  14 ++--
+ git-rebase.sh                 |  83 +++++++++--------------
+ git-submodule.sh              |   2 +-
+ merge-recursive.c             | 152 ++++++++++++++++++++++--------------------
+ t/t3404-rebase-interactive.sh |   2 +-
+ 6 files changed, 120 insertions(+), 136 deletions(-)
 
-Come on --- I'm not asking these questions just to make your life
-difficult.  Please make it easy to understand your code changes and to
-keep them maintained.
+-- 
+1.7.11.2.259.g37fc0e1
