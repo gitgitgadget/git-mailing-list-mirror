@@ -1,103 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pushing branches
-Date: Sat, 21 Jul 2012 12:33:40 -0700
-Message-ID: <7v7gtwucx7.fsf@alter.siamese.dyndns.org>
-References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
- <7vhat2toz8.fsf@alter.siamese.dyndns.org>
- <CACnwZYchBpSsvfY_-cu33dmPateNPgYaPr822Ri=Xn6=V0OOnA@mail.gmail.com>
- <CAJsNXTkH6wRgH9g4BCZVxKz9ntf0P_Y81kc+bAhcchkQM3+3Bw@mail.gmail.com>
- <CACnwZYe03VzR0=m6oCo8X6y=iiLkZXi+xQpvW9goya0roU+PFQ@mail.gmail.com>
- <CAJsNXT=-Ap0zJqK2F_3uJ7secmq7uvnSc218x+NoYdO5pLJAMg@mail.gmail.com>
- <CACnwZYdUzk74znPs4F+xz3haA3QhA9-DbR3mWWEVMfnztp-oCA@mail.gmail.com>
+From: Nick <oinksocket@letterboxes.org>
+Subject: Re: git with large files...
+Date: Sat, 21 Jul 2012 22:04:52 +0100
+Message-ID: <500B1974.5070508@letterboxes.org>
+References: <A18A933F-5627-4844-A4A6-B3AF244FD211@me.com> <86fw8mf3gp.fsf@red.stonehenge.com> <CACPiFC+a=46n-igTUBSDdpgDQyL4cz5vrcpurNBSsb+D1c0UnA@mail.gmail.com> <CAJDDKr5vZz_DepYKvdu34G60fmm8V_Sv8FU+J6O-DLoum07+jA@mail.gmail.com> <CA+EOSBk8XjA5=BO_kVOmfCPT-n2vKV1rbqUHnOnGi-ORF7wKLw@mail.gmail.com> <CACPiFCLTPi5i3RZHwOD-+OJ_zSbtOwe7VLy=NMO1MUKPVyPHEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: PJ Weisberg <pj@irregularexpressions.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 21:33:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Elia Pinto <gitter.spiros@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Darek Bridges <darek.bridges@me.com>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 23:05:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsfR1-0007Yp-Ao
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 21:33:51 +0200
+	id 1SsgrE-0006fd-W3
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 23:05:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab2GUTdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 15:33:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40555 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751624Ab2GUTdn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 15:33:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 613E78F31;
-	Sat, 21 Jul 2012 15:33:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1nsqSIHEaoJd1tINnpMzkC7Lxg4=; b=PqH4ue
-	yRsn/Pm65HH6lUA53aoq2aIimawmxU5EUaYRrJoS3VZ4oMYn9U0Py3hEQ8Y0oaL0
-	+UG+VrSvou+uYeyYQImsr5IahZK9fmCg09vRGkEMdFd2YMBiA3Api/kiAetyFz2c
-	OieyHTFhvYcWTSqDTjbxhdxaDXJU8y7L79A2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gZbE8sAaYO4+2XtuWECcor2jeCI87B8O
-	nkiVUjKiiW2RrUxK9NouXq8evzvMLXV724ubhWwCV6tsZHPhaiV2qAns78B4eBT3
-	tlBlYrPjt1cyxAfVs34das1XfTBPd4Rq54AJq6IWr6dktyCTqG6a6GjRG5n5F6GZ
-	aBAaoWzZC0s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EDDC8F30;
-	Sat, 21 Jul 2012 15:33:42 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A84848F2F; Sat, 21 Jul 2012
- 15:33:41 -0400 (EDT)
-In-Reply-To: <CACnwZYdUzk74znPs4F+xz3haA3QhA9-DbR3mWWEVMfnztp-oCA@mail.gmail.com> (Thiago
- Farina's message of "Fri, 20 Jul 2012 23:10:56 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA49EFD2-D36A-11E1-98C8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751979Ab2GUVEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 17:04:54 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:37852 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751570Ab2GUVEx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2012 17:04:53 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 51CC9209E8;
+	Sat, 21 Jul 2012 17:04:52 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute2.internal (MEProxy); Sat, 21 Jul 2012 17:04:52 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=letterboxes.org;
+	 h=message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=mesmtp;
+	 bh=AOq375VP1TWGdPMzZI7wONJzaH8=; b=UJ84Cji4sfsw+umjO4BDWBvq9pId
+	2xFwp0+KuD7TPQ2o0xm17uw5t8hBlUcd08RmZc9SGlMnr8l9l2gj5lwM176LVyXu
+	vcidyW0dgHj33K/k6gLcyhJNQRWkJyMsjPmaD0TUgHXPiQ1ghUF2toWBvljhypAG
+	MXqLQ9Zs1RRbtx8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=AOq375VP1TWGdPMzZI7wON
+	JzaH8=; b=uG5C+Mlw19xz8sAXroLBVeMKRCDGD5z+qK1SfQwuiJSrui7HAJUcmG
+	Wn1lwQqZ1HIAaayhf1ITBdsrPf3Duxjru2Eh5QzSA3tDiyb63DWonILpLLmMeNyT
+	/hxwHfTVCnWpApZXHBGrUa+8L95ZgqphISrP/oPlm8tOlMJDZujNA=
+X-Sasl-enc: q/34V2RtUHAcozZrcLkx+tQX8Yw0fpCi2debrn24DrRu 1342904691
+Received: from [192.168.0.103] (unknown [87.194.154.6])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A0676483525;
+	Sat, 21 Jul 2012 17:04:50 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <CACPiFCLTPi5i3RZHwOD-+OJ_zSbtOwe7VLy=NMO1MUKPVyPHEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201831>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+On 21/07/12 15:42, Martin Langhoff wrote:
+> On Sat, Jul 21, 2012 at 3:11 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
+>> Well, many folks use puppet in serverless configuration pushing the
+>> manifest from a central git server via cron and applying locally the
+>> configuration fetched. In this sense git IS used for deployement. And,
+>> for a configuration management system as puppet this could be a
+>> sensible thing to do - reduce load, scalability ecc.
+> 
+> That's a great thing to know, and timely too. I am looking at Puppet,
+> and worried a bit about reported memory load on the server side (and
+> some rumours of memory footprint issues on the client side too).
+> 
+> Can you point me to more information & discussion?
 
-> Do'h, now I can see the idiocy that I was doing.
->
-> If I'm understanding this better,
-> $ git push origin master
-> tells git to push to remote origin, the contents of my master branch.
+We use "masterless" puppet, deployed using gitolite post-receive hooks.  The
+most useful clues I found are here.
 
-Yes, add "to the 'master' at the 'origin'" at the end of the
-sentence and you are perfect.
+ http://groups.google.com/group/puppet-users/browse_thread/thread/ed9a4032b31bd8d4/e1a68aa8ea91305d
 
-> And then,
->
-> $ git push origin feature-work
-> tells git to push to remote origin to push the contents of feature-work branch.
+ http://semicomplete.com/presentations/puppet-at-loggly/puppet-at-loggly.pdf.html
 
-Yes.
+ http://current.workingdirectory.net/posts/2011/puppet-without-masters/
 
-> Hence does not make sense to ask git to do "push origin master" while
-> inside feature-work branch.
+ http://bitfieldconsulting.com/scaling-puppet-with-distributed-version-control
 
-No.  As long as you know your master is ready and suitable to be
-published when you ask "push", the command perfectly makes sense; it
-does not matter on what branch you are on.
+We had to join the dots ourselves. Works for us so far, but it's only about six
+months old.  We don't have lots of servers or very exacting requirements, just a
+inclination against the pull orthodoxy and the freedom to experiment. Can't
+comment about memory footprint, except it's not been a problem for us.  (On the
+other hand I am not that enamoured with Puppet's DSL design, I might prefer to
+avoid it if I could.)
 
-You may say
 
-	$ git checkout master
-        ... work work work ...
-        $ make test
-        ... ahh, perfection! ...
-        $ git checkout -b feature
-        ... let's build a bit more ..
-        ... while I am having fun, let's not forget to push the
-        ... part that is already solid out
-        $ git push origin master
-
-and that is perfectly fine without "git checkout master" before
-pushing (and "git checkout feature" after to come back to what you
-were doing).
+N
