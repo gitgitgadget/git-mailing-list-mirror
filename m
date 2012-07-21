@@ -1,71 +1,63 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git with large files...
-Date: Fri, 20 Jul 2012 19:28:50 -0400
-Message-ID: <CACPiFC+a=46n-igTUBSDdpgDQyL4cz5vrcpurNBSsb+D1c0UnA@mail.gmail.com>
-References: <A18A933F-5627-4844-A4A6-B3AF244FD211@me.com> <86fw8mf3gp.fsf@red.stonehenge.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Darek Bridges <darek.bridges@me.com>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Sat Jul 21 01:29:20 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: Fix git-svn tests for SVN 1.7.5.
+Date: Fri, 20 Jul 2012 20:27:57 -0400
+Message-ID: <1342830380-sup-1776@pinkfloyd.chass.utoronto.ca>
+References: <5004B772.3090806@pobox.com> <20120717174446.GA14244@burratino>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
+	gitster <gitster@pobox.com>, robbat2 <robbat2@gentoo.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 02:28:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsMdK-0007tf-NV
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 01:29:19 +0200
+	id 1SsNYc-0006Ge-I3
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 02:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055Ab2GTX3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jul 2012 19:29:14 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:44313 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751794Ab2GTX3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jul 2012 19:29:12 -0400
-Received: by vcbfk26 with SMTP id fk26so3435958vcb.19
-        for <git@vger.kernel.org>; Fri, 20 Jul 2012 16:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lVUiQx/dT2OHN+aZooJAjms8nEuuvQ1Cy18lRKmGuAU=;
-        b=zzg3g/gtxBf5svcqDKkzly3Lj3gEESeTdygaQw9V4vl8NNAB9CL8IiN+1Rka+Z7Oxe
-         4rO4WD9+Z/Y0ZkOkYIqbmKlq7yOQnh1vQ04uNzRK+O22ozNQZUzlVntV5sTAbjnkBfL6
-         G09vcJWa7zqcLS/RMRGG1rieLGDtaSjcZMbHIc+foHqXhcdsG/NbpDUL5QQfm4TphcFG
-         RA94faH/jASNOPGDPaxRCSXJwG77wpv3LEIXxQW8feyMNkEYz2fvfCkLj1QByg8gnoNM
-         +xQlcmg/GB1ndzefP9I32qWdoBzVnFj18lID2qVaUvDJTgUdo6dz6pR4Bwqe4OdzrLLB
-         tG+g==
-Received: by 10.220.153.7 with SMTP id i7mr5424558vcw.34.1342826951617; Fri,
- 20 Jul 2012 16:29:11 -0700 (PDT)
-Received: by 10.52.162.34 with HTTP; Fri, 20 Jul 2012 16:28:50 -0700 (PDT)
-In-Reply-To: <86fw8mf3gp.fsf@red.stonehenge.com>
+	id S1752916Ab2GUA2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jul 2012 20:28:24 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:42560 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178Ab2GUA2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jul 2012 20:28:04 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:39426 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SsNY6-0008FI-1n; Fri, 20 Jul 2012 20:27:58 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1SsNY6-0005aE-0e; Fri, 20 Jul 2012 20:27:58 -0400
+In-reply-to: <20120717174446.GA14244@burratino>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201797>
-
-On Fri, Jul 20, 2012 at 6:54 PM, Randal L. Schwartz
-<merlyn@stonehenge.com> wrote:
->>>>>> "Darek" == Darek Bridges <darek.bridges@me.com> writes:
->
-> Darek> I use git for many things, but I am trying to work out the
-> Darek> workflow to use git for deployment.
->
-> Don't.
-
-Heh. Best to keep in mind that it just doesn't work very well.
-git-bigfiles, git-annex might help you, but look at the docs and
-caveats carefully.
-
-Perhaps use rsync, unison work better for you.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201798>
 
 
+Hi Michael,
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- Software Architect - OLPC
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+> > I've fixed the git-svn tests for SVN 1.7 and tested with SVN 1.7.5.
+> 
+> Thanks.  git-svn is not maintained by Junio but by Eric and others on
+> the list.  I'm cc-ing Eric and Ben Walton so they can benefit from
+> your work.
+
+This is fantastic.  It's been on my todo list but not a priority for
+me.  I'm glad you've taken the time to scratch this itch though.
+
+I'll try to run through this series in the next few days and I can
+also do some test builds on solaris to see how it plays there.
+
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
