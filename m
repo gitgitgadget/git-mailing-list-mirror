@@ -1,136 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] t3300-*.sh: Fix a TAP parse error
-Date: Sat, 21 Jul 2012 13:20:49 -0500
-Message-ID: <20120721182049.GL19860@burratino>
-References: <500AEB11.4050006@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pushing branches
+Date: Sat, 21 Jul 2012 12:33:40 -0700
+Message-ID: <7v7gtwucx7.fsf@alter.siamese.dyndns.org>
+References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
+ <7vhat2toz8.fsf@alter.siamese.dyndns.org>
+ <CACnwZYchBpSsvfY_-cu33dmPateNPgYaPr822Ri=Xn6=V0OOnA@mail.gmail.com>
+ <CAJsNXTkH6wRgH9g4BCZVxKz9ntf0P_Y81kc+bAhcchkQM3+3Bw@mail.gmail.com>
+ <CACnwZYe03VzR0=m6oCo8X6y=iiLkZXi+xQpvW9goya0roU+PFQ@mail.gmail.com>
+ <CAJsNXT=-Ap0zJqK2F_3uJ7secmq7uvnSc218x+NoYdO5pLJAMg@mail.gmail.com>
+ <CACnwZYdUzk74znPs4F+xz3haA3QhA9-DbR3mWWEVMfnztp-oCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Jul 21 20:21:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: PJ Weisberg <pj@irregularexpressions.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 21 21:33:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SseIb-00033d-BL
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 20:21:05 +0200
+	id 1SsfR1-0007Yp-Ao
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jul 2012 21:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480Ab2GUSU7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Jul 2012 14:20:59 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:44945 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969Ab2GUSU7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Jul 2012 14:20:59 -0400
-Received: by yenl2 with SMTP id l2so4753451yen.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 11:20:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HnEL7/fv6FdiYPn+LtwVnJJIxrVPuu2CwS6T4WBzodM=;
-        b=zqYArfZnMb/EerJ2GprTin1ZAdWbFOf72vc60Z74FIQqOLjTWH1D1yQOERaDgKDS6J
-         +uxYml+Ftl79CFFP28AtnB1KJnfVxUK3+53nWNQJvH9BacTX4Q3NzTLS2WhQkeavR11z
-         nnsG2K4LHEoiXvgkx9qSbsaMhu0Uj0PH0DOOG+w3e+zLyrK7HQnAPov0aJq95YifOzaa
-         GHNwNZjpR5MVf50F9VHNOpasti5Q954/gC4fgvbKcsa+QIsqjGpUuX/VSc8LRfIw6N9o
-         V9LoLbzO3ezHtIrPE1ZXzi8d3OKqyfbw3ogUZFzPeR7xGKbCorlFfJVQHI22XnF+4PFc
-         OLCg==
-Received: by 10.50.15.202 with SMTP id z10mr7012292igc.67.1342894858445;
-        Sat, 21 Jul 2012 11:20:58 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id z3sm1891571igc.7.2012.07.21.11.20.57
-        (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 11:20:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <500AEB11.4050006@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752011Ab2GUTdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 15:33:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40555 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751624Ab2GUTdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 15:33:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 613E78F31;
+	Sat, 21 Jul 2012 15:33:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1nsqSIHEaoJd1tINnpMzkC7Lxg4=; b=PqH4ue
+	yRsn/Pm65HH6lUA53aoq2aIimawmxU5EUaYRrJoS3VZ4oMYn9U0Py3hEQ8Y0oaL0
+	+UG+VrSvou+uYeyYQImsr5IahZK9fmCg09vRGkEMdFd2YMBiA3Api/kiAetyFz2c
+	OieyHTFhvYcWTSqDTjbxhdxaDXJU8y7L79A2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gZbE8sAaYO4+2XtuWECcor2jeCI87B8O
+	nkiVUjKiiW2RrUxK9NouXq8evzvMLXV724ubhWwCV6tsZHPhaiV2qAns78B4eBT3
+	tlBlYrPjt1cyxAfVs34das1XfTBPd4Rq54AJq6IWr6dktyCTqG6a6GjRG5n5F6GZ
+	aBAaoWzZC0s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EDDC8F30;
+	Sat, 21 Jul 2012 15:33:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A84848F2F; Sat, 21 Jul 2012
+ 15:33:41 -0400 (EDT)
+In-Reply-To: <CACnwZYdUzk74znPs4F+xz3haA3QhA9-DbR3mWWEVMfnztp-oCA@mail.gmail.com> (Thiago
+ Farina's message of "Fri, 20 Jul 2012 23:10:56 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA49EFD2-D36A-11E1-98C8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201830>
 
-(cc-ing =C3=86var, TAP wizard)
-Hi,
+Thiago Farina <tfransosi@gmail.com> writes:
 
-Ramsay Jones wrote:
-
->     $ ./t3300-funny-names.sh
->     ok 1 - setup
->     # passed all 1 test(s)
->     1..1 # SKIP Your filesystem does not allow tabs in filenames
->     $
+> Do'h, now I can see the idiocy that I was doing.
 >
-> Unfortunately, this is not valid TAP output, which prove notes
-> as follows:
-[...]
->       Parse errors: No plan found in TAP output
-[...]
-> This is an RFC because I suspect some people may prefer the much
-> simpler patch:
-[...]
->      	# since FAT/NTFS does not allow tabs in filenames, skip this te=
-st
->     -	skip_all=3D'Your filesystem does not allow tabs in filenames'
->     +	say '# SKIP Your filesystem does not allow tabs in filenames'
->      	test_done
-[...]
-> ... the output of which looks like:
-[...]
->     ok 1 - setup
->     # SKIP Your filesystem does not allow tabs in filenames
->     # passed all 1 test(s)
->     1..1
-[..]
-> Needless to say, I much prefer the patch below. :-D
+> If I'm understanding this better,
+> $ git push origin master
+> tells git to push to remote origin, the contents of my master branch.
 
-Thanks for a nice explanation.  In general I definitely like getting
-rid of these setup tests when possible.  Let's see:
+Yes, add "to the 'master' at the 'origin'" at the end of the
+sentence and you are perfect.
 
-[...]
-> --- a/t/t3300-funny-names.sh
-> +++ b/t/t3300-funny-names.sh
-> @@ -15,28 +15,20 @@ p0=3D'no-funny'
->  p1=3D'tabs	," (dq) and spaces'
->  p2=3D'just space'
-> =20
-> -test_expect_success 'setup' '
-> -	cat >"$p0" <<-\EOF &&
-> -	1. A quick brown fox jumps over the lazy cat, oops dog.
-> -	2. A quick brown fox jumps over the lazy cat, oops dog.
-> -	3. A quick brown fox jumps over the lazy cat, oops dog.
-> -	EOF
-> +cat >"$p0" <<\EOF
-> +1. A quick brown fox jumps over the lazy cat, oops dog.
-> +2. A quick brown fox jumps over the lazy cat, oops dog.
-> +3. A quick brown fox jumps over the lazy cat, oops dog.
-> +EOF
+> And then,
+>
+> $ git push origin feature-work
+> tells git to push to remote origin to push the contents of feature-work branch.
 
-The problem is that on platforms not supporting funny filenames, it
-will write a complaint to stderr and because the code is not guarded
-by test_expect_success, that output goes to the terminal.  So I think
-this is a wrong approach.
+Yes.
 
-Would it make sense to avoid the "# SKIP" comment when a test has
-been run, like this?
+> Hence does not make sense to ask git to do "push origin master" while
+> inside feature-work branch.
 
-diff --git i/t/test-lib.sh w/t/test-lib.sh
-index acda33d1..038f6e9f 100644
---- i/t/test-lib.sh
-+++ w/t/test-lib.sh
-@@ -354,6 +354,11 @@ test_done () {
- 	case "$test_failure" in
- 	0)
- 		# Maybe print SKIP message
-+		if test -n "$skip_all" && test "$test_count" !=3D 0
-+		then
-+			say "# SKIP $skill_all"
-+			skip_all=3D
-+		fi
- 		[ -z "$skip_all" ] || skip_all=3D" # SKIP $skip_all"
-=20
- 		if test $test_external_has_tap -eq 0; then
+No.  As long as you know your master is ready and suitable to be
+published when you ask "push", the command perfectly makes sense; it
+does not matter on what branch you are on.
+
+You may say
+
+	$ git checkout master
+        ... work work work ...
+        $ make test
+        ... ahh, perfection! ...
+        $ git checkout -b feature
+        ... let's build a bit more ..
+        ... while I am having fun, let's not forget to push the
+        ... part that is already solid out
+        $ git push origin master
+
+and that is perfectly fine without "git checkout master" before
+pushing (and "git checkout feature" after to come back to what you
+were doing).
