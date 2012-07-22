@@ -1,58 +1,62 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [GSoC] Designing a faster index format - Progress report week
- 13
-Date: Sun, 22 Jul 2012 17:22:17 +0200
-Message-ID: <500C1AA9.4000306@dewire.com>
-References: <20120716203300.GA1849@tgummerer.surfnet.iacbox> <7vwr23zb65.fsf@alter.siamese.dyndns.org> <20120717082452.GC1849@tgummerer.surfnet.iacbox>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
+Date: Sun, 22 Jul 2012 11:50:56 -0400
+Message-ID: <20120722155056.GA22641@sigill.intra.peff.net>
+References: <20120719213225.GA20311@sigill.intra.peff.net>
+ <20120719213311.GA20385@sigill.intra.peff.net>
+ <50092993.6010203@alum.mit.edu>
+ <20120720154403.GB2862@sigill.intra.peff.net>
+ <6F148977-4F57-47FF-B43B-0997694F3891@gmail.com>
+ <20120722131448.GA16104@sigill.intra.peff.net>
+ <61E46C90-5C8F-4E11-8CB7-0A05F1D62A8A@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu, pclouds@gmail.com, trast@student.ethz.ch,
-	JGit Developers list <jgit-dev@eclipse.org>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 17:22:48 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Alexey Muranov <alexey.muranov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 17:51:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ssxzb-0004ix-Pb
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 17:22:48 +0200
+	id 1SsyQx-0006DQ-F3
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 17:51:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab2GVPWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 11:22:21 -0400
-Received: from mail.dewire.com ([83.140.172.130]:15745 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751006Ab2GVPWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 11:22:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id ED8BC8FC75;
-	Sun, 22 Jul 2012 17:22:40 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iFmgfLrajHf3; Sun, 22 Jul 2012 17:22:40 +0200 (CEST)
-Received: from Robin-Rosenbergs-MacBook-Pro.local (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 786508FC74;
-	Sun, 22 Jul 2012 17:22:40 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120717 Thunderbird/15.0
-In-Reply-To: <20120717082452.GC1849@tgummerer.surfnet.iacbox>
+	id S1751816Ab2GVPu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 11:50:58 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:58179 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751791Ab2GVPu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 11:50:58 -0400
+Received: (qmail 27443 invoked by uid 107); 22 Jul 2012 15:50:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 22 Jul 2012 11:50:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Jul 2012 11:50:56 -0400
+Content-Disposition: inline
+In-Reply-To: <61E46C90-5C8F-4E11-8CB7-0A05F1D62A8A@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201853>
 
+On Sun, Jul 22, 2012 at 04:40:14PM +0200, Alexey Muranov wrote:
 
-A note on how JGit would work here. Java has none of the fields
-that constitute statcrc. I guess we would write zero here when
-creating new entries. Git could recognize that when checking status and 
-simply assume "clean" unless mtime or st_size says otherwise.
+> >  3. Most importantly, it does not resolve D/F conflicts (it has the
+> >     same problem as "logs/refs/heads/a~"). If you delete "foo/bar", you
+> >     will end up with "logs/refs/heads/foo/bar@{...}". That will prevent
+> >     D/F conflicts with a new branch "foo/bar/baz", but will still have
+> >     a problem with just "foo".
+> 
+> Unfortunately i do not really follow this, because i have not seen any
+> directories in "logs/refs/heads/", i only saw files named after local
+> branches there. I do not know how directories are used there.
 
-For existing entries JGit could either keep the old value (which is
-probably a lie since) or zero it.
+The user is free to have branch names with slashes, in which case they
+are represented in the filesystem as directories. Even without using
+slashes in your branch names, you already have subdirectories in
+refs/remotes.
 
-A modification to the spec would be that 0 == not set.
-
--- robin
+-Peff
