@@ -1,112 +1,167 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC 4/4 v3] Add cat-blob report fifo from fast-import to
- remote-helper.
-Date: Sun, 22 Jul 2012 16:24:24 -0500
-Message-ID: <20120722212424.GA680@burratino>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <3246520.u1PcGtbf0N@flobuntu>
- <20120721154437.GC19860@burratino>
- <5489458.8D23shS0RV@flomedio>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.7.11.3
+Date: Sun, 22 Jul 2012 14:27:26 -0700
+Message-ID: <7vk3xvpjup.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 23:24:41 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sun Jul 22 23:27:43 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1St3dn-0005YS-JZ
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 23:24:39 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1St3gk-0008Bd-Pq
+	for glk-linux-kernel-3@plane.gmane.org; Sun, 22 Jul 2012 23:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650Ab2GVVYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 17:24:34 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45704 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752626Ab2GVVYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 17:24:33 -0400
-Received: by yenl2 with SMTP id l2so4953445yen.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HVgDXhwZdZbz/l2FkzEke8QdRckMcnsIbNESF7MjyN0=;
-        b=C2LPDLLv12q0R93Oal3wY9M7WQBAZrFjSUtbyL2xmno+Fs5GMKT8diyYJv7k7MjX0G
-         a0PndZvasUjc4Xe392YuHPgQl+XFmPx3IqS29tplm6G8JIp4audY4u5ShQowKkeJ+nc6
-         6JEtXncWf1MQASVs5UeDqDLJ8m/O7ivaNyy24JP9Leru0P6PrWIBRvnAe/HcBy4ZPBjK
-         zlwY8TTe/lNYHrVjHJqd2J7qk+UbbXMr8UNihXpxTmwmLiu/lSdkPoo0olaU4jGcHXTc
-         XTCjsdka3GLwYRZuZGs5+SiAqymHliXGAHpGiWluU2SRnoCZRbTZsFpLvMChplDM/D3s
-         u9mg==
-Received: by 10.50.106.166 with SMTP id gv6mr5754521igb.46.1342992272513;
-        Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id ud8sm9960792igb.4.2012.07.22.14.24.31
-        (version=SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <5489458.8D23shS0RV@flomedio>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
+	id S1752704Ab2GVV1d (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 22 Jul 2012 17:27:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65348 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752626Ab2GVV1b (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 22 Jul 2012 17:27:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFA778EE3;
+	Sun, 22 Jul 2012 17:27:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=F
+	Ukhz8U/WxXWlFmwKx6tENiY/PY=; b=Wz8rYuJB3Va8zra7R2f+K5hQAP5KB/m5T
+	kKUSuygLHqAmxOepb8csh8EJT+TpNv8w/VFqRoLsmE5oi86oL3G10yepQg9CHYfe
+	OY2VGpydtHi3gQuVebTRZ48VrpJJ3f97eX6Qr3LlY4x04IhlUe7sw8YiKWTzPGN8
+	N6RZogiDAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=Di7IlwbZ0TWqTagM3AW+m3b/MS/1gu0TQNej2kituFF0r6QzvFvPx96c
+	RgQnR4wXOOtkpyLYNAZqnpID2BshC1yEmVNxqt5DOm9XbwuUbczmePUB9K5iIlgp
+	A/BevVBbQhUmoPMhIS/i7F3TuMaQsmzEKjGcj1WvoON3dUAmyAU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE59B8EE2;
+	Sun, 22 Jul 2012 17:27:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBCAD8EDF; Sun, 22 Jul 2012
+ 17:27:27 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0970CBD2-D444-11E1-B91A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201868>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201869>
 
-Hi,
+The latest maintenance release Git v1.7.11.3 is now available at
+the usual places.
 
-Florian Achleitner wrote:
+The release tarballs are found at:
 
-> On Windows, processses are not forked but spawned from new and therefore can't 
-> inherit pipe file descriptors.
+    http://code.google.com/p/git-core/downloads/list
 
-Ok, this is what I didn't understand (and still don't understand).
+and their SHA-1 checksums are:
 
-Yes, on Windows processes are spawned instead of forked.  But does
-that mean they can't inherit pipes?  How do pipelines in the shell
-work at all, then?
+a10c420e4d9152d6059f41825904cfac3062b135  git-1.7.11.3.tar.gz
+41500708e87787d6139de413c4da91629aa79fa8  git-htmldocs-1.7.11.3.tar.gz
+10151406ace1da92a70d203a7eb1c86024fdd919  git-manpages-1.7.11.3.tar.gz
 
-I thought what Hannes said was rather that the current C runtime
-used by Git for Windows doesn't take care of inherited file
-descriptors, period, other than 0, 1, and 2.  This has nothing to do
-with the fork/spawn distinction.  So while --cat-blob-fd or some other
-mechanism could be made to work on Windows in the future, *relying* on
---cat-blob-fd on Windows today is a no-go, since it rely on file
-descriptors >2 and break the remote helper infrastructure completely
-there.
+Also the following public repositories all have a copy of the v1.7.11.3
+tag and the maint branch that the tag points at:
 
-That does not force us into a corner at all.  We have multiple
-options.  Here is what I propose:
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-Remote helpers declare using a capability (e.g., "bidi-import") that
-they would like a bidirectional communication channel with
-fast-import.  Git tells the remote helper that its request has been
-granted by using a different command (e.g., "bidi-import") instead of
-"import" to start the import process.
+Git v1.7.11.3 Release Notes
+===========================
 
-The responses from fast-import come on stdin (file descriptor 0), so
-in principle it should be possible to implement this interface on
-Windows.  The interface is portable, even if the initial
-implementation isn't.
+Fixes since v1.7.11.3
+---------------------
 
-Existing remote helpers using the "import" capability would be
-unaffected and would work as before.
+ * The error message from "git push $there :bogo" (and its equivalent
+   "git push $there --delete bogo") mentioned that we tried and failed
+   to guess what ref is being deleted based on the LHS of the refspec,
+   which we don't.
 
-On Windows, Git would not take advantage of the bidi-import capability
-for now.  Windows support is an added complication and we have enough
-to do this summer.
+ * A handful of files and directories we create had tighter than
+   necessary permission bits when the user wanted to have group
+   writability (e.g. by setting "umask 002").
 
-Then interested people using Windows would be able to experiment using
-whatever mechanism they please (CRT support for inherited file
-descriptors >2, fifos, sockets, some other Windows-specific thing) to
-implement the bidi-import capability.  Once that is implemented, they
-automatically get support for remote helpers that rely on the
-bidirectional communication functionality.
+ * "commit --amend" used to refuse amending a commit with an empty log
+   message, with or without "--allow-empty-message".
 
-What do you think?
+ * "git commit --amend --only --" was meant to allow "Clever" people to
+   rewrite the commit message without making any change even when they
+   have already changes for the next commit added to their index, but
+   it never worked as advertised since it was introduced in 1.3.0 era.
 
-Thanks for explaining,
-Jonathan
+ * Even though the index can record pathnames longer than 1<<12 bytes,
+   in some places we were not comparing them in full, potentially
+   replacing index entries instead of adding.
+
+ * "git show"'s auto-walking behaviour was an unreliable and
+   unpredictable hack; it now behaves just like "git log" does when it
+   walks.
+
+ * "git diff", "git status" and anything that internally uses the
+   comparison machinery was utterly broken when the difference
+   involved a file with "-" as its name.  This was due to the way "git
+   diff --no-index" was incorrectly bolted on to the system, making
+   any comparison that involves a file "-" at the root level
+   incorrectly read from the standard input.
+
+ * We did not have test to make sure "git rebase" without extra options
+   filters out an empty commit in the original history.
+
+ * "git fast-export" produced an input stream for fast-import without
+   properly quoting pathnames when they contain SPs in them.
+
+ * "git checkout --detach", when you are still on an unborn branch,
+   should be forbidden, but it wasn't.
+
+ * Some implementations of Perl terminates "lines" with CRLF even when
+   the script is operating on just a sequence of bytes.  Make sure to
+   use "$PERL_PATH", the version of Perl the user told Git to use, in
+   our tests to avoid unnecessary breakages in tests.
+
+Also contains minor typofixes and documentation updates.
+
+----------------------------------------------------------------
+
+Changes since v1.7.11.2 are as follows:
+
+Alex Riesen (1):
+      Restore umasks influence on the permissions of work tree created by clone
+
+Chris Webb (2):
+      git-checkout: disallow --detach on unborn branch
+      Allow edit of empty message with commit --amend
+
+Jay Soffian (1):
+      fast-export: quote paths with spaces
+
+Jeff King (3):
+      push: don't guess at qualifying remote refs on deletion
+      add: create ADD_EDIT.patch with mode 0666
+      commit: fix "--amend --only" with no pathspec
+
+Junio C Hamano (10):
+      show: fix "range implies walking"
+      t/test-lib.sh: export PERL_PATH for use in scripts
+      tests: enclose $PERL_PATH in double quotes
+      t/README: add a bit more Don'ts
+      diff-index.c: do not pretend paths are pathspecs
+      diff-index.c: unify handling of command line paths
+      diff-index.c: "git diff" has no need to read blob from the standard input
+      rerere: make rr-cache fanout directory honor umask
+      cache_name_compare(): do not truncate while comparing paths
+      Git 1.7.11.3
+
+Martin von Zweigbergk (1):
+      add test case for rebase of empty commit
+
+Thomas Rast (1):
+      Demonstrate git-show is broken with ranges
+
+Vincent van Ravesteijn (1):
+      t: Replace 'perl' by $PERL_PATH
