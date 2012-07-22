@@ -1,88 +1,110 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: pushing branches
-Date: Sat, 21 Jul 2012 23:54:21 -0300
-Message-ID: <CACnwZYcP7Ke-zyMLT8JBGt_BHS22G4cN6GYe+yauxXF6cVLZ1g@mail.gmail.com>
-References: <CACnwZYdqP_ptj0++dj5NkCoKWKHiLEj+c0t7zrmNidkHsyzMgw@mail.gmail.com>
-	<7vhat2toz8.fsf@alter.siamese.dyndns.org>
-	<CACnwZYchBpSsvfY_-cu33dmPateNPgYaPr822Ri=Xn6=V0OOnA@mail.gmail.com>
-	<CAJsNXTkH6wRgH9g4BCZVxKz9ntf0P_Y81kc+bAhcchkQM3+3Bw@mail.gmail.com>
-	<CACnwZYe03VzR0=m6oCo8X6y=iiLkZXi+xQpvW9goya0roU+PFQ@mail.gmail.com>
-	<CAJsNXT=-Ap0zJqK2F_3uJ7secmq7uvnSc218x+NoYdO5pLJAMg@mail.gmail.com>
-	<CACnwZYdUzk74znPs4F+xz3haA3QhA9-DbR3mWWEVMfnztp-oCA@mail.gmail.com>
-	<7v7gtwucx7.fsf@alter.siamese.dyndns.org>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: git with large files...
+Date: Sun, 22 Jul 2012 08:48:50 +0200
+Message-ID: <CA+EOSBm2o+9j0Ykpe01tQmTGApZeJA36mJ=Kt8bNAywfpbODPw@mail.gmail.com>
+References: <A18A933F-5627-4844-A4A6-B3AF244FD211@me.com>
+	<86fw8mf3gp.fsf@red.stonehenge.com>
+	<CACPiFC+a=46n-igTUBSDdpgDQyL4cz5vrcpurNBSsb+D1c0UnA@mail.gmail.com>
+	<CAJDDKr5vZz_DepYKvdu34G60fmm8V_Sv8FU+J6O-DLoum07+jA@mail.gmail.com>
+	<CA+EOSBk8XjA5=BO_kVOmfCPT-n2vKV1rbqUHnOnGi-ORF7wKLw@mail.gmail.com>
+	<CACPiFCLTPi5i3RZHwOD-+OJ_zSbtOwe7VLy=NMO1MUKPVyPHEw@mail.gmail.com>
+	<CA+EOSBkVh-PvASXf5NOOW40MWzt4gdBm-21ER1EbUWLkCJ3cCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: PJ Weisberg <pj@irregularexpressions.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 04:54:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Darek Bridges <darek.bridges@me.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 22 08:49:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SsmJR-0000i2-2z
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 04:54:29 +0200
+	id 1Sspz0-0003lc-N1
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 08:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029Ab2GVCyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 22:54:23 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:57318 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901Ab2GVCyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 22:54:22 -0400
-Received: by obbuo13 with SMTP id uo13so7292109obb.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 19:54:21 -0700 (PDT)
+	id S1750928Ab2GVGsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 02:48:52 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57097 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750899Ab2GVGsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 02:48:51 -0400
+Received: by pbbrp8 with SMTP id rp8so8856964pbb.19
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 23:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4iS6XKNGL5JmWVJ48BB043eN2oRZfCeGmz1BZnsG+h4=;
-        b=P3uDwSCCjLgxTdP/99lxWw48zXeMn4hmNqwzQNv3qjEExmACD90MQyQVM45X8alfzZ
-         OEBMDiUlTTjHCqsD1H8GbdqoVNx2EhimPoOOFMf4vU7OXp8HNQ67IyEESJjVatFgwRh+
-         PY/PlbNKqj+5HBfevJ7r67B5+9rvGXUUiJTYIchmYMM3KFRWM9zjuStY+abirJqdEozM
-         2wWWuekseih2qogmo3L9N6ZM9AfTxOnyrCVADziT6UDLx/q9p3jj9QmxTFctBjtgJWXi
-         wCvXwXL7tdlS1WNQgJgN+slIbdtXrFg1ZcngLP2veaRPn18jnA9BmMfaQ4o5waBx6P1P
-         vRIw==
-Received: by 10.182.50.68 with SMTP id a4mr8112513obo.59.1342925661564; Sat,
- 21 Jul 2012 19:54:21 -0700 (PDT)
-Received: by 10.182.212.67 with HTTP; Sat, 21 Jul 2012 19:54:21 -0700 (PDT)
-In-Reply-To: <7v7gtwucx7.fsf@alter.siamese.dyndns.org>
+         :content-type;
+        bh=IP/WVucuHB3yiCzNDBa9iu4nG19UDwwF4jiPUQCdRp4=;
+        b=gFJpaaKlO5IfvfISnYsyotUv56hb5zS3E5nrbymCUHF6HaTpFK4T9uPu76nhm+Q7mk
+         uTooQzaElRLwitxN26FeqqCsoYZ6j9+vmZb6Oc37jsX+8ruqbGpogLwwlH0mT9ag7Wyy
+         uWKjqyRlcKQWcDo6eV0Gwekn55K6/A1ZUK1CPb7v8Ha0cLg1e5r1W+Vo7awnQ0/qDkHd
+         +qtxsCoTLyNY1BgVIWgkhQcTlkYDaJh3xURqYqj0WHegCyOY/TcSckW5BcSAJJU8uFai
+         RsI+GDHaWE0YL/5v1Ids8deqvTmHUa4msjKGv2B9jSOAyRFSr6vmbVQIEQVXCmO+ekdR
+         drVw==
+Received: by 10.68.238.232 with SMTP id vn8mr26025246pbc.78.1342939730919;
+ Sat, 21 Jul 2012 23:48:50 -0700 (PDT)
+Received: by 10.66.157.97 with HTTP; Sat, 21 Jul 2012 23:48:50 -0700 (PDT)
+In-Reply-To: <CA+EOSBkVh-PvASXf5NOOW40MWzt4gdBm-21ER1EbUWLkCJ3cCA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201843>
 
-On Sat, Jul 21, 2012 at 4:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Yes.
->
->> Hence does not make sense to ask git to do "push origin master" while
->> inside feature-work branch.
->
-> No.  As long as you know your master is ready and suitable to be
-> published when you ask "push", the command perfectly makes sense; it
-> does not matter on what branch you are on.
->
-> You may say
->
->         $ git checkout master
->         ... work work work ...
->         $ make test
->         ... ahh, perfection! ...
->         $ git checkout -b feature
->         ... let's build a bit more ..
->         ... while I am having fun, let's not forget to push the
->         ... part that is already solid out
->         $ git push origin master
->
-> and that is perfectly fine without "git checkout master" before
-> pushing (and "git checkout feature" after to come back to what you
-> were doing).
-In my case it wouldn't because I do not modify my master branch, I
-just fetch upstream, merge upstream/master into my local master branch
-and switch to feature-work, then git push origin master will always
-give me "Everything up-to-date" I suppose (that is what always happen
-in my case/workflow).
+I forgot to tell that using git for deploying puppet have also some
+disadvantages : you cant'use some puppet feature as external node
+classifiers or stored configurations. As always, there are tradeoff.
+For more
 
-And just learned, the answer to my question is, while in feature-work
-branch, 'git push origin feature-work'. Which does what I wanted.
+http: //bitfieldconsulting.com/scaling-puppet-with-distributed-version-control
+(the missing link)
+
+cheers
+
+
+2012/7/21, Elia Pinto <gitter.spiros@gmail.com>:
+> Sure . There is a complete paragraph " creating decentralized puppet
+> architecture" in "puppet 2.7 cookbook". I am also sure to have read
+> the same topic on web on the site bitfieldconsulting.com  , not
+> casually : the book's author have his blog there. Sorry i have not the
+> complete url now - old smartphone, no wifi etc. But i hope this can
+> help you the  same.
+>
+> Best regards
+>
+> 2012/7/21, Martin Langhoff <martin.langhoff@gmail.com>:
+>> On Sat, Jul 21, 2012 at 3:11 AM, Elia Pinto <gitter.spiros@gmail.com>
+>> wrote:
+>>> Well, many folks use puppet in serverless configuration pushing the
+>>> manifest from a central git server via cron and applying locally the
+>>> configuration fetched. In this sense git IS used for deployement. And,
+>>> for a configuration management system as puppet this could be a
+>>> sensible thing to do - reduce load, scalability ecc.
+>>
+>> That's a great thing to know, and timely too. I am looking at Puppet,
+>> and worried a bit about reported memory load on the server side (and
+>> some rumours of memory footprint issues on the client side too).
+>>
+>> Can you point me to more information & discussion?
+>>
+>> thanks!
+>>
+>>
+>>
+>> m
+>> --
+>>  martin.langhoff@gmail.com
+>>  martin@laptop.org -- Software Architect - OLPC
+>>  - ask interesting questions
+>>  - don't get distracted with shiny stuff  - working code first
+>>  - http://wiki.laptop.org/go/User:Martinlanghoff
+>>
+>
+> --
+> Inviato dal mio dispositivo mobile
+>
+
+-- 
+Inviato dal mio dispositivo mobile
