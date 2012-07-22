@@ -1,86 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC] Designing a faster index format - Progress report week 13
-Date: Sun, 22 Jul 2012 14:08:12 -0700
-Message-ID: <7vr4s3pkqr.fsf@alter.siamese.dyndns.org>
-References: <20120716203300.GA1849@tgummerer.surfnet.iacbox>
- <7vwr23zb65.fsf@alter.siamese.dyndns.org>
- <20120717082452.GC1849@tgummerer.surfnet.iacbox>
- <500C1AA9.4000306@dewire.com> <7vfw8jsk5o.fsf@alter.siamese.dyndns.org>
- <87629fvaxz.fsf@thomas.inf.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC 4/4 v3] Add cat-blob report fifo from fast-import to
+ remote-helper.
+Date: Sun, 22 Jul 2012 16:24:24 -0500
+Message-ID: <20120722212424.GA680@burratino>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <3246520.u1PcGtbf0N@flobuntu>
+ <20120721154437.GC19860@burratino>
+ <5489458.8D23shS0RV@flomedio>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
-	<mhagger@alum.mit.edu>, <pclouds@gmail.com>,
-	JGit Developers list <jgit-dev@eclipse.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Jul 22 23:08:28 2012
+Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 22 23:24:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1St3O6-0008QY-Oq
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 23:08:27 +0200
+	id 1St3dn-0005YS-JZ
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 23:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543Ab2GVVIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 17:08:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57629 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752609Ab2GVVIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 17:08:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 237828B62;
-	Sun, 22 Jul 2012 17:08:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AD9G467l+hl89nFWyzJIhX4srnY=; b=xJb0/E
-	hFjWGegSnXZUVBwp5cYgua/c1QcfyBnFQMSk7s0AaB3yP1QKhRDBeaqFSqoqlcvV
-	L88XEJY66AGBmI7xF5S+5+v7sPQydKlZnkVvNGA/9V1PfGKGOxMEPicb1gicC50l
-	QTlQLL3T/TPpXPXNfujUObKNd5J1JRT4LDMXA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bd1f0l1rOtLKMRUpCe2x2dJZ+I/WacbH
-	zjkdqxQpFIqEU1nJVRAp1l5aRKjq+8PH8CHrnkR+iPYJJOsUwr6bxiAD/Zs5fpCJ
-	ha8nO+crMSU++go3gMZEDR7AQpjUd/9rcyLP6YNDwfHkFIrVvHwRN+PRtrsUS0ro
-	TflybMW9KKc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 115868B60;
-	Sun, 22 Jul 2012 17:08:18 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 012D18B5D; Sun, 22 Jul 2012
- 17:08:16 -0400 (EDT)
-In-Reply-To: <87629fvaxz.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Sun, 22 Jul 2012 21:43:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B840F0E-D441-11E1-BEE5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752650Ab2GVVYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 17:24:34 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45704 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752626Ab2GVVYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 17:24:33 -0400
+Received: by yenl2 with SMTP id l2so4953445yen.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HVgDXhwZdZbz/l2FkzEke8QdRckMcnsIbNESF7MjyN0=;
+        b=C2LPDLLv12q0R93Oal3wY9M7WQBAZrFjSUtbyL2xmno+Fs5GMKT8diyYJv7k7MjX0G
+         a0PndZvasUjc4Xe392YuHPgQl+XFmPx3IqS29tplm6G8JIp4audY4u5ShQowKkeJ+nc6
+         6JEtXncWf1MQASVs5UeDqDLJ8m/O7ivaNyy24JP9Leru0P6PrWIBRvnAe/HcBy4ZPBjK
+         zlwY8TTe/lNYHrVjHJqd2J7qk+UbbXMr8UNihXpxTmwmLiu/lSdkPoo0olaU4jGcHXTc
+         XTCjsdka3GLwYRZuZGs5+SiAqymHliXGAHpGiWluU2SRnoCZRbTZsFpLvMChplDM/D3s
+         u9mg==
+Received: by 10.50.106.166 with SMTP id gv6mr5754521igb.46.1342992272513;
+        Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id ud8sm9960792igb.4.2012.07.22.14.24.31
+        (version=SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2012 14:24:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5489458.8D23shS0RV@flomedio>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201868>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Hi,
 
-> Hum, I'm a bit lost now.
->
-> What is the status quo?  I take it JGit does not have any of ctime, dev,
-> ino etc., and either leaves the existing value or puts a 0....
-> an argument in favor of splitting stat_crc into its fields again?
+Florian Achleitner wrote:
 
-A difference is that JGit already has such code, and we would be
-adding a burden to do so yet again.  It also may not just be JGit,
-but anything that wants to be "compatible" with systems whose
-filesystem interface does not give enough data by omitting fields
-the current index pays attention to.
+> On Windows, processses are not forked but spawned from new and therefore can't 
+> inherit pipe file descriptors.
 
-It isn't really a discussion about splitting again, but more about
-not squishing them into a new field in the first place---IIUC, even
-outside Windows, ctime is already problematic on some systems where
-background processes muck with extended attributes Git does not pay
-attention to. If the patch makes us lose the ability to selectively
-ignore changes to certain fields (e.g. changes to dev and ino are
-noticed but ctime are ignored) by squishing them into one new field,
-wouldn't removing them without adding such a useless field a simpler
-way to go?
+Ok, this is what I didn't understand (and still don't understand).
+
+Yes, on Windows processes are spawned instead of forked.  But does
+that mean they can't inherit pipes?  How do pipelines in the shell
+work at all, then?
+
+I thought what Hannes said was rather that the current C runtime
+used by Git for Windows doesn't take care of inherited file
+descriptors, period, other than 0, 1, and 2.  This has nothing to do
+with the fork/spawn distinction.  So while --cat-blob-fd or some other
+mechanism could be made to work on Windows in the future, *relying* on
+--cat-blob-fd on Windows today is a no-go, since it rely on file
+descriptors >2 and break the remote helper infrastructure completely
+there.
+
+That does not force us into a corner at all.  We have multiple
+options.  Here is what I propose:
+
+Remote helpers declare using a capability (e.g., "bidi-import") that
+they would like a bidirectional communication channel with
+fast-import.  Git tells the remote helper that its request has been
+granted by using a different command (e.g., "bidi-import") instead of
+"import" to start the import process.
+
+The responses from fast-import come on stdin (file descriptor 0), so
+in principle it should be possible to implement this interface on
+Windows.  The interface is portable, even if the initial
+implementation isn't.
+
+Existing remote helpers using the "import" capability would be
+unaffected and would work as before.
+
+On Windows, Git would not take advantage of the bidi-import capability
+for now.  Windows support is an added complication and we have enough
+to do this summer.
+
+Then interested people using Windows would be able to experiment using
+whatever mechanism they please (CRT support for inherited file
+descriptors >2, fifos, sockets, some other Windows-specific thing) to
+implement the bidi-import capability.  Once that is implemented, they
+automatically get support for remote helpers that rely on the
+bidirectional communication functionality.
+
+What do you think?
+
+Thanks for explaining,
+Jonathan
