@@ -1,59 +1,64 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Unifying mergetool configuration between git and git-gui
-Date: Sun, 22 Jul 2012 16:22:23 +0200
-Message-ID: <500C0C9F.1000709@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 22 16:22:53 2012
+From: Alexey Muranov <alexey.muranov@gmail.com>
+Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
+Date: Sun, 22 Jul 2012 16:40:14 +0200
+Message-ID: <61E46C90-5C8F-4E11-8CB7-0A05F1D62A8A@gmail.com>
+References: <20120719213225.GA20311@sigill.intra.peff.net> <20120719213311.GA20385@sigill.intra.peff.net> <50092993.6010203@alum.mit.edu> <20120720154403.GB2862@sigill.intra.peff.net> <6F148977-4F57-47FF-B43B-0997694F3891@gmail.com> <20120722131448.GA16104@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 22 16:41:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ssx3b-0008CN-O1
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 16:22:52 +0200
+	id 1SsxLD-0002nw-DV
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 16:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976Ab2GVOWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 10:22:46 -0400
-Received: from plane.gmane.org ([80.91.229.3]:38126 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751711Ab2GVOWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 10:22:45 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ssx3T-000856-8n
-	for git@vger.kernel.org; Sun, 22 Jul 2012 16:22:43 +0200
-Received: from p5ddb037a.dip0.t-ipconnect.de ([93.219.3.122])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 16:22:43 +0200
-Received: from sschuberth by p5ddb037a.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 16:22:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: p5ddb037a.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1752004Ab2GVOkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 10:40:19 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:43364 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751772Ab2GVOkS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Jul 2012 10:40:18 -0400
+Received: by weyx8 with SMTP id x8so3701665wey.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 07:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=IcCy/mc752pEhFauyItBjJTCmZnqlhEohdRNahzpc7o=;
+        b=FZAgtNzPR3WUcVUvA3mKBfjXeYz5tSGpSfr0q4jVlG9wW0zfWV+z3mTFT7QusoY7E8
+         ScxHXwIIW1HfNFtoDU2o3LmkLOU91nonvr+vG/D5wWDWqiOPmnnEVoSdN39GMSLE4bi/
+         5C5B89dWSUSLuz/trO95GFutfJ9LCv6SfcCmrwYNUdhsVsy2V9SH+sKO6w5AeiQ04jdm
+         pD/BmqGT2pQRkERiRPVh1CUwu/ij6a2FjII/CoyG9iJjgGtGkH6gM/oe+1FxmqW6DzAK
+         aOoezcCLxk/Kf/oMYq57m/ZEoKNN88si0q3AISmIXlNekBlEYSTa6GFBf+T/2nYFEsUq
+         y68w==
+Received: by 10.180.92.7 with SMTP id ci7mr21722010wib.1.1342968017048;
+        Sun, 22 Jul 2012 07:40:17 -0700 (PDT)
+Received: from [192.168.6.127] (bi1.roaming.dfn.de. [195.37.234.61])
+        by mx.google.com with ESMTPS id ep14sm16927311wid.0.2012.07.22.07.40.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2012 07:40:16 -0700 (PDT)
+In-Reply-To: <20120722131448.GA16104@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201850>
 
-Hi,
+On 22 Jul 2012, at 15:14, Jeff King wrote:
 
-I was about to add a configuration for yet another mergetool when I 
-realized that git gui's mergetool.tcl pretty much duplicates git's 
-mergetools/* configuration files. Can some one tell me why this is 
-necessary? I would have expected git gui to simply rely on "git 
-mergetool" to launch the mergetool. Or, in case that git gui needs to 
-use a different tool than the one configured as mergetool, that 
-mergetool.tcl somehow uses the configuration from mergetools/*.
+>  3. Most importantly, it does not resolve D/F conflicts (it has the
+>     same problem as "logs/refs/heads/a~"). If you delete "foo/bar", you
+>     will end up with "logs/refs/heads/foo/bar@{...}". That will prevent
+>     D/F conflicts with a new branch "foo/bar/baz", but will still have
+>     a problem with just "foo".
 
-Thanks for any insights.
+Unfortunately i do not really follow this, because i have not seen any directories in "logs/refs/heads/", i only saw files named after local branches there. I do not know how directories are used there.
 
--- 
-Sebastian Schuberth
+-Alexey.
