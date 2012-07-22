@@ -1,13 +1,8 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v2 6/7] Remove unused and bad gettext block from git-am
-Date: Sun, 22 Jul 2012 09:26:10 +0800
-Message-ID: <4cf7af65d3f14f61d165fa971e3784d4553d030b.1342920089.git.worldhello.net@gmail.com>
+Subject: [PATCH v2 1/7] i18n: New keywords for xgettext extraction from sh
+Date: Sun, 22 Jul 2012 09:26:05 +0800
+Message-ID: <e488b5e8f40859a842f80855a3dd4861a4ced6d0.1342920089.git.worldhello.net@gmail.com>
 References: <cover.1342920089.git.worldhello.net@gmail.com>
- <e488b5e8f40859a842f80855a3dd4861a4ced6d0.1342920089.git.worldhello.net@gmail.com>
- <724ca3989123159c9970b3276b4764dcbd5fd56e.1342920089.git.worldhello.net@gmail.com>
- <b3d82ce0b35597c90bf8280f38a5b336066cea18.1342920089.git.worldhello.net@gmail.com>
- <16d740e2d6e38e1ce8f3770f506623068b1cf309.1342920089.git.worldhello.net@gmail.com>
- <247c407ce218c77a603eb6cf93228d94adc48f04.1342920089.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>,
@@ -16,73 +11,73 @@ Cc: Git List <git@vger.kernel.org>,
 	Stefano Lattarini <stefano.lattarini@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 22 03:27:42 2012
+X-From: git-owner@vger.kernel.org Sun Jul 22 03:27:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SskxM-0000tS-R3
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 03:27:37 +0200
+	id 1Sskxa-00012u-VY
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jul 2012 03:27:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab2GVB11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jul 2012 21:27:27 -0400
+	id S1752178Ab2GVB1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jul 2012 21:27:21 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:52289 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059Ab2GVB1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jul 2012 21:27:25 -0400
+	with ESMTP id S1751715Ab2GVB06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jul 2012 21:26:58 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so8575153pbb.19
-        for <git@vger.kernel.org>; Sat, 21 Jul 2012 18:27:25 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 21 Jul 2012 18:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=aMzk5xftPC5mrpqKQWBRj0YhTs0UI6wfD7nVVlU5Eho=;
-        b=RrHwj3rVoFvckBbnDwaUZRZnwZmeEsWA0tpNGF7+b0RZvU5U6lH7JmvueuesHjioZi
-         LdjqmMG8NEW8a6kYvT+weN5Krp2Tb3euHSKYZcd4d9aKivbtp+E95+1qOeYOaTWzoFtI
-         9GXL3Um8gnozd2xiNCWZnwEGGqnRZ85CqnH9o9aPqZ4qO49vwSpdx63LVyJ5CEvZszDC
-         sDYvDBvtVVH70mUk64+fPcYcyQAGaQxWl0ZjAvDexrkJCdLSDo8UyRia9mQhzuaTtz6n
-         1KWTbNsGWdF/fdsz/DkUKUfcsHTf2QMamU9nkvWf3jvVQhYrvW0gfEqAkKfYMGFW/wGI
-         GGYw==
-Received: by 10.68.221.227 with SMTP id qh3mr24698266pbc.115.1342920445201;
-        Sat, 21 Jul 2012 18:27:25 -0700 (PDT)
+        bh=H1sRfUOJ2glC9Xuh2/gFcXlHGIbtxoqYgS6g1BjJg18=;
+        b=TcsEr4LEdeT8r8ccRgzuBh+pg3NA/MlKpj0dRaoWo4OXjF1gMwoMNswt+qFOF0AtCj
+         HJAnCgW/Yh3W0NjE1cq1MHsBqAO5io+45TOzpcyOtkcmkOMiFhpNOD84uxblXP+OU5Or
+         ls5KZz9n6itVCYBT0bIidWUmE2vmsnGm6oj2FZgLef/2kbibMrciglKDceMBLpEvDAkE
+         9zgFKuvip0JnpQ3DE7EdLyNuL+a1MrgmzPj3st83WZNib6w68fbMJWnfZOQR2gczSmuw
+         WfyutG0EBLqehudymBKUDpgpP0FskNX2XtptffwxUxqOzO85p30NcJuN6cZ/dwYKA732
+         5Bkw==
+Received: by 10.68.189.135 with SMTP id gi7mr25100406pbc.68.1342920417990;
+        Sat, 21 Jul 2012 18:26:57 -0700 (PDT)
 Received: from localhost.foo.bar ([123.116.228.123])
-        by mx.google.com with ESMTPS id rg10sm6946850pbc.54.2012.07.21.18.27.20
+        by mx.google.com with ESMTPS id rg10sm6946850pbc.54.2012.07.21.18.26.53
         (version=SSLv3 cipher=OTHER);
-        Sat, 21 Jul 2012 18:27:24 -0700 (PDT)
+        Sat, 21 Jul 2012 18:26:57 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.2.259.g37fc0e1
-In-Reply-To: <247c407ce218c77a603eb6cf93228d94adc48f04.1342920089.git.worldhello.net@gmail.com>
+In-Reply-To: <cover.1342920089.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1342920089.git.worldhello.net@gmail.com>
 References: <cover.1342920089.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201839>
 
-Gettext message should not start with '-' nor '--'. Since the '-d' and
-'--dotest' options do not exist in OPTIONS_SPEC variable, it's safe to
-remove the block.
+Since we have additional shell wrappers (gettextln and eval_gettextln)
+for gettext, we need to take into account these wrappers when run
+'make pot' to extract messages from shell scripts.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
 ---
- git-am.sh | 3 ---
- 1 file changed, 3 deletions(-)
+ Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 20c1a..cfa63 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -413,9 +413,6 @@ it will be removed. Please do not use it anymore.")
- 		abort=t ;;
- 	--rebasing)
- 		rebasing=t threeway=t ;;
--	-d|--dotest)
--		die "$(gettext "-d option is no longer supported.  Do not use.")"
--		;;
- 	--resolvemsg)
- 		shift; resolvemsg=$1 ;;
- 	--whitespace|--directory|--exclude|--include)
+diff --git a/Makefile b/Makefile
+index 285c66..e1692 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2376,7 +2376,8 @@ XGETTEXT_FLAGS = \
+ 	--from-code=UTF-8
+ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+ 	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
+-XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell
++XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
++	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
+ LOCALIZED_C := $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+ LOCALIZED_SH := $(SCRIPT_SH)
 -- 
 1.7.11.2.259.g37fc0e1
