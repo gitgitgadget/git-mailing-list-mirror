@@ -1,130 +1,103 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH v2] gitk: Use an external icon file on Windows
-Date: Mon, 23 Jul 2012 08:28:22 +0200
-Message-ID: <500CEF06.2030501@gmail.com>
-References: <500C70AE.6050400@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 3/1] Makefile: BLK_SHA1 does not require fast htonl() and
+ unaligned loads
+Date: Mon, 23 Jul 2012 01:29:14 -0500
+Message-ID: <20120723062914.GA14045@burratino>
+References: <20120722233547.GA1978@burratino>
+ <7v8vebp0cl.fsf@alter.siamese.dyndns.org>
+ <20120723045148.GA13623@burratino>
+ <7vobn7njtz.fsf@alter.siamese.dyndns.org>
+ <20120723052605.GA13728@burratino>
+ <7vboj7nidc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@gmail.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Jul 23 08:28:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Cree <mcree@orcon.net.nz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 08:29:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StC8B-0006wK-Mz
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 08:28:36 +0200
+	id 1StC93-0007wM-Nh
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 08:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125Ab2GWG2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 02:28:30 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:61667 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753017Ab2GWG23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 02:28:29 -0400
-Received: by weyx8 with SMTP id x8so4004708wey.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 23:28:27 -0700 (PDT)
+	id S1753204Ab2GWG3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 02:29:25 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:49934 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753061Ab2GWG3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 02:29:24 -0400
+Received: by obbuo13 with SMTP id uo13so9044636obb.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 23:29:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5+Apg0TN1BiOiamSirKudK627I3uaif/8eUgzyParK8=;
-        b=bT/ZLBox4P6xE0O25fg/QTo9ElI8xEIs6c1QEYWi9Cpu9rx9FXWexXNDSuyQ7VwnUv
-         p7/LT4HFlWpENODp2dr3BwRjUtUM5o0ldR5lf8NCkj2F3FaeOKFYrcZQVdtuskOJ7X8T
-         vg54SnhEKTPJKDer5dIlbgeh6xshJLDsqloEDF1TrtdDxt2hG8SAOqE/q81jWyhjasxV
-         vjaUFuCqmBV2OpctVKAqyeXB5U3T/tAIrQvpnUGEyYQ3CSouZjbEXdpGhBy4vaM0zt6Y
-         6ejzcvYD5ww07w/bZYppkygOHcu0GPGbBjR+16Kww8pWExvKMN4UAehjZY0HRt8PIpS6
-         p6eA==
-Received: by 10.180.98.69 with SMTP id eg5mr46180369wib.3.1343024907710;
-        Sun, 22 Jul 2012 23:28:27 -0700 (PDT)
-Received: from [192.168.178.22] (p5DDB0653.dip0.t-ipconnect.de. [93.219.6.83])
-        by mx.google.com with ESMTPS id cu1sm15380671wib.6.2012.07.22.23.28.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 23:28:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <500C70AE.6050400@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=VSXvLYImcyO4gwuiqD6mZ2JG/XbgdI4/nr9quCt0FhE=;
+        b=RTwfYOTjJb7eCLpxpR4bd/CSy64juMl4H0vXppEJWhTofevR8DUAEuxGmmJGU9SIA6
+         AikQ5pR6nlP+h7+lnA+UGwQGbF7/1IsAYqj2iwF0BMVY1ozkegICoO7aD5g+oVIRkQcA
+         14gqpFB3d/3+KaBq5jmb5lAzbKQH4VF54SnFYIpHayubRuluXemHTrh0JasyWjvkDtTB
+         do9guj7+ngZZchcrZDaUIHaCvVEUqK8RwSZcy49w02Rf3j7Mq0Mk2k+KVq8YqIGgqi76
+         J7Rlx3RtTYuM+LrBZLQ+Wke59L3MUKO9Fd8xUhR/DYz5JmwbMuOr775pVNgCrr8fwgtX
+         sLwQ==
+Received: by 10.50.100.129 with SMTP id ey1mr9484949igb.35.1343024963814;
+        Sun, 22 Jul 2012 23:29:23 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id fe7sm7502438igc.14.2012.07.22.23.29.22
+        (version=SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2012 23:29:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vboj7nidc.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201909>
 
-Git for Windows now ships with the new Git icon from git-scm.com. Use that
-icon file instead of the old procedurally drawn one if it exists.
+block-sha1/ is fast on most known platforms.  Clarify the Makefile to
+be less misleading about that.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+Early versions of block-sha1/ explicitly relied on fast htonl() and
+fast 32-bit loads with arbitrary alignment.  Now it uses those on some
+arches but the default behavior is byte-at-a-time access for the sake
+of arches like ARM, Alpha, and their kin and it is still pretty fast
+on these arches (fast enough to supersede the mozilla SHA1
+implementation and the hand-written ARM assembler implementation that
+were bundled before).
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- gitk-git/gitk | 49 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 26 insertions(+), 23 deletions(-)
+Junio C Hamano wrote:
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 59693c0..5127e55 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -11664,7 +11664,6 @@ if { [info exists ::env(GITK_MSGSDIR)] } {
-     set gitk_prefix [file dirname [file dirname [file normalize $argv0]]]
-     set gitk_libdir [file join $gitk_prefix share gitk lib]
-     set gitk_msgsdir [file join $gitk_libdir msgs]
--    unset gitk_prefix
- }
- 
- ## Internationalization (i18n) through msgcat and gettext. See
-@@ -11821,28 +11820,32 @@ if {[expr {[exec git rev-parse --is-inside-work-tree] == "true"}]} {
- set worktree [exec git rev-parse --show-toplevel]
- setcoords
- makewindow
--catch {
--    image create photo gitlogo      -width 16 -height 16
--
--    image create photo gitlogominus -width  4 -height  2
--    gitlogominus put #C00000 -to 0 0 4 2
--    gitlogo copy gitlogominus -to  1 5
--    gitlogo copy gitlogominus -to  6 5
--    gitlogo copy gitlogominus -to 11 5
--    image delete gitlogominus
--
--    image create photo gitlogoplus  -width  4 -height  4
--    gitlogoplus  put #008000 -to 1 0 3 4
--    gitlogoplus  put #008000 -to 0 1 4 3
--    gitlogo copy gitlogoplus  -to  1 9
--    gitlogo copy gitlogoplus  -to  6 9
--    gitlogo copy gitlogoplus  -to 11 9
--    image delete gitlogoplus
--
--    image create photo gitlogo32    -width 32 -height 32
--    gitlogo32 copy gitlogo -zoom 2 2
--
--    wm iconphoto . -default gitlogo gitlogo32
-+if {$::tcl_platform(platform) eq {windows} && [file exists $gitk_prefix/etc/git.ico]} {
-+    wm iconbitmap . -default $gitk_prefix/etc/git.ico
-+} else {
-+    catch {
-+        image create photo gitlogo      -width 16 -height 16
-+
-+        image create photo gitlogominus -width  4 -height  2
-+        gitlogominus put #C00000 -to 0 0 4 2
-+        gitlogo copy gitlogominus -to  1 5
-+        gitlogo copy gitlogominus -to  6 5
-+        gitlogo copy gitlogominus -to 11 5
-+        image delete gitlogominus
-+
-+        image create photo gitlogoplus  -width  4 -height  4
-+        gitlogoplus  put #008000 -to 1 0 3 4
-+        gitlogoplus  put #008000 -to 0 1 4 3
-+        gitlogo copy gitlogoplus  -to  1 9
-+        gitlogo copy gitlogoplus  -to  6 9
-+        gitlogo copy gitlogoplus  -to 11 9
-+        image delete gitlogoplus
-+
-+        image create photo gitlogo32    -width 32 -height 32
-+        gitlogo32 copy gitlogo -zoom 2 2
-+
-+        wm iconphoto . -default gitlogo gitlogo32
-+    }
- }
- # wait for the window to become visible
- tkwait visibility .
+> *1* In other words, the ntohl(*(uint *)(p)) is used only on selected
+> little endian boxes, but that does not mean the generic code was
+> big-endian only.  Little endian boxes that are not listed in #if
+> block do use the generic byte-at-a-time macro.
+
+Oh, that reminds me.  Here's a third patch.
+
+ Makefile |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 134606b9..eadcc70a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -84,9 +84,8 @@ all::
+ # specify your own (or DarwinPort's) include directories and
+ # library directories by defining CFLAGS and LDFLAGS appropriately.
+ #
+-# Define BLK_SHA1 environment variable if you want the C version
+-# of the SHA1 that assumes you can do unaligned 32-bit loads and
+-# have a fast htonl() function.
++# Define BLK_SHA1 environment variable to make use of the bundled
++# optimized C SHA1 routine.
+ #
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
 -- 
-1.7.11.msysgit.2
+1.7.10.4
