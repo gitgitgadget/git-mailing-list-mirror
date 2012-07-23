@@ -1,68 +1,73 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: git with large files...
-Date: Mon, 23 Jul 2012 09:53:27 +0530
-Message-ID: <CAMK1S_hO5g5p4NjoVcxYFTt_KZ-wBRJk=OCveeszwr8U2LeZbg@mail.gmail.com>
-References: <A18A933F-5627-4844-A4A6-B3AF244FD211@me.com>
-	<86fw8mf3gp.fsf@red.stonehenge.com>
-	<7vvchfple2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH lt/block-sha1 0/2 v3] block-sha1: avoid pointer
+ conversion that violates alignment constraints
+Date: Sun, 22 Jul 2012 21:28:42 -0700
+Message-ID: <7v8vebp0cl.fsf@alter.siamese.dyndns.org>
+References: <20120722233547.GA1978@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Darek Bridges <darek.bridges@me.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 06:23:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Cree <mcree@orcon.net.nz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 06:28:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StABH-0002Uj-PN
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 06:23:40 +0200
+	id 1StAGJ-0006g6-9F
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 06:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428Ab2GWEXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 00:23:30 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:37576 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335Ab2GWEX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 00:23:28 -0400
-Received: by obbuo13 with SMTP id uo13so8908799obb.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 21:23:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0gvsyhwcc8bbNERhX6k6+ItVF72WHTsK3Z5wK4rs2SQ=;
-        b=kYt0wdTArQGIgujwYfD8HyaFaG7rnxlTfkkKaZ1mJsIkseCKX7uXeVlrapwcfRYHUw
-         gcfzD9ff9nPWfmX814jN3mrdt4epCK54ef/B6Pw7V8FqGx7VNm8B1lJM/5MSJ1+Zt5LK
-         o3GHP1dc3ODW0OhG0ONomhQoCEO3xTwlO5V9NwCJ3SX/Ud3TZqTpYTnEyEEVn0m7zYxN
-         6xPYGPamliQ0DFi1igI+XJPmRm2ic+gu1yL961vPOVukUEjC0E6GpIWZHNEXV5XbjTNz
-         O0IbidGAs8ymLvP7STTOT3R0CZ0hQEgmYe4vPrlN+VkF1/Z7TJqOJEE/9c9FBTrhX1EJ
-         vWfw==
-Received: by 10.60.172.101 with SMTP id bb5mr18678556oec.44.1343017407580;
- Sun, 22 Jul 2012 21:23:27 -0700 (PDT)
-Received: by 10.182.44.199 with HTTP; Sun, 22 Jul 2012 21:23:27 -0700 (PDT)
-In-Reply-To: <7vvchfple2.fsf@alter.siamese.dyndns.org>
+	id S1752879Ab2GWE2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 00:28:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34959 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751741Ab2GWE2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 00:28:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A676E5485;
+	Mon, 23 Jul 2012 00:28:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Cc7Cr8QSdX4RQHh1UToZSHQOXcc=; b=NxAm5g
+	3zjCsWDITQMXRjCvcWGNfyJ/0ZuihPm+/NV+SokDGSorda1pDiqbThkLhfTf+MMn
+	zg7/mrdgssIifpSnFlkahI5RsMckx4B1UnsojtZMA9Q6PCoeY7e6zthjwPuePmzq
+	LYVr9w0ot7OkTah6WLQBc4dUkhktwfBz10YuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qIZMbWhIKtNW+TlIwiUDv8PHEdVoG6ex
+	71VknqAHy3MnhmawuAUAW4rJbZTovRfYkbS3i7lbLj8R/Ebg9+7wJqhvz9QfAy7h
+	hdo/VNmuL1S1o0AkjrGJB1UtjlH78gYWsLonHrEEyAk1bpFGrG6Wo/ZN0Dv6zq75
+	hv0URl2+QIg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 940335484;
+	Mon, 23 Jul 2012 00:28:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 100FC5481; Mon, 23 Jul 2012
+ 00:28:43 -0400 (EDT)
+In-Reply-To: <20120722233547.GA1978@burratino> (Jonathan Nieder's message of
+ "Sun, 22 Jul 2012 18:35:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E335E20A-D47E-11E1-9DDD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201894>
 
-On Mon, Jul 23, 2012 at 2:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> merlyn@stonehenge.com (Randal L. Schwartz) writes:
->
->>>>>>> "Darek" == Darek Bridges <darek.bridges@me.com> writes:
->>
->> Darek> I use git for many things, but I am trying to work out the
->> Darek> workflow to use git for deployment.
->>
->> Don't.
->
-> Yeah, "don't think 'git checkout' is a way to 'deploy'".  Using Git
-> as a transport measure is probably fine.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-You can also try
-http://sitaramc.github.com/the-list-and-irc/deploy.html.  Whether it's
-saying you *can* use git for deploying something, or you *can* but
-*should not*, or you *cannot*, will depend on your own thoughts on the
-matter ;-)
+> This is a series of two patches: the first avoids alignment faults
+> that were making git either slow on Alpha machines or crashy,
+> depending on the machine's configuration, and the second patch is a
+> cosmetic nit noticed while reviewing the first.
+> ...
+> Thoughts?
+> Jonathan
+
+Thanks.
+
+Did somebody actually compiled Git for Alpha, and even more
+surprisingly on a big-endian variant of one?
