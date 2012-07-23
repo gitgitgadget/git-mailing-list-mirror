@@ -1,85 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g.
- ImageMagick's
-Date: Mon, 23 Jul 2012 15:22:27 -0700
-Message-ID: <7v629ejexo.fsf@alter.siamese.dyndns.org>
-References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com>
- <500CFB19.6010905@gmail.com> <7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
- <500DA7F3.3000403@gmail.com> <7v4noykxvm.fsf@alter.siamese.dyndns.org>
- <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [GSoC] Designing a faster index format - Progress report week
+ 13
+Date: Tue, 24 Jul 2012 00:29:49 +0200
+Message-ID: <500DD05D.8030708@dewire.com>
+References: <20120716203300.GA1849@tgummerer.surfnet.iacbox> <7vwr23zb65.fsf@alter.siamese.dyndns.org> <20120717082452.GC1849@tgummerer.surfnet.iacbox> <500C1AA9.4000306@dewire.com> <7vfw8jsk5o.fsf@alter.siamese.dyndns.org> <87629fvaxz.fsf@thomas.inf.ethz.ch> <7vr4s3pkqr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 00:22:37 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+	mhagger@alum.mit.edu, pclouds@gmail.com,
+	JGit Developers list <jgit-dev@eclipse.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 00:30:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StR1Q-0007CM-BS
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:22:36 +0200
+	id 1StR8f-0004VB-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798Ab2GWWWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 18:22:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59753 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754717Ab2GWWW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 18:22:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E2F361C5;
-	Mon, 23 Jul 2012 18:22:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pkp13o43PcrQpKqpEZd1aaUQX4Q=; b=yLdAKw
-	n+38VeH5ee2XV1+mR5Jnl04gD5fCrrCMnzosPMOxoxBEdx8jAPuUIgl5/vp/F464
-	KvPFIK9HW5V0/2nH2yi9TZKqTcbRc3/SOb7wNlniStuhnfVJpHQvWi4wE4S4v+tY
-	nhguRyfn6BwVKWSZ7j+V9utJmM2B4b9u6Np6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d1Sxf4QStHLapSvndmEh8J+d6thQ1WWq
-	f0pac7tZG6sY8L+1BnKGxCbjA65kS2W87+zgM7iB0ZLf944Nt1yzCwkVRDujNwsZ
-	+BxKDVY8DCRq50ubfFe89G53AaChQtJu/WRsI5CxLubklHgrDF2m4K+xWLk3lcmh
-	6dzBYhgBs0A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CF0061C3;
-	Mon, 23 Jul 2012 18:22:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD1BD61C2; Mon, 23 Jul 2012
- 18:22:28 -0400 (EDT)
-In-Reply-To: <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
- (Sebastian Schuberth's message of "Mon, 23 Jul 2012 23:09:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E35E0190-D514-11E1-8B3D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754831Ab2GWW37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 18:29:59 -0400
+Received: from mail.dewire.com ([83.140.172.130]:8276 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754822Ab2GWW37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 18:29:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 7BEB68FC79;
+	Tue, 24 Jul 2012 00:29:57 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id s-InYgpCpPz6; Tue, 24 Jul 2012 00:29:54 +0200 (CEST)
+Received: from Robin-Rosenbergs-MacBook-Pro.local (h102n2fls33o828.telia.com [213.67.12.102])
+	by dewire.com (Postfix) with ESMTP id 97DE18FC78;
+	Tue, 24 Jul 2012 00:29:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120717 Thunderbird/15.0
+In-Reply-To: <7vr4s3pkqr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201996>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+Junio C Hamano skrev 2012-07-22 23.08:
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> Hum, I'm a bit lost now.
+>>
+>> What is the status quo?  I take it JGit does not have any of ctime, dev,
+>> ino etc., and either leaves the existing value or puts a 0....
+>> an argument in favor of splitting stat_crc into its fields again?
+>
+> A difference is that JGit already has such code, and we would be
+> adding a burden to do so yet again.  It also may not just be JGit,
+> but anything that wants to be "compatible" with systems whose
+> filesystem interface does not give enough data by omitting fields
+> the current index pays attention to.
+>
+> It isn't really a discussion about splitting again, but more about
+> not squishing them into a new field in the first place---IIUC, even
+> outside Windows, ctime is already problematic on some systems where
+> background processes muck with extended attributes Git does not pay
+> attention to. If the patch makes us lose the ability to selectively
+> ignore changes to certain fields (e.g. changes to dev and ino are
+> noticed but ctime are ignored) by squishing them into one new field,
+> wouldn't removing them without adding such a useless field a simpler
+> way to go?
 
-> Personally, I've valued the gain of
-> the patch to not list araxis as an available diff tool by "git
-> difftool --tool-help" when in fact just ImageMagick is in PATH higher
-> than the loss to support araxis installations that are in a path not
-> containung "araxis" but are in PATH.
+I wasnt't thinking of splitting, but now I read it again, I do think
+it should split. Having size accessible is a good thing, and even better 
+if it a 64-bit value so we don't have the modulo-4G problem when looking 
+at it. Current size is 4G + 33 bytes, index says 33. Did the
+file change or not?
 
-I agree that running ImageMagick's compare by accident is one thing
-we would want to avoid, but once the problem is diagnosed, it is
-something the user can easily work around by futzing %PATH%, I
-think.
+Having access to size make the need for actually
+invoking the racy git logic and comparing file content less likely.
 
-On the other hand, if the user has bought and installed Araxis, but
-we incorrectly identify it as unusable, the user has wasted good
-money and there is no easy recourse as far as I can see in your
-patch.  That is why I wanted to see a reasonable assurance.
+As for ctime it is accessible in Java7, though everyone aren't using it 
+and JGit code has to run on Java5. An idea is to make an optional 
+component, but that doesn't make ctime available everywhere.
 
-If we limit the problem space by special casing Windows installation
-(e.g. check "uname -s" or something), would it make the problem
-easier to solve?  Perhaps it is much more likely that the path the
-program is installed in can be safely identified with a call to
-"type --path compare" (bash is the only shell shipped in msysgit,
-isn't it?), and its output is likely to contain "/Program Files/Araxis/"
-as a substring, or something?
+-- robin
