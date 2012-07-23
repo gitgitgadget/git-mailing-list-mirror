@@ -1,73 +1,96 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
-Date: Mon, 23 Jul 2012 23:44:25 +0200
-Message-ID: <CAHGBnuNP6VmDUXr_01zWZgcTDOUSX2_v7UDf6sOnEYU95RCW4g@mail.gmail.com>
-References: <500CF8CE.90906@gmail.com>
-	<500CF9D2.30102@gmail.com>
-	<500CFB19.6010905@gmail.com>
-	<7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
-	<500DA7F3.3000403@gmail.com>
-	<7v4noykxvm.fsf@alter.siamese.dyndns.org>
-	<CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
-	<7vipdejhmh.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr71SYf3=iUahGLVA2kmKYqT85Thaiooo2YCJqprS5nVag@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
+ abandoned
+Date: Mon, 23 Jul 2012 15:09:47 -0700
+Message-ID: <7va9yqjfis.fsf@alter.siamese.dyndns.org>
+References: <20120723184634.GA31905@sigill.intra.peff.net>
+ <20120723185218.GC27588@sigill.intra.peff.net>
+ <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
+ <20120723205209.GA6745@sigill.intra.peff.net>
+ <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
+ <20120723211312.GA12533@sigill.intra.peff.net>
+ <7veho2jh4q.fsf@alter.siamese.dyndns.org>
+ <20120723214339.GA13931@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 23:44:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 24 00:10:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StQQZ-0003j5-WF
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:44:32 +0200
+	id 1StQpB-0005vs-4O
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:09:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565Ab2GWVo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 17:44:27 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:39961 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752546Ab2GWVo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 17:44:26 -0400
-Received: by vbbff1 with SMTP id ff1so5184264vbb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=MWdBkx/TImjS3w4q4zx/cMXm8XzKGmN9iQX7UOxLUDs=;
-        b=VznTGfxKlzVIruWRri5UsQEedNv+D6rn5SPTsY1qZ9UlNtv++QmPRD2UWLD4Whj3UV
-         uutEhoiWMT05EDCrDPUzgrbxb2d8AIZchvX6vK6uw1i08/JaHVdHH7q/y7DGRJEwH2/+
-         2Q5PVIz6L/R2ARJddmEuNw52AqXBvYZPv7nG1yM0Qyx7wxM8qebzUfFjtmSn1qIJDQLQ
-         E41gR9zcqCdN5d9Ow2zlBDoaXVmfukD/OjZ3t/OEL3K+RTIVEfE2lwM5mjZMgcqNyDk9
-         Mg2QkefW5ULgW20RaK9pbMVsmzhJKWUtE/4+kbmiZM5MN3aE0eDnMi98TIDQuDP6cHeK
-         2dCQ==
-Received: by 10.52.97.227 with SMTP id ed3mr12129919vdb.103.1343079865639;
- Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
-Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
-In-Reply-To: <CAJDDKr71SYf3=iUahGLVA2kmKYqT85Thaiooo2YCJqprS5nVag@mail.gmail.com>
+	id S1754138Ab2GWWJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 18:09:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54561 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752723Ab2GWWJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 18:09:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83F138EAA;
+	Mon, 23 Jul 2012 18:09:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eRV5cWlF0Xbq1lbMVVXlgEFiUYo=; b=OCMZh/
+	oCTWEC6OPo7nsfUmFPV5X6vL/nM8+DWiniHsUw6XfgCrrs7wbvBSo3504JcyNjgx
+	q/+S7UAut5En4nfLvJiFCV54hF3EkcEO/lC08tF4kyY7/RTxpR2xsF2X+V01r9Q2
+	nvxtgeSi2XCz6pcPKhlanM6BuTrg473ripYQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tdKMWcEnH3c880z1KR1S2W/nTyMGtb+b
+	CsflamLP6r8g9mSrK0v+1Pmv/Das124N0XMxFJ7W32U0YaSs8MpexfrKRLbiMNBU
+	J0d2pkumrl3EwBGm2YM+q1KfiaPg/bv9zRuRGHAY1egCBcRn9o9PmY8mMDMDXCLx
+	2qGAbb6S5DE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70E268EA9;
+	Mon, 23 Jul 2012 18:09:49 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1C3F8EA7; Mon, 23 Jul 2012
+ 18:09:48 -0400 (EDT)
+In-Reply-To: <20120723214339.GA13931@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 23 Jul 2012 17:43:39 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E6C21B0-D513-11E1-A01A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201994>
 
-On Mon, Jul 23, 2012 at 11:34 PM, David Aguilar <davvid@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Sebastian, are you testing on Windows?  The araxis "compare" I used is
-> OS X.  Does "compare version" open a GUI window for you?  For me it
-> does not.
-> What about "compare -h", or just "compare" ?
+> On Mon, Jul 23, 2012 at 02:35:01PM -0700, Junio C Hamano wrote:
+> ...
+>> I also wondered if something like the following might be useful, but
+>> it probably falls into the "water under the bridge" category.
+>> 
+>>  builtin/commit.c | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>> 
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 149e07d..83bcee4 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -768,6 +768,11 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>>  				"with '#' will be kept; you may remove them"
+>>  				" yourself if you want to.\n"
+>>  				"An empty message aborts the commit.\n"));
+>> +		status_printf(s, GIT_COLOR_NORMAL,
+>> +			      _("The file '%s' keeps a copy of the log message\n"
+>> +				"you edited, if you wish to inspect it later.\n"
+>> +				"It will be wiped by the next invocation of 'git commit'.\n"),
+>> +			      git_path("COMMIT_EDITMSG"));
+>
+> That seems excessive, as it is inside the file itself. Unless your
+> editor is terrible, it already shows you that information.
 
-Yes, I'm testing on Windows, and unfortunately Araxis behaves differently here:
+The pathname was not the part that was interesting; "If you wish to
+inspect it later" was.
 
-- running "compare version" or "compare blah" prints nothing on the
-console, but the GUI opens saying it is unable to open a file
-"version" (which it would compare to nothing),
-
-- "compare -h" or just "compare" both open up the usage dialog listing
-all valid command line options (because "-h" is invalid).
-
--- 
-Sebastian Schuberth
+But that is what makes it water under the bridge.  The message will
+be gone by the time you really need it.
