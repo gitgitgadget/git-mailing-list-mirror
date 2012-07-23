@@ -1,83 +1,103 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
-Date: Tue, 24 Jul 2012 00:39:09 +0200
-Message-ID: <CAHGBnuOXNb5NKB-aiSmciU7OQaGm_T-cn4JUSj5yS3bVVFiBUw@mail.gmail.com>
-References: <500CF8CE.90906@gmail.com>
-	<500CF9D2.30102@gmail.com>
-	<500CFB19.6010905@gmail.com>
-	<7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
-	<500DA7F3.3000403@gmail.com>
-	<7v4noykxvm.fsf@alter.siamese.dyndns.org>
-	<CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
-	<7v629ejexo.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g.
+ ImageMagick's
+Date: Mon, 23 Jul 2012 15:41:03 -0700
+Message-ID: <7vtxwyhzi8.fsf@alter.siamese.dyndns.org>
+References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com>
+ <500CFB19.6010905@gmail.com> <7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
+ <500DA7F3.3000403@gmail.com> <7v4noykxvm.fsf@alter.siamese.dyndns.org>
+ <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
+ <7v629ejexo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 00:39:38 2012
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 00:41:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StRHs-00036f-3Q
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:39:36 +0200
+	id 1StRJR-0004HL-1D
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:41:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754875Ab2GWWjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 18:39:11 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:64125 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754856Ab2GWWjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 18:39:10 -0400
-Received: by vcbfk26 with SMTP id fk26so5293624vcb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 15:39:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Uz8HsQIl3LCHHGoyLGd8oQ0e7n3HeSsvWtL8V2pI4Cw=;
-        b=H/0Is89dE3Q5fp8dMy5flApjrIhcf2hWl2jNke+QXqPdFXH8OE80pmOd2gYNaUSipv
-         /gCfQIqFv90cBQ/H7Q6jQ36TfhUwkOnyEVK/HJ0ILoksNbsnXCmyy/09LnH9/3CluMJ/
-         Wd8OJ+K2I70pTFuPLwDwc9Yg31lGOwgmrCV5eNhNPbgVcpV0NSmh+Jl87f5zayS9jly2
-         23QVYD8kUGp2+RKtc28W2D8Y9UvX+uQqsFrdXoTY61j6/lIDdElMZar1RKYen3aMFkC0
-         nI+ExCYqsO+BSs5tiPYDw8RuI+e44r3090rthTiQm0rPkn8OZgX3pnFoPz0gBkObYyrn
-         KTEQ==
-Received: by 10.52.100.165 with SMTP id ez5mr12165562vdb.108.1343083149226;
- Mon, 23 Jul 2012 15:39:09 -0700 (PDT)
-Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 15:39:09 -0700 (PDT)
-In-Reply-To: <7v629ejexo.fsf@alter.siamese.dyndns.org>
+	id S1754876Ab2GWWlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 18:41:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35106 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754860Ab2GWWlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 18:41:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC38465E6;
+	Mon, 23 Jul 2012 18:41:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Do5U6ptaOHrFQqQdkoA0EpnUGpQ=; b=iiZY7c
+	cyeLccUvrRgiQQDKTseIkkPHCrpzd6YLoeqbg1aajDgPuLRXxsumdoWk0JNsk4rn
+	f6f9Tjo5szHldl3uriTBkRqDScBq6qhheS+L2QK+PIHlgjsB/UDWQ+4XputGy7yk
+	/sjyEKp6/BCSieJ5RvEsmX/ldusTzsgsHMtsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PhE6xT2LMoGrzBuOiSz1/zSS/h3soj9C
+	wDlUT62/IUNrDFYTTz+0ODWuIKeqEjvPO1E5L7EmjMceNQ/aGT4d5hO4TtqPp2Gz
+	j9aJVvJCLJbPwLKVpZSNRX37jBaVZ+DF7p5WU6qXDHR7AFfL28gjr8YJ19SIPh5A
+	pPr6Q9+VY5c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A60065E5;
+	Mon, 23 Jul 2012 18:41:05 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F40AF65E4; Mon, 23 Jul 2012
+ 18:41:04 -0400 (EDT)
+In-Reply-To: <7v629ejexo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 23 Jul 2012 15:22:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7CA67A1A-D517-11E1-91CD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201999>
 
-On Tue, Jul 24, 2012 at 12:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
-
-> On the other hand, if the user has bought and installed Araxis, but
-> we incorrectly identify it as unusable, the user has wasted good
-> money and there is no easy recourse as far as I can see in your
-> patch.
-
-Agreed.
+Junio C Hamano <gitster@pobox.com> writes:
 
 > If we limit the problem space by special casing Windows installation
 > (e.g. check "uname -s" or something), would it make the problem
 > easier to solve?  Perhaps it is much more likely that the path the
 > program is installed in can be safely identified with a call to
 > "type --path compare" (bash is the only shell shipped in msysgit,
-> isn't it?), and its output is likely to contain "/Program Files/Araxis/"
-> as a substring, or something?
+> isn't it?).
 
-Yes, I could come up with basically a variant of my first version of
-the patch that is limited to Windows only and uses "type --path"
-instead of "which", but then again this is too non-generic for my
-taste. Moreover, as I'm also using Mac OS X, I'd be interested in a
-solution that works there, too.
+E.g. something along the lines of your original patch.  I do not
+know what other commands are typically installed in the same
+directory as "compare", so it is likely you need to fix the name of
+the file to let us positively identify "compare" is from the Araxis
+suite.
 
-I don't see a good (read generic and concise) solution to the issue. I
-think we should just drop my patch and not waste all of our time on it
-any more.
+ mergetools/araxis | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
--- 
-Sebastian Schuberth
+diff --git a/mergetools/araxis b/mergetools/araxis
+index 64f97c5..1180a32 100644
+--- a/mergetools/araxis
++++ b/mergetools/araxis
+@@ -16,5 +16,18 @@ merge_cmd () {
+ }
+ 
+ translate_merge_tool_path() {
+-	echo compare
++	case "$BASH_VERSION" in
++	??*)
++		# we can safely use "type --path"
++		if test -f $(dirname "$(type --path compare)")/AraxisMerge
++		then
++			echo compare
++		else
++			echo "$1"
++		fi
++		;;
++	*)
++		echo compare
++		;;
++	esac
+ }
