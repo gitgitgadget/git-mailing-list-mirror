@@ -1,99 +1,110 @@
-From: John Bartholomew <jpa.bartholomew@gmail.com>
-Subject: Enhanced git branch list (proposal)
-Date: Mon, 23 Jul 2012 19:17:47 +0100
-Message-ID: <500D954B.4090007@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Solve git-submodule issues with detached work trees
+Date: Mon, 23 Jul 2012 11:21:27 -0700
+Message-ID: <7v7gtumj88.fsf@alter.siamese.dyndns.org>
+References: <CAHCkQtNfz8Kbn810LgXEQ_rkyk4qn5amGgHQsv2uR6H38sTSrg@mail.gmail.com>
+ <7vsjcjnjvj.fsf@alter.siamese.dyndns.org> <500D8C30.9010807@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 23 20:18:05 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
+	git@vger.kernel.org,
+	Richard Hartmann <richih.mailinglist@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 20:21:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StNCf-0006zn-NA
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 20:17:58 +0200
+	id 1StNGC-000274-7z
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 20:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496Ab2GWSRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 14:17:52 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:63391 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754186Ab2GWSRv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 14:17:51 -0400
-Received: by bkwj10 with SMTP id j10so5586434bkw.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 11:17:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=Y3NQ3WyU8fzusFK+Ac1HO1GmtQ+SW0rUQ9Ds239W/j0=;
-        b=RSj/R3DpQCQq0tKH6hLvma0BT/nO9GLbFzIGhPa94Fqpy6NR0tSCHp1MJoB717c14l
-         qO8UN0h3MdCuPfJW1QHibyMfPfUyULyImYhp0khtNkw8vBKMsMHXCytBBARPmJfIWzFw
-         Nt0NdIZekIfxSzNYyTsodvRKZ2NsN6dijr2OeQ1PQYV7HmSi5/pKOztkzsj9EgZ91fgr
-         QE5NDB14JJ6c13jM5tThpPiEUiluf2PTzbjrr4P5GkfitPBw2wORXqQEb1LkARspWpBw
-         1Gc4YtrLsLMIujmJyj4MrtYeCrF8yS4ULHVjQSLSuD3qEh8CT6+ZaAhifAfgTgx8UyY3
-         wq5w==
-Received: by 10.205.123.133 with SMTP id gk5mr8350523bkc.140.1343067469790;
-        Mon, 23 Jul 2012 11:17:49 -0700 (PDT)
-Received: from [192.168.1.64] (78-105-125-165.zone3.bethere.co.uk. [78.105.125.165])
-        by mx.google.com with ESMTPS id fu8sm8608455bkc.5.2012.07.23.11.17.48
-        (version=SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2012 11:17:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
+	id S1754462Ab2GWSVb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jul 2012 14:21:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45389 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754228Ab2GWSVa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2012 14:21:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70BC08107;
+	Mon, 23 Jul 2012 14:21:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=jFjc2fazfOvI
+	7X7+qTyz1Gi6UpU=; b=YY7PdSyV/pipQiD+FwMLRs3WCs+SO4dEe/Wmh6rFzxm8
+	GzBnUVs7WLv12DmuIzyo0N523ne1pLdpE9piu+H7CXx7XRIHD78FmiKi5bm+/kKr
+	hycXqYX1Re5LBDrsgrmiXJNgXrzPVJyZ5I0HFlKrdz7biAq8bDAE28/U/g/JjtY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EElcAm
+	vYyxBHVYjRXBYDW7awdfhM9i1Pro6KoOOkaDNXNx8iLzYSKeLPNu8dbemPpBMkNh
+	TMuxhsNBpqEq2MccV/3tXU22OA2qgGWaurzOEI4w46KKJB4oQ1eyTVG4qRtQ0rhZ
+	ryvb6dBm+RkScLo6LdiS4kSdv5usSAiKySqi0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DF318106;
+	Mon, 23 Jul 2012 14:21:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B843C8105; Mon, 23 Jul 2012
+ 14:21:28 -0400 (EDT)
+In-Reply-To: <500D8C30.9010807@web.de> (Jens Lehmann's message of "Mon, 23
+ Jul 2012 19:38:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 387C52A2-D4F3-11E1-9D67-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201947>
 
-I find the output of `git branch' to be quite bare, and would like to
-see more information; most importantly, what the state of the branch
-is in relation to its upstream. For some time I have been using my
-own script to do this. It produces output like this:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-$ git lsb
-  commodity-market-lua [behind 'brianetta/commodity-market-lua' by 2
-commits]
-  filesystem [up-to-date with 'jpab/filesystem']
-  fix-ring-blending [ahead of 'jpab/fix-ring-blending' by 1 commit]
-  galaxy-refactor
-  galaxy-refactor-2 [diverged from 'jpab/galaxy-refactor', by 6
-commits/626 commits (us/them)]
-  hud-pitch-ladder [up-to-date with 'jpab/hud-pitch-ladder']
-= issue-1388
-  issue-695
-  lmr-mtllib-improvements
-  marcel-stations
-* master [up-to-date with 'jpab/master']
-  refcounted-body [up-to-date with 'jpab/refcounted-body']
-  string-formatter [up-to-date with 'jpab/string-formatter']
+> Am 23.07.2012 07:09, schrieb Junio C Hamano:
+>> Daniel Gra=C3=B1a <dangra@gmail.com> writes:
+>>=20
+>>> A common way to track dotfiles with git is using GIT_DIR and
+>>> GIT_WORK_TREE to move repository out of ~/.git with something like:
+>>>
+>>>     git init --bare ~/.dotfiles
+>>>     alias dotfiles=3D"GIT_DIR=3D~/.dotfiles GIT_WORK_TREE=3D~ git"
+>>>
+>>>     dotfiles add ~/.bashrc
+>>>     dotfiles commit -a -m "add my bashrc"
+>>>     ...
+>>>
+>>> but git-submodule complains when trying to add submodules:
+>>>
+>>>     dotfiles submodule add http://path.to/submodule
+>>>     fatal: working tree '/home/user' already exists.
+>>>
+>>>     git --git-dir ~/.dotfiles submodule add http://path.to/submodul=
+e
+>>>     fatal: /usr/lib/git-core/git-submodule cannot be used without a
+>>> working tree.
+>>>
+>>> Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
+>>> ---
+>>=20
+>> I think this is in line with what we discussed earlier on list when
+>> the interaction between GIT_DIR/GIT_WORK_TREE and submodules came up
+>> the last time.  Jens?
+>
+> Yes, I think this is the only way submodules in current git can
+> be used with the GIT_DIR and GIT_WORK_TREE environment variables:
+> set them when adding or initializing the submodule and always use
+> the same settings when accessing them later. Daniel's dotfile
+> alias achieves exactly that, so his fix looks good. But I agree
+> the tests should be improved as you already pointed out.
 
-The first column indicates the relation to HEAD: '*' marks the current
-head, '=' marks a branch which is identical with the current HEAD.
+Thanks for a quick review.  The "the only way ... in current git can
+be used" part makes it sound as if it is a somewhat suboptimal ugly
+workaround, but if that is what you meant, what is a more optimal
+and less ugly way that you have in mind?
 
-Branches which have a configured upstream (branch.remote and
-branch.merge are set) show the relation to the corresponding remote
-branch.
-
-Some key text ('up-to-date', 'ahead', 'behind' or 'diverged', and the
-name of the current HEAD) is displayed with colour if colour is
-enabled.
-
-Arguments can be passed to show remote branches (for all remotes, or
-for a specified remote), or all branches, and to show each branch
-in relation to a specified target branch instead of the configured
-remote tracking branch.
-
-I would like to know whether there is any interest in incorporating
-this functionality into the main git distribution, either as a
-separate command, or within `git branch'. For my purposes I have it
-aliased under the name `git lsb' for `list branches'.
-
-You can examine the script I'm using for this at:
-
-https://github.com/johnbartholomew/gitvoodoo/blob/master/bin/git-xbranch
-
-Regards,
-
-John B
+If you want to move .git out of way with GIT_DIR and if you want to
+sit somewhere different from the top of your working tree, you must
+use GIT_WORK_TREE (or core.worktree) to tell where the top resides,
+whether your project use submodules or not, so I do not think it is
+an ugly workaround but is the one true way to use such a dismembered
+layout, I would think.
