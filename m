@@ -1,89 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
- abandoned
-Date: Mon, 23 Jul 2012 17:43:39 -0400
-Message-ID: <20120723214339.GA13931@sigill.intra.peff.net>
-References: <20120723184634.GA31905@sigill.intra.peff.net>
- <20120723185218.GC27588@sigill.intra.peff.net>
- <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
- <20120723205209.GA6745@sigill.intra.peff.net>
- <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
- <20120723211312.GA12533@sigill.intra.peff.net>
- <7veho2jh4q.fsf@alter.siamese.dyndns.org>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
+Date: Mon, 23 Jul 2012 23:44:25 +0200
+Message-ID: <CAHGBnuNP6VmDUXr_01zWZgcTDOUSX2_v7UDf6sOnEYU95RCW4g@mail.gmail.com>
+References: <500CF8CE.90906@gmail.com>
+	<500CF9D2.30102@gmail.com>
+	<500CFB19.6010905@gmail.com>
+	<7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
+	<500DA7F3.3000403@gmail.com>
+	<7v4noykxvm.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
+	<7vipdejhmh.fsf@alter.siamese.dyndns.org>
+	<CAJDDKr71SYf3=iUahGLVA2kmKYqT85Thaiooo2YCJqprS5nVag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 23:43:47 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 23:44:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StQPq-00038s-6X
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:43:46 +0200
+	id 1StQQZ-0003j5-WF
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989Ab2GWVnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 17:43:41 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59251 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750882Ab2GWVnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 17:43:41 -0400
-Received: (qmail 9296 invoked by uid 107); 23 Jul 2012 21:43:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 Jul 2012 17:43:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jul 2012 17:43:39 -0400
-Content-Disposition: inline
-In-Reply-To: <7veho2jh4q.fsf@alter.siamese.dyndns.org>
+	id S1752565Ab2GWVo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 17:44:27 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:39961 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752546Ab2GWVo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 17:44:26 -0400
+Received: by vbbff1 with SMTP id ff1so5184264vbb.19
+        for <git@vger.kernel.org>; Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MWdBkx/TImjS3w4q4zx/cMXm8XzKGmN9iQX7UOxLUDs=;
+        b=VznTGfxKlzVIruWRri5UsQEedNv+D6rn5SPTsY1qZ9UlNtv++QmPRD2UWLD4Whj3UV
+         uutEhoiWMT05EDCrDPUzgrbxb2d8AIZchvX6vK6uw1i08/JaHVdHH7q/y7DGRJEwH2/+
+         2Q5PVIz6L/R2ARJddmEuNw52AqXBvYZPv7nG1yM0Qyx7wxM8qebzUfFjtmSn1qIJDQLQ
+         E41gR9zcqCdN5d9Ow2zlBDoaXVmfukD/OjZ3t/OEL3K+RTIVEfE2lwM5mjZMgcqNyDk9
+         Mg2QkefW5ULgW20RaK9pbMVsmzhJKWUtE/4+kbmiZM5MN3aE0eDnMi98TIDQuDP6cHeK
+         2dCQ==
+Received: by 10.52.97.227 with SMTP id ed3mr12129919vdb.103.1343079865639;
+ Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
+Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 14:44:25 -0700 (PDT)
+In-Reply-To: <CAJDDKr71SYf3=iUahGLVA2kmKYqT85Thaiooo2YCJqprS5nVag@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201993>
 
-On Mon, Jul 23, 2012 at 02:35:01PM -0700, Junio C Hamano wrote:
+On Mon, Jul 23, 2012 at 11:34 PM, David Aguilar <davvid@gmail.com> wrote:
 
-> > +FILES
-> > +-----
-> > +
-> > +`$GIT_DIR/COMMIT_EDITMSG`::
-> > +	This file contains the commit message of a commit in progress.
-> > +	If `git-commit` exits due to an error before creating a commit,
-> > +	any commit message that has been provided by the user (e.g., in
-> > +	an editor session) will be available in this file, but will be
-> > +	overwritten by the next invocation of `git-commit`.
-> >  
-> >  SEE ALSO
-> >  --------
-> 
-> Very sensible, modulo s/git-commit/git commit/ and lack of S-o-b.
+> Sebastian, are you testing on Windows?  The araxis "compare" I used is
+> OS X.  Does "compare version" open a GUI window for you?  For me it
+> does not.
+> What about "compare -h", or just "compare" ?
 
-Yeah, I'm used to using the dashed form in documentation, but it's
-probably reasonable to use the normal spaced form here. I assume you can
-forge my S-o-b?
+Yes, I'm testing on Windows, and unfortunately Araxis behaves differently here:
 
-> I also wondered if something like the following might be useful, but
-> it probably falls into the "water under the bridge" category.
-> 
->  builtin/commit.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 149e07d..83bcee4 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -768,6 +768,11 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				"with '#' will be kept; you may remove them"
->  				" yourself if you want to.\n"
->  				"An empty message aborts the commit.\n"));
-> +		status_printf(s, GIT_COLOR_NORMAL,
-> +			      _("The file '%s' keeps a copy of the log message\n"
-> +				"you edited, if you wish to inspect it later.\n"
-> +				"It will be wiped by the next invocation of 'git commit'.\n"),
-> +			      git_path("COMMIT_EDITMSG"));
+- running "compare version" or "compare blah" prints nothing on the
+console, but the GUI opens saying it is unable to open a file
+"version" (which it would compare to nothing),
 
-That seems excessive, as it is inside the file itself. Unless your
-editor is terrible, it already shows you that information.
+- "compare -h" or just "compare" both open up the usage dialog listing
+all valid command line options (because "-h" is invalid).
 
--Peff
+-- 
+Sebastian Schuberth
