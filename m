@@ -1,79 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] difftool: Use symlinks in dir-diff mode
-Date: Sun, 22 Jul 2012 22:14:57 -0700
-Message-ID: <7vfw8jnjn2.fsf@alter.siamese.dyndns.org>
-References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH lt/block-sha1 0/2 v3] block-sha1: avoid pointer
+ conversion that violates alignment constraints
+Date: Mon, 23 Jul 2012 00:28:02 -0500
+Message-ID: <20120723052605.GA13728@burratino>
+References: <20120722233547.GA1978@burratino>
+ <7v8vebp0cl.fsf@alter.siamese.dyndns.org>
+ <20120723045148.GA13623@burratino>
+ <7vobn7njtz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 07:15:15 2012
+Cc: git@vger.kernel.org, Michael Cree <mcree@orcon.net.nz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 07:28:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StAz4-0008Mx-SU
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:15:07 +0200
+	id 1StBBp-0001Sn-Vo
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057Ab2GWFPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 01:15:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51068 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752974Ab2GWFO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 01:14:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57ACA5BF1;
-	Mon, 23 Jul 2012 01:14:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tMPIVRHsxnxA1J6u2ClEj8evAcU=; b=PhWYww
-	rjDhYjokowZ35M6CyBzptVkJuBAW1oiS4CDAEiM8LcvTNlPX64ifiN9CBOfSAdQu
-	snQ8PUG6ktWjbtxE/K/rrtR1bybRlMzdzkn4mN1ijbqmnzijs5mtniLN5k8GtMxS
-	O3ZMjWvvB8vN4yvZpkOYyltnTuRJbPo6oJkRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lBEBQEtU9EDNH9ZA1vKAXRuPkUPBrt5+
-	TZezOo2WoRHNKF6H6sAx9bK1p70A8jpfy21U0Markr95C3w62eZni79himFnVKWH
-	QZhS3EQGYFbTCOkPZkEHjvDTzp62a3B96g844R+YCeHgB5vMWy4H5W86rzfm7lOJ
-	qbown1vsHak=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45A245BF0;
-	Mon, 23 Jul 2012 01:14:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 845E55BEF; Mon, 23 Jul 2012
- 01:14:58 -0400 (EDT)
-In-Reply-To: <1343015831-17498-1-git-send-email-davvid@gmail.com> (David
- Aguilar's message of "Sun, 22 Jul 2012 20:57:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58ED26F6-D485-11E1-B69F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753485Ab2GWF2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 01:28:13 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:63715 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734Ab2GWF2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 01:28:12 -0400
+Received: by gglu4 with SMTP id u4so5089453ggl.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 22:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=i/3cAclhLWBOcAQJ233N/BSYcvqs4rK4FTE1TI4PxRc=;
+        b=Sw4+M+yhzVyWVEQNBllVUXh5bFUiIzg6TyUd8GmW8H7WQwyFOZQImNJTHf0JcSLdGQ
+         qSwrXWqx/duuD8ojCrhVWij7OqLyQES7qsN8Z7mS6wqYtwHQQGJzZwCwP7As6IHenzP3
+         fscUClu0Eb0rMY5upPbcep3RsKp6NJ4hlj8WD1uQJbqDzU9nOMyqIxf1sg0uVnIzP8vu
+         RfcgoogTGDSo0Wi7DEtdXh36nulqdTbKZOMc6B3dwi/ExaK1qPGwVDqWb+kSHtYcdqsZ
+         TDYLJJ4ZNpFBO1TGt8W1dAOZDU1TDRqz3Y7Uxz7Ypp8d6RBtU6CHJSw0liVJFStaO+xU
+         BuKg==
+Received: by 10.50.158.130 with SMTP id wu2mr13524742igb.32.1343021291689;
+        Sun, 22 Jul 2012 22:28:11 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id ai6sm11758453igc.0.2012.07.22.22.28.10
+        (version=SSLv3 cipher=OTHER);
+        Sun, 22 Jul 2012 22:28:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vobn7njtz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201902>
 
-David Aguilar <davvid@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Teach the difftool script to use symlinks when doing
-> directory diffs in --dir-diff mode.
+>> The big-endian part was just my idiocy, sorry.
 >
-> This is v2 of the patch because I had a typo in one of the
-> commit messages and gmail ate 4/5 in the last round.
+> Hrm, do we want an update log message for 1/2 then?
 
-FWIW, I received all including 4/5 in my inboxes (at pobox and
-gmail---I am doubly subscribed).  I still haven't figured out what
-in the original 4/5 was so special to be dropped somewhere in
-between.
+Hm, I thought all the crazy had been eliminated already.
 
-> David Aguilar (5):
->   difftool: Simplify print_tool_help()
->   difftool: Eliminate global variables
->   difftool: Move option values into a hash
->   difftool: Call the temp directory "git-difftool"
->   difftool: Use symlinks when diffing against the worktree
->
->  Documentation/git-difftool.txt |   8 ++
->  git-difftool.perl              | 184 ++++++++++++++++++++++++-----------------
->  2 files changed, 115 insertions(+), 77 deletions(-)
+*looks again*
+
+I guess "using a single 32-bit load" makes it sound like it's using a
+big-endian load instead of a load followed by twiddling in registers.
+
+Simplest fix would be to drop the phrase "by using a single 32-bit
+load", leaving "... and gcc takes full advantage, resulting in a whole
+bunch of unaligned access traps."  Would that work for you, or should
+I resend?
+
+Thanks,
+Jonathan
