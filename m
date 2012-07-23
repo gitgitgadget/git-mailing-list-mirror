@@ -1,131 +1,62 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH] Add a svnrdump-simulator replaying a dump file for testing.
-Date: Mon, 23 Jul 2012 14:44:14 +0200
-Message-ID: <1448476.VR1Gla8Cvg@flomedio>
-References: <4514544.Xip1OCQ7Uj@flomedio> <20120722214333.GB680@burratino> <2948040.5ceLh0WG3L@flomedio>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for
+ testing.
+Date: Mon, 23 Jul 2012 07:59:21 -0500
+Message-ID: <20120723125921.GA16768@burratino>
+References: <4514544.Xip1OCQ7Uj@flomedio>
+ <20120722214333.GB680@burratino>
+ <2948040.5ceLh0WG3L@flomedio>
+ <1448476.VR1Gla8Cvg@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	davidbarr@google.com, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 14:44:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: davidbarr@google.com, git@vger.kernel.org
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 14:59:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StI03-0007UD-3o
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 14:44:35 +0200
+	id 1StIEb-000209-KE
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 14:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846Ab2GWMoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 08:44:22 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:61634 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752675Ab2GWMoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 08:44:21 -0400
-Received: by lbbgm6 with SMTP id gm6so7974503lbb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 05:44:19 -0700 (PDT)
+	id S1753096Ab2GWM7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 08:59:32 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:53551 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753033Ab2GWM7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 08:59:31 -0400
+Received: by ghrr11 with SMTP id r11so5384781ghr.19
+        for <git@vger.kernel.org>; Mon, 23 Jul 2012 05:59:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=S9FPpRfc0Zx31qGjoBPWzMAFl2B+WHb0gAMY+IZxNOY=;
-        b=TXZPQbtbePeSaso38rvi84Ss/X1kfUnXaE07E2tcLicI1qKtaS5XMkRM34KWMAmlia
-         eOrqRdENRGvO+/4IClP+ERkFvoGx3FtGThF5n3OEPNLkZssShjMw1QC18CSL+yRoFyEk
-         VmfskdOpJWdG7cr8UD6wqVU+dH0kpg2PjuR3rBFZal+GYQPq098a50l7TiFM/Oukt7Uy
-         RaClwkdPlkfUO92XG5ZSfzRCvahDWOw3zjPYNFvYk3uPL/qQYZusx8TRxjDVow9t11Hw
-         Ih3bJVsa1CFgZet1URg0JFYWjY3hlJ1T2IIlF6GrAsj085gieHNoTytQGNCLM3RQI6I9
-         UL5g==
-Received: by 10.112.30.41 with SMTP id p9mr7824216lbh.26.1343047459809;
-        Mon, 23 Jul 2012 05:44:19 -0700 (PDT)
-Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id p2sm2997723lbj.4.2012.07.23.05.44.17
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=UlYkpJj++RvD3qiia1t+IS5FbCfH2xtVz7Mfcvty2Ew=;
+        b=AjJ+viThlCvNeamGgFyWkOBAviLZ/nxg+k8ZXBF5tj3b5DDUDpKKF4oZXo8L/9xut5
+         tXejBL2kZDe1seBbK9OHd2KURM/9BfAnS2bZDPzgGivL3Fpew5DbkUB3/OkKFC2jAmEO
+         KhChjmv+9sRCMJzwW38JMetgua80AE2mrR1hk75SjSxq5Tnt+pqem3/NmEpsTw5rHM/1
+         x/o8YIsywCPulcy1/NIvSNLdsx6Nn5qxet9c1gPjPN27t8L9XyBFZm5L5MUXb6KPqMdo
+         rNtCSUhB2aZSQJW47D0ZPx9Ua6DMInpmnLB1WwYqljVG9RSTFh3UWsv8Klwx4m20eV+q
+         9Pww==
+Received: by 10.50.220.195 with SMTP id py3mr10084372igc.70.1343048371095;
+        Mon, 23 Jul 2012 05:59:31 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id y5sm13245472igb.11.2012.07.23.05.59.30
         (version=SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2012 05:44:18 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <2948040.5ceLh0WG3L@flomedio>
+        Mon, 23 Jul 2012 05:59:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1448476.VR1Gla8Cvg@flomedio>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201932>
 
-To ease testing without depending on a reachable svn server, this
-compact python script mimics parts of svnrdumps behaviour.
-It requires the remote url to start with sim://.
-Start and end revisions are evaluated.
-If the requested revision doesn't exist, as it is the case with
-incremental imports, if no new commit was added, it returns 1
-(like svnrdump).
-To allow using the same dump file for simulating multiple
-incremental imports the highest revision can be limited by setting
-the environment variable SVNRMAX to that value. This simulates the
-situation where higher revs don't exist yet.
----
- contrib/svn-fe/svnrdump_sim.py |   53 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100755 contrib/svn-fe/svnrdump_sim.py
+Florian Achleitner wrote:
 
-diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-new file mode 100755
-index 0000000..4701d76
---- /dev/null
-+++ b/contrib/svn-fe/svnrdump_sim.py
-@@ -0,0 +1,53 @@
-+#!/usr/bin/python
-+"""
-+Simulates svnrdump by replaying an existing dump from a file, taking care
-+of the specified revision range.
-+To simulate incremental imports the environment variable SVNRMAX can be set
-+to the highest revision that should be available.
-+"""
-+import sys, os
-+
-+
-+def getrevlimit():
-+	var = 'SVNRMAX'
-+	if os.environ.has_key(var):
-+		return os.environ[var]
-+	return None
-+	
-+def writedump(url, lower, upper):
-+	if url.startswith('sim://'):
-+		filename = url[6:]
-+		if filename[-1] == '/': filename = filename[:-1] #remove terminating slash
-+	else:
-+		raise ValueError('sim:// url required')
-+	f = open(filename, 'r');
-+	state = 'header'
-+	wroterev = False
-+	while(True):
-+		l = f.readline()
-+		if l == '': break
-+		if state == 'header' and l.startswith('Revision-number: '):
-+			state = 'prefix'
-+		if state == 'prefix' and l == 'Revision-number: %s\n' % lower:
-+			state = 'selection'
-+		if not upper == 'HEAD' and state == 'selection' and l == 'Revision-number: %s\n' % upper:
-+			break;
-+
-+		if state == 'header' or state == 'selection':
-+			if state == 'selection': wroterev = True
-+			sys.stdout.write(l)
-+	return wroterev
-+
-+if __name__ == "__main__":
-+	if not (len(sys.argv) in (3, 4, 5)):
-+		print "usage: %s dump URL -rLOWER:UPPER"
-+		sys.exit(1)
-+	if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is suppported.')
-+	url = sys.argv[2]
-+	r = ('0', 'HEAD')
-+	if len(sys.argv) == 4 and sys.argv[3][0:2] == '-r':
-+		r = sys.argv[3][2:].lstrip().split(':')
-+	if not getrevlimit() is None: r[1] = getrevlimit()
-+	if writedump(url, r[0], r[1]): ret = 0
-+	else: ret = 1
-+	sys.exit(ret)
-\ No newline at end of file
--- 
-1.7.9.5
+> To ease testing without depending on a reachable svn server, this
+> compact python script mimics parts of svnrdumps behaviour.
+
+Thanks.  Mind if I forge your sign-off?
