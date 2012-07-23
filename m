@@ -1,65 +1,126 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 0/5] difftool: Use symlinks in dir-diff mode
-Date: Sun, 22 Jul 2012 20:57:06 -0700
-Message-ID: <1343015831-17498-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH v2 1/5] difftool: Simplify print_tool_help()
+Date: Sun, 22 Jul 2012 20:57:07 -0700
+Message-ID: <1343015831-17498-2-git-send-email-davvid@gmail.com>
+References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 05:57:55 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 05:57:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1St9mM-0000L6-Tm
+	id 1St9mN-0000L6-Cp
 	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 05:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370Ab2GWD5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 23:57:07 -0400
+	id S1753436Ab2GWD5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 23:57:22 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:56934 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976Ab2GWD5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 23:57:06 -0400
-Received: by pbbrp8 with SMTP id rp8so10168206pbb.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:05 -0700 (PDT)
+	with ESMTP id S1753395Ab2GWD5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 23:57:08 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so10168206pbb.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=rCc2q5oAW1MWDq4QhPLY2CER8iSlPM1Y4W7Id3UnZHo=;
-        b=M6kbnhIgWIkS//lByn0gn4Zwx+PfBNcD9ADlNemAlHFphvTg6IySZ49puCsu7gyxMw
-         qUSVwHOoeS1lCMkBFsTDVIlb3iODkOYXIbeCedrYRaS4YXoTlIK/mYFqO2cfn23zlRFm
-         n2oEBfU7+5yHSpo/HsJkmScJ9xaFdYeH3jB3MMQzh+9mSH0XxsBshaePEa1iAVk9JKlm
-         rq5K5naRCcMuGyCjC0+D+hGhhY5QcYJaOBOoPVS2Jik5mz2Q8pN+lI8uxdPIpTi+l7Yj
-         flLy9fQPKgCuhM8ccJ9hQpKFrghwyKPHpH8ban6QPe2Z8B/ncHSYLvFWD04QV5jPXgOf
-         /ILg==
-Received: by 10.68.218.7 with SMTP id pc7mr31753960pbc.88.1343015825524;
-        Sun, 22 Jul 2012 20:57:05 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=YNvNTQLOZgYcyKyql1PcT6NxdoqDYw9B3XEN3pkX9ys=;
+        b=Bq5hRprbRKYyndXHZaxSZAYVBtSC5TgcZJw54XhFKhjeaxqJYWhRPhF1F8K/ob3Keq
+         inSvMLHQcqIP2u/WUoGdfvjHefcr8cYkp7IsS+7wkdSPioXSMo0oK8yh/oeYFs57PG6C
+         ru7n6jmQQl7S/erv5ul3GW1C/2A0Bs6Z7YtWocnHI30SUz01+GxBJ36wWK/7mJrked4C
+         EKAAf/gVY0SEnCuaitAGlCT/gT9JgnpOOSdgqK89eW3HFG4CxjnXCY7pUy6noCYoMQJ9
+         /tww+43oILMLRjqpL7AHIUSUbuLQsgcL2lGBlvKfJmlsLJ6uUM/RslM7yanejk1ENHB8
+         6Iyg==
+Received: by 10.68.238.166 with SMTP id vl6mr9033562pbc.96.1343015827865;
+        Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.03
+        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 20:57:05 -0700 (PDT)
+        Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.2.255.g5f133da
+In-Reply-To: <1343015831-17498-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201887>
 
-Teach the difftool script to use symlinks when doing
-directory diffs in --dir-diff mode.
+Eliminate a global variable and File::Find usage by building upon
+basename() and glob() instead.
 
-This is v2 of the patch because I had a typo in one of the
-commit messages and gmail ate 4/5 in the last round.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
-David Aguilar (5):
-  difftool: Simplify print_tool_help()
-  difftool: Eliminate global variables
-  difftool: Move option values into a hash
-  difftool: Call the temp directory "git-difftool"
-  difftool: Use symlinks when diffing against the worktree
+Same as before, resending because gmail ate patch 4/5
 
- Documentation/git-difftool.txt |   8 ++
- git-difftool.perl              | 184 ++++++++++++++++++++++++-----------------
- 2 files changed, 115 insertions(+), 77 deletions(-)
+ git-difftool.perl | 25 +++++--------------------
+ 1 file changed, 5 insertions(+), 20 deletions(-)
 
+diff --git a/git-difftool.perl b/git-difftool.perl
+index c079854..ac0ed63 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -13,17 +13,15 @@
+ use 5.008;
+ use strict;
+ use warnings;
+-use File::Basename qw(dirname);
++use File::Basename qw(basename dirname);
+ use File::Copy;
+ use File::Compare;
+-use File::Find;
+ use File::stat;
+ use File::Path qw(mkpath);
+ use File::Temp qw(tempdir);
+ use Getopt::Long qw(:config pass_through);
+ use Git;
+ 
+-my @tools;
+ my @working_tree;
+ my $rc;
+ my $repo = Git->repository();
+@@ -65,26 +63,13 @@ sub find_worktree
+ 
+ my $workdir = find_worktree();
+ 
+-sub filter_tool_scripts
+-{
+-	if (-d $_) {
+-		if ($_ ne ".") {
+-			# Ignore files in subdirectories
+-			$File::Find::prune = 1;
+-		}
+-	} else {
+-		if ((-f $_) && ($_ ne "defaults")) {
+-			push(@tools, $_);
+-		}
+-	}
+-}
+-
+ sub print_tool_help
+ {
+ 	my ($cmd, @found, @notfound);
+ 	my $gitpath = Git::exec_path();
+ 
+-	find(\&filter_tool_scripts, "$gitpath/mergetools");
++	my @files = map { basename($_) } glob("$gitpath/mergetools/*");
++	my @tools = sort(grep { !m{^defaults$} } @files);
+ 
+ 	foreach my $tool (@tools) {
+ 		$cmd  = "TOOL_MODE=diff";
+@@ -99,10 +84,10 @@ sub print_tool_help
+ 	}
+ 
+ 	print "'git difftool --tool=<tool>' may be set to one of the following:\n";
+-	print "\t$_\n" for (sort(@found));
++	print "\t$_\n" for (@found);
+ 
+ 	print "\nThe following tools are valid, but not currently available:\n";
+-	print "\t$_\n" for (sort(@notfound));
++	print "\t$_\n" for (@notfound);
+ 
+ 	print "\nNOTE: Some of the tools listed above only work in a windowed\n";
+ 	print "environment. If run in a terminal-only session, they will fail.\n";
 -- 
 1.7.11.2.255.g5f133da
