@@ -1,205 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Solve git-submodule issues with detached work trees
-Date: Sun, 22 Jul 2012 22:09:52 -0700
-Message-ID: <7vsjcjnjvj.fsf@alter.siamese.dyndns.org>
-References: <CAHCkQtNfz8Kbn810LgXEQ_rkyk4qn5amGgHQsv2uR6H38sTSrg@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: fix location of listing produced by "make
+ subdir/foo.s"
+Date: Sun, 22 Jul 2012 22:11:21 -0700
+Message-ID: <7vk3xvnjt2.fsf@alter.siamese.dyndns.org>
+References: <20120722234726.GC2012@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 07:11:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 07:11:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StAv3-00055H-OO
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:10:58 +0200
+	id 1StAvY-0005Xp-Ld
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753551Ab2GWFKd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jul 2012 01:10:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49383 "EHLO
+	id S1753401Ab2GWFLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 01:11:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49812 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753520Ab2GWFJ4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jul 2012 01:09:56 -0400
+	id S1752974Ab2GWFLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 01:11:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D5F25B5E;
-	Mon, 23 Jul 2012 01:09:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 404D45B7D;
+	Mon, 23 Jul 2012 01:11:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cfV1P7+eVRAi
-	wVikCQ232tKpMgU=; b=jqgs7PVVSsFmHpHuAmL2DxTS/aPVoRB5djz1VS9z7q/C
-	w7b45EWHGKMjPN4DaSgcB2mgmXokBeFW37+XnVkhYf2aDqnhbivCj0WCGI384oIh
-	qzlZ8GC318D9TUfbffPBds6XFu/h0ANGYwSUUj3qcRblOYmhtcaGZq+uFBbBoDA=
+	:content-type; s=sasl; bh=6EBgmKzCuCjlmtaGghsq5l5vAxY=; b=Wk0Gls
+	QCzhNygdJPNDaaLYdAc6ExWTyh6ILmEmdUt4cZOhVn65VYhWBLEeY9twNn7QhJlM
+	x4ASuwEFtKaUlUUpoEKTrX4O/pWX9skiZ4LmHm3L0ayLsnxVnaCsjeBx1J+4pWvB
+	PYd3O6O7Ex5+0fSG35AinDDNrYXfW7jcNdeUY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=amuSOq
-	vWS0WWlORxoNyZnc2TFN+wLvr/l7H0Wp+hnSBqeeQQu5XledJxg7ngotxI6IceQC
-	3J4HPzsUYviDBb5jz9Kp/8iELmOLNNxVAYrdwz1+8olxXBySfISZvIbZ6rL656v9
-	tNu7JmLgsQua2NfMB2sbSZGhU5e+2bSwpIYi8=
+	:content-type; q=dns; s=sasl; b=CHT4e4LnLfGJAUkJUy/DZVqcJbN1rKkv
+	FtK9QlLIINGECAN7Liv2LT2Gon0QnnipzW3SeDTQGBwT5cknWb2Xg5jU8S236Xyw
+	6AqvPhCK/bq7bZweQGwbSs19hIuL2utV8bqu9E3Mr/RI3ln1gzDO2q+ZGRprvS6i
+	TI340yqhB0k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 298A35B5D;
-	Mon, 23 Jul 2012 01:09:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DC8D5B7C;
+	Mon, 23 Jul 2012 01:11:23 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A91B5B59; Mon, 23 Jul 2012
- 01:09:54 -0400 (EDT)
-In-Reply-To: <CAHCkQtNfz8Kbn810LgXEQ_rkyk4qn5amGgHQsv2uR6H38sTSrg@mail.gmail.com> ("Daniel
- =?utf-8?Q?Gra=C3=B1a=22's?= message of "Sun, 22 Jul 2012 11:49:44 -0300")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D58E5B7B; Mon, 23 Jul 2012
+ 01:11:22 -0400 (EDT)
+In-Reply-To: <20120722234726.GC2012@burratino> (Jonathan Nieder's message of
+ "Sun, 22 Jul 2012 18:47:26 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A3967D8E-D484-11E1-8B64-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D829B3E0-D484-11E1-9182-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201900>
 
-Daniel Gra=C3=B1a <dangra@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> A common way to track dotfiles with git is using GIT_DIR and
-> GIT_WORK_TREE to move repository out of ~/.git with something like:
+> When I invoke "make block-sha1/sha1.s", 'make' runs $(CC) -S without
+> specifying where it should put its output and the output ends up in
+> ./sha1.s.  Confusing.
 >
->     git init --bare ~/.dotfiles
->     alias dotfiles=3D"GIT_DIR=3D~/.dotfiles GIT_WORK_TREE=3D~ git"
+> Add an -o option to the .s rule to fix this.  We were already doing
+> that for most compiler invocations but had forgotten it for the
+> assembler listings.
 >
->     dotfiles add ~/.bashrc
->     dotfiles commit -a -m "add my bashrc"
->     ...
->
-> but git-submodule complains when trying to add submodules:
->
->     dotfiles submodule add http://path.to/submodule
->     fatal: working tree '/home/user' already exists.
->
->     git --git-dir ~/.dotfiles submodule add http://path.to/submodule
->     fatal: /usr/lib/git-core/git-submodule cannot be used without a
-> working tree.
->
-> Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 > ---
-
-I think this is in line with what we discussed earlier on list when
-the interaction between GIT_DIR/GIT_WORK_TREE and submodules came up
-the last time.  Jens?
-
->  git-submodule.sh                       |    7 +++-
->  t/t7409-submodule-detached-worktree.sh |   61 ++++++++++++++++++++++=
-++++++++++
->  2 files changed, 66 insertions(+), 2 deletions(-)
->  create mode 100755 t/t7409-submodule-detached-worktree.sh
+> Hi,
 >
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 5629d87..88ee4ea 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -181,8 +181,11 @@ module_clone()
->  		rm -f "$gitdir/index"
->  	else
->  		mkdir -p "$gitdir_base"
-> -		git clone $quiet -n ${reference:+"$reference"} \
-> -			--separate-git-dir "$gitdir" "$url" "$sm_path" ||
-> +		(
-> +			clear_local_git_env
-> +			git clone $quiet -n ${reference:+"$reference"} \
-> +				--separate-git-dir "$gitdir" "$url" "$sm_path"
-> +		) ||
->  		die "$(eval_gettext "Clone of '\$url' into submodule path
-> '\$sm_path' failed")"
-
-Line-wrapped broken patch?
-
->  	fi
+> This patch is from below the scissors at
+> http://thread.gmane.org/gmane.comp.version-control.git/201434/focus=201485
 >
-> diff --git a/t/t7409-submodule-detached-worktree.sh
-> b/t/t7409-submodule-detached-worktree.sh
-> new file mode 100755
-> index 0000000..db75642
-> --- /dev/null
-> +++ b/t/t7409-submodule-detached-worktree.sh
-> @@ -0,0 +1,61 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Daniel Gra=C3=B1a
-> +#
-> +
-> +test_description=3D'Test submodules on detached working tree
-> +
-> +This test verifies that "git submodule" initialization, update and
-> addition works
+> I think it's a good change, but as usual it's nice if someone else
+> takes a look at it and gives it a sanity check.  If it seems sane,
+> I'd be happy to see it applied.  What do you think?
+>
+> Thanks,
+> Jonathan
 
-Line-wrapped broken patch?
+Yeah, I think it is a sensible thing to do.
 
-> +on detahced working trees
-> +'
-> +
-> +TEST_NO_CREATE_REPO=3D1
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'submodule on detached working tree' '
-> +	git init --bare remote &&
-> +	test_create_repo bundle1 &&
-> +	(cd bundle1 && test_commit "shoot") &&
-> +	mkdir home &&
-> +	(
-> +		cd home &&
-> +		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
-> +		git clone --bare ../remote .dotfiles &&
-> +		git submodule add ../bundle1 .vim/bundle/sogood &&
-> +		test_commit "sogood" &&
-> +		git push origin master
-> +	) &&
-
-Don't you want to verify not just commands succeed, but leave a
-reasonable result, e.g. by running "git rev-parse HEAD" in "remote"
-and comparing the output with "git rev-parse HEAD" in .dotfiles, or
-something?
-
-> +	mkdir home2 &&
-> +	(
-> +		cd home2 &&
-> +		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
-> +		git clone --bare ../remote .dotfiles &&
-> +		git submodule update --init
-
-Likewise.  What state, other than "submodule update --init" does not
-barf, do you expect to see?
-
-> +	)
-> +'
-> +
-> +test_expect_success 'submodule on detached working pointed by core.w=
-orktree' '
-> +	mkdir home3 &&
-> +	(
-> +		cd home3 &&
-> +		export GIT_DIR=3D"$(pwd)/.dotfiles" &&
-> +		git clone --bare ../remote "$GIT_DIR" &&
-> +		git config core.bare false &&
-> +		git config core.worktree .. &&
-> +		git submodule add ../bundle1 .vim/bundle/dupe &&
-> +		test_commit "dupe" &&
-> +		git push origin master
-
-Likewise.
-
-> +	) &&
-> +	(
-> +		cd home &&
-> +		export GIT_DIR=3D"$(pwd)/.dotfiles" &&
-> +		git config core.bare false &&
-> +		git config core.worktree .. &&
-> +		git pull &&
-> +		git submodule update &&
-> +		git submodule status &&
-> +		test -d .vim/bundle/dupe
-
-Likewise.  Is there something you want to verify in the branches in
-the submodule and its working tree, other than the existence of that
-directory?
-
-> +	)
-> +'
-> +
-> +test_done
+>  Makefile |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 285c660e..8bfa19cd 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2263,7 +2263,7 @@ $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs)
+>  endif
+>  
+>  %.s: %.c GIT-CFLAGS FORCE
+> -	$(QUIET_CC)$(CC) -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+> +	$(QUIET_CC)$(CC) -o $@ -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+>  
+>  ifdef USE_COMPUTED_HEADER_DEPENDENCIES
+>  # Take advantage of gcc's on-the-fly dependency generation
