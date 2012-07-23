@@ -1,83 +1,98 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
-Date: Mon, 23 Jul 2012 23:09:29 +0200
-Message-ID: <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
-References: <500CF8CE.90906@gmail.com>
-	<500CF9D2.30102@gmail.com>
-	<500CFB19.6010905@gmail.com>
-	<7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
-	<500DA7F3.3000403@gmail.com>
-	<7v4noykxvm.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
+ abandoned
+Date: Mon, 23 Jul 2012 17:13:12 -0400
+Message-ID: <20120723211312.GA12533@sigill.intra.peff.net>
+References: <20120723184634.GA31905@sigill.intra.peff.net>
+ <20120723185218.GC27588@sigill.intra.peff.net>
+ <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
+ <20120723205209.GA6745@sigill.intra.peff.net>
+ <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 23:09:37 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 23:13:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StPsl-00015Z-Hu
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:09:35 +0200
+	id 1StPwP-0004DV-7t
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849Ab2GWVJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 17:09:30 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:33456 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754663Ab2GWVJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 17:09:30 -0400
-Received: by vcbfk26 with SMTP id fk26so5218931vcb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5LzYKh64zpypbiG12Ym7+B+ESxvhqnCICAvcvdAqhHQ=;
-        b=qaatQiF2x1svd9Sf0a5x7CdP1WUP437TZZM1uUgj0ajOxpqXk+c89rZ4lpHBX4PweG
-         MhVi5FgSu4Or9Dt9zORlc+Co9YNF8W92gyzUgiL96ypBq9IC++FCN+Dm3UVvNkV84vKX
-         9X4CiziN/4GZbYc2vtSUQqaR3+1oZ2SEjyNDFhV6cO7ERfbtXMRsTPwi7tDfB+Ui1ki+
-         o8BzNuRKwqa3crPOI6/6JosTCdnbR/p9rp+qIBtdgy66kUjPWLV1EtrnoW7S7TsAD1de
-         1FftLm4PN1K4V8r2kizcB61U3i+7aaLq4hUvMy/P1yHrSRG71Dfb+4Y1f290cW8DdLuu
-         kEgw==
-Received: by 10.221.12.14 with SMTP id pg14mr13788385vcb.21.1343077769294;
- Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
-Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
-In-Reply-To: <7v4noykxvm.fsf@alter.siamese.dyndns.org>
+	id S1754819Ab2GWVNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 17:13:16 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59221 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754663Ab2GWVNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 17:13:15 -0400
+Received: (qmail 8896 invoked by uid 107); 23 Jul 2012 21:13:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 Jul 2012 17:13:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jul 2012 17:13:12 -0400
+Content-Disposition: inline
+In-Reply-To: <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201984>
 
-On Mon, Jul 23, 2012 at 10:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Jul 23, 2012 at 02:00:19PM -0700, Junio C Hamano wrote:
 
-> For example, when the user tells it to install in "/home/ss/bin", if
-> it installs its "compare" program in "/home/ss/bin/araxis/compare"
-> without allowing the "/araxis/" part to be stripped away, the above
-> heuristics is sufficiently safe.  Otherwise, it is not.
+> >> Liberal use of atexit() for something like this makes me cringe
+> >> somewhat.
+> >
+> > I don't like it either, but there's not really a better way. The die()
+> > that Ramana triggered in the initial report is deep inside the ident
+> > code. The only other option would be to hook into die_routine, which I
+> > think is even uglier.
+> 
+> Then I would rather not worry about it.  A documentation update is
+> probably a good first step, though.
 
-To the best of my knowledge, Araxis does not enforce any naming
-convention for the path it gets installed in. That means the user may
-indeed install the program in a path that does not contain "araxis". I
-was aware of this when writing the patch, but should have probably
-made it more clear in the commit message.
+I'm OK with dropping this one; the likely cause is ident problems, and
+the previous patch already helped with that (the next likely is probably
+commit hooks failing, but that is just a guess).
 
-> It is unclear from your proposed commit log message what assurance
-> do we have that it is installed under such a path and why the
-> heuristics the patch implements is the sane way forward.
+Here's a documentation patch.
 
-We have no such assurance. That's why you correctly call it a
-heuristics after all: it may fail. Personally, I've valued the gain of
-the patch to not list araxis as an available diff tool by "git
-difftool --tool-help" when in fact just ImageMagick is in PATH higher
-than the loss to support araxis installations that are in a path not
-containung "araxis" but are in PATH.
+-- >8 --
+Subject: [PATCH] commit: document the temporary commit message file
 
-Please feel free to ignore the patch if you feel the heuristics is not
-sufficiently safe. I'm currently unable to come up with a safer
-solution while maintaining portability, i.e. not use "which" or doing
-rather laborious string parsing on the output of "type".
+We do not document COMMIT_EDITMSG at all, but users may want
+to know about it for two reasons:
 
--- 
-Sebastian Schuberth
+  1. They may want to tell their editor to configure itself
+     for formatting a commit message.
+
+  2. If a commit is aborted by an error, the user may want
+     to recover the commit message they typed.
+
+Let's put a note in git-commit(1).
+---
+ Documentation/git-commit.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f400835..87297dc 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -407,6 +407,15 @@ This command can run `commit-msg`, `prepare-commit-msg`, `pre-commit`,
+ and `post-commit` hooks.  See linkgit:githooks[5] for more
+ information.
+ 
++FILES
++-----
++
++`$GIT_DIR/COMMIT_EDITMSG`::
++	This file contains the commit message of a commit in progress.
++	If `git-commit` exits due to an error before creating a commit,
++	any commit message that has been provided by the user (e.g., in
++	an editor session) will be available in this file, but will be
++	overwritten by the next invocation of `git-commit`.
+ 
+ SEE ALSO
+ --------
