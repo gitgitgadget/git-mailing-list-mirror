@@ -1,79 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH lt/block-sha1 0/2 v3] block-sha1: avoid pointer
- conversion that violates alignment constraints
-Date: Mon, 23 Jul 2012 00:28:02 -0500
-Message-ID: <20120723052605.GA13728@burratino>
-References: <20120722233547.GA1978@burratino>
- <7v8vebp0cl.fsf@alter.siamese.dyndns.org>
- <20120723045148.GA13623@burratino>
- <7vobn7njtz.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 0/5] difftool: Use symlinks in dir-diff mode
+Date: Sun, 22 Jul 2012 22:34:21 -0700
+Message-ID: <CAJDDKr54yYXVWupDFQsx4b8UiqHRL1hsnAvpZGehDxDPYcfXpw@mail.gmail.com>
+References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
+	<7vfw8jnjn2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Cree <mcree@orcon.net.nz>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@fluxnic.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 07:28:20 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 07:34:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StBBp-0001Sn-Vo
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:28:18 +0200
+	id 1StBHn-00069q-J5
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485Ab2GWF2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 01:28:13 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:63715 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734Ab2GWF2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 01:28:12 -0400
-Received: by gglu4 with SMTP id u4so5089453ggl.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 22:28:12 -0700 (PDT)
+	id S1753577Ab2GWFeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 01:34:23 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:38550 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753479Ab2GWFeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 01:34:22 -0400
+Received: by vbbff1 with SMTP id ff1so4340290vbb.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 22:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=i/3cAclhLWBOcAQJ233N/BSYcvqs4rK4FTE1TI4PxRc=;
-        b=Sw4+M+yhzVyWVEQNBllVUXh5bFUiIzg6TyUd8GmW8H7WQwyFOZQImNJTHf0JcSLdGQ
-         qSwrXWqx/duuD8ojCrhVWij7OqLyQES7qsN8Z7mS6wqYtwHQQGJzZwCwP7As6IHenzP3
-         fscUClu0Eb0rMY5upPbcep3RsKp6NJ4hlj8WD1uQJbqDzU9nOMyqIxf1sg0uVnIzP8vu
-         RfcgoogTGDSo0Wi7DEtdXh36nulqdTbKZOMc6B3dwi/ExaK1qPGwVDqWb+kSHtYcdqsZ
-         TDYLJJ4ZNpFBO1TGt8W1dAOZDU1TDRqz3Y7Uxz7Ypp8d6RBtU6CHJSw0liVJFStaO+xU
-         BuKg==
-Received: by 10.50.158.130 with SMTP id wu2mr13524742igb.32.1343021291689;
-        Sun, 22 Jul 2012 22:28:11 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id ai6sm11758453igc.0.2012.07.22.22.28.10
-        (version=SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 22:28:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vobn7njtz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=r3nk7QTN8KEiUfq6qiZ9zFhqi1EjO4UK3nKSeEznE3M=;
+        b=zgIShcOEwDdl7qXPQE5KNo4l0y+rOiGW6H6C7fcLWdYxSgSeQO6rs995yRV7XFnWTf
+         N7cY5BO2e0XGKblr0W6dNdmHUGE7UKIv/HsoP1a1W+Qx3gnVCzeOcPnjI8BCM0q8Nlw6
+         kLuBWOrUBH/z/hzJkooZJbR/l5F9AmHd8CdZpyp+H3C4k//hBLBaW94b8ViYn/Gsmsgt
+         6O5+o3ovbvz4wGr7l0QsMnPRvob4Jui6Ed7m1H5UvOI/TKgooISYPU/cvjp8+qOPBC3b
+         iTvteui6rCbJB4k01LLg3gpOWjWCEcczBlB5/WtO3izYeIlTBqU412yhZv+qFYumwgxt
+         izNA==
+Received: by 10.52.90.144 with SMTP id bw16mr9859143vdb.129.1343021661801;
+ Sun, 22 Jul 2012 22:34:21 -0700 (PDT)
+Received: by 10.52.114.67 with HTTP; Sun, 22 Jul 2012 22:34:21 -0700 (PDT)
+In-Reply-To: <7vfw8jnjn2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201903>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> The big-endian part was just my idiocy, sorry.
+On Sun, Jul 22, 2012 at 10:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
 >
-> Hrm, do we want an update log message for 1/2 then?
+>> Teach the difftool script to use symlinks when doing
+>> directory diffs in --dir-diff mode.
+>>
+>> This is v2 of the patch because I had a typo in one of the
+>> commit messages and gmail ate 4/5 in the last round.
+>
+> FWIW, I received all including 4/5 in my inboxes (at pobox and
+> gmail---I am doubly subscribed).  I still haven't figured out what
+> in the original 4/5 was so special to be dropped somewhere in
+> between.
 
-Hm, I thought all the crazy had been eliminated already.
-
-*looks again*
-
-I guess "using a single 32-bit load" makes it sound like it's using a
-big-endian load instead of a load followed by twiddling in registers.
-
-Simplest fix would be to drop the phrase "by using a single 32-bit
-load", leaving "... and gcc takes full advantage, resulting in a whole
-bunch of unaligned access traps."  Would that work for you, or should
-I resend?
-
-Thanks,
-Jonathan
+I hastily blamed gmail but of course it was vger's spam filters.
+The original subject said "git-difftool.XXXXX".
+The exes triggered it.
+-- 
+David
