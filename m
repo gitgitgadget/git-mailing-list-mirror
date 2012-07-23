@@ -1,135 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
- abandoned
-Date: Mon, 23 Jul 2012 13:49:55 -0700
-Message-ID: <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/3] commit: check committer identity more strictly
+Date: Mon, 23 Jul 2012 13:51:25 -0700
+Message-ID: <7vvchejj5e.fsf@alter.siamese.dyndns.org>
 References: <20120723184634.GA31905@sigill.intra.peff.net>
- <20120723185218.GC27588@sigill.intra.peff.net>
+ <20120723185035.GB27588@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 23 22:50:04 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 22:51:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StPZs-00034s-Az
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:50:04 +0200
+	id 1StPbJ-0004M3-MZ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727Ab2GWUt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 16:49:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49566 "EHLO
+	id S1754761Ab2GWUv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 16:51:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50173 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754505Ab2GWUt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 16:49:57 -0400
+	id S1753832Ab2GWUv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 16:51:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 794E07945;
-	Mon, 23 Jul 2012 16:49:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA26F7998;
+	Mon, 23 Jul 2012 16:51:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+mNfIlJeMyrmYtE10sPQo2agyPc=; b=dFDLrN
-	kZCnchYpxEgzE90tuST7flkjQKF5qBVzK1tZd0cgs99z2Bk5xX8shkbRFRYCzmQe
-	HMoHdbaDdjoOoEkCbFYNiTI71E1RMHCzsymeEAyakloD5vhyymb0t1YnhxLA4Y+/
-	sr03hUNFPlV9tumoSJ6uG53anrmC27vL4/Szc=
+	:content-type; s=sasl; bh=rtnmfWc5NM9RhboG4FqKNj8jzag=; b=rFbf2j
+	mEpAXeMu8pMxGU31JiNANbMZKCZpbVDgwT+pbMO8sd6+S1t2D0HFrU1n5nOskn69
+	UgSlVPfX0hMt/XvnnyVrKObcrHYnqDi9NSGmKpE9ohgAQ7f4846+5P0MHY8x+3d8
+	Iedtq3r6qsbzZRD/oNxeM/emX5AivcMViY2H4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NFSBoxNz/EMn7uHl2TaQVQxTjfwiNxLI
-	coiep792lHsclFJ+Phld4FJO8l2+RNb7N2KDLRGrge6KSxb4qV3R+5twIPQ784Ev
-	UEaPrO0SA+Akh8C96T2g6LX86sLJcIrZ0t+DYM+GJFzuh7SwP3aZ1LnIlne9l3ZA
-	N7OrPj93k0M=
+	:content-type; q=dns; s=sasl; b=rGojbt01DGGEvxscQnNCyTLsqdV7PKZ0
+	3PhhcaozOjtUr1EFWr6XRJPgRA4TsZpczYCaDCUBXMmmJmTQPkx5HOUKegWd4UJF
+	ScJSwhT9GQys8pdE+yIQ+d0f8P8zwZuR30Ejnnz2bylrq8U4jwK9m06UpOi7z5qa
+	8pnxOeriS7k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66D817940;
-	Mon, 23 Jul 2012 16:49:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8D817997;
+	Mon, 23 Jul 2012 16:51:27 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB18A793F; Mon, 23 Jul 2012
- 16:49:56 -0400 (EDT)
-In-Reply-To: <20120723185218.GC27588@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 23 Jul 2012 14:52:18 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 112457996; Mon, 23 Jul 2012
+ 16:51:26 -0400 (EDT)
+In-Reply-To: <20120723185035.GB27588@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 23 Jul 2012 14:50:35 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F608DA16-D507-11E1-8E36-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2BE5F77C-D508-11E1-A5F9-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201979>
 
 Jeff King <peff@peff.net> writes:
 
-> If we launch an editor for the user to create a commit
-> message, they may put significant work into doing so.
-> Typically we try to check common mistakes that could cause
-> the commit to fail early, so that we die before the user
-> goes to the trouble.
->
-> We may still experience some errors afterwards, though; in
-> this case, the user is given no hint that their commit
-> message has been saved. Let's tell them where it is.
-
-Liberal use of atexit() for something like this makes me cringe
-somewhat.
-
+> Incidentally, this bug was masked prior to 060d4bb, as the
+> initial loose call would taint the later strict call. So the
+> commit would succeed (albeit with a bogus committer line in
+> the commit object), and nobody noticed that our early check
+> did not match the later one.
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
-> I did not bother protecting this with advice.* config, as it is unlikely
-> to come up regularly. If somebody cares, they are welcome to add it on
-> top.
->
->  builtin/commit.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  builtin/commit.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/builtin/commit.c b/builtin/commit.c
-> index 20cef95..149e07d 100644
+> index 95eeab1..20cef95 100644
 > --- a/builtin/commit.c
 > +++ b/builtin/commit.c
-> @@ -116,6 +116,16 @@ static enum {
->  	STATUS_FORMAT_PORCELAIN
->  } status_format = STATUS_FORMAT_LONG;
+> @@ -725,7 +725,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  	strbuf_release(&sb);
 >  
-> +static int mention_abandoned_message;
-> +static void maybe_mention_abandoned_message(void)
-> +{
-> +	if (!mention_abandoned_message)
-> +		return;
-> +	advise(_("Your commit message has been saved in '%s' and will be\n"
-> +		 "overwritten by the next invocation of \"git commit\"."),
-> +	       git_path(commit_editmsg));
-> +}
-> +
->  static int opt_parse_m(const struct option *opt, const char *arg, int unset)
->  {
->  	struct strbuf *buf = opt->value;
-> @@ -848,6 +858,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  			_("Please supply the message using either -m or -F option.\n"));
->  			exit(1);
->  		}
-> +		atexit(maybe_mention_abandoned_message);
-> +		mention_abandoned_message = 1;
->  	}
->  
->  	if (!no_verify &&
-> @@ -1532,11 +1544,13 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	if (template_untouched(&sb) && !allow_empty_message) {
->  		rollback_index_files();
->  		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
-> +		mention_abandoned_message = 0;
->  		exit(1);
->  	}
->  	if (message_is_empty(&sb) && !allow_empty_message) {
->  		rollback_index_files();
->  		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
-> +		mention_abandoned_message = 0;
->  		exit(1);
->  	}
->  
-> @@ -1579,6 +1593,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		die(_("cannot update HEAD ref"));
->  	}
->  
-> +	mention_abandoned_message = 0;
->  	unlink(git_path("CHERRY_PICK_HEAD"));
->  	unlink(git_path("REVERT_HEAD"));
->  	unlink(git_path("MERGE_HEAD"));
+>  	/* This checks if committer ident is explicitly given */
+> -	strbuf_addstr(&committer_ident, git_committer_info(0));
+> +	strbuf_addstr(&committer_ident, git_committer_info(IDENT_STRICT));
+>  	if (use_editor && include_status) {
+>  		char *ai_tmp, *ci_tmp;
+>  		if (whence != FROM_COMMIT)
+
+Looks sensible.  Is this something we can detect in automated tests,
+or is it too cumbersome to set up?
