@@ -1,62 +1,72 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Solve git-submodule issues with detached work trees
-Date: Tue, 24 Jul 2012 01:17:45 +0200
-Message-ID: <500DDB99.80103@web.de>
-References: <CAHCkQtNfz8Kbn810LgXEQ_rkyk4qn5amGgHQsv2uR6H38sTSrg@mail.gmail.com> <7vsjcjnjvj.fsf@alter.siamese.dyndns.org> <500D8C30.9010807@web.de> <7v7gtumj88.fsf@alter.siamese.dyndns.org> <500DADEE.9060700@web.de> <7vd33mkyhj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 6/7] build: "make clean" should not remove
+ configure-generated files
+Date: Mon, 23 Jul 2012 16:28:58 -0700
+Message-ID: <7vk3xuhxad.fsf@alter.siamese.dyndns.org>
+References: <7vy5mgvb6f.fsf@alter.siamese.dyndns.org>
+ <cover.1342683786.git.stefano.lattarini@gmail.com>
+ <904eb7b0b17805b5265ab70709241b7da382a0cb.1342683786.git.stefano.lattarini@gmail.com> <500DDB07.6050006@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Daniel_Gra=F1a?= <dangra@gmail.com>,
-	git@vger.kernel.org,
-	Richard Hartmann <richih.mailinglist@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:18:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Stefano Lattarini <stefano.lattarini@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:29:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StRsz-0006Hn-Kc
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 01:17:58 +0200
+	id 1StS3v-0005sw-JF
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 01:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab2GWXRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 19:17:53 -0400
-Received: from mout.web.de ([212.227.17.12]:52755 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751687Ab2GWXRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 19:17:52 -0400
-Received: from [192.168.178.48] ([91.3.175.185]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0LlF9O-1TRxcW2uZy-00aMIS; Tue, 24 Jul 2012 01:17:51
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vd33mkyhj.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:7IMJ0PFTqu/iNiWNlmbH5vMB2gaL2xmHh1VdM2muXuR
- o8VgxJ5VSZAePkPckt9+wvCr73+GH3IEFsvKxMLVwGnzW2oBAn
- usDjTnqagbSI+BPZ4Mv21fKkzVuAnaOP9P2evE2m6I+VLKLbr2
- PBuuJeU6kK0ZAa7bof/8b0b8L+U7TZmjOkNiLJDTltt94DLVzz
- j1UNDV0oeyqprSF+dp3dw==
+	id S1754706Ab2GWX3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 19:29:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55364 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752854Ab2GWX3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 19:29:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CC3C714B;
+	Mon, 23 Jul 2012 19:29:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WUV5jtLuz2wlOy+Jfofu+wzro+M=; b=ulIyQw
+	MxCuW7Dg6qw9ISQhiPpjJt177HTlGh5iFU7eEDLUfuBUHCyuWu6oJXhpZtqyaUPu
+	wIv/YhC3BMmcMS+x5DzI/3l2E20TH096WS3qugU/SO7tVnJia/kY5lmEGz91m+oj
+	/A/iaJ23GKkHsXyvXznpT1NOt0Ae7fmKJRl6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZZcJIlPgnqnhc/pp/1w/Ah6+Ewnm6QoP
+	5BJbgujK3Fi51Eh5lNjjbRJ0ODySshiWa9COMcsACeVoPsl6PExw4TeB//3FrIox
+	zBx2u4IGxqcoY4p3T1ubRhasl/Nc/YenuicBlzlokY6sRr8DaNIrLUKeQxx7y4UZ
+	+RxmFrxbE2k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BBF1714A;
+	Mon, 23 Jul 2012 19:29:00 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC0117149; Mon, 23 Jul 2012
+ 19:28:59 -0400 (EDT)
+In-Reply-To: <500DDB07.6050006@gmail.com> (Stefano Lattarini's message of
+ "Tue, 24 Jul 2012 01:15:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E2F9824-D51E-11E1-917F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202004>
 
-Am 23.07.2012 22:34, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> We could get rid of the core.worktree setting by assuming that the
->> directory a gitfile was found in is the root of the repo's work
->> tree (unless configured otherwise).
-> 
-> Now you lost me.  If you have .git that is not a directory but is a
-> gitfile, then you do not need GIT_DIR nor GIT_WORK_TREE in the first
-> place, no?
+Stefano Lattarini <stefano.lattarini@gmail.com> writes:
 
-Not inside the submodule, me thinks they only make sense in the
-superproject (that's why we clean the environment before working
-inside the submodule). But setting the superproject's GIT_WORK_TREE
-to something else won't work for an already initialized submodule,
-as the core.worktree setting will still point to the old work tree
-which was set when the submodule was initialized. One could expect
-the submodule's work tree to be $GIT_WORK_TREE/$sm_path when
-GIT_WORK_TREE is set, but it isn't.
+> ... and here we should add "invocation":
+>
+>     ... the "make install" invocation ...
+>
+>> falls back to the default prefix of '$HOME', thus installing git
+>> in the user's home directory -- definitely unexpected.
+>
+> Can you fix those nits locally before merging to 'next', or should
+> I send a re-roll?
+
+Too late X-<.
