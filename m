@@ -1,9 +1,12 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 2/5] difftool: Eliminate global variables
-Date: Sun, 22 Jul 2012 20:57:08 -0700
-Message-ID: <1343015831-17498-3-git-send-email-davvid@gmail.com>
+Subject: [PATCH 5/5] difftool: Use symlinks when diffing against the worktree
+Date: Sun, 22 Jul 2012 20:57:11 -0700
+Message-ID: <1343015831-17498-6-git-send-email-davvid@gmail.com>
 References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
  <1343015831-17498-2-git-send-email-davvid@gmail.com>
+ <1343015831-17498-3-git-send-email-davvid@gmail.com>
+ <1343015831-17498-4-git-send-email-davvid@gmail.com>
+ <1343015831-17498-5-git-send-email-davvid@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Mon Jul 23 05:58:12 2012
@@ -12,260 +15,171 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1St9ma-0000Tl-B7
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 05:58:08 +0200
+	id 1St9mb-0000Tl-Ux
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 05:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753458Ab2GWD5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 23:57:51 -0400
+	id S1753483Ab2GWD5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 23:57:54 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:56934 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976Ab2GWD5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 23:57:10 -0400
+	with ESMTP id S1753428Ab2GWD5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 23:57:17 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so10168206pbb.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:10 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=RgXl/UWY62nqKbgJg3bl17HkWEzH1dqg9U0Wa+3QmEo=;
-        b=glUMFI1c0yU0RrZlggDGCdldobSFPcA+9MLlqjyGRK3T4ci+JBAHF+E/K5jVynmGIZ
-         5N31NldOZwl07gk0OxQDsUKAnhUSonl/XExtehCba1C+naUniIZxnsrkbGKI8NdEcceT
-         PNC9KcBcpuxSPkKzVCyRSjTnjkJ6OOO3J+ktf7PU0h5qihRFaxLabKdnRiHNt1/DlnmA
-         MNbH6TJYwFx0jCGPXRwpMJbgtoqM+ozrcoMRPRAQqj/nuH/d02LOgms8H89PsSfKW6sm
-         GPGZjzlvpRFHGwWqS57piqmJTwNjVXPNAVyWb2yFHy2y94T3uK+QFaQbWxRYwu+q0E+X
-         6DXg==
-Received: by 10.68.203.40 with SMTP id kn8mr31679677pbc.162.1343015830005;
-        Sun, 22 Jul 2012 20:57:10 -0700 (PDT)
+        bh=SR54/feCZRST3WugoQkYPi4ImZ+xdd3J1dn7NiK3vtc=;
+        b=IZ1iHVuaY70Bx6vi4UKEbC9U9HaT5jFbhssCqsX4lHTk6FxrNRc25oTzUjhrQ6ZVpx
+         SL4vJd/8GCMxUHlmdmPCTP34o25+UC0BZocwTUx1mtk6Grh5nF3AaejLCnNXEa5Cziho
+         LwW4Et9oFfEBCMOkyyjaRyEpoxPZP9WSxwY53mRWRdkynfrR4ttPogSonDTdkpBBM29P
+         +QCcMDaklhjME36OxESJmNx3tbpyWQNMokf17NwiSGiiLd5ZKJt92DPZVoXk3dNCCYle
+         eYVnEBpjHqZ/x7/FU6cxqOaJVBM2HREgBWB7SBfiJwo5faeTiB/nzimA2QdXm+56nPnj
+         gKhg==
+Received: by 10.68.219.162 with SMTP id pp2mr31780466pbc.85.1343015836756;
+        Sun, 22 Jul 2012 20:57:16 -0700 (PDT)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.08
+        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 20:57:09 -0700 (PDT)
+        Sun, 22 Jul 2012 20:57:16 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.2.255.g5f133da
-In-Reply-To: <1343015831-17498-2-git-send-email-davvid@gmail.com>
+In-Reply-To: <1343015831-17498-5-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201891>
 
-Organize the script so that it has a single main() function which
-calls out to dir_diff() and file_diff() functions. This eliminates
-"dir-diff"-specific variables that do not need to be calculated when
-performing a regular file-diff.
+Teach difftool's --dir-diff mode to use symlinks to represent
+files from the working copy, and make it the default behavior
+for the non-Windows platforms.
+
+Using symlinks is simpler and safer since we do not need to
+worry about copying files back into the worktree.
+The old behavior is still available as --no-symlinks.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
 Same as before, resending because gmail ate patch 4/5
 
- git-difftool.perl | 128 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 75 insertions(+), 53 deletions(-)
+ Documentation/git-difftool.txt |  8 ++++++++
+ git-difftool.perl              | 30 +++++++++++++++++++++++-------
+ 2 files changed, 31 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 31fc2e3..313d54e 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -66,6 +66,14 @@ of the diff post-image.  `$MERGED` is the name of the file which is
+ being compared. `$BASE` is provided for compatibility
+ with custom merge tool commands and has the same value as `$MERGED`.
+ 
++--symlinks::
++--no-symlinks::
++	'git difftool''s default behavior is create symlinks to the
++	working tree when run in `--dir-diff` mode.
+++
++	Specifying `--no-symlinks` instructs 'git difftool' to create
++	copies instead.  `--no-symlinks` is the default on Windows.
++
+ --tool-help::
+ 	Print a list of diff tools that may be used with `--tool`.
+ 
 diff --git a/git-difftool.perl b/git-difftool.perl
-index ac0ed63..41ba932 100755
+index 2ae344c..b8f8057 100755
 --- a/git-difftool.perl
 +++ b/git-difftool.perl
-@@ -22,11 +22,6 @@ use File::Temp qw(tempdir);
- use Getopt::Long qw(:config pass_through);
- use Git;
- 
--my @working_tree;
--my $rc;
--my $repo = Git->repository();
--my $repo_path = $repo->repo_path();
--
- sub usage
- {
- 	my $exitcode = shift;
-@@ -43,6 +38,8 @@ USAGE
- 
- sub find_worktree
- {
-+	my ($repo) = @_;
-+
- 	# Git->repository->wc_path() does not honor changes to the working
- 	# tree location made by $ENV{GIT_WORK_TREE} or the 'core.worktree'
- 	# config variable.
-@@ -61,8 +58,6 @@ sub find_worktree
- 	return $worktree;
- }
- 
--my $workdir = find_worktree();
--
- sub print_tool_help
- {
- 	my ($cmd, @found, @notfound);
-@@ -97,10 +92,13 @@ sub print_tool_help
+@@ -92,7 +92,7 @@ sub print_tool_help
  
  sub setup_dir_diff
  {
-+	my ($repo, $workdir) = @_;
-+
+-	my ($repo, $workdir) = @_;
++	my ($repo, $workdir, $symlinks) = @_;
+ 
  	# Run the diff; exit immediately if no diff found
  	# 'Repository' and 'WorkingCopy' must be explicitly set to insure that
- 	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
- 	# by Git->repository->command*.
-+	my $repo_path = $repo->repo_path();
- 	my $diffrepo = Git->repository(Repository => $repo_path, WorkingCopy => $workdir);
- 	my $diffrtn = $diffrepo->command_oneline('diff', '--raw', '--no-abbrev', '-z', @ARGV);
- 	exit(0) if (length($diffrtn) == 0);
-@@ -121,6 +119,7 @@ sub setup_dir_diff
- 	my $rindex = '';
- 	my %submodule;
- 	my %symlink;
-+	my @working_tree = ();
- 	my @rawdiff = split('\0', $diffrtn);
- 
- 	my $i = 0;
-@@ -188,7 +187,7 @@ sub setup_dir_diff
- 	($inpipe, $ctx) = $repo->command_input_pipe(qw/update-index -z --index-info/);
- 	print($inpipe $lindex);
- 	$repo->command_close_pipe($inpipe, $ctx);
--	$rc = system('git', 'checkout-index', '--all', "--prefix=$ldir/");
-+	my $rc = system('git', 'checkout-index', '--all', "--prefix=$ldir/");
- 	exit($rc | ($rc >> 8)) if ($rc != 0);
- 
- 	$ENV{GIT_INDEX_FILE} = "$tmpdir/rindex";
-@@ -238,7 +237,7 @@ sub setup_dir_diff
+@@ -209,8 +209,13 @@ sub setup_dir_diff
+ 		unless (-d "$rdir/$dir") {
+ 			mkpath("$rdir/$dir") or die $!;
  		}
- 	}
- 
--	return ($ldir, $rdir);
-+	return ($ldir, $rdir, @working_tree);
- }
- 
- sub write_to_file
-@@ -261,54 +260,70 @@ sub write_to_file
- 	close($fh);
- }
- 
--# parse command-line options. all unrecognized options and arguments
--# are passed through to the 'git diff' command.
--my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
--GetOptions('g|gui!' => \$gui,
--	'd|dir-diff' => \$dirdiff,
--	'h' => \$help,
--	'prompt!' => \$prompt,
--	'y' => sub { $prompt = 0; },
--	't|tool:s' => \$difftool_cmd,
--	'tool-help' => \$tool_help,
--	'x|extcmd:s' => \$extcmd);
--
--if (defined($help)) {
--	usage(0);
--}
--if (defined($tool_help)) {
--	print_tool_help();
--}
--if (defined($difftool_cmd)) {
--	if (length($difftool_cmd) > 0) {
--		$ENV{GIT_DIFF_TOOL} = $difftool_cmd;
--	} else {
--		print "No <tool> given for --tool=<tool>\n";
--		usage(1);
-+sub main
-+{
-+	# parse command-line options. all unrecognized options and arguments
-+	# are passed through to the 'git diff' command.
-+	my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
-+	GetOptions('g|gui!' => \$gui,
-+		'd|dir-diff' => \$dirdiff,
-+		'h' => \$help,
-+		'prompt!' => \$prompt,
-+		'y' => sub { $prompt = 0; },
-+		't|tool:s' => \$difftool_cmd,
-+		'tool-help' => \$tool_help,
-+		'x|extcmd:s' => \$extcmd);
-+
-+	if (defined($help)) {
-+		usage(0);
- 	}
--}
--if (defined($extcmd)) {
--	if (length($extcmd) > 0) {
--		$ENV{GIT_DIFFTOOL_EXTCMD} = $extcmd;
--	} else {
--		print "No <cmd> given for --extcmd=<cmd>\n";
--		usage(1);
-+	if (defined($tool_help)) {
-+		print_tool_help();
- 	}
--}
--if ($gui) {
--	my $guitool = '';
--	$guitool = Git::config('diff.guitool');
--	if (length($guitool) > 0) {
--		$ENV{GIT_DIFF_TOOL} = $guitool;
-+	if (defined($difftool_cmd)) {
-+		if (length($difftool_cmd) > 0) {
-+			$ENV{GIT_DIFF_TOOL} = $difftool_cmd;
+-		copy("$workdir/$file", "$rdir/$file") or die $!;
+-		chmod(stat("$workdir/$file")->mode, "$rdir/$file") or die $!;
++		if ($symlinks) {
++			symlink("$workdir/$file", "$rdir/$file") or die $!;
 +		} else {
-+			print "No <tool> given for --tool=<tool>\n";
-+			usage(1);
++			copy("$workdir/$file", "$rdir/$file") or die $!;
++			my $mode = stat("$workdir/$file")->mode;
++			chmod($mode, "$rdir/$file") or die $!;
 +		}
-+	}
-+	if (defined($extcmd)) {
-+		if (length($extcmd) > 0) {
-+			$ENV{GIT_DIFFTOOL_EXTCMD} = $extcmd;
-+		} else {
-+			print "No <cmd> given for --extcmd=<cmd>\n";
-+			usage(1);
-+		}
-+	}
-+	if ($gui) {
-+		my $guitool = '';
-+		$guitool = Git::config('diff.guitool');
-+		if (length($guitool) > 0) {
-+			$ENV{GIT_DIFF_TOOL} = $guitool;
-+		}
-+	}
-+
-+	# In directory diff mode, 'git-difftool--helper' is called once
-+	# to compare the a/b directories.  In file diff mode, 'git diff'
-+	# will invoke a separate instance of 'git-difftool--helper' for
-+	# each file that changed.
-+	if (defined($dirdiff)) {
-+		dir_diff($extcmd);
-+	} else {
-+		file_diff($prompt);
  	}
- }
  
--# In directory diff mode, 'git-difftool--helper' is called once
--# to compare the a/b directories.  In file diff mode, 'git diff'
--# will invoke a separate instance of 'git-difftool--helper' for
--# each file that changed.
--if (defined($dirdiff)) {
--	my ($a, $b) = setup_dir_diff();
-+sub dir_diff
-+{
-+	my ($extcmd) = @_;
-+
-+	my $rc;
-+	my $repo = Git->repository();
-+
-+	my $workdir = find_worktree($repo);
-+	my ($a, $b, @working_tree) = setup_dir_diff($repo, $workdir);
+ 	# Changes to submodules require special treatment. This loop writes a
+@@ -271,6 +276,7 @@ sub main
+ 		gui => undef,
+ 		help => undef,
+ 		prompt => undef,
++		symlinks => $^O ne 'MSWin32' && $^O ne 'msys',
+ 		tool_help => undef,
+ 	);
+ 	GetOptions('g|gui!' => \$opts{gui},
+@@ -278,6 +284,8 @@ sub main
+ 		'h' => \$opts{help},
+ 		'prompt!' => \$opts{prompt},
+ 		'y' => sub { $opts{prompt} = 0; },
++		'symlinks' => \$opts{symlinks},
++		'no-symlinks' => sub { $opts{symlinks} = 0; },
+ 		't|tool:s' => \$opts{difftool_cmd},
+ 		'tool-help' => \$opts{tool_help},
+ 		'x|extcmd:s' => \$opts{extcmd});
+@@ -316,7 +324,7 @@ sub main
+ 	# will invoke a separate instance of 'git-difftool--helper' for
+ 	# each file that changed.
+ 	if (defined($opts{dirdiff})) {
+-		dir_diff($opts{extcmd});
++		dir_diff($opts{extcmd}, $opts{symlinks});
+ 	} else {
+ 		file_diff($opts{prompt});
+ 	}
+@@ -324,13 +332,13 @@ sub main
+ 
+ sub dir_diff
+ {
+-	my ($extcmd) = @_;
++	my ($extcmd, $symlinks) = @_;
+ 
+ 	my $rc;
+ 	my $repo = Git->repository();
+ 
+ 	my $workdir = find_worktree($repo);
+-	my ($a, $b, @working_tree) = setup_dir_diff($repo, $workdir);
++	my ($a, $b, @working_tree) = setup_dir_diff($repo, $workdir, $symlinks);
  	if (defined($extcmd)) {
  		$rc = system($extcmd, $a, $b);
  	} else {
-@@ -327,7 +342,12 @@ if (defined($dirdiff)) {
- 			chmod(stat("$b/$file")->mode, "$workdir/$file") or die $!;
+@@ -340,15 +348,23 @@ sub dir_diff
+ 
+ 	exit($rc | ($rc >> 8)) if ($rc != 0);
+ 
++	# Do not copy back files when symlinks are used
++	if ($symlinks) {
++		exit(0);
++	}
++
+ 	# If the diff including working copy files and those
+ 	# files were modified during the diff, then the changes
+ 	# should be copied back to the working tree
++
+ 	for my $file (@working_tree) {
+ 		if (-e "$b/$file" && compare("$b/$file", "$workdir/$file")) {
+ 			copy("$b/$file", "$workdir/$file") or die $!;
+-			chmod(stat("$b/$file")->mode, "$workdir/$file") or die $!;
++			my $mode = stat("$b/$file")->mode;
++			chmod($mode, "$workdir/$file") or die $!;
  		}
  	}
--} else {
-+}
-+
-+sub file_diff
-+{
-+	my ($prompt) = @_;
-+
- 	if (defined($prompt)) {
- 		if ($prompt) {
- 			$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
-@@ -347,3 +367,5 @@ if (defined($dirdiff)) {
- 	my $rc = system('git', 'diff', @ARGV);
- 	exit($rc | ($rc >> 8));
++	exit(0);
  }
-+
-+main();
+ 
+ sub file_diff
 -- 
 1.7.11.2.255.g5f133da
