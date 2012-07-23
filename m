@@ -1,96 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
- abandoned
-Date: Mon, 23 Jul 2012 15:09:47 -0700
-Message-ID: <7va9yqjfis.fsf@alter.siamese.dyndns.org>
-References: <20120723184634.GA31905@sigill.intra.peff.net>
- <20120723185218.GC27588@sigill.intra.peff.net>
- <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
- <20120723205209.GA6745@sigill.intra.peff.net>
- <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
- <20120723211312.GA12533@sigill.intra.peff.net>
- <7veho2jh4q.fsf@alter.siamese.dyndns.org>
- <20120723214339.GA13931@sigill.intra.peff.net>
+Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g.
+ ImageMagick's
+Date: Mon, 23 Jul 2012 15:22:27 -0700
+Message-ID: <7v629ejexo.fsf@alter.siamese.dyndns.org>
+References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com>
+ <500CFB19.6010905@gmail.com> <7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
+ <500DA7F3.3000403@gmail.com> <7v4noykxvm.fsf@alter.siamese.dyndns.org>
+ <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 24 00:10:00 2012
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 00:22:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StQpB-0005vs-4O
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:09:57 +0200
+	id 1StR1Q-0007CM-BS
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 00:22:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138Ab2GWWJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 18:09:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54561 "EHLO
+	id S1754798Ab2GWWWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 18:22:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59753 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752723Ab2GWWJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 18:09:50 -0400
+	id S1754717Ab2GWWW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 18:22:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83F138EAA;
-	Mon, 23 Jul 2012 18:09:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E2F361C5;
+	Mon, 23 Jul 2012 18:22:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eRV5cWlF0Xbq1lbMVVXlgEFiUYo=; b=OCMZh/
-	oCTWEC6OPo7nsfUmFPV5X6vL/nM8+DWiniHsUw6XfgCrrs7wbvBSo3504JcyNjgx
-	q/+S7UAut5En4nfLvJiFCV54hF3EkcEO/lC08tF4kyY7/RTxpR2xsF2X+V01r9Q2
-	nvxtgeSi2XCz6pcPKhlanM6BuTrg473ripYQM=
+	:content-type; s=sasl; bh=pkp13o43PcrQpKqpEZd1aaUQX4Q=; b=yLdAKw
+	n+38VeH5ee2XV1+mR5Jnl04gD5fCrrCMnzosPMOxoxBEdx8jAPuUIgl5/vp/F464
+	KvPFIK9HW5V0/2nH2yi9TZKqTcbRc3/SOb7wNlniStuhnfVJpHQvWi4wE4S4v+tY
+	nhguRyfn6BwVKWSZ7j+V9utJmM2B4b9u6Np6g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tdKMWcEnH3c880z1KR1S2W/nTyMGtb+b
-	CsflamLP6r8g9mSrK0v+1Pmv/Das124N0XMxFJ7W32U0YaSs8MpexfrKRLbiMNBU
-	J0d2pkumrl3EwBGm2YM+q1KfiaPg/bv9zRuRGHAY1egCBcRn9o9PmY8mMDMDXCLx
-	2qGAbb6S5DE=
+	:content-type; q=dns; s=sasl; b=d1Sxf4QStHLapSvndmEh8J+d6thQ1WWq
+	f0pac7tZG6sY8L+1BnKGxCbjA65kS2W87+zgM7iB0ZLf944Nt1yzCwkVRDujNwsZ
+	+BxKDVY8DCRq50ubfFe89G53AaChQtJu/WRsI5CxLubklHgrDF2m4K+xWLk3lcmh
+	6dzBYhgBs0A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70E268EA9;
-	Mon, 23 Jul 2012 18:09:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CF0061C3;
+	Mon, 23 Jul 2012 18:22:29 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1C3F8EA7; Mon, 23 Jul 2012
- 18:09:48 -0400 (EDT)
-In-Reply-To: <20120723214339.GA13931@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 23 Jul 2012 17:43:39 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD1BD61C2; Mon, 23 Jul 2012
+ 18:22:28 -0400 (EDT)
+In-Reply-To: <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
+ (Sebastian Schuberth's message of "Mon, 23 Jul 2012 23:09:29 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E6C21B0-D513-11E1-A01A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E35E0190-D514-11E1-8B3D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201995>
 
-Jeff King <peff@peff.net> writes:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> On Mon, Jul 23, 2012 at 02:35:01PM -0700, Junio C Hamano wrote:
-> ...
->> I also wondered if something like the following might be useful, but
->> it probably falls into the "water under the bridge" category.
->> 
->>  builtin/commit.c | 5 +++++
->>  1 file changed, 5 insertions(+)
->> 
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 149e07d..83bcee4 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -768,6 +768,11 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->>  				"with '#' will be kept; you may remove them"
->>  				" yourself if you want to.\n"
->>  				"An empty message aborts the commit.\n"));
->> +		status_printf(s, GIT_COLOR_NORMAL,
->> +			      _("The file '%s' keeps a copy of the log message\n"
->> +				"you edited, if you wish to inspect it later.\n"
->> +				"It will be wiped by the next invocation of 'git commit'.\n"),
->> +			      git_path("COMMIT_EDITMSG"));
->
-> That seems excessive, as it is inside the file itself. Unless your
-> editor is terrible, it already shows you that information.
+> Personally, I've valued the gain of
+> the patch to not list araxis as an available diff tool by "git
+> difftool --tool-help" when in fact just ImageMagick is in PATH higher
+> than the loss to support araxis installations that are in a path not
+> containung "araxis" but are in PATH.
 
-The pathname was not the part that was interesting; "If you wish to
-inspect it later" was.
+I agree that running ImageMagick's compare by accident is one thing
+we would want to avoid, but once the problem is diagnosed, it is
+something the user can easily work around by futzing %PATH%, I
+think.
 
-But that is what makes it water under the bridge.  The message will
-be gone by the time you really need it.
+On the other hand, if the user has bought and installed Araxis, but
+we incorrectly identify it as unusable, the user has wasted good
+money and there is no easy recourse as far as I can see in your
+patch.  That is why I wanted to see a reasonable assurance.
+
+If we limit the problem space by special casing Windows installation
+(e.g. check "uname -s" or something), would it make the problem
+easier to solve?  Perhaps it is much more likely that the path the
+program is installed in can be safely identified with a call to
+"type --path compare" (bash is the only shell shipped in msysgit,
+isn't it?), and its output is likely to contain "/Program Files/Araxis/"
+as a substring, or something?
