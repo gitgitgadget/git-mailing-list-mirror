@@ -1,92 +1,87 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
-Date: Tue, 24 Jul 2012 01:09:12 +0200
-Message-ID: <500DD998.2020600@gmail.com>
-References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com> <500CFB19.6010905@gmail.com> <7vmx2qmnfw.fsf@alter.siamese.dyndns.org> <500DA7F3.3000403@gmail.com> <7v4noykxvm.fsf@alter.siamese.dyndns.org> <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com> <7v629ejexo.fsf@alter.siamese.dyndns.org> <7vtxwyhzi8.fsf@alter.siamese.dyndns.org>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH v2 6/7] build: "make clean" should not remove configure-generated
+ files
+Date: Tue, 24 Jul 2012 01:15:19 +0200
+Message-ID: <500DDB07.6050006@gmail.com>
+References: <7vy5mgvb6f.fsf@alter.siamese.dyndns.org> <cover.1342683786.git.stefano.lattarini@gmail.com> <904eb7b0b17805b5265ab70709241b7da382a0cb.1342683786.git.stefano.lattarini@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 01:09:25 2012
+Cc: gitster@pobox.com, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 24 01:15:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StRki-0000Bw-Sq
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 01:09:25 +0200
+	id 1StRqa-0004cS-EF
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 01:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020Ab2GWXJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 19:09:19 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:60651 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055Ab2GWXJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 19:09:18 -0400
-Received: by wgbdr13 with SMTP id dr13so6297107wgb.1
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 16:09:17 -0700 (PDT)
+	id S1754787Ab2GWXPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 19:15:23 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:62991 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749Ab2GWXPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 19:15:23 -0400
+Received: by bkwj10 with SMTP id j10so5795048bkw.19
+        for <git@vger.kernel.org>; Mon, 23 Jul 2012 16:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=O17i8JGtfIA9CoTjZuF5Z612KipVlWlU9jFaHBR/6Ys=;
-        b=qbX2OAntUMwazOQZSgDP5XtKRzDjmVK36ZPE/YniZYjQ7hqLYUTishCVKXA7KIkij7
-         Dj2w8k8+wI7HwjvZPlpD9kWfkkSJJfMLpWawZkSXof4TtCHQ+4Ph38I0U1O0iqnfbgdV
-         YSY6j1hbB/TG7ZhaW0u35nsmyOADuLXTPEH8clX2nRAdFL8PuDDooaG0NNcS61QnAZrA
-         cIBfbw9gXBCm4qYOODzq/CF6v4FiebTvI+z+MWN+8o1ENVIiZE8mBzBYaCVS3GmkaG8J
-         0JIswSVCuGgghFaLC1ZtZfzI+QTqWyDoihcD800heI4Hlxaqc4OWAP4tDbKNJ68viAtF
-         FstA==
-Received: by 10.180.83.106 with SMTP id p10mr1412461wiy.21.1343084957662;
-        Mon, 23 Jul 2012 16:09:17 -0700 (PDT)
-Received: from [192.168.178.22] (p5DDB0643.dip0.t-ipconnect.de. [93.219.6.67])
-        by mx.google.com with ESMTPS id t8sm1198481wiy.3.2012.07.23.16.09.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2012 16:09:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vtxwyhzi8.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=0iDsFHrI4dQgOx89yLkDLsnhQZwByu/l62Y1ebaXq/A=;
+        b=BNi5a/p943d9FF7YbIZuyFxWxB7iWMiF6FkkJl/a4/Salyyap72hk8LJW2bB9ZeoOd
+         oaIwcNVUU4KAi1FI5tiFGne4ZSBXHGUU5ieBJRzIMZLTFsGi7IBhdTlsRvgN1DUyk5O2
+         4zpKzKEeWZOONPy2YH4rjbQVLkFvWBDHS2F4+dat3gJwPxyAYb4tFxQL1yotQg+Cua8r
+         3Em1PF/KuHTwpwHhjGpE4KlGuVAXaLmgbM4sG4mgkxDMQzeJB9Yuc0nVXzgnDxGY/o65
+         4BGQpbXTDZBhIkR3ZfPAV8MJchiY0xHmyXRMK46U9nvb8+DA/6n/tPaXiKfp6J45habd
+         D7Ng==
+Received: by 10.205.132.12 with SMTP id hs12mr8996561bkc.47.1343085321693;
+        Mon, 23 Jul 2012 16:15:21 -0700 (PDT)
+Received: from [192.168.178.21] (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
+        by mx.google.com with ESMTPS id 25sm9166601bkx.9.2012.07.23.16.15.20
+        (version=SSLv3 cipher=OTHER);
+        Mon, 23 Jul 2012 16:15:20 -0700 (PDT)
+In-Reply-To: <904eb7b0b17805b5265ab70709241b7da382a0cb.1342683786.git.stefano.lattarini@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202001>
 
-On 24.07.2012 00:41, Junio C Hamano wrote:
+Hi Junio.
 
-> +		if test -f $(dirname "$(type --path compare)")/AraxisMerge
+On 07/19/2012 09:50 AM, Stefano Lattarini wrote:
+> Those filed
+>
+Oops, this should read "files", not "filed" ...
 
-We would need additional quotes around the whole path here as the Windows installation path is usually something like "C:\Program Files\Araxis\Araxis Merge" and contains spaces.
+> hold variables, settings and information set by the
+> configuration process run by './configure'; in Autotools-based
+> build system that kind of stuff should only be removed by
+> "make distclean".  Having it removed by "make clean" is not only
+> inconsistent, but causes real confusion for that part of the Git
+> audience that is used to the Autotools semantics; for example,
+> an autotools old-timer that has run:
+> 
+>     ./configure --prefix /opt/git
+> 
+> in the past, without running "make distclean" afterwards, would
+> expect a "make install" issued after a "make clean" to rebuild and
+> install git in '/opt/git'; but with the current behaviour, the
+> "make clean" invocation removes (among the other things) the file
+> 'config.mak.autogen', so that the "make install"
+>
+... and here we should add "invocation":
 
-Moreover, "test -f" requires the ".exe" extension to be explicitly present for the file to test. But I'd rather not do that because the test would be specific to Windows then and e.g. not work on Mac OS X. That's why I'd still like to use ls like in my first patch:
+    ... the "make install" invocation ...
 
- mergetools/araxis | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+> falls back to the default prefix of '$HOME', thus installing git
+> in the user's home directory -- definitely unexpected.
 
-diff --git a/mergetools/araxis b/mergetools/araxis
-index 64f97c5..c406ead 100644
---- a/mergetools/araxis
-+++ b/mergetools/araxis
-@@ -16,5 +16,18 @@ merge_cmd () {
- }
- 
- translate_merge_tool_path() {
--	echo compare
-+	case "$BASH_VERSION" in
-+	??*)
-+		# we can safely use "type --path"
-+		if ls "$(dirname "$(type --path compare)")"/Araxis* >/dev/null 2>&1
-+		then
-+			echo compare
-+		else
-+			echo "$1"
-+		fi
-+		;;
-+	*)
-+		echo compare
-+		;;
-+	esac
- }
+Can you fix those nits locally before merging to 'next', or should
+I send a re-roll?
 
--- 
-Sebastian Schuberth
+Thanks, and sorry for the confusion,
+  Stefano
