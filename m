@@ -1,99 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: fix location of listing produced by "make
- subdir/foo.s"
-Date: Sun, 22 Jul 2012 22:11:21 -0700
-Message-ID: <7vk3xvnjt2.fsf@alter.siamese.dyndns.org>
-References: <20120722234726.GC2012@burratino>
+Subject: Re: [PATCH v2 0/5] difftool: Use symlinks in dir-diff mode
+Date: Sun, 22 Jul 2012 22:14:57 -0700
+Message-ID: <7vfw8jnjn2.fsf@alter.siamese.dyndns.org>
+References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 07:11:30 2012
+Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 07:15:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StAvY-0005Xp-Ld
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:11:28 +0200
+	id 1StAz4-0008Mx-SU
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 07:15:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab2GWFLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 01:11:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49812 "EHLO
+	id S1753057Ab2GWFPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 01:15:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51068 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752974Ab2GWFLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 01:11:23 -0400
+	id S1752974Ab2GWFO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 01:14:59 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 404D45B7D;
-	Mon, 23 Jul 2012 01:11:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57ACA5BF1;
+	Mon, 23 Jul 2012 01:14:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6EBgmKzCuCjlmtaGghsq5l5vAxY=; b=Wk0Gls
-	QCzhNygdJPNDaaLYdAc6ExWTyh6ILmEmdUt4cZOhVn65VYhWBLEeY9twNn7QhJlM
-	x4ASuwEFtKaUlUUpoEKTrX4O/pWX9skiZ4LmHm3L0ayLsnxVnaCsjeBx1J+4pWvB
-	PYd3O6O7Ex5+0fSG35AinDDNrYXfW7jcNdeUY=
+	:content-type; s=sasl; bh=tMPIVRHsxnxA1J6u2ClEj8evAcU=; b=PhWYww
+	rjDhYjokowZ35M6CyBzptVkJuBAW1oiS4CDAEiM8LcvTNlPX64ifiN9CBOfSAdQu
+	snQ8PUG6ktWjbtxE/K/rrtR1bybRlMzdzkn4mN1ijbqmnzijs5mtniLN5k8GtMxS
+	O3ZMjWvvB8vN4yvZpkOYyltnTuRJbPo6oJkRY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CHT4e4LnLfGJAUkJUy/DZVqcJbN1rKkv
-	FtK9QlLIINGECAN7Liv2LT2Gon0QnnipzW3SeDTQGBwT5cknWb2Xg5jU8S236Xyw
-	6AqvPhCK/bq7bZweQGwbSs19hIuL2utV8bqu9E3Mr/RI3ln1gzDO2q+ZGRprvS6i
-	TI340yqhB0k=
+	:content-type; q=dns; s=sasl; b=lBEBQEtU9EDNH9ZA1vKAXRuPkUPBrt5+
+	TZezOo2WoRHNKF6H6sAx9bK1p70A8jpfy21U0Markr95C3w62eZni79himFnVKWH
+	QZhS3EQGYFbTCOkPZkEHjvDTzp62a3B96g844R+YCeHgB5vMWy4H5W86rzfm7lOJ
+	qbown1vsHak=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DC8D5B7C;
-	Mon, 23 Jul 2012 01:11:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45A245BF0;
+	Mon, 23 Jul 2012 01:14:59 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D58E5B7B; Mon, 23 Jul 2012
- 01:11:22 -0400 (EDT)
-In-Reply-To: <20120722234726.GC2012@burratino> (Jonathan Nieder's message of
- "Sun, 22 Jul 2012 18:47:26 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 845E55BEF; Mon, 23 Jul 2012
+ 01:14:58 -0400 (EDT)
+In-Reply-To: <1343015831-17498-1-git-send-email-davvid@gmail.com> (David
+ Aguilar's message of "Sun, 22 Jul 2012 20:57:06 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D829B3E0-D484-11E1-9182-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 58ED26F6-D485-11E1-B69F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201901>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> When I invoke "make block-sha1/sha1.s", 'make' runs $(CC) -S without
-> specifying where it should put its output and the output ends up in
-> ./sha1.s.  Confusing.
+> Teach the difftool script to use symlinks when doing
+> directory diffs in --dir-diff mode.
 >
-> Add an -o option to the .s rule to fix this.  We were already doing
-> that for most compiler invocations but had forgotten it for the
-> assembler listings.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Hi,
->
-> This patch is from below the scissors at
-> http://thread.gmane.org/gmane.comp.version-control.git/201434/focus=201485
->
-> I think it's a good change, but as usual it's nice if someone else
-> takes a look at it and gives it a sanity check.  If it seems sane,
-> I'd be happy to see it applied.  What do you think?
->
-> Thanks,
-> Jonathan
+> This is v2 of the patch because I had a typo in one of the
+> commit messages and gmail ate 4/5 in the last round.
 
-Yeah, I think it is a sensible thing to do.
+FWIW, I received all including 4/5 in my inboxes (at pobox and
+gmail---I am doubly subscribed).  I still haven't figured out what
+in the original 4/5 was so special to be dropped somewhere in
+between.
 
->  Makefile |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> David Aguilar (5):
+>   difftool: Simplify print_tool_help()
+>   difftool: Eliminate global variables
+>   difftool: Move option values into a hash
+>   difftool: Call the temp directory "git-difftool"
+>   difftool: Use symlinks when diffing against the worktree
 >
-> diff --git a/Makefile b/Makefile
-> index 285c660e..8bfa19cd 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2263,7 +2263,7 @@ $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs)
->  endif
->  
->  %.s: %.c GIT-CFLAGS FORCE
-> -	$(QUIET_CC)$(CC) -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-> +	$(QUIET_CC)$(CC) -o $@ -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
->  
->  ifdef USE_COMPUTED_HEADER_DEPENDENCIES
->  # Take advantage of gcc's on-the-fly dependency generation
+>  Documentation/git-difftool.txt |   8 ++
+>  git-difftool.perl              | 184 ++++++++++++++++++++++++-----------------
+>  2 files changed, 115 insertions(+), 77 deletions(-)
