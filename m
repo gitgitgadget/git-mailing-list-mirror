@@ -1,82 +1,69 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] mergetool: support --tool-help option like difftool does
-Date: Mon, 23 Jul 2012 22:14:33 +0200
-Message-ID: <CAHGBnuMCsxmVN8fCSgazqKUwtJzJJxtrVxjKwCEEhZJ_U0cW9w@mail.gmail.com>
-References: <500CF8CE.90906@gmail.com>
-	<500CF9D2.30102@gmail.com>
-	<500CFAE1.3070304@gmail.com>
-	<7vr4s2mnir.fsf@alter.siamese.dyndns.org>
-	<7vipdemm0a.fsf_-_@alter.siamese.dyndns.org>
-	<500D9E5A.2000204@gmail.com>
-	<500D9EDB.90603@gmail.com>
-	<7vhasyl0gc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Solve git-submodule issues with detached work trees
+Date: Mon, 23 Jul 2012 13:34:48 -0700
+Message-ID: <7vd33mkyhj.fsf@alter.siamese.dyndns.org>
+References: <CAHCkQtNfz8Kbn810LgXEQ_rkyk4qn5amGgHQsv2uR6H38sTSrg@mail.gmail.com>
+ <7vsjcjnjvj.fsf@alter.siamese.dyndns.org> <500D8C30.9010807@web.de>
+ <7v7gtumj88.fsf@alter.siamese.dyndns.org> <500DADEE.9060700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 22:14:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
+	git@vger.kernel.org,
+	Richard Hartmann <richih.mailinglist@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 23 22:35:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StP1e-0000NA-3E
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:14:42 +0200
+	id 1StPLJ-00085A-Gg
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754690Ab2GWUOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 16:14:37 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:42808 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab2GWUOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 16:14:36 -0400
-Received: by vcbfk26 with SMTP id fk26so5162068vcb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 13:14:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nkWioPgRyd1lzXRLia1UAmqWu/adYocVgMoUe3SGg5k=;
-        b=vNnD2wNZuk01gA6oGJpKMKUDOW0EjZsvb1fyhgO/pRGi9WQSg9Tlk59Mkk7hL/pI9z
-         59DrmpMO3ikbuTIZAKevRrdQZ/q4VY5W97PI2Aoh/g5uZdsA/fRgbqAwTokvlEbN29lY
-         aHuHXLFyCAjN5KCfc1/nCBe9PzWvKQs/IgJmLBcfvFs2DiI/A56Pu4fcUecGQMQ5UrJm
-         VOSaahky0vMNK2q3Cys+KBaIzKSUil5Qptk9AkXpfrv6AZc4DppIwz1q+/ecfk9tbfVS
-         /rvpgI0TW1J4QU/xBdNY3qF1+koJxpKPnTI52dBeV8ayzLds3h/YOynvu2UDDaD3zRwJ
-         eC5w==
-Received: by 10.220.39.206 with SMTP id h14mr13670881vce.63.1343074473450;
- Mon, 23 Jul 2012 13:14:33 -0700 (PDT)
-Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 13:14:33 -0700 (PDT)
-In-Reply-To: <7vhasyl0gc.fsf@alter.siamese.dyndns.org>
+	id S1754917Ab2GWUey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 16:34:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42640 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754719Ab2GWUex (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 16:34:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A34C9752D;
+	Mon, 23 Jul 2012 16:34:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vu2HOIQpjo0FAoTRU8WE2sNUpbM=; b=jmfG2U
+	CXnWokAdbvrx2bi7uhgMETSZWAyYbPzQXPU/Q8vF2XTJGJ41nAJMMqehC4dRc/og
+	zwxS7gCU1ZMPoDyhtlnlJbA/OPxnqvNLsl1L4+IXwfntpWaScxCybC3qrcntLl4w
+	9KApNgh13r313gUi1y2SzhllIYCTwoy/ppQpY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SDt/F5GkKv+h8qjEdK6g7bc2IUK3l6Cr
+	h44POyhYwDr3QwI9GkdxhINKlS04Ce5oW4tqolkQj08yIfgbFLkaGr03dueBJ5mG
+	pY3YabGyzPqPkqTe9O9SWskrqFnyAMoy/s1H9wRtqz5AZSyTqNFyvSbuX8muZydN
+	5Hb5eXGX5yA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90C93752C;
+	Mon, 23 Jul 2012 16:34:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13233752B; Mon, 23 Jul 2012
+ 16:34:49 -0400 (EDT)
+In-Reply-To: <500DADEE.9060700@web.de> (Jens Lehmann's message of "Mon, 23
+ Jul 2012 22:02:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D9A540AA-D505-11E1-801C-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201974>
 
-On Mon, Jul 23, 2012 at 9:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->>  -t <tool>::
->>  --tool=<tool>::
->> -     Use the diff tool specified by <tool>.  Valid values include
->> -     emerge, kompare, meld, and vimdiff. Run `git difftool --tool-help`
->> -     for the list of valid <tool> settings.
->> +     Use the diff tool specified by <tool>.
->
-> I do not see how it is an improvement to drop the most common ones.
-> People sometimes read documentation without having an access to
-> shell to run "cmd --tool-help", and a list of handful of well known
-> ones would serve as a good hint to let the reader know the kind of
-> commands the front-end is capable of spawning, which in turn help
-> such a reader to imagine how the command is used to judge if it is
-> something the reader wants to use.
+> We could get rid of the core.worktree setting by assuming that the
+> directory a gitfile was found in is the root of the repo's work
+> tree (unless configured otherwise).
 
-I don't agree. What "most common ones" are depends on your platform
-and is sort of subjective. So it should be either all or non here.
-Your argument about people not having shell access is a valid one, but
-still that would mean to list all tools in my opinion. And listing all
-tools again thwarts our goal to reduce the number of places where new
-merge / diff tools need to be added. For people adding new merge /
-diff tools it is just clearer what places need to be modified if there
-are no places that list an arbitrary subset of tools.
-
--- 
-Sebastian Schuberth
+Now you lost me.  If you have .git that is not a directory but is a
+gitfile, then you do not need GIT_DIR nor GIT_WORK_TREE in the first
+place, no?
