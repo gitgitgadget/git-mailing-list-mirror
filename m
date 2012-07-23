@@ -1,139 +1,86 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for testing.
-Date: Mon, 23 Jul 2012 15:16:57 +0200
-Message-ID: <5998541.c9PWeIAsEV@flomedio>
-References: <4514544.Xip1OCQ7Uj@flomedio> <1448476.VR1Gla8Cvg@flomedio> <20120723125921.GA16768@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for
+ testing.
+Date: Mon, 23 Jul 2012 08:06:39 -0700
+Message-ID: <7v4noyo6tc.fsf@alter.siamese.dyndns.org>
+References: <4514544.Xip1OCQ7Uj@flomedio> <20120722214333.GB680@burratino>
+ <2948040.5ceLh0WG3L@flomedio> <1448476.VR1Gla8Cvg@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	davidbarr@google.com, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 15:17:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, davidbarr@google.com,
+	git@vger.kernel.org
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 17:06:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StIVb-0007CK-2O
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 15:17:11 +0200
+	id 1StKDn-00038m-N0
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 17:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213Ab2GWNRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 09:17:04 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:36820 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188Ab2GWNRC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 09:17:02 -0400
-Received: by lbbgm6 with SMTP id gm6so8013108lbb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 06:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=IYM+zUEoiSee954oCHwWD2V+u92X8w9pMIA2HHolmVo=;
-        b=IN6uceirB122ypSzlNinLrCyODkNj5r2prsAtXqyaMJh33Y3vAaTXLP0K9YLDU0yPp
-         1IstoHknOvWaAuowxJDYpv31SohbhJzvyWnrmNn/7hEDTukQLgX9jxBA33jOoVm3SQz/
-         qpNCawuiktP18wvyNpBXQYG0yBjd0k4UJKaDoVCn1dwiZlehcZlXcDNV4HXcvOey7bDt
-         I5ezLAId7ELGILyTv/wBaM3U6AFP3uzpjh9MELSsHog0Bauqd7pXbwhRQLjpctdXF3yk
-         bqINo1k/7Fy+RWJbdnZ9o26CMRv2T4tEQiYsFKyC26QNd/N9V4TYnikDB/pC2rClRFjQ
-         EnXg==
-Received: by 10.112.103.135 with SMTP id fw7mr7670506lbb.25.1343049420670;
-        Mon, 23 Jul 2012 06:17:00 -0700 (PDT)
-Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id j5sm3031103lbg.1.2012.07.23.06.16.58
-        (version=SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2012 06:16:59 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120723125921.GA16768@burratino>
+	id S1754134Ab2GWPGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 11:06:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50008 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753641Ab2GWPGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 11:06:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 297407E4F;
+	Mon, 23 Jul 2012 11:06:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UBuZdbWsr9FCALuxMu1ld+M4zI4=; b=ONo24h
+	1IIamLQjEYrxufEYEtcvYkxPMhKPG36ONJB/mtnjy3W7c6M+q2S7DPQniOzfWpsK
+	sh4jsAl9vyGw4Mox8eBm7PfLUOc46334IwwDyWSxEmM/Mr39dBwrM+bb0N/KukcJ
+	1+nA7eaJM2NVXaO0aOZYaH4VZ+X4EltuchHKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C0b4d6F4giWfbVqRMXlHh7bm/KYyuSXs
+	I5Mjacn3mulq5aSzqqOHaMJA0u7O4aTIElStlNEPGbQg0BBUyv+mFkIIe/AjhNat
+	fbJuTbrrrZhzeuNLO3vIPErmkxcTHXq09th9rHiq9OaZHlfIKbN08rnTVdFYUyU4
+	/BIxvscTfvc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1521D7E4E;
+	Mon, 23 Jul 2012 11:06:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68E2A7E4D; Mon, 23 Jul 2012
+ 11:06:41 -0400 (EDT)
+In-Reply-To: <1448476.VR1Gla8Cvg@flomedio> (Florian Achleitner's message of
+ "Mon, 23 Jul 2012 14:44:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 024BF3A6-D4D8-11E1-B309-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201935>
 
-To ease testing without depending on a reachable svn server, this
-compact python script mimics parts of svnrdumps behaviour.
-It requires the remote url to start with sim://.
-Start and end revisions are evaluated.
-If the requested revision doesn't exist, as it is the case with
-incremental imports, if no new commit was added, it returns 1
-(like svnrdump).
-To allow using the same dump file for simulating multiple
-incremental imports the highest revision can be limited by setting
-the environment variable SVNRMAX to that value. This simulates the
-situation where higher revs don't exist yet.
+Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
----
+> It requires the remote url to start with sim://.
+> Start and end revisions are evaluated.
 
-I had to fix the missing sign-off anyways..
+It is a bit unclear where "start" and "end" comes from, and if
+"evaluated" is the most important aspect of the handling of these
+two values.  Do you mean the tool takes start and end revisions as
+arguments?  If so, describe "how".  E.g. as two arguments (-rSTART
+-rEND)? As an argument that shows a range (-rSTART-END? -rSTART,END)?
 
- contrib/svn-fe/svnrdump_sim.py |   53 
-++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100755 contrib/svn-fe/svnrdump_sim.py
+Do not answer with "It is in the code" (I cheated and peeked to find
+out it is -rSTART:END, but the reader should not have to peek).
 
-diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-new file mode 100755
-index 0000000..4701d76
---- /dev/null
-+++ b/contrib/svn-fe/svnrdump_sim.py
-@@ -0,0 +1,53 @@
-+#!/usr/bin/python
-+"""
-+Simulates svnrdump by replaying an existing dump from a file, taking care
-+of the specified revision range.
-+To simulate incremental imports the environment variable SVNRMAX can be set
-+to the highest revision that should be available.
-+"""
-+import sys, os
-+
-+
-+def getrevlimit():
-+	var = 'SVNRMAX'
-+	if os.environ.has_key(var):
-+		return os.environ[var]
-+	return None
-+	
-+def writedump(url, lower, upper):
-+	if url.startswith('sim://'):
-+		filename = url[6:]
-+		if filename[-1] == '/': filename = filename[:-1] #remove terminating slash
-+	else:
-+		raise ValueError('sim:// url required')
-+	f = open(filename, 'r');
-+	state = 'header'
-+	wroterev = False
-+	while(True):
-+		l = f.readline()
-+		if l == '': break
-+		if state == 'header' and l.startswith('Revision-number: '):
-+			state = 'prefix'
-+		if state == 'prefix' and l == 'Revision-number: %s\n' % lower:
-+			state = 'selection'
-+		if not upper == 'HEAD' and state == 'selection' and l == 'Revision-
-number: %s\n' % upper:
-+			break;
-+
-+		if state == 'header' or state == 'selection':
-+			if state == 'selection': wroterev = True
-+			sys.stdout.write(l)
-+	return wroterev
-+
-+if __name__ == "__main__":
-+	if not (len(sys.argv) in (3, 4, 5)):
-+		print "usage: %s dump URL -rLOWER:UPPER"
-+		sys.exit(1)
-+	if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is 
-suppported.')
-+	url = sys.argv[2]
-+	r = ('0', 'HEAD')
-+	if len(sys.argv) == 4 and sys.argv[3][0:2] == '-r':
-+		r = sys.argv[3][2:].lstrip().split(':')
-+	if not getrevlimit() is None: r[1] = getrevlimit()
-+	if writedump(url, r[0], r[1]): ret = 0
-+	else: ret = 1
-+	sys.exit(ret)
-\ No newline at end of file
--- 
-1.7.9.5
+> If the requested revision doesn't exist, as it is the case with
+> incremental imports, if no new commit was added, it returns 1
+> (like svnrdump).
+
+This sentence does not parse for me.  What is it trying to say?
+Requested revision does not exist _where_?  It is unclear how
+"incremental import" and "revision doesn't exist" are related.  "no
+new commit was added" to _what_ by _whom_?  I presume that nobody is
+adding new commit _to_ an existing dump file, and the only thing
+this script does is to read and selectively write part of a dump file,
+so that would not add any new commit either.
+
+Puzzled.
