@@ -1,126 +1,76 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 1/5] difftool: Simplify print_tool_help()
-Date: Sun, 22 Jul 2012 20:57:07 -0700
-Message-ID: <1343015831-17498-2-git-send-email-davvid@gmail.com>
+Subject: [PATCH 4/5] difftool: Call the temp directory "git-difftool"
+Date: Sun, 22 Jul 2012 20:57:10 -0700
+Message-ID: <1343015831-17498-5-git-send-email-davvid@gmail.com>
 References: <1343015831-17498-1-git-send-email-davvid@gmail.com>
+ <1343015831-17498-2-git-send-email-davvid@gmail.com>
+ <1343015831-17498-3-git-send-email-davvid@gmail.com>
+ <1343015831-17498-4-git-send-email-davvid@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 05:57:57 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 05:58:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1St9mN-0000L6-Cp
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 05:57:55 +0200
+	id 1St9mb-0000Tl-ES
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 05:58:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab2GWD5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jul 2012 23:57:22 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:56934 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753395Ab2GWD5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jul 2012 23:57:08 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so10168206pbb.19
-        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
+	id S1753465Ab2GWD5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jul 2012 23:57:53 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:36444 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753420Ab2GWD5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jul 2012 23:57:15 -0400
+Received: by yhmm54 with SMTP id m54so5054174yhm.19
+        for <git@vger.kernel.org>; Sun, 22 Jul 2012 20:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=YNvNTQLOZgYcyKyql1PcT6NxdoqDYw9B3XEN3pkX9ys=;
-        b=Bq5hRprbRKYyndXHZaxSZAYVBtSC5TgcZJw54XhFKhjeaxqJYWhRPhF1F8K/ob3Keq
-         inSvMLHQcqIP2u/WUoGdfvjHefcr8cYkp7IsS+7wkdSPioXSMo0oK8yh/oeYFs57PG6C
-         ru7n6jmQQl7S/erv5ul3GW1C/2A0Bs6Z7YtWocnHI30SUz01+GxBJ36wWK/7mJrked4C
-         EKAAf/gVY0SEnCuaitAGlCT/gT9JgnpOOSdgqK89eW3HFG4CxjnXCY7pUy6noCYoMQJ9
-         /tww+43oILMLRjqpL7AHIUSUbuLQsgcL2lGBlvKfJmlsLJ6uUM/RslM7yanejk1ENHB8
-         6Iyg==
-Received: by 10.68.238.166 with SMTP id vl6mr9033562pbc.96.1343015827865;
-        Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
+        bh=rsyDtYztCV3w+xV3eoDL3nRrw6yLes5qKSBuo1RVu68=;
+        b=SQTcHW004OBgaDdRPnxHXoMlU7/nDen+pEEE1Qk/ddWTBKI+lU2CTofWDtfl2g36kx
+         3qRCu9vtAesouEaJnTUpfOtUUxtaB9rpOtwjq8zgQ3/+6iv2TLUSAd6pJtAP0uQbMTqr
+         EOdgv2B4JtwVmX6XbVvQRCrKk6aj/hpLt6NXPmal20Sn0rbHvb29BJ5FY+36Bfw0Cmpo
+         96jhpF33Z5CQjqZs3z87aQXOusxzI0TUYkClnl1PpK5iIuMLv94xan+rGfr7vRNZ0d/J
+         LICmsqxM61R01OZlbFPkeeBNXV1Fma3XDY93INy4P4jOb3YoNbVX/6EtfxAwZWy6Lpu5
+         sL+A==
+Received: by 10.66.74.69 with SMTP id r5mr27614602pav.56.1343015834651;
+        Sun, 22 Jul 2012 20:57:14 -0700 (PDT)
 Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.05
+        by mx.google.com with ESMTPS id iw10sm8485543pbc.55.2012.07.22.20.57.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Jul 2012 20:57:07 -0700 (PDT)
+        Sun, 22 Jul 2012 20:57:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.2.255.g5f133da
-In-Reply-To: <1343015831-17498-1-git-send-email-davvid@gmail.com>
+In-Reply-To: <1343015831-17498-4-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201888>
 
-Eliminate a global variable and File::Find usage by building upon
-basename() and glob() instead.
+The "diffall" name was left over from when this functionality was part of
+the "git-diffall" script in contrib/.  Make the naming consistent.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+Reworded the commit message to get through gmail filters.
 
-Same as before, resending because gmail ate patch 4/5
-
- git-difftool.perl | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ git-difftool.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/git-difftool.perl b/git-difftool.perl
-index c079854..ac0ed63 100755
+index 0ce6168..2ae344c 100755
 --- a/git-difftool.perl
 +++ b/git-difftool.perl
-@@ -13,17 +13,15 @@
- use 5.008;
- use strict;
- use warnings;
--use File::Basename qw(dirname);
-+use File::Basename qw(basename dirname);
- use File::Copy;
- use File::Compare;
--use File::Find;
- use File::stat;
- use File::Path qw(mkpath);
- use File::Temp qw(tempdir);
- use Getopt::Long qw(:config pass_through);
- use Git;
+@@ -104,7 +104,7 @@ sub setup_dir_diff
+ 	exit(0) if (length($diffrtn) == 0);
  
--my @tools;
- my @working_tree;
- my $rc;
- my $repo = Git->repository();
-@@ -65,26 +63,13 @@ sub find_worktree
- 
- my $workdir = find_worktree();
- 
--sub filter_tool_scripts
--{
--	if (-d $_) {
--		if ($_ ne ".") {
--			# Ignore files in subdirectories
--			$File::Find::prune = 1;
--		}
--	} else {
--		if ((-f $_) && ($_ ne "defaults")) {
--			push(@tools, $_);
--		}
--	}
--}
--
- sub print_tool_help
- {
- 	my ($cmd, @found, @notfound);
- 	my $gitpath = Git::exec_path();
- 
--	find(\&filter_tool_scripts, "$gitpath/mergetools");
-+	my @files = map { basename($_) } glob("$gitpath/mergetools/*");
-+	my @tools = sort(grep { !m{^defaults$} } @files);
- 
- 	foreach my $tool (@tools) {
- 		$cmd  = "TOOL_MODE=diff";
-@@ -99,10 +84,10 @@ sub print_tool_help
- 	}
- 
- 	print "'git difftool --tool=<tool>' may be set to one of the following:\n";
--	print "\t$_\n" for (sort(@found));
-+	print "\t$_\n" for (@found);
- 
- 	print "\nThe following tools are valid, but not currently available:\n";
--	print "\t$_\n" for (sort(@notfound));
-+	print "\t$_\n" for (@notfound);
- 
- 	print "\nNOTE: Some of the tools listed above only work in a windowed\n";
- 	print "environment. If run in a terminal-only session, they will fail.\n";
+ 	# Setup temp directories
+-	my $tmpdir = tempdir('git-diffall.XXXXX', CLEANUP => 1, TMPDIR => 1);
++	my $tmpdir = tempdir('git-difftool.XXXXX', CLEANUP => 1, TMPDIR => 1);
+ 	my $ldir = "$tmpdir/left";
+ 	my $rdir = "$tmpdir/right";
+ 	mkpath($ldir) or die $!;
 -- 
 1.7.11.2.255.g5f133da
