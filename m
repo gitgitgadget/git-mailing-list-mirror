@@ -1,94 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for
- testing.
-Date: Mon, 23 Jul 2012 13:38:52 -0700
-Message-ID: <7v8veakyar.fsf@alter.siamese.dyndns.org>
-References: <7v4noyo6tc.fsf@alter.siamese.dyndns.org>
- <1343074107-23262-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool: support --tool-help option like difftool does
+Date: Mon, 23 Jul 2012 13:44:32 -0700
+Message-ID: <CAJDDKr4TyDp5vxqqHGkBBSiMJXJHW528+nqrag9Rgz+vksqjhg@mail.gmail.com>
+References: <500CF8CE.90906@gmail.com>
+	<500CF9D2.30102@gmail.com>
+	<500CFAE1.3070304@gmail.com>
+	<7vr4s2mnir.fsf@alter.siamese.dyndns.org>
+	<7vipdemm0a.fsf_-_@alter.siamese.dyndns.org>
+	<500D9E5A.2000204@gmail.com>
+	<500D9EDB.90603@gmail.com>
+	<7vhasyl0gc.fsf@alter.siamese.dyndns.org>
+	<CAHGBnuMCsxmVN8fCSgazqKUwtJzJJxtrVxjKwCEEhZJ_U0cW9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, davidbarr@google.com,
-	git@vger.kernel.org
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 22:39:05 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Tim Henigan <tim.henigan@gmail.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 22:44:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StPPA-0002ue-QI
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:39:01 +0200
+	id 1StPUd-00076X-64
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 22:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754726Ab2GWUiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 16:38:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44359 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754610Ab2GWUiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 16:38:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 714BB75FA;
-	Mon, 23 Jul 2012 16:38:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HQ0g+nRLOT7s9Hi2+vAOf2Hq8k0=; b=vipNmA
-	xXtvO18d2VARbXONMTfSmJAliX/g0jEkxjPb3p0FUqnGT9YAUc7jlFpnHR+3yd0H
-	VbkB9t/XCqyvwUVL/9ggrjE48ijtPp981bs1wA/wg8As5ffh0MfJdoRthd/zVxN4
-	kEzYD1W7sn0BSK6vf0GahQReEVwmJ1B5lwSr0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iFxNiPocf4adQKZdxUJ5pn9xr3NKKvpu
-	+OuIbrilO4O+H9q2MTZYYxyvr0ha9uokf8iu6+PQHOHFoW4+p5gcf44CVnY035xq
-	r2f2j1ntcqD8HmZTJ5LPjM6LeHGvfxJ+TM8ChhoU3rScVu2b+Y81QeOQlqjpU78z
-	rdzY+kDncYY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EA4F75F9;
-	Mon, 23 Jul 2012 16:38:54 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC6E575F8; Mon, 23 Jul 2012
- 16:38:53 -0400 (EDT)
-In-Reply-To: <1343074107-23262-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- (Florian Achleitner's message of "Mon, 23 Jul 2012 22:08:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AE66F8A-D506-11E1-820F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754735Ab2GWUoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 16:44:34 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62133 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754388Ab2GWUod (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 16:44:33 -0400
+Received: by vcbfk26 with SMTP id fk26so5193742vcb.19
+        for <git@vger.kernel.org>; Mon, 23 Jul 2012 13:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=C07LbjmM+vL/s1U49tkoewH9EkUGJhjBG5LtJapVYB4=;
+        b=DVdmK4s1hDEYDhhrJoysBmpYfJinSKpv2B7Q2GX/cBJ4WoQ0cUA1R11tWH72hXAI2M
+         aw2bL0nR81g6dRAy93PX7btz1R/s6zqMxbzpXrmGfzaDDyL2KF/8RaZ68fNY7xQA4sBo
+         6UdjonQGkMBfqKHON/moqydM8KCgZfmK503HD1lOPj9QzFBXE/2ctxKcGWaBwwab1NSQ
+         TaE7LVputjJGc4nhuAYR988ZyLX+qpfpUQELM13tZDk7kjdrPnnhkWpOh5X8dqPYFXOC
+         LT6JFbP8h2jl/gu4uJJu4IWYTTCycq9y3V60ggkHYJSbSVzUqCEdJxtry/rHPzRDH78L
+         /gbA==
+Received: by 10.52.90.144 with SMTP id bw16mr12005886vdb.129.1343076272307;
+ Mon, 23 Jul 2012 13:44:32 -0700 (PDT)
+Received: by 10.52.114.67 with HTTP; Mon, 23 Jul 2012 13:44:32 -0700 (PDT)
+In-Reply-To: <CAHGBnuMCsxmVN8fCSgazqKUwtJzJJxtrVxjKwCEEhZJ_U0cW9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201976>
 
-Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
-
-> To ease testing without depending on a reachable svn server, this
-> compact python script mimics parts of svnrdumps behaviour.
-> It requires the remote url to start with sim://.
-> Eventual slashes at the end of the url are stripped.
-
-s/ventual/xcess/ perhaps?
-
-> The url specifies the path of the svn dump file (as created by
-> svnrdump). Selectable parts of it, or the whole file, are written
-> to stdout. The part is selectable by giving start and end revision
-> on the command line.
+On Mon, Jul 23, 2012 at 1:14 PM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> On Mon, Jul 23, 2012 at 9:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Start and end revisions can be specified on the command line
-> (-rSTART:END, like for svnrdump).
-> Only revisions between START and excluding END are replayed from
-> the dumpfile specified by the url. END can also be HEAD.
+>>>  -t <tool>::
+>>>  --tool=<tool>::
+>>> -     Use the diff tool specified by <tool>.  Valid values include
+>>> -     emerge, kompare, meld, and vimdiff. Run `git difftool --tool-help`
+>>> -     for the list of valid <tool> settings.
+>>> +     Use the diff tool specified by <tool>.
+>>
+>> I do not see how it is an improvement to drop the most common ones.
+>> People sometimes read documentation without having an access to
+>> shell to run "cmd --tool-help", and a list of handful of well known
+>> ones would serve as a good hint to let the reader know the kind of
+>> commands the front-end is capable of spawning, which in turn help
+>> such a reader to imagine how the command is used to judge if it is
+>> something the reader wants to use.
 >
-> If the start revision specified on the command line doesn't exist
-> in the dump file, it returns 1.
-> This emulates the behaviour of svnrdump when START>HEAD, i.e. the
-> requested start revision doesn't exist on the server.
+> I don't agree. What "most common ones" are depends on your platform
+> and is sort of subjective. So it should be either all or non here.
 
-Much more understandable than before.
+Let's please leave this section as-is.
 
-> To allow using the same dump file for simulating multiple
-> incremental imports the highest visible revision can be limited by
-> setting the environment variable SVNRMAX to that value. This
-> effectively limits HEAD to simulate the situation where higher
-> revs don't exist yet.
+This part of the documentation has had a fair amount of churn.
+Specifically, it would get touched every time a new tool was added.
 
-It is unclear how this is different from giving the ceiling by
-specifying it as the "END" in -rSTART:END command line.  Is this
-feature really needed?
+The point of bf73fc212a159210398b6d46ed5e9101c650e7db was to change it
+*one last time* into something that is helpful, but not a substitute
+for the real list output by --tool-help.
+
+If any changes are done then it should be to make git-mergetool.txt
+match the advice given in git-difftool.txt.
+
+> Your argument about people not having shell access is a valid one, but
+> still that would mean to list all tools in my opinion. And listing all
+> tools again thwarts our goal to reduce the number of places where new
+> merge / diff tools need to be added. For people adding new merge /
+> diff tools it is just clearer what places need to be modified if there
+> are no places that list an arbitrary subset of tools.
+
+Yes, indeed, it is arbitrary.  It does have some merit, though--it is
+also a good compromise between unhelpful (listing nothing) and painful
+to maintain (listing everything).
+-- 
+David
