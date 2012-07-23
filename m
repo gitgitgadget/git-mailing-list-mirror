@@ -1,86 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for
- testing.
-Date: Mon, 23 Jul 2012 08:06:39 -0700
-Message-ID: <7v4noyo6tc.fsf@alter.siamese.dyndns.org>
-References: <4514544.Xip1OCQ7Uj@flomedio> <20120722214333.GB680@burratino>
- <2948040.5ceLh0WG3L@flomedio> <1448476.VR1Gla8Cvg@flomedio>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for testing.
+Date: Mon, 23 Jul 2012 18:24:40 +0200
+Message-ID: <vpqr4s2jvhz.fsf@bauges.imag.fr>
+References: <4514544.Xip1OCQ7Uj@flomedio> <1448476.VR1Gla8Cvg@flomedio>
+	<20120723125921.GA16768@burratino> <5998541.c9PWeIAsEV@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: Jonathan Nieder <jrnieder@gmail.com>, davidbarr@google.com,
 	git@vger.kernel.org
 To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 23 17:06:57 2012
+X-From: git-owner@vger.kernel.org Mon Jul 23 18:24:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StKDn-00038m-N0
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 17:06:56 +0200
+	id 1StLRJ-0005pS-ED
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 18:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754134Ab2GWPGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 11:06:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50008 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753641Ab2GWPGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 11:06:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 297407E4F;
-	Mon, 23 Jul 2012 11:06:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UBuZdbWsr9FCALuxMu1ld+M4zI4=; b=ONo24h
-	1IIamLQjEYrxufEYEtcvYkxPMhKPG36ONJB/mtnjy3W7c6M+q2S7DPQniOzfWpsK
-	sh4jsAl9vyGw4Mox8eBm7PfLUOc46334IwwDyWSxEmM/Mr39dBwrM+bb0N/KukcJ
-	1+nA7eaJM2NVXaO0aOZYaH4VZ+X4EltuchHKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C0b4d6F4giWfbVqRMXlHh7bm/KYyuSXs
-	I5Mjacn3mulq5aSzqqOHaMJA0u7O4aTIElStlNEPGbQg0BBUyv+mFkIIe/AjhNat
-	fbJuTbrrrZhzeuNLO3vIPErmkxcTHXq09th9rHiq9OaZHlfIKbN08rnTVdFYUyU4
-	/BIxvscTfvc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1521D7E4E;
-	Mon, 23 Jul 2012 11:06:42 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68E2A7E4D; Mon, 23 Jul 2012
- 11:06:41 -0400 (EDT)
-In-Reply-To: <1448476.VR1Gla8Cvg@flomedio> (Florian Achleitner's message of
- "Mon, 23 Jul 2012 14:44:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 024BF3A6-D4D8-11E1-B309-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754225Ab2GWQYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 12:24:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36863 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754159Ab2GWQYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 12:24:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q6NGMSjX008150
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 23 Jul 2012 18:22:30 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1StLR2-0002o7-SR; Mon, 23 Jul 2012 18:24:40 +0200
+In-Reply-To: <5998541.c9PWeIAsEV@flomedio> (Florian Achleitner's message of
+	"Mon, 23 Jul 2012 15:16:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 Jul 2012 18:22:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6NGMSjX008150
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1343665354.34704@r/ir2uAlYqYZOoNlLtu4lg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201937>
 
 Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-> It requires the remote url to start with sim://.
-> Start and end revisions are evaluated.
+> I had to fix the missing sign-off anyways..
+>
+>  contrib/svn-fe/svnrdump_sim.py |   53 
+> ++++++++++++++++++++++++++++++++++++++++
 
-It is a bit unclear where "start" and "end" comes from, and if
-"evaluated" is the most important aspect of the handling of these
-two values.  Do you mean the tool takes start and end revisions as
-arguments?  If so, describe "how".  E.g. as two arguments (-rSTART
--rEND)? As an argument that shows a range (-rSTART-END? -rSTART,END)?
+You also have whitespace damages (i.e. line wrapping introduced by your
+mailer). Using git-send-email avoids this kind of problem (there are
+also some advices for some mailers in Documentation/SubmittingPatches).
 
-Do not answer with "It is in the code" (I cheated and peeked to find
-out it is -rSTART:END, but the reader should not have to peek).
-
-> If the requested revision doesn't exist, as it is the case with
-> incremental imports, if no new commit was added, it returns 1
-> (like svnrdump).
-
-This sentence does not parse for me.  What is it trying to say?
-Requested revision does not exist _where_?  It is unclear how
-"incremental import" and "revision doesn't exist" are related.  "no
-new commit was added" to _what_ by _whom_?  I presume that nobody is
-adding new commit _to_ an existing dump file, and the only thing
-this script does is to read and selectively write part of a dump file,
-so that would not add any new commit either.
-
-Puzzled.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
