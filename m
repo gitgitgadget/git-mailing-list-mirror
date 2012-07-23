@@ -1,86 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] commit: give a hint when a commit message has been
- abandoned
-Date: Mon, 23 Jul 2012 14:00:19 -0700
-Message-ID: <7vr4s2jiqk.fsf@alter.siamese.dyndns.org>
-References: <20120723184634.GA31905@sigill.intra.peff.net>
- <20120723185218.GC27588@sigill.intra.peff.net>
- <7vzk6qjj7w.fsf@alter.siamese.dyndns.org>
- <20120723205209.GA6745@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] Make sure to use Araxis' "compare" and not e.g. ImageMagick's
+Date: Mon, 23 Jul 2012 23:09:29 +0200
+Message-ID: <CAHGBnuOz94YR9wx_goL5YaWzPt5Z9c3gBB9CtyfcE40F5amrXw@mail.gmail.com>
+References: <500CF8CE.90906@gmail.com>
+	<500CF9D2.30102@gmail.com>
+	<500CFB19.6010905@gmail.com>
+	<7vmx2qmnfw.fsf@alter.siamese.dyndns.org>
+	<500DA7F3.3000403@gmail.com>
+	<7v4noykxvm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramana Kumar <ramana@member.fsf.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 23 23:00:34 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 23 23:09:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StPjv-00037f-Oq
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:00:28 +0200
+	id 1StPsl-00015Z-Hu
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jul 2012 23:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754759Ab2GWVAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jul 2012 17:00:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54216 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754536Ab2GWVAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jul 2012 17:00:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C9C07C2D;
-	Mon, 23 Jul 2012 17:00:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VnNz6p9Fex/jeQ1YBeulV/leX4M=; b=wCSIP/
-	72qVF4QIIXPzCY3NjYKXq/3ad6zhx5XV8giuNMZ+nLX/c+e5SsWkIzBB1XWCpmJl
-	VCOS4wbL5U5bjWRR1zhLkN0IvgH1Hxe/atieFrFbTi5UbdSxlFS4BgJQSwjaOil0
-	vEnKeEG1BowniojvkR+smZHF3HDeM3atgrq/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cJ7XE5klJlU0nEbReTeeVFc6Jb0mLRss
-	oZEObEIyxrHwMFk9H90ezx7/2S9XCJ+ZERxhOj6KT5KuQKqHsuSbDyUgVFdy+yp3
-	/btOJl9i8qmBn+1d8Z3Vwxwu83/06ZjB28KDFqicdlpsb+mNl89f5IFjvlg2lnKN
-	VEuzZYHXvoE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A6637C2C;
-	Mon, 23 Jul 2012 17:00:21 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E7607C2B; Mon, 23 Jul 2012
- 17:00:20 -0400 (EDT)
-In-Reply-To: <20120723205209.GA6745@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 23 Jul 2012 16:52:09 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 69D1C43E-D509-11E1-BF18-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754849Ab2GWVJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jul 2012 17:09:30 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:33456 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754663Ab2GWVJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jul 2012 17:09:30 -0400
+Received: by vcbfk26 with SMTP id fk26so5218931vcb.19
+        for <git@vger.kernel.org>; Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5LzYKh64zpypbiG12Ym7+B+ESxvhqnCICAvcvdAqhHQ=;
+        b=qaatQiF2x1svd9Sf0a5x7CdP1WUP437TZZM1uUgj0ajOxpqXk+c89rZ4lpHBX4PweG
+         MhVi5FgSu4Or9Dt9zORlc+Co9YNF8W92gyzUgiL96ypBq9IC++FCN+Dm3UVvNkV84vKX
+         9X4CiziN/4GZbYc2vtSUQqaR3+1oZ2SEjyNDFhV6cO7ERfbtXMRsTPwi7tDfB+Ui1ki+
+         o8BzNuRKwqa3crPOI6/6JosTCdnbR/p9rp+qIBtdgy66kUjPWLV1EtrnoW7S7TsAD1de
+         1FftLm4PN1K4V8r2kizcB61U3i+7aaLq4hUvMy/P1yHrSRG71Dfb+4Y1f290cW8DdLuu
+         kEgw==
+Received: by 10.221.12.14 with SMTP id pg14mr13788385vcb.21.1343077769294;
+ Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
+Received: by 10.58.35.135 with HTTP; Mon, 23 Jul 2012 14:09:29 -0700 (PDT)
+In-Reply-To: <7v4noykxvm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/201983>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Jul 23, 2012 at 10:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Mon, Jul 23, 2012 at 01:49:55PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > If we launch an editor for the user to create a commit
->> > message, they may put significant work into doing so.
->> > Typically we try to check common mistakes that could cause
->> > the commit to fail early, so that we die before the user
->> > goes to the trouble.
->> >
->> > We may still experience some errors afterwards, though; in
->> > this case, the user is given no hint that their commit
->> > message has been saved. Let's tell them where it is.
->> 
->> Liberal use of atexit() for something like this makes me cringe
->> somewhat.
->
-> I don't like it either, but there's not really a better way. The die()
-> that Ramana triggered in the initial report is deep inside the ident
-> code. The only other option would be to hook into die_routine, which I
-> think is even uglier.
+> For example, when the user tells it to install in "/home/ss/bin", if
+> it installs its "compare" program in "/home/ss/bin/araxis/compare"
+> without allowing the "/araxis/" part to be stripped away, the above
+> heuristics is sufficiently safe.  Otherwise, it is not.
 
-Then I would rather not worry about it.  A documentation update is
-probably a good first step, though.
+To the best of my knowledge, Araxis does not enforce any naming
+convention for the path it gets installed in. That means the user may
+indeed install the program in a path that does not contain "araxis". I
+was aware of this when writing the patch, but should have probably
+made it more clear in the commit message.
+
+> It is unclear from your proposed commit log message what assurance
+> do we have that it is installed under such a path and why the
+> heuristics the patch implements is the sane way forward.
+
+We have no such assurance. That's why you correctly call it a
+heuristics after all: it may fail. Personally, I've valued the gain of
+the patch to not list araxis as an available diff tool by "git
+difftool --tool-help" when in fact just ImageMagick is in PATH higher
+than the loss to support araxis installations that are in a path not
+containung "araxis" but are in PATH.
+
+Please feel free to ignore the patch if you feel the heuristics is not
+sufficiently safe. I'm currently unable to come up with a safer
+solution while maintaining portability, i.e. not use "which" or doing
+rather laborious string parsing on the output of "type".
+
+-- 
+Sebastian Schuberth
