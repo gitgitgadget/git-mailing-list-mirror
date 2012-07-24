@@ -1,94 +1,139 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/3] test-lib.sh: unset XDG_CONFIG_HOME
-Date: Tue, 24 Jul 2012 14:06:43 +0200
-Message-ID: <vpqpq7l8iss.fsf@bauges.imag.fr>
-References: <20120724115305.GA7328@sigill.intra.peff.net>
+From: Chris Webb <chris@arachsys.com>
+Subject: [PATCH] rebase -i: handle fixup of root commit correctly
+Date: Tue, 24 Jul 2012 13:17:03 +0100
+Message-ID: <20120724121703.GG26014@arachsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Witten <mfwitten@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 24 14:07:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 24 14:17:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StdtF-00062J-V3
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:07:02 +0200
+	id 1Ste39-0006jx-6x
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600Ab2GXMG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 08:06:57 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38366 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753534Ab2GXMG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 08:06:56 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6OC4jM1025648
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 24 Jul 2012 14:04:45 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Stdsx-0007OG-LV; Tue, 24 Jul 2012 14:06:43 +0200
-In-Reply-To: <20120724115305.GA7328@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 24 Jul 2012 07:53:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 24 Jul 2012 14:04:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6OC4jM1025648
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343736286.74192@sTPg2xL1acAt7v4hItqc+g
+	id S1753751Ab2GXMRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 08:17:09 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:38928 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753336Ab2GXMRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 08:17:07 -0400
+Received: from [81.2.114.212] (helo=arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.72)
+	(envelope-from <chris@arachsys.com>)
+	id 1Ste30-0004X3-Gq; Tue, 24 Jul 2012 13:17:07 +0100
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202033>
 
-Thanks (for the 3 patches, all of them look good).
+There is a bug with git rebase -i --root when a fixup or squash line is
+applied to the new root. We attempt to amend the commit onto which they
+apply with git reset --soft HEAD^ followed by a normal commit. Unlike a
+real commit --amend, this sequence will fail against a root commit as it
+has no parent.
 
-the "unset XDG_CONFIG_HOME" part was already discussed here:
+Fix rebase -i to use commit --amend for fixup and squash instead, and
+add a test for the case of a fixup of the root commit.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/201609
+Signed-off-by: Chris Webb <chris@arachsys.com>
+---
 
-But Michael did not continue the thread. I think your solution (unset
-$XDG_CONFIG_HOME instead of setting it to $HOME/.config/git) is better.
+Sorry, I should have spotted this issue when I did the original root-rebase
+series. I've checked that this patch doesn't break any of the existing
+tests, as well as satisfying the newly introduced check for the root-fixup
+case.
 
-In the thread above, I also proposed checking that $XDG_CONFIG_HOME was
-taken into account, but for the "git config" part (while you test the
-attributes part).
+ git-rebase--interactive.sh    | 25 +++++++++++++------------
+ t/t3404-rebase-interactive.sh |  8 ++++++++
+ 2 files changed, 21 insertions(+), 12 deletions(-)
 
-I think it makes sense to add stg like this to your PATCH 3:
-
-
-diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-index 3c75c3f..f1ea9f1 100755
---- a/t/t1306-xdg-files.sh
-+++ b/t/t1306-xdg-files.sh
-@@ -38,6 +38,19 @@ test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''
-        test_cmp expected actual
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index bef7bc0..0d2056f 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -493,25 +493,28 @@ do_next () {
+ 		author_script_content=$(get_author_ident_from_commit HEAD)
+ 		echo "$author_script_content" > "$author_script"
+ 		eval "$author_script_content"
+-		output git reset --soft HEAD^
+-		pick_one -n $sha1 || die_failed_squash $sha1 "$rest"
++		if ! pick_one -n $sha1
++		then
++			git rev-parse --verify HEAD >"$amend"
++			die_failed_squash $sha1 "$rest"
++		fi
+ 		case "$(peek_next_command)" in
+ 		squash|s|fixup|f)
+ 			# This is an intermediate commit; its message will only be
+ 			# used in case of trouble.  So use the long version:
+-			do_with_author output git commit --no-verify -F "$squash_msg" ||
++			do_with_author output git commit --amend --no-verify -F "$squash_msg" ||
+ 				die_failed_squash $sha1 "$rest"
+ 			;;
+ 		*)
+ 			# This is the final command of this squash/fixup group
+ 			if test -f "$fixup_msg"
+ 			then
+-				do_with_author git commit --no-verify -F "$fixup_msg" ||
++				do_with_author git commit --amend --no-verify -F "$fixup_msg" ||
+ 					die_failed_squash $sha1 "$rest"
+ 			else
+ 				cp "$squash_msg" "$GIT_DIR"/SQUASH_MSG || exit
+ 				rm -f "$GIT_DIR"/MERGE_MSG
+-				do_with_author git commit --no-verify -e ||
++				do_with_author git commit --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e ||
+ 					die_failed_squash $sha1 "$rest"
+ 			fi
+ 			rm -f "$squash_msg" "$fixup_msg"
+@@ -748,7 +751,6 @@ In both case, once you're done, continue with:
+ 		fi
+ 		. "$author_script" ||
+ 			die "Error trying to find the author identity to amend commit"
+-		current_head=
+ 		if test -f "$amend"
+ 		then
+ 			current_head=$(git rev-parse --verify HEAD)
+@@ -756,13 +758,12 @@ In both case, once you're done, continue with:
+ 			die "\
+ You have uncommitted changes in your working tree. Please, commit them
+ first and then run 'git rebase --continue' again."
+-			git reset --soft HEAD^ ||
+-			die "Cannot rewind the HEAD"
++			do_with_author git commit --amend --no-verify -F "$msg" -e ||
++				die "Could not commit staged changes."
++		else
++			do_with_author git commit --no-verify -F "$msg" -e ||
++				die "Could not commit staged changes."
+ 		fi
+-		do_with_author git commit --no-verify -F "$msg" -e || {
+-			test -n "$current_head" && git reset --soft $current_head
+-			die "Could not commit staged changes."
+-		}
+ 	fi
+ 
+ 	record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8078db6..3f75d32 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -903,4 +903,12 @@ test_expect_success 'rebase -i --root temporary sentinel commit' '
+ 	git rebase --abort
  '
-
-+test_expect_success '"$XDG_CONFIG_HOME overrides $HOME/.config/git' '
-+       mkdir -p "$HOME"/xdg/git/ &&
-+       echo "[user]" >"$HOME"/xdg/git/config &&
-+       echo "  name = in_xdg" >>"$HOME"/xdg/git/config &&
-+       echo in_xdg >expected &&
-+       (
-+               XDG_CONFIG_HOME="$HOME"/xdg/ &&
-+               export XDG_CONFIG_HOME &&
-+               git config --get-all user.name >actual
-+       ) &&
-+       test_cmp expected actual
+ 
++test_expect_success 'rebase -i --root fixup root commit' '
++	git checkout B &&
++	FAKE_LINES="1 fixup 2" git rebase -i --root &&
++	test A = $(git cat-file commit HEAD | sed -ne \$p) &&
++	test B = $(git show HEAD:file1) &&
++	test 0 = $(git cat-file commit HEAD | grep -c ^parent\ )
 +'
 +
-
- test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
-        >.gitconfig &&
-
+ test_done
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.11.2.251.g6a928a6
