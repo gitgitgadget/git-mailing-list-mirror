@@ -1,170 +1,137 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [RFC/PATCH v2] t3300-*.sh: Fix a TAP parse error
-Date: Tue, 24 Jul 2012 19:48:20 +0100
-Message-ID: <500EEDF4.7050007@ramsay1.demon.co.uk>
+Subject: Re: [RFC/PATCH] t3300-*.sh: Fix a TAP parse error
+Date: Tue, 24 Jul 2012 19:34:18 +0100
+Message-ID: <500EEAAA.8030604@ramsay1.demon.co.uk>
+References: <500AEB11.4050006@ramsay1.demon.co.uk> <20120721182049.GL19860@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:21:16 2012
+X-From: git-owner@vger.kernel.org Tue Jul 24 21:21:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StkfU-0004EX-6R
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:21:16 +0200
+	id 1StkfT-0004EX-EG
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:21:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756013Ab2GXTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756015Ab2GXTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 24 Jul 2012 15:21:09 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:43039 "EHLO
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:43038 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755604Ab2GXTVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 15:21:07 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jul 2012 15:21:07 EDT
+	with ESMTP id S1755830Ab2GXTVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 15:21:08 -0400
 Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id B2D4C40025A;
-	Tue, 24 Jul 2012 20:14:01 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 8A91E400253;	Tue, 24 Jul 2012 20:14:00 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Tue, 24 Jul 2012 20:13:59 +0100 (BST)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 03700400259;
+	Tue, 24 Jul 2012 20:13:58 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id CE649400253;	Tue, 24 Jul 2012 20:13:56 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Tue, 24 Jul 2012 20:13:55 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <20120721182049.GL19860@burratino>
 X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202057>
 
+Jonathan Nieder wrote:
+>> Needless to say, I much prefer the patch below. :-D
+> 
+> Thanks for a nice explanation.  In general I definitely like getting
+> rid of these setup tests when possible.  Let's see:
+> 
+> [...]
+>> --- a/t/t3300-funny-names.sh
+>> +++ b/t/t3300-funny-names.sh
+>> @@ -15,28 +15,20 @@ p0='no-funny'
+>>  p1='tabs	," (dq) and spaces'
+>>  p2='just space'
+>>  
+>> -test_expect_success 'setup' '
+>> -	cat >"$p0" <<-\EOF &&
+>> -	1. A quick brown fox jumps over the lazy cat, oops dog.
+>> -	2. A quick brown fox jumps over the lazy cat, oops dog.
+>> -	3. A quick brown fox jumps over the lazy cat, oops dog.
+>> -	EOF
+>> +cat >"$p0" <<\EOF
+>> +1. A quick brown fox jumps over the lazy cat, oops dog.
+>> +2. A quick brown fox jumps over the lazy cat, oops dog.
+>> +3. A quick brown fox jumps over the lazy cat, oops dog.
+>> +EOF
+> 
+> The problem is that on platforms not supporting funny filenames, it
+> will write a complaint to stderr and because the code is not guarded
+> by test_expect_success, that output goes to the terminal.  So I think
+> this is a wrong approach.
 
-At present, running the t3300-*.sh test on cygwin looks like:
+Huh? Which platforms are we talking about?
 
-    $ cd t
-    $ ./t3300-funny-names.sh
-    ok 1 - setup
-    # passed all 1 test(s)
-    1..1 # SKIP Your filesystem does not allow tabs in filenames
-    $
+The only problematic platforms I test on are "NTFS/bash" on cygwin and MinGW.
+Since commit 2b843732 ("Suppress some bash redirection error messages",
+26-08-2008), I have not noticed any complaints regarding this problem.
+What have I missed?
 
-Unfortunately, this is not valid TAP output, which prove notes
-as follows:
+Assuming we are not talking about errors like ENOSPC, EROFS etc., then the
+only command which would issue a complaint to stderr would be the line
+following the above snippet, thus:
 
-    $ prove --exec sh t3300-funny-names.sh
-    t3300-funny-names.sh .. All 1 subtests passed
+    +cat 2>/dev/null >"$p1" "$p0"
 
-    Test Summary Report
-    -------------------
-    t3300-funny-names.sh (Wstat: 0 Tests: 1 Failed: 0)
-      Parse errors: No plan found in TAP output
-    Files=1, Tests=1,  2 wallclock secs ( 0.05 usr  0.00 sys +  \
-        0.90 cusr  0.49 csys =  1.43 CPU)
-    Result: FAIL
-    $
+(note the stderr redirection). This does not output an error to the terminal
+when using bash (I think I also tested with dash). However, this does rely
+on the shell performing the redirections in the order, left to right, on the
+command line. [I had intended to check with POSIX to see if this order was
+mandated or not, but didn't get around to it ...]
 
-This is due to the 'trailing_plan' having a 'skip_directive'
-attached to it. This is not allowed by the TAP grammar, which
-only allows a 'leading_plan' to be followed by an optional
-'skip_directive'. (see perldoc TAP::Parser::Grammar).
+Have you found a shell were this does not work?
 
-A trailing_plan is one that appears in the TAP output after one or
-more test status lines (that start 'not '? 'ok ' ...), whereas a
-leading_plan must appear before all test status lines (if any).
+> Would it make sense to avoid the "# SKIP" comment when a test has
+> been run, like this?
+> 
+> diff --git i/t/test-lib.sh w/t/test-lib.sh
+> index acda33d1..038f6e9f 100644
+> --- i/t/test-lib.sh
+> +++ w/t/test-lib.sh
+> @@ -354,6 +354,11 @@ test_done () {
+>  	case "$test_failure" in
+>  	0)
+>  		# Maybe print SKIP message
+> +		if test -n "$skip_all" && test "$test_count" != 0
+> +		then
+> +			say "# SKIP $skill_all"
+> +			skip_all=
+> +		fi
+>  		[ -z "$skip_all" ] || skip_all=" # SKIP $skip_all"
+>  
+>  		if test $test_external_has_tap -eq 0; then
 
-In practice, this means that the test script cannot contain a use
-of the 'skip all' facility:
+No, I don't think this would be a good direction to go in. This may
+not be a good idea either, but if you wanted to add a check here, then
+maybe something like this (totally untested):
 
-    skip_all='Some reason to skip *all* tests in this file'
-    test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index acda33d..53a2422 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -354,6 +354,9 @@ test_done () {
+ 	case "$test_failure" in
+ 	0)
+ 		# Maybe print SKIP message
++		if test -n "$skip_all" && test $test_count -gt 0; then
++			error "Can't use skip_all after running some tests"
++		fi
+ 		[ -z "$skip_all" ] || skip_all=" # SKIP $skip_all"
+ 
+ 		if test $test_external_has_tap -eq 0; then
 
-after having already executed one or more tests with (for example)
-'test_expect_success'. Unfortunately, this is exactly what this
-test script is doing. The first 'setup' test is actually used to
-determine if the test prerequisite is satisfied by the filesystem
-(ie does it allow tabs in filenames?).
+Dunno! :-D
 
-In order to fix the parse errors, place the code to determine the
-test prerequisite at the top level of the script, prior to the
-first test, rather than as a parameter to test_expect_success.
-This allows us to correctly use 'skip_all', thus:
-
-    $ ./t3300-funny-names.sh
-    # passed all 0 test(s)
-    1..0 # SKIP Your filesystem does not allow tabs in filenames
-    $
-
-    $ prove --exec sh t3300-funny-names.sh
-    t3300-funny-names.sh .. skipped: Your filesystem does not \
-        allow tabs in filenames
-    Files=1, Tests=0,  2 wallclock secs ( 0.02 usr  0.03 sys +  \
-        0.84 cusr  0.41 csys =  1.29 CPU)
-    Result: NOTESTS
-    $
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Jonathan,
-
-This version of the patch only moves code to determine the test
-prerequisite to the outer level, while leaving the 'setup' aspects
-of the first test in place.
-
-I did think about merging the following test ("setup: populate index
-and tree") into the first test, but I wanted to keep it simple for now.
-
-What do you think?
+I will be sending a v2 patch soon.
 
 ATB,
 Ramsay Jones
-
- t/t3300-funny-names.sh | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
-
-diff --git a/t/t3300-funny-names.sh b/t/t3300-funny-names.sh
-index 1f35e55..7480d6e 100755
---- a/t/t3300-funny-names.sh
-+++ b/t/t3300-funny-names.sh
-@@ -11,6 +11,16 @@ tree, index, and tree objects.
- 
- . ./test-lib.sh
- 
-+HT='	'
-+
-+echo 2>/dev/null > "Name with an${HT}HT"
-+if ! test -f "Name with an${HT}HT"
-+then
-+	# since FAT/NTFS does not allow tabs in filenames, skip this test
-+	skip_all='Your filesystem does not allow tabs in filenames'
-+	test_done
-+fi
-+
- p0='no-funny'
- p1='tabs	," (dq) and spaces'
- p2='just space'
-@@ -23,21 +33,9 @@ test_expect_success 'setup' '
- 	EOF
- 
- 	{ cat "$p0" >"$p1" || :; } &&
--	{ echo "Foo Bar Baz" >"$p2" || :; } &&
--
--	if test -f "$p1" && cmp "$p0" "$p1"
--	then
--		test_set_prereq TABS_IN_FILENAMES
--	fi
-+	{ echo "Foo Bar Baz" >"$p2" || :; }
- '
- 
--if ! test_have_prereq TABS_IN_FILENAMES
--then
--	# since FAT/NTFS does not allow tabs in filenames, skip this test
--	skip_all='Your filesystem does not allow tabs in filenames'
--	test_done
--fi
--
- test_expect_success 'setup: populate index and tree' '
- 	git update-index --add "$p0" "$p2" &&
- 	t0=$(git write-tree)
--- 
-1.7.11.2
