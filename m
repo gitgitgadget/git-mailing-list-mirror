@@ -1,101 +1,78 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Enhanced git branch list (proposal)
-Date: Tue, 24 Jul 2012 12:40:26 -0400
-Message-ID: <CABURp0qcisya1MEL=2CMpuERjmpRm=PZ_doUurcwa1MQERTATw@mail.gmail.com>
-References: <500D954B.4090007@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC] Designing a faster index format - Progress report week 13
+Date: Tue, 24 Jul 2012 09:58:08 -0700
+Message-ID: <7vy5m9f65b.fsf@alter.siamese.dyndns.org>
+References: <20120716203300.GA1849@tgummerer.surfnet.iacbox>
+ <7vwr23zb65.fsf@alter.siamese.dyndns.org>
+ <20120717082452.GC1849@tgummerer.surfnet.iacbox>
+ <500C1AA9.4000306@dewire.com> <7vfw8jsk5o.fsf@alter.siamese.dyndns.org>
+ <87629fvaxz.fsf@thomas.inf.ethz.ch> <7vr4s3pkqr.fsf@alter.siamese.dyndns.org>
+ <500DD05D.8030708@dewire.com> <87d33lqsrp.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: John Bartholomew <jpa.bartholomew@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 18:41:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, <pclouds@gmail.com>,
+	JGit Developers list <jgit-dev@eclipse.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jul 24 18:58:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StiAW-0006wZ-Sr
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 18:41:09 +0200
+	id 1StiR7-0001ZG-LT
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 18:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755672Ab2GXQks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 12:40:48 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36665 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755581Ab2GXQkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 12:40:47 -0400
-Received: by obbuo13 with SMTP id uo13so11344921obb.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 09:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PeQBUDsXZqBvOGVlsHd+Py8roCdNlbH3PzIGj2Rsar0=;
-        b=NC+6AYBNieJWOjObzloeK0goITiicmxefKfJWV8CU/2KJ0NGKzYaNnFIHOKJPSjntS
-         a9nigRrXcUsiCPqKGp10yMVlfaqIMC+3/Hq2H0Okh5S/IYpIyoZSZDA0Sq0jDJSRkQkq
-         ZLsKMxwBb7Piuuquc8f/uva1Wsr9WAf9+fj6vguCG0h3I+nati3nTlESKqwBhxFTjN3E
-         27XVzpHEoJY7es99Sbyjks8Aa2+2tnxKszMpo6dslnNYjwVfrZwojOMHE1fiqNPoq0Tl
-         witY5B9hNCzaKz+5F3ljcsWoB/f5xZb0yZ+MMeJQ7teOBQteO2WvAQhJ739uAVzvxtdf
-         tPMQ==
-Received: by 10.182.212.36 with SMTP id nh4mr28397723obc.37.1343148046605;
- Tue, 24 Jul 2012 09:40:46 -0700 (PDT)
-Received: by 10.182.65.169 with HTTP; Tue, 24 Jul 2012 09:40:26 -0700 (PDT)
-In-Reply-To: <500D954B.4090007@gmail.com>
+	id S1754366Ab2GXQ6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 12:58:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753780Ab2GXQ6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 12:58:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D99216525;
+	Tue, 24 Jul 2012 12:58:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rJLMBF6O94n0tBMVUR0Lh2ZXuus=; b=i/5fb6
+	TnzWTftLjjVfx/khMkLKJ/ZuO1slPvu+oZJihAPWXlNjERIrq/tcyOi7oFplNh9i
+	vXYddPySr8VxKF2K7nY8JCsOQ44bRgeWV+Zlg/blXJEZqkkcJ5cCCQW9WW2yoa2I
+	xkq5lsgr+PnlB5bo4bBA0yBEezZrRkbPHTiow=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BFts8hVHKr3udpdax+1ow4RXdCDdx0iH
+	oMqEIFoGlqg8MI756FPLhhKlYpChM4gFIKKOgZ3Mst4yNDb1WQ3lVUj8zSloYssQ
+	0/Ywp5YdRZBdLedRtxVHDWb5tWJ0P3n0Q5AgZwGsM44TaUz0Dk/OsZz6evtVd3Mt
+	7yAnWncVUGQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C76736524;
+	Tue, 24 Jul 2012 12:58:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F9856523; Tue, 24 Jul 2012
+ 12:58:10 -0400 (EDT)
+In-Reply-To: <87d33lqsrp.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 24 Jul 2012 13:54:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BF9472FC-D5B0-11E1-BA72-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202046>
 
-On Mon, Jul 23, 2012 at 2:17 PM, John Bartholomew
-<jpa.bartholomew@gmail.com> wrote:
->
-> I find the output of `git branch' to be quite bare, and would like to
-> see more information; most importantly, what the state of the branch
-> is in relation to its upstream. For some time I have been using my
-> own script to do this. It produces output like this:
->
-> $ git lsb
->   commodity-market-lua [behind 'brianetta/commodity-market-lua' by 2
-> commits]
->   filesystem [up-to-date with 'jpab/filesystem']
->   fix-ring-blending [ahead of 'jpab/fix-ring-blending' by 1 commit]
->   galaxy-refactor
->   galaxy-refactor-2 [diverged from 'jpab/galaxy-refactor', by 6
-> commits/626 commits (us/them)]
->   hud-pitch-ladder [up-to-date with 'jpab/hud-pitch-ladder']
-> = issue-1388
->   issue-695
->   lmr-mtllib-improvements
->   marcel-stations
-> * master [up-to-date with 'jpab/master']
->   refcounted-body [up-to-date with 'jpab/refcounted-body']
->   string-formatter [up-to-date with 'jpab/string-formatter']
->
-> The first column indicates the relation to HEAD: '*' marks the current
-> head, '=' marks a branch which is identical with the current HEAD.
->
-> Branches which have a configured upstream (branch.remote and
-> branch.merge are set) show the relation to the corresponding remote
-> branch.
->
-> Some key text ('up-to-date', 'ahead', 'behind' or 'diverged', and the
-> name of the current HEAD) is displayed with colour if colour is
-> enabled.
->
-> Arguments can be passed to show remote branches (for all remotes, or
-> for a specified remote), or all branches, and to show each branch
-> in relation to a specified target branch instead of the configured
-> remote tracking branch.
->
-> I would like to know whether there is any interest in incorporating
-> this functionality into the main git distribution, either as a
-> separate command, or within `git branch'. For my purposes I have it
-> aliased under the name `git lsb' for `list branches'.
->
-> You can examine the script I'm using for this at:
-> https://github.com/johnbartholomew/gitvoodoo/blob/master/bin/git-xbranch
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Thanks.  You might also find this one interesting:
+> Junio's index-v4 was a speed boost mainly because it cuts down on the
+> size of the index.  Do we want to throw that out?
 
-http://masanjin.net/blog/label/git-wtf/
+That's pretty much orthogonal, isn't it?
 
-Phil
+The index-v4 is merely to show how a stupid prefix compression of
+pathnames without nothing else would reduce the file size and I/O
+cost, in order to set the bar for anything more clever than that.
+
+I thought that this discussion is about keeping, squishing, or
+discarding part of the cached stat info, and nobody is suggesting
+what to do with the prefix compression of pathnames.
