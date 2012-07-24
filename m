@@ -1,77 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: git-svn SVN 1.7 fix, take 2
-Date: Tue, 24 Jul 2012 14:51:37 -0700
-Message-ID: <7vipdcesk6.fsf@alter.siamese.dyndns.org>
+Date: Tue, 24 Jul 2012 17:02:08 -0500
+Message-ID: <20120724220207.GA15969@burratino>
 References: <500F17A3.60307@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Robin H. Johnson" <robbat2@gentoo.org>,
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
 	Eric Wong <normalperson@yhbt.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	Jonathan Nieder <jrnieder@gmail.com>
+	Ben Walton <bwalton@artsci.utoronto.ca>
 To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 23:51:54 2012
+X-From: git-owner@vger.kernel.org Wed Jul 25 00:02:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stn1C-00068x-T9
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 23:51:51 +0200
+	id 1StnBP-0003db-79
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 00:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754601Ab2GXVvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 17:51:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64665 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754278Ab2GXVvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 17:51:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0984F82D8;
-	Tue, 24 Jul 2012 17:51:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Abcxys5rM2eD/RiHL9wGFXQ3rI8=; b=U9D2y/
-	jey7SkRhrRfXoXdavKfgquyBl4V2nuZXouYYIxd6Vej4RV2gjw7+fkdX+lZEP12K
-	8UABmxXcT3DcMbnDqdH38Eb5lTdy2ArTkfwkoAxXVeDVeXFAWwXuLqzpAp2C4JGc
-	UV5If1KjZpVj14MSvSvuYHlJnhotSEW8jdbIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aLdNrfPVDeRkzN/BqwWc3wwuzLaJBohc
-	G1Qn16nBT6OTNqj9YG/qoxRGxW7bS0QhB71js4IYURKWFS0/lv0qjItFLjqUUcry
-	V6stzUmleh3vDVWMms0nic8JvPxyV4bisUBJZU38iFEfAalDCWnZfv79I9p0r9iV
-	9I4vRvaDpKI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAB5882D7;
-	Tue, 24 Jul 2012 17:51:39 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C6A082D6; Tue, 24 Jul 2012
- 17:51:38 -0400 (EDT)
-In-Reply-To: <500F17A3.60307@pobox.com> (Michael G. Schwern's message of
- "Tue, 24 Jul 2012 14:46:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BEE603C4-D5D9-11E1-B166-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754394Ab2GXWCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 18:02:18 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:49786 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753619Ab2GXWCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 18:02:17 -0400
+Received: by ghrr11 with SMTP id r11so77211ghr.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 15:02:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CM2UPDLuiLyiN5BIQATCUvEw8mTUkiBDpYaY3Eoz04E=;
+        b=k2nie1IoBjhGENss8vfWfuzwK9oJkMd9vt01zq2kASrEGjQj2osKKjZbxgojQe97xP
+         BnKFWwz8ACI7WYm5wnSA4rlDLUB0/Ny+kB3olLHPKqdO0AYgKgCOazU14XUn/+ys8klQ
+         MdY+cMMBqZzUvVNB/VeGZhNlTILOXqAV8sUfDNM1DX4pnNulfcWvLO53DZyUP/HiiQkv
+         EfaJ4G9YaB7wADE8dxODDMqBn34zcKhTPcjB1rjhvToFvKbe1QhVTDTrgNWIxgctXZBE
+         NaDAXJL5Xz7xePGJBDOOaFn58LM6amjVvB6flAT9vUcCTlybhpQiKMAU0rmpXyhU9sfV
+         eiQA==
+Received: by 10.42.197.197 with SMTP id el5mr18908602icb.35.1343167336333;
+        Tue, 24 Jul 2012 15:02:16 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id y5sm6086242igb.11.2012.07.24.15.02.15
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2012 15:02:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <500F17A3.60307@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202076>
 
-Michael G Schwern <schwern@pobox.com> writes:
+Hi,
 
-> A big one is "do not blast 10 emails to a mailing list" but I gather that's ok
-> here if a submission needs 10 commits to be well expressed and its done via
-> git-send-email?  And then if patch #3 needs revision I'm to do it in a rebase
-> and resend the whole 10 commits?  Am I to think of git-send-email less as a
-> means of sending patches to a mailing list and more as a git transport mechanism?
+Michael G Schwern wrote:
 
-Yes, yes and whatever (even though I think send-email is just a
-better MUA/MSA when you want to send patches and isn't restricted
-for a _git_ transport, I do not think it matters how you look at it).
+> I'm trying to bust it up into easier to digest pieces.
 
-> I'm trying to bust it up into easier to digest pieces.  I came into this cold
-> without much knowledge of the problem ("something to do with
-> canonicalization") and no knowledge of the code.
+I have a crazy idea.  You might not like it, but maybe it's worth giving
+it a try.
 
-Perhaps it is a good idea to lurk and see how others submit their
-topics first?
+[...]
+> The Git::SVN extraction is more complicated than the rest, so I'll probably do
+> that separately and bust it up into a few commits.
+
+All of these changes are supposed to have zero functional effect,
+right?
+
+Could you send the first five patches that *are* supposed to have a
+functional effect?  I know that they will not apply cleanly to git-svn
+from git "master" or on top of each other; that's fine with me.  If
+the approach looks right, interested people (read: probably Ben or I :))
+can make the corresponding change in the code layout from "master".
+Afterwards, we can look into all that refactoring to make later
+changes easier.
+
+What do you think?
+
+Thanks,
+Jonathan
