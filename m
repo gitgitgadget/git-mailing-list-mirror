@@ -1,10 +1,8 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 0/7] i18n for git-am, git-rebase and git-merge
-Date: Tue, 24 Jul 2012 14:59:28 +0800
-Message-ID: <cover.1343112786.git.worldhello.net@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH v3 1/7] i18n: New keywords for xgettext extraction from sh
+Date: Tue, 24 Jul 2012 14:59:29 +0800
+Message-ID: <6fbf2661d428ca4c4227b418368716d903dfd3e3.1343112786.git.worldhello.net@gmail.com>
+References: <cover.1343112786.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>,
@@ -12,70 +10,73 @@ Cc: Git List <git@vger.kernel.org>,
 	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 09:00:03 2012
+X-From: git-owner@vger.kernel.org Tue Jul 24 09:00:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StZ6A-0001RP-Cz
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 09:00:02 +0200
+	id 1StZ6K-0001YK-LH
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 09:00:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039Ab2GXG75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 02:59:57 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:59967 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753185Ab2GXG74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 02:59:56 -0400
-Received: by pbbrp8 with SMTP id rp8so12207178pbb.19
-        for <git@vger.kernel.org>; Mon, 23 Jul 2012 23:59:55 -0700 (PDT)
+	id S1755144Ab2GXHAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 03:00:04 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:43823 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755064Ab2GXHAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 03:00:03 -0400
+Received: by yhmm54 with SMTP id m54so6322967yhm.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 00:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=HjmmDCG9ASQsEtbdxEal03OSMaoONmG1ctvr6DwiDtM=;
-        b=yPRdjETMpbl18s7Z1FmNXD3cA9ijLQ5dJelXlWbvhXkWzgW8e4vxjFySAESwuyGkCO
-         dTRWHQ2b1VTTj4Cq4ArzD2YP5y+DCw1f7t0ANgyAhfvejoAKUH9rSB+lZEtmp4OcKWIm
-         6BnK592FkuQ0/uS5b1FdGgbnF1NOK5lJj03K1Onix6HMCxpnU0MlWq4h/kHH7aaMECuF
-         ebT3HZfMRTEOoVKfdO0xitPisKE8RFUUUom6Fsr71FUXza8Q3eZu00W6OEADmMzSABdW
-         ChPZRd4KqPagUvevxtAN+QtsWW54UuAULh8e2vQaCAPokwIYJkjXWiZ7OsAdvIQ3RW95
-         mT2g==
-Received: by 10.68.224.36 with SMTP id qz4mr41866628pbc.161.1343113195841;
-        Mon, 23 Jul 2012 23:59:55 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :in-reply-to:references;
+        bh=/DPpz7lsXE0f1oj82iX/iC7bdueJZs433VhRNFbhY7I=;
+        b=tc9RRD0LjOgEl01BNZ1O5vcb9xjbeuKxdzbUwARibJ+5vTv5O7F4UM0Xp/BAKT0qOI
+         CclkFuWCC734gG86Z7DJYxxSfdkwa93oOtcmInN3hpssi7xCPRxQjqMtGCZ567/OMN0q
+         Loledk2yRZ+rjfuxnSEEp4G8mUcRPln0fPY5LlNeiQG6ATbb+8x3ZCDcsuUU9GcC4vla
+         B2fNdxkW0giJWKjYf++VFvhvzy48x5VCy/tTXR++QIplJOBj3FvTzIo411FidjNbNCb8
+         Yiwg6ar99gq+8rXjdc9IQJu0qm80dX+dLXLzg5D3gngVxhCXo9c2+Ic9ppz8Q/H82lyO
+         AI5A==
+Received: by 10.66.73.5 with SMTP id h5mr2494612pav.79.1343113202196;
+        Tue, 24 Jul 2012 00:00:02 -0700 (PDT)
 Received: from jx.bj.ossxp.com.bj.ossxp.com ([123.116.228.123])
-        by mx.google.com with ESMTPS id tj4sm11577579pbc.33.2012.07.23.23.59.49
+        by mx.google.com with ESMTPS id tj4sm11577579pbc.33.2012.07.23.23.59.56
         (version=SSLv3 cipher=OTHER);
-        Mon, 23 Jul 2012 23:59:54 -0700 (PDT)
+        Tue, 24 Jul 2012 00:00:01 -0700 (PDT)
 X-Mailer: git-send-email 1.7.12.rc0.17.gcb766d3
+In-Reply-To: <cover.1343112786.git.worldhello.net@gmail.com>
+In-Reply-To: <cover.1343112786.git.worldhello.net@gmail.com>
+References: <cover.1343112786.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202011>
 
-Marked messages for translation in git-am, git-rebase, and git-merge.
-Also fixed affected test cases when turn GETTEXT_POISON switch on.
+Since we have additional shell wrappers (gettextln and eval_gettextln)
+for gettext, we need to take into account these wrappers when run
+'make pot' to extract messages from shell scripts.
 
-Jiang Xin (7):
-  i18n: New keywords for xgettext extraction from sh
-  i18n: rebase: mark strings for translation
-  i18n: Rewrite gettext messages start with dash
-  Remove obsolete LONG_USAGE which breaks xgettext
-  i18n: am: mark more strings for translation
-  Remove unused and bad gettext block from git-am
-  i18n: merge-recursive: mark strings for translation
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Reviewed-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- Makefile                             |   3 +-
- git-am.sh                            |  14 ++--
- git-rebase.sh                        |  87 ++++++++------------
- git-submodule.sh                     |   2 +-
- merge-recursive.c                    | 148 +++++++++++++++++++----------------
- t/t3400-rebase.sh                    |   8 +-
- t/t3404-rebase-interactive.sh        |   2 +-
- t/t3406-rebase-message.sh            |   2 +-
- t/t6022-merge-rename.sh              |  16 ++--
- t/t6042-merge-rename-corner-cases.sh |   2 +-
- 10 files changed, 134 insertions(+), 150 deletions(-)
-
+diff --git a/Makefile b/Makefile
+index b0b34..d3cd9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2387,7 +2387,8 @@ XGETTEXT_FLAGS = \
+ 	--from-code=UTF-8
+ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+ 	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
+-XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell
++XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
++	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
+ LOCALIZED_C := $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+ LOCALIZED_SH := $(SCRIPT_SH)
 -- 
 1.7.12.rc0.17.gcb766d3
