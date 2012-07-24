@@ -1,173 +1,112 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 2/7] i18n: rebase: mark strings for translation
-Date: Tue, 24 Jul 2012 13:01:38 -0500
-Message-ID: <20120724180138.GF2939@burratino>
+Subject: Re: [PATCH v3 4/7] Remove obsolete LONG_USAGE which breaks xgettext
+Date: Tue, 24 Jul 2012 13:08:09 -0500
+Message-ID: <20120724180808.GG2939@burratino>
 References: <cover.1343112786.git.worldhello.net@gmail.com>
- <b263c2bcc5dd6d611a1e3a4f6a87042d4cdb50aa.1343112786.git.worldhello.net@gmail.com>
+ <e3481427da5efcb60053bb4cd5bcc7e4567100f0.1343112786.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 20:02:23 2012
+X-From: git-owner@vger.kernel.org Tue Jul 24 20:08:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StjQn-0002cH-NG
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:02:02 +0200
+	id 1StjWz-0002cH-WB
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932354Ab2GXSBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 14:01:49 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43627 "EHLO
+	id S933694Ab2GXSIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 14:08:20 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:56856 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932290Ab2GXSBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 14:01:43 -0400
-Received: by yhmm54 with SMTP id m54so6961798yhm.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 11:01:42 -0700 (PDT)
+	with ESMTP id S933690Ab2GXSIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 14:08:14 -0400
+Received: by yhmm54 with SMTP id m54so6969494yhm.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 11:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/1RGFS7rwyuGIH0yDw1eSISdDqZglTtrvDqNVZiuviM=;
-        b=J5fMEzi/D5hOxhy5/2UY1NEM6mMebUD5c91LewK68AbRoGc/xO+1cgVGQFUL3dFb0y
-         eRtiGLVvxBnWxtXUK3U5AvGbpw6rbSG611g7VRUa2XOcbbIcCDgeV3Y/QbyIXpl9UPD3
-         w7YGwjR48KA7O58uz6V+hADkrr/d8JcH1WY76DT6QXpO6H0ylaiEkK1SpnpMme5FOf9B
-         NA7vWk//FVyhHkdRxfQjFgyoTlgXyufzCdfmK4Hqn0sTep6DHkN/+6iicDLmtdBWFUfG
-         kKOz9h6FJsgIXY9epvG0eYc1fMPXrqnvl1LGjonDCxtAmOMfbzdjdDdN8nkGeJfJjZhi
-         YKiw==
-Received: by 10.43.70.71 with SMTP id yf7mr17033336icb.14.1343152902663;
-        Tue, 24 Jul 2012 11:01:42 -0700 (PDT)
+        bh=6PMS0+33jXFil8omYII2oKvhDOcQxTe7oAhrXe3IqNY=;
+        b=jpzhU3Jcge8thwkmW2w3pmi9I3Se3GN2ezrfYQ4EQMMUwXn8IfuAdtbDzB+eUGbEkL
+         aPLmL7SeG9h9kZ48V6jVkYVfBGh/ksHAuQwpjj71lQadl3nZ+KXL24eHVLxK/YgdnV9s
+         U1R49VM2HRDHRq9BmBmkJyB+doTvdp0GzZI3JB7RtCxNdFtTqfzn9+p4MuCZBhvWSIe7
+         9FuOVnBK++Ti1PzgC6gyWnHUCU69g5BhSsyLLXiEIsg8WQ78ipQk22suYbdQPvpMNkdQ
+         xbhy5RE17SBMZOsGRbYxqHvo3WYSpYjvoDf3EdoR2jtfvHn/Aw3Slyo4du5BdZe/d6kL
+         XCbA==
+Received: by 10.42.99.75 with SMTP id v11mr17145691icn.41.1343153293512;
+        Tue, 24 Jul 2012 11:08:13 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id s4sm2548035igb.1.2012.07.24.11.01.41
+        by mx.google.com with ESMTPS id k5sm2544362igq.12.2012.07.24.11.08.12
         (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 11:01:42 -0700 (PDT)
+        Tue, 24 Jul 2012 11:08:12 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <b263c2bcc5dd6d611a1e3a4f6a87042d4cdb50aa.1343112786.git.worldhello.net@gmail.com>
+In-Reply-To: <e3481427da5efcb60053bb4cd5bcc7e4567100f0.1343112786.git.worldhello.net@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202049>
 
 Hi,
 
 Jiang Xin wrote:
 
-> Mark strings in git-rebase.sh for translation.
+> The obsolete LONG_USAGE variable
+[...]
 
-Thanks.
+It's a shame to lose the information that was in the LONG_USAGE
+message, though.  Maybe it could be incorporated into the OPTIONS_SPEC
+before the opening "--", or maybe it could be used to clarify the
+description in git-rebase(1).
+
+Cc-ing Martin who carried out the parseoptification for advice.  Patch
+left unsnipped below for reference.
+
+Thanks and hope that helps,
+Jonathan
 
 [...]
 > --- a/git-rebase.sh
 > +++ b/git-rebase.sh
-> @@ -65,6 +65,7 @@ abort!             abort and check out the original branch
->  skip!              skip current patch and continue
->  "
->  . git-sh-setup
-> +. git-sh-i18n
->  set_reflog_action rebase
->  require_work_tree_exists
->  cd_to_toplevel
-> @@ -72,11 +73,11 @@ cd_to_toplevel
->  LF='
->  '
->  ok_to_skip_pre_rebase=
-> -resolvemsg="
-> -When you have resolved this problem run \"git rebase --continue\".
-> -If you would prefer to skip this patch, instead run \"git rebase --skip\".
-> -To check out the original branch and stop rebasing run \"git rebase --abort\".
-> -"
-> +resolvemsg=$(gettext '
-> +When you have resolved this problem run "git rebase --continue".
-> +If you would prefer to skip this patch, instead run "git rebase --skip".
-> +To check out the original branch and stop rebasing run "git rebase --abort".
-> +')
-
-Functional change: command substitution strips off the trailing newline.
-Intentional?
-
-Probably it would make sense to do
-
-	resolvemsg="
-	$(gettext 'When you have resolved this problem, run "git rebase --continue".
-	If you prefer to skip this patch, run "git rebase --skip" instead.
-	To check out the original branch and stop rebasing, run "git rebase --abort".')
-	"
-
-anyway, so the translators could have fewer newlines at the edges to
-fuss about.
-
-[...]
->  	git diff-files --quiet --ignore-submodules || {
-> -		echo "You must edit all merge conflicts and then"
-> -		echo "mark them as resolved using git add"
-> +		echo "$(gettext "You must edit all merge conflicts and then
-> +mark them as resolved using git add")"
->  		exit 1
-
-Nice.
-
-[...]
-> @@ -367,15 +368,16 @@ esac
->  # Make sure no rebase is in progress
->  if test -n "$in_progress"
->  then
-> -	die '
-> -It seems that there is already a '"${state_dir##*/}"' directory, and
-> +	state_dir_base=${state_dir##*/}
-> +	die "$(eval_gettext "
-> +It seems that there is already a \$state_dir_base directory, and
->  I wonder if you are in the middle of another rebase.  If that is the
->  case, please try
->  	git rebase (--continue | --abort | --skip)
->  If that is not the case, please
-> -	rm -fr '"$state_dir"'
-> +	rm -fr \"\$state_dir\"
->  and run me again.  I am stopping in case you still have something
-> -valuable there.'
-> +valuable there.")"
-
-Maybe, to allow changing the commands without having to update
-translations:
-
-	state_dir_base=...
-	cmd_live_rebase='git rebase (--continue | --abort | --skip)'
-	cmd_clear_stale_rebase="rm -fr \"$state_dir\""
-	die "
-	$(eval_gettext 'It seems that there is already a $state_dir_base directory, and
-	I wonder if you ware in the middle of another rebase.  If that is the
-	case, please try
-		$cmd_live_rebase
-	If that is not the case, please
-		$cmd_clear_stale_rebase
-	and run me again.  I am stopping in case you still have something
-	valuable there.')"
-
-[...]
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -68,24 +68,24 @@ test_expect_success 'rebase against master' '
-
-Thanks for updating tests!  The expected output you had to change all
-seems to be intended for humans, which is a good sign.
-
-[...]
-> --- a/t/t3406-rebase-message.sh
-> +++ b/t/t3406-rebase-message.sh
-> @@ -64,7 +64,7 @@ test_expect_success 'rebase -n overrides config rebase.stat config' '
+> @@ -3,31 +3,6 @@
+>  # Copyright (c) 2005 Junio C Hamano.
+>  #
 >  
->  test_expect_success 'rebase --onto outputs the invalid ref' '
->  	test_must_fail git rebase --onto invalid-ref HEAD HEAD 2>err &&
-> -	grep "invalid-ref" err
-> +	test_i18ngrep "invalid-ref" err
->  '
-
-This is probably part of a message intended for humans, but the test
-does not say.  What is the full message being checked?
-
-Hope that helps,
-Jonathan
+> -USAGE='[--interactive | -i] [--exec | -x <cmd>] [-v] [--force-rebase | -f]
+> -       [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
+> -LONG_USAGE='git-rebase replaces <branch> with a new branch of the
+> -same name.  When the --onto option is provided the new branch starts
+> -out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
+> -It then attempts to create a new commit for each commit from the original
+> -<branch> that does not exist in the <upstream> branch.
+> -
+> -It is possible that a merge failure will prevent this process from being
+> -completely automatic.  You will have to resolve any such merge failure
+> -and run git rebase --continue.  Another option is to bypass the commit
+> -that caused the merge failure with git rebase --skip.  To check out the
+> -original <branch> and remove the .git/rebase-apply working files, use the
+> -command git rebase --abort instead.
+> -
+> -Note that if <branch> is not specified on the command line, the
+> -currently checked out branch is used.
+> -
+> -Example:       git-rebase master~1 topic
+> -
+> -	A---B---C topic                   A'\''--B'\''--C'\'' topic
+> -       /                   -->           /
+> -  D---E---F---G master          D---E---F---G master
+> -'
+> -
+>  SUBDIRECTORY_OK=Yes
+>  OPTIONS_KEEPDASHDASH=
+>  OPTIONS_SPEC="\
+> -- 
+> 1.7.12.rc0.17.gcb766d3
+> 
