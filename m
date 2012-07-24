@@ -1,125 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] test-lib.sh: unset XDG_CONFIG_HOME
-Date: Tue, 24 Jul 2012 08:27:10 -0400
-Message-ID: <20120724122710.GB12066@sigill.intra.peff.net>
-References: <20120724115305.GA7328@sigill.intra.peff.net>
- <vpqpq7l8iss.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Witten <mfwitten@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 24 14:27:21 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] ignore: make sure we have an xdg path before using it
+Date: Tue, 24 Jul 2012 14:26:51 +0200
+Message-ID: <1343132811-2296-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <20120724115357.GA7353@sigill.intra.peff.net>
+Cc: peff@peff.net, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 24 14:27:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SteCs-0007YY-Ef
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:27:18 +0200
+	id 1SteD4-0007k6-Qj
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753831Ab2GXM1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 08:27:13 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60183 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753528Ab2GXM1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 08:27:12 -0400
-Received: (qmail 16725 invoked by uid 107); 24 Jul 2012 12:27:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Jul 2012 08:27:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jul 2012 08:27:10 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqpq7l8iss.fsf@bauges.imag.fr>
+	id S1753837Ab2GXM10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 08:27:26 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38811 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753528Ab2GXM1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 08:27:25 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6OCP61S030887
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 24 Jul 2012 14:25:06 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SteCf-0007lX-9z; Tue, 24 Jul 2012 14:27:05 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SteCf-0000bs-6c; Tue, 24 Jul 2012 14:27:05 +0200
+X-Mailer: git-send-email 1.7.11.2.402.g04c525e.dirty
+In-Reply-To: <20120724115357.GA7353@sigill.intra.peff.net>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 24 Jul 2012 14:25:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6OCP61S030887
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1343737510.79485@72bvrvv1IWGTXvIWmo+OVQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202035>
 
-On Tue, Jul 24, 2012 at 02:06:43PM +0200, Matthieu Moy wrote:
+Commit e3ebc35 (config: fix several access(NULL) calls, 2012-07-12) was
+fixing access(NULL) calls when trying to access $HOME/.config/git/config,
+but missed the ones when trying to access $HOME/.config/git/ignore. Fix
+and test this.
 
-> Thanks (for the 3 patches, all of them look good).
-> 
-> the "unset XDG_CONFIG_HOME" part was already discussed here:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/201609
-> 
-> But Michael did not continue the thread. I think your solution (unset
-> $XDG_CONFIG_HOME instead of setting it to $HOME/.config/git) is better.
-
-Yeah, setting it to $HOME/.config/git is actively wrong; I agree with
-the reasoning in that thread (which I did not read until just now).
-
-> In the thread above, I also proposed checking that $XDG_CONFIG_HOME was
-> taken into account, but for the "git config" part (while you test the
-> attributes part).
-
-Yeah, I see.
-
-> I think it makes sense to add stg like this to your PATCH 3:
-
-Agreed. And one for the exclude section, too, just for completeness.
-
-Revised patch 3 is below.
-
--- >8 --
-Subject: [PATCHv2 3/3] t1306: check that XDG_CONFIG_HOME works
-
-This should override $HOME/.config, but we never actually
-tested it.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- t/t1306-xdg-files.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+This can be appended to Jeff's serie. I thought if we had 3 bug
+instances and already fixed 2, why not fix the (hopefully last)
+one ;-).
 
+ dir.c                | 2 +-
+ t/t1306-xdg-files.sh | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/dir.c b/dir.c
+index a772c6d..240bf0c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1313,7 +1313,7 @@ void setup_standard_excludes(struct dir_struct *dir)
+ 	}
+ 	if (!access(path, R_OK))
+ 		add_excludes_from_file(dir, path);
+-	if (!access(excludes_file, R_OK))
++	if (excludes_file && !access(excludes_file, R_OK))
+ 		add_excludes_from_file(dir, excludes_file);
+ }
+ 
 diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-index 1569596..a62c3fb 100755
+index 097184b..6d9e8cd 100755
 --- a/t/t1306-xdg-files.sh
 +++ b/t/t1306-xdg-files.sh
-@@ -38,6 +38,13 @@ test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''
- 	test_cmp expected actual
- '
- 
-+test_expect_success '"$XDG_CONFIG_HOME overrides $HOME/.config/git' '
-+	mkdir -p "$HOME"/xdg/git &&
-+	echo "[user]name = in_xdg" >"$HOME"/xdg/git/config &&
-+	echo in_xdg >expected &&
-+	XDG_CONFIG_HOME="$HOME"/xdg git config --get-all user.name >actual &&
-+	test_cmp expected actual
-+'
- 
- test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
- 	>.gitconfig &&
-@@ -80,6 +87,17 @@ test_expect_success 'Exclusion of a file in the XDG ignore file' '
+@@ -108,6 +108,13 @@ test_expect_success 'Exclusion in a non-XDG global ignore file' '
  	test_must_fail git add to_be_excluded
  '
  
-+test_expect_success '$XDG_CONFIG_HOME overrides $HOME/.config/ignore' '
-+	mkdir -p "$HOME"/xdg/git &&
-+	echo content >excluded_by_xdg_only &&
-+	echo excluded_by_xdg_only >"$HOME"/xdg/git/ignore &&
-+	test_when_finished "git read-tree --empty" &&
-+	(XDG_CONFIG_HOME="$HOME/xdg" &&
-+	 export XDG_CONFIG_HOME &&
-+	 git add to_be_excluded &&
-+	 test_must_fail git add excluded_by_xdg_only
-+	)
-+'
- 
- test_expect_success 'Exclusion in both XDG and local ignore files' '
- 	echo to_be_excluded >.gitignore &&
-@@ -113,6 +131,14 @@ test_expect_success 'Checking XDG attributes when HOME is unset' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '$XDG_CONFIG_HOME overrides $HOME/.config/attributes' '
-+	mkdir -p "$HOME"/xdg/git &&
-+	echo "f attr_f=xdg" >"$HOME"/xdg/git/attributes &&
-+	echo "f: attr_f: xdg" >expected &&
-+	XDG_CONFIG_HOME="$HOME/xdg" git check-attr -a f >actual &&
++test_expect_success 'Checking XDG ignore file when HOME is unset' '
++	>expected &&
++	(sane_unset HOME &&
++	 git config --unset core.excludesfile &&
++	 git ls-files --exclude-standard --ignored >actual) &&
 +	test_cmp expected actual
 +'
-+
- test_expect_success 'Checking attributes in both XDG and local attributes files' '
- 	echo "f -attr_f" >.gitattributes &&
- 	echo "f: attr_f: unset" >expected &&
+ 
+ test_expect_success 'Checking attributes in the XDG attributes file' '
+ 	echo foo >f &&
+-- 
+1.7.11.2.402.g04c525e.dirty
