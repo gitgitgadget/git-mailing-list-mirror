@@ -1,97 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 6/7] Remove unused and bad gettext block from git-am
-Date: Tue, 24 Jul 2012 13:27:00 -0500
-Message-ID: <20120724182700.GI2939@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/7] i18n: rebase: mark strings for translation
+Date: Tue, 24 Jul 2012 11:57:11 -0700
+Message-ID: <7vtxwxf0mw.fsf@alter.siamese.dyndns.org>
 References: <cover.1343112786.git.worldhello.net@gmail.com>
- <dc805486adc18bf70cea73f9c6363bb3c4cf6c2b.1343112786.git.worldhello.net@gmail.com>
+ <b263c2bcc5dd6d611a1e3a4f6a87042d4cdb50aa.1343112786.git.worldhello.net@gmail.com> <20120724180138.GF2939@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 20:27:28 2012
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 20:57:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StjpB-0003Xb-7i
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:27:13 +0200
+	id 1StkIK-0002zm-T7
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755615Ab2GXS1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 14:27:07 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:37641 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755173Ab2GXS1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 14:27:05 -0400
-Received: by ghrr11 with SMTP id r11so6990789ghr.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 11:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+3gJWZspgr8BXZdYxWzzOqgLU9h1rQNpx1UHZ+0vBq8=;
-        b=Gk9obaO8yJjWZnmwwHzw/QXwFbCr+7siIR66hJ8yQ38uqSND9pKH4vPxnTDKJy1w8S
-         hel4NUL4eSUvZ3VIRGxfX+gqA8NieKwZNwBxcHU77AQYvIR4UteAxf4CJ/XDBCMYjaL0
-         fOCCUvmLfP/LaOqYTT1BSLEYQN0dpcjgPYziHqyRjXhReSggXjvZLLA0akUU9RtYKfPM
-         iJHMFjHE8j5FtJo4Or7BFdrO0O4hN4nrK2C0gU1nVBXAk4x+JmyEFzVONM0EDIe47tUT
-         jNA2czI6A2nhsFQjn0hRzRbRA1taSZrBm+ULEjS2Fj2l+et2CuasI5cmXsFYc68lhT97
-         89Zw==
-Received: by 10.42.61.134 with SMTP id u6mr17307858ich.11.1343154424432;
-        Tue, 24 Jul 2012 11:27:04 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id g5sm2594900ign.4.2012.07.24.11.27.03
-        (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 11:27:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <dc805486adc18bf70cea73f9c6363bb3c4cf6c2b.1343112786.git.worldhello.net@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755839Ab2GXS5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 14:57:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47849 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755106Ab2GXS5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 14:57:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C02728450;
+	Tue, 24 Jul 2012 14:57:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8TlwWimlOfW0XW40L+zIdigp8u4=; b=gf3T+M
+	N04dmgxlHzidRf0X7uhp/ZTKqtWMKCO2l7uMGqHCLlkh7E+44++Rhg6uLHijeheu
+	+6TJCcg5G0Hw3NGINmgKXxbwY2NHL6S3Z2QWJSCw6bZinSAcegv6QiuIoEJowdjL
+	5KroGMJqVu6nDPtilsDFbqi7ntDqti9wvLEm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FDN5oDK8icGRNT02F43PSkEJ6lmjkvB8
+	lLLqdHLOw/+yulhLHH9fMT3in6rrJqRfGiPUMjkmTH0lFGi7LUSvT6P7CgK9BIJX
+	wb0SQLZTeIPglmfmyzF9p5QvBVfdcL6+SUnH9wTmpCfpFQ7KF6xVDQhnghMEwv+l
+	S7S5/gpU8uY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABFE4844F;
+	Tue, 24 Jul 2012 14:57:13 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D9EC844D; Tue, 24 Jul 2012
+ 14:57:13 -0400 (EDT)
+In-Reply-To: <20120724180138.GF2939@burratino> (Jonathan Nieder's message of
+ "Tue, 24 Jul 2012 13:01:38 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 610A623A-D5C1-11E1-B7D3-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202052>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Jiang Xin wrote:
+> Probably it would make sense to do
+>
+> 	resolvemsg="
+> 	$(gettext 'When you have resolved this problem, run "git rebase --continue".
+> 	If you prefer to skip this patch, run "git rebase --skip" instead.
+> 	To check out the original branch and stop rebasing, run "git rebase --abort".')
+> 	"
+>
+> anyway, so the translators could have fewer newlines at the edges to
+> fuss about.
 
-> Gettext message should not start with '-' nor '--'. Since the '-d' and
-> '--dotest' options do not exist in OPTIONS_SPEC variable, it's safe to
-> remove the block.
+Nice.
 
-The above justification is not a sufficient reason to stop giving
-helpful advice when someone uses an option that was historically
-supported:
+> Maybe, to allow changing the commands without having to update
+> translations:
+>
+> 	state_dir_base=...
+> 	cmd_live_rebase='git rebase (--continue | --abort | --skip)'
+> 	cmd_clear_stale_rebase="rm -fr \"$state_dir\""
+> 	die "
+> 	$(eval_gettext 'It seems that there is already a $state_dir_base directory, and
+> 	I wonder if you ware in the middle of another rebase.  If that is the
+> 	case, please try
+> 		$cmd_live_rebase
+> 	If that is not the case, please
+> 		$cmd_clear_stale_rebase
+> 	and run me again.  I am stopping in case you still have something
+> 	valuable there.')"
 
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -413,9 +413,6 @@ it will be removed. Please do not use it anymore.")
->  		abort=t ;;
->  	--rebasing)
->  		rebasing=t threeway=t ;;
-> -	-d|--dotest)
-> -		die "$(gettext "-d option is no longer supported.  Do not use.")"
-> -		;;
+Again, nice.
 
-Luckily the support was removed 4 years ago and I don't think anyone
-is going to run into this, so a different justification could apply.
-
-	Support for the git am -d/--dotest option was removed four years ago
-	(see e72c7406, "am: remove support for -d .dotest", 2008-03-04) and
-	presumably no one is trying to use it any more.  Simplify the
-	code and free the short-and-sweet "-d" option for other uses by
-	no longer parsing it.
-
-	The motivation: xgettext copes poorly with messages starting
-	with '-'.  Rather than fixing this ancient message, let's take
-	this as a reminder to remove it.
-
-See http://thread.gmane.org/gmane.comp.version-control.git/75896 for
-context.  Though also see
-http://thread.gmane.org/gmane.comp.security.selinux/1424/focus=1430
-
-Hope that helps,
-Jonathan
+Thanks.
