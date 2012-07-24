@@ -1,75 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: Recursive submodules fail when the repo path contains
- spaces
-Date: Tue, 24 Jul 2012 13:37:54 -0700
-Message-ID: <7v629cgajh.fsf@alter.siamese.dyndns.org>
-References: <1CE02EC2D88646D48EE7B7D71AD36234@gmail.com>
- <500F00C7.4040209@web.de> <7va9yogb37.fsf@alter.siamese.dyndns.org>
- <9ADC1C4EF43A4237BC7971884C50C0EB@gmail.com>
+Subject: Re: [PATCH v3 6/7] Remove unused and bad gettext block from git-am
+Date: Tue, 24 Jul 2012 13:40:49 -0700
+Message-ID: <7v1uk0gaem.fsf@alter.siamese.dyndns.org>
+References: <cover.1343112786.git.worldhello.net@gmail.com>
+ <dc805486adc18bf70cea73f9c6363bb3c4cf6c2b.1343112786.git.worldhello.net@gmail.com> <20120724182700.GI2939@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Justin Spahr-Summers <justin.spahrsummers@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 22:38:05 2012
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 22:40:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stlrn-0001uN-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 22:38:03 +0200
+	id 1Stlub-0003cS-R4
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 22:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755911Ab2GXUh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 16:37:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62527 "EHLO
+	id S1756050Ab2GXUkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 16:40:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63801 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755294Ab2GXUh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 16:37:57 -0400
+	id S1755637Ab2GXUkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 16:40:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D986D6D75;
-	Tue, 24 Jul 2012 16:37:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFAD66DF7;
+	Tue, 24 Jul 2012 16:40:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+A+MwTyQWNL4VMVgR2PeLZ2ZgmE=; b=DO2t7Q
-	38cmfmPUzK1FEml8FDRvQllvHaXS+SVPB9NCi8tUW/jbWlm++qKplRlqUC+n+LJ2
-	Wukr+bdzehvW/BFiW/TlP6JcdTggIzOUQDr4BnBDTdUD0ec3eXI9SM4Y/zIbxa2F
-	B36rGyyAnRLsmAbAVemwW8K8z71mAMPU2khmA=
+	:content-type; s=sasl; bh=mhGVM4ZYh0i62IgJMc6mzMJMH/Y=; b=KQoJHY
+	8hANp0DylWiBbrqK5detZwZy+RjsUp2gX28vKRYcrkVsAll1qdHKvTfJ8En+aqgf
+	R80k7T8/gR2Jftyl6kDZG538FJYlwUSilJsevYGJ9fwp5/yClDW8k16Aj0jdv8bD
+	NOc1GrPtPp0Wn51LTJfsYK9fW672QNMyRJEgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n+kM/JbxBJZscEGcnnvHFirXZDSFgVWk
-	7kitRTYxRGgQRm4duuPMql4YGBB3dzSohD9KGajqGuQc9cgw2zHTuNN2NlhbpZOQ
-	Vx3LKA0NH8NF+eV/FzWtaPQu6EJcqLV8g6JTxc1pQilHyX9chnLvWaBmHOeGw25+
-	S2sceObAR3s=
+	:content-type; q=dns; s=sasl; b=n742W1dU1/8fQu2Wa/AaYEiM+83h2roN
+	Fk3bckJdxteKnE43+iWxgOmiW5le9M+lWcqgddiyKPeZyzGuEjBUDsgEELYBWxKs
+	gvuUPF+9z3PCBb6UhrpFSlCwslaX5xnTOGc/AWp7ceeJsLvQXRVmhn4fUxb3pzVO
+	xA4bxe8rC78=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C704E6D74;
-	Tue, 24 Jul 2012 16:37:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCE146DF6;
+	Tue, 24 Jul 2012 16:40:51 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 489216D73; Tue, 24 Jul 2012
- 16:37:56 -0400 (EDT)
-In-Reply-To: <9ADC1C4EF43A4237BC7971884C50C0EB@gmail.com> (Justin
- Spahr-Summers's message of "Tue, 24 Jul 2012 13:33:44 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A9AD6DF5; Tue, 24 Jul 2012
+ 16:40:51 -0400 (EDT)
+In-Reply-To: <20120724182700.GI2939@burratino> (Jonathan Nieder's message of
+ "Tue, 24 Jul 2012 13:27:00 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 730DBABE-D5CF-11E1-A7E0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DB5699B0-D5CF-11E1-8D30-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202069>
 
-Justin Spahr-Summers <justin.spahrsummers@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On Tuesday, 24. July 2012 at 13:26, Junio C Hamano wrote:
-> ...
->> I can see one codepath that would behave incorrectly,...
->> ...
->> My recommendation at this point (i.e. not a long term) for people
->> with problems Justin saw is "Don't do it then".
+>> -	-d|--dotest)
+>> -		die "$(gettext "-d option is no longer supported.  Do not use.")"
+>> -		;;
 >
-> I appreciate the debugging work.
+> Luckily the support was removed 4 years ago and I don't think anyone
+> is going to run into this, so a different justification could apply.
 
-That was not a debug, and I didn't mean to say that was the only
-place that is problematic.  In fact I think I said the script is not
-prepared to work with paths with paths-unsafe characters because it
-has many problematic constructs, and ended the message with "Don't
-do it then".
+Still I'd prefer a deprecation/removal not buried in an unrelated
+topic.  Can we just leave it untranslated, and send a removal patch
+during pre 1.8.0 timeframe?
