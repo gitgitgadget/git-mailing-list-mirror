@@ -1,118 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/7] Remove obsolete LONG_USAGE which breaks xgettext
-Date: Tue, 24 Jul 2012 12:07:35 -0700
-Message-ID: <7vpq7lf05k.fsf@alter.siamese.dyndns.org>
-References: <cover.1343112786.git.worldhello.net@gmail.com>
- <e3481427da5efcb60053bb4cd5bcc7e4567100f0.1343112786.git.worldhello.net@gmail.com> <20120724180808.GG2939@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH v2] t3300-*.sh: Fix a TAP parse error
+Date: Tue, 24 Jul 2012 14:17:07 -0500
+Message-ID: <20120724191707.GA5210@burratino>
+References: <500EEDF4.7050007@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:07:45 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jul 24 21:17:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StkSP-0002e3-4k
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:07:45 +0200
+	id 1Stkbo-0001Qr-KY
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756204Ab2GXTHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 15:07:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53188 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755990Ab2GXTHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 15:07:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8FA9878B;
-	Tue, 24 Jul 2012 15:07:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A0EXsj0vgZO77xNgNgzGmu8T+ss=; b=XttszL
-	ryq5MKVktXWe4NgPZsgu8FrDV/VcyCs5wEJB8S8Lff8VfaY1MbOZMb4YVD/EFoqy
-	Gu+gBmUOC9+ydhjRedMpjBmZAD3FaA56ZXrZ1uCpJlhdxH4KybVfr84AjQhByJXy
-	WQZri5PUS98mKGOjZjMXm3ojCCO1IEZm+dOOc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qBBY38W38KiSShkDUZcIiHu0kPvVGMTS
-	L37F+28J7/CguM+ijd/L129XfJ3fwPn2GOqxU/ACn/yztcyUvmLUloBRzpsiVieL
-	qCXKsPta2jBTwmKWOvADMiPYjKjjw/sI1bkLpZbJahX2JsRRZlwI5WGlqpYgu+MQ
-	tHoMLUmoRZU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C62FE8789;
-	Tue, 24 Jul 2012 15:07:37 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BDF68787; Tue, 24 Jul 2012
- 15:07:37 -0400 (EDT)
-In-Reply-To: <20120724180808.GG2939@burratino> (Jonathan Nieder's message of
- "Tue, 24 Jul 2012 13:08:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D5022636-D5C2-11E1-836E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756004Ab2GXTRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 15:17:19 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:63912 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755860Ab2GXTRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 15:17:16 -0400
+Received: by gglu4 with SMTP id u4so7061681ggl.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 12:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WudoGbHXJ8eEU/SBRZw6wOypZjn5SIwjSh20uZ49dlM=;
+        b=Ile5vlUJi7lrnUV17EIZzBReOovX+DjqUfXMnzOwL5yhHq5IdBbfUcdGRcu4/OYLry
+         4s0NTtpXAFC2ZIVA72suqgOUVjTsFDJpS6bC7kTO8b7eoOPY2rihChX3ChdAXNxHTdmT
+         Q1nj+biCVyvGO3XARbBWmGax8VBdRKQdd3MUFFICinRtQkk1fK9/+oMywSZqagZZzGbu
+         vOJvXBmqKgSxhT6g0ZStmgk+EEO23MzmftcRzcMJamqVMaEAbMQbA1l0sBEG9z3ki6Ed
+         1HJwiJp0Pf03tfbOedmGCfMijkNtIbFINnLLydJYoRy+TaH8iL/rc6k+oEr/fks30P5j
+         xyIA==
+Received: by 10.42.38.200 with SMTP id d8mr12390327ice.19.1343157435756;
+        Tue, 24 Jul 2012 12:17:15 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id ch4sm2699253igb.2.2012.07.24.12.17.14
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2012 12:17:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <500EEDF4.7050007@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202055>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Jiang Xin wrote:
+Ramsay Jones wrote:
+
+> Hi Jonathan,
 >
->> The obsolete LONG_USAGE variable
-> [...]
->
-> It's a shame to lose the information that was in the LONG_USAGE
-> message, though.  Maybe it could be incorporated into the OPTIONS_SPEC
-> before the opening "--", or maybe it could be used to clarify the
-> description in git-rebase(1).
+> This version of the patch only moves code to determine the test
+> prerequisite to the outer level, while leaving the 'setup' aspects
+> of the first test in place.
 
-I personally think the original long-usage was overkill to be part
-of the help text, and I am happy to see it go.
+I guess I don't see the point.  The current convention of "don't do
+anything complicated outside test assertions" is easy to explain.
+What new convention are you suggesting to replace it?
 
-I wouldn't mind seeing it incorporated in the documentation if there
-is something in there that is missing, but I suspect that the first
-part of the DESCRIPTION should be sufficiently clear already.
-
-> [...]
->> --- a/git-rebase.sh
->> +++ b/git-rebase.sh
->> @@ -3,31 +3,6 @@
->>  # Copyright (c) 2005 Junio C Hamano.
->>  #
->>  
->> -USAGE='[--interactive | -i] [--exec | -x <cmd>] [-v] [--force-rebase | -f]
->> -       [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
->> -LONG_USAGE='git-rebase replaces <branch> with a new branch of the
->> -same name.  When the --onto option is provided the new branch starts
->> -out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
->> -It then attempts to create a new commit for each commit from the original
->> -<branch> that does not exist in the <upstream> branch.
->> -
->> -It is possible that a merge failure will prevent this process from being
->> -completely automatic.  You will have to resolve any such merge failure
->> -and run git rebase --continue.  Another option is to bypass the commit
->> -that caused the merge failure with git rebase --skip.  To check out the
->> -original <branch> and remove the .git/rebase-apply working files, use the
->> -command git rebase --abort instead.
->> -
->> -Note that if <branch> is not specified on the command line, the
->> -currently checked out branch is used.
->> -
->> -Example:       git-rebase master~1 topic
->> -
->> -	A---B---C topic                   A'\''--B'\''--C'\'' topic
->> -       /                   -->           /
->> -  D---E---F---G master          D---E---F---G master
->> -'
->> -
->>  SUBDIRECTORY_OK=Yes
->>  OPTIONS_KEEPDASHDASH=
->>  OPTIONS_SPEC="\
->> -- 
->> 1.7.12.rc0.17.gcb766d3
->> 
+Thanks,
+Jonathan
