@@ -1,56 +1,94 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for testing.
-Date: Tue, 24 Jul 2012 14:06:01 +0200
-Message-ID: <CABPQNSauwwQgM-48NBJVWhS5dRHhhoXpjrOxoXFiN5ymY2Rvzg@mail.gmail.com>
-References: <4514544.Xip1OCQ7Uj@flomedio> <20120722214333.GB680@burratino>
- <2948040.5ceLh0WG3L@flomedio> <1448476.VR1Gla8Cvg@flomedio>
-Reply-To: kusmabite@gmail.com
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/3] test-lib.sh: unset XDG_CONFIG_HOME
+Date: Tue, 24 Jul 2012 14:06:43 +0200
+Message-ID: <vpqpq7l8iss.fsf@bauges.imag.fr>
+References: <20120724115305.GA7328@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, davidbarr@google.com,
-	git@vger.kernel.org
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 14:06:50 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael Witten <mfwitten@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 24 14:07:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stdt3-0005sg-IC
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:06:49 +0200
+	id 1StdtF-00062J-V3
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 14:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542Ab2GXMGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 08:06:44 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:49244 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753534Ab2GXMGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 08:06:43 -0400
-Received: by vbbff1 with SMTP id ff1so5633469vbb.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 05:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=V8BJsck6+l7C86Rb/NH1HI3wv9hA2ty/znHbbAJb+5M=;
-        b=A7xVtmp0Mn2YsLN5y0Kv3LIw/wHG5Ym9yIEr5vCIwFveHLwF6usvWDTloOkbwoYYc3
-         DaIcvOlhkOs5H42+VLu9QJXKtnv7SrdRg+SrSFQKnb0icf5s36ool8tqimRydM46V3Kh
-         np1xV4PJdIoVqKxbm1qrU51o3nhnow8z4LYDoIp8ulWB3ptmUALYSioZOKnGnvU+hhwH
-         dlnzVFzH9tnE4MRhYyA0q6PDGkclDjk7AvIBpLBoJezjw8wE6l6PLCGp0StU1hJrvFrj
-         OURQKxWb8xxp/SU6vnqt7zC3ZWA2Z16ABgxGPQ7b8FBUrufBgJDY+onH4EizAtkJj7Rq
-         FP1A==
-Received: by 10.52.95.110 with SMTP id dj14mr13464178vdb.69.1343131601698;
- Tue, 24 Jul 2012 05:06:41 -0700 (PDT)
-Received: by 10.58.94.13 with HTTP; Tue, 24 Jul 2012 05:06:01 -0700 (PDT)
-In-Reply-To: <1448476.VR1Gla8Cvg@flomedio>
+	id S1753600Ab2GXMG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 08:06:57 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38366 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753534Ab2GXMG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 08:06:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6OC4jM1025648
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 24 Jul 2012 14:04:45 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Stdsx-0007OG-LV; Tue, 24 Jul 2012 14:06:43 +0200
+In-Reply-To: <20120724115305.GA7328@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 24 Jul 2012 07:53:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 24 Jul 2012 14:04:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q6OC4jM1025648
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1343736286.74192@sTPg2xL1acAt7v4hItqc+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202032>
 
-On Mon, Jul 23, 2012 at 2:44 PM, Florian Achleitner
-<florian.achleitner.2.6.31@gmail.com> wrote:
-> +       sys.exit(ret)
-> \ No newline at end of file
+Thanks (for the 3 patches, all of them look good).
 
-Nit: add a \n after "sys.exit(ret)", perhaps?
+the "unset XDG_CONFIG_HOME" part was already discussed here:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/201609
+
+But Michael did not continue the thread. I think your solution (unset
+$XDG_CONFIG_HOME instead of setting it to $HOME/.config/git) is better.
+
+In the thread above, I also proposed checking that $XDG_CONFIG_HOME was
+taken into account, but for the "git config" part (while you test the
+attributes part).
+
+I think it makes sense to add stg like this to your PATCH 3:
+
+
+diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
+index 3c75c3f..f1ea9f1 100755
+--- a/t/t1306-xdg-files.sh
++++ b/t/t1306-xdg-files.sh
+@@ -38,6 +38,19 @@ test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''
+        test_cmp expected actual
+ '
+
++test_expect_success '"$XDG_CONFIG_HOME overrides $HOME/.config/git' '
++       mkdir -p "$HOME"/xdg/git/ &&
++       echo "[user]" >"$HOME"/xdg/git/config &&
++       echo "  name = in_xdg" >>"$HOME"/xdg/git/config &&
++       echo in_xdg >expected &&
++       (
++               XDG_CONFIG_HOME="$HOME"/xdg/ &&
++               export XDG_CONFIG_HOME &&
++               git config --get-all user.name >actual
++       ) &&
++       test_cmp expected actual
++'
++
+
+ test_expect_success 'read with --get: xdg file exists and ~/.gitconfig exists' '
+        >.gitconfig &&
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
