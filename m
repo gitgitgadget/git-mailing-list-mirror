@@ -1,102 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/5] difftool: Use symlinks when diffing against the
- worktree
-Date: Tue, 24 Jul 2012 08:57:10 -0700
-Message-ID: <7v7gttgnjd.fsf@alter.siamese.dyndns.org>
-References: <7vzk6rnkgq.fsf@alter.siamese.dyndns.org>
- <1343023530-31463-1-git-send-email-davvid@gmail.com>
- <CAFouethz=7Ed-=AsnC2Fh+-hZcpjzmSLB9aCWd4tBw8GvH1K-w@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Enhanced git branch list (proposal)
+Date: Tue, 24 Jul 2012 12:40:26 -0400
+Message-ID: <CABURp0qcisya1MEL=2CMpuERjmpRm=PZ_doUurcwa1MQERTATw@mail.gmail.com>
+References: <500D954B.4090007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 17:57:26 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: John Bartholomew <jpa.bartholomew@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 18:41:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SthUA-0001e8-Jg
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 17:57:22 +0200
+	id 1StiAW-0006wZ-Sr
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 18:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910Ab2GXP5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 11:57:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60315 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754683Ab2GXP5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 11:57:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E99A28390;
-	Tue, 24 Jul 2012 11:57:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O1VWdW67Fm6c6hJso3WsQ+FI1B0=; b=VuH/Td
-	cTUqzADdLFNrqnuWdV59ki9Ra+m82rdTmgjD16erYRVqk2mfZX40uNprD2Aw7u4G
-	zDA/eWs1J+tqA9p6PdzFdqEGjCHWD/7dh8Zsb0lDL/VjglPBla3p99TCkjcXFDXp
-	VHwMhii6bbSufBbsWcY/uaF653xUcLa/ltgIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q5e+ZgUAAon7dwG3ffoff56ATHAz+4pB
-	0u1NfNv7dYO3XwuMg7QTwmAiKKeLO9fCkpgcZUt4V6DKbQeLLr+wydsOaUGQ3KYR
-	XWPHff+msxU8kfLD3ISGf90iZ73NS3oLRV57DYyYU/6M3varsP19zxXQTpBDyXXG
-	E3gCO9sNHdQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5BFD838F;
-	Tue, 24 Jul 2012 11:57:12 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41A6C838E; Tue, 24 Jul 2012
- 11:57:12 -0400 (EDT)
-In-Reply-To: <CAFouethz=7Ed-=AsnC2Fh+-hZcpjzmSLB9aCWd4tBw8GvH1K-w@mail.gmail.com> (Tim
- Henigan's message of "Tue, 24 Jul 2012 09:35:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3B3AEADE-D5A8-11E1-9711-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755672Ab2GXQks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 12:40:48 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36665 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755581Ab2GXQkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 12:40:47 -0400
+Received: by obbuo13 with SMTP id uo13so11344921obb.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 09:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PeQBUDsXZqBvOGVlsHd+Py8roCdNlbH3PzIGj2Rsar0=;
+        b=NC+6AYBNieJWOjObzloeK0goITiicmxefKfJWV8CU/2KJ0NGKzYaNnFIHOKJPSjntS
+         a9nigRrXcUsiCPqKGp10yMVlfaqIMC+3/Hq2H0Okh5S/IYpIyoZSZDA0Sq0jDJSRkQkq
+         ZLsKMxwBb7Piuuquc8f/uva1Wsr9WAf9+fj6vguCG0h3I+nati3nTlESKqwBhxFTjN3E
+         27XVzpHEoJY7es99Sbyjks8Aa2+2tnxKszMpo6dslnNYjwVfrZwojOMHE1fiqNPoq0Tl
+         witY5B9hNCzaKz+5F3ljcsWoB/f5xZb0yZ+MMeJQ7teOBQteO2WvAQhJ739uAVzvxtdf
+         tPMQ==
+Received: by 10.182.212.36 with SMTP id nh4mr28397723obc.37.1343148046605;
+ Tue, 24 Jul 2012 09:40:46 -0700 (PDT)
+Received: by 10.182.65.169 with HTTP; Tue, 24 Jul 2012 09:40:26 -0700 (PDT)
+In-Reply-To: <500D954B.4090007@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202045>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+On Mon, Jul 23, 2012 at 2:17 PM, John Bartholomew
+<jpa.bartholomew@gmail.com> wrote:
+>
+> I find the output of `git branch' to be quite bare, and would like to
+> see more information; most importantly, what the state of the branch
+> is in relation to its upstream. For some time I have been using my
+> own script to do this. It produces output like this:
+>
+> $ git lsb
+>   commodity-market-lua [behind 'brianetta/commodity-market-lua' by 2
+> commits]
+>   filesystem [up-to-date with 'jpab/filesystem']
+>   fix-ring-blending [ahead of 'jpab/fix-ring-blending' by 1 commit]
+>   galaxy-refactor
+>   galaxy-refactor-2 [diverged from 'jpab/galaxy-refactor', by 6
+> commits/626 commits (us/them)]
+>   hud-pitch-ladder [up-to-date with 'jpab/hud-pitch-ladder']
+> = issue-1388
+>   issue-695
+>   lmr-mtllib-improvements
+>   marcel-stations
+> * master [up-to-date with 'jpab/master']
+>   refcounted-body [up-to-date with 'jpab/refcounted-body']
+>   string-formatter [up-to-date with 'jpab/string-formatter']
+>
+> The first column indicates the relation to HEAD: '*' marks the current
+> head, '=' marks a branch which is identical with the current HEAD.
+>
+> Branches which have a configured upstream (branch.remote and
+> branch.merge are set) show the relation to the corresponding remote
+> branch.
+>
+> Some key text ('up-to-date', 'ahead', 'behind' or 'diverged', and the
+> name of the current HEAD) is displayed with colour if colour is
+> enabled.
+>
+> Arguments can be passed to show remote branches (for all remotes, or
+> for a specified remote), or all branches, and to show each branch
+> in relation to a specified target branch instead of the configured
+> remote tracking branch.
+>
+> I would like to know whether there is any interest in incorporating
+> this functionality into the main git distribution, either as a
+> separate command, or within `git branch'. For my purposes I have it
+> aliased under the name `git lsb' for `list branches'.
+>
+> You can examine the script I'm using for this at:
+> https://github.com/johnbartholomew/gitvoodoo/blob/master/bin/git-xbranch
 
-> I'm sorry I am so late to see and comment on this...I am just getting
-> caught up after a few busy weeks due to $dayjob and vacation.
->
->
-> On Mon, Jul 23, 2012 at 2:05 AM, David Aguilar <davvid@gmail.com> wrote:
->>
->> diff --git a/git-difftool.perl b/git-difftool.perl
->> index 2ae344c..a5b371f 100755
->> --- a/git-difftool.perl
->> +++ b/git-difftool.perl
->>
->> @@ -271,6 +276,7 @@ sub main
->>                 gui => undef,
->>                 help => undef,
->>                 prompt => undef,
->> +               symlinks => $^O ne 'MSWin32' && $^O ne 'msys',
->
-> Should this test for cygwin as well?
->
->
->> @@ -342,13 +350,18 @@ sub dir_diff
->>
->>         # If the diff including working copy files and those
->>         # files were modified during the diff, then the changes
->> -       # should be copied back to the working tree
->> -       for my $file (@working_tree) {
->> -               if (-e "$b/$file" && compare("$b/$file", "$workdir/$file")) {
->> +       # should be copied back to the working tree.
->> +       # Do not copy back files when symlinks are used and the
->> +       # external tool did not replace the original link with a file.
->> +       for my $file (@worktree) {
->> +               next if $symlinks && -l "$b/$file";
->> +               if (-f "$b/$file" && compare("$b/$file", "$workdir/$file")) {
->
-> compare returns '-1' if an error is encountered while reading a file.
-> In this (unlikely) case, should it still overwrite the working copy
-> file?  I think the answer is 'yes', but thought it was worth
-> mentioning.
+Thanks.  You might also find this one interesting:
 
-It probably is safer to report the error, not touch anything and let
-the user take an appropriate action.
+http://masanjin.net/blog/label/git-wtf/
+
+Phil
