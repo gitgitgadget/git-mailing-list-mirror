@@ -1,143 +1,94 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 3/3] fast-import: disallow "merge $itself" command
-Date: Tue, 24 Jul 2012 14:40:47 -0500
-Message-ID: <20120724194046.GA14351@burratino>
-References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
- <1340818825-13754-4-git-send-email-divanorama@gmail.com>
+Subject: Re: [PATCH] Add a svnrdump-simulator replaying a dump file for
+ testing.
+Date: Tue, 24 Jul 2012 14:50:49 -0500
+Message-ID: <20120724195049.GD5210@burratino>
+References: <7v4noyo6tc.fsf@alter.siamese.dyndns.org>
+ <1343074107-23262-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <7v8veakyar.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:41:04 2012
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	davidbarr@google.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 21:51:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stkyc-0000UN-Hd
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:41:02 +0200
+	id 1Stl8G-0006fE-SB
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754593Ab2GXTk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 15:40:56 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:56596 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754538Ab2GXTkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 15:40:55 -0400
-Received: by gglu4 with SMTP id u4so7090135ggl.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 12:40:55 -0700 (PDT)
+	id S1754537Ab2GXTuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 15:50:55 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:65452 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013Ab2GXTuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 15:50:55 -0400
+Received: by yhmm54 with SMTP id m54so7095278yhm.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 12:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nSpPYK7IxwdMoE7wLYpaV+xRT4bOcGrZodChlmLaZ2Y=;
-        b=1J1PjnoXa4IwlA59Ejkim+/n5Q00u6vRP+6dhThNpyZzoAicJhcfOdYMPcLorWyeWu
-         6vOiOl48kif0Sc5H5zd5UdWUYCy5fTvD1p+Q6GGHf3zBGswQBRV2Fw5UPpnhx7fRfsTS
-         pvZAJAmxfTNJS2sYzNMuTS07tru/OJkf+x5BjHpXhRRehvIjeXrtL29CP7nb1QpdZMEz
-         pIUTtIiPU8TSiaga89VHYIjx/WZufJ/OgRAtaIloaGmHzZ9AzGRhcluyeVa57DkYgeSa
-         7F28ykb3b98A6LuFqiyMhZy7Nx1BhudKkdk9OIIy/qlraLT4rW0iIUlyydDDR6o+g/fR
-         b7Yg==
-Received: by 10.43.134.134 with SMTP id ic6mr17985214icc.26.1343158854709;
-        Tue, 24 Jul 2012 12:40:54 -0700 (PDT)
+        bh=0BJlf7eg9xUxlgOoXrki/uSQfO21k33i9dp1mFv4XkE=;
+        b=voUOXqfloPfO4ysBSjPISoNLJDm/HMmMdbE3jO1GMQYV/GzN7xgsN1sDVIYBXg6YdW
+         0P5bgAX2f0leKdAslZ2STQbd5QGx5LHPNHgeP6ykFekS9DgWtdBq/Bo1ZnY218AzHS0x
+         OEKpjY7waC/8EIoE9oa6ZN/yDpYOmnxEUJB4YPda+sUe9iZf0AV/TQj7XDRLnDHSuteQ
+         TN9JgVCEZc7hglJ4A1tfGPvKLyOcxsjROligJ9cCE8z3XmFbsvvjKx1wZQyrJk4eF6V0
+         AbNIqQaVzG44nlpQa4rSg6ml+1pdSwAa/6/1KuSb1TDnkVTM0Jwf0Fi8ae7VriEeOCyt
+         3o9g==
+Received: by 10.42.38.200 with SMTP id d8mr12608558ice.19.1343159454077;
+        Tue, 24 Jul 2012 12:50:54 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id dk7sm5543717igb.10.2012.07.24.12.40.53
+        by mx.google.com with ESMTPS id dw5sm2761496igc.6.2012.07.24.12.50.53
         (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 12:40:53 -0700 (PDT)
+        Tue, 24 Jul 2012 12:50:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1340818825-13754-4-git-send-email-divanorama@gmail.com>
+In-Reply-To: <7v8veakyar.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202062>
 
 Hi,
 
-In June, Dmitry Ivankov wrote:
+Junio C Hamano wrote:
+> Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-> In presence of "from $some" command "merge $itself" acts the same as
-> "merge $some" would. Which is completely undocumented and looks like
-> a bug (caused by parse_from() temporarily rewriting b->sha1 with $some).
-
-Could you give an example?
-
-> Just deny "merge $itself" for now. It was a bit broken and btw "from
-> $itself" was and is a forbidden command too.
+>> To ease testing without depending on a reachable svn server, this
+>> compact python script mimics parts of svnrdumps behaviour.
+>> It requires the remote url to start with sim://.
+[...]
+>> To allow using the same dump file for simulating multiple
+>> incremental imports the highest visible revision can be limited by
+>> setting the environment variable SVNRMAX to that value. This
+>> effectively limits HEAD to simulate the situation where higher
+>> revs don't exist yet.
 >
-> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+> It is unclear how this is different from giving the ceiling by
+> specifying it as the "END" in -rSTART:END command line.  Is this
+> feature really needed?
 
-Yes, this one still looks good.
+I think the idea is that you put this script (or a symlink to it) on
+your $PATH with higher precedence than svnrdump and run a command
+that expected to be able to use svnrdump.  Then instead of going to
+the network, the command you run magically uses your test data
+instead.
 
-[...]
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -2611,7 +2611,7 @@ static int parse_from(struct branch *b)
->  	return 1;
->  }
->  
-> -static struct hash_list *parse_merge(unsigned int *count)
-> +static struct hash_list *parse_merge(unsigned int *count, struct branch *b)
->  {
->  	struct hash_list *list = NULL, *n, *e = e;
->  	const char *from;
-> @@ -2622,7 +2622,13 @@ static struct hash_list *parse_merge(unsigned int *count)
->  		from = strchr(command_buf.buf, ' ') + 1;
->  		n = xmalloc(sizeof(*n));
->  		s = lookup_branch(from);
-> -		if (s)
-> +		if (b == s)
+If the command you are testing wanted to run "svnrdump" without the
+upper endpoint set, we need to handle that request, either by emitting
+all the revs we have, or by stopping somewhere.  The revlimit feature
+provides the "stopping somewhere" behavior which is not strictly
+needed but is presumably very useful when testing incremental fetch.
 
-Style: "if (s == b)" would make it clearer that b is known (the current
-branch) and s unknown.  Giving the 'b' parameter a meaningful name
-like 'this_branch' would help even more.
+Florian, do you mind if I make the revlimit feature a separate patch
+when applying this?
 
-> +			/*
-> +			 * Also if there were a 'from' command, b will point to
-> +			 * 'from' commit, because parse_from stores it there.
-> +			 */
-> +			die("Can't merge a branch with itself: %s", b->name);
+Anyway, it looks good and reasonable to me, so will apply.
 
-It's not clear to me what the "Also" is referring to here.  How
-about:
-
-			/*
-			 * If there was a 'from' command, b->sha1 refers to
-			 * that commit instead of the previous commit on the
-			 * current branch, which is probably what no one
-			 * expected.
-			 *
-			 * Let's just reject attempts to merge a branch into
-			 * itself.
-			 */
-			die("Can't merge a ...");
-
-[...]
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -871,6 +871,19 @@ test_expect_success \
->  	'git fast-import <input &&
->  	git rev-parse --verify J5 &&
->  	test_must_fail git rev-parse --verify J5^'
-> +
-> +cat >input <<INPUT_END
-> +commit refs/heads/J5
-> +committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-> +data <<COMMIT
-> +Merge J5 with itself.
-> +COMMIT
-> +merge refs/heads/J5
-> +
-> +INPUT_END
-> +test_expect_success \
-> +	'J: disallow merge with itself' \
-> +	'test_must_fail git fast-import <input'
-
-Looks sensible.
-
-If the changes suggested above look good to you, I can amend locally.
-Otherwise, I'll be happy to see what you come up with next.
-
-Thanks,
+Thanks.
 Jonathan
