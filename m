@@ -1,170 +1,199 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: handle fixup of root commit correctly
-Date: Tue, 24 Jul 2012 12:22:34 -0700
-Message-ID: <7vlii9ezgl.fsf@alter.siamese.dyndns.org>
-References: <20120724121703.GG26014@arachsys.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/3] fast-import: do not write null_sha1 as a merge
+ parent
+Date: Tue, 24 Jul 2012 14:30:40 -0500
+Message-ID: <20120724193040.GC5210@burratino>
+References: <1340818825-13754-1-git-send-email-divanorama@gmail.com>
+ <1340818825-13754-2-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:22:42 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 24 21:30:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stkgr-0005GF-8K
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:22:41 +0200
+	id 1Stkol-0002Xw-Mt
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872Ab2GXTWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 15:22:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60367 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755464Ab2GXTWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 15:22:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A5E78B07;
-	Tue, 24 Jul 2012 15:22:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bU1UeT7RHOqcr4fD2RxHFxfJuV4=; b=bXxSdj
-	PsUs87OPkSwBjLBXFcuAVUz83MgE6ZhjW/rhRSAk27gE5FCv/tDh9Dxu7pahEKmg
-	7K46HtGHSJEZfdiB3scnN3gTnm9VYEjQGYFQh2WVqxtpc746/5R5L3pNFMa8fCsL
-	+sym2d/BHUl5fEg6NZYGjBUcIfB85CBmH05ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AAjrBNEhyhG+dewNDSj8gRjssMOonM+B
-	fv0n+IwrO4zEwS0MXN4kISF7uSKLudQ/+v35IjbcltNmpVrOGnmbiGo+Irx4wRp/
-	HK1SVca78iWndVQHDXzg4bPPWBFY/nvxrZYoESqF4oH19w7u2JRqiWx4r8cEXIi9
-	PDEwJhU/5oc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A168B06;
-	Tue, 24 Jul 2012 15:22:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7800F8B02; Tue, 24 Jul 2012
- 15:22:35 -0400 (EDT)
-In-Reply-To: <20120724121703.GG26014@arachsys.com> (Chris Webb's message of
- "Tue, 24 Jul 2012 13:17:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC719796-D5C4-11E1-8326-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753953Ab2GXTaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 15:30:46 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:43515 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753877Ab2GXTap (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 15:30:45 -0400
+Received: by mail-gg0-f174.google.com with SMTP id u4so7077594ggl.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 12:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gmD1FGZNgGr7TS1qPAsG8LWonc4re5jGP16gP32+MoM=;
+        b=kelbifNXJFlja50MYUHg+mApUWdEZaZGe81jjuDlWsE+0FeyVz6m882QHReVjUknkq
+         sHTHhyarK45VHin7WGmOQbfaCNHob/j2KVhdEVGe6LM1fGkqAkofvhTB5uSKSj+xcqwE
+         6wWLYZHb2qjADcjpXxoDPipeuO5cm2CmUdRvRQv0OE6Gg8LWS369q8GAg/2x8qRs7aPF
+         mrf5Cd1nBe0iPe/qjj8WRAtHSokAh+mLF6wNbZw8cnE9CTQpBceYG/S9A3eh/Kr4HAHP
+         2Yn+RKSI5UwS9Si32w2MUuLoZtWtF494E1qc7tdrsQnlaUDtXaTRmsBb0JhUldPhMBMx
+         0qNg==
+Received: by 10.42.154.199 with SMTP id r7mr17671927icw.55.1343158244482;
+        Tue, 24 Jul 2012 12:30:44 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id qo3sm5510598igc.8.2012.07.24.12.30.43
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2012 12:30:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1340818825-13754-2-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202060>
 
-Chris Webb <chris@arachsys.com> writes:
+Hi,
 
-> There is a bug with git rebase -i --root when a fixup or squash line is
-> applied to the new root. We attempt to amend the commit onto which they
-> apply with git reset --soft HEAD^ followed by a normal commit. Unlike a
-> real commit --amend, this sequence will fail against a root commit as it
-> has no parent.
->
-> Fix rebase -i to use commit --amend for fixup and squash instead, and
-> add a test for the case of a fixup of the root commit.
->
-> Signed-off-by: Chris Webb <chris@arachsys.com>
-> ---
->
-> Sorry, I should have spotted this issue when I did the original root-rebase
-> series. I've checked that this patch doesn't break any of the existing
-> tests, as well as satisfying the newly introduced check for the root-fixup
-> case.
+In June, Dmitry Ivankov wrote:
 
-OK, so instead of "reset --soft HEAD^ && pick -n && commit -F msg"
-to back up one step and then build on top of it, the new sequence
-"pick -n && commit --amend -F msg" modifies and then amends, whose
-end result should be the same but the important difference is that
-the latter would work even if the current commit is a root one.
-
-Makes sense.  Thanks for catching and fixing it.
-
+> null_sha1 is used in fast-import to indicate "empty" branches and
+> should never be actually written out as a commit parent. 'merge'
+> command lacks is_null_sha1 checks and must be fixed.
 >
->  git-rebase--interactive.sh    | 25 +++++++++++++------------
->  t/t3404-rebase-interactive.sh |  8 ++++++++
->  2 files changed, 21 insertions(+), 12 deletions(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index bef7bc0..0d2056f 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -493,25 +493,28 @@ do_next () {
->  		author_script_content=$(get_author_ident_from_commit HEAD)
->  		echo "$author_script_content" > "$author_script"
->  		eval "$author_script_content"
-> -		output git reset --soft HEAD^
-> -		pick_one -n $sha1 || die_failed_squash $sha1 "$rest"
-> +		if ! pick_one -n $sha1
-> +		then
-> +			git rev-parse --verify HEAD >"$amend"
-> +			die_failed_squash $sha1 "$rest"
-> +		fi
->  		case "$(peek_next_command)" in
->  		squash|s|fixup|f)
->  			# This is an intermediate commit; its message will only be
->  			# used in case of trouble.  So use the long version:
-> -			do_with_author output git commit --no-verify -F "$squash_msg" ||
-> +			do_with_author output git commit --amend --no-verify -F "$squash_msg" ||
->  				die_failed_squash $sha1 "$rest"
->  			;;
->  		*)
->  			# This is the final command of this squash/fixup group
->  			if test -f "$fixup_msg"
->  			then
-> -				do_with_author git commit --no-verify -F "$fixup_msg" ||
-> +				do_with_author git commit --amend --no-verify -F "$fixup_msg" ||
->  					die_failed_squash $sha1 "$rest"
->  			else
->  				cp "$squash_msg" "$GIT_DIR"/SQUASH_MSG || exit
->  				rm -f "$GIT_DIR"/MERGE_MSG
-> -				do_with_author git commit --no-verify -e ||
-> +				do_with_author git commit --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e ||
->  					die_failed_squash $sha1 "$rest"
->  			fi
->  			rm -f "$squash_msg" "$fixup_msg"
-> @@ -748,7 +751,6 @@ In both case, once you're done, continue with:
->  		fi
->  		. "$author_script" ||
->  			die "Error trying to find the author identity to amend commit"
-> -		current_head=
->  		if test -f "$amend"
->  		then
->  			current_head=$(git rev-parse --verify HEAD)
-> @@ -756,13 +758,12 @@ In both case, once you're done, continue with:
->  			die "\
->  You have uncommitted changes in your working tree. Please, commit them
->  first and then run 'git rebase --continue' again."
-> -			git reset --soft HEAD^ ||
-> -			die "Cannot rewind the HEAD"
-> +			do_with_author git commit --amend --no-verify -F "$msg" -e ||
-> +				die "Could not commit staged changes."
-> +		else
-> +			do_with_author git commit --no-verify -F "$msg" -e ||
-> +				die "Could not commit staged changes."
->  		fi
-> -		do_with_author git commit --no-verify -F "$msg" -e || {
-> -			test -n "$current_head" && git reset --soft $current_head
-> -			die "Could not commit staged changes."
-> -		}
->  	fi
->  
->  	record_in_rewritten "$(cat "$state_dir"/stopped-sha)"
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 8078db6..3f75d32 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -903,4 +903,12 @@ test_expect_success 'rebase -i --root temporary sentinel commit' '
->  	git rebase --abort
->  '
->  
-> +test_expect_success 'rebase -i --root fixup root commit' '
-> +	git checkout B &&
-> +	FAKE_LINES="1 fixup 2" git rebase -i --root &&
-> +	test A = $(git cat-file commit HEAD | sed -ne \$p) &&
-> +	test B = $(git show HEAD:file1) &&
-> +	test 0 = $(git cat-file commit HEAD | grep -c ^parent\ )
-> +'
+> It looks like using null_sha1 or empty branches in 'from' command
+> is legal and/or an intended option (it has been here from the very
+> beginning and survived). So leave it allowed for 'merge' command too,
+> and just like with 'from' command silently skip null_sha1 parents.
+
+As Junio mentioned, this might have just been an implementation
+accident --- without a use case in mind, it is hard to say that
+support for the 'from 0{40}' was really intended to be part of the
+supported fast-import syntax.
+
+On the other hand it seems possible and even likely that some frontend
+has taken advantage of the feature to avoid having to use conditional
+logic to decide whether to emit a "from" command, since it has been
+around so long.  So you are right that it's safest not to remove it.
+
+That means that adding the same support for the "merge" command could
+be a pretty bad thing, since it would be making a new promise of
+continued support and would place a new burden on other implementers
+of backends.
+
+[...]
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2734,7 +2734,8 @@ static void parse_new_commit(void)
+>  		strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(b->sha1));
+>  	while (merge_list) {
+>  		struct hash_list *next = merge_list->next;
+> -		strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(merge_list->sha1));
+> +		if (!is_null_sha1(merge_list->sha1))
+> +			strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(merge_list->sha1));
+
+Since these "merge" commands produced invalid results in the past,
+would it be safe to do
+
+		if (is_null_sha1(merge_list->sha1))
+			die("cannot use unborn branch or all-zeroes hash as merge parent";
+
+instead?
+
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -850,6 +850,27 @@ INPUT_END
+>  test_expect_success \
+>  	'J: tag must fail on empty branch' \
+>  	'test_must_fail git fast-import <input'
 > +
->  test_done
+> +cat >input <<INPUT_END
+> +reset refs/heads/J3
+> +
+> +reset refs/heads/J4
+> +from 0000000000000000000000000000000000000000
+> +
+> +commit refs/heads/J5
+> +committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> +data <<COMMIT
+> +Merge J3, J4 into fresh J5.
+> +COMMIT
+> +merge refs/heads/J3
+> +merge refs/heads/J4
+> +
+> +INPUT_END
+> +test_expect_success \
+> +	'J: allow merge with empty branch' \
+> +	'git fast-import <input &&
+> +	git rev-parse --verify J5 &&
+> +	test_must_fail git rev-parse --verify J5^'
+
+Thanks for the test --- in any case, we should test the behavior.  How
+about this, for now?
+
+-- >8 --
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: test: demonstrate fast-import bug that produces invalid commits with null parent
+
+null_sha1 is used in fast-import to indicate "empty" branches and
+should never be actually written out as a commit parent. 'merge'
+command lacks is_null_sha1 checks and must be fixed.
+
+[jn: extracted from a patch with a proposed fix; split into two tests]
+
+Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/t9300-fast-import.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 2fcf2694..f13b85b8 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -850,6 +850,42 @@ INPUT_END
+ test_expect_success \
+ 	'J: tag must fail on empty branch' \
+ 	'test_must_fail git fast-import <input'
++
++cat >input <<INPUT_END
++reset refs/heads/J-unborn
++
++commit refs/heads/J-merge-unborn
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++Merge J-unborn into fresh J-merge-unborn.
++COMMIT
++merge refs/heads/J-unborn
++
++INPUT_END
++test_expect_failure \
++	'J: reject or ignore merge with unborn branch' \
++	'test_when_finished "git update-ref -d refs/heads/J-merge-unborn" &&
++	 test_might_fail git fast-import <input &&
++	 git fsck'
++
++cat >input <<INPUT_END
++reset refs/heads/J-null-sha1
++from 0000000000000000000000000000000000000000
++
++commit refs/heads/J-merge-null
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++Merge J-null-sha1 into fresh J-merge-null.
++COMMIT
++merge refs/heads/J-null-sha1
++
++INPUT_END
++test_expect_failure \
++	'J: reject or ignore merge with unborn branch' \
++	'test_when_finished "git update-ref -d refs/heads/J-merge-null" &&
++	 test_might_fail git fast-import <input &&
++	 git fsck'
++
+ ###
+ ### series K
+ ###
+-- 
+1.7.10.4
