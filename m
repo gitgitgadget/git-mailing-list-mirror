@@ -1,137 +1,96 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [RFC/PATCH] t3300-*.sh: Fix a TAP parse error
-Date: Tue, 24 Jul 2012 19:34:18 +0100
-Message-ID: <500EEAAA.8030604@ramsay1.demon.co.uk>
-References: <500AEB11.4050006@ramsay1.demon.co.uk> <20120721182049.GL19860@burratino>
+Date: Tue, 24 Jul 2012 14:21:03 -0500
+Message-ID: <20120724192103.GB5210@burratino>
+References: <500AEB11.4050006@ramsay1.demon.co.uk>
+ <20120721182049.GL19860@burratino>
+ <500EEAAA.8030604@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 21:21:18 2012
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jul 24 21:21:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StkfT-0004EX-EG
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:21:15 +0200
+	id 1Stkff-0004Po-95
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 21:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756015Ab2GXTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 15:21:09 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:43038 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755830Ab2GXTVI (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756045Ab2GXTVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 15:21:16 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:57835 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755872Ab2GXTVI (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 Jul 2012 15:21:08 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 03700400259;
-	Tue, 24 Jul 2012 20:13:58 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id CE649400253;	Tue, 24 Jul 2012 20:13:56 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Tue, 24 Jul 2012 20:13:55 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <20120721182049.GL19860@burratino>
-X-MDF-HostID: 19
+Received: by ghrr11 with SMTP id r11so7057946ghr.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 12:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Au+jxIxnSB2Ulh4G1S1CzBuNpoxEAlCHqLIUfq/Kbms=;
+        b=er1B1c6JtQ/JVozNqbuyWybu4XOrVBGE5YoyiEKP3jspLU0rGQZcsWee6NYsyDCJhu
+         ZonDlG/EUcvrTk+pHzaRCzb1W/Ljzlo56mzOdmn80GOl6lE4uiF8LesN4ErXp9tJS2gl
+         IfU3AU4IE4U0W1GTT3Nf78aF6B0E0/VSZTjtHUjjn6EtHkPmGMhEFw03Nrd4RqoD4de7
+         KtLwdUEkkKx8RegUvZwT7DKVcB6+3NfITpt9x7CdSlezRXAI2hVtoExWF99ufZeNE4Bl
+         +ZSBRRa+xoj+r7E2li9jDIuMWU7Hs57EXo5xoN5bIXSeymvmHZvmRLrwOj6yA1g1igCN
+         NwoQ==
+Received: by 10.43.92.67 with SMTP id bp3mr17485021icc.16.1343157667811;
+        Tue, 24 Jul 2012 12:21:07 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id q1sm5450503igj.15.2012.07.24.12.21.06
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jul 2012 12:21:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <500EEAAA.8030604@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202058>
 
-Jonathan Nieder wrote:
->> Needless to say, I much prefer the patch below. :-D
-> 
-> Thanks for a nice explanation.  In general I definitely like getting
-> rid of these setup tests when possible.  Let's see:
-> 
-> [...]
->> --- a/t/t3300-funny-names.sh
->> +++ b/t/t3300-funny-names.sh
->> @@ -15,28 +15,20 @@ p0='no-funny'
->>  p1='tabs	," (dq) and spaces'
->>  p2='just space'
->>  
->> -test_expect_success 'setup' '
->> -	cat >"$p0" <<-\EOF &&
->> -	1. A quick brown fox jumps over the lazy cat, oops dog.
->> -	2. A quick brown fox jumps over the lazy cat, oops dog.
->> -	3. A quick brown fox jumps over the lazy cat, oops dog.
->> -	EOF
->> +cat >"$p0" <<\EOF
->> +1. A quick brown fox jumps over the lazy cat, oops dog.
->> +2. A quick brown fox jumps over the lazy cat, oops dog.
->> +3. A quick brown fox jumps over the lazy cat, oops dog.
->> +EOF
-> 
-> The problem is that on platforms not supporting funny filenames, it
-> will write a complaint to stderr and because the code is not guarded
-> by test_expect_success, that output goes to the terminal.  So I think
-> this is a wrong approach.
+Hi,
 
-Huh? Which platforms are we talking about?
+Ramsay Jones wrote:
 
-The only problematic platforms I test on are "NTFS/bash" on cygwin and MinGW.
-Since commit 2b843732 ("Suppress some bash redirection error messages",
-26-08-2008), I have not noticed any complaints regarding this problem.
-What have I missed?
+> The only problematic platforms I test on are "NTFS/bash" on cygwin and MinGW.
+> Since commit 2b843732 ("Suppress some bash redirection error messages",
+> 26-08-2008), I have not noticed any complaints regarding this problem.
 
-Assuming we are not talking about errors like ENOSPC, EROFS etc., then the
-only command which would issue a complaint to stderr would be the line
-following the above snippet, thus:
+Yeah, that probably took care of squashing the messages.  Maybe my
+memory is too long. ;-)
 
-    +cat 2>/dev/null >"$p1" "$p0"
-
-(note the stderr redirection). This does not output an error to the terminal
-when using bash (I think I also tested with dash). However, this does rely
-on the shell performing the redirections in the order, left to right, on the
-command line. [I had intended to check with POSIX to see if this order was
-mandated or not, but didn't get around to it ...]
-
-Have you found a shell were this does not work?
-
-> Would it make sense to avoid the "# SKIP" comment when a test has
-> been run, like this?
-> 
-> diff --git i/t/test-lib.sh w/t/test-lib.sh
-> index acda33d1..038f6e9f 100644
-> --- i/t/test-lib.sh
-> +++ w/t/test-lib.sh
-> @@ -354,6 +354,11 @@ test_done () {
+[...]
+> No, I don't think this would be a good direction to go in. This may
+> not be a good idea either, but if you wanted to add a check here, then
+> maybe something like this (totally untested):
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index acda33d..53a2422 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -354,6 +354,9 @@ test_done () {
 >  	case "$test_failure" in
 >  	0)
 >  		# Maybe print SKIP message
-> +		if test -n "$skip_all" && test "$test_count" != 0
-> +		then
-> +			say "# SKIP $skill_all"
-> +			skip_all=
+> +		if test -n "$skip_all" && test $test_count -gt 0; then
+> +			error "Can't use skip_all after running some tests"
 > +		fi
 >  		[ -z "$skip_all" ] || skip_all=" # SKIP $skip_all"
 >  
 >  		if test $test_external_has_tap -eq 0; then
 
-No, I don't think this would be a good direction to go in. This may
-not be a good idea either, but if you wanted to add a check here, then
-maybe something like this (totally untested):
+I think preventing invalid TAP output like this would be a very good
+thing!  As a start, this patchlet looks good to me, and then I guess
+we'll have to think more about what happens when a person wants to
+skip_all_remaining after a test has already been run.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index acda33d..53a2422 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -354,6 +354,9 @@ test_done () {
- 	case "$test_failure" in
- 	0)
- 		# Maybe print SKIP message
-+		if test -n "$skip_all" && test $test_count -gt 0; then
-+			error "Can't use skip_all after running some tests"
-+		fi
- 		[ -z "$skip_all" ] || skip_all=" # SKIP $skip_all"
- 
- 		if test $test_external_has_tap -eq 0; then
+Care to format it as a "git am"-able patch, or should I?
 
-Dunno! :-D
-
-I will be sending a v2 patch soon.
-
-ATB,
-Ramsay Jones
+Thanks again,
+Jonathan
