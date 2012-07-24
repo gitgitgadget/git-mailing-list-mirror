@@ -1,112 +1,90 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 4/7] Remove obsolete LONG_USAGE which breaks xgettext
-Date: Tue, 24 Jul 2012 13:08:09 -0500
-Message-ID: <20120724180808.GG2939@burratino>
+Subject: Re: [PATCH v3 5/7] i18n: am: mark more strings for translation
+Date: Tue, 24 Jul 2012 13:16:00 -0500
+Message-ID: <20120724181600.GH2939@burratino>
 References: <cover.1343112786.git.worldhello.net@gmail.com>
- <e3481427da5efcb60053bb4cd5bcc7e4567100f0.1343112786.git.worldhello.net@gmail.com>
+ <d3711733085d683d9a63cff6f615ef3114f2d3c0.1343112786.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+	Thomas Rast <trast@inf.ethz.ch>
 To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 24 20:08:40 2012
+X-From: git-owner@vger.kernel.org Tue Jul 24 20:17:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StjWz-0002cH-WB
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:08:26 +0200
+	id 1Stjei-0006tK-4Z
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jul 2012 20:16:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933694Ab2GXSIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jul 2012 14:08:20 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:56856 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933690Ab2GXSIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jul 2012 14:08:14 -0400
-Received: by yhmm54 with SMTP id m54so6969494yhm.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 11:08:13 -0700 (PDT)
+	id S932501Ab2GXSQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jul 2012 14:16:20 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:55146 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932590Ab2GXSQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jul 2012 14:16:05 -0400
+Received: by gglu4 with SMTP id u4so6984921ggl.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 11:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6PMS0+33jXFil8omYII2oKvhDOcQxTe7oAhrXe3IqNY=;
-        b=jpzhU3Jcge8thwkmW2w3pmi9I3Se3GN2ezrfYQ4EQMMUwXn8IfuAdtbDzB+eUGbEkL
-         aPLmL7SeG9h9kZ48V6jVkYVfBGh/ksHAuQwpjj71lQadl3nZ+KXL24eHVLxK/YgdnV9s
-         U1R49VM2HRDHRq9BmBmkJyB+doTvdp0GzZI3JB7RtCxNdFtTqfzn9+p4MuCZBhvWSIe7
-         9FuOVnBK++Ti1PzgC6gyWnHUCU69g5BhSsyLLXiEIsg8WQ78ipQk22suYbdQPvpMNkdQ
-         xbhy5RE17SBMZOsGRbYxqHvo3WYSpYjvoDf3EdoR2jtfvHn/Aw3Slyo4du5BdZe/d6kL
-         XCbA==
-Received: by 10.42.99.75 with SMTP id v11mr17145691icn.41.1343153293512;
-        Tue, 24 Jul 2012 11:08:13 -0700 (PDT)
+        bh=RUR5pWYg677JMT+aPRL20M1aUQ0hVj9mGMsxY4tnu0o=;
+        b=GOzLMtIkXoIFbOKSjRAMq84x3wX/hfOlMhODRXx3T0qYqtmulJBzl3200y0Np/XGCO
+         Uo115fSVAfRmbF4H5bqC5lAPO6li4WOlYZlBlm0zGCz//wchlBlAQdNbWufG12NhZg31
+         1dyd631OqX6NUyeq7qn+EFpy1y/Hmn1xUJvh23+WTJ0g5YUd3CyyUnNLAz6bEx+65Eph
+         FvUbYIvFU+2CAjJp6ScZjCaiMn3GF39jcqOzBaRkO+pZawx5AibB4e4vkEV55HJdvXl/
+         ny3704Zu4Ec6h0LnznMgVUmMGAsdwjw7mcrBmOq95My+dHuDmo9kNCY2e3sBhvq/kw37
+         1Y4A==
+Received: by 10.42.19.2 with SMTP id z2mr11164442ica.33.1343153764729;
+        Tue, 24 Jul 2012 11:16:04 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id k5sm2544362igq.12.2012.07.24.11.08.12
+        by mx.google.com with ESMTPS id ch4sm2575408igb.2.2012.07.24.11.16.03
         (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 11:08:12 -0700 (PDT)
+        Tue, 24 Jul 2012 11:16:04 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <e3481427da5efcb60053bb4cd5bcc7e4567100f0.1343112786.git.worldhello.net@gmail.com>
+In-Reply-To: <d3711733085d683d9a63cff6f615ef3114f2d3c0.1343112786.git.worldhello.net@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202050>
 
 Hi,
 
 Jiang Xin wrote:
 
-> The obsolete LONG_USAGE variable
+> Mark additional 3 strings for translation, and reduce one indentation
+> level for one gettextln clause introduced in commit de88c1c.
+
+The above description doesn't mention:
+
 [...]
+> @@ -387,8 +386,8 @@ do
+>  	-i|--interactive)
+>  		interactive=t ;;
+>  	-b|--binary)
+> -		echo >&2 "The $1 option has been a no-op for long time, and"
+> -		echo >&2 "it will be removed. Please do not use it anymore."
+> +		echo >&2 $(gettext "The -b option has been a no-op for long time, and
+> +it will be removed. Please do not use it anymore.")
 
-It's a shame to lose the information that was in the LONG_USAGE
-message, though.  Maybe it could be incorporated into the OPTIONS_SPEC
-before the opening "--", or maybe it could be used to clarify the
-description in git-rebase(1).
+... that this changes the message when the --binary option is passed.
+Before this patch, it says
 
-Cc-ing Martin who carried out the parseoptification for advice.  Patch
-left unsnipped below for reference.
+	The --binary option has been a no-op for a long time, and ...
 
-Thanks and hope that helps,
+After the patch, it says
+
+	The -b option has been a no-op for a long time, and ...
+
+Intentional?  That may be a good change or a bad one (I haven't
+thought clearly about it), but it seems at least worth mentioning.
+Cc-ing Thomas in case he has advice.
+
+Thanks,
 Jonathan
-
-[...]
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -3,31 +3,6 @@
->  # Copyright (c) 2005 Junio C Hamano.
->  #
->  
-> -USAGE='[--interactive | -i] [--exec | -x <cmd>] [-v] [--force-rebase | -f]
-> -       [--no-ff] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
-> -LONG_USAGE='git-rebase replaces <branch> with a new branch of the
-> -same name.  When the --onto option is provided the new branch starts
-> -out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
-> -It then attempts to create a new commit for each commit from the original
-> -<branch> that does not exist in the <upstream> branch.
-> -
-> -It is possible that a merge failure will prevent this process from being
-> -completely automatic.  You will have to resolve any such merge failure
-> -and run git rebase --continue.  Another option is to bypass the commit
-> -that caused the merge failure with git rebase --skip.  To check out the
-> -original <branch> and remove the .git/rebase-apply working files, use the
-> -command git rebase --abort instead.
-> -
-> -Note that if <branch> is not specified on the command line, the
-> -currently checked out branch is used.
-> -
-> -Example:       git-rebase master~1 topic
-> -
-> -	A---B---C topic                   A'\''--B'\''--C'\'' topic
-> -       /                   -->           /
-> -  D---E---F---G master          D---E---F---G master
-> -'
-> -
->  SUBDIRECTORY_OK=Yes
->  OPTIONS_KEEPDASHDASH=
->  OPTIONS_SPEC="\
-> -- 
-> 1.7.12.rc0.17.gcb766d3
-> 
