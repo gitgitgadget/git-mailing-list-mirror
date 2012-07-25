@@ -1,105 +1,69 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: False positive from orphaned_commit_warning() ?
-Date: Wed, 25 Jul 2012 14:53:43 -0400
-Message-ID: <20120725185343.GA6937@windriver.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH 3/3] difftool: Disable --symlinks on cygwin
+Date: Wed, 25 Jul 2012 21:39:03 +0200
+Message-ID: <50104B57.5050206@gmail.com>
+References: <1343186064-49350-1-git-send-email-davvid@gmail.com> <1343186064-49350-4-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 20:53:52 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 21:39:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su6iU-0004fW-Ek
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 20:53:50 +0200
+	id 1Su7QT-0006h2-7g
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 21:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371Ab2GYSxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 14:53:47 -0400
-Received: from mail1.windriver.com ([147.11.146.13]:36851 "EHLO
-	mail1.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969Ab2GYSxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 14:53:45 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail1.windriver.com (8.14.5/8.14.3) with ESMTP id q6PIridO002241
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Wed, 25 Jul 2012 11:53:44 -0700 (PDT)
-Received: from yow-pgortmak-d1 (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 25 Jul
- 2012 11:53:45 -0700
-Received: from paul by yow-pgortmak-d1 with local (Exim 4.74)	(envelope-from
- <paul.gortmaker@windriver.com>)	id 1Su6iN-0001qx-Ok	for git@vger.kernel.org;
- Wed, 25 Jul 2012 14:53:43 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751947Ab2GYTjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 15:39:10 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:41283 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750800Ab2GYTjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 15:39:09 -0400
+Received: by bkwj10 with SMTP id j10so784443bkw.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 12:39:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=Y9wAEr9aJ0ijczFtkphhmnA+xCDy0GhG9tYraiGhG6s=;
+        b=KB26P8EO6tMnkoUXGUI/r8XtptrNhtH5skGD9Btby4WAhF/qnR6d8aBAnQYEVARrbj
+         lpM4IcJbDLTh8uCUh9IiOtHMQoEAu/OuQ/Ur/EqTzX2RMxZt5RLB6+JEAjEYQNaX2TTt
+         bg68Mrou/9Gg5RSJpUJkzlLi/7BFs280ATmjgXJCg3Teb9Hj+TKPRZsv7J3eWXP96k5A
+         3SVms7R9u0FqihbY4oGAUAyRjApzKy2eqP8sTC06wscyFy0oNDyjLbA0udSd4CFuqXqv
+         POd1plsXlQf9D5ikZ+ARceFr8UtC8SDsE3cOJgg+9uaHdF1QoB1JUG31ByubLXQ+ftI1
+         xH0A==
+Received: by 10.204.129.14 with SMTP id m14mr12423840bks.7.1343245148149;
+        Wed, 25 Jul 2012 12:39:08 -0700 (PDT)
+Received: from [192.168.178.21] (host105-96-dynamic.4-87-r.retail.telecomitalia.it. [87.4.96.105])
+        by mx.google.com with ESMTPS id y20sm13476469bkv.11.2012.07.25.12.39.06
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Jul 2012 12:39:07 -0700 (PDT)
+In-Reply-To: <1343186064-49350-4-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202187>
 
-Has anyone else noticed false positives coming from the
-orphan check?  It is warning me about commits that are
-clearly on master.  Here is an example, where I checkout
-master~2 and then switch back to master.  It somehow thinks
-that master~2 is orphaned, when master~2 is by definition
-in the commit chain leading to master.
+On 07/25/2012 05:14 AM, David Aguilar wrote:
+> Symlinks are not ubiquitous on Windows so make --no-symlinks the default.
+> 
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> I don't have cygwin so I can't verify this one myself.
+> Is 'cygwin' really the value of $^O there?
+>
+Apparently yes:
 
-The repo is tiny, so anyone can try and reproduce this. (I've
-done so on v1.7.9 and v1.7.11, on two different machines).
+  $ uname -rso
+  CYGWIN_NT-5.1 1.5.25(0.156/4/2) Cygwin
+  $ perl -e 'print $^O'
+  cygwin
 
-git://git.yoctoproject.org/yocto-kernel-tools.git
-
-Paul.
--------------
-
-paul@foo:~/git/yocto-kernel-tools$ git checkout master~2
-Note: checking out 'master~2'.
-
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in
-this
-state without impacting any branches by performing another checkout.
-
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -b with the checkout command again.
-Example:
-
-  git checkout -b new_branch_name
-
-HEAD is now at e693754... kgit-checkpoint: fix verify_branch variable
-name typo
-paul@foo:~/git/yocto-kernel-tools$ git checkout master
-Warning: you are leaving 38 commits behind, not connected to
-any of your branches:
-
-  e693754 kgit-checkpoint: fix verify_branch variable name typo
-  ee67a7b kgit-config-cleaner: fix redefintion processing
-  579b1ba meta: support flexible meta branch naming
-  4673bdb scc: allow kconf fragment searching
- ... and 34 more.
-
-If you want to keep them by creating a new branch, this may be a good time
-to do so with:
-
- git branch new_branch_name e6937544e030637cec029edee34737846a036ece
-
-Switched to branch 'master'
-paul@foo:~/git/yocto-kernel-tools$ git branch --contains e6937544e030637cec029edee34737846a036ece
-* master
-paul@foo:~/git/yocto-kernel-tools$ git --version
-git version 1.7.11.1
-paul@foo:~/git/yocto-kernel-tools$ cat .git/config 
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[remote "origin"]
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	url = git://git.yoctoproject.org/yocto-kernel-tools.git
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
-paul@foo:~/git/yocto-kernel-tools$ 
----------------
+Regards,
+  Stefano
