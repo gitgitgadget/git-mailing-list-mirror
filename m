@@ -1,358 +1,141 @@
 From: "Michael G. Schwern" <schwern@pobox.com>
-Subject: [PATCH 1/4] Extract some utilities from git-svn to allow extracting Git::SVN.
-Date: Tue, 24 Jul 2012 23:01:03 -0700
-Message-ID: <1343196066-81319-2-git-send-email-schwern@pobox.com>
+Subject: [PATCH 2/4] Prepare Git::SVN for extraction into its own file.
+Date: Tue, 24 Jul 2012 23:01:04 -0700
+Message-ID: <1343196066-81319-3-git-send-email-schwern@pobox.com>
 References: <1343196066-81319-1-git-send-email-schwern@pobox.com>
 Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net, "Michael G. Schwern" <schwern@pobox.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 25 08:01:37 2012
+X-From: git-owner@vger.kernel.org Wed Jul 25 08:01:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StufA-0007mm-DK
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 08:01:36 +0200
+	id 1StufG-0007sS-Gh
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 08:01:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756407Ab2GYGBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 02:01:31 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:51502 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756388Ab2GYGB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 02:01:29 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so869214pbb.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 23:01:29 -0700 (PDT)
+	id S932745Ab2GYGBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 02:01:36 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:55394 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932719Ab2GYGBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 02:01:36 -0400
+Received: by gglu4 with SMTP id u4so333671ggl.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 23:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=/4NaoalIb/qZtofjEFtD7nnV1XfYOJtkBttnXwMpPHE=;
-        b=dKQLW9OJ7d8z+CtkG2m/ZOzmt72aQgqjcfVemBT6YZ0dJ6AWFHr+T1zH60AGRQmOK1
-         38Xw8ij29McUiu0h8+F5YKmUetVyERoD3Xat5sJNB+04xRIfnjZDOz5kB/47JltztoIv
-         L5GRCDwYAvGctPhXcyR/7xFR5uPc8+wuUg3StM1h8wP/ggeKeKarLL8RIpIu2oex8JBk
-         O5Y5g8HrAG1L3kKAPwx/MAn34Uu/ccV8MusxtgIulKWMTGZgl6+EyMYSH2pOrWmHj6k5
-         z8vzS1F4Vf7m21TamjdMGpg4rfUOG7YKNRWi04laI4nDeHiaZnNfZsW6cmqIePDaP4EO
-         QOTw==
-Received: by 10.68.203.40 with SMTP id kn8mr50537094pbc.162.1343196089526;
-        Tue, 24 Jul 2012 23:01:29 -0700 (PDT)
+        bh=DIuiM0ZSPJyRzRgGinPwPXPpqbYEFNVUemwXVLkuy4A=;
+        b=0JhhWrWMBXZeDP11/Y8zesabYKVEoFBD/XVHYsvKS7JiholFt6vxlgf9eXuHXQomhT
+         LUU5tNQKO7Jh2y9KqaX6mNNnK7+An71dFyImAccLHOucuRC8FxayOWKb6zHMYasg3h32
+         sepkzMAhNSv4cpvfFA6/g/2+9C2YwtHURPoVwNGK08weyO/rj1/5rwqW2fnDQAMDFrSU
+         LloqO1HylOckhcf0eXryHDtrtdPDTGPgd3y73PU8wvRSXhdVyRmS1REejdNluRyqOSNm
+         YVklaMA0XbDLSQZfI4OwaCPuEftt+bCEZNsfujElyVagElX8vG3hJ+63s+baQal/2wBB
+         bp1Q==
+Received: by 10.66.83.200 with SMTP id s8mr10191379pay.10.1343196094693;
+        Tue, 24 Jul 2012 23:01:34 -0700 (PDT)
 Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
-        by mx.google.com with ESMTPS id oy8sm13681630pbc.52.2012.07.24.23.01.26
+        by mx.google.com with ESMTPS id oy8sm13681630pbc.52.2012.07.24.23.01.33
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 23:01:27 -0700 (PDT)
+        Tue, 24 Jul 2012 23:01:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.1
 In-Reply-To: <1343196066-81319-1-git-send-email-schwern@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202126>
 
 From: "Michael G. Schwern" <schwern@pobox.com>
 
-Put them in a new module called Git::SVN::Utils.  Yeah, not terribly
-original and it will be a dumping ground.  But its better than having
-them in the main git-svn program.  At least they can be documented
-and tested.
+This means it should be able to load without git-svn being loaded.
 
-* fatal() is used by many classes.
-* Change the $can_compress lexical into a function.
+* Load Git.pm on its own and all the needed command functions.
 
-This should be enough to extract Git::SVN.
+* It needs to grab at a git-svn lexical $_prefix representing the --prefix
+  option.  Provide opt_prefix() for that.  This is a refactoring artifact.
+  The prefix should really be passed into Git::SVN->new.
 
-Signed-off-by: Michael G. Schwern <schwern@pobox.com>
+* Unqualify unnecessarily fully qualified globals like
+  $Git::SVN::default_repo_id.
+
+* Lexically isolate the class just to make sure nothing is leaking out.
 ---
- git-svn.perl                   | 34 +++++++++++++-----------
- perl/Git/SVN/Utils.pm          | 59 ++++++++++++++++++++++++++++++++++++++++++
- perl/Makefile                  |  1 +
- t/Git-SVN/00compile.t          |  8 ++++++
- t/Git-SVN/Utils/can_compress.t | 11 ++++++++
- t/Git-SVN/Utils/fatal.t        | 34 ++++++++++++++++++++++++
- 6 files changed, 132 insertions(+), 15 deletions(-)
- create mode 100644 perl/Git/SVN/Utils.pm
- create mode 100644 t/Git-SVN/00compile.t
- create mode 100644 t/Git-SVN/Utils/can_compress.t
- create mode 100644 t/Git-SVN/Utils/fatal.t
+ git-svn.perl | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 0b074c4..79fe4a4 100755
+index 79fe4a4..9cdf6fc 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -10,6 +10,8 @@ use vars qw/	$AUTHOR $VERSION
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
- $VERSION = '@@GIT_VERSION@@';
- 
-+use Git::SVN::Utils qw(fatal can_compress);
-+
- # From which subdir have we been invoked?
- my $cmd_dir_prefix = eval {
- 	command_oneline([qw/rev-parse --show-prefix/], STDERR => 0)
-@@ -35,8 +37,6 @@ $Git::SVN::Log::TZ = $ENV{TZ};
- $ENV{TZ} = 'UTC';
- $| = 1; # unbuffer STDOUT
- 
--sub fatal (@) { print STDERR "@_\n"; exit 1 }
--
- # All SVN commands do it.  Otherwise we may die on SIGPIPE when the remote
- # repository decides to close the connection which we expect to be kept alive.
- $SIG{PIPE} = 'IGNORE';
-@@ -66,7 +66,7 @@ sub _req_svn {
- 		fatal "Need SVN::Core 1.1.0 or better (got $SVN::Core::VERSION)";
- 	}
- }
--my $can_compress = eval { require Compress::Zlib; 1};
-+
- use Carp qw/croak/;
- use Digest::MD5;
- use IO::File qw//;
-@@ -1578,7 +1578,7 @@ sub cmd_reset {
- }
- 
- sub cmd_gc {
--	if (!$can_compress) {
-+	if (!can_compress()) {
- 		warn "Compress::Zlib could not be found; unhandled.log " .
- 		     "files will not be compressed.\n";
- 	}
-@@ -2014,13 +2014,13 @@ sub md5sum {
- 	} elsif (!$ref) {
- 		$md5->add($arg) or croak $!;
- 	} else {
--		::fatal "Can't provide MD5 hash for unknown ref type: '", $ref, "'";
-+		fatal "Can't provide MD5 hash for unknown ref type: '", $ref, "'";
- 	}
- 	return $md5->hexdigest();
- }
- 
- sub gc_directory {
--	if ($can_compress && -f $_ && basename($_) eq "unhandled.log") {
-+	if (can_compress() && -f $_ && basename($_) eq "unhandled.log") {
- 		my $out_filename = $_ . ".gz";
- 		open my $in_fh, "<", $_ or die "Unable to open $_: $!\n";
- 		binmode $in_fh;
-@@ -2055,6 +2055,9 @@ use Time::Local;
- use Memoize;  # core since 5.8.0, Jul 2002
- use Memoize::Storable;
- use POSIX qw(:signal_h);
-+
-+use Git::SVN::Utils qw(fatal can_compress);
-+
- my $can_use_yaml;
- BEGIN {
- 	$can_use_yaml = eval { require Git::SVN::Memoize::YAML; 1};
-@@ -2880,8 +2883,8 @@ sub assert_index_clean {
- 		command_noisy('read-tree', $treeish);
- 		$x = command_oneline('write-tree');
- 		if ($y ne $x) {
--			::fatal "trees ($treeish) $y != $x\n",
--			        "Something is seriously wrong...";
-+			fatal "trees ($treeish) $y != $x\n",
-+			      "Something is seriously wrong...";
+@@ -89,7 +89,7 @@ BEGIN {
+ 	foreach (qw/command command_oneline command_noisy command_output_pipe
+ 	            command_input_pipe command_close_pipe
+ 	            command_bidi_pipe command_close_bidi_pipe/) {
+-		for my $package ( qw(Git::SVN::Migration Git::SVN::Log Git::SVN),
++		for my $package ( qw(Git::SVN::Migration Git::SVN::Log),
+ 			__PACKAGE__) {
+ 			*{"${package}::$_"} = \&{"Git::$_"};
  		}
- 	});
- }
-@@ -3236,7 +3239,7 @@ sub mkemptydirs {
- 	my %empty_dirs = ();
- 	my $gz_file = "$self->{dir}/unhandled.log.gz";
- 	if (-f $gz_file) {
--		if (!$can_compress) {
-+		if (!can_compress()) {
- 			warn "Compress::Zlib could not be found; ",
- 			     "empty directories in $gz_file will not be read\n";
- 		} else {
-@@ -3919,7 +3922,7 @@ sub set_tree {
- 	my ($self, $tree) = (shift, shift);
- 	my $log_entry = ::get_commit_entry($tree);
- 	unless ($self->{last_rev}) {
--		::fatal("Must have an existing revision to commit");
-+		fatal("Must have an existing revision to commit");
+@@ -109,6 +109,10 @@ my ($_stdin, $_help, $_edit,
+ 	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+ 	$_git_format, $_commit_url, $_tag, $_merge_info, $_interactive);
++
++# This is a refactoring artifact so Git::SVN can get at this git-svn switch.
++sub opt_prefix { return $_prefix || '' }
++
+ $Git::SVN::_follow_parent = 1;
+ $Git::SVN::Fetcher::_placeholder_filename = ".gitignore";
+ $_q ||= 0;
+@@ -2038,6 +2042,7 @@ sub gc_directory {
  	}
- 	my %ed_opts = ( r => $self->{last_rev},
- 	                log => $log_entry->{log},
-@@ -4348,6 +4351,7 @@ sub remove_username {
- package Git::SVN::Log;
+ }
+ 
++{
+ package Git::SVN;
  use strict;
  use warnings;
-+use Git::SVN::Utils qw(fatal);
- use POSIX qw/strftime/;
- use constant commit_log_separator => ('-' x 72) . "\n";
- use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
-@@ -4446,15 +4450,15 @@ sub config_pager {
- sub run_pager {
- 	return unless defined $pager;
- 	pipe my ($rfd, $wfd) or return;
--	defined(my $pid = fork) or ::fatal "Can't fork: $!";
-+	defined(my $pid = fork) or fatal "Can't fork: $!";
- 	if (!$pid) {
- 		open STDOUT, '>&', $wfd or
--		                     ::fatal "Can't redirect to stdout: $!";
-+		                     fatal "Can't redirect to stdout: $!";
- 		return;
+@@ -2056,6 +2061,13 @@ use Memoize;  # core since 5.8.0, Jul 2002
+ use Memoize::Storable;
+ use POSIX qw(:signal_h);
+ 
++use Git qw(
++    command
++    command_oneline
++    command_noisy
++    command_output_pipe
++    command_close_pipe
++);
+ use Git::SVN::Utils qw(fatal can_compress);
+ 
+ my $can_use_yaml;
+@@ -4280,12 +4292,13 @@ sub find_rev_after {
+ sub _new {
+ 	my ($class, $repo_id, $ref_id, $path) = @_;
+ 	unless (defined $repo_id && length $repo_id) {
+-		$repo_id = $Git::SVN::default_repo_id;
++		$repo_id = $default_repo_id;
  	}
--	open STDIN, '<&', $rfd or ::fatal "Can't redirect stdin: $!";
-+	open STDIN, '<&', $rfd or fatal "Can't redirect stdin: $!";
- 	$ENV{LESS} ||= 'FRSX';
--	exec $pager or ::fatal "Can't run pager: $! ($pager)";
-+	exec $pager or fatal "Can't run pager: $! ($pager)";
+ 	unless (defined $ref_id && length $ref_id) {
+-		$_prefix = '' unless defined($_prefix);
++		# Access the prefix option from the git-svn main program if it's loaded.
++		my $prefix = defined &::opt_prefix ? ::opt_prefix() : "";
+ 		$_[2] = $ref_id =
+-		             "refs/remotes/$_prefix$Git::SVN::default_ref_id";
++		             "refs/remotes/$prefix$default_ref_id";
+ 	}
+ 	$_[1] = $repo_id;
+ 	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
+@@ -4347,6 +4360,7 @@ sub uri_decode {
+ sub remove_username {
+ 	$_[0] =~ s{^([^:]*://)[^@]+@}{$1};
  }
++}
  
- sub format_svn_date {
-@@ -4603,7 +4607,7 @@ sub cmd_show_log {
- 		} elsif ($::_revision =~ /^\d+$/) {
- 			$r_min = $r_max = $::_revision;
- 		} else {
--			::fatal "-r$::_revision is not supported, use ",
-+			fatal "-r$::_revision is not supported, use ",
- 				"standard 'git log' arguments instead";
- 		}
- 	}
-diff --git a/perl/Git/SVN/Utils.pm b/perl/Git/SVN/Utils.pm
-new file mode 100644
-index 0000000..3d0bfa4
---- /dev/null
-+++ b/perl/Git/SVN/Utils.pm
-@@ -0,0 +1,59 @@
-+package Git::SVN::Utils;
-+
-+use strict;
-+use warnings;
-+
-+use base qw(Exporter);
-+
-+our @EXPORT_OK = qw(fatal can_compress);
-+
-+
-+=head1 NAME
-+
-+Git::SVN::Utils - utility functions used across Git::SVN
-+
-+=head1 SYNOPSIS
-+
-+    use Git::SVN::Utils qw(functions to import);
-+
-+=head1 DESCRIPTION
-+
-+This module contains functions which are useful across many different
-+parts of Git::SVN.  Mostly it's a place to put utility functions
-+rather than duplicate the code or have classes grabbing at other
-+classes.
-+
-+=head1 FUNCTIONS
-+
-+All functions can be imported only on request.
-+
-+=head3 fatal
-+
-+    fatal(@message);
-+
-+Display a message and exit with a fatal error code.
-+
-+=cut
-+
-+# Note: not certain why this is in use instead of die.  Probably because
-+# the exit code of die is 255?  Doesn't appear to be used consistently.
-+sub fatal (@) { print STDERR "@_\n"; exit 1 }
-+
-+
-+=head3 can_compress
-+
-+    my $can_compress = can_compress;
-+
-+Returns true if Compress::Zlib is available, false otherwise.
-+
-+=cut
-+
-+my $can_compress;
-+sub can_compress {
-+    return $can_compress if defined $can_compress;
-+
-+    return $can_compress = eval { require Compress::Zlib; } ? 1 : 0;
-+}
-+
-+
-+1;
-diff --git a/perl/Makefile b/perl/Makefile
-index 6ca7d47..24a9f5a 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -31,6 +31,7 @@ modules += Git/SVN/Fetcher
- modules += Git/SVN/Editor
- modules += Git/SVN/Prompt
- modules += Git/SVN/Ra
-+modules += Git/SVN/Utils
- 
- $(makfile): ../GIT-CFLAGS Makefile
- 	echo all: private-Error.pm Git.pm Git/I18N.pm > $@
-diff --git a/t/Git-SVN/00compile.t b/t/Git-SVN/00compile.t
-new file mode 100644
-index 0000000..a7aa85a
---- /dev/null
-+++ b/t/Git-SVN/00compile.t
-@@ -0,0 +1,8 @@
-+#!/usr/bin/env perl
-+
-+use strict;
-+use warnings;
-+
-+use Test::More tests => 1;
-+
-+require_ok 'Git::SVN::Utils';
-diff --git a/t/Git-SVN/Utils/can_compress.t b/t/Git-SVN/Utils/can_compress.t
-new file mode 100644
-index 0000000..d7b49b8
---- /dev/null
-+++ b/t/Git-SVN/Utils/can_compress.t
-@@ -0,0 +1,11 @@
-+#!/usr/bin/perl
-+
-+use strict;
-+use warnings;
-+
-+use Test::More 'no_plan';
-+
-+use Git::SVN::Utils qw(can_compress);
-+
-+# !! is the "convert this to boolean" operator.
-+is !!can_compress(), !!eval { require Compress::Zlib };
-diff --git a/t/Git-SVN/Utils/fatal.t b/t/Git-SVN/Utils/fatal.t
-new file mode 100644
-index 0000000..b90746c
---- /dev/null
-+++ b/t/Git-SVN/Utils/fatal.t
-@@ -0,0 +1,34 @@
-+#!/usr/bin/perl
-+
-+use strict;
-+use warnings;
-+
-+use Test::More 'no_plan';
-+
-+BEGIN {
-+    # Override exit at BEGIN time before Git::SVN::Utils is loaded
-+    # so it will see our local exit later.
-+    *CORE::GLOBAL::exit = sub(;$) {
-+        return @_ ? CORE::exit($_[0]) : CORE::exit();
-+    };
-+}
-+
-+use Git::SVN::Utils qw(fatal);
-+
-+# fatal()
-+{
-+    # Capture the exit code and prevent exit.
-+    my $exit_status;
-+    no warnings 'redefine';
-+    local *CORE::GLOBAL::exit = sub { $exit_status = $_[0] || 0 };
-+
-+    # Trap fatal's message to STDERR
-+    my $stderr;
-+    close STDERR;
-+    ok open STDERR, ">", \$stderr;
-+
-+    fatal "Some", "Stuff", "Happened";
-+
-+    is $stderr, "Some Stuff Happened\n";
-+    is $exit_status, 1;
-+}
+ package Git::SVN::Log;
+ use strict;
 -- 
 1.7.11.1
