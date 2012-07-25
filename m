@@ -1,9 +1,9 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 2/7] i18n: rebase: mark strings for translation
-Date: Tue, 24 Jul 2012 23:21:34 -0500
-Message-ID: <20120725042134.GA3055@burratino>
+Subject: Re: [PATCH v4 5/7] i18n: am: mark more strings for translation
+Date: Tue, 24 Jul 2012 23:26:33 -0500
+Message-ID: <20120725042633.GB3055@burratino>
 References: <cover.1343188013.git.worldhello.net@gmail.com>
- <915b2821410c2348817a469e7be05be497cf1d06.1343188013.git.worldhello.net@gmail.com>
+ <1493bd09efd0ba6e1d56500305d989047da245ec.1343188013.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
@@ -12,117 +12,94 @@ Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	Stefano Lattarini <stefano.lattarini@gmail.com>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 06:22:31 2012
+X-From: git-owner@vger.kernel.org Wed Jul 25 06:26:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Stt7D-0007cG-Hr
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 06:22:27 +0200
+	id 1SttBN-0001qv-R7
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 06:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849Ab2GYEVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 00:21:44 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:48334 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774Ab2GYEVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 00:21:44 -0400
-Received: by gglu4 with SMTP id u4so286855ggl.19
-        for <git@vger.kernel.org>; Tue, 24 Jul 2012 21:21:43 -0700 (PDT)
+	id S1750826Ab2GYE0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 00:26:40 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60234 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750765Ab2GYE0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 00:26:39 -0400
+Received: by yenl2 with SMTP id l2so298319yen.19
+        for <git@vger.kernel.org>; Tue, 24 Jul 2012 21:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=jeZL2pw5u2L4MJbxVM3w00ZMUXUZUWmSXVc8sFNQMPY=;
-        b=SWpmkcUM/EKt2TshX4a5Sl3W/neZkRBT6vNVliomC95JBQ0vgEPrd33EgESV8zXIuM
-         WV9jn4QVoTald72gZiOom8UjAmxh97da5df3GQfB+brW7gwD2PNU6a2tM7KtOj5tSNSJ
-         YdPKkiuyhc3e1gyYpc+z7yu+af78ddNxhXOW6SZWTJ4MAtFBtz5x6OtA56wAg2EyoifK
-         aMXHaWPPRgeaXbeECn2GQf5Xvqhbw47j10FmeVUgfHS+QBHuz3twTDm9tnOsg+Gqvg0V
-         uV4Yz6Ehffuto+rDO3d/4Otx40hKIvqv/uhHTDtovlo12yFpF4I/62ntLWlLFhrzN+73
-         AOlA==
-Received: by 10.43.110.197 with SMTP id el5mr21071282icc.1.1343190103133;
-        Tue, 24 Jul 2012 21:21:43 -0700 (PDT)
+        bh=q2Zkup0oCGeekLxOwwOfyXmIvCxBz7+gtoKsNEciu1Q=;
+        b=kc8mE3iGbALFRBvIudtoXxl3pzGyFGb1VqgaDORvWYm71jTAQgLLHoBa6jKOxB2y2F
+         I7CKihp2ZPz3s8GIfJr7DuLiwOQfjXNFfxFVwqiJGLrxMIsWB1wK/MB+D2nfT6y6rB3a
+         6S5HtFxOYP5aMqUiMNVaoLEs4WkC+XQpbOkssKCsPVqtTscujx4Xn4XMc49xYq+fEDlZ
+         qZM4yzMFB4QPOhME/H5ZH6YZJ37AFam1Uez9awLKviuEAido15ci65tKDAF+aSdHS7fD
+         V1JAjhUz+X6WPM1+RprjC0ZbBUaL4AN/QlGQ8FiEPEQdY8emiZGNwGZN06MHGYo6tq5A
+         vJ9Q==
+Received: by 10.42.146.6 with SMTP id h6mr20997595icv.53.1343190398970;
+        Tue, 24 Jul 2012 21:26:38 -0700 (PDT)
 Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id dc7sm302410igc.13.2012.07.24.21.21.41
+        by mx.google.com with ESMTPS id k5sm313323igq.12.2012.07.24.21.26.36
         (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jul 2012 21:21:42 -0700 (PDT)
+        Tue, 24 Jul 2012 21:26:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <915b2821410c2348817a469e7be05be497cf1d06.1343188013.git.worldhello.net@gmail.com>
+In-Reply-To: <1493bd09efd0ba6e1d56500305d989047da245ec.1343188013.git.worldhello.net@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202117>
-
-(cc-ing Duy because of a mention of his nice GETTEXT_POISON tweak[*])
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202118>
 
 Jiang Xin wrote:
 
-> Mark strings in git-rebase.sh for translation. Jonathan offers a help
-> for reorgnization of the resolvemsg variable in 'git-rebase.sh', since
-> there is a likely message in git-am.sh, I update it in this commit for
-> consistency. And so does to 't/t0201-gettext-fallbacks.sh'.
+> Mark strings in 'git-am.sh' for translation. In the last chunk, I
+> changed '$1' to '-b/--binary' for this reason:
+>
+>  * First, if there is a variable in the l10n message, we could not use
+>    gettext. Because the variable will be expanded (evaluated) and will
+>    never match the entry in the po file.
+>
+>  * Second, if there is a positional parameter ($1, $2,...) in the
+>    message, we could not use eval_gettext either. Because
+>    eval_gettext may be a wapper for gettext, and the positional
+>    parameter would loose it's original context.
 
-Ah.  Looks like I tweaked the comma usage and sentence structure a
-little.  Sorry, force of habit --- I shouldn't have.
+Yes, I think it's a good change.
 
-> Some test scripts are affected by this update, and would fail if tested
-> with GETTEXT_POISON switch turned on. Using i18n-specific test
-> functions, such as test_i18ngrep, in the related test scripts will fix
-> these issues.
-
-If we're going to keep the changes together, here's how I would phrase
-the commit message:
-
-	Mark messages in git-rebase.sh for translation.  While doing this
-	it was noticed that the comma usage and sentence structure of the
-	resolvemsg was not quite right, so correct that and its cousins in
-	git-am.sh and t/t0201-gettext-fallbacks.sh at the same time.
-
-	Some tests would start to fail with GETTEXT_POISON turned on after
-	this update.  Use test_i18ncmp and test_i18ngrep where
-	appropriate to mark strings that should only be checked in the C
-	locale output to avoid such issues.
-
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> Reviewed-by: Stefano Lattarini <stefano.lattarini@gmail.com>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-I haven't tested or reviewed this patch in detail, so even though it
-looks good, I'd prefer it not to have my Reviewed-by.  (See
-Documentation/SubmittingPatches: '"Reviewed-by:", unlike the other
-extra tags, can only be offered by the reviewer'.)  If you'd like to
-credit my help, something like "With advice from Jonathan." would be
-fine.
-
+> --- a/git-am.sh
+> +++ b/git-am.sh
 [...]
-> --- a/t/t3406-rebase-message.sh
-> +++ b/t/t3406-rebase-message.sh
-> @@ -64,7 +64,7 @@ test_expect_success 'rebase -n overrides config rebase.stat config' '
->  
->  test_expect_success 'rebase --onto outputs the invalid ref' '
->  	test_must_fail git rebase --onto invalid-ref HEAD HEAD 2>err &&
-> -	grep "invalid-ref" err
-> +	test_i18ngrep "invalid-ref" err
->  '
+> @@ -387,8 +386,8 @@ do
+>  	-i|--interactive)
+>  		interactive=t ;;
+>  	-b|--binary)
+> -		echo >&2 "The $1 option has been a no-op for long time, and"
+> -		echo >&2 "it will be removed. Please do not use it anymore."
+> +		echo >&2 $(gettext "The -b/--binary option has been a no-op for long time, and
+> +it will be removed. Please do not use it anymore.")
 
-Could we add a comment so others do not have to wonder what
-human-readable message prompts the test_i18ngrep here?  e.g
+Could this be simplified to
 
-	# "Does not point to a valid commit: invalid-ref"
-	#
-	# NEEDSWORK: This "grep" is fine in real non-C locales, but
-	# GETTEXT_POISON poisons the refname along with the enclosing
-	# error message.
-	test_i18ngrep invalid-ref err
+		gettextln >&2 'The -b/--binary option...
+... any more.'
 
-In the long run we may be able to turn this back to a "grep" again,
-since any reasonable translation will keep the $onto_name somewhere
-in the message.  But changing it to test_i18ngrep for now is the
-right thing to do, until something like Duy's more sophisticated
-version of GETTEXT_POISON arrives. (<-- [*])
+or
 
-Thanks,
-Jonathan
+		gettextln 'The -b/--binary option ...
+... any more.' >&2
+
+or would that confuse xgettext?  That would be more comforting than "echo"
+because if the translated string includes backslashes then the behavior of
+echo can be unpredictable.
+
+Sorry I missed that last time.
+
+The rest is indeed
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
