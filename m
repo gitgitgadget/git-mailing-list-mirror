@@ -1,72 +1,71 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: [PATCH] Fix Q-encoded multi-octet-char split in email.
-Date: Wed, 25 Jul 2012 07:10:51 -0400
-Message-ID: <CAM9Z-nk97tkE4==Kx8z-1gwKoeUqj087wE2X1q=fUVuK+ckqpA@mail.gmail.com>
-References: <1341279697-4596-1-git-send-email-gkatsu.ne@gmail.com>
-	<20120703063511.GA16679@sigill.intra.peff.net>
-	<CAGxub4-9E0W8ZgsPHeTyUyxmPD80LUd7NjSezg5Zt2-nZPBMJA@mail.gmail.com>
-	<20120704064450.GA24807@sigill.intra.peff.net>
-	<7v394py7r2.fsf@alter.siamese.dyndns.org>
-	<20120718072753.GC12942@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 6/7] Remove dead code which contains bad gettext block
+Date: Wed, 25 Jul 2012 06:30:09 -0500
+Message-ID: <20120725113009.GA4732@burratino>
+References: <cover.1343205009.git.worldhello.net@gmail.com>
+ <b22ea7d7306745555bfd39bf4ff51f485a005a02.1343205009.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Katsuyama Takeharu <gkatsu.ne@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Takeharu Katsuyama <tkatsu.ne@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 25 13:11:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 13:30:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1StzUh-0002oC-T8
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 13:11:08 +0200
+	id 1StznN-00023c-1d
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 13:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524Ab2GYLKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 07:10:54 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:41943 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755726Ab2GYLKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 07:10:53 -0400
-Received: by bkwj10 with SMTP id j10so419225bkw.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 04:10:52 -0700 (PDT)
+	id S1756403Ab2GYLaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 07:30:19 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42091 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab2GYLaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 07:30:17 -0400
+Received: by yhmm54 with SMTP id m54so553381yhm.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 04:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5OFWL9lHnF1i4bvAWXrM/2riBVUJPhKR0upc200jVSI=;
-        b=xW25voYh0Sn1f8+TfDf/MgAgOH78i2MYHAhPumOIwDS3fR9pZlvw8Uzi0n0ey2yqED
-         YSCOgqc0r1gVFrtAwFyamGLh6Pp2tgDFWJn7ZHbR/t55WTIJu9m+g3TBZNzDIbb74WC/
-         vmylvEc5UsG7spBsA1gXlRhZlKSjkKgzHlD8eePFi9MnnvpTcCrIDAbQnRXX+cjRdfvN
-         RtOylhX6xOtWCpKMolj+hoaYYm7s0sqAG8jbKI1i7Hmg5or+WEK5N1F8Gx36xbW2iGKe
-         kKJvcRKia+UaGbdhFBUYghIPv4ywgYQWxUvKLhMG2ffZWlxc+DUta9+7jS03R9a+ODVR
-         69vw==
-Received: by 10.204.128.202 with SMTP id l10mr11491507bks.127.1343214651994;
- Wed, 25 Jul 2012 04:10:51 -0700 (PDT)
-Received: by 10.204.27.24 with HTTP; Wed, 25 Jul 2012 04:10:51 -0700 (PDT)
-In-Reply-To: <20120718072753.GC12942@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=rD8R4W7WS4GZXZEY/GBYw9pu88uAmG+sPC5+3LWknUo=;
+        b=YDxlWDoFDZyabepYIwFHUFbG99U1DOWp6FW2kDDb2OSKxIY7W7rpo9dG36XjAKP6UE
+         WCyEHhvmbm/skJUjsId+3hDNXxazx/6ngycCpDA5hgGC1wI880daR9uHecQLpq0Fai/2
+         PPIik/JjomF+gU/M6N56sTFJPsda2MbyipqP9eyQg6IbmJvbIfe/WSDrs4j/uYhmZ2n2
+         A8x2w+LGHisLfjjhqCYPg040EnfzVtHQY1w9jdWo97ENAlGD+k+ZJPiUpHmGgfOATz5m
+         VVVAanUKrOMaTiAPEk/2XkQzv/w8WRTgz7CewJCBnspCvQXLRmyCMk+Exl1/AMKFgr0p
+         HoCg==
+Received: by 10.42.70.136 with SMTP id f8mr24033475icj.28.1343215817310;
+        Wed, 25 Jul 2012 04:30:17 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id qo3sm2066367igc.8.2012.07.25.04.30.16
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Jul 2012 04:30:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <b22ea7d7306745555bfd39bf4ff51f485a005a02.1343205009.git.worldhello.net@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202148>
 
-On Wed, Jul 18, 2012 at 3:27 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 17, 2012 at 10:10:25PM -0700, Junio C Hamano wrote:
+Jiang Xin wrote:
+
+> Found this dead code when I examine gettext messages in shell scripts
+> start with dash ('-' or '--'). An error will be raised for this case,
+> like:
 >
->> Ping on a seemingly stalled thread.
-
-> If I did not simply dream it, can you re-post the latest patch you
-> sent?
+>     $ gettext "-d option is no longer supported.  Do not use."
+>     gettext: missing arguments
 >
-> -Peff
+> Indead, this code has been left as dead for a long time, as Junathan
+> points out:
 
-...And I thought dreaming I was trapped in a DOS prompt was bad.
-Dreaming in patches? OUCH!
-
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+s/Junathan/Jonathan/, please, unless you are trying to say that both
+Junio and I pointed it out at the same time.
