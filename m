@@ -1,63 +1,84 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v5 6/7] Remove dead code which contains bad gettext block
-Date: Wed, 25 Jul 2012 21:31:29 +0800
-Message-ID: <CANYiYbF9KsBeRsVV1RCD9k5KQFnf-9ubc-YLHLg+LjMSoPLVoA@mail.gmail.com>
-References: <cover.1343205009.git.worldhello.net@gmail.com>
-	<b22ea7d7306745555bfd39bf4ff51f485a005a02.1343205009.git.worldhello.net@gmail.com>
-	<20120725113009.GA4732@burratino>
+Subject: [PATCH v5 0/7] i18n for git-am, git-rebase and git-merge
+Date: Wed, 25 Jul 2012 22:44:00 +0800
+Message-ID: <cover.1343227045.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
 	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 15:31:41 2012
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 16:44:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su1ge-0006K7-SG
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 15:31:37 +0200
+	id 1Su2pJ-0007wP-WD
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 16:44:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756678Ab2GYNbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 09:31:31 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:38873 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756343Ab2GYNba (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 09:31:30 -0400
-Received: by yenl2 with SMTP id l2so678556yen.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 06:31:29 -0700 (PDT)
+	id S933362Ab2GYOoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 10:44:32 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:36947 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933279Ab2GYOoa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 10:44:30 -0400
+Received: by ghrr11 with SMTP id r11so786362ghr.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 07:44:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0CbCm5smKJ720wfxbLHE7pfaMnjWBASkDf+sSofzToM=;
-        b=yXy6OnXoYIKA2k/gcIVZFO8d0HrCN5mp4xxoziaGLWRoXcvkQ7eXWnGVX0pV5nEyck
-         Ib/lt2LMxkd2k/elclYsSTjF+yxlBn1Nzm1uQWmeM+l9WeJpE6pNzaJyR0RPApxopcpg
-         2B1OpWXE5HFgJxkQkwqA72uKaqK7YT47bIw0AtuaDxUmdETHLZ91WuBMtA75Ml7prF/g
-         7JuR8xJaW48CcGtex+AEx2AioP0bdTvHuV/RMEdzrrsIc4o4te45S2kGUO8IlCXOfPx5
-         OHSqR4LqyHfPGQPd2M15armTA+CGOAwGuqeuSjCSvRpktITNrqIKFjBZ35cVYaTP3AJw
-         ErpA==
-Received: by 10.42.146.6 with SMTP id h6mr24537758icv.53.1343223089284; Wed,
- 25 Jul 2012 06:31:29 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Wed, 25 Jul 2012 06:31:29 -0700 (PDT)
-In-Reply-To: <20120725113009.GA4732@burratino>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=z5v1HtX06nG6DyNod6oIeLEXkqhXHWmWgRu0na17QoE=;
+        b=yRXFYflsFPmL0KUA0nBu2OR70o1n/Aq7Ka8x5/jIgueku0wSEpVk0ShB61lFv4lP5r
+         0U4pHy8c6amup5F/glAos+6Z0R3XPb1jRs/xzhj8j2d/i50dct73BJ5G9bMg1HOBNvv7
+         TvPOoY94ANNTDgiaDRiul0ZC03+vv7gt3Yv65cLo0UkH4Me4oTWYdQBYG7bEddEtGAo6
+         r6eVuhFNeSkybC9Nuu7sit0OKcw6ro8XnzILUypAqNYywFBExOT1Nm+RKSwvAeBfrXcM
+         6rSwIvWVoKRWKWha3tneWlS9KqGc1DmUR6YYW0Y0mEQnhQ9Yu9cyC6OsCqcqg9aGzwOR
+         1/Og==
+Received: by 10.66.88.131 with SMTP id bg3mr13184827pab.16.1343227469715;
+        Wed, 25 Jul 2012 07:44:29 -0700 (PDT)
+Received: from localhost.foo.bar ([123.116.228.123])
+        by mx.google.com with ESMTPS id op10sm14492740pbc.75.2012.07.25.07.44.21
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 Jul 2012 07:44:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.rc0.16.gf4916ac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202150>
 
-2012/7/25 Jonathan Nieder <jrnieder@gmail.com>:
-> Jiang Xin wrote:
-> s/Junathan/Jonathan/, please, unless you are trying to say that both
-> Junio and I pointed it out at the same time.
+Marked messages for translation in git-am, git-rebase, and git-merge.
+Also fixed suffered tests when turning GETTEXT_POISON switch on.
 
-Sorry. Correct it in next series of patches.
-I don't know how this happens until now.
+Jiang Xin (7):
+  i18n: New keywords for xgettext extraction from sh
+  i18n: rebase: mark messages for translation
+  i18n: Rewrite gettext messages start with dash
+  Remove obsolete LONG_USAGE which breaks xgettext
+  i18n: am: mark more strings for translation
+  Remove dead code which contains bad gettext block
+  i18n: merge-recursive: mark strings for translation
+
+ Makefile                             |   3 +-
+ git-am.sh                            |  20 ++---
+ git-rebase.sh                        |  89 ++++++++-------------
+ git-submodule.sh                     |   2 +-
+ merge-recursive.c                    | 148 +++++++++++++++++++----------------
+ t/t0201-gettext-fallbacks.sh         |   8 +-
+ t/t3400-rebase.sh                    |   8 +-
+ t/t3404-rebase-interactive.sh        |   2 +-
+ t/t3406-rebase-message.sh            |   9 ++-
+ t/t6022-merge-rename.sh              |  16 ++--
+ t/t6042-merge-rename-corner-cases.sh |   2 +-
+ 11 files changed, 150 insertions(+), 157 deletions(-)
 
 -- 
-Jiang Xin
+1.7.12.rc0.16.gf4916ac
