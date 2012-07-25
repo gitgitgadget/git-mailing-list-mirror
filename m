@@ -1,120 +1,87 @@
 From: Michael G Schwern <schwern@pobox.com>
-Subject: Re: [PATCH 1/4] Extract some utilities from git-svn to allow
- extracting Git::SVN.
-Date: Wed, 25 Jul 2012 15:39:46 -0700
-Message-ID: <501075B2.8090205@pobox.com>
-References: <1343196066-81319-1-git-send-email-schwern@pobox.com>
- <1343196066-81319-2-git-send-email-schwern@pobox.com>
- <20120725212418.GA17494@dcvr.yhbt.net>
+Subject: Re: Teach Makefile.PL to find .pm files on its own
+Date: Wed, 25 Jul 2012 15:56:14 -0700
+Message-ID: <5010798E.6020401@pobox.com>
+References: <1343186471-1024-1-git-send-email-schwern@pobox.com>
+ <7vhasvdbk9.fsf@alter.siamese.dyndns.org> <5010567B.1060907@pobox.com>
+ <7vehnzbmyt.fsf@alter.siamese.dyndns.org> <50106136.5000404@pobox.com>
+ <7vsjcfa3ha.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, Jonathan Nieder <jrnieder@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 00:39:53 2012
+Cc: git@vger.kernel.org, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 00:56:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuAFF-0003pK-7J
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 00:39:53 +0200
+	id 1SuAVC-0007Zc-7G
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 00:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180Ab2GYWju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 18:39:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48562 "EHLO
+	id S1751962Ab2GYW4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 18:56:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56575 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750911Ab2GYWjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 18:39:49 -0400
+	id S1751107Ab2GYW4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 18:56:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5445886B8;
-	Wed, 25 Jul 2012 18:39:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFBF68AED;
+	Wed, 25 Jul 2012 18:56:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
 	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=boW0t2EDzEit
-	SsCdReA5h3io59k=; b=KvsAK/Wv8u7EverWl0XqsmhuDr/8rbNx/0b0yc/96a7s
-	GLceNMci9vsisxaJX3BZppMVtw2qK7cMtAaYRX/rx/JRhuklo7krnPLZWf6VenqG
-	GGlc/MAWkrx0vmLfXrcJUnO7ZZFWBOxNqd/TOn+I1pvKrvSpBf9pQqMZAHo2Gd4=
+	:content-type:content-transfer-encoding; s=sasl; bh=KAdFP1yVUNOd
+	H26N6V566nRchRI=; b=oFWGO/VErNb/YbKK/YPopr7YTTUbSNhVILDLOw5LnSCy
+	ecDoP+GOElCLjGVmhVS4Efz7yIupaLNCRoq0JdvoyQ5dvKk48Er4dhuvhYHdaSoX
+	Fq4wTH5xxjlXwBFkdaMrxdyzlD3fzPRzikzxDjKPqfrC0LroTzsg3sRos8KyQSQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
 	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xaMs2E
-	JPmp7rhZJOXkz3DTUmLt9QNgtPs7KLqvh8eS9Rt52+yJjqi7pMyBB+t9bIFeh6b0
-	tIGLajhA0XJpGK49eoi4aKoOQ25HESy1SLideFGylJ6LxhMGMp5UCSxy8hgvhW+D
-	vkzpHsBLdlW7lqyt25+wDsQa61bKdua38bXog=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kh4OE/
+	KwwSrcowbfpodt2rCzLWEhcKKk0li9jFP/DgwB3GivHsnMQWXPgRn7LXTgxfR4vl
+	L5fiaIfUT3gx+PUbdlUCpMAR6A4RN+i6HU0d08qrtxz4yL8uo1shxmfn5+DaMn+o
+	BIb2FRECMCfwsYKrXhv6Rs4NUAQJChvFNInk8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 423C886B7;
-	Wed, 25 Jul 2012 18:39:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC9C28AEC;
+	Wed, 25 Jul 2012 18:56:15 -0400 (EDT)
 Received: from windhund.local (unknown [71.236.173.173]) (using TLSv1 with
  cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 561AB86B6; Wed, 25 Jul
- 2012 18:39:47 -0400 (EDT)
+ by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D8378AEA; Wed, 25 Jul
+ 2012 18:56:14 -0400 (EDT)
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:14.0)
  Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <20120725212418.GA17494@dcvr.yhbt.net>
+In-Reply-To: <7vsjcfa3ha.fsf@alter.siamese.dyndns.org>
 X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: A3852D0A-D6A9-11E1-B12E-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F02CD14C-D6AB-11E1-9DE1-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202213>
 
-On 2012.7.25 2:24 PM, Eric Wong wrote:
-> Please keep Jonathan Cc:-ed, he's been very helpful with this series
-> (and very helpful in general :)
-
-I will try.
-
-
->> +use Test::More 'no_plan';
+On 2012.7.25 3:19 PM, Junio C Hamano wrote:
+> Michael G Schwern <schwern@pobox.com> writes:
+>> How about the git-svn SVN 1.7 fix in general?  All of these patch sets I'm
+>> sending build on one another, is that going to be a problem?  It's going to
+>> come in about six parts.
 > 
-> Didn't we agree to use done_testing()?   Perhaps (as you suggested) with
-> a private copy of Test::More?  It's probably easier to start using
-> done_testing() earlier rather than later.
-
-Yes, we agreed done_testing is the way forward.  Given how much work I've had
-to do to get even basic patches in I decided to ditch anything extra.  That
-includes adding a t/lib and I didn't want to make it silently depend on an
-upgraded Test::More either.
-
-There's not much difference if we do it later.  Switching to done_testing is
-trivial.  I'd like to get the big class extractions in so code stops shifting
-around, and worry about the minutia of test plans later.  If it happens before
-I get to it, great!
-
-PS  Those t/Git-SVN/ tests are not tied into the normal testing process.  I
-felt writing the tests now was important and they could be integrated into the
-test suite later.
-
-
->> +BEGIN {
->> +    # Override exit at BEGIN time before Git::SVN::Utils is loaded
->> +    # so it will see our local exit later.
->> +    *CORE::GLOBAL::exit = sub(;$) {
->> +        return @_ ? CORE::exit($_[0]) : CORE::exit();
->> +    };
->> +}
+> Judging from the rate of the discussion this is progressing, I was
+> imagining that this series would be ready by 1.7.13 at the earliest,
+> possibly back-merged to 1.7.12.X maintenance series, and 1.7.11.X
+> maintenance series is no longer relevant by then.
 > 
-> For new code related to git-svn, please match the existing indentation
-> style (tabs) prevalent in git-svn.  Most of the Perl found in git also
-> uses tabs for indentation.
+> But I certainly do not mind seeing the series based on earlier
+> maintenance releases, e.g. maint-1.7.9.  There however are tons of
+> other git-svn.perl and perl/ updates since then, so basing the
+> series on the current maint branch to abandon 1.7.10.X and earlier
+> but still leaving the door open to downmerge to 1.7.11.X may be a
+> good trade-off.
 
-About that.  I followed kernel style in existing code, but felt that new code
-would do better to follow Perl style.  The existing Perl code mixes tabs and
-spaces, so I felt it wasn't a strongly held style.  You'll get more Perl
-programmers to work on the Perl code by following Perl style in the Perl code
-rather than kernel style.
-
-Alternatively, how about allowing emacs/vim configuration comments?  The
-Kernel coding style doesn't allow them, how do you folks feel?  Then people
-don't have to guess the style and reconfigure their editor, their editor will
-do it for them.
-
-The important thing is to have one less special thing a new-to-your-project
-Perl programmer has to do.
+So... is that master or maint?  Just let me know which one.
 
 
 -- 
-ROCKS FALL! EVERYONE DIES!
-	http://www.somethingpositive.net/sp05032002.shtml
+91. I am not authorized to initiate Jihad.
+    -- The 213 Things Skippy Is No Longer Allowed To Do In The U.S. Army
+           http://skippyslist.com/list/
