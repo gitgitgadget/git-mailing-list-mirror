@@ -1,85 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make 'git submodule update --force' always check out
- submodules.
-Date: Wed, 25 Jul 2012 15:09:45 -0700
-Message-ID: <7vwr1ra3x2.fsf@alter.siamese.dyndns.org>
-References: <1343239412-26780-1-git-send-email-szager@google.com>
- <7vipdbbs0b.fsf@alter.siamese.dyndns.org> <50105C60.4050303@web.de>
+Subject: Re: Teach Makefile.PL to find .pm files on its own
+Date: Wed, 25 Jul 2012 15:19:13 -0700
+Message-ID: <7vsjcfa3ha.fsf@alter.siamese.dyndns.org>
+References: <1343186471-1024-1-git-send-email-schwern@pobox.com>
+ <7vhasvdbk9.fsf@alter.siamese.dyndns.org> <5010567B.1060907@pobox.com>
+ <7vehnzbmyt.fsf@alter.siamese.dyndns.org> <50106136.5000404@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
-	Stefan Zager <szager@google.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 26 00:09:54 2012
+Cc: git@vger.kernel.org, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 00:19:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su9mC-0007Ak-Va
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 00:09:53 +0200
+	id 1Su9vO-0005iy-RE
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 00:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861Ab2GYWJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 18:09:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34442 "EHLO
+	id S1751363Ab2GYWTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 18:19:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38678 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751974Ab2GYWJr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 18:09:47 -0400
+	id S1751066Ab2GYWTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 18:19:15 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8117E7F80;
-	Wed, 25 Jul 2012 18:09:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 364FD819F;
+	Wed, 25 Jul 2012 18:19:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EJI59uxL6snxKIdmtVGD42q/wNs=; b=nH+yXs
-	q1bCuTpPUYEjyLH0ljhtzLkAfDcGRrRLuIly06dDgEupEBVxTNd0n+tWQTAzAJVe
-	G2+JKXW5yto1bx/uxxKSTAI9QHopOZL81RHzSpP23aU81+LEWZSJF/IavWaSR5+X
-	FNVRGSBTRBPYlj5+BLXHvgE0wg0pOj47T9QVE=
+	:content-type; s=sasl; bh=R6Vw85LaidHUGlp/qEmIt/oGtCs=; b=qw6grE
+	Onk5dWfOnmp9Tg/0IsqOOzJD9jgSb0Q04VC9rGHpc6MQz9rw66WSBqou9092ZoVr
+	zCkcGLm4cI0hB4ahMo/0cBcKuioXEhpJyWuadxOPKxt8MCytrIbBUPzdbNOFO+MC
+	L8b6djvchWtH9AZtl4Yi0Ng+UiVpxIuWu2xXk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L3Bc9tJLFQm+BzmpcTVYkrM9l+EaYDso
-	arPW1ns9PbsxfepEx5LaufnAQ8cJVv5mrIxdwRVnu88I3rI5nV5x+gTfAYbkkQJH
-	TZJVr6jn6efHvQoVkjC81osyA7Xk9CNkqijN7RSRtUs8BTpJfnWI/VIiezz8tswG
-	0kagEJ0X5HI=
+	:content-type; q=dns; s=sasl; b=K7ZyURV5y7xSvUXFJRcqpHdpAF8Q+jct
+	AKWjdE4RZmB5H19uumJ4q9NOrfY/TkE3/+hRC/M4jRzFQk6vyyIeEh1g++1UcOBQ
+	3va5/rHfdR1ZgfZuZwjwi1NcvFXrSeO4Ks7jUydem+a/FhK7vW/jImFUWg4Vp04O
+	mroVdiIAPpI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F5787F7F;
-	Wed, 25 Jul 2012 18:09:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 239F7819E;
+	Wed, 25 Jul 2012 18:19:15 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7C557F7C; Wed, 25 Jul 2012
- 18:09:46 -0400 (EDT)
-In-Reply-To: <50105C60.4050303@web.de> (Jens Lehmann's message of "Wed, 25
- Jul 2012 22:51:44 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97912819D; Wed, 25 Jul 2012
+ 18:19:14 -0400 (EDT)
+In-Reply-To: <50106136.5000404@pobox.com> (Michael G. Schwern's message of
+ "Wed, 25 Jul 2012 14:12:22 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 71FE3BFE-D6A5-11E1-8BF9-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C46E0616-D6A6-11E1-8FB4-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202210>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Michael G Schwern <schwern@pobox.com> writes:
 
-> Am 25.07.2012 20:44, schrieb Junio C Hamano:
->> Stefan Zager <szager@google.com> writes:
+>>> Also I just realized I've been basing my work on master.  Should I move to maint?
 >> 
->>> Currently, it will only do a checkout if the sha1 registered in the containing
->>> repository doesn't match the HEAD of the submodule, regardless of whether the
->>> submodule is dirty.  As discussed on the mailing list, the '--force' flag is a
->>> strong indicator that the state of the submodule is suspect, and should be reset
->>> to HEAD.
->>>
->>> Signed-off-by: Stefan Zager <szager@google.com>
->>> ---
->> 
->> Looks sensible (again -- see http://thread.gmane.org/gmane.comp.version-control.git/197532
->> for the original discussion).  Can submodule folks Ack it?
+>> I don't think so.  It is not fixing any urgent breakage (iow, by
+>> being told about .pm explicitly, it knows about them just fine
+>> without being taught how to find them).
 >
-> I like it. Still I'd vote for amending the documentation like the
-> original thread proposed and would appreciate to have a test or two,
-> but apart from that I have no objections.
+> How about the git-svn SVN 1.7 fix in general?  All of these patch sets I'm
+> sending build on one another, is that going to be a problem?  It's going to
+> come in about six parts.
 
-OK, then I'll queue this so that we won't forget about the topic for
-now, and docs and tests can be done as follow-up patches to the
-topic.
+Judging from the rate of the discussion this is progressing, I was
+imagining that this series would be ready by 1.7.13 at the earliest,
+possibly back-merged to 1.7.12.X maintenance series, and 1.7.11.X
+maintenance series is no longer relevant by then.
 
-Thanks.
+But I certainly do not mind seeing the series based on earlier
+maintenance releases, e.g. maint-1.7.9.  There however are tons of
+other git-svn.perl and perl/ updates since then, so basing the
+series on the current maint branch to abandon 1.7.10.X and earlier
+but still leaving the door open to downmerge to 1.7.11.X may be a
+good trade-off.
