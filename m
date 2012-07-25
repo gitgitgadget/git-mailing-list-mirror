@@ -1,76 +1,57 @@
-From: Caleb Marchent <cmarchent@aminocom.com>
-Subject: RE: git cloning paths
-Date: Wed, 25 Jul 2012 15:22:07 +0000
-Message-ID: <9C3609BEC91A814BB52DBF9C41F04D1E74D159A0@uk-swa-ex02>
-References: <CANmEAK_jGdzR9R=0DexC+-_0U6mb_7o_v5zSKTuhgoaYCaSiFQ@mail.gmail.com>
+From: Peng Yu <pengyu.ut@gmail.com>
+Subject: How to unignore files in certain directories?
+Date: Wed, 25 Jul 2012 10:48:52 -0500
+Message-ID: <CABrM6wk+acut6EaoK=_GuQw3w9vhn_4ONoF21cj1GtEtHFWBKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: Douglas Garstang <doug.garstang@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 25 17:27:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 25 17:49:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su3Uv-00018J-9q
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 17:27:37 +0200
+	id 1Su3pg-0001i8-1l
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 17:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030217Ab2GYP1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 11:27:32 -0400
-Received: from mail.aminocom.com ([62.255.172.253]:39712 "EHLO
-	uk-swa-cas01.aminocom.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1030192Ab2GYP1b convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 11:27:31 -0400
-X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jul 2012 11:27:31 EDT
-Received: from UK-SWA-EX02.aminocom.com ([10.171.3.10]) by
- uk-swa-cas01.aminocom.com ([::1]) with mapi id 14.02.0298.004; Wed, 25 Jul
- 2012 16:22:08 +0100
-Thread-Topic: git cloning paths
-Thread-Index: AQHNYHw80clB15YRYU6Dr39oh3+Ez5c6LsUQ
-In-Reply-To: <CANmEAK_jGdzR9R=0DexC+-_0U6mb_7o_v5zSKTuhgoaYCaSiFQ@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.172.2.32]
-x-exclaimer-md-config: 97205c7e-1da7-49e0-88c8-ce11b093e3e5
+	id S1754670Ab2GYPsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 11:48:54 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:42351 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750968Ab2GYPsx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jul 2012 11:48:53 -0400
+Received: by lahd3 with SMTP id d3so662238lah.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 08:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=3t3h4VK61JxXWysCxryo7K8BfhbjD36Nkg6OOnhIAWQ=;
+        b=JQGqY0V2JNBX7vKbcZyYKYw0V2pwD6qNgxtxPA+R/CXUzCHdBhqLPMKOucQLx4DTfl
+         BA7lbucGLbAKKTKWpVMhaJs8Pzub7NlMOXR0J+oI8I5R92B7u71leg0G5FV5nm6FOK+w
+         ukn0/KJUe/QMy/9xl1X1DfPNQqm9dISmslERmATCYsaaM4s0mpgVhA9ZgpDR56dh5RKr
+         SMeSJVOGrUyz+QR+Na+R2Jsjbkk7GG8s2+EgrMgDp7eO0nMT8YCk6oQXfsthFs2whYFU
+         dvJUO5ZW04mWw3D3BSnB+boX286di71NRHViY6MsjjAEWI13gRgDvaZ5ILd6qHROVoAO
+         zgxg==
+Received: by 10.152.112.138 with SMTP id iq10mr3034623lab.13.1343231332452;
+ Wed, 25 Jul 2012 08:48:52 -0700 (PDT)
+Received: by 10.112.49.228 with HTTP; Wed, 25 Jul 2012 08:48:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202167>
 
-Hi Doug,
+Hi,
 
-The method I have been using to achieve this is to create a wrapper script that does the following:
+I have the following in .gitignore to ignore *.txt files.
 
-git clone -n                                   # clone, but don't checkout
-cd <repo name>                        
-git config core.sparseCheckout true    # configure sparse-checkout on
-# echo the list of bits you want into .git/info/sparse-checkout
-git checkout
+*.txt
 
-Do watch out though, the interpretation of the sparse-checkout file has changed since git 1.7, I would suggest you use the latest git and record the git version as a comment in top of the sparse checkout file, in case it changes again. 
+But I want to keep the *.txt files in, for example, data/ and all its
+subdirectories. I don't know should the the correct way to unignore
+these *.txt files. Could anybody show me the command that I should add
+to .gitignore? Thanks!
 
-I hope this helps,
-
-Caleb
-
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Douglas Garstang
-Sent: 12 July 2012 23:17
-To: git@vger.kernel.org
-Subject: git cloning paths
-
-All,
-
-I'm a relative newcomer to git and I've just inherited a setup where all of the company's code is in a single git repository. Within this repository are multiple projects. It seems that git doesn't natively allow cloning/checking out of individual paths within the repo (ie projects), which would seem to make integrating git with a continuous build system rather difficult. That is, the build system has to clone the entire repo, and therefore a change to any project will result in the entire contents of the repo being built.
-
-Correct....?
-
-Doug.
---
-To unsubscribe from this list: send the line "unsubscribe git" in the body of a message to majordomo@vger.kernel.org More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Regards,
+Peng
