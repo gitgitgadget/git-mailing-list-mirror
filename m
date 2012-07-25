@@ -1,97 +1,77 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH v2] t3300-*.sh: Fix a TAP parse error
-Date: Wed, 25 Jul 2012 20:46:53 +0100
-Message-ID: <50104D2D.70109@ramsay1.demon.co.uk>
-References: <500EEDF4.7050007@ramsay1.demon.co.uk> <20120724191707.GA5210@burratino>
+From: Michael G Schwern <schwern@pobox.com>
+Subject: Re: Teach Makefile.PL to find .pm files on its own
+Date: Wed, 25 Jul 2012 13:26:35 -0700
+Message-ID: <5010567B.1060907@pobox.com>
+References: <1343186471-1024-1-git-send-email-schwern@pobox.com>
+ <7vhasvdbk9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 21:49:07 2012
+Cc: git@vger.kernel.org, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 22:26:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su7Zw-0005sH-Ev
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 21:49:04 +0200
+	id 1Su8AS-0001wx-Vm
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 22:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752431Ab2GYTs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 15:48:57 -0400
-Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:43404 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752404Ab2GYTs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 15:48:56 -0400
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 929CAA0C081;
-	Wed, 25 Jul 2012 20:48:55 +0100 (BST)
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id BB98BA0C07F;	Wed, 25 Jul 2012 20:48:54 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Wed, 25 Jul 2012 20:48:53 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <20120724191707.GA5210@burratino>
-X-MDF-HostID: 9
+	id S1752341Ab2GYU0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 16:26:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46594 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751074Ab2GYU0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 16:26:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4368C6328;
+	Wed, 25 Jul 2012 16:26:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=sasl; bh=v7KRPcHQ8rjU
+	pgKXTix/LHqnmeE=; b=fgk0WLVrM+55EVAjI0+CchvWm2CaPg49zg9VDX7s5Cmd
+	fmRJEy6dzWkUNWLJHLADRltpsWvUdHGjuisxNAlSAh2PyHsAZHXlhlr1Z4lTRn8O
+	p7DPBOBBEp7CKZ4Q1bSZ46gjFFxidkqvDlJD+mBvJPFytBqqJiqQa43Zwcvvasw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JsfxjF
+	mTtiUYSbS6Nuui+ESGjxJSoCFl901Ag75r7zUsbB97t8fPnL0qG+I1gGL8a27VCu
+	mP++GTyqOBhrlB9CmRKCLDzmwaK7Qj4oEXCds4fm94tqnU0Ha3Tg9B4oA7HIhSbx
+	9VVozyh3MNsBM5MYpzUPZanVeBOVTLeRQHfDs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 306026327;
+	Wed, 25 Jul 2012 16:26:38 -0400 (EDT)
+Received: from windhund.local (unknown [71.236.173.173]) (using TLSv1 with
+ cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE8566326; Wed, 25 Jul
+ 2012 16:26:36 -0400 (EDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:14.0)
+ Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7vhasvdbk9.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.3
+X-Pobox-Relay-ID: 090812AE-D697-11E1-A5E7-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202191>
 
-Jonathan Nieder wrote:
->> This version of the patch only moves code to determine the test
->> prerequisite to the outer level, while leaving the 'setup' aspects
->> of the first test in place.
+On 2012.7.25 9:56 AM, Junio C Hamano wrote:
+> Looks sensible.  Will queue.
 > 
-> I guess I don't see the point.
+> Thanks.
 
-You don't see the point of fixing the TAP Parse error? :-D
+Thanks!
 
->                                The current convention of "don't do
-> anything complicated outside test assertions" is easy to explain.
-> What new convention are you suggesting to replace it?
+What's the lag time on it showing up in the repo, and which branch will it
+appear in?
 
-Hmm, well I guess I'm not going to suggest anything!
+Also I just realized I've been basing my work on master.  Should I move to maint?
 
-However, what is "anything complicated"?
 
-At the end of test-lib.sh we find:
-
-    # test whether the filesystem supports symbolic links
-    ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYMLINKS
-    rm -f y
-
-    # When the tests are run as root, permission tests will report that
-    # things are writable when they shouldn't be.
-    test -w / || test_set_prereq SANITY
-
-Is this too complicated? If not, why not? If yes, should it be added to
-a test assertion?
-
-Would it be acceptable for me to add some code, here at the end of
-test-lib.sh, to set the TABS_IN_FILENAME test prerequisite and use it
-in tests t3300-funny-names.sh, t3902-quoted.sh, t3600-rm.sh,
-t4016-diff-quote.sh and t4135-apply-weird-filenames.sh?
-
-How about some of the test "library" files:
-
-diff-lib.sh              lib-git-p4.sh            lib-read-tree.sh
-gitweb-lib.sh            lib-git-svn.sh           lib-rebase.sh
-lib-bash.sh              lib-gpg.sh*              lib-t6000.sh
-lib-credential.sh*       lib-httpd.sh             lib-terminal.sh
-lib-cvs.sh               lib-pager.sh             test-lib-functions.sh
-lib-diff-alternative.sh  lib-patch-mode.sh        test-lib.sh
-lib-gettext.sh           lib-prereq-FILEMODE.sh
-lib-git-daemon.sh        lib-read-tree-m-3way.sh
-
-Several of these files contain executable code (rather than just a
-library of functions). For example, look at lib-cvs.sh, lib-httpd.sh,
-and lib-prereq-FILEMODE.sh. Is this code too complicated?
-
-Would it be acceptable for me to create an lib-prereq-TABSINFILE.sh
-file so that I could source it only in the test files that require
-the TABS_IN_FILENAME prerequisite?
-
-ATB,
-Ramsay Jones
+-- 
+If you want the truth to stand clear before you, never be for or against.
+The struggle between "for" and "against" is the mind's worst disease.
+    -- Sent-ts'an
