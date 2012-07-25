@@ -1,81 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] The Makefile.PL will now find .pm files itself.
-Date: Wed, 25 Jul 2012 16:56:17 -0500
-Message-ID: <20120725215617.GI4732@burratino>
-References: <1343186471-1024-1-git-send-email-schwern@pobox.com>
- <1343186471-1024-4-git-send-email-schwern@pobox.com>
- <20120725211143.GA5455@burratino>
- <501069E9.2000009@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: False positive from orphaned_commit_warning() ?
+Date: Wed, 25 Jul 2012 17:57:30 -0400
+Message-ID: <20120725215730.GA30966@sigill.intra.peff.net>
+References: <20120725185343.GA6937@windriver.com>
+ <7va9ynbj9l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 25 23:56:34 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 25 23:57:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Su9ZE-0005Fu-OT
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 23:56:29 +0200
+	id 1Su9aM-00066o-Ae
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jul 2012 23:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909Ab2GYV4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jul 2012 17:56:23 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:39269 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062Ab2GYV4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jul 2012 17:56:22 -0400
-Received: by gglu4 with SMTP id u4so1274380ggl.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 14:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5rGJfC456JAHhA2ecqgOkezcYx/gCYEQepHmHHgucV4=;
-        b=WaGdFopzYsIDTusGE+9IgMgudEffNrssjSXcf6onxlykx+45aD71S9AAVllGww1vC4
-         upTEo7Ait3hCMHnOlaBpq7sU70QFjR9SkctIpBUn4LJ+NdylhscHkuQm1LGj3IgPLqaT
-         ymtlPqbO0nL/86CJoRZZMYHz2TWd8wOG84AwF6mtpoaeEJ6+28BI2/9reVoyzzjJBFMm
-         XaGB9sJhYjjgs1wLV5ESCQykVUkrlBJuCcz9gGj7kOmv1bx8LAVrp9dyOv2Scj+g5/vS
-         WbcG2B6+CjKwP9ekuXuOwPXjsLufxSrmctauKdYBixj/2Hm+vouDtxuwtrsqER4mJB+n
-         fZIg==
-Received: by 10.236.200.167 with SMTP id z27mr25554548yhn.131.1343253382433;
-        Wed, 25 Jul 2012 14:56:22 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id e19sm19786910ann.10.2012.07.25.14.56.20
-        (version=SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2012 14:56:21 -0700 (PDT)
+	id S1752785Ab2GYV5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jul 2012 17:57:33 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34031 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751473Ab2GYV5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jul 2012 17:57:32 -0400
+Received: (qmail 686 invoked by uid 107); 25 Jul 2012 21:57:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jul 2012 17:57:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jul 2012 17:57:30 -0400
 Content-Disposition: inline
-In-Reply-To: <501069E9.2000009@pobox.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7va9ynbj9l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202206>
 
-Michael G Schwern wrote:
-> On 2012.7.25 2:11 PM, Jonathan Nieder wrote:
+On Wed, Jul 25, 2012 at 02:52:54PM -0700, Junio C Hamano wrote:
 
->> Who are these comments in perl/Makefile.PL addressed to?
->
-> Somebody adding, renaming or deleting a .pm file.
->
->> Why would such a person be looking at perl/Makefile.PL?
->
-> Because sometimes they do wacky things
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+> 
+> > Has anyone else noticed false positives coming from the
+> > orphan check?
+> 
+> Thanks.  This should fix it.
 
-Not convincing at all. ;-)
+I've just been hunting the same bug and came up with the same answer.
+Here's a commit message. Feel free to apply or steal text for your
+commit.
 
-But my made-up justification about people making other changes to
-perl/Makefile.PL convinced me, so keeping the comments seems fine to
-me now.
+-- >8 --
+Subject: [PATCH] checkout: don't confuse ref and object flags
 
-[...]
->                             For my purposes, I just preserved the comment.
+When we are leaving a detached HEAD, we do a revision
+traversal to check whether we are orphaning any commits,
+marking the commit we're leaving as the start of the
+traversal, and all existing refs as uninteresting.
 
-That's what I feared and how cruft collects.  Sorry for the lack of
-clarity.
+Prior to commit 468224e5, we did so by calling for_each_ref,
+and feeding each resulting refname to setup_revisions.
+Commit 468224e5 refactored this to simply mark the pending
+objects, saving an extra lookup.
 
-Thanks,
-Jonathan
+However, it confused the "flags" parameter to the
+each_ref_fn clalback, which is about the flags we found
+while looking up the ref (e.g., REF_ISSYMREF) with the
+object flag (UNINTERESTING), leading to unpredictable
+results, as we were setting random flag bits on objects in
+the traversal.
+---
+ builtin/checkout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a76899d..f855489 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -592,7 +592,7 @@ static int add_pending_uninteresting_ref(const char *refname,
+ 					 const unsigned char *sha1,
+ 					 int flags, void *cb_data)
+ {
+-	add_pending_sha1(cb_data, refname, sha1, flags | UNINTERESTING);
++	add_pending_sha1(cb_data, refname, sha1, UNINTERESTING);
+ 	return 0;
+ }
+ 
