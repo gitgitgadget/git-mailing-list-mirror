@@ -1,81 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
-Date: Thu, 26 Jul 2012 18:41:09 +0200
-Message-ID: <vpq8ve6qxui.fsf@bauges.imag.fr>
-References: <20120719213225.GA20311@sigill.intra.peff.net>
-	<20120719213311.GA20385@sigill.intra.peff.net>
-	<50092993.6010203@alum.mit.edu>
-	<20120720154403.GB2862@sigill.intra.peff.net>
-	<5009892E.9010808@kdbg.org>
-	<20120720170913.GA14057@sigill.intra.peff.net>
-	<CACsJy8BtcvuW2HKPSki7meyHMsvpLS0b8QG5M_083HEwy=-9EQ@mail.gmail.com>
-	<10DD3DE0-E554-4BE3-A20B-FDBC73219646@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-commit.c: Not add duplicate S-o-b when commit
+Date: Thu, 26 Jul 2012 09:44:55 -0700
+Message-ID: <7vpq7i8oag.fsf@alter.siamese.dyndns.org>
+References: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com> <7vy5m781j5.fsf@alter.siamese.dyndns.org> <CANYiYbH0Jfk0LLp8HXVEamD0uRzM2OGJCE8W4h_UoDLh1pMVHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Alexey Muranov <alexey.muranov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 18:41:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 18:45:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuR7z-00042Y-Gy
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 18:41:31 +0200
+	id 1SuRBR-0006p2-Lt
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 18:45:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752337Ab2GZQl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 12:41:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58201 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752262Ab2GZQl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 12:41:26 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q6QGd5Pq002330
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jul 2012 18:39:05 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SuR7e-0000Ej-B4; Thu, 26 Jul 2012 18:41:10 +0200
-In-Reply-To: <10DD3DE0-E554-4BE3-A20B-FDBC73219646@gmail.com> (Alexey
-	Muranov's message of "Thu, 26 Jul 2012 18:26:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Jul 2012 18:39:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q6QGd5Pq002330
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1343925547.6397@cF2jEipGlWVfokvF33FdWw
+	id S1752219Ab2GZQo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 12:44:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53984 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752137Ab2GZQo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 12:44:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30A827B40;
+	Thu, 26 Jul 2012 12:44:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pTIF5dubX/3vXqEamcv14toTkjA=; b=XBpy8q
+	Vl5L53C7czOmVkKt2OUBAXWrzPuL41EXXZKQL1Kko84xdd3r/zC4gAYMR5Q+F3RE
+	wi5/wZWtAI0yyGt+6feQVkO93bERbKn8mCPO35rmeL+Fjkxm1WQfKXpi4AA8yRyu
+	sjMMaxAHq9FTcGCFEYuXSfPCrTFPipU0QmrhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pE5uIsked2MdbYiyoyAz+KoyRXSSCymd
+	UqQgmZx2KSJn46ROEtv3lWRkTnd6E9kaHPpqcabsJXoJIDqpdAsa7riRjEJ559kp
+	mevOKZ1CsdLF8FrQXm0W+hVwNqoMUL9AhmpIO1Gn0ZTZlWzpwuOJ4GIh7GFWA+wz
+	Dx/+1VNJ1J8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3277B3F;
+	Thu, 26 Jul 2012 12:44:58 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 729C47B3E; Thu, 26 Jul 2012
+ 12:44:57 -0400 (EDT)
+In-Reply-To: <CANYiYbH0Jfk0LLp8HXVEamD0uRzM2OGJCE8W4h_UoDLh1pMVHA@mail.gmail.com> (Jiang
+ Xin's message of "Thu, 26 Jul 2012 15:15:24 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3BD974A2-D741-11E1-BBB2-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202276>
 
-Alexey Muranov <alexey.muranov@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> On 26 Jul 2012, at 14:47, Nguyen Thai Ngoc Duy wrote:
+> 2012/7/26 Junio C Hamano <gitster@pobox.com>:
+>> After stating the observation like the above, please make it a habit
+>> to say "which is bad because...", if you think it is a bad behaviour
+>> and the patch is about fixing it.
 >
->> So we haven't found any way to present both branches "foo" and
->> "foo/bar" on file system at the same time. How about when we a new
->> branch introduces such a conflict, we push the new branch directly to
->> packed-refs? If we need either of them on a separate file, for fast
->> update for example, then we unpack just one and repack all refs that
->> conflict with it. Attempting to update two conflict branches in
->> parallel may impact performance, but I don't think that happens often.
->> -- 
->> Duy
+> Indead before I start, I examine git-commit and git-am, and find
+> the behaviours of the two commands are different.
 >
-> How about simply deprecating "/" in branch name?
+> "git commit -s" checks the last line of the footer, while "git -am"
+> checks the last S-o-b.
 
-Err, it's not like nobody's using this feature (Junio does a heavy use
-of it in particular) ...
+I think "git am -s" (which I think you meant) is wrong, then.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> E.g. original commit X:
+>
+>     commit log...
+>
+>     Signed-off-by: A
+>     Signed-off-by: B
+>     Reported-by: C
+
+The order in this "original" is already wrong, isn't it, though?
+Didn't the change result by first C reporting an issue, fixes done
+by A and forwarded by B?
+
+
+> When user B amend the commit, the amended commit Y looks like:
+>
+>     commit log...
+>
+>     Signed-off-by: A
+>     Signed-off-by: B
+>     Reported-by: C
+>     Signed-off-by: B
+>
+> While if the original commit X send to user B by patch, and
+> user B run command "git am -s", the commit would be:
+>
+>     Signed-off-by: A
+>     Signed-off-by: B
+>     Reported-by: C
+>
+> So I guess duplicate S-o-b is not intentional.
+
+I think the two commands are doing randomly different things on
+garbage input.  The order in the input (i.e. your "original") does
+not make sense.  C is not the person who handled the patch the last.
+
+If you start from
+
+	Reported-by: X
+	S-o-b: A
+	Reviewed-by: Y
+        S-o-b: B
+
+i.e. the last person who touched this patch is B, tweaking the patch
+and amending a commit will add S-o-b for the person who amends, iff
+that person is not B, which is what you usually want.
+
+> I use an alias for commit:
+>
+>     git config --global alias.ci "commit -s"
+>
+> And will encounter duplicate S-o-b issues frequently, especially
+> format-patch/send-email workflow.
