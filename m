@@ -1,156 +1,168 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] builtin-commit.c: Not add duplicate S-o-b when commit
-Date: Thu, 26 Jul 2012 14:01:19 +0800
-Message-ID: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jiang Xin <worldhello.net@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 1/2] difftool: Wrap long lines for readability
+Date: Wed, 25 Jul 2012 23:07:57 -0700
+Message-ID: <1343282878-86431-1-git-send-email-davvid@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:02:16 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:08:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuH9J-0002Ot-5e
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:02:13 +0200
+	id 1SuHFA-0006xQ-Py
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331Ab2GZGBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 02:01:45 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:62322 "EHLO
+	id S1751486Ab2GZGIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 02:08:04 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57479 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266Ab2GZGBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 02:01:44 -0400
-Received: by pbbrp8 with SMTP id rp8so2680759pbb.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 23:01:43 -0700 (PDT)
+	with ESMTP id S1751238Ab2GZGIC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 02:08:02 -0400
+Received: by pbbrp8 with SMTP id rp8so2688521pbb.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 23:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=9+uO/iITpD+JF+9pViSFzS1U8Hblx39Fz8ByHWntWyw=;
-        b=DemCuR3kMeyvPfCafQi13CPMGSbuJbpVMA6a2QIHnw2MJuDw1iRiVIZAp3KFFI+hzr
-         YL5pImXDBB1DeKh7CLRmB5XuNaIh+4161k40qoFEs7euG6mcFU5sI9SY80FwUzUc2jgs
-         2ZG/v1pYe+Z3qHZ+BEfou1jJ7B+XDneqaE0ecvjh3HwD4UsDAL6FzRmF+QMiLK7l98gu
-         8S6OtJj3AuboyxXBuOU6KraJ1C9Ap6lyBtkVWFwzOZqf2X2+js/WkxgpvfZOkLQSdFcS
-         dAGQlDOt2Ge5hDGj8w5GFqgARheQ+0MtE3Vh3qSRJllGh5vnq9gXSi+rkj3dbxFCDglM
-         sb/Q==
-Received: by 10.68.226.73 with SMTP id rq9mr2005087pbc.145.1343282503412;
-        Wed, 25 Jul 2012 23:01:43 -0700 (PDT)
-Received: from localhost.foo.bar ([123.115.149.64])
-        by mx.google.com with ESMTPS id qr3sm15855718pbc.69.2012.07.25.23.01.37
-        (version=SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2012 23:01:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.rc0.28.g8ecd8a5.dirty
+        bh=qnLvnQyx7jMi9R7oDFjCYe38ETBtLcaXIjsjlB1SknQ=;
+        b=lotDFFUMQmUlOHmEJ8f2fZ0rLi3CSnCxrGKHQsRszW9KCVYiJSCXQ7Rej64b6zc4Oi
+         DchH4xi7Ktndzho27w6gCb0agaCJLWkC+Yc6PKpHFSWs/EclBuOeYpsgdjuCAY5eWHWP
+         dzibOYrx3TNIjlpU/nLH7Sb2OSUXums5S+TVPbF3fPMi5Te+2wXTtNLJox04HPkLWorw
+         0v0WObmaVi6wkYNitPbx8lslvEHymfU5CbtEySKw0UaneuYwyzg/ex+xYiBsuJ7SKnWo
+         xGXXu8qRVpGj522mj+Dh6tksj5Ebb9cKIZB3aqR/WV6S/6M6ewN1JgP5UrU0ckpixDcB
+         LoDQ==
+Received: by 10.68.222.40 with SMTP id qj8mr2140184pbc.139.1343282881599;
+        Wed, 25 Jul 2012 23:08:01 -0700 (PDT)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id nj4sm15881623pbc.5.2012.07.25.23.08.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 25 Jul 2012 23:08:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.11.g3fd941e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202225>
 
-Scan the whole rfc2822 footer for duplicate S-o-b, not just the last
-line of the commit message.
+Keep everything within 80 columns.  Wrap the user-facing messages too.
 
-A commit may have multiple S-o-bs, or other tags, such as:
-
-    some commit log...
-
-    Signed-off-by: C O Mitter <committer@example.com>
-    Reported-by: R E Porter <reporter@example.com>
-
-Because the S-o-b is not located at the last line in the above commit,
-when the above commit is amended by the original committer, a
-duplicated S-o-b may appended by accident. New commit log may looks
-like:
-
-    some commit log...
-
-    Signed-off-by: C O Mitter <committer@example.com>
-    Reported-by: R E Porter <reporter@example.com>
-    Signed-off-by: C O Mitter <committer@example.com>
-
-This hack scans the whole rfc2822 footer for duplicate S-o-b, and only
-append a S-o-b when necessary. Also add testcases in 't/t7502-commit.sh'
-for this.
-
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- builtin/commit.c  | 28 ++++++++++++++++++++++++----
- t/t7502-commit.sh | 19 +++++++++++++++++++
- 2 files changed, 43 insertions(+), 4 deletions(-)
+The only remaining long lines were touched in 2/2.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 20cef..1a3da 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -704,15 +704,35 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	if (signoff) {
- 		struct strbuf sob = STRBUF_INIT;
- 		int i;
-+		int hit_footer = 0;
-+		int hit_sob = 0;
- 
- 		strbuf_addstr(&sob, sign_off_header);
- 		strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
- 					     getenv("GIT_COMMITTER_EMAIL")));
- 		strbuf_addch(&sob, '\n');
--		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
--			; /* do nothing */
--		if (prefixcmp(sb.buf + i, sob.buf)) {
--			if (!i || !ends_rfc2822_footer(&sb))
-+		for (i = sb.len - 1; i > 0; i--) {
-+			if (hit_footer && sb.buf[i] == '\n') {
-+				hit_footer = 2;
-+				i += 2;
-+				break;
-+			}
-+			hit_footer = (sb.buf[i] == '\n');
-+		}
-+		hit_footer = (2 == hit_footer);
-+		if (hit_footer) {
-+			while (i < sb.len)
-+			{
-+				if (!prefixcmp(sb.buf + i, sob.buf)) {
-+					hit_sob = 1;
-+					break;
-+				}
-+				while (i < sb.len && sb.buf[i++] != '\n')
-+					; /* do nothing */
-+			}
-+		}
-+		if (!hit_sob) {
-+			if (!hit_footer || !ends_rfc2822_footer(&sb))
- 				strbuf_addch(&sb, '\n');
- 			strbuf_addbuf(&sb, &sob);
+ git-difftool.perl | 46 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 14 deletions(-)
+
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 10d3d97..8e51238 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -93,15 +93,22 @@ sub print_tool_help
  		}
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 18145..8198f 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -336,7 +336,26 @@ test_expect_success 'A single-liner subject with a token plus colon is not a foo
- 	git commit -s -m "hello: kitty" --allow-empty &&
- 	git cat-file commit HEAD | sed -e "1,/^$/d" >actual &&
- 	test_line_count = 3 actual
-+'
-+
-+cat > expect << EOF
-+Footer-like: commit log
-+
-+Signed-off-by: C O Mitter <committer@example.com>
+ 	}
+ 
+-	print "'git difftool --tool=<tool>' may be set to one of the following:\n";
++	print << 'EOF';
++'git difftool --tool=<tool>' may be set to one of the following:
 +EOF
-+
-+test_expect_success 'S-o-b after footer-like commit message' '
-+	head -1 expect | git commit -s --allow-empty -F - &&
-+	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
-+	test_cmp expect output
-+'
-+
-+echo "Reported-by: R E Porter <reporter@example.com>" >> expect
+ 	print "\t$_\n" for (sort(@found));
  
-+test_expect_success 'no duplicate S-o-b when signoff' '
-+	cat expect | git commit -s --allow-empty -F - &&
-+	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
-+	test_cmp expect output
- '
+-	print "\nThe following tools are valid, but not currently available:\n";
++	print << 'EOF';
++
++The following tools are valid, but not currently available:
++EOF
+ 	print "\t$_\n" for (sort(@notfound));
  
- cat >.git/FAKE_EDITOR <<EOF
+-	print "\nNOTE: Some of the tools listed above only work in a windowed\n";
+-	print "environment. If run in a terminal-only session, they will fail.\n";
++	print << 'EOF';
+ 
++NOTE: Some of the tools listed above only work in a windowed
++environment. If run in a terminal-only session, they will fail.
++EOF
+ 	exit(0);
+ }
+ 
+@@ -114,8 +121,11 @@ sub setup_dir_diff
+ 	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
+ 	# by Git->repository->command*.
+ 	my $repo_path = $repo->repo_path();
+-	my $diffrepo = Git->repository(Repository => $repo_path, WorkingCopy => $workdir);
+-	my $diffrtn = $diffrepo->command_oneline('diff', '--raw', '--no-abbrev', '-z', @ARGV);
++	my %repo_args = (Repository => $repo_path, WorkingCopy => $workdir);
++	my $diffrepo = Git->repository(%repo_args);
++
++	my @gitargs = ('diff', '--raw', '--no-abbrev', '-z', @ARGV);
++	my $diffrtn = $diffrepo->command_oneline(@gitargs);
+ 	exit(0) if (length($diffrtn) == 0);
+ 
+ 	# Setup temp directories
+@@ -140,11 +150,15 @@ sub setup_dir_diff
+ 	my $i = 0;
+ 	while ($i < $#rawdiff) {
+ 		if ($rawdiff[$i] =~ /^::/) {
+-			print "Combined diff formats ('-c' and '--cc') are not supported in directory diff mode.\n";
++			warn << 'EOF';
++Combined diff formats ('-c' and '--cc') are not supported in
++directory diff mode ('-d' and '--dir-diff').
++EOF
+ 			exit(1);
+ 		}
+ 
+-		my ($lmode, $rmode, $lsha1, $rsha1, $status) = split(' ', substr($rawdiff[$i], 1));
++		my ($lmode, $rmode, $lsha1, $rsha1, $status) =
++			split(' ', substr($rawdiff[$i], 1));
+ 		my $src_path = $rawdiff[$i + 1];
+ 		my $dst_path;
+ 
+@@ -156,7 +170,7 @@ sub setup_dir_diff
+ 			$i += 2;
+ 		}
+ 
+-		if (($lmode eq $submodule_mode) or ($rmode eq $submodule_mode)) {
++		if ($lmode eq $submodule_mode or $rmode eq $submodule_mode) {
+ 			$submodule{$src_path}{left} = $lsha1;
+ 			if ($lsha1 ne $rsha1) {
+ 				$submodule{$dst_path}{right} = $rsha1;
+@@ -167,14 +181,16 @@ sub setup_dir_diff
+ 		}
+ 
+ 		if ($lmode eq $symlink_mode) {
+-			$symlink{$src_path}{left} = $diffrepo->command_oneline('show', "$lsha1");
++			$symlink{$src_path}{left} =
++				$diffrepo->command_oneline('show', "$lsha1");
+ 		}
+ 
+ 		if ($rmode eq $symlink_mode) {
+-			$symlink{$dst_path}{right} = $diffrepo->command_oneline('show', "$rsha1");
++			$symlink{$dst_path}{right} =
++				$diffrepo->command_oneline('show', "$rsha1");
+ 		}
+ 
+-		if (($lmode ne $null_mode) and ($status !~ /^C/)) {
++		if ($lmode ne $null_mode and $status !~ /^C/) {
+ 			$lindex .= "$lmode $lsha1\t$src_path\0";
+ 		}
+ 
+@@ -199,14 +215,16 @@ sub setup_dir_diff
+ 	# Populate the left and right directories based on each index file
+ 	my ($inpipe, $ctx);
+ 	$ENV{GIT_INDEX_FILE} = "$tmpdir/lindex";
+-	($inpipe, $ctx) = $repo->command_input_pipe(qw/update-index -z --index-info/);
++	($inpipe, $ctx) =
++		$repo->command_input_pipe(qw(update-index -z --index-info));
+ 	print($inpipe $lindex);
+ 	$repo->command_close_pipe($inpipe, $ctx);
+ 	my $rc = system('git', 'checkout-index', '--all', "--prefix=$ldir/");
+ 	exit($rc | ($rc >> 8)) if ($rc != 0);
+ 
+ 	$ENV{GIT_INDEX_FILE} = "$tmpdir/rindex";
+-	($inpipe, $ctx) = $repo->command_input_pipe(qw/update-index -z --index-info/);
++	($inpipe, $ctx) =
++		$repo->command_input_pipe(qw(update-index -z --index-info));
+ 	print($inpipe $rindex);
+ 	$repo->command_close_pipe($inpipe, $ctx);
+ 	$rc = system('git', 'checkout-index', '--all', "--prefix=$rdir/");
 -- 
-1.7.12.rc0.28.g8ecd8a5.dirty
+1.7.11.11.g72d9886.dirty
