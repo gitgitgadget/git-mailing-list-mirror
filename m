@@ -1,90 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] allow recovery from command name typos
-Date: Thu, 26 Jul 2012 14:37:35 -0400
-Message-ID: <20120726183734.GA16037@sigill.intra.peff.net>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
- <1343232982-10540-1-git-send-email-rctay89@gmail.com>
- <1343232982-10540-2-git-send-email-rctay89@gmail.com>
- <1343232982-10540-3-git-send-email-rctay89@gmail.com>
- <1343232982-10540-4-git-send-email-rctay89@gmail.com>
- <1343232982-10540-5-git-send-email-rctay89@gmail.com>
- <7vtxwvbu5s.fsf@alter.siamese.dyndns.org>
- <CALUzUxp91zubHEkWMC1z2xp7kJCRYrtznQS_=pVSZoNkZMihig@mail.gmail.com>
- <20120726172630.GD13942@sigill.intra.peff.net>
- <7vy5m67694.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 0/5] test-lib: filesystem prerequisites
+Date: Thu, 26 Jul 2012 14:43:37 -0400
+Message-ID: <20120726184337.GB16037@sigill.intra.peff.net>
+References: <5001B82B.1060201@web.de>
+ <cover.1343309173.git.git@drmicha.warpmail.net>
+ <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Erik Faye-Lund <kusmabite@gmail.com>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	tboegi@web.de
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 20:37:43 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 20:43:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuSwQ-0008B3-Ui
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 20:37:43 +0200
+	id 1SuT2G-0004CJ-Rv
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 20:43:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab2GZShi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 14:37:38 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37471 "EHLO
+	id S1752176Ab2GZSnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 14:43:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37479 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751481Ab2GZShh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 14:37:37 -0400
-Received: (qmail 12073 invoked by uid 107); 26 Jul 2012 18:37:39 -0000
+	id S1751481Ab2GZSnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 14:43:39 -0400
+Received: (qmail 12115 invoked by uid 107); 26 Jul 2012 18:43:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 14:37:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 14:37:35 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 14:43:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 14:43:37 -0400
 Content-Disposition: inline
-In-Reply-To: <7vy5m67694.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202291>
 
-On Thu, Jul 26, 2012 at 10:59:51AM -0700, Junio C Hamano wrote:
+On Thu, Jul 26, 2012 at 11:16:45AM -0700, Junio C Hamano wrote:
 
-> > The credential code uses git_terminal_prompt, which actually opens
-> > /dev/tty directly. So it is probably sane to use for your new prompt,
-> > but it does not (and should not) rely on isatty.
+> Consolidating the logic to set necessary prerequisites used in
+> various scripts is very good, but I am not sure adding them to
+> test-lib and run them unconditionally is a good idea.  SYMLINKS is
+> used by 47 among 595 tests, which is common enough, but the new ones
+> are not common enough.  I do not think we want to create a temporary
+> "junk" dir, two temporary "camelcase" files, read and compare them,
+> when nobody in the script cares.
 > 
-> I think using git_terminal_prompt() after doing a looser "does the
-> user sit at a terminal and is capable of answering interactive
-> prompt" check with isatty(2) is OK, as long as we know that all
-> implementations of git_terminal_prompt() never read from whatever
-> happens to be connected to the standard input.
+> We do not have to split them into separate include files, though, in
+> order to avoid such waste.  Instead, you can make the logic to set
+> prerequisite conditional inside test-lib.sh and update the users.
+> 
+> Something like:
+> [...]
+> 	(at the beginning of t/t0003-attributes.sh)
+> 	#!/bin/sh
+>         test_description=gitattributes
+>         TEST_WANT_PREREQ=CASE_INSENSITIVE_FS,SYMLINKS
+> 	. ./test-lib.sh
 
-I don't think isatty(2) is correct, though. It would yield false
-negatives when the user has redirected stderr but /dev/tty is still
-available. I don't know if it possible for getpass to fallback to stdin
-when stderr is a tty (it would mean that opening /dev/tty failed, which
-would mean that we have no controlling terminal _but_ our stderr is
-still connected to some terminal. That might be bizarre enough not to
-care about).
+That looks like a maintenance annoyance. Can't we just have the
+prerequisite-checker lazily perform the test on demand and cache the
+result?  It should be OK as long as:
 
-I think the right answer would be a real is_prompt_available() that
-checked /dev/tty when HAVE_DEV_TTY was set, and otherwise checked
-isatty(2) (or whatever was appropriate for the platform).
+  1. The prereq is careful about its pre- and post- conditions. We
+     already make sure to clean up after those tests so as not to taint
+     later tests. We would probably want to also make them more careful
+     about preconditions like which directory they are in (so, for
+     example, refer to "$TRASH_DIRECTORY/junk" and not "junk").
 
-> The function falls back to getpass() on platforms without DEV_TTY,
-> and if getpass() on some platforms reads from the standard input,
-> that would be a disaster.  I wasn't sure about that part.
-
-Yeah, although it is already a disaster in those cases, as the main
-caller of git_terminal_prompt is remote-curl, whose stdin is connected
-to git via the remote-helper protocol. Which isn't to say this wouldn't
-make things worse. It would, but the real solution is to implement a
-sane git_terminal_prompt for those platforms. Erik had a patch for
-Windows to use their magical CONIN$, but I think it is temporarily
-stalled. I don't know if there are any other platforms that do not have
-/dev/tty (I know we do not set HAVE_DEV_TTY by default, but that is only
-because I was being conservative and waiting for people on particular
-platforms to confirm that it works before tweaking our Makefile
-defaults).
+  2. The prereq test does not accidentally munge any existing test
+     state from previous tests. That should not be a big deal as long as
+     we avoid names like "junk" in favor of more unique names like
+     "check-case-sensitivity-prereq".
 
 -Peff
