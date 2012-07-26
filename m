@@ -1,90 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] allow recovery from command name typos
-Date: Thu, 26 Jul 2012 10:59:51 -0700
-Message-ID: <7vy5m67694.fsf@alter.siamese.dyndns.org>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
- <1343232982-10540-1-git-send-email-rctay89@gmail.com>
- <1343232982-10540-2-git-send-email-rctay89@gmail.com>
- <1343232982-10540-3-git-send-email-rctay89@gmail.com>
- <1343232982-10540-4-git-send-email-rctay89@gmail.com>
- <1343232982-10540-5-git-send-email-rctay89@gmail.com>
- <7vtxwvbu5s.fsf@alter.siamese.dyndns.org>
- <CALUzUxp91zubHEkWMC1z2xp7kJCRYrtznQS_=pVSZoNkZMihig@mail.gmail.com>
- <20120726172630.GD13942@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/5] test-lib: filesystem prerequisites
+Date: Thu, 26 Jul 2012 11:16:45 -0700
+Message-ID: <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
+References: <5001B82B.1060201@web.de>
+ <cover.1343309173.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 20:00:29 2012
+Cc: git@vger.kernel.org, tboegi@web.de
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jul 26 20:17:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuSML-0005W1-QL
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 20:00:26 +0200
+	id 1SuScU-00014v-KF
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 20:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143Ab2GZR7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 13:59:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59519 "EHLO
+	id S1752533Ab2GZSQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 14:16:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35834 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751670Ab2GZR7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 13:59:53 -0400
+	id S1752421Ab2GZSQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 14:16:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 741D08EDC;
-	Thu, 26 Jul 2012 13:59:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B19A834D;
+	Thu, 26 Jul 2012 14:16:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bB0SesA7hSFbCvLsOIsn7yA6qH4=; b=TSLUo/
-	WIEUrDXjZYO4+pHNYa1un0EE0/S8DBsAHNlEercP8zdEelWkw7mhIDGwIBQJUPLQ
-	QVBKxVtTb6H01nOeskekNNgpi2yDFZZMpGeeMq7sEK0UpDYpLPHlKoKU55/aYHtU
-	Hocs0qTgBj0X4rdSZc1jWUMQrgX/MQLcNulOQ=
+	:content-type; s=sasl; bh=Ap0vRXT5lAQKsM776zUBlMXF9uY=; b=mCjYM0
+	00DQ8a1qCPUFRbJcCmxy9pKIHkX6eqqZko+55skZ2iglAG8JJu18dAfKVn4hzXpz
+	L0/uLg+K6MmyM6+veYMQmhMDmKigNGOZV3fDqCcJEvqSCWHSj7rW6sHwSVatVEYC
+	bJDVir9T6Iuq2DxsFccF1W+rqjsCMPZKfrCDU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uHBoriZY/VvWMf5yrRZ2uuroiQOt5MGQ
-	3CulK+0byvPkxNJOGO3g5SxGv1fwZZ9l31rNG9S79KX8BzUiYHFjqXVV7gqsLsKN
-	yapzF3vPvTp5HVeiZXXSqlPMTDw8DmzyHpqMjIwEOoY1TJUzQkW9cLFpr35UyrlY
-	nxfuGxlFjK4=
+	:content-type; q=dns; s=sasl; b=RA4ZdswLAnEM4+hme+hDI3CDLxEhh3JA
+	jvMZydqIsmglQtKUi4DdjKBXgQP8AZOwrfq+bAuSqJbDM7j2qTLneh0+TGlyV4f2
+	M5bfbZRnhYI1vybPrMHTIssHWcOZGWHw1BTC1NgIis0Gr/hqpnuGenWxL6GeKgFl
+	cHC9xfIvZqs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61E078EDB;
-	Thu, 26 Jul 2012 13:59:53 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 785B9834C;
+	Thu, 26 Jul 2012 14:16:47 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6CDB8EDA; Thu, 26 Jul 2012
- 13:59:52 -0400 (EDT)
-In-Reply-To: <20120726172630.GD13942@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 Jul 2012 13:26:30 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D272C834B; Thu, 26 Jul 2012
+ 14:16:46 -0400 (EDT)
+In-Reply-To: <cover.1343309173.git.git@drmicha.warpmail.net> (Michael J.
+ Gruber's message of "Thu, 26 Jul 2012 15:39:52 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B33E7880-D74B-11E1-9996-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0FB3EBA2-D74E-11E1-9BE4-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202289>
 
-Jeff King <peff@peff.net> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
->   - isatty(0) check in cmd_revert to set opts.edit automatically. This
->     one should match merge's behavior.
-> ...
-> So I think the only one that could be improved is the one in cmd_revert.
+> This mini series provides and makes use of test prerequisites for
+> case insensitivity, symlinks and unicode conversion.
+>
+> SYMLINKS existed before but was not used in t0050.
+> CASE_INSENSITIVE_FS was defined in t0003 rather than test-lib (and redone in
+> t0050).
+> UTF8_NFD_TO_NFC did not exist but was redone in two ways in two tests.
+>
+> After this series, all 3 are defined in test-lib and used in the various tests.
 
-Yeah, that matches the result of my grep.
+Consolidating the logic to set necessary prerequisites used in
+various scripts is very good, but I am not sure adding them to
+test-lib and run them unconditionally is a good idea.  SYMLINKS is
+used by 47 among 595 tests, which is common enough, but the new ones
+are not common enough.  I do not think we want to create a temporary
+"junk" dir, two temporary "camelcase" files, read and compare them,
+when nobody in the script cares.
 
-Thanks for sanity checking.
+We do not have to split them into separate include files, though, in
+order to avoid such waste.  Instead, you can make the logic to set
+prerequisite conditional inside test-lib.sh and update the users.
 
-> The credential code uses git_terminal_prompt, which actually opens
-> /dev/tty directly. So it is probably sane to use for your new prompt,
-> but it does not (and should not) rely on isatty.
+Something like:
 
-I think using git_terminal_prompt() after doing a looser "does the
-user sit at a terminal and is capable of answering interactive
-prompt" check with isatty(2) is OK, as long as we know that all
-implementations of git_terminal_prompt() never read from whatever
-happens to be connected to the standard input.
+	(in t/test-lib.sh)
+	case ",$TEST_WANT_PREREQ," in
+	*,CASE_INSENSITIVE_FS,*)
+		mkdir junk &&
+                echo good >junk/CamelCase &&
+                echo bad >junk/camelcase &&
+                test "$(cat junk/CamelCase)" == good ||
+                test_set_prereq CASE_INSENSITIVE_FS
+		rm -fr junk
+	esac
 
-The function falls back to getpass() on platforms without DEV_TTY,
-and if getpass() on some platforms reads from the standard input,
-that would be a disaster.  I wasn't sure about that part.
+	(at the beginning of t/t0003-attributes.sh)
+	#!/bin/sh
+        test_description=gitattributes
+        TEST_WANT_PREREQ=CASE_INSENSITIVE_FS,SYMLINKS
+	. ./test-lib.sh
+
+Thanks.
