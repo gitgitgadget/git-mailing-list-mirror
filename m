@@ -1,122 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
-Date: Thu, 26 Jul 2012 10:29:51 -0700
-Message-ID: <7vlii68m7k.fsf@alter.siamese.dyndns.org>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <23122876.7xH9dZiP4M@flobuntu> <20120702110741.GA3527@burratino>
- <44779150.xA3SZNmQ1h@flomedio> <20120726090842.GA4999@burratino>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 3/3] difftool: Disable --symlinks on cygwin
+Date: Thu, 26 Jul 2012 10:39:28 -0700
+Message-ID: <CAJDDKr4z_ddwe7s8dY80dZJMNP=75VK6NjOV0WCqFL_LDuMpBA@mail.gmail.com>
+References: <1343186064-49350-1-git-send-email-davvid@gmail.com>
+	<1343186064-49350-4-git-send-email-davvid@gmail.com>
+	<CABPQNSZ=yWxVivadJfh9BMPtqiiGyyEL0vZu+fvsu_Zzhd7yhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 19:30:02 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jul 26 19:39:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuRsv-0008Mw-9t
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:30:01 +0200
+	id 1SuS2B-0006yY-6p
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223Ab2GZR3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 13:29:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45054 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751562Ab2GZR3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 13:29:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC6E6879E;
-	Thu, 26 Jul 2012 13:29:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sNk3fzYfPjAxde1eTwP7hSe2YTU=; b=ycAVGa
-	ZUZexf90Hxq65pJ9kVL4zK05Ac3SQvMsii7TgoJClGfKVL+7tnv7it8TOEFPq/4t
-	48iajHCag3fdJBnND2AvTbfj/JjF+xtmqLFg82uFTTWMRtuG0gASMFbH0tcFbC7q
-	pOO6R962BbePFa3A7DSfxFY4ox1BUexDgZ5YE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Scthom86e52gXgNvO+PwbeKM/17z/XzB
-	Sgp9cQ3CuiahRSz3EzlxvKVuv0zHQPW8WHMbO1OklLYw0fYvHPJz5RtikBYX3B36
-	i6cxL/r0cKrSgxRHVfhSjQtrkDrEDtBYNzj3e/VI37NVgvglCh7uFb9bZr/lRLba
-	bFIEyle1Dto=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9289879D;
-	Thu, 26 Jul 2012 13:29:53 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B8E2879C; Thu, 26 Jul 2012
- 13:29:53 -0400 (EDT)
-In-Reply-To: <20120726090842.GA4999@burratino> (Jonathan Nieder's message of
- "Thu, 26 Jul 2012 04:08:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82A3D66A-D747-11E1-9F3F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752160Ab2GZRja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 13:39:30 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:54687 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032Ab2GZRj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 13:39:29 -0400
+Received: by vbbff1 with SMTP id ff1so1900091vbb.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 10:39:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OAdlNZqm7ZpviJOm/IcWjbQmuSzOilWH1ZKL/kY5ePM=;
+        b=J6WWr6eQSNUR8rKShuIb7G78n060b84x4QeTueVwmX+9FXqslLLNqzNkuXKfTewKHB
+         V/t0wr1mDsvkC0INddFjdpvfHs9NgH3udmjhJYL/i0UhucEu+vLye4BVbBfKv7KMKTuX
+         WDX7pTB51EAtC0ctYyrxG/S7BxVbsC0yHn9XxRm1svDh4Gmz8GBAIT6QCtaOEWnEqE07
+         1YqYW+of/8KSs3of9SOJzvzEin+HM5d/70dXlCIiALI0yhapXcCTH5I61/XNK6c9T9/L
+         90WdTdRivs1vQN0OK2/MRAqLTWI4lKRr/ng9ZxRmngkdmGfDIcRK85bZ5iPhVqV1dnGu
+         RAdA==
+Received: by 10.52.90.144 with SMTP id bw16mr19758305vdb.129.1343324369001;
+ Thu, 26 Jul 2012 10:39:29 -0700 (PDT)
+Received: by 10.52.114.67 with HTTP; Thu, 26 Jul 2012 10:39:28 -0700 (PDT)
+In-Reply-To: <CABPQNSZ=yWxVivadJfh9BMPtqiiGyyEL0vZu+fvsu_Zzhd7yhw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202283>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> [...]
->>>> +
->>>> +enum cmd_result { SUCCESS, NOT_HANDLED, ERROR };
-> [...]
->> Hm.. the enum now has SUCCESS, NOT_HANDLED, TERMINATE.
+On Thu, Jul 26, 2012 at 4:31 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> On Wed, Jul 25, 2012 at 5:14 AM, David Aguilar <davvid@gmail.com> wrote:
+>> Symlinks are not ubiquitous on Windows so make --no-symlinks the default.
+>>
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
+>> ---
+>> I don't have cygwin so I can't verify this one myself.
+>> Is 'cygwin' really the value of $^O there?
+>>
+>>  git-difftool.perl | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-difftool.perl b/git-difftool.perl
+>> index 591ee75..10d3d97 100755
+>> --- a/git-difftool.perl
+>> +++ b/git-difftool.perl
+>> @@ -291,7 +291,8 @@ sub main
+>>                 gui => undef,
+>>                 help => undef,
+>>                 prompt => undef,
+>> -               symlinks => $^O ne 'MSWin32' && $^O ne 'msys',
+>> +               symlinks => $^O ne 'cygwin' &&
+>> +                               $^O ne 'MSWin32' && $^O ne 'msys',
 >
-> Much nicer.
->
-> I think this tristate return value could be avoided entirely because...
-> ... it isn't needed at the moment.
+> I thought Cygwin supported (their own version of) symlinks? What's the
+> rationale for not using it by default there?
 
-I am not sure what you mean by that.
+I am not a Cygwin user so I cannot verify whether it is a good or bad idea.
 
-The command dispatcher loop in [Patch v2 1/16] seems to call every
-possible input handler with the first line of the input and expect
-them to answer "This is not for me", so NOT_HANDLED is needed.
+I have a few questions regarding symlinks on Cygwin:
 
-An alternative dispatcher could be written in such a way that the
-dispatcher inspects the first line and decide what to call, and in
-such a scheme, you do not need NOT_HANDLED. My intuition tells me
-that such an arrangement is in general a better organization.
+Do the symlinks work consistently with the Perl symlink() function?
+Can we always rely on this capability being available?
+Do all win32 filesystems support it?
+Do all builds of cygwin perl support it?
 
-Looking at what cmd_import() does, however, I think the approach the
-patch takes might make sense for this application.  Unlike other
-handlers like "capabilities" that do not want to handle anything
-other than "capabilities", it wants to handle two:
-
- - "import" that starts an import batch;
- - "" (an empty line), but only when an import batch is in effect.
-
-A centralized dispatcher that does not use NOT_HANDLED could be
-written for such an input stream, but then the state information
-(i.e. "are we in an import batch?") needs to be global, which may or
-may not be desirable (I haven't thought things through on this).
-
-In any case, if you are going to use dispatching based on
-NOT_HANDLED, the result may have to be (at least) quadri-state.  In
-addition to "I am done successfully, please go back and dispatch
-another command" (SUCCESS), "This is not for me" (NOT_HANDLED), and
-"I am done successfully, and there is no need to dispatch and
-process another command further" (TERMINATE), you may want to be
-able to say "This was for me, but I found an error" (ERROR).
-
-Of course, if the dispatch loop has to be rewritten so that a
-central dispatcher decides what to call, individual input handlers
-do not need to say NOT_HANDLED nor TERMINATE, as the central
-dispatcher should keep track of the overall state of the system, and
-the usual "0 on success, negative on error" may be sufficient.
-
-One thing I wondered was how an input "capability" (or "list")
-should be handled after "import" was issued (hence batch_active
-becomes true).  The dispatcher loop in the patch based on
-NOT_HANDLED convention will happily call cmd_capabilities(), which
-does not have any notion of the batch_active state (because it is a
-function scope static inside cmd_import()), and will say "Ah, that
-is mine, and let me do my thing."  If we want to diagnose such an
-input stream as an error, the dispatch loop needs to become aware of
-the overall state of the system _anyway_, so that may be an argument
-against the NOT_HANDLED based dispatch system the patch series uses.
+If any of these answers are "no" or "maybe", then an improvement
+beyond this patch would be to perhaps support a `difftool.symlinks`
+configuration variable so that the user can tell us what to use as the
+default.
+-- 
+David
