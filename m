@@ -1,90 +1,99 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 4/4] allow recovery from command name typos
-Date: Fri, 27 Jul 2012 01:08:34 +0800
-Message-ID: <CALUzUxp91zubHEkWMC1z2xp7kJCRYrtznQS_=pVSZoNkZMihig@mail.gmail.com>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
-	<1343232982-10540-1-git-send-email-rctay89@gmail.com>
-	<1343232982-10540-2-git-send-email-rctay89@gmail.com>
-	<1343232982-10540-3-git-send-email-rctay89@gmail.com>
-	<1343232982-10540-4-git-send-email-rctay89@gmail.com>
-	<1343232982-10540-5-git-send-email-rctay89@gmail.com>
-	<7vtxwvbu5s.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Test "t/t7502-commit.sh" failed
+Date: Thu, 26 Jul 2012 13:12:56 -0400
+Message-ID: <20120726171256.GC13942@sigill.intra.peff.net>
+References: <CANYiYbHbMw1HpvoCr4yBbWF=Q9Hoc1Zsq3-WoTrx4aQg7R0e4g@mail.gmail.com>
+ <20120726130348.GA965@sigill.intra.peff.net>
+ <7vtxwu8orw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Thomas Rast <trast@student.ethz.ch>
+Content-Type: text/plain; charset=utf-8
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 19:08:41 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 19:13:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuRYH-0000j6-BF
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:08:41 +0200
+	id 1SuRcX-00042K-6M
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675Ab2GZRIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 13:08:36 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:45069 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545Ab2GZRIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 13:08:35 -0400
-Received: by pbbrp8 with SMTP id rp8so3498579pbb.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 10:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=f2Sd2uXbs8+dCkL9ZwGuJino7nXqGv+hkh64AkDCxoA=;
-        b=WvBqCAuF5O8y3704qWGzEW4saxn69UM/REpfQD9DwV0OLsA2Cp7alagp4R/zRjxERx
-         d4MxRvl4Hfv22cCBrAthfNxxlukPmX8Crmwbu2nneAL9PgUe5Wf2qj6/7gvk0IbB94XL
-         l3NQq/iHdgGjM2T8S6yOmivRU9YoKcyJauPawg+tFOrPezSAmkthGSI/EJrS2bX8Wdu+
-         CJM9OTuSVjpJueN0m4WsgZlc8YxtSRSfnR5LwqPz2D8UsgwpOaV24c0YrwaKDIWG3kA3
-         mh9b9B2812wDpi7j+ivM6/Z2397fxUHm1zT3J0h8dCNm/KUPtwF0ziPrXIvx8aPg+Xaw
-         3dpw==
-Received: by 10.68.222.103 with SMTP id ql7mr6938134pbc.48.1343322514884; Thu,
- 26 Jul 2012 10:08:34 -0700 (PDT)
-Received: by 10.68.71.170 with HTTP; Thu, 26 Jul 2012 10:08:34 -0700 (PDT)
-In-Reply-To: <7vtxwvbu5s.fsf@alter.siamese.dyndns.org>
+	id S1752713Ab2GZRM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 13:12:59 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37380 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752641Ab2GZRM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 13:12:58 -0400
+Received: (qmail 9595 invoked by uid 107); 26 Jul 2012 17:13:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 13:13:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 13:12:56 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtxwu8orw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202279>
 
-On Thu, Jul 26, 2012 at 1:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Tay Ray Chuan <rctay89@gmail.com> writes:
->
-> > If suggestions are available (based on Levenshtein distance) and if the
-> > terminal isatty(), present a prompt to the user to select one of the
-> > computed suggestions.
->
-> The way to determine "If the terminal is a tty" used in this patch
-> looks overly dangerous, given that we do not know what kind of "git"
-> command we may be invoking at this point.
+On Thu, Jul 26, 2012 at 09:34:27AM -0700, Junio C Hamano wrote:
 
-Indeed, it should also have considered stdin's tty-ness.
+> >> not ok - 21 committer is automatic
+> [...]
+> > I am not sure that the test is really all that useful. The point seems
+> > to be that we fall back to some kind of system-based ident, but that is
+> > not portable.
+> 
+> I think the point is to make sure that the "# Committer:" line is
+> given to the reader to remind that we took the codepath that comes
+> up with a committer ident by using untrustworthy heuristics.  You
+> are correct that the usefulness of the value of system-based ident
+> varies between systems (that is why it is stripped out with sed),
+> though.
 
-> Perhaps we should audit "isatty()" calls and replace them with a
-> helper function that does this kind of thing consistently in a more
-> robust way (my recent favorite is Linus's somewhat anal logic used
-> in builtin/merge.c::default_edit_option()).
+Ah, right. I was led astray by the crappy test title. When viewed with
+the test immediately prior (which checks that "Author:" is shown in the
+template), it makes more sense.
 
-Any specific callers to isatty() you have in mind? A quick grep shows
-that a significant portion of the "offenders" are isatty(2) calls to
-determine whether to display progress, I think those are ok.
+> You earlier gave a reason why f20f387 (commit: check committer identity
+> more strictly, 2012-07-23) does not have a test for it; I think the
+> same reason applies why this test is unworkable.
 
-The credential helper has some prompting functionality that is close
-to what I intend to do here, but I think it can make some assumptions
-about stdin/stdout that we can't, as you have pointed out. So that
-leaves merge-edit and this patch as the beneficiaries of a
-builtin/merge.c::default_edit_option() refactor. That's just off the
-top of my head.
+Right. You can check this only when "git var GIT_COMMITTER_IDENT" works,
+and you can check the f20f387 behavior only when it does _not_ work. So
+we could do something like:
 
-Perhaps the helper function could be named "git_can_prompt()" and
-placed in prompt.c?
+  (sane_unset GIT_COMMITTER_NAME &&
+   sane_unset GIT_COMMITTER_EMAIL &&
+   git var GIT_COMMITTER_IDENT >/dev/null) &&
+  test_set_prereq AUTOIDENT ||
+  test_set_prereq NOAUTOIDENT
 
---
-Cheers,
-Ray Chuan
+  test_expect_success AUTOIDENT \
+    'mention auto ident in commit template'
+    '...'
+
+  test_expect_success NOAUTOIDENT \
+    'git rejects bogus ident before starting editor'
+    '...'
+
+But it is somewhat unsatisfying to only get random test coverage
+depending on how your system happens to be configured. I guess we
+somewhat have that already with the case-insensitivity tests.
+
+Do we want to go that route, or just drop this test completely?
+
+> A related tangent; all the test vectors in this script seems to be
+> too wide, and we probably would want to narrow them for what each
+> test wants to see.  For example, the test in question only wants to
+> see "# Committer: <some system based ident>" and it does not matter
+> if the template was rewritten in future versions of Git so that it
+> does not begin with "# Please enter...".  Similarly, the one
+> previous only wants to see "# Author: <different from committer>".
+
+Agreed. They should probably just i18ngrep for "^# Committer: " or
+similar.
+
+-Peff
