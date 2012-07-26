@@ -1,111 +1,295 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Test "t/t7502-commit.sh" failed
-Date: Thu, 26 Jul 2012 15:33:59 -0400
-Message-ID: <20120726193359.GA28711@sigill.intra.peff.net>
-References: <CANYiYbHbMw1HpvoCr4yBbWF=Q9Hoc1Zsq3-WoTrx4aQg7R0e4g@mail.gmail.com>
- <20120726130348.GA965@sigill.intra.peff.net>
- <7vtxwu8orw.fsf@alter.siamese.dyndns.org>
- <20120726171256.GC13942@sigill.intra.peff.net>
- <7v8ve672ar.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2 2/2] difftool: Handle compare() returning -1
+Date: Thu, 26 Jul 2012 12:36:19 -0700
+Message-ID: <1343331379-99746-2-git-send-email-davvid@gmail.com>
+References: <1343331379-99746-1-git-send-email-davvid@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 21:34:52 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 21:37:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuTpQ-0001XT-6F
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 21:34:32 +0200
+	id 1SuTrl-0004q4-Hz
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 21:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118Ab2GZTeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 15:34:03 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37525 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754516Ab2GZTeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 15:34:01 -0400
-Received: (qmail 12619 invoked by uid 107); 26 Jul 2012 19:34:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 15:34:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 15:33:59 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8ve672ar.fsf@alter.siamese.dyndns.org>
+	id S1754173Ab2GZTg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 15:36:27 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:48489 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752995Ab2GZTgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 15:36:24 -0400
+Received: by pbbrp8 with SMTP id rp8so3678283pbb.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 12:36:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=vNR5mIP2nnomnIh/5X3wU45ZcGRJgucRxwsIfBiLAXE=;
+        b=pOTBIZ24SzEQZdGSUM482moPdycUxSM4gW6HGEMUHwxCetWv3NwCpMk3qGWuhxn180
+         rhMfwARHi76GJlqBMupG9lwPQxNuxDSBNfBoAsgQ1UYJiQeGVf4hAAozAYi8U49hGbg0
+         8+lCAOxUrs3lS4+BvNaeCiGMSKIQOJtxsAgiZBxkXnK3a7PGZjg/yzbGLa6avuvLlWqE
+         BNBkRqO7iEvjm1AWBhi9scvmCLJhPclEIkqBM/Ow9PtrCp+N6hQUlwThyuj54swwDnSg
+         R11DOAS+1629Dtt6nOQYSqCIGeSIN1i71hZk2bwyZsuWch/BtPZmLk7WzrawgmY+x4LJ
+         jgeA==
+Received: by 10.68.221.227 with SMTP id qh3mr7812300pbc.115.1343331384007;
+        Thu, 26 Jul 2012 12:36:24 -0700 (PDT)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id oa5sm284084pbb.14.2012.07.26.12.36.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 Jul 2012 12:36:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.11.g8d9a67a
+In-Reply-To: <1343331379-99746-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202297>
 
-On Thu, Jul 26, 2012 at 12:25:16PM -0700, Junio C Hamano wrote:
+Keep the temporary directory around when compare()
+cannot read its input files, which is indicated by -1.
 
-> There are three cases with respect to ident:
-> 
->  - There is a user-configured one;
-> 
->  - We derive one from the system and that is syntactically correct,
->    but we know from the past experience the system is often
->    misconfigured.
-> 
->  - We derive one from the system and that is empty.
+Defer tempdir creation to allow an early exit in setup_dir_diff().
+Wrap the rest of the entry points in an exit_cleanup() function
+to handle removing temporary files and error reporting.
 
-Yes, modulo s/empty/bogus in some way/ in the last one (e.g., we will
-complain about both empty names and bogus hostnames).
+Print the temporary files' location so that the user can
+recover them.
 
-> Before your tightening commit, the latter two cases were treated the
-> same way and gave the reminder to the user.  After the tightening,
-> these were separated into two and give different results.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+Differences since v1:
 
-Sort of. They were _not_ treated the same in the long run, as the second
-one is OK, but the third case would eventually fail. It is only that
-they were treated the same for the first half of git-commit running,
-meaning it got as far as running the editor.
+Store errno before calling rmtree() so that we are not affected
+when rmtree() clobbers errno.
 
-The problem is that the test relied on git-commit reaching a certain
-point before failing in case 3. But that is a bad assumption of the
-test, and one that actively hurts users (who would rather git fail
-early).
+ git-difftool.perl | 101 +++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 69 insertions(+), 32 deletions(-)
 
-> Perhaps the tightening was not such a good idea in the first place?
-> The user would have seen a bad committer ident in the log editing
-> session without the new code anyway, so perhaps we should have added
-> a messasge e.g. "Abort the editor session and do not edit further;
-> fix your ident first--this commit will fail anyway" there, or
-> something?
-
-We could do that, but why? We _know_ it's going to fail, so why not just
-fail?
-
-> The second case can lead to commits that the user may have to redo
-> with filter-branch, as the command does not even error out.
-
-Sure. And that's why we show the committer at all. In other words, we
-have three levels of confidence with three outcomes:
-
-  1. The user definitely told us who they are. Proceed without warning.
-
-  2. We guessed who the user is, and we have reasonable confidence that
-     it is right. Proceed, but warn.
-
-  3. We guessed who the user is, but we know that it is syntactically
-     bad. Do not proceed.
-
-That has always been the behavior, and was not changed by the recent
-tightening. Only _when_ we stopped proceeding changed, and that is not
-something I think this test should care about.
-
-> And we do want to make sure that the user is given a chance to verify
-> that the commit will carry a name that the user is happy with with
-> this test.  I think that is far more important than a user on a system
-> with broken GECOS field has to run the editor twice.
-
-Yes, and they are given that chance. This is not about the behavior of
-git, but about stupid assumptions by the test.
-
-I'm close to finished with a series that I think will at least make it
-better. Stay tuned.
-
--Peff
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 8e51238..e4277f5 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -18,7 +18,7 @@ use File::Copy;
+ use File::Compare;
+ use File::Find;
+ use File::stat;
+-use File::Path qw(mkpath);
++use File::Path qw(mkpath rmtree);
+ use File::Temp qw(tempdir);
+ use Getopt::Long qw(:config pass_through);
+ use Git;
+@@ -112,6 +112,18 @@ EOF
+ 	exit(0);
+ }
+ 
++sub exit_cleanup
++{
++	my ($tmpdir, $status) = @_;
++	my $errno = $!;
++	rmtree($tmpdir);
++	if ($status and $errno) {
++		my ($package, $file, $line) = caller();
++		warn "$file line $line: $errno\n";
++	}
++	exit($status | ($status >> 8));
++}
++
+ sub setup_dir_diff
+ {
+ 	my ($repo, $workdir, $symlinks) = @_;
+@@ -128,13 +140,6 @@ sub setup_dir_diff
+ 	my $diffrtn = $diffrepo->command_oneline(@gitargs);
+ 	exit(0) if (length($diffrtn) == 0);
+ 
+-	# Setup temp directories
+-	my $tmpdir = tempdir('git-difftool.XXXXX', CLEANUP => 1, TMPDIR => 1);
+-	my $ldir = "$tmpdir/left";
+-	my $rdir = "$tmpdir/right";
+-	mkpath($ldir) or die $!;
+-	mkpath($rdir) or die $!;
+-
+ 	# Build index info for left and right sides of the diff
+ 	my $submodule_mode = '160000';
+ 	my $symlink_mode = '120000';
+@@ -203,6 +208,13 @@ EOF
+ 		}
+ 	}
+ 
++	# Setup temp directories
++	my $tmpdir = tempdir('git-difftool.XXXXX', CLEANUP => 0, TMPDIR => 1);
++	my $ldir = "$tmpdir/left";
++	my $rdir = "$tmpdir/right";
++	mkpath($ldir) or exit_cleanup($tmpdir, 1);
++	mkpath($rdir) or exit_cleanup($tmpdir, 1);
++
+ 	# If $GIT_DIR is not set prior to calling 'git update-index' and
+ 	# 'git checkout-index', then those commands will fail if difftool
+ 	# is called from a directory other than the repo root.
+@@ -219,16 +231,18 @@ EOF
+ 		$repo->command_input_pipe(qw(update-index -z --index-info));
+ 	print($inpipe $lindex);
+ 	$repo->command_close_pipe($inpipe, $ctx);
++
+ 	my $rc = system('git', 'checkout-index', '--all', "--prefix=$ldir/");
+-	exit($rc | ($rc >> 8)) if ($rc != 0);
++	exit_cleanup($tmpdir, $rc) if $rc != 0;
+ 
+ 	$ENV{GIT_INDEX_FILE} = "$tmpdir/rindex";
+ 	($inpipe, $ctx) =
+ 		$repo->command_input_pipe(qw(update-index -z --index-info));
+ 	print($inpipe $rindex);
+ 	$repo->command_close_pipe($inpipe, $ctx);
++
+ 	$rc = system('git', 'checkout-index', '--all', "--prefix=$rdir/");
+-	exit($rc | ($rc >> 8)) if ($rc != 0);
++	exit_cleanup($tmpdir, $rc) if $rc != 0;
+ 
+ 	# If $GIT_DIR was explicitly set just for the update/checkout
+ 	# commands, then it should be unset before continuing.
+@@ -240,14 +254,19 @@ EOF
+ 	for my $file (@working_tree) {
+ 		my $dir = dirname($file);
+ 		unless (-d "$rdir/$dir") {
+-			mkpath("$rdir/$dir") or die $!;
++			mkpath("$rdir/$dir") or
++			exit_cleanup($tmpdir, 1);
+ 		}
+ 		if ($symlinks) {
+-			symlink("$workdir/$file", "$rdir/$file") or die $!;
++			symlink("$workdir/$file", "$rdir/$file") or
++			exit_cleanup($tmpdir, 1);
+ 		} else {
+-			copy("$workdir/$file", "$rdir/$file") or die $!;
++			copy("$workdir/$file", "$rdir/$file") or
++			exit_cleanup($tmpdir, 1);
++
+ 			my $mode = stat("$workdir/$file")->mode;
+-			chmod($mode, "$rdir/$file") or die $!;
++			chmod($mode, "$rdir/$file") or
++			exit_cleanup($tmpdir, 1);
+ 		}
+ 	}
+ 
+@@ -255,27 +274,35 @@ EOF
+ 	# temporary file to both the left and right directories to show the
+ 	# change in the recorded SHA1 for the submodule.
+ 	for my $path (keys %submodule) {
++		my $ok;
+ 		if (defined($submodule{$path}{left})) {
+-			write_to_file("$ldir/$path", "Subproject commit $submodule{$path}{left}");
++			$ok = write_to_file("$ldir/$path",
++				"Subproject commit $submodule{$path}{left}");
+ 		}
+ 		if (defined($submodule{$path}{right})) {
+-			write_to_file("$rdir/$path", "Subproject commit $submodule{$path}{right}");
++			$ok = write_to_file("$rdir/$path",
++				"Subproject commit $submodule{$path}{right}");
+ 		}
++		exit_cleanup($tmpdir, 1) if not $ok;
+ 	}
+ 
+ 	# Symbolic links require special treatment. The standard "git diff"
+ 	# shows only the link itself, not the contents of the link target.
+ 	# This loop replicates that behavior.
+ 	for my $path (keys %symlink) {
++		my $ok;
+ 		if (defined($symlink{$path}{left})) {
+-			write_to_file("$ldir/$path", $symlink{$path}{left});
++			$ok = write_to_file("$ldir/$path",
++					$symlink{$path}{left});
+ 		}
+ 		if (defined($symlink{$path}{right})) {
+-			write_to_file("$rdir/$path", $symlink{$path}{right});
++			$ok = write_to_file("$rdir/$path",
++					$symlink{$path}{right});
+ 		}
++		exit_cleanup($tmpdir, 1) if not $ok;
+ 	}
+ 
+-	return ($ldir, $rdir, @working_tree);
++	return ($ldir, $rdir, $tmpdir, @working_tree);
+ }
+ 
+ sub write_to_file
+@@ -286,16 +313,18 @@ sub write_to_file
+ 	# Make sure the path to the file exists
+ 	my $dir = dirname($path);
+ 	unless (-d "$dir") {
+-		mkpath("$dir") or die $!;
++		mkpath("$dir") or return 0;
+ 	}
+ 
+ 	# If the file already exists in that location, delete it.  This
+ 	# is required in the case of symbolic links.
+-	unlink("$path");
++	unlink($path);
+ 
+-	open(my $fh, '>', "$path") or die $!;
++	open(my $fh, '>', $path) or return 0;
+ 	print($fh $value);
+ 	close($fh);
++
++	return 1;
+ }
+ 
+ sub main
+@@ -367,21 +396,19 @@ sub main
+ sub dir_diff
+ {
+ 	my ($extcmd, $symlinks) = @_;
+-
+ 	my $rc;
++	my $error = 0;
+ 	my $repo = Git->repository();
+-
+ 	my $workdir = find_worktree($repo);
+-	my ($a, $b, @worktree) = setup_dir_diff($repo, $workdir, $symlinks);
++	my ($a, $b, $tmpdir, @worktree) =
++		setup_dir_diff($repo, $workdir, $symlinks);
++
+ 	if (defined($extcmd)) {
+ 		$rc = system($extcmd, $a, $b);
+ 	} else {
+ 		$ENV{GIT_DIFFTOOL_DIRDIFF} = 'true';
+ 		$rc = system('git', 'difftool--helper', $a, $b);
+ 	}
+-
+-	exit($rc | ($rc >> 8)) if ($rc != 0);
+-
+ 	# If the diff including working copy files and those
+ 	# files were modified during the diff, then the changes
+ 	# should be copied back to the working tree.
+@@ -395,16 +422,26 @@ sub dir_diff
+ 		if ($diff == 0) {
+ 			next;
+ 		} elsif ($diff == -1 ) {
+-			my $errmsg = "warning: could not compare ";
++			my $errmsg = "warning: Could not compare ";
+ 			$errmsg += "'$b/$file' with '$workdir/$file'\n";
+ 			warn $errmsg;
++			$error = 1;
+ 		} elsif ($diff == 1) {
+-			copy("$b/$file", "$workdir/$file") or die $!;
+ 			my $mode = stat("$b/$file")->mode;
+-			chmod($mode, "$workdir/$file") or die $!;
++			copy("$b/$file", "$workdir/$file") or
++			exit_cleanup($tmpdir, 1);
++
++			chmod($mode, "$workdir/$file") or
++			exit_cleanup($tmpdir, 1);
+ 		}
+ 	}
+-	exit(0);
++	if ($error) {
++		warn "warning: Temporary files exist in '$tmpdir'.\n";
++		warn "warning: You may want to cleanup or recover these.\n";
++		exit(1);
++	} else {
++		exit_cleanup($tmpdir, $rc);
++	}
+ }
+ 
+ sub file_diff
+-- 
+1.7.11.11.g8d9a67a
