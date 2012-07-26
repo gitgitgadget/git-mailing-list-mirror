@@ -1,86 +1,95 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Test "t/t7502-commit.sh" failed
-Date: Thu, 26 Jul 2012 14:27:52 +0800
-Message-ID: <CANYiYbHbMw1HpvoCr4yBbWF=Q9Hoc1Zsq3-WoTrx4aQg7R0e4g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-commit.c: Not add duplicate S-o-b when commit
+Date: Wed, 25 Jul 2012 23:44:14 -0700
+Message-ID: <7vy5m781j5.fsf@alter.siamese.dyndns.org>
+References: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:28:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:44:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuHYF-0004ai-Ql
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:28:00 +0200
+	id 1SuHo7-00006F-99
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab2GZG1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 02:27:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60078 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250Ab2GZG1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 02:27:53 -0400
-Received: by yhmm54 with SMTP id m54so1594602yhm.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 23:27:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=eKL8dtlj/LV1Vjz+Ns2z4+/VThj7thrt1R2BBj4CuTI=;
-        b=r/KrXoEeMfHI15xHDBfHDY34wBx29yxM5CSEBkoTubQD3wuSp0Il18U7mL5v2BSlpR
-         JQGA/J6Lo3TK2PLCTglkhJY7xbAnqAhdPRMNNrppY+PeswnAcvYkKecmslBLVF/tXkBH
-         zjcgxGCQAtddxG3xjwzfsosiWEk0QopRB3oUNW6CZx3aN3CLjcx9Wk54jG/kFjJx1eQ9
-         Zp0bwOxOjN7fbpX7JfA/yU5TpJ3TX6nHwhOxoMLIBiJEz52z2Kz1WFK72IS65UYc5M+N
-         WHKbnrWS4dbGDKSog8XxV+J8rh4honC15PNPdD1s4VnQk6DZpbABWainE5ySajyg/IeI
-         nRwg==
-Received: by 10.50.17.162 with SMTP id p2mr765489igd.52.1343284072818; Wed, 25
- Jul 2012 23:27:52 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Wed, 25 Jul 2012 23:27:52 -0700 (PDT)
+	id S1751028Ab2GZGoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 02:44:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54037 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750867Ab2GZGoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 02:44:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB1C5D16;
+	Thu, 26 Jul 2012 02:44:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8VxdNsQiwUxc/5o+YSZxBTXWeic=; b=jAGWQR
+	teE2ts4OvcO7XMBOZDQJmVApXMR7hprGfLtGbFolAdI9bgOhua8Dy6ATT7aMo4Hl
+	H7X3BXelw5/aSfG2Scp+vat/MKLHdA//4mkaytCD+qiwFm3qrjGDgWK57WJ5ZfjX
+	U/TScou/dSokMvMUYjAxX2c5rLVnjpcgjYr1Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ravaNqGs3mbyWMij7HMlgPWyTLf2JzAM
+	JZBa74mNFpIY1sr+2faz/oLE7jvt/GrIFvbMFf2XeaUcrqceqWU+55T8Xg1nNFLZ
+	+nEZzy5RCAdjHSTwTJIlpooxEEKUWaZpRqlwNA3Z3Iv1VtUgqLkjB8wd8GtHEadb
+	RoRbMj7zxdY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A790E5D15;
+	Thu, 26 Jul 2012 02:44:16 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C65E5D14; Thu, 26 Jul 2012
+ 02:44:15 -0400 (EDT)
+In-Reply-To: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com> (Jiang Xin's message of "Thu, 26 Jul 2012 14:01:19 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 517D5066-D6ED-11E1-8B46-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202228>
 
-Test "t/t7502-commit.sh" failed. I guess it's commit
-v1.7.9.7-1-gf20f387 which breaks it.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-    $ git log -1 --oneline --stat v1.7.9.7-1-gf20f387
-    f20f commit: check committer identity more strictly
-     builtin/commit.c | 2 +-
-     1 file changed, 1 insertion(+), 1 deletion(-)
+> Scan the whole rfc2822 footer for duplicate S-o-b, not just the last
+> line of the commit message.
+>
+> A commit may have multiple S-o-bs, or other tags, such as:
+>
+>     some commit log...
+>
+>     Signed-off-by: C O Mitter <committer@example.com>
+>     Reported-by: R E Porter <reporter@example.com>
+>
+> Because the S-o-b is not located at the last line in the above commit,
+> when the above commit is amended by the original committer, a
+> duplicated S-o-b may appended by accident. New commit log may looks
+> like:
+>
+>     some commit log...
+>
+>     Signed-off-by: C O Mitter <committer@example.com>
+>     Reported-by: R E Porter <reporter@example.com>
+>     Signed-off-by: C O Mitter <committer@example.com>
+>
 
-Result of t/t7502-commit.sh:
+After stating the observation like the above, please make it a habit
+to say "which is bad because...", if you think it is a bad behaviour
+and the patch is about fixing it.
 
-not ok - 21 committer is automatic
-#
-#
-#               echo >>negative &&
-#               (
-#                       sane_unset GIT_COMMITTER_EMAIL &&
-#                       sane_unset GIT_COMMITTER_NAME &&
-#                       # must fail because there is no change
-#                       test_must_fail git commit -e -m "sample"
-#               ) &&
-#               head -n 8 .git/COMMIT_EDITMSG | \
-#               sed "s/^# Committer: .*/# Committer:/" >actual
-#               test_i18ncmp expect actual
-#
+Because a chain of S-o-b is used to record the flow of a patch, it
+is entirely normal if developer A writes the patch (she signs it
+off), reviewer B picks it up and sends it back with a minor fix-up
+to the list, and developer A again picks it up from the list and
+forwards it to the uplevel maintainer, in which case you may see
+S-o-b by A, then B (it may be S-o-b or something else,
+e.g. Reviewed-by) and then S-o-b by A again.
 
-Contents of file expect:
-
-    sample
-
-    # Please enter the commit message for your changes. Lines starting
-    # with '#' will be ignored, and an empty message aborts the commit.
-    #
-    # Author:    A U Thor <author@example.com>
-    # Committer:
-    #
-
-Contents of file actual:
-
-    sample
-
--- 
-Jiang Xin
+The above observation is correct (a commit log may look like so),
+but your untold conclusion (it is a bad thing because there are
+S-o-b from the same person twice) is not necessarily correct.
