@@ -1,207 +1,266 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [RFC 05/16] remote-svn, vcs-svn: Enable fetching to private refs.
-Date: Thu, 26 Jul 2012 09:32:26 +0200
-Message-ID: <1343287957-22040-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [RFC 04/16] Add cat-blob report fifo from fast-import to remote-helper.
+Date: Thu, 26 Jul 2012 09:32:25 +0200
+Message-ID: <1343287957-22040-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1343287957-22040-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343287957-22040-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343287957-22040-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343287957-22040-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343287957-22040-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: florian.achleitner.2.6.31@gmail.com
 To: Jonathan Nieder <jrnieder@gmail.com>,
 	David Michael Barr <davidbarr@google.com>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 09:34:43 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 09:34:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuIan-0004t5-Su
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 09:34:42 +0200
+	id 1SuIan-0004t5-DY
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 09:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab2GZHec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 03:34:32 -0400
+	id S1751628Ab2GZHea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 03:34:30 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:58737 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751609Ab2GZHea (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 03:34:30 -0400
+	with ESMTP id S1751547Ab2GZHe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 03:34:28 -0400
 Received: by mail-bk0-f46.google.com with SMTP id j10so1067267bkw.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 00:34:29 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 00:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=6zPmhssX7ZQc19V3ZFJhY7LZ2x5YxzYuz02A8vinnQw=;
-        b=UN1fe/UVxlpsoHk7hBBrpDH299OakKpqxahlDlm7Kz6m4q00rE5AH/cr1ZUjrOSxRR
-         TSJ6dJ9UN3OpJE6rBbBHSC65QCFjzBp9pY88BNM7TFhnztgOyt06JM6xSrwjxKmMul3P
-         ncTBjQE3d+mGq0pANXTkkOn3QRG1/H8z4y79h2tGiO0l8RzAkNw5hNNmDG+MrxTJtFHL
-         qTW6QYtz1mnmojVWBxzKj+03BoZeUOJCH20Aj/Qn+ylv8oe6Cd50tvuggDG90ip5YTo8
-         Vy+eHmWSv5r3hF9RnEUjJvIKDYKMXEXj40ffKIV20vDJz71g8jJ3BRM1XMAwTMpg69di
-         a/Cw==
-Received: by 10.204.149.86 with SMTP id s22mr3816674bkv.1.1343288069372;
-        Thu, 26 Jul 2012 00:34:29 -0700 (PDT)
+        bh=0nUmYozRtJBURgJ4yRw31m3/lTepemLmL/twRL/7cwY=;
+        b=FDQXYw3TdLlV/0B5okSkr5BqaEnEkKkQPXMTfmQ0mxrSpQAfqYpkpDHoEBL+ZoVTkv
+         H91UN2Winm+eOHXOl6CzR90BQwR1BxEu77zXBj93VEv39cTKbCciy7xU3pfzYrsDASRX
+         jDf8LzCDdmzWO9XebAqnt9MqyqIvwWzzmsnZ4an1Rl1yYvIED2pF5nI0FdkSS6VHO/Xx
+         pXSP1Axos8nFttQhyPuzJilbL685i8AilHdwZpxRegkDNwsJS1iQMQw5TVeZiOqo7WoH
+         9Mmt46Y4Wdg/X3W1EXY7sN7oHUmLQ4/iCMtXINpvjyGWeaFSVzcDmvmk3wEeJM+5O/wu
+         tXFA==
+Received: by 10.205.118.14 with SMTP id fo14mr13637418bkc.130.1343288067689;
+        Thu, 26 Jul 2012 00:34:27 -0700 (PDT)
 Received: from localhost.localdomain (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id n5sm13880348bkv.14.2012.07.26.00.34.27
+        by mx.google.com with ESMTPS id n5sm13880348bkv.14.2012.07.26.00.34.25
         (version=SSLv3 cipher=OTHER);
-        Thu, 26 Jul 2012 00:34:28 -0700 (PDT)
+        Thu, 26 Jul 2012 00:34:26 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1343287957-22040-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1343287957-22040-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202236>
 
-The reference to update by the fast-import stream is hard-coded.
-When fetching from a remote the remote-helper shall update refs
-in a private namespace, i.e. a private subdir of refs/.
-This namespace is defined by the 'refspec' capability, that the
-remote-helper advertises as a reply to the 'capablilities' command.
+For some fast-import commands (e.g. cat-blob) an answer-channel
+is required. For this purpose a fifo (aka named pipe) (mkfifo)
+is created (.git/fast-import-report-fifo) by the transport-helper
+when fetch via import is requested. The remote-helper and
+fast-import open the ends of the pipe.
 
-Extend svndump and fast-export to allow passing the target ref.
-Update svn-fe to be compatible.
+The filename of the fifo is passed to the remote-helper via
+it's environment, helpers that don't use fast-import can
+simply ignore it.
+Add a new command line option --cat-blob-pipe to fast-import,
+for this purpose.
+
+Use argv_arrays in get_helper and get_importer.
+
+Opening the pipe with O_RDWR prevents blocking open calls on both ends.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 ---
- contrib/svn-fe/svn-fe.c |    2 +-
- test-svn-fe.c           |    2 +-
- vcs-svn/fast_export.c   |    4 ++--
- vcs-svn/fast_export.h   |    2 +-
- vcs-svn/svndump.c       |   14 +++++++-------
- vcs-svn/svndump.h       |    2 +-
- 6 files changed, 13 insertions(+), 13 deletions(-)
+ fast-import.c      |   14 ++++++++++++
+ transport-helper.c |   64 ++++++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 63 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-index 35db24f..c796cc0 100644
---- a/contrib/svn-fe/svn-fe.c
-+++ b/contrib/svn-fe/svn-fe.c
-@@ -10,7 +10,7 @@ int main(int argc, char **argv)
+diff --git a/fast-import.c b/fast-import.c
+index eed97c8..7619449 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -3180,6 +3180,15 @@ static void option_cat_blob_fd(const char *fd)
+ 	cat_blob_fd = (int) n;
+ }
+ 
++static void option_cat_blob_pipe(const char *name)
++{
++	int report_fd = open(name, O_RDWR);
++	if(report_fd < 0) {
++		die("Unable to open fast-import back-pipe! %s", strerror(errno));
++	}
++	cat_blob_fd = report_fd;
++}
++
+ static void option_export_pack_edges(const char *edges)
  {
- 	if (svndump_init(NULL))
- 		return 1;
--	svndump_read((argc > 1) ? argv[1] : NULL);
-+	svndump_read((argc > 1) ? argv[1] : NULL, "refs/heads/master");
- 	svndump_deinit();
- 	svndump_reset();
- 	return 0;
-diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 83633a2..bb0e980 100644
---- a/test-svn-fe.c
-+++ b/test-svn-fe.c
-@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
- 	if (argc == 2) {
- 		if (svndump_init(argv[1]))
- 			return 1;
--		svndump_read(NULL);
-+		svndump_read(NULL, "refs/remotes/svn/master");
- 		svndump_deinit();
- 		svndump_reset();
- 		return 0;
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 1f04697..11f8f94 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -72,7 +72,7 @@ static char gitsvnline[MAX_GITSVN_LINE_LEN];
- void fast_export_begin_commit(uint32_t revision, const char *author,
- 			const struct strbuf *log,
- 			const char *uuid, const char *url,
--			unsigned long timestamp)
-+			unsigned long timestamp, const char *local_ref)
- {
- 	static const struct strbuf empty = STRBUF_INIT;
- 	if (!log)
-@@ -84,7 +84,7 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
- 	} else {
- 		*gitsvnline = '\0';
+ 	if (pack_edges)
+@@ -3337,6 +3346,11 @@ static void parse_argv(void)
+ 			continue;
+ 		}
+ 
++		if(!prefixcmp(a + 2, "cat-blob-pipe=")) {
++			option_cat_blob_pipe(a + 2 + strlen("cat-blob-pipe="));
++			continue;
++		}
++
+ 		die("unknown option %s", a);
  	}
--	printf("commit refs/heads/master\n");
-+	printf("commit %s\n", local_ref);
- 	printf("mark :%"PRIu32"\n", revision);
- 	printf("committer %s <%s@%s> %ld +0000\n",
- 		   *author ? author : "nobody",
-diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index 8823aca..17eb13b 100644
---- a/vcs-svn/fast_export.h
-+++ b/vcs-svn/fast_export.h
-@@ -11,7 +11,7 @@ void fast_export_delete(const char *path);
- void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
- void fast_export_begin_commit(uint32_t revision, const char *author,
- 			const struct strbuf *log, const char *uuid,
--			const char *url, unsigned long timestamp);
-+			const char *url, unsigned long timestamp, const char *local_ref);
- void fast_export_end_commit(uint32_t revision);
- void fast_export_data(uint32_t mode, off_t len, struct line_buffer *input);
- void fast_export_blob_delta(uint32_t mode,
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 76b42b2..c0d5931 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -299,22 +299,22 @@ static void handle_node(void)
- 				node_ctx.text_length, &input);
- }
+ 	if (i != global_argc)
+diff --git a/transport-helper.c b/transport-helper.c
+index 61c928f..616db91 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -10,6 +10,7 @@
+ #include "string-list.h"
+ #include "thread-utils.h"
+ #include "sigchain.h"
++#include "argv-array.h"
  
--static void begin_revision(void)
-+static void begin_revision(const char *remote_ref)
+ static int debug;
+ 
+@@ -17,6 +18,7 @@ struct helper_data {
+ 	const char *name;
+ 	struct child_process *helper;
+ 	FILE *out;
++	char *report_fifo;
+ 	unsigned fetch : 1,
+ 		import : 1,
+ 		export : 1,
+@@ -101,6 +103,7 @@ static void do_take_over(struct transport *transport)
+ static struct child_process *get_helper(struct transport *transport)
  {
- 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
- 		return;
- 	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
- 		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
--		rev_ctx.timestamp);
-+		rev_ctx.timestamp, remote_ref);
+ 	struct helper_data *data = transport->data;
++	struct argv_array argv = ARGV_ARRAY_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process *helper;
+ 	const char **refspecs = NULL;
+@@ -111,6 +114,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	char git_dir_buf[sizeof(GIT_DIR_ENVIRONMENT) + PATH_MAX + 1];
+ 	const char *helper_env[] = {
+ 		git_dir_buf,
++		NULL,	/* placeholder */
+ 		NULL
+ 	};
+ 
+@@ -122,17 +126,23 @@ static struct child_process *get_helper(struct transport *transport)
+ 	helper->in = -1;
+ 	helper->out = -1;
+ 	helper->err = 0;
+-	helper->argv = xcalloc(4, sizeof(*helper->argv));
+-	strbuf_addf(&buf, "git-remote-%s", data->name);
+-	helper->argv[0] = strbuf_detach(&buf, NULL);
+-	helper->argv[1] = transport->remote->name;
+-	helper->argv[2] = remove_ext_force(transport->url);
++	argv_array_pushf(&argv, "git-remote-%s", data->name);
++	argv_array_push(&argv, transport->remote->name);
++	argv_array_push(&argv, remove_ext_force(transport->url));
++	helper->argv = argv.argv;
+ 	helper->git_cmd = 0;
+ 	helper->silent_exec_failure = 1;
+ 
+ 	snprintf(git_dir_buf, sizeof(git_dir_buf), "%s=%s", GIT_DIR_ENVIRONMENT, get_git_dir());
+ 	helper->env = helper_env;
+ 
++	strbuf_init(&buf, 0);
++	strbuf_addf(&buf, "%s/fast-import-report-fifo", get_git_dir());
++	data->report_fifo = strbuf_detach(&buf, NULL);
++	strbuf_init(&buf, 0);
++	strbuf_addf(&buf, "GIT_REPORT_FIFO=%s", data->report_fifo);
++	helper_env[1] = strbuf_detach(&buf, NULL);
++
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+ 		die("Unable to find remote helper for '%s'", data->name);
+@@ -141,6 +151,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 
+ 	data->helper = helper;
+ 	data->no_disconnect_req = 0;
++	free((void*) helper_env[1]);
++	argv_array_clear(&argv);
+ 
+ 	/*
+ 	 * Open the output as FILE* so strbuf_getline() can be used.
+@@ -237,13 +249,13 @@ static int disconnect_helper(struct transport *transport)
+ 			xwrite(data->helper->in, "\n", 1);
+ 			sigchain_pop(SIGPIPE);
+ 		}
++
+ 		close(data->helper->in);
+ 		close(data->helper->out);
+ 		fclose(data->out);
+ 		res = finish_command(data->helper);
+-		free((char *)data->helper->argv[0]);
+-		free(data->helper->argv);
+ 		free(data->helper);
++		free(data->report_fifo);
+ 		data->helper = NULL;
+ 	}
+ 	return res;
+@@ -373,16 +385,18 @@ static int fetch_with_fetch(struct transport *transport,
+ 	return 0;
  }
  
--static void end_revision(void)
-+static void end_revision()
+-static int get_importer(struct transport *transport, struct child_process *fastimport)
++static int get_importer(struct transport *transport, struct child_process *fastimport, struct argv_array *argv)
  {
- 	if (rev_ctx.revision)
- 		fast_export_end_commit(rev_ctx.revision);
+ 	struct child_process *helper = get_helper(transport);
++	struct helper_data *data = transport->data;
+ 	memset(fastimport, 0, sizeof(*fastimport));
+ 	fastimport->in = helper->out;
+-	fastimport->argv = xcalloc(5, sizeof(*fastimport->argv));
+-	fastimport->argv[0] = "fast-import";
+-	fastimport->argv[1] = "--quiet";
+-
++	argv_array_push(argv, "fast-import");
++	argv_array_push(argv, "--quiet");
++	argv_array_pushf(argv, "--cat-blob-pipe=%s", data->report_fifo);
++	fastimport->argv = argv->argv;
+ 	fastimport->git_cmd = 1;
++
+ 	return start_command(fastimport);
  }
  
--void svndump_read(const char *url)
-+void svndump_read(const char *url, const char *local_ref)
- {
- 	char *val;
- 	char *t;
-@@ -353,7 +353,7 @@ void svndump_read(const char *url)
- 			if (active_ctx == NODE_CTX)
- 				handle_node();
- 			if (active_ctx == REV_CTX)
--				begin_revision();
-+				begin_revision(local_ref);
- 			if (active_ctx != DUMP_CTX)
- 				end_revision();
- 			active_ctx = REV_CTX;
-@@ -366,7 +366,7 @@ void svndump_read(const char *url)
- 				if (active_ctx == NODE_CTX)
- 					handle_node();
- 				if (active_ctx == REV_CTX)
--					begin_revision();
-+					begin_revision(local_ref);
- 				active_ctx = NODE_CTX;
- 				reset_node_ctx(val);
- 				break;
-@@ -463,7 +463,7 @@ void svndump_read(const char *url)
- 	if (active_ctx == NODE_CTX)
- 		handle_node();
- 	if (active_ctx == REV_CTX)
--		begin_revision();
-+		begin_revision(local_ref);
- 	if (active_ctx != DUMP_CTX)
- 		end_revision();
- }
-diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
-index acb5b47..febeecb 100644
---- a/vcs-svn/svndump.h
-+++ b/vcs-svn/svndump.h
-@@ -3,7 +3,7 @@
+@@ -421,10 +435,30 @@ static int fetch_with_import(struct transport *transport,
+ 	int i;
+ 	struct ref *posn;
+ 	struct strbuf buf = STRBUF_INIT;
++	struct argv_array importer_argv = ARGV_ARRAY_INIT;
++	struct stat fifostat;
++
++	/* create a fifo for back-reporting of fast-import to the remote helper,
++	 * if it doesn't exist. */
++	if(!stat(data->report_fifo, &fifostat)) {
++		if(S_ISFIFO(fifostat.st_mode)) {		/* exists and is fifo, unlink and recreate, to be sure that permissions are ok.. */
++			if (debug)
++				fprintf(stderr, "Debug: Remote helper: Unlinked existing fifo.\n");
++			if(unlink(data->report_fifo))
++				die_errno("Couldn't unlink fifo %s", data->report_fifo);
++		}
++		else
++			die("Fifo %s used by some other file.", data->report_fifo);
++	}
++	if(mkfifo(data->report_fifo, 0660))
++		die_errno("Couldn't create fifo %s", data->report_fifo);
++	if (debug)
++		fprintf(stderr, "Debug: Remote helper: Mkfifo %s\n", data->report_fifo);
++
  
- int svndump_init(const char *filename);
- int svndump_init_fd(int in_fd, int back_fd);
--void svndump_read(const char *url);
-+void svndump_read(const char *url, const char *local_ref);
- void svndump_deinit(void);
- void svndump_reset(void);
+ 	get_helper(transport);
  
+-	if (get_importer(transport, &fastimport))
++	if (get_importer(transport, &fastimport, &importer_argv))
+ 		die("Couldn't run fast-import");
+ 
+ 	for (i = 0; i < nr_heads; i++) {
+@@ -441,8 +475,8 @@ static int fetch_with_import(struct transport *transport,
+ 
+ 	if (finish_command(&fastimport))
+ 		die("Error while running fast-import");
+-	free(fastimport.argv);
+-	fastimport.argv = NULL;
++
++	argv_array_clear(&importer_argv);
+ 
+ 	for (i = 0; i < nr_heads; i++) {
+ 		char *private;
 -- 
 1.7.9.5
