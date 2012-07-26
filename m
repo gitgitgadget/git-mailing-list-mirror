@@ -1,96 +1,72 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [RFC 01/16] Implement a remote helper for svn in C.
-Date: Thu, 26 Jul 2012 10:02:03 +0200
-Message-ID: <1707449.hNcpMgVJxF@flomedio>
-References: <1343287957-22040-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1343287957-22040-2-git-send-email-florian.achleitner.2.6.31@gmail.com> <20120726074607.GA4455@burratino>
+Date: Thu, 26 Jul 2012 03:14:43 -0500
+Message-ID: <20120726081443.GA4720@burratino>
+References: <1343287957-22040-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343287957-22040-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <20120726074607.GA4455@burratino>
+ <1707449.hNcpMgVJxF@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	David Michael Barr <davidbarr@google.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 10:02:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Michael Barr <davidbarr@google.com>, git@vger.kernel.org
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 10:15:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuJ1Z-0000Zi-AN
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 10:02:21 +0200
+	id 1SuJDo-0000jn-0r
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 10:15:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895Ab2GZICM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 04:02:12 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:46660 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630Ab2GZICJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 04:02:09 -0400
-Received: by bkwj10 with SMTP id j10so1082059bkw.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 01:02:08 -0700 (PDT)
+	id S1751200Ab2GZIOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 04:14:54 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:61655 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834Ab2GZIOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 04:14:52 -0400
+Received: by gglu4 with SMTP id u4so1654246ggl.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 01:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=ZjX4LeTF3kTzKpqIM5J34G/nRj8qfuBEGSE5+zBltW0=;
-        b=HCI7WRm7JzV7nx+pvb5L1Re0skFIxhJFd3HE9bBzEWkRKd9Ow8Nz9Aj7YgR6XqCuah
-         6iLu11CAzIFJ6CvsRMomW2FubgDwbmPMGEZFdSCKw+b9eJSWM8Sn0qpqkFtqx+m3sQvG
-         t/yNTo6otH0lLnKBgpB4ll+bjlBk7aZTdXdYDjDPAD/nqL5jE0FGmle/UqtnwGBFaPWz
-         nEHWXRrYyAsBmmS+1b+GXUWB5j+KDd6qy3fF3TDJMyDb2sjBuCajukg6EbA1bxna7IWP
-         mKExYmha8UnGZH/qxGl1oR8c8TBIP3THc08qgx+BwDUbL5yA3/LjOFz1gzW+r259mfdz
-         C2mg==
-Received: by 10.204.152.15 with SMTP id e15mr13194244bkw.18.1343289727871;
-        Thu, 26 Jul 2012 01:02:07 -0700 (PDT)
-Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id 14sm13921077bkq.12.2012.07.26.01.02.05
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=JA4AmtarLCYl168necMNhfhMe3r8Vv/ZhD0XsxLj64U=;
+        b=Rvlm/Ul1GG9Lsapyy3HJeq6N9Ewv2n+llpc9TTlCWLHhyPRu6c82CNcxCWwnGFSuQd
+         5zTPKSP6J9NksqiHoaZcuPLQCqedMflVssqLuS2SlxOvK24zQ5SA9Hqx58JSaiK0M6Q4
+         3a2sNfykqxWdxeM/+MJ93KtD5KL/yDvbPUx5QnChnj0M9oBwTszSaUKFJDNItY2v8EYX
+         FhZP2nuyaUFXnVCJaCx1BLoG0wSz/mNQz3QSPbkuo75fcX76CBvTXrdEoIObZ2EddCG8
+         IM6u5Ls2cUr1Xt5+6pQtrPzscj6bMWNbskHrC2js7Az0w7GswRonBerH0VrEvjuN2z67
+         fs/A==
+Received: by 10.42.80.6 with SMTP id t6mr27731603ick.15.1343290491340;
+        Thu, 26 Jul 2012 01:14:51 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id if4sm2897153igc.10.2012.07.26.01.14.50
         (version=SSLv3 cipher=OTHER);
-        Thu, 26 Jul 2012 01:02:06 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120726074607.GA4455@burratino>
+        Thu, 26 Jul 2012 01:14:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1707449.hNcpMgVJxF@flomedio>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202249>
 
-On Thursday 26 July 2012 02:46:07 Jonathan Nieder wrote:
-> Hi,
-> 
-> Florian Achleitner wrote:
-> > --- /dev/null
-> > +++ b/contrib/svn-fe/remote-svn.c
-> > @@ -0,0 +1,219 @@
-> > +
-> > +#include "cache.h"
-> > +#include "remote.h"
-> > +#include "strbuf.h"
-> > +#include "url.h"
-> > +#include "exec_cmd.h"
-> > +#include "run-command.h"
-> > +#include "svndump.h"
-> > +#include "argv-array.h"
-> > +
-> > +static int debug;
-> > +
-> > +static inline void printd(const char *fmt, ...)
-> 
-> I remember reviewing this before, and mentioning that this could be
-> replaced with trace_printf() and that would simplify some code and
-> improve the functionality.  I think I also remember giving some other
-> suggestions, but I don't have it in front of me so I can't be sure
-> (should have more time this weekend).
-> 
-> Did you look over that review?  Did you have any questions about it,
-> or was it just full of bad ideas, or something else?
-> 
-> It's silly and vain of me, but I'm not motivated by the idea of
-> spending more time looking over this without anything coming of it.
-> (Rejecting suggestions is fine, but sending feedback when doing so is
-> important because otherwise reviewers get demotivated.)
+Florian Achleitner wrote:
 
-Yes, I incorporated your review in the new version, as far as applicable. But 
-I didn't send you an answer on the detailed points. 
-I will send an answer to the previous review ..
+> Yes, I incorporated your review in the new version, as far as applicable. But 
+> I didn't send you an answer on the detailed points. 
+> I will send an answer to the previous review ..
 
-> 
-> Hope that helps,
-> Jonathan
+Thanks.  Now that I check, I see that you did make lots of important
+changes and probably lost the one I noticed just now in the noise.
+
+Another way to keep reviewers happy is to describe what changed since
+the last revision under the triple-dash for each patch when sending
+out a new set of patches.  That way, they can see that there was
+progress and there is less frustration when one specific change didn't
+make it.
+
+See http://thread.gmane.org/gmane.comp.version-control.git/176203
+for example.
