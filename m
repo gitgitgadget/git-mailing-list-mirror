@@ -1,296 +1,86 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 2/2] difftool: Handle compare() returning -1
-Date: Wed, 25 Jul 2012 23:07:58 -0700
-Message-ID: <1343282878-86431-2-git-send-email-davvid@gmail.com>
-References: <1343282878-86431-1-git-send-email-davvid@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:08:19 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Test "t/t7502-commit.sh" failed
+Date: Thu, 26 Jul 2012 14:27:52 +0800
+Message-ID: <CANYiYbHbMw1HpvoCr4yBbWF=Q9Hoc1Zsq3-WoTrx4aQg7R0e4g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 26 08:28:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuHFB-0006xQ-C5
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:08:17 +0200
+	id 1SuHYF-0004ai-Ql
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521Ab2GZGIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 02:08:05 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:36260 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403Ab2GZGID (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 02:08:03 -0400
-Received: by pbbrp8 with SMTP id rp8so2688568pbb.19
-        for <git@vger.kernel.org>; Wed, 25 Jul 2012 23:08:03 -0700 (PDT)
+	id S1751632Ab2GZG1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 02:27:54 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:60078 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250Ab2GZG1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 02:27:53 -0400
+Received: by yhmm54 with SMTP id m54so1594602yhm.19
+        for <git@vger.kernel.org>; Wed, 25 Jul 2012 23:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=XO+jEylHnNWippgjkF/wqueiySGqXdkJZF+6fXmlmvs=;
-        b=YFp1Ucq9qESy2810jQuivkFodb+cpcNtguILHDMti5CC5i9xdmAFFK1AgAQxvXd2uY
-         I7CZPFa9NkO2+6ZEgScK6PTxjOGgATDfxOO1xZCf+EA2bKJ6bWgZ7Ec2Rz00u4BEfmXH
-         XprX50oIiHFAQ7sXvHUBLxdSnDZBiVJWTkdgVTpkNLKRYUZNn07S0fLKE+fr7uEuU8CJ
-         NSxKAbPYiT8cTdSfhutxsrQ+FSdc5eIwPVpV/gySyausCdQRDzKLpb9ACq22rUGaFalg
-         QBIyIS4XlvZJoycAMWfHa42lSkfrkltOGFaxOWDiij2fHDJvy4rahzCTTUp2Ue0lsCPb
-         hgSQ==
-Received: by 10.68.197.202 with SMTP id iw10mr2025959pbc.161.1343282883094;
-        Wed, 25 Jul 2012 23:08:03 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id nj4sm15881623pbc.5.2012.07.25.23.08.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jul 2012 23:08:02 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.11.g3fd941e
-In-Reply-To: <1343282878-86431-1-git-send-email-davvid@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=eKL8dtlj/LV1Vjz+Ns2z4+/VThj7thrt1R2BBj4CuTI=;
+        b=r/KrXoEeMfHI15xHDBfHDY34wBx29yxM5CSEBkoTubQD3wuSp0Il18U7mL5v2BSlpR
+         JQGA/J6Lo3TK2PLCTglkhJY7xbAnqAhdPRMNNrppY+PeswnAcvYkKecmslBLVF/tXkBH
+         zjcgxGCQAtddxG3xjwzfsosiWEk0QopRB3oUNW6CZx3aN3CLjcx9Wk54jG/kFjJx1eQ9
+         Zp0bwOxOjN7fbpX7JfA/yU5TpJ3TX6nHwhOxoMLIBiJEz52z2Kz1WFK72IS65UYc5M+N
+         WHKbnrWS4dbGDKSog8XxV+J8rh4honC15PNPdD1s4VnQk6DZpbABWainE5ySajyg/IeI
+         nRwg==
+Received: by 10.50.17.162 with SMTP id p2mr765489igd.52.1343284072818; Wed, 25
+ Jul 2012 23:27:52 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Wed, 25 Jul 2012 23:27:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202227>
 
-Keep the temporary directory around when compare()
-cannot read its input files, which is indicated by -1.
+Test "t/t7502-commit.sh" failed. I guess it's commit
+v1.7.9.7-1-gf20f387 which breaks it.
 
-Defer tempdir creation to allow an early exit in setup_dir_diff().
-Wrap the rest of the entry points in an exit_cleanup() function
-to handle removing temporary files and error reporting.
+    $ git log -1 --oneline --stat v1.7.9.7-1-gf20f387
+    f20f commit: check committer identity more strictly
+     builtin/commit.c | 2 +-
+     1 file changed, 1 insertion(+), 1 deletion(-)
 
-Print the temporary files' location so that the user can
-recover them.
+Result of t/t7502-commit.sh:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Replaces "difftool: Check all return codes from compare()",
-which was the original permutation of this patch.
+not ok - 21 committer is automatic
+#
+#
+#               echo >>negative &&
+#               (
+#                       sane_unset GIT_COMMITTER_EMAIL &&
+#                       sane_unset GIT_COMMITTER_NAME &&
+#                       # must fail because there is no change
+#                       test_must_fail git commit -e -m "sample"
+#               ) &&
+#               head -n 8 .git/COMMIT_EDITMSG | \
+#               sed "s/^# Committer: .*/# Committer:/" >actual
+#               test_i18ncmp expect actual
+#
 
-This ended up touching much more than the original patch
-since it now handles every exit point, but it's more thorough
-and complete.
+Contents of file expect:
 
- git-difftool.perl | 100 +++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 68 insertions(+), 32 deletions(-)
+    sample
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 8e51238..5ed0b3a 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -18,7 +18,7 @@ use File::Copy;
- use File::Compare;
- use File::Find;
- use File::stat;
--use File::Path qw(mkpath);
-+use File::Path qw(mkpath rmtree);
- use File::Temp qw(tempdir);
- use Getopt::Long qw(:config pass_through);
- use Git;
-@@ -112,6 +112,17 @@ EOF
- 	exit(0);
- }
- 
-+sub exit_cleanup
-+{
-+	my ($tmpdir, $status) = @_;
-+	rmtree($tmpdir);
-+	if ($status and $!) {
-+		my ($package, $file, $line) = caller();
-+		warn "$file line $line: $!\n";
-+	}
-+	exit($status | ($status >> 8));
-+}
-+
- sub setup_dir_diff
- {
- 	my ($repo, $workdir, $symlinks) = @_;
-@@ -128,13 +139,6 @@ sub setup_dir_diff
- 	my $diffrtn = $diffrepo->command_oneline(@gitargs);
- 	exit(0) if (length($diffrtn) == 0);
- 
--	# Setup temp directories
--	my $tmpdir = tempdir('git-difftool.XXXXX', CLEANUP => 1, TMPDIR => 1);
--	my $ldir = "$tmpdir/left";
--	my $rdir = "$tmpdir/right";
--	mkpath($ldir) or die $!;
--	mkpath($rdir) or die $!;
--
- 	# Build index info for left and right sides of the diff
- 	my $submodule_mode = '160000';
- 	my $symlink_mode = '120000';
-@@ -203,6 +207,13 @@ EOF
- 		}
- 	}
- 
-+	# Setup temp directories
-+	my $tmpdir = tempdir('git-difftool.XXXXX', CLEANUP => 0, TMPDIR => 1);
-+	my $ldir = "$tmpdir/left";
-+	my $rdir = "$tmpdir/right";
-+	mkpath($ldir) or exit_cleanup($tmpdir, 1);
-+	mkpath($rdir) or exit_cleanup($tmpdir, 1);
-+
- 	# If $GIT_DIR is not set prior to calling 'git update-index' and
- 	# 'git checkout-index', then those commands will fail if difftool
- 	# is called from a directory other than the repo root.
-@@ -219,16 +230,18 @@ EOF
- 		$repo->command_input_pipe(qw(update-index -z --index-info));
- 	print($inpipe $lindex);
- 	$repo->command_close_pipe($inpipe, $ctx);
-+
- 	my $rc = system('git', 'checkout-index', '--all', "--prefix=$ldir/");
--	exit($rc | ($rc >> 8)) if ($rc != 0);
-+	exit_cleanup($tmpdir, $rc) if $rc != 0;
- 
- 	$ENV{GIT_INDEX_FILE} = "$tmpdir/rindex";
- 	($inpipe, $ctx) =
- 		$repo->command_input_pipe(qw(update-index -z --index-info));
- 	print($inpipe $rindex);
- 	$repo->command_close_pipe($inpipe, $ctx);
-+
- 	$rc = system('git', 'checkout-index', '--all', "--prefix=$rdir/");
--	exit($rc | ($rc >> 8)) if ($rc != 0);
-+	exit_cleanup($tmpdir, $rc) if $rc != 0;
- 
- 	# If $GIT_DIR was explicitly set just for the update/checkout
- 	# commands, then it should be unset before continuing.
-@@ -240,14 +253,19 @@ EOF
- 	for my $file (@working_tree) {
- 		my $dir = dirname($file);
- 		unless (-d "$rdir/$dir") {
--			mkpath("$rdir/$dir") or die $!;
-+			mkpath("$rdir/$dir") or
-+			exit_cleanup($tmpdir, 1);
- 		}
- 		if ($symlinks) {
--			symlink("$workdir/$file", "$rdir/$file") or die $!;
-+			symlink("$workdir/$file", "$rdir/$file") or
-+			exit_cleanup($tmpdir, 1);
- 		} else {
--			copy("$workdir/$file", "$rdir/$file") or die $!;
-+			copy("$workdir/$file", "$rdir/$file") or
-+			exit_cleanup($tmpdir, 1);
-+
- 			my $mode = stat("$workdir/$file")->mode;
--			chmod($mode, "$rdir/$file") or die $!;
-+			chmod($mode, "$rdir/$file") or
-+			exit_cleanup($tmpdir, 1);
- 		}
- 	}
- 
-@@ -255,27 +273,35 @@ EOF
- 	# temporary file to both the left and right directories to show the
- 	# change in the recorded SHA1 for the submodule.
- 	for my $path (keys %submodule) {
-+		my $ok;
- 		if (defined($submodule{$path}{left})) {
--			write_to_file("$ldir/$path", "Subproject commit $submodule{$path}{left}");
-+			$ok = write_to_file("$ldir/$path",
-+				"Subproject commit $submodule{$path}{left}");
- 		}
- 		if (defined($submodule{$path}{right})) {
--			write_to_file("$rdir/$path", "Subproject commit $submodule{$path}{right}");
-+			$ok = write_to_file("$rdir/$path",
-+				"Subproject commit $submodule{$path}{right}");
- 		}
-+		exit_cleanup($tmpdir, 1) if not $ok;
- 	}
- 
- 	# Symbolic links require special treatment. The standard "git diff"
- 	# shows only the link itself, not the contents of the link target.
- 	# This loop replicates that behavior.
- 	for my $path (keys %symlink) {
-+		my $ok;
- 		if (defined($symlink{$path}{left})) {
--			write_to_file("$ldir/$path", $symlink{$path}{left});
-+			$ok = write_to_file("$ldir/$path",
-+					$symlink{$path}{left});
- 		}
- 		if (defined($symlink{$path}{right})) {
--			write_to_file("$rdir/$path", $symlink{$path}{right});
-+			$ok = write_to_file("$rdir/$path",
-+					$symlink{$path}{right});
- 		}
-+		exit_cleanup($tmpdir, 1) if not $ok;
- 	}
- 
--	return ($ldir, $rdir, @working_tree);
-+	return ($ldir, $rdir, $tmpdir, @working_tree);
- }
- 
- sub write_to_file
-@@ -286,16 +312,18 @@ sub write_to_file
- 	# Make sure the path to the file exists
- 	my $dir = dirname($path);
- 	unless (-d "$dir") {
--		mkpath("$dir") or die $!;
-+		mkpath("$dir") or return 0;
- 	}
- 
- 	# If the file already exists in that location, delete it.  This
- 	# is required in the case of symbolic links.
--	unlink("$path");
-+	unlink($path);
- 
--	open(my $fh, '>', "$path") or die $!;
-+	open(my $fh, '>', $path) or return 0;
- 	print($fh $value);
- 	close($fh);
-+
-+	return 1;
- }
- 
- sub main
-@@ -367,21 +395,19 @@ sub main
- sub dir_diff
- {
- 	my ($extcmd, $symlinks) = @_;
--
- 	my $rc;
-+	my $error = 0;
- 	my $repo = Git->repository();
--
- 	my $workdir = find_worktree($repo);
--	my ($a, $b, @worktree) = setup_dir_diff($repo, $workdir, $symlinks);
-+	my ($a, $b, $tmpdir, @worktree) =
-+		setup_dir_diff($repo, $workdir, $symlinks);
-+
- 	if (defined($extcmd)) {
- 		$rc = system($extcmd, $a, $b);
- 	} else {
- 		$ENV{GIT_DIFFTOOL_DIRDIFF} = 'true';
- 		$rc = system('git', 'difftool--helper', $a, $b);
- 	}
--
--	exit($rc | ($rc >> 8)) if ($rc != 0);
--
- 	# If the diff including working copy files and those
- 	# files were modified during the diff, then the changes
- 	# should be copied back to the working tree.
-@@ -395,16 +421,26 @@ sub dir_diff
- 		if ($diff == 0) {
- 			next;
- 		} elsif ($diff == -1 ) {
--			my $errmsg = "warning: could not compare ";
-+			my $errmsg = "warning: Could not compare ";
- 			$errmsg += "'$b/$file' with '$workdir/$file'\n";
- 			warn $errmsg;
-+			$error = 1;
- 		} elsif ($diff == 1) {
--			copy("$b/$file", "$workdir/$file") or die $!;
- 			my $mode = stat("$b/$file")->mode;
--			chmod($mode, "$workdir/$file") or die $!;
-+			copy("$b/$file", "$workdir/$file") or
-+			exit_cleanup($tmpdir, 1);
-+
-+			chmod($mode, "$workdir/$file") or
-+			exit_cleanup($tmpdir, 1);
- 		}
- 	}
--	exit(0);
-+	if ($error) {
-+		warn "warning: Temporary files exist in '$tmpdir'.\n";
-+		warn "warning: You may want to cleanup or recover these.\n";
-+		exit(1);
-+	} else {
-+		exit_cleanup($tmpdir, $rc);
-+	}
- }
- 
- sub file_diff
+    # Please enter the commit message for your changes. Lines starting
+    # with '#' will be ignored, and an empty message aborts the commit.
+    #
+    # Author:    A U Thor <author@example.com>
+    # Committer:
+    #
+
+Contents of file actual:
+
+    sample
+
 -- 
-1.7.11.11.g72d9886.dirty
+Jiang Xin
