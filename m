@@ -1,92 +1,85 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 3/3] difftool: Disable --symlinks on cygwin
-Date: Thu, 26 Jul 2012 10:39:28 -0700
-Message-ID: <CAJDDKr4z_ddwe7s8dY80dZJMNP=75VK6NjOV0WCqFL_LDuMpBA@mail.gmail.com>
-References: <1343186064-49350-1-git-send-email-davvid@gmail.com>
-	<1343186064-49350-4-git-send-email-davvid@gmail.com>
-	<CABPQNSZ=yWxVivadJfh9BMPtqiiGyyEL0vZu+fvsu_Zzhd7yhw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
+Date: Thu, 26 Jul 2012 10:46:01 -0700
+Message-ID: <7vehny8lgm.fsf@alter.siamese.dyndns.org>
+References: <20120719213225.GA20311@sigill.intra.peff.net>
+ <20120719213311.GA20385@sigill.intra.peff.net>
+ <50092993.6010203@alum.mit.edu> <20120720154403.GB2862@sigill.intra.peff.net>
+ <5009892E.9010808@kdbg.org> <20120720170913.GA14057@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tim Henigan <tim.henigan@gmail.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 26 19:39:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Alexey Muranov <alexey.muranov@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 26 19:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuS2B-0006yY-6p
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:39:35 +0200
+	id 1SuS8a-0003d3-Fy
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160Ab2GZRja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 13:39:30 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:54687 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032Ab2GZRj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 13:39:29 -0400
-Received: by vbbff1 with SMTP id ff1so1900091vbb.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 10:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OAdlNZqm7ZpviJOm/IcWjbQmuSzOilWH1ZKL/kY5ePM=;
-        b=J6WWr6eQSNUR8rKShuIb7G78n060b84x4QeTueVwmX+9FXqslLLNqzNkuXKfTewKHB
-         V/t0wr1mDsvkC0INddFjdpvfHs9NgH3udmjhJYL/i0UhucEu+vLye4BVbBfKv7KMKTuX
-         WDX7pTB51EAtC0ctYyrxG/S7BxVbsC0yHn9XxRm1svDh4Gmz8GBAIT6QCtaOEWnEqE07
-         1YqYW+of/8KSs3of9SOJzvzEin+HM5d/70dXlCIiALI0yhapXcCTH5I61/XNK6c9T9/L
-         90WdTdRivs1vQN0OK2/MRAqLTWI4lKRr/ng9ZxRmngkdmGfDIcRK85bZ5iPhVqV1dnGu
-         RAdA==
-Received: by 10.52.90.144 with SMTP id bw16mr19758305vdb.129.1343324369001;
- Thu, 26 Jul 2012 10:39:29 -0700 (PDT)
-Received: by 10.52.114.67 with HTTP; Thu, 26 Jul 2012 10:39:28 -0700 (PDT)
-In-Reply-To: <CABPQNSZ=yWxVivadJfh9BMPtqiiGyyEL0vZu+fvsu_Zzhd7yhw@mail.gmail.com>
+	id S1752778Ab2GZRqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 13:46:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53085 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752218Ab2GZRqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 13:46:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E08E48BEE;
+	Thu, 26 Jul 2012 13:46:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5yZtmC7ix4i+B93ZaSJAJ+WkcEc=; b=QY5sNu
+	e3s8HmdQ33qvKAMJ7/ZhudiJFwKf1rfNOhrNiYiBfuQm9DfrS3Eu1WOBeAs4x9X/
+	gRqY4+igu4U68NVWBjAeLiu8MCtH1+tKiaClyebT/Tgvv0ZdzadT2xaStGuTMEKo
+	IIs36HJfw2nBJLmI6jvNh6RAXwlI3LwdJwWcE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FWzitteraaudPTfa0E54sFFozfxIMwCH
+	EIXoqBeCcTuyoBfAlc+c03zdOZKs8Gq+4d4uGC1uNqGi77id6UljPotcRkmOSqbG
+	KJdF+T4R1HqoY8EbZsOKLV3ET0GZanfh1pB5VQirat4VM53mSW1KS6TG+uBpQx7A
+	gydHKS9l08I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4A78BED;
+	Thu, 26 Jul 2012 13:46:03 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F2CC8BEC; Thu, 26 Jul 2012
+ 13:46:02 -0400 (EDT)
+In-Reply-To: <20120720170913.GA14057@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 20 Jul 2012 13:09:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C47A5D28-D749-11E1-9C6D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202284>
 
-On Thu, Jul 26, 2012 at 4:31 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Wed, Jul 25, 2012 at 5:14 AM, David Aguilar <davvid@gmail.com> wrote:
->> Symlinks are not ubiquitous on Windows so make --no-symlinks the default.
->>
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->> ---
->> I don't have cygwin so I can't verify this one myself.
->> Is 'cygwin' really the value of $^O there?
->>
->>  git-difftool.perl | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/git-difftool.perl b/git-difftool.perl
->> index 591ee75..10d3d97 100755
->> --- a/git-difftool.perl
->> +++ b/git-difftool.perl
->> @@ -291,7 +291,8 @@ sub main
->>                 gui => undef,
->>                 help => undef,
->>                 prompt => undef,
->> -               symlinks => $^O ne 'MSWin32' && $^O ne 'msys',
->> +               symlinks => $^O ne 'cygwin' &&
->> +                               $^O ne 'MSWin32' && $^O ne 'msys',
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Jul 20, 2012 at 06:37:02PM +0200, Johannes Sixt wrote:
 >
-> I thought Cygwin supported (their own version of) symlinks? What's the
-> rationale for not using it by default there?
+>> Am 20.07.2012 17:44, schrieb Jeff King:
+>> > So I think a suffix like ":d" is probably the least horrible.
+>> 
+>> Not so. It does not work on Windows :-( in the expected way. Trying to
+>> open a file with a colon-separated suffix either opens a resource fork
+>> on NTFS or fails with "invalid path".
+>
+> Bleh. It seems that we did too good a job in coming up with a list of
+> disallowed ref characters; they really are things you don't want in your
+> filenames at all. :)
 
-I am not a Cygwin user so I cannot verify whether it is a good or bad idea.
+Why do no need to even worry about ~ vs : vs whatever in the first
+place?
 
-I have a few questions regarding symlinks on Cygwin:
-
-Do the symlinks work consistently with the Perl symlink() function?
-Can we always rely on this capability being available?
-Do all win32 filesystems support it?
-Do all builds of cygwin perl support it?
-
-If any of these answers are "no" or "maybe", then an improvement
-beyond this patch would be to perhaps support a `difftool.symlinks`
-configuration variable so that the user can tell us what to use as the
-default.
--- 
-David
+With a flag-day per repository "core.repositoryformatversion = 1",
+you do not have to worry about mixture of old-style refs and new
+ones, so refs/heads/next-d/log could be a topic branch 'next/log'
+that is based on an integration branch 'next' branch that physically
+resides at refs/heads/next-f or an entry refs/heads/next in packed
+refs.  Only the API functions in refs.c should care, no?
