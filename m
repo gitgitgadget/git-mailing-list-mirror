@@ -1,75 +1,86 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
-Date: Thu, 26 Jul 2012 19:47:06 +0700
-Message-ID: <CACsJy8BtcvuW2HKPSki7meyHMsvpLS0b8QG5M_083HEwy=-9EQ@mail.gmail.com>
-References: <20120719213225.GA20311@sigill.intra.peff.net> <20120719213311.GA20385@sigill.intra.peff.net>
- <50092993.6010203@alum.mit.edu> <20120720154403.GB2862@sigill.intra.peff.net>
- <5009892E.9010808@kdbg.org> <20120720170913.GA14057@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] i18n: leave \n out of translated diffstat
+Date: Thu, 26 Jul 2012 19:52:36 +0700
+Message-ID: <1343307156-16528-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Alexey Muranov <alexey.muranov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 14:47:46 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 26 14:53:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuNTi-0004mq-N2
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 14:47:43 +0200
+	id 1SuNZT-0000hn-MV
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 14:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145Ab2GZMrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 08:47:39 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43143 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999Ab2GZMrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 08:47:37 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uo13so2633319obb.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 05:47:37 -0700 (PDT)
+	id S1752164Ab2GZMx2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jul 2012 08:53:28 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:56631 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005Ab2GZMx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 08:53:27 -0400
+Received: by gglu4 with SMTP id u4so1881415ggl.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 05:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=j/b32Oau/oChfFg4XEGxhzqUzprA1koPCEGWpNfNcVM=;
-        b=uUaqosgltk6m1mr4moadeNv0iw9kFbeXo1HLAiQWn7CM8yYWpiRj7pn1qCCT4nNxNL
-         Ao1IwpjWuLgGSEeES11UcGjlTe6S9A4Xkv5eP9LDwARwePfmNvr4xq0ZfUNn7piC2VXI
-         1c1pRDhupqwCG1eW77Anq0tnny5X8dOHKI+J9FQXKoq+oRRUnufU3gmD0uSa8QCIh5AD
-         unp5w+9Oai4gaNveb7BZ8WyONnPqhwHHXZ/Hr66OfcvKqEqk8v1212oQDTwnYNsSFK+O
-         uQi/kQd8MNYwwiPVNsi3IlXhbfadJCIGngePfuUDlUQstVS/5fSj/8qZf5LaDjb7tVPF
-         r3Zg==
-Received: by 10.182.16.3 with SMTP id b3mr41192194obd.72.1343306856861; Thu,
- 26 Jul 2012 05:47:36 -0700 (PDT)
-Received: by 10.182.177.67 with HTTP; Thu, 26 Jul 2012 05:47:06 -0700 (PDT)
-In-Reply-To: <20120720170913.GA14057@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=8CK48abz7gOAMu+sd27IlBDHYn62aJoQJK+GZ0hPZQA=;
+        b=ecan8zjZUXH4gMQ3T5GIAFnvYbbq4iuB/bAxc8i7kY24sWJsQAN62HoJtnVYy9EET+
+         XFbbTOuTBDYYUqzZ4nQf36E5DTi5c5dUL6bH4Ad5vt1zdw+xbg+QgjEl0WpVEozEYknT
+         R8ElQHXVc+u6/JNPK1VDqJQ3ZGQ2QVZA2SYAJNZOy+rnWUVAXDRKGJe2QVTymrkwALTB
+         BzJCDP6eySkd5WC9hOj4AwIIg+Al/3p68mc5k5nGtbWx/30fKMuwmWmRU9pVyBlcJLOQ
+         tFaW4Ha0DAyM2bpP6vSwO3x52puF+ArQ1EiVi4sJ/wSVMBfDdhpOAKRTENldI8OWPngv
+         e+pg==
+Received: by 10.66.75.228 with SMTP id f4mr20402690paw.52.1343307206821;
+        Thu, 26 Jul 2012 05:53:26 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.32.150])
+        by mx.google.com with ESMTPS id pt2sm16501770pbb.58.2012.07.26.05.53.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 Jul 2012 05:53:26 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 26 Jul 2012 19:52:38 +0700
+X-Mailer: git-send-email 1.7.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202260>
 
-On Sat, Jul 21, 2012 at 12:09 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jul 20, 2012 at 06:37:02PM +0200, Johannes Sixt wrote:
->
->> Am 20.07.2012 17:44, schrieb Jeff King:
->> > So I think a suffix like ":d" is probably the least horrible.
->>
->> Not so. It does not work on Windows :-( in the expected way. Trying to
->> open a file with a colon-separated suffix either opens a resource fork
->> on NTFS or fails with "invalid path".
->
-> Bleh. It seems that we did too good a job in coming up with a list of
-> disallowed ref characters; they really are things you don't want in your
-> filenames at all. :)
+GETTEXT_POISON scrapes everything in translated strings, including \n.
+t4205.12 however needs this \n in matching the end result. Keep this
+\n out of translation to make t4205.12 happy.
 
-So we haven't found any way to present both branches "foo" and
-"foo/bar" on file system at the same time. How about when we a new
-branch introduces such a conflict, we push the new branch directly to
-packed-refs? If we need either of them on a separate file, for fast
-update for example, then we unpack just one and repack all refs that
-conflict with it. Attempting to update two conflict branches in
-parallel may impact performance, but I don't think that happens often.
--- 
-Duy
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I haven't followed recent i18n patches closely. Jiang may have
+ already fixed this in one of his patches. Anyway just in case
+ everybody does miss this..
+
+ Should I resend parseopt i18n marking series now or wait until rc
+ period is over?
+
+ diff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 62cbe14..95706a5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1397,7 +1397,7 @@ int print_stat_summary(FILE *fp, int files, int i=
+nsertions, int deletions)
+=20
+ 	if (!files) {
+ 		assert(insertions =3D=3D 0 && deletions =3D=3D 0);
+-		return fputs(_(" 0 files changed\n"), fp);
++		return fprintf(fp, "%s\n", _(" 0 files changed"));
+ 	}
+=20
+ 	strbuf_addf(&sb,
+--=20
+1.7.8
