@@ -1,89 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] t7502: test early quit from commit with bad ident
-Date: Thu, 26 Jul 2012 16:32:50 -0400
-Message-ID: <20120726203250.GF16048@sigill.intra.peff.net>
-References: <20120726202644.GA15043@sigill.intra.peff.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH v9] git on Mac OS and precomposed unicode
+Date: Thu, 26 Jul 2012 22:49:14 +0200
+Message-ID: <5011AD4A.8060901@dewire.com>
+References: <201207081550.25850.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 22:33:01 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jul 26 22:49:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuUjy-0007hQ-2P
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 22:32:58 +0200
+	id 1SuV0I-00062w-GU
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 22:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752456Ab2GZUcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 16:32:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37611 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751678Ab2GZUcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 16:32:52 -0400
-Received: (qmail 13446 invoked by uid 107); 26 Jul 2012 20:32:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 16:32:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 16:32:50 -0400
-Content-Disposition: inline
-In-Reply-To: <20120726202644.GA15043@sigill.intra.peff.net>
+	id S1752362Ab2GZUtQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jul 2012 16:49:16 -0400
+Received: from mail.dewire.com ([83.140.172.130]:2859 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752314Ab2GZUtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 16:49:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 50EE38FC74;
+	Thu, 26 Jul 2012 22:49:14 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WR-qCa+DlNZG; Thu, 26 Jul 2012 22:49:14 +0200 (CEST)
+Received: from Robin-Rosenbergs-MacBook-Pro.local (h102n2fls33o828.telia.com [213.67.12.102])
+	by dewire.com (Postfix) with ESMTP id 154D48FC73;
+	Thu, 26 Jul 2012 22:49:14 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120717 Thunderbird/15.0
+In-Reply-To: <201207081550.25850.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202309>
 
-In commit f20f387, "git commit" notices and dies much
-earlier when we have a bogus commit identity. That commit
-did not add a test because we cannot do so reliably (namely,
-we can only trigger the behavior on a system where the
-automatically generated identity is bogus). However, now
-that we have a prerequisite check for this feature, we can
-add a test that will at least run on systems that produce
-such a bogus identity.
+Just a couple of nitpicks.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t7502-commit.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Torsten B=C3=B6gershausen skrev 2012-07-08 15.50:
+> diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+[...]
+> +static size_t has_utf8(const char *s, size_t maxlen, size_t *strlen_=
+c)
+> +{
+> +	const uint8_t *utf8p =3D (const uint8_t*) s;
+> +	size_t strlen_chars =3D 0;
+> +	size_t ret =3D 0;
+> +
+> +	if ((!utf8p) || (!*utf8p)) {
+Style: Drop the extra parentheses
+> +		return 0;
+> +	}
+> +
+> +	while((*utf8p) && maxlen) {
+Style: Drop the extra parentheses
+[...]
 
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index c444812..deb187e 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -248,6 +248,8 @@ test_expect_success 'setup auto-ident prerequisite' '
- 	    sane_unset GIT_COMMITTER_NAME &&
- 	    git var GIT_COMMITTER_IDENT); then
- 		test_set_prereq AUTOIDENT
-+	else
-+		test_set_prereq NOAUTOIDENT
- 	fi
- '
- 
-@@ -269,6 +271,21 @@ echo editor started > "$(pwd)/.git/result"
- exit 0
- EOF
- 
-+test_expect_success NOAUTOIDENT 'do not fire editor when committer is bogus' '
-+	>.git/result
-+	>expect &&
-+
-+	echo >>negative &&
-+	(
-+		sane_unset GIT_COMMITTER_EMAIL &&
-+		sane_unset GIT_COMMITTER_NAME &&
-+		GIT_EDITOR="\"$(pwd)/.git/FAKE_EDITOR\"" &&
-+		export GIT_EDITOR &&
-+		test_must_fail git commit -e -m sample -a
-+	) &&
-+	test_cmp expect .git/result
-+'
-+
- test_expect_success 'do not fire editor in the presence of conflicts' '
- 
- 	git clean -f &&
--- 
-1.7.11.3.8.ge78f547
+> +void probe_utf8_pathname_composition(char *path, int len)
+> +{
+> +	const static char *auml_nfc =3D "\xc3\xa4";
+> +	const static char *auml_nfd =3D "\x61\xcc\x88";
+> +	int output_fd;
+> +	if (precomposed_unicode !=3D -1)
+> +		return; /* We found it defined in the global config, respect it */
+> +	path[len] =3D 0;
+Not needed, will be overwritten by strcpy
+
+> +	strcpy(path + len, auml_nfc);
+> +	output_fd =3D open(path, O_CREAT|O_EXCL|O_RDWR, 0600);
+> +	if (output_fd >=3D0) {
+> +		close(output_fd);
+> +		path[len] =3D 0;
+Not needed, will be overwritten by strcpy
+
+> +		strcpy(path + len, auml_nfd);
+> +		/* Indicate to the user, that we can configure it to true */
+> +		if (0 =3D=3D access(path, R_OK))
+> +			git_config_set("core.precomposeunicode", "false");
+> +			/* To be backward compatible, set precomposed_unicode to 0 */
+> +		precomposed_unicode =3D 0;
+> +		path[len] =3D 0;
+Not needed, will be overwritten by strcpy
+
+> +		strcpy(path + len, auml_nfc);
+> +		unlink(path);
+Err out if path cannot be deleted?
+
+-- robin
