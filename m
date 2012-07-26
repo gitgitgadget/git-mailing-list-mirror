@@ -1,80 +1,116 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 0/5] test-lib: filesystem prerequisites
-Date: Thu, 26 Jul 2012 15:39:52 +0200
-Message-ID: <cover.1343309173.git.git@drmicha.warpmail.net>
+Subject: [PATCH 3/5] t0050: use the SYMLINKS test prereq
+Date: Thu, 26 Jul 2012 15:39:55 +0200
+Message-ID: <8a35a99e9694af4cccda19199c7543d748d41d73.1343309173.git.git@drmicha.warpmail.net>
 References: <5001B82B.1060201@web.de>
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 15:40:10 2012
+X-From: git-owner@vger.kernel.org Thu Jul 26 15:40:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuOIT-0004BS-LI
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 15:40:09 +0200
+	id 1SuOIf-0004LP-9z
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 15:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751735Ab2GZNkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 09:40:00 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:59457 "EHLO
+	id S1752048Ab2GZNkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 09:40:07 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:50162 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751049Ab2GZNkA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2012 09:40:00 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 90D8420B90;
-	Thu, 26 Jul 2012 09:39:59 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 26 Jul 2012 09:39:59 -0400
+	by vger.kernel.org with ESMTP id S1751773Ab2GZNkE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2012 09:40:04 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5EFF220AA5;
+	Thu, 26 Jul 2012 09:40:04 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Thu, 26 Jul 2012 09:40:04 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=CB4uTsOhh9k1Ar2j+U2lhU249
-	pI=; b=BowPzQm6Cm5CWzQIKiV3Qo+LilDWyUcIlX0LuUzlG8Jb0PZi/Bhyb+4yA
-	cLDstLdqUc63PzECXIQ94kpIDQ7HYZmDsn342dGQlkNkXRedtpscLKYdk2pA67+y
-	HI4eQ2DrL9nT+/1/pm6+bWGTgGa74HPOT4qgNhc3pfvHmQOl3s=
-X-Sasl-enc: CTeFXfyZyW3XmjOmKNi4GZU4rdBLA19ph5Booo+7ip0t 1343309999
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=xS
+	yfaoCUTcz+gvLhEtH9Hfqt2JM=; b=M9W6OhNScKYDQ8vYfVqKsmTZNhcME2hgF5
+	NseE87R3AzlwfF1wdqlcSmzMPXE+42c6a5oPTEjPXpfl/mQnTGiAxShtlWiDacIs
+	oLduUSjbNXMU7JTjp3pVqr2iGmwOCRqtzmqDYmi8ni5eZLz3hhrynoq26tnLr4FC
+	DMm0DaivE=
+X-Sasl-enc: ltSLCbSuRN+tIp44EJ9+vYIlo70KbhDtbzDdZ2618m8G 1343310003
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2A7CE8E011D;
-	Thu, 26 Jul 2012 09:39:59 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id E7259483525;
+	Thu, 26 Jul 2012 09:40:03 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.rc0.198.gd66b616
 In-Reply-To: <5001B82B.1060201@web.de>
+In-Reply-To: <cover.1343309173.git.git@drmicha.warpmail.net>
+References: <cover.1343309173.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202264>
 
-This mini series provides and makes use of test prerequisites for
-case insensitivity, symlinks and unicode conversion.
 
-SYMLINKS existed before but was not used in t0050.
-CASE_INSENSITIVE_FS was defined in t0003 rather than test-lib (and redone in
-t0050).
-UTF8_NFD_TO_NFC did not exist but was redone in two ways in two tests.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t0050-filesystem.sh | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-After this series, all 3 are defined in test-lib and used in the various tests.
-
-Michael J Gruber (5):
-  test-lib: provide case insensitivity as a prerequisite
-  t0050: use the CASE_INSENSITIVE_FS test prereq
-  t0050: use the SYMLINKS test prereq
-  test-lib: provide UTF8 behaviour as a prerequisite
-  t3910: use the SYMLINKS test prereq
-
- t/README                     |   9 ++
- t/t0003-attributes.sh        |  10 --
- t/t0050-filesystem.sh        |  64 ++++------
- t/t3910-mac-os-precompose.sh | 281 +++++++++++++++++++++----------------------
- t/test-lib.sh                |  24 ++++
- 5 files changed, 189 insertions(+), 199 deletions(-)
-
-Really (-w), it is this besides the tab removals:
-
- t/README                     |  9 +++++++++
- t/t0003-attributes.sh        | 10 ----------
- t/t0050-filesystem.sh        | 62 ++++++++++++++++++++------------------------------------------
- t/t3910-mac-os-precompose.sh | 25 +++++++------------------
- t/test-lib.sh                | 24 ++++++++++++++++++++++++
- 5 files changed, 60 insertions(+), 70 deletions(-)
-
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index df9498b..b46ae72 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -8,7 +8,6 @@ auml=$(printf '\303\244')
+ aumlcdiar=$(printf '\141\314\210')
+ 
+ unibad=
+-no_symlinks=
+ test_expect_success 'see what we expect' '
+ 
+ 	test_unicode=test_expect_success &&
+@@ -21,13 +20,7 @@ test_expect_success 'see what we expect' '
+ 		;;
+ 	*)	;;
+ 	esac &&
+-	rm -fr junk &&
+-	{
+-		ln -s x y 2> /dev/null &&
+-		test -h y 2> /dev/null ||
+-		no_symlinks=1 &&
+-		rm -f y
+-	}
++	rm -fr junk
+ '
+ 
+ if test_have_prereq CASE_INSENSITIVE_FS
+@@ -40,7 +33,7 @@ fi
+ 
+ test "$unibad" &&
+ 	say "will test on a unicode corrupting filesystem"
+-test "$no_symlinks" &&
++test_have_prereq SYMLINKS ||
+ 	say "will test on a filesystem lacking symbolic links"
+ 
+ if test_have_prereq CASE_INSENSITIVE_FS
+@@ -57,18 +50,18 @@ test_expect_success "detection of case insensitive filesystem during repo init"
+ '
+ fi
+ 
+-if test "$no_symlinks"
++if test_have_prereq SYMLINKS
+ then
+ test_expect_success "detection of filesystem w/o symlink support during repo init" '
+ 
+-	v=$(git config --bool core.symlinks) &&
+-	test "$v" = false
++	test_must_fail git config --bool core.symlinks ||
++	test "$(git config --bool core.symlinks)" = true
+ '
+ else
+ test_expect_success "detection of filesystem w/o symlink support during repo init" '
+ 
+-	test_must_fail git config --bool core.symlinks ||
+-	test "$(git config --bool core.symlinks)" = true
++	v=$(git config --bool core.symlinks) &&
++	test "$v" = false
+ '
+ fi
+ 
 -- 
 1.7.12.rc0.198.gd66b616
