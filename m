@@ -1,95 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jiang Xin <worldhello.net@gmail.com>
 Subject: Re: [PATCH] builtin-commit.c: Not add duplicate S-o-b when commit
-Date: Wed, 25 Jul 2012 23:44:14 -0700
-Message-ID: <7vy5m781j5.fsf@alter.siamese.dyndns.org>
+Date: Thu, 26 Jul 2012 15:15:24 +0800
+Message-ID: <CANYiYbH0Jfk0LLp8HXVEamD0uRzM2OGJCE8W4h_UoDLh1pMVHA@mail.gmail.com>
 References: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com>
+	<7vy5m781j5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 26 08:44:26 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 09:15:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuHo7-00006F-99
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 08:44:23 +0200
+	id 1SuIIc-0007Ci-Nj
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 09:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751028Ab2GZGoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 02:44:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54037 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750867Ab2GZGoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 02:44:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB1C5D16;
-	Thu, 26 Jul 2012 02:44:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8VxdNsQiwUxc/5o+YSZxBTXWeic=; b=jAGWQR
-	teE2ts4OvcO7XMBOZDQJmVApXMR7hprGfLtGbFolAdI9bgOhua8Dy6ATT7aMo4Hl
-	H7X3BXelw5/aSfG2Scp+vat/MKLHdA//4mkaytCD+qiwFm3qrjGDgWK57WJ5ZfjX
-	U/TScou/dSokMvMUYjAxX2c5rLVnjpcgjYr1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ravaNqGs3mbyWMij7HMlgPWyTLf2JzAM
-	JZBa74mNFpIY1sr+2faz/oLE7jvt/GrIFvbMFf2XeaUcrqceqWU+55T8Xg1nNFLZ
-	+nEZzy5RCAdjHSTwTJIlpooxEEKUWaZpRqlwNA3Z3Iv1VtUgqLkjB8wd8GtHEadb
-	RoRbMj7zxdY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A790E5D15;
-	Thu, 26 Jul 2012 02:44:16 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C65E5D14; Thu, 26 Jul 2012
- 02:44:15 -0400 (EDT)
-In-Reply-To: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com> (Jiang Xin's message of "Thu, 26 Jul 2012 14:01:19 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 517D5066-D6ED-11E1-8B46-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751250Ab2GZHP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 03:15:28 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:56727 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113Ab2GZHPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 03:15:25 -0400
+Received: by gglu4 with SMTP id u4so1614092ggl.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 00:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HmTKidnneHwn3i99B81dQwnGnyU9iKIm/pHJbTLjoUk=;
+        b=EdVDlJsfDb5d1sYXnkrc0aXvKslU5Kun/+cEsP/o9m8xAtcJeCnxaQCaE4VxGWGfLc
+         Wx8se6bjdfH3DwFHWrUIeN7U4hhbe+nnqvlEd/t/Za4RYkamEYQJrEBccpZQI/OSiBWD
+         fdXFSQS9iRLS9v2dl2HB4PFQ62EQHHAP5W593ilvuSbO6UM7QLhjAqzjkTnyk4YUYT9N
+         2FBCtQANMCwmBFTkPWHLE4P7ZpagYqfrDwXWQbsdkqqxK1zbFkIiPxmmuKmRShPtm1IE
+         sQsV9odZr77/jSfTGC/6ZbrICxAwXeEAUxcLQhqIcytQ+hrlZ5plU5kEwqlCbat2T8Oi
+         uSFQ==
+Received: by 10.43.126.1 with SMTP id gu1mr27703649icc.6.1343286924482; Thu,
+ 26 Jul 2012 00:15:24 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Thu, 26 Jul 2012 00:15:24 -0700 (PDT)
+In-Reply-To: <7vy5m781j5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202229>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+2012/7/26 Junio C Hamano <gitster@pobox.com>:
+> After stating the observation like the above, please make it a habit
+> to say "which is bad because...", if you think it is a bad behaviour
+> and the patch is about fixing it.
 
-> Scan the whole rfc2822 footer for duplicate S-o-b, not just the last
-> line of the commit message.
->
-> A commit may have multiple S-o-bs, or other tags, such as:
->
->     some commit log...
->
->     Signed-off-by: C O Mitter <committer@example.com>
->     Reported-by: R E Porter <reporter@example.com>
->
-> Because the S-o-b is not located at the last line in the above commit,
-> when the above commit is amended by the original committer, a
-> duplicated S-o-b may appended by accident. New commit log may looks
-> like:
->
->     some commit log...
->
->     Signed-off-by: C O Mitter <committer@example.com>
->     Reported-by: R E Porter <reporter@example.com>
->     Signed-off-by: C O Mitter <committer@example.com>
->
+Indead before I start, I examine git-commit and git-am, and find
+the behaviours of the two commands are different.
 
-After stating the observation like the above, please make it a habit
-to say "which is bad because...", if you think it is a bad behaviour
-and the patch is about fixing it.
+"git commit -s" checks the last line of the footer, while "git -am"
+checks the last S-o-b. E.g. original commit X:
 
-Because a chain of S-o-b is used to record the flow of a patch, it
-is entirely normal if developer A writes the patch (she signs it
-off), reviewer B picks it up and sends it back with a minor fix-up
-to the list, and developer A again picks it up from the list and
-forwards it to the uplevel maintainer, in which case you may see
-S-o-b by A, then B (it may be S-o-b or something else,
-e.g. Reviewed-by) and then S-o-b by A again.
+    commit log...
 
-The above observation is correct (a commit log may look like so),
-but your untold conclusion (it is a bad thing because there are
-S-o-b from the same person twice) is not necessarily correct.
+    Signed-off-by: A
+    Signed-off-by: B
+    Reported-by: C
+
+When user B amend the commit, the amended commit Y looks like:
+
+    commit log...
+
+    Signed-off-by: A
+    Signed-off-by: B
+    Reported-by: C
+    Signed-off-by: B
+
+While if the original commit X send to user B by patch, and
+user B run command "git am -s", the commit would be:
+
+    Signed-off-by: A
+    Signed-off-by: B
+    Reported-by: C
+
+So I guess duplicate S-o-b is not intentional.
+
+I use an alias for commit:
+
+    git config --global alias.ci "commit -s"
+
+And will encounter duplicate S-o-b issues frequently, especially
+format-patch/send-email workflow.
+
+-- 
+Jiang Xin
