@@ -1,79 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] test-lib: filesystem prerequisites
-Date: Thu, 26 Jul 2012 13:10:18 -0700
-Message-ID: <7vzk6m5ln9.fsf@alter.siamese.dyndns.org>
-References: <5001B82B.1060201@web.de>
- <cover.1343309173.git.git@drmicha.warpmail.net>
- <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
- <20120726184337.GB16037@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/6] t7502 fixes
+Date: Thu, 26 Jul 2012 16:26:44 -0400
+Message-ID: <20120726202644.GA15043@sigill.intra.peff.net>
+References: <CANYiYbHbMw1HpvoCr4yBbWF=Q9Hoc1Zsq3-WoTrx4aQg7R0e4g@mail.gmail.com>
+ <20120726130348.GA965@sigill.intra.peff.net>
+ <7vtxwu8orw.fsf@alter.siamese.dyndns.org>
+ <20120726171256.GC13942@sigill.intra.peff.net>
+ <7v8ve672ar.fsf@alter.siamese.dyndns.org>
+ <20120726193359.GA28711@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	tboegi@web.de
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 22:10:30 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 22:26:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuUOD-0004JH-8j
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 22:10:29 +0200
+	id 1SuUe4-000272-Ta
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 22:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632Ab2GZUKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 16:10:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57150 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752043Ab2GZUKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jul 2012 16:10:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF7EC9EC8;
-	Thu, 26 Jul 2012 16:10:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xYAivEQw+S7FGN+x/Epf5Kn/KDw=; b=nmzdxA
-	9rU66HQhUU8we0O3EAOp+/OkU0M65SkQRC14ZtuTOHKQG0fxhd99EU6BNSUFVnqk
-	UT8xrL7UlbDb//LOS282EvSHZ8RmpxRhs34hp4xuPFHZ8Lvh2PpsSQx/hQ/GA/lH
-	RH8yOKiS4yJKVROM+4xQKf5Du3VktE/pcRIGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DSHG1v54HrLpUxQR4ei8hj37CxwQJNck
-	+rJPNJdKCcbtNPRg9bjAJf6R0xcHNMolqKdacrycnUEehVEVicBhiaOrWNKoZ0he
-	6PqfSu6RNKe1jAL0GmJY9D9uD85kxb+aKGG+72E0clgUYum7SGLx8kvEnTGlpj8H
-	zTEnb2GcBoo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB8D49EC7;
-	Thu, 26 Jul 2012 16:10:20 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27B799EC6; Thu, 26 Jul 2012
- 16:10:20 -0400 (EDT)
-In-Reply-To: <20120726184337.GB16037@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 Jul 2012 14:43:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ECBF451E-D75D-11E1-8110-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752182Ab2GZU0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 16:26:47 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37577 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751877Ab2GZU0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 16:26:46 -0400
+Received: (qmail 13234 invoked by uid 107); 26 Jul 2012 20:26:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 16:26:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 16:26:44 -0400
+Content-Disposition: inline
+In-Reply-To: <20120726193359.GA28711@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202302>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jul 26, 2012 at 03:33:59PM -0400, Jeff King wrote:
 
-> That looks like a maintenance annoyance. Can't we just have the
-> prerequisite-checker lazily perform the test on demand and cache the
-> result?  It should be OK as long as:
->
->   1. The prereq is careful about its pre- and post- conditions. We
->      already make sure to clean up after those tests so as not to taint
->      later tests. We would probably want to also make them more careful
->      about preconditions like which directory they are in (so, for
->      example, refer to "$TRASH_DIRECTORY/junk" and not "junk").
->
->   2. The prereq test does not accidentally munge any existing test
->      state from previous tests. That should not be a big deal as long as
->      we avoid names like "junk" in favor of more unique names like
->      "check-case-sensitivity-prereq".
+> I'm close to finished with a series that I think will at least make it
+> better. Stay tuned.
 
-Yeah, it is very desirable if we could lazy-eval, and we _should_ be
-able to arrange the above.
+Here it is. I was able to replicate the original problem by munging my
+/etc/passwd, and I've confirmed that this series fixes it by skipping
+the related test. I also added in a test for the early-quit behavior
+introduced by f20f387. It can't run everywhere, of course, but it seems
+we have at least one tester whose system will run it (and I did confirm
+that it works with my munged /etc/passwd).
+
+One other option is that we could introduce a
+GIT_PRETEND_THIS_IS_MY_GECOS_NAME variable. That would let us wrong both
+sides of the test on all systems. I just hate to add an interface that
+will be carried around in production code just for the sake of a test.
+
+  [1/6]: t7502: clean up fake_editor tests
+  [2/6]: t7502: properly quote GIT_EDITOR
+  [3/6]: t7502: narrow checks for author/committer name in template
+  [4/6]: t7502: drop confusing test_might_fail call
+  [5/6]: t7502: handle systems where auto-identity is broken
+  [6/6]: t7502: test early quit from commit with bad ident
+
+-Peff
