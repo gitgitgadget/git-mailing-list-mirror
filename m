@@ -1,107 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/5] t0050: use the CASE_INSENSITIVE_FS test prereq
-Date: Thu, 26 Jul 2012 15:39:54 +0200
-Message-ID: <d404f849524e47602f72de88b4487863d23a60d1.1343309173.git.git@drmicha.warpmail.net>
-References: <5001B82B.1060201@web.de>
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 26 15:40:37 2012
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
+Date: Thu, 26 Jul 2012 16:28:33 +0200
+Message-ID: <1486896.KW3TvzfC56@flomedio>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <358E6F1E-8BAD-4F82-B270-0233AB86EF66@gmail.com> <20120726114039.GA6712@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Steven Michalske <smichalske@gmail.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 16:28:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuOIq-0004YT-1a
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 15:40:32 +0200
+	id 1SuP3d-0000Dj-Jw
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 16:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957Ab2GZNkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 09:40:04 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:59050 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751773Ab2GZNkD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2012 09:40:03 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id BBE4020B93;
-	Thu, 26 Jul 2012 09:40:02 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 26 Jul 2012 09:40:02 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Qw
-	OjSBiaFPI3i4q8HAUVd67YNug=; b=Ft9fYnHyJfwti/ECgLNmDhDhrl/fCoBKdC
-	vRV10Iy8qCAiRWpoKRjYJjAVQ4O0HpRHFBa8J5K4NPIyZMrCK/78g5Zf/HAScafg
-	DUiLXQn3twAgkoUs8uWFh8pgbGqDJHF/Y1DfSzxeqeAfGLAgBT4DW1crDaqjGICy
-	e9cOiZdAY=
-X-Sasl-enc: rrpG0QfSSFZxKOMsURcg6Zoxyi1fRlJBYC8oXmNOm9d9 1343310002
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 6203D8E011D;
-	Thu, 26 Jul 2012 09:40:02 -0400 (EDT)
-X-Mailer: git-send-email 1.7.12.rc0.198.gd66b616
-In-Reply-To: <5001B82B.1060201@web.de>
-In-Reply-To: <cover.1343309173.git.git@drmicha.warpmail.net>
-References: <cover.1343309173.git.git@drmicha.warpmail.net>
+	id S1752287Ab2GZO2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 10:28:47 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:11821 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259Ab2GZO2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 10:28:46 -0400
+Received: from flomedio.localnet (cm56-227-93.liwest.at [86.56.227.93])
+	(authenticated bits=0)
+	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q6QESYWR022212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Jul 2012 16:28:36 +0200 (CEST)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-26-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <20120726114039.GA6712@burratino>
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.6
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202269>
 
+On Thursday 26 July 2012 06:40:39 Jonathan Nieder wrote:
+> Steven Michalske wrote:
+> > On Jul 2, 2012, at 4:07 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> >> [...]
+> >> 
+> >>> diff: Use fifo instead of pipe: Retrieve the name of the pipe from env
+> >>> and open it for svndump.
+> >> 
+> >> I'd prefer to avoid this if possible, since it means having to decide
+> >> where the pipe goes on the filesystem.  Can you summarize the
+> >> discussion in the commit message so future readers understand why
+> >> we're doing it?
+> > 
+> > Crazy thought here but would a socket not be a bad choice here?
+> 
+> Not crazy --- it was already mentioned.  It could probably allow using
+> --cat-blob-fd even on the platforms that don't inherit file
+> descriptors >2, though it wuld take some tweaking.  Though I still
+> think the way forward is to keep using plain pipes internally for now
+> and to make the bidirectional communication optional, since it
+> wouldn't close any doors to whatever is most convenient on each
+> platform.  Hopefully I'll hear more from Florian about this in time.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t0050-filesystem.sh | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+Would you like to see a new pipe patch?
 
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 1542cf6..df9498b 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -7,23 +7,12 @@ test_description='Various filesystem issues'
- auml=$(printf '\303\244')
- aumlcdiar=$(printf '\141\314\210')
+> 
+> > Imagine being able to ssh tunnel into the SVN server and run the helper
+> > with filesystem access to the SVN repo.
+> 
+> We're talking about what communicates between the SVN dump parser the
+> version control system-specific backend (git fast-import) that reads
+> the converted result, so that particular socket wouldn't help much.
+>
+
+Yes .. the network part is already handled quite well by svnrdump.
  
--case_insensitive=
- unibad=
- no_symlinks=
- test_expect_success 'see what we expect' '
- 
--	test_case=test_expect_success &&
- 	test_unicode=test_expect_success &&
- 	mkdir junk &&
--	echo good >junk/CamelCase &&
--	echo bad >junk/camelcase &&
--	if test "$(cat junk/CamelCase)" != good
--	then
--		test_case=test_expect_failure &&
--		case_insensitive=t
--	fi &&
--	rm -fr junk &&
--	mkdir junk &&
- 	>junk/"$auml" &&
- 	case "$(cd junk && echo *)" in
- 	"$aumlcdiar")
-@@ -41,14 +30,20 @@ test_expect_success 'see what we expect' '
- 	}
- '
- 
--test "$case_insensitive" &&
-+if test_have_prereq CASE_INSENSITIVE_FS
-+then
- 	say "will test on a case insensitive filesystem"
-+	test_case=test_expect_failure
-+else
-+	test_case=test_expect_success
-+fi
-+
- test "$unibad" &&
- 	say "will test on a unicode corrupting filesystem"
- test "$no_symlinks" &&
- 	say "will test on a filesystem lacking symbolic links"
- 
--if test "$case_insensitive"
-+if test_have_prereq CASE_INSENSITIVE_FS
- then
- test_expect_success "detection of case insensitive filesystem during repo init" '
- 
--- 
-1.7.12.rc0.198.gd66b616
