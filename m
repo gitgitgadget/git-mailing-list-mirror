@@ -1,66 +1,102 @@
-From: Alexey Muranov <alexey.muranov@gmail.com>
-Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
-Date: Thu, 26 Jul 2012 19:24:40 +0200
-Message-ID: <91CA9DC6-FBAE-410F-A182-E83FBA769AC6@gmail.com>
-References: <20120719213225.GA20311@sigill.intra.peff.net> <20120719213311.GA20385@sigill.intra.peff.net> <50092993.6010203@alum.mit.edu> <20120720154403.GB2862@sigill.intra.peff.net> <5009892E.9010808@kdbg.org> <20120720170913.GA14057@sigill.intra.peff.net> <CACsJy8BtcvuW2HKPSki7meyHMsvpLS0b8QG5M_083HEwy=-9EQ@mail.gmail.com> <10DD3DE0-E554-4BE3-A20B-FDBC73219646@gmail.com> <vpq8ve6qxui.fsf@bauges.imag.fr> <20120726165949.GB13942@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 26 19:24:51 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] allow recovery from command name typos
+Date: Thu, 26 Jul 2012 13:26:30 -0400
+Message-ID: <20120726172630.GD13942@sigill.intra.peff.net>
+References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
+ <1343232982-10540-1-git-send-email-rctay89@gmail.com>
+ <1343232982-10540-2-git-send-email-rctay89@gmail.com>
+ <1343232982-10540-3-git-send-email-rctay89@gmail.com>
+ <1343232982-10540-4-git-send-email-rctay89@gmail.com>
+ <1343232982-10540-5-git-send-email-rctay89@gmail.com>
+ <7vtxwvbu5s.fsf@alter.siamese.dyndns.org>
+ <CALUzUxp91zubHEkWMC1z2xp7kJCRYrtznQS_=pVSZoNkZMihig@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 26 19:26:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuRnv-0004Vv-1F
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:24:51 +0200
+	id 1SuRpe-0005pV-UK
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jul 2012 19:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab2GZRYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jul 2012 13:24:45 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:54763 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752422Ab2GZRYo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2012 13:24:44 -0400
-Received: by eeil10 with SMTP id l10so444555eei.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 10:24:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=R52xVDO6ka5nuPo7FaFADakBS3Y2AwOAOVzdffggvFw=;
-        b=Fp2ZSEwNWUq2iDEkzSzQRM3XEKvxR4Kl3eq5Ejep8BwXr21knXfXPO387CRcNnALjR
-         P2ou3zFf9z5llvTXFdMLYHdx7TTKZVLDW3ad61AYDEsyXcRUiv8u9MW4Y22GfFmpzThP
-         HgNl/UngiROviuit7aa+4GX7P0wGIy9YwXkrztRwcEGgjjWu0uCfRXimSSv5+OYrUEsz
-         IY7eQAMNUoR+Zi66UKuCeE2JCUzu0cAZCM4h5SZHYeSD5a3qfUtVi1vS91LLFVU+yYVh
-         ZUBKzjRjzSctmTtV0/Hm+S7tsqvI4oBye1N/mTku/M/7pRVYDTEO/Ka0Zdr3fS0vvca9
-         AqFQ==
-Received: by 10.14.214.196 with SMTP id c44mr4993999eep.7.1343323483465;
-        Thu, 26 Jul 2012 10:24:43 -0700 (PDT)
-Received: from ?IPv6:2a01:e35:2f10:380:223:12ff:fe56:641a? ([2a01:e35:2f10:380:223:12ff:fe56:641a])
-        by mx.google.com with ESMTPS id s8sm10371791eeo.8.2012.07.26.10.24.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 Jul 2012 10:24:42 -0700 (PDT)
-In-Reply-To: <20120726165949.GB13942@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1084)
+	id S1752731Ab2GZR0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 13:26:33 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:37398 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752422Ab2GZR0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 13:26:32 -0400
+Received: (qmail 10571 invoked by uid 107); 26 Jul 2012 17:26:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jul 2012 13:26:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jul 2012 13:26:30 -0400
+Content-Disposition: inline
+In-Reply-To: <CALUzUxp91zubHEkWMC1z2xp7kJCRYrtznQS_=pVSZoNkZMihig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202281>
 
-On 26 Jul 2012, at 18:59, Jeff King wrote:
+On Fri, Jul 27, 2012 at 01:08:34AM +0800, Tay Ray Chuan wrote:
 
-> Not to mention git itself, as it splits up the refs/remotes hierarchy
-> into subdirectories. I think deprecating "/" is out of the question.
+> > Perhaps we should audit "isatty()" calls and replace them with a
+> > helper function that does this kind of thing consistently in a more
+> > robust way (my recent favorite is Linus's somewhat anal logic used
+> > in builtin/merge.c::default_edit_option()).
 > 
-> -Peff
+> Any specific callers to isatty() you have in mind? A quick grep shows
+> that a significant portion of the "offenders" are isatty(2) calls to
+> determine whether to display progress, I think those are ok.
 
-Ok, i guess you know better than me, my vision of Git is probably still too simplistic.
+Yeah, those are probably fine. Grep reveals that besides isatty(2) and
+the merge default_edit_option check, we have:
 
--Alexey.
+  - isatty(1) for checking auto-output munging, including auto-colors,
+    auto-columns, and the pager. These are all fine, as they are not
+    about interactivity, but specifically about whether stdout is a tty.
+
+  - isatty(0) in commit.c to print a message when reading "-F -" from
+    stdin. OK.
+
+  - isatty(0) in pack-redundant to avoid reading stdin when it is a
+    terminal (a questionable choice, perhaps, but not really something
+    that would want a full interactivity check).
+
+  - isatty(0) check in cmd_revert to set opts.edit automatically. This
+    one should match merge's behavior.
+
+  - isatty(0) in shortlog; this is a compatibility hack as shortlog
+    traditionally accepted log output on stdin, but can now be used
+    stand-alone. OK.
+
+So I think the only one that could be improved is the one in cmd_revert.
+
+> The credential helper has some prompting functionality that is close
+> to what I intend to do here, but I think it can make some assumptions
+> about stdin/stdout that we can't, as you have pointed out. So that
+> leaves merge-edit and this patch as the beneficiaries of a
+> builtin/merge.c::default_edit_option() refactor. That's just off the
+> top of my head.
+
+The credential code uses git_terminal_prompt, which actually opens
+/dev/tty directly. So it is probably sane to use for your new prompt,
+but it does not (and should not) rely on isatty.
+
+> Perhaps the helper function could be named "git_can_prompt()" and
+> placed in prompt.c?
+
+Please don't. The isatty() checks have nothing to do with whether
+git_prompt can run. The only thing such a git_can_prompt function should
+do is see if we can open /dev/tty.
+
+The isatty check in merge.c is more about "are we interactive, so that
+it is sane to run $EDITOR".
+
+-Peff
