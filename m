@@ -1,111 +1,78 @@
-From: Sascha Cunz <Sascha-ML@babbelbox.org>
-Subject: [RFC/PATCH] Use work tree to determine if it supports symlinks
-Date: Fri, 27 Jul 2012 23:39:41 +0200
-Message-ID: <17699041.7b2cBoDgE0@mephista>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
+ Git::SVN.
+Date: Fri, 27 Jul 2012 14:49:05 -0700
+Message-ID: <7vsjcczxgu.fsf@alter.siamese.dyndns.org>
+References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
+ <1343344945-3717-5-git-send-email-schwern@pobox.com>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org> <20120727053800.GC4685@burratino>
+ <7v394d3ffc.fsf@alter.siamese.dyndns.org>
+ <7vpq7h1z1q.fsf@alter.siamese.dyndns.org>
+ <7vlii51xz4.fsf@alter.siamese.dyndns.org>
+ <20120727200703.GA2034@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 23:39:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jul 27 23:49:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SusGM-0008VX-Ou
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 23:39:59 +0200
+	id 1SusPL-0005vB-Hl
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 23:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286Ab2G0Vjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 17:39:54 -0400
-Received: from babbelbox.org ([83.133.105.186]:57521 "EHLO mail.babbelbox.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752135Ab2G0Vjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 17:39:53 -0400
-Received: (qmail 6446 invoked from network); 27 Jul 2012 21:40:05 -0000
-Received: from unknown (HELO mephista.localnet) (Sascha@Babbelbox.org@89.204.130.192)
-  by babbelbox.org with ESMTPA; 27 Jul 2012 21:40:05 -0000
-User-Agent: KMail/4.8.4 (Linux/3.4.4-gentoo; KDE/4.8.4; x86_64; ; )
+	id S1752410Ab2G0VtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 17:49:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37020 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752299Ab2G0VtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 17:49:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCB7F9C4A;
+	Fri, 27 Jul 2012 17:49:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lXEh2JWHu6mD2OUhrl6r079uMCY=; b=nKVnUY
+	LwviZtT1IF5mo/ieIxPJ0LCR2FlzahxoAwzz4f7aeNSwvYoGZbwLK1Xb+XzGgXSz
+	86RANL8pv/0BYdbxb7/usJlmQisFEEoc2pM6ahRadHBPL2ZXLdW0o4FFSxwz4nDF
+	vze9AwL6QRua0cTdXeDPVF7FkRsxhNwcxMAjc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YOvlKDpLjP3miLyoW2K+H9W69xF9/C0O
+	TY6IFkzB5H2JK3xpkGhCOkA02S9lJkTyqYMsWKk8WfO5db9P1ZQim+hKZDT+E8m+
+	3CuMhIQQVNs9tc8y6S4kT6bbdMahzvw1lJrueYuMac33IBA4v3dYfshcfk6XcdOq
+	VmA9z0jE4v8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9CE29C49;
+	Fri, 27 Jul 2012 17:49:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3720C9C48; Fri, 27 Jul 2012
+ 17:49:07 -0400 (EDT)
+In-Reply-To: <20120727200703.GA2034@dcvr.yhbt.net> (Eric Wong's message of
+ "Fri, 27 Jul 2012 20:07:03 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E3FC890A-D834-11E1-9945-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202380>
 
->From 3f449e719b924929f1f8ca9b5eff83f17bc64c60 Mon Sep 17 00:00:00 2001
-From: Sascha Cunz <Sascha@BabbelBox.org>
-Date: Fri, 27 Jul 2012 22:54:56 +0200
-Subject: [PATCH] Use work tree to determine if it supports symlinks
+Eric Wong <normalperson@yhbt.net> writes:
 
-When creating a new repository, we check some capabilities of the
-underlying file system(s). We check the file system for its case
-sensitivity and the ability to create symbolic links.
+> I'll put the following after ms/makefile-pl but before ms/git-svn-pm:
 
-Before this patch the .git-dir was used for this check, while the
-comments in code clearly state to test on the work tree.
+OK, it seems that you haven't pushed out the result yet (which is
+fine); how do we want to proceed?
 
-This patch teaches the tests for symbolic links and utf8 precomposion
-to use the work tree instead of the .git directory.
+I generally prefer pulling from maintainer trees directly to my
+'master' without staging them in 'next', so when the above is done
+and you feel the tip of your tree is good for 1.7.12-rc1 without
+regression, please throw me a "pull, now!".
 
-Signed-off-by: Sascha Cunz <Sascha@BabbelBox.org>
----
- builtin/init-db.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
-
-In recent discussion[1] on libgit2, we found this little inconsistency
-and it's not exactly clear, whether the git implementation or documentation
-should be followed.
-
-I left out to change the case-insensitive check. If you think, this patch
-is useful at all (I actually have a hard time to find a real world use
-case), i would reroll it with that change included. I think in this case,
-the probe_utf8_pathname_composition might be refactored: We don't have a
-file in the work tree yet => we must create one, test its accessibility
-with a different name and finally unlink it. That's more or less what
-probe_utf8_pathname_composition does.
-
-SaCu
-
-[1] https://github.com/libgit2/libgit2/pull/844#issuecomment-7311677
-
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 244fb7f..2f988ad 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -273,6 +273,23 @@ static int create_default_files(const char *template_path)
- 	}
- 
- 	if (!reinit) {
-+		const char *work_tree = get_git_work_tree();
-+
-+		/* Check if the filesystem is case-insensitive */
-+		path[len] = 0;
-+		strcpy(path + len, "CoNfIg");
-+		if (!access(path, F_OK))
-+			git_config_set("core.ignorecase", "true");
-+
-+		/* Point 'path' to the work tree */
-+		len = strlen(work_tree);
-+		if (len > sizeof(path)-8)
-+			die(_("insane working directory %s"), work_tree);
-+
-+		memcpy(path, work_tree, len);
-+		if (len && path[len-1] != '/')
-+			path[len++] = '/';
-+
- 		/* Check if symlink is supported in the work tree */
- 		path[len] = 0;
- 		strcpy(path + len, "tXXXXXX");
-@@ -285,11 +302,6 @@ static int create_default_files(const char *template_path)
- 		else
- 			git_config_set("core.symlinks", "false");
- 
--		/* Check if the filesystem is case-insensitive */
--		path[len] = 0;
--		strcpy(path + len, "CoNfIg");
--		if (!access(path, F_OK))
--			git_config_set("core.ignorecase", "true");
- 		probe_utf8_pathname_composition(path, len);
- 	}
- 
--- 
-1.7.12.rc0.23.g3f449e7
+Thanks.
