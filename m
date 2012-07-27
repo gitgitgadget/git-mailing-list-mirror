@@ -1,151 +1,182 @@
-From: Aleksandr Priymak <tramsmm-mirror@yandex.ru>
-Subject: Re: git stash data loss
-Date: Fri, 27 Jul 2012 18:21:36 +0400
-Message-ID: <6BE6FF9E-0952-45D8-AFA7-0843CE3CFC5A@yandex.ru>
-References: <55831343358368@web1e.yandex.ru> <20120727132953.GA8263@sigill.intra.peff.net>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 27 16:27:44 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 2/2] test: allow prerequisite to be evaluated lazily
+Date: Fri, 27 Jul 2012 11:45:00 -0400
+Message-ID: <20120727154500.GA11957@sigill.intra.peff.net>
+References: <7vboj25dk7.fsf@alter.siamese.dyndns.org>
+ <7v7gtq5da3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 17:45:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SulVz-0005SZ-OR
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 16:27:40 +0200
+	id 1Sumj5-00022t-8G
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 17:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894Ab2G0O1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 10:27:34 -0400
-Received: from forward19.mail.yandex.net ([95.108.253.144]:49181 "EHLO
-	forward19.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751329Ab2G0O1e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jul 2012 10:27:34 -0400
-X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jul 2012 10:27:33 EDT
-Received: from smtp18.mail.yandex.net (smtp18.mail.yandex.net [95.108.252.18])
-	by forward19.mail.yandex.net (Yandex) with ESMTP id 8886A1120D72;
-	Fri, 27 Jul 2012 18:21:35 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1343398895; bh=v9kxRgFl5Yy6W3Uc3HjoHy18Zh+o2L1HtpbxLMTqnI8=;
-	h=References:In-Reply-To:Mime-Version:Content-Transfer-Encoding:
-	 Content-Type:Message-Id:Cc:From:Subject:Date:To;
-	b=XpNPLoB/Sv8zdC6GD54/cT5FN3izn5rTGm7AEJUB5eZ/fqfkCrAMgYSRYEBhZE/ks
-	 5Z4KYnDVwx+wbeQ880RIaNP9R1PQQ8RATVHdgugiYLUxbUEfTQ0XqQSaroUQrCNXBQ
-	 jOtrzFWAAVMatjxFzYOgBoKrIJy9KLCCPUXXMc8M=
-Received: from smtp18.mail.yandex.net (localhost [127.0.0.1])
-	by smtp18.mail.yandex.net (Yandex) with ESMTP id 66AFC18A019A;
-	Fri, 27 Jul 2012 18:21:35 +0400 (MSK)
-Received: from broadband-37-110-46-117.nationalcablenetworks.ru (broadband-37-110-46-117.nationalcablenetworks.ru [37.110.46.117])
-	by smtp18.mail.yandex.net (nwsmtp/Yandex) with ESMTP id LYJ4ou8n-LZJefdqg;
-	Fri, 27 Jul 2012 18:21:35 +0400
-X-Yandex-Rcpt-Suid: git@vger.kernel.org
-X-Yandex-Rcpt-Suid: peff@peff.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1343398895;
-	bh=v9kxRgFl5Yy6W3Uc3HjoHy18Zh+o2L1HtpbxLMTqnI8=;
-	h=References:In-Reply-To:Mime-Version:Content-Transfer-Encoding:
-	 Content-Type:Message-Id:Cc:X-Mailer:From:Subject:Date:To;
-	b=UKfFj9NI6hTmUJhG0zLEDqq/Pe7R5Vk77VAsfeKvMjVJM5/Eqgp8P/aja9lhCfI2U
-	 4fGexbO0A08mFkg2SwFB+HMejGvtj0ozEKomrpeBKXxDdqHD84m3UOxgUPXBUWucsI
-	 PqgWu/W/2n5vWyRAdQd/wm6XoJF2Z1ucybP72mvo=
-In-Reply-To: <20120727132953.GA8263@sigill.intra.peff.net>
-X-Mailer: iPad Mail (9B206)
+	id S1752582Ab2G0PpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 11:45:07 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38942 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752459Ab2G0PpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 11:45:05 -0400
+Received: (qmail 20785 invoked by uid 107); 27 Jul 2012 15:45:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 27 Jul 2012 11:45:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jul 2012 11:45:00 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gtq5da3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202356>
 
-Thanks Jeff for the comment. You are right. I oversimplified the use-case ( forget to fill the directory )
+On Thu, Jul 26, 2012 at 04:11:00PM -0700, Junio C Hamano wrote:
 
-Sent from my iPad
+> Introduce a mechanism to probe the prerequiste lazily.  Changes are:
+> 
+>  - test_lazy_prereq () function, which takes the name of the
+>    prerequisite it probes and the script to probe for it, is
+>    added.  This only registers the name of the prerequiste that can
+>    be lazily probed and the script to eval (without running).
+> 
+>  - test_have_prereq() function (which is used by test_expect_success
+>    and also can be called directly by test scripts) learns to look
+>    at the list of prerequisites that can be lazily probed, and the
+>    prerequisites that have already been probed that way.
 
-On Jul 27, 2012, at 5:29 PM, Jeff King <peff@peff.net> wrote:
+The overall strategy looks good to me. A few minor comments follow.
 
-> On Fri, Jul 27, 2012 at 07:06:08AM +0400, Aleksandr Pryimak wrote:
-> 
->> I also recreated it
->> 
->> aleksandr@beast:/tmp/test$ git init
->> Initialized empty Git repository in /tmp/test/.git/
->> aleksandr@beast:/tmp/test$ touch x
->> aleksandr@beast:/tmp/test$ git add x
->> aleksandr@beast:/tmp/test$ git commit -m "Initial"
->> [master (root-commit) d3569a0] Initial
->> 0 files changed, 0 insertions(+), 0 deletions(-)
->> create mode 100644 x
-> 
-> OK, so we have "x" as a tracked file.
-> 
->> aleksandr@beast:/tmp/test$ rm x
->> aleksandr@beast:/tmp/test$ mkdir x/
->> aleksandr@beast:/tmp/test$ ls
->> x
-> 
-> And then we remove it in favor of a directory. Note that git does not
-> track directories directly, only files inside them. So from git's
-> perspective, the working tree has no content in it at all.
-> 
->> aleksandr@beast:/tmp/test$ git stash
->> Saved working directory and index state WIP on master: d3569a0 Initial
->> HEAD is now at d3569a0 Initial
-> 
-> And now we stash it. That will stash the working tree removal of x. It
-> will not stash anything about the new directory x, because it has no
-> content inside it.
-> 
->> aleksandr@beast:/tmp/test$ ls
->> x
->> aleksandr@beast:/tmp/test$ git stash pop
->> Removing x
->> # On branch master
->> # Changes not staged for commit:
->> #   (use "git add/rm <file>..." to update what will be committed)
->> #   (use "git checkout -- <file>..." to discard changes in working directory)
->> #
->> #    deleted:    x
->> #
->> no changes added to commit (use "git add" and/or "git commit -a")
->> Dropped refs/stash@{0} (c500443ae16cf0d846b195cb97eb388dec5f440e)
->> aleksandr@beast:/tmp/test$ ls
-> 
-> And your stash pop restores the deletion of "x". It does _not_ reinstate
-> the directory "x", because as I stated above, that is not part of the
-> stash.
-> 
-> So what is the data loss? That the "mkdir x" was lost? That has nothing
-> to do with stash, but rather the fact that git does not track empty
-> directories. You could see the same thing with:
-> 
->  mkdir x && git commit -a
-> 
-> which will not record your mkdir at all. In other words, this is by
-> design.
-> 
-> If we put actual files inside "x", which git does track, then they would
-> be part of the stash, and should be properly retained. But they're not:
-> 
->  $ rm x && mkdir x && echo foo >x/file
-> 
-> Now we have some precious contents in the form of "x/file". They are
-> untracked by git, but git should be careful about removing them.
-> 
->  $ git stash
->  Saved working directory and index state WIP on master: 2d32d3a initial
->  HEAD is now at 2d32d3a initial
->  $ ls -l x
->  -rw-r--r-- 1 peff peff 0 Jul 27 09:19 x
->  $ git stash show --raw
->  :100644 000000 e69de29... 0000000... D  x
-> 
-> Now this _is_ data loss. Stash blows away untracked files inside the
-> directory, but does not record them in the resulting stash. And that
-> should be fixed.
-> 
-> With "-u", I'd expect stash to include the untracked file x/foo in the
-> stash. Without "-u", I'd expect stash to fail, since it would be
-> deleting untracked files.
-> 
-> -Peff
+>  * I thought about various error conditions but didn't come up with
+>    a solid conclusion.  For example, what should happen when the
+>    prober directory cannot be created, or removed?  Perhaps aborting
+>    the whole thing may be a safe and better option.
+
+Yeah, it would be safer. But we have the same problems in the probes
+themselves, which sometimes have setup steps (e.g., before this patch,
+they typically set up the equivalent of the probe directory themselves).
+Fixing it completely would involve the probes returning a tri-state
+(yes, no, error), but it would make them more annoying to write.
+
+So you are at least preserving the status quo, and as far as I know,
+that has never been a problem in practice.
+
+>    Also, I am not distinguishing a syntax error in the script and
+>    "the prerequisite is not satisfied" signal (they would both be a
+>    false in the "if ()" part). I do not think we care too much, but
+>    others may have better ideas.
+
+For a syntax error in a regular test, the script aborts (and you get
+a "FATAL: unexpected exit..."). It probably makes sense to do the same
+thing here. I find it is helpful when writing tests to have an immediate
+abort instead of having to investigate why your test did not pass.
+
+> +			*" $prerequisite "*)
+> +				mkdir -p "$TRASH_DIRECTORY/prereq-test-dir"
+> +				if (
+> +					eval "script=\$test_prereq_lazily_$prerequisite" &&
+> +					cd "$TRASH_DIRECTORY/prereq-test-dir" &&
+> +					eval "$script"
+> +				)
+
+I expected to see test_run_ here so we could get the usual redirections
+and "-v" support in case the probe has useful output (and it might be
+nice to report to the user during "-v" that we are checking the prereq,
+and what we are about to do).
+
+Pushing the subshell and chdir inside the test would let us just die
+naturally on syntax errors, like regular tests do. There's no reason not
+to put the mkdir there, too, so that somebody debugging via "-v" can see
+more of what's happening.
+
+Something like this on top of your patch:
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 2214388..f5831cc 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -232,6 +232,21 @@ test_lazy_prereq () {
+ 	eval test_prereq_lazily_$1=\$2
+ }
+ 
++test_run_prereq_ () {
++	script='
++mkdir -p "$TRASH_DIRECTORY/prereq-test-dir" &&
++(cd "$TRASH_DIRECTORY/prereq-test-dir" &&
++'"$2"'
++)
++'
++	say >&3 "checking prerequisite: $1"
++	say >&3 "$script"
++	test_eval_ "$script"
++	eval_ret=$?
++	rm -rf "$TRASH_DIRECTORY/prereq-test-dir"
++	return $eval_ret
++}
++
+ test_have_prereq () {
+ 	# prerequisites can be concatenated with ','
+ 	save_IFS=$IFS
+@@ -251,16 +266,11 @@ test_have_prereq () {
+ 		*)
+ 			case " $lazy_testable_prereq " in
+ 			*" $prerequisite "*)
+-				mkdir -p "$TRASH_DIRECTORY/prereq-test-dir"
+-				if (
+-					eval "script=\$test_prereq_lazily_$prerequisite" &&
+-					cd "$TRASH_DIRECTORY/prereq-test-dir" &&
+-					eval "$script"
+-				)
++				eval "script=\$test_prereq_lazily_$prerequisite" &&
++				if test_run_prereq_ "$prerequisite" "$script"
+ 				then
+ 					test_set_prereq $prerequisite
+ 				fi
+-				rm -fr "$TRASH_DIRECTORY/prereq-test-dir"
+ 				lazy_tested_prereq="$lazy_tested_prereq$prerequisite "
+ 			esac
+ 			;;
+
+Try it with a broken probe like:
+
+  $ cat >foo.sh <<EOF
+  #!/bin/sh
+
+  test_description='broken lazy eval'
+  . ./test-lib.sh
+  test_lazy_prereq LAZY 'broken &&'
+  test_expect_success LAZY 'need lazy' 'echo lazy ok'
+  test_done
+  EOF
+
+  : properly alert us to syntactic error
+  $ sh foo.sh
+  FATAL: Unexpected exit with code 2
+
+  : give sane output for debugging a broken probe
+  $ sh foo.sh -v
+  Initialized empty Git repository in /home/peff/compile/git/t/trash directory.foo/.git/
+  checking prerequisite: LAZY
+
+  mkdir -p "$TRASH_DIRECTORY/prereq-test-dir" &&
+  (cd "$TRASH_DIRECTORY/prereq-test-dir" &&
+  broken &&
+  )
+
+  foo.sh: 5: eval: Syntax error: ")" unexpected
+  FATAL: Unexpected exit with code 2
+
+And of course with non-broken probes, "-v" would also help to see exactly
+when the probe is run, using which commands, and what output they
+produced. E.g., for SYMLINKS, we should probably drop the stderr
+redirection from the probe so we can see how "ln" complains.
+
+It might also be worth doing a "say >&3" at the end of the check, too,
+to tell "-v" users the outcome.
+
+-Peff
