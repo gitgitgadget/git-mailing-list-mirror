@@ -1,110 +1,71 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 1/2] remove unnecessary parameter from get_patch_ids()
-Date: Fri, 27 Jul 2012 10:21:38 -0700
-Message-ID: <1343409699-27199-2-git-send-email-martin.von.zweigbergk@gmail.com>
-References: <1343409699-27199-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 27 19:22:07 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] test-lib: filesystem prerequisites
+Date: Fri, 27 Jul 2012 10:29:15 -0700
+Message-ID: <7vboj115as.fsf@alter.siamese.dyndns.org>
+References: <5001B82B.1060201@web.de>
+ <cover.1343309173.git.git@drmicha.warpmail.net>
+ <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
+ <20120726184337.GB16037@sigill.intra.peff.net>
+ <7vzk6m5ln9.fsf@alter.siamese.dyndns.org>
+ <50126005.7060202@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, tboegi@web.de
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jul 27 19:29:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuoEk-0006zR-TM
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 19:22:03 +0200
+	id 1SuoLs-0003oD-AY
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 19:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929Ab2G0RVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 13:21:47 -0400
-Received: from mail-yw0-f74.google.com ([209.85.213.74]:53100 "EHLO
-	mail-yw0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081Ab2G0RVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 13:21:46 -0400
-Received: by yhl10 with SMTP id 10so355017yhl.1
-        for <git@vger.kernel.org>; Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :x-gm-message-state;
-        bh=uzcolexPpI/7an6mpgfeuoJMV2FdiuM3xk4P3ars26s=;
-        b=S8Q+CGxJTUdh82heviyTwY3ydYDNlp3aQDclhlN8E6gw9Lowzhtwd2mD3iT41///eo
-         DpdKRbF19F+Odm6Urldz4uvjL7oGG4Lu8Ues+kWF1oAr46XGtl6u0R/bNz1nsxMzhZ9g
-         zXMefZsB/LuAdS5AiuCkZtlufqlgkScc+LUxbijvjiiqQZpknMmmLi6j187Jr5Tkcwbn
-         QxNo5w3Fcx3TND/R+k4TC5sm4txwU6aTgRv5hq8eupFudWDyqW/DgHH+nQo/Y7BPR2qZ
-         NGPg5K74xr8J7haRwQ+U5J3iB963hLpvspHTA3vusb8l8kzVMNSTMDcWPUwNw2dVbHeY
-         MCVA==
-Received: by 10.236.153.69 with SMTP id e45mr1528208yhk.35.1343409705707;
-        Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-Received: by 10.236.153.69 with SMTP id e45mr1528203yhk.35.1343409705669;
-        Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id l23si719417yhk.6.2012.07.27.10.21.45
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.98.93])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 8ED15100047;
-	Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 2B418C0CED; Fri, 27 Jul 2012 10:21:45 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
-In-Reply-To: <1343409699-27199-1-git-send-email-martin.von.zweigbergk@gmail.com>
-X-Gm-Message-State: ALoCoQnVvt+haMUERXr7JY4XU7gP38MLbRPd26a196gAOq3uCkm+uf8ouWA8nRO8ckSv7jiIWrKoon0EL7BphyQUYIPkz0wRtq5OZgy3af8DrIb7QAcVxUiv5Dqd86l4LyobDw/eolZlvenE0Hod+92VIsP5FilBw195q3YBfxefjsHYWkra7DHdowyTkbzQqgDaRdz6/415
+	id S1752247Ab2G0R3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 13:29:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55076 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751237Ab2G0R3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 13:29:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7037E8E88;
+	Fri, 27 Jul 2012 13:29:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a+cyP71AP1LpNMQwgp7T3xtfapI=; b=PV7u0T
+	ASHDCCput7LHnWVmQ5lyQ9v5pCa1gQl5hIWmgM5N+NSLvMr9AVdhIeWPzJqy+Zb3
+	wHgGfPsVl9nGt+BZivXXQ+eqGZ5cb/DHO/p+gZBKZIAXabr3U8GGEHVnjIsZ+mY+
+	YUvPi/p3C7sToKmpiwk0mF1Kb+0jRbNvhDMFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f9mR/zfMbHbRb1j7KivPi3bFgWlHRA8D
+	v4kqZzARp0XgsaPxiFzLpEdG4FYE3gl+KF314Oe/A2xXXwWL6dCYdXKzepYbdUob
+	g6jXnIJoIdx5uNthP1th8HYdRZ25p47eOuZTIyZOtrfmakgrNsPf4bYiXNwzyQCc
+	mfnTxNvhaQE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EDFD8E87;
+	Fri, 27 Jul 2012 13:29:17 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D010D8E86; Fri, 27 Jul 2012
+ 13:29:16 -0400 (EDT)
+In-Reply-To: <50126005.7060202@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri, 27 Jul 2012 11:31:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9760C2EC-D810-11E1-B6FE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202364>
 
-get_patch_ids() takes an already initialized rev_info and a
-prefix. The prefix is used when initalizing a second rev_info. Since
-the initialized rev_info already has a prefix and it seems the prefix
-doesn't change, we can used the prefix from the initialized rev_info
-to initialize the second rev_info.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
----
- builtin/log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> 5/5 needs a fix in the subject line, sorry. It should be:
+>
+> t3910: use the UTF8_NFD_TO_NFC test prereq
+>
+> (5/5 hasn't hit next)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index ecc2793..7a92e3f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -696,7 +696,7 @@ static int reopen_stdout(struct commit *commit, const char *subject,
- 	return 0;
- }
- 
--static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const char *prefix)
-+static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
- {
- 	struct rev_info check_rev;
- 	struct commit *commit;
-@@ -717,7 +717,7 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids, const cha
- 	init_patch_ids(ids);
- 
- 	/* given a range a..b get all patch ids for b..a */
--	init_revisions(&check_rev, prefix);
-+	init_revisions(&check_rev, rev->prefix);
- 	o1->flags ^= UNINTERESTING;
- 	o2->flags ^= UNINTERESTING;
- 	add_pending_object(&check_rev, o1, "o1");
-@@ -1306,7 +1306,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			if (hashcmp(o[0].item->sha1, o[1].item->sha1) == 0)
- 				return 0;
- 		}
--		get_patch_ids(&rev, &ids, prefix);
-+		get_patch_ids(&rev, &ids);
- 	}
- 
- 	if (!use_stdout)
-@@ -1525,7 +1525,7 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
- 			return 0;
- 	}
- 
--	get_patch_ids(&revs, &ids, prefix);
-+	get_patch_ids(&revs, &ids);
- 
- 	if (limit && add_pending_commit(limit, &revs, UNINTERESTING))
- 		die(_("Unknown commit %s"), limit);
--- 
-1.7.11.1.104.ge7b44f1
+That is because I thought that you would like the lazy-probe and
+that you would be capable of rerolling it on your own ;-)
