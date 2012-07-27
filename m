@@ -1,93 +1,66 @@
-From: Michael G Schwern <schwern@pobox.com>
-Subject: Re: Extract remaining classes from git-svn
-Date: Fri, 27 Jul 2012 12:00:06 -0700
-Message-ID: <5012E536.5080507@pobox.com>
-References: <1343348767-86446-1-git-send-email-schwern@pobox.com>
- <5011E07A.807@pobox.com>
- <CABPQNSYjvW9GZs18j+m4mUT6jiJ5VTUdnyi-L5Q8tHeqE7R+tg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, normalperson@yhbt.net,
-	jrnieder@gmail.com
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jul 27 21:00:24 2012
+From: "Michael G. Schwern" <schwern@pobox.com>
+Subject: Make git-svn Use accessors for paths and urls
+Date: Fri, 27 Jul 2012 13:00:47 -0700
+Message-ID: <1343419252-9447-1-git-send-email-schwern@pobox.com>
+Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	normalperson@yhbt.net, jrnieder@gmail.com, schwern@pobox.com
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jul 27 22:01:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Suplt-0001IL-CH
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 21:00:21 +0200
+	id 1Suqit-0003LG-AS
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 22:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082Ab2G0TAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 15:00:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63062 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751249Ab2G0TAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 15:00:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42A9B8568;
-	Fri, 27 Jul 2012 15:00:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=Bq6XzFq88QmI
-	tPX/z4kd67oyFhU=; b=vEsikmvdP85OvjGdRAjAJzPMghRHmEZTtm9kIkFxP+Y8
-	N69ZQzRMdmULWJoA7UpS+Q6Ddjuie/3Fa/GuPeEH0JY/CQbEWjaERwDr/V4wYATq
-	vsf47qk38oeSRMaZ1xBbFOUHrgDKdXQP1e4bc8vdcgTY5fAHIbFesMYXAlYJebI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FdSBtV
-	9/IHUocnmB0ZRhRrjJYwuo+Af1BTPppMnXcHDibeKGvOQlG61QcBJ4P11dbRtRGM
-	NxJyLkNrNvpGJwYwTEBJGNZoMHQBjRJY2nRvahBZvNcIf+dmaKmparMXsP/Wl1s7
-	HikZshSS0ErYvRA427pyjLF6JeenSliocuHx8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D4618563;
-	Fri, 27 Jul 2012 15:00:10 -0400 (EDT)
-Received: from windhund.local (unknown [71.236.173.173]) (using TLSv1 with
- cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C787E8556; Fri, 27 Jul
- 2012 15:00:07 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:14.0)
- Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <CABPQNSYjvW9GZs18j+m4mUT6jiJ5VTUdnyi-L5Q8tHeqE7R+tg@mail.gmail.com>
-X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: 48CB121A-D81D-11E1-A878-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+	id S1752641Ab2G0UBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 16:01:12 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57013 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486Ab2G0UBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 16:01:12 -0400
+Received: by pbbrp8 with SMTP id rp8so5499064pbb.19
+        for <git@vger.kernel.org>; Fri, 27 Jul 2012 13:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=TK69WxMo0PbIyrVMBQqeGgpXy3J3j9T2XSJPTwi0J5k=;
+        b=efcwagdsd9sE6bpQo/1zQF/0RWpLEjkxLwtnrUPLd09cptEaGxxz3Gm11uP8LxoFzp
+         O2tE9f9PCLMdoqZxDQP6NTm5XOHiT3MKYAIW9F/34wA/92ADrfN2w3yndWEimon6z0HY
+         nmAcbo2bA8ptJvFskG5hjgUmwzOJaKOAbAdP7HJLlhHGFJGwtY5fIa91ILiI8a6P822P
+         dyBvCfdy+zybSZR8AoC94+jJbM9WAgUWMe8MPtcbfT/IXhF9MunBIn8GyJgBLNr/i92G
+         pSfuaMjSyHQZxrZtvVyCthHUvOyGPIJdrhjnoFQO1U8FILA9qovH+6/RuuQQUWw2kTSD
+         kzMA==
+Received: by 10.68.201.135 with SMTP id ka7mr16934339pbc.15.1343419271710;
+        Fri, 27 Jul 2012 13:01:11 -0700 (PDT)
+Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
+        by mx.google.com with ESMTPS id sk5sm2489907pbc.7.2012.07.27.13.01.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 27 Jul 2012 13:01:10 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202368>
 
-On 2012.7.27 4:29 AM, Erik Faye-Lund wrote:
-> On Fri, Jul 27, 2012 at 2:27 AM, Michael G Schwern <schwern@pobox.com> wrote:
->> On 2012.7.26 5:25 PM, Michael G. Schwern wrote:
->>> This series of patches extracts the remaining classes from git-svn.  They're
->>> all simple extractions and functionally have no change.
->>
->> PS  This is on top of the previous Git::SVN extraction patch series.
->>
-> 
-> Nice :-)
-> 
-> Do you have somewhere I can pull this from? I have a git-svn topic
-> that I suspect will be much easier to maintain on top of these
-> patches.
+This patch series gives Git::SVN and Git::SVN::Ra accessors for
+path and url and then makes the rest of the code use them, rather
+than grab at $obj->{path} and $obj->{url}.  This then will give
+us the control necessary to canonicalize them as early as
+possible (done in the next patch series).
 
-Why yes I do!
-https://github.com/schwern/git
+There are plenty of other places in the code which will benefit
+from accessors and functions, but those will come later.  path
+and url were the most obvious.
 
-The git-svn branches should be fairly self explanatory and they stack on top
-of each other.  I'll probably be doing a lot of rebasing still, but there
-should be little content change up to git-svn/canonicalize-accessors.  Up to
-there passes tests with SVN 1.6.
+This is a refactoring and has no functional change.  All git-svn
+tests pass with SVN 1.6 for each patch.
 
-Things get a little fuzzy after that.
+This goes on top of my previous patch series to extract other
+classes.  That hasn't been reviewed yet, but both that and this are
+a simple patch series and I figure we can review a bit ahead.
 
-
--- 
-24. Must not tell any officer that I am smarter than they are, especially
-    if it's true.
-    -- The 213 Things Skippy Is No Longer Allowed To Do In The U.S. Army
-           http://skippyslist.com/list/
+This is the last refactoring patch series.  After this bugs, start
+getting fixed.
