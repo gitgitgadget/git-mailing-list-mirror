@@ -1,73 +1,91 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: The GitTogether
-Date: Fri, 27 Jul 2012 08:12:15 +0200
-Message-ID: <20120727061213.GA12124@book.hvoigt.net>
-References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
+ Git::SVN.
+Date: Thu, 26 Jul 2012 23:46:41 -0700
+Message-ID: <7vpq7h1z1q.fsf@alter.siamese.dyndns.org>
+References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
+ <1343344945-3717-5-git-send-email-schwern@pobox.com>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org> <20120727053800.GC4685@burratino>
+ <7v394d3ffc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 08:17:57 2012
+Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	normalperson@yhbt.net
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 08:46:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Suds3-0002dI-WC
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 08:17:56 +0200
+	id 1SueK2-0001pQ-EQ
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 08:46:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486Ab2G0GRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 02:17:50 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.93]:44714 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073Ab2G0GRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 02:17:50 -0400
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jul 2012 02:17:50 EDT
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Sudma-0008Jq-7c; Fri, 27 Jul 2012 08:12:16 +0200
-Content-Disposition: inline
-In-Reply-To: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751521Ab2G0Gqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 02:46:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51610 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751266Ab2G0Gqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 02:46:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF9997797;
+	Fri, 27 Jul 2012 02:46:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=64zKV+2HgOKJvobyC09Bq9z94d8=; b=Wb45Z7
+	u8SwzZcrj2CfXnQt9PprJ58TT5e8nEcYnzvrHs6z59YLwzHkPQXb5rkqdgsoTcVC
+	UhGd+3VkmXYDKjT56jWrMl/i3tkbBQxcgG32rA7b9hI/aY0t8zccfjD9lwuj8uNi
+	hdUif1jUfzmz2kOPuS4OpzhXuWTFYbN7pf2cc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PuzUp8veAcc3NmbEfeLjnLwFJnkMYHJ8
+	Yp411RuaOrxu+ygsiw8SvWQIe39xHd1iIQBoW27QtKgw3CaJdbDb5J9ri7K9xICW
+	ET16nzL4ag0UZsLXXP7tbZK4OngabpMhuj5LJjQ3aT/KVP8uzX+ebgkubV2aV16o
+	nnB8Bxi48oA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB5C67796;
+	Fri, 27 Jul 2012 02:46:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FEEC7795; Fri, 27 Jul 2012
+ 02:46:43 -0400 (EDT)
+In-Reply-To: <7v394d3ffc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 26 Jul 2012 23:07:35 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D3B4081C-D7B6-11E1-8C78-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202341>
 
-Hi Scott,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, Jul 26, 2012 at 03:28:00PM -0700, Scott Chacon wrote:
-> For those of you who *have* been to a GitTogether, what did you find
-> useful and/or useless about it?  What did you get out of it and would
-> like to see again?  For those of you who have never been, what do you
-> think would be useful?  I was thinking for both of them to have a
-> combination of short prepared talks, lightning/unconference style
-> talks and general discussion / breakout sessions.
+> t91XX series seem to fail in 'pu' with "Can't locate Git/SVN.pm in
+> @INC" for me.  I see perl/blib/lib/Git/SVN/ directory and files
+> under it, but there is no perl/blib/lib/Git/SVN.pm installed.  I see
+> Git/I18N.pm and Git/SVN/Ra.pm (and friends) mentioned in
+> perl/perl.mak generated by MakeMaker, but Git/SVN.pm does not appear
+> anywhere.
+>
+> I think it is some interaction with other topics, as the tip of
+> ms/git-svn-pm topic that parks this series does not exhibit the
+> symptom, but it is getting late for me already, so I won't dig into
+> this further.
 
-IMO, the last GitTogethers had the right mixture between talks, breakout
-sessions and free space for personal discussions.
+Actually there is no difference between ms/git-svn-pm and pu in perl/
+directory. I _think_ there is some dependency missing that makes
+this sequence break:
 
-The only thing that currently comes to my mind which could improve is
-the long physical distance between conference, accommodation and evening
-dining location. Shorter distances could probably be achieved more
-easily in Berlin.
+	(in one repository)
+	git checkout pu ;# older pu without ms/git-svn-pm
+        make ; make test
 
-The most important thing for me were the direct discussions with other
-developers.
+	(in another repository that shares the refs)
+	git checkout pu
+        git merge ms/git-svn-pm
 
-> Finally, is there any feedback on the times and places - especially
-> the Berlin one. If nobody can agree on a better specific time, I'll
-> push forward with early October in Berlin, but if there is a concensus
-> around a different time, I'm fine moving it.
-
-I like the Berlin idea. I did not plan to attend the GitTogether this
-year but if it was in Berlin I would do so. Maybe this is similar for
-others that are not able to make the long way to Mountain View.
-
-Cheers Heiko
+	(in the first repository)
+        git reset --hard ;# update the working tree
+        make ; make test
