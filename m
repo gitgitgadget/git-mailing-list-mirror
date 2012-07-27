@@ -1,73 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
- Git::SVN.
-Date: Fri, 27 Jul 2012 15:45:54 -0700
-Message-ID: <20120727224554.GA30385@dcvr.yhbt.net>
-References: <7vhast3hpb.fsf@alter.siamese.dyndns.org>
- <20120727053800.GC4685@burratino>
- <7v394d3ffc.fsf@alter.siamese.dyndns.org>
- <7vpq7h1z1q.fsf@alter.siamese.dyndns.org>
- <7vlii51xz4.fsf@alter.siamese.dyndns.org>
- <20120727200703.GA2034@dcvr.yhbt.net>
- <7vsjcczxgu.fsf@alter.siamese.dyndns.org>
- <20120727220753.GA7378@dcvr.yhbt.net>
- <20120727221924.GA8700@dcvr.yhbt.net>
- <7vboj0zv7t.fsf@alter.siamese.dyndns.org>
+From: Sascha Cunz <Sascha@babbelbox.org>
+Subject: Re: [RFC/PATCH] Use work tree to determine if it supports symlinks
+Date: Sat, 28 Jul 2012 00:40:37 +0200
+Message-ID: <3068717.2K7be5iONg@mephista>
+References: <17699041.7b2cBoDgE0@mephista> <7vobn0zx5m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 00:46:02 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 00:47:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SutIG-0000au-Jv
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 00:46:00 +0200
+	id 1SutJu-0001fO-H4
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 00:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150Ab2G0Wp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 18:45:56 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33731 "EHLO dcvr.yhbt.net"
+	id S1752234Ab2G0Wr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 18:47:28 -0400
+Received: from babbelbox.org ([83.133.105.186]:57538 "EHLO mail.babbelbox.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751832Ab2G0Wpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 18:45:55 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B83931F5B5;
-	Fri, 27 Jul 2012 22:45:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vboj0zv7t.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751832Ab2G0Wr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 18:47:26 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jul 2012 18:47:25 EDT
+Received: (qmail 6986 invoked from network); 27 Jul 2012 22:40:57 -0000
+Received: from unknown (HELO mephista.localnet) (Sascha@Babbelbox.org@89.204.130.192)
+  by babbelbox.org with ESMTPA; 27 Jul 2012 22:40:57 -0000
+User-Agent: KMail/4.8.4 (Linux/3.4.4-gentoo; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <7vobn0zx5m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202389>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> > The redundant dependencies are biting us :<  I agree there presence in
-> > the top-level Makefile needs to be reviewed.
+On Friday, July 27, 2012 02:55:49 PM you wrote:
+> Sascha Cunz <Sascha-ML@babbelbox.org> writes:
+> > From 3f449e719b924929f1f8ca9b5eff83f17bc64c60 Mon Sep 17 00:00:00 2001
+> > From: Sascha Cunz <Sascha@BabbelBox.org>
+> > Date: Fri, 27 Jul 2012 22:54:56 +0200
+> > Subject: [PATCH] Use work tree to determine if it supports symlinks
+> > 
+> > When creating a new repository, we check some capabilities of the
+> > underlying file system(s). We check the file system for its case
+> > sensitivity and the ability to create symbolic links.
+> > 
+> > Before this patch the .git-dir was used for this check, while the
+> > comments in code clearly state to test on the work tree.
 > 
-> Do you feel confident enough that we can leave that question hanging
-> around and still merge this before 1.7.12 safely?
+> That is simply because a layout that has .git and its containing
+> directory (i.e. the working tree) on a separate filesystem when we
+> run "git init" is not supported,
 
-Yes.
+But isn't enforced either. Are there known issues?
 
-> I do not think it is a regression at the Makefile level per-se---we
-> didn't have right dependencies to keep perl.mak up to date, which
-> was the root cause of what we observed.
-> 
-> But the lack of dependencies did not matter before this series
-> because the list of *.pm files never changed, so in that sense the
-> series is what introduced the build regression, and I do not have a
-> solid feeling that we squashed it.
+> and more importantly, we do not
+> want to step outside ".git", which is the simplest and safest way to
+> avoid touching the end-user data that sits in the working tree.
 
-Right, I agree the original dependencies are not good and it's not
-a recent regression in the Makefile level.
+While I think that this is true, I don't see the connection.
 
-I do feel our patch deals with the problem for now.  I've been going
-between commits in Michael's 3rd series and haven't noticed new issues
-when running the tests.
+> The code comment is about checking the filesystem that houses both
+> the working tree and ".git"; if the user later wants to turn .git
+> into a separate mount point, or if the user wants to use GIT_DIR and
+> GIT_WORK_TREE to create a funny layout, the user should know how to
+> muck with ".git/config" to adjust to the peculiarity.
+
+Ok, so repository and working directory are simply not meant to be on 
+different file systems. Thanks for the clarification.
