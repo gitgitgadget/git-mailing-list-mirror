@@ -1,101 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
  Git::SVN.
-Date: Fri, 27 Jul 2012 00:38:00 -0500
-Message-ID: <20120727053800.GC4685@burratino>
+Date: Thu, 26 Jul 2012 23:07:35 -0700
+Message-ID: <7v394d3ffc.fsf@alter.siamese.dyndns.org>
 References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
  <1343344945-3717-5-git-send-email-schwern@pobox.com>
- <7vhast3hpb.fsf@alter.siamese.dyndns.org>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org> <20120727053800.GC4685@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
 	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:38:17 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 08:07:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SudFg-0008Go-45
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 07:38:16 +0200
+	id 1SudiB-0003ju-I3
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 08:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060Ab2G0FiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 01:38:06 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:47643 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751860Ab2G0FiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 01:38:05 -0400
-Received: by mail-yx0-f174.google.com with SMTP id l2so2802580yen.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 22:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=D/d7TAuHyOhvcVNg6LcHb4xsSfOBrhjciS/YQG4ADdU=;
-        b=sy0CCsjhgeWJKyyQ1+1+YgZzViCxL2OuY1DYOH0SnOM/boQaz4v8ZCZVZNMpfy+zg9
-         dJwbZKtw9CoOFrkv7Bmm21O8FmV6bY7QmD4w9ukLofJ7NufZjJ8N5YlgWDgiYIDVJn4n
-         QHmIbJZD/MSqJWoIm7P0DX9tE5nfZprV9Wh1qvLPj0uGmbFwV2+DqjQUYGp9fIkErhrT
-         PtsCgTqv9WUVQJPEtdlOBlJF9Q2MkD7YztP0UTbIE5PQlw3HZlxVErEii3XWEhvy2XKB
-         EcXARdTEI9N3LKPDldVwKpoks/M4Egqao+Owa3eDicnddb/tSvFmzcrdCbfRLGFxC1Ny
-         ZTNQ==
-Received: by 10.50.47.168 with SMTP id e8mr894440ign.3.1343367484407;
-        Thu, 26 Jul 2012 22:38:04 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id bj4sm5296996igc.16.2012.07.26.22.38.03
-        (version=SSLv3 cipher=OTHER);
-        Thu, 26 Jul 2012 22:38:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vhast3hpb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752440Ab2G0GHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 02:07:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38338 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094Ab2G0GHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 02:07:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BDE970F1;
+	Fri, 27 Jul 2012 02:07:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AkM7Q0V9NCJNZtHCNuFHLfDjkig=; b=XgNwAL
+	3phjMy37tlCNqYuX3jtdErHOel8tbmQhOL1pOsMyk+lGnCksJv/7nHWDJp2tBIjH
+	5169hnDIY+sAMIed1r2yPgfB6uhnsXoE9xMpE+LAyd8wK6o9hTJGyEWgSnSN2Cfx
+	6YwsPZiviByz0bYl8J8hOAiuyZoiDu0RViwnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F7GdNXrZ7D5iISHky1w0OJZN3uwDxQVb
+	E2QCTTOni6RbMb+HWEzCNVUFiD2mew8Nu12OdHlXN8/ETV3x5BJpy1XLlo0yi4o9
+	AORD6cdfGmFTpDIKGnM4pSWqK0awfzwnxR0A2DgvdIVAt8ZusYr6YZydgEY6PEKU
+	9UMSpFEk8vw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2037870F0;
+	Fri, 27 Jul 2012 02:07:37 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A4BE70EF; Fri, 27 Jul 2012
+ 02:07:36 -0400 (EDT)
+In-Reply-To: <20120727053800.GC4685@burratino> (Jonathan Nieder's message of
+ "Fri, 27 Jul 2012 00:38:00 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5CED4176-D7B1-11E1-8B3B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202338>
 
-Junio C Hamano wrote:
-> "Michael G. Schwern" <schwern@pobox.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Also it can compile on its own now, yay!
+>> In short:
+>>
+>>  - I didn't see anything questionable in 1/4;
+>>
+>>  - Calling up ::opt_prefix() from module in 2/4 looked ugly to me
+>>    but I suspect it should be easy to fix;
+>>
+>>  - 3/4 was a straight move and I didn't see anything questionable in
+>>    it, but I think it would be nicer if intermediate steps can be
+>>    made to still work by making 4/4 come first or something
+>>    similarly simple.
+>>
+>> If the issues in 2/4 and 3/4 are easily fixable by going the route I
+>> handwaved above, the result of doing so based on this round is ready
+>> to be applied, I think.
+>>
+>> Eric, Jonathan, what do you think?
 >
-> Hmmm.
-
-I agree with Michael's "yay" and also think it's fine that after
-patch 3 it isn't there yet.
-
-That's because git-svn.perl doesn't use Git::SVN on its own but helps
-it out a little.  So even if we only applied patches 1-3, git-svn
-would still work (maybe it's worth testing "perl -MGit::SVN" by hand
-to avoid the "it's doubtful" about whether Git::SVN is self-contained
-and replace it with a more certain statement?), and patch 4 just makes
-it even better.
-
-[...]
-> In short:
+> I think this is pretty good already, though I also like your
+> suggestion re 2/4.
 >
->  - I didn't see anything questionable in 1/4;
->
->  - Calling up ::opt_prefix() from module in 2/4 looked ugly to me
->    but I suspect it should be easy to fix;
->
->  - 3/4 was a straight move and I didn't see anything questionable in
->    it, but I think it would be nicer if intermediate steps can be
->    made to still work by making 4/4 come first or something
->    similarly simple.
->
-> If the issues in 2/4 and 3/4 are easily fixable by going the route I
-> handwaved above, the result of doing so based on this round is ready
-> to be applied, I think.
->
-> Eric, Jonathan, what do you think?
+> I haven't reviewed the tests these introduce and assume Eric has that
+> covered.
 
-I think this is pretty good already, though I also like your
-suggestion re 2/4.
+I didn't mean to say "Unless you prove that the two suggestions are
+not easy to implement, I will veto the series until they are fixed."
+Especially, I consider that the ordering between 3 and 4 falls into
+the "it would be nicer if this wart weren't there" category.
 
-I haven't reviewed the tests these introduce and assume Eric has that
-covered.
+The result will be queued tentatively near the tip of 'pu', but as
+this is primarily about git-svn, I would prefer a copy that is
+vetted by Eric to be fed from him.
 
-Thanks,
-Jonathan
+Thanks.
+
+P.S.
+
+t91XX series seem to fail in 'pu' with "Can't locate Git/SVN.pm in
+@INC" for me.  I see perl/blib/lib/Git/SVN/ directory and files
+under it, but there is no perl/blib/lib/Git/SVN.pm installed.  I see
+Git/I18N.pm and Git/SVN/Ra.pm (and friends) mentioned in
+perl/perl.mak generated by MakeMaker, but Git/SVN.pm does not appear
+anywhere.
+
+I think it is some interaction with other topics, as the tip of
+ms/git-svn-pm topic that parks this series does not exhibit the
+symptom, but it is getting late for me already, so I won't dig into
+this further.
