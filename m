@@ -1,74 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: The GitTogether
-Date: Fri, 27 Jul 2012 13:45:20 +0200
-Message-ID: <87k3xpe8bz.fsf@thomas.inf.ethz.ch>
-References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/4] Prepare Git::SVN for extraction into its own file.
+Date: Fri, 27 Jul 2012 11:53:26 +0000
+Message-ID: <20120727115326.GA8890@dcvr.yhbt.net>
+References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
+ <1343344945-3717-3-git-send-email-schwern@pobox.com>
+ <7vvch93hpy.fsf@alter.siamese.dyndns.org>
+ <50124E71.2010302@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 13:45:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca, jrnieder@gmail.com
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 13:53:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Suiz2-0007Ck-JM
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 13:45:28 +0200
+	id 1Suj6s-00054S-67
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 13:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab2G0LpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 07:45:23 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:1471 "EHLO edge20.ethz.ch"
+	id S1751344Ab2G0Lx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 07:53:27 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57215 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751543Ab2G0LpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 07:45:22 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 27 Jul
- 2012 13:45:21 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 27 Jul
- 2012 13:45:20 +0200
-In-Reply-To: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
-	(Scott Chacon's message of "Thu, 26 Jul 2012 15:28:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1750872Ab2G0Lx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 07:53:26 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 753341F4CB;
+	Fri, 27 Jul 2012 11:53:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <50124E71.2010302@pobox.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202351>
 
-Scott Chacon <schacon@gmail.com> writes:
+Michael G Schwern <schwern@pobox.com> wrote:
+> On 2012.7.26 10:18 PM, Junio C Hamano wrote:
+> > Again, I agree with you that passing $prefix as one of the arguments
+> > to ->new is the right thing to do in the final state after applying
+> > the whole series.  I don't know if later steps in your patch series
+> > will do so, but it _might_ make more sense to update ->new and its
+> > callers to do so without doing anything else first, so that you do
+> > not have to call out to the ::opt_prefix() when you split things
+> > out.
+> 
+> I don't personally plan on doing any more about it, no.  It isn't needed for
+> SVN 1.7, there's very little real code change (which you could see by looking
+> at my remote instead of waiting to be fed patches...) and its a very, very
+> minor problem in the grand scheme.
 
-> GitHub would like to volunteer to organize and pay for these events
-> this year.  I would like to hold the developer-centric one in Berlin
-> in early October
+I agree, its not worth it right now.
 
-Yay, Berlin!  I would be glad to join there; I would probably not have
-the time and resources to travel to SF this year.
+> The first step toward that would be to change git-svn so it can be loaded as a
+> library using the standard "main() unless caller" trick.  Then Git::SVN unit
+> tests can require git-svn as a library without executing it and get some tests
+> written with a minimum of Git::SVN code change.
 
-> For those of you who *have* been to a GitTogether, what did you find
-> useful and/or useless about it?  What did you get out of it and would
-> like to see again?  For those of you who have never been, what do you
-> think would be useful?  I was thinking for both of them to have a
-> combination of short prepared talks, lightning/unconference style
-> talks and general discussion / breakout sessions.
+> None of which I plan to get into just now.
 
-I was at the 2010 GitTogether in Mountain View.  I really liked the
-unconference format, and the way Shawn and Junio used it: just using the
-topic stickers as a sort of todo-list, not actually fixing any schedule
-in advance.  Oddly enough we also managed to avoid the usual consequence
-of open-ended discussions: getting stuck endlessly on an absolutely
-insignificant point.
+That's fine.  The modules were an afterthought and not intended at the
+time for standalone use, so it'd take a bit of work.  I doubt the
+modules will be useful elsewhere, but will make code easier to
+maintain in the future.
 
-I think the discussions were very productive.  I would love to do more
-hacking than we managed in 2010, but I realize that this is not possible
-if we just meet for 2-3 days.  Perhaps one option would be to plan for
-1-2 days of hacking after the discussion rounds, so that the interested
-people can stay a bit longer?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I also value functional/integration tests far more than unit tests.
