@@ -1,71 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] test-lib: filesystem prerequisites
-Date: Fri, 27 Jul 2012 10:29:15 -0700
-Message-ID: <7vboj115as.fsf@alter.siamese.dyndns.org>
-References: <5001B82B.1060201@web.de>
- <cover.1343309173.git.git@drmicha.warpmail.net>
- <7vtxwu75gy.fsf@alter.siamese.dyndns.org>
- <20120726184337.GB16037@sigill.intra.peff.net>
- <7vzk6m5ln9.fsf@alter.siamese.dyndns.org>
- <50126005.7060202@drmicha.warpmail.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3] contrib: add win32 credential-helper
+Date: Fri, 27 Jul 2012 19:32:08 +0200
+Message-ID: <CABPQNSZt0a+447qbr6j9ELHfsmfr03VUw6-efAiu0vLicaKyEg@mail.gmail.com>
+References: <1343409006-5056-1-git-send-email-kusmabite@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, tboegi@web.de
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 27 19:29:24 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: peff@peff.net, msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: msysgit+bncCOPdven-DxDCocuABRoEuPZ7yg@googlegroups.com Fri Jul 27 19:32:52 2012
+Return-path: <msysgit+bncCOPdven-DxDCocuABRoEuPZ7yg@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pb0-f58.google.com ([209.85.160.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuoLs-0003oD-AY
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 19:29:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752247Ab2G0R3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 13:29:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55076 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751237Ab2G0R3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 13:29:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7037E8E88;
-	Fri, 27 Jul 2012 13:29:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a+cyP71AP1LpNMQwgp7T3xtfapI=; b=PV7u0T
-	ASHDCCput7LHnWVmQ5lyQ9v5pCa1gQl5hIWmgM5N+NSLvMr9AVdhIeWPzJqy+Zb3
-	wHgGfPsVl9nGt+BZivXXQ+eqGZ5cb/DHO/p+gZBKZIAXabr3U8GGEHVnjIsZ+mY+
-	YUvPi/p3C7sToKmpiwk0mF1Kb+0jRbNvhDMFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f9mR/zfMbHbRb1j7KivPi3bFgWlHRA8D
-	v4kqZzARp0XgsaPxiFzLpEdG4FYE3gl+KF314Oe/A2xXXwWL6dCYdXKzepYbdUob
-	g6jXnIJoIdx5uNthP1th8HYdRZ25p47eOuZTIyZOtrfmakgrNsPf4bYiXNwzyQCc
-	mfnTxNvhaQE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EDFD8E87;
-	Fri, 27 Jul 2012 13:29:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D010D8E86; Fri, 27 Jul 2012
- 13:29:16 -0400 (EDT)
-In-Reply-To: <50126005.7060202@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Fri, 27 Jul 2012 11:31:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9760C2EC-D810-11E1-B6FE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202364>
+	(envelope-from <msysgit+bncCOPdven-DxDCocuABRoEuPZ7yg@googlegroups.com>)
+	id 1SuoPD-0006Dx-S4
+	for gcvm-msysgit@m.gmane.org; Fri, 27 Jul 2012 19:32:52 +0200
+Received: by pbbro8 with SMTP id ro8sf3556666pbb.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Jul 2012 10:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=OMW/yBGW9vhlTBMXqKPZBijSYfj4hEacVCR+fwQwz9M=;
+        b=cr+QTl/FStLpL4KKZMmY6VXDxgTu0uFty+5QQ5F0XJiLXq0H1FYaxsLGuQp2GZOApm
+         OQdN5c/qhMmC/dSNLE5Z6gU56OSCJ9SUB2la4CVujfshYdr1LYrAs/tjuqjYGs1GCxy1
+         eN1b0QweH3R32mWD1EbHR72wWfZ4G5XudKswI=
+Received: by 10.68.233.226 with SMTP id tz2mr933672pbc.13.1343410370263;
+        Fri, 27 Jul 2012 10:32:50 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.68.194.197 with SMTP id hy5ls3344496pbc.3.gmail; Fri, 27 Jul
+ 2012 10:32:49 -0700 (PDT)
+Received: by 10.66.77.101 with SMTP id r5mr453095paw.27.1343410369537;
+        Fri, 27 Jul 2012 10:32:49 -0700 (PDT)
+Received: by 10.66.77.101 with SMTP id r5mr453094paw.27.1343410369487;
+        Fri, 27 Jul 2012 10:32:49 -0700 (PDT)
+Received: from mail-pb0-f46.google.com (mail-pb0-f46.google.com [209.85.160.46])
+        by gmr-mx.google.com with ESMTPS id pz2si560463pbb.0.2012.07.27.10.32.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 27 Jul 2012 10:32:49 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.160.46 as permitted sender) client-ip=209.85.160.46;
+Received: by mail-pb0-f46.google.com with SMTP id rp8so5408819pbb.5
+        for <msysgit@googlegroups.com>; Fri, 27 Jul 2012 10:32:49 -0700 (PDT)
+Received: by 10.68.204.129 with SMTP id ky1mr16189046pbc.32.1343410369245;
+ Fri, 27 Jul 2012 10:32:49 -0700 (PDT)
+Received: by 10.66.23.65 with HTTP; Fri, 27 Jul 2012 10:32:08 -0700 (PDT)
+In-Reply-To: <1343409006-5056-1-git-send-email-kusmabite@gmail.com>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.160.46 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202365>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
-> 5/5 needs a fix in the subject line, sorry. It should be:
+On Fri, Jul 27, 2012 at 7:10 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> Since the Windows port of Git expects binary pipes, we need to make
+> sure the helper-end also sets up binary pipes.
 >
-> t3910: use the UTF8_NFD_TO_NFC test prereq
+> Side-step CRLF-issue in test to make it pass.
 >
-> (5/5 hasn't hit next)
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> ---
+>
+> Sorry for the delay, but here's the third iteration of my credential
+> helper for Windows' credential API.
+>
+> The only change since v2 is that it now supports protocols without
+> a host component, as suggested by Jeff King.
+>
 
-That is because I thought that you would like the lazy-probe and
-that you would be capable of rerolling it on your own ;-)
+...aaand just as I sent it out, I realized that my Makefile was a bit
+on the light side. Imagine this patch on top for now, please :)
+
+diff --git a/contrib/credential/wincred/Makefile
+b/contrib/credential/wincred/Makefile
+index b4f098f..bad45ca 100644
+--- a/contrib/credential/wincred/Makefile
++++ b/contrib/credential/wincred/Makefile
+@@ -4,5 +4,11 @@ CC = gcc
+ RM = rm -f
+ CFLAGS = -O2 -Wall
+
++-include ../../../config.mak.autogen
++-include ../../../config.mak
++
+ git-credential-wincred.exe : git-credential-wincred.c
+ 	$(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
++
++clean:
++	$(RM) git-credential-wincred.exe
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
