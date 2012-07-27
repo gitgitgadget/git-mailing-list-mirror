@@ -1,88 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Prepare Git::SVN for extraction into its own file.
-Date: Thu, 26 Jul 2012 22:23:44 -0700
-Message-ID: <7va9yl3hgf.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
+ Git::SVN.
+Date: Fri, 27 Jul 2012 00:38:00 -0500
+Message-ID: <20120727053800.GC4685@burratino>
 References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
- <1343344945-3717-3-git-send-email-schwern@pobox.com>
- <7vvch93hpy.fsf@alter.siamese.dyndns.org>
+ <1343344945-3717-5-git-send-email-schwern@pobox.com>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, normalperson@yhbt.net,
-	jrnieder@gmail.com
-To: "Michael G. Schwern" <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 07:23:55 2012
+Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	normalperson@yhbt.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 07:38:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sud1n-0006YM-9O
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 07:23:55 +0200
+	id 1SudFg-0008Go-45
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 07:38:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266Ab2G0FXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 01:23:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55480 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750930Ab2G0FXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 01:23:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6ABA693F;
-	Fri, 27 Jul 2012 01:23:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tadC5ec+5UHYpWR2DqrhAVi2LsU=; b=VOkyJD
-	siHQQd/jP7N7u6H6H51fpREnXQ50U64h2nAV6WrNGCElkAnNn3LVDJ0BSKW/OXAA
-	oodNGQNrIy1gxT8X1aLstiy+ebL0hEm0b6PEZK64YsNUv0A/pUyEhq630dCnaX4K
-	kGG93S+VmTpw/Q2OcqBJkw3/oStOP2fevGOQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hhggDDwVXrll51akMOnizHdwobAKcFb9
-	Qjv8oDiCLnRbRqsdNiBBHwCMo1wQXgl3cevQIEI5hynUJq2/8ZjlldgGNibQsVar
-	C2HMLdJLTuhwGEDkgvFz76pImDFUX/+I+/nfHRpjmSoOwnS9oI/SNjbsuxvn6XmP
-	hyGhQgH4D5U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4BD2693E;
-	Fri, 27 Jul 2012 01:23:46 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35B8F693D; Fri, 27 Jul 2012
- 01:23:46 -0400 (EDT)
-In-Reply-To: <7vvch93hpy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 26 Jul 2012 22:18:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D1D067A-D7AB-11E1-B5B7-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752060Ab2G0FiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 01:38:06 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47643 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751860Ab2G0FiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 01:38:05 -0400
+Received: by mail-yx0-f174.google.com with SMTP id l2so2802580yen.19
+        for <git@vger.kernel.org>; Thu, 26 Jul 2012 22:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=D/d7TAuHyOhvcVNg6LcHb4xsSfOBrhjciS/YQG4ADdU=;
+        b=sy0CCsjhgeWJKyyQ1+1+YgZzViCxL2OuY1DYOH0SnOM/boQaz4v8ZCZVZNMpfy+zg9
+         dJwbZKtw9CoOFrkv7Bmm21O8FmV6bY7QmD4w9ukLofJ7NufZjJ8N5YlgWDgiYIDVJn4n
+         QHmIbJZD/MSqJWoIm7P0DX9tE5nfZprV9Wh1qvLPj0uGmbFwV2+DqjQUYGp9fIkErhrT
+         PtsCgTqv9WUVQJPEtdlOBlJF9Q2MkD7YztP0UTbIE5PQlw3HZlxVErEii3XWEhvy2XKB
+         EcXARdTEI9N3LKPDldVwKpoks/M4Egqao+Owa3eDicnddb/tSvFmzcrdCbfRLGFxC1Ny
+         ZTNQ==
+Received: by 10.50.47.168 with SMTP id e8mr894440ign.3.1343367484407;
+        Thu, 26 Jul 2012 22:38:04 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id bj4sm5296996igc.16.2012.07.26.22.38.03
+        (version=SSLv3 cipher=OTHER);
+        Thu, 26 Jul 2012 22:38:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vhast3hpb.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202337>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+Junio C Hamano wrote:
 > "Michael G. Schwern" <schwern@pobox.com> writes:
->
->> From: "Michael G. Schwern" <schwern@pobox.com>
->>
->> This means it should be able to load without git-svn being loaded.
->>
->> * Load Git.pm on its own and all the needed command functions.
->>
->> * It needs to grab at a git-svn lexical $_prefix representing the --prefix
->>   option.  Provide opt_prefix() for that.  This is a refactoring artifact.
->>   The prefix should really be passed into Git::SVN->new.
->
-> I agree that the prefix is part of SVN->new arguments in the final
 
-s/is/should be/; sorry for the noise.
+>> Also it can compile on its own now, yay!
+>
+> Hmmm.
 
-> state after applying the whole series (not just these four but also
-> with the follow-up patches).
-> ...
-> Again, I agree with you that passing $prefix as one of the arguments
-> to ->new is the right thing to do in the final state after applying
-> the whole series.  I don't know if later steps in your patch series
-> will do so, but it _might_ make more sense to update ->new and its
-> callers to do so without doing anything else first, so that you do
-> not have to call out to the ::opt_prefix() when you split things
-> out.
+I agree with Michael's "yay" and also think it's fine that after
+patch 3 it isn't there yet.
+
+That's because git-svn.perl doesn't use Git::SVN on its own but helps
+it out a little.  So even if we only applied patches 1-3, git-svn
+would still work (maybe it's worth testing "perl -MGit::SVN" by hand
+to avoid the "it's doubtful" about whether Git::SVN is self-contained
+and replace it with a more certain statement?), and patch 4 just makes
+it even better.
+
+[...]
+> In short:
+>
+>  - I didn't see anything questionable in 1/4;
+>
+>  - Calling up ::opt_prefix() from module in 2/4 looked ugly to me
+>    but I suspect it should be easy to fix;
+>
+>  - 3/4 was a straight move and I didn't see anything questionable in
+>    it, but I think it would be nicer if intermediate steps can be
+>    made to still work by making 4/4 come first or something
+>    similarly simple.
+>
+> If the issues in 2/4 and 3/4 are easily fixable by going the route I
+> handwaved above, the result of doing so based on this round is ready
+> to be applied, I think.
+>
+> Eric, Jonathan, what do you think?
+
+I think this is pretty good already, though I also like your
+suggestion re 2/4.
+
+I haven't reviewed the tests these introduce and assume Eric has that
+covered.
+
+Thanks,
+Jonathan
