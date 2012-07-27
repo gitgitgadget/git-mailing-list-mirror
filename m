@@ -1,82 +1,95 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] builtin-commit.c: Not add duplicate S-o-b when commit
-Date: Fri, 27 Jul 2012 09:07:22 +0800
-Message-ID: <CANYiYbFOS6Qw+vrF6_amzKinHwULrqJJKjm9SSy7i3rCtB10aw@mail.gmail.com>
-References: <ee08efceaa3f015732a19d49eb96bdeeaaf3d609.1343282283.git.worldhello.net@gmail.com>
-	<7vy5m781j5.fsf@alter.siamese.dyndns.org>
-	<CANYiYbH0Jfk0LLp8HXVEamD0uRzM2OGJCE8W4h_UoDLh1pMVHA@mail.gmail.com>
-	<7vpq7i8oag.fsf@alter.siamese.dyndns.org>
+From: Aleksandr Pryimak <tramsmm-mirror@yandex.ru>
+Subject: git stash data loss
+Date: Fri, 27 Jul 2012 07:06:08 +0400
+Message-ID: <55831343358368@web1e.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 03:07:29 2012
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 27 05:12:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuZ1d-00013Q-84
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 03:07:29 +0200
+	id 1SuayW-0006cm-Fu
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 05:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015Ab2G0BHY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jul 2012 21:07:24 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:57177 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752735Ab2G0BHX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jul 2012 21:07:23 -0400
-Received: by yenl2 with SMTP id l2so2659785yen.19
-        for <git@vger.kernel.org>; Thu, 26 Jul 2012 18:07:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/bLQuv8KENWiSwGE9kL+n+sWQon6WJQ4qXbayc0vM3g=;
-        b=KCA9I864g2brkz6fUhuW8P8qsHV8iQjwcr3PXo1eTH/JybsoRde9/+yTstbuowQXXP
-         NW5fqt5mITVx/7G+8qybqMn5pjP+lYONNilgbrkdUBEyYKg+qxiLGPlAEp5aAGl8VFFF
-         VtprHV0Uz4odOro9hkOrwUUAHCQStPff2fYSs3zPBgYJcdH47meB4l3Q29I6z5Q27btv
-         TIaU7/CQ800pUvVpWsBgVktDG72024ys532Y9wHmU0n7N7aQsK+xpx6JeAnHPbZ7eDWC
-         w9qkgE0Ok3ldPtAX9HyyPR70JfNRnnha4nx3iHZ4YT6LJ9uYDHNVu62Y1DEK1YF+Tsgf
-         IBIA==
-Received: by 10.50.17.170 with SMTP id p10mr508450igd.19.1343351242753; Thu,
- 26 Jul 2012 18:07:22 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Thu, 26 Jul 2012 18:07:22 -0700 (PDT)
-In-Reply-To: <7vpq7i8oag.fsf@alter.siamese.dyndns.org>
+	id S1752964Ab2G0DMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jul 2012 23:12:19 -0400
+Received: from forward6.mail.yandex.net ([77.88.60.125]:59240 "EHLO
+	forward6.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410Ab2G0DMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jul 2012 23:12:18 -0400
+X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jul 2012 23:12:18 EDT
+Received: from web1e.yandex.ru (web1e.yandex.ru [77.88.60.147])
+	by forward6.mail.yandex.net (Yandex) with ESMTP id 270EF112203B
+	for <git@vger.kernel.org>; Fri, 27 Jul 2012 07:06:09 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1343358369; bh=FV5dlcksvDPti4ptP/iD3EpXiPQmH2SSYToIfV3Mzgw=;
+	h=From:To:Subject:MIME-Version:Message-Id:Date:
+	 Content-Transfer-Encoding:Content-Type;
+	b=nSouJVuyC7/4gvTRZaFCMhRFSmEJs0v38uipDd1Fklcj3P5dF0XxbWOY4QCYmH+cc
+	 SVEoy1gHPgMBJL9NDOyM+xD5dskwihXugSrUi+/rapxSzvXIUHS39tvwZBronD8UYg
+	 E6im7vcd3qp6ClznDS5u1Gb3s13JRz0b2rxzamAI=
+Received: from 127.0.0.1 (localhost.localdomain [127.0.0.1])
+	by web1e.yandex.ru (Yandex) with ESMTP id A659F1758038;
+	Fri, 27 Jul 2012 07:06:08 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1343358368; bh=FV5dlcksvDPti4ptP/iD3EpXiPQmH2SSYToIfV3Mzgw=;
+	h=From:To:Subject:Date;
+	b=OVtxUlDsVstKcdaVvva/8M1KgC/yMdgvKX9BU+fSzvkIdnjNUK5h0dAKxpCPrTRqH
+	 PGaKy+JI8t4BmT8SC2SjGpc3y5eHAR7i5/2XB8hX4AOu8nn/k3nJjWTLky+V0xfjI1
+	 nsqAGR0xBHHaljTE7cnQeXVmG3SvcUZBlrf58kWg=
+Received: from broadband-37-110-46-117.nationalcablenetworks.ru (broadband-37-110-46-117.nationalcablenetworks.ru [37.110.46.117]) by web1e.yandex.ru with HTTP;
+	Fri, 27 Jul 2012 07:06:08 +0400
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202332>
 
-2012/7/27 Junio C Hamano <gitster@pobox.com>:
->>     Signed-off-by: A
->>     Signed-off-by: B
->>     Reported-by: C
->>
->> So I guess duplicate S-o-b is not intentional.
->
-> I think the two commands are doing randomly different things on
-> garbage input.  The order in the input (i.e. your "original") does
-> not make sense.  C is not the person who handled the patch the last.
+Hello.
 
-I am clear, thanks. Please reword the commit 3c58c1a in branch
-"jx/i18n-1.7.11". Change the tags from:
+It is believed that
+git stash
+git stash pop
+is safe to-do operation. But sometimes it is not. For example here is an example http://stackoverflow.com/questions/11680453/git-stash-where-did-the-files-in-my-directory-go/11680645
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-    Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
-    Reported-by: Vincent van Ravesteijn <vfr@lyx.org>
-    Reviewed-by: Stefano Lattarini <stefano.lattarini@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I also recreated it
 
-to
+aleksandr@beast:/tmp/test$ git init
+Initialized empty Git repository in /tmp/test/.git/
+aleksandr@beast:/tmp/test$ touch x
+aleksandr@beast:/tmp/test$ git add x
+aleksandr@beast:/tmp/test$ git commit -m "Initial"
+[master (root-commit) d3569a0] Initial
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 x
+aleksandr@beast:/tmp/test$ rm x
+aleksandr@beast:/tmp/test$ mkdir x/
+aleksandr@beast:/tmp/test$ ls
+x
+aleksandr@beast:/tmp/test$ git stash
+Saved working directory and index state WIP on master: d3569a0 Initial
+HEAD is now at d3569a0 Initial
+aleksandr@beast:/tmp/test$ ls
+x
+aleksandr@beast:/tmp/test$ git stash pop
+Removing x
+# On branch master
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	deleted:    x
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (c500443ae16cf0d846b195cb97eb388dec5f440e)
+aleksandr@beast:/tmp/test$ ls
+aleksandr@beast:/tmp/test$ git --version
+git version 1.7.5.4
 
-    Reported-by: Vincent van Ravesteijn <vfr@lyx.org>
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-    Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
-    Reviewed-by: Stefano Lattarini <stefano.lattarini@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
---=20
-Jiang Xin
+--
+Aleksandr Pryimak
