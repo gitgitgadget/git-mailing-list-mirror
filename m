@@ -1,70 +1,107 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/4] Prepare Git::SVN for extraction into its own file.
-Date: Fri, 27 Jul 2012 11:53:26 +0000
-Message-ID: <20120727115326.GA8890@dcvr.yhbt.net>
+Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
+ Git::SVN.
+Date: Fri, 27 Jul 2012 11:59:59 +0000
+Message-ID: <20120727115959.GA31784@dcvr.yhbt.net>
 References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
- <1343344945-3717-3-git-send-email-schwern@pobox.com>
- <7vvch93hpy.fsf@alter.siamese.dyndns.org>
- <50124E71.2010302@pobox.com>
+ <1343344945-3717-5-git-send-email-schwern@pobox.com>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org>
+ <20120727053800.GC4685@burratino>
+ <7v394d3ffc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca, jrnieder@gmail.com
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 27 13:53:37 2012
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 27 14:00:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Suj6s-00054S-67
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 13:53:34 +0200
+	id 1SujDE-0001bq-V2
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jul 2012 14:00:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344Ab2G0Lx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 07:53:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:57215 "EHLO dcvr.yhbt.net"
+	id S1751646Ab2G0MAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 08:00:00 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57280 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750872Ab2G0Lx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 07:53:26 -0400
+	id S1751004Ab2G0MAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 08:00:00 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 753341F4CB;
-	Fri, 27 Jul 2012 11:53:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79B8B580B5;
+	Fri, 27 Jul 2012 11:59:59 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <50124E71.2010302@pobox.com>
+In-Reply-To: <7v394d3ffc.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202352>
 
-Michael G Schwern <schwern@pobox.com> wrote:
-> On 2012.7.26 10:18 PM, Junio C Hamano wrote:
-> > Again, I agree with you that passing $prefix as one of the arguments
-> > to ->new is the right thing to do in the final state after applying
-> > the whole series.  I don't know if later steps in your patch series
-> > will do so, but it _might_ make more sense to update ->new and its
-> > callers to do so without doing anything else first, so that you do
-> > not have to call out to the ::opt_prefix() when you split things
-> > out.
+Junio C Hamano <gitster@pobox.com> wrote:
+> The result will be queued tentatively near the tip of 'pu', but as
+> this is primarily about git-svn, I would prefer a copy that is
+> vetted by Eric to be fed from him.
+
+OK.  I've signed-off on the 7 patches you have in pu.  Will look at the
+other series in a few hours.
+
+The following changes since commit cdd159b2f56c9e69e37bbb8f5af301abd93e5407:
+
+  Merge branch 'jc/test-lib-source-build-options-early' (2012-07-25 15:47:08 -0700)
+
+are available in the git repository at:
+
+  git://bogomips.org/git-svn master
+
+for you to fetch changes up to 8d1ddbdc877cf1f430ea8e79bf800ce806875565:
+
+  Move initialization of Git::SVN variables into Git::SVN. (2012-07-27 11:29:21 +0000)
+
+----------------------------------------------------------------
+Michael G. Schwern (7):
+      Quiet warning if Makefile.PL is run with -w and no --localedir
+      Don't lose Error.pm if $@ gets clobbered.
+      The Makefile.PL will now find .pm files itself.
+      Extract some utilities from git-svn to allow extracting Git::SVN.
+      Prepare Git::SVN for extraction into its own file.
+      Extract Git::SVN from git-svn into its own .pm file.
+      Move initialization of Git::SVN variables into Git::SVN.
+
+ git-svn.perl                   | 2340 +---------------------------------------
+ perl/Git/SVN.pm                | 2324 +++++++++++++++++++++++++++++++++++++++
+ perl/Git/SVN/Utils.pm          |   59 +
+ perl/Makefile                  |    2 +
+ perl/Makefile.PL               |   35 +-
+ t/Git-SVN/00compile.t          |    9 +
+ t/Git-SVN/Utils/can_compress.t |   11 +
+ t/Git-SVN/Utils/fatal.t        |   34 +
+ 8 files changed, 2476 insertions(+), 2338 deletions(-)
+ create mode 100644 perl/Git/SVN.pm
+ create mode 100644 perl/Git/SVN/Utils.pm
+ create mode 100644 t/Git-SVN/00compile.t
+ create mode 100644 t/Git-SVN/Utils/can_compress.t
+ create mode 100644 t/Git-SVN/Utils/fatal.t
+
+> Thanks.
 > 
-> I don't personally plan on doing any more about it, no.  It isn't needed for
-> SVN 1.7, there's very little real code change (which you could see by looking
-> at my remote instead of waiting to be fed patches...) and its a very, very
-> minor problem in the grand scheme.
+> P.S.
+> 
+> t91XX series seem to fail in 'pu' with "Can't locate Git/SVN.pm in
+> @INC" for me.  I see perl/blib/lib/Git/SVN/ directory and files
+> under it, but there is no perl/blib/lib/Git/SVN.pm installed.  I see
+> Git/I18N.pm and Git/SVN/Ra.pm (and friends) mentioned in
+> perl/perl.mak generated by MakeMaker, but Git/SVN.pm does not appear
+> anywhere.
+> 
+> I think it is some interaction with other topics, as the tip of
+> ms/git-svn-pm topic that parks this series does not exhibit the
+> symptom, but it is getting late for me already, so I won't dig into
+> this further.
 
-I agree, its not worth it right now.
-
-> The first step toward that would be to change git-svn so it can be loaded as a
-> library using the standard "main() unless caller" trick.  Then Git::SVN unit
-> tests can require git-svn as a library without executing it and get some tests
-> written with a minimum of Git::SVN code change.
-
-> None of which I plan to get into just now.
-
-That's fine.  The modules were an afterthought and not intended at the
-time for standalone use, so it'd take a bit of work.  I doubt the
-modules will be useful elsewhere, but will make code easier to
-maintain in the future.
-
-I also value functional/integration tests far more than unit tests.
+I think your proposed patch in the followup should work.  We should
+probably squash that into this series avoid breaking bisect in the
+future.
