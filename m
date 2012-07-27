@@ -1,70 +1,104 @@
-From: Sascha Cunz <Sascha@babbelbox.org>
-Subject: Re: [RFC/PATCH] Use work tree to determine if it supports symlinks
-Date: Sat, 28 Jul 2012 00:40:37 +0200
-Message-ID: <3068717.2K7be5iONg@mephista>
-References: <17699041.7b2cBoDgE0@mephista> <7vobn0zx5m.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Move initialization of Git::SVN variables into
+ Git::SVN.
+Date: Fri, 27 Jul 2012 15:52:43 -0700
+Message-ID: <7vwr1oyfyc.fsf@alter.siamese.dyndns.org>
+References: <1343344945-3717-1-git-send-email-schwern@pobox.com>
+ <1343344945-3717-5-git-send-email-schwern@pobox.com>
+ <7vhast3hpb.fsf@alter.siamese.dyndns.org> <20120727053800.GC4685@burratino>
+ <7v394d3ffc.fsf@alter.siamese.dyndns.org>
+ <7vpq7h1z1q.fsf@alter.siamese.dyndns.org>
+ <7vlii51xz4.fsf@alter.siamese.dyndns.org>
+ <20120727200703.GA2034@dcvr.yhbt.net>
+ <7vsjcczxgu.fsf@alter.siamese.dyndns.org>
+ <20120727220753.GA7378@dcvr.yhbt.net> <20120727221924.GA8700@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 28 00:47:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jul 28 00:52:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SutJu-0001fO-H4
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 00:47:42 +0200
+	id 1SutOu-0004zK-PA
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 00:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234Ab2G0Wr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 18:47:28 -0400
-Received: from babbelbox.org ([83.133.105.186]:57538 "EHLO mail.babbelbox.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751832Ab2G0Wr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 18:47:26 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jul 2012 18:47:25 EDT
-Received: (qmail 6986 invoked from network); 27 Jul 2012 22:40:57 -0000
-Received: from unknown (HELO mephista.localnet) (Sascha@Babbelbox.org@89.204.130.192)
-  by babbelbox.org with ESMTPA; 27 Jul 2012 22:40:57 -0000
-User-Agent: KMail/4.8.4 (Linux/3.4.4-gentoo; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <7vobn0zx5m.fsf@alter.siamese.dyndns.org>
+	id S1752246Ab2G0Wwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 18:52:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61753 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752019Ab2G0Wwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 18:52:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C25B68A0B;
+	Fri, 27 Jul 2012 18:52:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WQNPK7ISbM5CjJhIa7cpVc5YdjQ=; b=sF0kP+
+	q4TraqO18vjOw3WtJJIgRLx0zAbRHbrjgwvXFm9UV6DQ72RHwFFKYmakj/nfDG9X
+	P9TpLuoPFwAp5e+0/fwOJo9Z8qsBYDbiPmNwgIrd250gA26bpHdX2xRg6/sn505/
+	cBxF3CgsqEN2pjyBi7JVn0x9LEvqfyg1qxZEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cAw09eDOxxSjiHbKKIXul/DzrfB7Cf3Q
+	HkIrXODmyzBH2QbJ/+d/yiZ4jxeTUeMxH/CI3tSiWsKVhJYgfsvgkRFVQli3aTgx
+	2NVoE+59I/UneVQLpMrqgjeyvbNQbD4+opkqZbJ94c5HvlrN3heZt3QvDtTzPy6m
+	MdB3jSG2Kbo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B00FD8A09;
+	Fri, 27 Jul 2012 18:52:45 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30AD58A08; Fri, 27 Jul 2012
+ 18:52:45 -0400 (EDT)
+In-Reply-To: <20120727221924.GA8700@dcvr.yhbt.net> (Eric Wong's message of
+ "Fri, 27 Jul 2012 22:19:24 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7AAE888-D83D-11E1-83DD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202390>
 
-On Friday, July 27, 2012 02:55:49 PM you wrote:
-> Sascha Cunz <Sascha-ML@babbelbox.org> writes:
-> > From 3f449e719b924929f1f8ca9b5eff83f17bc64c60 Mon Sep 17 00:00:00 2001
-> > From: Sascha Cunz <Sascha@BabbelBox.org>
-> > Date: Fri, 27 Jul 2012 22:54:56 +0200
-> > Subject: [PATCH] Use work tree to determine if it supports symlinks
-> > 
-> > When creating a new repository, we check some capabilities of the
-> > underlying file system(s). We check the file system for its case
-> > sensitivity and the ability to create symbolic links.
-> > 
-> > Before this patch the .git-dir was used for this check, while the
-> > comments in code clearly state to test on the work tree.
-> 
-> That is simply because a layout that has .git and its containing
-> directory (i.e. the working tree) on a separate filesystem when we
-> run "git init" is not supported,
+Eric Wong <normalperson@yhbt.net> writes:
 
-But isn't enforced either. Are there known issues?
+> Eric Wong <normalperson@yhbt.net> wrote:
+>> So I'll hold off until we can fix the build regressions (working on it
+>> now)
+>
+> OK, all fixed, all I needed was this (squashed in):
+>
+> --- a/perl/Makefile
+> +++ b/perl/Makefile
+> @@ -22,6 +22,8 @@ clean:
+>  	$(RM) $(makfile).old
+>  	$(RM) PM.stamp
+>  
+> +$(makfile): PM.stamp
+> +
+>  ifdef NO_PERL_MAKEMAKER
+>  instdir_SQ = $(subst ','\'',$(prefix)/lib)
 
-> and more importantly, we do not
-> want to step outside ".git", which is the simplest and safest way to
-> avoid touching the end-user data that sits in the working tree.
+Another thing I noticed but didn't say was that the top-level
+Makefile seems to think without NO_PERL the way to regenerate
+perl/perl.mak is to run perl/Makefile.PL, which is not true if the
+build is done with NO_PERL_MAKEMAKER.
 
-While I think that this is true, I don't see the connection.
+I do not offhand know why we even need to have dependency on
+perl/perl.mak in the toplevel Makefile (other than "otherwise nobody
+descends into perl/ and run make in it", which is a bogus
+reason---there should be a rule to run "$(MAKE) -C perl/ $@" when
+doing "make all" at the top-level if that is the case), but I think
+at least the duplicated rule in the toplevel Makefile should read
+something like:
 
-> The code comment is about checking the filesystem that houses both
-> the working tree and ".git"; if the user later wants to turn .git
-> into a separate mount point, or if the user wants to use GIT_DIR and
-> GIT_WORK_TREE to create a funny layout, the user should know how to
-> muck with ".git/config" to adjust to the peculiarity.
+	perl/perl.mak: ... (the dependencies) ...
+		$(QUIET_SUBDIR0)perl ... (make variables) ... perl.mak
 
-Ok, so repository and working directory are simply not meant to be on 
-different file systems. Thanks for the clarification.
+so that the real knowledge of how to rebuild it (with or without
+NO_PERL_MAKEMAKER) should be in perl/Makefile.
