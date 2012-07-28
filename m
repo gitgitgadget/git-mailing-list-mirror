@@ -1,67 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Make git-svn Use accessors for paths and urls
-Date: Fri, 27 Jul 2012 22:10:43 -0500
-Message-ID: <20120728030959.GA3020@burratino>
-References: <1343419252-9447-1-git-send-email-schwern@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Extract remaining classes from git-svn
+Date: Fri, 27 Jul 2012 21:05:36 -0700
+Message-ID: <7vfw8cy1gv.fsf@alter.siamese.dyndns.org>
+References: <1343348767-86446-1-git-send-email-schwern@pobox.com>
+ <20120728004026.GA5363@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
-To: "Michael G. Schwern" <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 05:11:08 2012
+Cc: git@vger.kernel.org, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, jrnieder@gmail.com,
+	"Michael G. Schwern" <schwern@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jul 28 06:06:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SuxQq-0008G5-0Z
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 05:11:08 +0200
+	id 1SuyIC-0000v7-Nf
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 06:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab2G1DKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 23:10:52 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:53909 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997Ab2G1DKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 23:10:51 -0400
-Received: by obbuo13 with SMTP id uo13so5220936obb.19
-        for <git@vger.kernel.org>; Fri, 27 Jul 2012 20:10:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Vy6giouKujAjQJrAQj++5dR+G33znvX2K/AO1Zssf2Q=;
-        b=Rt/Zm67yy7iVY4PbcZrYadZWsW0m1dRZnifrgPRuSOjHmgJ1IM947L5dLUuRZ6NwAc
-         x17Xj3Dplcqn6pRrSSHBzViMTOQs138K4hnx4VRhPd0X+JbVKwA6mI2+34Tko1IGF6Gi
-         BUuB1g2q9wtMIEWIeT2Gt+HcfD242et6yTq/+FD13nFDmIkEnC2oTkexNBw33/rtkX14
-         BrVzxrR9KhAXDGauIf7TvWaNbKPrp26uEjGFg65m8vM7ydNVOg6k2j6YC8K89qwl/v+a
-         2Uh4OedPOhHjqKdILtdthXLWDCH1a38wTMm0Ahn+nI03a9kCSxwKHWo5j3+8X6MaIGyD
-         yKaA==
-Received: by 10.50.186.131 with SMTP id fk3mr6426705igc.31.1343445050621;
-        Fri, 27 Jul 2012 20:10:50 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id z8sm796769igi.5.2012.07.27.20.10.49
-        (version=SSLv3 cipher=OTHER);
-        Fri, 27 Jul 2012 20:10:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1343419252-9447-1-git-send-email-schwern@pobox.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751052Ab2G1EFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 00:05:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42491 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750873Ab2G1EFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 00:05:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26A3584FA;
+	Sat, 28 Jul 2012 00:05:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ma5XZhqnxtvweZ4yy/ka1sOSsvA=; b=P6XLie
+	UstqWIi0q8G2UGYKmugUhyd8wt8jTTw7PZDFErASg/4Yml52EKo+lMgLrgaFhdRH
+	Sy7o0v7OIaAum+sy6zrFcxHzfFNaKpNtkdbwotMbaoQm/Lv2MZhn/qXglJCwiInH
+	FWTl/+4GOTw85rqWFsKuOMRox0OZTtWKcT4sU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ws5ie0HXhVp9qrk+YJk2MUr86jc8dg90
+	Hsz+Dr11TKGfeBJ/OnGQM1Q8stS7SPaHszZjb0EFp3QMKFqvVTlIVjwp1wmpclSg
+	pC3/paq8rpO/zMqcL9aPJRbntpkvrZ0Y/KxZ/sm74gIEivTOnkzSW3DFbrzbLC+g
+	7UzIZpLBynI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 124D684F9;
+	Sat, 28 Jul 2012 00:05:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8730184F8; Sat, 28 Jul 2012
+ 00:05:37 -0400 (EDT)
+In-Reply-To: <20120728004026.GA5363@dcvr.yhbt.net> (Eric Wong's message of
+ "Sat, 28 Jul 2012 00:40:26 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7CD9A5A2-D869-11E1-8F5B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202401>
 
-Michael G. Schwern wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> This is the last refactoring patch series.  After this bugs, start
-> getting fixed.
+> "Michael G. Schwern" <schwern@pobox.com> wrote:
+>> This series of patches extracts the remaining classes from git-svn.  They're
+>> all simple extractions and functionally have no change.
+>
+> I've also pushed this to the "extract-remaining" series which
+> also includes everything that's currently in my master.
 
-I just wanted to say thanks for your thoughtful presentation of this
-code.  I was worried before, but these have been pleasantly submitted.
+Do you mean this should go in 1.7.12-rc1, or your master is for
+1.7.12 and this is for post 1.7.12 but you are pushing it out to
+help other developers who are working on git-svn as a preview?
 
-If you have a chance at some point to offer advice, I'd love to add
-the information to Documentation/SubmittingPatches that was missing.
-Proposed text is ideal, but outline form or a list of missing aspects
-and confusing existing coverage would be fine, too.
+I didn't look at these follow-up patches, but if you say they are
+fit for the upcoming release, that is good enough for me.  Just
+checking which way you want us to go.
 
-Jonathan
+Thanks.
