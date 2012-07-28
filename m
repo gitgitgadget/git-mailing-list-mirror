@@ -1,56 +1,99 @@
 From: "Michael G. Schwern" <schwern@pobox.com>
-Subject: Canonicalize the git-svn path & url accessors
-Date: Sat, 28 Jul 2012 02:38:25 -0700
-Message-ID: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+Subject: [PATCH 6/7] Switch path canonicalization to use the SVN API.
+Date: Sat, 28 Jul 2012 02:38:31 -0700
+Message-ID: <1343468312-72024-7-git-send-email-schwern@pobox.com>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
 Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net, jrnieder@gmail.com, schwern@pobox.com
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 28 11:39:41 2012
+X-From: git-owner@vger.kernel.org Sat Jul 28 11:39:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv3Un-0007Xk-Tl
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:39:38 +0200
+	id 1Sv3Uz-0007ho-Hg
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547Ab2G1Jiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 05:38:52 -0400
+	id S1752019Ab2G1Jjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 05:39:37 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:50635 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213Ab2G1Jiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 05:38:51 -0400
-Received: by pbbrp8 with SMTP id rp8so6493452pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:38:51 -0700 (PDT)
+	with ESMTP id S1751859Ab2G1JjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 05:39:01 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so6493452pbb.19
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=xbPFn8ngYRGccaQXs3re6O1Fk8MkTKa/3SI60jVy/g4=;
-        b=DkiuDBpMdgGdaYdNeoQkEUEnbACZavSIegAdJ3qubV7Ej/TH26T9t1NClNstnxxRZr
-         4fpdSzuWVenbrOlA+Z/kFSwDRj1FRwvItdnJD3Nvg8WantS55f8UspvL0RJhyqlTqtj6
-         mwwd5IE8m9zqKYfQqLDAEfLFTQGjKQZPxAMYoCceHiHLPaYnvdMMX0JDittX5yv0Vkbc
-         UGv41m0fr7F9ERtbnhVDUdttx6qJdPyop06w+cRssagyzQiwqGX9nDkyPEg/pLyEjQQG
-         3j8lTiqtX0hy8i8wVJzbIK/uqrcRuT/E3WleZLZxrrzMsRX9cLeVWIsGxZVOGhdLhJnw
-         y0fA==
-Received: by 10.66.85.135 with SMTP id h7mr11042408paz.75.1343468331350;
-        Sat, 28 Jul 2012 02:38:51 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=+8Y7UPZhiXZoKzwvbknNcF3nM2HBUNjV7dPmwGE4lkg=;
+        b=Ir+nWX0PjTULCpKymv6/PtqS3oakReZGB7PB0IwQC7N9UdfPATWQLObsWskuqb6sec
+         uJjj5x3R+ehvJc/jw3Dja52M99cKwG4fSBWyUqbxjlwQhGNbQ5n2EiDXCAnPwr1BoKwC
+         vuEvMssujIbJ91p+qY//O4xy9BH88fdE47iORpgu7wIW0zsgVqK0pY6d0f1GyDcUgtCI
+         sM/8VU94Uk9udZSyxg9B6jPY5JQpjE0qqbOe5QTs14BLMCS8WexRmjwzKhfyhYRVN/TD
+         UNN/UChOqkKAnNMfZEumdZs/lYZgLeMZuLMMTndsTwDkSSp1Ywhs70mvTD9tuQKSfbOT
+         AVHQ==
+Received: by 10.68.221.38 with SMTP id qb6mr19915283pbc.144.1343468341148;
+        Sat, 28 Jul 2012 02:39:01 -0700 (PDT)
 Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
-        by mx.google.com with ESMTPS id rs4sm3689907pbc.0.2012.07.28.02.38.49
+        by mx.google.com with ESMTPS id rs4sm3689907pbc.0.2012.07.28.02.39.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 02:38:50 -0700 (PDT)
+        Sat, 28 Jul 2012 02:39:00 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.3
+In-Reply-To: <1343468312-72024-1-git-send-email-schwern@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202412>
 
-This patch turns on canonicalization in the Git::SVN and Git::SVN::Ra
-path and url accessors.
+From: "Michael G. Schwern" <schwern@pobox.com>
 
-It also makes the canonicalizers use the SVN API when available.
+All tests pass with SVN 1.6.  SVN 1.7 remains broken, not worrying
+about it yet.
 
-All patches pass with SVN 1.6.  Next patch series will fix SVN 1.7.
+SVN changed its path canonicalization API between 1.6 and 1.7.
+http://svnbook.red-bean.com/en/1.6/svn.developer.usingapi.html#svn.developer.usingapi.urlpath
+http://svnbook.red-bean.com/en/1.7/svn.developer.usingapi.html#svn.developer.usingapi.urlpath
 
-This should be placed on top of the previous patch series which added
-path and url accessors.
+The SVN API does not accept foo/.. but it also doesn't canonicalize
+it.  We have to do it ourselves.
+---
+ perl/Git/SVN/Utils.pm | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/perl/Git/SVN/Utils.pm b/perl/Git/SVN/Utils.pm
+index 6c8ae53..7ae6fac 100644
+--- a/perl/Git/SVN/Utils.pm
++++ b/perl/Git/SVN/Utils.pm
+@@ -86,6 +86,27 @@ sub _collapse_dotdot {
+ 
+ 
+ sub canonicalize_path {
++	my $path = shift;
++
++	# The 1.7 way to do it
++	if ( defined &SVN::_Core::svn_dirent_canonicalize ) {
++		$path = _collapse_dotdot($path);
++		return SVN::_Core::svn_dirent_canonicalize($path);
++	}
++	# The 1.6 way to do it
++	elsif ( defined &SVN::_Core::svn_path_canonicalize ) {
++		$path = _collapse_dotdot($path);
++		return SVN::_Core::svn_path_canonicalize($path);
++	}
++	# No SVN API canonicalization is available, do it ourselves
++	else {
++		$path = _canonicalize_path_ourselves($path);
++		return $path;
++	}
++}
++
++
++sub _canonicalize_path_ourselves {
+ 	my ($path) = @_;
+ 	my $dot_slash_added = 0;
+ 	if (substr($path, 0, 1) ne "/") {
+-- 
+1.7.11.3
