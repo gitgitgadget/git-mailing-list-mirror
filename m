@@ -1,7 +1,7 @@
 From: "Michael G. Schwern" <schwern@pobox.com>
-Subject: [PATCH 7/8] Turn on canonicalization on newly minted URLs.
-Date: Sat, 28 Jul 2012 02:47:51 -0700
-Message-ID: <1343468872-72133-8-git-send-email-schwern@pobox.com>
+Subject: [PATCH 5/8] Canonicalize earlier in a couple spots.
+Date: Sat, 28 Jul 2012 02:47:49 -0700
+Message-ID: <1343468872-72133-6-git-send-email-schwern@pobox.com>
 References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net, jrnieder@gmail.com, schwern@pobox.com
@@ -12,168 +12,96 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv3dv-0005QI-6C
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:49:03 +0200
+	id 1Sv3dw-0005QI-5q
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143Ab2G1Jsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 05:48:51 -0400
+	id S1752128Ab2G1Jsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 05:48:50 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:42332 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915Ab2G1JsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 05:48:11 -0400
+	with ESMTP id S1751889Ab2G1JsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 05:48:09 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so6503059pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:48:11 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=wJx5V0nt80Ac3ETvpFpXVSBUZuuMG4KLi3e4hHSRmgg=;
-        b=SL0dwBDWa8i36Jzyg82ZIPwBjJ3bj2y5ZJ8+XFV/gHwAFDsOrJXnNG+GcstyPYt6vH
-         AtHLtjiNcM90eau52Sa3FSt6dlZCK5iyV2BX/1QhQGt1Gbii5VGklYbeZK2rh1y+uwlH
-         +z4DMCvgkhsNKF9b9hFRsmhtweZfTGpwcgMD6PepYzEZh5iJB1I4HXWpYuUuVBo0vmV4
-         LQHQrc7fXwPTukSNmADnK+LqzQL8xniMIfa3SGOmt/GbJtlmmYouo+KToIykIpRJvz/l
-         lZeJL4EGino2BkucxbALfvbxjqFqcOsq883EFEG2/qz1pery3nOhldBk++V2nG4y3VjF
-         vasQ==
-Received: by 10.68.219.166 with SMTP id pp6mr20421332pbc.35.1343468891324;
-        Sat, 28 Jul 2012 02:48:11 -0700 (PDT)
+        bh=SrOnD2HHoFKcxpEKK8ta/QiP74eWiO1UgEuQ0nCm6RY=;
+        b=ntjcWhwxnNVHp1uio8/8V7fTY78iFstzlnmuOM6winDKeTnVMxJMwU6m9yTGNzWIr3
+         oI9UDI1IHY88GAjcyJEy7zJ5yIxkJC5BhTV28OtexNhv1mMdR73Lx09P3zGjwHwYTJuJ
+         I5gNCIgYzBUP3pbNYKhpveWtnVPnghHOVeYhznQulwld6Zn3nlqKWvug+GYE/iWwDuFa
+         EjLli2rPjJqMY83wt7fWP1OI+NjSlUnZT0aNKJbk4FeSORu8UIC0qviUYJjT7Uib9AYF
+         +43LLCotcOmOW2uh/dh997aL4yPrFEOjc0QYG3SurcpijMfyIzmI8MUrjHa/d0PAlRpg
+         wz5A==
+Received: by 10.68.195.202 with SMTP id ig10mr20382541pbc.37.1343468888964;
+        Sat, 28 Jul 2012 02:48:08 -0700 (PDT)
 Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
-        by mx.google.com with ESMTPS id nv6sm3692274pbc.42.2012.07.28.02.48.10
+        by mx.google.com with ESMTPS id nv6sm3692274pbc.42.2012.07.28.02.48.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 02:48:10 -0700 (PDT)
+        Sat, 28 Jul 2012 02:48:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202425>
 
 From: "Michael G. Schwern" <schwern@pobox.com>
 
-Go through all the spots that use the new add_path_to_url() to
-make a new URL and canonicalize them.
-
-* copyfrom_path has to be canonicalized else find_parent_branch
-  will get confused
-
-* due to the `canonicalize_url($full_url) ne $full_url)` line of
-  logic in gs_do_switch(), $full_url is left alone until after.
-
-At this point SVN 1.7 passes except for 3 tests in
-t9100-git-svn-basic.sh that look like an SVN bug to do with
-symlinks.
+Just a few things I noticed.  Its good to canonicalize as early as
+possible.
 ---
- perl/Git/SVN.pm    | 19 ++++++++++++++-----
- perl/Git/SVN/Ra.pm |  9 ++++++++-
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ git-svn.perl       | 6 +++---
+ perl/Git/SVN/Ra.pm | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 22bf207..e5f7acc 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -362,6 +362,8 @@ sub init_remote_config {
- sub find_by_url { # repos_root and, path are optional
- 	my ($class, $full_url, $repos_root, $path) = @_;
+diff --git a/git-svn.perl b/git-svn.perl
+index 6e97545..6b90765 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1436,16 +1436,16 @@ sub cmd_info {
+ 	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
+ 	$path = "." if $path eq "";
  
-+	$full_url = canonicalize_url($full_url);
-+
- 	return undef unless defined $full_url;
- 	remove_username($full_url);
- 	remove_username($repos_root) if defined $repos_root;
-@@ -400,6 +402,11 @@ sub find_by_url { # repos_root and, path are optional
- 			}
- 			$p =~ s#^\Q$z\E(?:/|$)#$prefix# or next;
- 		}
-+
-+		# remote fetch paths are not URI escaped.  Decode ours
-+		# so they match
-+		$p = uri_decode($p);
-+
- 		foreach my $f (keys %$fetch) {
- 			next if $f ne $p;
- 			return Git::SVN->new($fetch->{$f}, $repo_id, $f);
-@@ -934,18 +941,18 @@ sub rewrite_uuid {
- sub metadata_url {
- 	my ($self) = @_;
- 	my $url = $self->rewrite_root || $self->url;
--	return add_path_to_url( $url, $self->path );
-+	return canonicalize_url( add_path_to_url( $url, $self->path ) );
- }
+-	my $full_url = $url . ($fullpath eq "" ? "" : "/$fullpath");
++	my $full_url = canonicalize_url( $url . ($fullpath eq "" ? "" : "/$fullpath") );
  
- sub full_url {
- 	my ($self) = @_;
--	return add_path_to_url( $self->url, $self->path );
-+	return canonicalize_url( add_path_to_url( $self->url, $self->path ) );
- }
- 
- sub full_pushurl {
- 	my ($self) = @_;
- 	if ($self->{pushurl}) {
--		return add_path_to_url( $self->{pushurl}, $self->path );
-+		return canonicalize_url( add_path_to_url( $self->{pushurl}, $self->path ) );
- 	} else {
- 		return $self->full_url;
+ 	if ($_url) {
+-		print canonicalize_url($full_url), "\n";
++		print "$full_url\n";
+ 		return;
  	}
-@@ -1113,7 +1120,7 @@ sub find_parent_branch {
- 	my $r = $i->{copyfrom_rev};
- 	my $repos_root = $self->ra->{repos_root};
- 	my $url = $self->ra->url;
--	my $new_url = add_path_to_url( $url, $branch_from );
-+	my $new_url = canonicalize_url( add_path_to_url( $url, $branch_from ) );
- 	print STDERR  "Found possible branch point: ",
- 	              "$new_url => ", $self->full_url, ", $r\n"
- 	              unless $::_q > 1;
-@@ -1869,7 +1876,9 @@ sub make_log_entry {
- 		$email ||= "$author\@$uuid";
- 		$commit_email ||= "$author\@$uuid";
- 	} elsif ($self->use_svnsync_props) {
--		my $full_url = add_path_to_url( $self->svnsync->{url}, $self->path );
-+		my $full_url = canonicalize_url(
-+			add_path_to_url( $self->svnsync->{url}, $self->path )
-+		);
- 		remove_username($full_url);
- 		my $uuid = $self->svnsync->{uuid};
- 		$log_entry{metadata} = "$full_url\@$rev $uuid";
+ 
+ 	my $result = "Path: $path\n";
+ 	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
+-	$result .= "URL: " . canonicalize_url($full_url) . "\n";
++	$result .= "URL: $full_url\n";
+ 
+ 	eval {
+ 		my $repos_root = $gs->repos_root;
 diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
-index 788e642..29b46e8 100644
+index ed9dbe9..eee7c00 100644
 --- a/perl/Git/SVN/Ra.pm
 +++ b/perl/Git/SVN/Ra.pm
-@@ -5,6 +5,7 @@ use warnings;
- use SVN::Client;
- use Git::SVN::Utils qw(
- 	canonicalize_url
-+	canonicalize_path
- 	add_path_to_url
- );
+@@ -69,7 +69,7 @@ sub _auth_providers () {
  
-@@ -102,6 +103,7 @@ sub new {
+ sub new {
+ 	my ($class, $url) = @_;
+-	$url =~ s!/+$!!;
++	$url = canonicalize_url($url);
+ 	return $RA if ($RA && $RA->url eq $url);
+ 
+ 	::_req_svn();
+@@ -101,7 +101,7 @@ sub new {
  			$Git::SVN::Prompt::_no_auth_cache = 1;
  		}
  	} # no warnings 'once'
-+
- 	my $self = SVN::Ra->new(url => $url, auth => $baton,
+-	my $self = SVN::Ra->new(url => canonicalize_url($url), auth => $baton,
++	my $self = SVN::Ra->new(url => $url, auth => $baton,
  	                      config => $config,
  			      pool => SVN::Pool->new,
-@@ -200,6 +202,7 @@ sub get_log {
- 				qw/copyfrom_path copyfrom_rev action/;
- 			if ($s{'copyfrom_path'}) {
- 				$s{'copyfrom_path'} =~ s/$prefix_regex//;
-+				$s{'copyfrom_path'} = canonicalize_path($s{'copyfrom_path'});
- 			}
- 			$_[0]{$p} = \%s;
- 		}
-@@ -303,7 +306,11 @@ sub gs_do_switch {
- 		$ra = Git::SVN::Ra->new($full_url);
- 		$ra_invalid = 1;
- 	} elsif ($old_url ne $full_url) {
--		SVN::_Ra::svn_ra_reparent($self->{session}, $full_url, $pool);
-+		SVN::_Ra::svn_ra_reparent(
-+			$self->{session},
-+			canonicalize_url($full_url),
-+			$pool
-+		);
- 		$self->url($full_url);
- 		$reparented = 1;
- 	}
+ 	                      auth_provider_callbacks => $callbacks);
 -- 
 1.7.11.3
