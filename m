@@ -1,107 +1,196 @@
 From: "Michael G. Schwern" <schwern@pobox.com>
-Subject: [PATCH 5/8] Canonicalize earlier in a couple spots.
-Date: Sat, 28 Jul 2012 02:47:49 -0700
-Message-ID: <1343468872-72133-6-git-send-email-schwern@pobox.com>
+Subject: [PATCH 4/8] Replace hand rolled URL escapes with canonicalization
+Date: Sat, 28 Jul 2012 02:47:48 -0700
+Message-ID: <1343468872-72133-5-git-send-email-schwern@pobox.com>
 References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net, jrnieder@gmail.com, schwern@pobox.com
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 28 11:49:04 2012
+X-From: git-owner@vger.kernel.org Sat Jul 28 11:49:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv3dw-0005QI-5q
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:49:04 +0200
+	id 1Sv3e6-0005aT-Jv
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752128Ab2G1Jsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 05:48:50 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42332 "EHLO
+	id S1752077Ab2G1Jsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 05:48:47 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57120 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889Ab2G1JsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 05:48:09 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rp8so6503059pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:48:09 -0700 (PDT)
+	with ESMTP id S1751859Ab2G1JsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 05:48:08 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rp8so6503035pbb.19
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=SrOnD2HHoFKcxpEKK8ta/QiP74eWiO1UgEuQ0nCm6RY=;
-        b=ntjcWhwxnNVHp1uio8/8V7fTY78iFstzlnmuOM6winDKeTnVMxJMwU6m9yTGNzWIr3
-         oI9UDI1IHY88GAjcyJEy7zJ5yIxkJC5BhTV28OtexNhv1mMdR73Lx09P3zGjwHwYTJuJ
-         I5gNCIgYzBUP3pbNYKhpveWtnVPnghHOVeYhznQulwld6Zn3nlqKWvug+GYE/iWwDuFa
-         EjLli2rPjJqMY83wt7fWP1OI+NjSlUnZT0aNKJbk4FeSORu8UIC0qviUYJjT7Uib9AYF
-         +43LLCotcOmOW2uh/dh997aL4yPrFEOjc0QYG3SurcpijMfyIzmI8MUrjHa/d0PAlRpg
-         wz5A==
-Received: by 10.68.195.202 with SMTP id ig10mr20382541pbc.37.1343468888964;
+        bh=GdlixFXskvdGTRmTOH2VR9eq1anxi1RFRlZ9FbmzKao=;
+        b=h0rsN/GQkN61eEqUxjh67gH3iEufAXitm5RiXpZohURVyViDTeQbLol1ziI7iKljrs
+         STawHEJ57hIiKZ0LluFUyixy0PTPPShNtg4s1h0BNN3fZv+XIFCAMw7tK6FQj6AjPsPA
+         yi3oodDb4vwCAA8zy++AgzILUc9Ip8Ga/YWToZ7QBkFypw1cq0CvSgDawUr4W3lpAyq8
+         DnkcctvyeF9WNpHj3pvxMC9hHmL3G5ZLVGPIg5Xc42TYLdQMst0DSFfU2hpxxC+XELK+
+         wSZqGPyndnlB0Bm0I7+/zYO/YsYm82aG9T0ItjPxJAxXPWg5YCf9Mz9pYD55zlLUvi/G
+         QwGw==
+Received: by 10.68.238.166 with SMTP id vl6mr20183678pbc.96.1343468888006;
         Sat, 28 Jul 2012 02:48:08 -0700 (PDT)
 Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
-        by mx.google.com with ESMTPS id nv6sm3692274pbc.42.2012.07.28.02.48.08
+        by mx.google.com with ESMTPS id nv6sm3692274pbc.42.2012.07.28.02.48.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 02:48:08 -0700 (PDT)
+        Sat, 28 Jul 2012 02:48:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202426>
 
 From: "Michael G. Schwern" <schwern@pobox.com>
 
-Just a few things I noticed.  Its good to canonicalize as early as
-possible.
+Continuing to move towards getting everything canonicalizing the same way.
+
+* Git::SVN->init_remote_config and Git::SVN::Ra->minimize_url both
+  have to canonicalize the same way else init_remote_config
+  will incorrectly think they're different URLs causing
+  t9107-git-svn-migrate.sh to fail.
 ---
- git-svn.perl       | 6 +++---
- perl/Git/SVN/Ra.pm | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ git-svn.perl       | 24 +++---------------------
+ perl/Git/SVN.pm    |  2 +-
+ perl/Git/SVN/Ra.pm | 27 +++++----------------------
+ 3 files changed, 9 insertions(+), 44 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 6e97545..6b90765 100755
+index 6e3e240..6e97545 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -1436,16 +1436,16 @@ sub cmd_info {
- 	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
- 	$path = "." if $path eq "";
+@@ -1412,24 +1412,6 @@ sub cmd_commit_diff {
+ 	}
+ }
  
--	my $full_url = $url . ($fullpath eq "" ? "" : "/$fullpath");
-+	my $full_url = canonicalize_url( $url . ($fullpath eq "" ? "" : "/$fullpath") );
+-sub escape_uri_only {
+-	my ($uri) = @_;
+-	my @tmp;
+-	foreach (split m{/}, $uri) {
+-		s/([^~\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
+-		push @tmp, $_;
+-	}
+-	join('/', @tmp);
+-}
+-
+-sub escape_url {
+-	my ($url) = @_;
+-	if ($url =~ m#^([^:]+)://([^/]*)(.*)$#) {
+-		my ($scheme, $domain, $uri) = ($1, $2, escape_uri_only($3));
+-		$url = "$scheme://$domain$uri";
+-	}
+-	$url;
+-}
+ 
+ sub cmd_info {
+ 	my $path = canonicalize_path(defined($_[0]) ? $_[0] : ".");
+@@ -1457,18 +1439,18 @@ sub cmd_info {
+ 	my $full_url = $url . ($fullpath eq "" ? "" : "/$fullpath");
  
  	if ($_url) {
--		print canonicalize_url($full_url), "\n";
-+		print "$full_url\n";
+-		print escape_url($full_url), "\n";
++		print canonicalize_url($full_url), "\n";
  		return;
  	}
  
  	my $result = "Path: $path\n";
  	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
--	$result .= "URL: " . canonicalize_url($full_url) . "\n";
-+	$result .= "URL: $full_url\n";
+-	$result .= "URL: " . escape_url($full_url) . "\n";
++	$result .= "URL: " . canonicalize_url($full_url) . "\n";
  
  	eval {
  		my $repos_root = $gs->repos_root;
+ 		Git::SVN::remove_username($repos_root);
+-		$result .= "Repository Root: " . escape_url($repos_root) . "\n";
++		$result .= "Repository Root: " . canonicalize_url($repos_root) . "\n";
+ 	};
+ 	if ($@) {
+ 		$result .= "Repository Root: (offline)\n";
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index cb6d83a..4219e5b 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -296,7 +296,7 @@ sub find_existing_remote {
+ 
+ sub init_remote_config {
+ 	my ($self, $url, $no_write) = @_;
+-	$url =~ s!/+$!!; # strip trailing slash
++	$url = canonicalize_url($url);
+ 	my $r = read_all_remotes();
+ 	my $existing = find_existing_remote($url, $r);
+ 	if ($existing) {
 diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
-index ed9dbe9..eee7c00 100644
+index ef7b3dd..ed9dbe9 100644
 --- a/perl/Git/SVN/Ra.pm
 +++ b/perl/Git/SVN/Ra.pm
-@@ -69,7 +69,7 @@ sub _auth_providers () {
+@@ -66,24 +66,6 @@ sub _auth_providers () {
+ 	\@rv;
+ }
+ 
+-sub escape_uri_only {
+-	my ($uri) = @_;
+-	my @tmp;
+-	foreach (split m{/}, $uri) {
+-		s/([^~\w.%+-]|%(?![a-fA-F0-9]{2}))/sprintf("%%%02X",ord($1))/eg;
+-		push @tmp, $_;
+-	}
+-	join('/', @tmp);
+-}
+-
+-sub escape_url {
+-	my ($url) = @_;
+-	if ($url =~ m#^(https?)://([^/]+)(.*)$#) {
+-		my ($scheme, $domain, $uri) = ($1, $2, escape_uri_only($3));
+-		$url = "$scheme://$domain$uri";
+-	}
+-	$url;
+-}
  
  sub new {
  	my ($class, $url) = @_;
--	$url =~ s!/+$!!;
-+	$url = canonicalize_url($url);
- 	return $RA if ($RA && $RA->url eq $url);
- 
- 	::_req_svn();
-@@ -101,7 +101,7 @@ sub new {
+@@ -119,7 +101,7 @@ sub new {
  			$Git::SVN::Prompt::_no_auth_cache = 1;
  		}
  	} # no warnings 'once'
--	my $self = SVN::Ra->new(url => canonicalize_url($url), auth => $baton,
-+	my $self = SVN::Ra->new(url => $url, auth => $baton,
+-	my $self = SVN::Ra->new(url => escape_url($url), auth => $baton,
++	my $self = SVN::Ra->new(url => canonicalize_url($url), auth => $baton,
  	                      config => $config,
  			      pool => SVN::Pool->new,
  	                      auth_provider_callbacks => $callbacks);
+@@ -314,7 +296,7 @@ sub gs_do_switch {
+ 
+ 	if ($old_url =~ m#^svn(\+ssh)?://# ||
+ 	    ($full_url =~ m#^https?://# &&
+-	     escape_url($full_url) ne $full_url)) {
++	     canonicalize_url($full_url) ne $full_url)) {
+ 		$_[0] = undef;
+ 		$self = undef;
+ 		$RA = undef;
+@@ -327,7 +309,7 @@ sub gs_do_switch {
+ 	}
+ 
+ 	$ra ||= $self;
+-	$url_b = escape_url($url_b);
++	$url_b = canonicalize_url($url_b);
+ 	my $reporter = $ra->do_switch($rev_b, '', 1, $url_b, $editor, $pool);
+ 	my @lock = (::compare_svn_version('1.2.0') >= 0) ? (undef) : ();
+ 	$reporter->set_path('', $rev_a, 0, @lock, $pool);
+@@ -582,7 +564,8 @@ sub minimize_url {
+ 			$ra->get_log("", $latest, 0, 1, 0, 1, sub {});
+ 		};
+ 	} while ($@ && ($c = shift @components));
+-	$url;
++
++	return canonicalize_url($url);
+ }
+ 
+ sub can_do_switch {
 -- 
 1.7.11.3
