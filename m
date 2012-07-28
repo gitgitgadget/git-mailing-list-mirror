@@ -1,109 +1,62 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Extract remaining classes from git-svn
-Date: Sat, 28 Jul 2012 00:40:26 +0000
-Message-ID: <20120728004026.GA5363@dcvr.yhbt.net>
-References: <1343348767-86446-1-git-send-email-schwern@pobox.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 1/2] remove unnecessary parameter from get_patch_ids()
+Date: Fri, 27 Jul 2012 18:54:50 -0700
+Message-ID: <CAOeW2eG_5G3qQTguvWsSDfLU1s5p=B8WT=v8ywe=G1-VJTfGNw@mail.gmail.com>
+References: <1343409699-27199-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1343409699-27199-2-git-send-email-martin.von.zweigbergk@gmail.com>
+	<7v1ujwzuw1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, jrnieder@gmail.com,
-	"Michael G. Schwern" <schwern@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 02:41:12 2012
+X-From: git-owner@vger.kernel.org Sat Jul 28 03:54:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Suv5i-00058n-88
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 02:41:10 +0200
+	id 1SuwF8-0001jn-Lu
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 03:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547Ab2G1Ak1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jul 2012 20:40:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34368 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751197Ab2G1Ak1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jul 2012 20:40:27 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407011F5B6;
-	Sat, 28 Jul 2012 00:40:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1343348767-86446-1-git-send-email-schwern@pobox.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752661Ab2G1Byw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jul 2012 21:54:52 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:43769 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514Ab2G1Byv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jul 2012 21:54:51 -0400
+Received: by pbbrp8 with SMTP id rp8so5941529pbb.19
+        for <git@vger.kernel.org>; Fri, 27 Jul 2012 18:54:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fD9QmYgtojzTIFR64m8qsGAScmfV1KroNcFraBeR2KM=;
+        b=SYM/0ALxQh/2CI6252wITJ2Sw1WRY9Pp8sOu2ktaiWVQDiWf86Ur0xS8nQ6zEXvPfe
+         6GnnruFRowo46E6M2DKbVunyzazKPMiqRTa7Wx3SpgFFZEpez27Reaf+LIL0VUeyigVL
+         3wjJLJfXWRQ4otRGXy9aYAdKsvC6sMmrbGLUZNq+IB04GCWu2ntzaPbmrWRDhmLTvZTF
+         9iq8+9No2XsbGoLdMmzNRkOH1H+CbA9myRvs+6crnhhxsw8uqdfRASfaacYj/7B7GJun
+         Yu3JDUkZljbV6w267TRr/mqNSj94sEHfpw5LBVDLn9jc2s2hhOOMmMPaS+LBEeQIvRuU
+         tJag==
+Received: by 10.68.218.133 with SMTP id pg5mr17646551pbc.140.1343440490921;
+ Fri, 27 Jul 2012 18:54:50 -0700 (PDT)
+Received: by 10.68.42.164 with HTTP; Fri, 27 Jul 2012 18:54:50 -0700 (PDT)
+In-Reply-To: <7v1ujwzuw1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202397>
 
-"Michael G. Schwern" <schwern@pobox.com> wrote:
-> This series of patches extracts the remaining classes from git-svn.  They're
-> all simple extractions and functionally have no change.
+On Fri, Jul 27, 2012 at 3:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+>
+> s/it seems the prefix doesn't change/the prefix never changes/;
 
-I've also pushed this to the "extract-remaining" series which
-also includes everything that's currently in my master.
+:-) Thanks for confirming.
 
-I squashed Michael's 8/8 trivial change into 3/8 to avoid introducing
-a needless commit.  (I don't feel strongly about indentation for
-alignment purposes in use() statements much, but since he submitted
-the change...)
+> In that sense it probably does not even matter if you did not pass
+> rev->prefix down to check_rev, and instead gave NULL to it, but that
+> only holds true in the current codebase, so I think what your patch
+> does is the right thing to do.
 
-
-The following changes since commit cdd159b2f56c9e69e37bbb8f5af301abd93e5407:
-
-  Merge branch 'jc/test-lib-source-build-options-early' (2012-07-25 15:47:08 -0700)
-
-are available in the git repository at:
-
-
-  git://bogomips.org/git-svn extract-remaining
-
-for you to fetch changes up to 3d9be15fc2b8c8198253ae1c4dcaa343b74c3b8d:
-
-  Extract Git::SVN::GlobSpec from git-svn. (2012-07-27 22:36:19 +0000)
-
-----------------------------------------------------------------
-Junio C Hamano (1):
-      perl: detect new files in MakeMaker builds
-
-Michael G. Schwern (14):
-      Quiet warning if Makefile.PL is run with -w and no --localedir
-      Don't lose Error.pm if $@ gets clobbered.
-      The Makefile.PL will now find .pm files itself.
-      Extract some utilities from git-svn to allow extracting Git::SVN.
-      Prepare Git::SVN for extraction into its own file.
-      Extract Git::SVN from git-svn into its own .pm file.
-      Move initialization of Git::SVN variables into Git::SVN.
-      Prepare Git::SVN::Log for extraction from git-svn.
-      Extract Git::SVN::Log from git-svn.
-      Prepare Git::SVN::Migration for extraction from git-svn.
-      Extract Git::SVN::Migration from git-svn.
-      Load all the modules in one place and before running code.
-      Move Git::IndexInfo into its own file.
-      Extract Git::SVN::GlobSpec from git-svn.
-
- Makefile                       |    7 +
- git-svn.perl                   | 3119 +---------------------------------------
- perl/.gitignore                |    1 +
- perl/Git/IndexInfo.pm          |   33 +
- perl/Git/SVN.pm                | 2326 ++++++++++++++++++++++++++++++
- perl/Git/SVN/Fetcher.pm        |    1 +
- perl/Git/SVN/GlobSpec.pm       |   59 +
- perl/Git/SVN/Log.pm            |  395 +++++
- perl/Git/SVN/Migration.pm      |  258 ++++
- perl/Git/SVN/Utils.pm          |   59 +
- perl/Makefile                  |    9 +
- perl/Makefile.PL               |   35 +-
- t/Git-SVN/00compile.t          |   14 +
- t/Git-SVN/Utils/can_compress.t |   11 +
- t/Git-SVN/Utils/fatal.t        |   34 +
- 15 files changed, 3272 insertions(+), 3089 deletions(-)
- create mode 100644 perl/Git/IndexInfo.pm
- create mode 100644 perl/Git/SVN.pm
- create mode 100644 perl/Git/SVN/GlobSpec.pm
- create mode 100644 perl/Git/SVN/Log.pm
- create mode 100644 perl/Git/SVN/Migration.pm
- create mode 100644 perl/Git/SVN/Utils.pm
- create mode 100644 t/Git-SVN/00compile.t
- create mode 100644 t/Git-SVN/Utils/can_compress.t
- create mode 100644 t/Git-SVN/Utils/fatal.t
+Makes sense. Thanks for explaining!
