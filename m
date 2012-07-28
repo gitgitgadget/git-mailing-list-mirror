@@ -1,82 +1,93 @@
-From: Michael G Schwern <schwern@pobox.com>
-Subject: Re: [PATCH 7/7] Make Git::SVN and Git::SVN::Ra canonicalize paths
- and urls.
-Date: Sat, 28 Jul 2012 12:15:36 -0700
-Message-ID: <50143A58.5050600@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] Change canonicalize_url() to use the SVN 1.7 API
+ when available.
+Date: Sat, 28 Jul 2012 14:30:29 -0500
+Message-ID: <20120728193029.GB3107@burratino>
 References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
- <1343468312-72024-8-git-send-email-schwern@pobox.com>
- <20120728141126.GD9715@burratino>
+ <1343468312-72024-3-git-send-email-schwern@pobox.com>
+ <20120728135018.GB9715@burratino>
+ <50143700.80900@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
 	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 21:16:24 2012
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 21:31:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvCUu-0002IL-TX
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 21:16:21 +0200
+	id 1SvCjR-0003nU-LQ
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 21:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069Ab2G1TPi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jul 2012 15:15:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41681 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753004Ab2G1TPh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2012 15:15:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E5AA8FC6;
-	Sat, 28 Jul 2012 15:15:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=q5JZKGzO7MGl
-	L84+9nyJw8FOidk=; b=AIJ+2Qmql0LYU3VXvnfW1CJeI5jm6B3NRzE1QfUVSiRC
-	PG7W3jLIDePOydpYSDJI5FULbVT+WbuQ61RoR0oLRBtkxaQ7Bj+RMMtdlpwDBu6P
-	WfwY7rqJWacTP0BnNMLb/BiesLHYaPEerfV+dvSZtHRihjzTqLzd8ImkkBRsTf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IZ2M5j
-	p/x9PFbB3Wt3WYl8+HkFla0bFOswTZNis2MTXn2yRl8WhvzDHvzhyNe9FHxqBoUp
-	o8dx0RYaGAcBD6vd/8PlTIoCecqDXCht0bvfcgTPPv0L+reO6CV6dNJbhs6iX+dp
-	AT3nYyQPGQfgsEIVNrg3r7c6EJwhTOKU7uWs0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A4EA8FC4;
-	Sat, 28 Jul 2012 15:15:37 -0400 (EDT)
-Received: from windhund.local (unknown [71.236.173.173]) (using TLSv1 with
- cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EBE08FC3; Sat, 28 Jul
- 2012 15:15:36 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:14.0)
- Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <20120728141126.GD9715@burratino>
-X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: 9CAD19D4-D8E8-11E1-8537-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+	id S1752911Ab2G1Tah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 15:30:37 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:53649 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322Ab2G1Tag (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 15:30:36 -0400
+Received: by ghrr11 with SMTP id r11so4060901ghr.19
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 12:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=GvM6I71YSwd9dxBe8xP0m0HTvwU4ufmWlVWYaRA2ve0=;
+        b=BRoLS8e99gxpLxBc5e4DZpl14ODGXxWCUSZd2fGuq9lLrebmI6NfyrkbeWknRYRcmZ
+         x0ZUo5oqP6wDT2kgwcb8nf9MMmU4wFwXHv2u39Bz/bp4/2Uj8DkFPsPYoC8Bz5ie4iay
+         UQ2UShT76Nnq1lfDGo7IyCTnOGq6Ccqsq7RKO8m5AzbxcZa1y6LWbIB7Nm4KumZa6ZQ/
+         GyqNSlxeoCI2lx4EKnk6eQtBvbopyLhmIyshnpA5TA8ynjY6vcKhk8PUDC7wRwuHwnxa
+         wZoqWh2mvl8tLdRfWm52jReO/+Tb40DtaF7h+1wcpOxkh6ek2qwgD7FnlScmiE3H0BzG
+         94XA==
+Received: by 10.43.126.1 with SMTP id gu1mr4059985icc.6.1343503836046;
+        Sat, 28 Jul 2012 12:30:36 -0700 (PDT)
+Received: from burratino ([64.107.3.126])
+        by mx.google.com with ESMTPS id qo3sm5061608igc.8.2012.07.28.12.30.34
+        (version=SSLv3 cipher=OTHER);
+        Sat, 28 Jul 2012 12:30:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <50143700.80900@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202458>
 
-On 2012.7.28 7:11 AM, Jonathan Nieder wrote:
-> Yay!  Am I correct in imagining this makes the following sequence of
-> commands[1] no longer trip an assertion failure in svn_path_join[2]
-> with SVN 1.6?
->=20
-> 	git svn init -Thttp://trac-hacks.org/svn/tagsplugin/trunk \
-> 		-thttp://trac-hacks.org/svn/tagsplugin/tags \
-> 		-bhttp://trac-hacks.org/svn/tagsplugin/branches
-> 	git svn fetch
+Michael G Schwern wrote:
+> On 2012.7.28 6:50 AM, Jonathan Nieder wrote:
 
-Works For Me=99!
+>> If I am reading Subversion r873487 correctly, in ancient times,
+>> svn_path_canonicalize() did the appropriate tweaking for URIs.  Today
+>> its implementation is comforting:
+>> 
+>> 	const char *
+>> 	svn_path_canonicalize(const char *path, apr_pool_t *pool)
+>> 	{
+>> 	  if (svn_path_is_url(path))
+>> 	    return svn_uri_canonicalize(path, pool);
+>> 	  else
+>> 	    return svn_dirent_canonicalize(path, pool);
+>> 	}
+[...]
+> I didn't know about that.  I don't know what your SVN backwards compat
+> requirements are, but if that behavior goes back far enough in SVN to satisfy
+> you folks, then canonicalize_url() should fall back to
+> SVN::_Core::svn_path_canonicalize().
 
-  ...
-  Checked out HEAD:
-    http://trac-hacks.org/svn/tagsplugin/trunk r11776
+svn_path_canonicalize() has been usable for this kind of thing since
+SVN 1.1, possibly earlier.
 
+>                                      But try it at the end of the patch
+> series.  The code has to be prepared for canonicalization first.  Then how it
+> actually does it can be improved.
 
---=20
-Insulting our readers is part of our business model.
-        http://somethingpositive.net/sp07122005.shtml
+Since this part of the series is not tested with SVN 1.7, this is
+basically adding dead code, right?  That could be avoided by
+reordering the changes to keep "canonicalize_url" as-is until later in
+the series when the switchover is safe.
+
+Thanks.  Will play around with this code more.
+
+Jonathan
