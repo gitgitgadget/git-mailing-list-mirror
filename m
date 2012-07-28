@@ -1,72 +1,67 @@
-From: Nikolai Vladimirov <nikolay@vladimiroff.com>
-Subject: [PATCH] buitin_config: return postitive status in get_value
-Date: Sat, 28 Jul 2012 14:42:10 +0300
-Message-ID: <1343475730-18743-1-git-send-email-nikolay@vladimiroff.com>
-Cc: Nikolai Vladimirov <nikolay@vladimiroff.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 28 13:44:23 2012
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] cleanup argument passing in submodule status command
+Date: Sat, 28 Jul 2012 14:19:56 +0200
+Message-ID: <20120728121956.GA36429@book.hvoigt.net>
+References: <20120727185925.793121C0FDC@stefro.sfo.corp.google.com> <20120728102209.GA13370@book.hvoigt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de,
+	Stefan Zager <szager@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jul 28 14:24:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv5RU-0004Y5-Gp
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 13:44:20 +0200
+	id 1Sv64V-0001gn-3g
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 14:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398Ab2G1Lng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 07:43:36 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33762 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382Ab2G1Lng (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 07:43:36 -0400
-Received: by wibhm11 with SMTP id hm11so427589wib.1
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 04:43:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=480QUr0/MxEvzgSpZiKNZR9umVCCF3dXUVcEvh2z+OE=;
-        b=JutM0WoAylO/mF1rLSR/XWo4k4/Q+cFHsgZY1KrpGhyeBHD3vo019yx7sCNvD6U50J
-         WW337Ixvx++54m5BxjbUBJORqzxJKCYGYMtIBGpoOkwlhHUnJlFpunXyzfAcEjQy1FoZ
-         n+b82zSbHaS85e8uSCioIJ9n8y5woh7DvhcnsGtRoZFGKtQYDuccUErnaonwClCACbt1
-         snEBubow4MQaEEvVCIqOMPpDrSW9Enx0rBbwsxxV48xEbofwqviLCn2iJaHYLjYdTlug
-         buwKBQdyAwiFFTrWhmPBvsJl8YyNAsIabi64fwWs6Dc7jqhF5HeudlKj/LMcaRzvK18g
-         IvXg==
-Received: by 10.180.107.2 with SMTP id gy2mr29190138wib.2.1343475814549;
-        Sat, 28 Jul 2012 04:43:34 -0700 (PDT)
-Received: from localhost.localdomain ([95.111.28.14])
-        by mx.google.com with ESMTPS id cl8sm3777154wib.10.2012.07.28.04.43.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 04:43:33 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.2
+	id S1752339Ab2G1MYC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 08:24:02 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:34275 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752299Ab2G1MYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 08:24:01 -0400
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Sv5zw-0003rS-RI; Sat, 28 Jul 2012 14:19:56 +0200
+Content-Disposition: inline
+In-Reply-To: <20120728102209.GA13370@book.hvoigt.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202431>
 
-Returning -1 instead of 1 results in wrong exit status(255) since
-the output of get_value is passed to exit().
+In commit 98dbe63 the variable $orig_args was renamed to $orig_flags.
+One location in cmd_status() was missed.
 
-'git config missing_section' should now return proper exit status = 1,
-as specified by the git config documentation.
+Note: This is a code cleanup and does not fix any bugs. As a side effect
+the variables containing the parsed flags to "git submodule status" are
+passed down recursively. So everything was already behaving as expected.
 
-Signed-off-by: Nikolai Vladimirov <nikolay@vladimiroff.com>
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
- builtin/config.c | 2 +-
+ git-submodule.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 8cd08da..c262cbb 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -160,7 +160,7 @@ static int show_config(const char *key_, const char *value_, void *cb)
- 
- static int get_value(const char *key_, const char *regex_)
- {
--	int ret = -1;
-+	int ret = 1;
- 	char *global = NULL, *xdg = NULL, *repo_config = NULL;
- 	const char *system_wide = NULL, *local;
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+diff --git a/git-submodule.sh b/git-submodule.sh
+index dba4d39..3a3f0a4 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -961,7 +961,7 @@ cmd_status()
+ 				prefix="$displaypath/"
+ 				clear_local_git_env
+ 				cd "$sm_path" &&
+-				eval cmd_status "$orig_args"
++				eval cmd_status "$orig_flags"
+ 			) ||
+ 			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
+ 		fi
 -- 
-1.7.11.2
+1.7.12.rc0.23.g3c7cae0
