@@ -1,214 +1,184 @@
 From: "Michael G. Schwern" <schwern@pobox.com>
-Subject: [PATCH 4/7] Add join_paths() to safely concatenate paths.
-Date: Sat, 28 Jul 2012 02:38:29 -0700
-Message-ID: <1343468312-72024-5-git-send-email-schwern@pobox.com>
+Subject: [PATCH 1/7] Move the canonicalization functions to Git::SVN::Utils
+Date: Sat, 28 Jul 2012 02:38:26 -0700
+Message-ID: <1343468312-72024-2-git-send-email-schwern@pobox.com>
 References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
 Cc: robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
 	normalperson@yhbt.net, jrnieder@gmail.com, schwern@pobox.com
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 28 11:39:52 2012
+X-From: git-owner@vger.kernel.org Sat Jul 28 11:40:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv3Uz-0007ho-2M
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:39:49 +0200
+	id 1Sv3VC-0007qw-Bl
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 11:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974Ab2G1Jjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 05:39:36 -0400
+	id S1751928Ab2G1Jje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 05:39:34 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:50635 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820Ab2G1Ji7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 05:38:59 -0400
+	with ESMTP id S1751637Ab2G1Ji4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 05:38:56 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rp8so6493452pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:38:59 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 02:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=FChV2rgOQCFiXqb3cPZNpYIzh6pjCj0PIY8/Yil9YW4=;
-        b=00an2WWszH87PVUpgXIZbweFW4LJQ2MPsqAyDvd9OU2hpYPCuydELDSItQXxKh7WVQ
-         mRFf7QWzOCb8Dpj/Ti1+PT87svzd4/my50HvEFgb2oQq/xIs5e+n5H/jEIXGmzXfbPrc
-         4kzSWkOyiL13JNgPQ7K6v2t1svd4/qtF4eOic4rvdlPdHPAwuWfsRPdvsUueS3N6JE8V
-         Pio3ast32WA46zSHWqescDfRj7HkZb7HYrc+lmt60pbum7NmUteLKhYVeLg3k1xdS138
-         hgYwamkGdWcgVV96NymffM5mAi8VVi7bSMZ9VrvqyBhrROEaBA4myVGnaajflVTrPvj9
-         M0/w==
-Received: by 10.68.227.163 with SMTP id sb3mr20523959pbc.74.1343468339201;
-        Sat, 28 Jul 2012 02:38:59 -0700 (PDT)
+        bh=jLKldBMyoo4y+y5KnELg2uQWGj+AK05y6ZSrKj9KE6A=;
+        b=df1m0UT1v34rPfxzf9/fSXiTaWI1bQS72djiUd7gPgBotGhnwVNwaryG9jD+Ix9KeV
+         OSLG65f4/8/J3Aw3HegTsm/2xS/6k3GumSAaUfckgrU8UhhEHI/MiPqAygruk8Y8kL/s
+         Xsh7uk+TPNaq8pHVjsn2yd6mVB2U4vUkPRTX8RBL/uUAf/8FkUIwHUb7hvv5PEQefYFI
+         BsEa6aYzX2Yk+dmk0Kswpvlpa92PRdRzf8fZ9GDZBa1DEegY/BPza0cVdtHrfb4hcCPY
+         ew5GuW+bE5NYEuHgtGGC3qwldHoNCqZ34OPLjgBspkW74MSlmR5gkMhYNYZUF3dCAxDo
+         T4LQ==
+Received: by 10.68.222.40 with SMTP id qj8mr19935669pbc.139.1343468335951;
+        Sat, 28 Jul 2012 02:38:55 -0700 (PDT)
 Received: from windhund.local.net (c-71-236-173-173.hsd1.or.comcast.net. [71.236.173.173])
-        by mx.google.com with ESMTPS id rs4sm3689907pbc.0.2012.07.28.02.38.58
+        by mx.google.com with ESMTPS id rs4sm3689907pbc.0.2012.07.28.02.38.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 02:38:58 -0700 (PDT)
+        Sat, 28 Jul 2012 02:38:55 -0700 (PDT)
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1343468312-72024-1-git-send-email-schwern@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202417>
 
 From: "Michael G. Schwern" <schwern@pobox.com>
 
-Otherwise you might wind up with things like...
+So they can be used by others.
 
-    my $path1 = undef;
-    my $path2 = 'foo';
-    my $path = $path1 . '/' . $path2;
+I'd like to test them, but they're going to become SVN API wrappers shortly
+and those aren't predictable.
 
-creating '/foo'.  Or this...
-
-    my $path1 = 'foo/';
-    my $path2 = 'bar';
-    my $path = $path1 . '/' . $path2;
-
-creating 'foo//bar'.
-
-Could have used File::Spec, but I'm shying away from it due to SVN
-1.7's pickiness about paths.  Felt it would be better to have our own
-we can control completely.
+No functional change.
 ---
- git-svn.perl                 |  3 ++-
- perl/Git/SVN.pm              | 10 ++++++----
- perl/Git/SVN/Utils.pm        | 32 ++++++++++++++++++++++++++++++++
- t/Git-SVN/Utils/join_paths.t | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 72 insertions(+), 5 deletions(-)
- create mode 100644 t/Git-SVN/Utils/join_paths.t
+ git-svn.perl          | 33 +++++++-------------------------
+ perl/Git/SVN/Utils.pm | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 58 insertions(+), 27 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index a857484..6e3e240 100755
+index de1ddd1..a857484 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -34,6 +34,7 @@ use Git::SVN::Utils qw(
- 	can_compress
- 	canonicalize_path
- 	canonicalize_url
-+	join_paths
- );
+@@ -29,7 +29,13 @@ use Git::SVN::Prompt;
+ use Git::SVN::Log;
+ use Git::SVN::Migration;
  
- use Git qw(
-@@ -1275,7 +1276,7 @@ sub get_svnprops {
- 	$path = $cmd_dir_prefix . $path;
- 	fatal("No such file or directory: $path") unless -e $path;
- 	my $is_dir = -d $path ? 1 : 0;
--	$path = $gs->{path} . '/' . $path;
-+	$path = join_paths($gs->{path}, $path);
- 
- 	# canonicalize the path (otherwise libsvn will abort or fail to
- 	# find the file)
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 7913d8f..b0ed3ea 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -23,7 +23,11 @@ use Git qw(
-     command_output_pipe
-     command_close_pipe
- );
 -use Git::SVN::Utils qw(fatal can_compress);
 +use Git::SVN::Utils qw(
 +	fatal
 +	can_compress
-+	join_paths
++	canonicalize_path
++	canonicalize_url
 +);
++
+ use Git qw(
+ 	git_cmd_try
+ 	command
+@@ -1256,31 +1262,6 @@ sub cmd_mkdirs {
+ 	$gs->mkemptydirs($_revision);
+ }
  
- my $can_use_yaml;
- BEGIN {
-@@ -316,9 +320,7 @@ sub init_remote_config {
- 			}
- 			my $old_path = $self->path;
- 			$url =~ s!^\Q$min_url\E(/|$)!!;
--			if (length $old_path) {
--				$url .= "/$old_path";
--			}
-+			$url = join_paths($url, $old_path);
- 			$self->path($url);
- 			$url = $min_url;
- 		}
+-sub canonicalize_path {
+-	my ($path) = @_;
+-	my $dot_slash_added = 0;
+-	if (substr($path, 0, 1) ne "/") {
+-		$path = "./" . $path;
+-		$dot_slash_added = 1;
+-	}
+-	# File::Spec->canonpath doesn't collapse x/../y into y (for a
+-	# good reason), so let's do this manually.
+-	$path =~ s#/+#/#g;
+-	$path =~ s#/\.(?:/|$)#/#g;
+-	$path =~ s#/[^/]+/\.\.##g;
+-	$path =~ s#/$##g;
+-	$path =~ s#^\./## if $dot_slash_added;
+-	$path =~ s#^/##;
+-	$path =~ s#^\.$##;
+-	return $path;
+-}
+-
+-sub canonicalize_url {
+-	my ($url) = @_;
+-	$url =~ s#^([^:]+://[^/]*/)(.*)$#$1 . canonicalize_path($2)#e;
+-	return $url;
+-}
+-
+ # get_svnprops(PATH)
+ # ------------------
+ # Helper for cmd_propget and cmd_proplist below.
 diff --git a/perl/Git/SVN/Utils.pm b/perl/Git/SVN/Utils.pm
-index 7314e52..deade07 100644
+index 3d0bfa4..c842d00 100644
 --- a/perl/Git/SVN/Utils.pm
 +++ b/perl/Git/SVN/Utils.pm
-@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
- 	can_compress
- 	canonicalize_path
- 	canonicalize_url
-+	join_paths
- );
+@@ -5,7 +5,12 @@ use warnings;
+ 
+ use base qw(Exporter);
+ 
+-our @EXPORT_OK = qw(fatal can_compress);
++our @EXPORT_OK = qw(
++	fatal
++	can_compress
++	canonicalize_path
++	canonicalize_url
++);
  
  
-@@ -134,4 +135,35 @@ sub _canonicalize_url_ourselves {
+ =head1 NAME
+@@ -56,4 +61,49 @@ sub can_compress {
  }
  
  
-+=head3 join_paths
++=head3 canonicalize_path
 +
-+    my $new_path = join_paths(@paths);
++    my $canoncalized_path = canonicalize_path($path);
 +
-+Appends @paths together into a single path.  Any empty paths are ignored.
++Converts $path into a canonical form which is safe to pass to the SVN
++API as a file path.
 +
 +=cut
 +
-+sub join_paths {
-+	my @paths = @_;
-+
-+	@paths = grep { defined $_ && length $_ } @paths;
-+
-+	return '' unless @paths;
-+	return $paths[0] if @paths == 1;
-+
-+	my $new_path = shift @paths;
-+	$new_path =~ s{/+$}{};
-+
-+	my $last_path = pop @paths;
-+	$last_path =~ s{^/+}{};
-+
-+	for my $path (@paths) {
-+		$path =~ s{^/+}{};
-+		$path =~ s{/+$}{};
-+		$new_path .= "/$path";
++sub canonicalize_path {
++	my ($path) = @_;
++	my $dot_slash_added = 0;
++	if (substr($path, 0, 1) ne "/") {
++		$path = "./" . $path;
++		$dot_slash_added = 1;
 +	}
-+
-+	return $new_path .= "/$last_path";
++	# File::Spec->canonpath doesn't collapse x/../y into y (for a
++	# good reason), so let's do this manually.
++	$path =~ s#/+#/#g;
++	$path =~ s#/\.(?:/|$)#/#g;
++	$path =~ s#/[^/]+/\.\.##g;
++	$path =~ s#/$##g;
++	$path =~ s#^\./## if $dot_slash_added;
++	$path =~ s#^/##;
++	$path =~ s#^\.$##;
++	return $path;
 +}
++
++
++=head3 canonicalize_url
++
++    my $canonicalized_url = canonicalize_url($url);
++
++Converts $url into a canonical form which is safe to pass to the SVN
++API as a URL.
++
++=cut
++
++sub canonicalize_url {
++	my ($url) = @_;
++	$url =~ s#^([^:]+://[^/]*/)(.*)$#$1 . canonicalize_path($2)#e;
++	return $url;
++}
++
 +
  1;
-diff --git a/t/Git-SVN/Utils/join_paths.t b/t/Git-SVN/Utils/join_paths.t
-new file mode 100644
-index 0000000..d4488e7
---- /dev/null
-+++ b/t/Git-SVN/Utils/join_paths.t
-@@ -0,0 +1,32 @@
-+#!/usr/bin/env perl
-+
-+use strict;
-+use warnings;
-+
-+use Test::More 'no_plan';
-+
-+use Git::SVN::Utils qw(
-+	join_paths
-+);
-+
-+# A reference cannot be a hash key, so we use an array.
-+my @tests = (
-+	[]					=> '',
-+	["/x.com", "bar"]			=> '/x.com/bar',
-+	["x.com", ""]				=> 'x.com',
-+	["/x.com/foo/", undef, "bar"]		=> '/x.com/foo/bar',
-+	["x.com/foo/", "/bar/baz/"]		=> 'x.com/foo/bar/baz/',
-+	["foo", "bar"]				=> 'foo/bar',
-+	["/foo/bar", "baz", "/biff"]		=> '/foo/bar/baz/biff',
-+	["", undef, "."]			=> '.',
-+	[]					=> '',
-+
-+);
-+
-+while(@tests) {
-+	my($have, $want) = splice @tests, 0, 2;
-+
-+	my $args = join ", ", map { qq['$_'] } map { defined($_) ? $_ : 'undef' } @$have;
-+	my $name = "join_paths($args) eq '$want'";
-+	is join_paths(@$have), $want, $name;
-+}
 -- 
 1.7.11.3
