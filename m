@@ -1,92 +1,108 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] buitin_config: return postitive status in get_value
-Date: Sat, 28 Jul 2012 20:29:23 +0700
-Message-ID: <20120728132923.GA31388@do>
-References: <1343475730-18743-1-git-send-email-nikolay@vladimiroff.com>
- <CACsJy8BUU13H1tRfTtUme_7u0Jf0upca31U-VNhXva_0R2MLoQ@mail.gmail.com>
- <CAJg5NvdAq_zEx2phVGS4EiUfqMtFJA2Bo=y1d3FJyWXtzMwCTw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] Change canonicalize_url() to use the SVN 1.7 API
+ when available.
+Date: Sat, 28 Jul 2012 08:50:18 -0500
+Message-ID: <20120728135018.GB9715@burratino>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+ <1343468312-72024-3-git-send-email-schwern@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nikolay Vladimirov <nikolay@vladimiroff.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 15:30:32 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
+To: "Michael G. Schwern" <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 28 15:50:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv76A-0000LI-70
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 15:30:26 +0200
+	id 1Sv7PY-0006DL-Tt
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 15:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603Ab2G1NaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 09:30:20 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:62720 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752566Ab2G1NaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 09:30:20 -0400
-Received: by pbbrp8 with SMTP id rp8so6758785pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 06:30:19 -0700 (PDT)
+	id S1751957Ab2G1NuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 09:50:23 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:40093 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751316Ab2G1NuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 09:50:23 -0400
+Received: by ghrr11 with SMTP id r11so3961283ghr.19
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 06:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rMMXX9cYGo93Uimhvh9u4R2qq8pgfPQ2Q1kNsNffa+Y=;
-        b=LYWwi9Nn8qX5QUvnFjoiqulLENHj48czEAqhN1lwSbVl6BfUkZ4Hh8TseDl4Thq69b
-         6d544d8GbVM2gixAUnvBdCjaNlzGIFTNiUaEHML0JL0bAGaOK2i3UbuGwgca57ihAmVB
-         YBtjy0XNteTnkRDLVhOeQlsPZIufJQr4oZj2njPcqqkOXvHErEu1vUl1Cm38zz8CnR/5
-         DO2FXN1qh8+q4+cmxXE1fD5IwYgnBB374+9krK+/9MvfGE6eXMQ+T9gEfii/0eiyJlPY
-         UVXbIxtDys0R2rff9qdTv4vIB04+pmvTIRQc90woqzxrAwvkuGjHVlVZ51yhlcGTS1td
-         C0qg==
-Received: by 10.66.75.133 with SMTP id c5mr12482662paw.24.1343482219672;
-        Sat, 28 Jul 2012 06:30:19 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.32.150])
-        by mx.google.com with ESMTPS id ob9sm3985869pbb.28.2012.07.28.06.30.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 06:30:19 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 28 Jul 2012 20:29:23 +0700
+        bh=ber3rtKYZrrNYEkWUN9Nn0tq9uYepv9+UPHaLVgtBu8=;
+        b=lUC6jpx1Xn0G5upcgKgEr4PZu14YUNDwic98MZpzyuM4BxI55vUCUBVsATNSCSVWlz
+         zIS2qbcjfm+dy12j1tq3qzYWW8GAObZrPAdYLkg6MkGrgn2d+cIHESVog4yZvpvFHlFk
+         fPSFsDCob3Ied5jCJiv7Thm8k0zGU1HsoEAhOVrV62fcpj2XmDEdLKEakUG655juwqUj
+         CeYD2Wpgz0oK9ohr46GblTANJpMp3VqRarvhpmMiyYsUVwDahO5bys0lREl7wCRuiMky
+         0EdiFIA1VYLEMQuj24LEy3X8mx17ByPSFL4O3P/1hvw46/0uSoEQWMr7iYn8XPe9L8tp
+         p8uw==
+Received: by 10.50.41.165 with SMTP id g5mr4562061igl.13.1343483422466;
+        Sat, 28 Jul 2012 06:50:22 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id dw5sm1743338igc.6.2012.07.28.06.50.21
+        (version=SSLv3 cipher=OTHER);
+        Sat, 28 Jul 2012 06:50:21 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAJg5NvdAq_zEx2phVGS4EiUfqMtFJA2Bo=y1d3FJyWXtzMwCTw@mail.gmail.com>
+In-Reply-To: <1343468312-72024-3-git-send-email-schwern@pobox.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202436>
 
-On Sat, Jul 28, 2012 at 04:18:49PM +0300, Nikolay Vladimirov wrote:
-> But the behavior now seems kind of strange, or maybe I'm missing something:
-> # git config foobar; echo $?
-> error: key does not contain a section: foobar
-> 255
-> 
-> # git config foobar.info; echo $?
-> 1
-> 
-> git version 1.7.11.2
-> 
-> I would generally expect the both to behave the same way.
+Hi,
 
-Then the following patch may be better because it leaves other cases
-untouched (I'm not saying that we should or should not do it though)
+Michael G. Schwern wrote:
 
--- 8< --
-diff --git a/builtin/config.c b/builtin/config.c
-index 8cd08da..d048ebf 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -199,8 +199,10 @@ static int get_value(const char *key_, const char *regex_)
- 			goto free_strings;
- 		}
- 	} else {
--		if (git_config_parse_key(key_, &key, NULL))
-+		if (git_config_parse_key(key_, &key, NULL)) {
-+			ret = 1;
- 			goto free_strings;
-+		}
- 	}
- 
- 	if (regex_) {
--- 8< --
+> --- a/perl/Git/SVN/Utils.pm
+> +++ b/perl/Git/SVN/Utils.pm
+[...]
+> @@ -100,6 +102,20 @@ API as a URL.
+>  =cut
+>  
+>  sub canonicalize_url {
+> +	my $url = shift;
+> +
+> +	# The 1.7 way to do it
+> +	if ( defined &SVN::_Core::svn_uri_canonicalize ) {
+> +		return SVN::_Core::svn_uri_canonicalize($url);
+> +	}
+> +	# There wasn't a 1.6 way to do it, so we do it ourself.
+> +	else {
+> +		return _canonicalize_url_ourselves($url);
+> +	}
+> +}
+> +
+> +
+> +sub _canonicalize_url_ourselves {
+>  	my ($url) = @_;
+>  	$url =~ s#^([^:]+://[^/]*/)(.*)$#$1 . canonicalize_path($2)#e;
 
--- 
-Duy
+Leaves me a bit nervous.
+
+What effect should we expect this change to have?  Is our emulation
+of svn_uri_canonicalize already perfect and this change just a little
+futureproofing in case svn_uri_canonicalize gets even better, or is
+this a trap waiting to happen when new callers of canonicalize_url
+start relying on, e.g., %-encoding of special characters?
+
+If I am reading Subversion r873487 correctly, in ancient times,
+svn_path_canonicalize() did the appropriate tweaking for URIs.  Today
+its implementation is comforting:
+
+	const char *
+	svn_path_canonicalize(const char *path, apr_pool_t *pool)
+	{
+	  if (svn_path_is_url(path))
+	    return svn_uri_canonicalize(path, pool);
+	  else
+	    return svn_dirent_canonicalize(path, pool);
+	}
+
+It might be easier to rely on that on pre-1.7 systems.
+
+Thanks,
+Jonathan
