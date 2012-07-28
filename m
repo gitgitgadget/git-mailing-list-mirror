@@ -1,95 +1,72 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] Enable parallelism in git submodule update.
-Date: Sat, 28 Jul 2012 12:52:01 +0200
-Message-ID: <20120728105159.GB13370@book.hvoigt.net>
-References: <20120727185925.793121C0FDC@stefro.sfo.corp.google.com> <7vwr1ozxz5.fsf@alter.siamese.dyndns.org> <CAHOQ7J_jYAe7r1q6Cg9OJb8f+79UfS=JfRk9NrS4R4a+oLM8LA@mail.gmail.com> <7vk3xoyeex.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	jens.lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 12:52:51 2012
+From: Nikolai Vladimirov <nikolay@vladimiroff.com>
+Subject: [PATCH] buitin_config: return postitive status in get_value
+Date: Sat, 28 Jul 2012 14:42:10 +0300
+Message-ID: <1343475730-18743-1-git-send-email-nikolay@vladimiroff.com>
+Cc: Nikolai Vladimirov <nikolay@vladimiroff.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 13:44:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv4de-0006JB-HH
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 12:52:50 +0200
+	id 1Sv5RU-0004Y5-Gp
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 13:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089Ab2G1KwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 06:52:10 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.37]:33506 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751977Ab2G1KwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 06:52:09 -0400
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Sv4cs-0003xR-EQ; Sat, 28 Jul 2012 12:52:02 +0200
-Content-Disposition: inline
-In-Reply-To: <7vk3xoyeex.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1752398Ab2G1Lng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 07:43:36 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:33762 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752382Ab2G1Lng (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 07:43:36 -0400
+Received: by wibhm11 with SMTP id hm11so427589wib.1
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 04:43:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=480QUr0/MxEvzgSpZiKNZR9umVCCF3dXUVcEvh2z+OE=;
+        b=JutM0WoAylO/mF1rLSR/XWo4k4/Q+cFHsgZY1KrpGhyeBHD3vo019yx7sCNvD6U50J
+         WW337Ixvx++54m5BxjbUBJORqzxJKCYGYMtIBGpoOkwlhHUnJlFpunXyzfAcEjQy1FoZ
+         n+b82zSbHaS85e8uSCioIJ9n8y5woh7DvhcnsGtRoZFGKtQYDuccUErnaonwClCACbt1
+         snEBubow4MQaEEvVCIqOMPpDrSW9Enx0rBbwsxxV48xEbofwqviLCn2iJaHYLjYdTlug
+         buwKBQdyAwiFFTrWhmPBvsJl8YyNAsIabi64fwWs6Dc7jqhF5HeudlKj/LMcaRzvK18g
+         IvXg==
+Received: by 10.180.107.2 with SMTP id gy2mr29190138wib.2.1343475814549;
+        Sat, 28 Jul 2012 04:43:34 -0700 (PDT)
+Received: from localhost.localdomain ([95.111.28.14])
+        by mx.google.com with ESMTPS id cl8sm3777154wib.10.2012.07.28.04.43.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 28 Jul 2012 04:43:33 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202430>
 
-Hi,
+Returning -1 instead of 1 results in wrong exit status(255) since
+the output of get_value is passed to exit().
 
-On Fri, Jul 27, 2012 at 04:25:58PM -0700, Junio C Hamano wrote:
-> Stefan Zager <szager@google.com> writes:
-> 
-> > On Fri, Jul 27, 2012 at 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> >> Stefan Zager <szager@google.com> writes:
-> >>
-> >> > +             module_list "$@" | awk '{print $4}' | xargs -L 1 -P
-> >> "$jobs" git submodule update $orig_args
-> >>
-> >> Capital-P option to xargs is not even in POSIX, no?
-> >
-> > I wasn't aware of that, but you appear to be correct.  Don't know if you
-> > have a policy about that, but anecdotally, -P is supported on my linux,
-> > mac, and win/msys systems.
-> 
-> About "policy", we use POSIX as a rough yardstick to warn us that we
-> might be breaking people on minority platforms.  We do _not_ say "It
-> is in POSIX, so it is safe to use it", but we say "It is not even in
-> POSIX, so we need to think twice."  We do not usually say "Linux,
-> Mac and Windows are the only things that matter, and they all
-> support it."
-> 
-> Of course, any set of rules have exceptions ;-) There are a few
-> things to which we say "Even though it is not in POSIX, everybody
-> who matters supports it, and without taking advantage of it, what we
-> want to achieve will become too cumbersome to express".
+'git config missing_section' should now return proper exit status = 1,
+as specified by the git config documentation.
 
-I was about to write that since this is limited to a given --jobs
-options the majority platforms should be enough as a start and others
-could add a parallelism mechanism later. Its only a matter of efficiency
-and not features.
+Signed-off-by: Nikolai Vladimirov <nikolay@vladimiroff.com>
+---
+ builtin/config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-But if you look at my other post to this thread I described that we need
-some UI output extension so the user can still make sense of it.
-In short: The user should be able distinguish which job said what.
-
-I was already thinking about how an output caching could be implemented in
-core git. How about exposing it as a git command like this?
-
-	git run [-j<number>] ...
-
-It works like the xargs call above except that it caches each jobs
-output to stderr and stdout until its done and then replays the output
-to stderr/out in the correct order.
-
-We could design the code so that it can be reused later on to do the
-caching in parallel fetch/push/... .
-
-What do you think? If we decide to go this route I would have a look
-into whipping something up.
-
-Cheers Heiko
+diff --git a/builtin/config.c b/builtin/config.c
+index 8cd08da..c262cbb 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -160,7 +160,7 @@ static int show_config(const char *key_, const char *value_, void *cb)
+ 
+ static int get_value(const char *key_, const char *regex_)
+ {
+-	int ret = -1;
++	int ret = 1;
+ 	char *global = NULL, *xdg = NULL, *repo_config = NULL;
+ 	const char *system_wide = NULL, *local;
+ 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+-- 
+1.7.11.2
