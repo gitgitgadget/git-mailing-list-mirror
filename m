@@ -1,74 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/8] SVN 1.7 will truncate "not-a%40{0}" to just "not-a".
-Date: Sat, 28 Jul 2012 09:16:52 -0500
-Message-ID: <20120728141652.GA1603@burratino>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <1343468872-72133-2-git-send-email-schwern@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] null sha1 in trees
+Date: Sat, 28 Jul 2012 11:01:32 -0400
+Message-ID: <20120728150132.GA25042@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca, normalperson@yhbt.net
-To: "Michael G. Schwern" <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 28 16:17:10 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 28 17:02:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sv7pL-0001XQ-6w
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 16:17:07 +0200
+	id 1Sv8XC-0000TR-Lm
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 17:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454Ab2G1ORC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 10:17:02 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:61930 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383Ab2G1ORA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 10:17:00 -0400
-Received: by ghrr11 with SMTP id r11so3970505ghr.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 07:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/DZWANel9ntBfcD5MmUJtyyjXKIdnPVPjuO+H97lo3U=;
-        b=VAx7niYEeiXWQ7Pw66X3QoKr+YqANRhiT6qUj/9lDO54W6FAQOM/xPMiti9rGxJ/dh
-         BnsCvvcI/lruwXHqXVLquOkYepZDJW2puCIWVd+jVoAxJX8edwEvBGq+rn6EP8VrKrmy
-         NHSSDPomxxDnLhIt/7HUz/J5cGKkSQQvSuNLAxAFXzm+q3ZlvbUpLIZ9Mev7h5J+DmKz
-         HuzHcR8asPR5DuRGH51WvT23iByivhY9cKHQ7mAA04MRcw8CMG+3TDKUouK2yrPv0+2S
-         NrtfW2Yev+r4LQTd5BDBGBSy6MYtInOKFasssUu7hSxEwYU9iM3R875/y1RE8anBbms/
-         wc4Q==
-Received: by 10.43.64.81 with SMTP id xh17mr3107672icb.48.1343485019951;
-        Sat, 28 Jul 2012 07:16:59 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id iw1sm1777821igc.13.2012.07.28.07.16.59
-        (version=SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 07:16:59 -0700 (PDT)
+	id S1752642Ab2G1PBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 11:01:42 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40013 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752401Ab2G1PBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 11:01:41 -0400
+Received: (qmail 31187 invoked by uid 107); 28 Jul 2012 15:01:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 28 Jul 2012 11:01:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Jul 2012 11:01:32 -0400
 Content-Disposition: inline
-In-Reply-To: <1343468872-72133-2-git-send-email-schwern@pobox.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202440>
 
-Michael G. Schwern wrote:
+I recently came across a tree in the wild that had a submodule entry
+whose sha1 was the null sha1 (i.e., all-zeros). It triggered an
+interesting bug in the diff code, which is fixed by patch 1.
 
-> Rather than guess what SVN is going to do for each version, make the test use
-> the branch name that was actually created.
-[...]
-> -		git rev-parse "refs/remotes/not-a%40{0}reflog"
-> +		git rev-parse "refs/remotes/$non_reflog"
+Unfortunately, I have no clue how this tree came about. I'm assuming it
+was simply a bug somewhere in git, where the entry should have had
+another sha1, or possibly been removed from the tree entirely.. Patches
+2 and 3 tighten up our checks for null sha1s in a few places, which
+might help detect such a bug earlier.
 
-Doesn't this defeat the point of the testcase (checking that git-svn
-is able to avoid creating git refs containing @{, following the rules
-from git-check-ref-format(1))?
+I assume I have never seen this with a non-submodule entry because such
+a tree would fail the usual connectivity checks during fsck or during a
+transfer. However, since we don't enforce connectivity on submodule
+entries, nothing blocked the creation and propagation of such an entry.
 
-Do you know when SVN truncates the directory name?  Would historical
-SVN repositories or historical SVN servers be able to have a directory
-named with a %40 in it, or has this been disallowed completely,
-leaving problematic historical repositories to be dumped with old SVN,
-tweaked, and reloaded with new SVN?
+I'm not at liberty to share the repository in question, but if anybody
+has specific things to look for, I'd be happy to investigate further.
 
-Thanks,
-Jonathan
+The patches are:
+
+  [1/3]: diff: do not use null sha1 as a sentinel value
+
+This is the actual bug-fix, and I hope is obviously a good thing to do.
+
+  [2/3]: do not write null sha1s to on-disk index
+
+This one tries to tighten our writing a bit. There are unfortunately a
+lot of different code paths that create trees in git. I hope by catching
+the index write as a choke-point, we can prevent bugs from spreading.
+However, there are a lot of tree-writers that update an index in-core
+and then write a tree out directly. I would not be surprised if this
+does not catch the bug by itself, but I think it is a step in the right
+direction.
+
+  [3/3]: fsck: detect null sha1 in tree entries
+
+And this one will at least let us notice the bug once it has happened.
+And if transfer.fsckObjects is set, it will prevent bogus trees from
+passing between repositories, containing any damage.
+
+-Peff
