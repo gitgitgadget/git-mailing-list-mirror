@@ -1,11 +1,11 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 1/2] t1100-*.sh: Fix an intermittent test failure
-Date: Sat, 28 Jul 2012 19:48:06 +0100
-Message-ID: <501433E6.6060904@ramsay1.demon.co.uk>
+Subject: [PATCH 2/2] t7810-*.sh: Remove redundant test
+Date: Sat, 28 Jul 2012 19:50:49 +0100
+Message-ID: <50143489.1030606@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
+Cc: GIT Mailing-list <git@vger.kernel.org>, rene.scharfe@lsrfire.ath.cx
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Sat Jul 28 20:54:07 2012
 Return-path: <git-owner@vger.kernel.org>
@@ -13,58 +13,66 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvC9N-0004QO-LV
+	id 1SvC9O-0004QO-6I
 	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 20:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753000Ab2G1Sxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jul 2012 14:53:54 -0400
-Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:48650 "EHLO
+	id S1753039Ab2G1SyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jul 2012 14:54:03 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:48659 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751533Ab2G1Sxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jul 2012 14:53:53 -0400
+	with ESMTP id S1753009Ab2G1SyB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jul 2012 14:54:01 -0400
 Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id A81CBA0C080;
-	Sat, 28 Jul 2012 19:53:52 +0100 (BST)
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 11F97A0C07F;	Sat, 28 Jul 2012 19:53:52 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Sat, 28 Jul 2012 19:53:51 +0100 (BST)
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 8E67CA0C080;
+	Sat, 28 Jul 2012 19:54:00 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id E3319A0C07F;	Sat, 28 Jul 2012 19:53:59 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Sat, 28 Jul 2012 19:53:59 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
 X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202453>
 
 
-In particular, the final test ('flags and then non flags') fails
-intermittently, depending on how much time elapsed between the
-invocations of "git commit-tree" when creating the commits which
-later have their commit id's compared. For example, if the commits
-for childid-3 and childid-4 are created 1 or more seconds apart,
-then the commits, which would otherwise be identical, will have
-different commit id's.
+Since commit bbc09c22 ("grep: rip out support for external grep",
+12-01-2010), test number 60 ("grep -C1 hunk mark between files") is
+essentially the same as test number 59.
 
-In order to make the test reproducible, we remove the variability
-by setting the author and committer times to a well defined state.
-We accomplish this with a single call to 'test_tick' at the start
-of the test.
+Test 59 was intended to verify the behaviour of git-grep resulting
+from multiple invocations of an external grep. As part of the test,
+it creates and adds 1024 files to the index, which is now wasted
+effort.
+
+Remove test 59, since it is now redundant.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- t/t1100-commit-tree-options.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/t7810-grep.sh | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
-index a3b7723..f8457f9 100755
---- a/t/t1100-commit-tree-options.sh
-+++ b/t/t1100-commit-tree-options.sh
-@@ -47,6 +47,7 @@ test_expect_success \
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 24e9b19..523d041 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -399,17 +399,6 @@ test_expect_success 'grep -q, silently report matches' '
+ 	test_cmp empty actual
+ '
  
- 
- test_expect_success 'flags and then non flags' '
-+	test_tick &&
- 	echo comment text |
- 	git commit-tree $(cat treeid) >commitid &&
- 	echo comment text |
+-# Create 1024 file names that sort between "y" and "z" to make sure
+-# the two files are handled by different calls to an external grep.
+-# This depends on MAXARGS in builtin-grep.c being 1024 or less.
+-c32="0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v"
+-test_expect_success 'grep -C1, hunk mark between files' '
+-	for a in $c32; do for b in $c32; do : >y-$a$b; done; done &&
+-	git add y-?? &&
+-	git grep -C1 "^[yz]" >actual &&
+-	test_cmp expected actual
+-'
+-
+ test_expect_success 'grep -C1 hunk mark between files' '
+ 	git grep -C1 "^[yz]" >actual &&
+ 	test_cmp expected actual
 -- 
 1.7.11.2
