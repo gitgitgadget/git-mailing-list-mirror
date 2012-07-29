@@ -1,95 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cleanup argument passing in submodule status command
-Date: Sun, 29 Jul 2012 14:57:40 -0700
-Message-ID: <7vk3xmut63.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Enable parallelism in git submodule update.
+Date: Sun, 29 Jul 2012 14:59:26 -0700
+Message-ID: <7vfw8aut35.fsf@alter.siamese.dyndns.org>
 References: <20120727185925.793121C0FDC@stefro.sfo.corp.google.com>
- <20120728102209.GA13370@book.hvoigt.net>
- <20120728121956.GA36429@book.hvoigt.net>
- <7vtxwrw0g0.fsf@alter.siamese.dyndns.org> <501556CF.1000605@web.de>
+ <7vwr1ozxz5.fsf@alter.siamese.dyndns.org>
+ <CAHOQ7J_jYAe7r1q6Cg9OJb8f+79UfS=JfRk9NrS4R4a+oLM8LA@mail.gmail.com>
+ <7vk3xoyeex.fsf@alter.siamese.dyndns.org>
+ <20120728105159.GB13370@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
-	Stefan Zager <szager@google.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Jul 29 23:57:49 2012
+Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 29 23:59:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvbUi-0006Ij-Nj
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 23:57:49 +0200
+	id 1SvbWQ-0007Gb-Jy
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 23:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753713Ab2G2V5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jul 2012 17:57:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52505 "EHLO
+	id S1753715Ab2G2V7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jul 2012 17:59:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53060 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753690Ab2G2V5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2012 17:57:43 -0400
+	id S1753691Ab2G2V73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 17:59:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7B9E8F72;
-	Sun, 29 Jul 2012 17:57:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2264A8FA1;
+	Sun, 29 Jul 2012 17:59:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hxD03udd5oxKoNAoPuuJCK4adDo=; b=Ipdwod
-	xVTuAz7OwJowtkJjMKazjSJM4zEOLG3TA+Kku2JNRdCw7dCZ06LOJ+vQqXhIQ/72
-	XCyGifnNMYKDyjFYLmK6o7Ne3VRN5O6k2LKGmBATR0Q115/xwSzN3ONJiw+pEzI1
-	AZek4ndNmcFwybWgdNQiU/nD+SjkIFqq5YBKE=
+	:content-type; s=sasl; bh=hL2NWC/kMX/WvGH52dJyIhDZCYc=; b=xy/giO
+	DAnQnCvH7yka5Mj5Lwa2vjxZMd2YmOOTn/N2imcrHmRNjEBa3+gQFaTnmYHy/7tV
+	hZl/EtNyKaag/OhtjJVaQUU+3ZZVBOQalQK479kEXYmla77pfg/D74NCAcDH7qWi
+	lTrge3YYW8m0CN03/VW1B65m/44sIfp5qyBQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WyKVJP4njtEN0MkT9SOebzYdkwQSI9Qj
-	8J6YXp6VvxwfpNSUl7pah9UNyWRefu3q3EwybUffZ2XpNhrXhI5L/t7IRKHTMxI5
-	kdEBqxK2FM32NColzVePEhcctH5Ir8SDAe0lHXQUzJxGM23EK1CvCENMr6GmHDx3
-	gneX81l7JXA=
+	:content-type; q=dns; s=sasl; b=gTi6Mo7QO6IuGkr0zIyuiPTG+hr6+35a
+	genGiV8AJDur9XZuY1PsXKZZL61Z6tTMZY4jmQHchoqfNboLphViPirE2+MKKam/
+	ESfdOZMbL6VszzIamfvRTcIY5UefMHjvFBPiYw5zHmYq0CnKvMGz46JdiR+G1bv0
+	14ivcPuzUyg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D668F6D;
-	Sun, 29 Jul 2012 17:57:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10BAB8FA0;
+	Sun, 29 Jul 2012 17:59:29 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 097168F6C; Sun, 29 Jul 2012
- 17:57:41 -0400 (EDT)
-In-Reply-To: <501556CF.1000605@web.de> (Jens Lehmann's message of "Sun, 29
- Jul 2012 17:29:19 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 821788F9D; Sun, 29 Jul 2012
+ 17:59:28 -0400 (EDT)
+In-Reply-To: <20120728105159.GB13370@book.hvoigt.net> (Heiko Voigt's message
+ of "Sat, 28 Jul 2012 12:52:01 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6BA4B712-D9C8-11E1-B4FB-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AB1E51FA-D9C8-11E1-AD76-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202503>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-> I tried today. Before this change no arguments got passed down and
-> afterwards they are (but just the arguments, no submodule paths
-> were passed on in either case; which is what Kevin fixed in the
-> commit Heiko referenced). Three arguments are allowed for "git
-> submodule status":
->
-> --recursive:
-> It doesn't matter if we pass that on or not because $recursive is
-> reused when "eval cmd_status" is executed.
->
-> --quiet:
-> Same as recursive, GIT_QUIET is set the first time and then reused
-> in the recursion.
->
-> --cached:
-> This was dropped when recursing into submodules but isn't anymore
-> with Heiko's change, so we do have a change in behavior here.
+> On Fri, Jul 27, 2012 at 04:25:58PM -0700, Junio C Hamano wrote:
 > ...
-> Hmm, when --cached is used together with --recursive, I would expect
-> it to show the commit stored in the index for the deeper submodules
-> too (and not magically switch to show their HEAD again after the
-> first level of submodules). To me this looks like a bug which Kevin
-> accidentally introduced and nobody noticed and/or reported until now.
+>> Of course, any set of rules have exceptions ;-) There are a few
+>> things to which we say "Even though it is not in POSIX, everybody
+>> who matters supports it, and without taking advantage of it, what we
+>> want to achieve will become too cumbersome to express".
 >
-> So I'd vote for making this a bugfix patch for "git submodule status
-> --cached --recursive" (and would love to see a test for it ;-).
+> I was about to write that since this is limited to a given --jobs
+> options the majority platforms should be enough as a start and others
+> could add a parallelism mechanism later. Its only a matter of efficiency
+> and not features.
 
-Yeah, I am not opposed to a "fix".  I just wanted it to be labelled
-as such, and analysed correctly.
-
-And with test ;-)
-
-Thanks.
+As long as "git submodule --jobs 9" on a platform without GNU
+enhanced xargs does not error out and gracefully degrade to non
+parallel execution, I do not have any problem with it.  As posted,
+the patch has not yet achieved that doneness yet.
