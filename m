@@ -1,79 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Enable parallelism in git submodule update.
-Date: Sun, 29 Jul 2012 14:59:26 -0700
-Message-ID: <7vfw8aut35.fsf@alter.siamese.dyndns.org>
-References: <20120727185925.793121C0FDC@stefro.sfo.corp.google.com>
- <7vwr1ozxz5.fsf@alter.siamese.dyndns.org>
- <CAHOQ7J_jYAe7r1q6Cg9OJb8f+79UfS=JfRk9NrS4R4a+oLM8LA@mail.gmail.com>
- <7vk3xoyeex.fsf@alter.siamese.dyndns.org>
- <20120728105159.GB13370@book.hvoigt.net>
+Subject: Re: [PATCH 0/3] null sha1 in trees
+Date: Sun, 29 Jul 2012 15:15:11 -0700
+Message-ID: <7v8ve2uscw.fsf@alter.siamese.dyndns.org>
+References: <20120728150132.GA25042@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org,
-	jens.lehmann@web.de
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Jul 29 23:59:36 2012
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 30 00:16:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvbWQ-0007Gb-Jy
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 23:59:34 +0200
+	id 1SvbmI-0000Xu-DX
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 00:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753715Ab2G2V7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jul 2012 17:59:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53060 "EHLO
+	id S1753687Ab2G2WPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jul 2012 18:15:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58926 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753691Ab2G2V73 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2012 17:59:29 -0400
+	id S1753566Ab2G2WPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 18:15:14 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2264A8FA1;
-	Sun, 29 Jul 2012 17:59:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05EC982A8;
+	Sun, 29 Jul 2012 18:15:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hL2NWC/kMX/WvGH52dJyIhDZCYc=; b=xy/giO
-	DAnQnCvH7yka5Mj5Lwa2vjxZMd2YmOOTn/N2imcrHmRNjEBa3+gQFaTnmYHy/7tV
-	hZl/EtNyKaag/OhtjJVaQUU+3ZZVBOQalQK479kEXYmla77pfg/D74NCAcDH7qWi
-	lTrge3YYW8m0CN03/VW1B65m/44sIfp5qyBQU=
+	:content-type; s=sasl; bh=bclmy0XRkJoppV/irQmH5hhfFI8=; b=n2Xpid
+	dXFKGB4ayadUTjSeqvzCNvxt/u38xTVTgY4nFB1WoFjYJSZqVHHCcuMI26JZn5SM
+	0nZNaJ9Ql8AGwJAZZtnWwvWGDRFosfXYQ8++pff+7TzYMifLOMXU+UlVNpihfRAT
+	Hnvnwj16pAw4AJ4qr596eUa8UcqTG7SC9jFtE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gTi6Mo7QO6IuGkr0zIyuiPTG+hr6+35a
-	genGiV8AJDur9XZuY1PsXKZZL61Z6tTMZY4jmQHchoqfNboLphViPirE2+MKKam/
-	ESfdOZMbL6VszzIamfvRTcIY5UefMHjvFBPiYw5zHmYq0CnKvMGz46JdiR+G1bv0
-	14ivcPuzUyg=
+	:content-type; q=dns; s=sasl; b=fM02h5kco2eY40SSSTO22xwn/5KJDt0H
+	eQRzV36HJXXAbESw+IU3FK73HstRXJgxdpndWT3l+MM5E+nvsjva/HePgNwkzQ4g
+	jsR5Cb5qDGAfceTRa/ND+5661z5JjA74CF1QMdAS5LE3aWiutkhYcovdmiFJNfiT
+	HLrCu2B2MFQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10BAB8FA0;
-	Sun, 29 Jul 2012 17:59:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E745B82A7;
+	Sun, 29 Jul 2012 18:15:13 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 821788F9D; Sun, 29 Jul 2012
- 17:59:28 -0400 (EDT)
-In-Reply-To: <20120728105159.GB13370@book.hvoigt.net> (Heiko Voigt's message
- of "Sat, 28 Jul 2012 12:52:01 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 651B082A6; Sun, 29 Jul 2012
+ 18:15:13 -0400 (EDT)
+In-Reply-To: <20120728150132.GA25042@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 28 Jul 2012 11:01:32 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AB1E51FA-D9C8-11E1-AD76-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DE4FD786-D9CA-11E1-8C63-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202504>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+All looked reasonable, even though I'd want to read the
+surrounding codepath over for 2/3 a few more times.
 
-> On Fri, Jul 27, 2012 at 04:25:58PM -0700, Junio C Hamano wrote:
-> ...
->> Of course, any set of rules have exceptions ;-) There are a few
->> things to which we say "Even though it is not in POSIX, everybody
->> who matters supports it, and without taking advantage of it, what we
->> want to achieve will become too cumbersome to express".
->
-> I was about to write that since this is limited to a given --jobs
-> options the majority platforms should be enough as a start and others
-> could add a parallelism mechanism later. Its only a matter of efficiency
-> and not features.
-
-As long as "git submodule --jobs 9" on a platform without GNU
-enhanced xargs does not error out and gracefully degrade to non
-parallel execution, I do not have any problem with it.  As posted,
-the patch has not yet achieved that doneness yet.
+Will queue; thanks.
