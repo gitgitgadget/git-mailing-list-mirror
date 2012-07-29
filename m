@@ -1,93 +1,81 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Enhancements to git-protocoll
-Date: Sat, 28 Jul 2012 23:41:16 +0200
-Message-ID: <20120728214116.GA3591@paksenarrion.iveqy.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 2/2] log: remove redundant check for merge commit
+Date: Sat, 28 Jul 2012 21:57:49 -0700
+Message-ID: <CAOeW2eELzcqnecZqea2K0vO818PTYf-P=xEoSKb5GcW7W0Nf+A@mail.gmail.com>
+References: <1343409699-27199-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<1343409699-27199-3-git-send-email-martin.von.zweigbergk@gmail.com>
+	<7vfw8czvj5.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eFROgZ+taqFvCHoSTVrQZnaQZo567e=73BcA+d5uSjKDA@mail.gmail.com>
+	<7v7gtoxw80.fsf@alter.siamese.dyndns.org>
+	<7vzk6kwf6l.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eG4mKTWm7PEGF_t0F9c_X1gkQaDw7HSrCiZaDte7PvOdQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 28 23:41:32 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 29 06:57:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvElP-00064M-Nn
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jul 2012 23:41:32 +0200
+	id 1SvLZk-0005n5-HM
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 06:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176Ab2G1VlO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jul 2012 17:41:14 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58788 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751632Ab2G1VlO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jul 2012 17:41:14 -0400
-Received: by lahd3 with SMTP id d3so2823193lah.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 14:41:12 -0700 (PDT)
+	id S1751475Ab2G2E5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jul 2012 00:57:51 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:44844 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751291Ab2G2E5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 00:57:50 -0400
+Received: by pbbrp8 with SMTP id rp8so7673659pbb.19
+        for <git@vger.kernel.org>; Sat, 28 Jul 2012 21:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=7wcFMlU9PHOGFXyD5wkL5knX207wJggu8kM4QtpAftE=;
-        b=lBwo5xueFoJI/TprlQqFZNE4WJPTAhi3f5JncCWwdmG9GxmfHm2isRbwmdDOvTjto7
-         TAgznv2Aywf1RW2hIYcxE7pRkGPrZJqyXJx6eiapa9lLQUKaz3SUvS/iWSwUaYaI0F4l
-         tY+nKN+9+d4Ep7fWv0G5BSc0DIdUCLdrTefnFmnoa8/azxeMNLNd6R/bSPhMFrSAt1G9
-         KGq5AuVQROQvDhFfOohYhuwy0fu/In1MMz/04E/vLHbigs9U3tiGofQcR/dRvv6dL2pC
-         k8hHH1ieMk+HotXDbgEW1TxJDx/ZVsIeAY6nYOZDQAe3gzt2G+5v95Q8rin3dyM7a6Ak
-         hBBQ==
-Received: by 10.152.109.198 with SMTP id hu6mr6831689lab.21.1343511672498;
-        Sat, 28 Jul 2012 14:41:12 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (h-235-111.a189.priv.bahnhof.se. [81.170.235.111])
-        by mx.google.com with ESMTPS id pp2sm5976864lab.3.2012.07.28.14.41.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jul 2012 14:41:11 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1SvElA-00014m-Qe; Sat, 28 Jul 2012 23:41:16 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=QxMIsiEMo8QqJdLOR6wwDiCRlXJf2kDW32F54+fC92s=;
+        b=iMxQZkxate+4Cc4aYjxIVkBSl/+0P14qdJGC2DTr65l2jlfdhlPK3/279N3xgR0L5l
+         pg2ZlYB34BELtd5o4jXPWJ6rd9IWZywHRgTvPb1T2I8FKu9IsDcIeWePWM3bpXPQdq/F
+         pXL/o0p4zWe2XmbyO5KVzY9IsdE78LKieiZeJ6rXThavPzgJQrL/hJ6rWiJU9tcI2e09
+         7cRGvP+ML8f7v9qB7t6G7LpHosaeSdCjdujL5kGzwsv7LiVpHXliS5Qm/8fktZSI35P3
+         B5e8bSypsqCIRS5sSSpkb3wQ6OvYpfC5X/PCQmtZzi4/h51EKJsaUnWUjPhPy7NIR949
+         r5WA==
+Received: by 10.66.73.5 with SMTP id h5mr15741477pav.79.1343537869842; Sat, 28
+ Jul 2012 21:57:49 -0700 (PDT)
+Received: by 10.68.42.164 with HTTP; Sat, 28 Jul 2012 21:57:49 -0700 (PDT)
+In-Reply-To: <CAOeW2eG4mKTWm7PEGF_t0F9c_X1gkQaDw7HSrCiZaDte7PvOdQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202467>
 
-Hi,
-sometimes git communicates with something that's not git on the other
-side (gitolite and github for example).
+Sorry, I meant to CC the list. See below.
 
-Sometimes the server wants to communicate directly to the git user.
-
-git isn't really designed for this. gitolite solves this by do user
-interaction on STDERR instead. The bad thing about this is that it can
-only be one-direction communication, for example error messages.
-
-If git would allow for the user to interact direct with the server, a
-lot of cool and and userfriendly features could be developed.
-
-=46or example:
-gitolite has something called wild repos[1]. The management is
-cumbersome and if you misspell when you clone a repo you might instead
-create a new repo.
-
-This could have been avoided with a simply:
-"Do you want to create a new repo[Yn]"
-
-To fix this, git protocol should have a command for printing input to
-STDOUT and accepting input on STDIN which should be sent to the server.
-And a command to switch back to orginal of course.
-
-The server could then switch to user interaction, do that and then
-switch back to normal operation.
-
-Before eventually starting to implement this, I would know your
-opinions. This feature would be wortless if it's not in the official gi=
-t.
-
-[1] http://sitaramc.github.com/gitolite/wild.html
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+On Sat, Jul 28, 2012 at 9:56 PM, Martin von Zweigbergk
+<martin.von.zweigbergk@gmail.com> wrote:
+> On Fri, Jul 27, 2012 at 11:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> It seems to have some interaction with your other topic, though.
+>> These two patches alone will pass the existing tests, but merging it
+>> with mz/rebase-range breaks t3412.  I didn't look into it, but
+>> perhaps this breaks "git cherry" in some way?
+>
+> Yes, it breaks "git cherry" quite badly, by not ignoring merges at
+> all. I incorrectly assumed that ignore_merges was about revision
+> traversal, but now I think it's only diff output from 'git log' (and
+> possibly others). What I think tricked me was seeing that
+> "ignore_merges = 1" closely followed by a comment saying "ignore
+> merges". But now I think the explicit code to "ignore merges" is
+> necessary (as show by the failing test case), but can be replaced by
+> "rev_info.max_parents = 1". Setting "ignore_merges = 1", OTOH, now
+> seems doubly redundant: not only does it set the same value as was set
+> in init_revisions, but it's also irrelevant. Since cherry doesn't
+> generate any diff output, I think ignore_merges is never used.
+> Flipping the values of all of "ignore_merges", "combine_merges" and
+> "diff" does not have any effect on test cases at least. I hope my
+> explanation makes some sense at least...
+>
+> I'll send a reroll when I get time.
