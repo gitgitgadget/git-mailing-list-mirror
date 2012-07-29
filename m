@@ -1,81 +1,99 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 2/2] log: remove redundant check for merge commit
-Date: Sat, 28 Jul 2012 21:57:49 -0700
-Message-ID: <CAOeW2eELzcqnecZqea2K0vO818PTYf-P=xEoSKb5GcW7W0Nf+A@mail.gmail.com>
-References: <1343409699-27199-1-git-send-email-martin.von.zweigbergk@gmail.com>
-	<1343409699-27199-3-git-send-email-martin.von.zweigbergk@gmail.com>
-	<7vfw8czvj5.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eFROgZ+taqFvCHoSTVrQZnaQZo567e=73BcA+d5uSjKDA@mail.gmail.com>
-	<7v7gtoxw80.fsf@alter.siamese.dyndns.org>
-	<7vzk6kwf6l.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eG4mKTWm7PEGF_t0F9c_X1gkQaDw7HSrCiZaDte7PvOdQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cleanup argument passing in submodule status command
+Date: Sat, 28 Jul 2012 23:22:55 -0700
+Message-ID: <7vtxwrw0g0.fsf@alter.siamese.dyndns.org>
+References: <20120727185925.793121C0FDC@stefro.sfo.corp.google.com>
+ <20120728102209.GA13370@book.hvoigt.net>
+ <20120728121956.GA36429@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 29 06:57:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de,
+	Stefan Zager <szager@google.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 29 08:23:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvLZk-0005n5-HM
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 06:57:56 +0200
+	id 1SvMul-00017x-3Z
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 08:23:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab2G2E5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jul 2012 00:57:51 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:44844 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751291Ab2G2E5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2012 00:57:50 -0400
-Received: by pbbrp8 with SMTP id rp8so7673659pbb.19
-        for <git@vger.kernel.org>; Sat, 28 Jul 2012 21:57:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QxMIsiEMo8QqJdLOR6wwDiCRlXJf2kDW32F54+fC92s=;
-        b=iMxQZkxate+4Cc4aYjxIVkBSl/+0P14qdJGC2DTr65l2jlfdhlPK3/279N3xgR0L5l
-         pg2ZlYB34BELtd5o4jXPWJ6rd9IWZywHRgTvPb1T2I8FKu9IsDcIeWePWM3bpXPQdq/F
-         pXL/o0p4zWe2XmbyO5KVzY9IsdE78LKieiZeJ6rXThavPzgJQrL/hJ6rWiJU9tcI2e09
-         7cRGvP+ML8f7v9qB7t6G7LpHosaeSdCjdujL5kGzwsv7LiVpHXliS5Qm/8fktZSI35P3
-         B5e8bSypsqCIRS5sSSpkb3wQ6OvYpfC5X/PCQmtZzi4/h51EKJsaUnWUjPhPy7NIR949
-         r5WA==
-Received: by 10.66.73.5 with SMTP id h5mr15741477pav.79.1343537869842; Sat, 28
- Jul 2012 21:57:49 -0700 (PDT)
-Received: by 10.68.42.164 with HTTP; Sat, 28 Jul 2012 21:57:49 -0700 (PDT)
-In-Reply-To: <CAOeW2eG4mKTWm7PEGF_t0F9c_X1gkQaDw7HSrCiZaDte7PvOdQ@mail.gmail.com>
+	id S1752014Ab2G2GW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jul 2012 02:22:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54713 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751508Ab2G2GW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 02:22:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E1DD5F23;
+	Sun, 29 Jul 2012 02:22:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=usECsFQv1Qm+dtCZuUj1bj7St0Y=; b=jSvj34
+	c7kWudwDuZhC8dv+haYhf2aBmTbEaHPcKvOwtOsTbwvGo/jMlOZT3VbND8fUjFk2
+	pq46Ie8rVIJzCJOiSSUMhlDGb6X8XrhgZLOqTRxtcXc5TZnVxsMmPXGLEg5hk6RY
+	dH1uMigyK//RERYpzpJWqZ4PMnbkb5NGAiK/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OG8MHznQrm6mWec0EZ7cN1yw8mI8a5yK
+	4HAcjZHZI2C/afTvLo+patSLPhEm/X+DSy2dl0uR4oOTIxJ5emZotdmipmmWOFA4
+	QOd26oCz/uZwTYSBQAe3jZpOz9DZG7kbP3bz8norB/kciPIRN/NBNqIuE6OSs1he
+	3zHZXQW4EdI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B2FB5F22;
+	Sun, 29 Jul 2012 02:22:57 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9110F5F21; Sun, 29 Jul 2012
+ 02:22:56 -0400 (EDT)
+In-Reply-To: <20120728121956.GA36429@book.hvoigt.net> (Heiko Voigt's message
+ of "Sat, 28 Jul 2012 14:19:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D61D23E6-D945-11E1-8CBD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202470>
 
-Sorry, I meant to CC the list. See below.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-On Sat, Jul 28, 2012 at 9:56 PM, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> On Fri, Jul 27, 2012 at 11:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> It seems to have some interaction with your other topic, though.
->> These two patches alone will pass the existing tests, but merging it
->> with mz/rebase-range breaks t3412.  I didn't look into it, but
->> perhaps this breaks "git cherry" in some way?
+> Note: This is a code cleanup and does not fix any bugs. As a side effect
+> the variables containing the parsed flags to "git submodule status" are
+> passed down recursively. So everything was already behaving as expected.
+
+If that is the case, shouldn't we stop passing anything down, if we
+want it to be a "clean-up only, no behaviour changes" patch?  While
+at it, we may want to kill that code to accumulate the original
+options in orig_flags because we haven't been using the variable.
+
+We _know_ $orig_args has been empty, i.e. the code has been working
+fine with only cmd_status there.  Nobody has tried what happens when
+we pass the original arguments to cmd_status on that line.  The
+patch changes the behaviour of the code; it makes the command line
+parsing "while" loop to run again, and if the code that accumulates
+original options in orig_flags have been buggy, now that bug will be
+exposed.
+
+
+
+
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> ---
+>  git-submodule.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Yes, it breaks "git cherry" quite badly, by not ignoring merges at
-> all. I incorrectly assumed that ignore_merges was about revision
-> traversal, but now I think it's only diff output from 'git log' (and
-> possibly others). What I think tricked me was seeing that
-> "ignore_merges = 1" closely followed by a comment saying "ignore
-> merges". But now I think the explicit code to "ignore merges" is
-> necessary (as show by the failing test case), but can be replaced by
-> "rev_info.max_parents = 1". Setting "ignore_merges = 1", OTOH, now
-> seems doubly redundant: not only does it set the same value as was set
-> in init_revisions, but it's also irrelevant. Since cherry doesn't
-> generate any diff output, I think ignore_merges is never used.
-> Flipping the values of all of "ignore_merges", "combine_merges" and
-> "diff" does not have any effect on test cases at least. I hope my
-> explanation makes some sense at least...
->
-> I'll send a reroll when I get time.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index dba4d39..3a3f0a4 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -961,7 +961,7 @@ cmd_status()
+>  				prefix="$displaypath/"
+>  				clear_local_git_env
+>  				cd "$sm_path" &&
+> -				eval cmd_status "$orig_args"
+> +				eval cmd_status "$orig_flags"
+>  			) ||
+>  			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
+>  		fi
