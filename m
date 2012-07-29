@@ -1,148 +1,99 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
 Subject: Re: Enhancements to git-protocoll
-Date: Sun, 29 Jul 2012 20:09:40 +0530
-Message-ID: <CAMK1S_iTv3BOV3LEoj83feuO2iQnPqTrOq0wyFC-GrvvJQqWTA@mail.gmail.com>
+Date: Sun, 29 Jul 2012 17:05:50 +0200
+Message-ID: <20120729150550.GA17679@paksenarrion.iveqy.com>
 References: <20120728214116.GA3591@paksenarrion.iveqy.com>
-	<7vehnvvyta.fsf@alter.siamese.dyndns.org>
-	<20120729142458.GB16223@paksenarrion.iveqy.com>
+ <CAMK1S_i7WjrZ=L_LVoTQriW8kKMPd+ABrgowpFCY3ks43E6K7A@mail.gmail.com>
+ <20120729141354.GA16223@paksenarrion.iveqy.com>
+ <CAMK1S_iFqQvU+USYf+wcsLFS1QtsytLnPfEhjcAVZa9Vwj8d1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 16:40:40 2012
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 29 17:05:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvUff-00033D-Kg
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 16:40:39 +0200
+	id 1SvV44-0002Xl-UQ
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 17:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753189Ab2G2Ojn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jul 2012 10:39:43 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:56176 "EHLO
+	id S1753210Ab2G2PFp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jul 2012 11:05:45 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:33481 "EHLO
 	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753160Ab2G2Ojm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jul 2012 10:39:42 -0400
-Received: by lbbgm6 with SMTP id gm6so3086389lbb.19
-        for <git@vger.kernel.org>; Sun, 29 Jul 2012 07:39:40 -0700 (PDT)
+	with ESMTP id S1753021Ab2G2PFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 11:05:44 -0400
+Received: by lbbgm6 with SMTP id gm6so3091810lbb.19
+        for <git@vger.kernel.org>; Sun, 29 Jul 2012 08:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dmdDaybzYPS9R/u4483wagcd35WiTkma8NN0HNFjk5Q=;
-        b=nJKhSj2zksoPX+bwh67AUJXkE6pihQ2Yav0GyCE10wApOlGcGmMqT/e4cVmTuCIUMp
-         vr677WbWqsgtxGykYBZIFNoW7Td9ky29Zf8m17iZXVo6VgRaPIP3K9zvuTGK4+JNf7sy
-         CPQPNxPtL6GrWPxgazAqPNJEpFF3m5VVi+IlUQSNmtyAuwLWcJjbVzm5ekqqI6SgbooF
-         O0K/zv6WcnvslEH/s0PWLM+pP6eRhU1oSJ/SLHTjn8/AVwwInzurgmUJ/iYiiQkBytMa
-         4fYhf+nucYfHTt4blATE80F9/f8g9tC7TvFC/j+s1tOSRJDoyEL1zXI+ZBTPeDeOC4ew
-         mg+Q==
-Received: by 10.152.132.40 with SMTP id or8mr8627562lab.24.1343572780841; Sun,
- 29 Jul 2012 07:39:40 -0700 (PDT)
-Received: by 10.112.60.194 with HTTP; Sun, 29 Jul 2012 07:39:40 -0700 (PDT)
-In-Reply-To: <20120729142458.GB16223@paksenarrion.iveqy.com>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=L1L2YW2rHsGk2PbO8FI4pgXqD0/Hpw5ngcaeWwQkC80=;
+        b=UxVvV2Dx05+fj86KT6kdO57rZGb/ABQMHhk3zrPdPnRRkn90suKkm3Y/EE+m/YWqcY
+         WJWq3iR7sEzRO4iAfvOlc2UKEoc2Sk3W/rRiFk9Dccg3HFMYlb5YMeORW+GodzSSyR9t
+         UvWQcEmsTBt0tYVhGwHho6XXvqhHnrpzkSs5xhRt0uRkdt11cqw+Fv+kBu6ejJl777ga
+         k0kZLiKT3y2eif47DlnX/eV6u73Ma1oraBzGJTMYUohPGKqtoVo7USnvXouicbafH7GT
+         EnKBmScnZf+n3R3Jlla3wU8yCfSPqXaErjCNKozi7i7NyxaMVdI//FAX34/BszYNumcx
+         BgJQ==
+Received: by 10.152.131.9 with SMTP id oi9mr8529556lab.39.1343574342822;
+        Sun, 29 Jul 2012 08:05:42 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (h-235-111.a189.priv.bahnhof.se. [81.170.235.111])
+        by mx.google.com with ESMTPS id xx8sm7953158lab.10.2012.07.29.08.05.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 29 Jul 2012 08:05:41 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1SvV42-0004gZ-CG; Sun, 29 Jul 2012 17:05:50 +0200
+Content-Disposition: inline
+In-Reply-To: <CAMK1S_iFqQvU+USYf+wcsLFS1QtsytLnPfEhjcAVZa9Vwj8d1w@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202481>
 
-On Sun, Jul 29, 2012 at 7:54 PM, Fredrik Gustafsson <iveqy@iveqy.com> w=
-rote:
-> On Sat, Jul 28, 2012 at 11:58:09PM -0700, Junio C Hamano wrote:
->> Fredrik Gustafsson <iveqy@iveqy.com> writes:
->>
->> > Sometimes the server wants to communicate directly to the git user=
-=2E
->> > ...
->> > For example:
->> > gitolite has something called wild repos[1]. The management is
->> > cumbersome and if you misspell when you clone a repo you might ins=
-tead
->> > create a new repo.
->> >
->> > This could have been avoided with a simply:
->> > "Do you want to create a new repo[Yn]"
->>
->> I do not think the automatic repository creation done by gitolite is
->> a good use case or example for whatever you seem to be advocating.
->>
->> IIUC, the auto-creation in gitolite-shell::main() is done way before
->> gitolite-shell (which is used as a login shell for incoming ssh
->> sessions) creates a new git repository, goes into it and spawns the
->> git-receive-pack command.  It all happens outside Git.
->>
->>     # auto-create?
->>     if ( repo_missing($repo) and access( $repo, $user, '^C', 'any' )=
- !~ /DENIED/ ) {
->>         require Gitolite::Conf::Store;
->>         Gitolite::Conf::Store->import;
->>         new_wild_repo( $repo, $user, $aa );
->>         gl_log( 'create', $repo, $user, $aa );
->>     }
->>
->> The "access()" we see here is not the Perl builtin access(), but is
->> a function defined in src/lib/Gitolite/Conf/Load.pm; that would be
->> the place to allow the incoming ssh session to talk back to the end
->> user, but at that point there is no Git processing on the server
->> end.
->
-> That's a feature. It means that the impact on git would be rather sma=
-ll,
-> we don't have to involve server-side git at all. The problem so solve=
- is
-> how to get client-side git to pass through STDIN and STDOUT (just as =
-is
-> done with STDERR right now). I see this as a gitolite <-> client-git
-> interaction case. No server-git should be involved.
+On Sun, Jul 29, 2012 at 07:55:36PM +0530, Sitaram Chamarty wrote:
+> > Thanks, however I think auto-creation is a great feature for some c=
+ases
+> > and I think there can be even more useable functions if we could ge=
+t
+> > user interaction.
+>=20
+> For the record, I don't think I agree.  There's a place to create a
+> human-conversation, and there's a place not to.
+>=20
+> If you want a dialog with the server, there should be *other* command=
+s
+> that do that, instead of overloading git's own protocol.
+>=20
+> Since you mentioned gitolite, consider copying the fork command
+> (src/commands/fork) and munging the code into an explicit wild repo
+> create.
 
-Uggh, no.  Client-git should only talk to server-git.  It shouldn't be
-talking first to some *other* program (in this case gitolite), and
-then to to server-git.  That doesn't sound sane to me.
+I appriciate that you clearified you oppinion. Please excuse me if it
+sounded as I in any way speaked for gitolite. I use gitolite as an
+example becuase the target application in this case is unknown to most
+people (think gitolite with db-backend for user permissions).
 
-You should wrap this whole thing around something else that does it in
-3 steps.  Check, create if needed, then the actual git command you
-intend to run.  All this should be local to your environment, not
-rolled into git; it's far too specific to be rolled into git itself,
-if you ask me.
+It's a valid design oppinion to not mix git protocoll with anything
+else. But gitolite already does that. Gitolite already have user
+interaction mixed with git interaction. Do you say to me that gitolite
+is broken and should not do user interaction over git-commands? Then wh=
+y
+does wild repos exists and why does gitolite error messages exists?
 
-> All the use casese I can imagine will be done before (or after)
-> serverside git is executed.
->
->> While I am not fundamentally opposed to adding yet another sideband
->> channel to the git protocol, I do not think adding user interaction
->> at random places in the protocol exchange is a viable or useful
->> approach to implement an enhanced server that works with both
->> enhanced and vanilla clients (and the same is true for enhanced
->> client that works with both enhanced and vanilla server).
->
-> Do we mean the same thing with "git protocol"? I specify the protocol=
- as
-> everything that happens between the server and the client. Are the
-> connection divided into multiple protocoll after eachother? (would it=
- be
-> possible to execute git-user-interaction-protocoll first and the
-> git-protocoll and then git-user-interaction-protocoll again?).
->
-> The vanilla case would be easy to solve if the protocol has git versi=
-on
-> in its handshake. The STDERR approach is already used and working. A
-> vanilla client would have the same functionality as today and en
-> enhanced client will have enhanced functionality.
->
-> --
-> Med v=C3=A4nliga h=C3=A4lsningar
-> Fredrik Gustafsson
->
-> tel: 0733-608274
-> e-post: iveqy@iveqy.com
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
+We're already down that road, why not do it better?
 
 --=20
-Sitaram
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
