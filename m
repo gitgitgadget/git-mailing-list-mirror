@@ -1,96 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Enhancements to git-protocoll
-Date: Sat, 28 Jul 2012 23:58:09 -0700
-Message-ID: <7vehnvvyta.fsf@alter.siamese.dyndns.org>
-References: <20120728214116.GA3591@paksenarrion.iveqy.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/2] test results for v1.7.12-rc0 on cygwin
+Date: Sun, 29 Jul 2012 10:57:10 +0200
+Message-ID: <5014FAE6.7080009@lsrfire.ath.cx>
+References: <50143379.8050500@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sun Jul 29 08:58:55 2012
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Jul 29 11:03:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvNSp-0002nI-7w
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 08:58:55 +0200
+	id 1SvPPc-0008Ip-Hq
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jul 2012 11:03:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547Ab2G2G6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jul 2012 02:58:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64108 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751475Ab2G2G6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2012 02:58:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19098631D;
-	Sun, 29 Jul 2012 02:58:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hS4PzFhsX9ZM2GcFsD46eYJs/QU=; b=aBOJiU
-	S+nxgNfkPGYMpoZ3eOfwLh28NS8rFrjCLMjbJBHuZy8BOReuVgYtBGR89rgUEZyB
-	0yMuO0gIUfBI7IBkqsmD5JotySalgvany5MLb9zTp1lggT+lHsydba6KxgTC9cGL
-	06H2QFiarjqXTkeKbwi4MbOs1JZNZIep0Cl5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xwmuTrC2dj1gvil+aDa3gxzXXVosr4ZS
-	jYZNuY5MvfXZulrOLFXxKhb1/eignoNVH3ijTvg5PvX68/oMO6IUZA21vKGbYTiL
-	Dgi8eZ7P3qez7VoxbrrKSa2YSoL+JuF3T1+uGwgtDZbCyl1WkLl3OoSaqXPQKnPV
-	didH5aj5q/o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06FCC631C;
-	Sun, 29 Jul 2012 02:58:12 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62BA3631B; Sun, 29 Jul 2012
- 02:58:11 -0400 (EDT)
-In-Reply-To: <20120728214116.GA3591@paksenarrion.iveqy.com> (Fredrik
- Gustafsson's message of "Sat, 28 Jul 2012 23:41:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C2A3470A-D94A-11E1-9D05-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752367Ab2G2JDf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jul 2012 05:03:35 -0400
+Received: from india601.server4you.de ([85.25.151.105]:38295 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069Ab2G2JDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 05:03:30 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Jul 2012 05:03:30 EDT
+Received: from [192.168.2.105] (p4FFD8CEF.dip.t-dialin.net [79.253.140.239])
+	by india601.server4you.de (Postfix) with ESMTPSA id B6EB42F8051;
+	Sun, 29 Jul 2012 10:57:16 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <50143379.8050500@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202474>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
-
-> Sometimes the server wants to communicate directly to the git user.
-> ...
-> For example:
-> gitolite has something called wild repos[1]. The management is
-> cumbersome and if you misspell when you clone a repo you might instead
-> create a new repo.
+Am 28.07.2012 20:46, schrieb Ramsay Jones:
+> Unfortunately, I was unable to reproduce the final failure in t7810-g=
+rep.sh.
+> I tried, among other things, to provoke a failure thus:
 >
-> This could have been avoided with a simply:
-> "Do you want to create a new repo[Yn]"
+>      $ for i in $(seq 100); do
+>      > if ! ./t7810-grep.sh -i -v; then
+>      >     break;
+>      > fi
+>      > done
+>      $
+>
+> but, apart from chewing on the cpu for about 50 minutes, it didn't re=
+sult
+> in a failure. :(
+>
+> However, after looking at test 59, it seems to me to be a stale (redu=
+ndant)
+> test. So, patch #2 removes that test! :-D [I wish I could reproduce t=
+he
+> failure because I don't like not knowing why it failed, but ...]
 
-I do not think the automatic repository creation done by gitolite is
-a good use case or example for whatever you seem to be advocating.
+Removing the test makes sense, since it was needed for --ext-grep only,=
+=20
+is relatively expensive and a bit fragile (by depending on MAXARGS).
 
-IIUC, the auto-creation in gitolite-shell::main() is done way before
-gitolite-shell (which is used as a login shell for incoming ssh
-sessions) creates a new git repository, goes into it and spawns the
-git-receive-pack command.  It all happens outside Git.
+I'm slightly worried about the non-reproducible failure, though.=20
+Perhaps a timing issue is involved and chances are higher if you leave=20
+out the option -v?
 
-    # auto-create?
-    if ( repo_missing($repo) and access( $repo, $user, '^C', 'any' ) !~ /DENIED/ ) {
-        require Gitolite::Conf::Store;
-        Gitolite::Conf::Store->import;
-        new_wild_repo( $repo, $user, $aa );
-        gl_log( 'create', $repo, $user, $aa );
-    }
-
-The "access()" we see here is not the Perl builtin access(), but is
-a function defined in src/lib/Gitolite/Conf/Load.pm; that would be
-the place to allow the incoming ssh session to talk back to the end
-user, but at that point there is no Git processing on the server
-end.
-
-While I am not fundamentally opposed to adding yet another sideband
-channel to the git protocol, I do not think adding user interaction
-at random places in the protocol exchange is a viable or useful
-approach to implement an enhanced server that works with both
-enhanced and vanilla clients (and the same is true for enhanced
-client that works with both enhanced and vanilla server).
+Thanks,
+Ren=E9
