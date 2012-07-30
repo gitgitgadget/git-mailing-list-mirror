@@ -1,136 +1,80 @@
-From: =?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>
-Subject: [PATCH] Improve tests for detached worktree in git-submodule
-Date: Mon, 30 Jul 2012 14:51:59 -0300
-Message-ID: <1343670719-3635-1-git-send-email-dangra@gmail.com>
-References: <7vsjc9qh33.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Cannot delete weirdly named branch
+Date: Mon, 30 Jul 2012 10:55:20 -0700
+Message-ID: <7vk3xlqgl3.fsf@alter.siamese.dyndns.org>
+References: <CAGhmpEFg2ZcwqO=wDNPLfPCnrobq4oOcwvFCm27vrEuiES2XbQ@mail.gmail.com>
+ <CAGhmpEGEZchXc4DqZ21BAKxf6_mHRp=TOUH8s=GG0vPscz1kfg@mail.gmail.com>
+ <7vsjcil3o5.fsf@alter.siamese.dyndns.org> <5016C2C9.5050904@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 19:55:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "abhisekpan\@gmail.com" <abhisekpan@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:55:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvuBM-0000Lx-Et
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:55:04 +0200
+	id 1SvuBk-0000gg-EE
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325Ab2G3Ry7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 13:54:59 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36388 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751799Ab2G3Ry6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 13:54:58 -0400
-Received: by yenl2 with SMTP id l2so5110422yen.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 10:54:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=WtjrkzQ//eN5EB98ij/nsMRCXT3kVejhER6yo4mlDKg=;
-        b=UZP0OAV0CrT16l1NgWC8K5smYcNDRWmjwHEZ+s7z/Sy5Eddnr0EpL+zoDJBhj3u0If
-         5u3J5l+OMVsHGhAnCU/3DzmO1vPNS/iiMTYuLrCsxmmAUfUEbpXdT4ffCCfe984mzPU9
-         cMfTuehLkUv4tsxxezv+JRP97Eiu5b1jMoZEB55+noxFY4doJWDvJlxkvXmG66XBfE6s
-         a1+4+ISB/hAf2hFZQoggVbwLzdNb23rKOtqzRfprcXPDGcrdeZ35n2sIkox4C9ZB0V6d
-         aQg4gbcKOiJM5zibOYvdPGIclg/RrmVRHet48O/bsN6dswqjzRA0hM5cmY4+ABnxAab9
-         jF+A==
-Received: by 10.236.76.198 with SMTP id b46mr10698529yhe.117.1343670898094;
-        Mon, 30 Jul 2012 10:54:58 -0700 (PDT)
-Received: from localhost.localdomain (r190-135-175-126.dialup.adsl.anteldata.net.uy. [190.135.175.126])
-        by mx.google.com with ESMTPS id g46sm6087567yhm.19.2012.07.30.10.54.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2012 10:54:57 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <7vsjc9qh33.fsf@alter.siamese.dyndns.org>
+	id S1754562Ab2G3RzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 13:55:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754457Ab2G3RzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 13:55:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6749B9F06;
+	Mon, 30 Jul 2012 13:55:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Dh/zku8sNdHbU1bOrhCJv7h0cuw=; b=fvmMff
+	6Qb/PwdIB2Kj/R2XZMvuk1CpncHEx3tpWCAyC/8kxda4AbPUC3/EgBoDPgRmiEUJ
+	GXlGWgmIFfLgU7nrGNmxxODCZ7KXSVOATijR3YU8yt2McarUMF6ur1r/lq15bOQx
+	45EQpbKCg0WyJqNj4E4lMRIQ/LEpxOR1B185c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pzKozb0lGOfa/FbPO48NmWRLpQ2grs0c
+	GZAnussxcRoIPJ3Lwvdc9bsdCTDqcB9weyG7MVFx1FT80PGIdaT1l8OZ+Ag2BrYs
+	0mP3pjG2fwp5fNcL7Mi5xTrHgAY3C+MywKUJmkKJP9kt5QkYRpFSLlvp73XmSgc2
+	trI6gGch1HY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5544F9F05;
+	Mon, 30 Jul 2012 13:55:22 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C36999F04; Mon, 30 Jul 2012
+ 13:55:21 -0400 (EDT)
+In-Reply-To: <5016C2C9.5050904@alum.mit.edu> (Michael Haggerty's message of
+ "Mon, 30 Jul 2012 19:22:17 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BB662964-DA6F-11E1-9EDD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202597>
 
-* Check submodule is correctly initialized and updated after cloning .d=
-otfiles
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
----
- t/t7409-submodule-detached-worktree.sh |   31 ++++++++++++++++++++++++=
--------
- 1 files changed, 24 insertions(+), 7 deletions(-)
+> On 07/23/2012 08:42 PM, Junio C Hamano wrote:
+>> "abhisekpan@gmail.com" <abhisekpan@gmail.com> writes:
+>>
+>>> Now I cannot delete this branch. Running:
+>>> git branch -d --tracking
+>>> gives an error: unknown option `tracking'
+>>
+>> I do not think this is supposed to work, but it does by accident.
+>>
+>>      $ git branch -d -- --tracking
+>>      Deleted branch --tracking (was 8670e20).
+>
+> The plumbing command "git update-ref -d refs/heads/--tracking" can
+> also be used to delete such a branch.
 
-diff --git a/t/t7409-submodule-detached-worktree.sh b/t/t7409-submodule=
--detached-worktree.sh
-index db75642..f82a757 100755
---- a/t/t7409-submodule-detached-worktree.sh
-+++ b/t/t7409-submodule-detached-worktree.sh
-@@ -15,7 +15,11 @@ TEST_NO_CREATE_REPO=3D1
- test_expect_success 'submodule on detached working tree' '
- 	git init --bare remote &&
- 	test_create_repo bundle1 &&
--	(cd bundle1 && test_commit "shoot") &&
-+	(
-+		cd bundle1 &&
-+		test_commit "shoot" &&
-+		git rev-parse --verify HEAD >../expect
-+	) &&
- 	mkdir home &&
- 	(
- 		cd home &&
-@@ -23,14 +27,27 @@ test_expect_success 'submodule on detached working =
-tree' '
- 		git clone --bare ../remote .dotfiles &&
- 		git submodule add ../bundle1 .vim/bundle/sogood &&
- 		test_commit "sogood" &&
-+		(
-+			unset GIT_WORK_TREE GIT_DIR &&
-+			cd .vim/bundle/sogood &&
-+			git rev-parse --verify HEAD >actual &&
-+			test_cmp ../../../../expect actual
-+		) &&
- 		git push origin master
--	) &&
-+	)
- 	mkdir home2 &&
- 	(
- 		cd home2 &&
--		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
- 		git clone --bare ../remote .dotfiles &&
--		git submodule update --init
-+		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
-+		git checkout master &&
-+		git submodule update --init &&
-+		(
-+			unset GIT_WORK_TREE GIT_DIR &&
-+			cd .vim/bundle/sogood &&
-+			git rev-parse --verify HEAD >actual &&
-+			test_cmp ../../../../expect actual
-+		)
- 	)
- '
-=20
-@@ -42,6 +59,7 @@ test_expect_success 'submodule on detached working po=
-inted by core.worktree' '
- 		git clone --bare ../remote "$GIT_DIR" &&
- 		git config core.bare false &&
- 		git config core.worktree .. &&
-+		git checkout master &&
- 		git submodule add ../bundle1 .vim/bundle/dupe &&
- 		test_commit "dupe" &&
- 		git push origin master
-@@ -52,9 +70,8 @@ test_expect_success 'submodule on detached working po=
-inted by core.worktree' '
- 		git config core.bare false &&
- 		git config core.worktree .. &&
- 		git pull &&
--		git submodule update &&
--		git submodule status &&
--		test -d .vim/bundle/dupe
-+		git submodule update --init &&
-+		test -e .vim/bundle/dupe/shoot.t
- 	)
- '
-=20
---=20
-1.7.5.4
+Note that once you started using the plumbing you are assumed to
+know what you are doing.  "update-ref -d" does not offer the "you
+will be losing these commits" safety, and it will not remove
+configuration items for "branch.--tracking.*" keys.  You would want
+to remove them yourself if you want to emulate "git branch -d".
