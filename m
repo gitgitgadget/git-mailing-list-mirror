@@ -1,100 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC v2 11/16] Add explanatory comment for transport-helpers
- refs mapping.
-Date: Mon, 30 Jul 2012 10:25:40 -0700
-Message-ID: <7v1ujtrwiz.fsf@alter.siamese.dyndns.org>
-References: <1343658683-10713-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <20120730170842.GC8515@burratino>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Cannot delete weirdly named branch
+Date: Mon, 30 Jul 2012 19:22:17 +0200
+Message-ID: <5016C2C9.5050904@alum.mit.edu>
+References: <CAGhmpEFg2ZcwqO=wDNPLfPCnrobq4oOcwvFCm27vrEuiES2XbQ@mail.gmail.com> <CAGhmpEGEZchXc4DqZ21BAKxf6_mHRp=TOUH8s=GG0vPscz1kfg@mail.gmail.com> <7vsjcil3o5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	David Michael Barr <davidbarr@google.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 19:25:53 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "abhisekpan@gmail.com" <abhisekpan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:29:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Svtj4-000687-49
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:25:50 +0200
+	id 1SvtmZ-0000Ag-Ub
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:29:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754501Ab2G3RZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 13:25:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36870 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754077Ab2G3RZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 13:25:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B7009841;
-	Mon, 30 Jul 2012 13:25:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vGsT3fmpvhWiWQqHtwRZnuimcpU=; b=P3M1Nk
-	miKWbNjGAVjFSI0ZGLKzGp3JSg7mBhh3DK0WUNpOb0rTptC2mm+4XJdq5IjoRahk
-	oaEbWmExATa/G8OSC20iEOouZANBcIo6410f5Vk8muiLO02/ipNT+qDuTqwMuwa3
-	3MS5kpZlZcp29yOfFOktDasSJ4/ksUYHiALpY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wkEtrfkaweK8IgOHyNzEx793yuq+DCE2
-	dCKZnswsQL1ExS59nbt5j7MuaMp4E0d+ebrDuCFh9e+zK3p35YhEaGzwA9NhaYKP
-	HzTmAynd0vEl62rqgdzSZD6d51rTEQHpztR669xWu6+4DgPmoIv/x5rT0co5qEdy
-	GZoU5qsAbP8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01A299840;
-	Mon, 30 Jul 2012 13:25:42 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 738CC983F; Mon, 30 Jul 2012
- 13:25:41 -0400 (EDT)
-In-Reply-To: <20120730170842.GC8515@burratino> (Jonathan Nieder's message of
- "Mon, 30 Jul 2012 12:08:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9641A96E-DA6B-11E1-A244-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754158Ab2G3R3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 13:29:23 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:43418 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753631Ab2G3R3W (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 13:29:22 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Jul 2012 13:29:22 EDT
+X-AuditID: 1207440f-b7fde6d00000095c-a8-5016c2cceeae
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id F9.71.02396.CC2C6105; Mon, 30 Jul 2012 13:22:20 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q6UHMIvc018446
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Jul 2012 13:22:19 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <7vsjcil3o5.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqHvmkFiAwfxOdovFXT4WXVe6mSwa
+	eq8wOzB77Jx1l93j4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M7Y8+8RYcImlYuPtVsYGxpvM
+	XYycHBICJhITT05nhbDFJC7cW8/WxcjFISRwmVFi8vJHUM5xJommKb0sIFW8AtoSGzv+gNks
+	AqoSfXMvgdlsAroSi3qamUBsUYEQiTXfpjBC1AtKnJz5BKxGREBNYmLbITCbWcBNov3LXzYQ
+	W1hAX2Ll0aOsEMv2M0rsOfUHbBCngJnE4YPvgBIcQA3WEt92F0H0yktsfzuHeQKjwCwkK2Yh
+	VM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6JXm5miV5qSukmRkjg8u9g7Fovc4hR
+	gINRiYfX8LJogBBrYllxZe4hRkkOJiVRXqMtYgFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHgn
+	iQDleFMSK6tSi/JhUtIcLErivOpL1P2EBNITS1KzU1MLUotgsjIcHEoSvIsPAjUKFqWmp1ak
+	ZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEgyI1vhgYqyApHqC900HaeYsLEnOBohCtpxh1OVb9
+	fnKbUYglLz8vVUqcdydIkQBIUUZpHtwKWJp6xSgO9LEwbyxIFQ8wxcFNegW0hAloSYgD2JKS
+	RISUVAOj5GSJFg+TQylFIbuj41kneXz1/fg38+5ldaetJvcdqxY+5fvN5PTe6ELn2ymOd/bv
+	2Pye82p62sGqY2kG5U3XO20P7tn1cLfFA4c7LDNdX6zyW2Xffq/l/51+qXc+W21f 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202588>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 07/23/2012 08:42 PM, Junio C Hamano wrote:
+> "abhisekpan@gmail.com" <abhisekpan@gmail.com> writes:
+>
+>> Now I cannot delete this branch. Running:
+>> git branch -d --tracking
+>> gives an error: unknown option `tracking'
+>
+> I do not think this is supposed to work, but it does by accident.
+>
+>      $ git branch -d -- --tracking
+>      Deleted branch --tracking (was 8670e20).
 
-> Hi Junio,
->
-> Florian Achleitner wrote:
->
->> transport-helpers can advertise the 'refspec' capability,
->> if not a default refspec *:* is assumed. This explains
->> the post-processing of refs after fetching with fast-import.
->>
->> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
->
-> The patch below adds a comment to fetch_with_import() explaining the
-> loop that saves the fetched commit names after 'git fast-import' has
-> done its work.  It avoids some confusion that Florian encountered on
-> first reading about which refs the fast-import stream is supposed to
-> use to write its result.
+The plumbing command "git update-ref -d refs/heads/--tracking" can also 
+be used to delete such a branch.
 
->
-> (By the way, I guess I find the above paragraph clearer than Florian's
-> commit message.  But aside from that, the patch seems good to me.)
->
-> I would like to see the patch applied so the remote-svn series without
-> it gets shorter and easier to review.
+Michael
 
-Sounds pretty safe, and as long as mentors and stakeholders in the
-area are happy with what the comment says, I see no issue applying
-it now.  Is it understood by all parties that Florian may need to
-rebase the series on top of it?
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
