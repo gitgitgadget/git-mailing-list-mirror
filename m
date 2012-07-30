@@ -1,86 +1,171 @@
-From: Thomas Badie <thomas.badie@gmail.com>
-Subject: Re: A new way to get a sha1?
-Date: Mon, 30 Jul 2012 18:57:58 +0200
-Message-ID: <CAFjFENp1CzepXLO+eR9A0op6ESRKCTsFLc90e1EKuw1p1A3y5w@mail.gmail.com>
-References: <jv5tln$96e$1@dough.gmane.org>
-	<alpine.LNX.2.01.1207301426090.25013@frira.zrqbmnf.qr>
-	<7vipd5s161.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve tests for detached worktree in git-submodule
+Date: Mon, 30 Jul 2012 10:02:04 -0700
+Message-ID: <7v6295rxmb.fsf@alter.siamese.dyndns.org>
+References: <1343664610-479-1-git-send-email-dangra@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jan Engelhardt <jengelh@inai.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 18:58:08 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:02:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvtIB-0003zV-PT
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 18:58:04 +0200
+	id 1SvtMF-0006zu-O3
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144Ab2G3Q57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 12:57:59 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:37419 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754071Ab2G3Q56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 12:57:58 -0400
-Received: by qcro28 with SMTP id o28so3112133qcr.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 09:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Chse3knVh4WcFPPa5jFfgj91P6Rpxb5RDdJOeLK+fic=;
-        b=f2qxFECZuw2pp+f6i6fAdKR6Odah+aj521zhnr9nBfV/5shcK0HodWp0k+E9Rydyxn
-         3/be9UdIApdJPAy6X9fVDJ8rZ8y795gQFY2gEb1IADBXECJefW/ec1+w1sHPPg/ydSun
-         OuOK0rFUde4bkJK/zZxw0y+4qnY5c8nhNBfJpbGkFaWRsSB92TBrkRhzgYZBFyteT8Y7
-         A9EFKfuiML3v0+FNE3wL7oCOW31XLyV7KJtVBheIk4x/uJGYZw8o/8AaTylIljaPw7SM
-         sLopeN2iRzQk0I8PMtdKB+I5a+q9d5H7aCAyeuGXtHLnPHtSMGv35hhYfEM36C9Dyj2V
-         ySoA==
-Received: by 10.224.174.72 with SMTP id s8mr6033995qaz.91.1343667478109; Mon,
- 30 Jul 2012 09:57:58 -0700 (PDT)
-Received: by 10.224.128.211 with HTTP; Mon, 30 Jul 2012 09:57:58 -0700 (PDT)
-In-Reply-To: <7vipd5s161.fsf@alter.siamese.dyndns.org>
+	id S1754126Ab2G3RCJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 13:02:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57417 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753932Ab2G3RCI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 13:02:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B351A91ED;
+	Mon, 30 Jul 2012 13:02:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=r8Le9qTZxq45
+	AMdf06mZ3OSa+VQ=; b=f4OQrFNPPrrSdX0Bd12zIOW1ObiNaAAujWDRPUAhH40H
+	DIp7QjnWsUswLqdOTdIJF9Pakjcw2c1oqO5NxIMq/VYqlVxEGKZQRwbzpQ3NbepE
+	lnEqHhTQVCNtglHF+LpjCgM7b/nxYPyMewE2HscU+Fl5jDucsXWy/J7x6YELTsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XW1so7
+	jPJf+AK+kxKU8QJsR4FuxQEVZyGLQ+ULBOXtl6eotyBRwX59x35Zw2C8gRk+4R7w
+	PAWz/je6lzmLmrSEbDLUXTTUO8/lvWLhLMLU+bap6Lm+gR3ZihBEiRkR9Nd/Pm02
+	tF3s0BUsKw8o2iRIuPiEpIoLCYa8AJizgxwMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A06B391EC;
+	Mon, 30 Jul 2012 13:02:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFFE391EB; Mon, 30 Jul 2012
+ 13:02:06 -0400 (EDT)
+In-Reply-To: <1343664610-479-1-git-send-email-dangra@gmail.com> ("Daniel
+ =?utf-8?Q?Gra=C3=B1a=22's?= message of "Mon, 30 Jul 2012 13:10:10 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4B05B16E-DA68-11E1-927A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202582>
 
-2012/7/30 Junio C Hamano <gitster@pobox.com>:
-> Jan Engelhardt <jengelh@inai.de> writes:
->
->> On Monday 2012-07-30 14:11, Thomas Badie wrote:
->>
->>>Hi all,
->>>
->>>When I should fixup or squash a commit, I nearly never
->>>remember how to get the sha1 of the commit I want to fixup.
->>>Because sometimes HEAD~n is not enough, I make `git log`,
->>>copy the sha1 of the right commit and paste it in my git
->>>fixup command. So I wrote a perl script to avoid the usage
->>>of the mouse.
->>
->> If you use screen(1), you can use the keyboard as well; it offers ^A [
->> and ^A ] for copy, and then paste. tmux and all those screen clones
->> probably have something similar. Maybe ratpoison-like WMs do as well.
->> Or, you can use `git log --oneline`, look for the commit and then
->> type the (usually) 6-char part of the hash manually, which may be faster
->> than ^A[, moving the cursor to the copy position, marking it, etc.
->
-> Also,
->
->         git show -s ':/^t1100-.*: Fix an interm'
->
-> would work well.  It your log messages are not descriptive enough,
-> however, that may not, but that is easily fixable by training you
-> and your colleages to give a more descriptive title to each commit,
-> which will make your project better.
+Daniel Gra=C3=B1a <dangra@gmail.com> writes:
 
-Another aim of this module would be to avoid writing the beginning of
-the commit message.
+> Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
+> ---
+>  t/t7409-submodule-detached-worktree.sh |   31 ++++++++++++++++++++++=
+++-------
+>  1 files changed, 24 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t7409-submodule-detached-worktree.sh b/t/t7409-submodu=
+le-detached-worktree.sh
+> index db75642..d88f400 100755
+> --- a/t/t7409-submodule-detached-worktree.sh
+> +++ b/t/t7409-submodule-detached-worktree.sh
+> @@ -15,7 +15,11 @@ TEST_NO_CREATE_REPO=3D1
+>  test_expect_success 'submodule on detached working tree' '
+>  	git init --bare remote &&
+>  	test_create_repo bundle1 &&
+> -	(cd bundle1 && test_commit "shoot") &&
+> +	(
+> +		cd bundle1 &&
+> +		test_commit "shoot" &&
+> +		git rev-list --max-count=3D1 HEAD > "$TRASH_DIRECTORY/expect"
 
-Thanks for your proposition. I didn't know this solution.
+Better written as
 
--- 
-Thomas "Enki" Badie
+	git rev-parse --verify HEAD >../expect
+
+methinks.
+
+> +	) &&
+>  	mkdir home &&
+>  	(
+>  		cd home &&
+> @@ -23,14 +27,27 @@ test_expect_success 'submodule on detached workin=
+g tree' '
+>  		git clone --bare ../remote .dotfiles &&
+>  		git submodule add ../bundle1 .vim/bundle/sogood &&
+>  		test_commit "sogood" &&
+> +		(
+> +			unset GIT_WORK_TREE GIT_DIR &&
+> +			cd .vim/bundle/sogood &&
+> +			git rev-list --max-count=3D1 HEAD > actual &&
+> +			test_cmp actual "$TRASH_DIRECTORY/expect"
+
+Likewise.
+
+	git rev-parse --verify HEAD >actual &&
+        test_cmp ../expect actual
+
+As test_cmp turns into "diff -u", comparing expect against actual
+(instead of the other way around) shows the deviation in a more
+readable way when your test fails.
+
+> +		) &&
+>  		git push origin master
+> -	) &&
+> +	)
+>  	mkdir home2 &&
+>  	(
+>  		cd home2 &&
+> -		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
+>  		git clone --bare ../remote .dotfiles &&
+> -		git submodule update --init
+> +		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
+
+So you used to clone with the two environment variables in effect to
+create the .otfiles, but now you don't use them while cloning.  That
+makes more sense to me, especially the .otfiles is created "bare".
+
+> +		git checkout master &&
+
+So you populate the newly created home2 working tree out of the .otfile=
+s
+repository in it.
+
+> +		git submodule update --init &&
+> +		(
+> +			unset GIT_WORK_TREE GIT_DIR &&
+> +			cd .vim/bundle/sogood &&
+> +			git rev-list --max-count=3D1 HEAD > actual &&
+> +			test_cmp actual "$TRASH_DIRECTORY/expect"
+
+Likewise.
+
+> +		)
+>  	)
+>  '
+> =20
+> @@ -42,6 +59,7 @@ test_expect_success 'submodule on detached working =
+pointed by core.worktree' '
+>  		git clone --bare ../remote "$GIT_DIR" &&
+>  		git config core.bare false &&
+>  		git config core.worktree .. &&
+> +		git checkout master &&
+>  		git submodule add ../bundle1 .vim/bundle/dupe &&
+>  		test_commit "dupe" &&
+>  		git push origin master
+> @@ -52,9 +70,8 @@ test_expect_success 'submodule on detached working =
+pointed by core.worktree' '
+>  		git config core.bare false &&
+>  		git config core.worktree .. &&
+>  		git pull &&
+> -		git submodule update &&
+> -		git submodule status &&
+> -		test -d .vim/bundle/dupe
+> +		git submodule update --init &&
+> +		test -e .vim/bundle/dupe/shoot.t
+
+Is the "existence" the only thing you care about?  That's not all
+that different from the old test that only checked the existence of
+the directory dupe, no?
+
+>  	)
+>  '
