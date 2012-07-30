@@ -1,74 +1,126 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: PROPFIND 405 with git-http-backend and Smart HTTP
-Date: Sun, 29 Jul 2012 18:00:44 -0700
-Message-ID: <CAJo=hJtB6OQ8+8Q_JgPoAntOdQ=Z0tOERYRD7wJ0LRLgacYA8A@mail.gmail.com>
-References: <1343587966493-7564017.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] link_alt_odb_entry: fix read over array bounds reported
+ by valgrind
+Date: Sun, 29 Jul 2012 18:01:58 -0700
+Message-ID: <7vzk6it62h.fsf@alter.siamese.dyndns.org>
+References: <20120728154635.GB98893@book.hvoigt.net>
+ <7v4noqul05.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Bo98 <BoEllisAnderson@aol.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 03:01:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Torsten =?utf-8?Q?B=C3=83=C2=B6gershausen?= <tboegi@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon Jul 30 03:02:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SveMJ-0005Pq-Aq
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 03:01:19 +0200
+	id 1SveN6-0005mu-Cx
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 03:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779Ab2G3BBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jul 2012 21:01:09 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:50848 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753685Ab2G3BBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jul 2012 21:01:07 -0400
-Received: by yenl2 with SMTP id l2so4319453yen.19
-        for <git@vger.kernel.org>; Sun, 29 Jul 2012 18:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=smQyOfgfcE0VsBdsRjzdIyQT0yRehl7z/Q9k+JdJ6Ls=;
-        b=TrYoi52QzNlq75z3JzUstz5kNKGrcHXXB4VY9cjgfJ5poVjRzUqmpR+1/ihD8IEMHf
-         1nTLtxdiJyUgoMz1DfC6qFscA72Y1yNRYzOLo0HGqFN4/5SPMqsmoH/vCDwydzPxpa92
-         xiJcZUV+94bbBzG8Us7llKlAJubU/MtA1MBZE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=smQyOfgfcE0VsBdsRjzdIyQT0yRehl7z/Q9k+JdJ6Ls=;
-        b=gV6vGMX7sxtqanSxibnR8nuHu1bobBK399WPIU5lP/hr0sh8+f/0jKzGifJ9tlA7VR
-         2FshCGN6o2YpNkj29ovsLF29M1p5YENMOX3me4eCFHd5CSwlWh99H9whk0WAZjF9PJsQ
-         MH/ULl7onz5V/h0QP+OqdxLUad9C2I1yKXwy0LlyAZWzsBz87sYIJP7Q/fmR6CEwZNle
-         RTwLCuNyf+3wtk+lhSkkeIl6Sy+OEOL48jv/hcAhKmn46iTeAIPJW5otACOZn3AifQsk
-         jWZLFODlLoNH2CFXZmoV/Iy5YN8lqJEtUlkQdL0xvS9vDVwgdPIfaMn94jWOEV0QYe1s
-         eGAA==
-Received: by 10.43.92.67 with SMTP id bp3mr5774536icc.16.1343610065692; Sun,
- 29 Jul 2012 18:01:05 -0700 (PDT)
-Received: by 10.64.14.177 with HTTP; Sun, 29 Jul 2012 18:00:44 -0700 (PDT)
-In-Reply-To: <1343587966493-7564017.post@n2.nabble.com>
-X-Gm-Message-State: ALoCoQnI9KzK7R/+TuGw5ixh5wRUBHEiRdiXxCygT7oACRx28a5XRcbhksK5zR3T/vO8BjyILEBj
+	id S1753802Ab2G3BCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jul 2012 21:02:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50900 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753460Ab2G3BCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jul 2012 21:02:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D2B59E7F;
+	Sun, 29 Jul 2012 21:02:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RzTmR/sIl89uAkC4lolSR9BLqYc=; b=k6gRYv
+	LAZEA+2X3LviQg+amkVm4yN1R3qoRmQ0VBuXeMJIE72oGxMAJqlR0jGVje9pou0l
+	st7tnzJI6PCA1lD7T8jRQTqCv64/+/1cpqegtTt/K5blTUlXZIXWcJkpx3uGbF3S
+	TZxLA/vgEuT2IHAmZxF35PJqFj/L5x6+WsaOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pl/QBJM96WFXhC+qtGYwXY7wP5Iq2hm3
+	vUPhzYN1kryGCL+20xDn8VpNVZs45R3z9vj/l0PvHlQ+3ZapFautlWsISWWrdTuK
+	cfQF4Cg3K0bfcOnA9eCiY1YWKuzmZiksoJvzE9aoHoDjKqCx/BBHHCvRvb7bCWal
+	2Rppny0j/+s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A7429E7E;
+	Sun, 29 Jul 2012 21:02:00 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C69ED9E7D; Sun, 29 Jul 2012
+ 21:01:59 -0400 (EDT)
+In-Reply-To: <7v4noqul05.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 29 Jul 2012 17:54:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A9739A6-D9E2-11E1-96FE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202512>
 
-On Sun, Jul 29, 2012 at 11:52 AM, Bo98 <BoEllisAnderson@aol.com> wrote:
-> I'm setting up a git server with git-http-backend and Smart HTTP but I'm
-> getting PROPFIND Error 405 with git push.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This suggests the client didn't see the server as one supporting smart HTTP.
-...
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
 >
-> And here's a snip from my access_log:
+>> pfxlen can be longer than the path in objdir when relative_base contains
+>> the path to gits object directory.
 >
->     ::1 - - [29/Jul/2012:18:34:34 +0100] "GET
-> /repo/myproject.git/info/refs?service=git-receive-pack HTTP/1.1" 200 117
+> s/gits/????/ perhaps "Git's", but I am not sure.
+>
+>> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+>> ---
+>>  sha1_file.c | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index 4ccaf7a..631d0dd 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>>  			return -1;
+>>  		}
+>>  	}
+>> -	if (!memcmp(ent->base, objdir, pfxlen)) {
+>> +	objdirlen = strlen(objdir);
+>> +	if (!memcmp(ent->base, objdir, pfxlen > objdirlen ? objdirlen : pfxlen)) {
+>
+> The new code tells us to compare up to the shorter length between
+> objdir (i.e. path/to/.git/objects) and the given alternate object
+> directory (i.e. alt/path/to/.git/objects), but is that really what
+> we want?  What happens if the given alternate object directory were
+> "path/to/.git/objects-not-quite", with objdir "path/to/.git/objects"?
+>
+> They are not the same directory, and this check is about avoiding
+> "the common mistake of listing ... object directory itself", no?
+>
+>>  		free(ent);
+>>  		return -1;
+>>  	}
 
-Was this request actually served using the smart http-backend? Try the
-request yourself on the command line with curl, making sure to pass
-the ?service=git-receive-pack query parameter. A smart HTTP response
-will include a service=git-receive-pack line as the first line of the
-response body. I don't think Apache called the http-backend CGI, and
-so the client thought the server was not smart HTTP capable.
+In other words, wouldn't this be sufficient?  We NUL terminate
+ent->base[pfxlen] when we prepare that buffer with
+
+	LEADING PATH\0XX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\0
+
+in preparation for these "duplicate check" step, and then we turn
+the NUL at ent->base[pfxlen] to '/' before leaving the function to
+make it
+
+	LEADING PATH/XX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\0
+
+so that we can fill XX when probing for loose objects.
+
+ sha1_file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 4f06a0e..a1f3bee 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -298,7 +298,7 @@ static int link_alt_odb_entry(const char * entry, int len, const char * relative
+ 			return -1;
+ 		}
+ 	}
+-	if (!memcmp(ent->base, objdir, pfxlen)) {
++	if (!strcmp(ent->base, objdir)) {
+ 		free(ent);
+ 		return -1;
+ 	}
