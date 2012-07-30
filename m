@@ -1,7 +1,7 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [RFC v2 15/16] remote-svn: add marks-file regeneration.
-Date: Mon, 30 Jul 2012 16:31:22 +0200
-Message-ID: <1343658683-10713-16-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [RFC v2 13/16] Add a svnrdump-simulator replaying a dump file for testing.
+Date: Mon, 30 Jul 2012 16:31:20 +0200
+Message-ID: <1343658683-10713-14-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1343287957-22040-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343658683-10713-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343658683-10713-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
@@ -16,8 +16,6 @@ References: <1343287957-22040-1-git-send-email-florian.achleitner.2.6.31@gmail.c
  <1343658683-10713-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343658683-10713-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1343658683-10713-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-14-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1343658683-10713-15-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: florian.achleitner.2.6.31@gmail.com
 To: Jonathan Nieder <jrnieder@gmail.com>,
 	David Michael Barr <davidbarr@google.com>,
@@ -28,169 +26,117 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Svr8S-00086y-Un
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 16:39:53 +0200
+	id 1Svr8S-00086y-FY
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 16:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771Ab2G3Ojq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 10:39:46 -0400
+	id S1754774Ab2G3Ojr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 10:39:47 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:39226 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754758Ab2G3Ojj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 10:39:39 -0400
+	with ESMTP id S1754756Ab2G3Ojg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 10:39:36 -0400
 Received: by mail-bk0-f46.google.com with SMTP id j10so2859087bkw.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 07:39:39 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 07:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5Z4w8TO/82ZN0nC5ptAHnHEI+oXBWfnhBur26U2Cuns=;
-        b=CykKMuzEk5a/JrADbeSLZkUi5dNbJaDfICJFMTMQ9g17ejn5qw0tD72Yr79qArHRPJ
-         DklrZWNBQbdv7k7VrXD/krqioi9KocKHd0D0u6WbX8pN6R6rcnnVJYDzaikJoB81Qqma
-         CMIPFzuKkyUI0ElBzSp73yKUPqk12XSY6xbAjCzApxQLnXocTpSiLPodK5n6005j7Ia1
-         RhMkdGxW9oR2g+GDJr46aL9Q7r7IaL8zWEEFu7N4l1wuS1E9GVxLwPGSWYuvNBVHAZXh
-         J+Z6WLe0Z28oe7sX4QUKvIKB+r6JngYHxiZMAhgvGtZkujyQSOcQPJVe1CXZuphz+hOB
-         XILA==
-Received: by 10.205.133.11 with SMTP id hw11mr4127777bkc.46.1343659178944;
-        Mon, 30 Jul 2012 07:39:38 -0700 (PDT)
+        bh=NUd8IBoaIuSmQHhGZco9DH1FVW1Ch0wrzg5rkLf2Dj8=;
+        b=FNVqCYIR0z6eKvwgZ1RG2DmgJWTjez88spCZAc7rYGuY+WqGY6weMuYpKYmBGw2Dd4
+         rAqbvR7yFVFHD5fQcOBwkiY1i7VZywzNB1ao27alDlrSaka7Z2S6NAYHOnjs44dusNbj
+         LbSLvciJDsB7Hn+K6gnSRf72Fp0XWGjXyQzknZbKeAmx8bzU6OG9pwER8yfaK1h+R+Jf
+         FzwMzCPbF/ljHMhJ9W1CQkkD24jNJw4KsVF5ViE5kAUUPs83LUNfXqYVsvuHS52AoXZP
+         AOj+5ZfWeG9FPybol9D5xMcrk25CGt4acfFe1McJbCqX/5zphsRJhuwYuC6I37GMPpvd
+         gk9g==
+Received: by 10.205.129.10 with SMTP id hg10mr4023702bkc.78.1343659175695;
+        Mon, 30 Jul 2012 07:39:35 -0700 (PDT)
 Received: from localhost.localdomain (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id fu8sm3945866bkc.5.2012.07.30.07.39.37
+        by mx.google.com with ESMTPS id fu8sm3945866bkc.5.2012.07.30.07.39.33
         (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2012 07:39:38 -0700 (PDT)
+        Mon, 30 Jul 2012 07:39:34 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1343658683-10713-15-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1343658683-10713-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202555>
 
-fast-import mark files are stored outside the object database and are therefore
-not fetched and can be lost somehow else.
-marks provide a svn revision --> git sha1 mapping, while the notes that are attached
-to each commit when it is imported provide a git sha1 --> svn revision.
-
-If the marks file is not available or not plausible, regenerate it by walking through
-the notes tree.
-, i.e.
-The plausibility check tests if the highest revision in the marks file matches the
-revision of the top ref. It doesn't ensure that the mark file is completely correct.
-This could only be done with an effort equal to unconditional regeneration.
+To ease testing without depending on a reachable svn server, this
+compact python script mimics parts of svnrdumps behaviour.
+It requires the remote url to start with sim://.
+Start and end revisions are evaluated.
+If the requested revision doesn't exist, as it is the case with
+incremental imports, if no new commit was added, it returns 1
+(like svnrdump).
+To allow using the same dump file for simulating multiple
+incremental imports the highest revision can be limited by setting
+the environment variable SVNRMAX to that value. This simulates the
+situation where higher revs don't exist yet.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 ---
- contrib/svn-fe/remote-svn.c |   74 ++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 70 insertions(+), 4 deletions(-)
+ contrib/svn-fe/svnrdump_sim.py |   53 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+ create mode 100755 contrib/svn-fe/svnrdump_sim.py
 
-diff --git a/contrib/svn-fe/remote-svn.c b/contrib/svn-fe/remote-svn.c
-index 2b4c827..168c973 100644
---- a/contrib/svn-fe/remote-svn.c
-+++ b/contrib/svn-fe/remote-svn.c
-@@ -13,7 +13,7 @@ static const char *url;
- static int dump_from_file;
- static const char *private_ref;
- static const char *remote_ref = "refs/heads/master";
--static const char *notes_ref;
-+static const char *notes_ref, *marksfilename;
- struct rev_note { unsigned int rev_nr; };
- 
- int cmd_capabilities(struct strbuf *line);
-@@ -86,8 +86,69 @@ static int parse_rev_note(const char *msg, struct rev_note *res) {
- 	return 0;
- }
- 
--int cmd_import(struct strbuf *line)
--{
-+static int note2mark_cb(const unsigned char *object_sha1,
-+		const unsigned char *note_sha1, char *note_path,
-+		void *cb_data) {
-+	FILE *file = (FILE *)cb_data;
-+	char *msg;
-+	unsigned long msglen;
-+	enum object_type type;
-+	struct rev_note note;
-+	if (!(msg = read_sha1_file(note_sha1, &type, &msglen)) ||
-+			!msglen || type != OBJ_BLOB) {
-+		free(msg);
-+		return 1;
-+	}
-+	if (parse_rev_note(msg, &note))
-+		return 2;
-+	if (fprintf(file, ":%d %s\n", note.rev_nr, sha1_to_hex(object_sha1)) < 1)
-+		return 3;
-+	return 0;
-+}
+diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
+new file mode 100755
+index 0000000..ab4ccf1
+--- /dev/null
++++ b/contrib/svn-fe/svnrdump_sim.py
+@@ -0,0 +1,53 @@
++#!/usr/bin/python
++"""
++Simulates svnrdump by replaying an existing dump from a file, taking care
++of the specified revision range.
++To simulate incremental imports the environment variable SVNRMAX can be set
++to the highest revision that should be available.
++"""
++import sys, os
 +
-+static void regenerate_marks() {
-+	int ret;
-+	FILE *marksfile;
-+	marksfile = fopen(marksfilename, "w+");
-+	if (!marksfile)
-+		die_errno("Couldn't create mark file %s.", marksfilename);
-+	ret = for_each_note(NULL, 0, note2mark_cb, marksfile);
-+	if (ret)
-+		die("Regeneration of marks failed, returned %d.", ret);
-+	fclose(marksfile);
-+}
 +
-+static void check_or_regenerate_marks(int latestrev) {
-+	FILE *marksfile;
-+	char *line = NULL;
-+	size_t linelen = 0;
-+	struct strbuf sb = STRBUF_INIT;
-+	int found = 0;
++def getrevlimit():
++	var = 'SVNRMAX'
++	if os.environ.has_key(var):
++		return os.environ[var]
++	return None
++	
++def writedump(url, lower, upper):
++	if url.startswith('sim://'):
++		filename = url[6:]
++		if filename[-1] == '/': filename = filename[:-1] #remove terminating slash
++	else:
++		raise ValueError('sim:// url required')
++	f = open(filename, 'r');
++	state = 'header'
++	wroterev = False
++	while(True):
++		l = f.readline()
++		if l == '': break
++		if state == 'header' and l.startswith('Revision-number: '):
++			state = 'prefix'
++		if state == 'prefix' and l == 'Revision-number: %s\n' % lower:
++			state = 'selection'
++		if not upper == 'HEAD' and state == 'selection' and l == 'Revision-number: %s\n' % upper:
++			break;
 +
-+	if (latestrev < 1)
-+		return;
++		if state == 'header' or state == 'selection':
++			if state == 'selection': wroterev = True
++			sys.stdout.write(l)
++	return wroterev
 +
-+	init_notes(NULL, notes_ref, NULL, 0);
-+	marksfile = fopen(marksfilename, "r");
-+	if (!marksfile)
-+		regenerate_marks(marksfile);
-+	else {
-+		strbuf_addf(&sb, ":%d ", latestrev);
-+		while (getline(&line, &linelen, marksfile) != -1) {
-+			if (!prefixcmp(line, sb.buf)) {
-+				found++;
-+				break;
-+			}
-+		}
-+		fclose(marksfile);
-+		if (!found)
-+			regenerate_marks();
-+	}
-+	free_notes(NULL);
-+	strbuf_release(&sb);
-+}
-+
-+int cmd_import(struct strbuf *line) {
- 	int code, report_fd;
- 	char *back_pipe_env;
- 	int dumpin_fd;
-@@ -133,7 +194,7 @@ int cmd_import(struct strbuf *line)
- 			free(note_msg);
- 		}
- 	}
--
-+	check_or_regenerate_marks(startrev - 1);
- 
- 	if(dump_from_file) {
- 		dumpin_fd = open(url, O_RDONLY);
-@@ -254,6 +315,10 @@ int main(int argc, const char **argv)
- 	strbuf_addf(&buf, "refs/notes/%s/revs", remote->name);
- 	notes_ref = strbuf_detach(&buf, NULL);
- 
-+	strbuf_init(&buf, 0);
-+	strbuf_addf(&buf, "%s/info/fast-import/marks/%s", get_git_dir(), remote->name);
-+	marksfilename = strbuf_detach(&buf, NULL);
-+
- 	while(1) {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
- 			if (ferror(stdin))
-@@ -270,5 +335,6 @@ int main(int argc, const char **argv)
- 	free((void*)url);
- 	free((void*)private_ref);
- 	free((void*)notes_ref);
-+	free((void*)marksfilename);
- 	return 0;
- }
++if __name__ == "__main__":
++	if not (len(sys.argv) in (3, 4, 5)):
++		print "usage: %s dump URL -rLOWER:UPPER"
++		sys.exit(1)
++	if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is suppported.')
++	url = sys.argv[2]
++	r = ('0', 'HEAD')
++	if len(sys.argv) == 4 and sys.argv[3][0:2] == '-r':
++		r = sys.argv[3][2:].lstrip().split(':')
++	if not getrevlimit() is None: r[1] = getrevlimit()
++	if writedump(url, r[0], r[1]): ret = 0
++	else: ret = 1
++	sys.exit(ret)
 -- 
 1.7.9.5
