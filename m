@@ -1,59 +1,59 @@
-From: Bo98 <BoEllisAnderson@aol.com>
-Subject: Re: PROPFIND 405 with git-http-backend and Smart HTTP
-Date: Mon, 30 Jul 2012 13:30:15 -0700 (PDT)
-Message-ID: <1343680215071-7564137.post@n2.nabble.com>
-References: <1343587966493-7564017.post@n2.nabble.com> <CAJo=hJtB6OQ8+8Q_JgPoAntOdQ=Z0tOERYRD7wJ0LRLgacYA8A@mail.gmail.com> <1343637600904-7564056.post@n2.nabble.com> <CAJo=hJtynNo3SPmM4vmmsS3b7PTUwOcQpHPYh0_sPWFWL-4HMA@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Fix git-svn for SVN 1.7
+Date: Mon, 30 Jul 2012 20:38:44 +0000
+Message-ID: <20120730203844.GA23892@dcvr.yhbt.net>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 22:30:27 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, jrnieder@gmail.com
+To: "Michael G. Schwern" <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 22:38:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Svwbh-0000sq-Uj
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 22:30:26 +0200
+	id 1Svwjq-0006Fb-2s
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 22:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893Ab2G3UaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 16:30:17 -0400
-Received: from sam.nabble.com ([216.139.236.26]:52506 "EHLO sam.nabble.com"
+	id S1754937Ab2G3Uip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 16:38:45 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:56618 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754195Ab2G3UaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 16:30:16 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <BoEllisAnderson@aol.com>)
-	id 1SvwbX-0000oF-2u
-	for git@vger.kernel.org; Mon, 30 Jul 2012 13:30:15 -0700
-In-Reply-To: <CAJo=hJtynNo3SPmM4vmmsS3b7PTUwOcQpHPYh0_sPWFWL-4HMA@mail.gmail.com>
+	id S1754873Ab2G3Uio (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 16:38:44 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48AD21F449;
+	Mon, 30 Jul 2012 20:38:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1343468872-72133-1-git-send-email-schwern@pobox.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202612>
 
+"Michael G. Schwern" <schwern@pobox.com> wrote:
+> There is one exception.  t9100-git-svn-basic.sh fails 11-13.  This appears
+> to be due to a bug in SVN to do with symlinks.  Leave that for somebody
+> else, this is the final submission in the series.
 
-Shawn Pearce wrote
+That's fine, a few failing tests is better than completely failing.
+
+> The work was difficult because the code relies on simple string equalty
+> when comparing URLs and paths.  Turning on canonicalization in one part
+> of the code would cause another part to fail if it also did not
+> canonicalize.  There's likely still issues.
 > 
-> No, a smart HTTP response looks more like this:
-> 
-> 1e# service=git-receive-pack
-> 000000a5e7a3bcbbb8083e812ce07a5459f0e6d30edfb9fe HEAD include-tag
-> multi_ack_detailed multi_ack ofs-delta side-band side-band-64k
-> thin-pack no-progress shallow no-done
-> 
-> Looks like Apache isn't calling the smart-http CGI.
-> 
+> A better solution would be to have path and URL objects which overload
+> the eq operator and automatically stringify canonicalized and escaped.
 
-Oh ok, thanks! But do you have any idea why? Everything in my config looks
-okay to me. I've got my GIT_PROJECT_ROOT, my GIT_HTTP_EXPORT_ALL, my
-ScriptAlias and my LocationMatch. I'm not sure why it's like this.
+Perhaps we can depend on the URI.pm module?  It seems to be
+widely-available and not be a significant barrier to installation.  On
+the other hand, I don't know its history, either (especially since we're
+now dealing with SVN changes...).
 
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/PROPFIND-405-with-git-http-backend-and-Smart-HTTP-tp7564017p7564137.html
-Sent from the git mailing list archive at Nabble.com.
+Anyways, I don't like relying on operator overloading, it makes code
+harder to read and review.
