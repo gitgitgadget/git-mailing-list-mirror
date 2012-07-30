@@ -1,64 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
-Date: Mon, 30 Jul 2012 11:55:02 -0500
-Message-ID: <20120730165502.GB8515@burratino>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <3225988.4e4jhmQGr7@flomedio>
- <20120730082951.GA7702@burratino>
- <19477122.a5lMBqWgns@flomedio>
+From: Thomas Badie <thomas.badie@gmail.com>
+Subject: Re: A new way to get a sha1?
+Date: Mon, 30 Jul 2012 18:57:58 +0200
+Message-ID: <CAFjFENp1CzepXLO+eR9A0op6ESRKCTsFLc90e1EKuw1p1A3y5w@mail.gmail.com>
+References: <jv5tln$96e$1@dough.gmane.org>
+	<alpine.LNX.2.01.1207301426090.25013@frira.zrqbmnf.qr>
+	<7vipd5s161.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 18:55:19 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jan Engelhardt <jengelh@inai.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 18:58:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvtFW-0001ut-5w
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 18:55:18 +0200
+	id 1SvtIB-0003zV-PT
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 18:58:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753749Ab2G3QzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 12:55:09 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50800 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753263Ab2G3QzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 12:55:08 -0400
-Received: by yhmm54 with SMTP id m54so5038536yhm.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 09:55:08 -0700 (PDT)
+	id S1754144Ab2G3Q57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 12:57:59 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:37419 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754071Ab2G3Q56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 12:57:58 -0400
+Received: by qcro28 with SMTP id o28so3112133qcr.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 09:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=btIFaKHbXuYcAIk8lTooIdFlaQwJlate5RNywwhTnKk=;
-        b=i4W8HLLhdOAdUQkjoMrfEIk6WIEUXMW5YrOwdak+jNB2+UzH3vEN87synzPpfeneC6
-         VRpAkBNLxIT5nFCAzDzK+xsHVkw+hXNOH8zS3OwJ1Jtt/QWNkXyLsWyuWQ98afcUEkSp
-         BrexWCBkP0DK+8Fl3n/Z2m2RTJdhQgSE9fc4cQ8d+YwFKczhwAT2VCEU01aMjxUxpcnj
-         vtAvp5+MSKcQP6/+uDxO3rpdxecrQrlwxPXJDUsv12/ugUYPGTxISs8wa/OXtkLOtWjc
-         Kyyi4xsYlcj2PsTWHSLYl5Qaaiy70YO69YlG5TT/F13OFv4eNm/ujccuDZHxabQW50mj
-         fr4A==
-Received: by 10.50.104.168 with SMTP id gf8mr8656196igb.62.1343667307297;
-        Mon, 30 Jul 2012 09:55:07 -0700 (PDT)
-Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
-        by mx.google.com with ESMTPS id pp4sm14911140igb.5.2012.07.30.09.55.06
-        (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2012 09:55:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <19477122.a5lMBqWgns@flomedio>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Chse3knVh4WcFPPa5jFfgj91P6Rpxb5RDdJOeLK+fic=;
+        b=f2qxFECZuw2pp+f6i6fAdKR6Odah+aj521zhnr9nBfV/5shcK0HodWp0k+E9Rydyxn
+         3/be9UdIApdJPAy6X9fVDJ8rZ8y795gQFY2gEb1IADBXECJefW/ec1+w1sHPPg/ydSun
+         OuOK0rFUde4bkJK/zZxw0y+4qnY5c8nhNBfJpbGkFaWRsSB92TBrkRhzgYZBFyteT8Y7
+         A9EFKfuiML3v0+FNE3wL7oCOW31XLyV7KJtVBheIk4x/uJGYZw8o/8AaTylIljaPw7SM
+         sLopeN2iRzQk0I8PMtdKB+I5a+q9d5H7aCAyeuGXtHLnPHtSMGv35hhYfEM36C9Dyj2V
+         ySoA==
+Received: by 10.224.174.72 with SMTP id s8mr6033995qaz.91.1343667478109; Mon,
+ 30 Jul 2012 09:57:58 -0700 (PDT)
+Received: by 10.224.128.211 with HTTP; Mon, 30 Jul 2012 09:57:58 -0700 (PDT)
+In-Reply-To: <7vipd5s161.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202581>
 
-Florian Achleitner wrote:
+2012/7/30 Junio C Hamano <gitster@pobox.com>:
+> Jan Engelhardt <jengelh@inai.de> writes:
+>
+>> On Monday 2012-07-30 14:11, Thomas Badie wrote:
+>>
+>>>Hi all,
+>>>
+>>>When I should fixup or squash a commit, I nearly never
+>>>remember how to get the sha1 of the commit I want to fixup.
+>>>Because sometimes HEAD~n is not enough, I make `git log`,
+>>>copy the sha1 of the right commit and paste it in my git
+>>>fixup command. So I wrote a perl script to avoid the usage
+>>>of the mouse.
+>>
+>> If you use screen(1), you can use the keyboard as well; it offers ^A [
+>> and ^A ] for copy, and then paste. tmux and all those screen clones
+>> probably have something similar. Maybe ratpoison-like WMs do as well.
+>> Or, you can use `git log --oneline`, look for the commit and then
+>> type the (usually) 6-char part of the hash manually, which may be faster
+>> than ^A[, moving the cursor to the copy position, marking it, etc.
+>
+> Also,
+>
+>         git show -s ':/^t1100-.*: Fix an interm'
+>
+> would work well.  It your log messages are not descriptive enough,
+> however, that may not, but that is easily fixable by training you
+> and your colleages to give a more descriptive title to each commit,
+> which will make your project better.
 
-> Hm .. that would mean, that both fast-import and git (transport-helper) would 
-> write to the remote-helper's stdin, right?
+Another aim of this module would be to avoid writing the beginning of
+the commit message.
 
-Yes, first git writes the list of refs to import, and then fast-import
-writes feedback during the import.  Is that a problem?
+Thanks for your proposition. I didn't know this solution.
+
+-- 
+Thomas "Enki" Badie
