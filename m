@@ -1,94 +1,134 @@
-From: =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>
-Subject: Fwd: [PATCH] Improve tests for detached worktree in git-submodule
-Date: Mon, 30 Jul 2012 14:06:57 -0300
-Message-ID: <CAHCkQtOYC_jCEuYdEcJ73-tmKCa_skDUsTOhrcoGLJ+qdG9XgA@mail.gmail.com>
-References: <1343664610-479-1-git-send-email-dangra@gmail.com>
-	<20120730163907.GA18109@sigill.intra.peff.net>
-	<CAHCkQtNyNGBm8Z8FP7BybVOW0zQNgpxjwW_akLepYfLc-U+0cg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC v2 11/16] Add explanatory comment for transport-helpers
+ refs mapping.
+Date: Mon, 30 Jul 2012 12:08:42 -0500
+Message-ID: <20120730170842.GC8515@burratino>
+References: <1343658683-10713-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1343658683-10713-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 30 19:07:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 19:08:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvtR3-00028r-QV
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:07:14 +0200
+	id 1SvtSf-0003Fv-Uq
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 19:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754420Ab2G3RHA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 13:07:00 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:53606 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754401Ab2G3RG6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 13:06:58 -0400
-Received: by pbbrp8 with SMTP id rp8so10115670pbb.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 10:06:58 -0700 (PDT)
+	id S1754249Ab2G3RIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 13:08:49 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:35127 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752936Ab2G3RIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 13:08:48 -0400
+Received: by yhmm54 with SMTP id m54so5055804yhm.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 10:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=pEXC4rfqN/i2mupK/3SolwLqC4IgX4arwF0v9cWYyCI=;
-        b=XLnHUgZONqHL+1xF28MlZ6v5P/HYWfi2G4YeQ7mviW7pTMB8joEjgTh680u3LS/8qu
-         6zzJY2lIzcQdH6zl8sA7HnqonRTkAecIc656H7ds0hsQSd7Kocs3dfnBWhcqAskpqxEi
-         UXXF6nP0xp5ct+F9KkAW1FSSCem8VGaZDyb5lbCmm8no668zWJDF2kLTtWZUL6PxTo3C
-         I1ke2+2OWfTAGDiTevPu3gyuPoEa63sTTHh+QSauXBhI50RwUhW7dQXcueB9+anwNTaC
-         20AkFv3ij6AgHNJl4voqB+IVYGYvseQ4lXC4dGnt69TGm32LH33EEfYVZMnpdDFJqP7c
-         2pIg==
-Received: by 10.68.216.199 with SMTP id os7mr22993835pbc.6.1343668017899; Mon,
- 30 Jul 2012 10:06:57 -0700 (PDT)
-Received: by 10.68.62.226 with HTTP; Mon, 30 Jul 2012 10:06:57 -0700 (PDT)
-In-Reply-To: <CAHCkQtNyNGBm8Z8FP7BybVOW0zQNgpxjwW_akLepYfLc-U+0cg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=u/ePHmxPKFc+KJ/rm1WDBjDCxJ0831POoxazKqiLuf8=;
+        b=oDAWPOTgNWXPJX6BR3wNGR6IW40BQ0zq7zzHInNfrMaaDDoRLfdrL1z4+NXJVmSINM
+         NzmYG/b5t0OCbm7yV3Im/Ud2mPLPc8nyjYeY7BsykdXajvrcTIhIIKDYJMncEDL3yI51
+         2gX5ZKhD+y6eyLrF7hcjYR59Cu6t2MyaF5V7j8YkAOa0G9dzhSBV5bTO2QJBhY7HcdkT
+         k1PB0HeYH7VT6ZAWOGzQ/q37T3Drdx+RigwJSDiaLE55sFl+ltgruFNIqJ2x6pqcyv02
+         8C1SGNN4rFeEsIDQKr7nk29X8i4eWeSdvsW9+xbabU2fu/sTOgrKNauWnOEeQboIhaYK
+         bggA==
+Received: by 10.50.11.165 with SMTP id r5mr9036414igb.27.1343668127357;
+        Mon, 30 Jul 2012 10:08:47 -0700 (PDT)
+Received: from burratino (cl-1372.chi-02.us.sixxs.net. [2001:4978:f:55b::2])
+        by mx.google.com with ESMTPS id uq6sm205862igb.14.2012.07.30.10.08.46
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jul 2012 10:08:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1343658683-10713-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202584>
 
-=46orwardning for the record as vger rejected my previous HTML email.
+Hi Junio,
 
----------- Forwarded message ----------
-=46rom: Daniel Gra=C3=B1a <dangra@gmail.com>
-Date: Mon, Jul 30, 2012 at 2:04 PM
-Subject: Re: [PATCH] Improve tests for detached worktree in git-submodu=
-le
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Florian Achleitner wrote:
 
-
-Hi Jeff,
-
-I understand your complain and I must apologize for confusing you with =
-Jens
-from this thread
-http://thread.gmane.org/gmane.comp.version-control.git/201851
-
-This patch is a follow up to that thread (that I fail to include as
-reply-to) and tries to address the issues noted by Junio and Jens there=
-=2E
-
-
-
-On Mon, Jul 30, 2012 at 1:39 PM, Jeff King <peff@peff.net> wrote:
+> transport-helpers can advertise the 'refspec' capability,
+> if not a default refspec *:* is assumed. This explains
+> the post-processing of refs after fetching with fast-import.
 >
-> On Mon, Jul 30, 2012 at 01:10:10PM -0300, Daniel Gra=C3=B1a wrote:
->
-> > Subject: Re: [PATCH] Improve tests for detached worktree in
-> > git-submodule
-> >
-> > Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
->
-> The space between the subject and your S-o-b is an excellent place to
-> explain the rationale for your commit.
->
-> How are we improving them? What cases or classes of failure does this
-> catch that the original did not?  It may be because I have not been
-> following this topic closely, but reading the patch, I am not sure wh=
-at
-> the purpose is. Please make life easier for reviewers by telling us w=
-hat
-> to expect and why before we even get to the patch.
->
-> -Peff
+> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+
+The patch below adds a comment to fetch_with_import() explaining the
+loop that saves the fetched commit names after 'git fast-import' has
+done its work.  It avoids some confusion that Florian encountered on
+first reading about which refs the fast-import stream is supposed to
+use to write its result.
+
+(By the way, I guess I find the above paragraph clearer than Florian's
+commit message.  But aside from that, the patch seems good to me.)
+
+I would like to see the patch applied so the remote-svn series without
+it gets shorter and easier to review. ;-)  Munging the two context
+lines ending with argv_array_clear(&importer_argv); to
+
+ 	free(fastimport.argv);
+ 	fastimport.argv = NULL;
+
+makes this patch apply against master.  Does it look ready for
+application to you?  If you'd like, I can send a copy rebased against
+'master'.
+
+Patch left unsnipped for reference.
+
+Thanks,
+Jonathan
+
+> ---
+>  transport-helper.c |   15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/transport-helper.c b/transport-helper.c
+> index d6daad5..e10fd6b 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -478,6 +478,21 @@ static int fetch_with_import(struct transport *transport,
+>  
+>  	argv_array_clear(&importer_argv);
+>  
+> +	/*
+> +	 * If the remote helper advertised the "refspec" capability,
+> +	 * it will have the written result of the import to the refs
+> +	 * named on the right hand side of the first refspec matching
+> +	 * each ref we were fetching.
+> +	 *
+> +	 * (If no "refspec" capability was specified, for historical
+> +	 * reasons we default to *:*.)
+> +	 *
+> +	 * Store the result in to_fetch[i].old_sha1.  Callers such
+> +	 * as "git fetch" can use the value to write feedback to the
+> +	 * terminal, populate FETCH_HEAD, and determine what new value
+> +	 * should be written to peer_ref if the update is a
+> +	 * fast-forward or this is a forced update.
+> +	 */
+>  	for (i = 0; i < nr_heads; i++) {
+>  		char *private;
+>  		posn = to_fetch[i];
+> -- 
+> 1.7.9.5
+> 
