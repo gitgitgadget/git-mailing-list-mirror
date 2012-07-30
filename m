@@ -1,78 +1,102 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: A new way to get a sha1?
-Date: Mon, 30 Jul 2012 18:11:40 +0530
-Message-ID: <CAMK1S_hhYi=dLrPy2j28=QMi-UDg7ZGXU=t9WqykVmx3XRyswQ@mail.gmail.com>
-References: <jv5tln$96e$1@dough.gmane.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: The GitTogether
+Date: Mon, 30 Jul 2012 15:17:00 +0200
+Message-ID: <5016894C.7020907@drmicha.warpmail.net>
+References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com> <87k3xpe8bz.fsf@thomas.inf.ethz.ch> <50155CD9.6060702@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Thomas Badie <thomas.badie@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 14:41:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 30 15:17:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvpIB-0000iK-K6
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 14:41:47 +0200
+	id 1SvpqX-0007xY-Hf
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 15:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753859Ab2G3Mlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 08:41:42 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:39520 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753827Ab2G3Mll (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 08:41:41 -0400
-Received: by lahd3 with SMTP id d3so3366511lah.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 05:41:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Mjb1BzmxSSmZ44Oc/oJ2F/C0+30Nh21HRwhGDTtTvrQ=;
-        b=HjVxfaWQV5coQwyF9qbrbgs3/kjtWg/f9tkJ8TUw/U4Ab++cEzg9Cj57yJZGFnPi1y
-         NSe1F4jV2g68+mM9JzwGX9KBjOyPAIf/tRGyKSJhqACzqCRo0KMC1sFcVvdd7ubqx5Zw
-         YrT0uwbvz0M7hkHBOkiykaF0OetObgYzMLCeoCMpFPm4Tjz1jHkU7VbbnnBZ+bgXn+f1
-         r/JPq/m1BK+TF8dPc+r48pfkXJiVLC+PL8dyhQheMtTgafArivyax54TnrZ+gc4orQ3H
-         OLDMPNFX2g3l+8opUZT4p6eYg+hiNllDBCLF3kzkiQGgQPUAWCMeKWzkUcqruthqq9HJ
-         lzdw==
-Received: by 10.152.106.233 with SMTP id gx9mr11292435lab.48.1343652100322;
- Mon, 30 Jul 2012 05:41:40 -0700 (PDT)
-Received: by 10.112.60.194 with HTTP; Mon, 30 Jul 2012 05:41:40 -0700 (PDT)
-In-Reply-To: <jv5tln$96e$1@dough.gmane.org>
+	id S1754171Ab2G3NRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 09:17:07 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39518 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754097Ab2G3NRD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 09:17:03 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 6675A207D3;
+	Mon, 30 Jul 2012 09:17:02 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 30 Jul 2012 09:17:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=5kosRKRQwYK5L5Zpgnz+n2
+	Xb9Wo=; b=laiBdz21WOudx7csLRDmuAbIJ9TO6VisVORBM7YX1QFe694yLMynLA
+	AeFG5xHlPz8VISjlHu3/YtGPubPeuIYxyn7zytQ9GIqNZbd5Tl7FOkFf56rp1oIk
+	gqyLBWCVKDF3ZGYkbUoNQWhq8epi6WsOF8JVVB4lI/J+Ed9sy7Lbw=
+X-Sasl-enc: tWfp8GRiCdr8cVTpauPeohgVHj+B3cCe+Evi/nkxGqm6 1343654222
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5A4B78E0152;
+	Mon, 30 Jul 2012 09:17:01 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
+In-Reply-To: <50155CD9.6060702@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202541>
 
-On Mon, Jul 30, 2012 at 5:41 PM, Thomas Badie <thomas.badie@gmail.com> wrote:
-> Hi all,
->
-> When I should fixup or squash a commit, I nearly never
-> remember how to get the sha1 of the commit I want to fixup.
-> Because sometimes HEAD~n is not enough, I make `git log`,
-> copy the sha1 of the right commit and paste it in my git
-> fixup command. So I wrote a perl script to avoid the usage
-> of the mouse. And after discussion with some of my friends,
-> this can be generalized as a generic command line interface
-> tool to get a sha1.
->
-> The idea is to have a perl module which run through
-> the log history and print 10 shortlog associated with a number
-> from 0 to 9, and a message below "Select commit [| 0, 9 |] or
-> next row ?" or this kind of message with several options.
+Jens Lehmann venit, vidit, dixit 29.07.2012 17:55:
+> Am 27.07.2012 13:45, schrieb Thomas Rast:
+>> Scott Chacon <schacon@gmail.com> writes:
+>>
+>>> GitHub would like to volunteer to organize and pay for these events
+>>> this year.  I would like to hold the developer-centric one in Berlin
+>>> in early October
 
-In general, I prefer nothing to be *interactive*, so I would vote an
-emphatic no.
+Winter term classes start 10/15. Before 10/15 it will be easier to book
+university rooms if we need that.
 
-Also, try "tig" and see if you can customise it.  For example, in
-order to create a new commit that is meant to be a fixup of some other
-commit, I 'git add' what is needed (either command line or tig again)
-then hit "m" to the main window, scroll down to the commit concerned,
-and hit "=".
+>>
+>> Yay, Berlin!  I would be glad to join there; I would probably not have
+>> the time and resources to travel to SF this year.
+> 
+> Same here.
 
-That "=" comes from this line in ~/.tigrc:
+Same.
 
-    bind    main            =   !git commit --fixup=%(commit)
+Do we have contacts regarding (un)conference rooms in Berlin already? I
+might be able to ask around.
 
-Please use such methods to keep interactivity where it belongs, is my opinion.
+> 
+>>> For those of you who *have* been to a GitTogether, what did you find
+>>> useful and/or useless about it?  What did you get out of it and would
+>>> like to see again?  For those of you who have never been, what do you
+>>> think would be useful?  I was thinking for both of them to have a
+>>> combination of short prepared talks, lightning/unconference style
+>>> talks and general discussion / breakout sessions.
+>>
+>> I was at the 2010 GitTogether in Mountain View.  I really liked the
+>> unconference format, and the way Shawn and Junio used it: just using the
+>> topic stickers as a sort of todo-list, not actually fixing any schedule
+>> in advance.  Oddly enough we also managed to avoid the usual consequence
+>> of open-ended discussions: getting stuck endlessly on an absolutely
+>> insignificant point.
+> 
+> Yup, the unconference format with both common and breakout sessions
+> worked really well.
+> 
+>> I think the discussions were very productive.  I would love to do more
+>> hacking than we managed in 2010, but I realize that this is not possible
+>> if we just meet for 2-3 days.  Perhaps one option would be to plan for
+>> 1-2 days of hacking after the discussion rounds, so that the interested
+>> people can stay a bit longer?
+> 
+> I really like that idea and would vote for 3-4 days (maybe including a
+> weekend for those of us who have to take a leave from work ;-).
+> 
