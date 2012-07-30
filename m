@@ -1,84 +1,83 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 6/7] Switch path canonicalization to use the SVN API.
-Date: Mon, 30 Jul 2012 20:04:44 +0000
-Message-ID: <20120730200444.GB20137@dcvr.yhbt.net>
-References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
- <1343468312-72024-7-git-send-email-schwern@pobox.com>
- <20120728135502.GC9715@burratino>
- <5014387C.50903@pobox.com>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [RFC v2 11/16] Add explanatory comment for transport-helpers refs mapping.
+Date: Mon, 30 Jul 2012 22:15:26 +0200
+Message-ID: <2235865.Y0jAeP1uog@flomedio>
+References: <1343658683-10713-5-git-send-email-florian.achleitner.2.6.31@gmail.com> <7vwr1lqhd7.fsf@alter.siamese.dyndns.org> <20120730191553.GC9564@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 22:04:52 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 22:15:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvwCx-0000uW-D0
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 22:04:51 +0200
+	id 1SvwNM-0007z2-V6
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 22:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754709Ab2G3UEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 16:04:45 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:56405 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754284Ab2G3UEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 16:04:45 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76B441F449;
-	Mon, 30 Jul 2012 20:04:44 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <5014387C.50903@pobox.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754475Ab2G3UPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 16:15:31 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:41716 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754120Ab2G3UPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 16:15:31 -0400
+Received: by bkwj10 with SMTP id j10so2995922bkw.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 13:15:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=G2jB/ac/gkYmsHA/Tq+dJ46LDyWQmFs3BagiDldaz0c=;
+        b=A7LiWejyjXA6RNoItih6vNpWcVcYSQMvZFck89O0NizYVzxej4Pgen0iUZeoSUyXPa
+         FbtGqp1IOBk6nP+CL14UZOTqQLBc3ZIJSSBqY1oqRX9vu47jm7aVUpAoh6msxpaKCcFD
+         yPnSoSLyR07hlsgawGRNpiCnUObIlx+iQXhtHw8+7ARB6VBtBCRPSrRxn2h5XRYeAEkX
+         sysGAQu5tSpGe0Yb5I4EPD/ovPymifU4tXH0k3ZEVHtCXhdjOh3Vzx65BYdvwz7ONuME
+         PaI/T3fnw203uuo58ab/vhRuJyNtPU9+mxaGxCuTnKlIi8c3+F39kePbR9EYQ+F4CpCh
+         vSoA==
+Received: by 10.205.123.133 with SMTP id gk5mr4313834bkc.140.1343679329841;
+        Mon, 30 Jul 2012 13:15:29 -0700 (PDT)
+Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
+        by mx.google.com with ESMTPS id fu8sm4351886bkc.5.2012.07.30.13.15.28
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jul 2012 13:15:29 -0700 (PDT)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <20120730191553.GC9564@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202609>
 
-Michael G Schwern <schwern@pobox.com> wrote:
-> On 2012.7.28 6:55 AM, Jonathan Nieder wrote:
-> > Michael G. Schwern wrote:
-> >> --- a/perl/Git/SVN/Utils.pm
-> >> +++ b/perl/Git/SVN/Utils.pm
-> >> @@ -86,6 +86,27 @@ sub _collapse_dotdot {
-> >>  
-> >>  
-> >>  sub canonicalize_path {
-> >> +	my $path = shift;
-> >> +
-> >> +	# The 1.7 way to do it
-> >> +	if ( defined &SVN::_Core::svn_dirent_canonicalize ) {
-> >> +		$path = _collapse_dotdot($path);
-> >> +		return SVN::_Core::svn_dirent_canonicalize($path);
-> >> +	}
-> >> +	# The 1.6 way to do it
-> >> +	elsif ( defined &SVN::_Core::svn_path_canonicalize ) {
-> >> +		$path = _collapse_dotdot($path);
-> >> +		return SVN::_Core::svn_path_canonicalize($path);
-> >> +	}
-> >> +	# No SVN API canonicalization is available, do it ourselves
-> >> +	else {
+On Monday 30 July 2012 14:15:53 Jonathan Nieder wrote:
+> Junio C Hamano wrote:
+> > Jonathan Nieder <jrnieder@gmail.com> writes:
+> >>> +	/*
+> >>> +	 * If the remote helper advertised the "refspec" capability,
+> >>> +	 * it will have the written result of the import to the refs
 > > 
-> > When would this "else" case trip?
+> > perhaps s/will have the written result of/would have written result of/?
 > 
-> When svn_path_canonicalize() does not exist in the SVN API, presumably because
-> their SVN is too old.
-> 
-> 
-> > Would it be safe to make it
-> > return an error message, or even to do something like the following?
-> 
-> I don't know what your SVN backwards compat requirements are, or when
-> svn_path_canonicalize() appears in the API, so I left it as is.  git-svn's
-> home rolled path canonicalization worked and its no work to leave it working.
->  No reason to break it IMO.
+> That would sound like 'If the remote helper advertised the "refspec"
+> capability, it would have written the result of the import to the
+> refs, but it didn't, so...', so I think "will" is the right tense.
+> But 'will have the written' is awkward.  How about:
 
-I agree there's no reason to break something on older SVN.
+Yes, thats clearly a typing error of mine, 'the' is to be deleted.
 
-git-svn should work with whatever SVN is in CentOS 5.x and similar
-distros (SVN 1.4.2).  As long as an active "long-term" distro supports
-a version of SVN, I think we should support that if it's not too
-difficult.
+> 
+> 	 * The fast-import stream of a remote helper advertising the
+> 	 * "refspec" capability writes to the refs named after the right
+> 	 * hand side of the first refspec matching each ref we were
+> 	 * fetching.
+> 	 *
+> 	 * (If no "refspec" capability is specified, for historical
+> 	 * reasons the default is *:*.)
+> 	 *
+> 	 * Store the result in to_fetch[i].old_sha1. [...]
