@@ -1,125 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>
 Subject: Re: [PATCH] Improve tests for detached worktree in git-submodule
-Date: Mon, 30 Jul 2012 11:09:45 -0700
-Message-ID: <7vfw89qfx2.fsf@alter.siamese.dyndns.org>
+Date: Mon, 30 Jul 2012 15:15:45 -0300
+Message-ID: <CAHCkQtNUKHkK8DYT-cBD3pbaqXPFJ-cNBsKqkAHdEUs9rxVa7A@mail.gmail.com>
 References: <7vsjc9qh33.fsf@alter.siamese.dyndns.org>
- <1343670719-3635-1-git-send-email-dangra@gmail.com>
+	<1343670719-3635-1-git-send-email-dangra@gmail.com>
+	<7vfw89qfx2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 30 20:09:56 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 20:16:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvuPj-0001Fb-LJ
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 20:09:56 +0200
+	id 1SvuVX-0004rm-BE
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 20:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754567Ab2G3SJt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 14:09:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58591 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754528Ab2G3SJt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 14:09:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C97E8339;
-	Mon, 30 Jul 2012 14:09:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=+TdxjGbV64mu
-	+amj+KZf30zLM7s=; b=Q+UDw3/MpPNSugPu97WYBadLct87TmVTKztTS/28dtdg
-	tmpLBGNTskmjC9SDxFouu5A39dpqMsy+jpxAwYxvOPLn+d8JXzVwiVal4I75A28O
-	DnZjwvnsfNRvoWC9ZMJAE+3lrLHpzLE6VfGFZ5PmKl5zNh/23u1JHJAco5oZ35E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Z0cVxP
-	C9yaCJ3pbJ9SYzjUTDRrJT5ylRN1ncgnHEsqBL+t7/UbtddP0FPwaMgJ7YGYCJOw
-	r7bNzuZZHBiRix57COLbqqjJ3IeEPQX0csE6jBXKgbzzo6OkvV8SjS7YbERTEBP7
-	9X9WQImLH2gqa7/cmA+cwxzgrzwXN7aYyGSHQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08C3C8338;
-	Mon, 30 Jul 2012 14:09:48 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DAE28337; Mon, 30 Jul 2012
- 14:09:47 -0400 (EDT)
-In-Reply-To: <1343670719-3635-1-git-send-email-dangra@gmail.com> ("Daniel
- =?utf-8?Q?Gra=C3=B1a=22's?= message of "Mon, 30 Jul 2012 14:51:59 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF5396C2-DA71-11E1-AED3-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754657Ab2G3SPr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 14:15:47 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:53899 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab2G3SPq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 14:15:46 -0400
+Received: by pbbrp8 with SMTP id rp8so10204683pbb.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 11:15:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KSfI1rj09Q+Ik3kHQqHfCAaS7X3wVr1fm/J5YqqdSxA=;
+        b=GGSPwEbf54qgONCg2Au/tm5nX0JoeOqyPgNiTp+LGYzmrq20ZKOp5QEWeu2YbD0F5D
+         IQdgoj2Cl4tXJHtxPtjhbpvq/CeXi1NavUA0AR4NbnCYr6Bh4mqjUWuMcZlxfdwQuqnC
+         lhBXOLKYg5vG6KIg+7vaYrYZ241ADOJWsCTCY+4LT4XkWg6PH1jA7rEN1UeiA6isyj/O
+         zsgKVb30fMPxUKuH6QHIOk2hNhsJff+tgdnZOR+MGc8k6tAb1pJ6Hg3P2hOH8cYbvt6s
+         Zv2P2o4+hFGJBDwKAfmyYH/MSxXCvEb8VkEL57qnZGn26OA7DSW/J7V3zJC3r+LjQ41K
+         6cNA==
+Received: by 10.68.231.132 with SMTP id tg4mr37540245pbc.159.1343672145296;
+ Mon, 30 Jul 2012 11:15:45 -0700 (PDT)
+Received: by 10.68.62.226 with HTTP; Mon, 30 Jul 2012 11:15:45 -0700 (PDT)
+In-Reply-To: <7vfw89qfx2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202600>
 
-Daniel Gra=C3=B1a <dangra@gmail.com> writes:
-
-> * Check submodule is correctly initialized and updated after cloning =
-=2Edotfiles
+On Mon, Jul 30, 2012 at 3:09 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Daniel Gra=C3=B1a <dangra@gmail.com> writes:
 >
-> Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
-> ---
+>> * Check submodule is correctly initialized and updated after cloning=
+ .dotfiles
+>>
+>> Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
+>> ---
+>
+> Thanks.
+>
+>> @@ -23,14 +27,27 @@ test_expect_success 'submodule on detached worki=
+ng tree' '
+>>               git clone --bare ../remote .dotfiles &&
+>>               git submodule add ../bundle1 .vim/bundle/sogood &&
+>>               test_commit "sogood" &&
+>> +             (
+>> +                     unset GIT_WORK_TREE GIT_DIR &&
+>> +                     cd .vim/bundle/sogood &&
+>> +                     git rev-parse --verify HEAD >actual &&
+>> +                     test_cmp ../../../../expect actual
+>> +             ) &&
+>>               git push origin master
+>> -     ) &&
+>> +     )
+>
+> I do not think you meant to break the && chain here on purpose.
+> I'll queue with a minor fix-up here.
 
-Thanks.
+great, thanks.
 
-> @@ -23,14 +27,27 @@ test_expect_success 'submodule on detached workin=
-g tree' '
->  		git clone --bare ../remote .dotfiles &&
->  		git submodule add ../bundle1 .vim/bundle/sogood &&
->  		test_commit "sogood" &&
-> +		(
-> +			unset GIT_WORK_TREE GIT_DIR &&
-> +			cd .vim/bundle/sogood &&
-> +			git rev-parse --verify HEAD >actual &&
-> +			test_cmp ../../../../expect actual
-> +		) &&
->  		git push origin master
-> -	) &&
-> +	)
-
-I do not think you meant to break the && chain here on purpose.
-I'll queue with a minor fix-up here.
-
->  	mkdir home2 &&
->  	(
->  		cd home2 &&
-> -		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
->  		git clone --bare ../remote .dotfiles &&
-> -		git submodule update --init
-> +		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
-> +		git checkout master &&
-> +		git submodule update --init &&
-> +		(
-> +			unset GIT_WORK_TREE GIT_DIR &&
-> +			cd .vim/bundle/sogood &&
-> +			git rev-parse --verify HEAD >actual &&
-> +			test_cmp ../../../../expect actual
-> +		)
->  	)
->  '
-> =20
-> @@ -42,6 +59,7 @@ test_expect_success 'submodule on detached working =
-pointed by core.worktree' '
->  		git clone --bare ../remote "$GIT_DIR" &&
->  		git config core.bare false &&
->  		git config core.worktree .. &&
-> +		git checkout master &&
->  		git submodule add ../bundle1 .vim/bundle/dupe &&
->  		test_commit "dupe" &&
->  		git push origin master
-> @@ -52,9 +70,8 @@ test_expect_success 'submodule on detached working =
-pointed by core.worktree' '
->  		git config core.bare false &&
->  		git config core.worktree .. &&
->  		git pull &&
-> -		git submodule update &&
-> -		git submodule status &&
-> -		test -d .vim/bundle/dupe
-> +		git submodule update --init &&
-> +		test -e .vim/bundle/dupe/shoot.t
->  	)
->  '
+>
+>>       mkdir home2 &&
+>>       (
+>>               cd home2 &&
+>> -             export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dot=
+files" &&
+>>               git clone --bare ../remote .dotfiles &&
+>> -             git submodule update --init
+>> +             export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dot=
+files" &&
+>> +             git checkout master &&
+>> +             git submodule update --init &&
+>> +             (
+>> +                     unset GIT_WORK_TREE GIT_DIR &&
+>> +                     cd .vim/bundle/sogood &&
+>> +                     git rev-parse --verify HEAD >actual &&
+>> +                     test_cmp ../../../../expect actual
+>> +             )
+>>       )
+>>  '
+>>
+>> @@ -42,6 +59,7 @@ test_expect_success 'submodule on detached working=
+ pointed by core.worktree' '
+>>               git clone --bare ../remote "$GIT_DIR" &&
+>>               git config core.bare false &&
+>>               git config core.worktree .. &&
+>> +             git checkout master &&
+>>               git submodule add ../bundle1 .vim/bundle/dupe &&
+>>               test_commit "dupe" &&
+>>               git push origin master
+>> @@ -52,9 +70,8 @@ test_expect_success 'submodule on detached working=
+ pointed by core.worktree' '
+>>               git config core.bare false &&
+>>               git config core.worktree .. &&
+>>               git pull &&
+>> -             git submodule update &&
+>> -             git submodule status &&
+>> -             test -d .vim/bundle/dupe
+>> +             git submodule update --init &&
+>> +             test -e .vim/bundle/dupe/shoot.t
+>>       )
+>>  '
