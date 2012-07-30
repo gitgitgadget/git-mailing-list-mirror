@@ -1,139 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Enhancements to git-protocoll
-Date: Sun, 29 Jul 2012 23:28:00 -0700
-Message-ID: <7vy5m1sqz3.fsf@alter.siamese.dyndns.org>
-References: <20120728214116.GA3591@paksenarrion.iveqy.com>
- <7vehnvvyta.fsf@alter.siamese.dyndns.org>
- <20120729142458.GB16223@paksenarrion.iveqy.com>
- <CAMK1S_iTv3BOV3LEoj83feuO2iQnPqTrOq0wyFC-GrvvJQqWTA@mail.gmail.com>
- <7vvch6uw89.fsf@alter.siamese.dyndns.org>
- <7vr4ruuu2e.fsf@alter.siamese.dyndns.org>
- <CAMK1S_geKq5DkNAy2wxGt5EmoOesxaSKKuQjVaQVcbRVdR+9gA@mail.gmail.com>
- <CAJo=hJsgMz-=pdG=HB3KtTE7g6Gvu9mr56dg2+V3WUST+rpAQg@mail.gmail.com>
- <7vehnut1kt.fsf@alter.siamese.dyndns.org>
- <CAJo=hJvjFP0m96YPNBCwvnkRGWhMZQdbL7C3Shsa6HQ62a9FuA@mail.gmail.com>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
+Date: Mon, 30 Jul 2012 10:12:06 +0200
+Message-ID: <3225988.4e4jhmQGr7@flomedio>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1609414.ugUML9Yn73@flomedio> <20120728070030.GC4739@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 30 08:28:24 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 10:12:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvjSl-00027c-PF
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 08:28:20 +0200
+	id 1Svl5V-0001Ss-V0
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 10:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091Ab2G3G2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jul 2012 02:28:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60208 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753694Ab2G3G2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 02:28:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0ED673F3;
-	Mon, 30 Jul 2012 02:28:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W8C6CewnLrZO0oqcIqOrExWrPTg=; b=yjiVXb
-	BDurA26pIBaDWiF+A+4J5FUBgIs0QYcaryQy+2Soq3qtl2Zs8aMaTX81gmBNlBu4
-	n0rWmoU/3zleYUSo5LljkDOkKWNmvYrjhalqnE1O7WRSkdLh4oAl+uoZscp5UAKb
-	/9ohpIpH2KMFOZ+hMKxue/qOblO4y4iq6Ue14=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CkBSWJ2SI8ORZacKZKDxrGmUugoxQWIs
-	mxHomjD045cq0nveaxkcsyd2fWsRjgTu9AfSIgQ/LuPpmEinYiOhU9LraagGTS6v
-	UbwfzbR90lOdw+hX/OOGt1KMyXoNi2V0leJFmSmB0TavWza6BO4LOmgHyebLHfgJ
-	OHIUcGxTweo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81BFF73F1;
-	Mon, 30 Jul 2012 02:28:02 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A915A73F0; Mon, 30 Jul 2012
- 02:28:01 -0400 (EDT)
-In-Reply-To: <CAJo=hJvjFP0m96YPNBCwvnkRGWhMZQdbL7C3Shsa6HQ62a9FuA@mail.gmail.com> (Shawn
- Pearce's message of "Sun, 29 Jul 2012 22:20:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B661280C-DA0F-11E1-9102-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754050Ab2G3IMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 04:12:19 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:34827 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752466Ab2G3IMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 04:12:17 -0400
+Received: by bkwj10 with SMTP id j10so2693719bkw.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 01:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=jyDeFL22NJ2l+HT7uVnixLWDAlbJvSmxVuHdhQ8dS7Q=;
+        b=1GHlHGie4WrKI8x2CJ1hacf2YFykBXN6jCwUFDobpzeGYMVlgTpJ8GM0enAoEdf1jP
+         ySSQtAtNIlWt/gNL6W8JnXtK6EIiq7P1yES7Qh/n2cMp4dVFdgW73zKA97c6d2dSMx3p
+         KAl/BN6VYa7wXPQINT1QwPzdS7iiKarY5z3PacRJ6CYEE6GKae8nkfshDHpDi9ojF7Hn
+         tthiGSbF4wLRpFLAdtoM8XoumKTfuRlQiiLQ3gcE6MwC9ounbHPKL4YeiZOAYOaZmEQr
+         QD1T7+Cv4M7b7SW0O/tKdQCGpDztaEvyLlPVfcAfjUmkrvkeGCfVAZQgM3kYs4FD166f
+         GMvg==
+Received: by 10.204.157.146 with SMTP id b18mr3650610bkx.108.1343635933425;
+        Mon, 30 Jul 2012 01:12:13 -0700 (PDT)
+Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
+        by mx.google.com with ESMTPS id hs2sm3171580bkc.1.2012.07.30.01.12.11
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jul 2012 01:12:12 -0700 (PDT)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <20120728070030.GC4739@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202525>
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Saturday 28 July 2012 02:00:31 Jonathan Nieder wrote:
+> Thanks for explaining.  Now we've discussed a few different approproaches,
+> none of which is perfect.
+> 
+> a. use --cat-blob-fd, no FIFO
+> 
+>    Doing this unconditionally would break platforms that don't support
+>    --cat-blob-fd=(descriptor >2), like Windows, so we'd have to:
+> 
+>    * Make it conditional --- only do it (1) we are not on Windows and
+>      (2) the remote helper requests backflow by advertising the
+>      import-bidi capability.
+> 
+>    * Let the remote helper know what's going on by using
+>      "import-bidi" instead of "import" in the command stream to
+>      initiate the import.
 
->> The way to expose the extra information parsed by Git to the server
->> side could be made into calling out to hooks, and at that point,
->> gitolite would not even have to know about the pack protocol.
->
-> Good point. The case that spawned this thread however still has a
-> problem with this approach. gitolite would need to create a repository
-> to invoke the receive-pack process within, and install that new hook
-> script into... when the hook was trying to prevent the creation of
-> that repository in the first place.
+Generally I like your prefered solution.
+I think there's one problem:
+The pipe needs to be created before the fork, so that the fd can be inherited. 
+There is no way of creating it if the remote-helper advertises a capability, 
+because it is already forked then. This would work with fifos, though.
 
-Heh.  While I do not particularly consider auto-creation-upon-push a
-useful thing to begin with (after all, once you created a
-repository, you would want ways to manage it, setting up ACL for it
-and stuff like that, so adding a "create" command to the management
-interface suite would be a more natural direction to go), as long as
-we are discussing a hack that involves hooks, I do not think your
-observation is a show-stopper downside.
+We could:
+- add a capability: bidi-import. 
+- make transport-helper create a fifo if the helper advertises it.
+- add a command for remote-helpers, like 'bidi-import <pipename>' that makes 
+the remote helper open the fifo at <pipename> and use it.
+- fast-import is forked after the helper, so we do already know if there will 
+be a back-pipe. If yes, open it in transport-helper and pass the fd as command 
+line argument cat-blob-fd. 
 
-The hook can interact with the end user over the back channel and
-decide to abort the transaction, while leaving some clue in the
-repository that is pre-agreed between the gitlite server and the
-hook.  When gitolite culls the process with wait4(2), it could
-notice that "clue", read the wish of the hook that the repository
-needs to be removed from it, and remove the repository. Up to that
-point, there is no real data transferred, so there isn't much wasted
-time or network resource anyway.
+--> fast-import wouldn't need to be changed, but we'd use a fifo, and we get 
+rid of the env-vars.
+(I guess it could work on windows too).
 
-> An ancient Git would abort hard if passed this flag. An updated Git
-> could set environment variables before calling hooks, making the
-> arguments visible that way. And gitolite can still scrape what it
-> needs from the command line without having to muck about inside of the
-> protocol, but only if it needs to observe this new data from pusher to
-> pushee?
+What do you think?
 
-I do not think the details of how the extra information is passed
-via the Git at the receiving end to its surrounding matters that
-much.  It would even work fine if we let the hook to talk with the
-end user sitting at the "git push" end, by using two extra sidebands
-to throw bits between them, while the Git process that spawned the
-hook acts as a relay, to establish a custom bi-di conversation (but
-again, I do not think it is useful, because such an out of band
-conversation cannot affect the outcome of the main protocol exchange
-in a meaningful way other than aborting).
-
-Or you could export environment variables, which would be far more
-limiting with respect to the nature of the data (i.e. needs to be
-free of NUL) and the size of data you can pass.  The limitation may
-actually be a feature to discourage people from doing wacky things,
-though.
-
-> `git push -Rfoo=baz host:dest.git master` on the client would turn
-> into `git-receive-pack -Rfoo=baz dest.git` in the SSH and git://
-> command line, and cause GIT_PUSH_ARG_FOO=baz to appear in the
-> environment of hooks. Over smart HTTP requests would get an additional
-> query parameter of foo=baz.
-
-I think using the same "extra args on the command line" would be a
-good way to upgrade the protocol version in a way the current
-"capability" system does not allow us to (namely, stop the party
-that accepts the connection from immediately advertising its refs).
-
-> The other hacky idea I had was to use a fake reference and have the
-> client push a structured blob to that ref. The server would decode the
-> blob, and deny the creation of the fake reference, but be able to get
-> additional data from that blob. Its hacky, and I don't like making a
-> new blob on the server just to transport a few small bits of data from
-> the client.
-
-That way lies madness, and at that point, you are better off doing a
-proper protocol extension by registering a new capability and defining
-the semantics for it.
+> 
+> b. use envvars to pass around FIFO path
+> 
+>    This complicates the fast-import interface and makes debugging hard.
+>    It would be nice to avoid this if we can, but in case we can't, it's
+>    nice to have the option available.
+> 
+> c. transport-helper.c uses FIFO behind the scenes.
+> 
+>    Like (a), except it would require a fast-import tweak (boo) and
+>    would work on Windows (yea)
+> 
+> d. use --cat-blob-fd with FIFO
+> 
+>    Early scripted remote-svn prototypes did this to fulfill "fetch"
+>    requests.
+> 
+>    It has no advantage over "use --cat-blob-fd, no FIFO" except being
+>    easier to implement as a shell script.  I'm listing this just for
+>    comparison; since (a) looks better in every way, I don't see any
+>    reason to pursue this one.
+> 
+> Since avoiding deadlocks with bidirectional communication is always a
+> little subtle, it would be nice for this to be implemented once in
+> transport-helper.c rather than each remote helper author having to
+> reimplement it again.  As a result, my knee-jerk ranking is a > c >
+> b > d.
+> 
+> Sane?
+> Jonathan
