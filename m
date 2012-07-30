@@ -1,129 +1,132 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH/RFC=5D=20l10n=3A=20de=2Epo=3A=20translate=204=20new=20messages?=
-Date: Mon, 30 Jul 2012 18:08:56 +0200
-Message-ID: <1343664536-11408-1-git-send-email-ralf.thielow@gmail.com>
+From: =?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>
+Subject: [PATCH] Improve tests for detached worktree in git-submodule
+Date: Mon, 30 Jul 2012 13:10:10 -0300
+Message-ID: <1343664610-479-1-git-send-email-dangra@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: worldhello.net@gmail.com, git@vger.kernel.org,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Mon Jul 30 18:09:30 2012
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 30 18:11:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SvsX8-0001V1-D3
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 18:09:26 +0200
+	id 1SvsZ3-0002xp-2v
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jul 2012 18:11:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753636Ab2G3QJV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 12:09:21 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:51039 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753411Ab2G3QJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jul 2012 12:09:20 -0400
-Received: by bkwj10 with SMTP id j10so2901484bkw.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 09:09:18 -0700 (PDT)
+	id S1752940Ab2G3QLU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 12:11:20 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:34986 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752707Ab2G3QLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 12:11:19 -0400
+Received: by gglu4 with SMTP id u4so4974371ggl.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 09:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=4k+AGhPfGPU513fQWZ4nYEM4cXRpN4MLH2liCRz5WYQ=;
-        b=E3v5U7QvSvfccIUyPVtrgLv2u4QFs4wJ9ji/EyOSlZG+Dxlgmys819gSXljxiFu84Z
-         VQduidgeBDpKtifRXr3v4fKVQzhhrRnu3jxDSXp9fden1+ZpBnQU29lS+XkEkrUpdotN
-         hZEoaqQe137x8lTX8bGcV1BI5Cvd1nTFBDuLPVgj559FGPfqelbFx/YHJFjO9kn74DG5
-         ygLj4wyRBkXsgt3dgoMSIuaMuGrPy5QaZyzjcb1c9Uxy/2mPmZxqwmkS4roq3GM1Ho6u
-         G2JuIL2Y5ocrMAj7F21T3Yizw3AiaDTysp7ELOgAvmWH38WZDbORqKPfKss4YcAy6HZo
-         UlsQ==
-Received: by 10.205.117.141 with SMTP id fm13mr4202177bkc.125.1343664558766;
-        Mon, 30 Jul 2012 09:09:18 -0700 (PDT)
-Received: from rath.fedora (dslb-094-222-138-170.pools.arcor-ip.net. [94.222.138.170])
-        by mx.google.com with ESMTPS id fu8sm4090493bkc.5.2012.07.30.09.09.17
+        bh=9Uo6+ajAxZLqOVKDhrIQzHywhNIbzcWz+fhm7dwrV4A=;
+        b=E1TNIq3YcYy6Urr/ZQHGp82oI8rmEsNhrIPpL4CRYo8beMmwu9jROao7gmDEq0Rnqo
+         +xs12B3MGCxS/lfT/swh3FGBEz+4oyw8rp2OcK6DdB1wvQp40C8cGWVhgZ4uZ4LSzMKg
+         hXjYCETorsero8XwRUIxEPb5AJnvEvwLKze1ZzRxw3H7LgzhvquTvHkVeTS9FrmWadMi
+         9Y5JofULnsUncmVS0y9ol+FDO4IoayEQQAivo4+sCsyJ8n4lThDqjCdLADneH+4FgmI0
+         jVA7UgDqm9qC6AaPcVVfGX731LWdrAAWkmr+VDNRhKLOokm912e7Vtd+BKJ89/f6bd7U
+         cuHw==
+Received: by 10.236.149.162 with SMTP id x22mr10661457yhj.92.1343664678709;
+        Mon, 30 Jul 2012 09:11:18 -0700 (PDT)
+Received: from localhost.localdomain (r190-135-175-126.dialup.adsl.anteldata.net.uy. [190.135.175.126])
+        by mx.google.com with ESMTPS id y10sm20180241yhd.6.2012.07.30.09.11.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2012 09:09:18 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.rc0
+        Mon, 30 Jul 2012 09:11:17 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202571>
 
-Translate 4 new messages came from git.pot update in 0bbe5b4
-(l10n: Update git.pot (4 new, 3 removed messages)).
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+Signed-off-by: Daniel Gra=C3=B1a <dangra@gmail.com>
 ---
-Hi German l10n team,
+ t/t7409-submodule-detached-worktree.sh |   31 ++++++++++++++++++++++++=
+-------
+ 1 files changed, 24 insertions(+), 7 deletions(-)
 
-please review this small update on German
-translation.
-
-Thanks,
-Ralf
-
- po/de.po | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index 0f9323d..c44cabe 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -5,7 +5,7 @@
- #
- msgid ""
- msgstr ""
--"Project-Id-Version: git 1.7.11\n"
-+"Project-Id-Version: git 1.7.12\n"
- "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
- "POT-Creation-Date: 2012-07-30 09:18+0800\n"
- "PO-Revision-Date: 2012-03-28 18:46+0200\n"
-@@ -1320,9 +1320,9 @@ msgid "patch failed: %s:%ld"
- msgstr "Anwendung des Patches fehlgeschlagen: %s:%ld"
+diff --git a/t/t7409-submodule-detached-worktree.sh b/t/t7409-submodule=
+-detached-worktree.sh
+index db75642..d88f400 100755
+--- a/t/t7409-submodule-detached-worktree.sh
++++ b/t/t7409-submodule-detached-worktree.sh
+@@ -15,7 +15,11 @@ TEST_NO_CREATE_REPO=3D1
+ test_expect_success 'submodule on detached working tree' '
+ 	git init --bare remote &&
+ 	test_create_repo bundle1 &&
+-	(cd bundle1 && test_commit "shoot") &&
++	(
++		cd bundle1 &&
++		test_commit "shoot" &&
++		git rev-list --max-count=3D1 HEAD > "$TRASH_DIRECTORY/expect"
++	) &&
+ 	mkdir home &&
+ 	(
+ 		cd home &&
+@@ -23,14 +27,27 @@ test_expect_success 'submodule on detached working =
+tree' '
+ 		git clone --bare ../remote .dotfiles &&
+ 		git submodule add ../bundle1 .vim/bundle/sogood &&
+ 		test_commit "sogood" &&
++		(
++			unset GIT_WORK_TREE GIT_DIR &&
++			cd .vim/bundle/sogood &&
++			git rev-list --max-count=3D1 HEAD > actual &&
++			test_cmp actual "$TRASH_DIRECTORY/expect"
++		) &&
+ 		git push origin master
+-	) &&
++	)
+ 	mkdir home2 &&
+ 	(
+ 		cd home2 &&
+-		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
+ 		git clone --bare ../remote .dotfiles &&
+-		git submodule update --init
++		export GIT_WORK_TREE=3D"$(pwd)" GIT_DIR=3D"$(pwd)/.dotfiles" &&
++		git checkout master &&
++		git submodule update --init &&
++		(
++			unset GIT_WORK_TREE GIT_DIR &&
++			cd .vim/bundle/sogood &&
++			git rev-list --max-count=3D1 HEAD > actual &&
++			test_cmp actual "$TRASH_DIRECTORY/expect"
++		)
+ 	)
+ '
 =20
- #: builtin/apply.c:3061
--#, fuzzy, c-format
-+#, c-format
- msgid "cannot checkout %s"
--msgstr "kann nicht in Verzeichnis %s wechseln"
-+msgstr "kann %s nicht auschecken"
+@@ -42,6 +59,7 @@ test_expect_success 'submodule on detached working po=
+inted by core.worktree' '
+ 		git clone --bare ../remote "$GIT_DIR" &&
+ 		git config core.bare false &&
+ 		git config core.worktree .. &&
++		git checkout master &&
+ 		git submodule add ../bundle1 .vim/bundle/dupe &&
+ 		test_commit "dupe" &&
+ 		git push origin master
+@@ -52,9 +70,8 @@ test_expect_success 'submodule on detached working po=
+inted by core.worktree' '
+ 		git config core.bare false &&
+ 		git config core.worktree .. &&
+ 		git pull &&
+-		git submodule update &&
+-		git submodule status &&
+-		test -d .vim/bundle/dupe
++		git submodule update --init &&
++		test -e .vim/bundle/dupe/shoot.t
+ 	)
+ '
 =20
- #: builtin/apply.c:3106 builtin/apply.c:3115 builtin/apply.c:3159
- #, c-format
-@@ -1330,9 +1330,9 @@ msgid "read of %s failed"
- msgstr "Konnte %s nicht lesen"
-=20
- #: builtin/apply.c:3139 builtin/apply.c:3361
--#, fuzzy, c-format
-+#, c-format
- msgid "path %s has been renamed/deleted"
--msgstr "Patch %s wurde umbenannt/gel=C3=B6scht"
-+msgstr "Pfad %s wurde umbenannt/gel=C3=B6scht"
-=20
- #: builtin/apply.c:3220 builtin/apply.c:3375
- #, c-format
-@@ -1537,7 +1537,8 @@ msgstr "wendet den Patch an (Benutzung mit --stat=
-/--summary/--check)"
-=20
- #: builtin/apply.c:4312
- msgid "attempt three-way merge if a patch does not apply"
--msgstr ""
-+msgstr "versucht 3-Wege-Zusammenf=C3=BChrung, wenn der Patch nicht ang=
-ewendet "
-+"werden konnte"
-=20
- #: builtin/apply.c:4314
- msgid "build a temporary index based on embedded index information"
-@@ -1605,9 +1606,8 @@ msgid "prepend <root> to all filenames"
- msgstr "stellt <Wurzelverzeichnis> vor alle Dateinamen"
-=20
- #: builtin/apply.c:4367
--#, fuzzy
- msgid "--3way outside a repository"
--msgstr "--cached au=C3=9Ferhalb eines Projektarchivs"
-+msgstr "--3way au=C3=9Ferhalb eines Projektarchivs"
-=20
- #: builtin/apply.c:4375
- msgid "--index outside a repository"
 --=20
-1.7.11.2
+1.7.5.4
