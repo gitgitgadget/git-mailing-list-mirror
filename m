@@ -1,95 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH/RFC] sane_execvp(): ignore non-directory on PATH
-Date: Tue, 31 Jul 2012 12:46:13 -0700
-Message-ID: <7vobmviuii.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v2] macos: lazily initialize iconv
+Date: Tue, 31 Jul 2012 12:51:30 -0700
+Message-ID: <CA+55aFwE93YeVjZp9VLhRvbxFJNonafmUE6rHzPer5hv-hON5Q@mail.gmail.com>
+References: <7vk3xjked0.fsf@alter.siamese.dyndns.org> <7v1ujrkc9p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 21:46:28 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 21:52:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwIOe-0001yZ-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:46:25 +0200
+	id 1SwIU1-0005hN-9J
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755883Ab2GaTqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 15:46:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62034 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754023Ab2GaTqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 15:46:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 349A290E6;
-	Tue, 31 Jul 2012 15:46:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
-	tN9ZXE7W3KptAML81nq2zXWSc4=; b=BJ4jA5/rHXc0Y573wCuG9fYxyu22C1RJ7
-	JTaykckocoRMNpl7bE6DAbiFZqNjen5MqBmeNZGd7b2JKoS+KXCWmj57y2NU3AWa
-	h4qYu/R/mpJBHe3GEPl6Hns4DuKzQFnyAz/OnMus4RP7cGWrXvjV1PWbG+X+2q/o
-	xUNmrxGkA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=tqqxbf3pxeSVvwESGLtZ9LolxQZLqGafUPiRQntjAaj1hcxxMkDUUiks
-	9lbr0NAHnIaCj8ZY++Rb0w6ja2RxkTUhZtthye8cIGRdevS4cl0Bgre4QAIFSnya
-	wDOa1PkwpSAxoAcPFKqlT4pVtPnyllpI6+cYdeD4eAPOB+BJ5yE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B0F290E5;
-	Tue, 31 Jul 2012 15:46:16 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71CD390E4; Tue, 31 Jul 2012
- 15:46:15 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 63B4B774-DB48-11E1-915B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754230Ab2GaTvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 15:51:52 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60080 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751735Ab2GaTvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 15:51:51 -0400
+Received: by weyx8 with SMTP id x8so4608726wey.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 12:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=6zXhtqln2OVZ1AmFghYx+Md61HvZZVH8gLy7uIs7fXI=;
+        b=fT8cfFSFWcGepupRhWZvWavrEG9XrU6XPYhgNmKJ0hVx4MYQDoBTRa7kvtv4L/VXmJ
+         Uh5WtVgv0qDDzDzM8lzkN5kIxngwr+w5nIJs8uWYniEO3bKN9xPhWy/KvWPInhxIN1nJ
+         JZCOnog/gGUEaxPdqW++uwF/FrtZ3hRVqJRExQz/EPO1VgtJRg2I3YVaj/29Gf0emWco
+         xgCtNdmCKcQ3+Mj4PlzvnvsmnW9dLfbuaVxwW6qYHkuLNDbDkt+5qMUjlcilsXN/BivR
+         CDmxSVwn1fdRfp7AU56hPyXuCPCzoAArJip+wnMUQAcs7aDvzPvTr51tCwobKu1DbwQ4
+         VMcQ==
+Received: by 10.180.84.169 with SMTP id a9mr9992979wiz.8.1343764310396; Tue,
+ 31 Jul 2012 12:51:50 -0700 (PDT)
+Received: by 10.216.203.207 with HTTP; Tue, 31 Jul 2012 12:51:30 -0700 (PDT)
+In-Reply-To: <7v1ujrkc9p.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: Lbvve71AYFAeW_TuIbttXXrhXsQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202677>
 
-When you have a non-directory on your PATH, a funny thing happens:
+On Tue, Jul 31, 2012 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>  * This is not even compile tested, so it needs testing and
+>    benchmarking, as I do not even know how costly the calls to
+>    open/close are when we do not have to call iconv() itself.
 
-	$ PATH=$PATH:/bin/sh git foo
-	fatal: cannot exec 'git-foo': Not a directory?
+Ok, so it's easily compile-tested: just add
 
-Worse yet, as real commands always take precedence over aliases,
-this behaviour interacts rather badly with them:
++       COMPAT_OBJS += compat/precompose_utf8.o
++       BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
 
-	$ PATH=$PATH:/bin/sh git -c alias.foo=show git foo -s
-	fatal: cannot exec 'git-foo': Not a directory?
+to the makefile for Linux too.
 
-This is because an ENOTDIR error from the underlying execvp(2) is
-reported back to the caller of our sane_execvp() wrapper as-is.  By
-translating it to ENOENT, just like the case where we _might_ have
-the command in an unreadable directory, fixes it.  Without an alias,
-we would get
+Actually testing how well it *works* is hard, since I don't really
+have a mac (well, I do, but it no longer has OS X on it ;), and the
+whole "utf-8-mac" thing does not make sense.
 
-	git: 'foo' is not a git command. See 'git --help'.
+HOWEVER. I actually tested it with the conversion being from Latin1 to
+UTF-8 instead, and it does interesting things, and kind of works. I
+say "kind of", because for the case of the filesystem being in Latin1,
+we actually have to convert things back to the filesystem character
+set when doing "open()" and "lstat()", and this patch obviously
+doesn't do that, because OS X does the conversion back to NFD on its
+own.
 
-and we use the 'foo' alias when it is available.
+But ACK on the patch.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+If I had more time, I'd actually be interested to do the generic case
+of namespace conversion, and we could make this a generic git feature
+- it's something I wanted to do long ago. However, right now I'm in
+the merge window and will go on a vacation to Finland after that, so I
+probably won't get around to it.
 
- * We can view this as a follow-up to 38f865c (run-command: treat
-   inaccessible directories as ENOENT, 2012-03-30).
+I do have one suggestion: please rename the "has_utf8()" function to
+"has_nonascii()" too. Why? Because that's what the function actually
+does. It has nothing to do with testing for UTF-8 (the utf-8 rules are
+more complex than just "high bit set"), and *if* I ever get around to
+doing a more generic character set conversion for the filenames, the
+decision really would be about non-ASCII, not about non-UTF8.
 
- run-command.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/run-command.c b/run-command.c
-index 805d41f..f9b7db2 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -77,6 +77,8 @@ int sane_execvp(const char *file, char * const argv[])
- 	 */
- 	if (errno == EACCES && !strchr(file, '/'))
- 		errno = exists_in_PATH(file) ? EACCES : ENOENT;
-+	else if (errno == ENOTDIR && !strchr(file, '/'))
-+		errno = ENOENT;
- 	return -1;
- }
- 
+              Linus
