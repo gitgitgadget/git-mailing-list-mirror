@@ -1,116 +1,227 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Tue, 31 Jul 2012 16:05:01 -0700
-Message-ID: <7vtxwnh6qq.fsf@alter.siamese.dyndns.org>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120730203844.GA23892@dcvr.yhbt.net>
- <7v1ujsl8ut.fsf@alter.siamese.dyndns.org> <5017AB63.6080909@pobox.com>
- <20120731200108.GA14462@dcvr.yhbt.net>
+Subject: Re: [PATCH/RFC 2/2] grep: rename "grep.extendedRegexp" option to
+ "grep.patternType"
+Date: Tue, 31 Jul 2012 16:22:54 -0700
+Message-ID: <7vpq7bh5wx.fsf@alter.siamese.dyndns.org>
+References: <1343775209-56505-1-git-send-email-dark.panda@gmail.com>
+ <1343775209-56505-2-git-send-email-dark.panda@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca, jrnieder@gmail.com
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 01 01:05:17 2012
+Cc: git@vger.kernel.org
+To: J Smith <dark.panda@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 01:23:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwLV4-0002Ys-S7
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 01:05:15 +0200
+	id 1SwLmK-0002RR-MH
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 01:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896Ab2GaXFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 19:05:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59749 "EHLO
+	id S1756240Ab2GaXW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 19:22:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34108 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754719Ab2GaXFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 19:05:06 -0400
+	id S1756239Ab2GaXW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 19:22:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF7A98FCC;
-	Tue, 31 Jul 2012 19:05:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E81989365;
+	Tue, 31 Jul 2012 19:22:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=myLt8rwpQ54puCje6AVAFDyArgA=; b=bHsJ1z
-	eQF14uquJrEJj7GKMIHf5jmn4nt+GT3X0Vppwa3NV94LHKNIzEvggUxUpOnNjuH9
-	Ql8vn9o769fp8hpV46pb60z6XTd4mhzeKEAFLuRp24496S8MZQTal0OeBFnlYH28
-	SHkzuBvrYho7aTu+SLKHdos9snDtZl28LhFtk=
+	:content-type; s=sasl; bh=zEOfO7VuJ6F8kWc1ENZR58mOIFc=; b=DgFraK
+	VWrnxbqxZASm4Y7DR9jpKU/0OcmVJVpqFGkgPEcj+RBqxJBDFyw9gHTucvucrKCG
+	gNQjJTAVXawtS53mXM4nTpDHbCVGq/nQ76fEW28q2k4N4YELwMSodezAV/8TBgwX
+	zWpctp9ULahOa4T4MQt7dr5XVKAHg36yt3P9I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WClm8jf0iCc7/iXgK/FAdbVcy6grUHP3
-	wR+NK59o4M1z3iqVzrHOhWKXEjoQh8MDHaBPpPocV93hKSODXMAngo6vfxLmBwzU
-	V2yZUSEBsS9Y9fdRtER9f3/9fJuwOvYhd884aDCJsv/cLi0YwhB3Bpt7JqZ5TYey
-	NyyPSqQoj78=
+	:content-type; q=dns; s=sasl; b=tJrtdgmqWtgVfyVWiB0O8S7en/ZhqLZZ
+	wN3G4GcG9+GU+SZ8n5vfGzjWDLi5ehVxV8fNhxFI+cHya84yqpHFektE9lSrGrmg
+	hT6pz54Nwh4xvveFsmqsrWhl4w+7t5DUzHqd1SkNllBCSV8mwlkhFeQnpb3JTCV9
+	QiduTkeqO04=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CD118FCB;
-	Tue, 31 Jul 2012 19:05:04 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D51149364;
+	Tue, 31 Jul 2012 19:22:56 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A81D8FCA; Tue, 31 Jul 2012
- 19:05:02 -0400 (EDT)
-In-Reply-To: <20120731200108.GA14462@dcvr.yhbt.net> (Eric Wong's message of
- "Tue, 31 Jul 2012 20:01:08 +0000")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2097B9363; Tue, 31 Jul 2012
+ 19:22:56 -0400 (EDT)
+In-Reply-To: <1343775209-56505-2-git-send-email-dark.panda@gmail.com> (J.
+ Smith's message of "Tue, 31 Jul 2012 18:53:29 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2918C33C-DB64-11E1-B87A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A8B51922-DB66-11E1-A69B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202694>
 
-Eric Wong <normalperson@yhbt.net> writes:
+J Smith <dark.panda@gmail.com> writes:
 
-> Michael G Schwern <schwern@pobox.com> wrote:
->> It just doesn't matter.
->> 
->> Why are we arguing over which solution will be 4% better two years from now,
->> or if my commits are formatted perfectly, when tremendous amounts of basic
->> work to be done improving git-svn?  The code is undocumented, lacking unit
->> tests, difficult to understand and riddled with bugs.
->
-> Yes it does matter.
->
-> git-svn has the problems it has because it traditionally had lower
-> review standards than the rest of git.  So yes, we're being more careful
-> nowadays about the long-term ramifications of changes.
+> With the addition of the "basic", "extended", "fixed", and "perl"
+> values for the "grep.extendedRegexp" option the name "grep.patternType"
+> better represents the option's functionality. "grep.extendedRegexp"
+> remains available as an alias to "grep.patternType" for the purposes of
+> backwards compatibility.
+> ---
 
-Thanks.  I know it takes guts to publicly admit that over time your
-own creation has become less ideal than you wish it to be, but it
-needed to be said.
+Sorry for not bringing this up earlier when we discussed grep.patternType,
+but my preference would be to introduce grep.patternType with these
+type names (including basic and perl) from the beginning, and then
+ignore grep.extendedRegexp if grep.patternType is set.
 
-Michael, please realize that the only reason people comment on the
-patch series is because they care about what the series brings to
-us.  In other words, your effort is appreciated.  For a change that
-we want to have in our codebase, the functionality of the code
-immediately after the change is applied of course is important, but
-the maintainability of the result also matters.
+The core part of the change may look something like this...
 
-We want to make sure that anybody who wants to understand and
-improve the system can read the code without distraction from
-inconsistent coding styles used in different sections of code.  We
-want "git log" (or "git log git-svn.perl perl/") output to tell a
-coherent story about how the code evolved and why these changes are
-made in a consistent voice to the readers.  We want people to be
-able to "git log | grep Signed-off-by:" to count the contributors.
-
-A contributor has enough room to be creative in how his or her code
-is designed.  Updating the code to follow the "convert as early as
-possible", and (during subsequent discussion with Eric) suggesting
-use of class instances instead of bare strings to make it harder to
-mistakenly use bare unconverted strings are two examples you already
-showed creativity in areas that matter.
-
-There is no need to be creative in ChangeLog and coding styles; it
-only hurts maintainability.
-
-Regarding the operator overloading of "eq" for comparing the
-converted strings, I still think it will hurt maintainablity (we
-want to make sure that it is harder, not easier, to make wrong
-changes to the code in the future), but I may be mistaken and you
-may have better ideas.  If you can use overloading in such a way
-that it won't harm maintainability and yet makes the resulting code
-easier to read, I don't have any objection.
-
-What I won't accept is "maintainability does not matter".  It does.
-
-Thanks.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 29adb0a..260a7db 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -260,6 +260,57 @@ static int wait_all(void)
+ }
+ #endif
+ 
++static int parse_pattern_type_arg(const char *opt, const char *arg)
++{
++	switch (git_config_maybe_bool(opt, arg)) {
++	case 1:
++		return GREP_PATTERN_TYPE_ERE;
++	case 0:
++		return GREP_PATTERN_TYPE_UNSPECIFIED;
++	default:
++		if (!strcmp(arg, "basic"))
++			return GREP_PATTERN_TYPE_BRE;
++		else if (!strcmp(arg, "extended"))
++			return GREP_PATTERN_TYPE_ERE;
++		else if (!strcmp(arg, "fixed"))
++			return GREP_PATTERN_TYPE_FIXED;
++		else if (!strcmp(arg, "perl"))
++			return GREP_PATTERN_TYPE_PCRE;
++		die("bad %s argument: %s", opt, arg);
++	}
++}
++
++static void grep_pattern_type_options(const int pattern_type, void *cb)
++{
++	struct grep_opt *opt = cb;
++
++	switch (pattern_type) {
++	case GREP_PATTERN_TYPE_BRE:
++		opt->fixed = 0;
++		opt->pcre = 0;
++		opt->regflags &= ~REG_EXTENDED;
++		break;
++
++	case GREP_PATTERN_TYPE_ERE:
++		opt->fixed = 0;
++		opt->pcre = 0;
++		opt->regflags |= REG_EXTENDED;
++		break;
++
++	case GREP_PATTERN_TYPE_FIXED:
++		opt->fixed = 1;
++		opt->pcre = 0;
++		opt->regflags &= ~REG_EXTENDED;
++		break;
++
++	case GREP_PATTERN_TYPE_PCRE:
++		opt->fixed = 0;
++		opt->pcre = 1;
++		opt->regflags &= ~REG_EXTENDED;
++		break;
++	}
++}
++
+ static int grep_config(const char *var, const char *value, void *cb)
+ {
+ 	struct grep_opt *opt = cb;
+@@ -269,10 +320,18 @@ static int grep_config(const char *var, const char *value, void *cb)
+ 		return -1;
+ 
+ 	if (!strcmp(var, "grep.extendedregexp")) {
+-		if (git_config_bool(var, value))
+-			opt->regflags |= REG_EXTENDED;
+-		else
+-			opt->regflags &= ~REG_EXTENDED;
++		if (!opt->pattern_type_used) {
++			if (git_config_bool(var, value))
++				opt->regflags |= REG_EXTENDED;
++			else
++				opt->regflags &= ~REG_EXTENDED;
++		}
++		return 0;
++	}
++
++	if (!strcmp(var, "grep.patterntype")) {
++		grep_pattern_type_options(parse_pattern_type_arg(var, value), opt);
++		opt->pattern_type_used = 1;
+ 		return 0;
+ 	}
+ 
+@@ -669,14 +728,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int dummy;
+ 	int use_index = 1;
+-	enum {
+-		pattern_type_unspecified = 0,
+-		pattern_type_bre,
+-		pattern_type_ere,
+-		pattern_type_fixed,
+-		pattern_type_pcre,
+-	};
+-	int pattern_type = pattern_type_unspecified;
++	int pattern_type = GREP_PATTERN_TYPE_UNSPECIFIED;
+ 
+ 	struct option options[] = {
+ 		OPT_BOOLEAN(0, "cached", &cached,
+@@ -705,16 +757,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_GROUP(""),
+ 		OPT_SET_INT('E', "extended-regexp", &pattern_type,
+ 			    "use extended POSIX regular expressions",
+-			    pattern_type_ere),
++			    GREP_PATTERN_TYPE_ERE),
+ 		OPT_SET_INT('G', "basic-regexp", &pattern_type,
+ 			    "use basic POSIX regular expressions (default)",
+-			    pattern_type_bre),
++			    GREP_PATTERN_TYPE_BRE),
+ 		OPT_SET_INT('F', "fixed-strings", &pattern_type,
+ 			    "interpret patterns as fixed strings",
+-			    pattern_type_fixed),
++			    GREP_PATTERN_TYPE_FIXED),
+ 		OPT_SET_INT('P', "perl-regexp", &pattern_type,
+ 			    "use Perl-compatible regular expressions",
+-			    pattern_type_pcre),
++			    GREP_PATTERN_TYPE_PCRE),
+ 		OPT_GROUP(""),
+ 		OPT_BOOLEAN('n', "line-number", &opt.linenum, "show line numbers"),
+ 		OPT_NEGBIT('h', NULL, &opt.pathname, "don't show filenames", 1),
+@@ -824,28 +876,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_KEEP_DASHDASH |
+ 			     PARSE_OPT_STOP_AT_NON_OPTION |
+ 			     PARSE_OPT_NO_INTERNAL_HELP);
+-	switch (pattern_type) {
+-	case pattern_type_fixed:
+-		opt.fixed = 1;
+-		opt.pcre = 0;
+-		break;
+-	case pattern_type_bre:
+-		opt.fixed = 0;
+-		opt.pcre = 0;
+-		opt.regflags &= ~REG_EXTENDED;
+-		break;
+-	case pattern_type_ere:
+-		opt.fixed = 0;
+-		opt.pcre = 0;
+-		opt.regflags |= REG_EXTENDED;
+-		break;
+-	case pattern_type_pcre:
+-		opt.fixed = 0;
+-		opt.pcre = 1;
+-		break;
+-	default:
+-		break; /* nothing */
+-	}
++
++	grep_pattern_type_options(pattern_type, &opt);
+ 
+ 	if (use_index && !startup_info->have_repository)
+ 		/* die the same way as if we did it at the beginning */
