@@ -1,71 +1,95 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
-Date: Tue, 31 Jul 2012 21:31:16 +0200
-Message-ID: <2351904.F5IazNUWoD@flomedio>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <19477122.a5lMBqWgns@flomedio> <20120730165502.GB8515@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/RFC] sane_execvp(): ignore non-directory on PATH
+Date: Tue, 31 Jul 2012 12:46:13 -0700
+Message-ID: <7vobmviuii.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 21:31:53 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 31 21:46:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwIAU-0006oD-8l
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:31:46 +0200
+	id 1SwIOe-0001yZ-Oq
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754130Ab2GaTbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 15:31:24 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:58456 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755231Ab2GaTbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 15:31:21 -0400
-Received: by bkwj10 with SMTP id j10so3449217bkw.19
-        for <git@vger.kernel.org>; Tue, 31 Jul 2012 12:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=+ahaTBEY/jkA/aTwP97E2IYs47zsOWPwvo4SC/8GN8w=;
-        b=Zohjh9Oszn5sWuN+YHn1EULblYSz0VeQ7nl92Y0qIzJ9BMd+sNuMrtTDIYMr4gJMI1
-         vuLaeqABupG1PBpHNroBtYw9bxeRnWH+u3RWFgyYhFDSPEtS+knn3aLvHO4QXobOE44g
-         5gdZS4vaKpZWNOp6mNn5yx9/jXyqXCad+F2DrZwzZuixmXDfrSfyqFxmcIqYXvWBhI3L
-         kO93ki+y75a7HnMuM+p4UCrltqEoO1kMy8kNt446+TRLoMjVUkKLwCT1qiJfzU6uSIh/
-         SoZy2ERTCxj5xHk8pBk9Lu9bU3bUqdWsuoO/SEP/BUlfoFg8NlJCJXLB0gTVmiTgc9+j
-         X0Lg==
-Received: by 10.204.132.77 with SMTP id a13mr5690756bkt.99.1343763080078;
-        Tue, 31 Jul 2012 12:31:20 -0700 (PDT)
-Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id 14sm597858bkw.15.2012.07.31.12.31.18
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 Jul 2012 12:31:19 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120730165502.GB8515@burratino>
+	id S1755883Ab2GaTqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 15:46:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62034 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754023Ab2GaTqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 15:46:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 349A290E6;
+	Tue, 31 Jul 2012 15:46:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
+	tN9ZXE7W3KptAML81nq2zXWSc4=; b=BJ4jA5/rHXc0Y573wCuG9fYxyu22C1RJ7
+	JTaykckocoRMNpl7bE6DAbiFZqNjen5MqBmeNZGd7b2JKoS+KXCWmj57y2NU3AWa
+	h4qYu/R/mpJBHe3GEPl6Hns4DuKzQFnyAz/OnMus4RP7cGWrXvjV1PWbG+X+2q/o
+	xUNmrxGkA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=tqqxbf3pxeSVvwESGLtZ9LolxQZLqGafUPiRQntjAaj1hcxxMkDUUiks
+	9lbr0NAHnIaCj8ZY++Rb0w6ja2RxkTUhZtthye8cIGRdevS4cl0Bgre4QAIFSnya
+	wDOa1PkwpSAxoAcPFKqlT4pVtPnyllpI6+cYdeD4eAPOB+BJ5yE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B0F290E5;
+	Tue, 31 Jul 2012 15:46:16 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71CD390E4; Tue, 31 Jul 2012
+ 15:46:15 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 63B4B774-DB48-11E1-915B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202676>
 
-On Monday 30 July 2012 11:55:02 Jonathan Nieder wrote:
-> Florian Achleitner wrote:
-> > Hm .. that would mean, that both fast-import and git (transport-helper)
-> > would write to the remote-helper's stdin, right?
-> 
-> Yes, first git writes the list of refs to import, and then fast-import
-> writes feedback during the import.  Is that a problem?
+When you have a non-directory on your PATH, a funny thing happens:
 
-I haven't tried that yet, nor do I remember anything where I've already seen 
-two processes writing to the same pipe.
-At least it sounds cumbersome to me. Processes' lifetimes overlap, so buffering 
-and flushing could mix data.
-We have to use it for both purposes interchangably  because there can be more 
-than one import command to the remote-helper, of course.
+	$ PATH=$PATH:/bin/sh git foo
+	fatal: cannot exec 'git-foo': Not a directory?
 
-Will try that in test-program..
+Worse yet, as real commands always take precedence over aliases,
+this behaviour interacts rather badly with them:
+
+	$ PATH=$PATH:/bin/sh git -c alias.foo=show git foo -s
+	fatal: cannot exec 'git-foo': Not a directory?
+
+This is because an ENOTDIR error from the underlying execvp(2) is
+reported back to the caller of our sane_execvp() wrapper as-is.  By
+translating it to ENOENT, just like the case where we _might_ have
+the command in an unreadable directory, fixes it.  Without an alias,
+we would get
+
+	git: 'foo' is not a git command. See 'git --help'.
+
+and we use the 'foo' alias when it is available.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * We can view this as a follow-up to 38f865c (run-command: treat
+   inaccessible directories as ENOENT, 2012-03-30).
+
+ run-command.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/run-command.c b/run-command.c
+index 805d41f..f9b7db2 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -77,6 +77,8 @@ int sane_execvp(const char *file, char * const argv[])
+ 	 */
+ 	if (errno == EACCES && !strchr(file, '/'))
+ 		errno = exists_in_PATH(file) ? EACCES : ENOENT;
++	else if (errno == ENOTDIR && !strchr(file, '/'))
++		errno = ENOENT;
+ 	return -1;
+ }
+ 
