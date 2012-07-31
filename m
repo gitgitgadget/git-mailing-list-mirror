@@ -1,157 +1,188 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] macos: lazily initialize iconv
-Date: Tue, 31 Jul 2012 10:52:11 -0700
-Message-ID: <7vk3xjked0.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC] grep: add a perlRegexp configuration option
+Date: Tue, 31 Jul 2012 11:04:57 -0700
+Message-ID: <7vehnrkdrq.fsf@alter.siamese.dyndns.org>
+References: <1343753854-66765-1-git-send-email-dark.panda@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jul 31 19:52:24 2012
+Cc: git@vger.kernel.org
+To: J Smith <dark.panda@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 20:05:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwGcK-0002nm-5h
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 19:52:24 +0200
+	id 1SwGoi-0000Nl-Qu
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 20:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623Ab2GaRwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 13:52:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62236 "EHLO
+	id S1755042Ab2GaSFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 14:05:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36273 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279Ab2GaRwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 13:52:14 -0400
+	id S1754999Ab2GaSFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 14:05:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D031D7030;
-	Tue, 31 Jul 2012 13:52:13 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CDC47491;
+	Tue, 31 Jul 2012 14:05:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=/
-	I5YYaKu4yG4qeF+DEgw+e4TCNM=; b=lY51QKmu3O1JmdUK4WhzJN0lpqd9XaM2j
-	5AIqx0yBi7subdXUDHMs55yjZ6dJpJBq3LGH+oBZdJ24oJnA378PB2CYgudCumyL
-	y8RJnvyxvciv3bTQfqx6Qc73rax54EHDk84o5rj1gIVoM9NEcPhdfeOQX/F+Ily2
-	YfBdqFay6s=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+Cf/YF9F4qhw028eadLaN3eNGwQ=; b=C0YBLS
+	NZLIZ+ACaFz+SD+rUioPVOHALhELHeu5gijZlaQadMAQzsg5CRVJiLEeyJ7PFhEZ
+	qvtXQaQY0N0Z2ElD79u4GwkBrpe5nZSJJNEy/UUesjZE3IK9P3qCLLj9d9oQ5cK0
+	BsIWW8NL0vFhZG0eE3nOOM0/2Fu8AWpJ5SbT4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=olRv42ci5aEl1sQuVhcKeoPS3kUbl/NEaJqyxIsQumG4l7wnWXi9JoU+
-	0WSBUv+S08/Xb8ha+M1HJzWwb48Q8CoJhbdImtxzRe5mOQrIJc+K88aL/pf928/e
-	WzNrNLDbWOE+k0EhvezyjD3LjmPbnDzTpQPWTG1vrH7VfgzeQsY=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bHkxmVRWlBbL7bf1QFQ1UVAgixPkTdFA
+	AELFvlM2BMge+OHIcSkxud4nDrQh+/DwSGEUv7hHFTmkC3l8tvUKIEXH/nO4eHtG
+	yaDRTyihHXhsNk6JgfXS+CSeIGLk7udvd6mAVhZVjBPsexxwBOcLoPfpQ2iiV6/Z
+	4mAJvyxdTS0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE1B0702F;
-	Tue, 31 Jul 2012 13:52:13 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0932F7490;
+	Tue, 31 Jul 2012 14:05:00 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A1CC702D; Tue, 31 Jul 2012
- 13:52:12 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38C82748F; Tue, 31 Jul 2012
+ 14:04:59 -0400 (EDT)
+In-Reply-To: <1343753854-66765-1-git-send-email-dark.panda@gmail.com> (J.
+ Smith's message of "Tue, 31 Jul 2012 12:57:34 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 754D82D2-DB38-11E1-8E90-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3DFD87DA-DB3A-11E1-9486-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202663>
 
-In practice, the majority of paths do not have any utf8 character
-that needs the canonicalization.  Lazily call iconv_open() and
-iconv_close() to avoid unnecessary overhead.
+J Smith <dark.panda@gmail.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> Enables the -P flag for perl regexps by default. When both the
+> perlRegexp and extendedRegexp options are enabled, the last enabled
+> option wins.
 
- * This is not even compile tested, so it needs testing and
-   benchmarking, as I do not even know how costly the calls to
-   open/close are when we do not have to call iconv() itself.
+Turning "grep.extendedregexp" from boolean to an extended boolean to
+allow "grep.extendedregexp = perl" might be a better alternative.
+That way, the user wouldn't have to worry about 7 variants of
+grep.fooRegexp variables twenty years down the road, even though the
+set of possible values given to "grep.extendedregexp" may have grown
+over time by then.
 
-   This was brought up by Linus (Cc'ed) in http://goo.gl/INWVc
-
- compat/precompose_utf8.c | 24 ++++++++++++++++++------
- compat/precompose_utf8.h |  1 +
- 2 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index d40d1b3..63ce89f 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -67,7 +67,7 @@ void probe_utf8_pathname_composition(char *path, int len)
- 
- void precompose_argv(int argc, const char **argv)
- {
--	int i = 0;
-+	int i;
- 	const char *oldarg;
- 	char *newarg;
- 	iconv_t ic_precompose;
-@@ -75,11 +75,19 @@ void precompose_argv(int argc, const char **argv)
- 	if (precomposed_unicode != 1)
- 		return;
- 
-+	/* Avoid iconv_open()/iconv_close() if there is nothing to convert */
-+	for (i = 0; i < argc; i++) {
-+		if (has_utf8(argv[i], (size_t)-1, NULL))
-+			break;
-+	}
-+	if (i < argc)
-+		return;
-+
- 	ic_precompose = iconv_open(repo_encoding, path_encoding);
- 	if (ic_precompose == (iconv_t) -1)
- 		return;
- 
--	while (i < argc) {
-+	for (i = 0; i < argc; i++) {
- 		size_t namelen;
- 		oldarg = argv[i];
- 		if (has_utf8(oldarg, (size_t)-1, &namelen)) {
-@@ -87,7 +95,6 @@ void precompose_argv(int argc, const char **argv)
- 			if (newarg)
- 				argv[i] = newarg;
- 		}
--		i++;
- 	}
- 	iconv_close(ic_precompose);
- }
-@@ -106,8 +113,7 @@ PREC_DIR *precompose_utf8_opendir(const char *dirname)
- 		return NULL;
- 	} else {
- 		int ret_errno = errno;
--		prec_dir->ic_precompose = iconv_open(repo_encoding, path_encoding);
--		/* if iconv_open() fails, die() in readdir() if needed */
-+		prec_dir->iconv_opened = 0;
- 		errno = ret_errno;
- 	}
- 
-@@ -136,6 +142,11 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
- 		prec_dir->dirent_nfc->d_type = res->d_type;
- 
- 		if ((precomposed_unicode == 1) && has_utf8(res->d_name, (size_t)-1, NULL)) {
-+			if (!prec_dir->iconv_opened) {
-+				prec_dir->ic_precompose =
-+					iconv_open(repo_encoding, path_encoding);
-+				prec_dir->iconv_opened = 1;
-+			}
- 			if (prec_dir->ic_precompose == (iconv_t)-1) {
- 				die("iconv_open(%s,%s) failed, but needed:\n"
- 						"    precomposed unicode is not supported.\n"
-@@ -181,7 +192,8 @@ int precompose_utf8_closedir(PREC_DIR *prec_dir)
- 	int ret_errno;
- 	ret_value = closedir(prec_dir->dirp);
- 	ret_errno = errno;
--	if (prec_dir->ic_precompose != (iconv_t)-1)
-+	if (prec->dir->iconv_opened &&
-+	    (prec_dir->ic_precompose != (iconv_t)-1))
- 		iconv_close(prec_dir->ic_precompose);
- 	free(prec_dir->dirent_nfc);
- 	free(prec_dir);
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index 3b73585..8de485e 100644
---- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -22,6 +22,7 @@ typedef struct dirent_prec_psx {
- 
- typedef struct {
- 	iconv_t ic_precompose;
-+	int iconv_opened;
- 	DIR *dirp;
- 	struct dirent_prec_psx *dirent_nfc;
- } PREC_DIR;
--- 
-1.7.12.rc1.43.g3fa3e7e
+> ---
+>  Documentation/config.txt   |  6 ++++++
+>  Documentation/git-grep.txt |  6 ++++++
+>  builtin/grep.c             | 17 +++++++++++++++--
+>  t/t7810-grep.sh            | 34 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 61 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index a95e5a4..ff3019b 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1213,6 +1213,12 @@ grep.lineNumber::
+>  grep.extendedRegexp::
+>  	If set to true, enable '--extended-regexp' option by default.
+>
+> +grep.perlRegexp::
+> +	If set to true, enable '--perl-regexp' option by default.
+> +
+> +When both the 'grep.extendedRegexp' and 'grep.perlRegexp' options
+> +are used, the last enabled option wins.
+> +
+>  gpg.program::
+>  	Use this custom program instead of "gpg" found on $PATH when
+>  	making or verifying a PGP signature. The program must support the
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 3bec036..8816968 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -45,6 +45,12 @@ grep.lineNumber::
+>  grep.extendedRegexp::
+>  	If set to true, enable '--extended-regexp' option by default.
+>
+> +grep.perlRegexp::
+> +	If set to true, enable '--perl-regexp' option by default.
+> +
+> +When both the 'grep.extendedRegexp' and 'grep.perlRegexp' options
+> +are used, the last enabled option wins.
+> +
+>
+>  OPTIONS
+>  -------
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 29adb0a..b4475e6 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -268,11 +268,24 @@ static int grep_config(const char *var, const char *value, void *cb)
+>  	if (userdiff_config(var, value) < 0)
+>  		return -1;
+>
+> +	if (!strcmp(var, "grep.perlregexp")) {
+> +		if (git_config_bool(var, value)) {
+> +			opt->fixed = 0;
+> +			opt->pcre = 1;
+> +		} else {
+> +			opt->pcre = 0;
+> +		}
+> +		return 0;
+> +	}
+> +
+>  	if (!strcmp(var, "grep.extendedregexp")) {
+> -		if (git_config_bool(var, value))
+> +		if (git_config_bool(var, value)) {
+>  			opt->regflags |= REG_EXTENDED;
+> -		else
+> +			opt->pcre = 0;
+> +			opt->fixed = 0;
+> +		} else {
+>  			opt->regflags &= ~REG_EXTENDED;
+> +		}
+>  		return 0;
+>  	}
+>
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index 24e9b19..5479dc9 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -729,6 +729,40 @@ test_expect_success LIBPCRE 'grep -P pattern' '
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success LIBPCRE 'grep pattern with grep.perlRegexp=true' '
+> +	git \
+> +		-c grep.perlregexp=true \
+> +		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success LIBPCRE 'grep pattern with grep.perlRegexp=true and then grep.extendedRegexp=true' '
+> +	test_must_fail git \
+> +		-c grep.perlregexp=true \
+> +		-c grep.extendedregexp=true \
+> +		grep "\p{Ps}.*?\p{Pe}" hello.c
+> +'
+> +
+> +test_expect_success LIBPCRE 'grep pattern with grep.extendedRegexp=true and then grep.perlRegexp=true' '
+> +	git \
+> +		-c grep.extendedregexp=true \
+> +		-c grep.perlregexp=true \
+> +		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success LIBPCRE 'grep -E pattern with grep.perlRegexp=true' '
+> +	test_must_fail git \
+> +		-c grep.perlregexp=true \
+> +		grep -E "\p{Ps}.*?\p{Pe}" hello.c
+> +'
+> +
+> +test_expect_success LIBPCRE 'grep -G pattern with grep.perlRegexp=true' '
+> +	test_must_fail git \
+> +		-c grep.perlregexp=true \
+> +		grep -G "\p{Ps}.*?\p{Pe}" hello.c
+> +'
+> +
+>  test_expect_success 'grep pattern with grep.extendedRegexp=true' '
+>  	>empty &&
+>  	test_must_fail git -c grep.extendedregexp=true \
+> --
+> 1.7.11.3
