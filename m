@@ -1,103 +1,157 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 0/2] test results for v1.7.12-rc0 on cygwin
-Date: Tue, 31 Jul 2012 18:38:55 +0100
-Message-ID: <5018182F.5000501@ramsay1.demon.co.uk>
-References: <50143379.8050500@ramsay1.demon.co.uk> <5014FAE6.7080009@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] macos: lazily initialize iconv
+Date: Tue, 31 Jul 2012 10:52:11 -0700
+Message-ID: <7vk3xjked0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Jul 31 19:41:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jul 31 19:52:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwGS5-0006S7-EP
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 19:41:49 +0200
+	id 1SwGcK-0002nm-5h
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 19:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618Ab2GaRlo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jul 2012 13:41:44 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:37788 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753547Ab2GaRln (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 13:41:43 -0400
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id CB4C4128074;
-	Tue, 31 Jul 2012 18:41:41 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 042BB128072;	Tue, 31 Jul 2012 18:41:41 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tch.inty.net (Postfix) with ESMTP;	Tue, 31 Jul 2012 18:41:37 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <5014FAE6.7080009@lsrfire.ath.cx>
-X-MDF-HostID: 22
+	id S1752623Ab2GaRwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 13:52:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62236 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752279Ab2GaRwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 13:52:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D031D7030;
+	Tue, 31 Jul 2012 13:52:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=/
+	I5YYaKu4yG4qeF+DEgw+e4TCNM=; b=lY51QKmu3O1JmdUK4WhzJN0lpqd9XaM2j
+	5AIqx0yBi7subdXUDHMs55yjZ6dJpJBq3LGH+oBZdJ24oJnA378PB2CYgudCumyL
+	y8RJnvyxvciv3bTQfqx6Qc73rax54EHDk84o5rj1gIVoM9NEcPhdfeOQX/F+Ily2
+	YfBdqFay6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=olRv42ci5aEl1sQuVhcKeoPS3kUbl/NEaJqyxIsQumG4l7wnWXi9JoU+
+	0WSBUv+S08/Xb8ha+M1HJzWwb48Q8CoJhbdImtxzRe5mOQrIJc+K88aL/pf928/e
+	WzNrNLDbWOE+k0EhvezyjD3LjmPbnDzTpQPWTG1vrH7VfgzeQsY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE1B0702F;
+	Tue, 31 Jul 2012 13:52:13 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A1CC702D; Tue, 31 Jul 2012
+ 13:52:12 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 754D82D2-DB38-11E1-8E90-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202662>
 
-Ren=E9 Scharfe wrote:
-> Am 28.07.2012 20:46, schrieb Ramsay Jones:
->> Unfortunately, I was unable to reproduce the final failure in t7810-=
-grep.sh.
->> I tried, among other things, to provoke a failure thus:
->>
->>      $ for i in $(seq 100); do
->>      > if ! ./t7810-grep.sh -i -v; then
->>      >     break;
->>      > fi
->>      > done
->>      $
->>
->> but, apart from chewing on the cpu for about 50 minutes, it didn't r=
-esult
->> in a failure. :(
->>
->> However, after looking at test 59, it seems to me to be a stale (red=
-undant)
->> test. So, patch #2 removes that test! :-D [I wish I could reproduce =
-the
->> failure because I don't like not knowing why it failed, but ...]
->=20
-> Removing the test makes sense, since it was needed for --ext-grep onl=
-y,=20
-> is relatively expensive and a bit fragile (by depending on MAXARGS).
+In practice, the majority of paths do not have any utf8 character
+that needs the canonicalization.  Lazily call iconv_open() and
+iconv_close() to avoid unnecessary overhead.
 
-Indeed.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> I'm slightly worried about the non-reproducible failure, though.
+ * This is not even compile tested, so it needs testing and
+   benchmarking, as I do not even know how costly the calls to
+   open/close are when we do not have to call iconv() itself.
 
-Yep, me too.
+   This was brought up by Linus (Cc'ed) in http://goo.gl/INWVc
 
-> Perhaps a timing issue is involved and chances are higher if you leav=
-e=20
-> out the option -v?
+ compat/precompose_utf8.c | 24 ++++++++++++++++++------
+ compat/precompose_utf8.h |  1 +
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-Yes, one of the "among other things" I tried was to drop the -v, but th=
-e
-end result was the same. Also, since I have "DEFAULT_TEST_TARGET=3Dprov=
-e"
-in my config.mak, I tried:
-
-    $ for i in $(seq 100); do
-    > if ! prove --exec sh t7810-grep.sh; then
-    >     break;
-    > fi
-    > done
-    $
-
-But again, it didn't provoke a failure (it did run quite a bit faster .=
-=2E.).
-
-I have now run this test file in excess of 600 times without failure in=
- the
-last two evenings (taking about 5-6 hours wallclock time).
-[I haven't come remotely close to running the test-suite 600 times on
-cygwin in the last 6 years ...]
-
-So, I'm out of ideas (and will stop trying to reproduce the failure).
-
-ATB,
-Ramsay Jones
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index d40d1b3..63ce89f 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -67,7 +67,7 @@ void probe_utf8_pathname_composition(char *path, int len)
+ 
+ void precompose_argv(int argc, const char **argv)
+ {
+-	int i = 0;
++	int i;
+ 	const char *oldarg;
+ 	char *newarg;
+ 	iconv_t ic_precompose;
+@@ -75,11 +75,19 @@ void precompose_argv(int argc, const char **argv)
+ 	if (precomposed_unicode != 1)
+ 		return;
+ 
++	/* Avoid iconv_open()/iconv_close() if there is nothing to convert */
++	for (i = 0; i < argc; i++) {
++		if (has_utf8(argv[i], (size_t)-1, NULL))
++			break;
++	}
++	if (i < argc)
++		return;
++
+ 	ic_precompose = iconv_open(repo_encoding, path_encoding);
+ 	if (ic_precompose == (iconv_t) -1)
+ 		return;
+ 
+-	while (i < argc) {
++	for (i = 0; i < argc; i++) {
+ 		size_t namelen;
+ 		oldarg = argv[i];
+ 		if (has_utf8(oldarg, (size_t)-1, &namelen)) {
+@@ -87,7 +95,6 @@ void precompose_argv(int argc, const char **argv)
+ 			if (newarg)
+ 				argv[i] = newarg;
+ 		}
+-		i++;
+ 	}
+ 	iconv_close(ic_precompose);
+ }
+@@ -106,8 +113,7 @@ PREC_DIR *precompose_utf8_opendir(const char *dirname)
+ 		return NULL;
+ 	} else {
+ 		int ret_errno = errno;
+-		prec_dir->ic_precompose = iconv_open(repo_encoding, path_encoding);
+-		/* if iconv_open() fails, die() in readdir() if needed */
++		prec_dir->iconv_opened = 0;
+ 		errno = ret_errno;
+ 	}
+ 
+@@ -136,6 +142,11 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ 		prec_dir->dirent_nfc->d_type = res->d_type;
+ 
+ 		if ((precomposed_unicode == 1) && has_utf8(res->d_name, (size_t)-1, NULL)) {
++			if (!prec_dir->iconv_opened) {
++				prec_dir->ic_precompose =
++					iconv_open(repo_encoding, path_encoding);
++				prec_dir->iconv_opened = 1;
++			}
+ 			if (prec_dir->ic_precompose == (iconv_t)-1) {
+ 				die("iconv_open(%s,%s) failed, but needed:\n"
+ 						"    precomposed unicode is not supported.\n"
+@@ -181,7 +192,8 @@ int precompose_utf8_closedir(PREC_DIR *prec_dir)
+ 	int ret_errno;
+ 	ret_value = closedir(prec_dir->dirp);
+ 	ret_errno = errno;
+-	if (prec_dir->ic_precompose != (iconv_t)-1)
++	if (prec->dir->iconv_opened &&
++	    (prec_dir->ic_precompose != (iconv_t)-1))
+ 		iconv_close(prec_dir->ic_precompose);
+ 	free(prec_dir->dirent_nfc);
+ 	free(prec_dir);
+diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+index 3b73585..8de485e 100644
+--- a/compat/precompose_utf8.h
++++ b/compat/precompose_utf8.h
+@@ -22,6 +22,7 @@ typedef struct dirent_prec_psx {
+ 
+ typedef struct {
+ 	iconv_t ic_precompose;
++	int iconv_opened;
+ 	DIR *dirp;
+ 	struct dirent_prec_psx *dirent_nfc;
+ } PREC_DIR;
+-- 
+1.7.12.rc1.43.g3fa3e7e
