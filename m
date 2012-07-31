@@ -1,97 +1,71 @@
-From: jaseem abid <jaseemabid@gmail.com>
-Subject: Need help to complete the proposed gsoc 2012 project
-Date: Wed, 1 Aug 2012 00:59:03 +0530
-Message-ID: <CAH-tXsByoeEWA0MZHp-xvJCpRZEXQT6G3M_MJYy+HwauW0ci0Q@mail.gmail.com>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
+Date: Tue, 31 Jul 2012 21:31:16 +0200
+Message-ID: <2351904.F5IazNUWoD@flomedio>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <19477122.a5lMBqWgns@flomedio> <20120730165502.GB8515@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 21:29:58 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 21:31:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwI8c-0005OU-Rb
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:29:51 +0200
+	id 1SwIAU-0006oD-8l
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701Ab2GaT3p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jul 2012 15:29:45 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:53370 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472Ab2GaT3o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2012 15:29:44 -0400
-Received: by wibhm11 with SMTP id hm11so3239562wib.1
-        for <git@vger.kernel.org>; Tue, 31 Jul 2012 12:29:43 -0700 (PDT)
+	id S1754130Ab2GaTbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 15:31:24 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:58456 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755231Ab2GaTbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 15:31:21 -0400
+Received: by bkwj10 with SMTP id j10so3449217bkw.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 12:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tXQOcWtFIpsH93jPq2rn/3qN9LThcK4a3fn0Fv7IEqs=;
-        b=hMfqVRBtAEHZkGH7hiP0JwCRAa7HfcwVbRgAMXwB6oB1cUtz0IKAFW/r9921MxR/ha
-         lsUTxMtlOGBbJtCj5qgOBRpMMDmEdoLY4gx1I/VvqGU9SaGsKU/sF//dnSNLTp/HCX/k
-         fiOeInOGL72ES2uUvtGp4+6JaVeYoQlGmSG02xzlg3u1VJQmpDMQoyIb1mMbVjFrNjJo
-         4rNW19QwwZjIpZfKZd+teFp4RwTfkuL2MihuDH0g3DdGl3xdqrbsIWOOvESQ5qFIQ+m3
-         SuIMGJ8xAhA5Sx1HXX4FvCApdISuIBPdma2IFAGFCG3Ga5XDDIu11bRKgoxHIsuqAutT
-         uwzA==
-Received: by 10.180.81.193 with SMTP id c1mr5197464wiy.12.1343762983373; Tue,
- 31 Jul 2012 12:29:43 -0700 (PDT)
-Received: by 10.227.30.133 with HTTP; Tue, 31 Jul 2012 12:29:03 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=+ahaTBEY/jkA/aTwP97E2IYs47zsOWPwvo4SC/8GN8w=;
+        b=Zohjh9Oszn5sWuN+YHn1EULblYSz0VeQ7nl92Y0qIzJ9BMd+sNuMrtTDIYMr4gJMI1
+         vuLaeqABupG1PBpHNroBtYw9bxeRnWH+u3RWFgyYhFDSPEtS+knn3aLvHO4QXobOE44g
+         5gdZS4vaKpZWNOp6mNn5yx9/jXyqXCad+F2DrZwzZuixmXDfrSfyqFxmcIqYXvWBhI3L
+         kO93ki+y75a7HnMuM+p4UCrltqEoO1kMy8kNt446+TRLoMjVUkKLwCT1qiJfzU6uSIh/
+         SoZy2ERTCxj5xHk8pBk9Lu9bU3bUqdWsuoO/SEP/BUlfoFg8NlJCJXLB0gTVmiTgc9+j
+         X0Lg==
+Received: by 10.204.132.77 with SMTP id a13mr5690756bkt.99.1343763080078;
+        Tue, 31 Jul 2012 12:31:20 -0700 (PDT)
+Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
+        by mx.google.com with ESMTPS id 14sm597858bkw.15.2012.07.31.12.31.18
+        (version=SSLv3 cipher=OTHER);
+        Tue, 31 Jul 2012 12:31:19 -0700 (PDT)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <20120730165502.GB8515@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202675>
 
-Dear list,
+On Monday 30 July 2012 11:55:02 Jonathan Nieder wrote:
+> Florian Achleitner wrote:
+> > Hm .. that would mean, that both fast-import and git (transport-helper)
+> > would write to the remote-helper's stdin, right?
+> 
+> Yes, first git writes the list of refs to import, and then fast-import
+> writes feedback during the import.  Is that a problem?
 
-Project					: Use JavaScript library / framework in gitweb
-Project Description		        : https://github.com/peff/git/wiki/SoC-201=
-2-Ideas
-Code 					: https://github.com/jaseemabid/git/commits/gitweb
+I haven't tried that yet, nor do I remember anything where I've already seen 
+two processes writing to the same pipe.
+At least it sounds cumbersome to me. Processes' lifetimes overlap, so buffering 
+and flushing could mix data.
+We have to use it for both purposes interchangably  because there can be more 
+than one import command to the remote-helper, of course.
 
-	The project was proposed by Jakub Nar=C4=99bski for GOSC 2012 but was =
-not taken
-up because git didn't get enough slots from Google. I almost completed =
-the work
-and now I am stuck at a stage where I cant move forward without some he=
-lp from
-the community. Jakub and Andrew Sayers used to help me but they are bus=
-y with
-their own work and are not available.
-
-	The JavaScript in gitweb was re-implementing a lot of features which a=
- lot
-of common libraries did a several times already. For example, sending a=
-n Ajax
-request or DOM manipulation required different code in different browse=
-rs. The
-project aims to clean up the JavaScript using such a library. As of now=
-, I have
-ported all of the existing features to a cleaner version using JQuery, =
-and I am
-ready to work on more features if required.
-
-	I have also added tests for JavaScript which didn't exist before using=
- mocha
-BDD testing framework, which can be run in both console with node.js pr=
-oducing
-TAP formatted output and in browsers. I have not introduced any UI chan=
-ges. The
-old CSS was used without modifications. Code quality was taken into goo=
-d
-account. All code is JSLint valid now.
-
-Here is the detailed project status, todo, known bugs and commit notes =
-:
-https://gist.github.com/3218461
-
-Any help will be greatly appreciated.
-
-Regards,
-
-Jaseem Abid
-http://jaseemabid.github.com
+Will try that in test-program..
