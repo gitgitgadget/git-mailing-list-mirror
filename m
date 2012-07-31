@@ -1,56 +1,58 @@
-From: Jialin Liu <jialinliu7@gmail.com>
-Subject: a error in git documentation
-Date: Mon, 30 Jul 2012 22:38:50 -0400
-Message-ID: <DBDC25FF-7978-49BF-AB39-5EF9496F5456@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.0 \(1485\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: vishwajeet singh <dextrous85@gmail.com>
+Subject: GIT smart http vs GIT over ssh
+Date: Tue, 31 Jul 2012 08:36:07 +0530
+Message-ID: <CACbucKnj5tqtAX5tJRRp+O8MA=tMD_xESsREPcAwffNS6Kvfag@mail.gmail.com>
+References: <CACbucKmOxKLpY-iHDpX3GJ7BGsipR9hhXm8UA1hdbNdCzNMMRw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 31 04:38:55 2012
+X-From: git-owner@vger.kernel.org Tue Jul 31 05:07:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sw2MJ-0000Q6-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 04:38:55 +0200
+	id 1Sw2nl-0002oT-18
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 05:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753826Ab2GaCiu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jul 2012 22:38:50 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:63346 "EHLO
+	id S1754810Ab2GaDGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jul 2012 23:06:31 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:50201 "EHLO
 	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476Ab2GaCit convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jul 2012 22:38:49 -0400
-Received: by gglu4 with SMTP id u4so5599171ggl.19
-        for <git@vger.kernel.org>; Mon, 30 Jul 2012 19:38:48 -0700 (PDT)
+	with ESMTP id S1754123Ab2GaDGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jul 2012 23:06:30 -0400
+Received: by gglu4 with SMTP id u4so5614739ggl.19
+        for <git@vger.kernel.org>; Mon, 30 Jul 2012 20:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version:x-mailer;
-        bh=SY0FjRBxWZHNzT9SQcitWXWUV9ssfKrQ1EQt29DyJ+E=;
-        b=zBrtWQlPqnvRGpCi8BRWYh5rAlHtZ9+ozEPlns4ZSbJ7WPmM9ceXiMc4EwSMJ2rz8k
-         +vfK/AIVrPQxNVsZaHNCiXAcXLjpiy9tv6YY4Z3ZfaGZH3x0lxMyck4u4ed9WKqHTF4T
-         4OjWPUN9xr/NGpF33c8opAJQLHaSTWru4q2sWGKFPpixHIkaAxa6gN+Y2mAJkq7p8xeP
-         /1+CrONt0YhEicAbRZ31WD1hudF6fwDl/LPJM8LcbBog/sYqd3vgVKFGBNVfryHaNTcO
-         uk8oaF7uOhSOgLcbLLzDIHSQOvTydKo+Y68LM/C6wuM2maFbENZ96hXN9vE9kQqUCPvA
-         DPgg==
-Received: by 10.50.213.98 with SMTP id nr2mr574907igc.71.1343702328392;
-        Mon, 30 Jul 2012 19:38:48 -0700 (PDT)
-Received: from [192.168.1.103] (cpe-184-58-119-100.woh.res.rr.com. [184.58.119.100])
-        by mx.google.com with ESMTPS id ch4sm8128601igb.2.2012.07.30.19.38.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Jul 2012 19:38:47 -0700 (PDT)
-X-Mailer: Apple Mail (2.1485)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=lgbrEMrqOL9JBVJR6Z13W4vjuxkw8SBoN77Bx3odxR4=;
+        b=ZmkeL1AUe9SzEYWcx6fs4zorbtAXn5dl6xfQbS8+cVHh5G2sZU1gqQw56YYZoW0E0b
+         kz2O0Z/cxMHnnXvE1LttKcx1jtc+mLieWFxLVd7KpZvwa2T6xcHgF0T5Kulcdw7J1nQ4
+         dzi+K0bA+na6glDsHKyAPLTp41v9G1d3Ubo/VUlQIDzVqbeadvlq7HJ8mhWzBde9IwTj
+         NeysEZyTZIh/pN+V4jFoq9wyshE1xI0+DrqjhuM7rIkJ486aoZe5+eDolXTwGrq7nZuY
+         798AWQrhWbiDJYVSHahFlwRQDAnVbutrPJ+x34OtjX8gv0Jb9l5hzuatXjBsTOWJNKnC
+         AMFA==
+Received: by 10.50.6.229 with SMTP id e5mr803503iga.9.1343703989123; Mon, 30
+ Jul 2012 20:06:29 -0700 (PDT)
+Received: by 10.64.15.70 with HTTP; Mon, 30 Jul 2012 20:06:07 -0700 (PDT)
+In-Reply-To: <CACbucKmOxKLpY-iHDpX3GJ7BGsipR9hhXm8UA1hdbNdCzNMMRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202626>
 
-In http://git-scm.com/book/en/Git-Basics-Recording-Changes-to-the-Repos=
-itory
+Dear All,
 
-Notice how you don=92t have to run git add on the benchmarks.rb file in=
- this case before you commit.
+Just wanted to know the difference between smart http and ssh and in
+what scenarios we need them
+I am setting up a git server,  can I just do with smart http support
+or I need to enable the ssh support to use git effectively.
+As I understand github provides both the protocols, what's the reason
+for supporting both protocols.
 
-I think how should be changed to now
+
+Regards,
+Vishwajeet Singh
