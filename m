@@ -1,97 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: post-receive hooks based on push content
-Date: Tue, 31 Jul 2012 12:07:34 -0700
-Message-ID: <7vsjc7iwax.fsf@alter.siamese.dyndns.org>
-References: <CAC=i8BzHi6UF=GEAiEdUzcjQM3NjibPw=p5S2uOeaE31nDkkjA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [WIP PATCH] Manual rename correction
+Date: Tue, 31 Jul 2012 15:23:42 -0400
+Message-ID: <20120731192342.GB30808@sigill.intra.peff.net>
+References: <20120731141536.GA26283@do>
+ <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jessica Lucci <jessicalucci14@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 21:08:10 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 21:23:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwHnd-0006Cm-MO
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:08:10 +0200
+	id 1SwI2q-0000mp-Ql
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 21:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207Ab2GaTHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 15:07:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37970 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752549Ab2GaTHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 15:07:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6A9C86B3;
-	Tue, 31 Jul 2012 15:07:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5WxUwFesvxJIYkgVLgLivAAoFgY=; b=u+r2+U
-	rFi4vRqtfovGoQkqh5gsnNI9IlMLfc51cQJRZn3jqzWedTdARoi++8+a+sESR2A1
-	K4TB2WGeMJR2DyijTXZLw8pHXg8QYQkgLJgs5wYj1t1OSsuZRln+kA8bQWo+21vD
-	Mml8zFyEw+d3TbHqEu4Yk4HyOsRZY8SyLP9XU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mpwr9vSzluqRcfO0+oBjCZtDdPzQ0/zk
-	yMatChnSds+x7S1CWMArv3FB0vjlzlaUpu5nFAjTyv0GAo3EaPwsZ+lyWu9gueMH
-	Epyv0xzcjqOdkqFy9I0YZTWieeujawJes8l19DVme/3Rw5yO+JbJp3itU9Iy/2Hz
-	q0dx1iA76Pk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D414E86B2;
-	Tue, 31 Jul 2012 15:07:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 385F486B1; Tue, 31 Jul 2012
- 15:07:36 -0400 (EDT)
-In-Reply-To: <CAC=i8BzHi6UF=GEAiEdUzcjQM3NjibPw=p5S2uOeaE31nDkkjA@mail.gmail.com> (Jessica
- Lucci's message of "Tue, 31 Jul 2012 13:27:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD5570B8-DB42-11E1-B9A5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752625Ab2GaTXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 15:23:47 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43669 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206Ab2GaTXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 15:23:46 -0400
+Received: (qmail 31054 invoked by uid 107); 31 Jul 2012 19:23:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Jul 2012 15:23:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2012 15:23:42 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202672>
 
-Jessica Lucci <jessicalucci14@gmail.com> writes:
+On Tue, Jul 31, 2012 at 09:32:49AM -0700, Junio C Hamano wrote:
 
-> Hey guys,
->
-> I'm trying to set up a post-receive hook that redirects code based on
-> the content of the actual push. Specifically, I'm trying to set up
-> automatic deployment of web apps with the option of sending the code
-> to a build farm first. For example, if you push your code to a git
-> repo, there should be a post-receive hook in there that looks to see
-> if /www is empty or something. If /www is empty, the app has yet to be
-> "built", so the hook should push the code to a build farm that can
-> compile the code into a WAR file (or whatever is appropriate). If /www
-> is already populated, we assume the code has already been compiled and
-> will then push the code directly onto the node.
->
-> So, first of all, is this even possible?
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> 
+> > The above output is done with "git diff --manual-rename=foo A B"
+> > and "foo" contains (probably not in the best format though)
+> >
+> > -- 8< --
+> > attr.c dir.c
+> > dir.c attr.c
+> > -- 8< --
+> > ...
+> > Comments?
+> 
+> It is a good direction to go in, I would think, to give users a way
+> to explicitly tell that "in comparison between these two trees, I
+> know path B in the postimage corresponds to path A in the preimage".
 
-Should be.
+I do not think that is the right direction. Let's imagine that I have a
+commit "A" and I annotate it (via notes or whatever) to say "between
+A^^{tree} and A^{tree}, foo.c became bar.c". That will help me when
+doing "git show" or "git log". But it will not help me when I later try
+to merge "A" (or its descendent). In that case, I will compute the diff
+between "A" and the merge-base (or worse, some descendent of "A" and the
+merge-base), and I will miss this hint entirely.
 
-> And if so, how would I go about writing this specific hook?
+A much better hint is to annotate pairs of sha1s, to say "do not bother
+doing inexact rename correlation on this pair; I promise that they have
+value N". Then it will find that pair no matter which trees or commits
+are being diffed, and it will do so relatively inexpensively[1].
 
-By writing the necessary pieces and then stringing them together?
+That is not fool-proof, of course. You might have a manual rename from
+sha1 X to sha1 Y, and then a slight modification to Y to make Z. So you
+would want some kind of transitivity to notice that X and Z correlate.
+I think you could model it as a graph problem; sha1s are nodes, and each
+"this is a rename" pair of annotated sha1s has an edge between them.
+They are the "same file" if there is a path.
 
- - How do you see /www is empty?  That is one piece.  It is outside
-   of the scope of "git", but it perhaps involves looking at the
-   output of "ls /www" or something.
+Of course that gives you bizarre and counter-intuitive results, because
+X and Z might not actually be that similar. And that is why we have
+rename detection in the first place. The idea of file identity (which
+this fundamentally is) leads to these sorts of weird results.
 
- - How do you know if the app "has yet to be built"?  That is
-   another piece and depends on how your build infrasture is set
-   up.  It is outside of the scope of "git".
+I'm sure you could get better results by weakening the transitivity
+according to the rename score, or something like that. But now you are
+getting pretty complex.
 
- - How do you push the code to a build farm?  You would be using
-   "git push $there $what", and presumably you know where $there is
-   (the repository your build farm reads from).  $what is given as
-   the input for post-receive hook, or you can read the tip of the
-   ref you care about yourself, as your hook will run in the
-   receiving repository of the push.
+-Peff
 
- - How do you push the code to a node?  That would be left as an
-   exercise to the reader ;-), but would be similar to how you push
-   to your build farm, I would imagine.
+[1] We could actually cache rename results by storing pairs of sha1s
+    along with their rename score, and should be able to get a good
+    speedup (we are still src*dst in comparing, but now the comparison
+    is a simple table lookup rather than loading the blobs and computing
+    the differences). If we had such a cache, then manually marking a
+    rename would just be a matter of priming the cache with your manual
+    entries.
