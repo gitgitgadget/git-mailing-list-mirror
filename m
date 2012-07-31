@@ -1,98 +1,84 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH/RFC] l10n: de.po: translate 4 new messages
-Date: Tue, 31 Jul 2012 10:45:41 +0200
-Message-ID: <CAN0XMO+=8rd8qfLUaAyKe58RGb-iQdi3mKHX0wAgdsLfHWHg6Q@mail.gmail.com>
-References: <1343664536-11408-1-git-send-email-ralf.thielow@gmail.com>
-	<alpine.LNX.2.01.1207311009300.11095@frira.zrqbmnf.qr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: GIT smart http vs GIT over ssh
+Date: Tue, 31 Jul 2012 10:47:05 +0200
+Message-ID: <50179B89.4050106@drmicha.warpmail.net>
+References: <CACbucKmOxKLpY-iHDpX3GJ7BGsipR9hhXm8UA1hdbNdCzNMMRw@mail.gmail.com> <CACbucKnj5tqtAX5tJRRp+O8MA=tMD_xESsREPcAwffNS6Kvfag@mail.gmail.com> <20120731031011.GA1685@localhost.localdomain> <CACbucKmEAz2BQCA28LObk_4Vk4S+-T2bAHaszNNR6=tH0mj9pg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@student.ethz.ch, jk@jk.gs, stimming@tuhh.de,
-	worldhello.net@gmail.com, git@vger.kernel.org,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Jan Engelhardt <jengelh@inai.de>
-X-From: git-owner@vger.kernel.org Tue Jul 31 10:45:51 2012
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: 7bit
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org
+To: vishwajeet singh <dextrous85@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 10:47:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sw85M-0003ve-OH
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 10:45:49 +0200
+	id 1Sw86k-0004fJ-38
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 10:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755912Ab2GaIpo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jul 2012 04:45:44 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:57286 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755833Ab2GaIpn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2012 04:45:43 -0400
-Received: by wibhq12 with SMTP id hq12so3133482wib.1
-        for <git@vger.kernel.org>; Tue, 31 Jul 2012 01:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WtbaBHgxwTWIo7jaUl7I017mQ42Wqk0pBw7FHVnpVHE=;
-        b=BbfOQ4tGngKJXf2PV21VOPwTfOkSuP/r1j/oKOPNRhFF7F1fQMxY9PcXj/xdz3nXmu
-         pLzQGaEXVqrzNYRktiZ0POLC2/Y+krXGvYceGkb4h6DEMU7cV9NA0Ge3hVnqIjXdfY0d
-         +EWBhhQPw+fGs6BjayVvmgESn5RnkFIvVGd0NoIwgFpJ7mJ/0aVE6qL7gaip6LBjTuIv
-         C6WP9q5RNce0n6TTOtwuRLQ3js29UO0GRx/UpEOxwjb+H2tQHB/tEz8yuxEwDc8cwGqq
-         mi7kbvUQqQNHgxoM0YCImtZPSJ4wWx8YgHDJgt2y0KvEpjtPXiluZSZ3VmvMex6svtOB
-         IqZg==
-Received: by 10.216.192.85 with SMTP id h63mr6949175wen.7.1343724341839; Tue,
- 31 Jul 2012 01:45:41 -0700 (PDT)
-Received: by 10.194.26.33 with HTTP; Tue, 31 Jul 2012 01:45:41 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.01.1207311009300.11095@frira.zrqbmnf.qr>
+	id S1755932Ab2GaIrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 04:47:08 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45714 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755833Ab2GaIrH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jul 2012 04:47:07 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 37CD5206ED;
+	Tue, 31 Jul 2012 04:47:07 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 31 Jul 2012 04:47:07 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=raLUmKbC1aCpip0E3SRymR
+	e+Ic8=; b=F+VcstMNivmNAEgLwmMjCwfRHXtBBNPaCYMVw7NhYCMQ0FzllmkNF8
+	b4yxi4zZhT5Gq4akhT+pEumWdnC1b/uSE6wOO5krcCiQaDpM39o0OPGCBr8E/NS4
+	7ppjzrrYlc8sRh9L3oR+idUDiw0CxwMdsxeG0ZeR5c2uWqLc1HSYU=
+X-Sasl-enc: tv/bICTEZG0yAiKlCIs2bCaGs/mBGQ6WLnFKrTZr95Yw 1343724426
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 97D3B8E01F7;
+	Tue, 31 Jul 2012 04:47:06 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
+In-Reply-To: <CACbucKmEAz2BQCA28LObk_4Vk4S+-T2bAHaszNNR6=tH0mj9pg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202637>
 
-On Tue, Jul 31, 2012 at 10:13 AM, Jan Engelhardt <jengelh@inai.de> wrot=
-e:
->
-> On Monday 2012-07-30 18:08, Ralf Thielow wrote:
->
->>Translate 4 new messages came from git.pot update in 0bbe5b4
->>(l10n: Update git.pot (4 new, 3 removed messages)).
+vishwajeet singh venit, vidit, dixit 31.07.2012 05:19:
+> On Tue, Jul 31, 2012 at 8:40 AM, Konstantin Khomoutov
+> <kostix+git@007spb.ru> wrote:
+>> On Tue, Jul 31, 2012 at 08:36:07AM +0530, vishwajeet singh wrote:
 >>
->>Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->>---
->>Hi German l10n team,
+>>> Just wanted to know the difference between smart http and ssh and in
+>>> what scenarios we need them
+>>> I am setting up a git server,  can I just do with smart http support
+>>> or I need to enable the ssh support to use git effectively.
+>>> As I understand github provides both the protocols, what's the reason
+>>> for supporting both protocols.
+>> http://git-scm.com/book/en/Git-on-the-Server-The-Protocols
+>> http://git-scm.com/2010/03/04/smart-http.html
 >>
->>please review this small update on German
->>translation.
->
-> Patch is fine from a translation POV;
-> but I wonder where my contributions had gone.
-> =C3=86var, were they ever merged?
->
-> commit 0c3db7e983a58f53cbd468e11937750e155de179
-> Author: Jan Engelhardt <jengelh@medozas.de>
-> Date:   Thu Oct 7 20:52:26 2010 +0200
->
->     po/de.po: complete German translation
->
->     Translate all 689 currently translatable messages in Git into
->     German. Making the German translation 100% complete.
->
->     [=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason: Modified by running msgm=
-erge(1) on it to
->     normalize the line wrapping, and squashed two of Jan's commits
->     together]
->
->     Signed-off-by: Jan Engelhardt <jengelh@medozas.de>
->     Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
-il.com>
->
+> 
+> Thanks for the links, I have already gone through those links, was
+> looking from implementation perspective do I really need to support
+> both protocols on my server or I can just do with smart http and
+> what's the preferred way of doing it smart http or ssh
+> 
+> 
 
-I didn't notice that you made a contribution to the German
-translation. As described
-in po/README, we have a dedicated repository on GitHub [1] which is a
-fork of the
-git-po repo. If you want to contribute you can fork this repo and send
-a pull request,
-or send a patch to the ML. Please read po/README for more informations.
+You need to provide what your users demand ;)
 
-[1] https://github.com/ralfth/git-po-de
+Seriously, this is why GitHub and other providers offer both. Not only
+are some users more comfortable with one protocol or the other (Win
+users don't prefer ssh generally) but some might be able to use only one
+because of firewalls or corporate rules.
+
+>From the server perspective, the setup is completely different, of
+course. Do you have shell accounts already which you want to reuse for
+ssh+git? Do you prefer setting up a special purpose shell account
+(gitosis/gitolite) or setting up a web server with authentication?
+
+Michael
