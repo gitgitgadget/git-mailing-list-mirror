@@ -1,73 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: J Smith <dark.panda@gmail.com>
 Subject: Re: [PATCH/RFC] grep: add a perlRegexp configuration option
-Date: Tue, 31 Jul 2012 13:30:05 -0700
-Message-ID: <7vboivishe.fsf@alter.siamese.dyndns.org>
+Date: Tue, 31 Jul 2012 16:35:44 -0400
+Message-ID: <CADFUPgfrG75FkSNV6JS22DAciD3CVkNEjKncNJOPkfRQSf41Pg@mail.gmail.com>
 References: <1343753854-66765-1-git-send-email-dark.panda@gmail.com>
- <7vehnrkdrq.fsf@alter.siamese.dyndns.org>
- <CADFUPgfHQCzdnXfby5b+z-pRkt5o6MAVEf_1waWER3iVtM1TZA@mail.gmail.com>
+ <7vehnrkdrq.fsf@alter.siamese.dyndns.org> <CADFUPgfHQCzdnXfby5b+z-pRkt5o6MAVEf_1waWER3iVtM1TZA@mail.gmail.com>
+ <7vboivishe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: J Smith <dark.panda@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 22:30:16 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 31 22:36:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwJ55-0004gM-PX
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 22:30:16 +0200
+	id 1SwJAr-0008CY-2q
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 22:36:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438Ab2GaUaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 16:30:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55451 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751139Ab2GaUaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 16:30:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96EEA9B7A;
-	Tue, 31 Jul 2012 16:30:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6Xl8EsurtFNTamU2thxJOj3AxI8=; b=grHCCy
-	XC3fK5b2UYU7XADnRgq2vWmp8V6kgoFT01E56NcaxV5C6WFAMUO6Gbg0IBitAZRg
-	STy9y2anMsRX1j+S/kI/MBQwgDXsOcp7oFE7q0ywnKhcH8FDQzcc0KOtKdoivsyI
-	Iij8Rj1YIsSGuq/4ICQtwoVrdf40O/1ZbRpzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F2KQRxq6UWJ+Q6NinlZ1PcrdRdP9sWAm
-	Lud5l8GxQf/jgQ2gsQ0rVL+0PciSb3ryY9VLfj9V3yxbnjjHvI/tYSNrTJu4bgKc
-	TeT6qREB/9BLOCYwBEIQj7jXkJMBAUKtCq2W5Cfjmh4BvYd3ZbAoj5RWyiZGECVe
-	bOqT3trvoIs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83FD39B79;
-	Tue, 31 Jul 2012 16:30:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 051E99B77; Tue, 31 Jul 2012
- 16:30:06 -0400 (EDT)
-In-Reply-To: <CADFUPgfHQCzdnXfby5b+z-pRkt5o6MAVEf_1waWER3iVtM1TZA@mail.gmail.com> (J.
- Smith's message of "Tue, 31 Jul 2012 16:20:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 843C1F18-DB4E-11E1-A08A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753727Ab2GaUgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 16:36:09 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:56991 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753405Ab2GaUgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 16:36:05 -0400
+Received: by obbuo13 with SMTP id uo13so11106569obb.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 13:36:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Z83+Hg6lWgRTZYziu9gbFZOQVWzet8pks9eN3SnHgIs=;
+        b=VV6Uuf1u5LASrtorAiaKobR1GMO47vnqFDcPgHqUz7ofIHBdRkO3TfHX1FJQRah5ei
+         QbLgvio5PfmaloMilTL1Cc2BzadkG+Rx1l0jQ7mgUeEbS8YzBEvy07chEY/KuomI0yKV
+         +sCcat9pr6ocMFSa55wSByJmGHfRat6v50iirfkDIaOyxLTVeIZMzBaDhxLzrIJqeF04
+         KwpufNGXHYTep8RdtTIxPY7DLQsV1FH9W4qXb133XhKATIk/r4LFL8mxQiUxdpX328Ng
+         oO5J+WhdZtKZFSs3Lz1Xf1dAJTQQcPOpNTJs4ikkRHXnL5GjLhG8i9Z7yLhypdNFzdWl
+         xppg==
+Received: by 10.182.8.6 with SMTP id n6mr25493781oba.39.1343766964806; Tue, 31
+ Jul 2012 13:36:04 -0700 (PDT)
+Received: by 10.76.168.200 with HTTP; Tue, 31 Jul 2012 13:35:44 -0700 (PDT)
+In-Reply-To: <7vboivishe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202685>
 
-J Smith <dark.panda@gmail.com> writes:
+On Tue, Jul 31, 2012 at 4:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> J Smith <dark.panda@gmail.com> writes:
+>
+>> ... For the sake of completeness (verbosity? pedantry?) I also
+>> included a setting for "extended" which is equivalent to true.
+>
+> Good thinking.
+>
+>> With this sort of change, would a more generic "grep.regexpMode",
+>> "grep.patternType" or something similar perhaps be more descriptive,
+>> with "grep.extendedRegexp" being aliased for backwards compatibility
+>> purposes? I could also add that functionality if desired.
+>
+> A variable called "extendedRegexp" already reads quite naturally if
+> it can have value to say what kind of extendedness is desired, at
+> least to me.  So I do not care too deeply either way.
 
-> ... For the sake of completeness (verbosity? pedantry?) I also
-> included a setting for "extended" which is equivalent to true.
+On the flip side, it might be useful to some to have the option to set
+the value to "fixed" for the "--fixed-strings" argument, in which case
+the option becomes less a type of extended regexp and more of a simple
+search string. Were that to be the case, I think "grep.patternType"
+would feel the most precise.
 
-Good thinking.
-
-> With this sort of change, would a more generic "grep.regexpMode",
-> "grep.patternType" or something similar perhaps be more descriptive,
-> with "grep.extendedRegexp" being aliased for backwards compatibility
-> purposes? I could also add that functionality if desired.
-
-A variable called "extendedRegexp" already reads quite naturally if
-it can have value to say what kind of extendedness is desired, at
-least to me.  So I do not care too deeply either way.
+I think for completeness at the very least I should work in the
+"fixed" value as an valid value, option naming aside.
