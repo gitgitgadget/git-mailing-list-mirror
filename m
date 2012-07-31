@@ -1,73 +1,55 @@
-From: Michael G Schwern <schwern@pobox.com>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Tue, 31 Jul 2012 16:28:11 -0700
-Message-ID: <50186A0B.9050707@pobox.com>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120730203844.GA23892@dcvr.yhbt.net>
- <7v1ujsl8ut.fsf@alter.siamese.dyndns.org> <5017AB63.6080909@pobox.com>
- <20120731200108.GA14462@dcvr.yhbt.net>
- <7vtxwnh6qq.fsf@alter.siamese.dyndns.org>
+From: Ammon Riley <ammon.riley@gmail.com>
+Subject: Broken git-svn tests known?
+Date: Tue, 31 Jul 2012 16:44:54 -0700
+Message-ID: <CAMvPOPuxdtaQPD6T4M7knPFhQbWGk8psp+DKn4gaHxW48WPFOw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca, jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 01:28:19 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 01 01:45:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwLrO-0004jP-Qs
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 01:28:19 +0200
+	id 1SwM7Z-0003Ii-ER
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 01:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756255Ab2GaX2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 19:28:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36432 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755072Ab2GaX2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 19:28:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 074599430;
-	Tue, 31 Jul 2012 19:28:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=Tot4RY6PRS/L
-	gOGyxtVhtMSIFKo=; b=YjaacIO4zeFeFM+8fYCR1Kx/N6ttpNaYvwWBaOWS8gEs
-	LpjxaIUVpyHLNwhCXO/jWfRYxdUzDJHxghlRr2tDp6JxU6LMLBuRuq0STjFMSXsx
-	gcBTUXABL7zrx2aj3zjsOW7tGZcLRI+COV7mFB6CErb0eP2IP/UbYYjoI2ntcTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OkVt0O
-	1XsFPl5+K2dm5SmiedP5a9rtt4CRytj17kMdowyROligJGbkC4qCWIwyM95HHsiS
-	BAYO1zBRilFldNnkHsSine28C7zGPVppEqvgzdBOaRHdD/k8llHlg7uAzJDAal/D
-	7hv//pfSrE+gp9hOvpb0zJGRSyKp2H0quvJtM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E78E9942F;
-	Tue, 31 Jul 2012 19:28:09 -0400 (EDT)
-Received: from [192.168.0.71] (unknown [168.103.236.213]) (using TLSv1 with
- cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7026942E; Tue, 31 Jul
- 2012 19:28:08 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:14.0)
- Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vtxwnh6qq.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.3
-X-Pobox-Relay-ID: 6382C8DA-DB67-11E1-AB5C-01B42E706CDE-02258300!b-pb-sasl-quonix.pobox.com
+	id S1756285Ab2GaXoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 19:44:55 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:46304 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755053Ab2GaXoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 19:44:55 -0400
+Received: by gglu4 with SMTP id u4so6730205ggl.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 16:44:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Zf09UG3vFsmw3ChhSe77diH5fIcOIzToPtRwBZKTCcY=;
+        b=lVpPOAgOKo53TpUSUa96dhkUUguOsIFJSqAfCWiQSHrIV4MUjuIiZu8+VoZIC0Ccw6
+         J9vtEuJaIHipjgxWuY7JBuiOt9Ywclg+a0maSKMGqsFx26NkwNzmH/HrraUZkqMdD+7m
+         WbIQwHve3xFZvA9sXYxXN4/hjWh0XOwDPFpq5auhJ0ltPNPNVb25stmZ9g3j2z7olHWc
+         hnH1cfwFnV9x24JhDj54EeZIFWVRkojWG6650EI2fIyHBLACmk45EHzQ46tvFsDtyvO3
+         Fk3GgH+DK676ihVvtVlAi25lXm8wiZPk91oXKFikFEc8WVD8BRTsashBXpbFd6rgx3V/
+         oyBg==
+Received: by 10.66.73.7 with SMTP id h7mr7908976pav.34.1343778294282; Tue, 31
+ Jul 2012 16:44:54 -0700 (PDT)
+Received: by 10.143.79.1 with HTTP; Tue, 31 Jul 2012 16:44:54 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202697>
 
-On 2012.7.31 4:05 PM, Junio C Hamano wrote:
-> What I won't accept is "maintainability does not matter".  It does.
+Hi,
 
-I'm sorry, that's not what I intended to convey at all.  My reply to Eric lays
-it out more clearly, I think.
+On a freshly checked out copy of the maint branch (0e4c8822), the
+t9100-git-svn-basic.sh tests are failing 21 of 25 tests. Is this
+known, or am I missing some dependencies? Is it possibly due to
+using subversion 1.7?
 
+I've run into a small bug with git-svn, and wanted to make sure
+the test suite still passed with my patch applied.
 
--- 
-Reality is that which, when you stop believing in it, doesn't go away.
-    -- Phillip K. Dick
+Cheers,
+Ammon
