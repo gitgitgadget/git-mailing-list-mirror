@@ -1,95 +1,167 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP PATCH] Manual rename correction
-Date: Tue, 31 Jul 2012 09:32:49 -0700
-Message-ID: <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
-References: <20120731141536.GA26283@do>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 31 18:33:00 2012
+From: J Smith <dark.panda@gmail.com>
+Subject: [PATCH/RFC] grep: add a perlRegexp configuration option
+Date: Tue, 31 Jul 2012 12:57:34 -0400
+Message-ID: <1343753854-66765-1-git-send-email-dark.panda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 31 18:58:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwFNS-0000qC-Ff
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 18:32:58 +0200
+	id 1SwFln-0003TL-Eo
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jul 2012 18:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957Ab2GaQcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 12:32:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52877 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753711Ab2GaQcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 12:32:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9142889E8;
-	Tue, 31 Jul 2012 12:32:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T0Mu5ScQ/dni9Rlf1K9vpQrsLNE=; b=O5Oaet
-	4oJeCrmXYSkBufraas4PiyXtH5ZfBlH0YOzkbgzYjw7ONHNF9j2uL7ibTVOjsIj+
-	OBOZhkoNFHzmmlvAHusE4xn1YgzH0xLqf3iR4FLvIdq+g/XV3DtONqlfSn3sKi6p
-	NlSU2n5Dn6bRAhessIoPcM6Q5BtYs+MuGh7ZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xb4W0O6rG4XGXrC6KhDctczmdPFm4uP/
-	IxCOhZMy959lJRuFGf7KUgPcvF573nDL1RyD1tRYDCQFn1kW1gV2M6nnD6OzzkIy
-	iBB1orDn9Ru3IHDqpNxfHBRtggo7E19TrtwiCAsrZyXhtFqgAB11jxlIlkO7Tgej
-	HjrLQz8p+FQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F6FE89E7;
-	Tue, 31 Jul 2012 12:32:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E437489E6; Tue, 31 Jul 2012
- 12:32:50 -0400 (EDT)
-In-Reply-To: <20120731141536.GA26283@do> (Nguyen Thai Ngoc Duy's message of
- "Tue, 31 Jul 2012 21:15:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EDDA2EE-DB2D-11E1-A4B2-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752324Ab2GaQ5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 12:57:38 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:46017 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980Ab2GaQ5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 12:57:37 -0400
+Received: by vcbfk26 with SMTP id fk26so6042060vcb.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 09:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=1sfmpHVgBjYoeV1AjQlWDwpLTPmUR+duOLmO+o+ZYxs=;
+        b=K7frXN8biZ1cdRICF5LQY+5ZXplRzX4jx+b4Kg+RQpHogGQVS6j3Y2UBLoPgvyxBz1
+         5lQKICroNNpDfRBQcW6ZAYJ0sRe9nmGW1ZV8YVYoTrKiu2hRQxvZm7ntIMqYNzsYSqfn
+         BOmxI4eDDL4buv0xyx5QgEuIQPo39tJCCj28i4jdx82RdYCHQoqBTgpYNaW618VN8/qw
+         ZFgy6Ce5iIBl7rimglBkmnMRgraHkYXz4n62c0qZsA/42x233ExYPDMtUXZKulqlXisA
+         DrTrzSBXiV8ffhpajTKW+62DvuVfNpt4GSJEZIgTEWU3QRYszgigszbTUOsEU9/A8O29
+         9Jvw==
+Received: by 10.59.7.138 with SMTP id dc10mr3093283ved.8.1343753856391;
+        Tue, 31 Jul 2012 09:57:36 -0700 (PDT)
+Received: from localhost.localdomain (surf3.net.rss.rogers.com. [24.114.255.3])
+        by mx.google.com with ESMTPS id cz2sm539168vdb.3.2012.07.31.09.57.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 31 Jul 2012 09:57:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202659>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Enables the -P flag for perl regexps by default. When both the
+perlRegexp and extendedRegexp options are enabled, the last enabled
+option wins.
+---
+ Documentation/config.txt   |  6 ++++++
+ Documentation/git-grep.txt |  6 ++++++
+ builtin/grep.c             | 17 +++++++++++++++--
+ t/t7810-grep.sh            | 34 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 61 insertions(+), 2 deletions(-)
 
-> The above output is done with "git diff --manual-rename=foo A B"
-> and "foo" contains (probably not in the best format though)
->
-> -- 8< --
-> attr.c dir.c
-> dir.c attr.c
-> -- 8< --
-> ...
-> Comments?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a95e5a4..ff3019b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1213,6 +1213,12 @@ grep.lineNumber::
+ grep.extendedRegexp::
+ 	If set to true, enable '--extended-regexp' option by default.
 
-It is a good direction to go in, I would think, to give users a way
-to explicitly tell that "in comparison between these two trees, I
-know path B in the postimage corresponds to path A in the preimage".
++grep.perlRegexp::
++	If set to true, enable '--perl-regexp' option by default.
++
++When both the 'grep.extendedRegexp' and 'grep.perlRegexp' options
++are used, the last enabled option wins.
++
+ gpg.program::
+ 	Use this custom program instead of "gpg" found on $PATH when
+ 	making or verifying a PGP signature. The program must support the
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 3bec036..8816968 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -45,6 +45,12 @@ grep.lineNumber::
+ grep.extendedRegexp::
+ 	If set to true, enable '--extended-regexp' option by default.
 
-I however wonder why you did this as a separate function that only
-does the explicitly marked ones.  Probably it was easier as a POC to
-do it this way, and that is fine.
++grep.perlRegexp::
++	If set to true, enable '--perl-regexp' option by default.
++
++When both the 'grep.extendedRegexp' and 'grep.perlRegexp' options
++are used, the last enabled option wins.
++
 
-The real version should do this in the same diffcore_rename()
-function, by excluding the paths that the user explicitly told you
-about from the the automatic matching logic, and instead matching
-them up manually; then you can let the remainder of the paths be
-paired by the existing code.
+ OPTIONS
+ -------
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 29adb0a..b4475e6 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -268,11 +268,24 @@ static int grep_config(const char *var, const char *value, void *cb)
+ 	if (userdiff_config(var, value) < 0)
+ 		return -1;
 
-Notice how the non-nullness of rename_dst[i].pair is used as a cue
-to skip the similarity computation in the expensive matrix part of
-diffcore_rename()?  That comes from find_exact_renames() that is
-called earlier in the function.  I would imagine that your logic
-would fit _before_ we call find_exact_renames() as a call to a new
-helper function (e.g. "record_explicit_renames()" perhaps).
-Anything that reduces the cost in the matrix part should come
-earlier, as that reduces the number of pairs we would need to try
-matching up.
++	if (!strcmp(var, "grep.perlregexp")) {
++		if (git_config_bool(var, value)) {
++			opt->fixed = 0;
++			opt->pcre = 1;
++		} else {
++			opt->pcre = 0;
++		}
++		return 0;
++	}
++
+ 	if (!strcmp(var, "grep.extendedregexp")) {
+-		if (git_config_bool(var, value))
++		if (git_config_bool(var, value)) {
+ 			opt->regflags |= REG_EXTENDED;
+-		else
++			opt->pcre = 0;
++			opt->fixed = 0;
++		} else {
+ 			opt->regflags &= ~REG_EXTENDED;
++		}
+ 		return 0;
+ 	}
 
-We might want to introduce a way to express the similarity score for
-such a filepair that was manually constructed when showing the
-result, though.
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 24e9b19..5479dc9 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -729,6 +729,40 @@ test_expect_success LIBPCRE 'grep -P pattern' '
+ 	test_cmp expected actual
+ '
+
++test_expect_success LIBPCRE 'grep pattern with grep.perlRegexp=true' '
++	git \
++		-c grep.perlregexp=true \
++		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success LIBPCRE 'grep pattern with grep.perlRegexp=true and then grep.extendedRegexp=true' '
++	test_must_fail git \
++		-c grep.perlregexp=true \
++		-c grep.extendedregexp=true \
++		grep "\p{Ps}.*?\p{Pe}" hello.c
++'
++
++test_expect_success LIBPCRE 'grep pattern with grep.extendedRegexp=true and then grep.perlRegexp=true' '
++	git \
++		-c grep.extendedregexp=true \
++		-c grep.perlregexp=true \
++		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success LIBPCRE 'grep -E pattern with grep.perlRegexp=true' '
++	test_must_fail git \
++		-c grep.perlregexp=true \
++		grep -E "\p{Ps}.*?\p{Pe}" hello.c
++'
++
++test_expect_success LIBPCRE 'grep -G pattern with grep.perlRegexp=true' '
++	test_must_fail git \
++		-c grep.perlregexp=true \
++		grep -G "\p{Ps}.*?\p{Pe}" hello.c
++'
++
+ test_expect_success 'grep pattern with grep.extendedRegexp=true' '
+ 	>empty &&
+ 	test_must_fail git -c grep.extendedregexp=true \
+--
+1.7.11.3
