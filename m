@@ -1,162 +1,516 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [WIP PATCH] Manual rename correction
-Date: Wed, 1 Aug 2012 17:54:14 -0400
-Message-ID: <20120801215414.GC16233@sigill.intra.peff.net>
-References: <20120731141536.GA26283@do>
- <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
- <20120731192342.GB30808@sigill.intra.peff.net>
- <7vfw87isx1.fsf@alter.siamese.dyndns.org>
- <20120801004238.GA15428@sigill.intra.peff.net>
- <7v8vdzgngo.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] grep: add a grep.patternType configuration setting
+Date: Wed, 01 Aug 2012 14:55:52 -0700
+Message-ID: <7vpq7ae0pj.fsf@alter.siamese.dyndns.org>
+References: <1343845781-69246-1-git-send-email-dark.panda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 23:54:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: J Smith <dark.panda@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 23:56:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwgsF-0002MP-SV
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:54:36 +0200
+	id 1Swgte-00036w-Bx
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756094Ab2HAVyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 17:54:23 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46791 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753778Ab2HAVyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 17:54:21 -0400
-Received: (qmail 10694 invoked by uid 107); 1 Aug 2012 21:54:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Aug 2012 17:54:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Aug 2012 17:54:14 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8vdzgngo.fsf@alter.siamese.dyndns.org>
+	id S1756057Ab2HAVz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 17:55:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38725 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753778Ab2HAVz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 17:55:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AAED93F2;
+	Wed,  1 Aug 2012 17:55:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=T3leJKPzu00dT+NhOHe5vHAx/Tk=; b=iaQNy9
+	svH0JwCWwLzbFfu8G7bbmDn78YcUIDCxnqluQfnOgDgF1RI7+0kNJrUUEO3ILhwU
+	LOM9dIAo2k1iLKaBvTCt1hIVmXRATgGHF/krAVLEcc8FuZfyPFps7LYIPHdUnnRM
+	gVw9Dqdw/Q9Dq7VagOxO2HZsf4V1O3IL87BI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qnIuXG1HCRdGwUna37dpKL8HXYioBKGc
+	Q5qRWJ7dOjAeL2Ztq6broGJQLJFrjUd36UvcfBgza2sVeqzbayMH3FSX5Ytarc3X
+	wJc3R2YQvGj9W2iEnUCURUjHynOjDx0cTEGNb5gd72BBhYzvilypfmUwMMkQukoX
+	xXNFgnpQPAc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27E9593F1;
+	Wed,  1 Aug 2012 17:55:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00AD793EF; Wed,  1 Aug 2012
+ 17:55:53 -0400 (EDT)
+In-Reply-To: <1343845781-69246-1-git-send-email-dark.panda@gmail.com> (J.
+ Smith's message of "Wed, 1 Aug 2012 14:29:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AA7CE664-DC23-11E1-92D2-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202732>
 
-On Tue, Jul 31, 2012 at 11:01:27PM -0700, Junio C Hamano wrote:
+J Smith <dark.panda@gmail.com> writes:
 
-> > @@ -175,6 +177,11 @@ static int estimate_similarity(struct diff_filespec *src,
-> >  	if (max_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
-> >  		return 0;
-> >  
-> > +	hashcpy(pair.one, src->sha1);
-> > +	hashcpy(pair.two, dst->sha1);
-> > +	if (rename_cache_get(&pair, &score))
-> > +		return score;
-> > +
-> 
-> Random thoughts.
-> 
-> Even though your "rename cache" could be used to reject pairing that
-> the similarity estimator would otherwise give high score, I would
-> imagine that in practice, people would always use the mechanism to
-> boost the similarity score of desired pairing.  This conjecture has
-> a few interesting implications.
+As the basic structure and the direction looks good, let's start
+nitpicking ;-)
 
-I agree that is the probable use. But low scores might also have a
-purpose in preventing useless work from being done (IOW, storing a "0"
-score is unlikely to happen manually, but it does let us avoid repeating
-the calculation).
+> Adds the grep.patternType configuration setting which sets the default
+> pattern matching behavior. The values "basic", "extended", "fixed", and
+> "perl" can be used to set "--basic-regexp", "--extended-regexp",
+> "--fixed-strings", and "--perl-regexp" options by default respectively.
 
-As you might have guessed, I am really more interested in caching and
-performance gains than in manual overrides.
+We tend to write the commit log message in imperative mood, as if
+you are giving an order to the codebase to "behave this way!".  Also
+we tend to give the justification behind the change first and then
+present the solution.
 
->  - As we track of only the top NUM_CANDIDATE_PER_DST rename src for
->    each dst (see record_if_better()), you should be able to first
->    see if pairs that have dst exist in your rename cache, and
->    iterate over the <src,dst> pairs, filling m[] with srcs that
->    appear in this particular invocation of diff.
+	There is grep.extendedRegexp configuration variable to
+	enable the -E command line flag by default, but there is no
+	equivalent for the -P (pcre) flag.  We could keep adding
+	grep.fooRegexp variables for different regular expression
+	variants, but that will be unwieldy.
 
-Yes, although I don't know if it makes a big difference. We still run
-estimate_similarity on the candidates to see if they make it into
-record_if_better, and that is the expensive part. I don't think you want
-to change that either (e.g., by assuming that cached scores will always
-be in the top N; it would depend on the particular tree that the cached
-scores came from).
+	Instead, add a "grep.patternType" variable that can be set
+	to "basic", "extended", "fixed" and "perl" to use
+	"--basic-regexp", "--extended-regexp", "--fixed-strings",
+	and "--perl-regexp" options by default respectively.
 
-Of course, that changes if it is not a cache at all, and simply a manual
-override. Or if manual overrides are stored separately and take effect
-first.
+	Ignore grep.extendedRegexp when grep.patternType is set.
 
-But I do not think you even want to care about NUM_CANDIDATE_PER_DST for
-manual overrides. You simply want to take the highest scored one,
-consider the it done, and not run estimate_similarity at all. Even if
-you only had 1 (and NUM_CANDIDATE_PER_DST were 4), there is still no
-point in looking at the others. The manual override should beat it,
-regardless of score.
+> A value of true is equivalent to "extended" as with grep.extendedRegexp,
+> and a value of false leaves the pattern type as unspecified and follows
+> the default grep behavior.
 
->  - If you find NUM_CANDIDATE_PER_DST srcs from your rename cache,
->    you wouldn't have to run estimate_similarity() at all, but that
->    is very unlikely.  We could however declare that user configured
->    similarity boost always wins computed ones, and skip estimation
->    for a dst for which you find an entry in the rename cache.
+With this round, we are not updating an existing a bool variable,
+but are introducing a brand new one; does it still make sense to
+support the boolean values for this new variable?
 
-Right. See above.
+> This setting overrides the value set in grep.extendedRegexp which will
+> be ignored completely if grep.patternType is set.
+> ---
 
->  - As entries in rename cache that record high scores have names of
->    "similar" blobs, pack-objects may be able to take advantage of
->    this information.
+Sign-off?
 
-Yeah, although I suspect it is not as big a win as you might hope.  In
-practice, you're going to diff a lot fewer objects than pack-objects
-would consider, so most of the pack-objects candidate pairs will not
-have a cache entry.  Which means that you really need to not rely on the
-cache (since it is very likely that the best candidate is still to be
-found), and you still do lots of computation.
+>  Documentation/config.txt   |  11 ++-
+>  Documentation/git-grep.txt |  11 ++-
+>  builtin/grep.c             | 106 ++++++++++++++++---------
+>  grep.h                     |   9 +++
+>  t/t7810-grep.sh            | 187 +++++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 284 insertions(+), 40 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index a95e5a4..38d56d8 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1210,8 +1210,17 @@ gitweb.snapshot::
+>  grep.lineNumber::
+>  	If set to true, enable '-n' option by default.
+>
+> +grep.patternType::
+> +	Sets the default matching behavior. This option can be set to a
+> +	boolean value or one of 'basic', 'extended', 'fixed', or 'perl'
+> +	which will enable the '--basic-regexp', '--extended-regexp',
+> +	'--fixed-strings' or '--perl-regexp' options accordingly. The value
+> +	of true is equivalent to 'extended' while false leaves the
+> +	settings in their default state.
 
-You could cache the result of comparisons done by pack-objects, but that
-cache ends up being large. You might remember that one of my very first
-patches was a cache for recording negative delta finds (so we try to
-delta A against B and find that it is not a good match, and record that
-information). Even that cache was huge, and we ended up discarding it in
-favor of Linus's much more sensible "if two things are in the same pack
-and not delta'd, then either they are not a good match, or something
-else is in better" heuristic. But one with full-on similarity scores
-would be even bigger.
+Perhaps s/Sets the/The/ or at least s/Sets/Set/ (notice that the
+description for grep.extendedRegexp says "enable foo", not "enables
+foo").
 
->  - If you declare blobs A and B are similar, it is likely that blobs
->    C, D, E, ... that are created by making a series of small tweaks
->    to B are also similar.  Would it make more sense to introduce a
->    concept of "set of similar blobs" instead of recording pairwise
->    scores for (A,B), (A,C), (A,D), ... (B,C), (B,D), ...?  If so,
->    the body of per-dst loop in diffcore_rename() may become:
+The same comment as above applies to the "boolean"-ness part.
 
-Yes, this is the transitive bit I mentioned elsewhere. I think there are
-dragons lurking there, as you end up with the edges of the set not
-_really_ being that close to each other. You'd probably want some kind
-of weighted association, like if A->B had 80% similarity, and B->C had
-90% similarity, then A->C would be 72%. But even that is not accurate;
-it is just a lower bound. The differences between A->B and B->C might
-overlap, and A->C might be much more similar.
+>  grep.extendedRegexp::
+> -	If set to true, enable '--extended-regexp' option by default.
+> +	If set to true, enable '--extended-regexp' option by default. This
+> +	option is ignored when the 'grep.patternType' option is set.
 
-You can't know the true value without actually finding the score for
-A->C.  And since we output the scores, they should probably be accurate.
+We are not going to make grep.patternType a boolean, so "when ... is
+set" is fine, but if we were to allow grep.patternType to be set to
+"false", the description gives ambiguity to some readers who do.
+Perhaps s/is set/is given/ is safer.
 
-> Regarding your rename-and-tweak-exif photo sets, is the issue that
-> there are too many rename src/dst candidates and filling a large
-> matrix takes a lot of time, or tweaking exif makes the contents
-> unnecessarily dissimilar and causes the similarity detection to
-> fail?
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 3bec036..f56f67f 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -42,8 +42,17 @@ CONFIGURATION
+>  grep.lineNumber::
+>  	If set to true, enable '-n' option by default.
+>
+> +grep.patternType::
+> ...
+>  grep.extendedRegexp::
+> -	If set to true, enable '--extended-regexp' option by default.
+> +	If set to true, enable '--extended-regexp' option by default. This
+> +	option is ignored when the 'grep.patternType' option is set.
 
-The former. We do find the renames; it is just that there are a lot of
-them (and worse, they are large blobs, so estimate_similarity is slow to
-run). I have to use "-l0" just to get the rename to run at all.
+Likewise.
 
-> As we still have the pathname in this codepath, I am wondering if we
-> would benefit from custom "content hash" that knows the nature of
-> payload than the built-in similarity estimator, driven by the
-> attribute mechanism (if the latter is the case, that is).
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 29adb0a..1de7e76 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -260,6 +260,55 @@ static int wait_all(void)
+>  }
+>  #endif
+>
+> +static int parse_pattern_type_arg(const char *opt, const char *arg)
+> +{
+> +	switch (git_config_maybe_bool(opt, arg)) {
+> +	case 1:
+> +		return GREP_PATTERN_TYPE_ERE;
+> +	case 0:
+> +		return GREP_PATTERN_TYPE_UNSPECIFIED;
+> +	default:
+> +		if (!strcmp(arg, "basic"))
+> +			return GREP_PATTERN_TYPE_BRE;
+> +		else if (!strcmp(arg, "extended"))
+> +			return GREP_PATTERN_TYPE_ERE;
+> +		else if (!strcmp(arg, "fixed"))
+> +			return GREP_PATTERN_TYPE_FIXED;
+> +		else if (!strcmp(arg, "perl"))
+> +			return GREP_PATTERN_TYPE_PCRE;
+> +		die("bad %s argument: %s", opt, arg);
+> +	}
 
-Hmm. Interesting. But I don't think that attributes are a good fit here.
-They are pathname based, so how do I apply anything related to
-similarity of a particular version by pathname? IOW, how does it apply
-in one tree but not another?
+Let's not do maybe-bool, as we are not upgrading an old bool-only
+variable any more.
 
--Peff
+> +static void grep_pattern_type_options(const int pattern_type, struct grep_opt *opt)
+> +{
+> +	switch (pattern_type) {
+> +		case GREP_PATTERN_TYPE_BRE:
+> +			opt->fixed = 0;
+> ...
+> +			break;
+> +	}
+
+Please de-dent these lines inside switch() one level; switch and
+case align.
+
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index 523d041..4fa24b4 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -245,11 +245,41 @@ do
+>  		test_cmp expected actual
+>  	'
+>
+> +	test_expect_success "grep $L with grep.patternType=false" '
+> +		echo "ab:a+bc" >expected &&
+> +		git -c grep.patternType=false grep "a+b*c" ab >actual &&
+> +		test_cmp expected actual
+> +	'
+> +
+>  	test_expect_success "grep $L with grep.extendedRegexp=true" '
+>  		echo "ab:abc" >expected &&
+>  		git -c grep.extendedRegexp=true grep "a+b*c" ab >actual &&
+>  		test_cmp expected actual
+>  	'
+> +
+> +	test_expect_success "grep $L with grep.patternType=true" '
+> +		echo "ab:abc" >expected &&
+> +		git -c grep.patternType=true grep "a+b*c" ab >actual &&
+> +		test_cmp expected actual
+> +	'
+> +
+> +	test_expect_success "grep $L with grep.patternType=false and grep.extendedRegexp=true" '
+> +		echo "ab:a+bc" >expected &&
+> +		git \
+> +			-c grep.patternType=false \
+> +			-c grep.extendedRegexp=true \
+> +			grep "a+b*c" ab >actual &&
+> +		test_cmp expected actual
+> +	'
+> +
+> +	test_expect_success "grep $L with grep.patternType=true and grep.extendedRegexp=false" '
+> +		echo "ab:abc" >expected &&
+> +		git \
+> +			-c grep.patternType=true \
+> +			-c grep.extendedRegexp=false \
+> +			grep "a+b*c" ab >actual &&
+> +		test_cmp expected actual
+> +	'
+
+It might make sense to also make sure the order in which the
+configuration variables are given does not make a difference with
+these tests.
+
+> @@ -725,12 +755,43 @@ test_expect_success 'grep pattern with grep.extendedRegexp=true' '
+>  	test_cmp empty actual
+>  '
+>
+> +test_expect_success 'grep pattern with grep.patternType=true' '
+> +	>empty &&
+> +	test_must_fail git -c grep.patternType=true \
+> +		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
+> +	test_cmp empty actual
+> +'
+
+When told to use basic-regexp, PCRE should not be used.  Good.
+
+> +test_expect_success 'grep pattern with grep.patternType=basic and grep.extendedRegexp=true' '
+> +	>empty &&
+> +	test_must_fail git \
+> +		-c grep.patterntype=basic \
+> +		-c grep.extendedregexp=true \
+> +		grep "a?" hello.c >actual &&
+> +	test_cmp empty actual
+> +'
+
+When told to use basic-regexp via patternType, extendedRegexp should
+not be used.  Good.
+
+> +
+> +test_expect_success 'grep pattern with grep.patternType=false and grep.extendedRegexp=true' '
+> +	>empty &&
+> +	test_must_fail git \
+> +		-c grep.patterntype=false \
+> +		-c grep.extendedregexp=true \
+> +		grep "a?" hello.c >actual &&
+> +	test_cmp empty actual
+> +'
+
+With the removal of "bool-or-type", this will become redundant.
+
+>  test_expect_success LIBPCRE 'grep -P pattern with grep.extendedRegexp=true' '
+>  	git -c grep.extendedregexp=true \
+>  		grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success LIBPCRE 'grep pattern with grep.patternType=perl' '
+> +	git -c grep.patternType=perl \
+> +		grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
+> +	test_cmp expected actual
+> +'
+
+What does this test?  grep.patternType=perl configuration is
+correctly overridden by a command line flag -P?  But you cannot tell
+which one turned pcre with this test.  Drop -P from the command
+line, perhaps?
+
+You want a test that runs "git -c grep.patternType=basic grep -P" or
+something, guarded with LIBPCRE prerequisite, to make sure pcre
+patterns are used because command line -P trumps over configured
+default, too.
+
+> @@ -761,44 +822,170 @@ test_expect_success 'grep -G invalidpattern properly dies ' '
+>  	test_must_fail git grep -G "a["
+>  '
+>
+> +test_expect_success 'grep invalidpattern properly dies with grep.patternType=basic' '
+> +	test_must_fail git -c patterntype=basic grep "a["
+> +'
+> +
+>  test_expect_success 'grep -E invalidpattern properly dies ' '
+>  	test_must_fail git grep -E "a["
+>  '
+>
+> +test_expect_success 'grep invalidpattern properly dies with grep.patternType=extended' '
+> +	test_must_fail git -c patterntype=extended grep "a["
+> +'
+> +
+>  test_expect_success LIBPCRE 'grep -P invalidpattern properly dies ' '
+>  	test_must_fail git grep -P "a["
+>  '
+>
+> +test_expect_success LIBPCRE 'grep invalidpattern properly dies with grep.patternType=perl' '
+> +	test_must_fail git -c patterntype=perl grep "a["
+> +'
+> +
+
+These three may not add much value, as long as we make sure that the
+configuration "-c grep.patterntype" triggers the pattern matching
+backend just like command line flags do with other tests.
+
+Besides, I do not think you are testing the right thing in them
+anyway (notice the lack of "grep." prefix).
+
+> +test_expect_success 'grep pattern with grep.patternType=basic, =extended, =fixed' '
+> +	echo "ab:a+b*c" >expected &&
+> +	git \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=fixed \
+> +		grep "a+b*c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+What does this test?  The last one wins?
+
+For the command line flags, people can do "alias g 'git grep -E'"
+and then countermand the flags in the alias by appending a
+contradicting flag when using it, e.g. "g -G", last one wins is a
+defined and useful semantics, but for configuration variables that
+are meant to take a single value, I do not think we give such a
+strong guarantee on ordering (it may happen to work by accident,
+though).
+
+I would _not_ strongly suggest removing this test, but instead wait
+until we hear from others, as they may disagree.
+
+>  test_expect_success 'grep -E -F -G pattern' '
+>  	echo "ab:a+bc" >expected &&
+>  	git grep -E -F -G "a+b*c" ab >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success 'grep pattern with grep.patternType=extended, =fixed, =basic' '
+> +	echo "ab:a+bc" >expected &&
+> +	git \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		grep "a+b*c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+
+Likewise.
+
+>  test_expect_success 'grep -F -G -E pattern' '
+>  	echo "ab:abc" >expected &&
+>  	git grep -F -G -E "a+b*c" ab >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success 'grep pattern with grep.patternType=fixed, =basic, =extended' '
+> +	echo "ab:abc" >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		grep "a+b*c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+Likewise.
+
+>  test_expect_success 'grep -G -F -P -E pattern' '
+>  	>empty &&
+>  	test_must_fail git grep -G -F -P -E "a\x{2b}b\x{2a}c" ab >actual &&
+>  	test_cmp empty actual
+>  '
+>
+> +test_expect_success 'grep pattern with grep.patternType=fixed, =basic, =perl, =extended' '
+> +	>empty &&
+> +	test_must_fail git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=perl \
+> +		-c grep.patterntype=extended \
+> +		grep "a\x{2b}b\x{2a}c" ab >actual &&
+> +	test_cmp empty actual
+> +'
+
+Likewise.
+
+>  test_expect_success LIBPCRE 'grep -G -F -E -P pattern' '
+>  	echo "ab:a+b*c" >expected &&
+>  	git grep -G -F -E -P "a\x{2b}b\x{2a}c" ab >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success LIBPCRE 'grep pattern with grep.patternType=fixed, =basic, =extended, =perl' '
+> +	echo "ab:a+b*c" >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=perl \
+> +		grep "a\x{2b}b\x{2a}c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+Likewise.
+
+> +test_expect_success LIBPCRE 'grep -P pattern with grep.patternType=fixed, =basic, =extended' '
+> +	echo "ab:a+b*c" >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=perl \
+> +		grep -P "a\x{2b}b\x{2a}c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+As you are expecting the "last one wins" behaviour among
+configuration variables, running a test with -P option would not let
+you catch bugs coming from potentially screwed-up precedence between
+the configuration and command line flags, would it?  At least, leave
+the "-c grep.patterntype=perl" out from here to make sure what the
+variable and the flag tell the command conflict with each other.  I
+would also prefer to see only one "-c grep.patterntype=<foo>" used.
+
+> +test_expect_success 'grep -F pattern with grep.patternType=fixed, =basic, =extended, =perl' '
+> +	echo "ab:a+b*c" >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=perl \
+> +		grep -F "*c" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+Likewise.
+
+> +test_expect_success 'grep -G pattern with grep.patternType=fixed, =basic, =extended, =perl' '
+> +	{
+> +		echo "ab:a+b*c"
+> +		echo "ab:a+bc"
+> +	} >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=perl \
+> +		grep -G "a+b" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+Likewise.
+
+> +test_expect_success 'grep -E pattern with grep.patternType=fixed, =basic, =extended, =perl' '
+> +	{
+> +		echo "ab:a+b*c"
+> +		echo "ab:a+bc"
+> +		echo "ab:abc"
+> +	} >expected &&
+> +	git \
+> +		-c grep.patterntype=fixed \
+> +		-c grep.patterntype=basic \
+> +		-c grep.patterntype=extended \
+> +		-c grep.patterntype=perl \
+> +		grep -E "a+" ab >actual &&
+> +	test_cmp expected actual
+> +'
+
+Likewise.
+
+> +test_expect_success 'grep pattern with grep.patternType=extended and grep.extendedRegexp=false' '
+> +	cat >expected <<-EOF
+> +	hello.c:int main(int argc, const char **argv)
+> +	EOF
+> +	git \
+> +		-c grep.patterntype=extended \
+> +		-c grep.extendedregexp=false \
+> +		grep "con?st" hello.c >actual &&
+> +	test_cmp expected actual
+> +'
+
+What does this test?  patterntype trumps extendedregexp?
+
+That may sit better next to the earlier "patterntype says basic but
+extendedregexp says true" test, if you can move this test easily
+there.
+
+Thanks.
