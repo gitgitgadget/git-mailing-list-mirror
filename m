@@ -1,125 +1,123 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [WIP PATCH] Manual rename correction
-Date: Wed, 1 Aug 2012 11:36:00 +0700
-Message-ID: <CACsJy8AYzYTJ+k72ZEuWW-RdKe7arYbbscVALNYakKSfYqD_zw@mail.gmail.com>
-References: <20120731141536.GA26283@do> <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
- <20120731192342.GB30808@sigill.intra.peff.net> <CACsJy8B14qSLkAt9VRQTCkoZx5UtGTpAmMHKyqk+_o14bc9GmQ@mail.gmail.com>
- <20120801020124.GA18071@sigill.intra.peff.net>
+Date: Tue, 31 Jul 2012 23:01:27 -0700
+Message-ID: <7v8vdzgngo.fsf@alter.siamese.dyndns.org>
+References: <20120731141536.GA26283@do>
+ <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
+ <20120731192342.GB30808@sigill.intra.peff.net>
+ <7vfw87isx1.fsf@alter.siamese.dyndns.org>
+ <20120801004238.GA15428@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 01 06:36:43 2012
+X-From: git-owner@vger.kernel.org Wed Aug 01 08:01:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwQfp-0001ut-Ou
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 06:36:42 +0200
+	id 1SwS00-0002qT-5o
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 08:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179Ab2HAEgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 00:36:32 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:53992 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751015Ab2HAEgc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 00:36:32 -0400
-Received: by ghrr11 with SMTP id r11so434686ghr.19
-        for <git@vger.kernel.org>; Tue, 31 Jul 2012 21:36:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=p02528M9TIgb2UtVE5NH68uxwikijKMeJKx3AGV7Afg=;
-        b=ol4+P9KJVFCALCEe6pnSLEcbSCHO5bMmYq4TAp3GJN0cBSy70q3/6lnzuJTn7R+YT8
-         oNr3UlxAxurygxO4ADebAk41tvEbLQvctgJE3935nbCByVPk0svJgnZOocv9+uaSut/d
-         VEugtGrLldkmtmZPqLMt/NQyOYVn2lw9yh/M9rDpxogwTHqy9wEOlpvF8x9+Ng9+js6B
-         QskCQ23oS91wquRi8XzbDEmfblnc8i70bH8cwDX71wwoNraHxWnmZuzpL9sSi+G4dF/f
-         j6Vdm+gxdYLA2NOpt0TvD2FaOkJsXkV/UQGQ3BMr57MDpUcQ6GgmPPuWNzOrpq0F7wne
-         +R6w==
-Received: by 10.50.6.197 with SMTP id d5mr3991427iga.44.1343795791024; Tue, 31
- Jul 2012 21:36:31 -0700 (PDT)
-Received: by 10.64.90.2 with HTTP; Tue, 31 Jul 2012 21:36:00 -0700 (PDT)
-In-Reply-To: <20120801020124.GA18071@sigill.intra.peff.net>
+	id S1753337Ab2HAGBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 02:01:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49569 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752528Ab2HAGBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 02:01:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E3AB99CA;
+	Wed,  1 Aug 2012 02:01:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z0tiKpPyAL6YikazYfK9cYksvxQ=; b=ZUoXyI
+	Yr9FMDbxAaAtdI8WZsqdHwGdZx7ZjF17wR5ts3V/7SZeXB2IIU6BNFV9zy2kT9Pt
+	4L0kS4OxZ8FAcbbIfN6cwx0bRubOp4yI6rwx551374K1dygsHx+01NDaM4+jrGkv
+	DF5vGlHhvITD51WZDUhUdwzECCldGhFIsyPGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DO7o+xAzYmoXItuiNfsK5IuTsmwX9L5h
+	dog49H6dk5zWnPNtqaEI+POhSlnyd1CQ5GbDrorAEUl2aJYoWba3pwlryUU1n6zE
+	s9q9u1gz9YSOjWX6Wdh0jn+uqE8EGzq9bYRiaAiQi6HKd/ytzhXfSgTwaKNn/StB
+	4zrlf4pECPA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A31A99C9;
+	Wed,  1 Aug 2012 02:01:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8607199C7; Wed,  1 Aug 2012
+ 02:01:28 -0400 (EDT)
+In-Reply-To: <20120801004238.GA15428@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 31 Jul 2012 20:42:38 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 559E20A2-DB9E-11E1-86B2-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202703>
 
-On Wed, Aug 1, 2012 at 9:01 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Aug 01, 2012 at 08:10:12AM +0700, Nguyen Thai Ngoc Duy wrote:
->
->> > I do not think that is the right direction. Let's imagine that I have a
->> > commit "A" and I annotate it (via notes or whatever) to say "between
->> > A^^{tree} and A^{tree}, foo.c became bar.c". That will help me when
->> > doing "git show" or "git log". But it will not help me when I later try
->> > to merge "A" (or its descendent). In that case, I will compute the diff
->> > between "A" and the merge-base (or worse, some descendent of "A" and the
->> > merge-base), and I will miss this hint entirely.
->> >
->> > A much better hint is to annotate pairs of sha1s, to say "do not bother
->> > doing inexact rename correlation on this pair; I promise that they have
->> > value N".
->>
->> I haven't had time to think it through yet but I throw my thoughts in
->> any way. I actually went with your approach first. But it's more
->> difficult to control the renaming. Assume we want to tell git to
->> rename SHA-1 "A" to SHA-1 "B". What happens if we have two As in the
->> source tree and two Bs in the target tree? What happens if two As and
->> one B, or one A and two Bs? What if a user defines A -> B and A -> C,
->> and we happen to have two As in source tree and B and C in target
->> tree?
->
-> Yes, it disregards path totally. But if you had the exact same movement
-> of content from one path to another in one instance, and it is
-> considered a rename, wouldn't it also be a rename in a second instance?
+Jeff King <peff@peff.net> writes:
 
-Yes. This is probably cosmetics only, but without path information, we
-leave it to chance to decide which A to pair with B and C (in the
-A->B, A->C case above). Wrong path might lead to funny effects (i'm
-thinking of git log --follow).
+> @@ -175,6 +177,11 @@ static int estimate_similarity(struct diff_filespec *src,
+>  	if (max_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
+>  		return 0;
+>  
+> +	hashcpy(pair.one, src->sha1);
+> +	hashcpy(pair.two, dst->sha1);
+> +	if (rename_cache_get(&pair, &score))
+> +		return score;
+> +
 
->> There's also the problem with transferring this information. With
->> git-notes I think I can transfer it (though not automatically). How do
->> we transfer sha1 map (that you mentioned in the commit generation mail
->> in this thread)?
+Random thoughts.
 
-I wasn't clear. This is about transferring info across repositories.
+Even though your "rename cache" could be used to reject pairing that
+the similarity estimator would otherwise give high score, I would
+imagine that in practice, people would always use the mechanism to
+boost the similarity score of desired pairing.  This conjecture has
+a few interesting implications.
 
-> That is orthogonal to the issue of what is being stored. I chose my
-> mmap'd disk implementation because it is very fast, which makes it nice
-> for a performance cache. But you could store the same thing in git-notes
-> (indexed by dst sha1, I guess, and then pointing to a blob of (src,
-> score) pairs.
->
-> If you want to include path-based hints in a commit, I'd say that using
-> some micro-format in the commit message would be the simplest thing.
+ - As we track of only the top NUM_CANDIDATE_PER_DST rename src for
+   each dst (see record_if_better()), you should be able to first
+   see if pairs that have dst exist in your rename cache, and
+   iterate over the <src,dst> pairs, filling m[] with srcs that
+   appear in this particular invocation of diff.
 
-Rename correction is after the commit is created. I don't think we can
-recreate commits.
+ - If you find NUM_CANDIDATE_PER_DST srcs from your rename cache,
+   you wouldn't have to run estimate_similarity() at all, but that
+   is very unlikely.  We could however declare that user configured
+   similarity boost always wins computed ones, and skip estimation
+   for a dst for which you find an entry in the rename cache.
 
-> But
-> that has been discussed before; ultimately the problem is that it only
-> covers _one_ diff that we do with that commit (it is probably the most
-> common, of course, but it doesn't cover them all).
+ - As entries in rename cache that record high scores have names of
+   "similar" blobs, pack-objects may be able to take advantage of
+   this information.
 
-How about we generate sha1 mapping from commit hints? We try to take
-advantage of path hints when we can. Else we fall back to sha-1
-mapping. This way we can transfer commit hints as git-notes to another
-repo, then regenerate sha-1 mapping there. No need to transfer sha1
-maps.
+ - If you declare blobs A and B are similar, it is likely that blobs
+   C, D, E, ... that are created by making a series of small tweaks
+   to B are also similar.  Would it make more sense to introduce a
+   concept of "set of similar blobs" instead of recording pairwise
+   scores for (A,B), (A,C), (A,D), ... (B,C), (B,D), ...?  If so,
+   the body of per-dst loop in diffcore_rename() may become:
 
->> > Then it will find that pair no matter which trees or commits
->> > are being diffed, and it will do so relatively inexpensively[1].
->>
->> But does that happen often in practice? I mean diff-ing two arbitrary
->> trees and expect rename correction. I disregarded it as "git log" is
->> my main case, but I'm just a single user..
->
-> It happens every time merge-recursive does rename detection, which
-> includes "git merge" but also things like "cherry-pick".
+	if (we know where dst came from)
+		continue;
+	if (dst belongs to a known blob family) {
+		for (each src in rename_src[]) {
+			if (src belongs to the same blob family as dst)
+				record it in m[];
+                }
+	}
+	if (the above didn't record anything in m[]) {
+        	... existing estimate_similarity() code ...
+	}
 
-Thanks. I'll look into merge/cherry-pick.
--- 
-Duy
+Regarding your rename-and-tweak-exif photo sets, is the issue that
+there are too many rename src/dst candidates and filling a large
+matrix takes a lot of time, or tweaking exif makes the contents
+unnecessarily dissimilar and causes the similarity detection to
+fail?  As we still have the pathname in this codepath, I am
+wondering if we would benefit from custom "content hash" that knows
+the nature of payload than the built-in similarity estimator, driven
+by the attribute mechanism (if the latter is the case, that is).
