@@ -1,55 +1,141 @@
-From: Ammon Riley <ammon.riley@gmail.com>
-Subject: Broken git-svn tests known?
-Date: Tue, 31 Jul 2012 16:44:54 -0700
-Message-ID: <CAMvPOPuxdtaQPD6T4M7knPFhQbWGk8psp+DKn4gaHxW48WPFOw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [WIP PATCH] Manual rename correction
+Date: Tue, 31 Jul 2012 20:42:38 -0400
+Message-ID: <20120801004238.GA15428@sigill.intra.peff.net>
+References: <20120731141536.GA26283@do>
+ <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
+ <20120731192342.GB30808@sigill.intra.peff.net>
+ <7vfw87isx1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 01:45:05 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 02:42:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwM7Z-0003Ii-ER
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 01:45:01 +0200
+	id 1SwN1V-0000zu-3H
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 02:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756285Ab2GaXoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 19:44:55 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:46304 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755053Ab2GaXoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 19:44:55 -0400
-Received: by gglu4 with SMTP id u4so6730205ggl.19
-        for <git@vger.kernel.org>; Tue, 31 Jul 2012 16:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Zf09UG3vFsmw3ChhSe77diH5fIcOIzToPtRwBZKTCcY=;
-        b=lVpPOAgOKo53TpUSUa96dhkUUguOsIFJSqAfCWiQSHrIV4MUjuIiZu8+VoZIC0Ccw6
-         J9vtEuJaIHipjgxWuY7JBuiOt9Ywclg+a0maSKMGqsFx26NkwNzmH/HrraUZkqMdD+7m
-         WbIQwHve3xFZvA9sXYxXN4/hjWh0XOwDPFpq5auhJ0ltPNPNVb25stmZ9g3j2z7olHWc
-         hnH1cfwFnV9x24JhDj54EeZIFWVRkojWG6650EI2fIyHBLACmk45EHzQ46tvFsDtyvO3
-         Fk3GgH+DK676ihVvtVlAi25lXm8wiZPk91oXKFikFEc8WVD8BRTsashBXpbFd6rgx3V/
-         oyBg==
-Received: by 10.66.73.7 with SMTP id h7mr7908976pav.34.1343778294282; Tue, 31
- Jul 2012 16:44:54 -0700 (PDT)
-Received: by 10.143.79.1 with HTTP; Tue, 31 Jul 2012 16:44:54 -0700 (PDT)
+	id S1754102Ab2HAAmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 20:42:43 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43927 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752146Ab2HAAmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 20:42:42 -0400
+Received: (qmail 1429 invoked by uid 107); 1 Aug 2012 00:42:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Jul 2012 20:42:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2012 20:42:38 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfw87isx1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202698>
 
-Hi,
+On Tue, Jul 31, 2012 at 01:20:42PM -0700, Junio C Hamano wrote:
 
-On a freshly checked out copy of the maint branch (0e4c8822), the
-t9100-git-svn-basic.sh tests are failing 21 of 25 tests. Is this
-known, or am I missing some dependencies? Is it possibly due to
-using subversion 1.7?
+> Jeff King <peff@peff.net> writes:
+> 
+> > A much better hint is to annotate pairs of sha1s, to say "do not bother
+> > doing inexact rename correlation on this pair; I promise that they have
+> > value N".
+> 
+> Surely.  And I suspect that the patch to the current codebase to do
+> so would be much less impact if you go that way.
 
-I've run into a small bug with git-svn, and wanted to make sure
-the test suite still passed with my patch applied.
+Yes. You may remember I wrote a generic caching subsystem last summer
+when we were talking about caching commit generations. Plugging in a new
+map type to map sha1 pairs to 32-bit integers was pretty simple, and
+that gives the basis for a rename cache.
 
-Cheers,
-Ammon
+It's fairly unimpressive on git.git. My best-of-five for "git log
+--format=%H --raw -M" went from 5.83s to 5.74s, which is pretty much
+within the run-to-run noise. The resulting cache was 155K.
+
+However, it's easy to come up with much more pathological cases. I have
+a really ugly rename-and-tweak-tags commit on my photo repository, and
+those blobs are relatively big. My timings for "git show" on that were:
+
+  before: 49.724s
+  after, run 1: 54.904s
+  after, run 2:  0.117s
+
+Which is pretty darn nice. The resulting cache is 5.3M (the repository
+itself is in the gigabytes, but that's not really relevant; the cache
+will obviously scale with the number of paths, not with the size of the
+blobs).
+
+It would also work for copies, too, of course. Here are the results of
+"git log --format=%H --raw -M -C -C" on git.git:
+
+  before: 1m35s
+  after, run 1: 39.7s
+  after, run 2: 39.5s
+
+So it does make much more of a difference for copies, which is obvious;
+git is doing a lot more work for us to cache. At the same time, our
+cache is much bigger: 32M. Yikes.
+
+My cache is fairly naive, in that it literally stores 44 bytes of
+<src_sha1, dst_sha1, score> for each entry. At the cost of more
+complexity, you could store each src_sha1 once, followed by a set of
+<dst_sha1, score> pairs. I also didn't take any special care to avoid
+duplicates of <X, Y> and <Y, X> (since presumably these renames would be
+commutative). I'm not sure it is necessary, though; I think the copy
+machinery already suppresses this when entries are in both source and
+destination lists.
+
+So I don't know. It can definitely speed up some operations, but at the
+cost of a non-trivial cache on disk. I'll spare you all of the generic
+caching infrastructure, but the actual patch to rename looks like this
+(just to give a sense of where the hooks go):
+
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 216a7a4..db70878 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -6,6 +6,7 @@
+ #include "diffcore.h"
+ #include "hash.h"
+ #include "progress.h"
++#include "metadata-cache.h"
+ 
+ /* Table of rename/copy destinations */
+ 
+@@ -137,7 +138,8 @@ static int estimate_similarity(struct diff_filespec *src,
+ 	 */
+ 	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
+ 	unsigned long delta_limit;
+-	int score;
++	uint32_t score;
++	struct sha1pair pair;
+ 
+ 	/* We deal only with regular files.  Symlink renames are handled
+ 	 * only when they are exact matches --- in other words, no edits
+@@ -175,6 +177,11 @@ static int estimate_similarity(struct diff_filespec *src,
+ 	if (max_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
+ 		return 0;
+ 
++	hashcpy(pair.one, src->sha1);
++	hashcpy(pair.two, dst->sha1);
++	if (rename_cache_get(&pair, &score))
++		return score;
++
+ 	if (!src->cnt_data && diff_populate_filespec(src, 0))
+ 		return 0;
+ 	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
+@@ -195,6 +202,7 @@ static int estimate_similarity(struct diff_filespec *src,
+ 		score = 0; /* should not happen */
+ 	else
+ 		score = (int)(src_copied * MAX_SCORE / max_size);
++	rename_cache_set(&pair, &score);
+ 	return score;
+ }
+ 
+-Peff
