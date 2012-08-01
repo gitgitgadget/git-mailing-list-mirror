@@ -1,175 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: make a config setting for --keep-non-patch
- switch
-Date: Wed, 01 Aug 2012 11:48:23 -0700
-Message-ID: <7v1ujqfnyg.fsf@alter.siamese.dyndns.org>
-References: <1343841535-25652-1-git-send-email-paul.gortmaker@windriver.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2] macos: lazily initialize iconv
+Date: Wed, 01 Aug 2012 21:25:19 +0200
+Message-ID: <5019829F.7050606@web.de>
+References: <7vk3xjked0.fsf@alter.siamese.dyndns.org> <7v1ujrkc9p.fsf@alter.siamese.dyndns.org> <CA+55aFwE93YeVjZp9VLhRvbxFJNonafmUE6rHzPer5hv-hON5Q@mail.gmail.com> <7vk3xjit4h.fsf@alter.siamese.dyndns.org> <CA+55aFzhgTsHKhL599k7M6NzD5WUm72v3V+NYuCKs4uCPbnFzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 20:48:33 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>, tboegi@web.de
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Aug 01 21:26:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwdyD-0001m1-HI
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 20:48:33 +0200
+	id 1SweYS-0007eT-PD
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 21:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753897Ab2HASs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 14:48:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41436 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753384Ab2HASs0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 14:48:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B92F89EFB;
-	Wed,  1 Aug 2012 14:48:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=El7bH2GPqCvXzEYokM8BStRTqig=; b=seqOTp
-	17udOFV0EJ2gXPamFxOLoVR9nZsptzaV9A2USzRrMzMJlFeDVd2sldMuvPAFeWE4
-	ZrycsNrb+gSBTy4nKsFw5IN7cwkKROJ4h2xkmmdvwb7H6cF/2aGAMwJCOgsgQ1Ip
-	BrfyrWDgyo1/3frMxRpTX9unruiirAnWCW4rU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YPg8oqoID48lUP+S1ggxU80u+DZJEb2o
-	4pTi/drHzZdm0UMOeWmhVoAXXeTAUV0jQdBfy+qXpda4pRHKx3RFb25+mgvcFuTA
-	ZITm8xCPuuUizFG9XcQa8psfLWOkp4qp/6WixwQfmf8Ly9LVl10NquoNOArUcXyu
-	lunoeSYXBBc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A68E39EFA;
-	Wed,  1 Aug 2012 14:48:25 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF8C09EF9; Wed,  1 Aug 2012
- 14:48:24 -0400 (EDT)
-In-Reply-To: <1343841535-25652-1-git-send-email-paul.gortmaker@windriver.com>
- (Paul Gortmaker's message of "Wed, 1 Aug 2012 13:18:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 79786D78-DC09-11E1-9553-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756310Ab2HATZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 15:25:26 -0400
+Received: from mout.web.de ([212.227.15.4]:55762 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756275Ab2HATZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 15:25:25 -0400
+Received: from [10.0.0.8] ([85.164.185.83]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MLgZ5-1SwvWj364B-000bMC; Wed, 01 Aug 2012 21:25:24
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <CA+55aFzhgTsHKhL599k7M6NzD5WUm72v3V+NYuCKs4uCPbnFzg@mail.gmail.com>
+X-Provags-ID: V02:K0:mbzN13F4VT6qE6DrUwy2zGjOm1Q4K7INNnKiA+oKb6M
+ MQhLKYjarn38o14euv3C4cxFL/RVG1uuxJ5ltRYtM/eGSsqWNY
+ 1JPtAv1BN+sr0Aumu5ToqsA9ktml87wSIm/iyF0Blv6z14zL99
+ toh1zO/UrNq5oOnsrOtehMP97tAXzagAi32XLxD2QsRAeZDEHQ
+ dRzX1ta8XSAciN50SyyiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202720>
 
-Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+Am 2012-07-31 22:39, schrieb Linus Torvalds:
+> On Tue, Jul 31, 2012 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Eek.
+>
+> Oh, I agree. Doing a full character set conversion both ways is quite
+> a bit more work.
+>
+>> Not just write_entry() codepath that creates the final paths on the
+>> filesystem, you would need to touch lstat() calls that check the
+>> existence and freshness of the path, once you go that route.  I am
+>> sure such a change can be made to work, but I am not sure how much
+>> we would gain from one.
+>
+> I think it might be interesting. I doubt it matters all that much any
+> more in Western Europe (Unicode really does seem to have largely taken
+> over), but I think Japan still uses Shift-JIS a lot.
+>
+> Although maybe that is starting to fade too.
+>
+> And it really is just a generalization of the OS X filesystem damage.
+>
+>              Linus
+>
+Hi,
+(I'm on vacation myself, so I migth apologize for answering very late.)
 
-> In order to make a commit be invariant (excluding ID) over
-> a format-patch and subsequent am cycle, one needs to use
-> the '--keep-non-patch' so that commits like:
->
-> 	[PATCH] [i386] fix foo bar arch/x86/mm
->
-> only lose the [PATCH] and not the [i386] part.  Since it
-> is a common desire (e.g. linux kernel stable trees) to have
-> the subjects remain invariant during a backport, there is
-> a genuine need for making this the default behaviour from
-> a config file, versus specifying it in scripts and on the
-> command line each time.
->
-> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
-> ---
->
-> See http://lkml.indiana.edu/hypermail/linux/kernel/1203.1/01817.html
-> for additional background; stable maintainers using it etc.
+I had done a fully fledges conversion back-and-force of file names.
 
-That's a blast from the past; it would have been so much nicer
-if the patch came earlier ;-)
+Having e.g. ISO-8859-1 on disk and UTF-8 in the repo.
 
-The patch looks from sane; we may want to have a test in t4150, just like
-we have tests for am.keepcr in t4253.  We have plenty of time as we
-are in feature freeze right now.
+The basic idea came from Linus, and it needs conversion for
+open() fopen(), unlink(), readdir(), stat(), lstat(), rename()
+(and may be one or two more, I even added support in readlink()).
 
-Thanks.
+After doing the whole thing ready, I realized that UTF-8 became more and 
+more standard.
 
->
->  Documentation/config.txt               | 9 +++++++++
->  Documentation/git-am.txt               | 4 ++++
->  contrib/completion/git-completion.bash | 1 +
->  git-am.sh                              | 8 ++++++++
->  4 files changed, 22 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index a95e5a4..47aded5 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -655,6 +655,15 @@ am.keepcr::
->  	by giving '--no-keep-cr' from the command line.
->  	See linkgit:git-am[1], linkgit:git-mailsplit[1].
->  
-> +am.keepnonpatch::
-> +	Normally git-mailinfo strips from the Subject line, all leading
-> +	strings bracketed with [ and ] pairs.  If this setting is true,
-> +	git-am will call git-mailinfo with the parameter '-b' so that only
-> +	the pairs whose bracketed string contains the word "PATCH" are
-> +	stripped.  Can be overridden by giving ' '--no-keep-non-patch'
-> +	from the command line.
-> +	See linkgit:git-am[1], linkgit:git-mailinfo[1].
-> +
->  apply.ignorewhitespace::
->  	When set to 'change', tells 'git apply' to ignore changes in
->  	whitespace, in the same way as the '--ignore-space-change'
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 19d57a8..790efdb 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -41,7 +41,11 @@ OPTIONS
->  	Pass `-k` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
->  
->  --keep-non-patch::
-> +--no-keep-non-patch::
->  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
-> +	The `am.keepnonpatch` configuration variable can be used to specify
-> +	the default behaviour.  The `--no-keep-non-patch` is useful to
-> +	override any `am.keepnonpatch` setting.
->  
->  --keep-cr::
->  --no-keep-cr::
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index ffedce7..04339df 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1758,6 +1758,7 @@ _git_config ()
->  		advice.statusHints
->  		alias.
->  		am.keepcr
-> +		am.keepnonpatch
->  		apply.ignorewhitespace
->  		apply.whitespace
->  		branch.autosetupmerge
-> diff --git a/git-am.sh b/git-am.sh
-> index c02e62d..9f6adbf 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
->  u,utf8          recode into utf8 (default)
->  k,keep          pass -k flag to git-mailinfo
->  keep-non-patch  pass -b flag to git-mailinfo
-> +no-keep-non-patch do not pass -b flag to git-mailsplit, independent of am.keepnonpatch
->  keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
->  no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
->  c,scissors      strip everything before a scissors line
-> @@ -381,6 +382,11 @@ then
->      keepcr=t
->  fi
->  
-> +if test "$(git config --bool --get am.keepnonpatch)" = true
-> +then
-> +    keep=b
-> +fi
-> +
->  while test $# != 0
->  do
->  	case "$1" in
-> @@ -402,6 +408,8 @@ do
->  		keep=t ;;
->  	--keep-non-patch)
->  		keep=b ;;
-> +	--no-keep-non-patch)
-> +		keep= ;;
->  	-c|--scissors)
->  		scissors=t ;;
->  	--no-scissors)
+At the same time people started to enhance msysgit to use UTF-8 as well. 
+(Thanks to the contributors)
+
+My feeling was that the "market window" for such a generic file name 
+conversion might be closed.
+
+So, is there still a need for such a feature in git?
+
+I wouldn't mind to re-base my pathch to master and post it within a 
+couple of days/weeks.
+
+Thanks for git and all enhancements.
+/Torsten
