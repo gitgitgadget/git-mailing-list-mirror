@@ -1,93 +1,108 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2] macos: lazily initialize iconv
-Date: Wed, 01 Aug 2012 21:25:19 +0200
-Message-ID: <5019829F.7050606@web.de>
-References: <7vk3xjked0.fsf@alter.siamese.dyndns.org> <7v1ujrkc9p.fsf@alter.siamese.dyndns.org> <CA+55aFwE93YeVjZp9VLhRvbxFJNonafmUE6rHzPer5hv-hON5Q@mail.gmail.com> <7vk3xjit4h.fsf@alter.siamese.dyndns.org> <CA+55aFzhgTsHKhL599k7M6NzD5WUm72v3V+NYuCKs4uCPbnFzg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
+Date: Wed, 1 Aug 2012 12:42:48 -0700
+Message-ID: <20120801194247.GE24357@copier>
+References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <2351904.F5IazNUWoD@flomedio>
+ <CAFzf2XzC4Y1AhBV4BU5zZ411f=oVzoOyNA=e1L2eZd3bjyEgjQ@mail.gmail.com>
+ <1447696.eZjtSkvvWp@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ralf Thielow <ralf.thielow@gmail.com>, tboegi@web.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 01 21:26:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 21:43:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SweYS-0007eT-PD
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 21:26:01 +0200
+	id 1Swep4-00017O-B6
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 21:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756310Ab2HATZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 15:25:26 -0400
-Received: from mout.web.de ([212.227.15.4]:55762 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756275Ab2HATZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 15:25:25 -0400
-Received: from [10.0.0.8] ([85.164.185.83]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MLgZ5-1SwvWj364B-000bMC; Wed, 01 Aug 2012 21:25:24
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <CA+55aFzhgTsHKhL599k7M6NzD5WUm72v3V+NYuCKs4uCPbnFzg@mail.gmail.com>
-X-Provags-ID: V02:K0:mbzN13F4VT6qE6DrUwy2zGjOm1Q4K7INNnKiA+oKb6M
- MQhLKYjarn38o14euv3C4cxFL/RVG1uuxJ5ltRYtM/eGSsqWNY
- 1JPtAv1BN+sr0Aumu5ToqsA9ktml87wSIm/iyF0Blv6z14zL99
- toh1zO/UrNq5oOnsrOtehMP97tAXzagAi32XLxD2QsRAeZDEHQ
- dRzX1ta8XSAciN50SyyiA==
+	id S1752417Ab2HATnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 15:43:03 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:64064 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578Ab2HATnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 15:43:00 -0400
+Received: by ggnl2 with SMTP id l2so456321ggn.19
+        for <git@vger.kernel.org>; Wed, 01 Aug 2012 12:43:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+y3d91oz+fyephL+oIvc2ZaWhguMKTNmBWb4IqwFc2c=;
+        b=Fu2VUt2Af9WPYcntRSZXVCJMrP+tpi++JdHcAz40aDufxsbp+EZbd3+RubbUue7xrl
+         uCuGu2unJEPtnnW7ZHS/QjK+ZuS+OPOY19CuaZGT10KxjZx8go0Lwetuc6gQYG7YQGVq
+         p/rW2c2FE+4kvkgtZxVGX71QhoyrOGsMJ8cIL2MqLlh0HbALmxRmKZDt3kXk1Lxlb98k
+         Fp09co47jDYFVCCRSsKKZlpeKCNGVsDvJ82FJKKDFLqU6vsC0MpxoUIVCUov5NYhYR3j
+         SFXf6YhvH5mmd95nAagwnYbMDzzs07jjPdvQIRq5cpurcPNVkD484baGfoEe0q4tBJEd
+         yDAw==
+Received: by 10.66.81.202 with SMTP id c10mr42223697pay.20.1343850180163;
+        Wed, 01 Aug 2012 12:43:00 -0700 (PDT)
+Received: from copier (cl-711.phx-01.us.sixxs.net. [2001:1938:81:2c6::2])
+        by mx.google.com with ESMTPS id pt2sm3151084pbb.58.2012.08.01.12.42.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Aug 2012 12:42:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1447696.eZjtSkvvWp@flomedio>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202721>
 
-Am 2012-07-31 22:39, schrieb Linus Torvalds:
-> On Tue, Jul 31, 2012 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Eek.
->
-> Oh, I agree. Doing a full character set conversion both ways is quite
-> a bit more work.
->
->> Not just write_entry() codepath that creates the final paths on the
->> filesystem, you would need to touch lstat() calls that check the
->> existence and freshness of the path, once you go that route.  I am
->> sure such a change can be made to work, but I am not sure how much
->> we would gain from one.
->
-> I think it might be interesting. I doubt it matters all that much any
-> more in Western Europe (Unicode really does seem to have largely taken
-> over), but I think Japan still uses Shift-JIS a lot.
->
-> Although maybe that is starting to fade too.
->
-> And it really is just a generalization of the OS X filesystem damage.
->
->              Linus
->
-Hi,
-(I'm on vacation myself, so I migth apologize for answering very late.)
+Hi again,
 
-I had done a fully fledges conversion back-and-force of file names.
+Florian Achleitner wrote:
 
-Having e.g. ISO-8859-1 on disk and UTF-8 in the repo.
+> When the first line arrives at the remote-helper, it starts importing one line 
+> at a time, leaving the remaining lines in the pipe.
+> For importing it requires the data from fast-import, which would be mixed with 
+> import lines or queued at the end of them.
 
-The basic idea came from Linus, and it needs conversion for
-open() fopen(), unlink(), readdir(), stat(), lstat(), rename()
-(and may be one or two more, I even added support in readlink()).
+Oh, good catch.
 
-After doing the whole thing ready, I realized that UTF-8 became more and 
-more standard.
+The way it's supposed to work is that in a bidi-import, the remote
+helper reads in the entire list of refs to be imported and only once
+the newline indicating that that list is over arrives starts writing
+its fast-import stream.  We could make this more obvious by not
+spawning fast-import until immediately before writing that newline.
 
-At the same time people started to enhance msysgit to use UTF-8 as well. 
-(Thanks to the contributors)
+This needs to be clearly documented in the git-remote-helpers(1) page
+if the bidi-import command is introduced.
 
-My feeling was that the "market window" for such a generic file name 
-conversion might be closed.
+If a remote helper writes commands for fast-import before that newline
+comes, that is a bug in the remote helper, plain and simple.  It might
+be fun to diagnose this problem:
 
-So, is there still a need for such a feature in git?
+	static void pipe_drained_or_die(int fd, const char *msg)
+	{
+		char buf[1];
+		int flags = fcntl(fd, F_GETFL);
+		if (flags < 0)
+			die_errno("cannot get pipe flags");
+		if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+			die_errno("cannot set up non-blocking pipe read");
+		if (read(fd, buf, 1) > 0)
+			die("%s", msg);
+		if (fcntl(fd, F_SETFL, flags))
+			die_errno("cannot restore pipe flags");
+	}
+	...
 
-I wouldn't mind to re-base my pathch to master and post it within a 
-couple of days/weeks.
+	for (i = 0; i < nr_heads; i++) {
+		write "import %s\n", to_fetch[i]->name;
+	}
 
-Thanks for git and all enhancements.
-/Torsten
+	if (getenv("GIT_REMOTE_HELPERS_SLOW_SANITY_CHECK"))
+		sleep(1);
+
+	pipe_drained_or_die("unexpected output from remote helper before fast-import launch");
+
+	if (get_importer(transport, &fastimport))
+		die("couldn't run fast-import");
+	write_constant(data->helper->in, "\n");
