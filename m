@@ -1,76 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GNU patch close to next stable release (2)
-Date: Wed, 01 Aug 2012 10:58:06 -0700
-Message-ID: <7v8vdyfqa9.fsf@alter.siamese.dyndns.org>
-References: <CAHpGcM+DkL_CCisCjF9m0j3NRJUNAdfL05T0cfLjLfVORQHrpw@mail.gmail.com>
+From: Angus Hammond <angusgh@gmail.com>
+Subject: Re: Cherry-picking commits with empty messages
+Date: Wed, 1 Aug 2012 19:15:16 +0100
+Message-ID: <CAOBOgRZ9Ouan2htT9m3qBrUvae3nT1az3A61kiRMSJNyFv1MdQ@mail.gmail.com>
+References: <20120801111658.GA21272@arachsys.com> <7vd33afqjh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bug-patch@gnu.org, git@vger.kernel.org
-To: Andreas =?utf-8?Q?Gr=C3=BCnbacher?= <agruen@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Aug 01 19:58:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Chris Webb <chris@arachsys.com>, git@vger.kernel.org,
+	Neil Horman <nhorman@tuxdriver.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 20:15:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwdBY-0001OQ-C6
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 19:58:16 +0200
+	id 1SwdSV-0004Qa-LE
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 20:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742Ab2HAR6K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Aug 2012 13:58:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47294 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754688Ab2HAR6J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Aug 2012 13:58:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1D5191EC;
-	Wed,  1 Aug 2012 13:58:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1fn5jNxpv+oS
-	kLss54IrFb5CDfk=; b=QpA5c+f2KzY3kJhVbm0BN3t5940pk9gnXsrEDuq4AZa3
-	zkBWwsFjDtO/G/tuA+h7TkZbBkA0WaP9CaH4Ns/DNWMn16mprRODIur5wrZpuAIH
-	ohdD4uQi3OpqI5iMfYhTM2YYigty/eYbI6b06SRXGQDAqGTNwkPKJocFeniRAb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EEx5rl
-	/MbqDDyoPByYQapI1xkzWwkmWoJlh7JNWby97UmqGKBvD3pSzdotmGhoMjR7+xS1
-	RPHSO2vK7Wxta9PENibO25UFAocxT+QOvSJLEOI+qbm3VYumFsgP3opGBdASqdux
-	ZhlyoEk6YRMVuTiWzC1HQxEsa8PQc84MMWPfo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEA4791EA;
-	Wed,  1 Aug 2012 13:58:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3108291E9; Wed,  1 Aug 2012
- 13:58:08 -0400 (EDT)
-In-Reply-To: <CAHpGcM+DkL_CCisCjF9m0j3NRJUNAdfL05T0cfLjLfVORQHrpw@mail.gmail.com>
- ("Andreas =?utf-8?Q?Gr=C3=BCnbacher=22's?= message of "Wed, 1 Aug 2012
- 13:50:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7368583C-DC02-11E1-B430-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753871Ab2HASPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 14:15:39 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:41653 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752368Ab2HASPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 14:15:38 -0400
+Received: by lbbgm6 with SMTP id gm6so508181lbb.19
+        for <git@vger.kernel.org>; Wed, 01 Aug 2012 11:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dVllBxQfBUO3VkGsARe5zRgwJZS+ScHMSoH+4PiEdSg=;
+        b=AMtUTb0+mwm7sku2j03UXL7J6Pxe2wKnf42+WlhvTCs58gxJk82gc/0/t1ozsZ+Yta
+         V4rdzNfpCg6f2su8mgMLne3GO2wdwIKlkDI4NU5UWVOv/MfVkwu54sbeS/bTVxVDbegk
+         ITqnowDWVXlAt8RpNl7AQn0Id1Pa4+L/1lxcGymJDiQREJgtWRHiMliYPFz39WUcvE+9
+         fxih2XHxqHsMJaoIMj599RzavOnHldYrsCBsA8l7ABRXOoI3l+/3TpJvyLUz0W2SM6k3
+         GhZI33HCPymmcRPUhAFKO7XkbP3cz5RvOVby0+uRiALE6NM+bVg/pKPzjtZOWKsT0uNG
+         t6tQ==
+Received: by 10.152.132.233 with SMTP id ox9mr18800732lab.25.1343844936552;
+ Wed, 01 Aug 2012 11:15:36 -0700 (PDT)
+Received: by 10.114.12.1 with HTTP; Wed, 1 Aug 2012 11:15:16 -0700 (PDT)
+In-Reply-To: <7vd33afqjh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202717>
 
-Andreas Gr=C3=BCnbacher <agruen@gnu.org> writes:
+>    But from the bigger UI consistency point of view, it would be
+>    chaotic to change the default of some options for a single
+>    command depending on the nature of the operand, so I would
+>    recommend against going this route, and pick one view between
+>    "give the user a chance to fix" or "the user must have done so on
+>    purpose" and apply it consistently.
+>
+> My recommendation, backed by the above line of thought, is to add
+> support for the "--allow-empty-message" option to both "rebase [-i]"
+> and "cherry-pick", defaulting to false.
 
-> * Support for double-quoted filenames in the "diff --git" format: whe=
-n a
->   filename starts with a double quote, it is interpreted as a C strin=
-g
->   literal.  The escape sequences \\, \", \a, \b, \f, \n, \r, \t, \v, =
-and \ooo
->   (a three-digit octal number between 0 and 255) are recognized.
+Though I completely agree regarding having a consistent UI that
+doesn't change it's behaviour based on the operand, I'd argue that
+--allow-empty-message should default to true on cherry-pick for a
+couple or reasons. Firstly, in the case that git perpetuates an empty
+commit message that the user does not want, it is only damaging a
+repository in a way that it is already damaged, clearly this still
+isn't ideal, but it's certainly not as bad as damaging a repository
+that's pristine. Arguably it's the user's responsibility to ensure
+they don't TELL git to perpetuate their own bad commit.
 
-Is this also available in non-git diffs?  IIRC, this extension to
-allow funny characters in pathnames was proposed by and discussed
-with Paul Eggert (listed as one of GNU diffutils maintainers at
-www.gnu.org/software/diffutils/) and git happened to adopt it
-earlier than "GNU diff" itself did.
+Secondly, I'd don't like the idea of a command that 99.9% of the time
+will run completely independently, but then every so often will become
+interactive. This is probably a rare enough scenario that script
+writers would reasonably assume that cherry-pick (without the
+--allow-empty-message flag) is not an interactive command and write
+their scripts accordingly. A user who made use of empty commit
+messages would find any such scripts crashing on them or producing
+strange results. Even if this is the fringe case, it seems to be a
+substantially worse fringe case than that where we make a commit that
+has no message at the user's instruction.
 
-I found it a bit odd to see this listed as one of the items needed
-to support "diff --git" oddity.
+Thanks
+Angus
