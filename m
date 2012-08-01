@@ -1,69 +1,85 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Wed, 1 Aug 2012 21:30:31 +0000
-Message-ID: <20120801213031.GA10847@dcvr.yhbt.net>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120730203844.GA23892@dcvr.yhbt.net>
- <7v1ujsl8ut.fsf@alter.siamese.dyndns.org>
- <5017AB63.6080909@pobox.com>
- <20120731200108.GA14462@dcvr.yhbt.net>
- <5018691A.9050904@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [WIP PATCH] Manual rename correction
+Date: Wed, 1 Aug 2012 17:32:07 -0400
+Message-ID: <20120801213207.GB16233@sigill.intra.peff.net>
+References: <20120731141536.GA26283@do>
+ <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
+ <20120731192342.GB30808@sigill.intra.peff.net>
+ <CACsJy8B14qSLkAt9VRQTCkoZx5UtGTpAmMHKyqk+_o14bc9GmQ@mail.gmail.com>
+ <20120801020124.GA18071@sigill.intra.peff.net>
+ <CACsJy8AYzYTJ+k72ZEuWW-RdKe7arYbbscVALNYakKSfYqD_zw@mail.gmail.com>
+ <7v4nongn3e.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Aa_YohFEApGQxL5086vOviAKBc1AB0QyWVsda6byrYzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca, jrnieder@gmail.com
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 23:30:41 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 23:32:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwgV3-0004zD-KO
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:30:37 +0200
+	id 1SwgWh-00062Q-Nn
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755903Ab2HAVac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 17:30:32 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:49328 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755725Ab2HAVac (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 17:30:32 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DBD9325A5;
-	Wed,  1 Aug 2012 21:30:31 +0000 (UTC)
+	id S1755858Ab2HAVcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 17:32:15 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46772 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755439Ab2HAVcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 17:32:14 -0400
+Received: (qmail 10528 invoked by uid 107); 1 Aug 2012 21:32:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Aug 2012 17:32:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Aug 2012 17:32:07 -0400
 Content-Disposition: inline
-In-Reply-To: <5018691A.9050904@pobox.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <CACsJy8Aa_YohFEApGQxL5086vOviAKBc1AB0QyWVsda6byrYzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202727>
 
-Michael G Schwern <schwern@pobox.com> wrote:
-> That's the part that doesn't matter.  People matter.
+On Wed, Aug 01, 2012 at 01:34:23PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> What I'm trying to say is I have much less interest in doing it without the
-> overloading.  It's not interesting to me.  It's no fun.  No fun means no
-> patch.  No patch means no improvement.  No improvement is the worst of all
-> possible options.
+> On Wed, Aug 1, 2012 at 1:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> >
+> >> Yes. This is probably cosmetics only, but without path information, we
+> >> leave it to chance to decide which A to pair with B and C (in the
+> >> A->B, A->C case above). Wrong path might lead to funny effects (i'm
+> >> thinking of git log --follow).
+> >
+> > Isn't that why <A,B> and <A,C> can have different scores per object
+> > name pair?  And if you mean by B and C the paths not object names,
+> > and the blob at B and C are indeed identical, why would it matter?
+> 
+> I don't see how scores affect that. Suppose I have two trees and a
+> rename-cache file:
+> 
+> $ git ls-tree -r HEAD^
+> 100644 blob d00491    path1/foo
+> 100644 blob d00491    path2/bar
+> $ git ls-tree -r HEAD
+> 100644 blob 0cfbf0    path1/fooo
+> 100644 blob 00750e    path2/barr
+> $ cat rename-cache
+> d00491 0cfbf0 <score 1>
+> d00491 00750e <score 2>
+> 
+> How can I be sure "git diff HEAD^!" will rename path1/foo =>
+> path1/fooo and path2/bar => path2/barr, not path1/foo => path2/barr
+> and path2/bar => path1/fooo?
 
-We want to ensure the code you contribute can be improved by others, not
-just you.  I thank you for your changes so far, other developers should
-find it easier to contribute to git-svn.
+You can't. A pathless mapping can never represent that. I think my (and
+Junio's argument) is more like: why would you care? And that gets back
+to the statement I just made elsewhere in the thread. Which is that you
+need to consider the purpose of the rename detection. For generating
+diffs and for merging, it doesn't matter in the above case. If the point
+is to communicate some semantics of the change (e.g., if your change was
+"double the final letter of each filename, and also make a small change),
+then that is what the commit message is for.
 
-> I had a lot of enthusiasm for this project when I came in.  I like refactoring
-> Perl code.  I like git.  That's all but sunk at how painful and slow and
-> nit-picking the process has been.  We've barely talked about the content of
-> the patches I've submitted, it's all process.  This is no fun.
-
-I haven't found objections to the actual code you've contributed so far.
-I'll be applying your changes once I've had a chance to reread/test
-them.
-
-Yes, we are nitpicky about process, but I think it's important to
-maintain that consistency given the number of contributors we attract.
-
-I'll also need to review/rewrite some of the Subject: lines so they make
-sense when read in --pretty=oneline/shortlog output. (unless you want to
-volunteer to resubmit that).
+-Peff
