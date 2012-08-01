@@ -1,108 +1,172 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
-Date: Wed, 1 Aug 2012 12:42:48 -0700
-Message-ID: <20120801194247.GE24357@copier>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <2351904.F5IazNUWoD@flomedio>
- <CAFzf2XzC4Y1AhBV4BU5zZ411f=oVzoOyNA=e1L2eZd3bjyEgjQ@mail.gmail.com>
- <1447696.eZjtSkvvWp@flomedio>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: [PATCH] git-am: make a config setting for --keep-non-patch switch
+Date: Wed, 1 Aug 2012 15:56:35 -0400
+Message-ID: <501989F3.7080907@windriver.com>
+References: <1343841535-25652-1-git-send-email-paul.gortmaker@windriver.com> <7v1ujqfnyg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 21:43:14 2012
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 21:56:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Swep4-00017O-B6
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 21:43:10 +0200
+	id 1Swf2E-0000bW-I3
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 21:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab2HATnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 15:43:03 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:64064 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578Ab2HATnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 15:43:00 -0400
-Received: by ggnl2 with SMTP id l2so456321ggn.19
-        for <git@vger.kernel.org>; Wed, 01 Aug 2012 12:43:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+y3d91oz+fyephL+oIvc2ZaWhguMKTNmBWb4IqwFc2c=;
-        b=Fu2VUt2Af9WPYcntRSZXVCJMrP+tpi++JdHcAz40aDufxsbp+EZbd3+RubbUue7xrl
-         uCuGu2unJEPtnnW7ZHS/QjK+ZuS+OPOY19CuaZGT10KxjZx8go0Lwetuc6gQYG7YQGVq
-         p/rW2c2FE+4kvkgtZxVGX71QhoyrOGsMJ8cIL2MqLlh0HbALmxRmKZDt3kXk1Lxlb98k
-         Fp09co47jDYFVCCRSsKKZlpeKCNGVsDvJ82FJKKDFLqU6vsC0MpxoUIVCUov5NYhYR3j
-         SFXf6YhvH5mmd95nAagwnYbMDzzs07jjPdvQIRq5cpurcPNVkD484baGfoEe0q4tBJEd
-         yDAw==
-Received: by 10.66.81.202 with SMTP id c10mr42223697pay.20.1343850180163;
-        Wed, 01 Aug 2012 12:43:00 -0700 (PDT)
-Received: from copier (cl-711.phx-01.us.sixxs.net. [2001:1938:81:2c6::2])
-        by mx.google.com with ESMTPS id pt2sm3151084pbb.58.2012.08.01.12.42.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 01 Aug 2012 12:42:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1447696.eZjtSkvvWp@flomedio>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754002Ab2HAT4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 15:56:41 -0400
+Received: from mail.windriver.com ([147.11.1.11]:49290 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753172Ab2HAT4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 15:56:40 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.5/8.14.3) with ESMTP id q71JubTN027559
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Wed, 1 Aug 2012 12:56:37 -0700 (PDT)
+Received: from [128.224.146.65] (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server id 14.2.309.2; Wed, 1 Aug 2012
+ 12:56:37 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <7v1ujqfnyg.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [128.224.146.65]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202722>
 
-Hi again,
+On 12-08-01 02:48 PM, Junio C Hamano wrote:
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+> 
+>> In order to make a commit be invariant (excluding ID) over
+>> a format-patch and subsequent am cycle, one needs to use
+>> the '--keep-non-patch' so that commits like:
+>>
+>> 	[PATCH] [i386] fix foo bar arch/x86/mm
+>>
+>> only lose the [PATCH] and not the [i386] part.  Since it
+>> is a common desire (e.g. linux kernel stable trees) to have
+>> the subjects remain invariant during a backport, there is
+>> a genuine need for making this the default behaviour from
+>> a config file, versus specifying it in scripts and on the
+>> command line each time.
+>>
+>> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+>> ---
+>>
+>> See http://lkml.indiana.edu/hypermail/linux/kernel/1203.1/01817.html
+>> for additional background; stable maintainers using it etc.
+> 
+> That's a blast from the past; it would have been so much nicer
+> if the patch came earlier ;-)
 
-Florian Achleitner wrote:
+I just happened to "rediscover" the issue yesterday when backporting
+a patch that had [S390] in it to linux-2.6.34 -- went looking for
+any possible previous reports and found the above thread.  So the
+timing was largely out of my control.  :)
 
-> When the first line arrives at the remote-helper, it starts importing one line 
-> at a time, leaving the remaining lines in the pipe.
-> For importing it requires the data from fast-import, which would be mixed with 
-> import lines or queued at the end of them.
+> 
+> The patch looks from sane; we may want to have a test in t4150, just like
+> we have tests for am.keepcr in t4253.  We have plenty of time as we
+> are in feature freeze right now.
 
-Oh, good catch.
+I'll take a look at the test cases, and resend once 1.7.12 is done.
 
-The way it's supposed to work is that in a bidi-import, the remote
-helper reads in the entire list of refs to be imported and only once
-the newline indicating that that list is over arrives starts writing
-its fast-import stream.  We could make this more obvious by not
-spawning fast-import until immediately before writing that newline.
+Paul.
+--
 
-This needs to be clearly documented in the git-remote-helpers(1) page
-if the bidi-import command is introduced.
-
-If a remote helper writes commands for fast-import before that newline
-comes, that is a bug in the remote helper, plain and simple.  It might
-be fun to diagnose this problem:
-
-	static void pipe_drained_or_die(int fd, const char *msg)
-	{
-		char buf[1];
-		int flags = fcntl(fd, F_GETFL);
-		if (flags < 0)
-			die_errno("cannot get pipe flags");
-		if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
-			die_errno("cannot set up non-blocking pipe read");
-		if (read(fd, buf, 1) > 0)
-			die("%s", msg);
-		if (fcntl(fd, F_SETFL, flags))
-			die_errno("cannot restore pipe flags");
-	}
-	...
-
-	for (i = 0; i < nr_heads; i++) {
-		write "import %s\n", to_fetch[i]->name;
-	}
-
-	if (getenv("GIT_REMOTE_HELPERS_SLOW_SANITY_CHECK"))
-		sleep(1);
-
-	pipe_drained_or_die("unexpected output from remote helper before fast-import launch");
-
-	if (get_importer(transport, &fastimport))
-		die("couldn't run fast-import");
-	write_constant(data->helper->in, "\n");
+> 
+> Thanks.
+> 
+>>
+>>  Documentation/config.txt               | 9 +++++++++
+>>  Documentation/git-am.txt               | 4 ++++
+>>  contrib/completion/git-completion.bash | 1 +
+>>  git-am.sh                              | 8 ++++++++
+>>  4 files changed, 22 insertions(+)
+>>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index a95e5a4..47aded5 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -655,6 +655,15 @@ am.keepcr::
+>>  	by giving '--no-keep-cr' from the command line.
+>>  	See linkgit:git-am[1], linkgit:git-mailsplit[1].
+>>  
+>> +am.keepnonpatch::
+>> +	Normally git-mailinfo strips from the Subject line, all leading
+>> +	strings bracketed with [ and ] pairs.  If this setting is true,
+>> +	git-am will call git-mailinfo with the parameter '-b' so that only
+>> +	the pairs whose bracketed string contains the word "PATCH" are
+>> +	stripped.  Can be overridden by giving ' '--no-keep-non-patch'
+>> +	from the command line.
+>> +	See linkgit:git-am[1], linkgit:git-mailinfo[1].
+>> +
+>>  apply.ignorewhitespace::
+>>  	When set to 'change', tells 'git apply' to ignore changes in
+>>  	whitespace, in the same way as the '--ignore-space-change'
+>> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+>> index 19d57a8..790efdb 100644
+>> --- a/Documentation/git-am.txt
+>> +++ b/Documentation/git-am.txt
+>> @@ -41,7 +41,11 @@ OPTIONS
+>>  	Pass `-k` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+>>  
+>>  --keep-non-patch::
+>> +--no-keep-non-patch::
+>>  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+>> +	The `am.keepnonpatch` configuration variable can be used to specify
+>> +	the default behaviour.  The `--no-keep-non-patch` is useful to
+>> +	override any `am.keepnonpatch` setting.
+>>  
+>>  --keep-cr::
+>>  --no-keep-cr::
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index ffedce7..04339df 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1758,6 +1758,7 @@ _git_config ()
+>>  		advice.statusHints
+>>  		alias.
+>>  		am.keepcr
+>> +		am.keepnonpatch
+>>  		apply.ignorewhitespace
+>>  		apply.whitespace
+>>  		branch.autosetupmerge
+>> diff --git a/git-am.sh b/git-am.sh
+>> index c02e62d..9f6adbf 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
+>>  u,utf8          recode into utf8 (default)
+>>  k,keep          pass -k flag to git-mailinfo
+>>  keep-non-patch  pass -b flag to git-mailinfo
+>> +no-keep-non-patch do not pass -b flag to git-mailsplit, independent of am.keepnonpatch
+>>  keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+>>  no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
+>>  c,scissors      strip everything before a scissors line
+>> @@ -381,6 +382,11 @@ then
+>>      keepcr=t
+>>  fi
+>>  
+>> +if test "$(git config --bool --get am.keepnonpatch)" = true
+>> +then
+>> +    keep=b
+>> +fi
+>> +
+>>  while test $# != 0
+>>  do
+>>  	case "$1" in
+>> @@ -402,6 +408,8 @@ do
+>>  		keep=t ;;
+>>  	--keep-non-patch)
+>>  		keep=b ;;
+>> +	--no-keep-non-patch)
+>> +		keep= ;;
+>>  	-c|--scissors)
+>>  		scissors=t ;;
+>>  	--no-scissors)
