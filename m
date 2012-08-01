@@ -1,352 +1,272 @@
 From: Robert Luberda <robert@debian.org>
-Subject: [PATCH/RFC] git svn: handle errors and concurrent commits in dcommit
-Date: Wed,  1 Aug 2012 23:26:37 +0200
-Message-ID: <1343856397-6536-1-git-send-email-robert@debian.org>
+Subject: [PATCH/RFC] git svn: don't introduce new paragraph for git-svn-id
+Date: Wed,  1 Aug 2012 23:23:17 +0200
+Message-ID: <1343856197-6393-1-git-send-email-robert@debian.org>
 Cc: Robert Luberda <robert@debian.org>
 To: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 23:42:32 2012
+X-From: git-owner@vger.kernel.org Wed Aug 01 23:42:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwggX-0003sO-Pc
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:42:30 +0200
+	id 1SwggX-0003sO-43
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 23:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755954Ab2HAVmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 17:42:23 -0400
-Received: from master.debian.org ([70.103.162.29]:51571 "EHLO
-	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755950Ab2HAVmW (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755951Ab2HAVmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 1 Aug 2012 17:42:22 -0400
+Received: from master.debian.org ([70.103.162.29]:51570 "EHLO
+	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755277Ab2HAVmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 17:42:21 -0400
+X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Aug 2012 17:42:21 EDT
 Received: from localhost ([127.0.0.1] helo=vox.robbo.home)
 	by master.debian.org with esmtp (Exim 4.72)
 	(envelope-from <robert@debian.org>)
-	id 1Swgaf-00089J-KX; Wed, 01 Aug 2012 21:36:25 +0000
+	id 1Swgaf-00089I-Gr; Wed, 01 Aug 2012 21:36:25 +0000
 Received: by vox.robbo.home (Postfix, from userid 1000)
-	id 7124710B259; Wed,  1 Aug 2012 23:26:43 +0200 (CEST)
+	id 19B57E2D23; Wed,  1 Aug 2012 23:23:47 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202729>
 
-dcommit didn't handle errors returned by SVN and coped very
-poorly with concurrent commits that appear in SVN repository
-while dcommit was running. In both cases it left git repository
-in inconsistent state: index (which was reset with `git reset
---mixed' after a successful commit to SVN) no longer matched the
-checkouted tree, when the following commit failed or needed to be
-rebased. See http://bugs.debian.org/676904 for examples.
+While importing changes from SVN by `git svn fetch' strip any
+white spaces from beginnings and endings of SVN commit messages
+and skip adding a new line character before `git-svn-id:'
+line in case the commit message ends with another pseudo-header
+(like From:, Signed-off-by: or Change-Id:, etc.).
 
-This patch fixes the issues by:
-- introducing error handler for dcommit. The handler will try
-  to rebase or reset working tree before returning error to the
-  end user. dcommit_rebase function was extracted out of cmd_dcommit
-  to ensure consistency between cmd_dcommit and the error handler.
-- calling `git reset --mixed' only once after all patches are
-  successfully committed to SVN. This ensures index is not touched
-  for most of the time of dcommit run.
+This patch allows one to use gerrit code review system on git-svn-managed
+repositories. gerrit expects its `Change-Id:' header to appear in the
+last paragraph of commit message and `git-svn-id:' following a new
+line character was breaking this expectation.
 ---
- git-svn.perl                         |   70 ++++++++++----
- t/t9164-git-svn-dcommit-concrrent.sh |  173 ++++++++++++++++++++++++++++++++++
- 2 files changed, 224 insertions(+), 19 deletions(-)
- create mode 100755 t/t9164-git-svn-dcommit-concrrent.sh
+ perl/Git/SVN.pm                    |    5 +-
+ t/t9122-git-svn-author.sh          |    4 +-
+ t/t9163-git-svn-import-messages.sh |  174 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 180 insertions(+), 3 deletions(-)
+ create mode 100755 t/t9163-git-svn-import-messages.sh
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 5711c57..ca3383f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -777,6 +777,44 @@ sub populate_merge_info {
- 	return undef;
- }
- 
-+sub dcommit_rebase {
-+	my ($is_last, $current, $fetched_ref, $svn_error) = @_;
-+	my @diff;
-+
-+	if ($svn_error)
-+	{
-+		print STDERR "\nERROR from SVN: ", $svn_error->expanded_message, "\n";
-+	}
-+	unless ($_no_rebase)
-+	{
-+		# we always want to rebase against the current HEAD,
-+		# not any head that was passed to us
-+		@diff = command('diff-tree', $current,
-+	                   $fetched_ref, '--');
-+		my @finish;
-+		if (@diff) {
-+			@finish = rebase_cmd();
-+			print STDERR "W: $current and ", $fetched_ref,
-+			             " differ, using @finish:\n",
-+			             join("\n", @diff), "\n";
-+		} elsif ($is_last) {
-+			print "No changes between ", $current, " and ",
-+			      $fetched_ref,
-+			      "\nResetting to the latest ",
-+			      $fetched_ref, "\n";
-+			@finish = qw/reset --mixed/;
-+		}
-+		command_noisy(@finish, $fetched_ref) if @finish;
-+	}
-+	if ($svn_error)
-+	{
-+		die "ERROR: Not all changes have been committed into SVN"
-+			.($_no_rebase ? ". " : ", however the committed ones (if any) seem to be successfully integrated into the working tree. ")
-+			."Please see the above messages for details.\n";
-+	}
-+	return @diff;
-+}
-+
- sub cmd_dcommit {
- 	my $head = shift;
- 	command_noisy(qw/update-index --refresh/);
-@@ -904,6 +942,7 @@ sub cmd_dcommit {
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index b8b3474..bf22408 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1015,7 +1015,8 @@ sub do_git_commit {
+ 	print $msg_fh $log_entry->{log} or croak $!;
+ 	restore_commit_header_env($old_env);
+ 	unless ($self->no_metadata) {
+-		print $msg_fh "\ngit-svn-id: $log_entry->{metadata}\n"
++		print $msg_fh "\n" unless $log_entry->{log} =~ m/\n\n([\w-]+:\s.*\n)+$/;
++		print $msg_fh "git-svn-id: $log_entry->{metadata}\n"
+ 		              or croak $!;
  	}
+ 	$msg_fh->flush == 0 or croak $!;
+@@ -1803,6 +1804,8 @@ sub make_log_entry {
+ 	close $un or croak $!;
  
- 	my $rewritten_parent;
-+	my $current_head =  command_oneline(qw/rev-parse HEAD/);
- 	Git::SVN::remove_username($expect_url);
- 	if (defined($_merge_info)) {
- 		$_merge_info =~ tr{ }{\n};
-@@ -943,6 +982,13 @@ sub cmd_dcommit {
- 			                },
- 					mergeinfo => $_merge_info,
- 			                svn_path => '');
-+
-+			my $err_handler = $SVN::Error::handler;
-+			$SVN::Error::handler = sub {
-+				my $err = shift;
-+				dcommit_rebase(1, $current_head, $gs->refname, $err);
-+			};
-+
- 			if (!Git::SVN::Editor->new(\%ed_opts)->apply_diff) {
- 				print "No changes\n$d~1 == $d\n";
- 			} elsif ($parents->{$d} && @{$parents->{$d}}) {
-@@ -950,31 +996,16 @@ sub cmd_dcommit {
- 				                               $parents->{$d};
- 			}
- 			$_fetch_all ? $gs->fetch_all : $gs->fetch;
-+			$SVN::Error::handler = $err_handler;
- 			$last_rev = $cmt_rev;
- 			next if $_no_rebase;
+ 	$log_entry{date} = parse_svn_date($log_entry{date});
++	$log_entry{log} =~ s/^\s*//;
++	$log_entry{log} =~ s/\s*$//;
+ 	$log_entry{log} .= "\n";
+ 	my $author = $log_entry{author} = check_author($log_entry{author});
+ 	my ($name, $email) = defined $::users{$author} ? @{$::users{$author}}
+diff --git a/t/t9122-git-svn-author.sh b/t/t9122-git-svn-author.sh
+index 30013b7..c1d55eb 100755
+--- a/t/t9122-git-svn-author.sh
++++ b/t/t9122-git-svn-author.sh
+@@ -68,8 +68,8 @@ test_expect_success 'interact with it via git svn' '
  
--			# we always want to rebase against the current HEAD,
--			# not any head that was passed to us
--			my @diff = command('diff-tree', $d,
--			                   $gs->refname, '--');
--			my @finish;
--			if (@diff) {
--				@finish = rebase_cmd();
--				print STDERR "W: $d and ", $gs->refname,
--				             " differ, using @finish:\n",
--				             join("\n", @diff), "\n";
--			} else {
--				print "No changes between current HEAD and ",
--				      $gs->refname,
--				      "\nResetting to the latest ",
--				      $gs->refname, "\n";
--				@finish = qw/reset --mixed/;
--			}
--			command_noisy(@finish, $gs->refname);
-+			my @diff = dcommit_rebase(@$linear_refs == 0, $d, $gs->refname, undef);
+ 	# Make sure there are no commit messages with excess blank lines
+ 	test $(grep "^ " actual.2 | wc -l) = 3 &&
+-	test $(grep "^ " actual.3 | wc -l) = 5 &&
+-	test $(grep "^ " actual.4 | wc -l) = 5 &&
++	test $(grep "^ " actual.3 | wc -l) = 4 &&
++	test $(grep "^ " actual.4 | wc -l) = 4 &&
  
--			$rewritten_parent = command_oneline(qw/rev-parse HEAD/);
-+			$rewritten_parent = command_oneline(qw/rev-parse/, $gs->refname);
- 
- 			if (@diff) {
-+				$current_head = command_oneline(qw/rev-parse HEAD/);
- 				@refs = ();
- 				my ($url_, $rev_, $uuid_, $gs_) =
- 				              working_head_info('HEAD', \@refs);
-@@ -1019,6 +1050,7 @@ sub cmd_dcommit {
- 				}
- 				$parents = \%p;
- 				$linear_refs = \@l;
-+				undef $last_rev;
- 			}
- 		}
- 	}
-diff --git a/t/t9164-git-svn-dcommit-concrrent.sh b/t/t9164-git-svn-dcommit-concrrent.sh
+ 	# Make sure there are no svn commit messages with excess blank lines
+ 	(
+diff --git a/t/t9163-git-svn-import-messages.sh b/t/t9163-git-svn-import-messages.sh
 new file mode 100755
-index 0000000..7916a63
+index 0000000..46b7c5b
 --- /dev/null
-+++ b/t/t9164-git-svn-dcommit-concrrent.sh
-@@ -0,0 +1,173 @@
++++ b/t/t9163-git-svn-import-messages.sh
+@@ -0,0 +1,174 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2012 Robert Luberda
 +#
 +
-+test_description='concurrent git svn dcommit'
++test_description='git svn check log messages imported from svn'
 +. ./lib-git-svn.sh
 +
++get_file_contents()
++{
++	for line in "$@"; do
++		echo "$line"
++	done
++}
++
++svn_commit()
++{
++	N=`expr $N + 1`
++	get_file_contents "$@" > svn-message.$N;
++	(cd work.svn && echo "$N" >> file &&
++	svn_cmd commit -F ../svn-message.$N file)
++}
++
++git_svn_dcommit()
++{
++	N=`expr $N + 1`
++	get_file_contents "$@" > git-svn-message.$N;
++	(cd work.git && echo "$N" >> file &&
++	git commit -a -F ../git-svn-message.$N &&
++	git svn dcommit )
++}
++
++fetch_and_check()
++{
++	get_file_contents "$@" >expected.$N	&&
++	echo "GIT-SVN-ID-LINE" >> expected.$N	&&
++	(cd work.git && git svn rebase)		&&
++	(cd work.git && git show -s HEAD) | sed -ne '/^    /,${
++		s/^    //
++		s/^git-svn-id: .*$/GIT-SVN-ID-LINE/
++		p
++		}' > actual.$N			&&
++	test_cmp expected.$N actual.$N
++}
 +
 +
-+test_expect_success 'setup svn repository' '
++test_expect_success 'setup svn & git repository' '
 +	svn_cmd checkout "$svnrepo" work.svn &&
 +	(
 +		cd work.svn &&
-+		echo >file && echo > auto_updated_file
-+		svn_cmd add file auto_updated_file &&
++		echo >file
++		svn_cmd add file &&
 +		svn_cmd commit -m "initial commit"
 +       ) &&
-+	svn_cmd checkout "$svnrepo" work-auto-commits.svn
-+'
-+N=0
-+next_N()
-+{
-+	N=`expr $N + 1`
-+}
-+
-+# Setup SVN repository hooks to emulate SVN failures or concurrent commits
-+# The function adds either
-+# either pre-commit  hook, which causes SVN commit given in second argument to fail
-+# or     post-commit hook, which creates a new commit (a new line added to
-+#                    auto_updated_file) after given SVN commit
-+# The second argument contains a number (not SVN revision) of commit the the hook
-+# should be applied for.
-+setup_hook()
-+{
-+	hook_type="$1"  # pre-commit to fail commit or post-commit to make concurrent commit
-+	skip_revs="$2"  # skip number of revisions before applying the hook
-+			# the number is decremented by one each time hook is called until
-+			# it gets 0, in which case the real part of hook is executed
-+	[ "$hook_type" = "pre-commit" ] || [ "$hook_type" = "post-commit" ] ||
-+		{ echo "ERROR: invalid argument ($hook_type) passed to setup_hook" >&2 ; return 1; }
-+	echo "cnt=$skip_revs" > "$hook_type-counter"
-+	rm -f "$rawsvnrepo/hooks/"*-commit # drop previous hooks
-+	hook="$rawsvnrepo/hooks/$hook_type"
-+	cat > "$hook" <<- 'EOF1'
-+		#!/bin/sh
-+		set -e
-+		cd "$1/.."  # "$1" is repository location
-+		exec >> svn-hook.log 2>&1
-+		hook="`basename "$0"`"
-+		echo "*** Executing $hook $@"
-+		set -x
-+		. ./$hook-counter
-+		cnt=`expr "$cnt" - 1` || [ $? = 1 ] # expr returns error code 1 if expression is 0
-+		echo "cnt=$cnt" > ./$hook-counter
-+		[ "$cnt" = "0" ] || exit 0
-+EOF1
-+	if [ "$hook_type" = "pre-commit" ]; then
-+		echo "echo 'commit disallowed' >&2; exit 1" >> "$hook"
-+	else
-+		echo "PATH=\"$PATH\"; export PATH" >> $hook
-+		echo "svnconf=\"$svnconf\"" >> $hook
-+		cat >> "$hook" <<- 'EOF2'
-+			cd work-auto-commits.svn
-+			svn up --config-dir "$svnconf"
-+			echo "$$" >> auto_updated_file
-+			svn commit --config-dir "$svnconf" -m "auto-committing concurrent change from post-commit hook"
-+			exit 0
-+EOF2
-+	fi
-+	chmod 755 "$hook"
-+}
-+
-+check_contents()
-+{
-+	gitdir="$1"
-+	(cd ../work.svn && svn_cmd up) &&
-+	test_cmp file ../work.svn/file &&
-+	test_cmp auto_updated_file ../work.svn/auto_updated_file
-+}
-+
-+test_expect_success 'check if svn post-commit hook creates a concurrent commit' '
-+	setup_hook post-commit 1 &&
-+	(cd work.svn &&
-+		cp auto_updated_file auto_updated_file_saved
-+		echo 1 >> file &&
-+		svn_cmd commit -m "changing file" &&
-+		svn_cmd up &&
-+		test_must_fail test_cmp auto_updated_file auto_updated_file_saved)
++       git svn clone "$svnrepo" work.git
 +'
 +
-+test_expect_success 'check if svn pre-commit hook fails' '
-+	setup_hook pre-commit 2 &&
-+	(cd work.svn &&
-+		echo 2 >> file &&
-+		svn_cmd commit -m "changing file once again" &&
-+		echo 3 >> file &&
-+		test_must_fail svn_cmd commit -m "this commit should fail" &&
-+		svn_cmd revert file)
++test_expect_success 'check empty line is added before git-svn-id' '
++	svn_commit "test message 1" &&
++	fetch_and_check "test message 1" \
++			""
 +'
 +
-+test_expect_success 'git svn dcommit error handling' '
-+	setup_hook pre-commit 2 &&
-+	next_N && git svn clone "$svnrepo" work$N.git &&
-+	( cd work$N.git &&
-+		echo 1 >> file && git commit -am "commit change $N.1" &&
-+		echo 2 >> file && git commit -am "commit change $N.2" &&
-+		echo 3 >> file && git commit -am "commit change $N.3" &&
-+		test_must_fail git svn dcommit && # should fail to dcommit 2nd and 3rd changes
-+		git update-index --refresh && # but still should leave repository in reasonable state
-+		git show HEAD~2   | grep -q git-svn-id &&
-+		! git show HEAD~1 | grep -q git-svn-id &&
-+		! git show HEAD   | grep -q git-svn-id )
++test_expect_success 'no empty line before git-svn-id if ends with pseudo-header' '
++	svn_commit "test message 2" \
++			"" \
++			"Change-Id: I123456" &&
++	fetch_and_check "test message 2" \
++				"" \
++				"Change-Id: I123456"
 +'
 +
-+test_expect_success 'git svn dcommit concurrent change in non-changed file' '
-+	setup_hook post-commit 2 &&
-+	next_N && git svn clone "$svnrepo" work$N.git &&
-+	( cd work$N.git &&
-+		echo 1 >> file && git commit -am "commit change $N.1" &&
-+		echo 2 >> file && git commit -am "commit change $N.2" &&
-+		echo 3 >> file && git commit -am "commit change $N.3" &&
-+		git svn dcommit # should rebase
-+		git update-index --refresh && # and leave repository in reasonable state
-+		check_contents &&
-+		git show HEAD~3 | grep -q git-svn-id &&
-+		git show HEAD~2 | grep -q git-svn-id &&
-+		git show HEAD~1 | grep -q auto-committing &&
-+		git show HEAD   | grep -q git-svn-id )
++test_expect_success 'no empty line before git-svn-id if ends with 2 pseudo-headers' '
++	svn_commit "test message 3" \
++			"" \
++			"Change-Id: I123456" \
++			"Signed-off-by: Au Thor <author@example.com>" &&
++	fetch_and_check "test message 3" \
++			"" \
++			"Change-Id: I123456" \
++			"Signed-off-by: Au Thor <author@example.com>"
 +'
 +
-+test_expect_success 'git svn dcommit concurrent non-conflicting change in changed file' '
-+	setup_hook post-commit 2 &&
-+	next_N && git svn clone "$svnrepo" work$N.git &&
-+	( cd work$N.git &&
-+		cat file >> auto_updated_file && git commit -am "commit change $N.1" &&
-+		sed -i 1d auto_updated_file && git commit -am "commit change $N.2" &&
-+		sed -i 1d auto_updated_file && git commit -am "commit change $N.3" &&
-+		git svn dcommit && # should rebase
-+		git update-index --refresh && # and leave repository in reasonable state
-+		check_contents &&
-+		git show HEAD~3 | grep -q git-svn-id &&
-+		git show HEAD~2 | grep -q git-svn-id &&
-+		git show HEAD~1 | grep -q auto-committing &&
-+		git show HEAD   | grep -q git-svn-id )
++test_expect_success 'empty line added when pseudo-header not in last section' '
++	svn_commit "test 4" \
++			"" \
++			"Change-Id: I123456" \
++			"line without colon" &&
++	fetch_and_check "test 4" \
++			"" \
++			"Change-Id: I123456" \
++			"line without colon" \
++			""
 +'
 +
-+test_expect_success 'git svn dcommit --no-rebase on concurrent non-conflicting change in changed file' '
-+	setup_hook post-commit 2 &&
-+	next_N && git svn clone "$svnrepo" work$N.git &&
-+	( cd work$N.git &&
-+		cat file >> auto_updated_file && git commit -am "commit change $N.1" &&
-+		sed -i 1d auto_updated_file && git commit -am "commit change $N.2" &&
-+		sed -i 1d auto_updated_file && git commit -am "commit change $N.3" &&
-+		test_must_fail git svn dcommit --no-rebase && # should fail as rebase is needed
-+		git update-index --refresh && # but still should leave repository in reasonable state
-+		! git show HEAD~2 | grep -q git-svn-id &&
-+		! git show HEAD~1 | grep -q git-svn-id &&
-+		! git show HEAD   | grep -q git-svn-id)
++test_expect_success 'empty line added when pseudo-header missing space' '
++	svn_commit "test 5" \
++			"" \
++			"Change-Id:I123456" &&
++	fetch_and_check "test 5" \
++			"" \
++			"Change-Id:I123456" \
++			""
 +'
 +
-+test_expect_success 'git svn dcommit fails on concurrent conflicting change' '
-+	setup_hook post-commit 1 &&
-+	next_N && git svn clone "$svnrepo" work$N.git &&
-+	( cd work$N.git &&
-+		echo a >> file && git commit -am "commit change $N.1" &&
-+		echo b >> auto_updated_file && git commit -am "commit change $N.2" &&
-+		echo c >> auto_updated_file && git commit -am "commit change $N.3" &&
-+		test_must_fail git svn dcommit && # rebase should fail
-+		test_must_fail git update-index --refresh )
++test_expect_success 'empty line added when pseudo-header missing colon' '
++	svn_commit "test 6" \
++			"" \
++			"Change-Id I123456" &&
++	fetch_and_check "test 6" \
++			"" \
++			"Change-Id I123456" \
++			""
++'
++test_expect_success 'empty line added when message consist of pseudo-header only' '
++	svn_commit "Change-Id: I7a1b2c3" &&
++	fetch_and_check "Change-Id: I7a1b2c3" \
++			""
 +'
 +
++test_expect_success 'whitespaces removed from start of message' '
++	svn_commit "   " \
++		   "  test 8" &&
++	fetch_and_check "test 8" \
++			""
++'
++
++test_expect_success 'whitespaces removed from end of message' '
++	svn_commit "test commit 9  " \
++		   "  "  \
++		   "	" &&
++	fetch_and_check "test commit 9" \
++			""
++'
++
++test_expect_success 'empty message imported as git-svn-id only' '
++	svn_commit "   " &&
++	fetch_and_check
++'
++
++test_expect_success 'pseudo-header preserved during git svn dcommit/rebase' '
++	git_svn_dcommit "test 11" \
++			"" \
++			"Change-Id: I23445" &&
++	fetch_and_check "test 11" \
++			"" \
++			"Change-Id: I23445"
++'
++
++test_expect_success 'empty line added if no pseudo-header when using git svn dcommit' '
++	git_svn_dcommit "test 12" &&
++	fetch_and_check "test 12" \
++			""
++'
++
++test_expect_success 'suprious git-svn-id line removed by git svn dcommit' '
++	git_svn_dcommit "test 13" \
++			"" \
++			"git-svn-id: file:///tmp/test@100 cb7b2de7-d0f6-461c-9b5c-d86679671c8" &&
++	fetch_and_check "test 13" \
++			""
++'
++
++test_expect_success 'suprious git-svn-id line removed by git svn dcommit when in middle of message' '
++	git_svn_dcommit "test 14" \
++			"" \
++			"git-svn-id: file:///tmp/test@110 cb7b2de7-d0f6-461c-9b5c-d86679671c8" \
++			"Header: test" &&
++	fetch_and_check "test 14" \
++			"" \
++			"Header: test"
++
++'
 +test_done
 -- 
 1.7.10.4
