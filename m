@@ -1,554 +1,175 @@
-From: J Smith <dark.panda@gmail.com>
-Subject: [PATCH/RFC] grep: add a grep.patternType configuration setting
-Date: Wed,  1 Aug 2012 14:29:41 -0400
-Message-ID: <1343845781-69246-1-git-send-email-dark.panda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 01 20:29:58 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: make a config setting for --keep-non-patch
+ switch
+Date: Wed, 01 Aug 2012 11:48:23 -0700
+Message-ID: <7v1ujqfnyg.fsf@alter.siamese.dyndns.org>
+References: <1343841535-25652-1-git-send-email-paul.gortmaker@windriver.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+X-From: git-owner@vger.kernel.org Wed Aug 01 20:48:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Swdg7-0005zV-Al
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 20:29:52 +0200
+	id 1SwdyD-0001m1-HI
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 20:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755688Ab2HAS3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 14:29:45 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:45674 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754961Ab2HAS3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 14:29:44 -0400
-Received: by vcbfk26 with SMTP id fk26so7348123vcb.19
-        for <git@vger.kernel.org>; Wed, 01 Aug 2012 11:29:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:x-mailer;
-        bh=1iU81gGMmVOrXkq0hW5IN+o7QwIfovPzUSmgfvzXrHo=;
-        b=Niqug4iezOdzAKBduM1BiumrZWu/uKNkc7/fN4s6qxGa/09ib1hs5tTzlxwR4zxLOz
-         N9956Tu8r7MCcY0sY/ulAi9rn8+Gw2vALX8zd0v5HPJVYthN+tO+Mi5zpdaBFSKzncoG
-         Pzc9rAazvbKG/XCO9W4ABOBZrBM9qFay2iboMRNdjIphs9fFOUfbALWny2TeKB0NTRAh
-         QFtnAew7NzSRucEzgz6qZwixt3MGoA3OgPOpUilPtHQPcWOBVhoKBkrNgy2rorA5w7U1
-         orBT+KKGF9phm58kCRYfmgCB2ejXMmpJR9/VEODQbhbTV5+KcXYD9ZdgKxZ24mZOmFTm
-         WmqA==
-Received: by 10.52.98.3 with SMTP id ee3mr10451487vdb.127.1343845783246;
-        Wed, 01 Aug 2012 11:29:43 -0700 (PDT)
-Received: from localhost.localdomain (surf3.net.rss.rogers.com. [24.114.255.3])
-        by mx.google.com with ESMTPS id bj6sm3395990vdc.12.2012.08.01.11.29.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 01 Aug 2012 11:29:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.3
+	id S1753897Ab2HASs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 14:48:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41436 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753384Ab2HASs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 14:48:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B92F89EFB;
+	Wed,  1 Aug 2012 14:48:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=El7bH2GPqCvXzEYokM8BStRTqig=; b=seqOTp
+	17udOFV0EJ2gXPamFxOLoVR9nZsptzaV9A2USzRrMzMJlFeDVd2sldMuvPAFeWE4
+	ZrycsNrb+gSBTy4nKsFw5IN7cwkKROJ4h2xkmmdvwb7H6cF/2aGAMwJCOgsgQ1Ip
+	BrfyrWDgyo1/3frMxRpTX9unruiirAnWCW4rU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YPg8oqoID48lUP+S1ggxU80u+DZJEb2o
+	4pTi/drHzZdm0UMOeWmhVoAXXeTAUV0jQdBfy+qXpda4pRHKx3RFb25+mgvcFuTA
+	ZITm8xCPuuUizFG9XcQa8psfLWOkp4qp/6WixwQfmf8Ly9LVl10NquoNOArUcXyu
+	lunoeSYXBBc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A68E39EFA;
+	Wed,  1 Aug 2012 14:48:25 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF8C09EF9; Wed,  1 Aug 2012
+ 14:48:24 -0400 (EDT)
+In-Reply-To: <1343841535-25652-1-git-send-email-paul.gortmaker@windriver.com>
+ (Paul Gortmaker's message of "Wed, 1 Aug 2012 13:18:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 79786D78-DC09-11E1-9553-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202719>
 
-Adds the grep.patternType configuration setting which sets the default
-pattern matching behavior. The values "basic", "extended", "fixed", and
-"perl" can be used to set "--basic-regexp", "--extended-regexp",
-"--fixed-strings", and "--perl-regexp" options by default respectively.
+Paul Gortmaker <paul.gortmaker@windriver.com> writes:
 
-A value of true is equivalent to "extended" as with grep.extendedRegexp,
-and a value of false leaves the pattern type as unspecified and follows
-the default grep behavior.
+> In order to make a commit be invariant (excluding ID) over
+> a format-patch and subsequent am cycle, one needs to use
+> the '--keep-non-patch' so that commits like:
+>
+> 	[PATCH] [i386] fix foo bar arch/x86/mm
+>
+> only lose the [PATCH] and not the [i386] part.  Since it
+> is a common desire (e.g. linux kernel stable trees) to have
+> the subjects remain invariant during a backport, there is
+> a genuine need for making this the default behaviour from
+> a config file, versus specifying it in scripts and on the
+> command line each time.
+>
+> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+> ---
+>
+> See http://lkml.indiana.edu/hypermail/linux/kernel/1203.1/01817.html
+> for additional background; stable maintainers using it etc.
 
-This setting overrides the value set in grep.extendedRegexp which will
-be ignored completely if grep.patternType is set.
----
- Documentation/config.txt   |  11 ++-
- Documentation/git-grep.txt |  11 ++-
- builtin/grep.c             | 106 ++++++++++++++++---------
- grep.h                     |   9 +++
- t/t7810-grep.sh            | 187 +++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 284 insertions(+), 40 deletions(-)
+That's a blast from the past; it would have been so much nicer
+if the patch came earlier ;-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a95e5a4..38d56d8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1210,8 +1210,17 @@ gitweb.snapshot::
- grep.lineNumber::
- 	If set to true, enable '-n' option by default.
+The patch looks from sane; we may want to have a test in t4150, just like
+we have tests for am.keepcr in t4253.  We have plenty of time as we
+are in feature freeze right now.
 
-+grep.patternType::
-+	Sets the default matching behavior. This option can be set to a
-+	boolean value or one of 'basic', 'extended', 'fixed', or 'perl'
-+	which will enable the '--basic-regexp', '--extended-regexp',
-+	'--fixed-strings' or '--perl-regexp' options accordingly. The value
-+	of true is equivalent to 'extended' while false leaves the
-+	settings in their default state.
-+
- grep.extendedRegexp::
--	If set to true, enable '--extended-regexp' option by default.
-+	If set to true, enable '--extended-regexp' option by default. This
-+	option is ignored when the 'grep.patternType' option is set.
+Thanks.
 
- gpg.program::
- 	Use this custom program instead of "gpg" found on $PATH when
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 3bec036..f56f67f 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -42,8 +42,17 @@ CONFIGURATION
- grep.lineNumber::
- 	If set to true, enable '-n' option by default.
-
-+grep.patternType::
-+	Sets the default matching behavior. This option can be set to a
-+	boolean value or one of 'basic', 'extended', 'fixed', or 'perl'
-+	which will enable the '--basic-regexp', '--extended-regexp',
-+	'--fixed-strings' or '--perl-regexp' options accordingly. The value
-+	of true is equivalent to 'extended' while false leaves the
-+	settings in their default state.
-+
- grep.extendedRegexp::
--	If set to true, enable '--extended-regexp' option by default.
-+	If set to true, enable '--extended-regexp' option by default. This
-+	option is ignored when the 'grep.patternType' option is set.
-
-
- OPTIONS
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 29adb0a..1de7e76 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -260,6 +260,55 @@ static int wait_all(void)
- }
- #endif
-
-+static int parse_pattern_type_arg(const char *opt, const char *arg)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return GREP_PATTERN_TYPE_ERE;
-+	case 0:
-+		return GREP_PATTERN_TYPE_UNSPECIFIED;
-+	default:
-+		if (!strcmp(arg, "basic"))
-+			return GREP_PATTERN_TYPE_BRE;
-+		else if (!strcmp(arg, "extended"))
-+			return GREP_PATTERN_TYPE_ERE;
-+		else if (!strcmp(arg, "fixed"))
-+			return GREP_PATTERN_TYPE_FIXED;
-+		else if (!strcmp(arg, "perl"))
-+			return GREP_PATTERN_TYPE_PCRE;
-+		die("bad %s argument: %s", opt, arg);
-+	}
-+}
-+
-+static void grep_pattern_type_options(const int pattern_type, struct grep_opt *opt)
-+{
-+	switch (pattern_type) {
-+		case GREP_PATTERN_TYPE_BRE:
-+			opt->fixed = 0;
-+			opt->pcre = 0;
-+			opt->regflags &= ~REG_EXTENDED;
-+			break;
-+
-+		case GREP_PATTERN_TYPE_ERE:
-+			opt->fixed = 0;
-+			opt->pcre = 0;
-+			opt->regflags |= REG_EXTENDED;
-+			break;
-+
-+		case GREP_PATTERN_TYPE_FIXED:
-+			opt->fixed = 1;
-+			opt->pcre = 0;
-+			opt->regflags &= ~REG_EXTENDED;
-+			break;
-+
-+		case GREP_PATTERN_TYPE_PCRE:
-+			opt->fixed = 0;
-+			opt->pcre = 1;
-+			opt->regflags &= ~REG_EXTENDED;
-+			break;
-+	}
-+}
-+
- static int grep_config(const char *var, const char *value, void *cb)
- {
- 	struct grep_opt *opt = cb;
-@@ -269,13 +318,21 @@ static int grep_config(const char *var, const char *value, void *cb)
- 		return -1;
-
- 	if (!strcmp(var, "grep.extendedregexp")) {
--		if (git_config_bool(var, value))
--			opt->regflags |= REG_EXTENDED;
--		else
--			opt->regflags &= ~REG_EXTENDED;
-+		if (!opt->pattern_type_used) {
-+			if (git_config_bool(var, value))
-+				opt->regflags |= REG_EXTENDED;
-+			else
-+				opt->regflags &= ~REG_EXTENDED;
-+		}
- 		return 0;
- 	}
-
-+	if (!strcmp(var, "grep.patterntype")) {
-+		grep_pattern_type_options(parse_pattern_type_arg(var, value), opt);
-+		opt->pattern_type_used = 1;
-+		return 0;
-+  }
-+
- 	if (!strcmp(var, "grep.linenumber")) {
- 		opt->linenum = git_config_bool(var, value);
- 		return 0;
-@@ -669,14 +726,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int dummy;
- 	int use_index = 1;
--	enum {
--		pattern_type_unspecified = 0,
--		pattern_type_bre,
--		pattern_type_ere,
--		pattern_type_fixed,
--		pattern_type_pcre,
--	};
--	int pattern_type = pattern_type_unspecified;
-+	int pattern_type = GREP_PATTERN_TYPE_UNSPECIFIED;
-
- 	struct option options[] = {
- 		OPT_BOOLEAN(0, "cached", &cached,
-@@ -705,16 +755,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_GROUP(""),
- 		OPT_SET_INT('E', "extended-regexp", &pattern_type,
- 			    "use extended POSIX regular expressions",
--			    pattern_type_ere),
-+			    GREP_PATTERN_TYPE_ERE),
- 		OPT_SET_INT('G', "basic-regexp", &pattern_type,
- 			    "use basic POSIX regular expressions (default)",
--			    pattern_type_bre),
-+			    GREP_PATTERN_TYPE_BRE),
- 		OPT_SET_INT('F', "fixed-strings", &pattern_type,
- 			    "interpret patterns as fixed strings",
--			    pattern_type_fixed),
-+			    GREP_PATTERN_TYPE_FIXED),
- 		OPT_SET_INT('P', "perl-regexp", &pattern_type,
- 			    "use Perl-compatible regular expressions",
--			    pattern_type_pcre),
-+			    GREP_PATTERN_TYPE_PCRE),
- 		OPT_GROUP(""),
- 		OPT_BOOLEAN('n', "line-number", &opt.linenum, "show line numbers"),
- 		OPT_NEGBIT('h', NULL, &opt.pathname, "don't show filenames", 1),
-@@ -824,28 +874,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_KEEP_DASHDASH |
- 			     PARSE_OPT_STOP_AT_NON_OPTION |
- 			     PARSE_OPT_NO_INTERNAL_HELP);
--	switch (pattern_type) {
--	case pattern_type_fixed:
--		opt.fixed = 1;
--		opt.pcre = 0;
--		break;
--	case pattern_type_bre:
--		opt.fixed = 0;
--		opt.pcre = 0;
--		opt.regflags &= ~REG_EXTENDED;
--		break;
--	case pattern_type_ere:
--		opt.fixed = 0;
--		opt.pcre = 0;
--		opt.regflags |= REG_EXTENDED;
--		break;
--	case pattern_type_pcre:
--		opt.fixed = 0;
--		opt.pcre = 1;
--		break;
--	default:
--		break; /* nothing */
--	}
-+
-+	grep_pattern_type_options(pattern_type, &opt);
-
- 	if (use_index && !startup_info->have_repository)
- 		/* die the same way as if we did it at the beginning */
-diff --git a/grep.h b/grep.h
-index ed7de6b..9a6cdde 100644
---- a/grep.h
-+++ b/grep.h
-@@ -58,6 +58,14 @@ enum grep_expr_node {
- 	GREP_NODE_OR
- };
-
-+enum grep_pattern_type {
-+	GREP_PATTERN_TYPE_UNSPECIFIED = 0,
-+	GREP_PATTERN_TYPE_BRE,
-+	GREP_PATTERN_TYPE_ERE,
-+	GREP_PATTERN_TYPE_FIXED,
-+	GREP_PATTERN_TYPE_PCRE
-+};
-+
- struct grep_expr {
- 	enum grep_expr_node node;
- 	unsigned hit;
-@@ -103,6 +111,7 @@ struct grep_opt {
- 	int max_depth;
- 	int funcname;
- 	int funcbody;
-+	int pattern_type_used;
- 	char color_context[COLOR_MAXLEN];
- 	char color_filename[COLOR_MAXLEN];
- 	char color_function[COLOR_MAXLEN];
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 523d041..4fa24b4 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -245,11 +245,41 @@ do
- 		test_cmp expected actual
- 	'
-
-+	test_expect_success "grep $L with grep.patternType=false" '
-+		echo "ab:a+bc" >expected &&
-+		git -c grep.patternType=false grep "a+b*c" ab >actual &&
-+		test_cmp expected actual
-+	'
-+
- 	test_expect_success "grep $L with grep.extendedRegexp=true" '
- 		echo "ab:abc" >expected &&
- 		git -c grep.extendedRegexp=true grep "a+b*c" ab >actual &&
- 		test_cmp expected actual
- 	'
-+
-+	test_expect_success "grep $L with grep.patternType=true" '
-+		echo "ab:abc" >expected &&
-+		git -c grep.patternType=true grep "a+b*c" ab >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep $L with grep.patternType=false and grep.extendedRegexp=true" '
-+		echo "ab:a+bc" >expected &&
-+		git \
-+			-c grep.patternType=false \
-+			-c grep.extendedRegexp=true \
-+			grep "a+b*c" ab >actual &&
-+		test_cmp expected actual
-+	'
-+
-+	test_expect_success "grep $L with grep.patternType=true and grep.extendedRegexp=false" '
-+		echo "ab:abc" >expected &&
-+		git \
-+			-c grep.patternType=true \
-+			-c grep.extendedRegexp=false \
-+			grep "a+b*c" ab >actual &&
-+		test_cmp expected actual
-+	'
- done
-
- cat >expected <<EOF
-@@ -725,12 +755,43 @@ test_expect_success 'grep pattern with grep.extendedRegexp=true' '
- 	test_cmp empty actual
- '
-
-+test_expect_success 'grep pattern with grep.patternType=true' '
-+	>empty &&
-+	test_must_fail git -c grep.patternType=true \
-+		grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
-+	test_cmp empty actual
-+'
-+
-+test_expect_success 'grep pattern with grep.patternType=basic and grep.extendedRegexp=true' '
-+	>empty &&
-+	test_must_fail git \
-+		-c grep.patterntype=basic \
-+		-c grep.extendedregexp=true \
-+		grep "a?" hello.c >actual &&
-+	test_cmp empty actual
-+'
-+
-+test_expect_success 'grep pattern with grep.patternType=false and grep.extendedRegexp=true' '
-+	>empty &&
-+	test_must_fail git \
-+		-c grep.patterntype=false \
-+		-c grep.extendedregexp=true \
-+		grep "a?" hello.c >actual &&
-+	test_cmp empty actual
-+'
-+
- test_expect_success LIBPCRE 'grep -P pattern with grep.extendedRegexp=true' '
- 	git -c grep.extendedregexp=true \
- 		grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
- 	test_cmp expected actual
- '
-
-+test_expect_success LIBPCRE 'grep pattern with grep.patternType=perl' '
-+	git -c grep.patternType=perl \
-+		grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success LIBPCRE 'grep -P -v pattern' '
- 	{
- 		echo "ab:a+b*c"
-@@ -761,44 +822,170 @@ test_expect_success 'grep -G invalidpattern properly dies ' '
- 	test_must_fail git grep -G "a["
- '
-
-+test_expect_success 'grep invalidpattern properly dies with grep.patternType=basic' '
-+	test_must_fail git -c patterntype=basic grep "a["
-+'
-+
- test_expect_success 'grep -E invalidpattern properly dies ' '
- 	test_must_fail git grep -E "a["
- '
-
-+test_expect_success 'grep invalidpattern properly dies with grep.patternType=extended' '
-+	test_must_fail git -c patterntype=extended grep "a["
-+'
-+
- test_expect_success LIBPCRE 'grep -P invalidpattern properly dies ' '
- 	test_must_fail git grep -P "a["
- '
-
-+test_expect_success LIBPCRE 'grep invalidpattern properly dies with grep.patternType=perl' '
-+	test_must_fail git -c patterntype=perl grep "a["
-+'
-+
- test_expect_success 'grep -G -E -F pattern' '
- 	echo "ab:a+b*c" >expected &&
- 	git grep -G -E -F "a+b*c" ab >actual &&
- 	test_cmp expected actual
- '
-
-+test_expect_success 'grep pattern with grep.patternType=basic, =extended, =fixed' '
-+	echo "ab:a+b*c" >expected &&
-+	git \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=fixed \
-+		grep "a+b*c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'grep -E -F -G pattern' '
- 	echo "ab:a+bc" >expected &&
- 	git grep -E -F -G "a+b*c" ab >actual &&
- 	test_cmp expected actual
- '
-
-+test_expect_success 'grep pattern with grep.patternType=extended, =fixed, =basic' '
-+	echo "ab:a+bc" >expected &&
-+	git \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		grep "a+b*c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'grep -F -G -E pattern' '
- 	echo "ab:abc" >expected &&
- 	git grep -F -G -E "a+b*c" ab >actual &&
- 	test_cmp expected actual
- '
-
-+test_expect_success 'grep pattern with grep.patternType=fixed, =basic, =extended' '
-+	echo "ab:abc" >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		grep "a+b*c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'grep -G -F -P -E pattern' '
- 	>empty &&
- 	test_must_fail git grep -G -F -P -E "a\x{2b}b\x{2a}c" ab >actual &&
- 	test_cmp empty actual
- '
-
-+test_expect_success 'grep pattern with grep.patternType=fixed, =basic, =perl, =extended' '
-+	>empty &&
-+	test_must_fail git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=perl \
-+		-c grep.patterntype=extended \
-+		grep "a\x{2b}b\x{2a}c" ab >actual &&
-+	test_cmp empty actual
-+'
-+
- test_expect_success LIBPCRE 'grep -G -F -E -P pattern' '
- 	echo "ab:a+b*c" >expected &&
- 	git grep -G -F -E -P "a\x{2b}b\x{2a}c" ab >actual &&
- 	test_cmp expected actual
- '
-
-+test_expect_success LIBPCRE 'grep pattern with grep.patternType=fixed, =basic, =extended, =perl' '
-+	echo "ab:a+b*c" >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=perl \
-+		grep "a\x{2b}b\x{2a}c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success LIBPCRE 'grep -P pattern with grep.patternType=fixed, =basic, =extended' '
-+	echo "ab:a+b*c" >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=perl \
-+		grep -P "a\x{2b}b\x{2a}c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep -F pattern with grep.patternType=fixed, =basic, =extended, =perl' '
-+	echo "ab:a+b*c" >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=perl \
-+		grep -F "*c" ab >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep -G pattern with grep.patternType=fixed, =basic, =extended, =perl' '
-+	{
-+		echo "ab:a+b*c"
-+		echo "ab:a+bc"
-+	} >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=perl \
-+		grep -G "a+b" ab >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep -E pattern with grep.patternType=fixed, =basic, =extended, =perl' '
-+	{
-+		echo "ab:a+b*c"
-+		echo "ab:a+bc"
-+		echo "ab:abc"
-+	} >expected &&
-+	git \
-+		-c grep.patterntype=fixed \
-+		-c grep.patterntype=basic \
-+		-c grep.patterntype=extended \
-+		-c grep.patterntype=perl \
-+		grep -E "a+" ab >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep pattern with grep.patternType=extended and grep.extendedRegexp=false' '
-+	cat >expected <<-EOF
-+	hello.c:int main(int argc, const char **argv)
-+	EOF
-+	git \
-+		-c grep.patterntype=extended \
-+		-c grep.extendedregexp=false \
-+		grep "con?st" hello.c >actual &&
-+	test_cmp expected actual
-+'
-+
- test_config() {
- 	git config "$1" "$2" &&
- 	test_when_finished "git config --unset $1"
---
-1.7.11.3
+>
+>  Documentation/config.txt               | 9 +++++++++
+>  Documentation/git-am.txt               | 4 ++++
+>  contrib/completion/git-completion.bash | 1 +
+>  git-am.sh                              | 8 ++++++++
+>  4 files changed, 22 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index a95e5a4..47aded5 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -655,6 +655,15 @@ am.keepcr::
+>  	by giving '--no-keep-cr' from the command line.
+>  	See linkgit:git-am[1], linkgit:git-mailsplit[1].
+>  
+> +am.keepnonpatch::
+> +	Normally git-mailinfo strips from the Subject line, all leading
+> +	strings bracketed with [ and ] pairs.  If this setting is true,
+> +	git-am will call git-mailinfo with the parameter '-b' so that only
+> +	the pairs whose bracketed string contains the word "PATCH" are
+> +	stripped.  Can be overridden by giving ' '--no-keep-non-patch'
+> +	from the command line.
+> +	See linkgit:git-am[1], linkgit:git-mailinfo[1].
+> +
+>  apply.ignorewhitespace::
+>  	When set to 'change', tells 'git apply' to ignore changes in
+>  	whitespace, in the same way as the '--ignore-space-change'
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index 19d57a8..790efdb 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -41,7 +41,11 @@ OPTIONS
+>  	Pass `-k` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+>  
+>  --keep-non-patch::
+> +--no-keep-non-patch::
+>  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+> +	The `am.keepnonpatch` configuration variable can be used to specify
+> +	the default behaviour.  The `--no-keep-non-patch` is useful to
+> +	override any `am.keepnonpatch` setting.
+>  
+>  --keep-cr::
+>  --no-keep-cr::
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index ffedce7..04339df 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1758,6 +1758,7 @@ _git_config ()
+>  		advice.statusHints
+>  		alias.
+>  		am.keepcr
+> +		am.keepnonpatch
+>  		apply.ignorewhitespace
+>  		apply.whitespace
+>  		branch.autosetupmerge
+> diff --git a/git-am.sh b/git-am.sh
+> index c02e62d..9f6adbf 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
+>  u,utf8          recode into utf8 (default)
+>  k,keep          pass -k flag to git-mailinfo
+>  keep-non-patch  pass -b flag to git-mailinfo
+> +no-keep-non-patch do not pass -b flag to git-mailsplit, independent of am.keepnonpatch
+>  keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+>  no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
+>  c,scissors      strip everything before a scissors line
+> @@ -381,6 +382,11 @@ then
+>      keepcr=t
+>  fi
+>  
+> +if test "$(git config --bool --get am.keepnonpatch)" = true
+> +then
+> +    keep=b
+> +fi
+> +
+>  while test $# != 0
+>  do
+>  	case "$1" in
+> @@ -402,6 +408,8 @@ do
+>  		keep=t ;;
+>  	--keep-non-patch)
+>  		keep=b ;;
+> +	--no-keep-non-patch)
+> +		keep= ;;
+>  	-c|--scissors)
+>  		scissors=t ;;
+>  	--no-scissors)
