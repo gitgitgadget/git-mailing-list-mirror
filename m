@@ -1,141 +1,87 @@
-From: Jeff King <peff@peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [WIP PATCH] Manual rename correction
-Date: Tue, 31 Jul 2012 20:42:38 -0400
-Message-ID: <20120801004238.GA15428@sigill.intra.peff.net>
-References: <20120731141536.GA26283@do>
- <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
+Date: Wed, 1 Aug 2012 08:10:12 +0700
+Message-ID: <CACsJy8B14qSLkAt9VRQTCkoZx5UtGTpAmMHKyqk+_o14bc9GmQ@mail.gmail.com>
+References: <20120731141536.GA26283@do> <7vtxwnki1a.fsf@alter.siamese.dyndns.org>
  <20120731192342.GB30808@sigill.intra.peff.net>
- <7vfw87isx1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 01 02:42:49 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 01 03:10:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwN1V-0000zu-3H
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 02:42:49 +0200
+	id 1SwNSc-0002vq-Ig
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Aug 2012 03:10:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102Ab2HAAmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jul 2012 20:42:43 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43927 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752146Ab2HAAmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jul 2012 20:42:42 -0400
-Received: (qmail 1429 invoked by uid 107); 1 Aug 2012 00:42:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Jul 2012 20:42:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2012 20:42:38 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfw87isx1.fsf@alter.siamese.dyndns.org>
+	id S1752669Ab2HABKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jul 2012 21:10:45 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58982 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751582Ab2HABKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jul 2012 21:10:44 -0400
+Received: by yenl2 with SMTP id l2so6781735yen.19
+        for <git@vger.kernel.org>; Tue, 31 Jul 2012 18:10:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=tBTEuxamfPDUyhPSAzq765w9MC3h+xK0bQoLKKFfHBo=;
+        b=zNjU2gHaWm8XUBBRqd18y8T5sayTKcLGwVnzfqHIzFRReAckMu05AKYmbFljxMG0N1
+         EhKDOHUetEYvMsginE2ilM374avO11T9q3mysSunpBLGlUCc553fwv6mzW6yqOxpfYFY
+         /9jY7KrGF7YAQh0VSmzGgK29S+mycPWN4xiU4kcqYlccUoqXFVUliUUi8ITg6kmAKpeX
+         naN5ON8Zm9dEaXY/mhXdiTCSEVgvLuR0X6oDW3XNByCmRkqVmmcg7iliwfMxZqoTNkAb
+         IdxJZmdkZdBLDgfCQqLFTNeTcTqyGGwSON1Vo50T4+MtafN3SfRUfxC4Ra/xkNBEISIw
+         2NXQ==
+Received: by 10.50.212.98 with SMTP id nj2mr2382328igc.35.1343783443746; Tue,
+ 31 Jul 2012 18:10:43 -0700 (PDT)
+Received: by 10.64.90.2 with HTTP; Tue, 31 Jul 2012 18:10:12 -0700 (PDT)
+In-Reply-To: <20120731192342.GB30808@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202699>
 
-On Tue, Jul 31, 2012 at 01:20:42PM -0700, Junio C Hamano wrote:
+On Wed, Aug 1, 2012 at 2:23 AM, Jeff King <peff@peff.net> wrote:
+>> It is a good direction to go in, I would think, to give users a way
+>> to explicitly tell that "in comparison between these two trees, I
+>> know path B in the postimage corresponds to path A in the preimage".
+>
+> I do not think that is the right direction. Let's imagine that I have a
+> commit "A" and I annotate it (via notes or whatever) to say "between
+> A^^{tree} and A^{tree}, foo.c became bar.c". That will help me when
+> doing "git show" or "git log". But it will not help me when I later try
+> to merge "A" (or its descendent). In that case, I will compute the diff
+> between "A" and the merge-base (or worse, some descendent of "A" and the
+> merge-base), and I will miss this hint entirely.
+>
+> A much better hint is to annotate pairs of sha1s, to say "do not bother
+> doing inexact rename correlation on this pair; I promise that they have
+> value N".
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > A much better hint is to annotate pairs of sha1s, to say "do not bother
-> > doing inexact rename correlation on this pair; I promise that they have
-> > value N".
-> 
-> Surely.  And I suspect that the patch to the current codebase to do
-> so would be much less impact if you go that way.
+I haven't had time to think it through yet but I throw my thoughts in
+any way. I actually went with your approach first. But it's more
+difficult to control the renaming. Assume we want to tell git to
+rename SHA-1 "A" to SHA-1 "B". What happens if we have two As in the
+source tree and two Bs in the target tree? What happens if two As and
+one B, or one A and two Bs? What if a user defines A -> B and A -> C,
+and we happen to have two As in source tree and B and C in target
+tree?
 
-Yes. You may remember I wrote a generic caching subsystem last summer
-when we were talking about caching commit generations. Plugging in a new
-map type to map sha1 pairs to 32-bit integers was pretty simple, and
-that gives the basis for a rename cache.
+There's also the problem with transferring this information. With
+git-notes I think I can transfer it (though not automatically). How do
+we transfer sha1 map (that you mentioned in the commit generation mail
+in this thread)?
 
-It's fairly unimpressive on git.git. My best-of-five for "git log
---format=%H --raw -M" went from 5.83s to 5.74s, which is pretty much
-within the run-to-run noise. The resulting cache was 155K.
+> Then it will find that pair no matter which trees or commits
+> are being diffed, and it will do so relatively inexpensively[1].
 
-However, it's easy to come up with much more pathological cases. I have
-a really ugly rename-and-tweak-tags commit on my photo repository, and
-those blobs are relatively big. My timings for "git show" on that were:
-
-  before: 49.724s
-  after, run 1: 54.904s
-  after, run 2:  0.117s
-
-Which is pretty darn nice. The resulting cache is 5.3M (the repository
-itself is in the gigabytes, but that's not really relevant; the cache
-will obviously scale with the number of paths, not with the size of the
-blobs).
-
-It would also work for copies, too, of course. Here are the results of
-"git log --format=%H --raw -M -C -C" on git.git:
-
-  before: 1m35s
-  after, run 1: 39.7s
-  after, run 2: 39.5s
-
-So it does make much more of a difference for copies, which is obvious;
-git is doing a lot more work for us to cache. At the same time, our
-cache is much bigger: 32M. Yikes.
-
-My cache is fairly naive, in that it literally stores 44 bytes of
-<src_sha1, dst_sha1, score> for each entry. At the cost of more
-complexity, you could store each src_sha1 once, followed by a set of
-<dst_sha1, score> pairs. I also didn't take any special care to avoid
-duplicates of <X, Y> and <Y, X> (since presumably these renames would be
-commutative). I'm not sure it is necessary, though; I think the copy
-machinery already suppresses this when entries are in both source and
-destination lists.
-
-So I don't know. It can definitely speed up some operations, but at the
-cost of a non-trivial cache on disk. I'll spare you all of the generic
-caching infrastructure, but the actual patch to rename looks like this
-(just to give a sense of where the hooks go):
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 216a7a4..db70878 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -6,6 +6,7 @@
- #include "diffcore.h"
- #include "hash.h"
- #include "progress.h"
-+#include "metadata-cache.h"
- 
- /* Table of rename/copy destinations */
- 
-@@ -137,7 +138,8 @@ static int estimate_similarity(struct diff_filespec *src,
- 	 */
- 	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
- 	unsigned long delta_limit;
--	int score;
-+	uint32_t score;
-+	struct sha1pair pair;
- 
- 	/* We deal only with regular files.  Symlink renames are handled
- 	 * only when they are exact matches --- in other words, no edits
-@@ -175,6 +177,11 @@ static int estimate_similarity(struct diff_filespec *src,
- 	if (max_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
- 		return 0;
- 
-+	hashcpy(pair.one, src->sha1);
-+	hashcpy(pair.two, dst->sha1);
-+	if (rename_cache_get(&pair, &score))
-+		return score;
-+
- 	if (!src->cnt_data && diff_populate_filespec(src, 0))
- 		return 0;
- 	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
-@@ -195,6 +202,7 @@ static int estimate_similarity(struct diff_filespec *src,
- 		score = 0; /* should not happen */
- 	else
- 		score = (int)(src_copied * MAX_SCORE / max_size);
-+	rename_cache_set(&pair, &score);
- 	return score;
- }
- 
--Peff
+But does that happen often in practice? I mean diff-ing two arbitrary
+trees and expect rename correction. I disregarded it as "git log" is
+my main case, but I'm just a single user..
+-- 
+Duy
