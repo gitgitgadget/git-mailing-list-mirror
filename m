@@ -1,236 +1,109 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 02/16] Modify read functions to prepare for other index formats
-Date: Thu,  2 Aug 2012 13:01:52 +0200
-Message-ID: <1343905326-23790-3-git-send-email-t.gummerer@gmail.com>
-References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
+Subject: [RFC 0/16] Introduce index file format version 5
+Date: Thu,  2 Aug 2012 13:01:50 +0200
+Message-ID: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@student.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
-	pclouds@gmail.com, robin.rosenberg@dewire.com,
-	Thomas Gummerer <t.gummerer@gmail.com>
+	pclouds@gmail.com, robin.rosenberg@dewire.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 13:03:00 2012
+X-From: git-owner@vger.kernel.org Thu Aug 02 13:03:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwtBE-00050c-3Y
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 13:03:00 +0200
+	id 1SwtBD-00050c-KR
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 13:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab2HBLC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 07:02:56 -0400
+	id S1754542Ab2HBLCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 07:02:54 -0400
 Received: from mail-ee0-f46.google.com ([74.125.83.46]:40752 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754375Ab2HBLCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 07:02:55 -0400
-Received: by mail-ee0-f46.google.com with SMTP id l10so2331137eei.19
-        for <git@vger.kernel.org>; Thu, 02 Aug 2012 04:02:54 -0700 (PDT)
+	with ESMTP id S1754375Ab2HBLCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 07:02:53 -0400
+Received: by eeil10 with SMTP id l10so2331137eei.19
+        for <git@vger.kernel.org>; Thu, 02 Aug 2012 04:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=j19SrDu/YPj/eqpgAePM7pMsPg5cVJNeH//5TYlsHlo=;
-        b=wFBn+pUyoG4HqMEQknX+/eUa+fP7tNhgbEdjKGY+zemzR5ZJxRWAhVcjBxrFisET2N
-         lWIRotUbg/xRlBfyB2zOg/sn4lWZEpU/mSMcqGAXUiWSzvQ8hHuBSJ51H+si8yvE9vau
-         iNC1zPG3UvZNP2AdXo0yh+gZ69/XW13dyWgesQaQEJKvlWdYluXA7VDVKpEVDrZj+Lkd
-         FiKwZuXwzBl6O5YPJ3VITWn+j7Vq6ervUuwvMhSWp+MhH14wom67tJ+w7fxhfYjMCFCC
-         pfslvjsSpaeaKmz5OGgYrWfsYH7fPD2FubfndGCLSLkoHHr13rVTfTJqzFMqLM4EYy4U
-         XOsw==
-Received: by 10.14.181.137 with SMTP id l9mr26199754eem.28.1343905374722;
-        Thu, 02 Aug 2012 04:02:54 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=aeM4HjHu1p+SA6014CRdxF/KFUt/bEbxFezQPO3Qq04=;
+        b=CegygS3OHzzy40MBLacxJ3YNDFN9CdjGkq03ftuACYM9UBH84YBUcWhkN1uQjZyKpo
+         Th+HwI0Av9/f9hwtF2DshQAzBJMP7/kIg2aZkPhzY63trg9Tv8vKfvDDIA0hhV4h+yLW
+         fYFKh+DvysP311uDiE0RXyX1XDojAm/fYkq0CzJeD9MfLIgPleOW21MR1leVaAcAxSof
+         KzQnQFGXnB5iFNDow+5TN1YYApwFQQ2pd8+y4VUFoxeVkXIPHL9NqMmVOb4EqvgVqrwy
+         fAyuAneBGL4/5K0SZnrLweqhdCmiAQn3+jmVQhnO1PgEz69QENYx8apNxzUIDCmVtgCp
+         dsmg==
+Received: by 10.14.211.132 with SMTP id w4mr26014485eeo.39.1343905371974;
+        Thu, 02 Aug 2012 04:02:51 -0700 (PDT)
 Received: from localhost ([2a01:7e00::f03c:91ff:fedf:f4db])
-        by mx.google.com with ESMTPS id w3sm16460948eep.2.2012.08.02.04.02.54
+        by mx.google.com with ESMTPS id v5sm16441101eel.6.2012.08.02.04.02.51
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2012 04:02:54 -0700 (PDT)
+        Thu, 02 Aug 2012 04:02:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.886.gdf6792c.dirty
-In-Reply-To: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202752>
 
-Modify the read_index_from function, splitting it up into
-one function that stays the same for every index format,
-doing the basic operations such as verifying the header,
-and a function which is specific for each index version,
-which does the real reading of the index.
+Series of patches to introduce the index version 5 file format. This
+series does not include any fancy stuff like partial loading or partial
+writing yet, though it's possible to do that with the new format.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- cache.h      |   1 +
- read-cache.c | 108 +++++++++++++++++++++++++++++++++++------------------------
- 2 files changed, 66 insertions(+), 43 deletions(-)
+There was already a POC for partial loading, which gave pretty good
+results, which was however broken in all but the general case, so it's
+not included yet. (for timings see: http://thread.gmane.org/gmane.comp.version-control.git/201964/focus=202019)
 
-diff --git a/cache.h b/cache.h
-index d4028ef..3aa70d8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -435,6 +435,7 @@ extern int init_db(const char *template_dir, unsigned int flags);
- /* Initialize and use the cache information */
- extern int read_index(struct index_state *);
- extern int read_index_preload(struct index_state *, const char **pathspec);
-+extern void read_index_v2(struct index_state *, void *mmap, int);
- extern int read_index_from(struct index_state *, const char *path);
- extern int is_index_unborn(struct index_state *);
- extern int read_index_unmerged(struct index_state *);
-diff --git a/read-cache.c b/read-cache.c
-index c44b5f7..3d83f05 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1247,10 +1247,8 @@ struct ondisk_cache_entry_extended {
- 			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
- 			    ondisk_cache_entry_size(ce_namelen(ce)))
- 
--static int verify_hdr(struct cache_version_header *hdr, unsigned long size)
-+static int verify_hdr_version(struct cache_version_header *hdr, unsigned long size)
- {
--	git_SHA_CTX c;
--	unsigned char sha1[20];
- 	int hdr_version;
- 
- 	if (hdr->hdr_signature != htonl(CACHE_SIGNATURE))
-@@ -1258,6 +1256,14 @@ static int verify_hdr(struct cache_version_header *hdr, unsigned long size)
- 	hdr_version = ntohl(hdr->hdr_version);
- 	if (hdr_version < 2 || 4 < hdr_version)
- 		return error("bad index version %d", hdr_version);
-+	return 0;
-+}
-+
-+static int verify_hdr_v2(struct cache_version_header *hdr, unsigned long size)
-+{
-+	git_SHA_CTX c;
-+	unsigned char sha1[20];
-+
- 	git_SHA1_Init(&c);
- 	git_SHA1_Update(&c, hdr, size - 20);
- 	git_SHA1_Final(sha1, &c);
-@@ -1403,50 +1409,15 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
- 	return ce;
- }
- 
--/* remember to discard_cache() before reading a different cache! */
--int read_index_from(struct index_state *istate, const char *path)
-+void read_index_v2(struct index_state *istate, void *mmap, int mmap_size)
- {
--	int fd, i;
--	struct stat st;
-+	int i;
- 	unsigned long src_offset;
- 	struct cache_version_header *hdr;
- 	struct cache_header_v2 *hdr_v2;
--	void *mmap;
--	size_t mmap_size;
- 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
- 
--	errno = EBUSY;
--	if (istate->initialized)
--		return istate->cache_nr;
--
--	errno = ENOENT;
--	istate->timestamp.sec = 0;
--	istate->timestamp.nsec = 0;
--	fd = open(path, O_RDONLY);
--	if (fd < 0) {
--		if (errno == ENOENT)
--			return 0;
--		die_errno("index file open failed");
--	}
--
--	if (fstat(fd, &st))
--		die_errno("cannot stat the open index");
--
--	errno = EINVAL;
--	mmap_size = xsize_t(st.st_size);
--	if (mmap_size < sizeof(struct cache_version_header) + 20)
--		die("index file smaller than expected");
--
--	mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
--	close(fd);
--	if (mmap == MAP_FAILED)
--		die_errno("unable to map index file");
--
- 	hdr = mmap;
--	hdr_v2 =  mmap + sizeof(*hdr);
--	if (verify_hdr(hdr, mmap_size) < 0)
--		goto unmap;
--
- 	hdr_v2 = mmap + sizeof(*hdr);
- 	istate->version = ntohl(hdr->hdr_version);
- 	istate->cache_nr = ntohl(hdr_v2->hdr_entries);
-@@ -1472,8 +1443,6 @@ int read_index_from(struct index_state *istate, const char *path)
- 		src_offset += consumed;
- 	}
- 	strbuf_release(&previous_name_buf);
--	istate->timestamp.sec = st.st_mtime;
--	istate->timestamp.nsec = ST_MTIME_NSEC(st);
- 
- 	while (src_offset <= mmap_size - 20 - 8) {
- 		/* After an array of active_nr index entries,
-@@ -1493,12 +1462,65 @@ int read_index_from(struct index_state *istate, const char *path)
- 		src_offset += 8;
- 		src_offset += extsize;
- 	}
-+	return;
-+unmap:
-+	munmap(mmap, mmap_size);
-+	die("index file corrupt");
-+}
-+
-+/* remember to discard_cache() before reading a different cache! */
-+int read_index_from(struct index_state *istate, const char *path)
-+{
-+	int fd;
-+	struct stat st;
-+	struct cache_version_header *hdr;
-+	void *mmap;
-+	size_t mmap_size;
-+
-+	errno = EBUSY;
-+	if (istate->initialized)
-+		return istate->cache_nr;
-+
-+	errno = ENOENT;
-+	istate->timestamp.sec = 0;
-+	istate->timestamp.nsec = 0;
-+	fd = open(path, O_RDONLY);
-+	if (fd < 0) {
-+		if (errno == ENOENT)
-+			return 0;
-+		die_errno("index file open failed");
-+	}
-+
-+	if (fstat(fd, &st))
-+		die_errno("cannot stat the open index");
-+
-+	errno = EINVAL;
-+	mmap_size = xsize_t(st.st_size);
-+	if (mmap_size < sizeof(struct cache_version_header) + 20)
-+		die("index file smaller than expected");
-+
-+	mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
-+	close(fd);
-+	if (mmap == MAP_FAILED)
-+		die_errno("unable to map index file");
-+
-+	hdr = mmap;
-+	if (verify_hdr_version(hdr, mmap_size) < 0)
-+		goto unmap;
-+
-+	if (verify_hdr_v2(hdr, mmap_size) < 0)
-+		goto unmap;
-+
-+	read_index_v2(istate, mmap, mmap_size);
-+
-+	istate->timestamp.sec = st.st_mtime;
-+	istate->timestamp.nsec = ST_MTIME_NSEC(st);
-+
- 	munmap(mmap, mmap_size);
- 	return istate->cache_nr;
- 
- unmap:
- 	munmap(mmap, mmap_size);
--	errno = EINVAL;
- 	die("index file corrupt");
- }
- 
--- 
-1.7.10.886.gdf6792c.dirty
+The first 4 patches are refactoring the old code, splitting it up into
+different functions, as a preparation for index-v5.
+
+Patches 5 and 6 fix testcases for index v5.
+
+Patch 9..11 introduce the reader for index-v5. I've split those
+patches up to read the main index first, then the resolve-undo
+data and then the cache-tree, to make it easier to review them.
+
+The same goes for patches 12..14, which introduce the writer, again
+split up in writing the main index, resolve-undo data and cache-tree
+data.
+
+Patch 15 adds a option to update index to force-rewrite the index,
+so rewriting it even if nothing has changed. This is later used
+for performance testing, to test the performance for both the reader and
+the writer.
+
+Patch 16 adds the performance test, which compares the time for
+force-rewrites for index-v[23], index-v4 and index-v5.
+
+The default index format is still set to 3, it can be changed in
+read-cache.c (INDEX_FORMAT_DEFAULT)
+
+[PATCH 01/16] Modify cache_header to prepare for other index formats
+[PATCH 02/16] Modify read functions to prepare for other index
+[PATCH 03/16] Modify match_stat_basic to prepare for other index
+[PATCH 04/16] Modify write functions to prepare for other index
+[PATCH 05/16] t2104: Don't fail when index version is 5
+[PATCH 06/16] t3700: sleep for 1 second, to avoid interfering with
+[PATCH 07/16] Add documentation of the index-v5 file format
+[PATCH 08/16] Make in-memory format aware of stat_crc
+[PATCH 09/16] Read index-v5
+[PATCH 10/16] Read resolve-undo data
+[PATCH 11/16] Read cache-tree in index-v5
+[PATCH 12/16] Write index-v5
+[PATCH 13/16] Write index-v5 cache-tree data
+[PATCH 14/16] Write resolve-undo data for index-v5
+[PATCH 15/16] update-index.c: add a force-rewrite option
+[PATCH 16/16] p0002-index.sh: add perf test for the index formats
+
+Documentation/technical/index-file-format-v5.txt |  281 ++++++++++++++++++++++++++++++++++
+builtin/update-index.c                           |    5 +-
+cache-tree.c                                     |  145 ++++++++++++++++++
+cache-tree.h                                     |    7 +
+cache.h                                          |   96 +++++++++++-
+read-cache.c                                     | 1519 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------------
+resolve-undo.c                                   |  129 ++++++++++++++++
+resolve-undo.h                                   |    3 +
+t/perf/p0002-index.sh                            |   33 ++++
+t/t2104-update-index-skip-worktree.sh            |   15 +-
+t/t3700-add.sh                                   |    1 +
+test-index-version.c                             |    2 +-
+12 files changed, 2082 insertions(+), 154 deletions(-)
