@@ -1,64 +1,86 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] git-rebase.sh: fix typo
-Date: Thu, 2 Aug 2012 07:28:46 +0800
-Message-ID: <CANYiYbGz9Zcyc9_k=+54nVe8bOj8aheDCZJJ5v9dFTXeAvWk4w@mail.gmail.com>
-References: <1343840949-3122-1-git-send-email-ralf.thielow@gmail.com>
+Subject: Re: New git.pot is generated for the upcoming git v1.7.12
+Date: Thu, 2 Aug 2012 09:52:13 +0800
+Message-ID: <CANYiYbGZWyCQxoTJpR1aOng3e2yrE+sjL1aR-ke62U1dYOztLA@mail.gmail.com>
+References: <CANYiYbFLy4s3q1Tn9FD1ASLwY1=AND_ePqhHpC_X_nvb1iLoCA@mail.gmail.com>
+	<7vvch5osmb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 01:28:57 2012
+Cc: Git List <git@vger.kernel.org>
+To: Byrial Jensen <byrial@vip.cybercity.dk>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Vincent van Ravesteijn <vfr@lyx.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?UTF-8?B?RGF2aWQgSHJiw6HEjQ==?= <david@hrbac.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 02 03:52:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwiLV-0007eM-LE
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 01:28:53 +0200
+	id 1SwkaJ-0004Ee-O0
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 03:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab2HAX2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Aug 2012 19:28:47 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:40858 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753723Ab2HAX2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Aug 2012 19:28:47 -0400
-Received: by yhmm54 with SMTP id m54so7964167yhm.19
-        for <git@vger.kernel.org>; Wed, 01 Aug 2012 16:28:46 -0700 (PDT)
+	id S1753557Ab2HBBwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Aug 2012 21:52:14 -0400
+Received: from mail-gg0-f174.google.com ([209.85.161.174]:58958 "EHLO
+	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752655Ab2HBBwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Aug 2012 21:52:13 -0400
+Received: by ggnl2 with SMTP id l2so810857ggn.19
+        for <git@vger.kernel.org>; Wed, 01 Aug 2012 18:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=EljP9Lhvaq50x18E+UmSr+j3ABicZyEw2O/4Ewu7TXg=;
-        b=QxP7B2vRdYA1gNmxHzI7jNR2yqittSopFs/bpBWJ1HK/kPk5zUJBjzC5ubYbVBAzsG
-         vuJxbDQiQ3ZbeSArH+nemOn+Uu1PVyTycAXt60j/Ty+xeOM/NVee09PhRBshBNhcBuAp
-         bRzVIIOFA1Y8XejESlMCiYdEUluFe3YN0I3X07cwndzPaoY8ci1EOQZKyDXuw0FNo0hy
-         dATwSf6CsTHoKxUFRmySzPXswzCUrz91+unvhmiS7pt4gJZZK/QXy+5GiLHSJWBFKLRi
-         nz1TsgV8XfxAR+bTHcxb5oNGuvMRhi/Y7d66ey+QfSVP+HtGKvmu7dwTMYAnFCXZeM19
-         k69w==
-Received: by 10.50.237.34 with SMTP id uz2mr5760893igc.19.1343863726190; Wed,
- 01 Aug 2012 16:28:46 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Wed, 1 Aug 2012 16:28:46 -0700 (PDT)
-In-Reply-To: <1343840949-3122-1-git-send-email-ralf.thielow@gmail.com>
+        bh=FWWSl/XjUCewgxAG9OMAUn2DSdwVfV03/+XQ7k4zTrY=;
+        b=rVTwncqTymJk3BDDpqFZtnEj5fjYdcuuw9VYy8EeF67eCMfb71u/JDiCTchLtzL9pB
+         lLkBBAVJWuWk4+ukzlezDnl6w211+3zyX0NNOJhKpMAahDkm0nFevumXXDKZscyWwrpV
+         QzWTuipWhLf/QpsWmPUeSkxsthjXhgw8DJ19/5kzhGZdrV7mgVNUgj4UvIICc7tUp98S
+         BtwuiW2Fs0TJ3nCYlOuAbuuFn6IEfs9YTl7aiTcYDliCGr9p4d4FesnlBqsJ419HPOh9
+         FzLwHvBYDp/cBi5JhMEdnExOWEGXW6QrSMYafpFk6WDAkB4tzn4OWeUyjEkBtPVvP2xx
+         DXcA==
+Received: by 10.50.237.34 with SMTP id uz2mr374863igc.19.1343872333040; Wed,
+ 01 Aug 2012 18:52:13 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Wed, 1 Aug 2012 18:52:13 -0700 (PDT)
+In-Reply-To: <7vvch5osmb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202742>
 
-2012/8/2 Ralf Thielow <ralf.thielow@gmail.com>:
->  $(eval_gettext 'It seems that there is already a $state_dir_base directory, and
-> -I wonder if you ware in the middle of another rebase.  If that is the
-> +I wonder if you are in the middle of another rebase.  If that is the
+L10n teams,
 
-It's my fault in commit c7108b. I am curious how this happened, and find out
-that it comes from my copy/paste from code review this post:
-http://thread.gmane.org/gmane.comp.version-control.git/202010/focus=202048
+As Junio has already merged i18n topic branches and last round of l10n
+commits, New round of translation begins. This update of "po/git.pot" is
+not trival.
 
-If I did a more careful diff, especially word-diff, might find it earlier.
+You can fetch this update at the usual place and start translation:
 
-     $ git show --word-diff c7108b | head -122 | tail -1
-     I wonder if you [-are-]{+ware+} in the middle of another rebase.
-If that is the
+ * https://github.com/git-l10n/git-po/commits/master
+
+Commit log for this update:
+
+    l10n: Update git.pot (76 new, 4 removed messages)
+
+    Generate po/git.pot from v1.7.12-rc1-16-g05a20, and there are 76 new,
+    4 removed l10n messages.
+
+     * 76 new messages are added at lines:
+
+       230, 337-580, 4972, 4984, 4998, 5017, 5280-5378, 5654
+
+     * 4 old messages are deleted from the previous version at lines:
+
+       230, 4729, 4764, 5295
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
 
 -- 
 Jiang Xin
