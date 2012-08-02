@@ -1,112 +1,116 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Thu, 2 Aug 2012 21:55:44 +0000
-Message-ID: <20120802215544.GA28193@dcvr.yhbt.net>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120802103122.GA24385@dcvr.yhbt.net>
- <20120802160753.GA17158@copier>
- <20120802205123.GA14391@dcvr.yhbt.net>
- <7vmx2dc7lw.fsf@alter.siamese.dyndns.org>
- <20120802214201.GB24385@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix 'No newline...' annotation in rewrite diffs.
+Date: Thu, 02 Aug 2012 15:00:41 -0700
+Message-ID: <7vehnpc5ti.fsf@alter.siamese.dyndns.org>
+References: <85f291cec03411c61ddf8808e53621ae@imap.force9.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
-	"Michael G. Schwern" <schwern@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 23:55:51 2012
+Cc: <git@vger.kernel.org>
+To: Adam Butcher <dev.lists@jessamine.co.uk>
+X-From: git-owner@vger.kernel.org Fri Aug 03 00:00:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sx3N0-0001i9-Ps
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 23:55:51 +0200
+	id 1Sx3Rt-0003OG-Qh
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 00:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753092Ab2HBVzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 17:55:46 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33469 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752217Ab2HBVzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 17:55:45 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B766C1F42D;
-	Thu,  2 Aug 2012 21:55:44 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20120802214201.GB24385@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753513Ab2HBWAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 18:00:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48186 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752470Ab2HBWAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 18:00:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DE598590;
+	Thu,  2 Aug 2012 18:00:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iR1jmPJoo5abDaJL2/xbRsgRLiY=; b=iwkhHG
+	q9Ma51fZvvnXa+NFQCCYhMeQNQPqIbYCtKvr15pNaGvnKHHjDjzFYw4Gt9GlVS4d
+	QvVhob7/Zn+14h5G4rM4y6qDtS6Fih63yiwIn6c35Xv1kpxJQFnYXpG4ST72Kf+E
+	uRJgUxYF5zVNKuvrsrOOb0BtkxqZqovrvmB/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iKVAzg+YjQVVECjj7AEYzWYTMwZcrtfW
+	ExVoBZ4/cs2S99idRu+0vPbTWpK6pZpqNfr/GFdAs+lQo/Lc63WM/vy94QExIAuP
+	gvm9QQclqjvJBjTY2Vn6lcaZ6iaw8J+hRD9ew8tqJIlrF/pHKZdXFKG9xzVxEDc6
+	kqv/V7oqG8M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A0BB858F;
+	Thu,  2 Aug 2012 18:00:47 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6ABB08589; Thu,  2 Aug 2012
+ 18:00:46 -0400 (EDT)
+In-Reply-To: <85f291cec03411c61ddf8808e53621ae@imap.force9.net> (Adam
+ Butcher's message of "Thu, 02 Aug 2012 22:11:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 83349730-DCED-11E1-8ED8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202801>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Eric Wong <normalperson@yhbt.net> writes:
-> > > Thanks for reminding me, I went back to an old chroot 1.4.2 indeed
-> > > does fail canonicalization.
-> > >
-> > > Will bisect and squash a fix in.
-> > 
-> > Oops; should I eject this out of next and wait for a reroll, then?
-> 
-> Your call, I doubt anybody on next uses SVN 1.4.2.   Rerolling now.
+Adam Butcher <dev.lists@jessamine.co.uk> writes:
 
-OK, rerolled with the patch in
-http://mid.gmane.org/20120802215141.GA5284@dcvr.yhbt.net squashed into
-[PATCH 11/20] git-svn: path canonicalization uses SVN API
+> +# create a file containing numbers with no newline at
+> +# the end and modify it such that the starting 10 lines
+> +# are unchanged, the next 101 are rewritten and the last
+> +# line differs only in that in is terminated by a newline.
+> +seq 1 10 > seq
+> +seq 100 +1 200 >> seq
+> +printf 201 >> seq
+> +(git add seq; git commit seq -m seq) >/dev/null
+> +seq 1 10 > seq
+> +seq 300 -1 200 >> seq
 
-The following changes since commit 05a20c87abd08441c98dfcca0606bc0f8432ab26:
+We would prefer to have these set-up steps in test_expect_success.
+That way, we will have more chance to catch potential and unintended
+breakage to "git add" and "git commit" when people attempt to update
+them.
 
-  Merge git://github.com/git-l10n/git-po (2012-08-01 15:59:08 -0700)
+Also, the redirect target sticks to redirect operator in our
+scripts, i.e. "cmd >seq" not "cmd > seq".
 
-are available in the git repository at:
+> +test_expect_success 'no newline at eof is on its own line without -B'
+> +
+> +	(git diff seq; true) > res &&
 
+What is this subshell and true about?  A git diff does not exit with
+non zero to signal differences, and even if it did, the right way to
+write it would be
 
-  git://bogomips.org/git-svn master
+	test_might_fail git cmd >res &&
 
-for you to fetch changes up to 5eaa1fd086e826b1ac8d9346a740527edbdb3c34:
+to allow us to make sure that the git command that may or may not
+exit with zero still does not die an uncontrolled death (e.g. segv).
 
-  git-svn: remove ad-hoc canonicalizations (2012-08-02 21:46:06 +0000)
+> +	grep "^\\\\ No newline at end of file$" res &&
+> +	grep -v "^.\\+\\\\ No newline at end of file" res &&
+> +	grep -v "\\\\ No newline at end of file.\\+$" res
+> +'
 
-----------------------------------------------------------------
-Michael G. Schwern (20):
-      Git::SVN: use accessors internally for path
-      Git::SVN: use accessor for URLs internally
-      Git::SVN::Ra: use accessor for URLs
-      use Git::SVN->path accessor globally
-      use Git::SVN{,::RA}->url accessor globally
-      git-svn: move canonicalization to Git::SVN::Utils
-      git-svn: use SVN 1.7 to canonicalize when possible
-      git-svn: factor out _collapse_dotdot function
-      git-svn: add join_paths() to safely concatenate paths
-      Git::SVN::Utils: remove irrelevant comment
-      git-svn: path canonicalization uses SVN API
-      Git::SVN{,::Ra}: canonicalize earlier
-      t9118: workaround inconsistency between SVN versions
-      t9107: fix typo
-      git-svn: attempt to mimic SVN 1.7 URL canonicalization
-      git-svn: replace URL escapes with canonicalization
-      git-svn: canonicalize earlier
-      git-svn: introduce add_path_to_url function
-      git-svn: canonicalize newly-minted URLs
-      git-svn: remove ad-hoc canonicalizations
+It is preferrable not to spell "No newline at ..." part out, so that
+we won't have to worry about future rewords and i18n.  There are older
+tests that predate i18n and they do spell these out, but that is not
+a good reason to make things worse than they already are.
 
- git-svn.perl                          |  92 ++++++------------
- perl/Git/SVN.pm                       | 174 +++++++++++++++++++++------------
- perl/Git/SVN/Fetcher.pm               |   2 +-
- perl/Git/SVN/Migration.pm             |   6 +-
- perl/Git/SVN/Ra.pm                    |  92 ++++++++++--------
- perl/Git/SVN/Utils.pm                 | 176 +++++++++++++++++++++++++++++++++-
- t/Git-SVN/Utils/add_path_to_url.t     |  27 ++++++
- t/Git-SVN/Utils/canonicalize_url.t    |  26 +++++
- t/Git-SVN/Utils/collapse_dotdot.t     |  23 +++++
- t/Git-SVN/Utils/join_paths.t          |  32 +++++++
- t/t9107-git-svn-migrate.sh            |   6 +-
- t/t9118-git-svn-funky-branch-names.sh |   7 +-
- 12 files changed, 489 insertions(+), 174 deletions(-)
- create mode 100644 t/Git-SVN/Utils/add_path_to_url.t
- create mode 100644 t/Git-SVN/Utils/canonicalize_url.t
- create mode 100644 t/Git-SVN/Utils/collapse_dotdot.t
- create mode 100644 t/Git-SVN/Utils/join_paths.t
+"git apply" only looks at the backslash-space at the beginning of
+line anyway.
+
+> +test_expect_success 'no newline at eof is on its own line with -B' '
+> +
+> +	(git diff -B seq; true) > res &&
+> +	grep "^\\\\ No newline at end of file$" res &&
+> +	grep -v "^.\\+\\\\ No newline at end of file" res &&
+> +	grep -v "\\\\ No newline at end of file.\\+$" res
+> +'
+
+Likewise.
+
+>  test_done
+
+Thanks.
