@@ -1,83 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Thu, 02 Aug 2012 14:22:03 -0700
-Message-ID: <7vmx2dc7lw.fsf@alter.siamese.dyndns.org>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120802103122.GA24385@dcvr.yhbt.net> <20120802160753.GA17158@copier>
- <20120802205123.GA14391@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix 'No newline...' annotation in rewrite diffs.
+Date: Thu, 2 Aug 2012 17:33:46 -0400
+Message-ID: <20120802213346.GA575@sigill.intra.peff.net>
+References: <85f291cec03411c61ddf8808e53621ae@imap.force9.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
-	"Michael G. Schwern" <schwern@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Aug 02 23:22:17 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Adam Butcher <dev.lists@jessamine.co.uk>
+X-From: git-owner@vger.kernel.org Thu Aug 02 23:34:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sx2qU-0005sJ-Lx
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 23:22:15 +0200
+	id 1Sx324-0001vF-Q7
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 23:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223Ab2HBVWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 17:22:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61104 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753031Ab2HBVWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 17:22:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C914A9AD9;
-	Thu,  2 Aug 2012 17:22:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8De7m99DDbun7COBR5kpmaClwTI=; b=MnhIEX
-	0CE4S/qaL3pO01XOJhLpnETjKQ/widsZ9HomIs9pf1nVO/JxWBadhGDQVqlptnIv
-	swb6/xNF5tY6aIq/CFB4c1rRPqT0wjy1+Zkj8YReEJWOeVxcwK/RLqqeqen/3abc
-	eXe0JIPb+2FiVrSA3XA57ASl4SsuxUrvW5Q9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Avy7SaCsCHJZsO7A8VQiFnRypvdWu+4Z
-	rE8M0S5DELNUOcDO6JkDs4PNjllH1blJNUkRVibkzkRkiwQntIxg1Bf1Tk4x0juK
-	jAJG5Q056asxFwoKWTrJx0rmmjLyBe99eoSM1O/vREoRnv2RhyQNDKByugy6fVYQ
-	Bf5H12CqLwA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B761E9AD8;
-	Thu,  2 Aug 2012 17:22:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23C579AD6; Thu,  2 Aug 2012
- 17:22:05 -0400 (EDT)
-In-Reply-To: <20120802205123.GA14391@dcvr.yhbt.net> (Eric Wong's message of
- "Thu, 2 Aug 2012 20:51:23 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B9BF85C-DCE8-11E1-A015-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753089Ab2HBVdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 17:33:55 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49115 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752720Ab2HBVdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 17:33:54 -0400
+Received: (qmail 18462 invoked by uid 107); 2 Aug 2012 21:33:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Aug 2012 17:33:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Aug 2012 17:33:46 -0400
+Content-Disposition: inline
+In-Reply-To: <85f291cec03411c61ddf8808e53621ae@imap.force9.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202796>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Thu, Aug 02, 2012 at 10:11:02PM +0100, Adam Butcher wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Thanks from me as well.  I'm still worried about whether the increased
->> use of canonicalize_url will introduce regressions for the existing
->> SVN 1.6 support, and I should have time to look it over this weekend.
->> 
->> The comment in canonicalize_url "There wasn't a 1.6 way to do it" is
->> not true.  The relevant thread on the git list had a little
->> conversation about keeping svn 1.4 support, but I'm not sure why
->> that's relevant, given that svn_canonicalize_path has worked largely
->> the same way starting with SVN 1.1 (and on the other hand had
->> significant changes in SVN 1.7).
->> 
->> Hopefully you've looked this over carefully already and I'm worrying
->> needlessly.
->
-> Thanks for reminding me, I went back to an old chroot 1.4.2 indeed
-> does fail canonicalization.
->
-> Will bisect and squash a fix in.
+> From 01730a741cc5fd7d0a5d8bd0d3df80d12c81fe48 Mon Sep 17 00:00:00 2001
+> From: Adam Butcher <dev.lists@jessamine.co.uk>
+> Date: Wed, 1 Aug 2012 22:25:09 +0100
+> Subject: [PATCH] Fix 'No newline...' annotation in rewrite diffs.
 
-Oops; should I eject this out of next and wait for a reroll, then?
+You can drop these lines from the email body; they are redundant with
+what's in your actual header.
+
+> When operating in --break-rewrites (-B) mode on a file with no newline
+> terminator (and assuming --break-rewrites determines that the diff
+> _is_ a rewrite), git diff previously concatenated the indicator comment
+> '\ No newline at end of file' directly to the terminating line rather
+> than on a line of its own.  The resulting diff is broken; claiming
+> that the last line actually contains the indicator text.  Without -B
+> there is no problem with the same files.
+> 
+> This patch fixes the former case by inserting a newline into the
+> output prior to emitting the indicator comment.
+
+Makes sense.
+
+> Potential issue: Currently this emits an ASCII 10 newline character
+> only.  I'm not sure whether this will be okay on all platforms; it
+> seems to work fine on Windows and GNU at least.
+
+This should not be a problem. Git always outputs newlines; it is stdio
+who might munge it into CRLF if need be (and your patch uses putc, so we
+should be fine).
+
+> A couple of tests have been added to the rewrite suite to confirm that
+> the indicator comment is generated on its own line in both plain diff
+> and rewrite mode.  The latter test fails if the functional part of
+> this patch (i.e. diff.c) is reverted.
+
+Yay, tests.
+
+> ---
+>  diff.c                  |  1 +
+>  t/t4022-diff-rewrite.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 28 insertions(+)
+> 
+> diff --git a/diff.c b/diff.c
+> index 95706a5..77d4e84 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -574,6 +574,7 @@ static void emit_rewrite_lines(struct
+> emit_callback *ecb,
+
+Your patch is line-wrapped and cannot be applied as-is (try turning off
+"flowed text" in your MUA).
+
+>  	if (!endp) {
+>  		const char *plain = diff_get_color(ecb->color_diff,
+>  						   DIFF_PLAIN);
+> +		putc('\n', ecb->opt->file);
+>  		emit_line_0(ecb->opt, plain, reset, '\\',
+>  			    nneof, strlen(nneof));
+>  	}
+
+Looks correct. I was curious how the regular (non-rewrite) code path did
+this, and it just sticks the "\n" as part of the nneof string. However,
+we would not want that here, because each line should have its own
+color markers.
+
+> +# create a file containing numbers with no newline at
+> +# the end and modify it such that the starting 10 lines
+> +# are unchanged, the next 101 are rewritten and the last
+> +# line differs only in that in is terminated by a newline.
+> +seq 1 10 > seq
+> +seq 100 +1 200 >> seq
+> +printf 201 >> seq
+> +(git add seq; git commit seq -m seq) >/dev/null
+> +seq 1 10 > seq
+> +seq 300 -1 200 >> seq
+
+Seq is (unfortunately) not portable. I usually use a perl snippet
+instead, like:
+
+  perl -le 'print for (1..10)'
+
+Though I think we are adjusting that to use $PERL_PATH these days.
+
+-Peff
