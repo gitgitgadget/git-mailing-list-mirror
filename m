@@ -1,102 +1,100 @@
-From: Angus Hammond <angusgh@gmail.com>
-Subject: Re: Cherry-picking commits with empty messages
-Date: Thu, 2 Aug 2012 11:10:35 +0100
-Message-ID: <CAOBOgRbH_ddjW+DJiVSYt5bADEgqf_E+L9offvnF8SdH+GR50g@mail.gmail.com>
-References: <20120801111658.GA21272@arachsys.com> <7vd33afqjh.fsf@alter.siamese.dyndns.org>
- <CAOBOgRZ9Ouan2htT9m3qBrUvae3nT1az3A61kiRMSJNyFv1MdQ@mail.gmail.com> <7vehnqdz9t.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Fix git-svn for SVN 1.7
+Date: Thu, 2 Aug 2012 10:31:22 +0000
+Message-ID: <20120802103122.GA24385@dcvr.yhbt.net>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Chris Webb <chris@arachsys.com>, git@vger.kernel.org,
-	Neil Horman <nhorman@tuxdriver.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, robbat2@gentoo.org,
+	bwalton@artsci.utoronto.ca, jrnieder@gmail.com,
+	"Michael G. Schwern" <schwern@pobox.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 12:11:04 2012
+X-From: git-owner@vger.kernel.org Thu Aug 02 12:31:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwsMx-0005L3-1L
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 12:11:03 +0200
+	id 1Swsgj-00068A-Aq
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 12:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715Ab2HBKK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 06:10:58 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65248 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752436Ab2HBKK5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Aug 2012 06:10:57 -0400
-Received: by lahd3 with SMTP id d3so5203349lah.19
-        for <git@vger.kernel.org>; Thu, 02 Aug 2012 03:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=q6IzDZXHkRu1z4ySwITyJGrprU9yqh+jYvlYkKWII5U=;
-        b=m3mskdYZlljc06I0c/pXsrsZIEX2nrSS8yhLisKeTWZsnDfS37v/eTjco+c9eocyOB
-         xXlllBt+dAaNQ0vd1zk8S2hLWBLFQc3V9f+CfAdKAvuR7PtM2XgdKxd/PNS8eQSg6wL/
-         DFDvYhy8WdxkV/H1mjbZZ5lLAIm4X2eKUICeg4WOiXpRwcbI5Q3dHKWbyOcqYjyXkJSG
-         AQNZpXg8DZkWoYnDp/JUbthcGoNegTuRPw8PkFJolzvDZROSoZRWnVbbNeaUtA2AWii+
-         mMOateirqQscqB47O1ei5kBpirqro4OkZRTT/YHSdC8Pb6NiC3/tIITP+6F/bi72l/nl
-         eJqw==
-Received: by 10.152.103.11 with SMTP id fs11mr5094140lab.23.1343902255788;
- Thu, 02 Aug 2012 03:10:55 -0700 (PDT)
-Received: by 10.114.12.1 with HTTP; Thu, 2 Aug 2012 03:10:35 -0700 (PDT)
-In-Reply-To: <7vehnqdz9t.fsf@alter.siamese.dyndns.org>
+	id S1751460Ab2HBKbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 06:31:24 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57385 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750972Ab2HBKbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 06:31:23 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A721F42D;
+	Thu,  2 Aug 2012 10:31:23 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1343468872-72133-1-git-send-email-schwern@pobox.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202748>
 
-On 1 August 2012 23:26, Junio C Hamano <gitster@pobox.com> wrote:
-> I've read your entire response three times, and I am having a hard
-> time deciding if you are against my suggestion, or you misread my
-> suggestion.
+"Michael G. Schwern" <schwern@pobox.com> wrote:
+> This patch series fixes git-svn for SVN 1.7 tested against SVN 1.7.5 and
+> 1.6.18.  Patch 7/8 is where SVN 1.7 starts passing.
 
-My apologies, I can see how my message wasn't as clear as it could have been.
+Thanks Michael.  I've made minor editorial changes (mostly rewording
+commit titles to fit the larger project).
 
-> I guess by "perpetuates" you meant there was already a commit with
-> an empty message, by "the user does not want" you consider such a
-> commit is a bad thing, and by "to ensure they don't TELL git", you
-> meant it is the user's responsibility not to give an extra option to
-> cause Git to replay a bad (= having an empty message) commit and
-> leave it in the resulting history.
+Junio:
 
-I was just trying to say that cherry-pick will only ever create a
-blank commit message where one already exists in the repository, so
-git shouldn't worry about copying that blank commit message,
-especially since the user has explicitly told git (by running
-cherry-pick) that they want those commits copied.
+The following changes since commit 05a20c87abd08441c98dfcca0606bc0f8432ab26:
 
-> It sounds to me that you are advocating for "git cherry-pick"
-> without any flags to stop and do not commit when given a commit with
-> an empty message.
->
-> And that is what I thought I was suggesting.  Give users a support
-> to say "git cherry-pick --allow-empty", but do not by default enable
-> it.  Perhaps I sounded as if I was suggesting the opposite?
+  Merge git://github.com/git-l10n/git-po (2012-08-01 15:59:08 -0700)
 
-I meant the opposite, that without any flags it should just copy the
-blank commit silently.
+are available in the git repository at:
 
->> Secondly, I'd don't like the idea of a command that 99.9% of the time
->> will run completely independently, but then every so often will become
->> interactive.
->
-> As "cherry-pick" is expected to stop and give control back whenever
-> there is conflicts, this does not apply.  Any script that uses
-> cherry-pick to replay an existing commit has to be prepared to see
-> it stop and give control back to the script already, or the script
-> is unusable.  Note that the script would not be buggy even if the
-> only thing it does when it sees cherry-pick stop and give control to
-> it is to abort and give control back to the user.
 
-Fair enough, I don't make heavy use of cherry-pick, so that didn't occur to me.
+  git://bogomips.org/git-svn master
 
-Since you've pointed out that the scripting argument is invalid, I'm
-now inclined to support what you originally proposed (by default
-refuse to create an empty commit message, offer a flag to override
-that default), but just wanted to clear up my original point since it
-wasn't written very clearly.
+for you to fetch changes up to db7c5388b6d843f7cd248dc465af4507d1de7918:
 
-Thanks
-Angus
+  git-svn: remove ad-hoc canonicalizations (2012-08-02 09:42:25 +0000)
+
+----------------------------------------------------------------
+Michael G. Schwern (20):
+      Git::SVN: use accessors internally for path
+      Git::SVN: use accessor for URLs internally
+      Git::SVN::Ra: use accessor for URLs
+      use Git::SVN->path accessor globally
+      use Git::SVN{,::RA}->url accessor globally
+      git-svn: move canonicalization to Git::SVN::Utils
+      git-svn: use SVN 1.7 to canonicalize when possible
+      git-svn: factor out _collapse_dotdot function
+      git-svn: add join_paths() to safely concatenate paths
+      Git::SVN::Utils: remove irrelevant comment
+      git-svn: path canonicalization uses SVN API
+      Git::SVN{,::Ra}: canonicalize earlier
+      t9118: workaround inconsistency between SVN versions
+      t9107: fix typo
+      git-svn: attempt to mimic SVN 1.7 URL canonicalization
+      git-svn: replace URL escapes with canonicalization
+      git-svn: canonicalize earlier
+      git-svn: introduce add_path_to_url function
+      git-svn: canonicalize newly-minted URLs
+      git-svn: remove ad-hoc canonicalizations
+
+ git-svn.perl                          |  92 ++++++------------
+ perl/Git/SVN.pm                       | 174 ++++++++++++++++++++++------------
+ perl/Git/SVN/Fetcher.pm               |   2 +-
+ perl/Git/SVN/Migration.pm             |   6 +-
+ perl/Git/SVN/Ra.pm                    |  92 ++++++++++--------
+ perl/Git/SVN/Utils.pm                 | 173 ++++++++++++++++++++++++++++++++-
+ t/Git-SVN/Utils/add_path_to_url.t     |  27 ++++++
+ t/Git-SVN/Utils/canonicalize_url.t    |  26 +++++
+ t/Git-SVN/Utils/collapse_dotdot.t     |  23 +++++
+ t/Git-SVN/Utils/join_paths.t          |  32 +++++++
+ t/t9107-git-svn-migrate.sh            |   6 +-
+ t/t9118-git-svn-funky-branch-names.sh |   7 +-
+ 12 files changed, 486 insertions(+), 174 deletions(-)
+ create mode 100644 t/Git-SVN/Utils/add_path_to_url.t
+ create mode 100644 t/Git-SVN/Utils/canonicalize_url.t
+ create mode 100644 t/Git-SVN/Utils/collapse_dotdot.t
+ create mode 100644 t/Git-SVN/Utils/join_paths.t
