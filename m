@@ -1,77 +1,74 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC 0/16] Introduce index file format version 5
-Date: Thu, 2 Aug 2012 20:53:08 +0700
-Message-ID: <CACsJy8ArnHCXsaW8K47OdcWgYe3=jEPukt-c61kOx1raTNvUEA@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 16/16] p0002-index.sh: add perf test for the index formats
+Date: Thu, 2 Aug 2012 15:56:47 +0200
+Message-ID: <20120802135647.GB1000@tgummerer.unibz.it>
 References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
- <CACsJy8De=1RR9yAQ79zzNM_iALF1OCB2L9A8pMK_v+ixZqgJug@mail.gmail.com> <20120802134718.GA1000@tgummerer.unibz.it>
+ <1343905326-23790-17-git-send-email-t.gummerer@gmail.com>
+ <CACsJy8AG_dbqentgM+Y9pE=y0bGs2u57sBTF0oG5rNP4HSqY_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
 	gitster@pobox.com, robin.rosenberg@dewire.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 15:53:51 2012
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 15:56:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwvqX-0005yR-Jm
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 15:53:49 +0200
+	id 1SwvtY-0007gW-DQ
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 15:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754454Ab2HBNxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 09:53:40 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:53135 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753792Ab2HBNxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 09:53:39 -0400
-Received: by ghrr11 with SMTP id r11so2257856ghr.19
-        for <git@vger.kernel.org>; Thu, 02 Aug 2012 06:53:39 -0700 (PDT)
+	id S1753711Ab2HBN4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 09:56:51 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:50822 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751422Ab2HBN4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 09:56:51 -0400
+Received: by wibhm11 with SMTP id hm11so5088736wib.1
+        for <git@vger.kernel.org>; Thu, 02 Aug 2012 06:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=zOKSnlDsVwynn7YyXU5YO+YjneZTMQbxsfp6UN5DbnI=;
-        b=hlIDu615I2tfjqp2+fKAyAkStPTqIwBTmwuAkyitiVqPNIOKkbpi9FHZr+g8d9Eskz
-         mnbpNijTCP/O2lki0SIKdGLtFzimExQEKolZmDg9+N/dN80sMT0cs/ZHwL3rK7rWKnZg
-         Ego2465LYqj4tQNbFfAoY+F18dDYOViduWuUDZRfESMHAx7rtS9CiEFIpyBsG6S25/Jg
-         HgV/VTJ6jE/1385o8gnMh5RIyPk6SZF79iMeqDS2Qvu5ada7hKF73fePB8S2zbT4f3TC
-         ew12alYQCc/ZOXnu98gF0OY3OWqBU6y5kRzzECrKu6tgOGwssJkUTNDpfjRhhwyRg3Sx
-         22Fg==
-Received: by 10.50.6.197 with SMTP id d5mr3736010iga.44.1343915618932; Thu, 02
- Aug 2012 06:53:38 -0700 (PDT)
-Received: by 10.64.90.2 with HTTP; Thu, 2 Aug 2012 06:53:08 -0700 (PDT)
-In-Reply-To: <20120802134718.GA1000@tgummerer.unibz.it>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ZHnaqSuhmQBIiMLU4DS1JJbekr007Z2V8mIewuE7ppI=;
+        b=gg79neG3LarcN+7EV1hzfOsQDIWQJq6DZfTV70r2Qr581ButvaDfHT7ITP9H6Gn2c3
+         adOZMdi/woCjUkZwFXhUgkBHV9ylAX/QOP9cCni9ZIMM41cRQiwCPPMV31bPB5o7ZFR+
+         F34BUcTF5dQ6s2WVYFARZyD1weVB/tn8OcwRApXsVu7yIahfsDVzIyrsMBQy6X7NY2MG
+         78ApLj2wfiSP1AONvRo9IXPBIQF1syAZltFXzpcnCknTd1VNX7BWRGE63clSCKvaHvFh
+         PUZdvvqQwLno9ESeUgVCC9slVX99HeZfEWPgECr+MafJBV1KmOCngiE53FvzTUmHLhzv
+         GFwg==
+Received: by 10.180.84.164 with SMTP id a4mr4968862wiz.12.1343915809917;
+        Thu, 02 Aug 2012 06:56:49 -0700 (PDT)
+Received: from localhost ([46.18.27.126])
+        by mx.google.com with ESMTPS id t7sm17433360wix.6.2012.08.02.06.56.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Aug 2012 06:56:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AG_dbqentgM+Y9pE=y0bGs2u57sBTF0oG5rNP4HSqY_A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202777>
 
-On Thu, Aug 2, 2012 at 8:47 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> On 08/02, Nguyen Thai Ngoc Duy wrote:
->> On Thu, Aug 2, 2012 at 6:01 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> > Documentation/technical/index-file-format-v5.txt |  281 ++++++++++++++++++++++++++++++++++
->> > builtin/update-index.c                           |    5 +-
->> > cache-tree.c                                     |  145 ++++++++++++++++++
->> > cache-tree.h                                     |    7 +
->> > cache.h                                          |   96 +++++++++++-
->> > read-cache.c                                     | 1519 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------------
->> > resolve-undo.c                                   |  129 ++++++++++++++++
->> > resolve-undo.h                                   |    3 +
->> > t/perf/p0002-index.sh                            |   33 ++++
->> > t/t2104-update-index-skip-worktree.sh            |   15 +-
->> > t/t3700-add.sh                                   |    1 +
->> > test-index-version.c                             |    2 +-
->> > 12 files changed, 2082 insertions(+), 154 deletions(-)
->>
->> This is not good (too many pluses in read-cache.c) if it comes from
->> format-patch. Does it?
->
-> No this comes from git diff --stat. It's probably just my terminal
-> width then?
->
+On 08/02, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Aug 2, 2012 at 6:02 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > Add a performance test for index version [23]/4/5 by using
+> > git update-index --force-rewrite, thus testing both the reader
+> > and the writer speed of all index formats.
+> 
+> On the testing side, it may be an interesting idea to force the whole
+> test suite to use v5 by default. There are a few test cases that
+> require a specific index version. We can identify and rule them out.
+> That'll give v5 a lot more exercises.
 
-Ah ok. Recent git learns to use much screen estate as possible but
-format-patch keep it fit wihtin 75 or so columns.
--- 
-Duy
+The test suite already works with index v5. Patch 5 and 6 fix the only
+cases where index-v5 would fail. To make it use index-v5 you can just
+set the INDEX_VERSION_DEFAULT to 5 in read-cache.c
+
+I've never used it for performance testing yet, I'll try to run it with
+both versions and post the results. I don't think the results will be
+a lot different thought, since the test-suite usually uses small
+repositories.
