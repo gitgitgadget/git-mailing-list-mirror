@@ -1,189 +1,188 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 04/16] Modify write functions to prepare for other index formats
-Date: Thu,  2 Aug 2012 13:01:54 +0200
-Message-ID: <1343905326-23790-5-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH 14/16] Write resolve-undo data for index-v5
+Date: Thu,  2 Aug 2012 13:02:04 +0200
+Message-ID: <1343905326-23790-15-git-send-email-t.gummerer@gmail.com>
 References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@student.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
 	pclouds@gmail.com, robin.rosenberg@dewire.com,
 	Thomas Gummerer <t.gummerer@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 02 13:03:17 2012
+X-From: git-owner@vger.kernel.org Thu Aug 02 13:03:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwtBS-00056m-LJ
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 13:03:14 +0200
+	id 1SwtBo-0005Lo-2e
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 13:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595Ab2HBLDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 07:03:00 -0400
+	id S1754641Ab2HBLDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 07:03:19 -0400
 Received: from mail-ey0-f174.google.com ([209.85.215.174]:64744 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754550Ab2HBLC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 07:02:58 -0400
-Received: by eaac11 with SMTP id c11so838708eaa.19
-        for <git@vger.kernel.org>; Thu, 02 Aug 2012 04:02:57 -0700 (PDT)
+	with ESMTP id S1754622Ab2HBLDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 07:03:17 -0400
+Received: by mail-ey0-f174.google.com with SMTP id c11so838708eaa.19
+        for <git@vger.kernel.org>; Thu, 02 Aug 2012 04:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=dqcoiosURuji+P1IV+jr7b//jmga2M9OzgZcgTY/wWg=;
-        b=pZvwEmV8KDuAN/G4/NvKF+Bd/1YLy+MgHYosL6cciDgsXelJuUyYLat6mXStXYitXN
-         AhxKkVx51Z8hul2Gc+YctHbWG6u3pP7JdGsQNkm2+uNVvY40SUYB95zwkznjwHVW4jtc
-         Z1tmCqApGb5sFGZ+yEHlhHBDtthBO0g2NyzNLWQauxZKBOg8HDEg93iIR3hmCPdg/WGI
-         uInrZ/tRK6mvjOPUX6UyaghA1VabxGOcGS4A0tc1XvbptX1goPuswHrpvfnvF4PYh+YL
-         QHVDKduJrI+G/v9XLQcPU9M2Uy0T5UQKJjM5KyGmAbCf1g8qXwYvv90EPByVLPzgvC8w
-         dZmw==
-Received: by 10.14.204.197 with SMTP id h45mr1225286eeo.8.1343905377289;
-        Thu, 02 Aug 2012 04:02:57 -0700 (PDT)
+        bh=5nFW0CCdVxqJm2ndtNJWtOQmNGC4nxJleBlX+RwYVto=;
+        b=HoSrnet8Nkl/pzWYesVsu91l3z08OvT9s7r5/6mGq7MDB/8LhUGSTbkJn8J+0WvJSh
+         lIZORvRH6/Dk9D/wR+bcrX8yGBYSqwi9aMvdiTcwMYbcDKvNT6gOq2Y4npEODE/lvUyg
+         X4JZHa6u131StInbC/9IM6OlkHhTvUos4XNcozTNwWW9rWpp+Z+bgY1JtUutYUHEETfd
+         RHt4ksp929ivxrBMIFXBRdzlwCNmm/60HSndM7KaBjfQeoCm6/lhHyQUD/m/SjmUpbIj
+         YZ7sfsbqqYsjHSdaKU13sTxleVlxjg2I8kilcGerWsWQLr5mZZjhLYuRa0puT6Y5PD7g
+         9Lpg==
+Received: by 10.14.181.137 with SMTP id l9mr26200817eem.28.1343905396742;
+        Thu, 02 Aug 2012 04:03:16 -0700 (PDT)
 Received: from localhost ([2a01:7e00::f03c:91ff:fedf:f4db])
-        by mx.google.com with ESMTPS id g46sm16303274eep.15.2012.08.02.04.02.56
+        by mx.google.com with ESMTPS id d48sm16420235eeo.10.2012.08.02.04.03.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2012 04:02:56 -0700 (PDT)
+        Thu, 02 Aug 2012 04:03:16 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.886.gdf6792c.dirty
 In-Reply-To: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202757>
 
-Modify the write_index function to add the possibility to add
-other index formats, that are written in a different way. Also
-mark all functions, which shall only be used with v2-v4 as v2
-functions.
+Write the resolve undo data to the ondisk format, by joining the data
+in the resolve-undo string-list with the already existing conflicts
+that were compiled before, when searching the directories and add
+them to the corresponding directory entries.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- read-cache.c | 40 ++++++++++++++++++++++++----------------
- 1 file changed, 24 insertions(+), 16 deletions(-)
+ read-cache.c   |  1 +
+ resolve-undo.c | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ resolve-undo.h |  1 +
+ 3 files changed, 95 insertions(+)
 
 diff --git a/read-cache.c b/read-cache.c
-index 6a0af35..1c804e1 100644
+index 6538ddf..a4ca40a 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1581,7 +1581,7 @@ static int ce_write_flush(git_SHA_CTX *context, int fd)
- 	return 0;
+@@ -2744,6 +2744,7 @@ static struct directory_entry *compile_directory_data(struct index_state *istate
+ 	}
+ 	if (istate->cache_tree)
+ 		cache_tree_to_ondisk_v5(&table, istate->cache_tree);
++	resolve_undo_to_ondisk_v5(&table, istate->resolve_undo, ndir, total_dir_len, de);
+ 	return de;
  }
  
--static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
-+static int ce_write_v2(git_SHA_CTX *context, int fd, void *data, unsigned int len)
- {
- 	while (len) {
- 		unsigned int buffered = write_buffer_len;
-@@ -1603,13 +1603,13 @@ static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
- 	return 0;
- }
- 
--static int write_index_ext_header(git_SHA_CTX *context, int fd,
-+static int write_index_ext_header_v2(git_SHA_CTX *context, int fd,
- 				  unsigned int ext, unsigned int sz)
- {
- 	ext = htonl(ext);
- 	sz = htonl(sz);
--	return ((ce_write(context, fd, &ext, 4) < 0) ||
--		(ce_write(context, fd, &sz, 4) < 0)) ? -1 : 0;
-+	return ((ce_write_v2(context, fd, &ext, 4) < 0) ||
-+		(ce_write_v2(context, fd, &sz, 4) < 0)) ? -1 : 0;
- }
- 
- static int ce_flush(git_SHA_CTX *context, int fd)
-@@ -1634,7 +1634,7 @@ static int ce_flush(git_SHA_CTX *context, int fd)
- 	return (write_in_full(fd, write_buffer, left) != left) ? -1 : 0;
- }
- 
--static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
-+static void ce_smudge_racily_clean_entry_v2(struct cache_entry *ce)
- {
- 	/*
- 	 * The only thing we care about in this function is to smudge the
-@@ -1715,7 +1715,7 @@ static char *copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
+diff --git a/resolve-undo.c b/resolve-undo.c
+index f96c6ba..4568dcc 100644
+--- a/resolve-undo.c
++++ b/resolve-undo.c
+@@ -206,3 +206,96 @@ void resolve_undo_convert_v5(struct index_state *istate,
+ 		ce = ce->next;
  	}
  }
- 
--static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
-+static int ce_write_entry_v2(git_SHA_CTX *c, int fd, struct cache_entry *ce,
- 			  struct strbuf *previous_name)
- {
- 	int size;
-@@ -1755,7 +1755,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
- 			      ce->name + common, ce_namelen(ce) - common);
- 	}
- 
--	result = ce_write(c, fd, ondisk, size);
-+	result = ce_write_v2(c, fd, ondisk, size);
- 	free(ondisk);
- 	return result;
- }
-@@ -1785,7 +1785,7 @@ void update_index_if_able(struct index_state *istate, struct lock_file *lockfile
- 		rollback_lock_file(lockfile);
- }
- 
--int write_index(struct index_state *istate, int newfd)
-+int write_index_v2(struct index_state *istate, int newfd)
- {
- 	git_SHA_CTX c;
- 	struct cache_version_header hdr;
-@@ -1819,9 +1819,9 @@ int write_index(struct index_state *istate, int newfd)
- 	hdr_v2.hdr_entries = htonl(entries - removed);
- 
- 	git_SHA1_Init(&c);
--	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
-+	if (ce_write_v2(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
--	if (ce_write(&c, newfd, &hdr_v2, sizeof(hdr_v2)) < 0)
-+	if (ce_write_v2(&c, newfd, &hdr_v2, sizeof(hdr_v2)) < 0)
- 		return -1;
- 
- 	previous_name = (hdr_version == 4) ? &previous_name_buf : NULL;
-@@ -1830,8 +1830,8 @@ int write_index(struct index_state *istate, int newfd)
- 		if (ce->ce_flags & CE_REMOVE)
- 			continue;
- 		if (!ce_uptodate(ce) && is_racy_timestamp(istate, ce))
--			ce_smudge_racily_clean_entry(ce);
--		if (ce_write_entry(&c, newfd, ce, previous_name) < 0)
-+			ce_smudge_racily_clean_entry_v2(ce);
-+		if (ce_write_entry_v2(&c, newfd, ce, previous_name) < 0)
- 			return -1;
- 	}
- 	strbuf_release(&previous_name_buf);
-@@ -1841,8 +1841,8 @@ int write_index(struct index_state *istate, int newfd)
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		cache_tree_write(&sb, istate->cache_tree);
--		err = write_index_ext_header(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
--			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
-+		err = write_index_ext_header_v2(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
-+			|| ce_write_v2(&c, newfd, sb.buf, sb.len) < 0;
- 		strbuf_release(&sb);
- 		if (err)
- 			return -1;
-@@ -1851,9 +1851,9 @@ int write_index(struct index_state *istate, int newfd)
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		resolve_undo_write(&sb, istate->resolve_undo);
--		err = write_index_ext_header(&c, newfd, CACHE_EXT_RESOLVE_UNDO,
-+		err = write_index_ext_header_v2(&c, newfd, CACHE_EXT_RESOLVE_UNDO,
- 					     sb.len) < 0
--			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
-+			|| ce_write_v2(&c, newfd, sb.buf, sb.len) < 0;
- 		strbuf_release(&sb);
- 		if (err)
- 			return -1;
-@@ -1866,6 +1866,14 @@ int write_index(struct index_state *istate, int newfd)
- 	return 0;
- }
- 
-+int write_index(struct index_state *istate, int newfd)
++
++void resolve_undo_to_ondisk_v5(struct hash_table *table,
++				struct string_list *resolve_undo,
++				unsigned int *ndir, int *total_dir_len,
++				struct directory_entry *de)
 +{
-+	if (!istate->version)
-+		istate->version = INDEX_FORMAT_DEFAULT;
++	struct string_list_item *item;
++	struct directory_entry *search;
 +
-+	return write_index_v2(istate, newfd);
++	if (!resolve_undo)
++		return;
++	for_each_string_list_item(item, resolve_undo) {
++		struct conflict_entry *conflict_entry;
++		struct resolve_undo_info *ui = item->util;
++		char *super;
++		int i, dir_len, len;
++		uint32_t crc;
++		struct directory_entry *found, *current, *new_tree;
++
++		if (!ui)
++			continue;
++
++		super = super_directory(item->string);
++		if (!super)
++			dir_len = 0;
++		else
++			dir_len = strlen(super);
++		crc = crc32(0, (Bytef*)super, dir_len);
++		found = lookup_hash(crc, table);
++		current = NULL;
++		new_tree = NULL;
++		
++		while (!found) {
++			struct directory_entry *new;
++
++			new = init_directory_entry(super, dir_len);
++			if (!current)
++				current = new;
++			insert_directory_entry(new, table, total_dir_len, ndir, crc);
++			if (new_tree != NULL)
++				new->de_nsubtrees = 1;
++			new->next = new_tree;
++			new_tree = new;
++			super = super_directory(super);
++			if (!super)
++				dir_len = 0;
++			else
++				dir_len = strlen(super);
++			crc = crc32(0, (Bytef*)super, dir_len);
++			found = lookup_hash(crc, table);
++		}
++		search = found;
++		while (search->next_hash && strcmp(super, search->pathname) != 0)
++			search = search->next_hash;
++		if (search && !current)
++			current = search;
++		if (!search && !current)
++			current = new_tree;
++		if (!super && new_tree) {
++			new_tree->next = de->next;
++			de->next = new_tree;
++			de->de_nsubtrees++;
++		} else if (new_tree) {
++			struct directory_entry *temp;
++
++			search = de->next;
++			while (strcmp(super, search->pathname))
++				search = search->next;
++			temp = new_tree;
++			while (temp->next)
++				temp = temp->next;
++			search->de_nsubtrees++;
++			temp->next = search->next;
++			search->next = new_tree;
++		}
++
++		len = strlen(item->string);
++		conflict_entry = create_new_conflict(item->string, len, current->de_pathlen);
++		add_conflict_to_directory_entry(current, conflict_entry);
++		for (i = 0; i < 3; i++) {
++			if (ui->mode[i]) {
++				struct conflict_part *cp;
++
++				cp = xmalloc(sizeof(struct conflict_part));
++				cp->flags = (i + 1) << CONFLICT_STAGESHIFT;
++				cp->entry_mode = ui->mode[i];
++				cp->next = NULL;
++				hashcpy(cp->sha1, ui->sha1[i]);
++				add_part_to_conflict_entry(current, conflict_entry, cp);
++			}
++		}
++	}
 +}
-+
- /*
-  * Read the index file that is potentially unmerged into given
-  * index_state, dropping any unmerged entries.  Returns true if
+diff --git a/resolve-undo.h b/resolve-undo.h
+index ab660a6..ff80d84 100644
+--- a/resolve-undo.h
++++ b/resolve-undo.h
+@@ -14,5 +14,6 @@ extern int unmerge_index_entry_at(struct index_state *, int);
+ extern void unmerge_index(struct index_state *, const char **);
+ 
+ extern void resolve_undo_convert_v5(struct index_state *, struct conflict_entry *);
++extern void resolve_undo_to_ondisk_v5(struct hash_table *, struct string_list *, unsigned int *, int *, struct directory_entry *);
+ 
+ #endif
 -- 
 1.7.10.886.gdf6792c.dirty
