@@ -1,101 +1,71 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 03/16] Modify match_stat_basic to prepare for other index
- formats
-Date: Thu, 2 Aug 2012 16:16:26 +0200
-Message-ID: <20120802141626.GE1000@tgummerer.unibz.it>
-References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
- <1343905326-23790-4-git-send-email-t.gummerer@gmail.com>
- <CACsJy8Cr4DoO5aw4-CJPN8j1CiWw+pU+5=_cB+mmViUvMU6BOw@mail.gmail.com>
+From: J Smith <dark.panda@gmail.com>
+Subject: Re: [PATCH/RFC] grep: add a grep.patternType configuration setting
+Date: Thu, 2 Aug 2012 10:47:43 -0400
+Message-ID: <CADFUPgfeEYSOH8scLatTGqCWQQ=goA2KZogLC+UmVNZWi3UrcA@mail.gmail.com>
+References: <1343845781-69246-1-git-send-email-dark.panda@gmail.com>
+ <7vpq7ae0pj.fsf@alter.siamese.dyndns.org> <CADFUPgdX44pCFhytPj-hHSCPH9UHNBKk5pYkpses86M1ntxvyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	gitster@pobox.com, robin.rosenberg@dewire.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 02 16:16:49 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 02 16:48:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SwwCj-000219-Ex
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 16:16:45 +0200
+	id 1SwwhB-0004NL-2l
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Aug 2012 16:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab2HBOQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Aug 2012 10:16:31 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:52184 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753123Ab2HBOQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Aug 2012 10:16:29 -0400
-Received: by mail-bk0-f46.google.com with SMTP id j10so4273873bkw.19
-        for <git@vger.kernel.org>; Thu, 02 Aug 2012 07:16:28 -0700 (PDT)
+	id S1751361Ab2HBOsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Aug 2012 10:48:06 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:54957 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751082Ab2HBOsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Aug 2012 10:48:05 -0400
+Received: by qcro28 with SMTP id o28so5371032qcr.19
+        for <git@vger.kernel.org>; Thu, 02 Aug 2012 07:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=i/GVxCCtKI+n1JdTbVfJtU++ZJRxee0y8OMrHADRZ3c=;
-        b=dQFwJCNH7AWLpEkV62AA7ioDgZvk6V7+LaVLl5jauOdrx4TTbH+QUazE9N8AJIaYbf
-         fFXocP9CpLL39UwcTWeC6iEbEbCgALNEMdRmThFg0D+OXPVpmspSuwi1TwGTg6xYfY4m
-         ftWLZxXBkPq4XflHzDr0nS/t38aWjhgfCCsQevCCOiWAMJG3aB7b8hQEVflO4v8/Hvdy
-         eEGMqUow172WmwZpK7Nh6LJ+zs9bCpIpc5q7W9LRP18av1upFuLS0guxUnsnmNOvlu4I
-         I44AXJNxNZpQKrLQ4DsLy08/by5YEzCMnn9cZgRN/IuTEhAvDpsfv3hak3Qu3pb0Jmv6
-         Apwg==
-Received: by 10.204.157.135 with SMTP id b7mr8306329bkx.61.1343916988519;
-        Thu, 02 Aug 2012 07:16:28 -0700 (PDT)
-Received: from localhost ([46.18.27.126])
-        by mx.google.com with ESMTPS id ht18sm3505342bkc.16.2012.08.02.07.16.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Aug 2012 07:16:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Cr4DoO5aw4-CJPN8j1CiWw+pU+5=_cB+mmViUvMU6BOw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xIdCYRbFPCJpdZF5joPQt2iYzL0TG6hXexCm7D3iikU=;
+        b=d3ie+72RCfBB283mPuo500jRUeC9ahUh84TX9+AyUA4IO3KbwwUrhG5WkcJvj8qnPv
+         NThM03anzrJYyk0bMfOUfQKzwZp9Bfewj4cMwPvfiRBjxsKuqE++80bZz35+26xTE5Kc
+         p+MPOKCCIT0OANV2NSALC/gNorz0wFedQAa45XOx6BcCq3XAvSgWtnU4cAV3ddm1IC78
+         N/fd7yP6N6U6tkE7wTfTiun/shkLS+893qek8UZABra42G1T5dUDrMkbQmexlua9tRZI
+         VB0GiQPEt7SwjzIYLNwqOgx7k+5KuuuFwSuakxmHHdB28Q8hksxWtnU//eLoMa06+EPe
+         6+sQ==
+Received: by 10.60.12.8 with SMTP id u8mr37047878oeb.46.1343918883276; Thu, 02
+ Aug 2012 07:48:03 -0700 (PDT)
+Received: by 10.76.168.200 with HTTP; Thu, 2 Aug 2012 07:47:43 -0700 (PDT)
+In-Reply-To: <CADFUPgdX44pCFhytPj-hHSCPH9UHNBKk5pYkpses86M1ntxvyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202781>
 
-On 08/02, Nguyen Thai Ngoc Duy wrote:
-> On Thu, Aug 2, 2012 at 6:01 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > @@ -1443,7 +1452,6 @@ void read_index_v2(struct index_state *istate, void *mmap, int mmap_size)
-> >                 src_offset += consumed;
-> >         }
-> >         strbuf_release(&previous_name_buf);
-> > -
-> >         while (src_offset <= mmap_size - 20 - 8) {
-> >                 /* After an array of active_nr index entries,
-> >                  * there can be arbitrary number of extended
-> > @@ -1500,7 +1508,6 @@ int read_index_from(struct index_state *istate, const char *path)
-> >                 die("index file smaller than expected");
-> >
-> >         mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
-> > -       close(fd);
-> >         if (mmap == MAP_FAILED)
-> >                 die_errno("unable to map index file");
-> >
-> > @@ -1512,7 +1519,6 @@ int read_index_from(struct index_state *istate, const char *path)
-> >                 goto unmap;
-> >
-> >         read_index_v2(istate, mmap, mmap_size);
-> > -
-> >         istate->timestamp.sec = st.st_mtime;
-> >         istate->timestamp.nsec = ST_MTIME_NSEC(st);
-> >
-> 
-> you could have done this in 02/16 when you introduced this block.
+Alright, I have revised the patch and fixed up the nits that were
+picked and made a quick modification. I've added a setting for
+grep.patternType for "default" which can restore the default grep
+pattern matching behaviour and restores the functionality back to
+grep.extendedRegexp. I added this functionality for situations like
+where you would have grep.patternType set to, say, "perl" in your
+$HOME/.gitconfig but don't want that functionality set in a specific
+repo and would rather to have it fall back to the older
+grep.extendedRegexp behaviour so you can set it to "default" in the
+repo's .git/config.
 
-Thanks.
+This change also lets us determine the final set of pattern type
+options in one place rather than the current code which does two
+checks -- once when we call grep_config to determine the configuration
+options and then another a few lines later when we call it for the
+arguments given to grep. Now we capture the values we receive from
+grep.patternType and grep.extendedRegexp in the grep_opt struct as
+pattern_type_option and extended_regexp_option, capture the pattern
+type argument given to the command itself, and then make the final
+determination for the options to be used in one place rather than the
+current manner. I think it should be more obvious this way.
 
-> > @@ -1802,9 +1808,6 @@ int write_index(struct index_state *istate, int newfd)
-> >                 }
-> >         }
-> >
-> > -       if (!istate->version)
-> > -               istate->version = INDEX_FORMAT_DEFAULT;
-> > -
-> >         /* demote version 3 to version 2 when the latter suffices */
-> >         if (istate->version == 3 || istate->version == 2)
-> >                 istate->version = extended ? 3 : 2;
-> 
-> why? it does not seem to be related to the commit message.
-
-Sorry this is wrong, it should belong to patch 4. Thanks for noticing.
+I'll post the latest patch shortly for review if this sounds reasonable. Cheers.
