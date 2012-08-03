@@ -1,92 +1,83 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 11/16] Read cache-tree in index-v5
-Date: Fri, 3 Aug 2012 10:31:17 +0200
-Message-ID: <87haskbcmi.fsf@thomas.inf.ethz.ch>
-References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
-	<1343905326-23790-12-git-send-email-t.gummerer@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <trast@student.ethz.ch>,
-	<mhagger@alum.mit.edu>, <gitster@pobox.com>, <pclouds@gmail.com>,
-	<robin.rosenberg@dewire.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 10:31:28 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-remote-mediawiki: replace TODO-list in comment by appropriate link
+Date: Fri,  3 Aug 2012 10:40:23 +0200
+Message-ID: <1343983223-20592-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 03 10:40:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxDI6-00064A-Lf
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 10:31:26 +0200
+	id 1SxDR0-0001Un-PL
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 10:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875Ab2HCIbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Aug 2012 04:31:21 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:31140 "EHLO edge10.ethz.ch"
+	id S1753089Ab2HCIke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Aug 2012 04:40:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35120 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750784Ab2HCIbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2012 04:31:19 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 10:31:15 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 10:31:17 +0200
-In-Reply-To: <1343905326-23790-12-git-send-email-t.gummerer@gmail.com> (Thomas
-	Gummerer's message of "Thu, 2 Aug 2012 13:02:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751846Ab2HCIkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2012 04:40:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q738bbZq031348
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 3 Aug 2012 10:37:37 +0200
+Received: from fema.imag.fr ([129.88.43.130])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SxDQo-0006R6-IV; Fri, 03 Aug 2012 10:40:26 +0200
+Received: from moy by fema.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1SxDQo-0005Mm-GM; Fri, 03 Aug 2012 10:40:26 +0200
+X-Mailer: git-send-email 1.7.12.rc0.32.g9fb4847.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 03 Aug 2012 10:37:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q738bbZq031348
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1344587859.38771@Mfrm796q4ZOGn6L1BSU4PA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202821>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+My account on Github is now used as wiki and issue tracking. This will be
+more flexible than in-tree management of a TODO-list.
 
-> Since the cache-tree data is saved as part of the directory data,
-> we have already read it, when we want to read the cache-tree. The
-> cache-tree then only has to be converted from the directory data.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/git-remote-mediawiki | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
-I think the first sentence is wrong.  You have already read it at the
-very beginning of reading the index format, when you parsed the
-directory records, haven't you?
-
-> The cache-tree isn't lexically sorted, but after the pathlen at
-> each level, therefore the directories have to be reordered with
-> respect to the ondisk layout.
-
-I'm not a native speaker either, but I think this does't parse well.
-Maybe
-
-  The cache-tree data is arranged in a tree, with the children sorted by
-  pathlen at each node.  So we have to rebuild this format from the
-  on-disk directory list.
-
-> +	for (i = 0; i < subtree_nr; i++) {
-> +		struct cache_tree *sub;
-> +		struct cache_tree_sub *subtree;
-> +		char *buf, *name;
-> +
-> +		name = "";
-> +		buf = strtok(down[i].de->pathname, "/");
-
-man 3 strtok says
-
-   Be cautious when using these functions.  If you do use them, note
-   that:
-
-   * These functions modify their first argument.
-
-   * These functions cannot be used on constant strings.
-
-   * The identity of the delimiting character is lost.
-
-   * The strtok() function uses a static buffer while parsing, so it's
-     not thread safe.  Use strtok_r() if this matters to you.
-
-I don't think the last point will be a problem, but what about modifying
-the argument?
-
+diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git/git-remote-mediawiki
+index 8647c92..68555d4 100755
+--- a/contrib/mw-to-git/git-remote-mediawiki
++++ b/contrib/mw-to-git/git-remote-mediawiki
+@@ -9,20 +9,7 @@
+ # License: GPL v2 or later
+ 
+ # Gateway between Git and MediaWiki.
+-#   https://github.com/Bibzball/Git-Mediawiki/wiki
+-#
+-# Known limitations:
+-#
+-# - Several strategies are provided to fetch modifications from the
+-#   wiki, but no automatic heuristics is provided, the user has
+-#   to understand and chose which strategy is appropriate for him.
+-#
+-# - Git renames could be turned into MediaWiki renames (see TODO
+-#   below)
+-#
+-# - No way to import "one page, and all pages included in it"
+-#
+-# - Multiple remote MediaWikis have not been very well tested.
++# Documentation & bugtracker: https://github.com/moy/Git-Mediawiki/
+ 
+ use strict;
+ use MediaWiki::API;
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.12.rc0.32.g9fb4847.dirty
