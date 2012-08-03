@@ -1,115 +1,100 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] l10n: de.po: translate 76 new messages
-Date: Fri, 3 Aug 2012 14:16:23 +0200
-Message-ID: <874nok5fxk.fsf@thomas.inf.ethz.ch>
-References: <1343927525-3338-1-git-send-email-ralf.thielow@gmail.com>
-	<87y5lw73m8.fsf@thomas.inf.ethz.ch>
-	<CAN0XMOLp_m4jUKv_=qfXdYx4jDJMBYQtY2-19sfC_7LzfY6uXA@mail.gmail.com>
+Subject: [PATCH 2/2] merge-recursive: eliminate flush_buffer() in favor of write_in_full()
+Date: Fri, 3 Aug 2012 14:16:25 +0200
+Message-ID: <853d452639066df2487b5766160ec2ebb692eab4.1343995614.git.trast@student.ethz.ch>
+References: <6668871a0573c4d82d914137e3c7ff31fa8ce1ef.1343995614.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <jk@jk.gs>, <stimming@tuhh.de>, <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, <jk@jk.gs>,
+	<stimming@tuhh.de>, <git@vger.kernel.org>,
 	<worldhello.net@gmail.com>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 14:16:32 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 03 14:16:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxGnw-00005a-BD
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 14:16:32 +0200
+	id 1SxGnw-00005a-QR
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 14:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753594Ab2HCMQ0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Aug 2012 08:16:26 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:7664 "EHLO edge20.ethz.ch"
+	id S1753693Ab2HCMQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Aug 2012 08:16:29 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:7669 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753554Ab2HCMQ0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2012 08:16:26 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+	id S1753589Ab2HCMQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2012 08:16:27 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
  (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 14:16:17 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 14:16:23 +0200
-In-Reply-To: <CAN0XMOLp_m4jUKv_=qfXdYx4jDJMBYQtY2-19sfC_7LzfY6uXA@mail.gmail.com>
-	(Ralf Thielow's message of "Fri, 3 Aug 2012 12:41:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+ 2012 14:16:20 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
+ 2012 14:16:26 +0200
+X-Mailer: git-send-email 1.7.12.rc1.219.gb14e69c
+In-Reply-To: <6668871a0573c4d82d914137e3c7ff31fa8ce1ef.1343995614.git.trast@student.ethz.ch>
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202829>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->>>  msgid ": perhaps a D/F conflict?"
->>> -msgstr ""
->>> +msgstr ": vielleicht ein D/F-Konflikt?"
->>
->> What's the terminology for conflicts in German?  For D/F, the user n=
-eeds
->> to know the English terms.  Not that V/D would be much better.  Mayb=
-e
->> just spell it out.
->>
->
-> Thanks. I'll spell it out but would leave the term "Konflikt"?!
+flush_buffer() is a thin wrapper around write_in_full() with two very
+confusing properties:
 
-Yes, I agree with conflict -> Konflikt.
+* It runs a loop to handle short reads, ensuring that we write
+  everything.  But that is precisely what write_in_full() does!
 
->>>  #: merge-recursive.c:1038 merge-recursive.c:1052
->>>  #, c-format
->>> @@ -437,6 +435,8 @@ msgid ""
->>>  "CONFLICT (%s/delete): %s deleted in %s and %s in %s. Version %s o=
-f %s left "
->>>  "in tree."
->>>  msgstr ""
->>> +"KONFLIKT (%s/delete): %s gel=C3=B6scht in %s und %s in %s. Stand =
-%s von %s wurde "
->>> +"im Arbeitsbereich gelassen."
->>
->> This needs de-legoification on the first and fourth %s, which can be
->> rename/renamed or modify/modified.  Furthermore, in line with the D/=
-=46
->> above, perhaps you should translate "delete"?  But I see that you ha=
-ve
->> not translated "renamed" etc. below, either.  Was that on purpose?  =
-It
->> will read a bit odd as
->>
->>   KONFLIKT (rename/delete): foo gel=C3=B6scht in bar und renamed in =
-quux. Stand ...
->
-> Gah, I misunderstood the values of the placeholders. The reason why I=
- haven't
-> translate "delete" or "rename" is because they're part of the
-> "KONFLIKT (%s/delete)"
-> messages, aren't they? Translate it all would solve the problem. Than=
-ks
+* It checks for a return value of 0 from write_in_full(), which cannot
+  happen: it returns this value only if count=0, but flush_buffer()
+  will never call write_in_full() in this case.
 
-Well, it's a bit confusing.  AFAICS the verb (rename/modify) goes into
-the parens at the start, and the participle (renamed/modified) goes int=
-o
-the fourth %s.  So if you decided to *not* translate the
-"(rename/delete)" conflict description, you would have to translate
-"renamed" (to fit it into the sentence) but not "rename".
+Remove it.
 
-Which would be really hard to maintain.  So let's not do that.  I think
-it's better if you translate them all.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
->>>  msgid "fatal: no such branch: $branch_name"
->>> -msgstr ""
->>> +msgstr "fatal: kein solcher Zweig: $branch_name"
->>
->> kein Zweig $branch_name gefunden?
->>
->
-> what about "Zweig $branch_name nicht gefunden"?
+Much easier than worrying about the "disk full?" message.
 
-Sure.
+ merge-recursive.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+diff --git a/merge-recursive.c b/merge-recursive.c
+index a7bb212..3d4eb82 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -613,23 +613,6 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+ 	return newpath;
+ }
+ 
+-static void flush_buffer(int fd, const char *buf, unsigned long size)
+-{
+-	while (size > 0) {
+-		long ret = write_in_full(fd, buf, size);
+-		if (ret < 0) {
+-			/* Ignore epipe */
+-			if (errno == EPIPE)
+-				break;
+-			die_errno("merge-recursive");
+-		} else if (!ret) {
+-			die(_("merge-recursive: disk full?"));
+-		}
+-		size -= ret;
+-		buf += ret;
+-	}
+-}
+-
+ static int dir_in_way(const char *path, int check_working_copy)
+ {
+ 	int pos, pathlen = strlen(path);
+@@ -788,7 +771,7 @@ static void update_file_flags(struct merge_options *o,
+ 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
+ 			if (fd < 0)
+ 				die_errno(_("failed to open '%s'"), path);
+-			flush_buffer(fd, buf, size);
++			write_in_full(fd, buf, size);
+ 			close(fd);
+ 		} else if (S_ISLNK(mode)) {
+ 			char *lnk = xmemdupz(buf, size);
+-- 
+1.7.12.rc1.219.gb14e69c
