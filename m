@@ -1,79 +1,96 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [RFC] l10n: de.po: translate 76 new messages
-Date: Fri, 3 Aug 2012 14:28:54 +0200
-Message-ID: <CAN0XMOJJ=B-Uq+hv6fkTtA0vNs=XRf03_+dgymV8ESXA4tw0+A@mail.gmail.com>
-References: <1343927525-3338-1-git-send-email-ralf.thielow@gmail.com>
-	<87y5lw73m8.fsf@thomas.inf.ethz.ch>
-	<CAN0XMOLp_m4jUKv_=qfXdYx4jDJMBYQtY2-19sfC_7LzfY6uXA@mail.gmail.com>
-	<874nok5fxk.fsf@thomas.inf.ethz.ch>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [RFC 0/16] Introduce index file format version 5
+Date: Fri, 3 Aug 2012 14:34:31 +0200
+Message-ID: <20120803123431.GA3226@tgummerer.unibz.it>
+References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
+ <87pq785odw.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org,
-	worldhello.net@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, gitster@pobox.com,
+	pclouds@gmail.com, robin.rosenberg@dewire.com
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 03 14:29:06 2012
+X-From: git-owner@vger.kernel.org Fri Aug 03 14:35:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxH03-0004tm-C6
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 14:29:03 +0200
+	id 1SxH5y-0006zh-NS
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 14:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775Ab2HCM26 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Aug 2012 08:28:58 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:63784 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753760Ab2HCM24 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2012 08:28:56 -0400
-Received: by wibhq12 with SMTP id hq12so74608wib.1
-        for <git@vger.kernel.org>; Fri, 03 Aug 2012 05:28:54 -0700 (PDT)
+	id S1753715Ab2HCMeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Aug 2012 08:34:36 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:55556 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922Ab2HCMef (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2012 08:34:35 -0400
+Received: by weyx8 with SMTP id x8so376859wey.19
+        for <git@vger.kernel.org>; Fri, 03 Aug 2012 05:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rX1D7PJ7OpWppUvW6Gc44L8PgXlF9eRy0cv1V6nyYIM=;
-        b=dB6bcIFMSS/+G0yPfuSpcIJYkTTxSYjrIcl1yFmbQD1WHeCpw0XOKzjsVBBnwj0yHL
-         zQsJ7c7G2gJRQk/zUQGiYFGs7xPDjghcPzxnx3rmHj59XmhatPI4513AsJ1awCGL2Daq
-         JIPxvsbPCA/1YSukBsoKGlpLI/ZVkjJ7neWLqTVWdiQY/uUMFUPk/HEUvGXxwv5K6+ZY
-         8rAj0NeJdXbHCg1VV7yUgnKjYjmvWcmQrOffTCLhPHjUFPlc4bC5EdtCVw7kRDPzzUBm
-         Osa3mn1mgmY0dWOblyvPpOegGma1Q2503T7pj9YhGO8T07EiNXlq7i1kqHzswERNmAMh
-         tcxA==
-Received: by 10.180.96.3 with SMTP id do3mr4068379wib.5.1343996934721; Fri, 03
- Aug 2012 05:28:54 -0700 (PDT)
-Received: by 10.194.26.33 with HTTP; Fri, 3 Aug 2012 05:28:54 -0700 (PDT)
-In-Reply-To: <874nok5fxk.fsf@thomas.inf.ethz.ch>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=G/lw9pIEOpEc7J6QT92zBMUwWj9wHJuWqEfiIdFb+Zs=;
+        b=HBXZTruMt5E7uKEuuluBCWV1haGRT7WfwnFWHJF/m9Y5YZjjfJ9lxRnh+Ry86Ri4DB
+         nR811wQ8yfVEJEBYrvjHVwzN7jfIcODwffRlU3Wwl8WnSzMuPCLynXNLG/5lvakUn3o7
+         +FimA4NyLw5dm94QcB4hZEqdQW9t1Ii9Wa3ogltRg57eM5uFM6BUdxnUsfYyWtwpwaBo
+         lRTxHMegdozqa3kLhk4Rury/6lx00wRmtkkK8gFYpHBv2xl8bB8+zD08e9xt/91v4Mu1
+         JtAflgjNDvQf2ZHQysLFAAcRuFTt+kKQeKfzYQ1onxy2YH8+DMdxgjp7hRUl8MdwfKRq
+         u0KA==
+Received: by 10.216.90.19 with SMTP id d19mr841186wef.113.1343997274634;
+        Fri, 03 Aug 2012 05:34:34 -0700 (PDT)
+Received: from localhost ([46.18.27.126])
+        by mx.google.com with ESMTPS id z11sm25598728wiv.10.2012.08.03.05.34.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2012 05:34:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87pq785odw.fsf@thomas.inf.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202833>
 
-On Fri, Aug 3, 2012 at 2:16 PM, Thomas Rast <trast@student.ethz.ch> wro=
-te:
->>>
->>>   KONFLIKT (rename/delete): foo gel=C3=B6scht in bar und renamed in=
- quux. Stand ...
->>
->> Gah, I misunderstood the values of the placeholders. The reason why =
-I haven't
->> translate "delete" or "rename" is because they're part of the
->> "KONFLIKT (%s/delete)"
->> messages, aren't they? Translate it all would solve the problem. Tha=
-nks
->
-> Well, it's a bit confusing.  AFAICS the verb (rename/modify) goes int=
-o
-> the parens at the start, and the participle (renamed/modified) goes i=
-nto
-> the fourth %s.  So if you decided to *not* translate the
-> "(rename/delete)" conflict description, you would have to translate
-> "renamed" (to fit it into the sentence) but not "rename".
->
-> Which would be really hard to maintain.  So let's not do that.  I thi=
-nk
-> it's better if you translate them all.
->
+On 08/03, Thomas Rast wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > [PATCH 01/16] Modify cache_header to prepare for other index formats
+> > [PATCH 02/16] Modify read functions to prepare for other index
+> > [PATCH 03/16] Modify match_stat_basic to prepare for other index
+> > [PATCH 04/16] Modify write functions to prepare for other index
+> > [PATCH 05/16] t2104: Don't fail when index version is 5
+> > [PATCH 06/16] t3700: sleep for 1 second, to avoid interfering with
+> > [PATCH 07/16] Add documentation of the index-v5 file format
+> > [PATCH 08/16] Make in-memory format aware of stat_crc
+> > [PATCH 09/16] Read index-v5
+> > [PATCH 10/16] Read resolve-undo data
+> > [PATCH 11/16] Read cache-tree in index-v5
+> > [PATCH 12/16] Write index-v5
+> > [PATCH 13/16] Write index-v5 cache-tree data
+> > [PATCH 14/16] Write resolve-undo data for index-v5
+> > [PATCH 15/16] update-index.c: add a force-rewrite option
+> > [PATCH 16/16] p0002-index.sh: add perf test for the index formats
+> 
+> I haven't had time for more than a cursory look yet, but good job on the
+> splits.  This is a large improvement over what you had in Zurich!
 
-That's what i meant. Sorry if I was unclear.
+Thanks, it was easier when seeing the code, instead of just thinking
+about them of the top of my head.
+
+> One thing that you need to be more careful about is attribution of the
+> source code.  Credit is very important because it's the only thing
+> people get for their OSS work.  For some patches you received lots of
+> input and help by many people.  For example, the documentation patch
+> that casts the format in stone (or will, when it's finished), should
+> have "Helped-by:" for *at least* Michael, Junio, and Duy.  You should
+> dig in the ML archives for other people who may have contributed ideas.
+> 
+> Also, anything that contains nontrivial code from me needs my S-o-b; off
+> the top of my head that's just 16/16, which AFAICS is even completely
+> unchanged (!) and needs to come with a From (and my S-o-b).  (I'm not
+> going to be anal about any of the work we did in Zurich, let's just
+> classify that as "help" like above.)
+
+My apologies, i forgot to add them. I'll make sure to include all
+credits in the re-roll.
