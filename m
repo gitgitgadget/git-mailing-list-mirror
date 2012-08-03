@@ -1,80 +1,96 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC 0/16] Introduce index file format version 5
-Date: Fri, 3 Aug 2012 11:13:47 +0200
-Message-ID: <87pq785odw.fsf@thomas.inf.ethz.ch>
-References: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com>
+From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+Subject: GSOC remote-svn: branch detection
+Date: Fri, 03 Aug 2012 11:43:30 +0200
+Message-ID: <12682331.q6WHVv9EKU@flomedio>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <mhagger@alum.mit.edu>, <gitster@pobox.com>,
-	<pclouds@gmail.com>, <robin.rosenberg@dewire.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 03 11:13:56 2012
+Content-Transfer-Encoding: 7Bit
+Cc: David Michael Barr <davidbarr@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 03 11:44:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxDxD-00082Q-OP
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 11:13:56 +0200
+	id 1SxEQH-0005B3-1P
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 11:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175Ab2HCJNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Aug 2012 05:13:51 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:55993 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751987Ab2HCJNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2012 05:13:50 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 11:13:42 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 3 Aug
- 2012 11:13:47 +0200
-In-Reply-To: <1343905326-23790-1-git-send-email-t.gummerer@gmail.com> (Thomas
-	Gummerer's message of "Thu, 2 Aug 2012 13:01:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751723Ab2HCJnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Aug 2012 05:43:53 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:51071 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658Ab2HCJng (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Aug 2012 05:43:36 -0400
+Received: by bkwj10 with SMTP id j10so166863bkw.19
+        for <git@vger.kernel.org>; Fri, 03 Aug 2012 02:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding:content-type;
+        bh=e7yVCJt7tPH9dzRq1G/Cb2mSCdtOQzXRtGW0TTALrvY=;
+        b=h7pkx6wFNC7aN0fP7wMzo4TAT7FbxW4WZVhW6bUdzF9THFI2toxB+805WveTeWu0RK
+         Tf9cdIANQROKn1kwBnWvavwcHs+hnPrn13PN4VwKNjTm6WqtKyYA/dVePSCNwgQ4fjOn
+         I/QXG3Op8ohDBVBP7y0g8ybOQz3URnGqunbvE9xzr4f0UhS2+EAEk5AnjT/NWoEszQDx
+         9tmBNH/1o/4baEI3vnCyDq9zik2ETng2zkKo38EZ42p4Hym0Y/kzD3xQzapNHufIb5b0
+         1iunw6INTcRr1zJ+jmzGG9/VaVWZ46XhE9e1qjo5p84E4uvi806zFLkeEFAKDkQmg+nY
+         km4A==
+Received: by 10.204.155.69 with SMTP id r5mr391826bkw.49.1343987014921;
+        Fri, 03 Aug 2012 02:43:34 -0700 (PDT)
+Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
+        by mx.google.com with ESMTPS id gq2sm4503511bkc.13.2012.08.03.02.43.32
+        (version=SSLv3 cipher=OTHER);
+        Fri, 03 Aug 2012 02:43:33 -0700 (PDT)
+User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202825>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi!
 
-> [PATCH 01/16] Modify cache_header to prepare for other index formats
-> [PATCH 02/16] Modify read functions to prepare for other index
-> [PATCH 03/16] Modify match_stat_basic to prepare for other index
-> [PATCH 04/16] Modify write functions to prepare for other index
-> [PATCH 05/16] t2104: Don't fail when index version is 5
-> [PATCH 06/16] t3700: sleep for 1 second, to avoid interfering with
-> [PATCH 07/16] Add documentation of the index-v5 file format
-> [PATCH 08/16] Make in-memory format aware of stat_crc
-> [PATCH 09/16] Read index-v5
-> [PATCH 10/16] Read resolve-undo data
-> [PATCH 11/16] Read cache-tree in index-v5
-> [PATCH 12/16] Write index-v5
-> [PATCH 13/16] Write index-v5 cache-tree data
-> [PATCH 14/16] Write resolve-undo data for index-v5
-> [PATCH 15/16] update-index.c: add a force-rewrite option
-> [PATCH 16/16] p0002-index.sh: add perf test for the index formats
+I'm playing around in vcs-svn/ to start a framework for detecting and 
+processing branches  in svndumps. So I wanted to let you know about my ideas.
 
-I haven't had time for more than a cursory look yet, but good job on the
-splits.  This is a large improvement over what you had in Zurich!
+Two approaches:
+1. Import linearly and split later:
+One idea is to import from svn linearly, i.e. one revision on top of it's 
+predecessor, like now, and detect and split branches afterwards. The svn 
+metadata is stored in git notes, so the required information would be 
+available.
++ allows recovery, because the linear history is always here.
++ it's easier to peek around in the git history than in the svn dump during 
+import to do the branch detection.
+- requires creation of new commits in the branch detection stage.
+- this results in double commits and awkward history, linear vs. branched.
 
-One thing that you need to be more careful about is attribution of the
-source code.  Credit is very important because it's the only thing
-people get for their OSS work.  For some patches you received lots of
-input and help by many people.  For example, the documentation patch
-that casts the format in stone (or will, when it's finished), should
-have "Helped-by:" for *at least* Michael, Junio, and Duy.  You should
-dig in the ML archives for other people who may have contributed ideas.
+2. Split during import:
+Detect branches as they are created while reading the svn dump and identify to 
+which branch a following node belongs.
+First step is to restructure svndump.c to be able to buffer one complete 
+revision for inspection before starting to write a commit to fast import.
+Probably it's possible to feed the blobs to fast import directly and only 
+buffer node data and defer commit creation, but not the data.
+Currently, at the beginning of a new revision on the svn side, a new commit is 
+created on top of a constant ref. When we support branches, we don't know the 
+ref, i.e. the branch(es), the revision changes, before reading all the 'Node-
+*' lines.
++ feels more 'right'
+- requires revision buffering
 
-Also, anything that contains nontrivial code from me needs my S-o-b; off
-the top of my head that's just 16/16, which AFAICS is even completely
-unchanged (!) and needs to come with a From (and my S-o-b).  (I'm not
-going to be anal about any of the work we did in Zurich, let's just
-classify that as "help" like above.)
+Generally:
+Detect branches as they are created by 'Node-copyfrom*' to some commonly used 
+branch directories, like branches/. More complex branch detection can be 
+implemented later, of course.
+Store detected branches permanently (necessary for incremental fetches), and 
+assign every file modification to one of those branches, if possible. Else 
+assign them to, hm .. 
+If a revision modifies more than one branch, create multiple commits.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks for your comments and ideas! 
+
+--
+Florian
