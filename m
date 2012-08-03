@@ -1,96 +1,147 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: GSOC remote-svn: branch detection
-Date: Fri, 03 Aug 2012 11:43:30 +0200
-Message-ID: <12682331.q6WHVv9EKU@flomedio>
+From: Yves Blusseau <blusseau@zetam.org>
+Subject: [PATCH] completion: resolve svn remote upstream refs
+Date: Fri, 03 Aug 2012 11:54:25 +0200
+Message-ID: <501B9FD1.8090204@zetam.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: David Michael Barr <davidbarr@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 03 11:44:02 2012
+X-From: git-owner@vger.kernel.org Fri Aug 03 11:56:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxEQH-0005B3-1P
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 11:43:57 +0200
+	id 1SxEc6-00026J-6d
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Aug 2012 11:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723Ab2HCJnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Aug 2012 05:43:53 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:51071 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658Ab2HCJng (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2012 05:43:36 -0400
-Received: by bkwj10 with SMTP id j10so166863bkw.19
-        for <git@vger.kernel.org>; Fri, 03 Aug 2012 02:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=e7yVCJt7tPH9dzRq1G/Cb2mSCdtOQzXRtGW0TTALrvY=;
-        b=h7pkx6wFNC7aN0fP7wMzo4TAT7FbxW4WZVhW6bUdzF9THFI2toxB+805WveTeWu0RK
-         Tf9cdIANQROKn1kwBnWvavwcHs+hnPrn13PN4VwKNjTm6WqtKyYA/dVePSCNwgQ4fjOn
-         I/QXG3Op8ohDBVBP7y0g8ybOQz3URnGqunbvE9xzr4f0UhS2+EAEk5AnjT/NWoEszQDx
-         9tmBNH/1o/4baEI3vnCyDq9zik2ETng2zkKo38EZ42p4Hym0Y/kzD3xQzapNHufIb5b0
-         1iunw6INTcRr1zJ+jmzGG9/VaVWZ46XhE9e1qjo5p84E4uvi806zFLkeEFAKDkQmg+nY
-         km4A==
-Received: by 10.204.155.69 with SMTP id r5mr391826bkw.49.1343987014921;
-        Fri, 03 Aug 2012 02:43:34 -0700 (PDT)
-Received: from flomedio.localnet (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id gq2sm4503511bkc.13.2012.08.03.02.43.32
-        (version=SSLv3 cipher=OTHER);
-        Fri, 03 Aug 2012 02:43:33 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
+	id S1751997Ab2HCJ4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Aug 2012 05:56:05 -0400
+Received: from [193.252.149.37] ([193.252.149.37]:36924 "EHLO
+	smtpout01s1.x-echo.com" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751793Ab2HCJ4D (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Aug 2012 05:56:03 -0400
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.3
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:6.0) Gecko/20110812 Thunderbird/6.0
+X-AV-Checked: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202826>
 
-Hi!
+Updated version of my previous patch
 
-I'm playing around in vcs-svn/ to start a framework for detecting and 
-processing branches  in svndumps. So I wanted to let you know about my ideas.
+This fix is used to return the svn reference of the remote svn upstream
+branch when the git repository is a clone of a svn repository that was
+created with the --stdlayout and --prefix options of git svn command.
 
-Two approaches:
-1. Import linearly and split later:
-One idea is to import from svn linearly, i.e. one revision on top of it's 
-predecessor, like now, and detect and split branches afterwards. The svn 
-metadata is stored in git notes, so the required information would be 
-available.
-+ allows recovery, because the linear history is always here.
-+ it's easier to peek around in the git history than in the svn dump during 
-import to do the branch detection.
-- requires creation of new commits in the branch detection stage.
-- this results in double commits and awkward history, linear vs. branched.
+* completion/git-prompt.sh: add function to resolve svn branches into
+   git remote refs using paths declared in svn-remote.*.fetch and
+   svn-remote.*.branches configurations
 
-2. Split during import:
-Detect branches as they are created while reading the svn dump and identify to 
-which branch a following node belongs.
-First step is to restructure svndump.c to be able to buffer one complete 
-revision for inspection before starting to write a commit to fast import.
-Probably it's possible to feed the blobs to fast import directly and only 
-buffer node data and defer commit creation, but not the data.
-Currently, at the beginning of a new revision on the svn side, a new commit is 
-created on top of a constant ref. When we support branches, we don't know the 
-ref, i.e. the branch(es), the revision changes, before reading all the 'Node-
-*' lines.
-+ feels more 'right'
-- requires revision buffering
+Signed-off-by: Yves Blusseau <blusseau@zetam.org>
+---
+  contrib/completion/git-prompt.sh | 56 
++++++++++++++++++++++++++++++++++++++++-
+  1 file changed, 55 insertions(+), 1 deletion(-)
 
-Generally:
-Detect branches as they are created by 'Node-copyfrom*' to some commonly used 
-branch directories, like branches/. More complex branch detection can be 
-implemented later, of course.
-Store detected branches permanently (necessary for incremental fetches), and 
-assign every file modification to one of those branches, if possible. Else 
-assign them to, hm .. 
-If a revision modifies more than one branch, create multiple commits.
-
-Thanks for your comments and ideas! 
-
---
-Florian
+diff --git a/contrib/completion/git-prompt.sh 
+b/contrib/completion/git-prompt.sh
+index 29b1ec9..f9a3421 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -73,17 +73,65 @@ __gitdir ()
+  	fi
+  }
+  +# resolve svn refs
++# The function accepts 2 arguments:
++# 1: An array containing the translation ref(s) (ie 
+branches/*:refs/remotes/svn/*)
++# 2: the ref to be translated (ie. branches/prod)
++# returns the remote refs or original ref if it could not be translated
++__git_resolve_svn_refs ()
++{
++	local idx ref_globs left_part_ref_glob right_part_ref_glob left right 
+value
++
++	local all_ref_globs=("${!1}")
++	local ref="$2"
++
++	for (( idx=0 ; idx < ${#all_ref_globs[@]}; idx++ ));do
++		ref_globs="${all_ref_globs[$idx]}"
++		# get the left part ref glob (before the :refs/)
++		left_part_ref_glob="${ref_globs%%:refs/*}"
++
++		# If the ref match the left part we can resolve the ref directly
++		if [[ "$ref" == "$left_part_ref_glob" ]];then
++			# resolve the ref into the right part (after the :)
++			ref="${ref_globs/${left_part_ref_glob}:/}"
++			break
++		else
++			case $ref in
++				# check if the ref match the glob
++				$left_part_ref_glob)
++					# extract the value that match the pattern
++					left=${left_part_ref_glob%%\**}
++					right=${left_part_ref_glob##*\*}
++					value=${ref#$left}
++					value=${value%$right}
++					# get the right part ref glob (after the :)
++					right_part_ref_glob="${ref_globs/${left_part_ref_glob}:/}"
++					# replace the pattern with the value found above
++					left=${right_part_ref_glob%%\**}
++					right=${right_part_ref_glob##*\*}
++					ref=${left}${value}${right}
++					break
++					;;
++			esac
++		fi
++	done
++	# remove leading refs/remotes/
++	ref=${ref/refs\/remotes\//}
++	echo "$ref"
++}
++
+  # stores the divergence from upstream in $p
+  # used by GIT_PS1_SHOWUPSTREAM
+  __git_ps1_show_upstream ()
+  {
+  	local key value
+  	local svn_remote svn_url_pattern count n
++	local svn_refs_globs=()
+  	local upstream=git legacy="" verbose=""
+   	svn_remote=()
+  	# get some config options from git-config
+-	local output="$(git config -z --get-regexp 
+'^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
++	local output="$(git config -z --get-regexp 
+'^(svn-remote\..*\.(fetch|branches|url)|bash\.showupstream)$' 
+2>/dev/null | tr '\0\n' '\n ')"
+  	while read -r key value; do
+  		case "$key" in
+  		bash.showupstream)
+@@ -93,6 +141,9 @@ __git_ps1_show_upstream ()
+  				return
+  			fi
+  			;;
++		svn-remote.*.fetch|svn-remote.*.branches)
++			svn_refs_globs[${#svn_refs_globs[*]}]="$value"
++			;;
+  		svn-remote.*.url)
+  			svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
+  			svn_url_pattern+="\\|$value"
+@@ -132,6 +183,9 @@ __git_ps1_show_upstream ()
+  			else
+  				upstream=${svn_upstream#/}
+  			fi
++			if [[ ${#svn_refs_globs[@]} -gt 0 ]]; then
++				upstream=$(__git_resolve_svn_refs svn_refs_globs[@] "$upstream")
++			fi
+  		elif [[ "svn+git" = "$upstream" ]]; then
+  			upstream="@{upstream}"
+  		fi
+-- 
+1.7.12.rc1.17.g6cf3663
