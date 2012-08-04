@@ -1,100 +1,109 @@
-From: Adam Butcher <dev.lists@jessamine.co.uk>
-Subject: Re: [PATCH] tests: Introduce =?utf-8?b?dGVzdF9zZXE=?=
-Date: Sat, 4 Aug 2012 22:10:08 +0000 (UTC)
-Message-ID: <loom.20120805T000957-218@post.gmane.org>
-References: <7v3943bsuc.fsf@alter.siamese.dyndns.org> <1344032464-14104-1-git-send-email-michal.kiedrowicz@gmail.com> <7vfw83a7t5.fsf@alter.siamese.dyndns.org> <20120804101403.10ad79b5@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: File path not escaped in warning message
+Date: Sat, 04 Aug 2012 15:20:19 -0700
+Message-ID: <7v39429u58.fsf@alter.siamese.dyndns.org>
+References: <501D1BB5.6020200@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 05 00:10:26 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: git@vger.kernel.org, Janusz =?utf-8?Q?Bia=C5=82obrzewski?=
+ <jbialobr@o2.pl>
+To: msysgit@googlegroups.com
+X-From: msysgit+bncCI3_0YzZExCnwPaABRoE-InYAw@googlegroups.com Sun Aug 05 00:20:25 2012
+Return-path: <msysgit+bncCI3_0YzZExCnwPaABRoE-InYAw@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f186.google.com ([209.85.213.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxmYE-0007vN-E2
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 00:10:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab2HDWKV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Aug 2012 18:10:21 -0400
-Received: from plane.gmane.org ([80.91.229.3]:47580 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753833Ab2HDWKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2012 18:10:20 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SxmY7-0007sh-TY
-	for git@vger.kernel.org; Sun, 05 Aug 2012 00:10:19 +0200
-Received: from munkyhouse.force9.co.uk ([84.92.244.81])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Aug 2012 00:10:19 +0200
-Received: from dev.lists by munkyhouse.force9.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Aug 2012 00:10:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 84.92.244.81 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202894>
+	(envelope-from <msysgit+bncCI3_0YzZExCnwPaABRoE-InYAw@googlegroups.com>)
+	id 1Sxmhs-00054k-KE
+	for gcvm-msysgit@m.gmane.org; Sun, 05 Aug 2012 00:20:24 +0200
+Received: by yenq6 with SMTP id q6sf2190348yen.3
+        for <gcvm-msysgit@m.gmane.org>; Sat, 04 Aug 2012 15:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=7tB3t/i19YXoR1PThoDPa3Mb8Fd1o1tiUzJ63E7irTE=;
+        b=KKIdVaaePpIM46fG/cv5/4WcFXILKvbh6u+QkFRV00HU5hja/8au6m38sK2mPIhENa
+         Mg6BnVYlqLXgPV/LJAxZ5erSDC4whT0XV4GLZzXoPVg1pfH9N87+NuOZuucLseZXGc5m
+         A3BlYiQAwVOFmc1Jk1FqwheWvbuoRDgSbls+k=
+Received: by 10.52.94.111 with SMTP id db15mr641832vdb.11.1344118823381;
+        Sat, 04 Aug 2012 15:20:23 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.52.36.147 with SMTP id q19ls2110625vdj.4.gmail; Sat, 04 Aug
+ 2012 15:20:21 -0700 (PDT)
+Received: by 10.58.202.2 with SMTP id ke2mr1934457vec.34.1344118821775;
+        Sat, 04 Aug 2012 15:20:21 -0700 (PDT)
+Received: by 10.58.202.2 with SMTP id ke2mr1934456vec.34.1344118821767;
+        Sat, 04 Aug 2012 15:20:21 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id c10si1086163vdu.1.2012.08.04.15.20.21;
+        Sat, 04 Aug 2012 15:20:21 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5487D8B31;
+	Sat,  4 Aug 2012 18:20:21 -0400 (EDT)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 412818B2F;
+	Sat,  4 Aug 2012 18:20:21 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEB328B2E; Sat,  4 Aug 2012
+ 18:20:20 -0400 (EDT)
+In-Reply-To: <501D1BB5.6020200@o2.pl> ("Janusz =?utf-8?Q?Bia=C5=82obrzewsk?=
+ =?utf-8?Q?i=22's?= message of "Sat, 04 Aug 2012 14:55:17 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93F4E390-DE82-11E1-B0C5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio@b-sasl-quonix.pobox.com designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202895>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz <at> gmail.com> writes:
-> Junio C Hamano <gitster <at> pobox.com> wrote:
-> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> > index c8b4ae3..7dc70eb 100644
-> > --- a/t/test-lib-functions.sh
-> > +++ b/t/test-lib-functions.sh
-> > @@ -543,11 +543,12 @@ test_cmp() {
-> >  #	done
-> > =20
-> >  test_seq () {
-> > -	test $# =3D 2 && { first=3D$1; shift; } || first=3D1
-> > -	test $# =3D 1 ||
-> > -	error "bug in the test script: not 1 or 2 parameters to test_seq"
-> > -	last=3D$1
-> > -	"$PERL_PATH" -le 'print for "$ARGV[0]".."$ARGV[1]"' "$first" "$la=
-st"
-> > +	case $# in
-> > +	1)	set 1 "$@" ;;
-> > +	2)	;;
-> > +	*)	error "bug in the test script: not 1 or 2 parameters to=20
-test_seq" ;;
-> > +	esac
-> > +	"$PERL_PATH" -le 'print for $ARGV[0]..$ARGV[1]' "$@"
-> >  }
-> > =20
-> >  # This function can be used to schedule some commands to be run
+Janusz Bia=C5=82obrzewski <jbialobr@o2.pl> writes:
 
--- >8 --
-Subject: [PATCH] Fixup test_seq: ensure arguments passed to script.
+> I have enabled core.quotepath, but file path in warning isn't escaped:
+> File name is 1=C4=85.txt its content is encoded in windows-1250
+> Output of git diff after reencoding to windows1250 is:
+>
+> warning: LF will be replaced by CRLF in 1=C3=84=E2=80=A6.txt.
+> The file will have its original line endings in your working directory.
+>
+> But I expected it to be:
+>
+> warning: LF will be replaced by CRLF in 1\304\205.txt.
+> The file will have its original line endings in your working directory.
 
-If the arguments passed to to test_seq start with '-' (e.g. negative
-integers) they are considered perl options and the program errors.  By
-prefixing the user argument list with '--' when passing to perl, this
-is avoid and sequences involving negative numbers are possible.
----
- t/test-lib-functions.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Do msysgit folks want to look into this, perhaps?
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 5a1a95a..ed44f5e 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -539,7 +539,7 @@ test_seq () {
- 	2)	;;
- 	*)	error "bug in the test script: not 1 or 2 parameters to=20
-test_seq" ;;
- 	esac
--	"$PERL_PATH" -le 'print for $ARGV[0]..$ARGV[1]' "$@"
-+	"$PERL_PATH" -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
- }
-=20
- # This function can be used to schedule some commands to be run
+Thanks.
+
 --=20
-1.7.11.msysgit.1.1.gf0affa1
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
