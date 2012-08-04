@@ -1,69 +1,81 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git cvsimport: new tags not imported on second cvsimport
-Date: Sun, 05 Aug 2012 00:20:16 +0200
-Message-ID: <m2lihuuwnz.fsf@igel.home>
-References: <1123570348.20120804133108@gmail.com>
-	<m2lihvt2gi.fsf@linux-m68k.org> <9510482012.20120804170149@gmail.com>
-	<m2pq76vecd.fsf@igel.home> <7v7gte9una.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: Introduce test_seq
+Date: Sat, 04 Aug 2012 16:05:15 -0700
+Message-ID: <7vpq768dhw.fsf@alter.siamese.dyndns.org>
+References: <20120803160229.GA13094@sigill.intra.peff.net>
+ <1344023835-8947-1-git-send-email-michal.kiedrowicz@gmail.com>
+ <20120803200201.GA10344@sigill.intra.peff.net>
+ <7v3943bsuc.fsf@alter.siamese.dyndns.org> <20120804000904.13c4162b@gmail.com>
+ <501D4FF0.4060109@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ilya Basin <basinilya@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 00:21:07 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Aug 05 01:05:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxmiY-0005RT-59
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 00:21:06 +0200
+	id 1SxnPx-00048j-Ul
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 01:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754055Ab2HDWUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Aug 2012 18:20:49 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:36656 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754034Ab2HDWUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2012 18:20:20 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3WqKLm5nkyz4KK37;
-	Sun,  5 Aug 2012 00:20:16 +0200 (CEST)
-X-Auth-Info: 9ArjN0iOBtz8PprmBR0WReHbX/Dk16FZll/P//Rzv0g=
-Received: from igel.home (ppp-93-104-128-70.dynamic.mnet-online.de [93.104.128.70])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3WqKLm5MZlzbbbq;
-	Sun,  5 Aug 2012 00:20:16 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 63D06CA2A3; Sun,  5 Aug 2012 00:20:16 +0200 (CEST)
-X-Yow: Then, it's off to RED CHINA!!
-In-Reply-To: <7v7gte9una.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 04 Aug 2012 15:09:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1754085Ab2HDXFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Aug 2012 19:05:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35773 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754071Ab2HDXFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2012 19:05:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A21C99591;
+	Sat,  4 Aug 2012 19:05:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VVLyZDS4JyYtaEL16BhS02RRRsA=; b=iusjgH
+	cZI1BsjTemL6VEXuLx6Gs41TH8AhwQwRzCcye2RHuOS0lwgJwPUVlGwQV3ztb1MB
+	zbvLqS4+uy9e7Ww1xRC08vrYcEppkABLFN4rjwdvADj81XVRJ+FILgFhf/XROgJ9
+	FQxr86EghRfgvTaZxGuUht0JPMeqLjsaEFxdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OnkZLdwDlNwMYibqayClnQhGx3tRQfEl
+	NcIuRYmxCCEA2cJuf4SQV9CawLMqPaH/pDpuG0e60srSi/z2n2YjUVj5G98+Io6y
+	C3OE6hof3qG89x+8KUraJr4rt58jrotDh/pH6Ec+uKmNfwxunghEKc+IwzhTkOz4
+	qX4Cq3MlVSs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88E099590;
+	Sat,  4 Aug 2012 19:05:17 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFD4C958D; Sat,  4 Aug 2012
+ 19:05:16 -0400 (EDT)
+In-Reply-To: <501D4FF0.4060109@kdbg.org> (Johannes Sixt's message of "Sat, 04
+ Aug 2012 18:38:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB048118-DE88-11E1-AE0F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202897>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Andreas Schwab <schwab@linux-m68k.org> writes:
+> And the reason for this is that we always told people "don't use seq"
+> and they submitted an updated patch. What would we have to do now? We
+> have to tell them "don't use seq, use test_seq". Therefore, the patch
+> does not accomplish anything useful, IMO.
 >
->> Reset the branch back to before the import.
+> The function should really just be named 'seq'.
 >
-> Does the resulting history created by cvsimport after resetting a
-> branch back to an older point exactly match the history before
-> resetting (obviously modulo the tag that has been added since the
-> original import)?
+> Or how about this strategy:
+> ...
+> but it is not my favorite.
 
-Usually it does.
+Why not?  That implementation looks like a logical and natural
+consequence of "should relly just be named 'seq'" suggestion.
 
-> I recall that cvsimport tried hard to be reproducible and it should
-> work, but I haven't run cvsimport myself for a long time, so...
-
-As long as cvsps detects the same changesets.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Having said that, we already say "don't use cmp, use test_cmp", so
+it might not be such a big deal, even though I find the reasoning in
+the first paragraph I quoted above from your message quite sane and
+convincing to me.
