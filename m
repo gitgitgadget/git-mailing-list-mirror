@@ -1,104 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: Introduce test_seq
-Date: Fri, 03 Aug 2012 16:12:54 -0700
-Message-ID: <7vfw83a7t5.fsf@alter.siamese.dyndns.org>
-References: <7v3943bsuc.fsf@alter.siamese.dyndns.org>
- <1344032464-14104-1-git-send-email-michal.kiedrowicz@gmail.com>
+From: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCHv2 5/5] t3910: use the UTF8_NFD_TO_NFC test prereq
+Date: Sat, 04 Aug 2012 07:37:49 +0200
+Message-ID: <501CB52D.6080208@web.de>
+References: <7vboj115as.fsf@alter.siamese.dyndns.org> <de831564718b0d52d6ba6e9cb13020defdbfa359.1343641675.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 01:13:04 2012
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, tboegi@web.de
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Aug 04 07:38:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SxR3I-00058k-Gi
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Aug 2012 01:13:04 +0200
+	id 1SxX4S-0006CL-9r
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Aug 2012 07:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab2HCXM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Aug 2012 19:12:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39446 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753959Ab2HCXM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Aug 2012 19:12:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FEEC87E7;
-	Fri,  3 Aug 2012 19:12:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=a7oC6Y8vdzBUiJICAHreRkvUrG4=; b=Nf7ufIgecTffzTJEkK6n
-	VMRhKPQqpjp+T4kTJ8CIOP3gu1dYzyvpUgj0wk93+tCzanGUgf0d/eJbjlrWRx8B
-	p5H0zOnlKH6Ryox9Fz4CeG9VR3+XqY2x5TcwD134ZKO441Vc0GHtid9pyf/Fjdlp
-	eK7xPT80aj582g0sVNpngW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=YCiVJldBSHPJAg/GrAqm70CDJ3/JOqbm1rQ+/kGue+1xz1
-	VJVRyr+RjD7yK/Ot/JBXKp6rR7uTDOsyLV9+nICbIWYhktbRkYP1dmzgxbSAIh/h
-	azEsnl0obtEYkHbmtKeaRRjy6QStCPWFADmg+qI1WXE+IegiHXZKVhrOZ++os=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E22F87E6;
-	Fri,  3 Aug 2012 19:12:58 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64B4387E4; Fri,  3 Aug 2012
- 19:12:57 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C314CB12-DDC0-11E1-86C9-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751205Ab2HDFhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Aug 2012 01:37:54 -0400
+Received: from mout.web.de ([212.227.15.3]:55005 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751234Ab2HDFhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2012 01:37:53 -0400
+Received: from [192.168.1.37] ([193.213.18.4]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MI63m-1Sumxu2ACE-0048IK; Sat, 04 Aug 2012 07:37:50
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <de831564718b0d52d6ba6e9cb13020defdbfa359.1343641675.git.git@drmicha.warpmail.net>
+X-Provags-ID: V02:K0:s9aJ7nxL00/kaokfTcotoXEqZeZBdhKF+4/fIrRb+PQ
+ B5qm89eaDE2flyuGOvU0LZ10u+6GNZQNbF3AaK5Nc3FcjP8r57
+ gTYHyA3OEUm/JfrVo62J+LRjJPYpEmOcPScSgOznLyHsYjl0Fs
+ Msgtvvuy0DZ0g2U1rmcHm7nC+E6HtzxD7eafYZVLZdcD2p38/u
+ 459KTUQo4AsUytvj5sm3A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202871>
 
-Tentatively I'll queue this one on top, but I am tempted to squash
-this in before merging the topic down.
+Am 2012-07-30 11:57, schrieb Michael J Gruber:
+(Sorry being late)
 
--- >8 --
-Subject: [PATCH] fixup! tests: Introduce test_seq
+That line:
+>skip_all="filesystem does not convert utf-8 nfd to nfc"
 
-Complex chains of && and || are harder to read when used as
-replacement for if/else statements, but it is easy to rewrite it
-with a case/esac in this case.
+shouldn't it be the other way around?
+skip_all="filesystem does not convert utf-8 nfc to nfd"
 
-Avoid using unnecessary variables $first and $last.
+(and may be the following may be more easy to read:)
+skip_all="filesystem does not decompose unicode"
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/test-lib-functions.sh | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index c8b4ae3..7dc70eb 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -532,7 +532,7 @@ test_cmp() {
- 
- # Print a sequence of numbers or letters in increasing order.  This is
- # similar to GNU seq(1), but the latter might not be available
--# everywhere.  It may be used like:
-+# everywhere (and does not do letters).  It may be used like:
- #
- #	for i in `test_seq 100`; do
- #		for j in `test_seq 10 20`; do
-@@ -543,11 +543,12 @@ test_cmp() {
- #	done
- 
- test_seq () {
--	test $# = 2 && { first=$1; shift; } || first=1
--	test $# = 1 ||
--	error "bug in the test script: not 1 or 2 parameters to test_seq"
--	last=$1
--	"$PERL_PATH" -le 'print for "$ARGV[0]".."$ARGV[1]"' "$first" "$last"
-+	case $# in
-+	1)	set 1 "$@" ;;
-+	2)	;;
-+	*)	error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
-+	esac
-+	"$PERL_PATH" -le 'print for $ARGV[0]..$ARGV[1]' "$@"
- }
- 
- # This function can be used to schedule some commands to be run
--- 
-1.7.12.rc1.50.g3df08cf
+Side note: t0050 uses another term:
+"will test on a unicode corrupting filesystem"
+
+/Torsten
