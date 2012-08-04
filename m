@@ -1,85 +1,79 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git cvsimport: new tags not imported on second cvsimport
-Date: Sat, 04 Aug 2012 17:58:26 +0200
-Message-ID: <m2pq76vecd.fsf@igel.home>
-References: <1123570348.20120804133108@gmail.com>
-	<m2lihvt2gi.fsf@linux-m68k.org> <9510482012.20120804170149@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] tests: Introduce test_seq
+Date: Sat, 04 Aug 2012 18:38:08 +0200
+Message-ID: <501D4FF0.4060109@kdbg.org>
+References: <20120803160229.GA13094@sigill.intra.peff.net> <1344023835-8947-1-git-send-email-michal.kiedrowicz@gmail.com> <20120803200201.GA10344@sigill.intra.peff.net> <7v3943bsuc.fsf@alter.siamese.dyndns.org> <20120804000904.13c4162b@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 04 17:59:05 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 04 18:38:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sxgkl-0006zK-Q0
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Aug 2012 17:59:00 +0200
+	id 1SxhMr-00045q-3s
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Aug 2012 18:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471Ab2HDP6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Aug 2012 11:58:50 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:53967 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438Ab2HDP6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Aug 2012 11:58:30 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3Wq8tC4V6bz3hhZc;
-	Sat,  4 Aug 2012 17:58:27 +0200 (CEST)
-X-Auth-Info: GLTbSu6MPOaVzBnnYHtVxRWtpj3zHutMM7HYweNJtSE=
-Received: from igel.home (ppp-93-104-128-70.dynamic.mnet-online.de [93.104.128.70])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3Wq8tC47sBzbbfx;
-	Sat,  4 Aug 2012 17:58:27 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id C1C18CA2A3; Sat,  4 Aug 2012 17:58:26 +0200 (CEST)
-X-Yow: Yow!  Am I JOGGING yet??
-In-Reply-To: <9510482012.20120804170149@gmail.com> (Ilya Basin's message of
-	"Sat, 4 Aug 2012 17:01:49 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1753301Ab2HDQiQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Aug 2012 12:38:16 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:27216 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751002Ab2HDQiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Aug 2012 12:38:15 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 26041130049;
+	Sat,  4 Aug 2012 18:38:08 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8D32319F6F8;
+	Sat,  4 Aug 2012 18:38:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120601 Thunderbird/13.0
+In-Reply-To: <20120804000904.13c4162b@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202880>
 
-Ilya Basin <basinilya@gmail.com> writes:
+Am 04.08.2012 00:09, schrieb Micha=C5=82 Kiedrowicz:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> I do not have strong
+>> opinion on calling this test_seq when it acts differently from seq;
+>> it is not confusing enough to make me push something longer that is
+>> different from "seq", e.g. test_sequence.
+>=20
+> I prefer "test_seq" because it reminds seq which helps learning how t=
+o
+> use it.  If some other seq feature is ever needed (e.g. increment val=
+ue,
+> decrementing), it may be added at any time (but I don't think so, the=
+re
+> are only few usages after years of test suite existence).
 
-> AS> Ilya Basin <basinilya@gmail.com> writes:
->
->>> I made the initial import:
->>>     git cvsimport -d :pserver:user@blackbird:10010/data/cvs/webgui -C SAP -r cvs -k SAP
->>>
->>> edited .git/config:
->>>     [cvsimport]
->>>             module = SAP
->>>             r = cvs
->>>             d = :pserver:user@blackbird:10010/data/cvs/webgui
->>>
->>> did some commits to CVS and created a new tag
->>>
->>> Then ran:
->>>     git cvsimport -ak
->>> To synchronize with CVS.
->>>
->>> The new commits were imported, but the new tag wasn't.
->
-> AS> cvsimport never reconsiders changesets that were already imported, so if
-> AS> the tag was added to such a changeset it won't be seen.
->
-> AS> Andreas.
->
->
-> Do you mean, if I tag BEFORE cvsimport, it will be imported?
+And the reason for this is that we always told people "don't use seq"
+and they submitted an updated patch. What would we have to do now? We
+have to tell them "don't use seq, use test_seq". Therefore, the patch
+does not accomplish anything useful, IMO.
 
-If you tag one of the new commits it will be imported.
+The function should really just be named 'seq'.
 
-> How to make the git repo "forget" the last cvsimport?
+Or how about this strategy:
 
-Reset the branch back to before the import.
+seq () {
+	unset -f seq
+	if ! seq 1 2 >/dev/null 2>&1
+	then
+		# don't have a working seq; provide it as a function
+		seq () {
+			insert your definition here
+		}
+	fi
+	seq "$@"
+}
 
-Andreas.
+but it is not my favorite.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-- Hannes
