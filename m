@@ -1,189 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] add interface for /dev/tty interaction
-Date: Sun, 05 Aug 2012 13:11:47 -0700
-Message-ID: <7vsjc12j5o.fsf@alter.siamese.dyndns.org>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
- <1344192340-19415-1-git-send-email-rctay89@gmail.com>
- <1344192340-19415-2-git-send-email-rctay89@gmail.com>
+Subject: Re: Localization: Timestamps get wrong if using different locales
+Date: Sun, 05 Aug 2012 13:47:27 -0700
+Message-ID: <7vmx292hi8.fsf@alter.siamese.dyndns.org>
+References: <501E3828.40708@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Jeff King" <peff@peff.net>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 22:12:38 2012
+Cc: git@vger.kernel.org
+To: Christoph Miebach <christoph.miebach@web.de>
+X-From: git-owner@vger.kernel.org Sun Aug 05 22:47:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sy7Bl-0004mP-FW
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 22:12:37 +0200
+	id 1Sy7jd-0006AY-AG
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 22:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754894Ab2HEULu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Aug 2012 16:11:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35999 "EHLO
+	id S1754970Ab2HEUrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Aug 2012 16:47:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50387 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754772Ab2HEULu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2012 16:11:50 -0400
+	id S1754936Ab2HEUra (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2012 16:47:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 992B79C09;
-	Sun,  5 Aug 2012 16:11:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E151B85D8;
+	Sun,  5 Aug 2012 16:47:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dPWcK/CKZE1jxL6niuP/RjzHAFs=; b=kuWW00
-	HbhQW7VbCPu28Sjii7zY8Hm7H5RVhe1W+N1o7av2w5ZSgHvh6EHjTD6kgxuagDX2
-	8VMxG1btYnzEzYpkH9JYmuoLvhc5NTfBuL/oHA/0DX4jWm/ihz25l/MPVytYWlzA
-	DOqNfBIbyERHTzliGmtIQF8pK4Lrf+C1tOA/U=
+	:content-type; s=sasl; bh=ykv6EHXLyPSONz/aQUIADWHla0s=; b=MZZIIG
+	teVtN1ktFpYe1nUY2ahtFrsDM82IFX8phBTQgIPA9IT69Eg2RDvsFYrrfHNxcfKD
+	TtYfCIsLzXl9zO/QBRKI6G9+3dJGP5kgnQtsNWab/IGdCw07bgkrpPwp1JI53oew
+	+opRhtRWxwTUFfAlNXwetpW8lDPbV8ZoYlkiY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IofBDuWSuOJwbUyjQvfVkAdveqUqfTT0
-	psoNN8i0Q0Ko7NPpHoefBvUzzzXO+vHTOGUySB6I1+EzzW4jHhLHKKSgmhIBem+5
-	f8toYf+b0zjpkc+xnSQB0KyA1PfQwxvN2tTEvhaZIcwYOAkhABzX/7fBD/22TjG9
-	et05jxPY5EM=
+	:content-type; q=dns; s=sasl; b=tDLS8V5TQf4GvN6sI2VAHltsCjFtOEY0
+	h62/W8DEk3jlQ2TvOMtol3OTI3uYZmgt9Vt0PR7O+ogoSLIdJZ1dPOnBLb85edGz
+	AAyP3ks9jyVlEfhejewZd18R675kiY6H98w0KzBKIkcN8wf+zR1hux+AgykebiV1
+	N8HSjz4/JqY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 870D89C07;
-	Sun,  5 Aug 2012 16:11:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF85085D6;
+	Sun,  5 Aug 2012 16:47:29 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B38CC9C05; Sun,  5 Aug 2012
- 16:11:48 -0400 (EDT)
-In-Reply-To: <1344192340-19415-2-git-send-email-rctay89@gmail.com> (Tay Ray
- Chuan's message of "Mon, 6 Aug 2012 02:45:39 +0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33F8E85D5; Sun,  5 Aug 2012
+ 16:47:29 -0400 (EDT)
+In-Reply-To: <501E3828.40708@web.de> (Christoph Miebach's message of "Sun, 05
+ Aug 2012 11:08:56 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C9ABC320-DF39-11E1-83A1-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C57EA22C-DF3E-11E1-9E0E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202922>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Christoph Miebach <christoph.miebach@web.de> writes:
 
-> Factor out the opening and closing of /dev/tty from
-> git_terminal_prompt(), so that callers may first test if a controlling
-> terminal is available before proceeding with prompting proper.
+> Running this commands locally (german locale) lead to some wrong dates
+> for the patches upstream.
 >
-> When HAVE_DEV_TTY is not defined, terminal_open() falls back to checking
-> tty-ness of stdin and stderr, as getpass() uses them both.
+> git format-patch -o patches origin
+
+What does "git show -s --pretty=fuller HEAD" give you at this point?
+This is to check what kind of timestamps are stored in the original
+commit objects.
+
+And what does "grep '^Date: ' patches/0001-*" show you at this point?
+This is to see if the problem is at the "format-patch" step.
+
+> git send-email --compose --no-chain-reply-to --to some@address.com
+> --suppress-cc=author patches/0001-l10n-Turkish-update.patch
+
+And what does "grep '^Date: '" for the message that is received by
+recipients show at this step?  They cannot be
+
 >
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> ---
-
-This is not your fault but seeing term_t made me go "eek, yuck".
-
-As far as I can see, use of "FILE *" in existing compat/terminal.c
-is not buying us anything useful.  The stdio calls made on FILE *fh
-are only fopen(), fputs(), fflush() and fclose(), and everything
-else goes through fileno(fh).
-
-So perhaps it is a saner approach to fix that function first before
-this patch so that it works on file descriptors.
-
->  compat/terminal.c | 52 ++++++++++++++++++++++++++++++++++++++++++++--------
->  compat/terminal.h | 10 ++++++++++
->  2 files changed, 54 insertions(+), 8 deletions(-)
 >
-> diff --git a/compat/terminal.c b/compat/terminal.c
-> index 6d16c8f..c85d5c7 100644
-> --- a/compat/terminal.c
-> +++ b/compat/terminal.c
-> @@ -24,15 +24,21 @@ static void restore_term_on_signal(int sig)
->  	raise(sig);
->  }
->  
-> -char *git_terminal_prompt(const char *prompt, int echo)
-> +term_t terminal_open(void)
-> +{
-> +	return fopen("/dev/tty", "w+");
-> +}
-> +
-> +int terminal_close(term_t term)
-> +{
-> +	return fclose(term);
-> +}
-> +
-> +char *terminal_prompt(term_t term, const char *prompt, int echo)
->  {
->  	static struct strbuf buf = STRBUF_INIT;
->  	int r;
-> -	FILE *fh;
-> -
-> -	fh = fopen("/dev/tty", "w+");
-> -	if (!fh)
-> -		return NULL;
-> +	FILE *fh = term;
->  
->  	if (!echo) {
->  		struct termios t;
-> @@ -64,18 +70,48 @@ char *git_terminal_prompt(const char *prompt, int echo)
->  	}
->  
->  	restore_term();
-> -	fclose(fh);
->  
->  	if (r == EOF)
->  		return NULL;
->  	return buf.buf;
->  }
->  
-> +char *git_terminal_prompt(const char *prompt, int echo)
-> +{
-> +	char *ret;
-> +	term_t term;
-> +
-> +	term = terminal_open();
-> +	if (!term)
-> +		return NULL;
-> +
-> +	ret = terminal_prompt(term, prompt, echo);
-> +
-> +	terminal_close(term);
-> +
-> +	return ret;
-> +}
-> +
->  #else
->  
-> -char *git_terminal_prompt(const char *prompt, int echo)
-> +term_t terminal_open()
-> +{
-> +	return isatty(0) && isatty(2);
-> +}
-> +
-> +int terminal_close(term_t term)
-> +{
-> +	return 0;
-> +}
-> +
-> +char *terminal_prompt(term_t term, const char *prompt, int echo)
->  {
->  	return getpass(prompt);
->  }
->  
-> +char *git_terminal_prompt(const char *prompt, int echo)
-> +{
-> +	return terminal_prompt(prompt, echo);
-> +}
-> +
->  #endif
-> diff --git a/compat/terminal.h b/compat/terminal.h
-> index 97db7cd..cf2aa10 100644
-> --- a/compat/terminal.h
-> +++ b/compat/terminal.h
-> @@ -1,6 +1,16 @@
->  #ifndef COMPAT_TERMINAL_H
->  #define COMPAT_TERMINAL_H
->  
-> +#ifdef HAVE_DEV_TTY
-> +typedef FILE *term_t;
-> +#else
-> +typedef int term_t;
-> +#endif
-> +
-> +term_t terminal_open();
-> +int terminal_close(term_t term);
-> +char *terminal_prompt(term_t term, const char *prompt, int echo);
-> +
->  char *git_terminal_prompt(const char *prompt, int echo);
->  
->  #endif /* COMPAT_TERMINAL_H */
+> The local
+> Date: Sat, 4 Aug 2012
+> became
+>       Wed, 8 Dec 2004
+
+as these two do not even have times and zones.  It should read
+something like
+
+    Date: Sun, 05 Aug 2012 13:39:12 -0700
+
+or something.    
+
+Also "Date" on which message do you see your problem with?  The one
+that is created with --compose?  Or the one that was originally
+produced by format-patch and then sent?  Or both?
+
+The timestamps used by git-send-email is obtained by calling time()
+function of Perl, and is not affected by timezone, and the function
+format_2822_time() implements the e-mail header timestamp in a way
+that should not be affected by any locales as far as I know, so it
+is curious where the "breakage" is coming from.
+
+> Shall I provide more information?
+
+Yes.
