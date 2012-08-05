@@ -1,85 +1,97 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: PROPFIND 405 with git-http-backend and Smart HTTP
-Date: Sun, 5 Aug 2012 14:30:51 -0400
-Message-ID: <CAM9Z-nnfwuR9UKtoQ1uACOMH3vhZKFxDkjEn5_azpGxd2GGjJQ@mail.gmail.com>
-References: <1343587966493-7564017.post@n2.nabble.com>
-	<CAJo=hJtB6OQ8+8Q_JgPoAntOdQ=Z0tOERYRD7wJ0LRLgacYA8A@mail.gmail.com>
-	<1343637600904-7564056.post@n2.nabble.com>
-	<CAJo=hJtynNo3SPmM4vmmsS3b7PTUwOcQpHPYh0_sPWFWL-4HMA@mail.gmail.com>
-	<1343680215071-7564137.post@n2.nabble.com>
-	<CAJo=hJsES44mXWjKmFqe7z+T_FHZ6Pi19toURyVp-wvW8AqQiw@mail.gmail.com>
-	<1343684368384-7564144.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge-recursive: separate message for common ancestors
+Date: Sun, 05 Aug 2012 11:44:49 -0700
+Message-ID: <7vehnl41r2.fsf@alter.siamese.dyndns.org>
+References: <1344189398-27127-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Bo98 <BoEllisAnderson@aol.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 20:31:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, worldhello.net@gmail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 05 20:45:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sy5bQ-0003Uw-9e
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 20:31:00 +0200
+	id 1Sy5ov-0002eE-T4
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 20:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764Ab2HESax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Aug 2012 14:30:53 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:58245 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662Ab2HESaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2012 14:30:52 -0400
-Received: by bkwj10 with SMTP id j10so775037bkw.19
-        for <git@vger.kernel.org>; Sun, 05 Aug 2012 11:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=r9IrcZtVRORYOxkksCmifNqP9mvSKsw9zwVOW6Ipk9Q=;
-        b=Uu2mnSlHbcfGLY++pPheSiB+KCVZhLaCICk6NECqu515/5UQjZU2velHnAH9/f5Ebo
-         R6IAuw7lGTZJFq1Sf99Liex29EJZk+EoWMU0ikd8/FdRsqg952c5FSRSsbmZTtlVjxlZ
-         x45PhZFYJytaSsY8znf5LPiie0YQiC75lYKznfv1KeaPbzzADSdVUff8rrRDV12E0S6q
-         BGbi2A2b58PcLQbkSmwd0V8CelQ1NXz4Y3RldIxPiCS6UpBxlfGNboGxES7FI9eKOc9d
-         I8vvoITxjcPPEyjxwoaDvPmmFqvCOdkM4PIoAmqKtVKjLVUZF1PEWIdNe9FiMbhCeBLi
-         VfgQ==
-Received: by 10.205.139.6 with SMTP id iu6mr3186488bkc.20.1344191451294; Sun,
- 05 Aug 2012 11:30:51 -0700 (PDT)
-Received: by 10.204.27.24 with HTTP; Sun, 5 Aug 2012 11:30:51 -0700 (PDT)
-In-Reply-To: <1343684368384-7564144.post@n2.nabble.com>
+	id S1754825Ab2HESox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Aug 2012 14:44:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34088 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754760Ab2HESow (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2012 14:44:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7934586B6;
+	Sun,  5 Aug 2012 14:44:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QOTtWn3qnqxCTPH5AsMB2YMSmqY=; b=HAnY1I
+	OrqDR8DUgFA99yXuI5RbdIT6ej0TydN8r09RoYzqdVQ1hAu8GUpf+ZLuFm/ESrCa
+	Gx+9abPm7hsyiDUYB0gLgyLgAwN3hkpEyARTu3aPz8u/vTVjBXpx7TovkqKVY8/m
+	CAtJB7LkkvI5jhddT9uXWEUdoekJz84vefZDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E0DtyKA/ldRo1m56sO6yXkROd16Omef3
+	7TkGdzzjaV5fd2+DUMlVzlOEAJ8tAerww7CAhptFt/T+qQ7qumk3LKqxik3XiSXg
+	rXEI5H7Hv36Rj1/rmnDurU1n2Sh9GbCuzbSk+rYSKpsXChfHYI7nkDkM2RUzxJ3V
+	my0kexLhjd8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6673786B5;
+	Sun,  5 Aug 2012 14:44:51 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF57886B4; Sun,  5 Aug 2012
+ 14:44:50 -0400 (EDT)
+In-Reply-To: <1344189398-27127-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+ Thielow's message of "Sun, 5 Aug 2012 19:56:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A3878082-DF2D-11E1-9C1F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202912>
 
-On Mon, Jul 30, 2012 at 5:39 PM, Bo98 <BoEllisAnderson@aol.com> wrote:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
+
+> The function "merge_recursive" prints the count of common
+> ancestors as "found %u common ancestor(s):". At least for
+> better translation, we should use a singular and a plural
+> form of this message.
 >
-> Shawn Pearce wrote
->> Maybe you forgot to enable ExecCGI?
->>
-> Whoops, completely forgot about that, but, assuming I did it right, it still
-> doesn't seem to work.
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+
+Thanks.
+
+In your "At least" above, I am getting an impression that either (1)
+you think the updated two-message solution is still not ideal for
+some reason, or (2) you think the change not only helps translation,
+it also helps something else.  But I cannot quite guess which.  If
+it is (1) I am not sure what you are not exactly happy about, if it
+is (2) I am not sure what other problem the change helps.
+
+I am a bit puzzled by the log message, but the change makes sense to
+me otherwise.
+
+>  merge-recursive.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> Here's what I did:
->
->   <Directory "/usr/libexec/git-core/">
->     Options +ExecCGI
->     Allow From All
->   </Directory>
-
-Are all directory permissions set right? Is SELINUX enabled, and if so
-are all of the contexts set correctly? Does your Apache configuration
-recognize things NOT spelled *.cgi as CGI scripts / programs?
-
-Besides, once you start asking Apache to do things outside of the base
-Document Root all sorts of interesting possibilities for failure
-become available.
-
-I am pretty sure that this isn't a Git problem, it is a CGI hosting /
-configuration problem. An Apache-centric list may be able to help you
-better and is likely a better place to ask.
-
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 8903a73..39b2e16 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1915,7 +1915,10 @@ int merge_recursive(struct merge_options *o,
+>  	}
+>  
+>  	if (show(o, 5)) {
+> -		output(o, 5, _("found %u common ancestor(s):"), commit_list_count(ca));
+> +		unsigned cnt = commit_list_count(ca);
+> +
+> +		output(o, 5, Q_("found %u common ancestor:",
+> +				"found %u common ancestors:", cnt), cnt);
+>  		for (iter = ca; iter; iter = iter->next)
+>  			output_commit_title(o, iter->item);
+>  	}
