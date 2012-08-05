@@ -1,112 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-recursive: separate message for common ancestors
-Date: Sun, 05 Aug 2012 12:32:22 -0700
-Message-ID: <7v628x3zjt.fsf@alter.siamese.dyndns.org>
-References: <1344189398-27127-1-git-send-email-ralf.thielow@gmail.com>
- <7vehnl41r2.fsf@alter.siamese.dyndns.org>
- <CAN0XMO+j08fV-5+nNrVQAteB3VStBjqvvjMzRq=6wcbg8OR+xg@mail.gmail.com>
+Subject: Re: File path not escaped in warning message
+Date: Sun, 05 Aug 2012 12:48:45 -0700
+Message-ID: <7v1ujl3ysi.fsf@alter.siamese.dyndns.org>
+References: <501D1BB5.6020200@o2.pl>
+ <7v39429u58.fsf@alter.siamese.dyndns.org> <501E616E.6000907@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, worldhello.net@gmail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 05 21:32:41 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: quoted-printable
+Cc: msysgit@googlegroups.com,  git@vger.kernel.org
+To: Janusz =?utf-8?Q?Bia=C5=82obrzewski?= <jbialobr@o2.pl>
+X-From: msysgit+bncCI3_0YzZExCgnPuABRoE_fRoqw@googlegroups.com Sun Aug 05 21:48:53 2012
+Return-path: <msysgit+bncCI3_0YzZExCgnPuABRoE_fRoqw@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gh0-f186.google.com ([209.85.160.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sy6Z0-0002wA-Bt
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Aug 2012 21:32:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab2HETc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Aug 2012 15:32:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52863 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752278Ab2HETcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2012 15:32:25 -0400
+	(envelope-from <msysgit+bncCI3_0YzZExCgnPuABRoE_fRoqw@googlegroups.com>)
+	id 1Sy6oj-0003T7-TV
+	for gcvm-msysgit@m.gmane.org; Sun, 05 Aug 2012 21:48:50 +0200
+Received: by ghbf18 with SMTP id f18sf2886215ghb.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 05 Aug 2012 12:48:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=+05YGVnKWfo77DrlYzIt0aEjMhT11rl7txPoRGCh2KU=;
+        b=ZUi14aENe4sh06relUq+eiHXMsXAyv78K/aU1eNYfg4lAjyJ/O2D2yXOglJ44KJ2T3
+         PxC3+HB3vc6sQkBm7MxmWEEwChuVHt01uoZdGgDJj6jKn1dmwIjjWkLXQF0BcwYllW/y
+         8/Q/ZR9YGsNxNgSVTJtGgXnbm82EYGyMVS+YY=
+Received: by 10.52.90.129 with SMTP id bw1mr5819vdb.13.1344196128573;
+        Sun, 05 Aug 2012 12:48:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.220.119.137 with SMTP id z9ls4203622vcq.2.gmail; Sun, 05 Aug
+ 2012 12:48:47 -0700 (PDT)
+Received: by 10.52.33.1 with SMTP id n1mr2232139vdi.4.1344196127714;
+        Sun, 05 Aug 2012 12:48:47 -0700 (PDT)
+Received: by 10.52.33.1 with SMTP id n1mr2232138vdi.4.1344196127706;
+        Sun, 05 Aug 2012 12:48:47 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id t4si1728666vds.3.2012.08.05.12.48.47;
+        Sun, 05 Aug 2012 12:48:47 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1584D9237;
-	Sun,  5 Aug 2012 15:32:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZfHd/tPwKXTNcZ46gnTzwzuXASE=; b=kcMxsp
-	WI9ihOY6csksl/SDLebmLNAsYL7tvQYom70Mw87XflDnVpK2VrJ1X56FhIKVceZU
-	s+3Joa70O+a173FxI/pFm3qwxNoxMAGELp3Cm9gJtHA5N1jGCN0qNEWQvK/+yPWP
-	2PYaUN9P4Lq+/fq5SLO15x92ffl2pLciGfGas=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SEX9geRUy/x7c1uBf82LO53vxD3sVp7r
-	9GzTg3Y4R0MrXs/TbKIUxkal87vx5LOEl3Jg9Z9R9Ef0pJo7O+LM2FL4SduJDiyF
-	jXU7aU0+v2HrxlmeLkUPG7/1vhQ6gMWM40jIs66/HhVmiBFjNELWjcTtn5UJfcCp
-	DeaLJxykgHk=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6062496DE;
+	Sun,  5 Aug 2012 15:48:47 -0400 (EDT)
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 028E49236;
-	Sun,  5 Aug 2012 15:32:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E38796DD;
+	Sun,  5 Aug 2012 15:48:47 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 558509235; Sun,  5 Aug 2012
- 15:32:24 -0400 (EDT)
-In-Reply-To: <CAN0XMO+j08fV-5+nNrVQAteB3VStBjqvvjMzRq=6wcbg8OR+xg@mail.gmail.com> (Ralf
- Thielow's message of "Sun, 5 Aug 2012 20:55:57 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8F3E96DC; Sun,  5 Aug 2012
+ 15:48:46 -0400 (EDT)
+In-Reply-To: <501E616E.6000907@o2.pl> ("Janusz =?utf-8?Q?Bia=C5=82obrzewsk?=
+ =?utf-8?Q?i=22's?= message of "Sun, 05 Aug 2012 14:05:02 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 486330C8-DF34-11E1-B5EE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202918>
+X-Pobox-Relay-ID: 91E8AE24-DF36-11E1-B6B5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio@b-sasl-quonix.pobox.com designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202919>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Janusz Bia=B3obrzewski <jbialobr@o2.pl> writes:
 
-> It would be nicer for translators to have two messages.
-> In the end it's just a separation for singular and plural as it's
-> done in diff.c (e.g. Q_(" %d file changed", " %d files changed", files)).
-
-OK, so there was no hidden message behind "At least for better
-translation".  Will apply this so 1.7.12 can have it.
-
-Thanks.
-
+> Here is output from linux:
 >
-> On Sun, Aug 5, 2012 at 8:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ralf Thielow <ralf.thielow@gmail.com> writes:
->>
->>> The function "merge_recursive" prints the count of common
->>> ancestors as "found %u common ancestor(s):". At least for
->>> better translation, we should use a singular and a plural
->>> form of this message.
->>>
->>> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->>> ---
->>
->> Thanks.
->>
->> In your "At least" above, I am getting an impression that either (1)
->> you think the updated two-message solution is still not ideal for
->> some reason, or (2) you think the change not only helps translation,
->> it also helps something else.  But I cannot quite guess which.  If
->> it is (1) I am not sure what you are not exactly happy about, if it
->> is (2) I am not sure what other problem the change helps.
->>
->> I am a bit puzzled by the log message, but the change makes sense to
->> me otherwise.
->>
->>>  merge-recursive.c | 5 ++++-
->>>  1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/merge-recursive.c b/merge-recursive.c
->>> index 8903a73..39b2e16 100644
->>> --- a/merge-recursive.c
->>> +++ b/merge-recursive.c
->>> @@ -1915,7 +1915,10 @@ int merge_recursive(struct merge_options *o,
->>>       }
->>>
->>>       if (show(o, 5)) {
->>> -             output(o, 5, _("found %u common ancestor(s):"), commit_list_count(ca));
->>> +             unsigned cnt = commit_list_count(ca);
->>> +
->>> +             output(o, 5, Q_("found %u common ancestor:",
->>> +                             "found %u common ancestors:", cnt), cnt);
->>>               for (iter = ca; iter; iter = iter->next)
->>>                       output_commit_title(o, iter->item);
->>>       }
+> [janusz@mikrus JavaCommon]$ git config --add core.quotepath false
+> [janusz@mikrus JavaCommon]$ git diff  --unified=3D3 -- "1=B1.txt"
+> warning: LF will be replaced by CRLF in 1<B1>.txt.
+> The file will have its original line endings in your working directory.
+
+I do not know offhand if the literal <B1> is the byte value you want
+or not, but core.quotepath should not affect it.
+
+The configuration is primarily about quoting paths that appear in
+the header part in the diff output for machine readability.  In this
+output,
+
+> diff --git a/1<B1>.txt b/1<B1>.txt
+> index 281ad6f..9444a66 100644
+> --- a/1<B1>.txt
+> +++ b/1<B1>.txt
+
+the paths are not quoted because quotepath is set to false, but in
+the next example, it
+
+> ...
+> [janusz@mikrus JavaCommon]$ git config --unset core.quotepath
+> [janusz@mikrus JavaCommon]$ git config --add core.quotepath true
+> [janusz@mikrus JavaCommon]$ git diff  --unified=3D3 -- "1=B1.txt"
+> warning: LF will be replaced by CRLF in 1<B1>.txt.
+> The file will have its original line endings in your working directory.
+> diff --git "a/1\261.txt" "b/1\261.txt"
+> index 281ad6f..9444a66 100644
+> --- "a/1\261.txt"
+> +++ "b/1\261.txt"
+
+is quoted due to the configuration setting.
+
+Again, <B1> in the warning message is not affected, as the quotepath
+configuration is not meant to affect messages that are meant for
+human consumption.
+
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
