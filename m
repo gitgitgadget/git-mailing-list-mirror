@@ -1,87 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/2] add interface for /dev/tty interaction
-Date: Mon, 6 Aug 2012 15:56:16 -0400
-Message-ID: <20120806195616.GC10039@sigill.intra.peff.net>
-References: <1336287330-7215-1-git-send-email-rctay89@gmail.com>
- <1344192340-19415-1-git-send-email-rctay89@gmail.com>
- <1344192340-19415-2-git-send-email-rctay89@gmail.com>
- <7vsjc12j5o.fsf@alter.siamese.dyndns.org>
- <20120806194511.GB10039@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid crippled getpass function on Solaris
+Date: Mon, 06 Aug 2012 12:57:47 -0700
+Message-ID: <7v628vztc4.fsf@alter.siamese.dyndns.org>
+References: <1344208672-20028-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <7vboio231n.fsf@alter.siamese.dyndns.org>
+ <1344220427-sup-3468@pinkfloyd.chass.utoronto.ca>
+ <20120806193958.GA10039@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 21:56:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git <git@vger.kernel.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 06 21:57:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyTPd-0001cB-1K
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 21:56:25 +0200
+	id 1SyTR6-0002p6-0e
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 21:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932547Ab2HFT4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Aug 2012 15:56:20 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53617 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932500Ab2HFT4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2012 15:56:19 -0400
-Received: (qmail 18247 invoked by uid 107); 6 Aug 2012 19:56:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Aug 2012 15:56:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2012 15:56:16 -0400
-Content-Disposition: inline
-In-Reply-To: <20120806194511.GB10039@sigill.intra.peff.net>
+	id S1756865Ab2HFT5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Aug 2012 15:57:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65107 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752782Ab2HFT5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2012 15:57:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2527A9D6B;
+	Mon,  6 Aug 2012 15:57:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ryAgBwBISTUD7Yu5mLjpMm/u57o=; b=ADyDJX
+	UHfZt1XCZ6P4jhAqe2OulH6RASAzVx8sajAaiAZccl78iV1k9s6p5mAr7Jk1sT9R
+	PtNw+YFv8XVQKNv+vrNUWE0bnjaCfKCE0csra4rzxZE3BhnRlot55ecf3zyFsDW5
+	Uf32k82NSqawvyaSxJU1MoiKpnnZgW/igL9U0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dRTqXh6MHniVYPLw1gXfS3XCD9GrvNjM
+	RHWh5m1t/B6k1xW9uQqUSdo0Ka8sEnxJe5peW0uCxOK7HKoVlYSJrcNdfR3eJJZb
+	+EqZ688aLwinW/CfXzjEUpLt4jY6s75rVJpmydHnZ7fpNZ+xw3Y+4sX+Be3DAoJF
+	61yCtltN+YE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1331D9D69;
+	Mon,  6 Aug 2012 15:57:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09CA39D68; Mon,  6 Aug 2012
+ 15:57:48 -0400 (EDT)
+In-Reply-To: <20120806193958.GA10039@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 6 Aug 2012 15:39:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF96452E-E000-11E1-8869-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202980>
 
-On Mon, Aug 06, 2012 at 03:45:11PM -0400, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> > This is not your fault but seeing term_t made me go "eek, yuck".
-> 
-> Agreed.
-> 
-> > As far as I can see, use of "FILE *" in existing compat/terminal.c
-> > is not buying us anything useful.  The stdio calls made on FILE *fh
-> > are only fopen(), fputs(), fflush() and fclose(), and everything
-> > else goes through fileno(fh).
-> > 
-> > So perhaps it is a saner approach to fix that function first before
-> > this patch so that it works on file descriptors.
-> 
-> Yeah, I think that is a good path. I think my original use of stdio
-> was mostly because I started by paring down glibc's implementation of
-> getpass.  Since we have niceties like write_in_full, I don't think
-> there's any reason not to just skip stdio.
+> ....  From my reading of
+> getpassphrase, it does seem to be a drop-in replacement.
+>
+> So I'm OK conceptually with the patch if we can't do any better. But
+> getpass still sucks. It doesn't handle echoing, and it may or may not
+> fall back to reading from stdin if the tty isn't available (which is
+> disastrous for remote-curl, whose stdin is speaking the remote-helper
+> protocol to git). So I'd really prefer to make HAVE_DEV_TTY work with
+> Solaris if we can.
 
-I forgot to mention: even if we changed the HAVE_DEV_TTY code path to
-use an integer descriptor (which I think is a sane thing to do
-regardless), that may not be sufficient to solve this problem.
-
-Erik has looked into doing a Windows alternative in compat/terminal.c,
-and I think an integer would be insufficient there. In particular, I
-think Windows needs two descriptors to accomplish the same thing (one
-for CONIN$ and one for CONOUT$).  So you'd need to turn term_t into a
-struct (and you'd probably not want to return it by value then).
-
-Maybe it would be better to keep the abstraction as non-leaky as
-possible, and just provide "terminal_can_prompt()" or similar?
-
-Returning the open descriptor (as Tay's patch does) avoids a race
-condition where /dev/tty can be opened when terminal_can_prompt runs,
-but not when we try to actually read from it. But we can either:
-
-  1. Not care. Even if the tty is opened, if a user has closed the
-     terminal we are going to get a read error anyway. So you can never
-     avoid that race condition in some form.
-
-  2. Open the terminal descriptor when either function is called, and
-     never close it. I don't think there is any reason we can't just
-     leak the descriptor.
-
--Peff
+Tay Ray Chuan mentioned in the thread near-by that HAVE_DEV_TTY
+codepath worked for him with "FILE *" to fd conversion, I think.
