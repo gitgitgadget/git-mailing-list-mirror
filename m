@@ -1,127 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
-Date: Mon, 06 Aug 2012 10:46:14 -0700
-Message-ID: <7vehnjzzfd.fsf@alter.siamese.dyndns.org>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344263760-31191-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH] tests: Introduce test_seq
+Date: Mon, 6 Aug 2012 19:52:56 +0200
+Message-ID: <20120806195256.43ec44de@gmail.com>
+References: <20120803160229.GA13094@sigill.intra.peff.net>
+	<1344023835-8947-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<20120803200201.GA10344@sigill.intra.peff.net>
+	<7v3943bsuc.fsf@alter.siamese.dyndns.org>
+	<20120804000904.13c4162b@gmail.com>
+	<501D4FF0.4060109@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	trast@student.ethz.ch, mhagger@alum.mit.edu,
-	robin.rosenberg@dewire.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 19:46:26 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Aug 06 19:53:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyRNp-0006W4-Dl
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 19:46:25 +0200
+	id 1SyRUI-0003gb-Rq
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 19:53:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756747Ab2HFRqT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Aug 2012 13:46:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35690 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754504Ab2HFRqR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2012 13:46:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20BE37121;
-	Mon,  6 Aug 2012 13:46:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9iPFfn9DCD9X
-	L1S6GTS9M02elWg=; b=Ny+6VyjY0gQU07xJpadHkDw3O5fCxQ6Fv0QeqRoGhiok
-	Io3ahlsGvCi+O0ui+5KkdoL5YTeUAkRIgUhikzqiLuPn3OmUb9WTfatve6NrMZiR
-	Ut/HiUeqeBMf52PUv67rqDyzXKPIzLOEJnoO71S0Q2FNnnXziljrJY6mkko6eUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=imy/ij
-	fRqGHgh6NDAdF4/ro7ez/cHWsJkeLicyUZWdp+63Qfil4lulLgbL47rwbwYJEro8
-	R5e2lfduDfUZOj4/aGQTb+lY2rFFQG0JrqA7vep0YlyjmOoxQA40Dt2uh+0yER1J
-	40I124YM9lfNEtw3F3OoGit1WkpQDjYNhA1Qk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D0987120;
-	Mon,  6 Aug 2012 13:46:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 536A3711D; Mon,  6 Aug 2012
- 13:46:16 -0400 (EDT)
-In-Reply-To: <1344263760-31191-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 6 Aug
- 2012 21:35:58 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F2EAFB2-DFEE-11E1-B596-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756819Ab2HFRxB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Aug 2012 13:53:01 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:41568 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756409Ab2HFRxA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2012 13:53:00 -0400
+Received: by eaac11 with SMTP id c11so931292eaa.19
+        for <git@vger.kernel.org>; Mon, 06 Aug 2012 10:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=GX/6zgCMFWjTeVeoTI1mPBDaqjdALEIksEE6O7kQgu8=;
+        b=gOGM/288ekNkR4bR5U42VKjZ8URDfsBKFumPId06gE/0qnskiQJZS1PQfoMtZ9NvnG
+         ufZpsUbfTippsXoYFzPxa1YVwoPyz5fPyiqbdwTrhHh5s2pAkl+wusxAzZEEFakK3f3b
+         lxHxmrBcQ6HP2Thr8tIc2lF+U0hEDDB882hbpj8p7rX2xwb9y59EemPfKP8mHiEdApNw
+         APXHT1KUQnCoFU+QSY1COKH7zKMlJ30G4w2GxNg/nqIBnbyQl8DmLqhMniJNX/zJfYfZ
+         lxRRcVQA4mIm0NNBR5Y91b5GVButK0kIu7f7D1eyogclF8riBY+XDSc2TS8vGMElZXUW
+         2T+A==
+Received: by 10.14.175.130 with SMTP id z2mr14183409eel.0.1344275578908;
+        Mon, 06 Aug 2012 10:52:58 -0700 (PDT)
+Received: from localhost (94-178-78-94.net.stream.pl. [94.78.178.94])
+        by mx.google.com with ESMTPS id j4sm49473469eeo.11.2012.08.06.10.52.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 06 Aug 2012 10:52:58 -0700 (PDT)
+In-Reply-To: <501D4FF0.4060109@kdbg.org>
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202974>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> wrote:
 
-> These mails are about cosmetics only. But I think it helps maintenanc=
-e
-> in long term. I notice in your series we have many functions with _v2
-> and _v5 mixed together. Worse, some functions that are _v2 only are
-> not suffixed with _v2. I still think separating v2/v5 changes is a
-> good idea. So I played a bit, see how it might become.
->
-> The next two emails demonstrate how we take v2-specific code out to
-> read-cache-v2.c, then add v5 code in the next patch. Notice there's v=
-ery
-> little change in read-cache.c in the second patch. I wanted to see ho=
-w
-> v5 changes affects v2 users and the second patch shows it.
->
-> I'm not happy with the first patch either. Ideally it should consist
-> of code move only, no other changes. All updates in read_index_from
-> and the introduction of struct index_ops should happen in patches
-> before that.
+> Am 04.08.2012 00:09, schrieb Micha=C5=82 Kiedrowicz:
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> >> I do not have strong
+> >> opinion on calling this test_seq when it acts differently from seq=
+;
+> >> it is not confusing enough to make me push something longer that i=
+s
+> >> different from "seq", e.g. test_sequence.
+> >=20
+> > I prefer "test_seq" because it reminds seq which helps learning how=
+ to
+> > use it.  If some other seq feature is ever needed (e.g. increment v=
+alue,
+> > decrementing), it may be added at any time (but I don't think so, t=
+here
+> > are only few usages after years of test suite existence).
+>=20
+> And the reason for this is that we always told people "don't use seq"
+> and they submitted an updated patch. What would we have to do now? We
+> have to tell them "don't use seq, use test_seq". Therefore, the patch
+> does not accomplish anything useful, IMO.
+>=20
+> The function should really just be named 'seq'.
 
-Right.
+My reasoning was that there is already test_cmp, so let's make test_seq=
+,
+but I agree with you that it doesn't solve the issue completely. So my =
+2
+cents is that it would be best to stay with not allowing seq in the tes=
+t
+suite.
 
-> Then of course you need to split the second patch into several logica=
-l
-> patches again. We can drop _v5 suffix in read-cache-v5.c (I haven't
-> done that). When we add partial read/write for v5, we can add more
-> func pointers to index_ops and implement them in v2 (probably as no-o=
-p
-> or assertion)
-
-The index_ops abstraction is a right way to go, and I like it, but I
-think the split illustrated in this patch might turn out to be at
-wrong levels (and it is OK, as I understand this is a illustration
-of concept patch).
-
-=46or example, add_to_index() interface may be a good candidate to
-have in index_ops.  Because your in-core index may not be holding
-everything in a flat array, "find the location in the flat array the
-entry would sit, replace the existing one if there is any, otherwise
-insert" cannot be a generic way to add a new entry.  If you make the
-whole thing an abstract API entry point, a sparse implementation of
-the in-core index could still implement it without bringing the
-untouched and irrelevant parts of the index to core.
-
-        Side note: with a tree-like implementation of the in-core
-        index, "find the location the entry would sit", "get the
-        entry at the location", "insert the entry at the location",
-        could still be a set of good abstract API, though.  The
-        definition of _location_ may be quite different from "the
-        offset of the entry counting from the beginning of a flat
-        array", which is what index_name_pos() returns.
-
-The story is the same on the removal front.  The current
-remove_index_entry_at() interface is tied to the flat array
-implementation, so "remove the nth entry from the beginning" is an
-inappropriate interface for anything but such an implementation
-(unless we come up with an abstract notion of the "location" that is
-usable efficiently in a tree-like implementation, that is).
-
-I wish that the development of this topic was done more in a
-top-down direction, instead of bottom-up, so that it identified the
-necessary access patterns to the in-core index early and come up
-with a good set of abstract API first, and then only after that is
-done, came up with in-core and on-disk format to support the
-necessary operations.
+>=20
+> Or how about this strategy:
+>=20
+> seq () {
+> 	unset -f seq
+> 	if ! seq 1 2 >/dev/null 2>&1
+> 	then
+> 		# don't have a working seq; provide it as a function
+> 		seq () {
+> 			insert your definition here
+> 		}
+> 	fi
+> 	seq "$@"
+> }
+>=20
+> but it is not my favorite.
+>=20
+> -- Hannes
