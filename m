@@ -1,80 +1,101 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 5/5] t3910: use the UTF8_NFD_TO_NFC test prereq
-Date: Mon, 06 Aug 2012 14:44:26 +0200
-Message-ID: <501FBC2A.1070403@drmicha.warpmail.net>
-References: <7vboj115as.fsf@alter.siamese.dyndns.org> <de831564718b0d52d6ba6e9cb13020defdbfa359.1343641675.git.git@drmicha.warpmail.net> <501CB52D.6080208@web.de> <7vboiq9uv7.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
+Date: Mon,  6 Aug 2012 21:35:58 +0700
+Message-ID: <1344263760-31191-1-git-send-email-pclouds@gmail.com>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Aug 06 14:44:36 2012
+Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	gitster@pobox.com, robin.rosenberg@dewire.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 16:37:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyMfj-00034A-So
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 14:44:36 +0200
+	id 1SyOQs-0001Mb-Eo
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 16:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860Ab2HFMo3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Aug 2012 08:44:29 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33970 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755811Ab2HFMo2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Aug 2012 08:44:28 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 55AC52079C;
-	Mon,  6 Aug 2012 08:44:28 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute3.internal (MEProxy); Mon, 06 Aug 2012 08:44:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=MAGQr2JrwQO6XLUd59CA4m
-	U7EgY=; b=scdPLrWSZ2dGMHKuWsxlDoUKVkf6+4iSaCLd46yp/Xnk2huJOxiZYQ
-	CVpPSS7HwUHAWqEElDWdMKdhJnGq6NVW+WbNmb+9TOIhCvGH+e0ms/6Lz+9JuzfM
-	AfqHhfzxBr6cYhpxD3eDC7XWegx/2YAaYWn2GDMwYvwJcpMvlqgkY=
-X-Sasl-enc: RcrmGxdl2DIk8amy3SrQ7exl7ZG79C3uQswBmS6CpJZW 1344257067
-Received: from localhost.localdomain (unknown [79.199.79.22])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 794C08E01FB;
-	Mon,  6 Aug 2012 08:44:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
-In-Reply-To: <7vboiq9uv7.fsf@alter.siamese.dyndns.org>
+	id S1756605Ab2HFOhK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Aug 2012 10:37:10 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:47575 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756269Ab2HFOhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2012 10:37:08 -0400
+Received: by pbbrr13 with SMTP id rr13so2667860pbb.19
+        for <git@vger.kernel.org>; Mon, 06 Aug 2012 07:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=q3gcyJ31Va12dPkdZU6h7UqzqECxXSg1Qpt6Om/jQis=;
+        b=WqWw4l5abjKEiBTJiQWfVwud7e6ox90jZDkP968Q01xq4dcNcmSrGmWGksoB8HUKpr
+         um/7J/zh05Y9MJkldx0pIEfhkP6BV+lfkirkQascJBO2ftRZP/QsV9Tb93o3/yfGYp/B
+         z0ydJXY7htyjGDMmX12WIii7Jf/2gTPwHvMa5a/+p7JO1CDNNjVwK4ZB3GAYOVzFTiNt
+         Qd/hoBNjr9f1vyYgwOy/bsx/pXvxzwg2v03Cwrt8YbgAs8ZY7gROmwNITqDB+bUwgO2V
+         scUqx4MR/vfaNfuVvUvJ4yP9CZtbrxv0gY6l4Kb3xc7CxY/RXoph/d7eSnU5yZbHKpGI
+         dVlg==
+Received: by 10.68.134.161 with SMTP id pl1mr19386481pbb.29.1344263828180;
+        Mon, 06 Aug 2012 07:37:08 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.55.147])
+        by mx.google.com with ESMTPS id wi6sm5652820pbc.35.2012.08.06.07.37.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 06 Aug 2012 07:37:07 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 06 Aug 2012 21:36:02 +0700
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202964>
 
-Junio C Hamano venit, vidit, dixit 05.08.2012 00:04:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> Am 2012-07-30 11:57, schrieb Michael J Gruber:
->> (Sorry being late)
->>
->> That line:
->>> skip_all=3D"filesystem does not convert utf-8 nfd to nfc"
->>
->> shouldn't it be the other way around?
->> skip_all=3D"filesystem does not convert utf-8 nfc to nfd"
->>
->> (and may be the following may be more easy to read:)
->> skip_all=3D"filesystem does not decompose unicode"
->>
->>
->> Side note: t0050 uses another term:
->> "will test on a unicode corrupting filesystem"
->=20
-> I am OK with either of the last two.  Thanks for noticing.
+These mails are about cosmetics only. But I think it helps maintenance
+in long term. I notice in your series we have many functions with _v2
+and _v5 mixed together. Worse, some functions that are _v2 only are
+not suffixed with _v2. I still think separating v2/v5 changes is a
+good idea. So I played a bit, see how it might become.
 
-I had taken the test description from t3910. But that referred to Git's
-undoing of the conversion done by the filesystem...
+The next two emails demonstrate how we take v2-specific code out to
+read-cache-v2.c, then add v5 code in the next patch. Notice there's ver=
+y
+little change in read-cache.c in the second patch. I wanted to see how
+v5 changes affects v2 users and the second patch shows it.
 
-It's best to have it analogous to t0050 as in Junio's fixup.
+I'm not happy with the first patch either. Ideally it should consist
+of code move only, no other changes. All updates in read_index_from
+and the introduction of struct index_ops should happen in patches
+before that.
 
-Thanks!
-Michael
-[resent with cc: list...]
+Then of course you need to split the second patch into several logical
+patches again. We can drop _v5 suffix in read-cache-v5.c (I haven't
+done that). When we add partial read/write for v5, we can add more
+func pointers to index_ops and implement them in v2 (probably as no-op
+or assertion)
+
+There are still some v5 bits in the first patch. This series is not
+meant to be used anyway, so it does not matter much. Hope it helps.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  Move index v2 specific code out of read-cache
+  Add index-v5
+
+ Makefile        |    3 +
+ cache.h         |   92 ++++-
+ read-cache-v2.c |  570 +++++++++++++++++++++++++++
+ read-cache-v5.c | 1170 +++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ read-cache.c    |  618 +++---------------------------
+ read-cache.h    |   54 +++
+ 6 files changed, 1932 insertions(+), 575 deletions(-)
+ create mode 100644 read-cache-v2.c
+ create mode 100644 read-cache-v5.c
+ create mode 100644 read-cache.h
+
+--=20
+1.7.8
