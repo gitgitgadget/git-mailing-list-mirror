@@ -1,82 +1,175 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] merge-recursive: separate message for common ancestors
-Date: Tue, 7 Aug 2012 01:04:47 +0800
-Message-ID: <CANYiYbE-q82-BmbQ15o8S=0mS2GgURZ1qpX6E1NG80ZNgax_ow@mail.gmail.com>
-References: <1344189398-27127-1-git-send-email-ralf.thielow@gmail.com>
-	<7vehnl41r2.fsf@alter.siamese.dyndns.org>
-	<CAN0XMO+j08fV-5+nNrVQAteB3VStBjqvvjMzRq=6wcbg8OR+xg@mail.gmail.com>
-	<7v628x3zjt.fsf@alter.siamese.dyndns.org>
-	<CANYiYbFe6LUL+2m-X+Ek8ehFw6D5tvh+FwoGjF_zipcUe_MtMw@mail.gmail.com>
+From: karsten.blees@dcon.de
+Subject: Re: Re: Re: File path not escaped in warning message
+Date: Mon, 6 Aug 2012 19:18:58 +0200
+Message-ID: <OF9C260C14.7F8DC09D-ONC1257A52.005D3AD5-C1257A52.005F222E@dcon.de>
+References: <2783325c.512962ce.501f69dd.5711e@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Byrial Jensen <byrial@vip.cybercity.dk>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Aug 06 19:04:55 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	msysgit@googlegroups.com
+To: jbialobr <jbialobr@o2.pl>
+X-From: msysgit+bncCN2Jst6HAhCK-f-ABRoEpgeUdA@googlegroups.com Mon Aug 06 19:19:12 2012
+Return-path: <msysgit+bncCN2Jst6HAhCK-f-ABRoEpgeUdA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f186.google.com ([209.85.217.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyQje-00032U-CD
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 19:04:54 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756744Ab2HFREt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Aug 2012 13:04:49 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:48912 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756717Ab2HFREs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2012 13:04:48 -0400
-Received: by ggnl2 with SMTP id l2so2711335ggn.19
-        for <git@vger.kernel.org>; Mon, 06 Aug 2012 10:04:48 -0700 (PDT)
+	(envelope-from <msysgit+bncCN2Jst6HAhCK-f-ABRoEpgeUdA@googlegroups.com>)
+	id 1SyQxO-0008IB-Tp
+	for gcvm-msysgit@m.gmane.org; Mon, 06 Aug 2012 19:19:06 +0200
+Received: by lbom4 with SMTP id m4sf862930lbo.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 06 Aug 2012 10:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=hGaanemCyl16NfG+UoZGXzhT+oqL8EfpD6uX20fRNmM=;
-        b=xsYFKDr61umLpAhk5OeOeA+/B9FM/ANHFTngJXntaMsqmnqyXv3DyzhaMSX0REk5WQ
-         F12HnaNnZfR5mtx7HBOyLjV4EaK3QAzblj+efNZADRuqndJOrDOJQ1s69C28ljPUyTjq
-         IgZejkB87+iXbxbc+saYUXiJU9Yk9AKFFICHvubr2VC9+/FrmBie3HFJocGovu2z/N/I
-         p0hEMlYZu4i9lXHi68jdKLK7/Od7DpNLLgHBBghqTaxaVhwEGYNIMLuah8d02cMrAiKn
-         5eVzE8XvFFUbLeBUhQTZxGGMsDVGQ0VN4u6l5raIvWj/XTuLmJP8ca24MdGdVFY2Oz25
-         V5Ew==
-Received: by 10.42.106.207 with SMTP id a15mr9581831icp.0.1344272687912; Mon,
- 06 Aug 2012 10:04:47 -0700 (PDT)
-Received: by 10.50.237.38 with HTTP; Mon, 6 Aug 2012 10:04:47 -0700 (PDT)
-In-Reply-To: <CANYiYbFe6LUL+2m-X+Ek8ehFw6D5tvh+FwoGjF_zipcUe_MtMw@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202970>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:in-reply-to:from:to:cc:subject
+         :mime-version:x-mailer:message-id:sender:date:x-mimetrack
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=j4Yeibe3pGSZcKevMj27VrbeXPM4AMnCDxXgfYRXC28=;
+        b=SiP1UWdqgYu8Xx2Kc+An7PfeKS3cdu9r2ORga29wTWM9s7j3tJeo2WH77Q/36tz2Lg
+         2y+h4UkUO51fOZEbYZtK6mU66VIJWVy3xVkfgQE6PpRp1NRsrIJlimaihV3bJkXoVf9b
+         4W8vM3MGHTGv6FPrVnU4/R0sGKAn5b5u++sB8=
+Received: by 10.180.105.232 with SMTP id gp8mr681096wib.0.1344273546022;
+        Mon, 06 Aug 2012 10:19:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.81.71 with SMTP id y7ls3285078wix.3.gmail; Mon, 06 Aug
+ 2012 10:19:05 -0700 (PDT)
+Received: by 10.180.82.226 with SMTP id l2mr1280773wiy.1.1344273545029;
+        Mon, 06 Aug 2012 10:19:05 -0700 (PDT)
+Received: by 10.180.82.226 with SMTP id l2mr1280771wiy.1.1344273545019;
+        Mon, 06 Aug 2012 10:19:05 -0700 (PDT)
+Received: from MAIL.DCON.DE (mail.dcon.de. [77.244.111.98])
+        by gmr-mx.google.com with ESMTP id cx9si1951828wib.0.2012.08.06.10.19.04;
+        Mon, 06 Aug 2012 10:19:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@dcon.de designates 77.244.111.98 as permitted sender) client-ip=77.244.111.98;
+In-Reply-To: <2783325c.512962ce.501f69dd.5711e@o2.pl>
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+Sender: msysgit@googlegroups.com
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 06.08.2012 19:18:58,
+	Serialize complete at 06.08.2012 19:18:58
+X-Original-Sender: karsten.blees@dcon.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of karsten.blees@dcon.de designates 77.244.111.98 as permitted sender) smtp.mail=karsten.blees@dcon.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202971>
 
-2012/8/6 Jiang Xin <worldhello.net@gmail.com>:
-> 2012/8/6 Junio C Hamano <gitster@pobox.com>:
->> OK, so there was no hidden message behind "At least for better
->> translation".  Will apply this so 1.7.12 can have it.
+Hi Janusz,
+
+It seems you're mixing up a few completely unrelated concepts here.
+
+Core.quotepath enables quoting and escaping of special characters in file=
+=20
+names. This has nothing to do with character set encoding of file names=20
+(i.e. Cp1250/ISO-8859-2/UTF-8). AFAIK, apart from git-svn, git currently=20
+doesn't support character set re-coding of file names at all, so=20
+core.quotepath and encoding are completely unrelated.
+
+Regarding git-log / git-diff output, there are basically three different=20
+character set encodings involved:
+1. commit log messages: re-coded to i18n.logoutputencoding (usually UTF-8)
+2. file content: printed verbatim (no re-coding); gui tools such as gitk=20
+may decode this based on gui.encoding or .gitattributes settings
+3. everything else (file names, diff headers, error / warning messages):=20
+always UTF-8 (at least in Git for Windows)
+
+Gui tools such as gitk decode this output line by line using the=20
+appropriate encoding.
+
+
+<jbialobr@o2.pl> wrote on 06.08.2012 08:53:17:
+> File name is 1=C4=85.txt its content is encoded in windows-1250
+
+File name encoding and file content encoding are completely unrelated.=20
+File name encoding in current Git for Windows is *always* UTF-8, file=20
+content encoding can be anything.
+
+> Output of git diff after reencoding to windows1250 is:
 >
-> So I will not wait for Ralf's update on "de.po", he will catch up with next
-> round of l10n with this fix. Pull request for this round of l10n:
+> warning: LF will be replaced by CRLF in 1=C3=84=E2=80=A6.txt.
+> The file will have its original line endings in your working directory.
 
-Next round (maybe last) of translation for git v1.7.12 begins. This time
-only 1 message is updated in commit bb2ba06:
+This looks like the file name is UTF-8, but reinterpreted (not reencoded)=
+=20
+as if it were Cp1250. However, as stated above, you cannot simply=20
+interpret the entire git-log / git-diff output as beeing one particular=20
+encoding, as the encoding may vary on a line by line basis.
 
-    l10n: Update one message in git.pot
+> Here is output from linux:
+>
+> [janusz@mikrus JavaCommon]$ git config --add core.quotepath false
+> [janusz@mikrus JavaCommon]$ git diff  --unified=3D3 -- "1=C4=85.txt"
+> warning: LF will be replaced by CRLF in 1<B1>.txt.
+> The file will have its original line endings in your working directory.
 
-    This update comes from commit v1.7.12-rc1-18-ge0453
-    (merge-recursive: separate message for common ancestors).
+"<B1>" looks like less's escaping with missing LESSCHARSET setting.
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Additionally, your Linux box seems to be set up with ISO-8859-2 system=20
+encoding. Git repositories created on this system will not be portable,=20
+i.e. using the same repository on other Linux systems, Git for Windows,=20
+Cygwin-git, or JGit/EGit will result in completely broken file names. The=
+=20
+quasi-standard file name encoding in git repositories is UTF-8.
 
-Fetch this update from the usual place:
+> There is nothing said in the manual, that core.quotepath affects=20
+> only header. But it is not the point. You don't know which part of=20
+> git output will be consumed by machine. Warning message is addressed
+> to human, but it can be consumed by program in the same way as all=20
+> other messages and output data.
 
-    $ git fetch git://github.com/git-l10n/git-po master
+Error / warning messages may be localized, so they are particularly=20
+unsuitable for consumption by other programs. That's why many git commands=
+=20
+have special switches to make their output machine readable (e.g. -z).=20
+Incidentally, 'git-log -z' also disables core.quotepath. So if you write a=
+=20
+program that parses git output, and you're using the proper 'machine=20
+readable' version, you should never have to worry about quoted paths,=20
+irrespective of the core.quotepath setting.
 
--- 
-Jiang Xin
+> Imho, since warning comes from git, path should be quoted to
+> make git behaviour consistent.=20
+> From git-log help:
+> > Note that we deliberately chose not to re-code the commit log=20
+> message when a commit is made to force UTF-8 at the commit object=20
+> level, because re-coding to UTF-8 is not necessarily a reversible=20
+operation.
+>=20
+> If re-coding from one encoding to other is not necessarily a=20
+> reversible operation, and you can set logoutputencoding to any=20
+> encoding you wish, you may loose some charatcers while recoding file
+> path in warning message. Quoting it would be desired then.
+>=20
+
+The i18n.commitencoding and i18n.logoutputencoding settings only affect=20
+commit log messages. They are completely unrelated to error / warning=20
+messages, file names, or file name quoting.
+
+Hope that helps,
+Karsten
+
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
