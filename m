@@ -1,99 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 01/16] Modify cache_header to prepare for other
- index formats
-Date: Sun, 05 Aug 2012 18:17:32 -0700
-Message-ID: <7v8vds3jkj.fsf@alter.siamese.dyndns.org>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344203353-2819-2-git-send-email-t.gummerer@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] merge-recursive: separate message for common ancestors
+Date: Mon, 6 Aug 2012 09:34:03 +0800
+Message-ID: <CANYiYbFe6LUL+2m-X+Ek8ehFw6D5tvh+FwoGjF_zipcUe_MtMw@mail.gmail.com>
+References: <1344189398-27127-1-git-send-email-ralf.thielow@gmail.com>
+	<7vehnl41r2.fsf@alter.siamese.dyndns.org>
+	<CAN0XMO+j08fV-5+nNrVQAteB3VStBjqvvjMzRq=6wcbg8OR+xg@mail.gmail.com>
+	<7v628x3zjt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pcouds@gmail.com, robin.rosenberg@dewire.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 06 03:17:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 06 03:34:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyBwz-0004m0-Fi
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 03:17:41 +0200
+	id 1SyCCz-00057k-PK
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Aug 2012 03:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755162Ab2HFBRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Aug 2012 21:17:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55731 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755051Ab2HFBRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Aug 2012 21:17:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C1A4881C;
-	Sun,  5 Aug 2012 21:17:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7KSCkHzGO5vPu+IJRv86+B2QuVg=; b=gyfHOa
-	Zm8rYTXiPhAAQa8MHg4ztIZTxwi3P8kFWNSMjOjEwZpM0OOanXAp46wbdL/mw4V7
-	CAl0qOSGEiF7puhh1xMOtmDA/arQYML5H4yFjuHhtHnalbKsIIh3HUNjJKbQ7pe6
-	GlZA1alPugSSCgCzfh4yjNR7vugp+4DKf/H/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o1NsBFSaBk2oN6sKhW0PWSsNqQMgptaZ
-	E+P6i7028HXWzWC1OpH2CTMSWf4rsu6VkOEXE64zBZUMUdlQ958y0C2KcmnqjRb3
-	jwUc5X1rYHRj7qIIoVdS756AJ2U+JB+/hrM6ByBEjFvvQ/I+3Muv8fscl6TOkK/3
-	FrDNOvsqF4s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1833C881B;
-	Sun,  5 Aug 2012 21:17:35 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57E17881A; Sun,  5 Aug 2012
- 21:17:34 -0400 (EDT)
-In-Reply-To: <1344203353-2819-2-git-send-email-t.gummerer@gmail.com> (Thomas
- Gummerer's message of "Sun, 5 Aug 2012 23:48:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 808A862E-DF64-11E1-A5F8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755313Ab2HFBeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Aug 2012 21:34:06 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:37649 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755133Ab2HFBeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Aug 2012 21:34:05 -0400
+Received: by ghrr11 with SMTP id r11so2026661ghr.19
+        for <git@vger.kernel.org>; Sun, 05 Aug 2012 18:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hCGbzFh1lBy4ZCxEXl3AfxppzMmrmNJ0kLmAPJUj0QA=;
+        b=Gq7anROEGd9vEmoKzOuNYl5QOXIZXQPhrNMtZEdlK8aWd75+QTNLjCW2UNTUb6SfZE
+         /gBKrvfEaWqJNqwzfoIq3JkP/rIeLvCQTOfQE88lx0IsipXFZacdD+sCtxYo+xhe80BL
+         4ZgYvqckRrz7j3yhwVcFpLTH/nXwbmm2MezXJj27XqFWoABzsRUTa6b/MOqGtVW654p2
+         b9GLpohcGJCqcsaTLccHDTRsO+00ht4jB3UxIHw+bnOXqn6hkBtf2dTgnQqVuvuGHyeq
+         fRGxY7KKeHX2PNu3fuSrqhuMjiJzziNFrCMT5e4i5VQbpfuZxHdaxtZncFt1Z1Ub/Mp1
+         cJmw==
+Received: by 10.50.160.130 with SMTP id xk2mr3972936igb.66.1344216844042; Sun,
+ 05 Aug 2012 18:34:04 -0700 (PDT)
+Received: by 10.50.237.38 with HTTP; Sun, 5 Aug 2012 18:34:03 -0700 (PDT)
+In-Reply-To: <7v628x3zjt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/202943>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+2012/8/6 Junio C Hamano <gitster@pobox.com>:
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
+>
+>> It would be nicer for translators to have two messages.
+>> In the end it's just a separation for singular and plural as it's
+>> done in diff.c (e.g. Q_(" %d file changed", " %d files changed", files)).
+>
+> OK, so there was no hidden message behind "At least for better
+> translation".  Will apply this so 1.7.12 can have it.
 
-> diff --git a/read-cache.c b/read-cache.c
-> index 2f8159f..5d61d92 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1433,7 +1446,7 @@ int read_index_from(struct index_state *istate, const char *path)
->  
->  	errno = EINVAL;
->  	mmap_size = xsize_t(st.st_size);
-> -	if (mmap_size < sizeof(struct cache_header) + 20)
-> +	if (mmap_size < sizeof(struct cache_version_header) + 20)
->  		die("index file smaller than expected");
+[resend to the list again, for last mail is rich text format and is
+rejected by the list]
 
-At the design level, I have a large problem with this change.  I
-understand that you wanted to make sure that some versions can lack
-the num-entries word in the header, but then what is the point of
-keeping that "+20" here?  Are all versions of the file format still
-required to have the 20-byte trailing SHA-1 sum over the whole file?
+So I will not wait for Ralf's update on "de.po", he will catch up with next
+round of l10n with this fix. Pull request for this round of l10n:
 
-	Side note: I am actually fine with that "sum at the end"
-	requirement, but then it needs to be documented what are
-	assumed to be unomittable and why.
+The following changes since commit 05a20c87abd08441c98dfcca0606bc0f8432ab26:
 
-        I also do not see why v5 *needs* to drop the num-entries
-        word from the header in the first place.
+  Merge git://github.com/git-l10n/git-po (2012-08-01 15:59:08 -0700)
 
-At the practical level, we used to error out, upon seeing a file
-that claims to be v2 in the header but is too small to hold the
-version header, the number of entries word and the trailing SHA-1
-sum.  We no longer do this and happily call verify_hdr() in the
-following code even when the file is too small, no?
+are available in the git repository at:
 
-> @@ -1442,11 +1455,13 @@ int read_index_from(struct index_state *istate, const char *path)
->  		die_errno("unable to map index file");
->  
->  	hdr = mmap;
-> +	hdr_v2 =  mmap + sizeof(*hdr);
->  	if (verify_hdr(hdr, mmap_size) < 0)
->  		goto unmap;
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 649900bc126edf59aaae49ba025880dc948980f0:
+
+  l10n: zh_CN.po: translate 76 new messages (2012-08-05 07:12:27 +0800)
+
+----------------------------------------------------------------
+Jiang Xin (2):
+      l10n: Update git.pot (76 new, 4 removed messages)
+      l10n: zh_CN.po: translate 76 new messages
+
+Tran Ngoc Quan (1):
+      l10n: vi.po update to follow POT in 3b613
+
+ po/git.pot  | 433 +++++++++++++++++++++++++++++---
+ po/vi.po    | 464 ++++++++++++++++++++++++++++++----
+ po/zh_CN.po | 817 +++++++++++++++++++++++++++++++++---------------------------
+ 3 files changed, 1265 insertions(+), 449 deletions(-)
+
+-- 
+Jiang Xin
