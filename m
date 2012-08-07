@@ -1,100 +1,121 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: info: display '--' as '-'
-Date: Tue, 7 Aug 2012 15:42:11 -0400
-Message-ID: <20120807194211.GB440@sigill.intra.peff.net>
+Subject: [PATCH] docs: monospace listings in docbook output
+Date: Tue, 7 Aug 2012 16:07:38 -0400
+Message-ID: <20120807200738.GC440@sigill.intra.peff.net>
 References: <CANes+HZ3EH70x6KiaPsV=SQpbjr5o+pEzj2+4Xx613GPZv0SLw@mail.gmail.com>
  <20120807060157.GA13222@sigill.intra.peff.net>
  <874nofcgrl.fsf@fencepost.gnu.org>
+ <20120807194211.GB440@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: mofaph <mofaph@gmail.com>, git <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Aug 07 21:42:25 2012
+Cc: Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>,
+	mofaph <mofaph@gmail.com>, git <git@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 07 22:07:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sypfb-0005pW-FK
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 21:42:23 +0200
+	id 1Syq4E-0000wd-JI
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 22:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087Ab2HGTmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 15:42:17 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54844 "EHLO
+	id S1756372Ab2HGUHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 16:07:44 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54867 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752095Ab2HGTmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 15:42:15 -0400
-Received: (qmail 30753 invoked by uid 107); 7 Aug 2012 19:42:22 -0000
+	id S1756331Ab2HGUHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 16:07:42 -0400
+Received: (qmail 30882 invoked by uid 107); 7 Aug 2012 20:07:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 15:42:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 15:42:11 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 16:07:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 16:07:38 -0400
 Content-Disposition: inline
-In-Reply-To: <874nofcgrl.fsf@fencepost.gnu.org>
+In-Reply-To: <20120807194211.GB440@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203042>
 
-On Tue, Aug 07, 2012 at 09:17:50AM +0200, David Kastrup wrote:
+When asciidoc converts a listing block like:
 
-> Not really: @display does not change fonts, merely indentation.  From
-> the Texinfo manual:
-> [...]
-> But in non-typewriter fonts, -- is a shorthand for an en-dash (see
-> "conventions" in the Texinfo manual):
+----------------------
+$ git log --merge
+----------------------
 
-Thanks, that's the missing piece I didn't have.
+it marks it to be displayed in a monospace font. This works
+fine when generating HTML output. However, when generating
+docbook output, we override the expansion of a listingblock
+to work around bugs in some versions of the docbook
+toolchain. Our override did not mark the listingblock with
+the "monospaced" class.
 
-So it seems like docbook2-texi is at fault. The "--" does not have a
-special meaning in docbook XML, but is special markup specially in
-Texinfo source. By passing it through literally, docbook2-texi is
-changing the meaning of the text. It should be escaped somehow, just as
-you would escape other markup characters (e.g., "@display" literally in
-the text would also need to be escaped).
+The main output that uses docbook as an intermediate format
+is the manpages. We didn't notice any issue there because
+the monospaced class seems to be ignored when generating
+roff from the docbook manpages.
 
-I suppose you could argue that the "--" conversion is not markup, but a
-presentation choice for free-form text. I find that a little dubious
-when coming from docbook, which could use "&endash;" if it really wanted
-an en dash.
+However, when generating texinfo to make info pages, docbook
+does respect this class. The resulting texinfo output
+properly uses "@example" blocks to display the listing in
+this case. Besides possibly looking prettier in some texinfo
+backends,  one important effect is that the monospace font
+suppresses texinfo's expansion of "--" and "---" into
+en-dashes and em-dashes.  With the current code, the example
+above ends up looking like "git log -merge", which is
+confusing and wrong.
 
-> So somewhere in your conversion chains, you should try detecting code
-> examples and translate them into @example...@end example rather than the
-> merely indented @display ... @end display.  It is likely that it will
-> look better in other parts of the production chain as well.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I wonder if we can maybe just rip out our custom overrides entirely.
+They date back to versions of docbook from 2006. I'm not sure I entirely
+understand their purpose, though (they seem to also be about inserting
+extra line breaks, and handling manual additions of roff).
 
-I think that's a reasonable work-around for this particular incarnation
-of the bug. I still think it's wrong of the docbook to texinfo
-conversion process to leave "--" in place in general, but it matters
-most in fixed-font displays.
+This cleans up many of the problems with the info result. However, there
+are still lots of places that use "--" outside of a listing block or a
+backtick literal. Those still look bad in the generated info page.
 
-It looks like some of our asciidoc workarounds were causing listing
-blocks not to be marked as monospace. I've got a patch to address that,
-and it fixes this particular class of bug.
+ Documentation/asciidoc.conf    | 4 ++--
+ Documentation/user-manual.conf | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-However, we also use literal "--" in lots of non-monospaced contexts.
-The whole documentation tree needs to be audited for use of "--" (e.g.,
-every option mentioned in git-log.txt is currently wrong in the
-gitman.info result). I think the end result will look better, but it is
-going to be a giant pain.
-
-> > Cc-ing David Kastrup, who added the info version originally, and might
-> > be more clueful about that part of the toolchain.
-> 
-> I think you are significantly overstating my contribution.  Unless my
-> memory is failing me (always an option), I probably raised the main
-> stink at one time about the info documentation falling into a decrepit
-> state, but I don't think that I was all that much involved with getting
-> it up to scratch again, and I don't think I had been responsible for
-> originally implementing it.
-
-I based my assumption on your 4739809 (Add support for an info version
-of the user manual, 2007-08-06). I don't think any of the regular
-contributors actually uses info, which is why it has remained largely
-untouched since then.
-
-Anyway, I was right; you were more clueful than I (not that it took
-much...). Thanks for pointing me in the right direction.
-
--Peff
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index a26d245..1273a85 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -36,7 +36,7 @@ ifndef::git-asciidoc-no-roff[]
+ # v1.72 breaks with this because it replaces dots not in roff requests.
+ [listingblock]
+ <example><title>{title}</title>
+-<literallayout>
++<literallayout class="monospaced">
+ ifdef::doctype-manpage[]
+ &#10;.ft C&#10;
+ endif::doctype-manpage[]
+@@ -53,7 +53,7 @@ ifdef::doctype-manpage[]
+ # The following two small workarounds insert a simple paragraph after screen
+ [listingblock]
+ <example><title>{title}</title>
+-<literallayout>
++<literallayout class="monospaced">
+ |
+ </literallayout><simpara></simpara>
+ {title#}</example>
+diff --git a/Documentation/user-manual.conf b/Documentation/user-manual.conf
+index 339b309..d87294d 100644
+--- a/Documentation/user-manual.conf
++++ b/Documentation/user-manual.conf
+@@ -14,7 +14,7 @@ ifdef::backend-docbook[]
+ # "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
+ [listingblock]
+ <example><title>{title}</title>
+-<literallayout>
++<literallayout class="monospaced">
+ |
+ </literallayout>
+ {title#}</example>
+-- 
+1.7.12.rc1.12.g5eaae48
