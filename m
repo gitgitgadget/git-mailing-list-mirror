@@ -1,76 +1,98 @@
-From: =?UTF-8?B?wqA=?= <porpen@gmail.com>
-Subject: Re: Android Replies to Git List getting rejected
-Date: Tue, 7 Aug 2012 18:01:22 -0400
-Message-ID: <CAANzHtQDEcGpKNT6vBcnhpZG89JXMNH28_-iv9OtB1YF9Dc4jw@mail.gmail.com>
-References: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
-	<50216D83.6080707@kernel.org>
-	<20120807205524.GA3953@thunk.org>
-	<CAPZPVFZJkxK50eA+saMKLHAc=wCioTFF0PVw=Xhcrf3GpzPydA@mail.gmail.com>
-	<20120807213938.GC3953@thunk.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
+Date: Wed, 8 Aug 2012 00:31:10 +0200
+Message-ID: <87393yz64x.fsf@thomas.inf.ethz.ch>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+	<1344263760-31191-1-git-send-email-pclouds@gmail.com>
+	<7vehnjzzfd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eugene Sajine <euguess@gmail.com>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	"Theodore Ts'o" <tytso@mit.edu>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 00:01:31 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"Thomas Gummerer" <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<trast@student.ethz.ch>, <mhagger@alum.mit.edu>,
+	<robin.rosenberg@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 00:33:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyrqD-0000XH-Sh
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 00:01:30 +0200
+	id 1SysL6-0004aE-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 00:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244Ab2HGWBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 18:01:24 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36124 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752081Ab2HGWBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 18:01:23 -0400
-Received: by obbuo13 with SMTP id uo13so133691obb.19
-        for <git@vger.kernel.org>; Tue, 07 Aug 2012 15:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FLcPfhmycUT4UVm1fcN3vQVAVnkGTU6og3fmkRzwDtY=;
-        b=cgFNA8r5YjxuGP2aFXKre1+COLr+zTkTFETOihNs0wsYAks+AM+h+Hrsg/h+IkDPDe
-         Dr83AlsHKudoumrDP8lKXpQFI18DpmdIqFAijxIbvNbJuy26ZLSV75g4YE6Lsi2NNlLt
-         YT7Q8og8SWJ6CNnXCPEBtaVFCt91+nfYvml3bGsOtiIiqyeszRFRA6+PSwDTumm+6hGk
-         C+Y36jiT3jpSq2jUJJ2in/pQwmJ1+27XlKr19T50+SfpITnwNkmqjY8EXf9Y4UiRtkAn
-         7qqJwhuYlWabAhqTnBW4DQZ0B6FTvzXtT+5rEvQeCFdyR7hUoNiGcdxUgYkbS3ZiKhFR
-         ByvQ==
-Received: by 10.182.159.42 with SMTP id wz10mr10055662obb.49.1344376882731;
- Tue, 07 Aug 2012 15:01:22 -0700 (PDT)
-Received: by 10.182.52.162 with HTTP; Tue, 7 Aug 2012 15:01:22 -0700 (PDT)
-In-Reply-To: <20120807213938.GC3953@thunk.org>
+	id S932828Ab2HGWbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 18:31:22 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:58091 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932818Ab2HGWbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 18:31:20 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 8 Aug
+ 2012 00:31:16 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.208.44) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 8 Aug
+ 2012 00:31:16 +0200
+In-Reply-To: <7vehnjzzfd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 06 Aug 2012 10:46:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.208.44]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203054>
 
-On 7 August 2012 17:39, Theodore Ts'o <tytso@mit.edu> wrote:
-> On Tue, Aug 07, 2012 at 05:25:02PM -0400, Eugene Sajine wrote:
->> <rant>
->> Don't want to accept HTML messages - fine. But don't tell me which
->> program to use for my email, especially when I'm sending totally valid
+Junio C Hamano <gitster@pobox.com> writes:
 
-Perhaps this one:
-https://code.google.com/p/k9mail/
-which can send messages with a mere
+>> Then of course you need to split the second patch into several logical
+>> patches again. We can drop _v5 suffix in read-cache-v5.c (I haven't
+>> done that). When we add partial read/write for v5, we can add more
+>> func pointers to index_ops and implement them in v2 (probably as no-op
+>> or assertion)
+>
+> The index_ops abstraction is a right way to go, and I like it, but I
+> think the split illustrated in this patch might turn out to be at
+> wrong levels (and it is OK, as I understand this is a illustration
+> of concept patch).
+>
+> For example, add_to_index() interface may be a good candidate to
+> have in index_ops.  Because your in-core index may not be holding
+> everything in a flat array, "find the location in the flat array the
+> entry would sit, replace the existing one if there is any, otherwise
+> insert" cannot be a generic way to add a new entry.  If you make the
+> whole thing an abstract API entry point, a sparse implementation of
+> the in-core index could still implement it without bringing the
+> untouched and irrelevant parts of the index to core.
+[...]
+> I wish that the development of this topic was done more in a
+> top-down direction, instead of bottom-up, so that it identified the
+> necessary access patterns to the in-core index early and come up
+> with a good set of abstract API first, and then only after that is
+> done, came up with in-core and on-disk format to support the
+> necessary operations.
 
-> User-Agent: K-9 Mail for Android
-> MIME-Version: 1.0
-> Content-Type: text/plain;
->  charset=UTF-8
-> Content-Transfer-Encoding: 8bit
+I like the general idea, too, but I think there is a long way ahead, and
+we shouldn't hold up v5 on this.
 
-You'll need to turn on imap access in your gmail account.
+Thomas and me -- it was mostly my bad idea -- spent some time going
+through all the loops that iterate over the index.  You can get some
+taste of it with 'git grep ce_stage', mostly because many of them either
+skip unmerged entries or specifically look for them.  There are subtle
+differences between the loops on many points: what do they do when they
+hit an unmerged entry?  Or a CE_REMOVED or CE_VALID one?
 
-Cheers!
--p orpen
+I gave up after treating half of them and horribly breaking the test
+suite.  I suppose eventually we will have to classify these loops by
+properties like how they treat unmerged entries, and replace them by
+some clever for_each_cache_entry macro.
 
-(Yes, I know, I didn't send this from my android gadget.)
+It would open some interesting possibilities.  For example, for v5 it
+would be far better if conflicted and resolve-undo entries were a
+property of the normal index entry, instead of something that so happens
+to be consecutive entries and in a completely different place,
+respectively.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
