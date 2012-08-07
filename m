@@ -1,81 +1,100 @@
-From: John 'Warthog9' Hawley <warthog9@kernel.org>
-Subject: Re: Android Replies to Git List getting rejected
-Date: Tue, 07 Aug 2012 13:33:23 -0600
-Message-ID: <50216D83.6080707@kernel.org>
-References: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: info: display '--' as '-'
+Date: Tue, 7 Aug 2012 15:42:11 -0400
+Message-ID: <20120807194211.GB440@sigill.intra.peff.net>
+References: <CANes+HZ3EH70x6KiaPsV=SQpbjr5o+pEzj2+4Xx613GPZv0SLw@mail.gmail.com>
+ <20120807060157.GA13222@sigill.intra.peff.net>
+ <874nofcgrl.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Drew Northup <n1xim.email@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 21:33:31 2012
+Content-Type: text/plain; charset=utf-8
+Cc: mofaph <mofaph@gmail.com>, git <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 21:42:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SypX0-0004ZT-Uf
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 21:33:31 +0200
+	id 1Sypfb-0005pW-FK
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 21:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756059Ab2HGTdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 15:33:25 -0400
-Received: from shards.monkeyblade.net ([149.20.54.216]:56805 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751639Ab2HGTdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 15:33:24 -0400
-Received: from voot-cruiser.eaglescrag.net (50-77-41-5-static.hfc.comcastbusiness.net [50.77.41.5])
-	by shards.monkeyblade.net (Postfix) with ESMTPSA id 7DE0D5842A8;
-	Tue,  7 Aug 2012 12:33:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120605 Thunderbird/13.0
-In-Reply-To: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
-X-Enigmail-Version: 1.4.3
+	id S1756087Ab2HGTmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 15:42:17 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54844 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752095Ab2HGTmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 15:42:15 -0400
+Received: (qmail 30753 invoked by uid 107); 7 Aug 2012 19:42:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 15:42:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 15:42:11 -0400
+Content-Disposition: inline
+In-Reply-To: <874nofcgrl.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203041>
 
-It's pretty simple: you sent HTML mail to vger.kernel.org, and it
-explicitly rejects all HTML e-mail.  GMail, particularly from Android,
-apparently doesn't have a way to bypass sending HTML mail (it's been a
-much maligned bug).
+On Tue, Aug 07, 2012 at 09:17:50AM +0200, David Kastrup wrote:
 
-Before you ask, no I very much doubt vger will change it's policy with
-regards to HTML mail, and honestly it's a policy I fully support.
+> Not really: @display does not change fonts, merely indentation.  From
+> the Texinfo manual:
+> [...]
+> But in non-typewriter fonts, -- is a shorthand for an en-dash (see
+> "conventions" in the Texinfo manual):
 
-Your only bet is to use a mail client that won't send HTML, K-9 or
-Kaiten should work.
+Thanks, that's the missing piece I didn't have.
 
-- John 'Warthog9' Hawley
+So it seems like docbook2-texi is at fault. The "--" does not have a
+special meaning in docbook XML, but is special markup specially in
+Texinfo source. By passing it through literally, docbook2-texi is
+changing the meaning of the text. It should be escaped somehow, just as
+you would escape other markup characters (e.g., "@display" literally in
+the text would also need to be escaped).
 
-On 08/07/2012 01:24 PM, Drew Northup wrote:
-> I am not 100% sure of the root cause of this, but I have gotten the
-> following error message back from vger via GMail at least twice now:
+I suppose you could argue that the "--" conversion is not markup, but a
+presentation choice for free-form text. I find that a little dubious
+when coming from docbook, which could use "&endash;" if it really wanted
+an en dash.
+
+> So somewhere in your conversion chains, you should try detecting code
+> examples and translate them into @example...@end example rather than the
+> merely indented @display ... @end display.  It is likely that it will
+> look better in other parts of the production chain as well.
+
+I think that's a reasonable work-around for this particular incarnation
+of the bug. I still think it's wrong of the docbook to texinfo
+conversion process to leave "--" in place in general, but it matters
+most in fixed-font displays.
+
+It looks like some of our asciidoc workarounds were causing listing
+blocks not to be marked as monospace. I've got a patch to address that,
+and it fixes this particular class of bug.
+
+However, we also use literal "--" in lots of non-monospaced contexts.
+The whole documentation tree needs to be audited for use of "--" (e.g.,
+every option mentioned in git-log.txt is currently wrong in the
+gitman.info result). I think the end result will look better, but it is
+going to be a giant pain.
+
+> > Cc-ing David Kastrup, who added the info version originally, and might
+> > be more clueful about that part of the toolchain.
 > 
-> "Delivery to the following recipient failed permanently:
-> 
->       git@vger.kernel.org
-> 
->  Technical details of permanent failure:
->  Google tried to deliver your message, but it was rejected by the
-> recipient domain. We recommend contacting the other email provider for
-> further information about the cause of this error. The error that the
-> other server returned was: 550 550 5.7.1 Content-Policy reject msg:
-> The message contains HTML subpart, therefore we consider it SPAM or
-> Outlook Virus.  TEXT/PLAIN is accepted.! BF:<H 0.0255687>;
-> S1755748Ab2HGTHS (state 17)."
-> 
-> I was replying to 20120806223113.GA16298@sigill.intra.peff.net
-> (Subject: Re: [PATCH] Avoid crippled getpass function on Solaris).
-> Hopefully all of the direct replies went through, but the list denied
-> it. Some other replies have worked just fine.
-> 
-> Before the usual raft of "you configured your mail client incorrectly"
-> I would like to note that such things are not configurable in the
-> Android GMail App. If this is an app issue I'll (attempt to) take it
-> up with them (and expect zero results). (I am writing this from the
-> webmail interface in the hopes that it goes through.)
-> 
-> Am I the ONLY ONE seeing this?
-> 
+> I think you are significantly overstating my contribution.  Unless my
+> memory is failing me (always an option), I probably raised the main
+> stink at one time about the info documentation falling into a decrepit
+> state, but I don't think that I was all that much involved with getting
+> it up to scratch again, and I don't think I had been responsible for
+> originally implementing it.
+
+I based my assumption on your 4739809 (Add support for an info version
+of the user manual, 2007-08-06). I don't think any of the regular
+contributors actually uses info, which is why it has remained largely
+untouched since then.
+
+Anyway, I was right; you were more clueful than I (not that it took
+much...). Thanks for pointing me in the right direction.
+
+-Peff
