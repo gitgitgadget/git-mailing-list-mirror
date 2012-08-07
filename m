@@ -1,103 +1,68 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git svn: reset invalidates the memoized mergeinfo
- caches
-Date: Tue, 7 Aug 2012 20:45:10 +0000
-Message-ID: <20120807204510.GA10453@dcvr.yhbt.net>
-References: <20120807200207.GA10899@m62s10.vlinux.de>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: Android Replies to Git List getting rejected
+Date: Tue, 7 Aug 2012 16:55:24 -0400
+Message-ID: <20120807205524.GA3953@thunk.org>
+References: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
+ <50216D83.6080707@kernel.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andrew Myrick <amyrick@apple.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Steven Walter <stevenrwalter@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 07 22:45:20 2012
+Cc: Drew Northup <n1xim.email@gmail.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: John 'Warthog9' Hawley <warthog9@kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 07 22:55:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyqeV-0004Br-CY
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 22:45:19 +0200
+	id 1SyqoX-0000pR-M9
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 22:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756176Ab2HGUpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 16:45:12 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53240 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753667Ab2HGUpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 16:45:11 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E88C81F42A;
-	Tue,  7 Aug 2012 20:45:10 +0000 (UTC)
+	id S1756074Ab2HGUze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 16:55:34 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:43494 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751370Ab2HGUzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 16:55:33 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.72)
+	(envelope-from <tytso@thunk.org>)
+	id 1SyqoG-0004lQ-3Z; Tue, 07 Aug 2012 20:55:24 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 446BB2411B5; Tue,  7 Aug 2012 16:55:24 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20120807200207.GA10899@m62s10.vlinux.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <50216D83.6080707@kernel.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203046>
 
-Peter Baumann <waste.manager@gmx.de> wrote:
-> Therefore the easiest solution to clear the cache is to delete the files
-> on disk in 'git svn reset'. Normally, deleting the files behind the back
-> of the memoization module would be problematic, because the in-memory
-> representation would still exist and contain wrong data. Fortunately, the
-> memoization is active in memory only for a small portion of the code.
-> Invalidating the cache by deleting the files on disk if it isn't active
-> should be safe.
+On Tue, Aug 07, 2012 at 01:33:23PM -0600, John 'Warthog9' Hawley wrote:
+> It's pretty simple: you sent HTML mail to vger.kernel.org, and it
+> explicitly rejects all HTML e-mail.  GMail, particularly from Android,
+> apparently doesn't have a way to bypass sending HTML mail (it's been a
+> much maligned bug).
 
-Thanks for the patch and explanation.  A few comments below:
+Yeah, sigh.  Drew, I suggest that you star the following bug:
 
-> +	sub clear_memoized_mergeinfo_caches {
-> +		die "Only call this method in non-memoized context" if ($memoized);
-> +
-> +		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-> +		return unless -d $cache_path;
-> +
-> +		for my $cache_file (("$cache_path/lookup_svn_merge",
-> +				     "$cache_path/check_cherry_pick",
-> +				     "$cache_path/has_no_changes")) {
-> +			for my $suffix (qw(yaml db)) {
-> +				unlink("$cache_file.$suffix");
+http://code.google.com/p/android/issues/detail?id=8712
 
-Need to check for unlink() errors (and ignore ENOENT).
+... and perhaps leave a comment in the bug report that you can't
+interact with the git mailing list because of this limitation.
 
-> @@ -2126,8 +2142,13 @@ sub rev_map_set {
->  
->  	sysopen(my $fh, $db_lock, O_RDWR | O_CREAT)
->  	     or croak "Couldn't open $db_lock: $!\n";
-> -	$update_ref eq 'reset' ? _rev_map_reset($fh, $rev, $commit) :
-> -				 _rev_map_set($fh, $rev, $commit);
-> +	if ($update_ref eq 'reset') {
-> +		_rev_map_reset($fh, $rev, $commit);
-> +		clear_memoized_mergeinfo_caches();
+I'm sure you know (since you indicated that you sent your e-mail via
+the web interface of Gmail), that this is at least something you can
+control in the desktop/web version of Gmail (just enable "Plain text"
+mode) --- but it would certainly be nice if users had the choice of
+whether they wanted to participate on vger mailing lists using the
+Android application, versus the Web interface, or using Mutt or Pine
+on a Linux box.
 
-Better to clear_memoized_mergeinfo_caches() before _rev_map_reset()
-in case unlink() (or anything else) fails when clearing the cache.
+Regards,
 
-> +test_expect_success 'initialize source svn repo' '
-> +	svn_cmd mkdir -m "create trunk" "$svnrepo"/trunk &&
-> +	svn_cmd mkdir -m "create branches" "$svnrepo/branches" &&
-> +	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
-> +	(
-> +		cd "$SVN_TREE" &&
-> +		touch foo &&
-> +		svn add foo &&
-
-svn_cmd here, too.
-
-> +		svn commit -m "a" &&
-> +		svn cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
-> +		svn switch "$svnrepo"/branches/branch1 &&
-> +		touch bar &&
-> +		svn add bar &&
-> +		svn commit -m b &&
-> +		svn switch "$svnrepo"/trunk &&
-> +		touch baz &&
-> +		svn add baz &&
-> +		svn commit -m c &&
-> +		svn up &&
-> +		svn merge "$svnrepo"/branches/branch1 &&
-> +		svn commit -m "m"
-> +	) &&
+					- Ted
