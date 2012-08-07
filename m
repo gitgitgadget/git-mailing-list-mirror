@@ -1,78 +1,100 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH/RFC v2 08/16] Make in-memory format aware of stat_crc
-Date: Tue, 7 Aug 2012 21:02:45 +0200
-Message-ID: <20120807190245.GA867@tgummerer.surfnet.iacbox>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344203353-2819-9-git-send-email-t.gummerer@gmail.com>
- <7vobmo23n8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git repack vs git gc --aggressive
+Date: Tue, 07 Aug 2012 12:05:41 -0700
+Message-ID: <7vvcguv7y2.fsf@alter.siamese.dyndns.org>
+References: <87zk66r28y.fsf@bitburger.home.felix>
+ <20120807184405.GA440@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com, robin.rosenberg@dewire.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 21:03:10 2012
+Cc: Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 07 21:05:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Syp3U-0002Bo-Sg
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 21:03:01 +0200
+	id 1Syp6E-0005Se-D6
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 21:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755412Ab2HGTCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 15:02:55 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:64277 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754641Ab2HGTCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 15:02:54 -0400
-Received: by pbbrr13 with SMTP id rr13so94560pbb.19
-        for <git@vger.kernel.org>; Tue, 07 Aug 2012 12:02:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=S7Y64Gu8E70Ld8sYpvCt0L7oqw4gOCVSvXxkmlZJKJs=;
-        b=gCO8FiOBZ9BmJWuv0NMkXa/SjYMc/nYT1eofKixLSwLrM1S7adUKMN75UJPsAiq9Zj
-         MsTSSsqPYZMJ8m6b5WT6m2sJAireHB0x1yyTqxZIEYOL/mJWB8YxEXeKms/nTNWea7o0
-         YIzOhL5sm+aQGthLvPK8nScwPvbWKqr3aoCofnT6eVDzCQQrPHWXL27YkrdRUOq2PGpt
-         RZ783CjXvwpTtMjJZPsmkK8F/7Blm9RlhH3T+6al6xuLm8kIDi/7pJN9pGsE/Lnpwsef
-         Ti3i4UXgIYiN0FCWpEtdhi1KebtzAEmuCoGHpgt/DRJ+uSR4QAnau05wlPjQSsj0AWVN
-         0E/g==
-Received: by 10.68.196.225 with SMTP id ip1mr29946725pbc.6.1344366174410;
-        Tue, 07 Aug 2012 12:02:54 -0700 (PDT)
-Received: from localhost ([216.18.212.218])
-        by mx.google.com with ESMTPS id qx8sm8252877pbc.63.2012.08.07.12.02.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 07 Aug 2012 12:02:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vobmo23n8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755841Ab2HGTFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 15:05:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44467 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755667Ab2HGTFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 15:05:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1ED089E93;
+	Tue,  7 Aug 2012 15:05:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iyGvor/tCb2jzfWFhu+PiRv9OLo=; b=S1PRka
+	b1ojz9zoapQJSM3D08sSDLmxOlqp0PubyFED8Ng7EgOQUlFdFd+lK/SC+PR5DNCU
+	v8zCdW5Wok7JmagKljc3XB+knZgDhyfuj3KKHKFYYdkhoXRowjwCyRKHoS5HAgVo
+	tFp6JVGhneBhH5s9HB59cjlj8xtoSF+p8YW/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s8aBvuntFNpgEz2Rm2HPaeHKUIlsy+py
+	G9uApHKDcuTu9eEmCcSu5coFq2f/y8/ZEBAphHgGtEkl3oSzKl5n9DX6Tok1UQKE
+	MKxEc1DvouYeStOaInZomhznUQzEfAYCJDjUPQwUzey0oR0rBjn2kXcCHhi9E9YT
+	kRBE9on62D8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C93E9E92;
+	Tue,  7 Aug 2012 15:05:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67E9F9E8E; Tue,  7 Aug 2012
+ 15:05:43 -0400 (EDT)
+In-Reply-To: <20120807184405.GA440@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 7 Aug 2012 14:44:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E2FD3EAA-E0C2-11E1-96E9-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203037>
 
-On 08/05, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	stat = htonl(ce->ce_ino);
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	stat = htonl(ce->ce_size);
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	stat = htonl(ce->ce_dev);
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	stat = htonl(ce->ce_uid);
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	stat = htonl(ce->ce_gid);
-> > +	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
-> > +	return stat_crc;
-> 
-> What are these (Bytef *) casts are about?  We do not use it in any
-> of our existing calls to crc32().
+Jeff King <peff@peff.net> writes:
 
->From a quick look over the existing calls, their argument is
-always either a void* or a char* pointer.  Using pointers other
-than those two or Bytef* gives compiler warnings.  I can cast
-to either void* or char* if that's preferred.
+> So the packing parameters are the same these days for either method.
+> Note that "git gc --aggressive" will also use "-f" to recompute all
+> deltas. This is more expensive, but gives git more flexibility if the
+> old deltas were sub-optimal (typically, this is the case if the existing
+> pack was generated by fast-import, which favors speed of import versus
+> coming up with an optimal storage pattern).
+
+Also your fetch often results in storing the pack received from the
+other end straight to your local repository (with necessary objects
+to complete the pack the other end did not send appended at the
+end).  If the server side hasn't been packed with "-f", you will
+inherit the badness until you repack with "-f".
+
+> Of course, every workload is different. One can develop pathological
+> cases where --depth=500 saves a lot of space. But it's unlikely that it
+> is the case for a normal repository. You can always try both and see the
+> result.
+
+For a dataset where ridiculously large depth really is a win, these
+objects would have to be reasonably large and cost of expanding the
+base and then applying hundreds of delta to recover one object may
+not be negligible. The user should consider if he is willing to pay
+the price every time he does a local Git operation.
+
+> In fact, I'd also test how just "git gc" behaves versus "git gc
+> --aggressive" for your repo. The former is much less expensive to run.
+> You really shouldn't need to be running "--aggressive" all the time, so
+> if you are looking at doing a nightly repack or similar, just "git gc"
+> is probably fine.
+
+As I am coming from "large depth is harmful" school, I would
+recommend
+
+ - "git repack -a -d -f" with large "--window" with reasonably short
+   "--depth" once, and mark the result with .keep;
+ 
+ - "git repack -a -d -f" once every several weeks; and
+
+ - "git gc" or "git repack" (without any other options) daily.
+
+and ignore "--aggressive" entirely.
