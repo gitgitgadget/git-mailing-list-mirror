@@ -1,100 +1,86 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: GSOC remote-svn: branch detection
-Date: Tue, 07 Aug 2012 23:26:26 +0200
-Message-ID: <3476983.FSv5Fk2g49@flobuntu>
-References: <12682331.q6WHVv9EKU@flomedio> <20120803181728.GA21745@copier> <CALkWK0mu1=NEUZzB1VPAf0DU_nguuq_nJ-9Rn7Pj6zeNfoZGtA@mail.gmail.com>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: Android Replies to Git List getting rejected
+Date: Tue, 7 Aug 2012 17:39:38 -0400
+Message-ID: <20120807213938.GC3953@thunk.org>
+References: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
+ <50216D83.6080707@kernel.org>
+ <20120807205524.GA3953@thunk.org>
+ <CAPZPVFZJkxK50eA+saMKLHAc=wCioTFF0PVw=Xhcrf3GpzPydA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	David Michael Barr <davidbarr@google.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Sam Vilain <sam@vilain.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 23:26:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Drew Northup <n1xim.email@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 23:40:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyrIS-0006SA-Fs
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:26:36 +0200
+	id 1SyrVr-00072W-BU
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756739Ab2HGV0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 17:26:32 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:48072 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756738Ab2HGV0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 17:26:31 -0400
-Received: by wgbdr13 with SMTP id dr13so63765wgb.1
-        for <git@vger.kernel.org>; Tue, 07 Aug 2012 14:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=DAbcKPjk2+u557Z4lzDGonhCb1okjOa3lWV89kmzHZ0=;
-        b=L6emsKfE1u1qrpluSixaNMevhabkH7F3hXlp07CDoax+1LbKIBIxLZS1cygTdgpOcu
-         4qQpRQEVRdigTgyt2nkCP1DOy2UU+LFtcVkjVdYHz67uV0N1PCGnCde8gC79fEliQNcJ
-         /OoTJZgFKcvrSvXu38xxeFbR8siqHfhA8gJfpKqaXxJQK6JP2bzKi25+HQ6U1wuIJYAb
-         s58reF10ZfxeX/MIhOhrwuBr4aqi5kYzFB8U0xyer3M4IDc+JM/t+HlW1qsULCT5zJDH
-         94NZY13MYwZFqEjrgilJE4Xr1guJbQSDbtUp3PLOMud6dcMlUqoAbNZz3ZNm9x5pb3v1
-         hxwQ==
-Received: by 10.216.85.130 with SMTP id u2mr7922103wee.202.1344374789791;
-        Tue, 07 Aug 2012 14:26:29 -0700 (PDT)
-Received: from flobuntu.localnet (93-82-148-35.adsl.highway.telekom.at. [93.82.148.35])
-        by mx.google.com with ESMTPS id cl8sm1467256wib.10.2012.08.07.14.26.27
-        (version=SSLv3 cipher=OTHER);
-        Tue, 07 Aug 2012 14:26:28 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.2.0-27-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <CALkWK0mu1=NEUZzB1VPAf0DU_nguuq_nJ-9Rn7Pj6zeNfoZGtA@mail.gmail.com>
+	id S932124Ab2HGVkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 17:40:04 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:43508 "EHLO
+	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932072Ab2HGVjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 17:39:46 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.72)
+	(envelope-from <tytso@thunk.org>)
+	id 1SyrV3-0004nG-Kd; Tue, 07 Aug 2012 21:39:37 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id D77022412CB; Tue,  7 Aug 2012 17:39:38 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAPZPVFZJkxK50eA+saMKLHAc=wCioTFF0PVw=Xhcrf3GpzPydA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203049>
 
-On Saturday 04 August 2012 23:53:58 Ramkumar Ramachandra wrote:
-> Hi,
-> 
-> Florian Achleitner wrote:
-> > 1. Import linearly and split later:
-> I think this approach will be a lot less messy if you can cleanly
-> separate the fetching component from the mapper.  Currently, svndump
-> re-creates the layout of the SVN repository.  And the series you
-> posted last week contains a patch that attaches a note with SVN
-> metadata to each commit.  Do you have thoughts on how the mapping will
-> take place?
+On Tue, Aug 07, 2012 at 05:25:02PM -0400, Eugene Sajine wrote:
+> <rant>
+> Don't want to accept HTML messages - fine. But don't tell me which
+> program to use for my email, especially when I'm sending totally valid
+> message, so take my plain text message part and use it.
+> </rant>
 
-The mapping itself is currently a black box for me, it's internals could be 
-rather complex. It could get a function like is_branch_start, that is called 
-with a node ctx and tells if this is likely to be the start of branch. The 
-detected branches are stored and upcoming changes in the associated 
-directories are mapped to a commit on a branch.
-The detection of branch starts and the list of existing branches can be taken 
-from whatever logic we want. So that's approx. the idea.
+The problem is that HTML messages is a really good signal for SPAM and
+exploits sent by spambots trying to break into Windows machines.  So
+from the perspective of keeping the vger lists spam-free, it works
+very well.  Also, from a practical point of view, most of the mailers
+which send HTML also tend to mangle patches, and since most of the
+vger lists are very developer centric, having users use MUA's that
+mangle patches is highly unfortunate.
 
-Currently I'm working on more basic preparations. I want to split the creation 
-of commits and the creation of blobs in svndump.c.
-This is necessary because fast import requires a branch name as an argument to 
-the 'commit' command, and
-currently a 'commit' command is started when a new revision is encountered in 
-the svndump.
-But to decide on which branch the commit should go, or even if it will be more 
-than one commit, it is necessary to read all the nodes first.
-To prevent buffering the node content, I want to replace the inline data format 
-(currently used) by 'blob' commands.
-While parsing the dump, every node change creates a blob command to feed the 
-data immediately into fast-import while the node metadata (struct node_ctx) is 
-stored at least until the revision ends. Then the blobs can be put on a linear 
-master tree and other branch trees. The node metadata could also be read from 
-notes, if remapping branches.
-That's not so easy to do, because the current implementation mixes tree-
-operations and blob-operations heavily, and relies on only one global 
-node_ctx.
+So having a hard requirement has been often useful for developers who,
+say, are unfortunate enough to work at a company that mandates the use
+of Lotus Notes, since it's a nice way to force the company to set up
+an alternate IMAP/SMTP infrastructure for developers who need to
+interact with the Linux Kernel community.  Speaking as someone who
+used to work at IBM's Linux Technology Center, let me assure you there
+are some unappreciated, but still very valid, side effects of the
+current policies in force on vger.
 
-> 
-> Ram
+There are other solutions to the spam problem, of course --- such as
+diverting all of vger's mail through Postini, which is uses the same
+anti-spam technology that GMail uses, and which is pretty good.  (Far
+better than Symantec's anti-virus filtering service, which is what
+mit.edu uses, so I've had experience with both.)
 
-Flo
+But the tin foil hat community would probably be all suspicious about
+routing all of vger through Google's servers, even though pretty much
+all of the vger mailing lists are archived on web sites such as
+Gmane....  and truth to tell, the current solution which VGER has for
+filtering spam works pretty well, all things considered.  It's rather
+unfortunate that Android-only GMail users are an unintended casualty.
+
+						- Ted
