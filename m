@@ -1,68 +1,59 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/2] prune.c: only print informational message in
- show_only or verbose mode
-Date: Tue, 7 Aug 2012 15:55:02 -0700
-Message-ID: <CA+sFfMe+NsPxz555iZ6X0f8Kca8Vu2+2gFWm628O0XYFaHOzXQ@mail.gmail.com>
-References: <CA+sFfMdXc+usFRnCNVoke91_X2qWZARTvPHO=B7Ukxr-j7JB2g@mail.gmail.com>
-	<1344315709-15897-1-git-send-email-drafnel@gmail.com>
-	<1344315709-15897-2-git-send-email-drafnel@gmail.com>
-	<7vtxwfw9rp.fsf@alter.siamese.dyndns.org>
-	<7vpq73w9i8.fsf@alter.siamese.dyndns.org>
-	<CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
-	<20120807060311.GB13222@sigill.intra.peff.net>
-	<7vlihqv0ks.fsf@alter.siamese.dyndns.org>
+From: Marco Schulze <marco.c.schulze@gmail.com>
+Subject: Issuing cat-blob or ls to fast-import from a remote helper
+Date: Tue, 07 Aug 2012 19:41:48 -0300
+Message-ID: <502199AC.2070909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 00:55:18 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 01:00:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SysgF-0005gG-Tz
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 00:55:16 +0200
+	id 1Syslf-0003oy-6v
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 01:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031244Ab2HGWzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 18:55:06 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:61458 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031162Ab2HGWzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 18:55:04 -0400
-Received: by vbbff1 with SMTP id ff1so162423vbb.19
-        for <git@vger.kernel.org>; Tue, 07 Aug 2012 15:55:03 -0700 (PDT)
+	id S932926Ab2HGXAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 19:00:46 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:33528 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030802Ab2HGWlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 18:41:51 -0400
+Received: by mail-yx0-f174.google.com with SMTP id l2so168849yen.19
+        for <git@vger.kernel.org>; Tue, 07 Aug 2012 15:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0Jv4+EICEUDKcmM4ANssPAF0DK7hnOWFm1cCilNe1Uw=;
-        b=PPbkgPF3HYS1puRo6N17pDw+4MXejedGHRWF/pwqsSoGMmnEvfotOLIyuN6aQuucCU
-         ejA5jhD9suwmRqJINdbsa0tFbQFLxoPwmpZIUDwx1+AHBZ+SJibpLByTopmjvZ596hlt
-         xN+M9H0jh2NGBhTKR4VpXd9OgSiXcOikA+M3pwXubAmF8qF6D79eNBKmFUVpOEaB2ln+
-         Jec9HFuBxxrwM0GwQvlhw8N0T6rzm2B1GXuPwILDQDQA+7+lV/Pqh7NaFYMgIQDO1lAy
-         VyXrJTvtdGz+W+WfV23i7iyXL0y2Dy5cFwfFouLnKcIYK6YAW0I7qUZKN0Gs578Yxpsu
-         LJTA==
-Received: by 10.58.94.44 with SMTP id cz12mr14042805veb.34.1344380103032; Tue,
- 07 Aug 2012 15:55:03 -0700 (PDT)
-Received: by 10.59.5.196 with HTTP; Tue, 7 Aug 2012 15:55:02 -0700 (PDT)
-In-Reply-To: <7vlihqv0ks.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=FbQeA4sncdcjHIqsUbDsSDMXKczvJd03Cxw2oTZnNhk=;
+        b=rXgWRAXUKqLgutEFcCGhPxd+q19X8228jkkv8l8WqqgdEdWRew2FaytwGKW4zW7evi
+         FkOyb3zyrAguVItip/5xHKOtUglYxUA0va6+LerU543Hf15EDvVww5NNARC2uTB3JF7C
+         v57q6htFmnlH4ozH4OuNNM0nR5qVrMdJ4U8CYrwM7MUInWWN98xPcarhsmktgIBZsTNA
+         OLhTdbO0YK6WuuJFyXrvSbhEQCrzfKgDlaVdhWs2AX1QjyMvoi9dk0yWiu+sfQoqmOh9
+         tQ3h/gqXQTbXeoUzy8Ui8PhaKYC/5TBhnO+S76psLMZ6euuyYOZqG8uxl5IloU2BcSQz
+         MZ1g==
+Received: by 10.236.186.73 with SMTP id v49mr14831561yhm.48.1344379311135;
+        Tue, 07 Aug 2012 15:41:51 -0700 (PDT)
+Received: from [192.168.25.100] ([187.115.183.179])
+        by mx.google.com with ESMTPS id e5sm11501226yhi.12.2012.08.07.15.41.49
+        (version=SSLv3 cipher=OTHER);
+        Tue, 07 Aug 2012 15:41:50 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203056>
 
-On Tue, Aug 7, 2012 at 2:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> I still think your 2/2 is worth doing independently, though. It is silly
->> that git-prune will not mention pruned objects without "-v", but will
->> mention temporary files. They should be in the same category.
->
-> Ok, so I'll queue it as a separate topic with a different
-> justification.
+I've been toying with a git-remote-svn which uses fast-import (by 
+advertising the 'import' capability) to get data into Git. 
+Unfortunately, I can't get the result of any commands issued to 
+fast-import, as its stdout is not redirected, and the remote helper API 
+offers no alternative.
 
-Looks fine to me.  Thanks.
-
--Brandon
+I tried modifiying transport-helper.c to force redirection 
+(fast-import's stdout -> remote helper's stdin), but that breaks test 
+t5800 (and possibly others). Is this a bug, or intended behaviour? Am I 
+missing something?
