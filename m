@@ -1,62 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] prune.c: only print informational message in
- show_only or verbose mode
-Date: Tue, 7 Aug 2012 02:03:11 -0400
-Message-ID: <20120807060311.GB13222@sigill.intra.peff.net>
-References: <CA+sFfMdXc+usFRnCNVoke91_X2qWZARTvPHO=B7Ukxr-j7JB2g@mail.gmail.com>
- <1344315709-15897-1-git-send-email-drafnel@gmail.com>
- <1344315709-15897-2-git-send-email-drafnel@gmail.com>
- <7vtxwfw9rp.fsf@alter.siamese.dyndns.org>
- <7vpq73w9i8.fsf@alter.siamese.dyndns.org>
- <CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
+Subject: Re: Bringing a bit more sanity to $GIT_DIR/objects/info/alternates?
+Date: Tue, 7 Aug 2012 02:16:16 -0400
+Message-ID: <20120807061616.GC13222@sigill.intra.peff.net>
+References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
+ <501E3F04.4050902@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 08:03:23 2012
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:16:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sycsy-0001CE-Fp
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 08:03:20 +0200
+	id 1Syd5h-0002kH-Lz
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 08:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494Ab2HGGDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 02:03:15 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54187 "EHLO
+	id S1751746Ab2HGGQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 02:16:23 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54201 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751971Ab2HGGDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 02:03:15 -0400
-Received: (qmail 25087 invoked by uid 107); 7 Aug 2012 06:03:22 -0000
+	id S1751159Ab2HGGQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 02:16:22 -0400
+Received: (qmail 25169 invoked by uid 107); 7 Aug 2012 06:16:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 02:03:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 02:03:11 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 02:16:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 02:16:16 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
+In-Reply-To: <501E3F04.4050902@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203020>
 
-On Mon, Aug 06, 2012 at 10:44:07PM -0700, Brandon Casey wrote:
+On Sun, Aug 05, 2012 at 11:38:12AM +0200, Michael Haggerty wrote:
 
-> On Mon, Aug 6, 2012 at 10:32 PM, Jeff King <peff@peff.net> wrote:
-> >
-> > This seems like a band-aid. The real problem is that auto-gc can
-> > interfere with the pack protocol, which it should not be allowed to do,
-> > no matter what it produces.
-> >
-> > We could fix that root cause with this patch (on top of your 1/2):
+> I have some other crazy ideas for making the concept even more powerful:
 > 
-> Anyone else? :)
+> * Support remote alternate repositories.  Local repository obtains
+> missing objects from the remote as needed.  This would probably be
+> insanely inefficient without also supporting...
+> 
+> * Lazy copying of "borrowed" objects to the local repository.  Any
+> object fetched from the alternate object store is copied to the local
+> object store.
+> 
+> Together, I think that these two features would give fully-functional
+> shallow clones.
 
-Sorry to gang up on you. :)
+You might be interested in looking at my rough (_very_ rough) experiment
+with object db "hooks":
 
-I still think your 2/2 is worth doing independently, though. It is silly
-that git-prune will not mention pruned objects without "-v", but will
-mention temporary files. They should be in the same category.
+  https://github.com/peff/git/commits/jk/external-odb
+
+The basic idea is to have helper programs that basically have two
+commands: give a list of sha1s you can provide, and fetch a specific
+object by sha1. That's enough for the low levels of git to fall-back to
+a helper on an object lookup failure, and copy the object to a local
+cache. Managing the cache could be done externally by helper-specific
+code.
+
+Sorry, there's no documentation on the format or behavior, and most of
+the changes are in one big patch. If you're interested and find it
+unreadable, I can try to clean it up.
 
 -Peff
