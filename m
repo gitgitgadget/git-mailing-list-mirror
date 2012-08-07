@@ -1,76 +1,82 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH 2/2] Add index-v5
-Date: Tue, 07 Aug 2012 23:52:22 +0200
-Message-ID: <50218E16.1010304@dewire.com>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com> <1344263760-31191-1-git-send-email-pclouds@gmail.com> <1344263760-31191-3-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] prune.c: only print informational message in
+ show_only or verbose mode
+Date: Tue, 7 Aug 2012 17:59:46 -0400
+Message-ID: <20120807215946.GB22974@sigill.intra.peff.net>
+References: <CA+sFfMdXc+usFRnCNVoke91_X2qWZARTvPHO=B7Ukxr-j7JB2g@mail.gmail.com>
+ <1344315709-15897-1-git-send-email-drafnel@gmail.com>
+ <1344315709-15897-2-git-send-email-drafnel@gmail.com>
+ <7vtxwfw9rp.fsf@alter.siamese.dyndns.org>
+ <7vpq73w9i8.fsf@alter.siamese.dyndns.org>
+ <CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
+ <20120807060311.GB13222@sigill.intra.peff.net>
+ <7vlihqv0ks.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	trast@student.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 23:52:40 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 00:00:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyrhY-0005u4-HD
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:52:32 +0200
+	id 1Syroi-0006yn-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756422Ab2HGVw1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Aug 2012 17:52:27 -0400
-Received: from mail.dewire.com ([83.140.172.130]:11152 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756309Ab2HGVw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 17:52:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id A1C658FC73;
-	Tue,  7 Aug 2012 23:52:24 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LAF1qjDvU2qH; Tue,  7 Aug 2012 23:52:24 +0200 (CEST)
-Received: from Robin-Rosenbergs-MacBook-Pro.local (h30n1fls32o828.telia.com [213.65.101.30])
-	by dewire.com (Postfix) with ESMTP id D21DA8FC5D;
-	Tue,  7 Aug 2012 23:52:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120717 Thunderbird/15.0
-In-Reply-To: <1344263760-31191-3-git-send-email-pclouds@gmail.com>
+	id S1755524Ab2HGV7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 17:59:51 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54999 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753340Ab2HGV7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 17:59:51 -0400
+Received: (qmail 502 invoked by uid 107); 7 Aug 2012 21:59:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 17:59:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 17:59:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vlihqv0ks.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203052>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy skrev 2012-08-06 16.36:
+On Tue, Aug 07, 2012 at 02:44:51PM -0700, Junio C Hamano wrote:
 
-> +++ b/read-cache-v5.c
-> @@ -0,0 +1,1170 @@
-> +#include "cache.h"
-> +#include "read-cache.h"
-> +#include "resolve-undo.h"
-> +#include "cache-tree.h"
-> +
-> +struct cache_header_v5 {
-> +	unsigned int hdr_ndir;
-> +	unsigned int hdr_nfile;
-> +	unsigned int hdr_fblockoffset;
-> +	unsigned int hdr_nextension;
-> +};
-> +
-> +struct ondisk_cache_entry_v5 {
-> +	unsigned short flags;
-> +	unsigned short mode;
-> +	struct cache_time mtime;
-> +	int stat_crc;
-> +	unsigned char sha1[20];
-> +};
+> Ok, so I'll queue it as a separate topic with a different
+> justification.
+> 
+> -- >8 --
+> From: Brandon Casey <drafnel@gmail.com>
+> Date: Mon, 6 Aug 2012 22:01:49 -0700
+> Subject: [PATCH] prune.c: only print informational message in show_only or verbose mode
+> 
+> "git prune" reports removal of loose object files that are no longer
+> necessary only under the "-v" option, but unconditionally reports
+> removal of temporary files that are no longer needed.
+> 
+> The original thinking was that presence of a leftover temporary file
 
-I mentioned this before in another thread, but for JGit I'd like
-to see size as a separate attribute. The rest of stat_crc is not
-available to Java so when this index gets its way into JGit,
-stat_crc will be zero and will never be checked.
+s/presence/the &/
 
--- robin
+> should be an unusual occurrence that may indicate an earlier failure
+> of some sort, and the user may want to be reminded of it.  Removing
+> an unnecessary loose object file, on the other hand, is just part of
+> the normal operation.  That is why the former is always printed out
+> and the latter only when -v is used.
+> 
+> But neither report is particularly useful.  Hide both of these
+> behind the "-v" option for consistency.
+> 
+> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+
+Looks fine to me.  I think tmpfile removal is also not that interesting
+in general. A stale file can happen any time the user aborts an
+operation via ^C. But I think your justification is sufficient as-is
+(and this topic is not worth spending too much more time on).
+
+-Peff
