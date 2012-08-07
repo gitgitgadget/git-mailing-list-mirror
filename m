@@ -1,76 +1,86 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 2/2] prune.c: only print informational message in
- show_only or verbose mode
-Date: Mon, 6 Aug 2012 22:44:07 -0700
-Message-ID: <CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
-References: <CA+sFfMdXc+usFRnCNVoke91_X2qWZARTvPHO=B7Ukxr-j7JB2g@mail.gmail.com>
-	<1344315709-15897-1-git-send-email-drafnel@gmail.com>
-	<1344315709-15897-2-git-send-email-drafnel@gmail.com>
-	<7vtxwfw9rp.fsf@alter.siamese.dyndns.org>
-	<7vpq73w9i8.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: info: display '--' as '-'
+Date: Tue, 7 Aug 2012 02:01:57 -0400
+Message-ID: <20120807060157.GA13222@sigill.intra.peff.net>
+References: <CANes+HZ3EH70x6KiaPsV=SQpbjr5o+pEzj2+4Xx613GPZv0SLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 07 07:44:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
+To: mofaph <mofaph@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 08:02:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SycaV-0003Xs-1f
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 07:44:15 +0200
+	id 1Sycrn-0000Gv-KK
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 08:02:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836Ab2HGFoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 01:44:09 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:44452 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608Ab2HGFoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 01:44:08 -0400
-Received: by vcbfk26 with SMTP id fk26so3603074vcb.19
-        for <git@vger.kernel.org>; Mon, 06 Aug 2012 22:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=g39kg63OmcEgw5RMOc8U+jAYbHGwlHBGEZMztar2Pmk=;
-        b=F5B7T8hN0exQ3/KbsJXUCgZAzivKFrFKD4DmQbdUIUNSUymH2VQU7H//sn+aYR86Jv
-         RMOTJrFHXMzyxrsAp/jsS6md8xtKw+nmOAIYOYxuzn/6K+Mts9uPr9D8aV6tZUPbxP0l
-         knnBGzN9iBUbBVvfgqf1PJZGIFdxO7hOal/EyHAYH0rUn1vaCoRzZgEm1Ub5ft0G4gFu
-         Xp9aUqn1ehy18h3Dz/bcubmmBlWdcIn58/WvQVUfpCr1/9FXZr8VMtKiH47NfHe8dVRJ
-         3GVcUTv8KwrrvzxoEJHFDKj2maEGrDuJduMW95/7NZeP9p+Byu66XxSWx1OAp1HYSDxm
-         hTcQ==
-Received: by 10.52.35.45 with SMTP id e13mr8662947vdj.100.1344318247968; Mon,
- 06 Aug 2012 22:44:07 -0700 (PDT)
-Received: by 10.59.5.196 with HTTP; Mon, 6 Aug 2012 22:44:07 -0700 (PDT)
-In-Reply-To: <7vpq73w9i8.fsf@alter.siamese.dyndns.org>
+	id S1752264Ab2HGGCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 02:02:01 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:54182 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751971Ab2HGGCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 02:02:00 -0400
+Received: (qmail 25053 invoked by uid 107); 7 Aug 2012 06:02:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Aug 2012 02:02:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Aug 2012 02:01:57 -0400
+Content-Disposition: inline
+In-Reply-To: <CANes+HZ3EH70x6KiaPsV=SQpbjr5o+pEzj2+4Xx613GPZv0SLw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203018>
 
-On Mon, Aug 6, 2012 at 10:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> Ok, now a tested patch, on top of your 1/2
+On Mon, Aug 06, 2012 at 11:08:39AM +0800, mofaph wrote:
 
+> I am using Git 1.7.11.4 now. I compile and then install it from the repo.
+> 
+> $ git checkout v1.7.11.4
+> $ make prefix=$HOME/opt/git/1.7.11.4 all doc info
+> $ make prefix=$HOME/opt/git/1.7.11.4 install{,-doc,-html,-info}
+> 
+> Recently, I found some problem when I read the git.info.
+> 
+> For example, you can see it in "3.7.1 Getting conflict-resolution help during a
+> merge":
+> 
+> $ git log -merge
+> $ gitk -merge
+> 
+> See, it should be type like this:
+> 
+> $ git log --merge
+> $ gitk --merge
+> 
+> You will see this typo almost in the whole info file.
 
-On Mon, Aug 6, 2012 at 10:32 PM, Jeff King <peff@peff.net> wrote:
->
-> This seems like a band-aid. The real problem is that auto-gc can
-> interfere with the pack protocol, which it should not be allowed to do,
-> no matter what it produces.
->
-> We could fix that root cause with this patch (on top of your 1/2):
+Yeah, I can reproduce it here. The data goes through these
+transformations to get to the final info form:
 
-Anyone else? :)
+  user-manual.txt  (source)
+   -> user-manual.xml (via asciidoc)
+     -> user-manual.texi (via docbook2x-texi)
+       -> git.info (via makeinfo)
 
-Ah, I wasn't aware of that feature of run_command.  Both look obviously correct.
+The data looks OK in user-manual.texi, but "--" is converted to "-" in
+git.info. So either:
 
-And the comment I made yesterday about leaking the full path to the
-remote end can be disregarded, since prune will report the path
-relative to the repository base.
+  1. There is a bug in makeinfo, which should not be doing this
+     conversion inside a "@display" section.
 
-Thanks,
--Brandon
+  2. There is a bug in docbook2x-texi, which should be quoting the
+     contents of the <literallayout> when generating the @display
+     section.
+
+I don't know enough about texinfo to say which. But I'm sure that the
+contents of user-manual.xml are correct, because I do actually speak
+docbook, which means the problem happens after that step.
+
+Cc-ing David Kastrup, who added the info version originally, and might
+be more clueful about that part of the toolchain.
+
+-Peff
