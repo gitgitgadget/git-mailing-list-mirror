@@ -1,86 +1,113 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Android Replies to Git List getting rejected
-Date: Tue, 7 Aug 2012 17:39:38 -0400
-Message-ID: <20120807213938.GC3953@thunk.org>
-References: <CAM9Z-nmEDTEN0Em-nY+y5g0kRMsNuy-pn8Lzr_mWSU7engj6JQ@mail.gmail.com>
- <50216D83.6080707@kernel.org>
- <20120807205524.GA3953@thunk.org>
- <CAPZPVFZJkxK50eA+saMKLHAc=wCioTFF0PVw=Xhcrf3GpzPydA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] prune.c: only print informational message in
+ show_only or verbose mode
+Date: Tue, 07 Aug 2012 14:44:51 -0700
+Message-ID: <7vlihqv0ks.fsf@alter.siamese.dyndns.org>
+References: <CA+sFfMdXc+usFRnCNVoke91_X2qWZARTvPHO=B7Ukxr-j7JB2g@mail.gmail.com>
+ <1344315709-15897-1-git-send-email-drafnel@gmail.com>
+ <1344315709-15897-2-git-send-email-drafnel@gmail.com>
+ <7vtxwfw9rp.fsf@alter.siamese.dyndns.org>
+ <7vpq73w9i8.fsf@alter.siamese.dyndns.org>
+ <CA+sFfMdVhTwAFLUgrO-mLBh8apG-5X1OJKCN9xgq3-N+1RBrvg@mail.gmail.com>
+ <20120807060311.GB13222@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Drew Northup <n1xim.email@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 07 23:40:28 2012
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 07 23:45:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyrVr-00072W-BU
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:40:27 +0200
+	id 1SyraG-0004YT-6M
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 23:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932124Ab2HGVkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Aug 2012 17:40:04 -0400
-Received: from li9-11.members.linode.com ([67.18.176.11]:43508 "EHLO
-	imap.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932072Ab2HGVjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Aug 2012 17:39:46 -0400
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.72)
-	(envelope-from <tytso@thunk.org>)
-	id 1SyrV3-0004nG-Kd; Tue, 07 Aug 2012 21:39:37 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id D77022412CB; Tue,  7 Aug 2012 17:39:38 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAPZPVFZJkxK50eA+saMKLHAc=wCioTFF0PVw=Xhcrf3GpzPydA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S932069Ab2HGVoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Aug 2012 17:44:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51601 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755927Ab2HGVoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Aug 2012 17:44:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7251291AE;
+	Tue,  7 Aug 2012 17:44:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BXBPoE3iyVg+MSZWGKFIkpB5mFQ=; b=G+OMR2
+	Yo6rQ9usy2KFSe8dAFsdCa13IXlH7c1KBGTpaaHN3AFiHb+cqNjpz5ChEqZ2iRYx
+	XA/lyGMalBIQsSv6x7YVUjR8IaK82Tm/2I9xshc9doHm9H01W7JFITKye11h8XbR
+	j+YDH0QAdMN3bw6WaWB22faJkhhqf2zhpAH/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KLiUtCUg0Gb1PlQXuNpcaqJj7Opc772D
+	WKnTSMsntWkWlMcTA+y9KMZJO7WbRDEETOkdMSY/zzv9weO7BgSzDPetOVhHuPDY
+	KF7Fwgtb3m/1XlneBCWGhgjcU4A5zhhn9FaZxgu8ksKB9cenRErQgeu5btNc616U
+	oh0l9hGV5nw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60A0791AC;
+	Tue,  7 Aug 2012 17:44:53 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B933991AB; Tue,  7 Aug 2012
+ 17:44:52 -0400 (EDT)
+In-Reply-To: <20120807060311.GB13222@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 7 Aug 2012 02:03:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1ED59786-E0D9-11E1-BE7F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203050>
 
-On Tue, Aug 07, 2012 at 05:25:02PM -0400, Eugene Sajine wrote:
-> <rant>
-> Don't want to accept HTML messages - fine. But don't tell me which
-> program to use for my email, especially when I'm sending totally valid
-> message, so take my plain text message part and use it.
-> </rant>
+Jeff King <peff@peff.net> writes:
 
-The problem is that HTML messages is a really good signal for SPAM and
-exploits sent by spambots trying to break into Windows machines.  So
-from the perspective of keeping the vger lists spam-free, it works
-very well.  Also, from a practical point of view, most of the mailers
-which send HTML also tend to mangle patches, and since most of the
-vger lists are very developer centric, having users use MUA's that
-mangle patches is highly unfortunate.
+> I still think your 2/2 is worth doing independently, though. It is silly
+> that git-prune will not mention pruned objects without "-v", but will
+> mention temporary files. They should be in the same category.
 
-So having a hard requirement has been often useful for developers who,
-say, are unfortunate enough to work at a company that mandates the use
-of Lotus Notes, since it's a nice way to force the company to set up
-an alternate IMAP/SMTP infrastructure for developers who need to
-interact with the Linux Kernel community.  Speaking as someone who
-used to work at IBM's Linux Technology Center, let me assure you there
-are some unappreciated, but still very valid, side effects of the
-current policies in force on vger.
+Ok, so I'll queue it as a separate topic with a different
+justification.
 
-There are other solutions to the spam problem, of course --- such as
-diverting all of vger's mail through Postini, which is uses the same
-anti-spam technology that GMail uses, and which is pretty good.  (Far
-better than Symantec's anti-virus filtering service, which is what
-mit.edu uses, so I've had experience with both.)
+-- >8 --
+From: Brandon Casey <drafnel@gmail.com>
+Date: Mon, 6 Aug 2012 22:01:49 -0700
+Subject: [PATCH] prune.c: only print informational message in show_only or verbose mode
 
-But the tin foil hat community would probably be all suspicious about
-routing all of vger through Google's servers, even though pretty much
-all of the vger mailing lists are archived on web sites such as
-Gmane....  and truth to tell, the current solution which VGER has for
-filtering spam works pretty well, all things considered.  It's rather
-unfortunate that Android-only GMail users are an unintended casualty.
+"git prune" reports removal of loose object files that are no longer
+necessary only under the "-v" option, but unconditionally reports
+removal of temporary files that are no longer needed.
 
-						- Ted
+The original thinking was that presence of a leftover temporary file
+should be an unusual occurrence that may indicate an earlier failure
+of some sort, and the user may want to be reminded of it.  Removing
+an unnecessary loose object file, on the other hand, is just part of
+the normal operation.  That is why the former is always printed out
+and the latter only when -v is used.
+
+But neither report is particularly useful.  Hide both of these
+behind the "-v" option for consistency.
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/prune.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/prune.c b/builtin/prune.c
+index b99b635..6cb9944 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -25,7 +25,8 @@ static int prune_tmp_object(const char *path, const char *filename)
+ 		return error("Could not stat '%s'", fullpath);
+ 	if (st.st_mtime > expire)
+ 		return 0;
+-	printf("Removing stale temporary file %s\n", fullpath);
++	if (show_only || verbose)
++		printf("Removing stale temporary file %s\n", fullpath);
+ 	if (!show_only)
+ 		unlink_or_warn(fullpath);
+ 	return 0;
+-- 
+1.7.12.rc2.53.g9ec2ef6
