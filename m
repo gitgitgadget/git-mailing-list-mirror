@@ -1,89 +1,164 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Avoid crippled getpass function on Solaris
-Date: Mon, 6 Aug 2012 20:35:41 -0400
-Message-ID: <20120807003541.GA18219@sigill.intra.peff.net>
-References: <1344208672-20028-1-git-send-email-bwalton@artsci.utoronto.ca>
- <7vboio231n.fsf@alter.siamese.dyndns.org>
- <1344220427-sup-3468@pinkfloyd.chass.utoronto.ca>
- <20120806193958.GA10039@sigill.intra.peff.net>
- <1344287843-sup-6200@pinkfloyd.chass.utoronto.ca>
- <20120806213404.GA14320@sigill.intra.peff.net>
- <1344290892-sup-1108@pinkfloyd.chass.utoronto.ca>
- <20120806223113.GA16298@sigill.intra.peff.net>
- <m2pq73zkmu.fsf@igel.home>
- <20120807002318.GA17498@sigill.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2 1/2] git-svn.perl: consider all ranges for a given
+ merge, instead of only tip-by-tip
+Date: Tue, 7 Aug 2012 00:47:41 +0000
+Message-ID: <20120807004741.GA25929@dcvr.yhbt.net>
+References: <1344257176-17116-1-git-send-email-stevenrwalter@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, Tay Ray Chuan <rctay89@gmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Aug 07 02:36:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: avarab@gmail.com, git@vger.kernel.org, Sam Vilain <sam@vilain.net>
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 07 02:47:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SyXmT-0000zh-4G
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 02:36:17 +0200
+	id 1SyXxa-0001Tx-Hp
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Aug 2012 02:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756333Ab2HGAgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Aug 2012 20:36:09 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53925 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756295Ab2HGAfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Aug 2012 20:35:45 -0400
-Received: (qmail 21885 invoked by uid 107); 7 Aug 2012 00:35:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Aug 2012 20:35:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2012 20:35:41 -0400
+	id S932274Ab2HGArn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Aug 2012 20:47:43 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42269 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757100Ab2HGArm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Aug 2012 20:47:42 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 656251F43A;
+	Tue,  7 Aug 2012 00:47:41 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20120807002318.GA17498@sigill.intra.peff.net>
+In-Reply-To: <1344257176-17116-1-git-send-email-stevenrwalter@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203003>
 
-On Mon, Aug 06, 2012 at 08:23:18PM -0400, Jeff King wrote:
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> Consider the case where you have trunk, branchA of trunk, and branchB of
+> branchA.  trunk is merged back into branchB, and then branchB is
+> reintegrated into trunk.  The merge of branchB into trunk will have
+> svn:mergeinfo property references to both branchA and branchB.  When
+> performing the check_cherry_pick check on branchB, it is necessary to
+> eliminate the merged contents of branchA as well as branchB, or else the
+> merge will be incorrectly ignored as a cherry-pick.
 
-> This is all moot if we end up ripping stdio out of this code for other
-> reasons, but it does give us another option for a fix.
+Thanks Steven, Cc-ing Sam for mergeinfo stuff.
 
-And here is what that patch would look like:
+> ---
+>  git-svn.perl                                    |    8 ++-
+>  t/t9163-git-svn-fetch-merge-branch-of-branch.sh |   60 +++++++++++++++++++++++
+>  2 files changed, 63 insertions(+), 5 deletions(-)
+>  create mode 100755 t/t9163-git-svn-fetch-merge-branch-of-branch.sh
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index ca038ec..abcec11 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -3657,14 +3657,14 @@ sub find_extra_svn_parents {
+>  	my @merge_tips;
+>  	my $url = $self->{url};
+>  	my $uuid = $self->ra_uuid;
+> -	my %ranges;
+> +	my @all_ranges;
+>  	for my $merge ( @merges ) {
+>  		my ($tip_commit, @ranges) =
+>  			lookup_svn_merge( $uuid, $url, $merge );
+>  		unless (!$tip_commit or
+>  				grep { $_ eq $tip_commit } @$parents ) {
+>  			push @merge_tips, $tip_commit;
+> -			$ranges{$tip_commit} = \@ranges;
+> +			push @all_ranges, @ranges;
+>  		} else {
+>  			push @merge_tips, undef;
+>  		}
+> @@ -3679,8 +3679,6 @@ sub find_extra_svn_parents {
+>  		my $spec = shift @merges;
+>  		next unless $merge_tip and $excluded{$merge_tip};
+>  
+> -		my $ranges = $ranges{$merge_tip};
+> -
+>  		# check out 'new' tips
+>  		my $merge_base;
+>  		eval {
+> @@ -3702,7 +3700,7 @@ sub find_extra_svn_parents {
+>  		my (@incomplete) = check_cherry_pick(
+>  			$merge_base, $merge_tip,
+>  			$parents,
+> -			@$ranges,
+> +			@all_ranges,
+>  		       );
+>  
+>  		if ( @incomplete ) {
+> diff --git a/t/t9163-git-svn-fetch-merge-branch-of-branch.sh b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
+> new file mode 100755
+> index 0000000..73cdda5
+> --- /dev/null
+> +++ b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
+> @@ -0,0 +1,60 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2012 Steven Walter
+> +#
+> +
+> +test_description='git svn merge detection'
+> +. ./lib-git-svn.sh
+> +
+> +svn_ver="$(svn --version --quiet)"
+> +case $svn_ver in
+> +0.* | 1.[0-4].*)
+> +	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
+> +	test_done
+> +	;;
+> +esac
+> +
+> +test_expect_success 'initialize source svn repo' '
+> +	svn_cmd mkdir -m x "$svnrepo"/trunk &&
+> +	svn_cmd mkdir -m x "$svnrepo"/branches &&
+> +	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
+> +	(
+> +		cd "$SVN_TREE" &&
+> +		touch foo &&
+> +		svn add foo &&
 
--- >8 --
-Subject: [PATCH] terminal: seek when switching between reading and writing
+svn_cmd here, too
 
-When a stdio stream is opened in update mode (e.g., "w+"),
-the C standard forbids switching between reading or writing
-without an intervening positioning function. Many
-implementations are lenient about this, but Solaris libc
-will flush the recently-read contents to the output buffer.
-In this instance, that meant writing the non-echoed password
-that the user just typed to the terminal.
-
-Fix it by inserting a no-op fseek between the read and
-write.
-
-The opposite direction (writing immediately followed by
-reading) is also disallowed, but our fflush immediately
-after printing the prompt is sufficient to satisfy the
-standard.
----
- compat/terminal.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 6d16c8f..bbb038d 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -59,6 +59,7 @@ char *git_terminal_prompt(const char *prompt, int echo)
- 
- 	r = strbuf_getline(&buf, fh, '\n');
- 	if (!echo) {
-+		fseek(fh, SEEK_CUR, 0);
- 		putc('\n', fh);
- 		fflush(fh);
- 	}
+> +		svn commit -m "initial commit" &&
+> +		svn cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
+> +		svn switch "$svnrepo"/branches/branch1 &&
+> +		touch bar &&
+> +		svn add bar &&
+> +		svn commit -m branch1 &&
+> +		svn cp -m branch "$svnrepo"/branches/branch1 "$svnrepo"/branches/branch2 &&
+> +		svn switch "$svnrepo"/branches/branch2 &&
+> +		touch baz &&
+> +		svn add baz &&
+> +		svn commit -m branch2 &&
+> +		svn switch "$svnrepo"/trunk &&
+> +		touch bar2 &&
+> +		svn add bar2 &&
+> +		svn commit -m trunk &&
+> +		svn switch "$svnrepo"/branches/branch2 &&
+> +		svn merge "$svnrepo"/trunk &&
+> +		svn commit -m "merge trunk"
+> +		svn switch "$svnrepo"/trunk &&
+> +		svn merge --reintegrate "$svnrepo"/branches/branch2 &&
+> +		svn commit -m "merge branch2"
+> +	) &&
+> +	rm -rf "$SVN_TREE"
+> +'
+> +
+> +test_expect_success 'clone svn repo' '
+> +	git svn init -s "$svnrepo" &&
+> +	git svn fetch
+> +'
+> +
+> +test_expect_success 'verify merge commit' 'x=$(git rev-parse HEAD^2) &&
+> +	y=$(git rev-parse branch2) &&
+> +	test "x$x" = "x$y"
+> +'
+> +
+> +test_done
+> -- 
+> 1.7.9.5
