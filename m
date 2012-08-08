@@ -1,75 +1,95 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
-Date: Wed, 8 Aug 2012 17:30:54 +0700
-Message-ID: <CACsJy8BR219A8jE=pf1dK574wG1YLkjjQJiOvUdNt1wY=q4adw@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 2/2] Add index-v5
+Date: Wed, 8 Aug 2012 12:54:03 +0200
+Message-ID: <20120808105403.GA884@tgummerer.unibz.it>
 References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344263760-31191-1-git-send-email-pclouds@gmail.com> <7vehnjzzfd.fsf@alter.siamese.dyndns.org>
- <87393yz64x.fsf@thomas.inf.ethz.ch>
+ <1344263760-31191-1-git-send-email-pclouds@gmail.com>
+ <1344263760-31191-3-git-send-email-pclouds@gmail.com>
+ <50218E16.1010304@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu, robin.rosenberg@dewire.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 08 12:32:03 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7IG4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	gitster@pobox.com
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 12:54:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz3YX-0005ph-OE
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 12:32:02 +0200
+	id 1Sz3uJ-0008Qw-Jb
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 12:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750767Ab2HHKb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 06:31:26 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:56283 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731Ab2HHKbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 06:31:25 -0400
-Received: by qcro28 with SMTP id o28so310989qcr.19
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 03:31:24 -0700 (PDT)
+	id S1754512Ab2HHKyJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Aug 2012 06:54:09 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:62906 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751967Ab2HHKyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 06:54:07 -0400
+Received: by weyx8 with SMTP id x8so368401wey.19
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 03:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8lSQTjAvDiDEUs8nUUKOa1kOgZwQGDAzutVHZlJN1xQ=;
-        b=NOoo3kGzfwdC1Nf/VAh0Vd1jIQz7XnwsDmHnDVTnWSNn18oq/6YUirmuElt2EUkCPf
-         NClHiQYx4PfKXmda5enX4UEfwzTbcZXlBlrkHIg8JwexKG8dMyTwTNxPEcvAzOkaEqDy
-         JakgMxKuoSTbTr/1F1A3YfO1lYM9r4vST3FGtY0sdyKPxAF4lP+aiQdZc7pQa/icyC0q
-         34tNoSdTDs1diGq18v3WAYQkjUolZQeV7kffC0B5XTioTQHBN1sTodrreyT/b5OkBjcS
-         EfpXceGLK02YiJ73TDRYag4ZcN7h7zdeRjcsGG66BVHVpNronuQ75a3fba5k3BjD1Zme
-         4Egg==
-Received: by 10.224.188.83 with SMTP id cz19mr28976393qab.23.1344421884848;
- Wed, 08 Aug 2012 03:31:24 -0700 (PDT)
-Received: by 10.49.84.73 with HTTP; Wed, 8 Aug 2012 03:30:54 -0700 (PDT)
-In-Reply-To: <87393yz64x.fsf@thomas.inf.ethz.ch>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=JvXD9dC0u31zCj5j3JWcGx+a6taoSsuj0YaRzMi6/Qw=;
+        b=B3AwWkTbRK41GAYrfoQ0UivMo+ERtpZDmrHEuIBhUD09IStsLPmBbWnSJKC17OpKwC
+         zFbSGRIzOaMRgy+L3tzoUdf+GDVcYxer2ol2GK16KXgZZtE7u1mOq7x7NXNlAscpO18/
+         HzOyME5ribitBLhTDzWdWj7LtzOdkIVrxY3DHhmxe8Acaoq9UPJ10tNxLpWUvk4VwRPy
+         JzKbwuVCqB3z1w3T1vGnM7bk+HbyibifTr+XFI+raN6W9nHUZpdRoYPJo/IktLsKlw/p
+         BAa7U6iGTZpaSrhfFnjQK77C5SjCfqMpjSJvINKX3ZpxQpZJ6g6FxW2bjtQagZkTyRFc
+         3ZiA==
+Received: by 10.180.78.4 with SMTP id x4mr1629326wiw.19.1344423246368;
+        Wed, 08 Aug 2012 03:54:06 -0700 (PDT)
+Received: from localhost ([46.18.27.126])
+        by mx.google.com with ESMTPS id j6sm6750062wiy.4.2012.08.08.03.54.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Aug 2012 03:54:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <50218E16.1010304@dewire.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203071>
 
-On Wed, Aug 8, 2012 at 5:31 AM, Thomas Rast <trast@student.ethz.ch> wrote:
-> Thomas and me -- it was mostly my bad idea -- spent some time going
-> through all the loops that iterate over the index.  You can get some
-> taste of it with 'git grep ce_stage', mostly because many of them either
-> skip unmerged entries or specifically look for them.  There are subtle
-> differences between the loops on many points: what do they do when they
-> hit an unmerged entry?
 
-Most of them ignore unmerged entries, git-add and git-update-index can
-remove unmerged entries, unpack-trees (reset, merge, checkout...) can
-generate them. What's the problem with it?
 
-> Or a CE_REMOVED or CE_VALID one?
+On 08/07, Robin Rosenberg wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy skrev 2012-08-06 16.36:
+>=20
+> >+++ b/read-cache-v5.c
+> >@@ -0,0 +1,1170 @@
+> >+#include "cache.h"
+> >+#include "read-cache.h"
+> >+#include "resolve-undo.h"
+> >+#include "cache-tree.h"
+> >+
+> >+struct cache_header_v5 {
+> >+	unsigned int hdr_ndir;
+> >+	unsigned int hdr_nfile;
+> >+	unsigned int hdr_fblockoffset;
+> >+	unsigned int hdr_nextension;
+> >+};
+> >+
+> >+struct ondisk_cache_entry_v5 {
+> >+	unsigned short flags;
+> >+	unsigned short mode;
+> >+	struct cache_time mtime;
+> >+	int stat_crc;
+> >+	unsigned char sha1[20];
+> >+};
+>=20
+> I mentioned this before in another thread, but for JGit I'd like
+> to see size as a separate attribute. The rest of stat_crc is not
+> available to Java so when this index gets its way into JGit,
+> stat_crc will be zero and will never be checked.
+>=20
 
-CE_VALID is assume-unchanged feature. I don't think we have problems with it.
-
-CE_REMOVED is to say "we are going to remove this entry both in index
-and worktree, but if we remove it now we would have no way to know
-which file in worktree to be removed later on, so we just mark it here
-as a ghost entry in index". It's only used by unpack-trees, I think.
-From the index pov, CE_REMOVED entries never get written to file. It
-may complicate tree building for v5.
--- 
-Duy
+I'm sorry for forgetting to add this, it will be included in the
+re-roll.  The stat_crc will be ignored if it is 0 in the ondisk
+index.
