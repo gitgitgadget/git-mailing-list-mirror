@@ -1,81 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] update "make check-docs"
-Date: Wed, 08 Aug 2012 12:13:11 -0700
-Message-ID: <7v1ujhtcxk.fsf@alter.siamese.dyndns.org>
-References: <1344412707-22356-1-git-send-email-Matthieu.Moy@imag.fr>
- <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
- <20120808183132.GA24550@sigill.intra.peff.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH/RFC v3 01/13] Move index v2 specific functions to their
+ own file
+Date: Wed, 8 Aug 2012 21:21:16 +0200
+Message-ID: <20120808192041.GA25671@tommy-fedora.surfnet.iacbox>
+References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
+ <1344424681-31469-2-git-send-email-t.gummerer@gmail.com>
+ <CACsJy8CY--Z_BfscRCG8+Om1Z8JsFgj0BkjNyMJnwsbmyGRLXQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 08 21:13:21 2012
+Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	gitster@pobox.com, robin.rosenberg@dewire.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 21:21:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzBh1-0000hW-Vy
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 21:13:20 +0200
+	id 1SzBos-0004fe-N5
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 21:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932895Ab2HHTNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 15:13:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58390 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758389Ab2HHTNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 15:13:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E624793A1;
-	Wed,  8 Aug 2012 15:13:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5k7BO8UZ0xDvrAJgVU0uGHLauQU=; b=IBKakF
-	W+ePKyXUiGQqxwKOALH39/huugah6+9+dHFIrT+7PlYuswko0VtFEZjAC5/OYCuS
-	9BQQ2Y4BJ9rFSDkvaAgys6uMHtRQday0P5vsmxX7ckvP1Vbe1q8sOYuSmSHL4RuH
-	GbyNeo/1Ccw40DsrfsOiz0IRsCAImDM4yXaC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KJBNowgoV5crOOtbGMkKD1F9p9ttVIBs
-	9P1UCoH8PzBjCNq4LWXR0fhIC1ZyBiyIIdBq7NTsJKc3fl84w5slKU8xxDrfogcC
-	KeHFBKvLKY2/F7UTyB3QlrCVsUZuT6yT0Mw6M4FV2amYsSKU2C+SvsGkmgv7fksh
-	FPlJ2N6KvpQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D507393A0;
-	Wed,  8 Aug 2012 15:13:13 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 525FF939F; Wed,  8 Aug 2012
- 15:13:13 -0400 (EDT)
-In-Reply-To: <20120808183132.GA24550@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 8 Aug 2012 14:31:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1991CD1C-E18D-11E1-9CE7-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030557Ab2HHTVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 15:21:21 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:36242 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752397Ab2HHTVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 15:21:20 -0400
+Received: by weyx8 with SMTP id x8so696485wey.19
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 12:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=x0eHXxMhIm3X/IO62++zzjw/0dBsQij35Apg7B08ipg=;
+        b=K/XNTypfLtkEoNJPhOww5bO/LfPbPGgHU2g5uaFVtKdTitYa3Mw3rk5QOSjHoi9IY0
+         0BM3FMzfijN0efYjkk1S+/9s/7nzm9mMeox3lITx4YVr2PlhwlRItWEG9dHrnp88zZKb
+         AEJ2lQoN2tAesJ/0AetzSRZjKgwMhXRpsnvBqGoZTcVun8R0VvdFvMo1W2iICGAV7mIa
+         r9JHcaFkVGJM+0GJwtrJG+YgCDug1ze57v+AFHd9TR/blgkSLk9zDluL8CSOaHab/T2o
+         WAyQvLOM2Xt7IyYwwv8qUjkTR3udJIZCRycl48PrHflgkHidNNHl8mFcGm8CujphF+Me
+         kq+Q==
+Received: by 10.180.93.68 with SMTP id cs4mr143097wib.14.1344453678625;
+        Wed, 08 Aug 2012 12:21:18 -0700 (PDT)
+Received: from localhost ([95.171.54.129])
+        by mx.google.com with ESMTPS id b7sm9856887wiz.9.2012.08.08.12.21.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Aug 2012 12:21:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CY--Z_BfscRCG8+Om1Z8JsFgj0BkjNyMJnwsbmyGRLXQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203116>
 
-Jeff King <peff@peff.net> writes:
 
-> On Wed, Aug 08, 2012 at 09:58:33AM -0700, Junio C Hamano wrote:
->
->> There really should be an easier way for the maintainer to notice
->> this kind of glitch without being told (better yet, the submitter of
->> a new command to notice it).  Perhaps the check-docs target in the
->> Makefile needs some updating?
->
-> Hmm. We have a check-docs command? :)
 
-Yes, and there also is a check-builtins target.  Perhaps the default
-build target should depend on them, as they are fairly lightweight?
+On 08/08, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Aug 8, 2012 at 6:17 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > Move index version 2 specific functions to their own file,
+> > to prepare for the addition of a new index file format. With
+> > the split into two files we have the non-index specific
+> > functions in read-cache.c and the index-v2 specific functions
+> > in read-cache-v2.c
+> 
+> You still mix code changes and code move in one patch, but we can skip
+> it for now.
+> 
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -267,6 +259,7 @@ struct index_state {
+> >         unsigned name_hash_initialized : 1,
+> >                  initialized : 1;
+> >         struct hash_table name_hash;
+> > +       struct index_ops *ops;
+> >  };
+> 
+> Do we really need to modify "ops" content? If not make it "const
+> struct index_ops *ops;" which makes..
+> 
+> > @@ -471,8 +464,8 @@ extern int index_name_is_other(const struct index_state *, const char *, int);
+> >  #define CE_MATCH_RACY_IS_DIRTY         02
+> >  /* do stat comparison even if CE_SKIP_WORKTREE is true */
+> >  #define CE_MATCH_IGNORE_SKIP_WORKTREE  04
+> > -extern int ie_match_stat(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
+> > -extern int ie_modified(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
+> > +extern int ie_match_stat(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
+> > +extern int ie_modified(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
+> 
+> ..this hunk go away
 
-> This patch series at least brings that up to date. It goes on top of
-> Matthieu's patch.
->
->   [1/4]: check-docs: mention gitweb specially
->   [2/4]: check-docs: update non-command documentation list
->   [3/4]: command-list: add git-sh-i18n
->   [4/4]: command-list: mention git-credential-* helpers
+Unfortunately I think we need to modify it, because in some cases
+when ie_modified/ie_match_stat is called, index->ops is not set yet
+(happens when the index is empty and thus not read first). Therefore
+we have to set it in ce_match_stat_basic to have access to the
+format specific match_stat_basic.
 
-Thanks.
+We could also call match_stat_basic directly from the v[25]_ops
+struct, but I do not think that would be the cleaner solution, or
+is there any other way to do it, which I can't see?
