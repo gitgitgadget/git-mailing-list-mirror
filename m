@@ -1,85 +1,70 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: Git does not handle changing inode numbers well
-Date: Wed, 8 Aug 2012 20:34:11 +0200
-Message-ID: <20120808183411.GT21274@login.drsnuggles.stderr.nl>
-References: <20120808152230.GQ21274@login.drsnuggles.stderr.nl> <7vboiltglr.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 2/4] check-docs: update non-command documentation list
+Date: Wed, 8 Aug 2012 14:34:33 -0400
+Message-ID: <20120808183433.GB24574@sigill.intra.peff.net>
+References: <20120808183132.GA24550@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HqPpMaT+a6TeY/Q4"
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 20:34:27 2012
+X-From: git-owner@vger.kernel.org Wed Aug 08 20:34:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzB5K-0000rW-Fo
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 20:34:22 +0200
+	id 1SzB5h-0001Ot-29
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 20:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758373Ab2HHSeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 14:34:18 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:42625 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693Ab2HHSeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 14:34:17 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1SzB59-0004dB-DI; Wed, 08 Aug 2012 20:34:12 +0200
-Received: (nullmailer pid 17802 invoked by uid 1000);
-	Wed, 08 Aug 2012 18:34:11 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S932795Ab2HHSek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 14:34:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57539 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932561Ab2HHSej (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 14:34:39 -0400
+Received: (qmail 9562 invoked by uid 107); 8 Aug 2012 18:34:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Aug 2012 14:34:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2012 14:34:33 -0400
 Content-Disposition: inline
-In-Reply-To: <7vboiltglr.fsf@alter.siamese.dyndns.org>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+In-Reply-To: <20120808183132.GA24550@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203111>
 
+The check-docs target looks at Documentation/git*txt and
+complains if any entry does not have a matching command.
+Therefore we need to explicitly ignore any entries which are
+not meant to describe a command (like gitattributes.txt).
+This list has grown stale over time, so let's bring it up to
+date.
 
---HqPpMaT+a6TeY/Q4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I really wonder if we would do better to match git-*.txt, since most of
+the ignores are gitfoo(7) types of pages. We'd probably want to add back
+in "git", "gitweb" and "gitk" explicitly, but they are already handled
+specially above and below.
 
-Hi Junio,
+ Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> -	if (ce->ce_ino != (unsigned int) st->st_ino)
-> +	if (trust_inum && ce->ce_ino != (unsigned int) st->st_ino)
->  		changed |= INODE_CHANGED;
-
-I just tried this with 1.7.10 (that is, I deleted these two lines to
-mimic trust_inum being false) and it indeed fixes my problem.
-
-(I'll probably won't be implementing the full patch, though, I've
-already figured out how to fix my filesystem instead)
-
-Gr.
-
-Matthijs
-
---HqPpMaT+a6TeY/Q4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAlAisSMACgkQz0nQ5oovr7xfyACgkEMYoJ0oNCLPMKqe2lTPT36L
-hQ0AoJx8JFvQbP3XWFDXoYR1J3hfeWGb
-=fD1i
------END PGP SIGNATURE-----
-
---HqPpMaT+a6TeY/Q4--
+diff --git a/Makefile b/Makefile
+index 5e773cd..41d9db8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2853,6 +2853,9 @@ check-docs::
+ 		documented,git-bisect-lk2009 | \
+ 		documented,git-remote-helpers | \
+ 		documented,gitworkflows | \
++		documented,gitcredentials | \
++		documented,gitnamespaces | \
++		documented,gitweb.conf | \
+ 		sentinel,not,matching,is,ok ) continue ;; \
+ 		esac; \
+ 		case " $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk gitweb " in \
+-- 
+1.7.12.rc2.2.g584e0d9
