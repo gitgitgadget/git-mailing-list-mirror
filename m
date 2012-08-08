@@ -1,88 +1,127 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH] add test for 'git rebase --keep-empty'
-Date: Wed,  8 Aug 2012 09:48:18 -0700
-Message-ID: <1344444498-29328-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Neil Horman <nhorman@tuxdriver.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 18:48:38 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v2 09/16] Read index-v5
+Date: Wed, 08 Aug 2012 09:49:54 -0700
+Message-ID: <7vr4rhtjkd.fsf@alter.siamese.dyndns.org>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+ <1344203353-2819-10-git-send-email-t.gummerer@gmail.com>
+ <7v4nog1twd.fsf@alter.siamese.dyndns.org>
+ <20120808074138.GD867@tgummerer.surfnet.iacbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
+	pclouds@gmail.com, robin.rosenberg@dewire.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 18:50:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz9Qz-0000T8-4s
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 18:48:37 +0200
+	id 1Sz9SO-0002Zu-49
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 18:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758878Ab2HHQsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 12:48:31 -0400
-Received: from mail-wi0-f202.google.com ([209.85.212.202]:64915 "EHLO
-	mail-wi0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751430Ab2HHQsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 12:48:30 -0400
-Received: by wibhr14 with SMTP id hr14so48324wib.1
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 09:48:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=euQUiUINGkQjy/qneNfmzLhEZ9MsbBGDvaN4tx0NCqI=;
-        b=Jq1QkPqIIhW7JqbcSjnCBLS6wgwiYftRP22dq4COAv69e1vKfnMDqr/HUkYRKeyAgr
-         ITSJHW6gPWLtRlzz6hg5s2Dd4dEqLA2xx6m3BNubMir1cJO6PD3CkGWmd0drUfJwfiw+
-         8F/Mi0erwBmWE7tYzMO/9LRQHGMunvafPDjjfUaU7v0zm/SS7W1QjU0OI4kZ8FVb/HTB
-         qgg6OHMZby9LC+iURRXaRqxw3SFonMtbwWiVypgwHQVfJwU/D8A5N2xY3GJqsGHC1lFC
-         RyhZCTLwHksZ2AL+inIyLtPUdCJzS5Qwv++cVtAE4FSV4U360I3rB+jhl8u+kyh39B3Z
-         WAJQ==
-Received: by 10.14.218.199 with SMTP id k47mr15119394eep.5.1344444509270;
-        Wed, 08 Aug 2012 09:48:29 -0700 (PDT)
-Received: by 10.14.218.199 with SMTP id k47mr15119384eep.5.1344444509198;
-        Wed, 08 Aug 2012 09:48:29 -0700 (PDT)
-Received: from hpza9.eem.corp.google.com ([74.125.121.33])
-        by gmr-mx.google.com with ESMTPS id 46si32494335eed.1.2012.08.08.09.48.29
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Wed, 08 Aug 2012 09:48:29 -0700 (PDT)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.98.93])
-	by hpza9.eem.corp.google.com (Postfix) with ESMTP id 061CF5C0063;
-	Wed,  8 Aug 2012 09:48:29 -0700 (PDT)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id 3EC6FC1A32; Wed,  8 Aug 2012 09:48:28 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
-X-Gm-Message-State: ALoCoQlBMjcQPhAO9ddu+DflPzexW3GjdbI7+LH79ZQiwJAtFmUXb1AJlj5rKh+Ha+j6yBWYhtRVKewZ28LAcw3mDHFuIawOCIMsDV3mGgxuU9hUKFoftUenKVHNRQMmlbDoC9apwSIUbNWcHhp6hH2AL67k+0sRWrcItz1SQFsLTIvNnYwsaDlymP6/++VCsuAffa9DTkQB
+	id S1758887Ab2HHQt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 12:49:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55601 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751996Ab2HHQt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 12:49:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3040982BC;
+	Wed,  8 Aug 2012 12:49:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zbmHngzznWF5B+XMr0wi6OOdhg8=; b=hH6jyI
+	47IGAlAdSxuw3tBSWUyZ9vL7vfRqpPkfJkOWl9UNsjyqtUzA/r2pNB/p3BvjP2V6
+	c79S3wB6Uyubz4k/JnoCOhbKxLUZJuYNUo0MfGH57oBnXiynjb2wKNLTYye85utR
+	9W648kng/ta39uM3Rs2/ljXbp0N6xB36SOglI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JiIcoIhlBqvvhqmcpX0oshivV81s3jfo
+	E/uMIou/HoCypsGIYFt66adbRurcMCXkEwVtYWP6nbpBD5JV093e394xcLNS0kDM
+	msHehCXon8GG+kXk2MeVsTXIptDVEyyb49meovk4VaAgJkv5hTJiYkt26kthSvdW
+	3vW1xTS7CBQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CD2282BB;
+	Wed,  8 Aug 2012 12:49:57 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EDEC82B8; Wed,  8 Aug 2012
+ 12:49:56 -0400 (EDT)
+In-Reply-To: <20120808074138.GD867@tgummerer.surfnet.iacbox> (Thomas
+ Gummerer's message of "Wed, 8 Aug 2012 09:41:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1563B926-E179-11E1-BD60-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203098>
 
-Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
----
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-While trying to use patch-id instead of
---ignore-if-in-upstream/--cherry-pick/cherry/etc, I noticed that
-patch-id ignores empty patches and I was surprised that tests still
-pass. This test case would be useful to protect --keep-empty.
+>> > +	name = (char *)mmap + *dir_offset;
+>> > +	beginning = mmap + *dir_table_offset;
+>> 
+>> Notice how you computed name with pointer arithmetic by first
+>> casting mmap (which is "void *") and when computing beginning, you
+>> forgot to cast mmap and attempted pointer arithmetic with "void *".
+>> The latter does not work and breaks compilation.
+>> 
+>> The pointer-arith with "void *" is not limited to this function.
+> ...
+> I've used the type of the respective assignment for now. e.g. i have
+> struct cache_header *hdr, so I'm using
+> hdr = (struct cache_header *)mmap + x;
 
- t/t3401-rebase-partial.sh | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+You need to be careful when rewriting the above to choose the right
+value for 'x' if you go that route (which I wouldn't recommend).
 
-diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
-index 7f8693b..b89b512 100755
---- a/t/t3401-rebase-partial.sh
-+++ b/t/t3401-rebase-partial.sh
-@@ -47,7 +47,14 @@ test_expect_success 'rebase ignores empty commit' '
- 	git commit --allow-empty -m empty &&
- 	test_commit D &&
- 	git rebase C &&
--	test $(git log --format=%s C..) = "D"
-+	test "$(git log --format=%s C..)" = "D"
-+'
-+
-+test_expect_success 'rebase --keep-empty' '
-+	git reset --hard D &&
-+	git rebase --keep-empty C &&
-+	test "$(git log --format=%s C..)" = "D
-+empty"
- '
- 
- test_done
--- 
-1.7.11.1.104.ge7b44f1
+With
+
+    hdr = ptr_add(mmap, x);
+
+you are making "hdr" point at x BYTES beyond mmap, but
+
+    hdr = (struct cache_header *)mmap + x;
+
+means something entirely different, no?  "hdr" points at x entries
+of "struct cache_header" beyond mmap (in other words, if mmap[] were
+defined as "struct cache_header mmap[]", the above is saying the
+same as "hdr = &mmap[x]").
+
+I think the way you casted to compute the value for the "name"
+pointer is the (second) right thing to do.  The cast (char *)
+applied to "mmap" is about "mmap is a typeless blob of memory I want
+to count bytes in.  Give me *dir_offset bytes into that blob".  It
+is not tied to the type of LHS (i.e. "name") at all.  The result
+then needs to be casted to the type of LHS (i.e. "name"), and in
+this case the types happen to be the same, so you do not have to
+cast the result of the addition but that is mere luck.
+
+The next line is not so lucky and you would need to say something
+like:
+
+    beginning = (uint32_t *)((char *)mmap + *dir_table_offset);
+
+Again, inner cast is about "mmap is a blob counted in bytes", the
+outer cast is about type mismatch between a byte-address and LHS of
+the assignment.
+
+If mmap variable in this function were not "void *" but something
+more sane like "const char *", you wouldn't have to have the inner
+cast to begin with, and that is why I said the way you did "name" is
+the second right thing.  Then you can write them like
+
+    name = mmap + *dir_offset;
+    beginning = (uint32_t *)(mmap + *dir_offset);
+
+After thinking about this, the ptr_add() macro might be the best
+solution, even though I originally called it as a band-aid.  We know
+mmap is a blob of memory, byte-offset of each component of which we
+know about, so we can say
+
+    name = ptr_add(mmap, *dir_offset);
+    beginning = ptr_add(mmap, *dir_offset);
+
+Hmmm..
