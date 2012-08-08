@@ -1,96 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] Documentation: list git-credential in plumbing commands
-Date: Wed,  8 Aug 2012 19:13:09 +0200
-Message-ID: <1344445989-2923-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 08 19:13:57 2012
+From: Rich Pixley <rich.pixley@palm.com>
+Subject: Re: merging confusion and question
+Date: Wed, 08 Aug 2012 10:50:18 -0700
+Message-ID: <5022A6DA.2010702@palm.com>
+References: <5021B20D.2030702@palm.com> <7v393yupjp.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 19:50:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz9pU-0005a3-C1
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 19:13:56 +0200
+	id 1SzAOq-0001nA-Pe
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 19:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030567Ab2HHRNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 13:13:51 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38645 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030444Ab2HHRNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 13:13:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q78HAcJ7030374
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 8 Aug 2012 19:10:38 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sz9pJ-0006vm-3F; Wed, 08 Aug 2012 19:13:45 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Sz9pI-0000m2-Sx; Wed, 08 Aug 2012 19:13:44 +0200
-X-Mailer: git-send-email 1.7.12.rc1.183.gb94da76
-In-Reply-To: <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 08 Aug 2012 19:10:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q78HAcJ7030374
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1345050639.82679@FtJ9pEC91yknUd4+cUOpcA
+	id S1759021Ab2HHRuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 13:50:23 -0400
+Received: from smtp-relay2.palm.com ([64.28.152.243]:11088 "EHLO
+	smtp-relay2.palm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758977Ab2HHRuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 13:50:22 -0400
+X-IronPort-AV: E=Sophos;i="4.77,734,1336374000"; 
+   d="scan'208";a="15202012"
+Received: from unknown (HELO ushqusdns4.palm.com) ([148.92.223.164])
+  by smtp-relay2.palm.com with ESMTP; 08 Aug 2012 10:50:19 -0700
+Received: from fuji-land.noir.com ([10.100.2.16])
+	by ushqusdns4.palm.com (8.14.4/8.14.4) with ESMTP id q78HoIOf014258;
+	Wed, 8 Aug 2012 10:50:18 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:15.0) Gecko/20120731 Thunderbird/15.0
+In-Reply-To: <7v393yupjp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203103>
 
-Commit e30b2feb1b (Jun 24 2012, add 'git credential' plumbing command)
-forgot to add git-credential to command-list.txt, hence the command was
-not appearing in the documentation, making it hard for users to discover
-it.
+Thank you.
 
-While we're there, capitalize the description line for git-crendential
-for consistency with other commands.
+I think the work flow here needs some work, but reset --hard gets me 
+running again.  That should probably be mentioned in the error message.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-> > for consistancy with other commands.
-> 
-> consistency?
+--rich
 
-Yes, sorry. This one should be OK.
-
- Documentation/git-credential.txt | 2 +-
- command-list.txt                 | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index 53adee3..810e957 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -3,7 +3,7 @@ git-credential(1)
- 
- NAME
- ----
--git-credential - retrieve and store user credentials
-+git-credential - Retrieve and store user credentials
- 
- SYNOPSIS
- --------
-diff --git a/command-list.txt b/command-list.txt
-index 14ea67a..ec64cac 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -25,6 +25,7 @@ git-commit                              mainporcelain common
- git-commit-tree                         plumbingmanipulators
- git-config                              ancillarymanipulators
- git-count-objects                       ancillaryinterrogators
-+git-credential                          purehelpers
- git-cvsexportcommit                     foreignscminterface
- git-cvsimport                           foreignscminterface
- git-cvsserver                           foreignscminterface
--- 
-1.7.12.rc1.183.gb94da76
+On 8/7/12 18:43 , Junio C Hamano wrote:
+> Rich Pixley <rich.pixley@palm.com> writes:
+>
+>> I'm confused.
+>>
+>> What is the intended work flow here?  Ie, aside from trashing my
+>> repository and starting over, what does one do to recover?
+>>
+>> rich@cobra> git clone /home/rich/repos/webos webos
+>> Cloning into 'webos'...
+>> done.
+>> rich@cobra> cd webos
+>> rich@cobra> git remote add central git@github.com:openwebos/webos.git
+>> rich@cobra> git co master
+>> Already on 'master'
+>> rich@cobra> git pull central master
+>> X11 forwarding request failed on channel 0
+>> remote: Counting objects: 22, done.
+>> remote: Compressing objects: 100% (19/19), done.
+>> remote: Total 21 (delta 12), reused 11 (delta 2)
+>> Unpacking objects: 100% (21/21), done.
+>>  From github.com:openwebos/webos
+>>   * branch            master     -> FETCH_HEAD
+>> warning: Failed to merge submodule meta-webos (not checked out)
+>> Auto-merging meta-webos
+>> CONFLICT (submodule): Merge conflict in meta-webos
+>> Auto-merging README.md
+>> Automatic merge failed; fix conflicts and then commit the result.
+>> rich@cobra> git commit -a
+> Why isn't there any "fix conflicts and then" step between this line
+> and the friendly insn message on the previous line?
+>
+>> error: unable to index file meta-webos
+>> fatal: updating files failed
+>> rich@cobra> git add meta-webos
+>> error: unable to index file meta-webos
+>> fatal: updating files failed
+>> rich@cobra> git rm meta-webos
+>> meta-webos: needs merge
+>> rm 'meta-webos'
+>> fatal: git rm: 'meta-webos': Is a directory
+>> rich@cobra> git merge meta-webos
+>> error: 'merge' is not possible because you have unmerged files.
+>> hint: Fix them up in the work tree,
+>> hint: and then use 'git add/rm <file>' as
+>> hint: appropriate to mark resolution and make a commit,
+>> hint: or use 'git commit -a'.
+>> fatal: Exiting because of an unresolved conflict.
+> If you are not interested in mucking with meta-webos with this
+> merge, you would resolve meta-webos by taking either your (i.e. the
+> one that came from /home/rich/repos/webos) version or their
+> (i.e. the one that came from openwebos/webos.git) version.  Go back
+> to the state before "git pull central master" with "reset --hard",
+> init and update webos submodule, try the "pull" again and then "git
+> add webos" to resolve to your version, perhaps?
