@@ -1,123 +1,150 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Sync production with Git
-Date: Wed, 8 Aug 2012 15:35:53 -0700
-Message-ID: <CAJDDKr5=zDEn4j9HAp3k5ubOJ1g5J-VhAka=BpoNuJbJ+ES_og@mail.gmail.com>
-References: <1344431484059-7564617.post@n2.nabble.com>
-	<vpqlihpbh4f.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
+Date: Wed, 08 Aug 2012 15:47:07 -0700
+Message-ID: <7v628tq9w4.fsf@alter.siamese.dyndns.org>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+ <1344263760-31191-1-git-send-email-pclouds@gmail.com>
+ <7vehnjzzfd.fsf@alter.siamese.dyndns.org> <87393yz64x.fsf@thomas.inf.ethz.ch>
+ <7vboimuvur.fsf@alter.siamese.dyndns.org> <87628tsqeu.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	sitaramc@gmail.com
-To: kiranpyati <kiran.pyati@infobeans.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 00:36:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"Thomas Gummerer" <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, <robin.rosenberg@dewire.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Aug 09 00:47:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzErB-0003IK-ND
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:36:02 +0200
+	id 1SzF2A-00031G-Rd
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757151Ab2HHWfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 18:35:55 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:55896 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756640Ab2HHWfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 18:35:54 -0400
-Received: by vbbff1 with SMTP id ff1so1283302vbb.19
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 15:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=L3jKddsrzobfgQdMAhW+0i0dvdUS8HWPpcdCTSSN94I=;
-        b=h4ojZqa4kUugFltJIVc6u+djxMfli8MCFXdk4OlGoqZlO+851BcEKPCiY3ktyBdYuY
-         l3VYBZi5lSWseZU7bGXjScWLxl5y1aYygqp0f0/rxgI0sdGirCdPT8i3QPDKFCVFspr3
-         xl0F/d0ykJmEw3xSvHO/DBCtSyMhviU+agdcdUiYW/1AF2i0eN5eisTP95H4StxbrNvT
-         TniSLCLv9ocQ5+l7/4HZ968xhEYvhRjHzYGzyWeHq0ZK1W0MstoRDdg93hKpNMFGqapE
-         6y19cxnTXJmci+ebIh2uOGTZt7P+V18G+7G6pzGDa3VDcpvjIVk0ohgmKZNvOOMPXrGH
-         TdEQ==
-Received: by 10.52.99.138 with SMTP id eq10mr13267519vdb.25.1344465353813;
- Wed, 08 Aug 2012 15:35:53 -0700 (PDT)
-Received: by 10.59.9.36 with HTTP; Wed, 8 Aug 2012 15:35:53 -0700 (PDT)
-In-Reply-To: <vpqlihpbh4f.fsf@bauges.imag.fr>
+	id S1757500Ab2HHWrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 18:47:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60151 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753570Ab2HHWrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 18:47:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDEA67B8B;
+	Wed,  8 Aug 2012 18:47:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wOo06YWv5wCAstdH7BXZbfyaEYk=; b=N4vYRT
+	yVVejX9GJOYTXIEeltXep5pa/ymAKpVetIiIJdoZLMHx0jtxu33qSrAib/di0M4z
+	lJ6Xv4WrMU9JEVqlVCKnXibki+KsKSs3kAOLYlUrkYwjpcBMV6HyO+W4hswfH7dd
+	JLUapdlKo3D7TrXPQW/RJNZL7AeHxK5yFzNMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=liwnobIjB8BLHTCzIGH3faBqAVmUDMuZ
+	Ko1WFY/wWbaLYXDBevjJZgUaD/bLN+V4k/2SKGcUKSWlwpeFqqDIyyO+VXDaa8Rj
+	S4KL5BsM4gQKqDXHJCeTb5LlSXNowftoo9sbK3Gc9QZ1n4z0ZDFryvDfmhy2kahe
+	80juCfJML1A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBB7A7B8A;
+	Wed,  8 Aug 2012 18:47:09 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 271837B89; Wed,  8 Aug 2012
+ 18:47:09 -0400 (EDT)
+In-Reply-To: <87628tsqeu.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Wed, 8 Aug 2012 11:07:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FC511762-E1AA-11E1-BAA9-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203140>
 
-On Wed, Aug 8, 2012 at 7:20 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> kiranpyati <kiran.pyati@infobeans.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> We want a way to seamlessly sync production and Git.
+>> Thomas Rast <trast@student.ethz.ch> writes:
+>>
+>>> I like the general idea, too, but I think there is a long way ahead, and
+>>> we shouldn't hold up v5 on this.
+>>
+>> We shouldn't rush, only to keep some deadline, and regret it later
+>> that we butchered the index format without thinking things through.
+>> When this was added to the GSoC idea page, I already said upfront
+>> that this was way too big a topic to be a GSoC project, didn't I?
 >
-> You should be aware that Git was not designed for this scenario. The
-> usual flow with Git (and actually with most revision control systems),
-> is to do the development with Git, then use your build system to
-> generate a package that can be used in production (e.g. generate a
-> .tar.gz, or a .jar, or whatever your platform needs), and then install
-> this package on your production server.
-
-
-Obligatory link to Sitaram's very helpful docs:
-
-http://sitaramc.github.com/the-list-and-irc/deploy.html
-
-Thanks to Sitaram for this very helpful guide.
-
-
-That said, please pay close attention to everything Matthieu wrote
-here.  It seems like things will go smoothly once you "true things up"
-and then follow a sensible process for moving things from git to
-production going forward.  Sitaram's write-up can help you discover
-what the right process is for you.
-
-
-> It can be tempting, however, to use your revision control system as a
-> deployment tool, so that an update on the production server be as simple
-> as "git pull". But in real-life applications, it usually has to be more
-> complicated: do you need to generate some files after you fetch the
-> latest version of the source? Do you need to update your database? Isn't
-> the .git/ directory harmfull here (e.g. do I want the full history
-> source of my project to be visible worldwide if this is a
-> webapplication?) ...
+> Let me spell out my concern.  There are two v5s here:
 >
-> If you insist in using Git for deployment, then you should absolutely
-> stick to it. Whether for deployment or for anything else, trying to send
-> changes using both Git and other mechanism (e.g. uploading files
-> directly to a working tree as you did) puts you in trouble 99.9% of the
-> cases.
+> * The extent of the GSoC task.
 >
-> In your case, the damage is already done. If I were you, I'd do
-> something like
+> * The eventual implementation of index-v5 that goes into Git mainline.
 >
-> <do some backup>
-> <make sure the backup is OK>
-> <think twice "will I be able to restore the backup if it goes wrong?">
-> $ git fetch origin
-> $ git reset --hard origin/master
->
-> (actually, if I were you, I'd try reproducing the situation on a
-> non-production server first)
->
-> "git fetch" will download the revisions from the remote server, which
-> should be the repository where the version you want to run is located.
-> "git reset --hard" will discard any local change (committed or not) you
-> may have, and set your local working tree to the latest version in the
-> master branch of the remote repository. You may need a "git clean" to
-> remove untracked files too.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> IMHO this thread is mixing up the two.  There indeed must not be any
+> rush in the final implementation of index-v5.  However, the GSoC ends in
+> less than two weeks, and I have to evaluate Thomas on whatever is
+> finished until then.
 
+This is the primary reason why I have recused myself from the Mentor
+pool.  My involvement in this thread is mostly about the latter.  It
+is not like "I do not really care about GSoC", but the maintainer
+works for what is best for the project, not for GSoC schedule.
 
+> AFAIK Thomas is now cleaning up the existing code to be in readable
+> shape, using your feedback, which is great.  However, the above
+> suggestion is such a fuzzily-specified task that there is no way to even
+> find out what needs to be done within the next two weeks.
 
--- 
-David
+Yes, it is the mentor's job to (1) keep an eye on the progress of
+the student, (2) avoid giving a task that is too big to chew within
+the given timeframe, and (3) help the student learn the skill to
+break down large tasks to manageable pieces.
+
+> Perhaps it
+> makes sense, at this point, to wrap anything that ended up having _v[25]
+> suffixes in an index_ops like Duy did.
+
+Yes, I think that suggestion was a welcome input for the mentor and
+the student (item (3) above).
+
+> That's a long way from actually
+> following through on the idea, though.
+
+I think that is perfectly fine, both from the point of view of the
+project maintainer (who officially does not give a whit about GSoC
+schedule) and from the point of view of somebody who cares about the
+health of the development community (and as one part of it, cares
+about the GSoC student project).
+
+If Git GSoC admins initially picked a project that is too large by
+mistake, finishing a subpart of it that is of reasonable size and
+polishing the result into a nice shape would be the best the student
+can do, and the grading should be done on the quality of that
+subtask alone.  It may not directly help the project without the
+remainder, but that is not the student's fault.  But as I am not
+part of the Mentor pool, what I wrote in this paragraph is just my
+opinion.
+
+> I think the part you snipped
+>
+>>> the loops that iterate over the index [...] either
+>>> skip unmerged entries or specifically look for them.  There are subtle
+>>> differences between the loops on many points: what do they do when they
+>>> hit an unmerged entry?  Or a CE_REMOVED or CE_VALID one?
+>
+> is a symptom of the same general problem: the data structures are sound,
+> but they are leaking all over the code and now we have lots of
+> complexity to do even simple operations like "for each unmerged entry".
+
+I do not think I was arguing against an updated cleaner API, so we
+are in agreement.  In fact, I was saying that the calling code
+should be ported to such a cleaner API and in-core data structure
+first, and only then an optimal on-disk representation of the
+in-core data structure can be designed.
+
+The mistaken title of this GSoC topic was one of the root cause of
+the issues, I think, you are seeing.  It said "faster file format",
+but file format is a result of a design of the code that uses the
+data, not the other way around.
+
+That, and also the project scope is too large for a summer student
+project as I said in the very beginning.
