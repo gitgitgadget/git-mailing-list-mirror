@@ -1,97 +1,138 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Sync production with Git
-Date: Wed, 08 Aug 2012 16:20:00 +0200
-Message-ID: <vpqlihpbh4f.fsf@bauges.imag.fr>
-References: <1344431484059-7564617.post@n2.nabble.com>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Git does not handle changing inode numbers well
+Date: Wed, 8 Aug 2012 17:22:30 +0200
+Message-ID: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: kiranpyati <kiran.pyati@infobeans.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 16:20:21 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="z4IKABJTiQIqPwmW"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 18:02:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz77S-0003if-IK
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 16:20:18 +0200
+	id 1Sz8iW-0005qb-77
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 18:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756916Ab2HHOUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 10:20:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54917 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756548Ab2HHOUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 10:20:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q78EHHQS001798
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 8 Aug 2012 16:17:17 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Sz77A-0005cp-LH; Wed, 08 Aug 2012 16:20:00 +0200
-In-Reply-To: <1344431484059-7564617.post@n2.nabble.com> (kiranpyati's message
-	of "Wed, 8 Aug 2012 06:11:24 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 08 Aug 2012 16:17:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q78EHHQS001798
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1345040239.89827@K+mmwVNefhdxxqejKiWHSQ
+	id S1030414Ab2HHQCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 12:02:34 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:51287 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030402Ab2HHQCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 12:02:33 -0400
+X-Greylist: delayed 2399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2012 12:02:33 EDT
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1Sz85e-0006fA-Um
+	for git@vger.kernel.org; Wed, 08 Aug 2012 17:22:32 +0200
+Received: (nullmailer pid 25612 invoked by uid 1000);
+	Wed, 08 Aug 2012 15:22:30 -0000
+Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
+	git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203095>
 
-kiranpyati <kiran.pyati@infobeans.com> writes:
 
-> We want a way to seamlessly sync production and Git.
+--z4IKABJTiQIqPwmW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-You should be aware that Git was not designed for this scenario. The
-usual flow with Git (and actually with most revision control systems),
-is to do the development with Git, then use your build system to
-generate a package that can be used in production (e.g. generate a
-.tar.gz, or a .jar, or whatever your platform needs), and then install
-this package on your production server.
+(Please CC me, I'm not on the list)
 
-It can be tempting, however, to use your revision control system as a
-deployment tool, so that an update on the production server be as simple
-as "git pull". But in real-life applications, it usually has to be more
-complicated: do you need to generate some files after you fetch the
-latest version of the source? Do you need to update your database? Isn't
-the .git/ directory harmfull here (e.g. do I want the full history
-source of my project to be visible worldwide if this is a
-webapplication?) ...
+Hi folks,
 
-If you insist in using Git for deployment, then you should absolutely
-stick to it. Whether for deployment or for anything else, trying to send
-changes using both Git and other mechanism (e.g. uploading files
-directly to a working tree as you did) puts you in trouble 99.9% of the
-cases.
+I've spent some time debugging an issue and I'd like to share the
+results. The conclusion of my debugging is that git does not currently
+handle changing inode numbers on files well.
 
-In your case, the damage is already done. If I were you, I'd do
-something like
+I have a custom Fuse filesystem, and fuse dynamically allocates inode
+numbers to paths, but keeps a limited cache of inode -> name mappings,
+causing the inodes to change over time.
 
-<do some backup>
-<make sure the backup is OK>
-<think twice "will I be able to restore the backup if it goes wrong?">
-$ git fetch origin
-$ git reset --hard origin/master
+Now of course, you'll probably say, "it's the filesystem's fault, git
+can't be expected to cope with that". You'll be right of course, but
+since I already spent the time digging into this and figuring out what
+goes on inside git in this case, I thought I might as well share the
+analysis, just in case someone sees an easy fix in here, or in case
+someone else stumbles upon this problem as well.
 
-(actually, if I were you, I'd try reproducing the situation on a
-non-production server first)
+So, the actual problem I was seeing is that running "git status" showed
+all symlinks as "modified", even though they really were identical
+between the working copy, index and HEAD. Interestingly enough this only
+happened when running "git status" without further arguments, when
+running on a subdirectory, it would show no changes as expected.
 
-"git fetch" will download the revisions from the remote server, which
-should be the repository where the version you want to run is located.
-"git reset --hard" will discard any local change (committed or not) you
-may have, and set your local working tree to the latest version in the
-master branch of the remote repository. You may need a "git clean" to
-remove untracked files too.
+I compared the output of stat to a hexdump of the index file and found
+that everything matched, except for the inode numbers. I originally
+thought I was misinterpreting what I saw, but gdb confirmed that it were
+indeed the inode numbers that git observed as different.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Now, I could have stopped here and started trying to fix my filesystem
+instead. But it was still weird that this problem only existed for
+symlinks and that normal files acted as expected. So I dug in a bit
+deeper, hoping to find some way to make this work for symlinks as well.
+
+So, here's what happens (IIUC):
+ - cmd_status calls refresh_index, which calls refresh_cache_ent for
+   every entry in the index.
+ - refresh_cache_ent notices that the inode number has changed (for both
+   symlinks and regular files) and compares the file / symlink contents.
+ - refresh_cache_ent sees the content hasn't changed, so it calls
+   fill_stat_cache_info to update the stat info.
+ - fill_stat_cache_info sets the EC_UPTODATE flag on the entry, but only
+   if it is a regular file.
+ - cmd_status calls wt_status_collect which calls
+   wt_status_collect_changes_worktree which calls run_diff_files.
+ - run_diff_files skips regular files, because of the EC_UPTODATE flag.
+   For symlinks, however, it checks the stat info and notices that the
+   inode number has changed (again). It does not do a content check at
+   this point, but instead just outputs the file as "modified".
+
+
+It turned out that the reason running "git status" on a subdirectory did
+appear to work, was that the number of files in the subdir wasn't big
+enough to overflow the inode number cache fuse keeps, so that numbers
+didn't change in this case (the problem _did_ occur when trying a bigger
+subdirectory).
+
+So, it seems that git just doesn't cope well with changing inode numbers
+because it checks the content in a first pass in refresh_index, but only
+checks the stat info in the second pass in run_diff_files. The reason it
+does work for regular files is EC_UPTODATE optimization introduced in
+eadb5831: Avoid running lstat(2) on the same cache entry.
+
+So, let's see if I can fix my filesystem now ;-)
+
+Gr.
+
+Matthijs
+
+--z4IKABJTiQIqPwmW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAlAihDYACgkQz0nQ5oovr7zqqgCfUZ/gVU/cz5AqFyyqIvF7ShpJ
+bKkAoNaPiVPZaebaZPbOfTp4K/wjFvoC
+=Tg/t
+-----END PGP SIGNATURE-----
+
+--z4IKABJTiQIqPwmW--
