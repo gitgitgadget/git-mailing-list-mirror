@@ -1,99 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] fast-import: Handle 'sub/testname' to
- 'sub/testname/testfile' renaming correctly
-Date: Wed, 08 Aug 2012 15:04:11 -0700
-Message-ID: <7vd331qbvo.fsf@alter.siamese.dyndns.org>
-References: <1344454971-19559-1-git-send-email-techlivezheng@gmail.com>
- <1344454971-19559-2-git-send-email-techlivezheng@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 2/4] check-docs: update non-command documentation list
+Date: Wed, 8 Aug 2012 23:11:44 +0100
+Organization: OPDS
+Message-ID: <C64F75694EC040349CFE91CD69EDB2DC@PhilipOakley>
+References: <20120808183132.GA24550@sigill.intra.peff.net> <20120808183433.GB24574@sigill.intra.peff.net> <7vwr19rxua.fsf@alter.siamese.dyndns.org> <20120808205456.GB29528@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Elijah Newren" <newren@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Techlive Zheng <techlivezheng@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 00:04:22 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 00:11:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzEMY-0005us-6r
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:04:22 +0200
+	id 1SzETq-0000vR-E5
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439Ab2HHWEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 18:04:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40059 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751409Ab2HHWEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 18:04:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3B1C6D6C;
-	Wed,  8 Aug 2012 18:04:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5NyfX5i2EUED0ccWY6QEw8cgSdA=; b=Qfb6NY
-	WwatckKZC60qBE2x2lvykII1FFLRZRZ512hggWHcHu7St16odSs4HZEluy24AhB1
-	Y0IypCTiBSZl7jUAIRETB7Md1OBj0kxOarEB7q9S5ZbtvjsRjz5pKhwd4RL80mxh
-	8qcw4sxmuWZHIrBMD4/Xl7T8YdlXzr7BbOb1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VliiVk3ZekOJnov7RmaX0Alc+OXFnf2m
-	HSadiLR9KJIt9xfO49V0UuAtqbfNnio/Q2bhpzzL5AWFXUcmh6jYHIRa3M+pI59I
-	3qnwSTuJhJKkAHocJ2SmZXyXBC6DH9FKIlu0+4GsE47z5KcKtDV1JcNTDuPnRDi4
-	dlJdUy4FYlo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1A206D68;
-	Wed,  8 Aug 2012 18:04:13 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 331CD6D66; Wed,  8 Aug 2012
- 18:04:13 -0400 (EDT)
-In-Reply-To: <1344454971-19559-2-git-send-email-techlivezheng@gmail.com>
- (Techlive Zheng's message of "Thu, 9 Aug 2012 03:42:50 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FCEE0EBA-E1A4-11E1-A5C8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756058Ab2HHWLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 18:11:43 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58397 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752634Ab2HHWLm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2012 18:11:42 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsULABnjIlBcHIOP/2dsb2JhbABFhgGFP60dBAICfoEIghsFAQEEAQgBARkVHgEBIQUGAQEDBQIBAw4DBAEBAQICBSECAhQBBBoGBw8IBgESCAIBAgMBCodsCqhBkyWBIYlxghSDOjJgA41al36CYA
+X-IronPort-AV: E=Sophos;i="4.77,735,1336345200"; 
+   d="scan'208";a="400553698"
+Received: from host-92-28-131-143.as13285.net (HELO PhilipOakley) ([92.28.131.143])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 08 Aug 2012 23:11:40 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203138>
 
-Judging from "git shortlog --since=6.months fast-import.c", Jonathan
-may be the most qualified to see if this makes sense, among the
-active list regulars, so....
+----- Original Message ----- 
+From: "Jeff King" <peff@peff.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>; <git@vger.kernel.org>
+Sent: Wednesday, August 08, 2012 9:54 PM
+Subject: Re: [PATCH 2/4] check-docs: update non-command documentation 
+list
 
--- >8 --
-From: Techlive Zheng <techlivezheng@gmail.com>
-Subject: [PATCH 2/2] fast-import: Handle 'sub/testname' to 'sub/testname/testfile' renaming correctly
-Date: Thu,  9 Aug 2012 03:42:50 +0800
 
-The current git-fast-import would not correctly handle such a commit stream
-in which a file was deleted and at the same time a directory with the same
-name was created. All paths under the newly created directory will be lost
-after the importing.
----
- fast-import.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> On Wed, Aug 08, 2012 at 12:24:29PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > The check-docs target looks at Documentation/git*txt and
+>> > complains if any entry does not have a matching command.
+>> > Therefore we need to explicitly ignore any entries which are
+>> > not meant to describe a command (like gitattributes.txt).
+>> > This list has grown stale over time, so let's bring it up to
+>> > date.
+>> >
+>> > Signed-off-by: Jeff King <peff@peff.net>
+>> > ---
+>> > I really wonder if we would do better to match git-*.txt, since 
+>> > most of
+>> > the ignores are gitfoo(7) types of pages. We'd probably want to add 
+>> > back
+>> > in "git", "gitweb" and "gitk" explicitly, but they are already 
+>> > handled
+>> > specially above and below.
+>>
+>> Quite possibly, yes.
+>
+> Actually, my "already handled specially" is not quite accurate. That
+> special list is "things that are commands but are not necessarily
+> mentioned in the Makefile variables". But this list is "things that 
+> are
+> documented but do not begin with git-". The two should mostly be the
+> same, but the whole point of this exercise is to make sure they _are_
+> the same.
+>
+> A better solution is to simply ask the Documentation directory what 
+> the
+> commands are, since it already knows (in the form of MAN1_TXT).
+>
+>> Also "git gitk gitweb" may want to be made into a Makefile variable
+>> to be shared in the "above" and "below" (I do not know what to call
+>> them offhand---they are programs with special build rules that are
+>> not covered by ALL/SCRIPT_LIB/BUILTIN).
+>
+> I couldn't think of a special name, either, but I think it is 
+> sufficient
+> to just create a new ALL_COMMANDS variable that includes those other
+> things, and then add to it.
+>
+>> By the way, do we have a documentation for git-gui?  Perhaps it may
+>> want to be added to that "git gitk gitweb" list as a reminder that
+>> it lacks documentation.  One of the goals of the person who runs
+>> "make check-docs" should be to reduce the special case that appears
+>> at the beginning of that case statement.
+>
+> Yes, it should be checked (and git-citool, too).
+>
+>> I also wonder why "help" is not treated as a built-in?  Perhaps we
+>> should throw it in to "git gitk gitweb" list?  After all, it is a
+>> command that is available in "git foo" form, is documented, and is
+>> listed in the command-list.txt file.
 
-diff --git a/fast-import.c b/fast-import.c
-index eed97c8..8874b4b 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1595,6 +1595,15 @@ static int tree_content_remove(
- 				 * exist and need not be deleted.
- 				 */
- 				return 1;
-+			if (!slash1 && S_ISREG(e->versions[0].mode) && S_ISDIR(e->versions[1].mode))
-+			    /*
-+			     * If p names a file in some subdirectory and in
-+			     * some commit that file got deleted, a directory
-+			     * with the same name was set up in the same directory,
-+			     * then there is no need to step into for further
-+			     * iteration or deletion.
-+			     */
-+				return 0;
- 			if (!slash1 || !S_ISDIR(e->versions[1].mode))
- 				goto del_entry;
- 			if (!e->tree)
--- 
-1.7.11.4
+One issue I notice a few weeks ago is that `git help --all` does not 
+list all of the available git help pages, rather it just limits itself 
+to the available command pages.
+
+This means that new users can't discover those additional help pages in 
+any easy manner.
+
+I had an initial look at what might be involved in adding a --guides 
+option, shifting the current --all to --cmd (or --command) and then 
+make --all list both commands and guides.
+
+The need for help to list all the guides is parallel to these patches. I 
+didn't get that far in working out how to approach such a patch which 
+would discovere the available guides - I'm on GfW-msysgit which normally 
+uses web display.
+
+>
+> Historically it was part of git.c, but these days it is a built-in and
+> does not need any special treatment from check-docs.
+>
+> Patches for all to follow (on top of my previous 4).
+>
+>  [5/4]: check-docs: factor out command-list
+>  [6/4]: check-docs: list git-gui as a command
+>  [7/4]: check-docs: drop git-help special-case
+>  [8/4]: check-docs: get documented command list from Makefile
+>
+> -Peff
+> --
