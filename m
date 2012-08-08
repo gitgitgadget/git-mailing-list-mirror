@@ -1,86 +1,75 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: Git does not handle changing inode numbers well
-Date: Wed, 8 Aug 2012 20:07:48 +0200
-Message-ID: <20120808180748.GS21274@login.drsnuggles.stderr.nl>
-References: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
+From: Andrew Dranse <adranse@oanda.com>
+Subject: Bug with git-submodule and IFS
+Date: Wed, 8 Aug 2012 14:21:23 -0400 (EDT)
+Message-ID: <1844267106.216233.1344450083762.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca>
+References: <1496197024.216188.1344449732940.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bGopQmzlzQgFk3Fg"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 20:07:58 2012
+X-From: git-owner@vger.kernel.org Wed Aug 08 20:21:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzAfm-0002uq-7u
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 20:07:58 +0200
+	id 1SzAtJ-0006vq-72
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 20:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030514Ab2HHSHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 14:07:53 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:44501 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030507Ab2HHSHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 14:07:52 -0400
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1SzAfc-0002o7-At
-	for git@vger.kernel.org; Wed, 08 Aug 2012 20:07:49 +0200
-Received: (nullmailer pid 10792 invoked by uid 1000);
-	Wed, 08 Aug 2012 18:07:48 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S932372Ab2HHSVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 14:21:44 -0400
+Received: from mx.scalarmail.ca ([98.158.95.75]:59883 "EHLO
+	ironport-01.sms.scalar.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757595Ab2HHSVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 14:21:43 -0400
+Received: from unknown (HELO sms-zimbra-mta-01.sms.scalar.ca) ([192.168.32.56])
+  by ironport-01.sms.scalar.ca with ESMTP; 08 Aug 2012 14:21:24 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by sms-zimbra-mta-01.sms.scalar.ca (Postfix) with ESMTP id 06AE617F47
+	for <git@vger.kernel.org>; Wed,  8 Aug 2012 14:21:24 -0400 (EDT)
+Received: from sms-zimbra-mta-01.sms.scalar.ca ([127.0.0.1])
+	by localhost (sms-zimbra-mta-01.sms.scalar.ca [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DvB08CSnhaK4 for <git@vger.kernel.org>;
+	Wed,  8 Aug 2012 14:21:23 -0400 (EDT)
+Received: from sms-zimbra-message-store-03.sms.scalar.ca (unknown [172.17.19.202])
+	by sms-zimbra-mta-01.sms.scalar.ca (Postfix) with ESMTP id D357917F45
+	for <git@vger.kernel.org>; Wed,  8 Aug 2012 14:21:23 -0400 (EDT)
+In-Reply-To: <1496197024.216188.1344449732940.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca>
+X-Originating-IP: [216.235.10.210]
+X-Mailer: Zimbra 7.1.2_GA_3268 (ZimbraWebClient - SAF3 (Linux)/7.1.2_GA_3268)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203107>
 
+Hi there,
 
---bGopQmzlzQgFk3Fg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I ran into an interesting bug with git submodules today.  It appears that if your IFS is not set to what git-submodule expects it to be (i.e. the standard IFS), it will break in a fun way.
 
-> So, let's see if I can fix my filesystem now ;-)
-For anyone interested: turns out passing -o noforget makes fuse keep a
-persistent path -> inode mapping (at the cost of memory usage, of
-course).
+Example:
 
-However, it also turns out that fuse wasn't my problem: It was the aufs
-mount that was overlayed over my fuse mount (this was on a Debian live
-system), which sets the noxino option that prevents aufs from keeping
-persistent inode numbers.
+$ git init
+Initialized empty Git repository in /home/adranse/test/.git/
+$ git submodule add github:/repos/perf
+Cloning into 'perf'...
+remote: Counting objects: 5744, done.
+remote: Compressing objects: 100% (4627/4627), done.
+remote: Total 5744 (delta 2400), reused 1579 (delta 343)
+Receiving objects: 100% (5744/5744), 28.78 MiB | 4.56 MiB/s, done.
+Resolving deltas: 100% (2400/2400), done.
+$ export IFS="
+> "
+$ git submodule update --init --recursive
+No submodule mapping found in .gitmodules for path ''
+$ unset IFS
+$ git submodule update --init --recursive
+Submodule 'perf' () registered for path 'perf'
 
-To get git status working as expected, I had to both remove noxino from
-the aufs mount and add noforget to the underlying fuse mount.
+As a solution, I would suggest setting IFS to the expected value before calling the git-submodule shell script.
 
-Gr.
+Thanks,
 
-Matthijs
-
---bGopQmzlzQgFk3Fg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAlAiqvQACgkQz0nQ5oovr7zbxQCghgakErd0K7sxoRvuYvuaKlPr
-HhwAnRvYTS+4pw0pA4fNzrluG0NFZr3c
-=/y0f
------END PGP SIGNATURE-----
-
---bGopQmzlzQgFk3Fg--
+Andrew Dranse
+OANDA Corporation
+adranse@oanda.com
