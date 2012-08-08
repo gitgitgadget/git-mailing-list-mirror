@@ -1,95 +1,100 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 2/2] Add index-v5
-Date: Wed, 8 Aug 2012 12:54:03 +0200
-Message-ID: <20120808105403.GA884@tgummerer.unibz.it>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344263760-31191-1-git-send-email-pclouds@gmail.com>
- <1344263760-31191-3-git-send-email-pclouds@gmail.com>
- <50218E16.1010304@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7IG4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	gitster@pobox.com
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 12:54:32 2012
+Subject: [PATCH/RFC v3 05/13] Make in-memory format aware of stat_crc
+Date: Wed,  8 Aug 2012 13:17:53 +0200
+Message-ID: <1344424681-31469-6-git-send-email-t.gummerer@gmail.com>
+References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
+Cc: trast@student.ethz.ch, mhagger@alum.mit.edu, gitster@pobox.com,
+	pclouds@gmail.com, robin.rosenberg@dewire.com, t.gummerer@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 13:26:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz3uJ-0008Qw-Jb
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 12:54:31 +0200
+	id 1Sz4Pc-0004pP-Uz
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 13:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512Ab2HHKyJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Aug 2012 06:54:09 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:62906 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751967Ab2HHKyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 06:54:07 -0400
-Received: by weyx8 with SMTP id x8so368401wey.19
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 03:54:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=JvXD9dC0u31zCj5j3JWcGx+a6taoSsuj0YaRzMi6/Qw=;
-        b=B3AwWkTbRK41GAYrfoQ0UivMo+ERtpZDmrHEuIBhUD09IStsLPmBbWnSJKC17OpKwC
-         zFbSGRIzOaMRgy+L3tzoUdf+GDVcYxer2ol2GK16KXgZZtE7u1mOq7x7NXNlAscpO18/
-         HzOyME5ribitBLhTDzWdWj7LtzOdkIVrxY3DHhmxe8Acaoq9UPJ10tNxLpWUvk4VwRPy
-         JzKbwuVCqB3z1w3T1vGnM7bk+HbyibifTr+XFI+raN6W9nHUZpdRoYPJo/IktLsKlw/p
-         BAa7U6iGTZpaSrhfFnjQK77C5SjCfqMpjSJvINKX3ZpxQpZJ6g6FxW2bjtQagZkTyRFc
-         3ZiA==
-Received: by 10.180.78.4 with SMTP id x4mr1629326wiw.19.1344423246368;
-        Wed, 08 Aug 2012 03:54:06 -0700 (PDT)
-Received: from localhost ([46.18.27.126])
-        by mx.google.com with ESMTPS id j6sm6750062wiy.4.2012.08.08.03.54.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 08 Aug 2012 03:54:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <50218E16.1010304@dewire.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755982Ab2HHL01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 07:26:27 -0400
+Received: from li348-43.members.linode.com ([178.79.179.43]:36950 "EHLO
+	tgummerer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754989Ab2HHL00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 07:26:26 -0400
+X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2012 07:26:26 EDT
+Received: by tgummerer.com (Postfix, from userid 1001)
+	id 64C774EFEF; Wed,  8 Aug 2012 13:18:48 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10.GIT
+In-Reply-To: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203072>
 
+Make the in-memory format aware of the stat_crc used by index-v5.
+It is simply ignored by index version prior to v5.
 
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ cache.h      |    1 +
+ read-cache.c |   25 +++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-On 08/07, Robin Rosenberg wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy skrev 2012-08-06 16.36:
->=20
-> >+++ b/read-cache-v5.c
-> >@@ -0,0 +1,1170 @@
-> >+#include "cache.h"
-> >+#include "read-cache.h"
-> >+#include "resolve-undo.h"
-> >+#include "cache-tree.h"
-> >+
-> >+struct cache_header_v5 {
-> >+	unsigned int hdr_ndir;
-> >+	unsigned int hdr_nfile;
-> >+	unsigned int hdr_fblockoffset;
-> >+	unsigned int hdr_nextension;
-> >+};
-> >+
-> >+struct ondisk_cache_entry_v5 {
-> >+	unsigned short flags;
-> >+	unsigned short mode;
-> >+	struct cache_time mtime;
-> >+	int stat_crc;
-> >+	unsigned char sha1[20];
-> >+};
->=20
-> I mentioned this before in another thread, but for JGit I'd like
-> to see size as a separate attribute. The rest of stat_crc is not
-> available to Java so when this index gets its way into JGit,
-> stat_crc will be zero and will never be checked.
->=20
-
-I'm sorry for forgetting to add this, it will be included in the
-re-roll.  The stat_crc will be ignored if it is 0 in the ondisk
-index.
+diff --git a/cache.h b/cache.h
+index c77cdbe..bfe3099 100644
+--- a/cache.h
++++ b/cache.h
+@@ -122,6 +122,7 @@ struct cache_entry {
+ 	unsigned int ce_flags;
+ 	unsigned int ce_namelen;
+ 	unsigned char sha1[20];
++	uint32_t ce_stat_crc;
+ 	struct cache_entry *next;
+ 	struct cache_entry *dir_next;
+ 	char name[FLEX_ARRAY]; /* more */
+diff --git a/read-cache.c b/read-cache.c
+index 125e6a0..d8f8b74 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -51,6 +51,29 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+ 	add_index_entry(istate, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+ }
+ 
++static uint32_t calculate_stat_crc(struct cache_entry *ce)
++{
++	unsigned int ctimens = 0;
++	uint32_t stat, stat_crc;
++
++	stat = htonl(ce->ce_ctime.sec);
++	stat_crc = crc32(0, (Bytef*)&stat, 4);
++#ifdef USE_NSEC
++	ctimens = ce->ce_ctime.nsec;
++#endif
++	stat = htonl(ctimens);
++	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
++	stat = htonl(ce->ce_ino);
++	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
++	stat = htonl(ce->ce_dev);
++	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
++	stat = htonl(ce->ce_uid);
++	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
++	stat = htonl(ce->ce_gid);
++	stat_crc = crc32(stat_crc, (Bytef*)&stat, 4);
++	return stat_crc;
++}
++
+ /*
+  * This only updates the "non-critical" parts of the directory
+  * cache, ie the parts that aren't tracked by GIT, and only used
+@@ -73,6 +96,8 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
+ 
+ 	if (S_ISREG(st->st_mode))
+ 		ce_mark_uptodate(ce);
++
++	ce->ce_stat_crc = calculate_stat_crc(ce);
+ }
+ 
+ static int ce_compare_data(struct cache_entry *ce, struct stat *st)
+-- 
+1.7.10.GIT
