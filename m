@@ -1,115 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 06/16] t3700: sleep for 1 second, to avoid
- interfering with the racy code
-Date: Wed, 08 Aug 2012 13:16:29 -0700
-Message-ID: <7vr4rhrvfm.fsf@alter.siamese.dyndns.org>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344203353-2819-7-git-send-email-t.gummerer@gmail.com>
- <7vsjc023sr.fsf@alter.siamese.dyndns.org> <20120807165947.GD913@tgummerer>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] Add Code Compare v2.80.4 as a merge / diff tool for Windows
+Date: Wed, 08 Aug 2012 22:31:12 +0200
+Message-ID: <5022CC90.3060108@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pcouds@gmail.com, robin.rosenberg@dewire.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 22:16:40 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 22:31:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzCgI-0002jb-Le
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 22:16:39 +0200
+	id 1SzCv1-0008Kj-Lh
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 22:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759198Ab2HHUQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 16:16:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55269 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753822Ab2HHUQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 16:16:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3097D88D5;
-	Wed,  8 Aug 2012 16:16:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7tOsfx3UP39E+DcQ8Pu/qXeqPWE=; b=DHtKJ6
-	28walFC+rbqNGvjz0a3dLGvUsK3KjNbawCH+vSuFSLR9MCJZfqxoFNwvnIqcs9cd
-	vCFV5hxbRw4uZozbnDP5XmIQ4r9ho/ehR1EQVzGix4quml8UmfJKVU3LxE1sB3UW
-	7NzW341c8+C7PdLAcCJG+zvn7whors9xM8Uo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kc93MXuEMiSRzcnevH7t4faUWF7OgSPS
-	nQaqfnejD22pMOJccmIuVWYdJnByBX+k0ajFgeyPmX7PrGdDK/GgfBO32Q/KKFGJ
-	2ixflmmodJ242LNrcorQkkc3MoyFN+JUpgWpqPuf45yf++TbSZ+trAVKkwK5Uaq2
-	4sj7oy24hmU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E66688D3;
-	Wed,  8 Aug 2012 16:16:31 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 817AA88D0; Wed,  8 Aug 2012
- 16:16:30 -0400 (EDT)
-In-Reply-To: <20120807165947.GD913@tgummerer> (Thomas Gummerer's message of
- "Tue, 7 Aug 2012 18:59:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F0E370C4-E195-11E1-B471-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759236Ab2HHUbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 16:31:33 -0400
+Received: from plane.gmane.org ([80.91.229.3]:38717 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753427Ab2HHUbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 16:31:32 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1SzCud-0007ku-9U
+	for git@vger.kernel.org; Wed, 08 Aug 2012 22:31:27 +0200
+Received: from p5ddb050a.dip0.t-ipconnect.de ([93.219.5.10])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 22:31:27 +0200
+Received: from sschuberth by p5ddb050a.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 22:31:27 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: p5ddb050a.dip0.t-ipconnect.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203123>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Code Compare is a commercial file comparison tool for Windows, see
 
-> On 08/05, Junio C Hamano wrote:
->> Thomas Gummerer <t.gummerer@gmail.com> writes:
->> 
->> > The new git racy code uses the mtime of cache-entries to smudge
->> > a racy clean entry, and loads the work, of checking the file-system
->> 
->> -ECANTPARSE.
->
-> The git racy code for index-v5 uses the mtime of the cache-entries as
-> smudge markers. The work of checking the file-system is loaded of to
-> the reader.
+    http://www.devart.com/codecompare/
 
-OK, now I can parse, perhaps with either s/is loaded of/&f/ or
-s/is loaded of/is offloaded/.
+Version 2.80.4 added support for command line arguments preceded by a
+dash instead of a slash. This is required for Git for Windows because
+slashes in command line arguments get mangled with according to these
+rules:
 
-Thanks for clarifying the grammar.
+    http://www.mingw.org/wiki/Posix_path_conversion
 
-But doesn't the current code make it the responsibilty of the reader
-to check the contents with ce_modified_check_fs() already?  You may
-have switched st_size to st_mtime as the field to mark a racily
-clean entry, but it is unclear how that change affects anything.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ Documentation/merge-config.txt         |  8 ++++----
+ contrib/completion/git-completion.bash |  2 +-
+ git-mergetool--lib.sh                  |  2 +-
+ mergetools/codecompare                 | 25 +++++++++++++++++++++++++
+ 4 files changed, 31 insertions(+), 6 deletions(-)
+ create mode 100644 mergetools/codecompare
 
->> > if the entry has really changed, off to the reader. This interferes
->> > with this test, because the entry is racily smudged and thus has
->> > mtime 0. We wait 1 second to avoid smudging the entry and getting
->> > correct test results.
->> 
->> Mild NAK, especially it is totally unclear why you even need to muck
->> with racy-git check in the current format of the index in the first
->> place, and even if it were necessary, it is unclear why this cannot
->> be done with test-chmtime.
->
-> The racy-git code needs to be changed, to avoid problems when implementing
-> the partial writing for index-v5. Otherwise it could cause problems, when
-> we have entries that should be smudged, but are not due to the different
-> racy algorithms.
-
-Hrmph.  But if racy detection and checking is now a responsibility
-of the later reader, the overall end result should be the same, no?
-Perhaps the existing test was checking a wrong thing?
-
-We should not care if the index still has a racily clean entries, or
-how that fact is marked in the index entry.  The primary thing we
-care about is that we do not mistake an actual change as no change
-due to raciness.
-
-So whether done with "sleep" or "test-chmtime", avoiding a racily
-clean situation sounds like sweeping a bug in the v5 code in racy
-situation under the rug to me (unless I am misunderstanding what
-you are doing with this change and in your explanation, or the test
-was checking a wrong thing, that is).
-
-Even more confused....
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index 861bd6f..e9e0d55 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -54,10 +54,10 @@ merge.stat::
+ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "araxis",
+-	"bc3", "diffuse", "ecmerge", "emerge", "gvimdiff", "kdiff3", "meld",
+-	"opendiff", "p4merge", "tkdiff", "tortoisemerge", "vimdiff"
+-	and "xxdiff".  Any other value is treated is custom merge tool
+-	and there must be a corresponding mergetool.<tool>.cmd option.
++	"bc3", "codecompare", "diffuse", "ecmerge", "emerge", "gvimdiff",
++	"kdiff3", "meld", "opendiff", "p4merge", "tkdiff", "tortoisemerge",
++	"vimdiff" and "xxdiff".  Any other value is treated is custom merge
++	tool and there must be a corresponding mergetool.<tool>.cmd option.
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ffedce7..222b804 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1071,7 +1071,7 @@ _git_diff ()
+ }
+ 
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+-			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3
++			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3 codecompare
+ "
+ 
+ _git_difftool ()
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index f730253..54cb708 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -126,7 +126,7 @@ list_merge_tool_candidates () {
+ 		else
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+ 		fi
+-		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3"
++		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3 codecompare"
+ 	fi
+ 	case "${VISUAL:-$EDITOR}" in
+ 	*vim*)
+diff --git a/mergetools/codecompare b/mergetools/codecompare
+new file mode 100644
+index 0000000..3f0486b
+--- /dev/null
++++ b/mergetools/codecompare
+@@ -0,0 +1,25 @@
++diff_cmd () {
++	"$merge_tool_path" "$LOCAL" "$REMOTE"
++}
++
++merge_cmd () {
++	touch "$BACKUP"
++	if $base_present
++	then
++		"$merge_tool_path" -MF="$LOCAL" -TF="$REMOTE" -BF="$BASE" \
++			-RF="$MERGED"
++	else
++		"$merge_tool_path" -MF="$LOCAL" -TF="$REMOTE" \
++			-RF="$MERGED"
++	fi
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	if merge_mode
++	then
++		echo CodeMerge
++	else
++		echo CodeCompare
++	fi
++}
+-- 
+1.7.11.msysgit.3
