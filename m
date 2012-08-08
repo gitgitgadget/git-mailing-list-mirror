@@ -1,83 +1,85 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC v3 01/13] Move index v2 specific functions to their
- own file
-Date: Wed, 8 Aug 2012 19:04:48 +0700
-Message-ID: <CACsJy8CY--Z_BfscRCG8+Om1Z8JsFgj0BkjNyMJnwsbmyGRLXQ@mail.gmail.com>
-References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com> <1344424681-31469-2-git-send-email-t.gummerer@gmail.com>
+Subject: Re: [PATCH/RFC v3 06/13] Read index-v5
+Date: Wed, 8 Aug 2012 19:05:33 +0700
+Message-ID: <CACsJy8DZ-+0XD2HxkTFuXKXJFH66MCLLrfHtcMF-1GqBb2AmVg@mail.gmail.com>
+References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com> <1344424681-31469-7-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
 	gitster@pobox.com, robin.rosenberg@dewire.com
 To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 14:05:34 2012
+X-From: git-owner@vger.kernel.org Wed Aug 08 14:06:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz50w-0002lV-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 14:05:26 +0200
+	id 1Sz51g-00047O-GH
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 14:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757977Ab2HHMFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 08:05:20 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:33810 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757486Ab2HHMFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 08:05:19 -0400
-Received: by qaas11 with SMTP id s11so448369qaa.19
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 05:05:18 -0700 (PDT)
+	id S1757993Ab2HHMGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 08:06:07 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:50832 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756111Ab2HHMGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 08:06:05 -0400
+Received: by qcro28 with SMTP id o28so347687qcr.19
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 05:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=YTuj896YgTQLjAr0/Uk5zxpGW/TMrIMMlbFzsKzYalA=;
-        b=cSO9GIu4U2mf0LE81s2nLQfrOv91yCpZlWu8gbwTOMFH7aVC8C9eXtHRyx9Fqtq1Te
-         yUOJzeABpV/wGDXyveh6OKfO4MBL0odPRvb/zF4BKE9iI3c7h4v/bpD9w2khue6a9EEC
-         v69c5j8U+mZXFwMfWoEsuK5958ET87E1hFhXa0whDKQfXfVkgmc32mgOaty7kQSoY6i2
-         q7QeYZy8eLxaZZzeDiQ87FnL+fnj7QXcL8eHInJWY0m/34Z0nwAblOQq71UezSsEPiTM
-         UpdXkAid2KyB9CnZ39OjXjKEpa1VIuAiteRSJq9YPBSldVbsxiyCHISFbsTtZEikgx46
-         piAQ==
-Received: by 10.224.71.1 with SMTP id f1mr20361292qaj.90.1344427518335; Wed,
- 08 Aug 2012 05:05:18 -0700 (PDT)
-Received: by 10.49.84.73 with HTTP; Wed, 8 Aug 2012 05:04:48 -0700 (PDT)
-In-Reply-To: <1344424681-31469-2-git-send-email-t.gummerer@gmail.com>
+        bh=wtl8zT8VJ4qDwJI2kgfoSeHRmK+fy2ywjurAfSwgFmA=;
+        b=pBJuHxun/oEFC0XTIl2eudyN+j31ru6UG3IgtRE0/PHZKjXTLcss+HjUyVAt65Isum
+         CDzc2i9un/Paj1cK7pd7ndnKryE4wF9WoD8U4s/8qjStI6t5ytC5cIOUc3squyLYzyPO
+         Fwn4y+9J2cHoZCLmdI47DRidw1dN9rDZVdjKNyd2infyHLbgPU0OLsW7Nmo8N1MWf+6C
+         NPuU9tX6tGfaPmsqJVo1IJynaw28JqlvQZryH3ldKIL7cQxdzu5Mf5QCZ5CNHLv9onqW
+         PUC5wOX+cNDjftmUyQWLxqPfX+a5QrznfBnV87M/vyr5qDX4N7018/lMiv8vVr4BIZbT
+         MzYg==
+Received: by 10.224.26.210 with SMTP id f18mr29584499qac.80.1344427563847;
+ Wed, 08 Aug 2012 05:06:03 -0700 (PDT)
+Received: by 10.49.84.73 with HTTP; Wed, 8 Aug 2012 05:05:33 -0700 (PDT)
+In-Reply-To: <1344424681-31469-7-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203087>
 
-On Wed, Aug 8, 2012 at 6:17 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> Move index version 2 specific functions to their own file,
-> to prepare for the addition of a new index file format. With
-> the split into two files we have the non-index specific
-> functions in read-cache.c and the index-v2 specific functions
-> in read-cache-v2.c
+uOn Wed, Aug 8, 2012 at 6:17 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> +static struct cache_entry *read_entry(struct directory_entry *de,
+> +                       unsigned long *entry_offset,
+> +                       void **mmap,
+> +                       unsigned long mmap_size,
+> +                       unsigned int *foffsetblock,
+> +                       int fd)
+> +{
+> ....
+> +               if (crc_wrong) {
+> +                       /* wait for 10 milliseconds */
+> +                       usleep(10*1000);
+> +                       munmap(*mmap, mmap_size);
+> +                       *mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+> +               }
 
-You still mix code changes and code move in one patch, but we can skip
-it for now.
+Do we really need to munmap and mmap again? I don't see mmap man page
+mention anything about "refreshing" the mmap'd memory with file
+changes, not sure how it works. msync() seems for writing only.
 
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -267,6 +259,7 @@ struct index_state {
->         unsigned name_hash_initialized : 1,
->                  initialized : 1;
->         struct hash_table name_hash;
-> +       struct index_ops *ops;
->  };
+If remapping is necessary, how about mremap? What I want to see is
+whether we could avoid passing "fd" down to here.
 
-Do we really need to modify "ops" content? If not make it "const
-struct index_ops *ops;" which makes..
+> +struct index_ops v5_ops = {
+> +       match_stat_basic,
+> +       verify_hdr,
+> +       read_index_v5,
+> +       NULL
+> +};
 
-> @@ -471,8 +464,8 @@ extern int index_name_is_other(const struct index_state *, const char *, int);
->  #define CE_MATCH_RACY_IS_DIRTY         02
->  /* do stat comparison even if CE_SKIP_WORKTREE is true */
->  #define CE_MATCH_IGNORE_SKIP_WORKTREE  04
-> -extern int ie_match_stat(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
-> -extern int ie_modified(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
-> +extern int ie_match_stat(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
-> +extern int ie_modified(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
-
-..this hunk go away
+If you do it right, putting write_index_v2 here should work because
+in-core structure is not changed (except that write_index_v2 is static
+function, well..). Maybe putting write_index to this struct is a wrong
+decision. We should be able to read_index_v5+write_index_v2 and
+read_index_v2+write_index_v5.
 -- 
 Duy
