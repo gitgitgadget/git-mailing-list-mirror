@@ -1,81 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3 06/13] Read index-v5
-Date: Wed, 08 Aug 2012 10:05:28 -0700
-Message-ID: <7vipcttiuf.fsf@alter.siamese.dyndns.org>
-References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
- <1344424681-31469-7-git-send-email-t.gummerer@gmail.com>
- <CACsJy8DZ-+0XD2HxkTFuXKXJFH66MCLLrfHtcMF-1GqBb2AmVg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	trast@student.ethz.ch, mhagger@alum.mit.edu,
-	robin.rosenberg@dewire.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 19:05:42 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] Documentation: list git-credential in plumbing commands
+Date: Wed,  8 Aug 2012 19:13:09 +0200
+Message-ID: <1344445989-2923-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 08 19:13:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz9hQ-0001F7-NC
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 19:05:37 +0200
+	id 1Sz9pU-0005a3-C1
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 19:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758929Ab2HHRFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 13:05:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62491 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758903Ab2HHRFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 13:05:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E4818841;
-	Wed,  8 Aug 2012 13:05:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JDxoIUYyVwepvDEojVWgmmP6bC0=; b=tvZ/7N
-	0G/aWf0w6Se2ADt6l4bpGyP2HJCv5ZPx3cu9zZCKFux28eV/sha3UZiyHLFo0wwK
-	epx5mQEBeWXadOUp74sBZUQwUvVmxVlwVQ9Qb7aCt3716WlwlcyuGskir4AKuFFJ
-	SW4IWiooGtX1XbYruageVxjQrZSD/j0Y5VPaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IkgffjbQFVJwNaSaCKFolrod+Mc3bmEm
-	SoufrZ72csz/3Yh888hFv83d8vW7Q+ZwtuqQaEV3IZILoBAx9hKzWQaoJ6fE+VKb
-	6exZKK6rch3rpd6ti89skH3++dJ30RVhFT0pHWCASD0wKSxP55SYwDiMtL5Xq/N4
-	qMQ8978l2FU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A8288840;
-	Wed,  8 Aug 2012 13:05:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE356883C; Wed,  8 Aug 2012
- 13:05:29 -0400 (EDT)
-In-Reply-To: <CACsJy8DZ-+0XD2HxkTFuXKXJFH66MCLLrfHtcMF-1GqBb2AmVg@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 8 Aug 2012 19:05:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 41C5F360-E17B-11E1-BE6B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030567Ab2HHRNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 13:13:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38645 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030444Ab2HHRNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 13:13:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q78HAcJ7030374
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 8 Aug 2012 19:10:38 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sz9pJ-0006vm-3F; Wed, 08 Aug 2012 19:13:45 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1Sz9pI-0000m2-Sx; Wed, 08 Aug 2012 19:13:44 +0200
+X-Mailer: git-send-email 1.7.12.rc1.183.gb94da76
+In-Reply-To: <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 08 Aug 2012 19:10:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q78HAcJ7030374
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1345050639.82679@FtJ9pEC91yknUd4+cUOpcA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203102>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Commit e30b2feb1b (Jun 24 2012, add 'git credential' plumbing command)
+forgot to add git-credential to command-list.txt, hence the command was
+not appearing in the documentation, making it hard for users to discover
+it.
 
->> +struct index_ops v5_ops = {
->> +       match_stat_basic,
->> +       verify_hdr,
->> +       read_index_v5,
->> +       NULL
->> +};
->
-> If you do it right, putting write_index_v2 here should work because
-> in-core structure is not changed (except that write_index_v2 is static
-> function, well..). Maybe putting write_index to this struct is a wrong
-> decision. We should be able to read_index_v5+write_index_v2 and
-> read_index_v2+write_index_v5.
+While we're there, capitalize the description line for git-crendential
+for consistency with other commands.
 
-The "right way" is to have a global API function
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+> > for consistancy with other commands.
+> 
+> consistency?
 
-    write_index_in_format(int version, int fd);
+Yes, sorry. This one should be OK.
 
-which calls "the_index->index_ops.write_index[version](the_index, fd)",
-no?
+ Documentation/git-credential.txt | 2 +-
+ command-list.txt                 | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+index 53adee3..810e957 100644
+--- a/Documentation/git-credential.txt
++++ b/Documentation/git-credential.txt
+@@ -3,7 +3,7 @@ git-credential(1)
+ 
+ NAME
+ ----
+-git-credential - retrieve and store user credentials
++git-credential - Retrieve and store user credentials
+ 
+ SYNOPSIS
+ --------
+diff --git a/command-list.txt b/command-list.txt
+index 14ea67a..ec64cac 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -25,6 +25,7 @@ git-commit                              mainporcelain common
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators
+ git-count-objects                       ancillaryinterrogators
++git-credential                          purehelpers
+ git-cvsexportcommit                     foreignscminterface
+ git-cvsimport                           foreignscminterface
+ git-cvsserver                           foreignscminterface
+-- 
+1.7.12.rc1.183.gb94da76
