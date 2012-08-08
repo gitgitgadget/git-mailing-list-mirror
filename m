@@ -1,52 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fast-import error: fatal: 'refs/heads/master' - not a valid ref
-Date: Wed, 8 Aug 2012 13:54:33 -0400
-Message-ID: <20120808175433.GA12772@sigill.intra.peff.net>
-References: <CAHSUVA5y1nZG69JbvC-wbmHhjyBGLx8Z2TM3htEyuCsWj=A+aw@mail.gmail.com>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: Git does not handle changing inode numbers well
+Date: Wed, 8 Aug 2012 20:07:48 +0200
+Message-ID: <20120808180748.GS21274@login.drsnuggles.stderr.nl>
+References: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Andrey Pavlenko <andrey.a.pavlenko@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 19:54:51 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bGopQmzlzQgFk3Fg"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 08 20:07:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzAT2-0008Hh-Iq
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 19:54:48 +0200
+	id 1SzAfm-0002uq-7u
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 20:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932510Ab2HHRyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 13:54:44 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57489 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759061Ab2HHRyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 13:54:43 -0400
-Received: (qmail 9014 invoked by uid 107); 8 Aug 2012 17:54:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Aug 2012 13:54:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2012 13:54:33 -0400
+	id S1030514Ab2HHSHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 14:07:53 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:44501 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030507Ab2HHSHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 14:07:52 -0400
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1SzAfc-0002o7-At
+	for git@vger.kernel.org; Wed, 08 Aug 2012 20:07:49 +0200
+Received: (nullmailer pid 10792 invoked by uid 1000);
+	Wed, 08 Aug 2012 18:07:48 -0000
+Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CAHSUVA5y1nZG69JbvC-wbmHhjyBGLx8Z2TM3htEyuCsWj=A+aw@mail.gmail.com>
+In-Reply-To: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203106>
 
-On Wed, Aug 08, 2012 at 11:25:02AM +0400, Andrey Pavlenko wrote:
 
-> I'm developing a remote helper which uses the fast-import stream for
-> fetching. When I perform cloning git prints error message - "fatal:
-> 'refs/heads/master' - not a valid ref", however the clonning completes
-> normally. Each my fast-import commit command starts with "commit
-> refs/heads/master" header.
-> 
-> What does this error message mean and how can I fix it?
+--bGopQmzlzQgFk3Fg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-What version of git are you using? The only command which produces that
-exact message is "git show-ref", and it is not called by current
-versions of the cloning process (but it used to be in old versions).
+> So, let's see if I can fix my filesystem now ;-)
+For anyone interested: turns out passing -o noforget makes fuse keep a
+persistent path -> inode mapping (at the cost of memory usage, of
+course).
 
--Peff
+However, it also turns out that fuse wasn't my problem: It was the aufs
+mount that was overlayed over my fuse mount (this was on a Debian live
+system), which sets the noxino option that prevents aufs from keeping
+persistent inode numbers.
+
+To get git status working as expected, I had to both remove noxino from
+the aufs mount and add noforget to the underlying fuse mount.
+
+Gr.
+
+Matthijs
+
+--bGopQmzlzQgFk3Fg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAlAiqvQACgkQz0nQ5oovr7zbxQCghgakErd0K7sxoRvuYvuaKlPr
+HhwAnRvYTS+4pw0pA4fNzrluG0NFZr3c
+=/y0f
+-----END PGP SIGNATURE-----
+
+--bGopQmzlzQgFk3Fg--
