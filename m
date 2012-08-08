@@ -1,138 +1,130 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Git does not handle changing inode numbers well
-Date: Wed, 8 Aug 2012 17:22:30 +0200
-Message-ID: <20120808152230.GQ21274@login.drsnuggles.stderr.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
+Date: Wed, 08 Aug 2012 09:31:37 -0700
+Message-ID: <7vvcgttkeu.fsf@alter.siamese.dyndns.org>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+ <1344263760-31191-1-git-send-email-pclouds@gmail.com>
+ <7vehnjzzfd.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CepAQr4r-c_hzwgT2-_bpFV-=VmOsFaBcDZqBpG52reQ@mail.gmail.com>
+ <7v7gtaups3.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DfJJpwidfUQFDeqM=5uPpGF6rZ6C1pS0H6mSNHUqOkbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="z4IKABJTiQIqPwmW"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 08 18:02:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+	trast@student.ethz.ch, mhagger@alum.mit.edu,
+	robin.rosenberg@dewire.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 18:31:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz8iW-0005qb-77
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 18:02:40 +0200
+	id 1Sz9Ah-0008GV-5c
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 18:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030414Ab2HHQCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 12:02:34 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:51287 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030402Ab2HHQCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 12:02:33 -0400
-X-Greylist: delayed 2399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2012 12:02:33 EDT
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1Sz85e-0006fA-Um
-	for git@vger.kernel.org; Wed, 08 Aug 2012 17:22:32 +0200
-Received: (nullmailer pid 25612 invoked by uid 1000);
-	Wed, 08 Aug 2012 15:22:30 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1030399Ab2HHQbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 12:31:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46424 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758873Ab2HHQbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 12:31:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF38D9C1F;
+	Wed,  8 Aug 2012 12:31:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BWg7HM41nU582MHzBjeqy303Cpg=; b=E9CRVt
+	IVuM0kJQVSXZEgEZp+eVqkapd50kvHbUzI9qsBbCtNtVe8HlDR3fdvlS4drvE03v
+	S8V/SsUwQyJpnlohPGIG5Aj1n+53HqbEbagnFoMAqksxeaCK/2rmUhpa5N0J64/e
+	m0d/5zkmnob3xS99/m0LTTUXwIrjRi0gBuZqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QtyMxYmlF/pXXIk6GGvyVTjtY4KI3Wjl
+	6oYhQOSE26RUg40ICvfMdLoZg1aDmJNqV664q7mWITBBoW8hYKM9Zmr3mgoEarWK
+	oZ4+qKnDDVtSG1p7OYiXugMgjbNfmXuH38vBG7jIb927pAhep4h7uiNvc+Iy/vjR
+	jN//7EhPgMQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BF639C1E;
+	Wed,  8 Aug 2012 12:31:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBA809C1C; Wed,  8 Aug 2012
+ 12:31:38 -0400 (EDT)
+In-Reply-To: <CACsJy8DfJJpwidfUQFDeqM=5uPpGF6rZ6C1pS0H6mSNHUqOkbg@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 8 Aug 2012 20:54:09 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 872C5D86-E176-11E1-995F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203096>
 
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
---z4IKABJTiQIqPwmW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> OK how about this. The general idea is preserve/extend current flat
+> index API and add a new (tree-based) one. Index users can use either.
+> They can even mix them up (which they do because we can't just flip
+> the API in one day for about 200 source files).
+>
+> The day that unpack_trees() is converted to tree API, I will declare
+> v5 victory ;)
 
-(Please CC me, I'm not on the list)
+s/API, /API and benchmark says tree-shaped index is an overall win, /;
 
-Hi folks,
+> = Cleanup =
+>
+> struct cache_entry becomes partly opaque. ce_ctime..ce_gid are hidden
+> in -v2.c and -v5.c. We only expose ce_size, ce_flags, ce_namelen, name
+> and sha1 to index users. Extra v5 fields like ce_stat_crc, next and
+> dir_next are also hidden. These fields can be put in a real struct in
+> read-cache.h, which is supposedly included by -v2.c and -v5.c
 
-I've spent some time debugging an issue and I'd like to share the
-results. The conclusion of my debugging is that git does not currently
-handle changing inode numbers on files well.
+I do not particularly see a reason to keep different in-core
+cache_entry representations even in an early round of the API
+updates.  If v2 needs ctime and gid and v5 needs crc, keep both
+fields for simplicity.  When coming from the filesystem, ctime, gid
+and friends are immediately available and crc needs to be computed
+only immediately before it is written out or it is compared with an
+existing entry.
 
-I have a custom Fuse filesystem, and fuse dynamically allocates inode
-numbers to paths, but keeps a limited cache of inode -> name mappings,
-causing the inodes to change over time.
+I also do not see a reason to keep two representations of in-core
+index_state representations for that matter.
 
-Now of course, you'll probably say, "it's the filesystem's fault, git
-can't be expected to cope with that". You'll be right of course, but
-since I already spent the time digging into this and figuring out what
-goes on inside git in this case, I thought I might as well share the
-analysis, just in case someone sees an easy fix in here, or in case
-someone else stumbles upon this problem as well.
+The current code that access nth entry from the index->cache[nth]
+would need to be updated to use an accessor function, whether the
+"nth" comes from index_name_pos() or from the for-loop that iterates
+over the entire index.  For the latter, you would need to give the
+users a function that returns a cursor into the in-core index to
+allow iterating over it.
 
-So, the actual problem I was seeing is that running "git status" showed
-all symlinks as "modified", even though they really were identical
-between the working copy, index and HEAD. Interestingly enough this only
-happened when running "git status" without further arguments, when
-running on a subdirectory, it would show no changes as expected.
+When you use an in-core representation that is not a flat array, the
+type of "nth", which is essentially a cursor, may have to change to
+something that is richer than a simple integer, in order to give the
+implementation of the in-core index a more efficient way to access
+the entry than traversing the leaves of the tree depth first, and
+you would need to update index_name_pos() to return such a "cursor".
+That design and development cost is part of updating the in-core
+data structure. In the end result, the runtime cost to manipulate an
+index entry that the cursor refers to should be minimum, as that
+would be the cost paid by all the users of the API anyway, even if
+we _were_ starting from an ideal world where there weren't any flat
+in-core index in the first place.
 
-I compared the output of stat to a hexdump of the index file and found
-that everything matched, except for the inode numbers. I originally
-thought I was misinterpreting what I saw, but gdb confirmed that it were
-indeed the inode numbers that git observed as different.
+Because the v2 on-disk format forces us to scan the whole thing at
+least once, with a properly designed in-core representation, the
+overall system would not suffer performance penalty when reading
+from v2, as both the current code and the updated code have to read
+everything, and accesses based on the cursor given by either
+index_name_pos() or the index iterator has to be fast anyway (if the
+latter does not hold true, your updated in-core representation that
+is not a flat array needs to be rethought).
 
-Now, I could have stopped here and started trying to fix my filesystem
-instead. But it was still weird that this problem only existed for
-symlinks and that normal files acted as expected. So I dug in a bit
-deeper, hoping to find some way to make this work for symlinks as well.
+On top of such a solid foundation, we can map the updated in-core
+representation to an on-disk representation with confidence, as any
+performance improvement or degradation from that point on must be
+solely attributable to the on-disk format difference.
 
-So, here's what happens (IIUC):
- - cmd_status calls refresh_index, which calls refresh_cache_ent for
-   every entry in the index.
- - refresh_cache_ent notices that the inode number has changed (for both
-   symlinks and regular files) and compares the file / symlink contents.
- - refresh_cache_ent sees the content hasn't changed, so it calls
-   fill_stat_cache_info to update the stat info.
- - fill_stat_cache_info sets the EC_UPTODATE flag on the entry, but only
-   if it is a regular file.
- - cmd_status calls wt_status_collect which calls
-   wt_status_collect_changes_worktree which calls run_diff_files.
- - run_diff_files skips regular files, because of the EC_UPTODATE flag.
-   For symlinks, however, it checks the stat info and notices that the
-   inode number has changed (again). It does not do a content check at
-   this point, but instead just outputs the file as "modified".
-
-
-It turned out that the reason running "git status" on a subdirectory did
-appear to work, was that the number of files in the subdir wasn't big
-enough to overflow the inode number cache fuse keeps, so that numbers
-didn't change in this case (the problem _did_ occur when trying a bigger
-subdirectory).
-
-So, it seems that git just doesn't cope well with changing inode numbers
-because it checks the content in a first pass in refresh_index, but only
-checks the stat info in the second pass in run_diff_files. The reason it
-does work for regular files is EC_UPTODATE optimization introduced in
-eadb5831: Avoid running lstat(2) on the same cache entry.
-
-So, let's see if I can fix my filesystem now ;-)
-
-Gr.
-
-Matthijs
-
---z4IKABJTiQIqPwmW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAlAihDYACgkQz0nQ5oovr7zqqgCfUZ/gVU/cz5AqFyyqIvF7ShpJ
-bKkAoNaPiVPZaebaZPbOfTp4K/wjFvoC
-=Tg/t
------END PGP SIGNATURE-----
-
---z4IKABJTiQIqPwmW--
+Without such a foundation, it is hard to justify a different on-disk
+format without handwaving, no?
