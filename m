@@ -1,106 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug with git-submodule and IFS
-Date: Wed, 08 Aug 2012 12:08:17 -0700
-Message-ID: <7v628ttd5q.fsf@alter.siamese.dyndns.org>
-References: <1496197024.216188.1344449732940.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca> <1844267106.216233.1344450083762.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca>
+Subject: Re: [PATCH 0/4] update "make check-docs"
+Date: Wed, 08 Aug 2012 12:13:11 -0700
+Message-ID: <7v1ujhtcxk.fsf@alter.siamese.dyndns.org>
+References: <1344412707-22356-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vmx25tj5y.fsf@alter.siamese.dyndns.org>
+ <20120808183132.GA24550@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Dranse <adranse@oanda.com>
-X-From: git-owner@vger.kernel.org Wed Aug 08 21:08:29 2012
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 08 21:13:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzBcL-0001oU-3n
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 21:08:29 +0200
+	id 1SzBh1-0000hW-Vy
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 21:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932868Ab2HHTIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 15:08:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56085 "EHLO
+	id S932895Ab2HHTNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 15:13:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58390 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758816Ab2HHTIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 15:08:20 -0400
+	id S1758389Ab2HHTNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 15:13:14 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A83A3923C;
-	Wed,  8 Aug 2012 15:08:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E624793A1;
+	Wed,  8 Aug 2012 15:13:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zYEA15/xHRHZm0ohrV9gaRJa8Es=; b=hVXzrX
-	OmUZHf9j+mtsKiuZRxZJJb+BgCxgcPeLSab3Ab2wD0SNwQNkNwwT9irGsxBVhITO
-	yxb3aSGspQB2sjd+8SyxfivQY4Bi2nwoEeeCRaXsHCtG7J2Hjpv8gSRifwG1/gCL
-	+8DVVfeDMR9YbRgylTREoGukVEu3lfRbVJc9Q=
+	:content-type; s=sasl; bh=5k7BO8UZ0xDvrAJgVU0uGHLauQU=; b=IBKakF
+	W+ePKyXUiGQqxwKOALH39/huugah6+9+dHFIrT+7PlYuswko0VtFEZjAC5/OYCuS
+	9BQQ2Y4BJ9rFSDkvaAgys6uMHtRQday0P5vsmxX7ckvP1Vbe1q8sOYuSmSHL4RuH
+	GbyNeo/1Ccw40DsrfsOiz0IRsCAImDM4yXaC4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FsorueFaSKC7KMYHofPbJnRxlBCkAa9t
-	KhlNDQrntxMpS1DMgga+ZPRRkB1zrrnBTZLbFdqKBvOFnP1LCe9Dm2lQnPiMwLqx
-	8eyzEtfseIeANn6O/uBB7+I06dl0rxJfmpwHpBvwxRIjQIcMs7tO3LoHmuhUMaLd
-	i69YohgWWZE=
+	:content-type; q=dns; s=sasl; b=KJBNowgoV5crOOtbGMkKD1F9p9ttVIBs
+	9P1UCoH8PzBjCNq4LWXR0fhIC1ZyBiyIIdBq7NTsJKc3fl84w5slKU8xxDrfogcC
+	KeHFBKvLKY2/F7UTyB3QlrCVsUZuT6yT0Mw6M4FV2amYsSKU2C+SvsGkmgv7fksh
+	FPlJ2N6KvpQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9590C923B;
-	Wed,  8 Aug 2012 15:08:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D507393A0;
+	Wed,  8 Aug 2012 15:13:13 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1DF9923A; Wed,  8 Aug 2012
- 15:08:18 -0400 (EDT)
-In-Reply-To: <1844267106.216233.1344450083762.JavaMail.root@sms-zimbra-message-store-03.sms.scalar.ca> (Andrew Dranse's message of "Wed, 8 Aug 2012 14:21:23 -0400 (EDT)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 525FF939F; Wed,  8 Aug 2012
+ 15:13:13 -0400 (EDT)
+In-Reply-To: <20120808183132.GA24550@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 8 Aug 2012 14:31:32 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A161AC8-E18C-11E1-9C55-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1991CD1C-E18D-11E1-9CE7-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203115>
 
-Andrew Dranse <adranse@oanda.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Hi there,
+> On Wed, Aug 08, 2012 at 09:58:33AM -0700, Junio C Hamano wrote:
 >
-> I ran into an interesting bug with git submodules today.  It
-> appears that if your IFS is not set to what git-submodule expects
-> it to be (i.e. the standard IFS), it will break in a fun way.
+>> There really should be an easier way for the maintainer to notice
+>> this kind of glitch without being told (better yet, the submitter of
+>> a new command to notice it).  Perhaps the check-docs target in the
+>> Makefile needs some updating?
 >
-> Example:
+> Hmm. We have a check-docs command? :)
+
+Yes, and there also is a check-builtins target.  Perhaps the default
+build target should depend on them, as they are fairly lightweight?
+
+> This patch series at least brings that up to date. It goes on top of
+> Matthieu's patch.
 >
-> $ git init
-> Initialized empty Git repository in /home/adranse/test/.git/
-> $ git submodule add github:/repos/perf
-> Cloning into 'perf'...
-> remote: Counting objects: 5744, done.
-> remote: Compressing objects: 100% (4627/4627), done.
-> remote: Total 5744 (delta 2400), reused 1579 (delta 343)
-> Receiving objects: 100% (5744/5744), 28.78 MiB | 4.56 MiB/s, done.
-> Resolving deltas: 100% (2400/2400), done.
-> $ export IFS="
->> "
-> $ git submodule update --init --recursive
-> No submodule mapping found in .gitmodules for path ''
+>   [1/4]: check-docs: mention gitweb specially
+>   [2/4]: check-docs: update non-command documentation list
+>   [3/4]: command-list: add git-sh-i18n
+>   [4/4]: command-list: mention git-credential-* helpers
 
-I do not think it is limited to "git submodule", and shell scripts
-generally, not limited to shell scripted Porcelain commands from the
-Git suite, assume that they can rely safely on words split at SP and
-HT.
-
-Perhaps something like this is a good solution for it.
-
- git-sh-setup.sh | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 770a86e..ee0e0bc 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -9,8 +9,12 @@
- # you would cause "cd" to be taken to unexpected places.  If you
- # like CDPATH, define it for your interactive shell sessions without
- # exporting it.
-+# But we protect ourselves from such a user mistake nevertheless.
- unset CDPATH
- 
-+# Similarly for IFS
-+unset IFS
-+
- git_broken_path_fix () {
- 	case ":$PATH:" in
- 	*:$1:*) : ok ;;
+Thanks.
