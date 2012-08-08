@@ -1,142 +1,123 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 2/4] check-docs: update non-command documentation list
-Date: Wed, 8 Aug 2012 23:11:44 +0100
-Organization: OPDS
-Message-ID: <C64F75694EC040349CFE91CD69EDB2DC@PhilipOakley>
-References: <20120808183132.GA24550@sigill.intra.peff.net> <20120808183433.GB24574@sigill.intra.peff.net> <7vwr19rxua.fsf@alter.siamese.dyndns.org> <20120808205456.GB29528@sigill.intra.peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Sync production with Git
+Date: Wed, 8 Aug 2012 15:35:53 -0700
+Message-ID: <CAJDDKr5=zDEn4j9HAp3k5ubOJ1g5J-VhAka=BpoNuJbJ+ES_og@mail.gmail.com>
+References: <1344431484059-7564617.post@n2.nabble.com>
+	<vpqlihpbh4f.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 00:11:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	sitaramc@gmail.com
+To: kiranpyati <kiran.pyati@infobeans.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 00:36:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzETq-0000vR-E5
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:11:54 +0200
+	id 1SzErB-0003IK-ND
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 00:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756058Ab2HHWLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 18:11:43 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58397 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752634Ab2HHWLm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Aug 2012 18:11:42 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AsULABnjIlBcHIOP/2dsb2JhbABFhgGFP60dBAICfoEIghsFAQEEAQgBARkVHgEBIQUGAQEDBQIBAw4DBAEBAQICBSECAhQBBBoGBw8IBgESCAIBAgMBCodsCqhBkyWBIYlxghSDOjJgA41al36CYA
-X-IronPort-AV: E=Sophos;i="4.77,735,1336345200"; 
-   d="scan'208";a="400553698"
-Received: from host-92-28-131-143.as13285.net (HELO PhilipOakley) ([92.28.131.143])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 08 Aug 2012 23:11:40 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1757151Ab2HHWfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 18:35:55 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:55896 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756640Ab2HHWfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 18:35:54 -0400
+Received: by vbbff1 with SMTP id ff1so1283302vbb.19
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 15:35:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=L3jKddsrzobfgQdMAhW+0i0dvdUS8HWPpcdCTSSN94I=;
+        b=h4ojZqa4kUugFltJIVc6u+djxMfli8MCFXdk4OlGoqZlO+851BcEKPCiY3ktyBdYuY
+         l3VYBZi5lSWseZU7bGXjScWLxl5y1aYygqp0f0/rxgI0sdGirCdPT8i3QPDKFCVFspr3
+         xl0F/d0ykJmEw3xSvHO/DBCtSyMhviU+agdcdUiYW/1AF2i0eN5eisTP95H4StxbrNvT
+         TniSLCLv9ocQ5+l7/4HZ968xhEYvhRjHzYGzyWeHq0ZK1W0MstoRDdg93hKpNMFGqapE
+         6y19cxnTXJmci+ebIh2uOGTZt7P+V18G+7G6pzGDa3VDcpvjIVk0ohgmKZNvOOMPXrGH
+         TdEQ==
+Received: by 10.52.99.138 with SMTP id eq10mr13267519vdb.25.1344465353813;
+ Wed, 08 Aug 2012 15:35:53 -0700 (PDT)
+Received: by 10.59.9.36 with HTTP; Wed, 8 Aug 2012 15:35:53 -0700 (PDT)
+In-Reply-To: <vpqlihpbh4f.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203139>
 
------ Original Message ----- 
-From: "Jeff King" <peff@peff.net>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>; <git@vger.kernel.org>
-Sent: Wednesday, August 08, 2012 9:54 PM
-Subject: Re: [PATCH 2/4] check-docs: update non-command documentation 
-list
+On Wed, Aug 8, 2012 at 7:20 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> kiranpyati <kiran.pyati@infobeans.com> writes:
+>
+>> We want a way to seamlessly sync production and Git.
+>
+> You should be aware that Git was not designed for this scenario. The
+> usual flow with Git (and actually with most revision control systems),
+> is to do the development with Git, then use your build system to
+> generate a package that can be used in production (e.g. generate a
+> .tar.gz, or a .jar, or whatever your platform needs), and then install
+> this package on your production server.
 
 
-> On Wed, Aug 08, 2012 at 12:24:29PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > The check-docs target looks at Documentation/git*txt and
->> > complains if any entry does not have a matching command.
->> > Therefore we need to explicitly ignore any entries which are
->> > not meant to describe a command (like gitattributes.txt).
->> > This list has grown stale over time, so let's bring it up to
->> > date.
->> >
->> > Signed-off-by: Jeff King <peff@peff.net>
->> > ---
->> > I really wonder if we would do better to match git-*.txt, since 
->> > most of
->> > the ignores are gitfoo(7) types of pages. We'd probably want to add 
->> > back
->> > in "git", "gitweb" and "gitk" explicitly, but they are already 
->> > handled
->> > specially above and below.
->>
->> Quite possibly, yes.
->
-> Actually, my "already handled specially" is not quite accurate. That
-> special list is "things that are commands but are not necessarily
-> mentioned in the Makefile variables". But this list is "things that 
-> are
-> documented but do not begin with git-". The two should mostly be the
-> same, but the whole point of this exercise is to make sure they _are_
-> the same.
->
-> A better solution is to simply ask the Documentation directory what 
-> the
-> commands are, since it already knows (in the form of MAN1_TXT).
->
->> Also "git gitk gitweb" may want to be made into a Makefile variable
->> to be shared in the "above" and "below" (I do not know what to call
->> them offhand---they are programs with special build rules that are
->> not covered by ALL/SCRIPT_LIB/BUILTIN).
->
-> I couldn't think of a special name, either, but I think it is 
-> sufficient
-> to just create a new ALL_COMMANDS variable that includes those other
-> things, and then add to it.
->
->> By the way, do we have a documentation for git-gui?  Perhaps it may
->> want to be added to that "git gitk gitweb" list as a reminder that
->> it lacks documentation.  One of the goals of the person who runs
->> "make check-docs" should be to reduce the special case that appears
->> at the beginning of that case statement.
->
-> Yes, it should be checked (and git-citool, too).
->
->> I also wonder why "help" is not treated as a built-in?  Perhaps we
->> should throw it in to "git gitk gitweb" list?  After all, it is a
->> command that is available in "git foo" form, is documented, and is
->> listed in the command-list.txt file.
+Obligatory link to Sitaram's very helpful docs:
 
-One issue I notice a few weeks ago is that `git help --all` does not 
-list all of the available git help pages, rather it just limits itself 
-to the available command pages.
+http://sitaramc.github.com/the-list-and-irc/deploy.html
 
-This means that new users can't discover those additional help pages in 
-any easy manner.
+Thanks to Sitaram for this very helpful guide.
 
-I had an initial look at what might be involved in adding a --guides 
-option, shifting the current --all to --cmd (or --command) and then 
-make --all list both commands and guides.
 
-The need for help to list all the guides is parallel to these patches. I 
-didn't get that far in working out how to approach such a patch which 
-would discovere the available guides - I'm on GfW-msysgit which normally 
-uses web display.
+That said, please pay close attention to everything Matthieu wrote
+here.  It seems like things will go smoothly once you "true things up"
+and then follow a sensible process for moving things from git to
+production going forward.  Sitaram's write-up can help you discover
+what the right process is for you.
 
+
+> It can be tempting, however, to use your revision control system as a
+> deployment tool, so that an update on the production server be as simple
+> as "git pull". But in real-life applications, it usually has to be more
+> complicated: do you need to generate some files after you fetch the
+> latest version of the source? Do you need to update your database? Isn't
+> the .git/ directory harmfull here (e.g. do I want the full history
+> source of my project to be visible worldwide if this is a
+> webapplication?) ...
 >
-> Historically it was part of git.c, but these days it is a built-in and
-> does not need any special treatment from check-docs.
+> If you insist in using Git for deployment, then you should absolutely
+> stick to it. Whether for deployment or for anything else, trying to send
+> changes using both Git and other mechanism (e.g. uploading files
+> directly to a working tree as you did) puts you in trouble 99.9% of the
+> cases.
 >
-> Patches for all to follow (on top of my previous 4).
+> In your case, the damage is already done. If I were you, I'd do
+> something like
 >
->  [5/4]: check-docs: factor out command-list
->  [6/4]: check-docs: list git-gui as a command
->  [7/4]: check-docs: drop git-help special-case
->  [8/4]: check-docs: get documented command list from Makefile
+> <do some backup>
+> <make sure the backup is OK>
+> <think twice "will I be able to restore the backup if it goes wrong?">
+> $ git fetch origin
+> $ git reset --hard origin/master
 >
-> -Peff
+> (actually, if I were you, I'd try reproducing the situation on a
+> non-production server first)
+>
+> "git fetch" will download the revisions from the remote server, which
+> should be the repository where the version you want to run is located.
+> "git reset --hard" will discard any local change (committed or not) you
+> may have, and set your local working tree to the latest version in the
+> master branch of the remote repository. You may need a "git clean" to
+> remove untracked files too.
+>
 > --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+-- 
+David
