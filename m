@@ -1,78 +1,97 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] Enable HAVE_DEV_TTY for Solaris
-Date: Wed, 8 Aug 2012 16:13:03 +0200
-Message-ID: <CABPQNSaUCEDU4+2N63n0k_XwSXOP_iFZG3GEYSPSBPcSVV8wRQ@mail.gmail.com>
-References: <20120807003541.GA18219@sigill.intra.peff.net> <1344308862-24635-1-git-send-email-bwalton@artsci.utoronto.ca>
- <7v4nofxt89.fsf@alter.siamese.dyndns.org> <20120807040326.GA18682@sigill.intra.peff.net>
- <20120807041026.GA21918@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Sync production with Git
+Date: Wed, 08 Aug 2012 16:20:00 +0200
+Message-ID: <vpqlihpbh4f.fsf@bauges.imag.fr>
+References: <1344431484059-7564617.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org,
-	rctay89@gmail.com, schwab@linux-m68k.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 08 16:13:56 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: kiranpyati <kiran.pyati@infobeans.com>
+X-From: git-owner@vger.kernel.org Wed Aug 08 16:20:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sz71F-0002ld-FM
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 16:13:53 +0200
+	id 1Sz77S-0003if-IK
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Aug 2012 16:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754908Ab2HHONr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 10:13:47 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:65080 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751932Ab2HHONq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 10:13:46 -0400
-Received: by vcbfk26 with SMTP id fk26so767465vcb.19
-        for <git@vger.kernel.org>; Wed, 08 Aug 2012 07:13:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CKW+A1XpQFWaJpeeMNOMlkB7cDB7JJ7DlbN3ADEBM4o=;
-        b=ONS1WffFZHVvtBlts0A3XyoMYMhEjOSq+hqrSJ76yXaGEXKdUkkoPbHogZlJZDqx6z
-         kfnQv/Z8EmwQ911YK/1AoQ6mkmuAYZ3YmYIsZrOl0axeqmQqSreNDDxK24tnr0pLALs5
-         F4gCCBbMNsg2HUkHhq6OX2o36TDoE+7yCa5oPg1l2mWIIgKUMwAniVvVeC1qT7mgmLBb
-         E4UaLT2n8Eo9VQVzQMkHze9phNovi9c6NX1tXtv0iUZ40nGto+9wHe6zzkSl75YYstnz
-         ugTK2OEUu1Ud9Kka3AmuoMq3D442DJkB6ZQ0PnbENi25OC4nAN1dbuV42WKUfrDgCOj5
-         W/tw==
-Received: by 10.58.137.197 with SMTP id qk5mr6135875veb.29.1344435224718; Wed,
- 08 Aug 2012 07:13:44 -0700 (PDT)
-Received: by 10.59.9.5 with HTTP; Wed, 8 Aug 2012 07:13:03 -0700 (PDT)
-In-Reply-To: <20120807041026.GA21918@sigill.intra.peff.net>
+	id S1756916Ab2HHOUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 10:20:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54917 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756548Ab2HHOUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 10:20:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q78EHHQS001798
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 8 Aug 2012 16:17:17 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Sz77A-0005cp-LH; Wed, 08 Aug 2012 16:20:00 +0200
+In-Reply-To: <1344431484059-7564617.post@n2.nabble.com> (kiranpyati's message
+	of "Wed, 8 Aug 2012 06:11:24 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 08 Aug 2012 16:17:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q78EHHQS001798
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1345040239.89827@K+mmwVNefhdxxqejKiWHSQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203094>
 
-On Tue, Aug 7, 2012 at 6:10 AM, Jeff King <peff@peff.net> wrote:
-> Subject: [PATCH] terminal: seek when switching between reading and writing
->
-> When a stdio stream is opened in update mode (e.g., "w+"),
-> the C standard forbids switching between reading or writing
-> without an intervening positioning function. Many
-> implementations are lenient about this, but Solaris libc
-> will flush the recently-read contents to the output buffer.
-> In this instance, that meant writing the non-echoed password
-> that the user just typed to the terminal.
->
-> Fix it by inserting a no-op fseek between the read and
-> write.
+kiranpyati <kiran.pyati@infobeans.com> writes:
 
-My Windows-patches for git_terminal_prompt would probably also solve
-this problem. Instead of opening a read-write handle to /dev/tty, they
-open two handles to the terminal instead; one for reading and one for
-writing. This is because the terminal cannot be opened in read-write
-mode on Windows (we need to open "CONIN$" and "CONOUT$" separately).
+> We want a way to seamlessly sync production and Git.
 
-You can have a look at the series here if you're interested:
-https://github.com/kusma/git/tree/work/terminal-cleanup
+You should be aware that Git was not designed for this scenario. The
+usual flow with Git (and actually with most revision control systems),
+is to do the development with Git, then use your build system to
+generate a package that can be used in production (e.g. generate a
+.tar.gz, or a .jar, or whatever your platform needs), and then install
+this package on your production server.
 
-That last patch is the reason why I haven't submitted the series yet,
-but perhaps some of the preparatory patches could be worth-while for
-other platforms in the mean time?
+It can be tempting, however, to use your revision control system as a
+deployment tool, so that an update on the production server be as simple
+as "git pull". But in real-life applications, it usually has to be more
+complicated: do you need to generate some files after you fetch the
+latest version of the source? Do you need to update your database? Isn't
+the .git/ directory harmfull here (e.g. do I want the full history
+source of my project to be visible worldwide if this is a
+webapplication?) ...
+
+If you insist in using Git for deployment, then you should absolutely
+stick to it. Whether for deployment or for anything else, trying to send
+changes using both Git and other mechanism (e.g. uploading files
+directly to a working tree as you did) puts you in trouble 99.9% of the
+cases.
+
+In your case, the damage is already done. If I were you, I'd do
+something like
+
+<do some backup>
+<make sure the backup is OK>
+<think twice "will I be able to restore the backup if it goes wrong?">
+$ git fetch origin
+$ git reset --hard origin/master
+
+(actually, if I were you, I'd try reproducing the situation on a
+non-production server first)
+
+"git fetch" will download the revisions from the remote server, which
+should be the repository where the version you want to run is located.
+"git reset --hard" will discard any local change (committed or not) you
+may have, and set your local working tree to the latest version in the
+master branch of the remote repository. You may need a "git clean" to
+remove untracked files too.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
