@@ -1,98 +1,70 @@
-From: "Chris West (Faux)" <git@goeswhere.com>
-Subject: [PATCH] gitweb: Add support for gravatar-ssl
-Date: Thu, 9 Aug 2012 19:42:10 +0100
-Message-ID: <20120809184210.GA27795@goeswhere.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: Add support for gravatar-ssl
+Date: Thu, 09 Aug 2012 21:36:46 +0200
+Message-ID: <20120809193655.7418D13F8069@mailgw.unict.it>
+References: <20120809184210.GA27795@goeswhere.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 09 20:52:16 2012
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: Chris West <git@goeswhere.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 09 21:43:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzXqB-0005Uv-7i
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 20:52:15 +0200
+	id 1SzYdU-000372-SC
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 21:43:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755668Ab2HISwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 14:52:09 -0400
-Received: from fau.xxx ([78.47.200.108]:53273 "EHLO reg.goeswhere.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754660Ab2HISwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 14:52:08 -0400
-X-Greylist: delayed 596 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2012 14:52:08 EDT
-Received: by reg.goeswhere.com (Postfix, from userid 1000)
-	id 7134B2E057F; Thu,  9 Aug 2012 19:42:10 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=goeswhere.com;
-	s=default; t=1344537730;
-	bh=yVWYFeQVwA8L15U6DJrIaqylMIyjLQKfKPyTzeUH04A=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	b=Q0YUIDzl9LFjjBvtoiEDJzJaODt0aMt7MLEVTCJAQqgzBhh/XFiNu6/EQ9zDVsVAC
-	 nPo/lzICOOow2mcNlbEX2wvwsEZTS28/dqAoTATEKtwK8aT//lBAIZLVi26wVEkFqw
-	 K98WACh6LR6iwvjbVHXQj6KDPA2kQuDLaTz5vSSU=
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759468Ab2HITnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 15:43:07 -0400
+Received: from smtpout1.unict.it ([151.97.0.51]:56801 "EHLO mailgw.unict.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759376Ab2HITnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 15:43:05 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2012 15:43:05 EDT
+X-Sender: DMI@vger.kernel.org
+Received: from mbox.dmi.unict.it (mbox.dmi.unict.it [151.97.252.131])
+	by mailgw.unict.it (Postfix) with ESMTPS id 7418D13F8069;
+	Thu,  9 Aug 2012 21:36:55 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mbox.dmi.unict.it (Postfix) with ESMTP id 2CD81239C;
+	Thu,  9 Aug 2012 21:36:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mbox.dmi.unict.it
+Received: from mbox.dmi.unict.it ([127.0.0.1])
+	by localhost (mbox.dmi.unict.it [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0Q5B7jCGQzoC; Thu,  9 Aug 2012 21:36:54 +0200 (CEST)
+Received: from oblomov.localnet (unknown [151.74.177.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: bilotta)
+	by mbox.dmi.unict.it (Postfix) with ESMTPSA id 311142361;
+	Thu,  9 Aug 2012 21:36:54 +0200 (CEST)
+User-Agent: KNode/4.4.11
+X-UniCT-MailScanner-Information: Please contact the ISP for more information
+X-UniCT-MailScanner-ID: 7418D13F8069.AA373
+X-UniCT-MailScanner: Found to be clean
+X-UniCT-MailScanner-SpamCheck: non spam, SpamAssassin (not cached,
+	punteggio=0.653, necessario 5, autolearn=disabled,
+	FREEMAIL_FROM 0.00, SPF_NEUTRAL 0.65)
+X-MailScanner-From: giuseppe.bilotta@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203177>
 
-Teach gitweb to allow 'avatar' to be set to 'gravatar-ssl', switching
-to the https://secure.gravatar.com url form, to avoid mixed content
-warnings when serving gitweb over https, with gravatar enabled.
----
+Chris West (Faux) wrote:
 
-I'd alternatively propose always using the https:// form of the URL,
-but it seems significantly slower, so it's probably best to let people
-pick to continue using the insecure version.
+> Teach gitweb to allow 'avatar' to be set to 'gravatar-ssl', switching
+> to the https://secure.gravatar.com url form, to avoid mixed content
+> warnings when serving gitweb over https, with gravatar enabled.
+> ---
+> I'd alternatively propose always using the https:// form of the URL,
+> but it seems significantly slower, so it's probably best to let people
+> pick to continue using the insecure version.
 
- gitweb/gitweb.perl |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3d6a705..d70e8b8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -482,7 +482,7 @@ our %feature = (
- 
- 	# To enable system wide have in $GITWEB_CONFIG
- 	# $feature{'avatar'}{'default'} = ['<provider>'];
--	# where <provider> is either gravatar or picon.
-+	# where <provider> is either gravatar, gravatar-ssl or picon.
- 	# To have project specific config enable override in $GITWEB_CONFIG
- 	# $feature{'avatar'}{'override'} = 1;
- 	# and in project config gitweb.avatar = <provider>;
-@@ -1117,7 +1117,7 @@ sub configure_gitweb_features {
- 	# if the provider name is invalid or the dependencies are not met,
- 	# reset $git_avatar to the empty string.
- 	our ($git_avatar) = gitweb_get_feature('avatar');
--	if ($git_avatar eq 'gravatar') {
-+	if ($git_avatar eq 'gravatar' || $git_avatar eq 'gravatar-ssl') {
- 		$git_avatar = '' unless (eval { require Digest::MD5; 1; });
- 	} elsif ($git_avatar eq 'picon') {
- 		# no dependencies
-@@ -2079,7 +2079,10 @@ sub gravatar_url {
- 	my $email = lc shift;
- 	my $size = shift;
- 	$avatar_cache{$email} ||=
--		"http://www.gravatar.com/avatar/" .
-+		($git_avatar eq 'gravatar-ssl' ?
-+			"https://secure" :
-+			"http://www")
-+		. ".gravatar.com/avatar/" .
- 			Digest::MD5::md5_hex($email) . "?s=";
- 	return $avatar_cache{$email} . $size;
- }
-@@ -2093,7 +2096,7 @@ sub git_get_avatar {
- 	$opts{-size} ||= 'default';
- 	my $size = $avatar_size{$opts{-size}} || $avatar_size{'default'};
- 	my $url = "";
--	if ($git_avatar eq 'gravatar') {
-+	if ($git_avatar eq 'gravatar' || $git_avatar eq 'gravatar-ssl') {
- 		$url = gravatar_url($email, $size);
- 	} elsif ($git_avatar eq 'picon') {
- 		$url = picon_url($email);
--- 
-1.7.10
+Rather than introducing a new, separate setting, wouldn't it be better
+to have the gravatar URL be automatically decided based on the current
+gitweb URL? (use the ssl gravar url when the current protocol is https,
+and the standard http url otherwise)
