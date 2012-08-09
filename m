@@ -1,76 +1,125 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Add Code Compare v2.80.4 as a merge / diff tool for Windows
-Date: Thu, 9 Aug 2012 18:22:17 +0200
-Message-ID: <CAHGBnuPT+ULpPtO_QxqUY8qxfbRT==fACQdM+TG2CyhbcKM-_w@mail.gmail.com>
-References: <5022CC90.3060108@gmail.com>
-	<7v1ujhrs7e.fsf@alter.siamese.dyndns.org>
-	<CAHGBnuOaze=opbK+hH2s92enHuN2NUuKOVsTY4ZKgc3aWsX2-g@mail.gmail.com>
-	<7vipcsoxwa.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: The GitTogether
+Date: Thu, 09 Aug 2012 18:38:22 +0200
+Message-ID: <5023E77E.4020604@drmicha.warpmail.net>
+References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com> <87k3xpe8bz.fsf@thomas.inf.ethz.ch> <50155CD9.6060702@web.de> <5016894C.7020907@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 18:22:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Aug 09 18:38:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzVV9-0001HY-WA
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 18:22:24 +0200
+	id 1SzVkl-0002hs-HM
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 18:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757477Ab2HIQWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 12:22:19 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:38195 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757391Ab2HIQWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 12:22:18 -0400
-Received: by vbbff1 with SMTP id ff1so124626vbb.19
-        for <git@vger.kernel.org>; Thu, 09 Aug 2012 09:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nretBlOK/me7wy8/1YfIWojMHqg/NldG5qyajn+rIao=;
-        b=yYEw0J6rtsma9qx1m3QlkA3ft40f8PcL6GmBjrlxVhW95VxwFyWQ4KRVhyuLVzaMMZ
-         udob4wKaScYUuHftCT4/5KYfRsjAwQIg9c3FboD1a+Tdw89krz7ZhoI8i7CNxq2O0hED
-         XxGPEZN12Uh7nRucQhd5JMtt4mkU254jYtHRpfLSkgo+7FurGelula+FrP0zZZ6GP38U
-         jjHV6ee67W49TFM4ju2QaYIb2njmFJ29N9H8LfZEkMRtryPKa++pWm5yohI6n8L64vxY
-         oDJOjxJ/e6lThEZVR5Meu5t+fcKtaMSG77uSSPl6VmJ8cVfcgIc3sG/uMB0x/sX+KLe9
-         T2Yg==
-Received: by 10.52.16.239 with SMTP id j15mr9794444vdd.7.1344529337311; Thu,
- 09 Aug 2012 09:22:17 -0700 (PDT)
-Received: by 10.58.68.167 with HTTP; Thu, 9 Aug 2012 09:22:17 -0700 (PDT)
-In-Reply-To: <7vipcsoxwa.fsf@alter.siamese.dyndns.org>
+	id S1758672Ab2HIQi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 12:38:26 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:59626 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755949Ab2HIQiZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2012 12:38:25 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id B312020A9D;
+	Thu,  9 Aug 2012 12:38:24 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 09 Aug 2012 12:38:24 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=svUHW4rGOjUuh59OcR+i+P
+	h5Xco=; b=Hz2tjhlaZsYmM+lmg5qoOIaK1ZtZWh24kd7tPuE0s+l+bt9rIlne/X
+	AeeuMAO2hZzkwO52B2MJbSlG/uBSqAIUiGBaMvgcewdt4pM5vTBDZvcF8HRuM1RU
+	2VlMXVuXGY5oqmM1Mj5bYthUMU+QmTSm+ppsiLmUJnSyqg2b1s33A=
+X-Sasl-enc: 2AR2B26GNn3kXVxKwAQ9TB+6oTSzAUdgyKRqIBo2JQbc 1344530304
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 9970E8E020C;
+	Thu,  9 Aug 2012 12:38:23 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
+In-Reply-To: <5016894C.7020907@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203165>
 
-On Thu, Aug 9, 2012 at 6:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Michael J Gruber venit, vidit, dixit 30.07.2012 15:17:
+> Jens Lehmann venit, vidit, dixit 29.07.2012 17:55:
+>> Am 27.07.2012 13:45, schrieb Thomas Rast:
+>>> Scott Chacon <schacon@gmail.com> writes:
+>>>
+>>>> GitHub would like to volunteer to organize and pay for these events
+>>>> this year.  I would like to hold the developer-centric one in Berlin
+>>>> in early October
+> 
+> Winter term classes start 10/15. Before 10/15 it will be easier to book
+> university rooms if we need that.
+> 
+>>>
+>>> Yay, Berlin!  I would be glad to join there; I would probably not have
+>>> the time and resources to travel to SF this year.
+>>
+>> Same here.
+> 
+> Same.
+> 
+> Do we have contacts regarding (un)conference rooms in Berlin already? I
+> might be able to ask around.
+> 
+>>
+>>>> For those of you who *have* been to a GitTogether, what did you find
+>>>> useful and/or useless about it?  What did you get out of it and would
+>>>> like to see again?  For those of you who have never been, what do you
+>>>> think would be useful?  I was thinking for both of them to have a
+>>>> combination of short prepared talks, lightning/unconference style
+>>>> talks and general discussion / breakout sessions.
+>>>
+>>> I was at the 2010 GitTogether in Mountain View.  I really liked the
+>>> unconference format, and the way Shawn and Junio used it: just using the
+>>> topic stickers as a sort of todo-list, not actually fixing any schedule
+>>> in advance.  Oddly enough we also managed to avoid the usual consequence
+>>> of open-ended discussions: getting stuck endlessly on an absolutely
+>>> insignificant point.
+>>
+>> Yup, the unconference format with both common and breakout sessions
+>> worked really well.
+>>
+>>> I think the discussions were very productive.  I would love to do more
+>>> hacking than we managed in 2010, but I realize that this is not possible
+>>> if we just meet for 2-3 days.  Perhaps one option would be to plan for
+>>> 1-2 days of hacking after the discussion rounds, so that the interested
+>>> people can stay a bit longer?
+>>
+>> I really like that idea and would vote for 3-4 days (maybe including a
+>> weekend for those of us who have to take a leave from work ;-).
 
->> I still agree that not listing all mergetools in multiple places is a
->> good thing. But doing the whole stuff of extending --tool-help for
->> git-mergetool and git-difftool to return a simple list that can be
->> used in git-completion.bash etc. IMHO is a separate topic and out of
->> scope of this patch.
->
-> Exactly.  If you know that is the long term direction, I would have
-> preferred you _not_ to touch any existing descriptions of the tools
-> (not even changing them to refer to "--tool-help") in this patch, in
-> order to avoid unnecessary conflicts with the topic of unifying the
-> list of tool backends, which can be written and cooked separately.
+While the unconference format is successful, may I suggest a
+track/topic: Especially if there's GitHub support and participation this
+would be a good opportunity to discuss some GitHub specific issues in
+person rather than via the list or support tickets. Two come to my mind:
 
-To the the best of my knowledge there currently no such topic
-underway, and even if it was, it would be unclear how long it would
-take for integration. If I was not touching the existing descriptions
-of the tools, and a Git version was to be released after accepting my
-patch but before the --tool-help topic is merged, that would leave the
-documentation in a wrong state. I was just trying to be consistent by
-also touching the descriptions, which IMHO is the correct thing to do
-in the short term, as you yourself say the topic to make use of
---tool-help is a long term goal.
+1) GitHub for Git developers: I certainly don't suggest a change in
+workflow for git.git, but you often hear Git developers say "we can't do
+this or that on GitHub", and I think GitHub (and other projects using
+GitHub) could benefit from the specific point of view and input of Git
+developers to improve workflow support on GitHub.
 
--- 
-Sebastian Schuberth
+2) git-scm.com: The old Git website and wiki certainly did not quite
+meet GitHub's demands (e.g. reliability, looks), and git-scm.com
+certainly does not quite meet the/all Git developers demands (e.g. list
+discussion based decisions and actions, separation between the "free
+project" and "business related content). In person it may be easier to
+find a way forward which benefits all parts of the large and undefined
+"Git community".
+
+Cheers,
+Michael
