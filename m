@@ -1,64 +1,84 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] git svn: handle errors and concurrent commits in
- dcommit
-Date: Wed, 8 Aug 2012 23:07:54 +0000
-Message-ID: <20120808230754.GB24956@dcvr.yhbt.net>
-References: <1343856397-6536-1-git-send-email-robert@debian.org>
- <20120802104421.GA13271@dcvr.yhbt.net>
- <5021F9D4.1010700@debian.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC v2 0/16] Introduce index file format version 5
+Date: Thu, 9 Aug 2012 09:28:42 +0700
+Message-ID: <CACsJy8DqwgzrbXXU+ea2QWJ_oujcJe4_ZVmR_-Sy02Gnk1Hetg@mail.gmail.com>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+ <1344263760-31191-1-git-send-email-pclouds@gmail.com> <7vehnjzzfd.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CepAQr4r-c_hzwgT2-_bpFV-=VmOsFaBcDZqBpG52reQ@mail.gmail.com>
+ <7v7gtaups3.fsf@alter.siamese.dyndns.org> <CACsJy8DfJJpwidfUQFDeqM=5uPpGF6rZ6C1pS0H6mSNHUqOkbg@mail.gmail.com>
+ <7vvcgttkeu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robert Luberda <robert@debian.org>
-X-From: git-owner@vger.kernel.org Thu Aug 09 01:08:03 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+	trast@student.ethz.ch, mhagger@alum.mit.edu,
+	robin.rosenberg@dewire.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 04:29:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzFM8-0007zS-VN
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 01:08:01 +0200
+	id 1SzIUy-0002kX-B6
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 04:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758328Ab2HHXH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Aug 2012 19:07:56 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:36986 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752953Ab2HHXHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Aug 2012 19:07:55 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89B6D1F5BE;
-	Wed,  8 Aug 2012 23:07:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <5021F9D4.1010700@debian.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751831Ab2HIC3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Aug 2012 22:29:15 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:63562 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751114Ab2HIC3O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Aug 2012 22:29:14 -0400
+Received: by ghrr11 with SMTP id r11so1539197ghr.19
+        for <git@vger.kernel.org>; Wed, 08 Aug 2012 19:29:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PrKVKcBjKr5rwAmbnsBr8vFTTxKSV8ImpjaGoZ2W7KA=;
+        b=vL2/Mg1PHL/mWQEjT61Mkmb89dcsrujIpLw3OH9UEqHYaL+KbNOK3tyni+s3SgPFe1
+         1YdXA0lg10t7suRdF46uTzOqXYg7fbXQT9Jn5D0yiyatsY9OHs5Bu59iBo+iySREOb8u
+         TeLK+wcXiY7+UicaVJlO3m02VhjmEL3opCclpznOphby2aJZI6QIffmt5lwHYwzAv9uw
+         tQe/K9cQ+PlX8O96HmML8hGMuBz+9HwtmPBO10kz52l525MavLzDh1UQCTvjJ0R1GBNi
+         yg2I1W0/HvX1VJ6CNMzu/FI2E75ZqIIbiU+Q+7q3ILeiKGRbe86LjuByZVWPDJEhG6ii
+         ySLg==
+Received: by 10.50.220.194 with SMTP id py2mr843054igc.15.1344479353423; Wed,
+ 08 Aug 2012 19:29:13 -0700 (PDT)
+Received: by 10.64.35.12 with HTTP; Wed, 8 Aug 2012 19:28:42 -0700 (PDT)
+In-Reply-To: <7vvcgttkeu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203144>
 
-Robert Luberda <robert@debian.org> wrote:
-> Eric Wong wrote:
-> >> +		echo "PATH=\"$PATH\"; export PATH" >> $hook
-> >> +		echo "svnconf=\"$svnconf\"" >> $hook
-> >> +		cat >> "$hook" <<- 'EOF2'
-> >> +			cd work-auto-commits.svn
-> >> +			svn up --config-dir "$svnconf"
-> > 
-> > That doesn't seem to interact well with users who depend on
-> > svn_cmd pointing to something non-standard.  Not sure
-> > what to do about it, though....
+On Wed, Aug 8, 2012 at 11:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The current code that access nth entry from the index->cache[nth]
+> would need to be updated to use an accessor function, whether the
+> "nth" comes from index_name_pos() or from the for-loop that iterates
+> over the entire index.  For the latter, you would need to give the
+> users a function that returns a cursor into the in-core index to
+> allow iterating over it.
+>
+> When you use an in-core representation that is not a flat array, the
+> type of "nth", which is essentially a cursor, may have to change to
+> something that is richer than a simple integer, in order to give the
+> implementation of the in-core index a more efficient way to access
+> the entry than traversing the leaves of the tree depth first, and
+> you would need to update index_name_pos() to return such a "cursor".
+> That design and development cost is part of updating the in-core
+> data structure. In the end result, the runtime cost to manipulate an
+> index entry that the cursor refers to should be minimum, as that
+> would be the cost paid by all the users of the API anyway, even if
+> we _were_ starting from an ideal world where there weren't any flat
+> in-core index in the first place.
 
-> I have no idea how to change it either. I've tried to source the
-> lib-git-svn.sh file inside the hook, but it sources test-lib.sh, and the
-> latter script doesn't work well if it is sourced by non-test script.
-> Anyway I the part of my original patch unchanged.
-
-Ah, so svn_cmd only cares about --config-dir and you already handled
-that :)   I misremembered it also allowed for non-standard SVN
-installations :x
-
-I've pushed your updated patch to my "maint" branch on
-git://bogomips.org/git-svn since "master" has larger pending changes.
-
-Thanks!
+Interesting. So you hide the entire tree walk behind the cursor
+concept. And we can make pathspec filter as part of cursor
+initialization. Index iteration code this way looks really neat
+(compared to how we do traverse sha-1 trees nowadays). The hard part
+is updating the index while iterating (or avodiing running into such a
+situation). Maybe C++ STL has done it already with std::map::iterator.
+I fear that by hiding the trees, we might miss some optimization
+opportunities. But I haven't figured it all out yet so I may be wrong.
+-- 
+Duy
