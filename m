@@ -1,153 +1,157 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH/RFC v2 06/16] t3700: sleep for 1 second, to avoid
- interfering with the racy code
-Date: Fri, 10 Aug 2012 00:51:29 +0200
-Message-ID: <20120809225128.GA5127@tommy-fedora.scientificnet.net>
-References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
- <1344203353-2819-7-git-send-email-t.gummerer@gmail.com>
- <7vsjc023sr.fsf@alter.siamese.dyndns.org>
- <20120807165947.GD913@tgummerer>
- <7vr4rhrvfm.fsf@alter.siamese.dyndns.org>
- <7vmx25rtj5.fsf@alter.siamese.dyndns.org>
- <20120809131932.GD25671@tommy-fedora.surfnet.iacbox>
- <7vehngovox.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v3 07/13] Read resolve-undo data
+Date: Thu, 09 Aug 2012 15:51:58 -0700
+Message-ID: <7vk3x7n0fl.fsf@alter.siamese.dyndns.org>
+References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
+ <1344424681-31469-8-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pcouds@gmail.com, robin.rosenberg@dewire.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 00:52:32 2012
+	pclouds@gmail.com, robin.rosenberg@dewire.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 00:52:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szbae-0004jU-N7
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 00:52:29 +0200
+	id 1Szbal-0004uj-8V
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 00:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759876Ab2HIWvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 18:51:45 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63724 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759873Ab2HIWvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 18:51:44 -0400
-Received: by weyx8 with SMTP id x8so622197wey.19
-        for <git@vger.kernel.org>; Thu, 09 Aug 2012 15:51:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+1OWSvzOWnLDCrN10n5CS1PzrUNoA0nSYarFrdrzrmI=;
-        b=cD2J/V7U6BS74FfIyd0Vm3zdcjyTY9cBk3HOmMK1ed5aTVeVRcbsf7vj93N5DyVQa9
-         WEGlvdIGdLw4PGc5sHs+VTL3u+ZOU7yV7He7x9JIsBbE6T1cAcA6t7v+LraVm+6fr21d
-         IfhFxiQtRRvLm1VjQmyND4GqOJOv6hUh/LJX0NOsJBF/6MQk9jLhVXlvZ3es4bqGIHsB
-         mUDPMPL14WwyJuoqqp6KnwtdjOWkm7e31unmeMPb08o6Ug7wYg/lx2TDod5tGY+13Dp3
-         DiJ65PLr6Mr8lT+pow4iFkrtlvQrUfDazKpwRFEdY0DnPJuxCr2wIluzZ7c3pCmdj4wC
-         yBLg==
-Received: by 10.180.84.1 with SMTP id u1mr397299wiy.15.1344552702356;
-        Thu, 09 Aug 2012 15:51:42 -0700 (PDT)
-Received: from localhost ([95.171.54.129])
-        by mx.google.com with ESMTPS id o2sm6290606wiz.11.2012.08.09.15.51.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Aug 2012 15:51:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vehngovox.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759900Ab2HIWwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 18:52:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63691 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759873Ab2HIWwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 18:52:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF9F97A2;
+	Thu,  9 Aug 2012 18:52:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l3JTTqOPjnB944KPbFUbg+r8vGk=; b=xZCRSF
+	oKdY7bNDrD8SGT6VNkfcV3vPoyd1vEqjlG8qVypcgIMmCYMbimUuK801YJHJwG2x
+	ONBQa0prg0M2jBvMM38WZv03d+RO50rs1aOaEMeJ8YkLtEppjPCQWe8vzlMvMMA8
+	OAoSCfKROz/KoQcd9hWMnBSF2PZKT9+mT6ePo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IFYRJ7t0cV3R40WZsAbXokZw1X3b7w07
+	FcEuLQhAm2siXYUhZJ6Qz43A8G2OB5XxxPotQFTTh9wvyQTv/A2XcIRraGL9ejDX
+	hcwahWbYcTNcdKbwtBWIOqeBHjkMmrkRud4yMBad2sEDSDMkSDa/NspuQyOPYRF5
+	h4xyELlVtnw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BA4597A1;
+	Thu,  9 Aug 2012 18:52:00 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9036197A0; Thu,  9 Aug 2012
+ 18:51:59 -0400 (EDT)
+In-Reply-To: <1344424681-31469-8-git-send-email-t.gummerer@gmail.com> (Thomas
+ Gummerer's message of "Wed, 8 Aug 2012 13:17:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D3D72BBC-E274-11E1-BDFF-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203186>
 
-On 08/09, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > On 08/08, Junio C Hamano wrote:
-> >> ...
-> >> Let me ask the same question in a more direct way.  Which part of
-> >> this test break with your series?
-> >> 
-> >>         test_expect_success 'git add --refresh with pathspec' '
-> >>                 git reset --hard &&
-> >>                 echo >foo && echo >bar && echo >baz &&
-> >>                 git add foo bar baz && H=$(git rev-parse :foo) && git rm -f foo &&
-> >>                 echo "100644 $H 3	foo" | git update-index --index-info &&
-> >> 	# "sleep 1 &&" in the update here ...
-> >>                 test-chmtime -60 bar baz &&
-> >>                 >expect &&
-> >>                 git add --refresh bar >actual &&
-> >>                 test_cmp expect actual &&
-> >> 
-> >>                 git diff-files --name-only >actual &&
-> >>                 ! grep bar actual&&
-> >>                 grep baz actual
-> >>         '
-> >> 
-> >> We prepare an index with bunch of paths, we make "foo" unmerged, we
-> >> smudge bar and baz stat-dirty, so that "diff-files" would report
-> >> them, even though their contents match what is recorded in the
-> >> index.
-> >
-> > After getting confused a bit myself, I now think here is the problem.
-> > The v5 code smudges baz when doing git add --refresh bar.  Therefore
-> > baz isn't considered stat-dirty by the code, but a racily smudged entry
-> > and therefore its content gets checked, thus not showing up in
-> > git diff-files.
-> 
-> So in short, the breakage is the last one among the three choices I
-> gave you in my message you are responding to.  The user asked to
-> refresh "bar" so that later diff-files won't report a false change
-> on it, but "baz" effectively ends up getting refreshed at the same
-> time and a false change is not reported.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Exactly.
+> Make git read the resolve-undo data from the index.
+>
+> Since the resolve-undo data is joined with the conflicts in
+> the ondisk format of the index file version 5, conflicts and
+> resolved data is read at the same time, and the resolve-undo
+> data is then converted to the in-memory format.
 
-> That "breakage" is, from the correctness point of view, not a
-> breakage.  As the primary purpose of "refreshing" is to support
-> commands that want to rely on a quick ce_modified() call to tell
-> files that are modified in the working tree since it was last added
-> to the index---you refresh once, and then you call such commands
-> many times without having to worry about having to compare the
-> contents between the indexed objects and the working tree files.
-> 
-> But from the performance point of view, which is the whole point of
-> "refresh", the behaviour of the new code is dubious.  If the user is
-> working in a large working tree (which automatically means large
-> index, the primary reason we are doing this v5 experiment), the user
-> often is working in a deep and narrow subdirectory of it, and a path
-> limited refresh (the test names a specific file "bar", but imagine
-> it were "." to limit it to the directory the user is working in) may
-> be a cheap way not to bother even checking outside the area the user
-> currently is working in.
+This, and the next one, are both about reading extension data from
+the v2 formatted index, no?
 
-That's true, but once we have the partial reader/writer, we do not
-bother checking outside the area the user is currently working in
-anyway.
+Again, mild NAK.
 
-Also and probably more importantly, this will only affect a *very*
-small number of entries, because timestamps outside of the directory
-in which the user is working in are rarely updated recently and
-thus racy.
+I think it is a lot more logical for the v5 code to read data stored
+in the resolve-undo and cache-tree extensions using the public API
+just like other users of these data do, and write out whatever in a
+way that is specific to the v5 index format.
 
-> Also, smudging more entries than necessary
-> to be checked by ce_modified_check_fs() later at runtime may mean
-> that it defeats the "refresh once and then compare cheaply many
-> times" pattern that is employed by existing scripts.
+If the v5 codepath needs some information that is not exposed to
+other users of istate->resolve_undo and istate->cache_tree, then the
+story is different, but I do not think that is the case.
 
-The new racy code also calls ce_modified_check_fs() only if the size
-and the stat_crc are not changed.  It's true that ce_modified_check_fs()
-can be called multiple times, when match_stat_crc() is called, but that
-could be solved by adding an additional flag CE_IS_MODIFIED, which
-indicates that ce_modified_check_fs() was already run.
-
-> Is the root cause really where the "racily-clean so smudge to tell
-> later runtime to check contents" bit goes?  I am hoping that the
-> issue is not coming from the difference between the current code and
-> your code when they decide to "smudge", what entries they decide to
-> "smudge" and based on what condition.
-
-I just gave it a try using a CE_SMUDGED flag, instead of the mtime
-as smudge marker, which which this test works without any problems.
-It doesn't work the other way round, the test as the test doesn't
-break when using mtime as smudge marker in v2, because we do the
-ce_modified_check_fs() test earlier.
+>
+> Helped-by: Thomas Rast <trast@student.ethz.ch>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  read-cache-v5.c |    1 +
+>  resolve-undo.c  |   36 ++++++++++++++++++++++++++++++++++++
+>  resolve-undo.h  |    2 ++
+>  3 files changed, 39 insertions(+)
+>
+> diff --git a/read-cache-v5.c b/read-cache-v5.c
+> index ec1201d..b47398d 100644
+> --- a/read-cache-v5.c
+> +++ b/read-cache-v5.c
+> @@ -494,6 +494,7 @@ static struct directory_entry *read_entries(struct index_state *istate,
+>  	int i;
+>  
+>  	conflict_queue = read_conflicts(de, mmap, mmap_size, fd);
+> +	resolve_undo_convert_v5(istate, conflict_queue);
+>  	for (i = 0; i < de->de_nfiles; i++) {
+>  		ce = read_entry(de,
+>  				entry_offset,
+> diff --git a/resolve-undo.c b/resolve-undo.c
+> index 72b4612..f96c6ba 100644
+> --- a/resolve-undo.c
+> +++ b/resolve-undo.c
+> @@ -170,3 +170,39 @@ void unmerge_index(struct index_state *istate, const char **pathspec)
+>  		i = unmerge_index_entry_at(istate, i);
+>  	}
+>  }
+> +
+> +void resolve_undo_convert_v5(struct index_state *istate,
+> +					struct conflict_entry *ce)
+> +{
+> +	int i;
+> +
+> +	while (ce) {
+> +		struct string_list_item *lost;
+> +		struct resolve_undo_info *ui;
+> +		struct conflict_part *cp;
+> +
+> +		if (ce->entries && (ce->entries->flags & CONFLICT_CONFLICTED) != 0) {
+> +			ce = ce->next;
+> +			continue;
+> +		}
+> +		if (!istate->resolve_undo) {
+> +			istate->resolve_undo = xcalloc(1, sizeof(struct string_list));
+> +			istate->resolve_undo->strdup_strings = 1;
+> +		}
+> +
+> +		lost = string_list_insert(istate->resolve_undo, ce->name);
+> +		if (!lost->util)
+> +			lost->util = xcalloc(1, sizeof(*ui));
+> +		ui = lost->util;
+> +
+> +		cp = ce->entries;
+> +		for (i = 0; i < 3; i++)
+> +			ui->mode[i] = 0;
+> +		while (cp) {
+> +			ui->mode[conflict_stage(cp) - 1] = cp->entry_mode;
+> +			hashcpy(ui->sha1[conflict_stage(cp) - 1], cp->sha1);
+> +			cp = cp->next;
+> +		}
+> +		ce = ce->next;
+> +	}
+> +}
+> diff --git a/resolve-undo.h b/resolve-undo.h
+> index 8458769..ab660a6 100644
+> --- a/resolve-undo.h
+> +++ b/resolve-undo.h
+> @@ -13,4 +13,6 @@ extern void resolve_undo_clear_index(struct index_state *);
+>  extern int unmerge_index_entry_at(struct index_state *, int);
+>  extern void unmerge_index(struct index_state *, const char **);
+>  
+> +extern void resolve_undo_convert_v5(struct index_state *, struct conflict_entry *);
+> +
+>  #endif
