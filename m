@@ -1,168 +1,166 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] Let submodule command exit with error status if path does
-	not exist
-Date: Thu, 9 Aug 2012 22:03:04 +0200
-Message-ID: <20120809200302.GA93203@book.hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Let submodule command exit with error status if path
+ does not exist
+Date: Thu, 09 Aug 2012 13:42:20 -0700
+Message-ID: <7vboijol03.fsf@alter.siamese.dyndns.org>
 References: <1340872080.2103.92.camel@athena.dnet>
+ <20120809200302.GA93203@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Daniel Milde <daniel@milde.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 22:03:31 2012
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 09 22:42:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzYx6-0002VY-2k
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 22:03:28 +0200
+	id 1SzZYs-0005Vp-FU
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 22:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759512Ab2HIUDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 16:03:22 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.41]:42963 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759378Ab2HIUDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 16:03:21 -0400
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1SzYwp-0007Zp-Q6; Thu, 09 Aug 2012 22:03:12 +0200
-Content-Disposition: inline
-In-Reply-To: <1340872080.2103.92.camel@athena.dnet>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1755489Ab2HIUmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 16:42:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39708 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755127Ab2HIUmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 16:42:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25A819441;
+	Thu,  9 Aug 2012 16:42:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BE0OoOd/mfKEPCMqEfAkGFwyVwo=; b=VlmWHL
+	kMaeuQbtq6PJglQ5rs+HHvyRI+gXue1eDlogx8q4e5TNKwtiub4B5VK/2IcYIjbY
+	+s+PuUrw6CkYUHkBGnNjqWOhanMwVqCS3jieFzKxXFyUIEMOWpHs+J/jDTljg4ux
+	rrLDEozv0cHiS+NVIwJEMj3UVZy5igM/rag94=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rzRQOQ6DaIV+RnophGSjslnJUxQoEXEl
+	dGvDXMFQkUhix/HWu5XnS7J012BtVPs1YC5ERVj+Sfm831NRPM74PtrD1HYdx7IC
+	p2RIOZGIsEXwhchV21eP4UuYja7Bxb01XqmA0EcV4lHMh5zqwhlWRf2ddNqVCbFz
+	HJBMEiqlre0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 125C89440;
+	Thu,  9 Aug 2012 16:42:23 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C4F7943E; Thu,  9 Aug 2012
+ 16:42:22 -0400 (EDT)
+In-Reply-To: <20120809200302.GA93203@book.hvoigt.net> (Heiko Voigt's message
+ of "Thu, 9 Aug 2012 22:03:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B82E7A8A-E262-11E1-B37B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203180>
 
-Previously the exit status of git submodule was zero for various
-subcommands even though the user specified an unknown path.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-The reason behind that was that they all pipe the output of module_list
-into the while loop which then does the action on the paths specified by
-the commandline. Since piped commands are run in parallel the status
-code of module_list was swallowed.
+> Previously the exit status of git submodule was zero for various
+> subcommands even though the user specified an unknown path.
+>
+> The reason behind that was that they all pipe the output of module_list
+> into the while loop which then does the action on the paths specified by
+> the commandline. Since piped commands are run in parallel the status
+> code of module_list was swallowed.
 
-We work around this by introducing a new function module_list_valid
-which is used to check the leftover commandline parameters passed to
-module_list.
+It is more like that the shell ignores the exit status of command
+that is on the upstream side of a pipeline.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- git-submodule.sh           | 19 ++++++++++++++++++-
- t/t7400-submodule-basic.sh | 26 ++++++++++++++++++++++----
- 2 files changed, 40 insertions(+), 5 deletions(-)
+> We work around this by introducing a new function module_list_valid
+> which is used to check the leftover commandline parameters passed to
+> module_list.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index aac575e..1fd21da 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -103,13 +103,21 @@ resolve_relative_url ()
- 	echo "${is_relative:+${up_path}}${remoteurl#./}"
- }
- 
-+module_list_ls_files() {
-+	git ls-files --error-unmatch --stage -- "$@"
-+}
-+
-+module_list_valid() {
-+	module_list_ls_files "$@" >/dev/null
-+}
-+
- #
- # Get submodule info for registered submodules
- # $@ = path to limit submodule list
- #
- module_list()
- {
--	git ls-files --error-unmatch --stage -- "$@" |
-+	module_list_ls_files "$@" |
- 	perl -e '
- 	my %unmerged = ();
- 	my ($null_sha1) = ("0" x 40);
-@@ -434,6 +442,8 @@ cmd_init()
- 		shift
- 	done
- 
-+	module_list_valid "$@" || exit 1
-+
- 	module_list "$@" |
- 	while read mode sha1 stage sm_path
- 	do
-@@ -532,6 +542,8 @@ cmd_update()
- 		cmd_init "--" "$@" || return
- 	fi
- 
-+	module_list_valid "$@" || exit 1
-+
- 	cloned_modules=
- 	module_list "$@" | {
- 	err=
-@@ -929,6 +941,8 @@ cmd_status()
- 		shift
- 	done
- 
-+	module_list_valid "$@" || exit 1
-+
- 	module_list "$@" |
- 	while read mode sha1 stage sm_path
- 	do
-@@ -996,6 +1010,9 @@ cmd_sync()
- 			;;
- 		esac
- 	done
-+
-+	module_list_valid "$@" || exit 1
-+
- 	cd_to_toplevel
- 	module_list "$@" |
- 	while read mode sha1 stage sm_path
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index c73bec9..3a40334 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -258,6 +258,27 @@ test_expect_success 'init should register submodule url in .git/config' '
- 	test_cmp expect url
- '
- 
-+test_failure_with_unknown_submodule() {
-+	test_must_fail git submodule $1 no-such-submodule 2>output.err &&
-+	grep "^error: .*no-such-submodule" output.err
-+}
-+
-+test_expect_success 'init should fail with unknown submodule' '
-+	test_failure_with_unknown_submodule init
-+'
-+
-+test_expect_success 'update should fail with unknown submodule' '
-+	test_failure_with_unknown_submodule update
-+'
-+
-+test_expect_success 'status should fail with unknown submodule' '
-+	test_failure_with_unknown_submodule status
-+'
-+
-+test_expect_success 'sync should fail with unknown submodule' '
-+	test_failure_with_unknown_submodule sync
-+'
-+
- test_expect_success 'update should fail when path is used by a file' '
- 	echo hello >expect &&
- 
-@@ -418,10 +439,7 @@ test_expect_success 'moving to a commit without submodule does not leave empty d
- '
- 
- test_expect_success 'submodule <invalid-path> warns' '
--
--	git submodule no-such-submodule 2> output.err &&
--	grep "^error: .*no-such-submodule" output.err
--
-+	test_failure_with_unknown_submodule
- '
- 
- test_expect_success 'add submodules without specifying an explicit path' '
--- 
-1.7.12.rc2.10.g45a4861
+Doesn't it slow things down for the normal case, though?
+
+A plausible hack, assuming all the problematic readers of the pipe
+are of the form "... | while read mode sha1 stage sm_path", might be
+to update module_list () to do something like:
+
+	(
+		git ls-files --error-unmatch ... ||
+                echo "#unmatched"
+	)
+
+and then update the readers to catch "#unmatched" token, e.g.
+
+	module_list "$@" |
+        while read mode sha1 stage sm_path
+        do
+		if test "$mode" = "#unmatched"
+                then
+        		... do the necessary error thing ...
+                        continue
+		fi
+                ... whatever the loop originally did ...
+	done
+
+One thing to note is that the above is not good if you want to
+atomically reject
+
+	git submodule foo module1 moduel2
+
+and error the whole thing out without touching module1 (which
+exists) because of misspelt module2.
+
+But is it what we want to see happen in these codepaths?
+
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index aac575e..1fd21da 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -103,13 +103,21 @@ resolve_relative_url ()
+>  	echo "${is_relative:+${up_path}}${remoteurl#./}"
+>  }
+>  
+> +module_list_ls_files() {
+> +	git ls-files --error-unmatch --stage -- "$@"
+> +}
+> +
+> +module_list_valid() {
+> +	module_list_ls_files "$@" >/dev/null
+> +}
+> +
+
+This is a tangent, but among the 170 hits
+
+	git grep -e '^[a-z][a-z0-9A-Z_]* *(' -- './git-*.sh'
+
+gives, about 120 have SP after funcname, i.e.
+
+	funcname () {
+
+and 50 don't, i.e.
+
+	funcname() {
+
+This file has 12 such definitions, among which 10 are the latter
+form.  There is no "rational" reason to choose between the two, but
+having two forms in the same project hurts greppability.  Updating
+the style of existing code shouldn't be done in the same patch, but
+please do not make things worse.
+
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index c73bec9..3a40334 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -258,6 +258,27 @@ test_expect_success 'init should register submodule url in .git/config' '
+>  	test_cmp expect url
+>  '
+>  
+> +test_failure_with_unknown_submodule() {
+
+Likewise, even though inside t/ directory we seem to have more
+offenders (190/480 ~ 40%, vs 50/170 ~ 30%).
+
+> +	test_must_fail git submodule $1 no-such-submodule 2>output.err &&
+> +	grep "^error: .*no-such-submodule" output.err
+> +}
+
+I think the latter half already passes with the current code, but
+the exit code from "git submodule $1" would be corrected with this
+patch, which is good.
+
+Thanks.
