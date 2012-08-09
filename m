@@ -1,171 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3 04/13] Add documentation of the index-v5 file
- format
-Date: Thu, 09 Aug 2012 15:41:36 -0700
-Message-ID: <7vobmjn0wv.fsf@alter.siamese.dyndns.org>
-References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
- <1344424681-31469-5-git-send-email-t.gummerer@gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH/RFC v2 06/16] t3700: sleep for 1 second, to avoid
+ interfering with the racy code
+Date: Fri, 10 Aug 2012 00:51:29 +0200
+Message-ID: <20120809225128.GA5127@tommy-fedora.scientificnet.net>
+References: <1344203353-2819-1-git-send-email-t.gummerer@gmail.com>
+ <1344203353-2819-7-git-send-email-t.gummerer@gmail.com>
+ <7vsjc023sr.fsf@alter.siamese.dyndns.org>
+ <20120807165947.GD913@tgummerer>
+ <7vr4rhrvfm.fsf@alter.siamese.dyndns.org>
+ <7vmx25rtj5.fsf@alter.siamese.dyndns.org>
+ <20120809131932.GD25671@tommy-fedora.surfnet.iacbox>
+ <7vehngovox.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, trast@student.ethz.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com, robin.rosenberg@dewire.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 00:41:54 2012
+	pcouds@gmail.com, robin.rosenberg@dewire.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 00:52:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzbQH-0004aU-VA
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 00:41:46 +0200
+	id 1Szbae-0004jU-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 00:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759868Ab2HIWlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 18:41:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59198 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759779Ab2HIWlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 18:41:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BD719573;
-	Thu,  9 Aug 2012 18:41:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/W3Y49TaFbVYlO1ZX6v71G2hdCM=; b=God3bS
-	/yjGN64xRUAwxPeMs1rslVSLHplkm/OcFYiiubq40LRQKD3sfjVSm7GD5/3qGGqZ
-	SNndnjUXUxpcP3/rHl29205pZbYV1n2rjySFO5LlQPG/GNS+Nx20v/RiQ1SYwU9a
-	KLwuLsZQkR2kEecd1Q1aqhVcYBVC34Rm/DCuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mP5vL9JVjBy65/uZI6lklP5e6PQFT73z
-	RERuQa8utRBhwhlKbhHIanurJkPTVIAk/h0hKIGq5oX4jRUKTmOXIWsI2/aHcUx5
-	Xlbo8EBW0OSPnnRIJGCDBBoDL1B5+6rwOVIuxGxjLIdWI5lXRMDBCAl3vklztSDp
-	X/5rE59YJck=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2905D9572;
-	Thu,  9 Aug 2012 18:41:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 621669570; Thu,  9 Aug 2012
- 18:41:37 -0400 (EDT)
-In-Reply-To: <1344424681-31469-5-git-send-email-t.gummerer@gmail.com> (Thomas
- Gummerer's message of "Wed, 8 Aug 2012 13:17:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 60FC9C54-E273-11E1-804F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759876Ab2HIWvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 18:51:45 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:63724 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759873Ab2HIWvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 18:51:44 -0400
+Received: by weyx8 with SMTP id x8so622197wey.19
+        for <git@vger.kernel.org>; Thu, 09 Aug 2012 15:51:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+1OWSvzOWnLDCrN10n5CS1PzrUNoA0nSYarFrdrzrmI=;
+        b=cD2J/V7U6BS74FfIyd0Vm3zdcjyTY9cBk3HOmMK1ed5aTVeVRcbsf7vj93N5DyVQa9
+         WEGlvdIGdLw4PGc5sHs+VTL3u+ZOU7yV7He7x9JIsBbE6T1cAcA6t7v+LraVm+6fr21d
+         IfhFxiQtRRvLm1VjQmyND4GqOJOv6hUh/LJX0NOsJBF/6MQk9jLhVXlvZ3es4bqGIHsB
+         mUDPMPL14WwyJuoqqp6KnwtdjOWkm7e31unmeMPb08o6Ug7wYg/lx2TDod5tGY+13Dp3
+         DiJ65PLr6Mr8lT+pow4iFkrtlvQrUfDazKpwRFEdY0DnPJuxCr2wIluzZ7c3pCmdj4wC
+         yBLg==
+Received: by 10.180.84.1 with SMTP id u1mr397299wiy.15.1344552702356;
+        Thu, 09 Aug 2012 15:51:42 -0700 (PDT)
+Received: from localhost ([95.171.54.129])
+        by mx.google.com with ESMTPS id o2sm6290606wiz.11.2012.08.09.15.51.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Aug 2012 15:51:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vehngovox.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203185>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On 08/09, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > On 08/08, Junio C Hamano wrote:
+> >> ...
+> >> Let me ask the same question in a more direct way.  Which part of
+> >> this test break with your series?
+> >> 
+> >>         test_expect_success 'git add --refresh with pathspec' '
+> >>                 git reset --hard &&
+> >>                 echo >foo && echo >bar && echo >baz &&
+> >>                 git add foo bar baz && H=$(git rev-parse :foo) && git rm -f foo &&
+> >>                 echo "100644 $H 3	foo" | git update-index --index-info &&
+> >> 	# "sleep 1 &&" in the update here ...
+> >>                 test-chmtime -60 bar baz &&
+> >>                 >expect &&
+> >>                 git add --refresh bar >actual &&
+> >>                 test_cmp expect actual &&
+> >> 
+> >>                 git diff-files --name-only >actual &&
+> >>                 ! grep bar actual&&
+> >>                 grep baz actual
+> >>         '
+> >> 
+> >> We prepare an index with bunch of paths, we make "foo" unmerged, we
+> >> smudge bar and baz stat-dirty, so that "diff-files" would report
+> >> them, even though their contents match what is recorded in the
+> >> index.
+> >
+> > After getting confused a bit myself, I now think here is the problem.
+> > The v5 code smudges baz when doing git add --refresh bar.  Therefore
+> > baz isn't considered stat-dirty by the code, but a racily smudged entry
+> > and therefore its content gets checked, thus not showing up in
+> > git diff-files.
+> 
+> So in short, the breakage is the last one among the three choices I
+> gave you in my message you are responding to.  The user asked to
+> refresh "bar" so that later diff-files won't report a false change
+> on it, but "baz" effectively ends up getting refreshed at the same
+> time and a false change is not reported.
 
-> +GIT index format
-> +================
-> +
-> +== The git index file format
-> +
-> +   The git index file (.git/index) documents the status of the files
-> +     in the git staging area.
-> +
-> +   The staging area is used for preparing commits, merging, etc.
+Exactly.
 
-The above two are not about "index file format".  It is an
-explanation of what the index is.
+> That "breakage" is, from the correctness point of view, not a
+> breakage.  As the primary purpose of "refreshing" is to support
+> commands that want to rely on a quick ce_modified() call to tell
+> files that are modified in the working tree since it was last added
+> to the index---you refresh once, and then you call such commands
+> many times without having to worry about having to compare the
+> contents between the indexed objects and the working tree files.
+> 
+> But from the performance point of view, which is the whole point of
+> "refresh", the behaviour of the new code is dubious.  If the user is
+> working in a large working tree (which automatically means large
+> index, the primary reason we are doing this v5 experiment), the user
+> often is working in a deep and narrow subdirectory of it, and a path
+> limited refresh (the test names a specific file "bar", but imagine
+> it were "." to limit it to the directory the user is working in) may
+> be a cheap way not to bother even checking outside the area the user
+> currently is working in.
 
-> +   All binary numbers are in network byte order. Version 5 is described
-> +     here.
+That's true, but once we have the partial reader/writer, we do not
+bother checking outside the area the user is currently working in
+anyway.
 
-I had to read between these two lines something like 
+Also and probably more importantly, this will only affect a *very*
+small number of entries, because timestamps outside of the directory
+in which the user is working in are rarely updated recently and
+thus racy.
 
-    ""The index file consists of various sections; the sections
-    appear in the following order in the file."""
+> Also, smudging more entries than necessary
+> to be checked by ce_modified_check_fs() later at runtime may mean
+> that it defeats the "refresh once and then compare cheaply many
+> times" pattern that is employed by existing scripts.
 
-to make sense of the document.
+The new racy code also calls ce_modified_check_fs() only if the size
+and the stat_crc are not changed.  It's true that ce_modified_check_fs()
+can be called multiple times, when match_stat_crc() is called, but that
+could be solved by adding an additional flag CE_IS_MODIFIED, which
+indicates that ce_modified_check_fs() was already run.
 
-> +   - A 20-byte header consisting of
-> +
-> +     sig (32-bits): Signature:
-> +       The signature is { 'D', 'I', 'R', 'C' } (stands for "dircache")
-> +
-> +     vnr (32-bits): Version number:
-> +       The current supported versions are 2, 3, 4 and 5.
-> +
-> +     ndir (32-bits): number of directories in the index.
-> +
-> +     nfile (32-bits): number of file entries in the index.
-> +
-> +     fblockoffset (32-bits): offset to the file block, relative to the
-> +       beginning of the file.
+> Is the root cause really where the "racily-clean so smudge to tell
+> later runtime to check contents" bit goes?  I am hoping that the
+> issue is not coming from the difference between the current code and
+> your code when they decide to "smudge", what entries they decide to
+> "smudge" and based on what condition.
 
-Ok.
-
-> +   - Offset to the extensions.
->
-> +     nextensions (32-bits): number of extensions.
-> +
-> +     extoffset (32-bits): offset to the extension. (Possibly none, as
-> +       many as indicated in the 4-byte number of extensions)
-
-OK.
-
-> +     headercrc (32-bits): crc checksum for the header and extension
-> +       offsets
-
-This may have to have the same "  - <section title>" at the same
-level as "A 20-byte header" and "Offset to the ext"; as it stands,
-it looks as if it is part of "Offset to the ext" which consists of
-12 bytes.
-
-> +   - diroffsets (ndir * directory offsets): A directory offset for each
-> +       of the ndir directories in the index, sorted by pathname (of the
-> +       directory it's pointing to) (see below). The diroffsets are relative
-> +       to the beginning of the direntries block. [1]
-
-"ndir * diroffsets" confused me.  I think you meant to say that this
-"diroffsets" section consists of ndir entries of something and that
-each of that something is a directory offset.  It is unclear how "a
-directory offset" is represented, except that it is "relative to the
-beginning of direntry block" (and it is unclear what and where the
-direntry block is from the information given up to this point) and
-the reader can guess it is in "network byte order" (assuming it is a
-binary number).  Perhaps
-
-	diroffsets (ndir entries of "directory offset"): A 4-byte
-	offset relative to the beginning of the "direntries block"
-	(see below) for each of the ...
-
-and drop the last sentence?
-
-Other tables may want to be adjusted in a similar fashion.
-
-> +== Directory offsets (diroffsets)
-> +
-> +  diroffset (32-bits): offset to the directory relative to the beginning
-> +    of the index file. There are ndir + 1 offsets in the diroffset table,
-> +    the last is pointing to the end of the last direntry. With this last
-> +    entry, we can replace the strlen when reading each filename, by
-> +    calculating its length with the offsets.
-
-The mention of "strlen" looks very out of place.  The reader may be
-able to guess that you want to say that the nth "string" is between
-diroffset[n] and diroffset[n+1], and these "string"s are densely
-packed so strlen(diroffset[n]) and diroffset[n+1]-diroffset[n] are
-either the same thing (or with a fixed difference, if each "string"
-is accompanied by some fixed-length data), but it is unclear what
-these "strings" represent, especially because the name of the table
-implies that you are talking about directories but strlen talks
-about filename.
-
-> +== Design explanations
-> + ...
-> +[3] The data of the cache-tree extension and the resolve undo
-> +    extension is now part of the index itself, but if other extensions
-> +    come up in the future, there is no need to change the index, they
-> +    can simply be added at the end.
-
-Interesting.  When we added extensions, we said that there is no
-need to change the index to add new features, they can simply be
-added at the end.  Perhaps the file offset table can be added as an
-extension to v2 to give us the same bisectability, allowing us a
-single entry in-place replacementability, without defining an
-entirely different format?
+I just gave it a try using a CE_SMUDGED flag, instead of the mtime
+as smudge marker, which which this test works without any problems.
+It doesn't work the other way round, the test as the test doesn't
+break when using mtime as smudge marker in v2, because we do the
+ce_modified_check_fs() test earlier.
