@@ -1,103 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add Code Compare v2.80.4 as a merge / diff tool for
- Windows
-Date: Thu, 09 Aug 2012 09:03:49 -0700
-Message-ID: <7vipcsoxwa.fsf@alter.siamese.dyndns.org>
-References: <5022CC90.3060108@gmail.com>
- <7v1ujhrs7e.fsf@alter.siamese.dyndns.org>
- <CAHGBnuOaze=opbK+hH2s92enHuN2NUuKOVsTY4ZKgc3aWsX2-g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 09 18:04:00 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/PATCH] rebase -i: use full onto sha1 in reflog
+Date: Thu,  9 Aug 2012 18:05:59 +0200
+Message-ID: <89f79049a5fd737716ad51630a8c1ee4a27d747e.1344528082.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 09 18:06:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzVDL-0003pD-IZ
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 18:03:59 +0200
+	id 1SzVFS-0007lz-Li
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 18:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758617Ab2HIQDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 12:03:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44769 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758396Ab2HIQDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 12:03:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FD465D8B;
-	Thu,  9 Aug 2012 12:03:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wqhXk9Pg+9DCZWqAeHEVGbd07FA=; b=SGmxYb
-	hS0kQIl/pttbEznYdM/aIIlI53JdR6mv2Smf7ofTKI/O5DEo63uqhtAtj7at2VoN
-	FNdB7UF9KOCBKKZdbf+csBcyIoqvwbTmiH/2laAuwqoz7QI4exh1nNTPRqlJbMy2
-	3WGphIAu0wu2/MxjNtiKNazh/AserR2nQZg0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pcJ/AQ1PLQjm8fAvJqWZP4UjaOFVo/1T
-	slCYU6AB1zqUNRf2eeKBoh5eIDDZPwgnsdwpqsivQELYkai5inxVQEXavSLP2QKh
-	+zHBZcsK/fvhAi2UayTuR0zoS0FC1ZJbm5ADbfMfi6QR1DMPPaYaiAV0KORkshFQ
-	dgTYrsaQDL4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D4CA5D8A;
-	Thu,  9 Aug 2012 12:03:52 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 311D15D89; Thu,  9 Aug 2012
- 12:03:51 -0400 (EDT)
-In-Reply-To: <CAHGBnuOaze=opbK+hH2s92enHuN2NUuKOVsTY4ZKgc3aWsX2-g@mail.gmail.com>
- (Sebastian Schuberth's message of "Thu, 9 Aug 2012 09:06:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CF9F351E-E23B-11E1-9362-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1031438Ab2HIQGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 12:06:04 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:41131 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1031418Ab2HIQGD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Aug 2012 12:06:03 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 97A0520BBA
+	for <git@vger.kernel.org>; Thu,  9 Aug 2012 12:06:01 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Thu, 09 Aug 2012 12:06:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:subject:date:message-id; s=
+	smtpout; bh=fIcMcWSC1cQ9kgVgoKQxpXwIYd8=; b=uJH4RdUobmFjKWKFEmN1
+	RT3BvhHpU4c9wwDGQUR2fpDveRMS5bTVMCpuGQ2GFph1CCwZvusZnjlbiSq1M1Sj
+	r0hYzi1Lsx0hG/7APH3VEcXpNtVoifCPS8C5NTENTN6GvyDcrlyDj+2jnNmyp6lm
+	eELfaNqbjR7H7TwBDPFJLJI=
+X-Sasl-enc: 4/qEWZvtDy1kGZlfgHW6dTCbVJwhYZlbS+Yp94Y4Yq3A 1344528361
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 293DC4824E5;
+	Thu,  9 Aug 2012 12:06:01 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.rc2.245.g4f94e02
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203162>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+'git rebase' uses the full onto sha1 for the reflog message whereas 'git
+rebase -i' uses the short sha1. This is not only inconsistent, but can
+lead to problems when the reflog is inspected at a later time at which
+that abbreviation may have become ambiguous.
 
-> On Wed, Aug 8, 2012 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> I do not have a strong reason to vote for or against inclusion of
->> yet another tool as mergetool backends (read: Meh), but what this
->
-> That sounds almost as if you'd like to keep the number of directly
-> supported mergetools small (I'm not talking about about the length of
-> the list of mergetools in the docs right now). I was always thinking,
-> the more mergetools, the better. Do you think differently?
+Make 'rebase -i' use the full onto sha1, as well.
 
-It depends on the pros-and-cons between the cost of forcing many
-people to see a list of supported backends with yet one more item
-(the list only grows and rarely shrinks) and the benefit of the
-subset of users who can now use it.  I couldn't measure how widely
-the particular commercial program is used from your proposed commit
-log message, and that is where my "for or against" comes from.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+I don't remember having sent this out before but have been running with
+it since (including tests). I don't see it on the list either.
 
->> patch does to Documentation/merge-config.txt is actively unwelcome.
->>
->> As we discussed earlier in
->>
->>     http://thread.gmane.org/gmane.comp.version-control.git/201913/focus=201976
->>
->> the longer term direction is to reduce the names of tools listed
->> there.
->>
->> I am somewhat saddened to find your name in that thread; you should
->> have been aware of that discussion when you wrote this patch.
->
-> I still agree that not listing all mergetools in multiple places is a
-> good thing. But doing the whole stuff of extending --tool-help for
-> git-mergetool and git-difftool to return a simple list that can be
-> used in git-completion.bash etc. IMHO is a separate topic and out of
-> scope of this patch.
+While not for 1.7.12 obviously, it might still be good to have.
 
-Exactly.  If you know that is the long term direction, I would have
-preferred you _not_ to touch any existing descriptions of the tools
-(not even changing them to refer to "--tool-help") in this patch, in
-order to avoid unnecessary conflicts with the topic of unifying the
-list of tool backends, which can be written and cooked separately.
+ git-rebase--interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 0d2056f..dbc9de6 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -573,7 +573,7 @@ do_next () {
+ 	newhead=$(git rev-parse HEAD) &&
+ 	case $head_name in
+ 	refs/*)
+-		message="$GIT_REFLOG_ACTION: $head_name onto $shortonto" &&
++		message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
+ 		git update-ref -m "$message" $head_name $newhead $orig_head &&
+ 		git symbolic-ref \
+ 		  -m "$GIT_REFLOG_ACTION: returning to $head_name" \
+-- 
+1.7.12.rc2.245.g4f94e02
