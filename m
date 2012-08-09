@@ -1,77 +1,168 @@
-From: git@goeswhere.com
-Subject: Re: [PATCH] gitweb: Add support for gravatar-ssl
-Date: Thu, 9 Aug 2012 20:53:10 +0100
-Message-ID: <20120809195310.GA29014@goeswhere.com>
-References: <20120809184210.GA27795@goeswhere.com>
- <20120809193655.7418D13F8069@mailgw.unict.it>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] Let submodule command exit with error status if path does
+	not exist
+Date: Thu, 9 Aug 2012 22:03:04 +0200
+Message-ID: <20120809200302.GA93203@book.hvoigt.net>
+References: <1340872080.2103.92.camel@athena.dnet>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 09 21:53:30 2012
+Cc: git@vger.kernel.org, Daniel Milde <daniel@milde.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 22:03:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzYnJ-0002wX-LH
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 21:53:21 +0200
+	id 1SzYx6-0002VY-2k
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 22:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759494Ab2HITxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 15:53:13 -0400
-Received: from fau.xxx ([78.47.200.108]:56080 "EHLO reg.goeswhere.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759481Ab2HITxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 15:53:12 -0400
-Received: by reg.goeswhere.com (Postfix, from userid 1000)
-	id DB3DC2E057F; Thu,  9 Aug 2012 20:53:10 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=goeswhere.com;
-	s=default; t=1344541990;
-	bh=+b6Yx92wY8eb5AdnIiagiAQNCcFOUnkdVHWaC35YIJc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=qpwgCddeDvi3JOlYalEywzZm4dME9SCNQIrYkjsfKERZeDKST8sd67o1RKinSCyFG
-	 XBPspMfFnhmdm959K25Xo1CVUs7HRYPTAZ7LiMWbGRN9HzLphRxetdziwvyDoqgQ7+
-	 3PAYXoEs81nr1WO0p6Qsdx3KZEXRI2gr9mpGhCek=
-Mail-Followup-To: git@vger.kernel.org
+	id S1759512Ab2HIUDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 16:03:22 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.41]:42963 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759378Ab2HIUDV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 16:03:21 -0400
+Received: from [77.21.76.22] (helo=localhost)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1SzYwp-0007Zp-Q6; Thu, 09 Aug 2012 22:03:12 +0200
 Content-Disposition: inline
-In-Reply-To: <20120809193655.7418D13F8069@mailgw.unict.it>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1340872080.2103.92.camel@athena.dnet>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203179>
 
-On Thu, Aug 09, 2012 at 09:36:46PM +0200, Giuseppe Bilotta wrote:
-> Chris West (Faux) wrote:
-> 
-> > Teach gitweb to allow 'avatar' to be set to 'gravatar-ssl', switching
-> > to the https://secure.gravatar.com url form, to avoid mixed content
-> > warnings when serving gitweb over https, with gravatar enabled.
-> > ---
-> > I'd alternatively propose always using the https:// form of the URL,
-> > but it seems significantly slower, so it's probably best to let people
-> > pick to continue using the insecure version.
-> 
-> Rather than introducing a new, separate setting, wouldn't it be better
-> to have the gravatar URL be automatically decided based on the current
-> gitweb URL? (use the ssl gravar url when the current protocol is https,
-> and the standard http url otherwise)
+Previously the exit status of git submodule was zero for various
+subcommands even though the user specified an unknown path.
 
-I don't believe it's possible to reliably detect this kind of thing (on
-the server side), think ssl terminators / reverse proxies / etc.,
-although you can probably get 99% of the way there, which might be good
-enough.
+The reason behind that was that they all pipe the output of module_list
+into the while loop which then does the action on the paths specified by
+the commandline. Since piped commands are run in parallel the status
+code of module_list was swallowed.
 
-An alternative would be to dump some JS on the page to convert the SSL
-links to non-SSL links if the page hasn't been loaded over SSL
-(according to the browser)?  Or do it the other way around and ignore
-the mixed content warnings that ssl users with no javascript will see.
+We work around this by introducing a new function module_list_valid
+which is used to check the leftover commandline parameters passed to
+module_list.
 
-I'd rather just hardcode the https version than do anything with JS.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ git-submodule.sh           | 19 ++++++++++++++++++-
+ t/t7400-submodule-basic.sh | 26 ++++++++++++++++++++++----
+ 2 files changed, 40 insertions(+), 5 deletions(-)
 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/git-submodule.sh b/git-submodule.sh
+index aac575e..1fd21da 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -103,13 +103,21 @@ resolve_relative_url ()
+ 	echo "${is_relative:+${up_path}}${remoteurl#./}"
+ }
+ 
++module_list_ls_files() {
++	git ls-files --error-unmatch --stage -- "$@"
++}
++
++module_list_valid() {
++	module_list_ls_files "$@" >/dev/null
++}
++
+ #
+ # Get submodule info for registered submodules
+ # $@ = path to limit submodule list
+ #
+ module_list()
+ {
+-	git ls-files --error-unmatch --stage -- "$@" |
++	module_list_ls_files "$@" |
+ 	perl -e '
+ 	my %unmerged = ();
+ 	my ($null_sha1) = ("0" x 40);
+@@ -434,6 +442,8 @@ cmd_init()
+ 		shift
+ 	done
+ 
++	module_list_valid "$@" || exit 1
++
+ 	module_list "$@" |
+ 	while read mode sha1 stage sm_path
+ 	do
+@@ -532,6 +542,8 @@ cmd_update()
+ 		cmd_init "--" "$@" || return
+ 	fi
+ 
++	module_list_valid "$@" || exit 1
++
+ 	cloned_modules=
+ 	module_list "$@" | {
+ 	err=
+@@ -929,6 +941,8 @@ cmd_status()
+ 		shift
+ 	done
+ 
++	module_list_valid "$@" || exit 1
++
+ 	module_list "$@" |
+ 	while read mode sha1 stage sm_path
+ 	do
+@@ -996,6 +1010,9 @@ cmd_sync()
+ 			;;
+ 		esac
+ 	done
++
++	module_list_valid "$@" || exit 1
++
+ 	cd_to_toplevel
+ 	module_list "$@" |
+ 	while read mode sha1 stage sm_path
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index c73bec9..3a40334 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -258,6 +258,27 @@ test_expect_success 'init should register submodule url in .git/config' '
+ 	test_cmp expect url
+ '
+ 
++test_failure_with_unknown_submodule() {
++	test_must_fail git submodule $1 no-such-submodule 2>output.err &&
++	grep "^error: .*no-such-submodule" output.err
++}
++
++test_expect_success 'init should fail with unknown submodule' '
++	test_failure_with_unknown_submodule init
++'
++
++test_expect_success 'update should fail with unknown submodule' '
++	test_failure_with_unknown_submodule update
++'
++
++test_expect_success 'status should fail with unknown submodule' '
++	test_failure_with_unknown_submodule status
++'
++
++test_expect_success 'sync should fail with unknown submodule' '
++	test_failure_with_unknown_submodule sync
++'
++
+ test_expect_success 'update should fail when path is used by a file' '
+ 	echo hello >expect &&
+ 
+@@ -418,10 +439,7 @@ test_expect_success 'moving to a commit without submodule does not leave empty d
+ '
+ 
+ test_expect_success 'submodule <invalid-path> warns' '
+-
+-	git submodule no-such-submodule 2> output.err &&
+-	grep "^error: .*no-such-submodule" output.err
+-
++	test_failure_with_unknown_submodule
+ '
+ 
+ test_expect_success 'add submodules without specifying an explicit path' '
+-- 
+1.7.12.rc2.10.g45a4861
