@@ -1,318 +1,88 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [PATCH v2] git svn: reset invalidates the memoized mergeinfo caches
-Date: Thu, 9 Aug 2012 13:35:25 -0400
-Message-ID: <CAK8d-aK_R0X36o_CyNgE=1PSX2AOd79bJNhbHzgL0vO7yj224g@mail.gmail.com>
-References: <20120807200207.GA10899@m62s10.vlinux.de> <20120807204510.GA10453@dcvr.yhbt.net>
- <20120808054129.GB10899@m62s10.vlinux.de> <20120808225258.GA24956@dcvr.yhbt.net>
- <20120809064253.GC10899@m62s10.vlinux.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] git svn: handle errors and concurrent commits in
+ dcommit
+Date: Thu, 09 Aug 2012 10:44:30 -0700
+Message-ID: <7v1ujgot8h.fsf@alter.siamese.dyndns.org>
+References: <1343856397-6536-1-git-send-email-robert@debian.org>
+ <20120802104421.GA13271@dcvr.yhbt.net> <5021F9D4.1010700@debian.org>
+ <20120808230754.GB24956@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	Andrew Myrick <amyrick@apple.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 09 19:35:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Luberda <robert@debian.org>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 09 19:44:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzWeH-0004nA-TG
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 19:35:54 +0200
+	id 1SzWmk-0002oj-WA
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 19:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713Ab2HIRfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 13:35:48 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37529 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753785Ab2HIRfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 13:35:46 -0400
-Received: by yhmm54 with SMTP id m54so725246yhm.19
-        for <git@vger.kernel.org>; Thu, 09 Aug 2012 10:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=iH6smnSzBfzA/9ghChMecp3oo492xUq1mtrA4RUdrco=;
-        b=rFlkaeyjITNuvegmbnZ/FePTcFEt89FNwk/LFzwplY0JVGLQJ7/kvRqKt0LD8MC96a
-         yVPpLuGAU5jNmaEV9lzaOFGPgn2aHsRM3ZFSw2mwt327qlVaK+E8UalM3C8Cu9LuS63Z
-         9uHqcpyDW2ALR+FDMe/Lz3NcjIAJLj0UVZWz0ybFvOh/XV6FlpKFxlEUcAX7GMgdLBoX
-         ImdcUzYNhGknc8zZiZLc4IkQi+r+u5bUUyeWPo1AkvXZ5PW3jUbsJoH+Q8oZrYt78o95
-         9mkabCbhYgijptbaNw0SQPZ6OH07B6J8SqK9qLgOejNHELMaHw4XUxx/r/WmF0QIldbW
-         8H2Q==
-Received: by 10.66.83.234 with SMTP id t10mr107217pay.39.1344533745221; Thu,
- 09 Aug 2012 10:35:45 -0700 (PDT)
-Received: by 10.142.207.17 with HTTP; Thu, 9 Aug 2012 10:35:25 -0700 (PDT)
-In-Reply-To: <20120809064253.GC10899@m62s10.vlinux.de>
+	id S1758045Ab2HIRoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 13:44:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59131 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757539Ab2HIRod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 13:44:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDCDC7F2A;
+	Thu,  9 Aug 2012 13:44:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AU+b40it5Syh3aUIz/iUoG+a9Jw=; b=Xgh9Km
+	Lq9jPi7tzyRCcRLxchV3uV27mpKYzoiz2o6nDPoNu4JCnirl1yXrFgyqVik5ID4a
+	ddKbVjyUDHdlPchROhdaqnyg/5g6Y0TJDaY/tlTDL8eZhAlR1Y/8DyhBFXUw7L+2
+	2U84MgD+rYgL1Xfx87n7NtcaJbcSWu1wRdvEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=or6jPq4c+AnK5l0ovwtA33o6hAuzGEVI
+	tMBnebjxIBdpbLKh2kjkMxK+PwAW6uHr8Bv4+vAkr8QcR6EY5iG8L2Tnn6IndV2y
+	ISssJts+ZUCeo2ap23XJ2PZDekeX26ibJ8RIZtdMNMkMiLbrtb835nEMZsEUs1GS
+	/CIRMTovm1w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA9CA7F29;
+	Thu,  9 Aug 2012 13:44:32 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AB5F7F28; Thu,  9 Aug 2012
+ 13:44:32 -0400 (EDT)
+In-Reply-To: <20120808230754.GB24956@dcvr.yhbt.net> (Eric Wong's message of
+ "Wed, 8 Aug 2012 23:07:54 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E05CB1DE-E249-11E1-BE2B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203171>
 
-Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Eric Wong <normalperson@yhbt.net> writes:
 
-On Thu, Aug 9, 2012 at 2:42 AM, Peter Baumann <waste.manager@gmx.de> wrote:
-> On Wed, Aug 08, 2012 at 10:52:58PM +0000, Eric Wong wrote:
->> Peter Baumann <waste.manager@gmx.de> wrote:
->> > On Tue, Aug 07, 2012 at 08:45:10PM +0000, Eric Wong wrote:
->> > > Peter Baumann <waste.manager@gmx.de> wrote:
->> > > > +                       for my $suffix (qw(yaml db)) {
->> > > > +                               unlink("$cache_file.$suffix");
->> > >
->> > > Need to check for unlink() errors (and ignore ENOENT).
->> >
->> > I'm not sure what you mean here: Aren't we screwed either way if unlinking
->> > the file failed? There is nothhing we can do about it if e.g. the user doesn't
->> > have the permissions to delete the file, besides terminating, e.g.
->> >
->> >     for my $cache_file (("$cache_path/lookup_svn_merge",
->> >                          "$cache_path/check_cherry_pick",
->> >                          "$cache_path/has_no_changes")) {
->> >             for my $suffix (qw(yaml db)) {
->> >                     next unless (-e "$cache_file.$suffix");
->> >                     unlink("$cache_file.$suffix") or
->> >                             die "Failed to delete $cache_file.$suffix";
->> >             }
->>
->> Yes we're screwed, but silent failure is the worst way to fail,
->> especially if it can lead us back to the problems your patch is meant to
->> address.
->>
->> Perhaps something like this (with $! to show the error):
->>
->>                       my $file = "$cache_file.$suffix";
->>                       next unless -e $file;
->>                       unlink($file) or die "unlink($file) failed: $!\n";
+> Robert Luberda <robert@debian.org> wrote:
+>> Eric Wong wrote:
+>> >> +		echo "PATH=\"$PATH\"; export PATH" >> $hook
+>> >> +		echo "svnconf=\"$svnconf\"" >> $hook
+>> >> +		cat >> "$hook" <<- 'EOF2'
+>> >> +			cd work-auto-commits.svn
+>> >> +			svn up --config-dir "$svnconf"
+>> > 
+>> > That doesn't seem to interact well with users who depend on
+>> > svn_cmd pointing to something non-standard.  Not sure
+>> > what to do about it, though....
 >
-> First, let me thank you for your review and your detailed explanation.
-> I really appreciate it.
+>> I have no idea how to change it either. I've tried to source the
+>> lib-git-svn.sh file inside the hook, but it sources test-lib.sh, and the
+>> latter script doesn't work well if it is sourced by non-test script.
+>> Anyway I the part of my original patch unchanged.
 >
-> I changed svn to svn_cmd in the test (and also some minor changes to
-> the comments and removing trailing whitespace) and switched the order of
-> clear_memoized_mergeinfo_caches and _rev_map_reset as you asked for, so
-> hopefully this is ready to go in.
+> Ah, so svn_cmd only cares about --config-dir and you already handled
+> that :)   I misremembered it also allowed for non-standard SVN
+> installations :x
 >
-> -- 8< --
-> From: Peter Baumann <waste.manager@gmx.de>
-> Subject: [PATCH] git svn: reset invalidates the memoized mergeinfo caches
->
-> Since v1.7.0-rc2~11 (git-svn: persistent memoization, 2010-01-30),
-> git-svn has maintained some private per-repository caches in
-> .git/svn/.caches to avoid refetching and recalculating some
-> mergeinfo-related information with every 'git svn fetch'.
->
-> This memoization can cause problems, e.g consider the following case:
->
-> SVN repo:
->
->   ... - a - b - c - m  <- trunk
->           \        /
->             d  -  e    <- branch1
->
-> The Git import of the above repo is at commit 'a' and doesn't know about
-> the branch1. In case of an 'git svn rebase', only the trunk of the
-> SVN repo is imported. During the creation of the git commit 'm', git svn
-> uses the svn:mergeinfo property and tries to find the corresponding git
-> commit 'e' to create 'm' with 'c' and 'e' as parents. But git svn rebase
-> only imports the current branch so commit 'e' is not imported.
-> Therefore git svn fails to create commit 'm' as a merge commit, because one
-> of its parents is not known to git. The imported history looks like this:
->
->   ... - a - b - c - m  <- trunk
->
-> A later 'git svn fetch' to import all branches can't rewrite the commit 'm'
-> to add 'e' as a parent and to make it a real git merge commit, because it
-> was already imported.
->
-> That's why the imported history misses the merge and looks like this:
->
->   ... - a - b - c - m  <- trunk
->           \
->             d  -  e    <- branch1
->
-> Right now the only known workaround for importing 'm' as a merge is to
-> force reimporting 'm' again from SVN, e.g. via
->
->   $ git svn reset --revision $(git find-rev $c)
->   $ git svn fetch
->
-> Sadly, this is where the behavior has regressed: git svn reset doesn't
-> invalidate the old mergeinfo cache, which is no longer valid for the
-> reimport, which leads to 'm' beeing imprted with only 'c' as parent.
->
-> As solution to this problem, this commit invalidates the mergeinfo cache
-> to force correct recalculation of the parents.
->
-> During development of this patch, several ways for invalidating the cache
-> where considered. One of them is to use Memoize::flush_cache, which will
-> call the CLEAR method on the underlying Memoize persistency implementation.
-> Sadly, neither Memoize::Storable nor the newer Memoize::YAML module
-> introduced in 68f532f4ba888 could optionally be used implement the
-> CLEAR method, so this is not an option.
->
-> Reseting the internal hash used to store the memoized values has the same
-> problem, because it calls the non-existing CLEAR method of the
-> underlying persistency layer, too.
->
-> Considering this and taking into account the different implementations
-> of the memoization modules, where Memoize::Storable is not in our control,
-> implementing the missing CLEAR method is not an option, at least not if
-> Memoize::Storable is still used.
->
-> Therefore the easiest solution to clear the cache is to delete the files
-> on disk in 'git svn reset'. Normally, deleting the files behind the back
-> of the memoization module would be problematic, because the in-memory
-> representation would still exist and contain wrong data. Fortunately, the
-> memoization is active in memory only for a small portion of the code.
-> Invalidating the cache by deleting the files on disk if it isn't active
-> should be safe.
->
-> Signed-off-by: Peter Baumann <waste.manager@gmx.de>
-> ---
->  perl/Git/SVN.pm                        | 27 +++++++++++-
->  t/t9163-git-svn-reset-clears-caches.sh | 78 ++++++++++++++++++++++++++++++++++
->  2 files changed, 103 insertions(+), 2 deletions(-)
->  create mode 100755 t/t9163-git-svn-reset-clears-caches.sh
->
-> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-> index 0889145..acb2539 100644
-> --- a/perl/Git/SVN.pm
-> +++ b/perl/Git/SVN.pm
-> @@ -1634,6 +1634,24 @@ sub tie_for_persistent_memoization {
->                 Memoize::unmemoize 'has_no_changes';
->         }
->
-> +       sub clear_memoized_mergeinfo_caches {
-> +               die "Only call this method in non-memoized context" if ($memoized);
-> +
-> +               my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-> +               return unless -d $cache_path;
-> +
-> +               for my $cache_file (("$cache_path/lookup_svn_merge",
-> +                                    "$cache_path/check_cherry_pick",
-> +                                    "$cache_path/has_no_changes")) {
-> +                       for my $suffix (qw(yaml db)) {
-> +                               my $file = "$cache_file.$suffix";
-> +                               next unless -e $file;
-> +                               unlink($file) or die "unlink($file) failed: $!\n";
-> +                       }
-> +               }
-> +       }
-> +
-> +
->         Memoize::memoize 'Git::SVN::repos_root';
->  }
->
-> @@ -2126,8 +2144,13 @@ sub rev_map_set {
->
->         sysopen(my $fh, $db_lock, O_RDWR | O_CREAT)
->              or croak "Couldn't open $db_lock: $!\n";
-> -       $update_ref eq 'reset' ? _rev_map_reset($fh, $rev, $commit) :
-> -                                _rev_map_set($fh, $rev, $commit);
-> +       if ($update_ref eq 'reset') {
-> +               clear_memoized_mergeinfo_caches();
-> +               _rev_map_reset($fh, $rev, $commit);
-> +       } else {
-> +               _rev_map_set($fh, $rev, $commit);
-> +       }
-> +
->         if ($sync) {
->                 $fh->flush or die "Couldn't flush $db_lock: $!\n";
->                 $fh->sync or die "Couldn't sync $db_lock: $!\n";
-> diff --git a/t/t9163-git-svn-reset-clears-caches.sh b/t/t9163-git-svn-reset-clears-caches.sh
-> new file mode 100755
-> index 0000000..cd4c662
-> --- /dev/null
-> +++ b/t/t9163-git-svn-reset-clears-caches.sh
-> @@ -0,0 +1,78 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Peter Baumann
-> +#
-> +
-> +test_description='git svn reset clears memoized caches'
-> +. ./lib-git-svn.sh
-> +
-> +svn_ver="$(svn --version --quiet)"
-> +case $svn_ver in
-> +0.* | 1.[0-4].*)
-> +       skip_all="skipping git-svn test - SVN too old ($svn_ver)"
-> +       test_done
-> +       ;;
-> +esac
-> +
-> +# ... a  -  b - m   <- trunk
-> +#      \       /
-> +#       ... c       <- branch1
-> +#
-> +# SVN Commits not interesting for this test are abbreviated with "..."
-> +#
-> +test_expect_success 'initialize source svn repo' '
-> +       svn_cmd mkdir -m "create trunk" "$svnrepo"/trunk &&
-> +       svn_cmd mkdir -m "create branches" "$svnrepo/branches" &&
-> +       svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
-> +       (
-> +               cd "$SVN_TREE" &&
-> +               touch foo &&
-> +               svn_cmd add foo &&
-> +               svn_cmd commit -m "a" &&
-> +               svn_cmd cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
-> +               svn_cmd switch "$svnrepo"/branches/branch1 &&
-> +               touch bar &&
-> +               svn_cmd add bar &&
-> +               svn_cmd commit -m b &&
-> +               svn_cmd switch "$svnrepo"/trunk &&
-> +               touch baz &&
-> +               svn_cmd add baz &&
-> +               svn_cmd commit -m c &&
-> +               svn_cmd up &&
-> +               svn_cmd merge "$svnrepo"/branches/branch1 &&
-> +               svn_cmd commit -m "m"
-> +       ) &&
-> +       rm -rf "$SVN_TREE"
-> +'
-> +
-> +test_expect_success 'fetch to merge-base (a)' '
-> +       git svn init -s "$svnrepo" &&
-> +       git svn fetch --revision BASE:3
-> +'
-> +
-> +# git svn rebase looses the merge commit
-> +#
-> +# ... a  -  b - m  <- trunk
-> +#      \
-> +#       ... c
-> +#
-> +test_expect_success 'rebase looses SVN merge (m)' '
-> +       git svn rebase &&
-> +       git svn fetch &&
-> +       test 1 = $(git cat-file -p master|grep parent|wc -l)
-> +'
-> +
-> +# git svn fetch creates correct history with merge commit
-> +#
-> +# ... a  -  b - m  <- trunk
-> +#      \       /
-> +#       ... c      <- branch1
-> +#
-> +test_expect_success 'reset and fetch gets the SVN merge (m) correctly' '
-> +       git svn reset -r 3 &&
-> +       git reset --hard trunk &&
-> +       git svn fetch &&
-> +       test 2 = $(git cat-file -p trunk|grep parent|wc -l)
-> +'
-> +
-> +test_done
-> --
-> 1.7.12.rc0.10.g476109f
->
+> I've pushed your updated patch to my "maint" branch on
+> git://bogomips.org/git-svn since "master" has larger pending changes.
 
-
-
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"The rotter who simpers that he sees no difference between the power
-of the dollar and the power of the whip, ought to learn the difference
-on his own hide."
-    -Francisco d'Anconia, Atlas Shrugged
+I should have asked this yesterday, but do you mean you want to have
+your "maint" in the upcoming 1.7.12?  This does look like a useful
+thing to do, but does not seem like a regression fix to me.
