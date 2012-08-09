@@ -1,66 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 4/4] command-list: mention git-credential-* helpers
-Date: Thu, 09 Aug 2012 10:02:38 +0200
-Message-ID: <vpq7gt8biht.fsf@bauges.imag.fr>
-References: <20120808183132.GA24550@sigill.intra.peff.net>
-	<20120808183449.GD24574@sigill.intra.peff.net>
+From: Andrey Pavlenko <andrey.a.pavlenko@gmail.com>
+Subject: Re: fast-import error: fatal: 'refs/heads/master' - not a valid ref
+Date: Thu, 9 Aug 2012 12:22:22 +0400
+Message-ID: <CAHSUVA4muWPh7jYNJNsPP4=_g0z98QQmz6fzraVkKfyDgE_rcw@mail.gmail.com>
+References: <CAHSUVA5y1nZG69JbvC-wbmHhjyBGLx8Z2TM3htEyuCsWj=A+aw@mail.gmail.com>
+	<20120808175433.GA12772@sigill.intra.peff.net>
+Reply-To: andrey.a.pavlenko@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 09 10:03:14 2012
+X-From: git-owner@vger.kernel.org Thu Aug 09 10:22:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzNi5-00008f-Gv
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 10:03:13 +0200
+	id 1SzO0m-0007Sm-Q4
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 10:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755973Ab2HIIDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 04:03:04 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50970 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755366Ab2HIIDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 04:03:00 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q797xUaK022200
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 9 Aug 2012 09:59:30 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SzNhX-0004fE-Ue; Thu, 09 Aug 2012 10:02:40 +0200
-In-Reply-To: <20120808183449.GD24574@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 8 Aug 2012 14:34:49 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 09 Aug 2012 09:59:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q797xUaK022200
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1345103978.61989@CDghJ8BHAhSBOZgqlaXfkg
+	id S1756130Ab2HIIW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 04:22:27 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:57728 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755934Ab2HIIWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 04:22:24 -0400
+Received: by weyx8 with SMTP id x8so112767wey.19
+        for <git@vger.kernel.org>; Thu, 09 Aug 2012 01:22:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=lpxtJoMkGAgyv2jtRTRIZBTTNuagUsI0CjE1Ft6U2As=;
+        b=T3zt1UhY+/e0wCCJzu0Qh7Xw6yFsH638OlSTeCczkNo3b7Yf/RIJxsf43+xt3L6b9F
+         53an2CUTX3gzvllitClrIxS7gfCciFCT+Y/0f7t/qMUlHSF8vgIiZkXO4DYQ838guCf2
+         BfWKS0i9JN5QULrvdBx1Dh+3imMOKjb2qgsWWXnZ8x611aeCvDRyzbxEa4d6fBp9eDYI
+         thc/zGu/+L65txoZEk8JajNDNb6k51nZtJYmKaR2Kbv/6phk1oYF9sqK6opHYxbIpScb
+         eTCIL+Fo43/YeIAtAJdGQi5kYfexPv/Y6+oO4V+UOG3jr9FuDb4bcZNo7R11ClHSqimu
+         dJsQ==
+Received: by 10.216.135.147 with SMTP id u19mr10853417wei.12.1344500542625;
+ Thu, 09 Aug 2012 01:22:22 -0700 (PDT)
+Received: by 10.216.152.164 with HTTP; Thu, 9 Aug 2012 01:22:22 -0700 (PDT)
+In-Reply-To: <20120808175433.GA12772@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203155>
 
-Jeff King <peff@peff.net> writes:
+git --version
+git version 1.7.11.3
 
-> These commands were never added to the command-list. Adding
-> them makes "make check-docs" run without complaint.
-> While we're at it, let's capitalize the first letter of
-> their one-line summaries to match the rest of the git
-> manpages.
-
-You may want to squash my patch in this one, since they really do the
-same thing.
-
-In any case, thanks for taking care of this, the patches sound good.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+On Wed, Aug 8, 2012 at 9:54 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 08, 2012 at 11:25:02AM +0400, Andrey Pavlenko wrote:
+>
+>> I'm developing a remote helper which uses the fast-import stream for
+>> fetching. When I perform cloning git prints error message - "fatal:
+>> 'refs/heads/master' - not a valid ref", however the clonning completes
+>> normally. Each my fast-import commit command starts with "commit
+>> refs/heads/master" header.
+>>
+>> What does this error message mean and how can I fix it?
+>
+> What version of git are you using? The only command which produces that
+> exact message is "git show-ref", and it is not called by current
+> versions of the cloning process (but it used to be in old versions).
+>
+> -Peff
