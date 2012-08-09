@@ -1,95 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] rebase -i: use full onto sha1 in reflog
-Date: Thu, 09 Aug 2012 10:08:50 -0700
-Message-ID: <7va9y4ouvx.fsf@alter.siamese.dyndns.org>
-References: <89f79049a5fd737716ad51630a8c1ee4a27d747e.1344528082.git.git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] add tests for 'git rebase --keep-empty'
+Date: Thu, 09 Aug 2012 10:22:40 -0700
+Message-ID: <7v628sou8v.fsf@alter.siamese.dyndns.org>
+References: <1344444498-29328-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Aug 09 19:09:00 2012
+Cc: git@vger.kernel.org, Neil Horman <nhorman@tuxdriver.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 09 19:22:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzWEF-0002Fz-6S
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 19:08:59 +0200
+	id 1SzWRe-00080u-1E
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Aug 2012 19:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245Ab2HIRIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Aug 2012 13:08:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43315 "EHLO
+	id S1753604Ab2HIRWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Aug 2012 13:22:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49173 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752874Ab2HIRIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Aug 2012 13:08:53 -0400
+	id S1753580Ab2HIRWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Aug 2012 13:22:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 878237343;
-	Thu,  9 Aug 2012 13:08:52 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFAC87815;
+	Thu,  9 Aug 2012 13:22:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=znhaU91jXKFK9w5vFSwLS7ok0yQ=; b=fxRv2G
-	Vq6D32PoVih0oukZIneUjzbCFzN8zQUURfOhd9kSsAbO7ibjd5es1vLyyYNDLuUV
-	B/5xR9jo1hdIL4u2smc3YWmHYLMhMFdavdAMniGo5Ai+SIwGRPKNe2UNH/A+ViM1
-	5/2aoUXcGafwTrG3h2qJALGSlIBs3/uEfhE8c=
+	:content-type; s=sasl; bh=DkqhC0tkOX68J3czbaDsqbJD1UE=; b=QoHI7l
+	vO2gsp+7/Jot2taxT32Gvx76mvPc3CYvzOIC8ScXFQe4MlYrdjx//O9vgZhiSJcZ
+	CfREkYvv3ZDWB6OV2lpjau/GD3Z3E9rNvkwAMxTcvCTs8FnScGnJpDECaZ2BtGAE
+	NTH9MCpR0dZSH/gc8ibyLYDrCFwOcbJXpMay0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wR1X/Jhtr84PIDz0f6XMHlVRpV2BCbv0
-	mB/IjUlTtd7KgjAT4aL8MfSGhsxqnzpWC7MWaGRVqt0s5ckKz3FVgC1Sz7sYcbs+
-	uD3EbVRGnT/McYjIE5s9tmlXzuB3hI+MnDLWE1asYyaa9DAQvTEkgo5V1Aa0nwqm
-	Nfc4XW5Xlfs=
+	:content-type; q=dns; s=sasl; b=D5jEeArv08qbrEpzqz+0SggiPjuHRcZT
+	PqtpWl1kkbAht2gni95B+dMw3PLUqUowvaZJ2MB26GNhYDI78iw0Y7tJ9eo7HZLB
+	UMTCsg//LB/uLGcqyrNiTUJ6iO+Jf31HHvoWC+W3CTP/p7tugktjsW+LsIUEyZsa
+	X1ZZjd5UW9A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 744927342;
-	Thu,  9 Aug 2012 13:08:52 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B71197814;
+	Thu,  9 Aug 2012 13:22:42 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C53FD7341; Thu,  9 Aug 2012
- 13:08:51 -0400 (EDT)
-In-Reply-To: <89f79049a5fd737716ad51630a8c1ee4a27d747e.1344528082.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 9 Aug 2012 18:05:59 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2245D780F; Thu,  9 Aug 2012
+ 13:22:42 -0400 (EDT)
+In-Reply-To: <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
+ von Zweigbergk's message of "Thu, 9 Aug 2012 08:39:51 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4907286-E244-11E1-A8EA-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D37B519E-E246-11E1-A9BB-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203169>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> 'git rebase' uses the full onto sha1 for the reflog message whereas 'git
-> rebase -i' uses the short sha1. This is not only inconsistent, but can
-> lead to problems when the reflog is inspected at a later time at which
-> that abbreviation may have become ambiguous.
+> Add test cases for 'git rebase --keep-empty' with and without an
+> "empty" commit already in upstream. The empty commit that is about to
+> be rebased should be kept in both cases.
 >
-> Make 'rebase -i' use the full onto sha1, as well.
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 > ---
-> I don't remember having sent this out before but have been running with
-> it since (including tests). I don't see it on the list either.
 >
-> While not for 1.7.12 obviously, it might still be good to have.
+> Added another test for when the upstream already has an empty
+> commit. The test case protects the current behavior; I just assume the
+> current behavior is what we want.
 
-Makes sense, I agree it is not that urgent to include it in 1.7.12,
-and I think it is not just "good to have" but "we should have done
-so from day one and it cannot break anybody who is reading the
-reflog".
+Thanks.  I think it makes sense, as "upstream already has an empty
+commit" together with "want to keep empty while rebasing" is a
+strong sign that the user wants to have a history littered with many
+empty commits.  Unlike a normal commit whose "patch-id" identity may
+have meaningful significance (i.e. "the change to do X is already
+in, or not yet in, this branch"), all the empty commits share the
+same emptiness, so having one empty somewhere long time ago in the
+history of where we are transplanting the commits shouldn't be a
+reason to countermand the "want to keep empty" wish by the user.
 
-Thanks.
-
->
->  git-rebase--interactive.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 0d2056f..dbc9de6 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -573,7 +573,7 @@ do_next () {
->  	newhead=$(git rev-parse HEAD) &&
->  	case $head_name in
->  	refs/*)
-> -		message="$GIT_REFLOG_ACTION: $head_name onto $shortonto" &&
-> +		message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
->  		git update-ref -m "$message" $head_name $newhead $orig_head &&
->  		git symbolic-ref \
->  		  -m "$GIT_REFLOG_ACTION: returning to $head_name" \
+And I do not think the conclusion would change even if we changed
+the definition of "identity" for empty commits so that two empty
+commits with the same message are detected as equal.  The only semi
+sensible justification I heard from people who want to have empty
+commits in their history is to keep in-history "notes" (e.g. "at
+this point in the series, the code stops to compile, but the next
+one fixes it", "it is possible that we may want to redo the previous
+patch but I dunno"), and it may not make sense to drop such an empty
+commit under "--keep-empty" mode if there are similar or identical
+looking "notes" in the "upstream" part of the history.
