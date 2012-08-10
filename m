@@ -1,121 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] connect: learn to parse capabilities with values
-Date: Fri, 10 Aug 2012 17:15:09 -0400
-Message-ID: <20120810211509.GB888@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] jk/version-string and google code
+Date: Fri, 10 Aug 2012 14:25:51 -0700
+Message-ID: <7vr4reigm8.fsf@alter.siamese.dyndns.org>
 References: <20120810075342.GA30072@sigill.intra.peff.net>
- <20120810075816.GC8399@sigill.intra.peff.net>
- <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
+ <7vboiilpvs.fsf@alter.siamese.dyndns.org>
+ <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
+ <20120810180836.GA29597@sigill.intra.peff.net>
+ <CAD0k6qSZYH5mvwR5PKhs1FFAPqMfRryXooxd_qhtt+eGXU7pUA@mail.gmail.com>
+ <20120810182555.GA29707@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 23:15:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Dave Borowitz <dborowitz@google.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 23:26:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzwYF-0007bE-VN
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:15:24 +0200
+	id 1Szwij-0003a4-7k
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757704Ab2HJVPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 17:15:19 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34032 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753424Ab2HJVPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 17:15:17 -0400
-Received: (qmail 2325 invoked by uid 107); 10 Aug 2012 21:15:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 17:15:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 17:15:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
+	id S1758670Ab2HJVZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 17:25:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38934 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757593Ab2HJVZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 17:25:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F2B08B38;
+	Fri, 10 Aug 2012 17:25:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oqeGNdZw1arJUlvvqsZrLy8FWsw=; b=wLfeId
+	U/48MpuowuhPOl1g1eZxl3uv98fTedVaujsFDk02JACmQ3edGyedhJjjA4J/o31M
+	hVWrkCF+W4P4BQljyaoQZ3deAGfBVuChSH/1IFwt47y1w7Wc0pVOlxUbHeFesTD+
+	Mz3g1ghrQ6L6SPg3GTv/2NVW2A38aPG/7KVnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j1gn+zS4MoSCAaQ2u/Gx/7vOuvpalKob
+	2I4MZTLNGA6yr2gRMfa/yMeuu/4paHcMDlGH3sDYXGcNquBSELpMnOsYmY29Ayf7
+	1uZwqYCafxSYbbUHYiu5Sk2C2NR/ICVaMDc0eCJld73Kycp+avJltYzyNdHdtFpR
+	7LeR89aLinE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BDB18B37;
+	Fri, 10 Aug 2012 17:25:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47AAB8B36; Fri, 10 Aug 2012
+ 17:25:53 -0400 (EDT)
+In-Reply-To: <20120810182555.GA29707@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Aug 2012 14:25:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F6E6652E-E331-11E1-B7A4-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203263>
 
-On Fri, Aug 10, 2012 at 01:01:11PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +/*
-> > + * Parse features of the form "feature=value".  Returns NULL if the feature
-> > + * does not exist, the empty string if it exists but does not have an "=", or
-> > + * the content to the right of the "=" until the first space (or end of
-> > + * string).  The cannot contain literal spaces; double-quoting or similar
-> > + * schemes would break compatibility, since older versions of git treat the
-> > + * space as a hard-delimiter without any context.
-> > + *
-> > + * The return value (if non-NULL) is newly allocated on the heap and belongs to
-> > + * the caller.
-> > + */
-> > +char *parse_feature_request_value(const char *feature_list, const char *feature)
-> > +{
-> > +	const char *start = parse_feature_request(feature_list, feature);
-> > +	const char *end;
-> > +
-> > +	if (!start || prefixcmp(start, feature))
-> > +		return NULL;
-> > +	start += strlen(feature);
-> > +
-> > +	if (*start == '=')
-> > +		start++;
-> > +	end = strchrnul(start, ' ');
-> > +
-> > +	return xmemdupz(start, end - start);
-> > +}
-> 
-> Having to run strlen(feature) three times in this function (once in
-> parse_feature_request() as part of strstr() and the edge check of
-> the found string, once as part of prefixcmp() here, and then an
-> explicit strlen() to skip it) makes me feel dirty.
+> On Fri, Aug 10, 2012 at 11:13:30AM -0700, Dave Borowitz wrote:
+>
+>> > Thanks for the data point. I knew you guys ran some custom code, so I
+>> > wasn't sure how widespread this is. The fact that other dulwich-based
+>> > servers would see the same issue makes me doubly sure that my fix is the
+>> > right direction.
+>> 
+>> You may also notice in that code a set of innocuous_capabilities,
+>> which IIRC is the complete set of capabilities, at the time of
+>> writing, that the C git client may send without the server advertising
+>> them. Such a set (painstakingly assembled, I assure you :) may be
+>> useful as we move further in this direction.
+>
+> Oh, hmm. When initially writing my message I thought that might be the
+> case, but I checked to see that the features were sent only when the
+> server had first advertised them. However, I didn't notice that is true
+> only in _some_ of these lines from fetch-pack.c:
+>
+>     if (multi_ack == 2)     strbuf_addstr(&c, " multi_ack_detailed");
+>     if (multi_ack == 1)     strbuf_addstr(&c, " multi_ack");
+>     if (no_done)            strbuf_addstr(&c, " no-done");
+>     if (use_sideband == 2)  strbuf_addstr(&c, " side-band-64k");
+>     if (use_sideband == 1)  strbuf_addstr(&c, " side-band");
+>     if (args.use_thin_pack) strbuf_addstr(&c, " thin-pack");
+>     if (args.no_progress)   strbuf_addstr(&c, " no-progress");
+>     if (args.include_tag)   strbuf_addstr(&c, " include-tag");
+>
+> The early ones are checking that the server claimed support, but all of
+> the args.* ones are influenced directly by the arguments, whether the
+> server supports it or not.
 
-I thought about that, but it seems like a quite premature optimization.
-It is three extra strlens per network conversation. _If_ you have turned
-on double-verbosity in fetch-pack. I considered reusing the existing
-parse_feature_request function more valuable from a maintenance
-standpoint.
+> I don't think there's any bug here. They are all of a class of features
+> where the client can handle the case where the server simply ignores the
+> request. However it is certainly food for thought if we are considering
+> tightening git's server side (even if we fix these, we have to support
+> the innocuous capabilities list forever for older clients).
 
-I would think the extra memory allocation would dwarf it, anyway.
+I doubt the "innocuous" approach is really viable, unless we have an
+autoritative documentation that tells which ones are and which ones
+are not innocuous, and everybody follows it, so that everybody's
+server and client understands the same set of capabilities as such.
 
-> It is not wrong per-se, but it is likely that the caller has a
-> constant string as the feature when it called this function, so
-> perhaps just changing the function signature of server_supports,
-> i.e.
-> 
->     const char *server_supports(const char *feature)
->     {
-> 	return parse_feature_request(server_capabilities, feature);
->     }
-> 
-> to return "var=val " would be more than sufficient.
+Which is not likely to happen.  So in that sense, the above have
+three bugs.  A new person that starts writing his server without
+knowing the workaround Dulwich used that has been hidden from the
+Git community until today will have to rediscover the "innocuous"
+workaround on his server, unless such buggy clients die out.
 
-That was in fact my first iteration, but...
+I'd rather make sure that 10 years on, the maintainer does not have
+to worry about interoperating with a new server written by some
+third-party.
 
-> Then the existing callers can keep doing
-> 
-> 	if (server_supports("thin-pack"))
->         if (!server_supports("quiet"))
-> 
-> and a new caller can do something like
-> 
-> 	agent = server_supports("agent");
->         if (!agent || !agent[5])
->         	... no agent ...
-> 	else {
->         	int span = strcspn(agent + 6, " \t\n");
->                 printf("I found agent=<%.*s>!\n", span, agent + 6);
-> 	}
-> 
-> which doesn't look too bad.
+Something like this, perhaps.
 
-I didn't want to force callers to have to deal with ad-hoc parsing.
+ builtin/fetch-pack.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Anyway, do you think this is even worth doing at this point? I'm
-lukewarm on the final two patches due to the existence of
-GIT_TRACE_PACKET, which is much more likely to be useful.
-
--Peff
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index bc7a0f9..fdec7f6 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -818,6 +818,12 @@ static struct ref *do_fetch_pack(int fd[2],
+ 			fprintf(stderr, "Server supports side-band\n");
+ 		use_sideband = 1;
+ 	}
++	if (!server_supports("thin-pack"))
++		args.use_thin_pack = 0;
++	if (!server_supports("no-progress"))
++		args.no_progress = 0;
++	if (!server_supports("include-tag"))
++		args.include_tag = 0;
+ 	if (server_supports("ofs-delta")) {
+ 		if (args.verbose)
+ 			fprintf(stderr, "Server supports ofs-delta\n");
