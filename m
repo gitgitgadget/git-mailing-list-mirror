@@ -1,102 +1,80 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool,difftool: Document --tool-help consistently
-Date: Thu,  9 Aug 2012 21:52:45 -0700
-Message-ID: <1344574365-5534-1-git-send-email-davvid@gmail.com>
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 06:52:57 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] rebase -i: use full onto sha1 in reflog
+Date: Fri, 10 Aug 2012 08:51:19 +0200
+Message-ID: <54180665e1207275db9694cd68f49ff96812284e.1344581316.git.git@drmicha.warpmail.net>
+References: <7vwr18nehe.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, martin.von.zweigbergk@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 10 08:51:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzhDU-00088I-43
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 06:52:56 +0200
+	id 1Szj4D-0002Yd-Cg
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 08:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921Ab2HJEwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 00:52:50 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:34429 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751544Ab2HJEwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 00:52:49 -0400
-Received: by pbbrr13 with SMTP id rr13so2082343pbb.19
-        for <git@vger.kernel.org>; Thu, 09 Aug 2012 21:52:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=mNDcFerqfUvqbbOlUSl6BKZkdfYUsgI27BJ6DP8uNh4=;
-        b=WjhEwGvzDaSHR08+kn1RxBLsouWh08OzLzKBURO4dWUoYiOUxQ213DYR8tCt4abA7S
-         9JIXIY6JfRt0XXdPrtPKol6jYRB9KZ4wAz4URFtqoyjeXhKRWJVJP9Q/HtZTC044pkR0
-         VcQuXyRE4Tbcdk8QLxRtr7wJ5dAGExIOospvfVhLU4fFe1h7eygFCDOFH6WuitkVL3k/
-         j9pqdrQ85v2RLNup5S8lroFYWvWxqbHFB77QJlOFlftUYp2bEhpbzbIjZgdUOJSRgEKJ
-         LrI6yHFLvwsHvReP/qho3ny8Tjs1Gf4v6MoUBulQgK/0juP2LQO9Ik7SyjTLFETa94x4
-         XQCA==
-Received: by 10.68.219.166 with SMTP id pp6mr9460164pbc.35.1344574369470;
-        Thu, 09 Aug 2012 21:52:49 -0700 (PDT)
-Received: from lustrous.local.fas.fa.disney.com (cpe-76-94-86-69.socal.res.rr.com. [76.94.86.69])
-        by mx.google.com with ESMTPS id nv6sm2543357pbc.42.2012.08.09.21.52.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Aug 2012 21:52:48 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.rc2.16.g034161a
+	id S1753460Ab2HJGvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 02:51:23 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:32945 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754564Ab2HJGvW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2012 02:51:22 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 22DF42043E;
+	Fri, 10 Aug 2012 02:51:21 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 10 Aug 2012 02:51:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=g6jOdjOLjlzLO6Hg0SeT18T/M
+	GM=; b=I7fGmSGKL7iWtzDig3nQ50q4Wep/VCFcRkQAf3uJH65cjr4sKCBW1FMM7
+	QJqgwre9yyK9Cmha2SVLSA1MA7yqBtaXtG90I77H4qbsFjlIln9XLfgeU+eLVec7
+	i4fdqCyqAeDsuQjMlyhQah+sJHhDRNiDovzN1f1vF16V7pFtIc=
+X-Sasl-enc: 0Dw8gTKIwrS1nRRxMPsLZ+YvLFeu/LvCfkEtBxBXL9Zq 1344581480
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A7FE2483517;
+	Fri, 10 Aug 2012 02:51:20 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.rc2.245.g4f94e02
+In-Reply-To: <7vwr18nehe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203202>
 
-Add an entry for --tool-help to the mergetool documentation.
+'git rebase' uses the full onto sha1 for the reflog message whereas 'git
+rebase -i' uses the short sha1. This is not only inconsistent, but can
+lead to problems when the reflog is inspected at a later time at which
+that abbreviation may have become ambiguous.
 
-Move --tool-help in the difftool documentation so that it is
-listed immediately after --tool so that it is easier to find.
+Make 'rebase -i' use the full onto sha1, as well.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-Based on work in next.
+So, this is without the now superfluous shortonto definition.
 
-This is not urgent as the current difftool topics are cooking
-and will not be in the current release cycle.
+The other place where shortonto is defined is still needed.
 
- Documentation/git-difftool.txt  | 6 +++---
- Documentation/git-mergetool.txt | 3 +++
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ git-rebase--interactive.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 313d54e..73ca702 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -66,6 +66,9 @@ of the diff post-image.  `$MERGED` is the name of the file which is
- being compared. `$BASE` is provided for compatibility
- with custom merge tool commands and has the same value as `$MERGED`.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 0d2056f..a09e842 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -569,11 +569,10 @@ do_next () {
+ 	test -s "$todo" && return
  
-+--tool-help::
-+	Print a list of diff tools that may be used with `--tool`.
-+
- --symlinks::
- --no-symlinks::
- 	'git difftool''s default behavior is create symlinks to the
-@@ -74,9 +77,6 @@ with custom merge tool commands and has the same value as `$MERGED`.
- 	Specifying `--no-symlinks` instructs 'git difftool' to create
- 	copies instead.  `--no-symlinks` is the default on Windows.
- 
----tool-help::
--	Print a list of diff tools that may be used with `--tool`.
--
- -x <command>::
- --extcmd=<command>::
- 	Specify a custom command for viewing diffs.
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index d7207bd..7100237 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -64,6 +64,9 @@ variable `mergetool.<tool>.trustExitCode` can be set to `true`.
- Otherwise, 'git mergetool' will prompt the user to indicate the
- success of the resolution after the custom tool has exited.
- 
-+--tool-help::
-+	Print a list of diff tools that may be used with `--tool`.
-+
- -y::
- --no-prompt::
- 	Don't prompt before each invocation of the merge resolution
+ 	comment_for_reflog finish &&
+-	shortonto=$(git rev-parse --short $onto) &&
+ 	newhead=$(git rev-parse HEAD) &&
+ 	case $head_name in
+ 	refs/*)
+-		message="$GIT_REFLOG_ACTION: $head_name onto $shortonto" &&
++		message="$GIT_REFLOG_ACTION: $head_name onto $onto" &&
+ 		git update-ref -m "$message" $head_name $newhead $orig_head &&
+ 		git symbolic-ref \
+ 		  -m "$GIT_REFLOG_ACTION: returning to $head_name" \
 -- 
-1.7.12.rc2.16.g034161a
+1.7.12.rc2.245.g4f94e02
