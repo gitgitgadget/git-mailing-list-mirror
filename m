@@ -1,134 +1,121 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2] macos: lazily initialize iconv
-Date: Fri, 10 Aug 2012 23:11:34 +0200
-Message-ID: <50257906.1010606@web.de>
-References: <7vk3xjked0.fsf@alter.siamese.dyndns.org> <7v1ujrkc9p.fsf@alter.siamese.dyndns.org> <50253A1E.20706@web.de> <7vsjbuk3v3.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] connect: learn to parse capabilities with values
+Date: Fri, 10 Aug 2012 17:15:09 -0400
+Message-ID: <20120810211509.GB888@sigill.intra.peff.net>
+References: <20120810075342.GA30072@sigill.intra.peff.net>
+ <20120810075816.GC8399@sigill.intra.peff.net>
+ <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 23:11:45 2012
+X-From: git-owner@vger.kernel.org Fri Aug 10 23:15:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzwUj-0000wR-Co
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:11:45 +0200
+	id 1SzwYF-0007bE-VN
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757608Ab2HJVLk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Aug 2012 17:11:40 -0400
-Received: from mout.web.de ([212.227.15.3]:58194 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754834Ab2HJVLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 17:11:39 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0M7bVP-1TuN6G233X-00wjGd; Fri, 10 Aug 2012 23:11:36 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vsjbuk3v3.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:+s5V6guRaPSc9kK8mL9HfHU8G31a4M6M4VOdtmVhpms
- AwLolSgEvcvv4SxYyDgAMJ44IMh3Ez6AiPyw5KtEyauJtuJz4l
- SIgR8N8M/yknVaclV7kQy/pGX64W1fVpbEZFUYV2k5wJ+KzHuY
- s8Ah7+7GOTRuA9+H3dfL6YovhJt4l1YlLJjQHC1ZbYvdA3nUp/
- 6d2luAyYNXFwE5dYmLisg==
+	id S1757704Ab2HJVPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 17:15:19 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34032 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753424Ab2HJVPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 17:15:17 -0400
+Received: (qmail 2325 invoked by uid 107); 10 Aug 2012 21:15:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 17:15:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 17:15:09 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203262>
 
-On 10.08.12 20:18, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> On 31.07.12 20:37, Junio C Hamano wrote:
->>> In practice, the majority of paths do not have utf8 that needs
->>> the canonicalization. Lazily call iconv_open()/iconv_close() to
->>> avoid unnecessary overhead.
->>>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> Helped-by: Ralf Thielow <ralf.thielow@gmail.com>
->>> Helped-by: Linus Torvalds <torvalds@linux-foundation.org>
->>> ---
->>>
->>>  * This is not even compile tested, so it needs testing and
->>>    benchmarking, as I do not even know how costly the calls to
->>>    open/close are when we do not have to call iconv() itself.
->>> ...
->> Hi Junio,
->>
->> thanks for the optimization.
->> Tested-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> Well, I didn't mean the correctness testing without numbers.  The
-> correctness of the patch after a couple of people eyeballed it was
-> no longer a question.
->
-> If the patch does not give any measuable performance difference to
-> people who exercise this codepath, it is not worth merging.  And
-> that is not something I can't do myself without a Mac (nor I wish to
-> have one to be able to do so myself).
->
-> Thanks.
-Really sorry for the confusion with the percentage, I should have writt=
-en:
-The patch is tested OK, and we can even remove 2 lines of code,
-where we save and restore errno.
-They are no longer needed.
+On Fri, Aug 10, 2012 at 01:01:11PM -0700, Junio C Hamano wrote:
 
-Here some benchmarks on my system
-(Intel Core 2 Duo @   3,06 GHz, L2-Cache:    3 MB,  Memory:    4 GB)
-running git status on the linux source tree.
+> Jeff King <peff@peff.net> writes:
+> 
+> > +/*
+> > + * Parse features of the form "feature=value".  Returns NULL if the feature
+> > + * does not exist, the empty string if it exists but does not have an "=", or
+> > + * the content to the right of the "=" until the first space (or end of
+> > + * string).  The cannot contain literal spaces; double-quoting or similar
+> > + * schemes would break compatibility, since older versions of git treat the
+> > + * space as a hard-delimiter without any context.
+> > + *
+> > + * The return value (if non-NULL) is newly allocated on the heap and belongs to
+> > + * the caller.
+> > + */
+> > +char *parse_feature_request_value(const char *feature_list, const char *feature)
+> > +{
+> > +	const char *start = parse_feature_request(feature_list, feature);
+> > +	const char *end;
+> > +
+> > +	if (!start || prefixcmp(start, feature))
+> > +		return NULL;
+> > +	start += strlen(feature);
+> > +
+> > +	if (*start == '=')
+> > +		start++;
+> > +	end = strchrnul(start, ' ');
+> > +
+> > +	return xmemdupz(start, end - start);
+> > +}
+> 
+> Having to run strlen(feature) three times in this function (once in
+> parse_feature_request() as part of strstr() and the edge check of
+> the found string, once as part of prefixcmp() here, and then an
+> explicit strlen() to skip it) makes me feel dirty.
 
-After cloning, I set "git config core.precomposeunicode true".
+I thought about that, but it seems like a quite premature optimization.
+It is three extra strlens per network conversation. _If_ you have turned
+on double-verbosity in fetch-pack. I considered reusing the existing
+parse_feature_request function more valuable from a maintenance
+standpoint.
 
-git is v1.7.12.rc2,
-git_git/git is with your patch.
+I would think the extra memory allocation would dwarf it, anyway.
 
-git v1.7.12.rc2:
-tb@birne:~/projects/git/linux-2.6> for f in 1 2 3 4 5; do time git stat=
-us  ; done 2>&1 | egrep "^user|^real|^sys"
-real    0m0.469s
-user    0m0.283s
-sys     0m0.175s
+> It is not wrong per-se, but it is likely that the caller has a
+> constant string as the feature when it called this function, so
+> perhaps just changing the function signature of server_supports,
+> i.e.
+> 
+>     const char *server_supports(const char *feature)
+>     {
+> 	return parse_feature_request(server_capabilities, feature);
+>     }
+> 
+> to return "var=val " would be more than sufficient.
 
-real    0m0.461s
-user    0m0.283s
-sys     0m0.170s
+That was in fact my first iteration, but...
 
-real    0m0.460s
-user    0m0.283s
-sys     0m0.170s
+> Then the existing callers can keep doing
+> 
+> 	if (server_supports("thin-pack"))
+>         if (!server_supports("quiet"))
+> 
+> and a new caller can do something like
+> 
+> 	agent = server_supports("agent");
+>         if (!agent || !agent[5])
+>         	... no agent ...
+> 	else {
+>         	int span = strcspn(agent + 6, " \t\n");
+>                 printf("I found agent=<%.*s>!\n", span, agent + 6);
+> 	}
+> 
+> which doesn't look too bad.
 
-real    0m0.461s
-user    0m0.283s
-sys     0m0.177s
+I didn't want to force callers to have to deal with ad-hoc parsing.
 
-real    0m0.460s
-user    0m0.283s
-sys     0m0.176s
+Anyway, do you think this is even worth doing at this point? I'm
+lukewarm on the final two patches due to the existence of
+GIT_TRACE_PACKET, which is much more likely to be useful.
 
-With lazy init of iconv:
-tb@birne:~/projects/git/linux-2.6> for f in 1 2 3 4 5; do time ~/projec=
-ts/git/git_git/git status  ; done 2>&1 | egrep "^user|^real|^sys"
-real    0m0.463s
-user    0m0.282s
-sys     0m0.173s
-
-real    0m0.460s
-user    0m0.281s
-sys     0m0.172s
-
-real    0m0.460s
-user    0m0.281s
-sys     0m0.172s
-
-real    0m0.463s
-user    0m0.281s
-sys     0m0.175s
-
-real    0m0.462s
-user    0m0.281s
-sys     0m0.177s
+-Peff
