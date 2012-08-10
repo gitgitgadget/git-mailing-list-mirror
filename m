@@ -1,103 +1,99 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git am and the wrong chunk of ---
-Date: Fri, 10 Aug 2012 13:00:07 +0200
-Message-ID: <5024E9B7.1070004@op5.se>
-References: <5024523F.3050208@zytor.com> <20120810103612.GA21562@sigill.intra.peff.net>
+From: Neil Horman <nhorman@tuxdriver.com>
+Subject: Re: [PATCH v2] add tests for 'git rebase --keep-empty'
+Date: Fri, 10 Aug 2012 09:26:08 -0400
+Message-ID: <20120810132608.GA29609@hmsreliant.think-freely.org>
+References: <1344444498-29328-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 10 13:00:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 15:26:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szmx1-0000Pl-Uf
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 13:00:20 +0200
+	id 1SzpEX-0007P5-ME
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 15:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758431Ab2HJLAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 07:00:14 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:46159 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757957Ab2HJLAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 07:00:13 -0400
-Received: by lbbgj3 with SMTP id gj3so105365lbb.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 04:00:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=y2h5pESGshZ9A4Ncy2QE1pOson/SGm6rpFrtF5KGJr4=;
-        b=VcV4nOPNa2v/cAFQzSdHLnj+Gx5IgkH5/nc7dHNltQgutAHZU0eOKFJcpcZKhOBXj7
-         eTiFvOxWgHwCNWFCovEhfiL4z8V1V74QGEquZJqXINvm8Bkf+s66hEbk5ghNwQ6tcm/v
-         QpOa2xcynlNjtjgrrYRLJ0sexaExXo2ga4n1N+OsXWSpUYbrtejKhujF743jBj3ZvsO/
-         d0Z48yRZJc4zriRdThPgWJcVo0MVqZEUubDx2E4HxoGzIBK5vdcT+RX8jhPwr1TLQSbe
-         SGoEk6kyjCcGyo7V6Y9RnrP2dZsk67shR2LmbgGYFRHrP94EYk/o5BrLDk9HYta0vzru
-         nguQ==
-Received: by 10.152.104.77 with SMTP id gc13mr2552810lab.31.1344596410795;
-        Fri, 10 Aug 2012 04:00:10 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id sn2sm3709338lab.16.2012.08.10.04.00.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Aug 2012 04:00:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
-In-Reply-To: <20120810103612.GA21562@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQnFFK4T+LL8NYLbTv2+EYRnCQE3Bum+BgC6QGX6B11c7DS7+GCpv2Oka936H9b0hNInfklp
+	id S1755973Ab2HJN01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 09:26:27 -0400
+Received: from charlotte.tuxdriver.com ([70.61.120.58]:41085 "EHLO
+	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755899Ab2HJN00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 09:26:26 -0400
+Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
+	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.63)
+	(envelope-from <nhorman@tuxdriver.com>)
+	id 1SzpEA-0005P0-2d; Fri, 10 Aug 2012 09:26:23 -0400
+Content-Disposition: inline
+In-Reply-To: <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Spam-Score: -2.9 (--)
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203216>
 
-On 08/10/2012 12:36 PM, Jeff King wrote:
-> On Thu, Aug 09, 2012 at 05:13:51PM -0700, H. Peter Anvin wrote:
+On Thu, Aug 09, 2012 at 08:39:51AM -0700, Martin von Zweigbergk wrote:
+> Add test cases for 'git rebase --keep-empty' with and without an
+> "empty" commit already in upstream. The empty commit that is about to
+> be rebased should be kept in both cases.
 > 
->> I have some contributors who consistently put their commentary
->> *before* the "---" line rather than *after* it, presumably with the
->> notion that it is some kind of "cover text".  This messes with "git
->> am", and so I end up having to edit those posts manually.
->>
->> I have tried git am --scissors and it doesn't seem to solve the problem.
->>
->> Is there any other option which can be used to automatically process
->> such a patch?
-> 
-> If I understand your issue, somebody is writing:
-> 
-> 
->      From: them
->      To: you
->      Date: ...
->      Subject: [PATCH] subject line
-> 
->      commit message body
->      ....
-> 
->      some cover letter material that should go below the "---"
->      ---
->        [diffstat + diff]
-> 
-> 
-> How do you know when the commit message body ends, and the cover letter
-> begins? We already have two machine-readable formats for separating the
-> two ("---" after the commit message, and "-- >8 --" scissors before). Is
-> there some machine-readable hint? Is it always the paragraph before the
-> "---"? Chopping that off unconditionally seems like a dangerous
-> heuristic.
-> 
+> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Acked-by: Neil Horman <nhorman@tuxdriver.com>
 
-End of SOB lines might be a good cutoff, if they're present. I've never
-seen anyone put commit message text below them anyway.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+> ---
+> 
+> Added another test for when the upstream already has an empty
+> commit. The test case protects the current behavior; I just assume the
+> current behavior is what we want.
+> 
+> While writing the test case, I also noticed that an interrupted 'git
+> rebase --keep-empty' can not be continued 'git rebase --continue', but
+> instead needs 'git cherry-pick --continue'. I guess this shouldn't
+> really be surprising given that it's implemented in terms of
+> cherry-pick. This should be fixed once all the different kinds of
+> rebase use the same way of finding the commits to rebase, so I
+> wouldn't worry about fixing this specific problem right now.
+> 
+>  t/t3401-rebase-partial.sh | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
+> index 7f8693b..58f4823 100755
+> --- a/t/t3401-rebase-partial.sh
+> +++ b/t/t3401-rebase-partial.sh
+> @@ -47,7 +47,23 @@ test_expect_success 'rebase ignores empty commit' '
+>  	git commit --allow-empty -m empty &&
+>  	test_commit D &&
+>  	git rebase C &&
+> -	test $(git log --format=%s C..) = "D"
+> +	test "$(git log --format=%s C..)" = "D"
+> +'
+> +
+> +test_expect_success 'rebase --keep-empty' '
+> +	git reset --hard D &&
+> +	git rebase --keep-empty C &&
+> +	test "$(git log --format=%s C..)" = "D
+> +empty"
+> +'
+> +
+> +test_expect_success 'rebase --keep-empty keeps empty even if already in upstream' '
+> +	git reset --hard A &&
+> +	git commit --allow-empty -m also-empty &&
+> +	git rebase --keep-empty D &&
+> +	test "$(git log --format=%s A..)" = "also-empty
+> +D
+> +empty"
+>  '
+>  
+>  test_done
+> -- 
+> 1.7.11.1.104.ge7b44f1
+> 
+> 
