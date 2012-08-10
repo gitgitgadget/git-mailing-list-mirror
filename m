@@ -1,73 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick and 'log --no-walk' and ordering
-Date: Fri, 10 Aug 2012 14:38:32 -0700
-Message-ID: <7vfw7uig13.fsf@alter.siamese.dyndns.org>
-References: <CAOeW2eE=VcUs1YcWqqEUc6vM6jW9JaXzE-_tVWy48VtPzm_+wA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] jk/version-string and google code
+Date: Fri, 10 Aug 2012 14:42:43 -0700
+Message-ID: <7vboiiifu4.fsf@alter.siamese.dyndns.org>
+References: <20120810075342.GA30072@sigill.intra.peff.net>
+ <7vboiilpvs.fsf@alter.siamese.dyndns.org>
+ <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
+ <20120810180836.GA29597@sigill.intra.peff.net>
+ <CAD0k6qSZYH5mvwR5PKhs1FFAPqMfRryXooxd_qhtt+eGXU7pUA@mail.gmail.com>
+ <20120810182555.GA29707@sigill.intra.peff.net>
+ <7vr4reigm8.fsf@alter.siamese.dyndns.org>
+ <20120810213508.GC888@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 23:38:42 2012
+Cc: Dave Borowitz <dborowitz@google.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 23:43:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szwun-0004T7-Pi
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:38:42 +0200
+	id 1Szwz0-0005dm-AD
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758646Ab2HJVig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 17:38:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44687 "EHLO
+	id S1759915Ab2HJVmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 17:42:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46365 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752853Ab2HJVif (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 17:38:35 -0400
+	id S1759880Ab2HJVmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 17:42:46 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCF6D8EBC;
-	Fri, 10 Aug 2012 17:38:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB5578FB9;
+	Fri, 10 Aug 2012 17:42:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1sFq23bVFLM1VK6PPlw9mcBOb4E=; b=m5QXnX
-	lHMSmWEUdY86tNJ3QvoSZ32TCFPFX9401c+SuLRI37jV7LWur8/305DZYrY14ZDz
-	vusVPsmU+KYVE/Q78QNk5yj49hfIte8RI7ggE4xj7HvuLXUqn1qnvZIblpB0Yfdt
-	mbAIPSxZ1QDDZDyilJdg8j4vppzSI9sYa/hUY=
+	:content-type; s=sasl; bh=sQGdA6U85WOsxI8SE/XxeQ8xlz4=; b=FJoApl
+	CGv+HT8RSUB4fQwMgYxuZIjxUDDnL9E3R/Wx2MX5G8MN4cXZYRWWi6WQ6RuS/uA4
+	Ap+r40g8q15eO83myrGAD4xPKG+/4S+F6gYWxBfXbX5LtJhxrgix8fsyVdgQh6l+
+	jjkhTVndI3Y1XnZR/u/cnQi2wIfPXrT2gbYHg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wCfU5oR2QE/+8dKrGdSm+nrqxjb04vKz
-	Sj3o5PFtVfXz66Wy7r3MoHLVfed640XhvlVLBJzABrXk7rMCALY7egsVniWPgbdm
-	QIgE+IYMeAOPqWsqLD5LPY1F9A9LRslb97K+A3eUJoZUAXJgd7tGWZ7Imn4mx1zd
-	78EzZIqJJCU=
+	:content-type; q=dns; s=sasl; b=sciwwqd0LhpRfxfyPUeCoEr5bQJlZ1/R
+	MteRw8tGvlUMznIGBXOH3bq0d20zGTQCm15Y523lT8hSKcoMAHXk2tYKlL5hP2vT
+	vTnXLDH5gbk5Zq5/kTC2QyjcruJCjLRrlwNhNFexq/UiF0Gn96SaF7tdlN5Svyxv
+	s3RI03NFUJk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC26A8EBB;
-	Fri, 10 Aug 2012 17:38:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 920068FB8;
+	Fri, 10 Aug 2012 17:42:45 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B66D8EBA; Fri, 10 Aug 2012
- 17:38:34 -0400 (EDT)
-In-Reply-To: <CAOeW2eE=VcUs1YcWqqEUc6vM6jW9JaXzE-_tVWy48VtPzm_+wA@mail.gmail.com> (Martin
- von Zweigbergk's message of "Fri, 10 Aug 2012 13:41:36 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E7D88FB5; Fri, 10 Aug 2012
+ 17:42:44 -0400 (EDT)
+In-Reply-To: <20120810213508.GC888@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Aug 2012 17:35:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC7601AE-E333-11E1-88D0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 51F59000-E334-11E1-BABC-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203268>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> There is also cherry-pick/revert, which I _think_ does not really want
-> the revisions sorted.
+> Yes, I think that is all that is necessary to fix the immediate issue.
+> The protocol-capabilities document talks about what to do when
+> include-tag is not available ("SHOULD issue a subsequent fetch to
+> acquire the tags that include-tag would have otherwise given the
+> client"), but I am not sure how well we handle that (in theory we should
+> be handling it already, but I didn't look).
 
-Yes, I think sequencer.c::prepare_revs() is wrong to unconditoinally
-call prepare_revision_walk().
+Yeah, it is more like "A separate fetch only to follow tags was the
+only way we handled it before we added include-tag, so we know it
+used to work, and also we know the four combinations of new/old *
+fetch/upload all used to work".
 
-It instead should first check the revs->pending.objects list to see
-if what was given by the caller is a mere collection of individual
-objects or a range expression (i.e. check if any of them is marked
-with UNINTERESTING), and refrain from going into the body of the
-preparation steps, which has to involve sorting.
-
-I think we had to fix a bug in "git show" coming from a similar root
-cause, but the bug manifested in the opposite direction.
+We may have broken some combinations over time, though.
