@@ -1,90 +1,62 @@
-From: Dave Borowitz <dborowitz@google.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 0/4] jk/version-string and google code
-Date: Fri, 10 Aug 2012 11:06:08 -0700
-Message-ID: <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
-References: <20120810075342.GA30072@sigill.intra.peff.net> <7vboiilpvs.fsf@alter.siamese.dyndns.org>
+Date: Fri, 10 Aug 2012 14:08:36 -0400
+Message-ID: <20120810180836.GA29597@sigill.intra.peff.net>
+References: <20120810075342.GA30072@sigill.intra.peff.net>
+ <7vboiilpvs.fsf@alter.siamese.dyndns.org>
+ <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 20:06:39 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 20:08:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Sztba-0006gm-22
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 20:06:38 +0200
+	id 1Sztdh-0002SS-IU
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 20:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758616Ab2HJSGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 14:06:30 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:46423 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753369Ab2HJSG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 14:06:29 -0400
-Received: by ghrr11 with SMTP id r11so1891009ghr.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 11:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-system-of-record;
-        bh=HA8JdMIeB/ub8zxoxPu6JZpEi9z+Hf5dNeKr3GGG86M=;
-        b=YVfCdex4YmRTlPvp8xD57csjzi+ZDYlQu4rzzJs6F4MwXRKIScwmMJDuljxKOLnWjl
-         wjZ7qk9J7ZvcSLK/PKAUeHjd9hz9UTHnNfYOk4xU9EMVkjvZPG+yi5dmxTffb6xNKcGl
-         r0ldLm6AKJLU6e3VS/SN7x1XnDzXHGs05dovDlllVlGpRMyMWVE4IbX0dduIsN4kFDYQ
-         TnH8ItNC5hQnfo86jtNeR9B86I7DK8c/jN1chpln7mikTmfLvO8P3n2um1cB0kfJ93yG
-         MFlDD8nkXdM8N02fpWbm2kEaGQckIWNYyWWKmWCqL/YZ9shZg7Pd/VrkktXVVT31DNBk
-         A5ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-system-of-record:x-gm-message-state;
-        bh=HA8JdMIeB/ub8zxoxPu6JZpEi9z+Hf5dNeKr3GGG86M=;
-        b=bKnGuKFjTdbYLPVZoI86bykywN6FX/Geftkb2R3SWdK4a+vDj+njvSI/MsC8asfZEB
-         84z5bUwFmjuPFU4rI0Bb87i8d1dHG7aSjEFaWEeE4y9o9NhaGH+1x6WetNvpHWwQ1Wyh
-         wKXZWuAK9aV0uVUujHJ5gyoBHy0Jt9e8sJ3cpwXpMQHHJDST1IX36mTKOkFEoZ5pSr4B
-         wnNVSRKeMKuB20RBWGoJ1p9KPuOnE5nArl/vcE0HQYfxppjlEOIkBo+TI1X/aS0cl3Gu
-         vzbePAZm7wxGuLdWtr7SKkHaJVs8PsXbBVIP07O4DC4twSnEW39AdcAPZM3xIVyCFfna
-         Ub+A==
-Received: by 10.50.104.163 with SMTP id gf3mr525565igb.69.1344621988638;
-        Fri, 10 Aug 2012 11:06:28 -0700 (PDT)
-Received: by 10.50.104.163 with SMTP id gf3mr525550igb.69.1344621988445; Fri,
- 10 Aug 2012 11:06:28 -0700 (PDT)
-Received: by 10.231.135.1 with HTTP; Fri, 10 Aug 2012 11:06:08 -0700 (PDT)
-In-Reply-To: <7vboiilpvs.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQm8dKMKp+A0bL8AReRNnJ0yrN2AWdoZbzitbkEkq6odHTa6mVjUC4tQ8umOgxjLFU8g5KawHjBo8ae5T0V4qkzy/jmUs4MtJmna9/73eq2ftQNtxmtKMYSswaavLOE6PawqpvPoQFNr9ykqh36zxTntY5j59YuT1SElNRy3dJtP7H6bOXY15T01Enk7JngkjKa9uPBk
+	id S1758816Ab2HJSIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 14:08:44 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33858 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754748Ab2HJSIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 14:08:44 -0400
+Received: (qmail 426 invoked by uid 107); 10 Aug 2012 18:08:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 14:08:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 14:08:36 -0400
+Content-Disposition: inline
+In-Reply-To: <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203242>
 
-On Fri, Aug 10, 2012 at 8:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> Ugh, the jk/version-string topic breaks fetching from Google Code. With
->> my patch, the client unconditionally sends an "agent=foo" capability,
->> but the server does not like seeing the unknown capability and ends the
->> connection (I'm guessing with some kind of internal exception, since it
->> spews "Internal server error" over the protocol channel).
->
-> I asked the folks who run code.google.com and they are indeed seeing
-> something like these in their logs:
->
->  >> Client asked for capability agent=git/1.7.12.rc2.79.g86c1702 that was not advertised.
+On Fri, Aug 10, 2012 at 11:06:08AM -0700, Dave Borowitz wrote:
 
-FWIW, this error comes from Dulwich:
-https://github.com/jelmer/dulwich/blob/25250c1694dac343d469742aeafa139f37fc4ec6/dulwich/server.py#L196
+> > I asked the folks who run code.google.com and they are indeed seeing
+> > something like these in their logs:
+> >
+> >  >> Client asked for capability agent=git/1.7.12.rc2.79.g86c1702 that was not advertised.
+> 
+> FWIW, this error comes from Dulwich:
+> https://github.com/jelmer/dulwich/blob/25250c1694dac343d469742aeafa139f37fc4ec6/dulwich/server.py#L196
 
-So any servers running Dulwich would be affected by this...though I'm
-not aware of any large-scale Dulwich installations other than Google
-Code.
+Thanks for the data point. I knew you guys ran some custom code, so I
+wasn't sure how widespread this is. The fact that other dulwich-based
+servers would see the same issue makes me doubly sure that my fix is the
+right direction.
 
-> So please consider your conjecture confirmed, and thanks for a
-> prompt fix.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> So any servers running Dulwich would be affected by this...though I'm
+> not aware of any large-scale Dulwich installations other than Google
+> Code.
+
+I'd rather not break small-scale installations, either. :)
+
+-Peff
