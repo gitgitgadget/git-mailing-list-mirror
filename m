@@ -1,114 +1,111 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: merging confusion and question
-Date: Fri, 10 Aug 2012 15:37:22 -0400
-Message-ID: <CABURp0q6OXF5Mu3m20z5ZwL4kz0A0HgZynVMLZZBMNXtga01Vg@mail.gmail.com>
-References: <5021B20D.2030702@palm.com> <7v393yupjp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] do not send client agent unless server does first
+Date: Fri, 10 Aug 2012 12:45:19 -0700
+Message-ID: <7vd32yjzu8.fsf@alter.siamese.dyndns.org>
+References: <20120810075342.GA30072@sigill.intra.peff.net>
+ <20120810075743.GB8399@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Rich Pixley <rich.pixley@palm.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 21:38:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 21:45:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szv1u-0000aw-Uy
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 21:37:55 +0200
+	id 1Szv9K-0007Df-Dm
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 21:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756219Ab2HJTho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 15:37:44 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:61780 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755604Ab2HJThn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 15:37:43 -0400
-Received: by qcro28 with SMTP id o28so1178467qcr.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 12:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Epsz3ukwcp0JlILgdbqmgfKbfio2s/3+D6eTkDeXzeo=;
-        b=vmQJI6aBwkxXXj6ywc4QXTJKTq5C+LFFNGZnCaRrW3oLWss0z7LE7sN+KTHQ7nqNoh
-         oJIJlhvUAvQ5wKOZifWGz8OfIDOZkfBSeQgBsg67lwZYkcmUHa3mRrBqi0c25HStzP26
-         H1ovCcJdb5vnyaosN2GDECZ9Siu+LA01XUyvH7znoD7HdRTI/xFy0z36RkETZ9miZTCS
-         p3LX32ocBU1tCNIsNVYEYIM13BfU60VeXX8OAHC8qpqmhiQhpjUQ+XB3nK8wnCuj0x1A
-         xfwZfnSeyQuaRiSVHuRpskrox03ZGxsCoyWKwSzihiRymzHXT2yFomcjy8i3+in29tGw
-         7n6w==
-Received: by 10.224.195.199 with SMTP id ed7mr9876827qab.22.1344627462399;
- Fri, 10 Aug 2012 12:37:42 -0700 (PDT)
-Received: by 10.229.52.77 with HTTP; Fri, 10 Aug 2012 12:37:22 -0700 (PDT)
-In-Reply-To: <7v393yupjp.fsf@alter.siamese.dyndns.org>
+	id S1758050Ab2HJTpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 15:45:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59714 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752664Ab2HJTpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 15:45:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 339298EBD;
+	Fri, 10 Aug 2012 15:45:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tEIxncUceJxSlT4/kwsCGJOXUVk=; b=muCQ9x
+	5mLlNG7Z40eod5NvC+vr1hixYaKXv3qiTuqdR6mSJEyNdFgSLtI2i+GUjBYjoiek
+	JINAgPdeeMOjfAH0ksZNwwcdkKKhTzDJc5ZvOZPA1UUBuVpghzkhV1B4TDAz0m08
+	qsLS3g3sDqNFHdsa03+nkjQpnErroSRS2QzQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BOc+HQI4UKRFColF9hFYi5/xbpVqqGYG
+	B9BENiP5QMslzN1uDf/OKGBh7BFymlco+FkUeL2rsUBoXhBBgj92QXgFwtYyCZ/w
+	EBuwBvDcSKpuzYJJuAlbV+l7FGgNGWrIDGRQQqgnsoYY0vZTwqF7T0QlxPSSdwPB
+	4D28+WfGZQA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2236B8EBC;
+	Fri, 10 Aug 2012 15:45:22 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 779448EBB; Fri, 10 Aug 2012
+ 15:45:20 -0400 (EDT)
+In-Reply-To: <20120810075743.GB8399@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Aug 2012 03:57:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EB117C9C-E323-11E1-A540-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203252>
 
-On Tue, Aug 7, 2012 at 9:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Rich Pixley <rich.pixley@palm.com> writes:
->
->> I'm confused.
->>
->> What is the intended work flow here?  Ie, aside from trashing my
->> repository and starting over, what does one do to recover?
->>
->> rich@cobra> git clone /home/rich/repos/webos webos
->> Cloning into 'webos'...
->> done.
->> rich@cobra> cd webos
->> rich@cobra> git remote add central git@github.com:openwebos/webos.git
->> rich@cobra> git co master
->> Already on 'master'
->> rich@cobra> git pull central master
->> X11 forwarding request failed on channel 0
->> remote: Counting objects: 22, done.
->> remote: Compressing objects: 100% (19/19), done.
->> remote: Total 21 (delta 12), reused 11 (delta 2)
->> Unpacking objects: 100% (21/21), done.
->> From github.com:openwebos/webos
->>  * branch            master     -> FETCH_HEAD
->> warning: Failed to merge submodule meta-webos (not checked out)
->> Auto-merging meta-webos
->> CONFLICT (submodule): Merge conflict in meta-webos
->> Auto-merging README.md
->> Automatic merge failed; fix conflicts and then commit the result.
->> rich@cobra> git commit -a
->
-> Why isn't there any "fix conflicts and then" step between this line
-> and the friendly insn message on the previous line?
+Jeff King <peff@peff.net> writes:
 
-I think I know the answer.  I remember it from my newbie days.
+> Instead, each client must record whether we saw an agent
+> string from the server, and respond with its agent only if
+> the server mentioned it first.
 
-The reason is that "fix conflicts" is confusing to new users. The new
-user didn't really want to merge here, perhaps, which is why there
-were so many conflicts.  Git "helpfully" points out each one of the
-conflicts, but he doesn't explain what happened as a result (change
-markers in the file, etc.).  For the newbie, this is not intuitive;
-the barrage of conflict details is intimidating.
+Just a couple of minor comments.
 
-"Fix conflicts"?  If I do not know how the conflicts are represented
-yet, I also do not know how to fix them.
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index fe56596..bc7a0f9 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -19,6 +19,7 @@ static int prefer_ofs_delta = 1;
+>  static int no_done;
+>  static int fetch_fsck_objects = -1;
+>  static int transfer_fsck_objects = -1;
+> +static int agent_supported;
+>  static struct fetch_pack_args args = {
+>  	/* .uploadpack = */ "git-upload-pack",
+>  };
 
-"Commit the result"?  Result of what?  Commit how?
+This is only set to false once per process invocation.  We do not
+currently talk with more than one remote from the same process in
+the "fetch" codepath, and we must maintain that. This fix will be
+broken otherwise ("recursive submodule fetch" comes to mind; one
+more reason it should do its submodule business in a separate
+process).
 
-Adding insult to injury, newbies can find no obvious way to "undo and
-try again."  Each command they think should move forward or "do over"
-is met with "cannot do that. conflicts exist.  fix this mess and try
-again."
+> @@ -328,7 +329,8 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+>  			if (args.no_progress)   strbuf_addstr(&c, " no-progress");
+>  			if (args.include_tag)   strbuf_addstr(&c, " include-tag");
 
-Imagine your mom on the web for the first time encountering a "404".
-Now imagine that once this happens her browser refuses to work
-insisting she "fix the web" first.
+This codepath still forgets to check if the other side advertised
+"thin-pack", "no-progress", and "include-tag", no?
 
-I do not know a better description which would not rub the gurus the
-wrong way.  When I try to think of one, the hint always involves
-something called "git undo".  So I guess the status quo is good for
-now, which is "google git merge conflict"
+>  			if (prefer_ofs_delta)   strbuf_addstr(&c, " ofs-delta");
+> -			strbuf_addf(&c, " agent=%s", git_user_agent_sanitized());
+> +			if (agent_supported)    strbuf_addf(&c, " agent=%s",
+> +							    git_user_agent_sanitized());
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index 5c69995..7d05064 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -252,6 +252,7 @@ int send_pack(struct send_pack_args *args,
+>  	int status_report = 0;
+>  	int use_sideband = 0;
+>  	int quiet_supported = 0;
+> +	int agent_supported = 0;
+>  	unsigned cmds_sent = 0;
+>  	int ret;
+>  	struct async demux;
 
-I agree that 'git reset --hard' should be mentioned in the hint for
-newbies, but this conflicts with my desire to avoid giving chainsaws
-to toddlers.
-
-Phil
+This is initialied to 0 per communication, so having multiple
+remote.$there.pushURL configuration variables will work correctly.
