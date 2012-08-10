@@ -1,172 +1,90 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Porting git to HP NonStop
-Date: Fri, 10 Aug 2012 22:08:49 +0200
-Message-ID: <004d01cd7733$f55d43e0$e017cba0$@schmitz-digital.de>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git repack vs git gc --aggressive
+Date: Fri, 10 Aug 2012 13:09:37 -0700
+Message-ID: <7v393ujypq.fsf@alter.siamese.dyndns.org>
+References: <87zk66r28y.fsf@bitburger.home.felix>
+ <20120807184405.GA440@sigill.intra.peff.net>
+ <7vvcguv7y2.fsf@alter.siamese.dyndns.org>
+ <87ehnewolp.fsf@bitburger.home.felix>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <rsbecker@nexbridge.com>
-To: "'Shawn Pearce'" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 10 22:09:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felix Natter <fnatter@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 22:09:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzvWU-0008H3-Np
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 22:09:31 +0200
+	id 1SzvWk-0000Aw-2Q
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 22:09:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758145Ab2HJUJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 16:09:04 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:51347 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754992Ab2HJUJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 16:09:03 -0400
-Received: from DualCore (dsdf-4db5242c.pool.mediaWays.net [77.181.36.44])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0Lowim-1TcaFM3V92-00eqfY; Fri, 10 Aug 2012 22:09:01 +0200
-In-Reply-To: 
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7Eflf4hv7CAADBEQA==
-Content-Language: de
-X-Provags-ID: V02:K0:O8zwzAE6jtRoB0sisU4DFIBnK7jju7w5Pt65r/XPRYb
- GnFtPZVlpcUHOBHAvBiGDYsgnij+Hn+r+fLhRcCuWMTZiDIMqa
- qaNhO4GcdHDcQc9/u/dUXn4o6c/zK2sDiww+EiNmr1oRiD2ai0
- 6deA/0upJp9i0ut6rpEc3YCszFa0QpPinEC/qO9MpM3tiHsTYJ
- KsU7/yRXo+BJBafqkT/GjoYlawgFhm2/hJDiIbpijtw7fxtTSd
- 3Q1DKiqs89nkah1AT2iM4lLq1sZVJFBeu9xlsBQbHr/O12B/Oj
- LknklDJI4XmPGS8yOkoAbQj8AArwyPY5K/PbpMS4r/Qx0ldYgZ
- 8oaRIFwgCGx4XhGxBGDxzH+ycSqp16EUsjjEFcup5DxEz+8dB5
- 8queFNIUbuuEQ==
+	id S1755013Ab2HJUJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 16:09:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37381 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751661Ab2HJUJk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 16:09:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2991954A;
+	Fri, 10 Aug 2012 16:09:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gzRK7ritkSwDfmoGXguhva1Ammo=; b=CSQqui
+	loBTC4FRMunX/xN7SvLUx9DMIsZ9rdONxI7cn+2iJ/WeDy9TAJkaNwL35dnhq6Dk
+	SIBYlOYslH8sdOZoxXZ2iuJQsG4SUyeq3Vn10ETZwUsGN7pJ/jYGYw4MHozqajQU
+	cbrdKNvwPVJ0EIlq3GS964L+px9p2KChkec/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O8tLRAuyoTYmob0LVIY533ltj3MLdy/H
+	gjL+uoeA+/5Z5NTmQPpdae1KUSJ9yHfB2w2vp7vtnEZP350wwPUqAtEwF6OEVuwn
+	C6UE4CUt6lPUY6DVcy0cAaTEVWesXOFwDdXualUbOPY2/JKsK0iVGq0pzA4w+mGB
+	69hbpbI+Td0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEF1E9549;
+	Fri, 10 Aug 2012 16:09:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 140E19548; Fri, 10 Aug 2012
+ 16:09:38 -0400 (EDT)
+In-Reply-To: <87ehnewolp.fsf@bitburger.home.felix> (Felix Natter's message of
+ "Fri, 10 Aug 2012 21:09:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5074F7B4-E327-11E1-806E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203256>
 
-> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
-> Sent: Friday, August 10, 2012 7:33 PM
-> To: 'Shawn Pearce'
-> Cc: 'git@vger.kernel.org'; 'rsbecker@nexbridge.com'
-> Subject: RE: Porting git to HP NonStop
-> 
-> > From: Shawn Pearce [mailto:spearce@spearce.org]
-> > Sent: Friday, August 10, 2012 6:28 PM
-> > To: Joachim Schmitz
-> > Cc: git@vger.kernel.org; rsbecker@nexbridge.com
-> > Subject: Re: Porting git to HP NonStop
-> >
-> > On Fri, Aug 10, 2012 at 8:04 AM, Joachim Schmitz
-> > <jojo@schmitz-digital.de>
-> > wrote:
-<snip>
-> > >> - HP NonStop doesn't have stat.st_blocks, this is used in
-> > > builtin/count-objects.c
-> > >> around line 45, not sure yet how to fix that.
-> >
-> > IIRC the block count is only used to give the user some notion of how
-> > much disk was wasted by the repository. You could hack a macro that
-> > redefines this as st_size.
-> 
-> OK, thanks, will try that.
+Felix Natter <fnatter@gmx.net> writes:
 
-Setting "NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease" in Makefile helps, no need
-for further hacking ;-).
+> I have a few questions about this:
+>
+>> As I am coming from "large depth is harmful" school, I would
+>> recommend
+>>
+>>  - "git repack -a -d -f" with large "--window" with reasonably short
+>>    "--depth" once, 
+>
+> So something like --depth=250 and --window=500? 
 
-> > >> - HP NonStop doesn't have stat.st_?time.nsec, there are several
-> > >> places
-> > > what an
-> > >> "#ifdef USE_NSEC" is missing, I can provide a diff if needed
-> > >> (offending
-> > >> files: builtin/fetch-pack.c and read-cache.c).
-> >
-> > I think this would be appreciated by anyone else that has a similar
-> > problem where the platform lacks nsec.
-> 
-> Will do.
+I would use more like --depth=16 or 32 in my local repositories.
 
-OK, here we go:
+>> and mark the result with .keep;
+>
+> I guess you refer to a toplevel '.keep' file.
 
-/usr/local/bin/diff -EBbu ./builtin/fetch-pack.c.orig ./builtin/fetch-pack.c
---- ./builtin/fetch-pack.c.orig 2012-07-30 15:50:38 -0500
-+++ ./builtin/fetch-pack.c      2012-08-10 01:50:28 -0500
-@@ -1096,7 +1096,9 @@
-                int fd;
+Not at all.  And it is not documented, it seems X-<.
 
-                mtime.sec = st.st_mtime;
-+#ifdef USE_NSEC
-                mtime.nsec = ST_MTIME_NSEC(st);
-+#endif
-                if (stat(shallow, &st)) {
-                        if (mtime.sec)
-                                die("shallow file was removed during
-fetch");
-/usr/local/bin/diff -EBbu ./read-cache.c.orig ./read-cache.c
---- ./read-cache.c.orig 2012-07-30 15:50:38 -0500
-+++ ./read-cache.c      2012-08-09 10:57:57 -0500
-@@ -72,8 +72,10 @@
- {
-        ce->ce_ctime.sec = (unsigned int)st->st_ctime;
-        ce->ce_mtime.sec = (unsigned int)st->st_mtime;
-+#ifdef USE_NSEC
-        ce->ce_ctime.nsec = ST_CTIME_NSEC(*st);
-        ce->ce_mtime.nsec = ST_MTIME_NSEC(*st);
-+#endif
-        ce->ce_dev = st->st_dev;
-        ce->ce_ino = st->st_ino;
-        ce->ce_uid = st->st_uid;
-@@ -1465,7 +1467,9 @@
-        }
-        strbuf_release(&previous_name_buf);
-        istate->timestamp.sec = st.st_mtime;
-+#ifdef USE_NSEC
-        istate->timestamp.nsec = ST_MTIME_NSEC(st);
-+#endif
+Typically you have a pair of files in .git/objects/pack, e.g.
 
-        while (src_offset <= mmap_size - 20 - 8) {
-                /* After an array of active_nr index entries,
-@@ -1821,7 +1825,9 @@
-        if (ce_flush(&c, newfd) || fstat(newfd, &st))
-                return -1;
-        istate->timestamp.sec = (unsigned int)st.st_mtime;
-+#ifdef USE_NSEC
-        istate->timestamp.nsec = ST_MTIME_NSEC(st);
-+#endif
-        return 0;
- }
+  .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.idx
+  .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.pack
 
-Hope this helps?
+And you can add another file next to them
 
-Could you also consider adding the following:
+  .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.keep
 
-/usr/local/bin/diff -EBbu ./git-compat-util.h.orig ./git-compat-util.h
---- ./git-compat-util.h.orig    2012-07-30 15:50:38 -0500
-+++ ./git-compat-util.h 2012-08-10 09:59:56 -0500
-@@ -74,7 +74,8 @@
- # define _XOPEN_SOURCE 500
- # endif
- #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) &&
-\
--      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__)
-+      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
-+      !defined(__TANDEM)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs
-600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
-@@ -98,6 +99,11 @@
- #include <stdlib.h>
- #include <stdarg.h>
- #include <string.h>
-+#ifdef __TANDEM
-+# include <strings.h> /* for strcasecmp() */
-+  typedef long int intptr_t;
-+  typedef unsigned long int uintptr_t;
-+#endif
- #include <errno.h>
- #include <limits.h>
- #include <sys/param.h>
-
-Bye, Jojo
+to prevent the pack from getting repacked.  I think "git clone" does
+this for you after an initial import.
