@@ -1,80 +1,80 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: git archive --format zip utf-8 issues
-Date: Fri, 10 Aug 2012 23:58:12 +0200
-Message-ID: <502583F4.8030308@tu-clausthal.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 0/4] jk/version-string and google code
+Date: Fri, 10 Aug 2012 15:29:24 -0700
+Message-ID: <CAJo=hJsaQyBEjH8uWHqnR9Sk9HwFqCwe81HRN3HxUi2j76YNAg@mail.gmail.com>
+References: <20120810075342.GA30072@sigill.intra.peff.net> <7vfw7ulq0a.fsf@alter.siamese.dyndns.org>
+ <20120810174605.GA29113@sigill.intra.peff.net> <7vlihmk2ab.fsf@alter.siamese.dyndns.org>
+ <20120810215020.GA1841@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 11 00:17:10 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 11 00:29:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzxVy-00077X-4v
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 00:17:06 +0200
+	id 1SzxiK-0008DN-0S
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 00:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760132Ab2HJWQz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Aug 2012 18:16:55 -0400
-Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:24670 "EHLO
-	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755194Ab2HJWQq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2012 18:16:46 -0400
-X-Greylist: delayed 1113 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Aug 2012 18:16:46 EDT
-Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
-	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id F10B442D985
-	for <git@vger.kernel.org>; Fri, 10 Aug 2012 23:58:11 +0200 (CEST)
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id C8D98422169
-	for <git@vger.kernel.org>; Fri, 10 Aug 2012 23:58:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; s=dkim1; bh=UAOLiAt5tlRh8XxXMCOrt+Jx
-	Fjw=; b=jOufqFMFynjQmKoOZz0yNx/cJMJmyWuozVF8dWttRcTalRIs266Dxpm+
-	ghW+VoRTjY6n/QjqRkaqVRfBFU9FDgNz78VgRzpkIotJyyB34qgfDVK7siSjs0B9
-	udfCnMM0U4QM21UFZr841vJ7Gt+8QUEzvzzveL5SZkiXTx9BAX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; q=dns; s=dkim1; b=6LOMY0kDwyXwzlKjVD
-	+xLi1t79eMGxSUZYPWvqeBwe9119tJK+z93QpvBTL/8idAeFPv3PgffP6Ra6YAZL
-	aZI1WjNoMI1IkmugDCfC+NFN9sVshI5tch81SRG49I4r1kmqRjBMDXZOzHUid3wB
-	HL+ahbCE76+kBgMcUY6IKv1po=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 0530F422155
-	for <git@vger.kernel.org>; Fri, 10 Aug 2012 23:58:11 +0200 (CEST)
-Received: from [91.3.168.40] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.6)
-  with ESMTPSA id 36105157 for git@vger.kernel.org; Fri, 10 Aug 2012 23:58:10 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-X-Enigmail-Version: 1.4.3
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
-X-Spam-Level: (10%, '
- TO_IN_SUBJECT 0.5, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_600_699 0, BODY_SIZE_7000_LESS 0, NO_URI_FOUND 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_CONTACT_NAME 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __SUBJ_ALPHA_START 0, __SUBJ_ALPHA_START_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __USER_AGENT 0')
+	id S1760203Ab2HJW3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 18:29:46 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:64910 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758879Ab2HJW3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 18:29:45 -0400
+Received: by yhmm54 with SMTP id m54so2172626yhm.19
+        for <git@vger.kernel.org>; Fri, 10 Aug 2012 15:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nmJGIYzCWUU0PCOKIHevT16WhJ6dFl6wRXj9O5EcmqQ=;
+        b=MtqeMgwE94FJk96neaIi3/dwAJ/0ZakybwsaLf0H8zPYMudcZQXatMa2sY5f89+vBE
+         yO++H6Fnv+u6Q3efabFWpNgYCwv0ZOENlB4ojvHbopIvvV3tsVRXlTco9XcgRgkwTaXZ
+         9Ele62wkPj/ddCYafyYZJ2Iy21HD1tIG+khuc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=nmJGIYzCWUU0PCOKIHevT16WhJ6dFl6wRXj9O5EcmqQ=;
+        b=Qo8m5gSlSgSLE6BOEU7iOUwlx2hFlvGPtSol8TDDfZFA2HJQ6j/rT4tKK12ZI7Rhlu
+         /16UhX4CNJ2dgC2rk2m0RD8S/2Gtt7ixU0s/alevOa3EJwf5/ONfdLyO5AJjjz+mCRXj
+         FJRvN+iodjSOBTnJT1nNhyTndSS/UHTfRN2SFYkUqByz0LxGMMcc7qkUr+skAIYyKl5O
+         p14x61SIxYHBAZnLK6r2qW6cgkSpTwHouWjxfi0RjjvY4y3GOo3qJL8rxlcUWhw+ApTb
+         DTFVkBVRlWXmOig464c0I+vFX4KA+B97y7EouU1sKtrzu3EeU2g2+1BkBX680K9xDQ5/
+         4krQ==
+Received: by 10.50.236.4 with SMTP id uq4mr3233666igc.18.1344637784634; Fri,
+ 10 Aug 2012 15:29:44 -0700 (PDT)
+Received: by 10.64.22.231 with HTTP; Fri, 10 Aug 2012 15:29:24 -0700 (PDT)
+In-Reply-To: <20120810215020.GA1841@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQnK3ScSSqJm21ST+IbuL8fl2LlSjpr5stWIOWVzt4DufIZ7VfdPNVCyjVMnVdX169y1AMfk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203273>
 
-Hi,
+On Fri, Aug 10, 2012 at 2:50 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 10, 2012 at 11:52:28AM -0700, Junio C Hamano wrote:
+>
+>> When evaluating a change in the interoperability area, it does not
+>> add much more confidence to the correctness that the change has been
+>> in use for months with the same partner than that it has been used
+>> to talk to many different partners even for a short period of time,
+>> I guess.
+>
+> Traditionally our interoperability testing has been to cook things in
+> "next" and "master" and see if anybody complains. It would be nice to
+> have an interoperability test suite that could hit some common hosting
+> sites, as well as older versions of git-core itself. I suspect
+> automating that would be a big pain, though.
 
-when I create a git repository, add a file containing utf-8 characters
-or umlauts (like =F6=E4=FC.txt), commit and then export the HEAD revisi=
-on to a
-zip archive using "git archive --format zip -o 1.zip HEAD", the zip fil=
-e
-contains incorrect filenames:
-
-$ unzip -l 1.zip
-Archive:  1.zip
-4490a6dab1df5404f91ab3eb871f133154bff0bf
-  Length      Date    Time    Name
----------  ---------- -----   ----
-        6  2012-08-10 23:41   +?+?++.txt
----------                     -------
-        6                     1 file
---=20
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+I don't know that you need to hit the hosting sites themselves, just
+the implementations they are using. Dulwich and JGit are both open
+source. It should be possible to build a smallish compatibility test
+suite that grabs everyone into one tree, compiles a small test server
+from each, and runs the matrix locally. Then its up to the hosting
+sites to worry about making sure their implementations are included in
+this suite, and up-to-date.  :-)
