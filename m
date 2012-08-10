@@ -1,99 +1,72 @@
-From: Neil Horman <nhorman@tuxdriver.com>
-Subject: Re: [PATCH v2] add tests for 'git rebase --keep-empty'
-Date: Fri, 10 Aug 2012 09:26:08 -0400
-Message-ID: <20120810132608.GA29609@hmsreliant.think-freely.org>
-References: <1344444498-29328-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC v3 01/13] Move index v2 specific functions to their own file
+Date: Fri, 10 Aug 2012 16:24:25 +0200
+Message-ID: <87hasan7ty.fsf@thomas.inf.ethz.ch>
+References: <1344424681-31469-1-git-send-email-t.gummerer@gmail.com>
+	<1344424681-31469-2-git-send-email-t.gummerer@gmail.com>
+	<7vtxwbn2qe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 15:26:37 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, <git@vger.kernel.org>,
+	<mhagger@alum.mit.edu>, <pclouds@gmail.com>,
+	<robin.rosenberg@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 16:25:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzpEX-0007P5-ME
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 15:26:33 +0200
+	id 1Szq9o-0004Dh-8k
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 16:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755973Ab2HJN01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 09:26:27 -0400
-Received: from charlotte.tuxdriver.com ([70.61.120.58]:41085 "EHLO
-	smtp.tuxdriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755899Ab2HJN00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 09:26:26 -0400
-Received: from hmsreliant.think-freely.org ([2001:470:8:a08:7aac:c0ff:fec2:933b] helo=localhost)
-	by smtp.tuxdriver.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.63)
-	(envelope-from <nhorman@tuxdriver.com>)
-	id 1SzpEA-0005P0-2d; Fri, 10 Aug 2012 09:26:23 -0400
-Content-Disposition: inline
-In-Reply-To: <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -2.9 (--)
-X-Spam-Status: No
+	id S1758619Ab2HJOZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 10:25:37 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:56483 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758582Ab2HJOZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 10:25:36 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 10 Aug
+ 2012 16:25:24 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.211.80) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 10 Aug
+ 2012 16:25:30 +0200
+In-Reply-To: <7vtxwbn2qe.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 09 Aug 2012 15:02:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.211.80]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203217>
 
-On Thu, Aug 09, 2012 at 08:39:51AM -0700, Martin von Zweigbergk wrote:
-> Add test cases for 'git rebase --keep-empty' with and without an
-> "empty" commit already in upstream. The empty commit that is about to
-> be rebased should be kept in both cases.
-> 
-> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Acked-by: Neil Horman <nhorman@tuxdriver.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-> ---
-> 
-> Added another test for when the upstream already has an empty
-> commit. The test case protects the current behavior; I just assume the
-> current behavior is what we want.
-> 
-> While writing the test case, I also noticed that an interrupted 'git
-> rebase --keep-empty' can not be continued 'git rebase --continue', but
-> instead needs 'git cherry-pick --continue'. I guess this shouldn't
-> really be surprising given that it's implemented in terms of
-> cherry-pick. This should be fixed once all the different kinds of
-> rebase use the same way of finding the commits to rebase, so I
-> wouldn't worry about fixing this specific problem right now.
-> 
->  t/t3401-rebase-partial.sh | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
-> index 7f8693b..58f4823 100755
-> --- a/t/t3401-rebase-partial.sh
-> +++ b/t/t3401-rebase-partial.sh
-> @@ -47,7 +47,23 @@ test_expect_success 'rebase ignores empty commit' '
->  	git commit --allow-empty -m empty &&
->  	test_commit D &&
->  	git rebase C &&
-> -	test $(git log --format=%s C..) = "D"
-> +	test "$(git log --format=%s C..)" = "D"
-> +'
-> +
-> +test_expect_success 'rebase --keep-empty' '
-> +	git reset --hard D &&
-> +	git rebase --keep-empty C &&
-> +	test "$(git log --format=%s C..)" = "D
-> +empty"
-> +'
-> +
-> +test_expect_success 'rebase --keep-empty keeps empty even if already in upstream' '
-> +	git reset --hard A &&
-> +	git commit --allow-empty -m also-empty &&
-> +	git rebase --keep-empty D &&
-> +	test "$(git log --format=%s A..)" = "also-empty
-> +D
-> +empty"
->  '
->  
->  test_done
-> -- 
-> 1.7.11.1.104.ge7b44f1
-> 
-> 
+> If you found that an entry you read halfway has an inconsistent crc,
+> and if you suspect that is because somebody else was writing to the
+> same index, it is a _sure_ sign that you are not alone, and all the
+> entries you read so far to the core, even if they weren't touched by
+> that sombody else when you read them, may be stale, and worse yet,
+> what you are going to read may be inconsistent with what you've read
+> and have in-core (e.g. you may have read "f" before somebody else
+> that is racing with you have turned it into a directory, and your
+> next read may find "f/d" in the index without crc error).
+
+The intention for v5 (admittedly this probably requires a lot more
+documentation) was to only allow an in-place update in two cases:
+
+* updating the data fields (*not* the name) of a file entry,
+
+* adding or removing conflict entries at the end.
+
+The latter probably requires a bit more thought to make it safe, too.
+But I think the idea always was that any write that changes the basic
+layout of the file (so that you would read something wrong) will need a
+full rewrite.  Otherwise we're too far in DB land.  Most updates will be
+of the "update the stat and/or sha1 of a file" kind, anyway.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
