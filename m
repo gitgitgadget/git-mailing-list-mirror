@@ -1,61 +1,67 @@
-From: Andrew Keller <andrew@kellerfarm.com>
-Subject: Re: Installing GIT Server
-Date: Fri, 10 Aug 2012 12:31:16 -0400
-Message-ID: <0075195F-B1E6-4358-80F2-91F6A75445BF@kellerfarm.com>
-References: <41E7B95B-70F0-4DCD-ADCE-213BCE4B2FAC@YAHOO.COM>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Neeraj Mathawan <NEERAJM@YAHOO.COM>
-X-From: git-owner@vger.kernel.org Fri Aug 10 19:36:43 2012
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Porting git to HP NonStop
+Date: Fri, 10 Aug 2012 10:38:06 -0700
+Message-ID: <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+ <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com> <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, rsbecker@nexbridge.com
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Fri Aug 10 19:38:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szt8b-0004eV-2E
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 19:36:41 +0200
+	id 1SztAQ-0008JC-5J
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 19:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758191Ab2HJRgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 13:36:36 -0400
-Received: from leia.tchmachines.com ([208.76.86.38]:45939 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753615Ab2HJRgf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2012 13:36:35 -0400
-X-Greylist: delayed 3917 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Aug 2012 13:36:35 EDT
-Received: from d28-23-39-26.dim.wideopenwest.com ([23.28.26.39]:40604 helo=[192.168.0.198])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.77)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1Szs7D-00044K-Vo; Fri, 10 Aug 2012 12:31:12 -0400
-In-Reply-To: <41E7B95B-70F0-4DCD-ADCE-213BCE4B2FAC@YAHOO.COM>
-X-Mailer: Apple Mail (2.1084)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S1758308Ab2HJRi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 13:38:29 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:63335 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753615Ab2HJRi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 13:38:27 -0400
+Received: by yenl14 with SMTP id l14so603803yen.19
+        for <git@vger.kernel.org>; Fri, 10 Aug 2012 10:38:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YU4BkByQz9i6zynGT125E+RtbCfcUo4OQRC7MTHNji0=;
+        b=ZtFlI6satL7u9HM181t+a3+kNPVStWu+Wy4Yr+7dWVqXW4kGnbYYi9RsuLG6Kp+ePu
+         dYgLFUWSgt97+YwpgvQ6NXQj5X6PTwnboI91KR3bFv6SrdQYEd2qHBdQyDyKeX47nXIm
+         JQK517Z5rxDS1BOXFRq5TO4bsOmr+LgYYdjBc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=YU4BkByQz9i6zynGT125E+RtbCfcUo4OQRC7MTHNji0=;
+        b=j6B21WyvAlhgHSMmzIGQnkaUPmwkZnm6JbJ9dEdKVlry16MT1HFOAwWh9b0DK6tiFf
+         LCyAGgr4tOsWMn+6XghBrc9RSI3ZYnHU19jqPa5TxnHv/mVVyc8TNTryMbZ5Tkqr1b9q
+         UUIpdnYJhdYeQv15yGNULQZPcqiw2DqDibKaWRUjFrSti5lFmpLsiy6tTK8RDv+Eaz9B
+         bl3n5vraxJ+MgyTCHBpd5yn22dcHsryHXck7mrXjMD6sQfMq0t61EhN5QtG9VHdeo04Y
+         mEPXxzFbMPh5951zk53GvLxI2rFot9PHM2dZjtS/FBauyl89QVsGhZKycH1lAHvaYhRj
+         9uOA==
+Received: by 10.50.158.226 with SMTP id wx2mr2633760igb.18.1344620306904; Fri,
+ 10 Aug 2012 10:38:26 -0700 (PDT)
+Received: by 10.64.22.231 with HTTP; Fri, 10 Aug 2012 10:38:06 -0700 (PDT)
+In-Reply-To: <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+X-Gm-Message-State: ALoCoQnc1Cyi1gwUx+hWzhiY0s/61ZWrKtzjEtU7bDzXBuyUFqJ6uRcoo0UzTawQMX+s6ljjG8xS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203238>
 
-On Aug 10, 2012, at 11:17 AM, Neeraj Mathawan wrote:
+On Fri, Aug 10, 2012 at 10:32 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+>> then use `git init --bare` in a new directory to copy in the templates,
+> and see if
+>> its the template copying code that is making an incorrect copy.
+>
+> "git init --bare" gives the same error. It isn't copying any of the
+> subdirectories, only the file 'description'
 
-> We have decided to use GIT for a huge government implementation, I am looking for some help with installation of GIT SERVER. 
-> 
-> Few questions:-
-> 
-> 1. What platform to choose - UNIX, MAC or Windows? We have lot of windows 2008 installations, and if there are no trade off's we would love to use Windows 2008 server and install the GIT server compoent there.
-> 
-> 2. Once that is done, the client machine mostly MAC OSX development machines...will they be able to connect using SSH or file share?
-> 
-> Can someone help me with this?
-
-Unix, Linux, and Mac OS X all work equally well.  Haven't tried git-daemon on Windows, however I have noticed that Git in general is much slower on Windows and the default memory limit is low, which can cause problems with large repositories.  I'd guess that git-daemon might have similar problems.
-
-In the past, I have had problems with programs with programs in general accessing shared resources on file shares.  I've had permission problems, update problems, and corruption problems when the network fails.  I have had much better success with SSH.
-
-~ Andrew Keller
+Time to start debugging copy_templates_1 in builtin/init-db.c. :-(
