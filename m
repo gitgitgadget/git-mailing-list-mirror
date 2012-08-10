@@ -1,76 +1,109 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool,difftool: Simplify --tool-help documentation
-Date: Fri, 10 Aug 2012 00:39:23 -0700
-Message-ID: <1344584363-5933-2-git-send-email-davvid@gmail.com>
-References: <1344584363-5933-1-git-send-email-davvid@gmail.com>
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/4] jk/version-string and google code
+Date: Fri, 10 Aug 2012 03:53:42 -0400
+Message-ID: <20120810075342.GA30072@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 09:39:35 2012
+X-From: git-owner@vger.kernel.org Fri Aug 10 09:54:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szjok-00010U-AR
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 09:39:34 +0200
+	id 1Szk2f-0006Ze-1v
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 09:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755653Ab2HJHj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 03:39:29 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:52600 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754908Ab2HJHj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 03:39:28 -0400
-Received: by ggdk6 with SMTP id k6so1328150ggd.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 00:39:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=xWWon+gbekcPNrrJg9o1WNwWb352CiU29YjxYgS4lZY=;
-        b=PJOp42bSgFpXKwYpOppa2DvTP65wcume1yAGuELLqF783w0+axQI36N62AaimZLFTd
-         qxwXgg8tFSYgOwiMR+qX4Un35Cq3d947uk7zgyqIgzLFmBDu5dmoHfOoKeOuTDiItgDq
-         1fbNbvpHIK5cWIBUvPoTD9ZLa3iDPTmz4I0Sa1iLhIY9a+3J30o727pXApbjTS1S62Hm
-         ttRK+519JgIDtY1KW7OoCwvvRU157+VPNAwesEEEuEYxubnVunfuVcQDdg2AypU0ZJZg
-         WKRH9zAMmZIN/XOKxRci2LGNBtLssffBJ5Pz6I55ZNO46Olt7wwFHkcxw32mXF1x1tFU
-         AldQ==
-Received: by 10.66.78.195 with SMTP id d3mr4417384pax.17.1344584367650;
-        Fri, 10 Aug 2012 00:39:27 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id tv6sm2834734pbc.24.2012.08.10.00.39.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Aug 2012 00:39:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.rc2.16.g034161a
-In-Reply-To: <1344584363-5933-1-git-send-email-davvid@gmail.com>
+	id S1756509Ab2HJHxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 03:53:50 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60059 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754856Ab2HJHxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 03:53:49 -0400
+Received: (qmail 27082 invoked by uid 107); 10 Aug 2012 07:53:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 03:53:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 03:53:42 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203206>
 
-Remove the entry for --tool-help in the documentation as it is
-already mentioned in the documentation for --tool.
+On Fri, Aug 03, 2012 at 12:19:16PM -0400, Jeff King wrote:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Incompatible with the previous patch, but if you prefer to
-mention --tool-help in the docs for --tool only, then choose
-this one.
+> Instead of having the client advertise a particular version
+> number in the git protocol, we have managed extensions and
+> backwards compatibility by having clients and servers
+> advertise capabilities that they support. This is far more
+> robust than having each side consult a table of
+> known versions, and provides sufficient information for the
+> protocol interaction to complete.
+> 
+> However, it does not allow servers to keep statistics on
+> which client versions are being used. This information is
+> not necessary to complete the network request (the
+> capabilities provide enough information for that), but it
+> may be helpful to conduct a general survey of client
+> versions in use.
+> 
+> We already send the client version in the user-agent header
+> for http requests; adding it here allows us to gather
+> similar statistics for non-http requests.
 
- Documentation/git-difftool.txt | 3 ---
- 1 file changed, 3 deletions(-)
+Ugh, the jk/version-string topic breaks fetching from Google Code. With
+my patch, the client unconditionally sends an "agent=foo" capability,
+but the server does not like seeing the unknown capability and ends the
+connection (I'm guessing with some kind of internal exception, since it
+spews "Internal server error" over the protocol channel).
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 313d54e..ee80b00 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -74,9 +74,6 @@ with custom merge tool commands and has the same value as `$MERGED`.
- 	Specifying `--no-symlinks` instructs 'git difftool' to create
- 	copies instead.  `--no-symlinks` is the default on Windows.
- 
----tool-help::
--	Print a list of diff tools that may be used with `--tool`.
--
- -x <command>::
- --extcmd=<command>::
- 	Specify a custom command for viewing diffs.
--- 
-1.7.12.rc2.16.g034161a
+This is the right thing to do according to protocol-capabilities.txt,
+which says:
+
+  Client will then send a space separated list of capabilities it wants
+  to be in effect. The client MUST NOT ask for capabilities the server
+  did not say it supports.
+
+  Server MUST diagnose and abort if capabilities it does not understand
+  was sent.  Server MUST NOT ignore capabilities that client requested
+  and server advertised.  As a consequence of these rules, server MUST
+  NOT advertise capabilities it does not understand.
+
+However, that is not how git-core behaves. Its server side will ignore
+an unknown capability coming from the client (so not only is it more
+lenient about what the client does, but it does not follow the "MUST"
+directives in the second paragraph).
+
+This isn't a huge deal for this topic; any server that is collecting the
+data should be advertising anyway. The only ones who would miss out are
+humans trying to debug client behavior via tcpdump or similar, when the
+server side is an older version of git.
+
+That's probably acceptable, given that the alternative is changing Google
+Code's implementation, along with finding out how many other
+implementations might have followed that spec strictly. We might or
+might not want to loosen the "MUST" bits in that document, since git
+itself does not follow them.
+
+Here's a patch series that goes on top of jk/version-string:
+
+  [1/4]: send-pack: fix capability-sending logic
+
+This one is a minor bug fix in the same area.
+
+  [2/4]: do not send client agent unless server does first
+
+The actual fix.
+
+  [3/4]: connect: learn to parse capabilities with values
+  [4/4]: fetch-pack: mention server version with verbose output
+
+A bonus feature. I'm not sure if they are worth doing or not. I'd
+really expect somebody debugging a protocol issue to just use
+GIT_TRACE_PACKET, and then they can read it straight from the packet
+dump themselves.
+
+-Peff
