@@ -1,100 +1,134 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] do not send client agent unless server does first
-Date: Fri, 10 Aug 2012 17:09:53 -0400
-Message-ID: <20120810210953.GA888@sigill.intra.peff.net>
-References: <20120810075342.GA30072@sigill.intra.peff.net>
- <20120810075743.GB8399@sigill.intra.peff.net>
- <7vd32yjzu8.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2] macos: lazily initialize iconv
+Date: Fri, 10 Aug 2012 23:11:34 +0200
+Message-ID: <50257906.1010606@web.de>
+References: <7vk3xjked0.fsf@alter.siamese.dyndns.org> <7v1ujrkc9p.fsf@alter.siamese.dyndns.org> <50253A1E.20706@web.de> <7vsjbuk3v3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 23:10:12 2012
+X-From: git-owner@vger.kernel.org Fri Aug 10 23:11:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzwTA-0006Sv-N0
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:10:09 +0200
+	id 1SzwUj-0000wR-Co
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757674Ab2HJVKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 17:10:03 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34025 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756370Ab2HJVKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 17:10:02 -0400
-Received: (qmail 2259 invoked by uid 107); 10 Aug 2012 21:10:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 17:10:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 17:09:53 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd32yjzu8.fsf@alter.siamese.dyndns.org>
+	id S1757608Ab2HJVLk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Aug 2012 17:11:40 -0400
+Received: from mout.web.de ([212.227.15.3]:58194 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754834Ab2HJVLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 17:11:39 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb003) with
+ ESMTPA (Nemesis) id 0M7bVP-1TuN6G233X-00wjGd; Fri, 10 Aug 2012 23:11:36 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7vsjbuk3v3.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:+s5V6guRaPSc9kK8mL9HfHU8G31a4M6M4VOdtmVhpms
+ AwLolSgEvcvv4SxYyDgAMJ44IMh3Ez6AiPyw5KtEyauJtuJz4l
+ SIgR8N8M/yknVaclV7kQy/pGX64W1fVpbEZFUYV2k5wJ+KzHuY
+ s8Ah7+7GOTRuA9+H3dfL6YovhJt4l1YlLJjQHC1ZbYvdA3nUp/
+ 6d2luAyYNXFwE5dYmLisg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203261>
 
-On Fri, Aug 10, 2012 at 12:45:19PM -0700, Junio C Hamano wrote:
+On 10.08.12 20:18, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+>> On 31.07.12 20:37, Junio C Hamano wrote:
+>>> In practice, the majority of paths do not have utf8 that needs
+>>> the canonicalization. Lazily call iconv_open()/iconv_close() to
+>>> avoid unnecessary overhead.
+>>>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> Helped-by: Ralf Thielow <ralf.thielow@gmail.com>
+>>> Helped-by: Linus Torvalds <torvalds@linux-foundation.org>
+>>> ---
+>>>
+>>>  * This is not even compile tested, so it needs testing and
+>>>    benchmarking, as I do not even know how costly the calls to
+>>>    open/close are when we do not have to call iconv() itself.
+>>> ...
+>> Hi Junio,
+>>
+>> thanks for the optimization.
+>> Tested-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Well, I didn't mean the correctness testing without numbers.  The
+> correctness of the patch after a couple of people eyeballed it was
+> no longer a question.
+>
+> If the patch does not give any measuable performance difference to
+> people who exercise this codepath, it is not worth merging.  And
+> that is not something I can't do myself without a Mac (nor I wish to
+> have one to be able to do so myself).
+>
+> Thanks.
+Really sorry for the confusion with the percentage, I should have writt=
+en:
+The patch is tested OK, and we can even remove 2 lines of code,
+where we save and restore errno.
+They are no longer needed.
 
-> > diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-> > index fe56596..bc7a0f9 100644
-> > --- a/builtin/fetch-pack.c
-> > +++ b/builtin/fetch-pack.c
-> > @@ -19,6 +19,7 @@ static int prefer_ofs_delta = 1;
-> >  static int no_done;
-> >  static int fetch_fsck_objects = -1;
-> >  static int transfer_fsck_objects = -1;
-> > +static int agent_supported;
-> >  static struct fetch_pack_args args = {
-> >  	/* .uploadpack = */ "git-upload-pack",
-> >  };
-> 
-> This is only set to false once per process invocation.  We do not
-> currently talk with more than one remote from the same process in
-> the "fetch" codepath, and we must maintain that. This fix will be
-> broken otherwise ("recursive submodule fetch" comes to mind; one
-> more reason it should do its submodule business in a separate
-> process).
+Here some benchmarks on my system
+(Intel Core 2 Duo @   3,06 GHz, L2-Cache:    3 MB,  Memory:    4 GB)
+running git status on the linux source tree.
 
-Right; I followed the existing options in both fetch-pack and send-pack
-(use_sideband, no_done, and others here have the same issue), with the
-assumption that the current code was not broken (which may not be true,
-if it is simply masked by the fact that in practice everybody happens to
-support those older features).
+After cloning, I set "git config core.precomposeunicode true".
 
-I don't know off-hand whether that is actually a trigger-able bug in the
-current code or not. It's probably a good topic for a follow-on series.
+git is v1.7.12.rc2,
+git_git/git is with your patch.
 
-> > @@ -328,7 +329,8 @@ static int find_common(int fd[2], unsigned char *result_sha1,
-> >  			if (args.no_progress)   strbuf_addstr(&c, " no-progress");
-> >  			if (args.include_tag)   strbuf_addstr(&c, " include-tag");
-> 
-> This codepath still forgets to check if the other side advertised
-> "thin-pack", "no-progress", and "include-tag", no?
+git v1.7.12.rc2:
+tb@birne:~/projects/git/linux-2.6> for f in 1 2 3 4 5; do time git stat=
+us  ; done 2>&1 | egrep "^user|^real|^sys"
+real    0m0.469s
+user    0m0.283s
+sys     0m0.175s
 
-Yes. I didn't realize it until Dave mentioned the "innocuous" list. I
-think cleaning them up is reasonable, but probably a separate topic.
+real    0m0.461s
+user    0m0.283s
+sys     0m0.170s
 
-> > diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> > index 5c69995..7d05064 100644
-> > --- a/builtin/send-pack.c
-> > +++ b/builtin/send-pack.c
-> > @@ -252,6 +252,7 @@ int send_pack(struct send_pack_args *args,
-> >  	int status_report = 0;
-> >  	int use_sideband = 0;
-> >  	int quiet_supported = 0;
-> > +	int agent_supported = 0;
-> >  	unsigned cmds_sent = 0;
-> >  	int ret;
-> >  	struct async demux;
-> 
-> This is initialied to 0 per communication, so having multiple
-> remote.$there.pushURL configuration variables will work correctly.
+real    0m0.460s
+user    0m0.283s
+sys     0m0.170s
 
-Right. Not through me having thought about it, though, but by following
-the existing convention.
+real    0m0.461s
+user    0m0.283s
+sys     0m0.177s
 
--Peff
+real    0m0.460s
+user    0m0.283s
+sys     0m0.176s
+
+With lazy init of iconv:
+tb@birne:~/projects/git/linux-2.6> for f in 1 2 3 4 5; do time ~/projec=
+ts/git/git_git/git status  ; done 2>&1 | egrep "^user|^real|^sys"
+real    0m0.463s
+user    0m0.282s
+sys     0m0.173s
+
+real    0m0.460s
+user    0m0.281s
+sys     0m0.172s
+
+real    0m0.460s
+user    0m0.281s
+sys     0m0.172s
+
+real    0m0.463s
+user    0m0.281s
+sys     0m0.175s
+
+real    0m0.462s
+user    0m0.281s
+sys     0m0.177s
