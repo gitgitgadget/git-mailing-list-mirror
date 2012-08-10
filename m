@@ -1,97 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool,difftool: Document --tool-help consistently
-Date: Fri, 10 Aug 2012 08:04:44 -0700
-Message-ID: <7vk3x6lreb.fsf@alter.siamese.dyndns.org>
-References: <1344574365-5534-1-git-send-email-davvid@gmail.com>
- <CAHGBnuMCLkALCCAp1MiwQ1J+TuUhD=4k3LTGP2BMrp1LThb=HQ@mail.gmail.com>
-Mime-Version: 1.0
+From: Neeraj Mathawan <NEERAJM@YAHOO.COM>
+Subject: Installing GIT Server
+Date: Fri, 10 Aug 2012 11:17:06 -0400
+Message-ID: <41E7B95B-70F0-4DCD-ADCE-213BCE4B2FAC@YAHOO.COM>
+Mime-Version: 1.0 (Apple Message framework v1278)
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 17:05:01 2012
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 10 17:23:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szqlh-0004E7-Un
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 17:04:54 +0200
+	id 1Szr3B-0001nf-EQ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 17:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759285Ab2HJPEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 11:04:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36771 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758269Ab2HJPEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 11:04:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 384ED9D29;
-	Fri, 10 Aug 2012 11:04:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8dvbEs8Ni/CX7jyGqVjmo6hv74g=; b=Em+DLV
-	5S331znhM1ZnrYdTys/Z/Or4s3BuEsr2kDPRNrnIHIjex9T776hFUiNWG+hJa7SS
-	z1xoErOdg29e7Ej3gxyGKd8r4a8HAHQXNkfwo84A5eelaz+CZQju3YUYt9H5SWcc
-	JkYVWAImbYTKRofi7bftO4Xgcyp+MuHluzIAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IJUbthU+RIsBlko2PZSVrnuU7boCPuOa
-	gFI9LxSvTHxDj2QyFH95RX7I7IjWZvO90F3bDOWr898wSnQ2Z/Ty7zuCeZlWPYZB
-	GwIKT14ZkRA3rcFM2AQSqVhC66GdVPboyIbKb/ZUpuQXgWb7xX5FK3kckp9U+3az
-	xWSMkFtiHLU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 237FA9D28;
-	Fri, 10 Aug 2012 11:04:47 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8148C9D27; Fri, 10 Aug 2012
- 11:04:46 -0400 (EDT)
-In-Reply-To: <CAHGBnuMCLkALCCAp1MiwQ1J+TuUhD=4k3LTGP2BMrp1LThb=HQ@mail.gmail.com>
- (Sebastian Schuberth's message of "Fri, 10 Aug 2012 09:17:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B93F060C-E2FC-11E1-8DBE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758917Ab2HJPWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 11:22:53 -0400
+Received: from n1-vm0.bullet.mail.bf1.yahoo.com ([72.30.235.156]:45508 "EHLO
+	n1-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754572Ab2HJPWw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 11:22:52 -0400
+X-Greylist: delayed 340 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Aug 2012 11:22:51 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=gcom1024; t=1344611829; bh=hZQB560ABfRVOYCtMngKHlIAiIx31toySweIk2YJAI0=; h=Received:Received:Received:X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:From:Content-Type:Content-Transfer-Encoding:Subject:Date:Message-Id:To:Mime-Version:X-Mailer:Hi,:We have decided to use GIT for a huge government implementation, I am =:looking for some help with installation of GIT SERVER.=20; b=WXRHFz7u17MYXAfHtTmyedRVeaLvMQIy8O4sg1mQdIbYC8INHuawEhS9qk1Vzpmjr944H2maw2yie0EwuN4Ya1CmWpajjBX9WV16S2/v85EavP7+L7a9bpzFvisQKFnJ+SZVX61idWMebGoJYtGMD3bkp5ffM31Zz8lxpIdqOjo=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=gcom1024; d=yahoo.com;
+	b=UylfHjGGoXpd/Odj2XUboPbTL5rw2nEFkUnmKtDCX7E+WLeHlIcxTffa9RPccblSIDY4tcmB7uvg5hcJ3PdZu0E/hjnGlHZLT0DdHE3jH95eJPkvXg81+468gc+jU2JV4ntZIl9vNGzrfxJ/ZN6Y8a0/XUX3XmUrwUKjYTXreCE=;
+Received: from [72.30.235.65] by n1.bullet.mail.bf1.yahoo.com with NNFMP; 10 Aug 2012 15:17:09 -0000
+Received: from [98.139.213.1] by t2.bullet.mail.bf1.yahoo.com with NNFMP; 10 Aug 2012 15:17:07 -0000
+Received: from [127.0.0.1] by smtp101.mail.bf1.yahoo.com with NNFMP; 10 Aug 2012 15:17:07 -0000
+X-Yahoo-Newman-Id: 412941.48682.bm@smtp101.mail.bf1.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: 9hD8HTcVM1kGdOzTBA.cMXSQLu6YSBXnngHRKeUgcW9wgrC
+ 2MEYsf_32DGfonAWNJsk_mJp6Me4dAiSRuQNxKERpqCw.0nozh7ftwoMq6Ft
+ 2kKbzWrZQs1J1EDThLYUHs7hOeoiKi1zWvDyffg_vAakCgtKrBGOeOZU5dXr
+ AOuYWnAHNN06v_i59DsFig0SyDaZvwb_Md3AzTMqh1HgD30yo8Q0nl7t4frD
+ pP7I_RkzzZshxZDE6vleFqsqO9vYpfbODZy8tMdWIjpbxllJ6gLnEjhH61wZ
+ eDOGoCSwASRbBpnhjiZhxxu2uEZrlUdIKQ5c.dwoedYwVnzezzh1X0NxxtuM
+ gVb_7CHfM_wB1eJaWeMEVwkbeu4lXY1w1oG_lYj9055f5xfvc_oK51D5jaCc
+ xVPBH2eq9Mopv0Z.vO7imh02QTwiXW_Aid6sXJ8SWl.clqPDB.04.2AdI_29
+ 0Fbql
+X-Yahoo-SMTP: 9h86oVqswBD1bcjl0kRC4YvPKUo-
+Received: from new-host-3.home (NEERAJM@173.59.3.177 with plain)
+        by smtp101.mail.bf1.yahoo.com with SMTP; 10 Aug 2012 15:17:07 +0000 UTC
+X-Mailer: Apple Mail (2.1278)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203225>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+Hi,
+We have decided to use GIT for a huge government implementation, I am looking for some help with installation of GIT SERVER. 
 
-> On Fri, Aug 10, 2012 at 6:52 AM, David Aguilar <davvid@gmail.com> wrote:
->
->> Add an entry for --tool-help to the mergetool documentation.
->>
->> Move --tool-help in the difftool documentation so that it is
->> listed immediately after --tool so that it is easier to find.
->>
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->
-> Funny, I was doing almost the same thing in [1], so I obviously
-> like it. Back then Junio found it "Meh" because "it already is
-> mentioned in the description of --tool above", but I still think
-> all available command line option should be listed as such.
+Few questions:-
 
-Either way is fine by me.  Even though I do not think it adds much
-value, there is no reason to hiding the option; it is not like we
-are discouraging the use of it.
+1. What platform to choose - UNIX, MAC or Windows? We have lot of windows 2008 installations, and if there are no trade off's we would love to use Windows 2008 server and install the GIT server compoent there.
 
-Let's take the version with the description of --tool-help, then,
-and have it next to the description of --tool.
+2. Once that is done, the client machine mostly MAC OSX development machines...will they be able to connect using SSH or file share?
 
-Thanks for sanity checking.
+Can someone help me with this?
 
->> --- a/Documentation/git-mergetool.txt
->> +++ b/Documentation/git-mergetool.txt
->> @@ -64,6 +64,9 @@ variable `mergetool.<tool>.trustExitCode` can be set to `true`.
->>  Otherwise, 'git mergetool' will prompt the user to indicate the
->>  success of the resolution after the custom tool has exited.
->>
->> +--tool-help::
->> +       Print a list of diff tools that may be used with `--tool`.
->> +
->
-> This should say "list of merge tools", however.
-
-Will amend while queuing.
-
-Thanks.
+-Raj
