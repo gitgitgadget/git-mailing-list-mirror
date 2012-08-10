@@ -1,77 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: merging confusion and question
-Date: Fri, 10 Aug 2012 13:16:38 -0700
-Message-ID: <7vy5lmijtl.fsf@alter.siamese.dyndns.org>
-References: <5021B20D.2030702@palm.com>
- <7v393yupjp.fsf@alter.siamese.dyndns.org>
- <CABURp0q6OXF5Mu3m20z5ZwL4kz0A0HgZynVMLZZBMNXtga01Vg@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2] git svn: reset invalidates the memoized mergeinfo
+ caches
+Date: Fri, 10 Aug 2012 20:22:11 +0000
+Message-ID: <20120810202211.GA16606@dcvr.yhbt.net>
+References: <20120807200207.GA10899@m62s10.vlinux.de>
+ <20120807204510.GA10453@dcvr.yhbt.net>
+ <20120808054129.GB10899@m62s10.vlinux.de>
+ <20120808225258.GA24956@dcvr.yhbt.net>
+ <20120809064253.GC10899@m62s10.vlinux.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rich Pixley <rich.pixley@palm.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 22:16:49 2012
+Cc: git@vger.kernel.org, Andrew Myrick <amyrick@apple.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 22:22:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzvdW-0005b8-LC
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 22:16:46 +0200
+	id 1SzvjP-0000bw-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 22:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754992Ab2HJUQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 16:16:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40114 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753645Ab2HJUQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 16:16:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2996796DB;
-	Fri, 10 Aug 2012 16:16:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/FyMFo9ezGeVsQcsaUGwajHdoFM=; b=Mt4aSQ
-	eo4m4QyCJVZaHCNkuiexsvQba0qGBMOQTBIDRCogN4WOwL9wcna3GZewYrit0q6F
-	EUfq2uNbR8UP5D8AW9qdt51FUQfVgh7Iv7r8g9bwW4Dgz5s4izSGG04QdAgmhCVF
-	Art0gb9P5Ol09CF9bAQhDCcrBQqRrpbVk0byw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ym9JL7N1NJwHlJ4ZjLZqNNOoQR2qHyT5
-	g9xm/TL+72npx775hs2x3D7aoL2Obf8mjJfGP48UKK286BpZInOMz1P4K9YFqG12
-	Zxy4ohD3fX/Nm62F5NJOL4E0cA6QZYPlFvJ26Nh2o29C84mDoq0uA6MJNL64elr3
-	ZQLjHVIQhQs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16F7D96D9;
-	Fri, 10 Aug 2012 16:16:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8207F96D8; Fri, 10 Aug 2012
- 16:16:39 -0400 (EDT)
-In-Reply-To: <CABURp0q6OXF5Mu3m20z5ZwL4kz0A0HgZynVMLZZBMNXtga01Vg@mail.gmail.com> (Phil
- Hord's message of "Fri, 10 Aug 2012 15:37:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B10A0E2-E328-11E1-B53A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754852Ab2HJUWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 16:22:12 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:52900 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752759Ab2HJUWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 16:22:12 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75D441F42C;
+	Fri, 10 Aug 2012 20:22:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20120809064253.GC10899@m62s10.vlinux.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203258>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Peter Baumann <waste.manager@gmx.de> wrote:
+> First, let me thank you for your review and your detailed explanation.
+> I really appreciate it.
 
-> I agree that 'git reset --hard' should be mentioned in the hint for
-> newbies, but this conflicts with my desire to avoid giving chainsaws
-> to toddlers.
+You're welcome, Peter.  Thanks again for the patch.  I've signed-off and
+pushed for Junio.
 
-Exactly.  So what are you suggesting?
+The following changes since commit 034161a94e827ef05790b1c7ce5a6e3e740c864e:
 
-Perhaps force the user to go through a series of quiz when "git
-merge" was run by the user for the first time to make sure she at
-least read the sections on merges and conflict resolutions in the
-documentation to understand the fundamentals, and refuse to proceed
-until the user passes?
+  Merge git://github.com/git-l10n/git-po (2012-08-09 10:51:46 -0700)
 
-I personally do not see a good way out.  Even telling new users not
-to do merges, rebases, or resets but to only build a straight linear
-history is not a fix, as the user will never gain the necessary
-understanding by doing only limited and simple things.
+are available in the git repository at:
+
+
+  git://bogomips.org/git-svn for-git-master
+
+for you to fetch changes up to 61b472ed8b090a3e9240590c85041120a54dd268:
+
+  git svn: reset invalidates the memoized mergeinfo caches (2012-08-10 19:53:18 +0000)
+
+----------------------------------------------------------------
+Peter Baumann (1):
+      git svn: reset invalidates the memoized mergeinfo caches
+
+Robert Luberda (1):
+      git svn: handle errors and concurrent commits in dcommit
+
+ git-svn.perl                           |  74 ++++++++---
+ perl/Git/SVN.pm                        |  27 ++++-
+ t/t9163-git-svn-reset-clears-caches.sh |  78 ++++++++++++
+ t/t9164-git-svn-dcommit-concrrent.sh   | 216 +++++++++++++++++++++++++++++++++
+ 4 files changed, 374 insertions(+), 21 deletions(-)
+ create mode 100755 t/t9163-git-svn-reset-clears-caches.sh
+ create mode 100755 t/t9164-git-svn-dcommit-concrrent.sh
