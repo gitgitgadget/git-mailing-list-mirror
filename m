@@ -1,167 +1,101 @@
-From: Patrick Renaud <prenaud76@gmail.com>
-Subject: Re: The GitTogether
-Date: Fri, 10 Aug 2012 10:42:50 -0400
-Message-ID: <CAC+LNEQB-B5L2CV2pONsOyD-VE4SW36c9SKxdOcYGBQbA-d4hQ@mail.gmail.com>
-References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
-	<87k3xpe8bz.fsf@thomas.inf.ethz.ch>
-	<50155CD9.6060702@web.de>
-	<5016894C.7020907@drmicha.warpmail.net>
-	<5023E77E.4020604@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git am and the wrong chunk of ---
+Date: Fri, 10 Aug 2012 07:46:02 -0700
+Message-ID: <7vsjbuls9h.fsf@alter.siamese.dyndns.org>
+References: <5024523F.3050208@zytor.com>
+ <20120810103612.GA21562@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 10 16:43:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 16:46:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzqQU-0000Bc-IE
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 16:42:59 +0200
+	id 1SzqTf-0006TI-0V
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 16:46:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758325Ab2HJOmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 10:42:53 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:62906 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758271Ab2HJOmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 10:42:51 -0400
-Received: by yhmm54 with SMTP id m54so1651628yhm.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 07:42:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=upb+FC+NLacf7Ympxrx/jviZ0j2eIJGiPIpxj2XrDZk=;
-        b=rFXlX2vJsXzsn1s9Ci9kAitDiLmtjfOyFF8fINqWj4T3nWh1GH2JjE8Xgii8Piy67E
-         SIq8XaiPggG7HnxRV2+0YSyEnCPA9O8kriNUJ/U1keCo0vviGJtQeXPXYAtLSKbP6UIm
-         4kujpaxhe0ufPldop24iXHfJMGKu9RmRGXhcCB4bkw6a5AQ0G/Ftu3YaCz1hAcjv6gYv
-         iK5wSDbyYbFtDu9vLml5igyyzPAmd7RNxZDNmviXjpGyh/RTl6OY9MAnU9Ob5kpRq9+5
-         dTF+YSrvdy1YmrmIWrOpKDxYv4PM6lovPAGsVst8eLsUDwy0Oh3ofR88bLus44nHJUxG
-         jFoQ==
-Received: by 10.60.169.138 with SMTP id ae10mr4565778oec.7.1344609771014; Fri,
- 10 Aug 2012 07:42:51 -0700 (PDT)
-Received: by 10.182.67.1 with HTTP; Fri, 10 Aug 2012 07:42:50 -0700 (PDT)
-In-Reply-To: <5023E77E.4020604@drmicha.warpmail.net>
+	id S1758650Ab2HJOqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 10:46:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61243 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758573Ab2HJOqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 10:46:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC8D5977A;
+	Fri, 10 Aug 2012 10:46:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7tctq7xeKcwPWtovLz8K+dNeo8c=; b=XEGphl
+	PCmOrHZNVT88NbIgmo0eIUJbNaTcrXPkIf7kHbdQ+g8AZx7dw+dYjq8jDNRdX4hQ
+	Y2M6Lg5kAWYVFCBJsEh4zdpoc098kFqASfmlmYPXHSTSRAYzZ9USiw6fcBf5n/yg
+	QiqQ0kUsm4PUG4PiKquiTAPON9C7WYnv8LQ4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M77oeBmWtXhW3TrNeD/7o1vAfrB/cT9t
+	ipGCLWVwxp9CEK+SDapyO1Tosru7bvdB1s7/wtAGFd3wnPU9Y902CM7v8efruShV
+	ijwQUugQCWbwM0bMZY8T/kb3ZwqFeqv8X38Ufk0ODdbz/6mGRNo4HC8jcdksvUtl
+	+kiDeoE03HU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5BCA9779;
+	Fri, 10 Aug 2012 10:46:04 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11FC79778; Fri, 10 Aug 2012
+ 10:46:03 -0400 (EDT)
+In-Reply-To: <20120810103612.GA21562@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Aug 2012 06:36:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C35EE18-E2FA-11E1-A8A5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203219>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-I am not sure to understand why having two physically disconnected
-events, in time and in place. Personally I'd rather see one event,
-maybe longer than the previous occurrences to accommodate for the user
-and developer centric topics. Along this line, maybe it would be best
-to begin the event with the user-centric topics for a couple of days
-and then continue with a few more days for the core developers to
-discuss how to implement the features highlighted by the user
-community, as well as other topics of interest for core devs. The
-users could decide to join the rest of the event and listen-in the
-core dev topics, or go back home.
-
-Sadly, I am not a core dev. However I do appreciate the close contact
-the GitTogether event so far gave to development concerns. From a
-user's standpoint being exposed to that was an eye opener, something
-that is impossible when dealing with a proprietary solution provider.
-Under the new proposed approach I am afraid that we would start seeing
-the beginning of a formal separation between Git users: devs vs users.
-And I would bet that core devs would stop showing up at the user event
-and vice-versa, and thus create that continental divide that was so
-far absent in the Git community, which contributes to making Git so
-great.
-
-Scott, I believe you and I discussed this at last year's GitTogether
-and we both thought the time had come for a user event. But I am not a
-fan of making two completely disconnected events the way it is
-proposed here. And as for Berlin vs Mountain View, my vote goes to
-Mountain View but I'll go wherever the event is held.
-
-On 9 August 2012 12:38, Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> Michael J Gruber venit, vidit, dixit 30.07.2012 15:17:
->> Jens Lehmann venit, vidit, dixit 29.07.2012 17:55:
->>> Am 27.07.2012 13:45, schrieb Thomas Rast:
->>>> Scott Chacon <schacon@gmail.com> writes:
->>>>
->>>>> GitHub would like to volunteer to organize and pay for these events
->>>>> this year.  I would like to hold the developer-centric one in Berlin
->>>>> in early October
->>
->> Winter term classes start 10/15. Before 10/15 it will be easier to book
->> university rooms if we need that.
->>
->>>>
->>>> Yay, Berlin!  I would be glad to join there; I would probably not have
->>>> the time and resources to travel to SF this year.
->>>
->>> Same here.
->>
->> Same.
->>
->> Do we have contacts regarding (un)conference rooms in Berlin already? I
->> might be able to ask around.
->>
->>>
->>>>> For those of you who *have* been to a GitTogether, what did you find
->>>>> useful and/or useless about it?  What did you get out of it and would
->>>>> like to see again?  For those of you who have never been, what do you
->>>>> think would be useful?  I was thinking for both of them to have a
->>>>> combination of short prepared talks, lightning/unconference style
->>>>> talks and general discussion / breakout sessions.
->>>>
->>>> I was at the 2010 GitTogether in Mountain View.  I really liked the
->>>> unconference format, and the way Shawn and Junio used it: just using the
->>>> topic stickers as a sort of todo-list, not actually fixing any schedule
->>>> in advance.  Oddly enough we also managed to avoid the usual consequence
->>>> of open-ended discussions: getting stuck endlessly on an absolutely
->>>> insignificant point.
->>>
->>> Yup, the unconference format with both common and breakout sessions
->>> worked really well.
->>>
->>>> I think the discussions were very productive.  I would love to do more
->>>> hacking than we managed in 2010, but I realize that this is not possible
->>>> if we just meet for 2-3 days.  Perhaps one option would be to plan for
->>>> 1-2 days of hacking after the discussion rounds, so that the interested
->>>> people can stay a bit longer?
->>>
->>> I really like that idea and would vote for 3-4 days (maybe including a
->>> weekend for those of us who have to take a leave from work ;-).
+> If I understand your issue, somebody is writing:
 >
-> While the unconference format is successful, may I suggest a
-> track/topic: Especially if there's GitHub support and participation this
-> would be a good opportunity to discuss some GitHub specific issues in
-> person rather than via the list or support tickets. Two come to my mind:
 >
-> 1) GitHub for Git developers: I certainly don't suggest a change in
-> workflow for git.git, but you often hear Git developers say "we can't do
-> this or that on GitHub", and I think GitHub (and other projects using
-> GitHub) could benefit from the specific point of view and input of Git
-> developers to improve workflow support on GitHub.
+>     From: them
+>     To: you
+>     Date: ...
+>     Subject: [PATCH] subject line
 >
-> 2) git-scm.com: The old Git website and wiki certainly did not quite
-> meet GitHub's demands (e.g. reliability, looks), and git-scm.com
-> certainly does not quite meet the/all Git developers demands (e.g. list
-> discussion based decisions and actions, separation between the "free
-> project" and "business related content). In person it may be easier to
-> find a way forward which benefits all parts of the large and undefined
-> "Git community".
+>     commit message body
+>     ....
 >
-> Cheers,
-> Michael
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>     some cover letter material that should go below the "---"
+>     ---
+>       [diffstat + diff]
+>
+> How do you know when the commit message body ends, and the cover letter
+> begins? We already have two machine-readable formats for separating the
+> two ("---" after the commit message, and "-- >8 --" scissors before). Is
+> there some machine-readable hint? Is it always the paragraph before the
+> "---"? Chopping that off unconditionally seems like a dangerous
+> heuristic.
 
+Or it could be like this:
 
+    ...
+    Subject: [PATCH] patch title
 
--- 
--Patrick
+    Heya,
+
+    I was walking my dog when I found a solution to this
+    problem the other day.  Here it is.
+
+    commit message body
+
+    S-o-b: ...
+    ---
+
+And I agree that clever heuristics are dangerous.  We need to draw a
+line somewhere anyway, and the line should be at the place that is
+easily understandable to people.  That means mechanically parseable
+and easy to follow convention to use markers e.g. "---".
