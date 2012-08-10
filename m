@@ -1,55 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] jk/version-string and google code
-Date: Fri, 10 Aug 2012 17:50:20 -0400
-Message-ID: <20120810215020.GA1841@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] connect: learn to parse capabilities with values
+Date: Fri, 10 Aug 2012 14:55:07 -0700
+Message-ID: <7v393uif9g.fsf@alter.siamese.dyndns.org>
 References: <20120810075342.GA30072@sigill.intra.peff.net>
- <7vfw7ulq0a.fsf@alter.siamese.dyndns.org>
- <20120810174605.GA29113@sigill.intra.peff.net>
- <7vlihmk2ab.fsf@alter.siamese.dyndns.org>
+ <20120810075816.GC8399@sigill.intra.peff.net>
+ <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
+ <20120810211509.GB888@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 23:50:38 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 10 23:56:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szx6L-0005J3-9a
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:50:37 +0200
+	id 1SzxBS-0007sE-Qo
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 23:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759641Ab2HJVua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 17:50:30 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:34077 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758086Ab2HJVu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 17:50:29 -0400
-Received: (qmail 2848 invoked by uid 107); 10 Aug 2012 21:50:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Aug 2012 17:50:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2012 17:50:20 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlihmk2ab.fsf@alter.siamese.dyndns.org>
+	id S1758936Ab2HJVzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 17:55:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51913 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758879Ab2HJVzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 17:55:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7017E9225;
+	Fri, 10 Aug 2012 17:55:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=I2RhoW6frjjTPKb6f2YbF2njlvo=; b=WVuTZT
+	e9aw4urICSes1QLOjVhtwvvjJbblKuA64U9W7PGNhQGf/MB7ljSia2qmP8EHALzY
+	FNsvg1cV7YRuHyqZfz48a7wijAidDHF3T2uj3+gQNcctJBZ01GilXI5Kf5YpJdf4
+	RpIN+tIy+OizJmbe4n2+Lof/b8GB9Ps5PhNjE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HUt67rtQ01G7bAK15Uquc0zQ70jPBxgC
+	WtU5OPvRjzY2mwvbwqD85fFiLnNhH75ApffbeMiRzcftlhG/vHVqVM1+DUEs4e5n
+	cS/uV8wcRo96HKy5qXxBzhtv7/pk6kGQHhCszvua8xrI3w3NdnHxLpvxISIOxtwb
+	5wjYESFLYiw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C2B39223;
+	Fri, 10 Aug 2012 17:55:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAA7E9220; Fri, 10 Aug 2012
+ 17:55:08 -0400 (EDT)
+In-Reply-To: <20120810211509.GB888@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Aug 2012 17:15:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D47EA78-E336-11E1-940A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203271>
 
-On Fri, Aug 10, 2012 at 11:52:28AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> When evaluating a change in the interoperability area, it does not
-> add much more confidence to the correctness that the change has been
-> in use for months with the same partner than that it has been used
-> to talk to many different partners even for a short period of time,
-> I guess.
+> I would think the extra memory allocation would dwarf it, anyway.
+>> ...
+>> and a new caller can do something like
+>> 
+>> 	agent = server_supports("agent");
+>>         if (!agent || !agent[5])
+>>         	... no agent ...
+>> 	else {
+>>         	int span = strcspn(agent + 6, " \t\n");
+>>                 printf("I found agent=<%.*s>!\n", span, agent + 6);
+>> 	}
+>> 
+>> which doesn't look too bad.
 
-Traditionally our interoperability testing has been to cook things in
-"next" and "master" and see if anybody complains. It would be nice to
-have an interoperability test suite that could hit some common hosting
-sites, as well as older versions of git-core itself. I suspect
-automating that would be a big pain, though.
+I forgot to mention it, but the above was done also to make it
+"possible but not mandatory" to pay extra allocation penalty.  The
+caller can choose to parse the string into an int, for example,
+without extra allocation.  Only the ones that want a string value
+and keep a copy around do have to do xmemdupz().
 
--Peff
+> Anyway, do you think this is even worth doing at this point? I'm
+> lukewarm on the final two patches due to the existence of
+> GIT_TRACE_PACKET, which is much more likely to be useful.
+
+In the longer term, I think giving callers access to the parameter
+value given to a capability is necessary.  If we had this facility
+in the old days, we wouldn't have done side-band-64k but spelled it
+as side-band=64k.
+
+For the agent=<foo>, certainly we don't need it.
