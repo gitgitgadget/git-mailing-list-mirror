@@ -1,71 +1,90 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Installing GIT Server
-Date: Fri, 10 Aug 2012 13:57:25 -0400
-Message-ID: <CAM9Z-nkPU6YP6_hvwLNmnjDymWXVgyeVD+TBW3sLK8-+V26msg@mail.gmail.com>
-References: <41E7B95B-70F0-4DCD-ADCE-213BCE4B2FAC@YAHOO.COM>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 0/4] jk/version-string and google code
+Date: Fri, 10 Aug 2012 11:06:08 -0700
+Message-ID: <CAD0k6qTnQ+b8e2wt4WZ2HhOdsKXzcMkGbUZBkbw2j6_mQdE9GA@mail.gmail.com>
+References: <20120810075342.GA30072@sigill.intra.peff.net> <7vboiilpvs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Andrew Keller <andrew@kellerfarm.com>
-To: Neeraj Mathawan <NEERAJM@yahoo.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 19:57:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 10 20:06:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SztSm-0005XK-Ly
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 19:57:33 +0200
+	id 1Sztba-0006gm-22
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 20:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759203Ab2HJR51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 13:57:27 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:63132 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758616Ab2HJR50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 13:57:26 -0400
-Received: by bkwj10 with SMTP id j10so696206bkw.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2012 10:57:25 -0700 (PDT)
+	id S1758616Ab2HJSGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 14:06:30 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:46423 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753369Ab2HJSG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 14:06:29 -0400
+Received: by ghrr11 with SMTP id r11so1891009ghr.19
+        for <git@vger.kernel.org>; Fri, 10 Aug 2012 11:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=L57Fxkr1GywXzUg5fjJzpgIi+dc+q6p0QgePcgZamE4=;
-        b=HtylFxP0O+6ERzpo4ruprcNssQLmJMxshxw2UxernOVbOeqxrG7IwX2pzQwqcgV4u7
-         U/5paeSIEP97vIXqoJgJliMnkNuFtV1cyDJa9W6UE80SPC5PigzEK+AMrXU9Tb7Sfs87
-         xGcQpWAwzju8PregYlOW1d4AdTll16HhXGLn+O1Ob0jSbM3WMwl1pz6X1ftEq0Dl91io
-         wIBUfMRIfj3D7J2amHvULxt9803saXEN5eRUXl3B8MWAyBYzccuOYuCCSlonKvmFcI8w
-         Z3r2poAUSaNbp1VojC5JTqppU9ivrh/+ngPe6rUHp32FY6MBquFSFN0ZZxyUm3RURog8
-         derQ==
-Received: by 10.205.129.10 with SMTP id hg10mr1533153bkc.78.1344621445235;
- Fri, 10 Aug 2012 10:57:25 -0700 (PDT)
-Received: by 10.204.27.24 with HTTP; Fri, 10 Aug 2012 10:57:25 -0700 (PDT)
-In-Reply-To: <41E7B95B-70F0-4DCD-ADCE-213BCE4B2FAC@YAHOO.COM>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-system-of-record;
+        bh=HA8JdMIeB/ub8zxoxPu6JZpEi9z+Hf5dNeKr3GGG86M=;
+        b=YVfCdex4YmRTlPvp8xD57csjzi+ZDYlQu4rzzJs6F4MwXRKIScwmMJDuljxKOLnWjl
+         wjZ7qk9J7ZvcSLK/PKAUeHjd9hz9UTHnNfYOk4xU9EMVkjvZPG+yi5dmxTffb6xNKcGl
+         r0ldLm6AKJLU6e3VS/SN7x1XnDzXHGs05dovDlllVlGpRMyMWVE4IbX0dduIsN4kFDYQ
+         TnH8ItNC5hQnfo86jtNeR9B86I7DK8c/jN1chpln7mikTmfLvO8P3n2um1cB0kfJ93yG
+         MFlDD8nkXdM8N02fpWbm2kEaGQckIWNYyWWKmWCqL/YZ9shZg7Pd/VrkktXVVT31DNBk
+         A5ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=HA8JdMIeB/ub8zxoxPu6JZpEi9z+Hf5dNeKr3GGG86M=;
+        b=bKnGuKFjTdbYLPVZoI86bykywN6FX/Geftkb2R3SWdK4a+vDj+njvSI/MsC8asfZEB
+         84z5bUwFmjuPFU4rI0Bb87i8d1dHG7aSjEFaWEeE4y9o9NhaGH+1x6WetNvpHWwQ1Wyh
+         wKXZWuAK9aV0uVUujHJ5gyoBHy0Jt9e8sJ3cpwXpMQHHJDST1IX36mTKOkFEoZ5pSr4B
+         wnNVSRKeMKuB20RBWGoJ1p9KPuOnE5nArl/vcE0HQYfxppjlEOIkBo+TI1X/aS0cl3Gu
+         vzbePAZm7wxGuLdWtr7SKkHaJVs8PsXbBVIP07O4DC4twSnEW39AdcAPZM3xIVyCFfna
+         Ub+A==
+Received: by 10.50.104.163 with SMTP id gf3mr525565igb.69.1344621988638;
+        Fri, 10 Aug 2012 11:06:28 -0700 (PDT)
+Received: by 10.50.104.163 with SMTP id gf3mr525550igb.69.1344621988445; Fri,
+ 10 Aug 2012 11:06:28 -0700 (PDT)
+Received: by 10.231.135.1 with HTTP; Fri, 10 Aug 2012 11:06:08 -0700 (PDT)
+In-Reply-To: <7vboiilpvs.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQm8dKMKp+A0bL8AReRNnJ0yrN2AWdoZbzitbkEkq6odHTa6mVjUC4tQ8umOgxjLFU8g5KawHjBo8ae5T0V4qkzy/jmUs4MtJmna9/73eq2ftQNtxmtKMYSswaavLOE6PawqpvPoQFNr9ykqh36zxTntY5j59YuT1SElNRy3dJtP7H6bOXY15T01Enk7JngkjKa9uPBk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203241>
 
-On Fri, Aug 10, 2012 at 11:17 AM, Neeraj Mathawan <NEERAJM@yahoo.com> wrote:
-> Hi,
-> We have decided to use GIT for a huge government implementation, I am looking for some help with installation of GIT SERVER.
+On Fri, Aug 10, 2012 at 8:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Few questions:-
+>> Ugh, the jk/version-string topic breaks fetching from Google Code. With
+>> my patch, the client unconditionally sends an "agent=foo" capability,
+>> but the server does not like seeing the unknown capability and ends the
+>> connection (I'm guessing with some kind of internal exception, since it
+>> spews "Internal server error" over the protocol channel).
 >
-> 1. What platform to choose - UNIX, MAC or Windows? We have lot of windows 2008 installations, and if there are no trade off's we would love to use Windows 2008 server and install the GIT server compoent there.
+> I asked the folks who run code.google.com and they are indeed seeing
+> something like these in their logs:
 >
-> 2. Once that is done, the client machine mostly MAC OSX development machines...will they be able to connect using SSH or file share?
->
-> Can someone help me with this?
+>  >> Client asked for capability agent=git/1.7.12.rc2.79.g86c1702 that was not advertised.
 
-Raj,
-You may find that using Gitolite [1] (and following the documentation
-that comes with it) to be a good solution to what you are trying to
-do.
+FWIW, this error comes from Dulwich:
+https://github.com/jelmer/dulwich/blob/25250c1694dac343d469742aeafa139f37fc4ec6/dulwich/server.py#L196
 
-(1): https://github.com/sitaramc/gitolite/
+So any servers running Dulwich would be affected by this...though I'm
+not aware of any large-scale Dulwich installations other than Google
+Code.
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+> So please consider your conjecture confirmed, and thanks for a
+> prompt fix.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
