@@ -1,103 +1,205 @@
 From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Porting to a new platform
-Date: Fri, 10 Aug 2012 18:59:37 +0200
-Message-ID: <004301cd7719$86b810b0$94283210$@schmitz-digital.de>
-References: <1344444498-29328-1-git-send-email-martin.von.zweigbergk@gmail.com> <1344526791-13539-1-git-send-email-martin.von.zweigbergk@gmail.com> <20120810132608.GA29609@hmsreliant.think-freely.org> <003901cd7708$fa482c10$eed88430$@schmitz-digital.de> <7v1ujelnvm.fsf_-_@alter.siamese.dyndns.org>
+Subject: RE: Porting git to HP NonStop
+Date: Fri, 10 Aug 2012 19:32:35 +0200
+Message-ID: <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>, <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 10 19:00:28 2012
+To: "'Shawn Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 10 19:32:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SzsZU-0001RW-Dc
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 19:00:24 +0200
+	id 1Szt4w-0005u7-8g
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Aug 2012 19:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab2HJRAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 13:00:18 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:64432 "EHLO
+	id S1757597Ab2HJRct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 13:32:49 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:54289 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751831Ab2HJRAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Aug 2012 13:00:17 -0400
+	with ESMTP id S1753058Ab2HJRcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 13:32:47 -0400
 Received: from DualCore (dsdf-4db5242c.pool.mediaWays.net [77.181.36.44])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0Lv4go-1Tib453q8w-010PdC; Fri, 10 Aug 2012 18:59:48 +0200
-In-Reply-To: <7v1ujelnvm.fsf_-_@alter.siamese.dyndns.org>
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0LbTPL-1TSwQH02Zf-00lDDR; Fri, 10 Aug 2012 19:32:46 +0200
+In-Reply-To: <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
 X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJHr2cA9VHKYTIzC/tsBXVJAGXt/AGsh1lhAh0jVpECFyKZkQFwebValiRA7LA=
+Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7Eflf4hv7A=
 Content-Language: de
-X-Provags-ID: V02:K0:dUk9jkTvyRMNJfyNMeEH/6NhAfOuUnl3ly5/8MvENHg
- QvaTwQ7JqwFwsuTA/V5mqQlGdKz2Z++JpOelZ+xonTH3pvCX0W
- TyfscmOU/M83DhjBJKSVcViDF7xIOCkUjcpUSFkxkQ/pVmKhcp
- mhKlGg2SNm6HUho0pMzuzLl2SK3M1c1aOQZ32LG/TKkeAEkIby
- 7P4wXd8SV3dvWtSWp0ejfc1Z550px6hwrmit7eZZpkDEqn9ask
- y5xQ/2dHbh9ktf+fZH5Gzqjxe/jSQbt0v/oWLBoAyX1bsSPV/c
- 6cLvs/gj4yV/Y9ImG8gwTro4flxLu/A/L0BalZi++smhpSf/0S
- 8CKkWyPoyOC8XvUTpqlRO5i4yzzkBzcAPKTXqqDewzS0f2XRNS
- DpC1Z6ApbgKhA==
+X-Provags-ID: V02:K0:GPbKfO9Sh0AspqrURFpjYw4ugH3e1MXNvG0QlnodOLY
+ g1WKS9TDicywfUwWPQL+JNxjRv8pyB2SQivFULR+pCMPUANGka
+ jiVBPzOZqVO3rxh3K2UemxNBj6juPI4XaQH422hXGzk64MQQDS
+ DYVHwidusHo4ImOi5DwQwOSzwAsP1vhf3m0AX1HltdQ7Fj3Mmi
+ z10XyTLfQ5hL45z8JFV0jdokqK2eHPR+SYvU3n2M6rfWG69eME
+ DpaQ9k/GG+nfKpXlu4dad7Zlbf2PeN5SkaNXEp+FuGFIt+0lPO
+ lGYN5RbBY9roAbzzC9Stg5B/mPLmC1PI9qjHbq0tufhHwpRbih
+ jyuaNlfbHeIZfNQXolWh5Pl4GDDc12CI2iIwPt6E5kddxKKz26
+ YfhgWOUa4k2VQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203236>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Friday, August 10, 2012 6:21 PM
+> From: Shawn Pearce [mailto:spearce@spearce.org]
+> Sent: Friday, August 10, 2012 6:28 PM
 > To: Joachim Schmitz
 > Cc: git@vger.kernel.org; rsbecker@nexbridge.com
-> Subject: Porting to a new platform
+> Subject: Re: Porting git to HP NonStop
 > 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> On Fri, Aug 10, 2012 at 8:04 AM, Joachim Schmitz <jojo@schmitz-digital.de>
+> wrote:
+> >>
+> >> - HP NonStop is lacking poll(), git is making quite some use of it.
+> >> My Solution: I 'stole' the implementation from GNUlib, which
+> >> implements
+> >> poll() using select().
+> >> Git should either provide its own poll(), not use it at all or resort
+> >> to
+> > using
+> >> GNUlib, what do you think?.
 > 
-> > - HP NonStop is lacking poll(),...
-> > - HP NonStop is lacking getrlimit(), fsync(), setitimer()...
+> poll() is usually better than select() because you don't need to worry
+about
+> FD_SETSIZE. That said, the compat/ directory contains implementations of
+> some functions. You could contribute a fake poll that uses select if it
+was under
+> the GPLv2.
+
+This is what I did. Just to see now that compat/win32/poll.c has exacly the
+same stuff...
+ 
+> >> - HP NonStop is lacking getrlimit(), fsync(), setitimer() and memory
+> > mapped IO.
+> >> For now I've commented out the part that used getrlimit() and use a
+> >> home brewed implementation for fsync(), setitimer() and mmap().
 > 
-> I would check compat/win32 and friends and see what other platforms that
-lack
-> this and that do, if I were you.
+> There is no need to define your own mmap(). Define NO_MMAP=1 in the
+> Makefile. Git already has its own fake mmap and knows how to write it back
+to
+> disk when making changes.
 
-Hmm, in compat/win32/poll.c I found exactly the same code I stole' for my
-implementation (GNUlib's implementation) so I just managed to reinvent the
-wheel :-(
-Thanks anyway for telling me about it.
+Ah, excellent. Esp. as our home brewed implementation is pretty primitive.
 
-For getrlimit(RLIMIT_NOFILE, ...), I'm now using sysconf(_SC_OPEN_MAX), does
-that sound reasonable?
-
-I found no replacement for fsync() and setitimer(), but have my ones since
-long, so no real need.
-
-Also would compat/pread.c, another API HP NonStop is missing, but I had my
-own implementation for that since quite a while already (and it looks pretty
-similar to git's one).
-
-I don't quite understand though why neither compat/pread.c nor
-compat/win32/poll.c are used automatically after having been proven absent
-in configure?
-Ahh, I see, it could be done by adding a HP NonStop specific section in
-Makefile ("ifeq ($(uname_S),NONSTOP_KERNEL)"), right?
-I'll have a deeper look and see whether I can come up with something useful
-to feed back into git.
-
-> > so telling configure to search for c99  should help here.
+> >> - git makes use of some C99 features or at least feature that are not
+> > availabe in
+> >> C89, like 'inline'
+> >> C89 is the default compiler on HP NonStop, but we also habe a c99
+> > compiler, so
+> >> telling configure to search for c99  should help here.
 > 
-> In general, the top-level Makefile is designed to be usable without ever
-> worrying about "configure" mess.  Just define CC for the platform section
-there,
+> You could also disable inline by #define inline /**/, but this will
+probably result
+> in a slower binary.
 
-Yes, that's what I did, sort of, I just set CC to c99 prior to executing
-configure.
-I've seen other configure though, that explicitly test for C99, so why not
-this one?
+Even our C99 compiler doesn't inline, it merly recognizes the keyword and
+then warns about (unable to inline...)
+But there are other C99 features used too.
 
-> and optionally add a support to flip the same in configure.ac.  This
-applies
-> equally to other conditional compilation options you may have to add to
-> support your platform.
+> >> - HP NonStop doesn't have stat.st_blocks, this is used in
+> > builtin/count-objects.c
+> >> around line 45, not sure yet how to fix that.
+> 
+> IIRC the block count is only used to give the user some notion of how much
+disk
+> was wasted by the repository. You could hack a macro that redefines this
+as
+> st_size.
+
+OK, thanks, will try that.
+
+> >> - HP NonStop doesn't have stat.st_?time.nsec, there are several
+> >> places
+> > what an
+> >> "#ifdef USE_NSEC" is missing, I can provide a diff if needed
+> >> (offending
+> >> files: builtin/fetch-pack.c and read-cache.c).
+> 
+> I think this would be appreciated by anyone else that has a similar
+problem
+> where the platform lacks nsec.
+
+Will do.
+ 
+> >> - Once compiled and installed, a simple
+> >> jojo@\hpitug:/home/jojo/GitHub $
+> > git
+> >> clone git://github.com/git/git.git fails with:
+> >> /home/jojo/GitHub/git/.git/branches/: No such file or directory After
+> > creating
+> >> those manually it fails because the directory isn't empty,
+> >> catch-22
+> >> After some trial'n'error I found that the culprit seems to be the
+> > subdirectories
+> >> branches, hook and info in /usr/local/share/git-core/templates/, if I
+> >> remove/rename those, the above command works fine.
+> >> I have no idea why that is nor how to properly fix it, anyone out
+there?
+> 
+> This sounds like the templates directory was not created correctly during
+> installation, or is being copied incorrectly during the git init process.
+I would
+> start by comparing the structure and permissions of the templates
+directory on
+> your HP NonStop system to one on a Linux system and see if there was a
+> mistake made during the installation process. If the directory matches, I
+would
+
+jojo@\hpitug:/usr/local/share/git-core/templates $ ls -laR
+total 41
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 12:10 .
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 08:19 ..
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 branches
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 hooks
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 info
+-rw-r--r--    1 SUPER.SUPER        SUPER         73 Aug 10 07:26 description
+
+./branches:
+total 16
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 .
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 12:10 ..
+
+./hooks:
+total 43
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 .
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 12:10 ..
+-rwxr-xr-x    1 SUPER.SUPER        SUPER        452 Aug 10 07:26
+applypatch-msg.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER        896 Aug 10 07:26
+commit-msg.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER        189 Aug 10 07:26
+post-update.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER        398 Aug 10 07:26
+pre-applypatch.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER       1704 Aug 10 07:26
+pre-commit.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER       4957 Aug 10 07:26
+pre-rebase.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER       1251 Aug 10 07:26
+prepare-commit-msg.sample
+-rwxr-xr-x    1 SUPER.SUPER        SUPER       3611 Aug 10 07:26
+update.sample
+
+./info:
+total 17
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 07:26 .
+drwxr-xr-x    1 SUPER.SUPER        SUPER       4096 Aug 10 12:10 ..
+-rw-r--r--    1 SUPER.SUPER        SUPER        240 Aug 10 07:26 exclude
+jojo@\hpitug:/usr/local/share/git-core/templates $
+
+SUPER.SUPER on NonStop is equivalent to root in UNIX. Everything is readable
+to everybody. Looks OK to me?
+
+> then use `git init --bare` in a new directory to copy in the templates,
+and see if
+> its the template copying code that is making an incorrect copy.
+
+"git init --bare" gives the same error. It isn't copying any of the
+subdirectories, only the file 'description'
 
 Bye, Jojo
