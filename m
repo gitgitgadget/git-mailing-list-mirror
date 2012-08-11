@@ -1,82 +1,151 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: git archive --format zip utf-8 issues
-Date: Sat, 11 Aug 2012 01:53:16 +0200
-Message-ID: <50259EEC.2020701@tu-clausthal.de>
-References: <502583F4.8030308@tu-clausthal.de> <7vtxwagy9f.fsf@alter.siamese.dyndns.org>
+From: Paul Alesius <paul@unnservice.com>
+Subject: Git hangs on clone
+Date: Sat, 11 Aug 2012 04:48:55 +0200
+Message-ID: <CAL8jUGVZFott2Tp0mYTjGAG-4jCw_pgf70ZkYJ3XYOF9DZqVNQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 11 01:53:24 2012
+X-From: git-owner@vger.kernel.org Sat Aug 11 04:50:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Szz19-0001uQ-Td
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 01:53:24 +0200
+	id 1T01mR-0004pY-R1
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 04:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760414Ab2HJXxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Aug 2012 19:53:17 -0400
-Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:15486 "EHLO
-	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760187Ab2HJXxR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Aug 2012 19:53:17 -0400
-Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
-	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id 80FCD42D985;
-	Sat, 11 Aug 2012 01:53:15 +0200 (CEST)
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 5A8A742216B;
-	Sat, 11 Aug 2012 01:53:15 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=w6ZN2EXPy5ZuHOr57ZKxYpfUD8g=; b=xPntkJiawTgUxlrBmsVii6eMKkRD
-	Gg2T+hq103EdDL4Wi/+Nt3CAW7RV0XS0xpZBjSxNTROhrppjrdimiXT/DKj5L88b
-	vM2jGQalxzpm8tx+TO1jUtmuqWJAKVrO4hdqK7YQ/lWIn2F5HL/WP+iOzt1PS20t
-	PjTJp3bXYZCnnTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=50fwu0ZGfSPfNqLL1CmC//Mxs6aUX2Xa6ZMzO5isz9R3rySg5lqlYv6
-	84ayeMsn++FfbrA7DjRSWUeCOZGOnAKdV5Db9yErlCJiHlR+16jmeGe+NNsXi042
-	/5k6ZziNHSdrbn32Snh0EoZY1EovUmYO/Y5CIYoxcRc5TlWduCRg=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id DEBC9422153;
-	Sat, 11 Aug 2012 01:53:14 +0200 (CEST)
-Received: from [91.3.190.140] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.6)
-  with ESMTPSA id 36106085; Sat, 11 Aug 2012 01:53:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vtxwagy9f.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.3
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
-X-Spam-Level: (10%, '
- TO_IN_SUBJECT 0.5, MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_600_699 0, BODY_SIZE_7000_LESS 0, CT_TEXT_PLAIN_UTF8_CAPS 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CP_URI_IN_BODY 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_FROM 0, __HAS_MSGID 0, __INT_PROD_LOC 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_MAILTO 0, __URI_NS , __USER_AGENT 0')
+	id S1754637Ab2HKCtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Aug 2012 22:49:36 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:57614 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754165Ab2HKCtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Aug 2012 22:49:36 -0400
+Received: by obbuo13 with SMTP id uo13so3158752obb.19
+        for <git@vger.kernel.org>; Fri, 10 Aug 2012 19:49:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :x-gm-message-state;
+        bh=2mrCEs38+HU2FFHBpGU2vamMfCIv3LZnIGVub/SPXRo=;
+        b=ciSUMP1omX3xuE06KFoEW97/pdUGHBz9jU8fjFcetD6lO/zEptB9a7VyxDMHi7pN2C
+         XSJS9FltEraoIdiCODJW7bJIYSFszAyfzGSc2S4ioPXjCoz0zkXR5WGWT2fbFUxnHgRP
+         Sx+p3HU6VKK57rTaZ2Clmyd0M39AHeJOWKr11ig8EkTGEkxUHEf2RP9BBI6l77XTrn0j
+         i/SdA0JWDgbCITcjvRKcCWcRjGFHxsxm6tbEZqNoNuQ6j++H0V5qhSig3rEhA8UimoY3
+         sEsIgYukGazBS2XQgXvN/ldrFxlOyFJ+CMRXXM69+aNgVI0HHt/4QyVEo0fZC0oIXMKO
+         aGcQ==
+Received: by 10.60.20.74 with SMTP id l10mr7279682oee.19.1344653375495; Fri,
+ 10 Aug 2012 19:49:35 -0700 (PDT)
+Received: by 10.60.69.202 with HTTP; Fri, 10 Aug 2012 19:48:55 -0700 (PDT)
+X-Gm-Message-State: ALoCoQmsXZPgTPQlNXuhep5c5+qtkiUcuc7KBBgR2tfmwG6oXG9RkxcchguT2/6PB28i6Hg3Ptm3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203277>
 
-Am 11.08.2012 00:47 schrieb Junio C Hamano:
-> Do you know in what encoding the pathnames are _expected_ to be
-> stored in zip archives?
+80 out of 100 times git will hang indefinitely during a clone operation.
+Here's the state of things during the hangs:
 
-re-encoding to latin1 does not always work and may break double byte
-totally (e.g. chinese or japanese).
 
-PKZIP APPNOTE seems to be the zip standard and it specifies a utf-8
-flag: http://www.pkware.com/documents/casestudies/APPNOTE.TXT
-> A.  Local file header:
-> general purpose bit flag: (2 bytes)
-> Bit 11: Language encoding flag (EFS).  If this bit is
-> set, the filename and comment fields for this file
-> must be encoded using UTF-8. (see APPENDIX D)
+----------------------- scenario 1:
+remote: Counting objects: 306395, done.
+remote: Compressing objects: 100% (47753/47753), done.
+remote: Total 306395 (delta 259044), reused 305469 (delta 258264)
+Receiving objects: 100% (306395/306395), 207.20 MiB | 5.80 MiB/s, done.
+Resolving deltas: 100% (259044/259044), done.
+----------------------- ps aux | grep git:
+build    28122  0.1  0.0 126032  2092 pts/1    Sl+  04:19   0:00 git clone
+git://git.gnome.org/gtk+
+---------------------- backtrace for scenario 1:
+(gdb) bt
+#0  0x0000003c9ee08e60 in pthread_join (threadid=47144800229120,
+thread_return=thread_return@entry=0x7fff19edc928) at pthread_join.c:93
+#1  0x00000000004cb6ab in finish_async (async=async@entry=0x7fff19edca00) at
+run-command.c:739
+#2  0x0000000000428318 in get_pack (pack_lockfile=0x121df80, xd=0x121dfc0)
+at builtin/fetch-pack.c:773
+#3  do_fetch_pack (pack_lockfile=0x121df80, match=0x125e0a0, nr_match=544,
+orig_ref=<optimized out>, fd=0x121dfc0) at builtin/fetch-pack.c:835
+#4  fetch_pack (my_args=my_args@entry=0x7fff19edd1b0, fd=fd@entry=0x121dfc0,
+conn=<optimized out>, ref=<optimized out>, dest=dest@entry=0x1217e70
+"git://git.gnome.org/gtk+",
+    nr_heads=nr_heads@entry=544, heads=heads@entry=0x125e0a0,
+pack_lockfile=pack_lockfile@entry=0x121df80) at builtin/fetch-pack.c:1090
+#5  0x00000000004de08e in fetch_refs_via_pack (transport=0x121df20,
+nr_heads=544, to_fetch=0x125c880) at transport.c:549
+#6  0x00000000004e0472 in transport_fetch_refs
+(transport=transport@entry=0x121df20, refs=refs@entry=0x123d3c0) at
+transport.c:1167
+#7  0x000000000041cbce in cmd_clone (argc=<optimized out>, argv=<optimized
+out>, prefix=<optimized out>) at builtin/clone.c:859
+#8  0x00000000004057d8 in run_builtin (argv=0x7fff19edd900, argc=2,
+p=0x74a040) at git.c:308
+#9  handle_internal_command (argc=2, argv=0x7fff19edd900) at git.c:468
+#10 0x0000000000404be2 in run_argv (argv=0x7fff19edd790,
+argcp=0x7fff19edd79c) at git.c:514
+#11 main (argc=2, argv=0x7fff19edd900) at git.c:589
+----------------------
 
--- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+
+
+
+---------------------- scenario 2:
+remote: Counting objects: 306395, done.
+remote: Compressing objects: 100% (47753/47753), done.
+Receiving objects:  99% (303332/306395), 205.18 MiB | 452 KiB/s
+----------------------- ps aux | grep git:
+build    28247  0.5  0.0 126032  2088 pts/1    Sl+  04:30   0:00 git clone
+git://git.gnome.org/gtk+
+build    28249  8.4  0.3 144908 30480 pts/1    S+   04:30   0:12 git
+index-pack --stdin -v --fix-thin --keep=fetch-pack 28247 on mydomain
+---------------------- backtrace for scenario 1:
+#0  0x0000003c9ee0e0ad in read () at ../sysdeps/unix/syscall-template.S:82
+#1  0x00000000004ea29f in read (__nbytes=46, __buf=0x7fffeb4d8cc0, __fd=7)
+at /usr/include/bits/unistd.h:45
+#2  xread (fd=fd@entry=7, buf=buf@entry=0x7fffeb4d8cc0, len=len@entry=46) at
+wrapper.c:142
+#3  0x00000000004ea38b in read_in_full (fd=7, buf=buf@entry=0x7fffeb4d8cc0,
+count=count@entry=46) at wrapper.c:171
+#4  0x00000000004ad78c in index_pack_lockfile (ip_out=<optimized out>) at
+pack-write.c:298
+#5  0x00000000004285d4 in get_pack (pack_lockfile=0x1928f80, xd=0x1928fc0)
+at builtin/fetch-pack.c:767
+#6  do_fetch_pack (pack_lockfile=0x1928f80, match=0x19690a0, nr_match=544,
+orig_ref=<optimized out>, fd=0x1928fc0) at builtin/fetch-pack.c:835
+#7  fetch_pack (my_args=my_args@entry=0x7fffeb4da580, fd=fd@entry=0x1928fc0,
+conn=<optimized out>, ref=<optimized out>, dest=dest@entry=0x1922e70
+"git://git.gnome.org/gtk+",
+    nr_heads=nr_heads@entry=544, heads=heads@entry=0x19690a0,
+pack_lockfile=pack_lockfile@entry=0x1928f80) at builtin/fetch-pack.c:1090
+#8  0x00000000004de08e in fetch_refs_via_pack (transport=0x1928f20,
+nr_heads=544, to_fetch=0x1967880) at transport.c:549
+#9  0x00000000004e0472 in transport_fetch_refs
+(transport=transport@entry=0x1928f20, refs=refs@entry=0x19483c0) at
+transport.c:1167
+#10 0x000000000041cbce in cmd_clone (argc=<optimized out>, argv=<optimized
+out>, prefix=<optimized out>) at builtin/clone.c:859
+#11 0x00000000004057d8 in run_builtin (argv=0x7fffeb4dacd0, argc=2,
+p=0x74a040) at git.c:308
+#12 handle_internal_command (argc=2, argv=0x7fffeb4dacd0) at git.c:468
+#13 0x0000000000404be2 in run_argv (argv=0x7fffeb4dab60,
+argcp=0x7fffeb4dab6c) at git.c:514
+#14 main (argc=2, argv=0x7fffeb4dacd0) at git.c:589
+----------------------
+
+
+
+---------------------- facts:
+- Happens on multiple machines on this LAN, which made me believe it's the
+NAT router.
+- Happens when using any repository.
+- There's nothing filtering egress ports (Other than the NAT)
+- Kernel 3(?) to 3.5 which I run currently
+- I often see it hang at __read_nocancel too in the backtrace, which is part
+of the read()
+- I have to abort the clone operation and retry indefinitely until it works,
+which may be never.
+
+
+
+
+- Paul
