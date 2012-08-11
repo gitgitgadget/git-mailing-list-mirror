@@ -1,143 +1,97 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 3/5] git p4: set self.branchPrefixes in initialization
-Date: Sat, 11 Aug 2012 12:55:02 -0400
-Message-ID: <1344704104-17727-3-git-send-email-pw@padd.com>
+Subject: [PATCH 4/5] git p4: do wildcard decoding in stripRepoPath
+Date: Sat, 11 Aug 2012 12:55:03 -0400
+Message-ID: <1344704104-17727-4-git-send-email-pw@padd.com>
 References: <20120811165143.GA2004@padd.com>
 Cc: Matthew Korich <matthew@korich.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 11 18:55:56 2012
+X-From: git-owner@vger.kernel.org Sat Aug 11 18:56:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0Eye-0001p8-3q
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 18:55:52 +0200
+	id 1T0Ez0-0002a1-2b
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Aug 2012 18:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753320Ab2HKQzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Aug 2012 12:55:48 -0400
-Received: from honk.padd.com ([74.3.171.149]:50673 "EHLO honk.padd.com"
+	id S1753326Ab2HKQ4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Aug 2012 12:56:10 -0400
+Received: from honk.padd.com ([74.3.171.149]:50677 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752670Ab2HKQzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Aug 2012 12:55:47 -0400
+	id S1752670Ab2HKQ4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Aug 2012 12:56:07 -0400
 Received: from arf.padd.com (unknown [50.55.149.165])
-	by honk.padd.com (Postfix) with ESMTPSA id 76D82D27;
-	Sat, 11 Aug 2012 09:55:46 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 7EEA2D27;
+	Sat, 11 Aug 2012 09:56:06 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 377FE5A90C; Sat, 11 Aug 2012 12:55:44 -0400 (EDT)
+	id 4124C5A90C; Sat, 11 Aug 2012 12:56:04 -0400 (EDT)
 X-Mailer: git-send-email 1.7.11.2.329.ga84ed21
 In-Reply-To: <20120811165143.GA2004@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203293>
 
-This instance variable is needed during commit() to map
-files from p4 to their relative locations in git.  Set
-it when initializing P4Sync to avoid passing it to every
-commit() call.
+Instead of having to remember to do it after each call to
+stripRepoPath, make it part of that function.
 
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- git-p4.py | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ git-p4.py | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index e67d37d..6d07115 100755
+index 6d07115..e20ff5d 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -2041,10 +2041,9 @@ class P4Sync(Command, P4UserMap):
-         gitStream.write(description)
-         gitStream.write("\n")
+@@ -1819,15 +1819,17 @@ class P4Sync(Command, P4UserMap):
  
--    def commit(self, details, files, branch, branchPrefixes, parent = ""):
-+    def commit(self, details, files, branch, parent = ""):
-         epoch = details["time"]
-         author = details["user"]
--        self.branchPrefixes = branchPrefixes
+     def stripRepoPath(self, path, prefixes):
+         if self.useClientSpec:
+-            return self.clientSpecDirs.map_in_client(path)
++            path = self.clientSpecDirs.map_in_client(path)
  
-         if self.verbose:
-             print "commit into %s" % branch
-@@ -2053,7 +2052,7 @@ class P4Sync(Command, P4UserMap):
-         # create a commit.
-         new_files = []
-         for f in files:
--            if [p for p in branchPrefixes if p4PathStartsWith(f['path'], p)]:
-+            if [p for p in self.branchPrefixes if p4PathStartsWith(f['path'], p)]:
-                 new_files.append (f)
-             else:
-                 sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
-@@ -2070,8 +2069,8 @@ class P4Sync(Command, P4UserMap):
+-        if self.keepRepoPath:
+-            prefixes = [re.sub("^(//[^/]+/).*", r'\1', prefixes[0])]
++        else:
++            if self.keepRepoPath:
++                prefixes = [re.sub("^(//[^/]+/).*", r'\1', prefixes[0])]
  
-         self.gitStream.write("data <<EOT\n")
-         self.gitStream.write(details["desc"])
--        self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s"
--                             % (','.join (branchPrefixes), details["change"]))
-+        self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
-+                             (','.join(self.branchPrefixes), details["change"]))
-         if len(details['options']) > 0:
-             self.gitStream.write(": options = %s" % details['options'])
-         self.gitStream.write("]\nEOT\n\n")
-@@ -2094,7 +2093,7 @@ class P4Sync(Command, P4UserMap):
-                 print "Change %s is labelled %s" % (change, labelDetails)
+-        for p in prefixes:
+-            if p4PathStartsWith(path, p):
+-                path = path[len(p):]
++            for p in prefixes:
++                if p4PathStartsWith(path, p):
++                    path = path[len(p):]
  
-             files = p4CmdList(["files"] + ["%s...@%s" % (p, change)
--                                                    for p in branchPrefixes])
-+                                                for p in self.branchPrefixes])
++        path = wildcard_decode(path)
+         return path
  
-             if len(files) == len(labelRevisions):
+     def splitFilesIntoBranches(self, commit):
+@@ -1849,7 +1851,6 @@ class P4Sync(Command, P4UserMap):
+             fnum = fnum + 1
  
-@@ -2405,6 +2404,7 @@ class P4Sync(Command, P4UserMap):
-                     for branch in branches.keys():
-                         ## HACK  --hwn
-                         branchPrefix = self.depotPaths[0] + branch + "/"
-+                        self.branchPrefixes = [ branchPrefix ]
+             relPath = self.stripRepoPath(path, self.depotPaths)
+-            relPath = wildcard_decode(relPath)
  
-                         parent = ""
+             for branch in self.knownBranches.keys():
  
-@@ -2449,19 +2449,19 @@ class P4Sync(Command, P4UserMap):
-                             tempBranch = os.path.join(self.tempBranchLocation, "%d" % (change))
-                             if self.verbose:
-                                 print "Creating temporary branch: " + tempBranch
--                            self.commit(description, filesForCommit, tempBranch, [branchPrefix])
-+                            self.commit(description, filesForCommit, tempBranch)
-                             self.tempBranches.append(tempBranch)
-                             self.checkpoint()
-                             blob = self.searchParent(parent, branch, tempBranch)
-                         if blob:
--                            self.commit(description, filesForCommit, branch, [branchPrefix], blob)
-+                            self.commit(description, filesForCommit, branch, blob)
-                         else:
-                             if self.verbose:
-                                 print "Parent of %s not found. Committing into head of %s" % (branch, parent)
--                            self.commit(description, filesForCommit, branch, [branchPrefix], parent)
-+                            self.commit(description, filesForCommit, branch, parent)
-                 else:
-                     files = self.extractFilesFromCommit(description)
--                    self.commit(description, files, self.branch, self.depotPaths,
-+                    self.commit(description, files, self.branch,
-                                 self.initialParent)
-                     self.initialParent = ""
-             except IOError:
-@@ -2525,7 +2525,7 @@ class P4Sync(Command, P4UserMap):
+@@ -1867,7 +1868,6 @@ class P4Sync(Command, P4UserMap):
  
-         self.updateOptionDict(details)
-         try:
--            self.commit(details, self.extractFilesFromCommit(details), self.branch, self.depotPaths)
-+            self.commit(details, self.extractFilesFromCommit(details), self.branch)
-         except IOError:
-             print "IO error with git fast-import. Is your git version recent enough?"
-             print self.gitError.read()
-@@ -2683,6 +2683,9 @@ class P4Sync(Command, P4UserMap):
+     def streamOneP4File(self, file, contents):
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+-        relPath = wildcard_decode(relPath)
+         if verbose:
+             sys.stderr.write("%s\n" % relPath)
  
-         self.depotPaths = newPaths
+@@ -1936,7 +1936,6 @@ class P4Sync(Command, P4UserMap):
  
-+        # --detect-branches may change this for each branch
-+        self.branchPrefixes = self.depotPaths
-+
-         self.loadUserMapFromCache()
-         self.labels = {}
-         if self.detectLabels:
+     def streamOneP4Deletion(self, file):
+         relPath = self.stripRepoPath(file['path'], self.branchPrefixes)
+-        relPath = wildcard_decode(relPath)
+         if verbose:
+             sys.stderr.write("delete %s\n" % relPath)
+         self.gitStream.write("D %s\n" % relPath)
 -- 
 1.7.12.rc2.24.gc304662
