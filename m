@@ -1,75 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] i18n: mark progress strings for translation
-Date: Sat, 11 Aug 2012 21:33:16 -0700
-Message-ID: <7v8vdkhgqb.fsf@alter.siamese.dyndns.org>
-References: <1344684304-22425-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 0/5] git p4: fix branch detection with --use-client-spec
+Date: Sat, 11 Aug 2012 21:41:51 -0700
+Message-ID: <7v4no8hgc0.fsf@alter.siamese.dyndns.org>
+References: <CANWnr5aqswATTM9_Zyw=w_x01=e8CqoCsn0Ybee0XvGSJ3F_yw@mail.gmail.com>
+ <20120811165143.GA2004@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 06:33:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthew Korich <matthew@korich.net>, git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Aug 12 06:42:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0Prg-0001Z0-DB
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Aug 2012 06:33:24 +0200
+	id 1T0Q0b-0002qQ-VA
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Aug 2012 06:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793Ab2HLEdT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Aug 2012 00:33:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46141 "EHLO
+	id S1750803Ab2HLElz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Aug 2012 00:41:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48456 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750743Ab2HLEdT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2012 00:33:19 -0400
+	id S1750711Ab2HLEly (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2012 00:41:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D081D900A;
-	Sun, 12 Aug 2012 00:33:18 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F17B911C;
+	Sun, 12 Aug 2012 00:41:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=byFtTX+qWbZO
-	MtlQIL7k176Qvvg=; b=bCGuQm79NcenyoQolEsz6KOAZ5mp33YU3LaGYGY4akdZ
-	6G3SdMpIqPG27+oiqy5tzAWi5mWZAo3IyxLaH+ItWBYDYbqMz+5pvpQyr4S3UKQa
-	XrSC9Q78raddV5KZO6fPM/44l6zSZHVuD2JZyaNujBgVJVSmJAOVWtIPFqkGyuw=
+	:content-type; s=sasl; bh=63b8gHoofbShfFvDaHahvhF4mwU=; b=yBrz/M
+	R+mvhxIBTtY91Yd60DQiHCI0mU/ez4AfDNwhoGctLhs3KBmTefOdi8B5UbDWB0nm
+	lk0wI9tYxZQzxrYyFi821F/ZYeUHWHo1S+OdNGI6mfzu+xagBRRuf+gzno0x4FWa
+	9xwMX5QtJxUKxR9lb1UcTKxvwQKhQRle9AvXU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Hw+WfN
-	YUiSkx/yAIQw49LurNCMzVcJpPpekDELZZJfLNHcpNFcsaoIA6wdNkI1VJxZz6Ms
-	pAKIMDfmwTGW+7MLeiSQ2xyelzZfj0dHjumPYt2bkE1sOrAiVmiueEaXbLUz8thV
-	/4H2v3XBoHpEJZafR/r6kk+8ZjUMft4eIxqEY=
+	:content-type; q=dns; s=sasl; b=FuUTIY1rU9BsOGLwzaR0nAAXvwgYBqxt
+	ApgbFvegMc2Iabsb21BdL+qaPEGro566rlTju3FaijydDLiIGIoiwKZe60zntqYN
+	mdVc/iJaDoJ+e2OZp///59Q6ndp6bwD54e31UJ8mUzJ+22ovEjr6WaHJoqdoQD4i
+	e+7fxZCFGDk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE5599009;
-	Sun, 12 Aug 2012 00:33:18 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D24C911B;
+	Sun, 12 Aug 2012 00:41:54 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AB179008; Sun, 12 Aug 2012
- 00:33:18 -0400 (EDT)
-In-Reply-To: <1344684304-22425-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 11 Aug
- 2012 18:25:04 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5722D9118; Sun, 12 Aug 2012
+ 00:41:53 -0400 (EDT)
+In-Reply-To: <20120811165143.GA2004@padd.com> (Pete Wyckoff's message of
+ "Sat, 11 Aug 2012 12:51:43 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D6E46478-E436-11E1-A78E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 09ECDFB6-E438-11E1-B031-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203304>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Pete Wyckoff <pw@padd.com> writes:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  I know it's late in the cycle so let's queue it for the next one
->  before I forget it.
+> matthew@korich.net wrote on Fri, 10 Aug 2012 12:14 -0700:
+>> Using git p4 on git version 1.7.12.rc2 has path issues. Standard
+>> clone/sync ops apparently place detected master and branches on
+>> independent and parallel directory structures instead of git branches.
+>> See http://stackoverflow.com/q/11893688/1588831 for a full demo of the problem.
+>
+> Thank you for the detailed report.  It is a bug in 1.7.12-rc2.
 
-I won't necessarily be queuing this.  Not forgetting is a
-responsibility of individual developers.
+Do you mean "a feature that was present in 1.7.11 without this bug
+was broken when used with 1.7.12-rc2"?  Or do you mean "this bug
+exists in 1.7.12-rc2 (older versions may or may not have it, but I
+am stressing that it is not fixed)"?
 
-But it is a good idea to show an early iteration for input from
-others.
+The description for [PATCH 5/5] blames v1.7.9-rc0~4^2~1, which tells
+me it is the latter.  And if that were the case, and if this were in
+the area of the system I oversee, I wouldn't push it to the upcoming
+release at this late in the cycle, when I do not know what other
+things it might break while fixing this bug (in other words, a fix
+to an old bug is not an execuse to introduce a regression).
 
-I personally do not think this makes much sense, as half the
-progress message you see comes from the other end of the connection,
-which does not know nor care what language you speak.
+But git-p4 is not in my area, so if you meant this should go in the
+upcoming 1.7.12 release, I'll queue them directly on 'master'.
+
+Please tell me what your preference is.
+
+Thanks.
+
+> This series fixes it, on top of origin/master.
+>
+> The crux of the matter is that files are mapped into the wrong
+> locations in git when both --use-client-spec and --branch-detection
+> are enabled.
+>
+> Pete Wyckoff (5):
+>   git p4 test: move client_view() function to library
+>   git p4 test: add broken --use-client-spec --detect-branches tests
+>   git p4: set self.branchPrefixes in initialization
+>   git p4: do wildcard decoding in stripRepoPath
+>   git p4: make branch detection work with --use-client-spec
+>
+>  git-p4.py                     | 75 +++++++++++++++++++++++++++--------------
+>  t/lib-git-p4.sh               | 18 ++++++++++
+>  t/t9801-git-p4-branch.sh      | 77 +++++++++++++++++++++++++++++++++++++++++++
+>  t/t9809-git-p4-client-view.sh | 17 ----------
+>  4 files changed, 146 insertions(+), 41 deletions(-)
