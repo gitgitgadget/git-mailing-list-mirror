@@ -1,103 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git archive --format zip utf-8 issues
-Date: Sat, 11 Aug 2012 21:27:42 -0700
-Message-ID: <7vhas8hgzl.fsf@alter.siamese.dyndns.org>
-References: <502583F4.8030308@tu-clausthal.de>
- <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx>
+Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
+Date: Sat, 11 Aug 2012 21:30:06 -0700
+Message-ID: <7vd32whgvl.fsf@alter.siamese.dyndns.org>
+References: <20120811070030.GA83665@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Aug 12 06:28:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sun Aug 12 06:30:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0Pmt-0000jT-Vx
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Aug 2012 06:28:28 +0200
+	id 1T0Pop-0004OC-3l
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Aug 2012 06:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750763Ab2HLE1p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Aug 2012 00:27:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44441 "EHLO
+	id S1751445Ab2HLEaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Aug 2012 00:30:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45266 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750715Ab2HLE1o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Aug 2012 00:27:44 -0400
+	id S1751390Ab2HLEaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2012 00:30:10 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D8FB8F69;
-	Sun, 12 Aug 2012 00:27:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA1138F83;
+	Sun, 12 Aug 2012 00:30:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=97Va/mkCfFJv
-	BbuOJBaZ7Nyy79w=; b=kBY/FARBrV3rQHSYCsAo7ypqrKhw/sU2isIno20ilN9c
-	kmFubhKP4h3wyUGQu2f+Fc7cbXozd0rNr1t27bXokn0iSzo05BKlcOptLyRA4Zd1
-	mbnDkPKU1A0AYoGQ40DgQzeqIjl9yswVcR1auTYlInG83mAKS7hHJN4Jop/fKw8=
+	:content-type; s=sasl; bh=CotS0C1nmd5cyVxJQHOrRBL5KWM=; b=k5csQ6
+	OfiVm4KNVqxf0OWdcxSFFafuxflAID6CrknjZ8UCmyxyp+L0hk4/3s5dq6ETxKTu
+	9ajJBgZm2O5+ScBhZetrxw+wRo0JlvEOnVOAPrNKnNM5Of1AmxjPlALlWELF5RDZ
+	T709Qy8N3uXBVkICBqRTNxHbutpzB3S2VoTqM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pq+2PI
-	lGd2LJnBB2ckpIn6vaboppiw3nKJPiuHzEBLsrIArC9kXrL6em7CWKuYqbsmp0rE
-	wYDSUNgpDCp6YF5z1l31Y0reS9hZThP6QjApfgzSk2sGxqVf2c4/NnOn/cR1ffGn
-	T8WdC88cb74Woh2vFyx7ezN5RgVlTBCZmdq4w=
+	:content-type; q=dns; s=sasl; b=duq6d2CWrtGlbmHBAYy/bpzH3EvYZ3N+
+	UrQAgbXskqZiHH8m48qXlYO0r2/Hos0ZhvIe9x5xjWjG7t7mtzV2VouzwZGRhTU+
+	gf4z1+EZ0h8qPV2O22ZBkbU65/hYFOzUPqfenuNe7jUARBkGk0BWsVzHTq9Jpz5b
+	jfFOFCQ+O70=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 513738F68;
-	Sun, 12 Aug 2012 00:27:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C760A8F82;
+	Sun, 12 Aug 2012 00:30:09 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C9D38F67; Sun, 12 Aug 2012
- 00:27:43 -0400 (EDT)
-In-Reply-To: <5026C649.2090700@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sat, 11 Aug 2012 22:53:29 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38A088F81; Sun, 12 Aug 2012
+ 00:30:08 -0400 (EDT)
+In-Reply-To: <20120811070030.GA83665@book.hvoigt.net> (Heiko Voigt's message
+ of "Sat, 11 Aug 2012 09:00:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F749D7C-E436-11E1-A224-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 65A3670A-E436-11E1-A8FD-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203302>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-> ... A more interesting question is: What's supported by
-> which programs?
-
-Yes, that is the most interesting question.
-
->> Of course, "git archive --format=3Dzip --path-reencode=3Dutf8-to-lat=
-in1"
->> would be the most generic way to do this.
+>  help.c | 15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
 >
-> I really hope we can make do without additional options.
+> diff --git a/help.c b/help.c
+> index 662349d..b41fa21 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -103,10 +103,19 @@ static int is_executable(const char *name)
+>  		return 0;
+>  
+>  #if defined(WIN32) || defined(__CYGWIN__)
+> +	/* On Windows we cannot use the executable bit. The executable
+> +	 * state is determined by extension only. We do this first
+> +	 * because with virus scanners opening an executeable for
+> +	 * reading is potentially expensive.
+> +	 */
+> +	if (has_extension(name, ".exe"))
+> +		return S_IXUSR;
+> +
+>  #if defined(__CYGWIN__)
+>  if ((st.st_mode & S_IXUSR) == 0)
+>  #endif
+> -{	/* cannot trust the executable bit, peek into the file instead */
+> +{	/* now that we know it does not have an executable extension,
+> +	   peek into the file instead */
+>  	char buf[3] = { 0 };
+>  	int n;
+>  	int fd = open(name, O_RDONLY);
+> @@ -114,8 +123,8 @@ if ((st.st_mode & S_IXUSR) == 0)
+>  	if (fd >= 0) {
+>  		n = read(fd, buf, 2);
+>  		if (n == 2)
+> -			/* DOS executables start with "MZ" */
+> -			if (!strcmp(buf, "#!") || !strcmp(buf, "MZ"))
+> +			/* look for a she-bang */
+> +			if (!strcmp(buf, "#!"))
+>  				st.st_mode |= S_IXUSR;
+>  		close(fd);
+>  	}
 
-We need to at least know the path encoding used in the tree objects,
-and I'd be OK with a solution that assumes a single encoding is used
-for the entire tree.
-
-We would eventually need to also know the encoding used on the local
-working tree (i.e. in what encoding paths are returned from
-readdir() and the pathspec the user gives us from the command line),
-and iconv it to the tree objects encoding for the project when
-creating a cache_entry object to be fed to add_to_index(), and iconv
-it back from the tree objects encoding to the working tree encoding
-in write_entry(), but that is a longer term direction.  For now, in
-order to address the immediate issue, we only need the tree object
-encoding, which should default to UTF-8 for interoperability.
-
-So "git archive --format=3Dzip --in-object-path-encoding=3Dbig5" for a
-project whose tree object pathnames are in that encoding (and we
-always record paths in UTF-8 when writing zipfiles) should be the
-minimal that we need for now.
-
-Optionally, with a configuration variable i18n.inObjectPathEncoding
-(as opposed to the eventual i18n.worktreePathEncoding) set to big5,
-users of such a project can say "git archive --format=3Dzip" without
-the "--in-object-path-encoding" option.
-
-Considering that zip is a format meant for exchange, I'd think we
-would be fine to always write in UTF-8 and leaving the readers
-responsible for converting the pathname while extracting.  If a
-major zip extractor is incapable of handling UTF-8 (or even if
-capable it is cumbersome, for that matter), we may end up having to
-add "--in-archive-path-encoding=3DUTF-8" option to "git archive", with
-associated "zip.archivePathEncoding" variable, though.
+Would it make sense to move this to compat/win32/, compat/cygwin.c,
+and compat/posix.c, each exporting is_executable(const char *path),
+so that we do not have to suffer the #ifdef mess?
