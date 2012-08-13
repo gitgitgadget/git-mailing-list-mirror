@@ -1,94 +1,90 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git svn clone, a non-standard layout question
-Date: Mon, 13 Aug 2012 15:38:47 +0200
-Message-ID: <20120813133847.GE10899@m62s10.vlinux.de>
-References: <CANW+GuQ=egge=NcdSakChYXXZkW=MsG9f3i9yNvoutXXVFcPzQ@mail.gmail.com>
- <20120813063132.GD10899@m62s10.vlinux.de>
- <CANW+GuRoQJtZW6ZCwDQEj9OQD4C3BqxqX--2JV+=jkddagQgig@mail.gmail.com>
+From: Marc Branchaud <mbranchaud@xiplink.com>
+Subject: Re: git repack vs git gc --aggressive
+Date: Mon, 13 Aug 2012 10:20:15 -0400
+Message-ID: <50290D1F.20007@xiplink.com>
+References: <87zk66r28y.fsf@bitburger.home.felix> <20120807184405.GA440@sigill.intra.peff.net> <7vvcguv7y2.fsf@alter.siamese.dyndns.org> <87ehnewolp.fsf@bitburger.home.felix> <7v393ujypq.fsf@alter.siamese.dyndns.org>
+Reply-To: marcnarc@xiplink.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christopher Marshall <christopherlmarshall@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 15:39:01 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 16:19:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0urE-0004eA-ES
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 15:39:00 +0200
+	id 1T0vUe-0007ZM-VO
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 16:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab2HMNiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 09:38:51 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:37964 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751227Ab2HMNiu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 09:38:50 -0400
-Received: (qmail invoked by alias); 13 Aug 2012 13:38:49 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp034) with SMTP; 13 Aug 2012 15:38:49 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/JtGxLHK3JnBasqvdH8gxW29hXdfWml7xjRqwJXz
-	7cDrrqsDJYMv/h
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 05F9EDC00C; Mon, 13 Aug 2012 15:38:48 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <CANW+GuRoQJtZW6ZCwDQEj9OQD4C3BqxqX--2JV+=jkddagQgig@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1751561Ab2HMOTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 10:19:39 -0400
+Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:55106 "EHLO
+	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227Ab2HMOTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 10:19:38 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp17.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 990D0380473;
+	Mon, 13 Aug 2012 10:19:37 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp17.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5853D380472;
+	Mon, 13 Aug 2012 10:19:37 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <7v393ujypq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203337>
 
-On Mon, Aug 13, 2012 at 09:29:53AM -0400, Christopher Marshall wrote:
-> >
-> > I had a similar problem, but I solved it using "ignore-paths" and "ignore-refs".
-> > If I remember correctly, you need to set both to ignore bdir directly without
-> > ignoring b3, b4,...
-> >
-> > For ignore-refs, pls see cdb51a13c3cf4830d499d1138160eacdd2b8aa46, as it is currently
-> > undocumented.
-> >
-> > So I would try experimenting with the following settings:
-> >
-> > [svn-remote "svn"]
-> >         url = file:///home/chris/programs/svn/repo
-> >         fetch = trunk:refs/remotes/svn/trunk
-> >         tags = tags/*:refs/remotes/svn/tags/*
-> >         branches = branches/{b1,b2}:refs/remotes/svn/*
-> >         branches = branches/bdir/{b3,b4}:refs/remotes/svn/*
-> >
-> >         # Operates on the imported git branches
-> >         ignore-refs  = ^refs/remotes/bdir$
-> >
-> >         # Operates on the SVN branches; you might try it first without this statement
-> >         ignore-paths = ^branches/bdir$
-> > --
+On 12-08-10 04:09 PM, Junio C Hamano wrote:
+> Felix Natter <fnatter@gmx.net> writes:
 > 
-> Peter:
+>> I have a few questions about this:
+>>
+>>> As I am coming from "large depth is harmful" school, I would
+>>> recommend
+>>>
+>>>  - "git repack -a -d -f" with large "--window" with reasonably short
+>>>    "--depth" once, 
+>>
+>> So something like --depth=250 and --window=500? 
 > 
-> Thanks for the advice.  I tried this:
+> I would use more like --depth=16 or 32 in my local repositories.
 > 
-> [svn-remote "svn"]
->         url = file:///home/chris/programs/svn/repo
->         fetch = trunk:refs/remotes/svn/trunk
->         branches = branches/*:refs/remotes/svn/*
->         tags = tags/*:refs/remotes/svn/tags/*
->         branches = branches/bdir/*:refs/remotes/svn/bdir2/*
->         ignore-paths  = ^branches/bdir$
->         ignore-refs  = ^refs/remotes/bdir$
+>>> and mark the result with .keep;
+>>
+>> I guess you refer to a toplevel '.keep' file.
 > 
-> It doesn't seem to change anything.
+> Not at all.  And it is not documented, it seems X-<.
 > 
+> Typically you have a pair of files in .git/objects/pack, e.g.
+> 
+>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.idx
+>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.pack
+> 
+> And you can add another file next to them
+> 
+>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.keep
+> 
+> to prevent the pack from getting repacked.  I think "git clone" does
+> this for you after an initial import.
 
-You need a git version new enough to include cdb51a13c3cf4830d499d1138160eacdd2b8aa46, otherwise
-it won't have any effect and will be silently ignored.
+1.7.12.rc1 does not.
 
-> Chris
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+I even cloned from a repo with a few .keep files, but ended up with only one
+big .pack file.
+
+Maybe clone should preserve the packs it gets from the upstream repo?  For
+example, our main repo has a 690MB pack file that's marked .keep, but the
+clone just ends up with a single 725MB pack file.  Would our clones see
+performance improvements if they that big 690MB pack separate from the others?
+
+Perhaps the fact that clone creates a single pack file makes it impossible to
+preserve the .keep packs from the upstream?
+
+(I figure it's probably not a good idea for clone to .keep the single pack
+file it creates.)
+
+		M.
