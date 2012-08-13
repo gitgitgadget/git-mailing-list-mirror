@@ -1,79 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Bernd Jendrissek <bernd.jendrissek@gmail.com>
 Subject: Re: git diff vs git diff-files
-Date: Mon, 13 Aug 2012 17:13:38 +0200
-Message-ID: <vpq1uja25b1.fsf@bauges.imag.fr>
+Date: Mon, 13 Aug 2012 18:06:04 +0200
+Message-ID: <CAF7PVPqyaZQtca0KfWHirBY2Dvdtn2RT-_mxR8x5uUNsfbHmdQ@mail.gmail.com>
 References: <CAF7PVPrex6sJMU+uvxQOSpB12qSTp2barTycow_-LZ8Ngbv7uQ@mail.gmail.com>
+	<87fw7qhm31.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Bernd Jendrissek <bernd.jendrissek@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 17:13:53 2012
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Aug 13 18:06:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0wL2-0004mV-BI
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 17:13:52 +0200
+	id 1T0x9g-0006By-PA
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 18:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170Ab2HMPNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 11:13:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34412 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752469Ab2HMPNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 11:13:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q7DFAElZ027745
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 13 Aug 2012 17:10:14 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1T0wKo-0006DH-KP; Mon, 13 Aug 2012 17:13:38 +0200
-In-Reply-To: <CAF7PVPrex6sJMU+uvxQOSpB12qSTp2barTycow_-LZ8Ngbv7uQ@mail.gmail.com>
-	(Bernd Jendrissek's message of "Mon, 13 Aug 2012 10:55:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 13 Aug 2012 17:10:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q7DFAElZ027745
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1345475418.59394@JLIuNs4uPBfdqhv/aP2n7Q
+	id S1751817Ab2HMQGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 12:06:06 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:54525 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751395Ab2HMQGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 12:06:05 -0400
+Received: by obbuo13 with SMTP id uo13so7047285obb.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 09:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=25d49US7mvlyjwKM4qyuIKYGtb/ujMYQKxeekAMXzyQ=;
+        b=TBhpxAAJp/ZNsLY3B2RlJYT9Fa6tZ203evGchY7tIF1PCvATsMMJveohVzYW4/Zbxq
+         /SyPZBsA0g800PUayz53oubNvmlamafxzdvxr/gXp0tgjunzKVj+gNVZhqCWNqFihRUp
+         +8YoNfc18Yy/W5lUaLe7P0FE1sSvXEZg8VojyXYg6KLkf1UbmBkuCw4Duin3g+97eg2C
+         gvu/+BBC08/5ngjENaDiWpb3ieFRnx32fGzk6rMHCyEWL2zeY9pnlyhbEFvvXGa6Zeip
+         pJwSv6nm4BxTdOTI8nDupk9USB2nDPpW808oXaS7r1zLxxVVsn+7M7iqhGLXi72pJNZ7
+         8jug==
+Received: by 10.182.144.104 with SMTP id sl8mr12946958obb.74.1344873964245;
+ Mon, 13 Aug 2012 09:06:04 -0700 (PDT)
+Received: by 10.182.46.165 with HTTP; Mon, 13 Aug 2012 09:06:04 -0700 (PDT)
+In-Reply-To: <87fw7qhm31.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203340>
 
-Bernd Jendrissek <bernd.jendrissek@gmail.com> writes:
+On Mon, Aug 13, 2012 at 5:02 PM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Can you share this repository?
 
-> $ /usr/local/git/bin/git diff-files -p --color -- TwoStageAmp-output.net
-> diff --git a/gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-> b/gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-> index a5ee1e7..a9f3620 100644
+This weird behaviour doesn't even survive making a copy (cp -a) of the
+whole repository, so I very much doubt making it available would be
+illuminative. My disk's SMART data seems okay. The weird-quotient just
+rose a bit.
 
-> $ /usr/local/git/bin/git diff TwoStageAmp-output.netdiff --git
-> a/gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-> b/gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.n
-> index a5ee1e7..a9f3620 100644
+Besides, .git/ is 60MB and my upload speed is 128kbps. A bit inconvenient.
 
-What's surprising is that both diff show the same "index" line, so both
-commands actually diff the same content, and then show a different
-output.
+> Or at least the pre- and post-change
+> files, transferred in such a way that there won't be any whitespace
+> damage (your snippets above show obvious damage).  You can use
 
-You can try something like
+http://www.bpj-code.co.za/downloads.php/bugs/TwoStageAmp-output.net?text
+contains the output from git show a5ee1e7. Leave off the ?text for an
+application/octet-stream download.
 
-git cat-file blob a5ee1e7 > /tmp/staged.txt
-diff -u /tmp/staged.txt TwoStageAmp-output.netdiff
+That file (with the Q1 line present) is consistent with the earlier
+commit that added the file. It's diff-files that's lying.
 
-to recover the content from the index (Thomas' version should also work
-and give the same result), and use another diff tool. This "diff -u"
-should give you an output similar to one of "git diff" and "git
-diff-files" (my understanding is that it should match diff-files, and
-"git diff" is the one being wrong here).
+> Do you have any diff config that could be of interest?  A textconv
+> filter would be an obvious example that could produce the above, but
+> perhaps you could just look at
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Nothing that fancy. I have just diff.color = auto and user.* = blah in
+global config, and similarly benign config in the repository.
