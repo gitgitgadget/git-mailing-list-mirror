@@ -1,70 +1,71 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: OSLC connectivity to GIT in Java
-Date: Mon, 13 Aug 2012 15:44:41 -0400
-Message-ID: <CACPiFCK_diX36uS6SCigO4VQZ4ghBVd2Dk3a_FWajBgoqQR8rg@mail.gmail.com>
-References: <1344859929250-7564860.post@n2.nabble.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Your branch and 'origin/master' have diverged
+Date: Mon, 13 Aug 2012 12:58:40 -0700
+Message-ID: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: "rahul.chandrashekar" <rahul.chandrashekar@in.bosch.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 21:45:31 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 13 21:59:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T10Zb-00065m-MG
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 21:45:12 +0200
+	id 1T10n7-0007PL-FB
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 21:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550Ab2HMTpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 15:45:04 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60832 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752380Ab2HMTpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 15:45:02 -0400
-Received: by yhmm54 with SMTP id m54so3626545yhm.19
-        for <git@vger.kernel.org>; Mon, 13 Aug 2012 12:45:02 -0700 (PDT)
+	id S1752241Ab2HMT7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 15:59:03 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42305 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752072Ab2HMT7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 15:59:01 -0400
+Received: by bkwj10 with SMTP id j10so1471565bkw.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 12:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=LT2hRwALMdYbMEghgM1kCT3+uC3udcUOYRyTklYgl88=;
-        b=O0ozjm4VQwK86JA7ELlW5bGNPxAE+DsyVDNKZFpsNMxpPcqsrxXlBaDKj1am/u2ZjK
-         CyU0Kl/hZNt1GzIg38F0KGF+7dO5d+JTn32p9pcRH69lDP373uY0q/Us+S+YARcu6mEA
-         0NiTKaUMs+eWUrALNbX9ZaQSSNjcIOqky+rtlC76h9I+ziNJYjariA7PFu5C6/3efP0A
-         ZF62PT/Q4ZpbZpEwVFN6OHtGzhAzCtppJZPr+LGkDTZJy3wP3fafiPibcZrLBon8C1Tu
-         Eo0B1vftd8nhP0xTyoVyz7xoYfxEGnIzdY8GnyYLp2uMFSfn5nIR2h0PL+XpoXK3H49h
-         ZhGQ==
-Received: by 10.68.212.98 with SMTP id nj2mr34290626pbc.138.1344887101614;
- Mon, 13 Aug 2012 12:45:01 -0700 (PDT)
-Received: by 10.66.253.2 with HTTP; Mon, 13 Aug 2012 12:44:41 -0700 (PDT)
-In-Reply-To: <1344859929250-7564860.post@n2.nabble.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=w9XuCcKBmOQHytgrv10aFY1lr+bSOSqhe+ZZPzAa0ho=;
+        b=QsahwnbNPxFb8anWzK3WxNpQP/9E2LysXJkd2O6yn/eV1XYSoMo+Neam1GGr3F1pjo
+         zXvy3JJSHLRwZl+7DnUhBhrIaOhZK0SzPIk5gUm06VcvppeLf3WclLuvBeD4kZUGJCL/
+         +d2+h8gWnMwf8mY8eR70fzac8iq6uR0QXARAxyNdXzi8PoAeovoMgHpf/tAyN5F5kOtK
+         1M6aV1V8EBX1J9B88+OfJo2RhvDJDp6czyf7Js/VGs+Ey4nPhkxtGZOVUSvsK9fTt62u
+         a7ezHAU8xXnoVF5Wi3F5ijjJNDqFRyJIV9Ymi+LRbPlTyW14sXM6WguB40zcJ+SenwYq
+         N8gQ==
+Received: by 10.204.152.27 with SMTP id e27mr4905054bkw.56.1344887940521; Mon,
+ 13 Aug 2012 12:59:00 -0700 (PDT)
+Received: by 10.204.132.72 with HTTP; Mon, 13 Aug 2012 12:58:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203357>
 
-On Mon, Aug 13, 2012 at 8:12 AM, rahul.chandrashekar
-<rahul.chandrashekar@in.bosch.com> wrote:
-> I am interested to connect to a GIT SCM through OSLC.
+Hi all,
 
-It seems to me a very strange request. There is a very well
-implemented, fit-for-purpose "git protocol". OSLC, after some
-googling, is a REST-style definition over HTTP.
+A colleague of mine (after a relatively long absence) noticed the
+following when running "git status":
 
-We already have a git-over-http protocol, not very efficient but opens
-a window of opportunity to those behind unreasonable firewalls.
-Perhaps it is a starting point for you.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 250 and 19 different commit(s) each, respectively.
+#
+nothing to commit (working directory clean)
 
-hth,
+He asked me what to do and I told him to do what has always worked for
+me in the past when something like this happened: gitk, "reset master
+branch to here" (to a commit before the divergence and using --hard),
+git pull origin master. Problem solved.
 
+Well, not this one. This one is persistent. :-) I am at a loss what to
+do. "master" and "origin/master" do *not* point at the same commit.
+Even after the "git reset --hard ..." and "git pull". Running my
+silver bullet solution gets us in the same situation every time.
 
+I checked his .git/config and it looks fine.
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- Software Architect - OLPC
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Any ideas? What information should I provide that might make it
+possible for you to help me?
+
+Cheers,
+Hilco
