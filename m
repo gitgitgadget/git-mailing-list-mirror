@@ -1,85 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC 1/4 v2] Implement a basic remote helper for svn in C.
-Date: Sun, 12 Aug 2012 13:10:36 -0700
-Message-ID: <20120812201036.GB4065@mannheim-rule.local>
-References: <1338830455-3091-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1636924.tANzCnKezB@flobuntu>
- <20120812161258.GA3829@mannheim-rule.local>
- <2007117.uOeClQJdrW@flobuntu>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC] index-pack: produce pack index version 3
+Date: Mon, 13 Aug 2012 07:57:01 +0700
+Message-ID: <CACsJy8CNp2w6PsMSrQ4aFBwHKbOGid4pVHUhE4xgmTatrnEepQ@mail.gmail.com>
+References: <1344772889-8978-1-git-send-email-pclouds@gmail.com>
+ <7vtxw8exii.fsf@alter.siamese.dyndns.org> <7vlihjgaaj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 12 22:11:08 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 02:58:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0eV3-0007su-RM
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Aug 2012 22:11:02 +0200
+	id 1T0iz3-0000Hf-Bi
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 02:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab2HLUKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Aug 2012 16:10:20 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:59465 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366Ab2HLUKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2012 16:10:19 -0400
-Received: by pbbrr13 with SMTP id rr13so6032698pbb.19
-        for <git@vger.kernel.org>; Sun, 12 Aug 2012 13:10:19 -0700 (PDT)
+	id S1752832Ab2HMA5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Aug 2012 20:57:32 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36247 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719Ab2HMA5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2012 20:57:32 -0400
+Received: by obbuo13 with SMTP id uo13so6055321obb.19
+        for <git@vger.kernel.org>; Sun, 12 Aug 2012 17:57:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=USE9VD8+PP3DQb028O6HcUymc9F+a+KMk7GzeLjbTRs=;
-        b=0kZGkslib5n0eoZXds2JwCidIFM8wqeAje6FUzQJYqE7cVghktgBgDG55XgH4Gw4mt
-         b43ON4tfxoSli8ahIH4I0sRYEqxJSL07CDPQzIVN/nQfLKWdTcFF3OeV+PZxUxOM55bK
-         jV/XCdWeFc3+lJNJFe/nFLPCuAXl3tkXoC5kczP9YvAwTZvM7BgGHkaNESyg0Zix/pp4
-         SExkU9hRpxK5qoktuXkRwh/KJtwbRl3pz6eFxGNtO4zz9brCmcWAKOydAATKvuFzgBXY
-         /W5GVHmnRCo+jJkJWdZxmGPHhksEZNr1HWGkYKycbyhw1MumZVKfdhqGTk3J+8KTPz6x
-         2ZaA==
-Received: by 10.66.78.196 with SMTP id d4mr13450358pax.76.1344802219192;
-        Sun, 12 Aug 2012 13:10:19 -0700 (PDT)
-Received: from mannheim-rule.local (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id pq1sm3853032pbb.3.2012.08.12.13.10.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 12 Aug 2012 13:10:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <2007117.uOeClQJdrW@flobuntu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nh16uG7c7KiZi2y3liIkSbtw1VE8C210lQ7Ssu+8OmM=;
+        b=IzJKVV1vFCO1Gt11tVEGnjnFQxJ9+IgkJ9v5uGfBoPvYyjimQJsughPHW+arNOyw5T
+         T6tOFqCFHHpkeLDQEbd0zuAt6DjpxqBJNXiZMA+XpTp2kRMOjCj5tGwD6eWm90ngCEcU
+         nFvkiG3lczKgl6vv+eydEkPIzZ60pwTK+8yu2dXAyzSDx1JxxhLzo8vpsiIpDsBWR79m
+         0cn78c01u/WPAkdPLi8OUC6mvss5FFeqQP4v1FPMFT7XiMgQBQNoEedxr0PvAIth6VT7
+         01RQZJrZMobblqHcj2h8htB6CbaN/tPsvjkjLiz6zypuh0I0wnXsIQ2q4qG8EC6mR6cn
+         zAhA==
+Received: by 10.50.193.201 with SMTP id hq9mr3756423igc.48.1344819451551; Sun,
+ 12 Aug 2012 17:57:31 -0700 (PDT)
+Received: by 10.64.35.12 with HTTP; Sun, 12 Aug 2012 17:57:01 -0700 (PDT)
+In-Reply-To: <7vlihjgaaj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203319>
 
-Florian Achleitner wrote:
+On Mon, Aug 13, 2012 at 2:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> For example, the reachability bitmap would want to say something
+> like "Traversing from commit A, these objects in this pack are
+> reachable."  The bitmap for one commit A would logically consist of
+> N bits for a packfile that stores N objects (the resulting bitmap
+> needs to be compressed before going to disk, perhaps with RLE or
+> something).  With the single "sorted by SHA-1" table, we can use the
+> index in that single table to enumerate all reachable objects of any
+> type in one go.  With four separate tables, on the other hand, we
+> would need four bitmaps per commit.
 
-> This is how I see it, probably it's all wrong:
-> I thought the main problem is, that we don't want processes to have *more than
-> three pipes attached*, i.e. stdout, stdin, stderr, because existing APIs don't
-> allow it.
+No we still need one per commit. The n-th bit is in the order of the
+object in the pack, not the index. How sha-1 is sorted does not
+matter.
 
-Oh, that makes sense.  Thanks for explaining, and sorry to have been so
-dense.
+> Either way is _possible_, but I think the former is simpler, and the
+> latter makes it harder to introduce new types of objects in the
+> future, which I do not think we have examined possible use cases
+> well enough to make that decision to say "four types is enough
+> forever".
 
-At the Windows API level, Set/GetStdHandle() is only advertised to
-handle stdin, stdout, and stderr, so on Windows there would indeed
-need to be some magic to communicate the inherited HANDLE value to
-fast-import.
+New types can be put in one of those four tables, depending on its
+purpose. The reason I split because I care particularly about commits
+and trees. If the new type serves the same purpose as tree, for
+example, then it's better put in tree table...
 
-But I am confident in the Windows porters, and if a fast-import
-interface change ends up being needed, I think we can deal with it
-when the moment comes and it wouldn't necessitate changing the remote
-helper interface.
+> In either way, we would have such bitmap (or a set of four bitmaps
+> in your case) for more than one commit (it is not necessary or
+> desirable to add the reachability bitmap to all commits), and such a
+> "reachability extension" would need to store a sequence of "the
+> commit object name the bitmap (or a set of four bitmaps) is about,
+> and the bitmap (or set of four bitmaps)".  That object name does not
+> have to be 20-byte but would be a varint representation of the
+> offset into the "sorted by SHA-1" table.
 
-You also mentioned before that passing fast-import responses to the
-remote helper stdin means that the remote helper has to slurp up the
-whole list of refs to import before starting to talk to fast-import.
-That was good practice already anyway, but it is a real pitfall and a
-real downside to the single-input approach.  Thanks for bringing it
-up.
+How do you reach the bitmap, given its commit sha-1?
 
-Jonathan
+> That varint representation
+> would be smaller by about 3.5 bits if you have a separate "commit
+> only, sorted by SHA-1" table (as the number of all objects tend to
+> be 10x larger than the number of all commits that need them).  For
+> the particular case of "we want to only annotate the commits, never
+> other kinds of objects" use case, it would be a win.  But without
+> knowing what other use cases we will want to use the "object
+> annotation in the pack index file" mechanism for, it feels like a
+> premature optimization to me to have four tables to shave 3.5 bits
+> per object.
+
+caching trees for faster traversal in general case (sort of pack v4
+but it comes as a cache instead of replacing the real pack).
+-- 
+Duy
