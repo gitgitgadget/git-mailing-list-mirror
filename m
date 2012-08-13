@@ -1,104 +1,108 @@
-From: y@google.com
-Subject: [PATCH 0/4] Re: cherry-pick and 'log --no-walk' and ordering
-Date: Sun, 12 Aug 2012 23:27:16 -0700
-Message-ID: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
-References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 08:27:56 2012
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git svn clone, a non-standard layout question
+Date: Mon, 13 Aug 2012 08:31:32 +0200
+Message-ID: <20120813063132.GD10899@m62s10.vlinux.de>
+References: <CANW+GuQ=egge=NcdSakChYXXZkW=MsG9f3i9yNvoutXXVFcPzQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christopher Marshall <christopherlmarshall@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 08:31:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0o7x-0007LB-2G
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 08:27:49 +0200
+	id 1T0oBi-0004xr-3i
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 08:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312Ab2HMG1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 02:27:38 -0400
-Received: from mail-ob0-f202.google.com ([209.85.214.202]:63571 "EHLO
-	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542Ab2HMG13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 02:27:29 -0400
-Received: by obbwc20 with SMTP id wc20so2563651obb.1
-        for <git@vger.kernel.org>; Sun, 12 Aug 2012 23:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=szPDFHRY4tqgFGG1nlyD+Ikz/IxZHpxgM64WMTGy9o0=;
-        b=esq421HFocpC+WZ2g5IvOv5pWJG79aVqy1UYSnLvjW4CdozLw8xBharrygFGAmVsr+
-         ZwHn5gAuIWUwV16Z+O5UedCj0Sd8ZxvudmAgdQlfLulM/zhW5RE79AjglV8ZHLz3/c/h
-         A6e0artlfVPXYw57B/Rs/18KbnlmuHKL7yf3TgG/4V0qXYKLS+eLHCycxA7EZxWmPHx3
-         ilZOMAq4cGrefUrEa/PMYJUm/Z7/TuMAraeTYL1jTLCk3MhMLS9GutEcwjv60Cg1tD8m
-         adVb0emr4L1RLPMWAMwlJuxB4d60BFYvjtjlLLRTZyfgjIQeAzB+Et+qf5Bnt9bk5Pqx
-         TwyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :x-gm-message-state;
-        bh=szPDFHRY4tqgFGG1nlyD+Ikz/IxZHpxgM64WMTGy9o0=;
-        b=WmbWLqU/fqZCiSFoZnWo04fFKg9C880FzWudZVUPA8e4qXulV8UVcvpMqmqG/QIZ/M
-         WjNh4uFTKyjqnMWHUdvhkQVMCrB9o3vj8WXiBataVLvf4bz416+VyMvIZCAc4Am4FchH
-         qAShQomPyKFvsxdezZc4guTtVQwaEMPgX3PSVTW5XFwYf+QRelHfdJh/Sm2cgkPqM8SI
-         SN55WreD5rtX9YLzos9xL8/d2eYEWyE6FeU/OuOCRcRa9M69kuhXpjNgcA4VV17a++xZ
-         SdLrbKJBe4NQlsK20xGwb+D5VkqWqfJMUdLVkiGlCA6Wx7ZNM0L/JSX9uxy5Bda0zmJm
-         mTxQ==
-Received: by 10.42.73.129 with SMTP id s1mr2788057icj.21.1344839249133;
-        Sun, 12 Aug 2012 23:27:29 -0700 (PDT)
-Received: by 10.42.73.129 with SMTP id s1mr2788046icj.21.1344839248798;
-        Sun, 12 Aug 2012 23:27:28 -0700 (PDT)
-Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id bg4si1911496igb.3.2012.08.12.23.27.28
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Sun, 12 Aug 2012 23:27:28 -0700 (PDT)
-Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.98.93])
-	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 6975E1E0043;
-	Sun, 12 Aug 2012 23:27:28 -0700 (PDT)
-Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
-	id C5E25C1A16; Sun, 12 Aug 2012 23:27:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
-In-Reply-To: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQnSWWwFLFTarLXY+VlsQhuSPjq0NAdmXGtYCMfl0WpeIjapGKDRREF5KERwH8uMIj9z9dFO1rcP4L/OtKdcOLd0lAz4hpmEsyldk7DEXPi2GziZUUu7OBGZZAhYzK03lIjTqouQGillhocU5v22f3foo5vZn3lGXDvGCoK25xxPITvxCYS86cadzKZpCGxY2PyKhSUe
+	id S1751532Ab2HMGbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 02:31:37 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:60536 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751196Ab2HMGbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 02:31:36 -0400
+Received: (qmail invoked by alias); 13 Aug 2012 06:31:35 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp012) with SMTP; 13 Aug 2012 08:31:35 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX19fEtUbEulfblNs/rq8Gk5KgFI8GE6DXnslrBBRmI
+	GyQ+N2VrKGNQSP
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 16A41D6D55; Mon, 13 Aug 2012 08:31:33 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CANW+GuQ=egge=NcdSakChYXXZkW=MsG9f3i9yNvoutXXVFcPzQ@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203327>
 
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+On Sun, Aug 12, 2012 at 11:23:16PM -0400, Christopher Marshall wrote:
+> I would like to use git svn to clone an svn repo with a non-standard
+> branches layout roughly like this:
+> trunk/
+> tags/
+> branches/
+>    b1
+>    b2
+>    ...
+>    bdir/
+>       b3
+>       b4
+>       ...
+> 
+> That is, every directory under branches is a branch except bdir, and
+> every directory under bdir is a branch.
+> 
+> One thing I have attempted is this:
+>    git svn clone \
+>                       --trunk=trunk \
+>                       --branches=branches/bdir \
+>                       --branches=branches \
+>                       --tags=tags \
+>                       --prefix=svn/ $SVN_REPO \
+>                       git.svn
+> 
+> That properly creates the remote tracking branches b1,b2,b3,b4 but
+> also creates the remote tracking branch bdir, which I am trying to
+> exclude.  If I were to settle for this, the bdir branch would have
+> enormous trees committed to it (when I ran against the real svn repo I
+> am targetting).
+> 
+> I get can exactly the branch mapping I want by editing .git/config like this:
+> [svn-remote "svn"]
+>         url = file:///home/chris/programs/svn/repo
+>         fetch = trunk:refs/remotes/svn/trunk
+>         tags = tags/*:refs/remotes/svn/tags/*
+>         branches = branches/{b1,b2}:refs/remotes/svn/*
+>         branches = branches/bdir/{b3,b4}:refs/remotes/svn/*
+> 
+> but then I would have to manually add branches before every git svn
+> fetch, or risk not importing new branches that other developers have
+> created since I last fetched.
+> 
 
-This series adds supports for 'git log --no-walk=unsorted', which
-should be useful for the re-roll of my mz/rebase-range series. It also
-addresses the bug in cherry-pick/revert, which makes it sort revisions
-by date.
+I had a similar problem, but I solved it using "ignore-paths" and "ignore-refs".
+If I remember correctly, you need to set both to ignore bdir directly without
+ignoring b3, b4,...
 
-On Fri, Aug 10, 2012 at 11:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Range limited revision walking, e.g. "git cherry-pick A..B D~4..D",
-> fundamentally implies sorting and you cannot assume B would appear
-> before D only because B comes before D on the command line (B may
-> even be inside D~4..D range in which case it would not even appear
-> in the final output).
+For ignore-refs, pls see cdb51a13c3cf4830d499d1138160eacdd2b8aa46, as it is currently
+undocumented.
 
-Sorry, I probably wasn't clear; I mentioned "revision walking", but I
-only meant the no-walk case. I hope the patches make sense.
+So I would try experimenting with the following settings:
 
+[svn-remote "svn"]
+	url = file:///home/chris/programs/svn/repo
+	fetch = trunk:refs/remotes/svn/trunk
+	tags = tags/*:refs/remotes/svn/tags/*
+	branches = branches/{b1,b2}:refs/remotes/svn/*
+	branches = branches/bdir/{b3,b4}:refs/remotes/svn/*
 
-Martin von Zweigbergk (4):
-  teach log --no-walk=unsorted, which avoids sorting
-  revisions passed to cherry-pick should be in "default" order
-  cherry-pick/revert: respect order of revisions to pick
-  cherry-pick/revert: default to topological sorting
+	# Operates on the imported git branches
+	ignore-refs  = ^refs/remotes/bdir$
 
- Documentation/git-cherry-pick.txt   |  2 +-
- builtin/log.c                       |  2 +-
- builtin/revert.c                    |  3 ++-
- revision.c                          | 18 +++++++++++++++---
- revision.h                          |  6 +++++-
- t/t3508-cherry-pick-many-commits.sh |  2 +-
- t/t3510-cherry-pick-sequence.sh     |  4 ++--
- t/t4202-log.sh                      | 10 ++++++++++
- 8 files changed, 37 insertions(+), 10 deletions(-)
-
--- 
-1.7.11.1.104.ge7b44f1
+	# Operates on the SVN branches; you might try it first without this statement
+	ignore-paths = ^branches/bdir$
