@@ -1,128 +1,116 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v2] Let submodule command exit with error status if
-	path does not exist
-Date: Mon, 13 Aug 2012 18:39:17 +0200
-Message-ID: <20120813163911.GA6418@book.hvoigt.net>
-References: <1340872080.2103.92.camel@athena.dnet> <20120809200302.GA93203@book.hvoigt.net> <7vboijol03.fsf@alter.siamese.dyndns.org> <20120811064912.GA83365@book.hvoigt.net> <7vy5lkfyx1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
+Date: Mon, 13 Aug 2012 19:02:23 +0200
+Message-ID: <20120813170221.GB6418@book.hvoigt.net>
+References: <20120811070030.GA83665@book.hvoigt.net> <7vd32whgvl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Milde <daniel@milde.cz>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 18:40:36 2012
+X-From: git-owner@vger.kernel.org Mon Aug 13 19:02:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0xgw-0004NZ-25
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 18:40:34 +0200
+	id 1T0y2I-00080R-6j
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 19:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600Ab2HMQk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 12:40:28 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:36214 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752488Ab2HMQk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 12:40:28 -0400
+	id S1752948Ab2HMRCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 13:02:32 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.101]:32881 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752667Ab2HMRCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 13:02:31 -0400
 Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.68)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1T0xfi-0005G5-91; Mon, 13 Aug 2012 18:39:18 +0200
+	id 1T0y24-0000zk-2u; Mon, 13 Aug 2012 19:02:24 +0200
 Content-Disposition: inline
-In-Reply-To: <7vy5lkfyx1.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vd32whgvl.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.19 (2009-01-05)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203343>
 
-Hi Junio,
-
-thanks for such a thorough review.
-
-On Sat, Aug 11, 2012 at 10:43:22PM -0700, Junio C Hamano wrote:
+On Sat, Aug 11, 2012 at 09:30:06PM -0700, Junio C Hamano wrote:
 > Heiko Voigt <hvoigt@hvoigt.net> writes:
 > 
-> > I did not know that you prefer a space after the function name. I simply
-> > imitated the style from C and there we do not have spaces. It makes the
-> > style rules a bit more complicated. Wouldn't it be nicer to have the
-> > same as in C so we have less rules?
+> >  help.c | 15 ++++++++++++---
+> >  1 file changed, 12 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/help.c b/help.c
+> > index 662349d..b41fa21 100644
+> > --- a/help.c
+> > +++ b/help.c
+> > @@ -103,10 +103,19 @@ static int is_executable(const char *name)
+> >  		return 0;
+> >  
+> >  #if defined(WIN32) || defined(__CYGWIN__)
+> > +	/* On Windows we cannot use the executable bit. The executable
+> > +	 * state is determined by extension only. We do this first
+> > +	 * because with virus scanners opening an executeable for
+> > +	 * reading is potentially expensive.
+> > +	 */
+> > +	if (has_extension(name, ".exe"))
+> > +		return S_IXUSR;
+> > +
+> >  #if defined(__CYGWIN__)
+> >  if ((st.st_mode & S_IXUSR) == 0)
+> >  #endif
+> > -{	/* cannot trust the executable bit, peek into the file instead */
+> > +{	/* now that we know it does not have an executable extension,
+> > +	   peek into the file instead */
+> >  	char buf[3] = { 0 };
+> >  	int n;
+> >  	int fd = open(name, O_RDONLY);
+> > @@ -114,8 +123,8 @@ if ((st.st_mode & S_IXUSR) == 0)
+> >  	if (fd >= 0) {
+> >  		n = read(fd, buf, 2);
+> >  		if (n == 2)
+> > -			/* DOS executables start with "MZ" */
+> > -			if (!strcmp(buf, "#!") || !strcmp(buf, "MZ"))
+> > +			/* look for a she-bang */
+> > +			if (!strcmp(buf, "#!"))
+> >  				st.st_mode |= S_IXUSR;
+> >  		close(fd);
+> >  	}
 > 
-> I do not think so, as they are different languages.  The call site
-> of C functions have name and opening parenthesis without a SP in
-> between.  The call site of shell functions do not even have
-> parentheses.
-> 
-> In any case, personal preferences (including mine) do not matter
-> much, as there is no "this is scientificly superiour" in styles.
+> Would it make sense to move this to compat/win32/, compat/cygwin.c,
+> and compat/posix.c, each exporting is_executable(const char *path),
+> so that we do not have to suffer the #ifdef mess?
 
-How about I update CodingGuidelines according to the rules you
-suggested? Then other people know how we prefer bash functions and if
-statements to look like.
+Yes that makes sense. But that means I need to test the code on multiple
+platforms. To ease the merge in msysgit (the patch is already applied there)
+I would suggest to post a follow up patch which would split up the function
+into the platform specific parts.
 
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index aac575e..48014f2 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -109,7 +109,8 @@ resolve_relative_url ()
-> >  #
-> >  module_list()
-> >  {
-> > -	git ls-files --error-unmatch --stage -- "$@" |
-> > +	(git ls-files --error-unmatch --stage -- "$@" ||
-> > +		echo '160000 0000000000000000000000000000000000000000 0	') |
-> 
-> Is there a reason why the sentinel has to have the same mode pattern
-> as a GITLINK entry, NULL SHA-1, stage #0?  Or is the "path" being
-> empty all that matters?
-> 
-> Ah, OK, you did not want to touch the perl script downstream.  I
-> would have preferred a comment to document that, i.e.
+Since the code for cygwin and windows in general is almost the same I would
+extract one function for them where I leave in one ifdef for cygwin.
 
-I only described it in the commit message, sorry. Next time I will add a
-comment.
+E.g. like this:
 
-> > @@ -385,6 +386,10 @@ cmd_foreach()
-> >  	module_list |
-> >  	while read mode sha1 stage sm_path
-> >  	do
-> > +		if test -z "$sm_path"; then
-> > +			exit 1
-> 
-> Style:
-> 
-> 	if test -z "$sm_path"
-> 	then
-> 		exit 1
 
-See above. If you agree I would add this style to the guidelines.
+	static int is_executable(const char *name)
+	{
+	        struct stat st;
 
-> I know module_list would have said "error: pathspec 'no-such' did
-> not match any file(s) known to git.  Did you forget to git add"
-> already, but because that comes at the very end of the input to the
-> filter written in perl (and with the way the filter is coded, it
-> will stay at the end), I am not sure if the user would notice it if
-> we exit like this.  By the time we hit this exit, we would have seen
-> "Entering $sm_path..." followed by whatever message given while in
-> the submodule for all the submodules that comes out of module_list,
-> no?
-> 
-> How about doing it this way to avoid that issue, to make sure we die
-> immediately after the typo is diagnosed without touching anything?
+	        if (stat(name, &st) || /* stat, not lstat */
+	            !S_ISREG(st.st_mode))
+	                return 0;
 
-I like it, your approach combines the atomicity of my first patch with
-the efficiency of not calling ls-files twice. I was hesitant to change
-to much code just to get the exit code right, but your approach looks
-good to me.
+		fill_platform_stat(name, &st);
 
-Should I send an updated patch? Or do you just want to squash this in.
-Since now only the tests are from me what should we do with the
-ownership?
+	        return st.st_mode & S_IXUSR;
+	}
 
->  git-submodule.sh | 32 +++++++++++++++++++++++++++++---
->  1 file changed, 29 insertions(+), 3 deletions(-)
-[...]
+which I could then define to a no op on posix. That way we avoid code
+duplication in the platform specific functions.
+
+What do you think?
 
 Cheers Heiko
