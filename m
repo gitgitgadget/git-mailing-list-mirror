@@ -1,116 +1,121 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
-Date: Mon, 13 Aug 2012 19:02:23 +0200
-Message-ID: <20120813170221.GB6418@book.hvoigt.net>
-References: <20120811070030.GA83665@book.hvoigt.net> <7vd32whgvl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Re: cherry-pick and 'log --no-walk' and ordering
+Date: Mon, 13 Aug 2012 10:05:06 -0700
+Message-ID: <7vzk5yen99.fsf@alter.siamese.dyndns.org>
+References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
+ <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+ <7vhas7fefs.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eHprw73+zqVbJRird1eE7ayU_KjCUSoieYsGi1rbL5QBQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 19:02:46 2012
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 19:05:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0y2I-00080R-6j
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 19:02:38 +0200
+	id 1T0y4y-0003vY-EE
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 19:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948Ab2HMRCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 13:02:32 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.101]:32881 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667Ab2HMRCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 13:02:31 -0400
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1T0y24-0000zk-2u; Mon, 13 Aug 2012 19:02:24 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd32whgvl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1753587Ab2HMRFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 13:05:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47104 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753164Ab2HMRFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 13:05:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44B1588EC;
+	Mon, 13 Aug 2012 13:05:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TwpIRGJVkkHxzwuV0Rp5XQVS0Tg=; b=CmqnvK
+	Y22c0kgMGhLYNBvTAaoAB0PC7xn6bzRsoN9vzDz1tWINz9UrfYUpGh9uf1qWEWR6
+	G6mHu1m9elHocKqnXmTlmpyPffFNsAdedfehjeapW5ZJ1N2qm/dz01S+mzVZigU3
+	q6dOoreyd2NQvWNflDEwfsZwWnE9WoPGZYWiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WxgyurkeMUgFKG5KO5jKlxJOFvXNuxY1
+	QDvq2bKbl7bcEiQbLvOPyc02eQnSiSF3IQRWP+LU6gJyrsJMl1jfe2emVsHevfwX
+	iXj+RkcgUEh7Kut+wnvVY5HRHpQIDCunylaZQ4jpiIDKMX5e1h+pPsOQe+8LRrDL
+	5tcLHX4FV6A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3030A88EB;
+	Mon, 13 Aug 2012 13:05:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8254988E9; Mon, 13 Aug 2012
+ 13:05:08 -0400 (EDT)
+In-Reply-To: <CAOeW2eHprw73+zqVbJRird1eE7ayU_KjCUSoieYsGi1rbL5QBQ@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Mon, 13 Aug 2012 09:09:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0922B916-E569-11E1-B65A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203344>
 
-On Sat, Aug 11, 2012 at 09:30:06PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> >  help.c | 15 ++++++++++++---
-> >  1 file changed, 12 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/help.c b/help.c
-> > index 662349d..b41fa21 100644
-> > --- a/help.c
-> > +++ b/help.c
-> > @@ -103,10 +103,19 @@ static int is_executable(const char *name)
-> >  		return 0;
-> >  
-> >  #if defined(WIN32) || defined(__CYGWIN__)
-> > +	/* On Windows we cannot use the executable bit. The executable
-> > +	 * state is determined by extension only. We do this first
-> > +	 * because with virus scanners opening an executeable for
-> > +	 * reading is potentially expensive.
-> > +	 */
-> > +	if (has_extension(name, ".exe"))
-> > +		return S_IXUSR;
-> > +
-> >  #if defined(__CYGWIN__)
-> >  if ((st.st_mode & S_IXUSR) == 0)
-> >  #endif
-> > -{	/* cannot trust the executable bit, peek into the file instead */
-> > +{	/* now that we know it does not have an executable extension,
-> > +	   peek into the file instead */
-> >  	char buf[3] = { 0 };
-> >  	int n;
-> >  	int fd = open(name, O_RDONLY);
-> > @@ -114,8 +123,8 @@ if ((st.st_mode & S_IXUSR) == 0)
-> >  	if (fd >= 0) {
-> >  		n = read(fd, buf, 2);
-> >  		if (n == 2)
-> > -			/* DOS executables start with "MZ" */
-> > -			if (!strcmp(buf, "#!") || !strcmp(buf, "MZ"))
-> > +			/* look for a she-bang */
-> > +			if (!strcmp(buf, "#!"))
-> >  				st.st_mode |= S_IXUSR;
-> >  		close(fd);
-> >  	}
-> 
-> Would it make sense to move this to compat/win32/, compat/cygwin.c,
-> and compat/posix.c, each exporting is_executable(const char *path),
-> so that we do not have to suffer the #ifdef mess?
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-Yes that makes sense. But that means I need to test the code on multiple
-platforms. To ease the merge in msysgit (the patch is already applied there)
-I would suggest to post a follow up patch which would split up the function
-into the platform specific parts.
+> I also thought the sorting was just a bug. From what I understand by
+> looking how the code has evolved, the sorting in the no-walk case was
+> not intentional, but more of a consequence of the implementation. That
+> patch you suggested was my first attempt and led me to find the broken
+> cherry-pick test cases that I then fixed in patch 2/4. But, it clearly
+> would break the test case in t4202 called 'git log --no-walk <commits>
+> sorts by commit time'. So I started digging from there and found e.g.
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/123205/focus=123216
+>
+> For convenience, I have pasted the commit message of the commit
+> mentioned in that thread at the end of this email.  So we would be
+> breaking at least Johannes's use case if we changed it.
 
-Since the code for cygwin and windows in general is almost the same I would
-extract one function for them where I leave in one ifdef for cygwin.
+Ok.  Having a way to conveniently sort based on committer date is
+indeed handy, and losing it would be a regression.
 
-E.g. like this:
+Not that the accident that supports only on committer date is a
+nicely designed feature.  The user may want to sort on author date
+instead, but there is no way to do so with --no-walk.  So in that
+sense, Johannes's use case happens to work by accident.
 
+> ... so is a migration desired? Or just
+> change the default for --no-walk from "sorted" to "unsorted" in git
+> 2.0?
 
-	static int is_executable(const char *name)
-	{
-	        struct stat st;
+I think the proper support for Johannes's case should give users
+more control on what to sort on, and that switch should not be tied
+to "--no-walk".  After all, being able to sort commits in the result
+of limit_list() with various criteria would equally useful as being
+able to sort commits listed on the command line with --no-walk.
+Think about what "git shortlog A..B" does, for example. It is like
+first enumerating commits within the given range, and sorting the
+result using author as the primary and then timestamp as the
+secondary sort column.
 
-	        if (stat(name, &st) || /* stat, not lstat */
-	            !S_ISREG(st.st_mode))
-	                return 0;
+So let's not even think about migration, and go in the direction of
+giving "--no-walk" two flavours, for now.  Either it keeps the order
+commits were given from the command line, or it does the default
+sort using the timestamp.  We can later add the --sort-on option that
+would work with or without --no-walk for people who want output that
+is differently sorted, but that is outside the scope of your series.
 
-		fill_platform_stat(name, &st);
+> By the way, git-log's documentation says "By default, the commits are
+> shown in reverse chronological order.", which to some degree is in
+> support of the current behavior.
 
-	        return st.st_mode & S_IXUSR;
-	}
+That is talking about the presentation order of the result of
+limit_list(), predates --no-walk, and was not adjusted to the new
+world order when --no-walk was introduced, so I would not take it as
+a supporting argument.
 
-which I could then define to a no op on posix. That way we avoid code
-duplication in the platform specific functions.
+But not regressing the current "you can see them sorted on the
+commit timestamp (this is merely an accident and not a designed
+feature, so you cannot choose to sort on other things)" behaviour is
+a reason enough not to disable sorting for the plain "--no-walk"
+option.
 
-What do you think?
-
-Cheers Heiko
+Thanks.
