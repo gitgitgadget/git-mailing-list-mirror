@@ -1,167 +1,111 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v3 1/2] git-svn.perl: consider all ranges for a given
- merge, instead of only tip-by-tip
-Date: Mon, 13 Aug 2012 07:08:50 +0000
-Message-ID: <20120813070850.GA9190@dcvr.yhbt.net>
-References: <1344705265-10939-1-git-send-email-stevenrwalter@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Re: cherry-pick and 'log --no-walk' and ordering
+Date: Mon, 13 Aug 2012 00:17:59 -0700
+Message-ID: <7vhas7fefs.fsf@alter.siamese.dyndns.org>
+References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
+ <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: avarab@gmail.com, sam@vilain.net, git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 09:09:43 2012
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 09:18:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0omN-0001pX-Ca
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 09:09:35 +0200
+	id 1T0ouh-0006vz-Al
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 09:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834Ab2HMHJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 03:09:15 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:49815 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752739Ab2HMHIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 03:08:51 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 882D41F433;
-	Mon, 13 Aug 2012 07:08:50 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1344705265-10939-1-git-send-email-stevenrwalter@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753369Ab2HMHSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 03:18:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49965 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753344Ab2HMHSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 03:18:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B28F77AEA;
+	Mon, 13 Aug 2012 03:18:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wTJjZ/SbHFyi2Bq+nDuaPCrQqio=; b=O5HTBu
+	29QZJYRYcIfe5Mwm0Ll8Cj4rJ/uaU4K6MdgdzQxTcAalLDzUMJiZA4jOO49I7MLJ
+	FmtNNcujshiNGO78LRFvngmp2mp/aQpXDSeT47/OVHIa5N2QJdAIgRXXzGOAbKMk
+	O2J6zcBom3zfNHOaOH7sLIxTzEUVvmsxV5370=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xekVdeosUtM4e4cyEZxcBtN/vuIYxPVh
+	7GhWDRt3nFDkvd+z1JvfplAz8W7nZvjpILgVAgl6HehG2fT/p5ufaML/zW26atxi
+	fLKjxMNE2u5vMFAT3EpixJTlxJyyioDtr3FXeYsvh2gkIPquzu1meriCJkJLCJfH
+	M66F5Iqt7AE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FC6A7AE9;
+	Mon, 13 Aug 2012 03:18:01 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9A827AE8; Mon, 13 Aug 2012
+ 03:18:00 -0400 (EDT)
+In-Reply-To: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+ (y.'s message of "Sun, 12 Aug 2012 23:27:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 03C902A6-E517-11E1-BE2E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203329>
 
-Steven Walter <stevenrwalter@gmail.com> wrote:
-> Consider the case where you have trunk, branchA of trunk, and branchB of
-> branchA.  trunk is merged back into branchB, and then branchB is
-> reintegrated into trunk.  The merge of branchB into trunk will have
-> svn:mergeinfo property references to both branchA and branchB.  When
-> performing the check_cherry_pick check on branchB, it is necessary to
-> eliminate the merged contents of branchA as well as branchB, or else the
-> merge will be incorrectly ignored as a cherry-pick.
-> 
-> Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
-> ---
+y@google.com writes:
 
-I think this series is good, but would feel more comfortable if
-I got a second opinion from Sam.
+[Administrivia: I somehow doubt y@google.com would reach you, and
+futzed with the To: line above]
 
-This doesn't apply against Junio's master (nor mine on
-git://bogomips.org/git-svn.git), though it works fine on Junio's maint.
+> From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+>
+> This series adds supports for 'git log --no-walk=unsorted', which
+> should be useful for the re-roll of my mz/rebase-range series. It also
+> addresses the bug in cherry-pick/revert, which makes it sort revisions
+> by date.
+>
+> On Fri, Aug 10, 2012 at 11:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Range limited revision walking, e.g. "git cherry-pick A..B D~4..D",
+>> fundamentally implies sorting and you cannot assume B would appear
+>> before D only because B comes before D on the command line (B may
+>> even be inside D~4..D range in which case it would not even appear
+>> in the final output).
+>
+> Sorry, I probably wasn't clear; I mentioned "revision walking", but I
+> only meant the no-walk case. I hope the patches make sense.
 
->  git-svn.perl                                    |    8 ++-
->  t/t9163-git-svn-fetch-merge-branch-of-branch.sh |   60 +++++++++++++++++++++++
->  2 files changed, 63 insertions(+), 5 deletions(-)
->  create mode 100755 t/t9163-git-svn-fetch-merge-branch-of-branch.sh
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index ca038ec..abcec11 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -3657,14 +3657,14 @@ sub find_extra_svn_parents {
->  	my @merge_tips;
->  	my $url = $self->{url};
->  	my $uuid = $self->ra_uuid;
-> -	my %ranges;
-> +	my @all_ranges;
->  	for my $merge ( @merges ) {
->  		my ($tip_commit, @ranges) =
->  			lookup_svn_merge( $uuid, $url, $merge );
->  		unless (!$tip_commit or
->  				grep { $_ eq $tip_commit } @$parents ) {
->  			push @merge_tips, $tip_commit;
-> -			$ranges{$tip_commit} = \@ranges;
-> +			push @all_ranges, @ranges;
->  		} else {
->  			push @merge_tips, undef;
->  		}
-> @@ -3679,8 +3679,6 @@ sub find_extra_svn_parents {
->  		my $spec = shift @merges;
->  		next unless $merge_tip and $excluded{$merge_tip};
->  
-> -		my $ranges = $ranges{$merge_tip};
-> -
->  		# check out 'new' tips
->  		my $merge_base;
->  		eval {
-> @@ -3702,7 +3700,7 @@ sub find_extra_svn_parents {
->  		my (@incomplete) = check_cherry_pick(
->  			$merge_base, $merge_tip,
->  			$parents,
-> -			@$ranges,
-> +			@all_ranges,
->  		       );
->  
->  		if ( @incomplete ) {
-> diff --git a/t/t9163-git-svn-fetch-merge-branch-of-branch.sh b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
-> new file mode 100755
-> index 0000000..13ae7e3
-> --- /dev/null
-> +++ b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
-> @@ -0,0 +1,60 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Steven Walter
-> +#
-> +
-> +test_description='git svn merge detection'
-> +. ./lib-git-svn.sh
-> +
-> +svn_ver="$(svn --version --quiet)"
-> +case $svn_ver in
-> +0.* | 1.[0-4].*)
-> +	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
-> +	test_done
-> +	;;
-> +esac
-> +
-> +test_expect_success 'initialize source svn repo' '
-> +	svn_cmd mkdir -m x "$svnrepo"/trunk &&
-> +	svn_cmd mkdir -m x "$svnrepo"/branches &&
-> +	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
-> +	(
-> +		cd "$SVN_TREE" &&
-> +		touch foo &&
-> +		svn_cmd add foo &&
-> +		svn_cmd commit -m "initial commit" &&
-> +		svn_cmd cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
-> +		svn_cmd switch "$svnrepo"/branches/branch1 &&
-> +		touch bar &&
-> +		svn_cmd add bar &&
-> +		svn_cmd commit -m branch1 &&
-> +		svn_cmd cp -m branch "$svnrepo"/branches/branch1 "$svnrepo"/branches/branch2 &&
-> +		svn_cmd switch "$svnrepo"/branches/branch2 &&
-> +		touch baz &&
-> +		svn_cmd add baz &&
-> +		svn_cmd commit -m branch2 &&
-> +		svn_cmd switch "$svnrepo"/trunk &&
-> +		touch bar2 &&
-> +		svn_cmd add bar2 &&
-> +		svn_cmd commit -m trunk &&
-> +		svn_cmd switch "$svnrepo"/branches/branch2 &&
-> +		svn_cmd merge "$svnrepo"/trunk &&
-> +		svn_cmd commit -m "merge trunk"
-> +		svn_cmd switch "$svnrepo"/trunk &&
-> +		svn_cmd merge --reintegrate "$svnrepo"/branches/branch2 &&
-> +		svn_cmd commit -m "merge branch2"
-> +	) &&
-> +	rm -rf "$SVN_TREE"
-> +'
-> +
-> +test_expect_success 'clone svn repo' '
-> +	git svn init -s "$svnrepo" &&
-> +	git svn fetch
-> +'
-> +
-> +test_expect_success 'verify merge commit' 'x=$(git rev-parse HEAD^2) &&
-> +	y=$(git rev-parse branch2) &&
-> +	test "x$x" = "x$y"
-> +'
-> +
-> +test_done
-> -- 
-> 1.7.9.5
+I actually think --no-walk, especially when given any negative
+revision, that sorts is fundamentally a flawed concept (it led to
+the inconsistency that made "git show A..B C" vs "git show C A..B"
+behave differently, which we had to fix recently).
+
+Would anything break if we take your patch, but without two
+possibilities to revs->no_walk option (i.e. we never sort under
+no_walk)?  That is, the core of your change would become something
+like this:
+
+ revision.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/revision.c b/revision.c
+index 9e8f47a..589d17f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2116,12 +2116,12 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		}
+ 		e++;
+ 	}
+-	commit_list_sort_by_date(&revs->commits);
+ 	if (!revs->leak_pending)
+ 		free(list);
+ 
+ 	if (revs->no_walk)
+ 		return 0;
++	commit_list_sort_by_date(&revs->commits);
+ 	if (revs->limited)
+ 		if (limit_list(revs) < 0)
+ 			return -1;
