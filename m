@@ -1,115 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git repack vs git gc --aggressive
-Date: Mon, 13 Aug 2012 10:19:56 -0700
-Message-ID: <7vr4raemkj.fsf@alter.siamese.dyndns.org>
-References: <87zk66r28y.fsf@bitburger.home.felix>
- <20120807184405.GA440@sigill.intra.peff.net>
- <7vvcguv7y2.fsf@alter.siamese.dyndns.org>
- <87ehnewolp.fsf@bitburger.home.felix>
- <7v393ujypq.fsf@alter.siamese.dyndns.org> <50290D1F.20007@xiplink.com>
+From: Christopher Marshall <christopherlmarshall@gmail.com>
+Subject: Re: git svn clone, a non-standard layout question
+Date: Mon, 13 Aug 2012 13:27:05 -0400
+Message-ID: <CANW+GuQ4ZkOySSXN38ot7f=BR1SbXs8d7UvGVmuMDcPSUUzxGQ@mail.gmail.com>
+References: <CANW+GuQ=egge=NcdSakChYXXZkW=MsG9f3i9yNvoutXXVFcPzQ@mail.gmail.com>
+	<20120813063132.GD10899@m62s10.vlinux.de>
+	<CANW+GuRoQJtZW6ZCwDQEj9OQD4C3BqxqX--2JV+=jkddagQgig@mail.gmail.com>
+	<20120813133847.GE10899@m62s10.vlinux.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felix Natter <fnatter@gmx.net>, git@vger.kernel.org
-To: marcnarc@xiplink.com
-X-From: git-owner@vger.kernel.org Mon Aug 13 19:20:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 13 19:27:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0yJC-00032F-O1
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 19:20:07 +0200
+	id 1T0yQ6-0006D0-2l
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 19:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236Ab2HMRT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 13:19:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54107 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751379Ab2HMRT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 13:19:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0DB38CFA;
-	Mon, 13 Aug 2012 13:19:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HqxOdIzBkHgBLUGEZ27/K8FnZjA=; b=UIK4Zq
-	YxSLbY4BXgLA3HrEhqVSpq8tLQnWFgxelb/VueGKqF219Bdcb5Mj67YgVlRzU1fp
-	eihpfcGmoYiN23RW5Ij3xNSjzRZAWZo8xV7jNQKXWbrE+XH/qq/Bg2c+dv5RL+Km
-	6wjIUFPEjLDgpQKL5yUzb9rmeQoUCuyqe9Eng=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nh5jHaJpUvSDjOuHQaLzWhY2LYtc7ZHY
-	6hq0ypiVSUZRV2SLod4lZZ+xhHWDk+OVTMeavpO0NHPwG1dCMi1m82pITGf6zvBD
-	7hOrzNNE5wmIx6gOZ4UkuvKRQq03JZwy1SjG0RpA2dAnIyGdOZD6CyvLtHgzCbdf
-	0ftXbp0IzXY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DF348CF9;
-	Mon, 13 Aug 2012 13:19:58 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3ECE8CEE; Mon, 13 Aug 2012
- 13:19:57 -0400 (EDT)
-In-Reply-To: <50290D1F.20007@xiplink.com> (Marc Branchaud's message of "Mon,
- 13 Aug 2012 10:20:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B423908-E56B-11E1-941B-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753122Ab2HMR1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 13:27:08 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:54920 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752434Ab2HMR1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 13:27:07 -0400
+Received: by weyx8 with SMTP id x8so2690002wey.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 10:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0DPuJANngqFrhTLG6nAlCgLtVmW9GGbuANix5io14sA=;
+        b=dWmpCveUp6faj/lxE8SDsrvxV1+DWE6mUj0cSibGXuvCOLEajZcsJOlv+U+x8odoj+
+         GAVgna9sWc3/IE4rf+11GM2Y93kMOps4kLv9RSXi99YOI4LtOMNsZGagK6YI/9Qz2IF2
+         28c1DURBLN2Dk98A14r4Fal4rWDEoUjGfTDjgYUjXEdLYDkNcZGtIzpji4OycXK6OgAv
+         xxqvVOBlMdv44B4KlQkJgqE8q5/eHV8P4l/s2fvHv7lps+KdVQDZjUeaWbr0uy3KMyKB
+         WKA4ZYKhl8543yNtC8tve2ph9s59Lxs+sTSoMKIGhDKCFWTKFye1srbv4hXCxRRdmiPc
+         htZQ==
+Received: by 10.217.6.14 with SMTP id x14mr6329082wes.174.1344878825388; Mon,
+ 13 Aug 2012 10:27:05 -0700 (PDT)
+Received: by 10.194.34.34 with HTTP; Mon, 13 Aug 2012 10:27:05 -0700 (PDT)
+In-Reply-To: <20120813133847.GE10899@m62s10.vlinux.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203347>
 
-Marc Branchaud <mbranchaud@xiplink.com> writes:
-
-> On 12-08-10 04:09 PM, Junio C Hamano wrote:
->> Felix Natter <fnatter@gmx.net> writes:
->> 
->>> I have a few questions about this:
->>>
->>>> As I am coming from "large depth is harmful" school, I would
->>>> recommend
->>>>
->>>>  - "git repack -a -d -f" with large "--window" with reasonably short
->>>>    "--depth" once, 
->>>
->>> So something like --depth=250 and --window=500? 
->> 
->> I would use more like --depth=16 or 32 in my local repositories.
->> 
->>>> and mark the result with .keep;
->>>
->>> I guess you refer to a toplevel '.keep' file.
->> 
->> Not at all.  And it is not documented, it seems X-<.
->> 
->> Typically you have a pair of files in .git/objects/pack, e.g.
->> 
->>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.idx
->>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.pack
->> 
->> And you can add another file next to them
->> 
->>   .git/objects/pack/pack-2e3e3b332b446278f9ff91c4f497bc6ed2626d00.keep
->> 
->> to prevent the pack from getting repacked.  I think "git clone" does
->> this for you after an initial import.
+>> [svn-remote "svn"]
+>>         url = file:///home/chris/programs/svn/repo
+>>         fetch = trunk:refs/remotes/svn/trunk
+>>         branches = branches/*:refs/remotes/svn/*
+>>         tags = tags/*:refs/remotes/svn/tags/*
+>>         branches = branches/bdir/*:refs/remotes/svn/bdir2/*
+>>         ignore-paths  = ^branches/bdir$
+>>         ignore-refs  = ^refs/remotes/bdir$
+>>
+>> It doesn't seem to change anything.
+>>
 >
-> 1.7.12.rc1 does not.
+> You need a git version new enough to include cdb51a13c3cf4830d499d1138160eacdd2b8aa46, otherwise
+> it won't have any effect and will be silently ignored.
+>
+>> Chris
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
 
-Sorry, I misremembered.  It was removed at 1db4a75 (Remove
-unnecessary pack-*.keep file after successful git-clone,
-2008-07-08), so even when the sender gave you a crappy pack, you can
-repack locally to correct it.
+Peter:
 
-> Maybe clone should preserve the packs it gets from the upstream repo?
+I see what you mean.  I will download a version of git that includes
+that commit and try again.
 
-That was part of the intention of the code 1db4a75 removed.
+Thanks for all your help,
 
-> For
-> example, our main repo has a 690MB pack file that's marked .keep, but the
-> clone just ends up with a single 725MB pack file.  Would our clones see
-> performance improvements if they that big 690MB pack separate from the others?
-
-There is no "pack boundary" in the object transfer protocol.  What
-comes out of the wire is a single stream of pack data, so the above
-is not feasible without major surgery and backward incompatible
-change.
+Chris
