@@ -1,96 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] cherry-pick/revert: default to topological sorting
-Date: Mon, 13 Aug 2012 14:50:30 -0700
-Message-ID: <7vwr12bgwp.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 0/4] Re: cherry-pick and 'log --no-walk' and ordering
+Date: Mon, 13 Aug 2012 15:01:39 -0700
+Message-ID: <CAOeW2eEbN-n72cq4Ywt=o6uVFkBWB5L6jAn9Qx_FBwyZLJdjMQ@mail.gmail.com>
 References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
- <50289e51.29d0320a.65ff.2c48SMTPIN_ADDED@gmr-mx.google.com>
- <7vpq6uczis.fsf@alter.siamese.dyndns.org>
+	<50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+	<7vhas7fefs.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eHprw73+zqVbJRird1eE7ayU_KjCUSoieYsGi1rbL5QBQ@mail.gmail.com>
+	<7vzk5yen99.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eF67Tj0Mq+g+-3UFyh_Xvt=ZcKDc9LjCKGwu9y2G39NBQ@mail.gmail.com>
+	<7v1ujacwcd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 23:50:39 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 00:01:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T12X1-00050X-28
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 23:50:39 +0200
+	id 1T12hm-0007Em-PD
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 00:01:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361Ab2HMVud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 17:50:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54748 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752005Ab2HMVud (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 17:50:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 666D49425;
-	Mon, 13 Aug 2012 17:50:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bBmqa0Gm0bODoXnlHZtsSDUuJu0=; b=GeHavO
-	QakvH1ofsF4EP7Rx7/12OqXBQIxmfNz47sglH1h4xUDYkNBelfKj6hNnyNXM6Wh2
-	Fp95C58/qvlDeOvu1/XUPZyM+EHAJnbIj704xZ5rXk1GaPxVvK06KRMtWDIt0tIs
-	+kJkPZmvLutkEE0Bf2iqcChWBNmaA33Bs4X14=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oy0VkaDItOwmLhagHjK6p3rifufbeBEk
-	jUEIvbuYOoBEFqq5VCdWenxfP9eWbx7zODHds4mPOXCnrms5/E5XCWlSQQPr2DOE
-	xM323iDgDf7rclVUtH9vKqgMDEEOYw6Yit36+77Ozb6baFxomtEWc5tVEyDRM/Rp
-	/B0eog10z90=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53B2E9424;
-	Mon, 13 Aug 2012 17:50:32 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A88279422; Mon, 13 Aug 2012
- 17:50:31 -0400 (EDT)
-In-Reply-To: <7vpq6uczis.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 13 Aug 2012 13:23:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E754ED22-E590-11E1-8265-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753344Ab2HMWBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 18:01:41 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:47704 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753240Ab2HMWBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 18:01:40 -0400
+Received: by ghrr11 with SMTP id r11so3606817ghr.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 15:01:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=9dISX2O/37fDFiSxVvGAoeZmesy6VqlhPe8iR9nBvoY=;
+        b=dtxejKGePB+UYRHvHo8c6+U1P8oxmzdhAj2dMalUr1uH3OAY1/a1X0C8yX2v5n/BVs
+         a141u6eH9yfh8iW1urMV4H4GPUCCQV3X7zGdULJvuUaRUxqgM2hw6YC72Qdvl4rXbLgH
+         2bF2F+SOcTG9y01MUu/JbmAGZoKOoN/f1A2O3dYLMYABVx5TjS+g+FGi8w4vVPnCHcHI
+         IOqqhcRbr+jsvsOV1Lwg0SLdsGi9m8uQX3brAiEysHrgmcyp2yFAGm8tKbOOkCmWDo+d
+         duz+hBdX0aSpuw8AQPODP2ewQDORIBVrjEV+FlDUZuTIL+Nbk1n6GR/Nl8xB1RF9YEwn
+         yrDA==
+Received: by 10.66.85.201 with SMTP id j9mr18799604paz.40.1344895299926; Mon,
+ 13 Aug 2012 15:01:39 -0700 (PDT)
+Received: by 10.68.120.112 with HTTP; Mon, 13 Aug 2012 15:01:39 -0700 (PDT)
+In-Reply-To: <7v1ujacwcd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203371>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> y@google.com writes:
+On Mon, Aug 13, 2012 at 2:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 >
->> From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
->>
->> When 'git cherry-pick' and 'git revert' are used with ranges such as
->> 'git cherry-pick A..B', the order of the commits to pick are
->> determined by the default date-based sorting. If a commit has a commit
->> date before the commit date of its parent, it will therfore be applied
->> before its parent.
+>> Makes sense. The shortlog example is a good example of sorting that
+>> completely reorders the commit graph sometimes even making sense for
+>> ranges. Thanks!
 >
-> Is that what --topo-order really means?
+> By the way, does this topic relate to the long stalled "rebase"
+> topic from you, and if so how?
 
-And it turns out that the documentation is crappy.  Perhaps
-something like this, but an illustration may not hurt.
+Yes, but only through the first patch in the series. Unless I'm
+mistaken, I would can get a list of revisions to rebase using
+git-patch-id, but to convert that into a instruction list with running
+git-log on each commit, I planned to use 'git rev-list --format=...
+--no-walk=unsorted --stdin', which of course doesn't exist before
+patch 1/4.
 
- Documentation/rev-list-options.txt | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index d9b2b5b..c147117 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -579,9 +579,10 @@ Commit Ordering
- By default, the commits are shown in reverse chronological order.
- 
- --topo-order::
--
--	This option makes them appear in topological order (i.e.
--	descendant commits are shown before their parents).
-+	This option makes them appear in topological order.  Even
-+	without this option, descendant commits are shown before
-+	their parents, but this tries to avoid showing commits on
-+	multiple lines of history intermixed.
- 
- --date-order::
- 
+The rest of the current series is a little fuzzy to me, especially the
+confusion about reversing or not. Feel free to split out patch 1 into
+a separate topic if you like, or however you would handle that.
