@@ -1,83 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] fetch-pack: mention server version with verbose
- output
-Date: Mon, 13 Aug 2012 12:43:17 -0700
-Message-ID: <7vy5lid1d6.fsf@alter.siamese.dyndns.org>
-References: <20120810075342.GA30072@sigill.intra.peff.net>
- <20120810075816.GC8399@sigill.intra.peff.net>
- <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
- <20120810211509.GB888@sigill.intra.peff.net>
- <7v393uif9g.fsf@alter.siamese.dyndns.org>
- <7vboieehrf.fsf@alter.siamese.dyndns.org>
- <7v7gt2ehl4.fsf_-_@alter.siamese.dyndns.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: OSLC connectivity to GIT in Java
+Date: Mon, 13 Aug 2012 15:44:41 -0400
+Message-ID: <CACPiFCK_diX36uS6SCigO4VQZ4ghBVd2Dk3a_FWajBgoqQR8rg@mail.gmail.com>
+References: <1344859929250-7564860.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 13 21:44:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: "rahul.chandrashekar" <rahul.chandrashekar@in.bosch.com>
+X-From: git-owner@vger.kernel.org Mon Aug 13 21:45:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T10Xv-00028F-Nf
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 21:43:28 +0200
+	id 1T10Zb-00065m-MG
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 21:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298Ab2HMTnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 15:43:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60922 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752167Ab2HMTnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 15:43:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F058A9339;
-	Mon, 13 Aug 2012 15:43:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZG+y14RBpGkp5pPhDTdCo4EPPhY=; b=iBQghP
-	JEnU2OP2BdJBFU6++wUR5fl+tvFhofG0763clTHrrCbD6D1FOwpveGWLF9FCXu8Y
-	r76D7nypdNan5D3ceDpbH1AKxfOjbJ6Luufh9xfJiJPXyQLS2Tj2TsgMRWb0Au2r
-	hWKPctsj9toRk7M1HntWGlVZ0ElZOcaceGW1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XC7wfLHcEEssFdXYqMNqp/AVni1Jbrav
-	I8yq4e4GdgVdgjh4Hf9DgTyC06pl3yc36cVdMQXYBub5//SynpzwG0eEk4tl0kWj
-	fixUWZYBpna14XDgx76zwPHkmUwY46fiFj4/hdv8E49NV3x/CHDbHoLus7CAqLxn
-	5bl+1pJTAa8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA6BD9337;
-	Mon, 13 Aug 2012 15:43:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A0879336; Mon, 13 Aug 2012
- 15:43:19 -0400 (EDT)
-In-Reply-To: <7v7gt2ehl4.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 13 Aug 2012 12:07:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 22133692-E57F-11E1-ACCA-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752550Ab2HMTpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Aug 2012 15:45:04 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:60832 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380Ab2HMTpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Aug 2012 15:45:02 -0400
+Received: by yhmm54 with SMTP id m54so3626545yhm.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 12:45:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LT2hRwALMdYbMEghgM1kCT3+uC3udcUOYRyTklYgl88=;
+        b=O0ozjm4VQwK86JA7ELlW5bGNPxAE+DsyVDNKZFpsNMxpPcqsrxXlBaDKj1am/u2ZjK
+         CyU0Kl/hZNt1GzIg38F0KGF+7dO5d+JTn32p9pcRH69lDP373uY0q/Us+S+YARcu6mEA
+         0NiTKaUMs+eWUrALNbX9ZaQSSNjcIOqky+rtlC76h9I+ziNJYjariA7PFu5C6/3efP0A
+         ZF62PT/Q4ZpbZpEwVFN6OHtGzhAzCtppJZPr+LGkDTZJy3wP3fafiPibcZrLBon8C1Tu
+         Eo0B1vftd8nhP0xTyoVyz7xoYfxEGnIzdY8GnyYLp2uMFSfn5nIR2h0PL+XpoXK3H49h
+         ZhGQ==
+Received: by 10.68.212.98 with SMTP id nj2mr34290626pbc.138.1344887101614;
+ Mon, 13 Aug 2012 12:45:01 -0700 (PDT)
+Received: by 10.66.253.2 with HTTP; Mon, 13 Aug 2012 12:44:41 -0700 (PDT)
+In-Reply-To: <1344859929250-7564860.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203356>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 13, 2012 at 8:12 AM, rahul.chandrashekar
+<rahul.chandrashekar@in.bosch.com> wrote:
+> I am interested to connect to a GIT SCM through OSLC.
 
-> Fetch-pack's verbose mode is more of a debugging mode (and in fact
-> takes two "-v" arguments to trigger via the porcelain layer). Let's
-> mention the server version as another possible item of interest.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * And this is your 4 adjusted for the previous one, releaving the
->    caller from having to figure out where the capability string
->    ends.
+It seems to me a very strange request. There is a very well
+implemented, fit-for-purpose "git protocol". OSLC, after some
+googling, is a REST-style definition over HTTP.
 
-Oops; this was a cut and paste error.  There are these four
-(counting the blank after "Subject:") lines before the description.
+We already have a git-over-http protocol, not very efficient but opens
+a window of opportunity to those behind unreasonable firewalls.
+Perhaps it is a starting point for you.
 
-    From: Jeff King <peff@peff.net>
-    Date: Fri, 10 Aug 2012 03:59:29 -0400
-    Subject: [PATCH] fetch-pack: mention server version with verbose output
+hth,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- Software Architect - OLPC
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
