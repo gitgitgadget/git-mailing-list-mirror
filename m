@@ -1,100 +1,166 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC] index-pack: produce pack index version 3
-Date: Mon, 13 Aug 2012 07:57:01 +0700
-Message-ID: <CACsJy8CNp2w6PsMSrQ4aFBwHKbOGid4pVHUhE4xgmTatrnEepQ@mail.gmail.com>
-References: <1344772889-8978-1-git-send-email-pclouds@gmail.com>
- <7vtxw8exii.fsf@alter.siamese.dyndns.org> <7vlihjgaaj.fsf@alter.siamese.dyndns.org>
+From: Christopher Marshall <christopherlmarshall@gmail.com>
+Subject: git svn clone, a non-standard layout question
+Date: Sun, 12 Aug 2012 23:23:16 -0400
+Message-ID: <CANW+GuQ=egge=NcdSakChYXXZkW=MsG9f3i9yNvoutXXVFcPzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 13 02:58:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 13 05:23:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T0iz3-0000Hf-Bi
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 02:58:17 +0200
+	id 1T0lFW-0007cR-Ih
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Aug 2012 05:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832Ab2HMA5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Aug 2012 20:57:32 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36247 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719Ab2HMA5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Aug 2012 20:57:32 -0400
-Received: by obbuo13 with SMTP id uo13so6055321obb.19
-        for <git@vger.kernel.org>; Sun, 12 Aug 2012 17:57:31 -0700 (PDT)
+	id S1753255Ab2HMDXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Aug 2012 23:23:18 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:39912 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753020Ab2HMDXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Aug 2012 23:23:17 -0400
+Received: by wicr5 with SMTP id r5so2137787wic.1
+        for <git@vger.kernel.org>; Sun, 12 Aug 2012 20:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nh16uG7c7KiZi2y3liIkSbtw1VE8C210lQ7Ssu+8OmM=;
-        b=IzJKVV1vFCO1Gt11tVEGnjnFQxJ9+IgkJ9v5uGfBoPvYyjimQJsughPHW+arNOyw5T
-         T6tOFqCFHHpkeLDQEbd0zuAt6DjpxqBJNXiZMA+XpTp2kRMOjCj5tGwD6eWm90ngCEcU
-         nFvkiG3lczKgl6vv+eydEkPIzZ60pwTK+8yu2dXAyzSDx1JxxhLzo8vpsiIpDsBWR79m
-         0cn78c01u/WPAkdPLi8OUC6mvss5FFeqQP4v1FPMFT7XiMgQBQNoEedxr0PvAIth6VT7
-         01RQZJrZMobblqHcj2h8htB6CbaN/tPsvjkjLiz6zypuh0I0wnXsIQ2q4qG8EC6mR6cn
-         zAhA==
-Received: by 10.50.193.201 with SMTP id hq9mr3756423igc.48.1344819451551; Sun,
- 12 Aug 2012 17:57:31 -0700 (PDT)
-Received: by 10.64.35.12 with HTTP; Sun, 12 Aug 2012 17:57:01 -0700 (PDT)
-In-Reply-To: <7vlihjgaaj.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=VoE5I3TKL4Jip+eBzMhjjE+jylV5D607Pk2uqL9M/5s=;
+        b=OqfYz/zA+2qzsQdgdAuwLtxDeX7kvCDrIb5VyqW5pKlg/dYFrZL83TmkATNzLDxAF1
+         WjhCIHWYeXkSIhJfmzyCH1Z5oXeuvX2m0h+gmYxzMcewt3hrhsEsDbF05OxJs6BDy6cH
+         KjZOsTibqKTC3FyQav6kofcVJddW5VknWD1cUP5XvuJ3NUlmyl1USW1RxCXY1nfpmUaM
+         P/x4ScobAcpRni8gpRkNuAx1dYEbzN8Cy/fwPmA70ACvmhpWTwAPvFJ5jiV+sv8o6E74
+         rha8MYcEDFFH8BVo/OPmG3ibzE4E8Vg67lTyYTFtCuPK/cpaZiLl0wdARPMioTLPfqNi
+         S4Aw==
+Received: by 10.216.137.193 with SMTP id y43mr3720282wei.71.1344828196189;
+ Sun, 12 Aug 2012 20:23:16 -0700 (PDT)
+Received: by 10.223.160.3 with HTTP; Sun, 12 Aug 2012 20:23:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203320>
 
-On Mon, Aug 13, 2012 at 2:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> For example, the reachability bitmap would want to say something
-> like "Traversing from commit A, these objects in this pack are
-> reachable."  The bitmap for one commit A would logically consist of
-> N bits for a packfile that stores N objects (the resulting bitmap
-> needs to be compressed before going to disk, perhaps with RLE or
-> something).  With the single "sorted by SHA-1" table, we can use the
-> index in that single table to enumerate all reachable objects of any
-> type in one go.  With four separate tables, on the other hand, we
-> would need four bitmaps per commit.
+I would like to use git svn to clone an svn repo with a non-standard
+branches layout roughly like this:
+trunk/
+tags/
+branches/
+   b1
+   b2
+   ...
+   bdir/
+      b3
+      b4
+      ...
 
-No we still need one per commit. The n-th bit is in the order of the
-object in the pack, not the index. How sha-1 is sorted does not
-matter.
+That is, every directory under branches is a branch except bdir, and
+every directory under bdir is a branch.
 
-> Either way is _possible_, but I think the former is simpler, and the
-> latter makes it harder to introduce new types of objects in the
-> future, which I do not think we have examined possible use cases
-> well enough to make that decision to say "four types is enough
-> forever".
+One thing I have attempted is this:
+   git svn clone \
+                      --trunk=trunk \
+                      --branches=branches/bdir \
+                      --branches=branches \
+                      --tags=tags \
+                      --prefix=svn/ $SVN_REPO \
+                      git.svn
 
-New types can be put in one of those four tables, depending on its
-purpose. The reason I split because I care particularly about commits
-and trees. If the new type serves the same purpose as tree, for
-example, then it's better put in tree table...
+That properly creates the remote tracking branches b1,b2,b3,b4 but
+also creates the remote tracking branch bdir, which I am trying to
+exclude.  If I were to settle for this, the bdir branch would have
+enormous trees committed to it (when I ran against the real svn repo I
+am targetting).
 
-> In either way, we would have such bitmap (or a set of four bitmaps
-> in your case) for more than one commit (it is not necessary or
-> desirable to add the reachability bitmap to all commits), and such a
-> "reachability extension" would need to store a sequence of "the
-> commit object name the bitmap (or a set of four bitmaps) is about,
-> and the bitmap (or set of four bitmaps)".  That object name does not
-> have to be 20-byte but would be a varint representation of the
-> offset into the "sorted by SHA-1" table.
+I get can exactly the branch mapping I want by editing .git/config like this:
+[svn-remote "svn"]
+        url = file:///home/chris/programs/svn/repo
+        fetch = trunk:refs/remotes/svn/trunk
+        tags = tags/*:refs/remotes/svn/tags/*
+        branches = branches/{b1,b2}:refs/remotes/svn/*
+        branches = branches/bdir/{b3,b4}:refs/remotes/svn/*
 
-How do you reach the bitmap, given its commit sha-1?
+but then I would have to manually add branches before every git svn
+fetch, or risk not importing new branches that other developers have
+created since I last fetched.
 
-> That varint representation
-> would be smaller by about 3.5 bits if you have a separate "commit
-> only, sorted by SHA-1" table (as the number of all objects tend to
-> be 10x larger than the number of all commits that need them).  For
-> the particular case of "we want to only annotate the commits, never
-> other kinds of objects" use case, it would be a win.  But without
-> knowing what other use cases we will want to use the "object
-> annotation in the pack index file" mechanism for, it feels like a
-> premature optimization to me to have four tables to shave 3.5 bits
-> per object.
+Chris Marshall
 
-caching trees for faster traversal in general case (sort of pack v4
-but it comes as a cache instead of replacing the real pack).
--- 
-Duy
+p.s.  Here is the bash script I am using to experiment with this type
+of svn layout.  It creates a svn repo with the structure described
+above, then applies my second (non-wildcard) solution.  The "bash"
+line right before the cleanup lines at the end is to allow you to look
+around before everything disappears.
+
+#!/bin/bash
+# file_summary: svn non-standard layout.  this works, and excludes
+bdir, but by not using wild cards it requires that branches be
+added manually before a fetch.
+
+export SVN_EDITOR=vi
+CWD=$(pwd)
+export URL=file://$(pwd)/repo
+
+svnadmin create repo
+
+# create top level directories.
+svn checkout $URL proj
+cd proj
+svn mkdir branches tags trunk
+svn commit -m "created top level dirs"
+svn mkdir branches/bdir
+svn commit -m "created non-standard branches dir"
+cd $CWD
+
+# trunk
+svn checkout ${URL}/trunk proj-t
+cd proj-t
+echo -e "1\n2\n3" > f1
+svn add f1
+svn commit -m "added f1: 1,2,3"
+cd $CWD
+
+# create branches b1,b2,b3,b4
+svn copy ${URL}/trunk ${URL}/branches/b1 -m "created branch b1"
+svn copy ${URL}/trunk ${URL}/branches/b2 -m "created branch b2"
+svn copy ${URL}/trunk ${URL}/branches/bdir/b3 -m "created branch b3"
+svn copy ${URL}/trunk ${URL}/branches/bdir/b4 -m "created branch b4"
+cd $CWD
+
+# create a b1 commit
+svn checkout ${URL}/branches/b1 proj-b1
+cd proj-b1
+echo -e "b1" >> f1; svn commit -m "b1 line"
+cd $CWD
+
+# create a b2 commit
+svn checkout ${URL}/branches/b2 proj-b2
+cd proj-b2
+echo -e "b2" >> f1; svn commit -m "b2 line"
+cd $CWD
+
+# create a b3 commit
+svn checkout ${URL}/branches/bdir/b3 proj-b3
+cd proj-b3
+echo -e "b3" >> f1; svn commit -m "b3 line"
+cd $CWD
+
+# create a b4 commit
+svn checkout ${URL}/branches/bdir/b4 proj-b4
+cd proj-b4
+echo -e "b4" >> f1; svn commit -m "b4 line"
+cd $CWD
+
+git svn clone --trunk=trunk --branches=branches --tags=tags
+--prefix=svn/ $URL -r 1:1 git.svn
+cd git.svn
+grep -v branches .git/config > .git/config2
+mv .git/config2 .git/config
+echo "branches = branches/{b1,b2}:refs/remotes/svn/*" >> .git/config
+echo "branches = branches/bdir/{b3,b4}:refs/remotes/svn/*" >> .git/config
+rm .git/svn/.metadata
+git svn fetch
+
+bash
+cd $CWD
+rm -rf repo proj proj-{t,b{1,2,3,4}} git.svn
