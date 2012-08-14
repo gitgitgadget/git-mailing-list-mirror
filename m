@@ -1,84 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] fetch-pack: mention server version with verbose
- output
-Date: Mon, 13 Aug 2012 21:56:57 -0700
-Message-ID: <7v8vdiax5y.fsf@alter.siamese.dyndns.org>
-References: <20120810075816.GC8399@sigill.intra.peff.net>
- <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
- <20120810211509.GB888@sigill.intra.peff.net>
- <7v393uif9g.fsf@alter.siamese.dyndns.org>
- <7vboieehrf.fsf@alter.siamese.dyndns.org>
- <7v7gt2ehl4.fsf_-_@alter.siamese.dyndns.org>
- <20120813205423.GA31630@sigill.intra.peff.net>
- <7v628mcxdf.fsf@alter.siamese.dyndns.org>
- <20120813211109.GA32688@sigill.intra.peff.net>
- <20120814015927.GA7891@sigill.intra.peff.net>
- <20120814020210.GB7891@sigill.intra.peff.net>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] rev-list docs: clarify --topo-order description
+Date: Mon, 13 Aug 2012 22:33:22 -0700
+Message-ID: <CAOeW2eE63JQbo+x7ZTDupt=auvo2_4Df790TPOtTEynCBK6z5g@mail.gmail.com>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eGoNvgpbQ9iM0xHpSD1Z4XyC-J8VNVW0bVw3p9qOeijjg@mail.gmail.com>
+	<7vobmebdfc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 14 06:57:13 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 07:33:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T19Bk-0003vx-Id
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 06:57:08 +0200
+	id 1T19kv-0003YN-5r
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 07:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060Ab2HNE5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 00:57:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33519 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751684Ab2HNE5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 00:57:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CB688C06;
-	Tue, 14 Aug 2012 00:57:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MrcE33DzKXPpVm/LIyjd4HZOswE=; b=KzxAZV
-	bNvJVtwHnHoSlZ6DX2JIigl3c2ASw7WSCg3q2gI0cJyOJk6QZNXwvemdev8rjHCs
-	Xt8Y0Mekct65kORbvL+sO9bTOS2S9Lb0iHL9dAZLwmqrr4yjJVb2uPxyNA6MR0ru
-	b5kq+yXf0/wCFZNrE1+x6b/2YRpf60/dNrUqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sp5CSiHv7mBnqDy9XVCTDaJj0q2zuG3j
-	a2X/V2BnYAYmVxM2Tx/1VXn0jwR8bPDQ6dDAIPr3wxoiymbHQjnwOOnjyeDHzdE6
-	U3MtHGY7V3DXSy+GujNC1L6Ty7hbzhZbFjLUBjuEqtJaBepWa+e82XcKkqMmOlzh
-	ht8Pmd/sIUI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE0C88C05;
-	Tue, 14 Aug 2012 00:56:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D9B38C04; Tue, 14 Aug 2012
- 00:56:59 -0400 (EDT)
-In-Reply-To: <20120814020210.GB7891@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 13 Aug 2012 22:02:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7AC91750-E5CC-11E1-8C22-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753738Ab2HNFdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 01:33:23 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:43046 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752374Ab2HNFdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 01:33:23 -0400
+Received: by yhmm54 with SMTP id m54so4374yhm.19
+        for <git@vger.kernel.org>; Mon, 13 Aug 2012 22:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=bF9GGeeBwIJ/XeCWnUjf7nKvJmKiGBb7Tsod5IersVw=;
+        b=g6WaD/sIPEYUiuryc6PfYe4FfXW9HJq2uKBMyaDwcmeBbc34X1XlEoYKlpzS01aWeK
+         GhsL+LclyDAtQ6LMImu6l81jrjerItjfngkZqV+sXiMKUVGy3zPlR9NByExC9SSw7Mpb
+         gZuojGq2fgJlFtRAy0/QCSECvxM8nHOkZUHDTD3PGo5IsZME2lATa//bwRHBxxZbW680
+         DHV6MkCgqwsvKO8Vtgj0bKpep+5parzovJR1cAB7lbNW3EUV/oCsidZir4WIFNnvpado
+         O9s2mUyCRS3RTTQrps3B9Kp9I0KoVJOedquVeUOzsqdlbi0uRYMT7arIphwdAaAYjxUA
+         SYSQ==
+Received: by 10.66.87.66 with SMTP id v2mr27480941paz.71.1344922402103; Mon,
+ 13 Aug 2012 22:33:22 -0700 (PDT)
+Received: by 10.68.120.112 with HTTP; Mon, 13 Aug 2012 22:33:22 -0700 (PDT)
+In-Reply-To: <7vobmebdfc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203385>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Aug 13, 2012 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+>
+>>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+>>> index 6a4b635..dc501ee 100644
+>>> --- a/Documentation/rev-list-options.txt
+>>> +++ b/Documentation/rev-list-options.txt
+>>> @@ -579,15 +579,32 @@ Commit Ordering
+>>>  By default, the commits are shown in reverse chronological order.
+>>
+>> It seems likely that those reading the above sentence will continue on
+>> to read about --topo-order, but still, do you think the "descendant
+>> commits are shown before parents" part belong here instead?
+>
+> I do not think so.  When you are not limited (i.e. limit_list() is
+> not called), you could do something like "git rev-list 4 5" in a
+> history like this:
+>
+>         --1---5---2---3---4
+>
+> and get end up getting "5 4 3 2 1", and "2" certainly doesn't get
+> shown before "5" does.
 
-> +	if ((agent_feature = server_feature_value("agent", &agent_len))) {
->  		agent_supported = 1;
-> +		if (args.verbose && agent_len) {
-> +			fprintf(stderr, "Server version is %.*s\n",
-> +				agent_len, agent_feature);
-> +		}
-> +	}
+Oh, interesting. I had no idea, although that does make sense. Thanks.
 
-OK.  The one I queued in 'pu' said "Server version not disclosed"
-when length was 0, but I think I like this one better.
-
-Also I like the the update to the parsing code in the previous
-patch.  It makes the logic clearer.
-
-Thanks.
+Still, the "Even without this option" strongly suggests to me that
+what follows ("descendant commits are shown before parents") applies
+to the "By default" case. Would it be correct to say something like
+"By default, the commits are shown in reverse chronological order.
+When commit limiting is in effect, descendant commits are shown before
+parents."? I'm not sure the "commit limiting" section in the man page
+involves the same options as "limit_list" (I rather think they don't),
+but I don't know if there's a better term to use in the documentation
+either.
