@@ -1,127 +1,85 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Tue, 14 Aug 2012 10:04:03 -0700
-Message-ID: <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
- <87zk5x6fox.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Implement ACL module architecture and sample MySQL ACL
+ module
+Date: Tue, 14 Aug 2012 10:06:37 -0700
+Message-ID: <7vsjbp768y.fsf@alter.siamese.dyndns.org>
+References: <feafacf49186d7cf0eed0002a82289b318f56ff8.1344938189.git.minovotn@redhat.com>
+ <7v1uj98nbj.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJtYz3OX1C6HS7ivhJKBOSg=Ex3rKEdTYSbcDfFT1Jh4hw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 14 19:04:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Novotny <minovotn@redhat.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 14 19:06:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1KXf-0007VO-0Q
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 19:04:31 +0200
+	id 1T1KZs-0002Eu-4Y
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 19:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885Ab2HNREZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 13:04:25 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:61556 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785Ab2HNREY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 13:04:24 -0400
-Received: by bkwj10 with SMTP id j10so221776bkw.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 10:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kUf/7l2XV7HAEgXFwHZyzS1oHMF+q4NVhrOFKupAVPk=;
-        b=gfAAv7X5JcNBo02iKA6WP9PI57MFQ1ZRcvLhX4oX0OJxqxgy8KNzD4srtEGo75OoLy
-         dcvO6Cf09KmCZp5Ci7y96e5bo4RzcUN9bfXQy6biGrxd+qJLBStFkNhPSYN21Wjs1oDa
-         NM6bhNy6pJrcuWp2W9XdGBzAKUzsuFE42nKylgJ5nBjCRI9pBsqZc15y+lIkwVTslR1S
-         PogWkfkR4165ByFFTkjmukc+hTljYJBgWhPa3ngHYrf3MoiHNjC+rTO8z8a5AAEtGG71
-         uV6AP3UtmV0kwFWsnEXJJv285mfbiXGxv4wrhpgZicv4XXrHO1qgI6fJmru3LqTuRl04
-         L0VA==
-Received: by 10.204.154.131 with SMTP id o3mr6533273bkw.87.1344963863259; Tue,
- 14 Aug 2012 10:04:23 -0700 (PDT)
-Received: by 10.204.132.72 with HTTP; Tue, 14 Aug 2012 10:04:03 -0700 (PDT)
-In-Reply-To: <87zk5x6fox.fsf@thomas.inf.ethz.ch>
+	id S1755697Ab2HNRGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 13:06:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60654 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752809Ab2HNRGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 13:06:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F6E160B0;
+	Tue, 14 Aug 2012 13:06:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u66RWNf/APwZCXeUZE8AqHvaH2U=; b=KVNUXe
+	KoK97GBC64sqOOg5qjxFKobdvR8qDog9Vo2lO7BXyoIwKs66qcRkLBc/AvT33CTo
+	Z74NPo2t+N1DlMW1ISf0iYfNuG2ll/qX62d+Ql0cOGOygptIBiMU3Jek9c4JUnM+
+	s0+wPWWABJf0bMkSKO06CpOf55QOxzYdUDMKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E3PhCxeD4jalB8ad/XsP2Kl2VxEnaZda
+	2apKf0gMU0CCMuyqcBtMCPqUYrgzr7iac3Gru0JnlMNDkv6oHe579IVL7JbWtym4
+	7dsDyh4TCyR4OWzMfHlNrfPkQD3LJ/a+pxMFhDxAVtsJyZtL2DmUUHFxnEsAuEw0
+	/QwLfrHFz0w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C84360AF;
+	Tue, 14 Aug 2012 13:06:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAB2260AE; Tue, 14 Aug 2012
+ 13:06:38 -0400 (EDT)
+In-Reply-To: <CAJo=hJtYz3OX1C6HS7ivhJKBOSg=Ex3rKEdTYSbcDfFT1Jh4hw@mail.gmail.com> (Shawn
+ Pearce's message of "Tue, 14 Aug 2012 09:27:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 695E8854-E632-11E1-B69D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203414>
 
-On 14 August 2012 01:27, Thomas Rast <trast@student.ethz.ch> wrote:
-> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->
->> # On branch master
->> # Your branch and 'origin/master' have diverged,
->> # and have 250 and 19 different commit(s) each, respectively.
->> #
->> nothing to commit (working directory clean)
->>
->> He asked me what to do and I told him to do what has always worked for
->> me in the past when something like this happened: gitk, "reset master
->> branch to here" (to a commit before the divergence and using --hard),
->> git pull origin master. Problem solved.
->
-> There are several layers of pitfalls and misunderstandings here.
->
-> * Is your work origin/master..master (that is, anything in master but
->   not origin/master) really so worthless as to make "scrap it all!" the
->   normal course of resolution?
+Shawn Pearce <spearce@spearce.org> writes:
 
-Of course, it's master. Nobody should be working on master directly.
+> Parsing the request line of git-daemon is easy. But we could make it
+> easier. An alternative arrangement would be to add a new command line
+> flag to git daemon like --command-filter that names an executable
+> git-daemon will invoke after parsing the request line. It can pass
+> along the client IP address, command request, repository name, and
+> resolved repository path, and tie stdin/stdout to the client. This
+> binary can decide to exec the proper git binary for the named command,
+> or just exit to disconnect the client and refuse service. This makes
+> it simple for a tool like gitolite to plug into the git-daemon
+> authorization path, without needing to be the network daemon itself,
+> worry about number of active connection slots, etc.
 
->   Or perhaps the real reason for the divergence is that upstream rewrote
->   its master (eeeek!), in which case you should get them acquainted with
->   the clue bat... and probably rebase instead of merge.
-
-Upstream is fine. Nobody else is having any problems.
-
-> * pull = fetch + merge!  Repeat this a few times until it sinks in.
->   Then print it on A0 and stick it up in your office or something.
-
-Yes, I know.
-
->   For your case this means that the pull command is roughly equivalent
->   to
->
->     git fetch origin master
->     git merge FETCH_HEAD
->
->   The two-arg form of fetch does *not* update origin/master.  Assuming
->   you got the reset right, the merge will fast-forward to whatever
->   origin's master points to -- but origin/master is still the old state!
-
-Ah, now we're getting to something I did *not* know. :-) So FETCH_HEAD
-!= origin/master? I tried to find out more information about
-FETCH_HEAD but there doesn't seem to be much. I have seen "FETCH_HEAD"
-show up in the terminal but always just ignored it as a Git
-implementation detail. When/how does origin/master get set then? I
-always assumed that was part of git fetch and then git merge would
-actually move master to origin/master.
-
-> * Resetting to something that you think will fast-forward, only to then
->   fast-forward it to the newest state, is silly.  You can just reset to
->   the newest state instead.
-
-:-) Well, yeah, now that you point it out... :-)
-
-Still, just resetting ignores all the problems that led to the current
-situation. Normally, when I reset and then FF I can be sure (if it
-works) that things were not completely screwed up. At least, that has
-always been my theory.
-
-> Taking all of this together, I think you should stop using two-arg
-> pull[*] or fetch, and replace your error-prone recipe with simply
->
->   git fetch
->   git reset --hard origin/master
->
-> Assuming, as before, that your local work is worthless.  Is it?
-> Otherwise it would be better to run something like
->
->   git fetch
->   git rebase origin/master
->
->
-> [*] it's ok if you use it with an URL instead of a remote nickname
-
-Why would that be okay? What is the difference? Isn't the nickname
-just an alias for a URL?
+I think that is a good direction to go in, except that I am unsure
+what kind of conversation do you want to allow between the "command
+filter" helper and the client by exposing standard input and output
+stream to to the helper.  If the client side has a matching "pre
+negotiate command" helper support, then presumably the helpers can
+discuss what Git protocol proper does not care about before deciding
+to allow the connection go through, but until that happens, opening
+the stdio streams up to the helper sounds like an accident waiting
+to happen to me (e.g. "fetch-pack" connects, the server side helper
+reads the first pkt-line from the client, says "OK, you may proceed"
+to the daemon, then the daemon spawns the "upload-pack", which will
+obviously see a corrupt request stream from "fetch-pack").
