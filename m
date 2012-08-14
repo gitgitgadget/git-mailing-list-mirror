@@ -1,91 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What should mergetool do with --no-prompt?
-Date: Tue, 14 Aug 2012 10:23:58 -0700
-Message-ID: <7v1uj9bd5d.fsf@alter.siamese.dyndns.org>
-References: <CAJDDKr5TK910n603jcmoq6WoaLL9DX9hgwF3Y+MmjngMpAXPQw@mail.gmail.com>
- <20120814071823.GA21031@hashpling.org>
- <7vehn98qcv.fsf@alter.siamese.dyndns.org>
- <20120814170900.GA28978@hashpling.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Implement ACL module architecture and sample MySQL ACL module
+Date: Tue, 14 Aug 2012 10:26:30 -0700
+Message-ID: <CAJo=hJu7W6JnNLYvahaQ43ZNqDtrurTOLCnLfZacVJKeL6VMFg@mail.gmail.com>
+References: <feafacf49186d7cf0eed0002a82289b318f56ff8.1344938189.git.minovotn@redhat.com>
+ <7v1uj98nbj.fsf@alter.siamese.dyndns.org> <CAJo=hJtYz3OX1C6HS7ivhJKBOSg=Ex3rKEdTYSbcDfFT1Jh4hw@mail.gmail.com>
+ <7vsjbp768y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 19:24:12 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michal Novotny <minovotn@redhat.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 19:27:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1Kqe-0001cz-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 19:24:08 +0200
+	id 1T1KtU-0005pC-KG
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 19:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360Ab2HNRYC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 13:24:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35533 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752809Ab2HNRYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 13:24:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3C6D658F;
-	Tue, 14 Aug 2012 13:24:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uKygvVm/KCd4eUbx4jp3ngH667E=; b=RgCkeM
-	dPFiq5c0s7frPXG8dwapUt3HbXMRyJu6qQ+4o6oPxZrW2fLpVIfmFV/j4Oq6bRUt
-	Mhhq6/IeCIJ+QQQ0S4d8epCeQkLzDUrwGY9PocZYGFsQkNfaixHfV2vpmtqUPSB5
-	hfIBIre0IqluvO71EU/sqwLvzAt5aaJU5Sb94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v9S65lHTih+xjsu/x2J1ITkJut2D6MVo
-	KibOD3MH/ggT6wClITqh0bPS2etn5RnRu28Qx9WRaBifPzmQgofr30WkG/r2PEGP
-	G9eoPIN2dg9gDCFT/uuRTXagfLyp4jinmM+b2c5vgoNw69znG1kDX4evX547Mbkv
-	pca7XNW/P9E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B73B0658E;
-	Tue, 14 Aug 2012 13:24:00 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32265658D; Tue, 14 Aug 2012
- 13:24:00 -0400 (EDT)
-In-Reply-To: <20120814170900.GA28978@hashpling.org> (Charles Bailey's message
- of "Tue, 14 Aug 2012 18:09:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D613F0F4-E634-11E1-A6CB-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756633Ab2HNR0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 13:26:54 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:63519 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756516Ab2HNR0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 13:26:51 -0400
+Received: by vbbff1 with SMTP id ff1so585236vbb.19
+        for <git@vger.kernel.org>; Tue, 14 Aug 2012 10:26:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ObLSJKwZ1SwemQyn2zsrkE50HlsIFHDtzCGKwHDU8HQ=;
+        b=Du5Rhl5WSaJ+BLp3489FQkyZu7yi1KmM0xn/i8cRX7T/dXh1F/x2iV/drEKWdo9LVQ
+         J3cT3bS1IzPpVQ4A/sqMSUZqW/DM74k14q5CikE/FQAQxe1eIniwtvXkfumiuC8L/Gzh
+         PD6q4QRq+fZYGvv7Ij2KJd20UREmqoXWdFyh0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-gm-message-state;
+        bh=ObLSJKwZ1SwemQyn2zsrkE50HlsIFHDtzCGKwHDU8HQ=;
+        b=dpy3vxuQoK8vLmF77C79H6ho2jWehRl5z+5iAHvgY+oEkVbRFlwAsWIHzwO1nfZpBJ
+         ocfVELa6upjMe4qBDTZS2Sc5Ym9bvk9BbZ/GJ2lFHzFT7jw1oa7uRKk88YjIDrOxqSeQ
+         f9KguffRlQV5qY0T9G5JPShPdzqd1zsY5PvizkYIbnQfneQ8T7ToYgNnTs/8BchZ7XSY
+         nz4QPlG8iYx180iUChkNnUVXP6URSPsoVfpGWeFoSaYMWBE4ieKGhraisIvZg6pzU10u
+         02Ofc0nW61dcCDi/4K8SP477l0hA6OTo8SFn4CKD3uY5IM3bQB7ICep3wP+hMJSOYxCH
+         NJuQ==
+Received: by 10.42.129.145 with SMTP id q17mr13771935ics.54.1344965210366;
+ Tue, 14 Aug 2012 10:26:50 -0700 (PDT)
+Received: by 10.64.22.231 with HTTP; Tue, 14 Aug 2012 10:26:30 -0700 (PDT)
+In-Reply-To: <7vsjbp768y.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQkdf2nNrrkkU0PdF3D+zDrO8MxvXjRWZdZueavsbPv2Lr+nscM3TpSbcFTKlUUvghf6vCnE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203419>
 
-Charles Bailey <charles@hashpling.org> writes:
-
-> On Tue, Aug 14, 2012 at 08:06:56AM -0700, Junio C Hamano wrote:
->> 
->> Could it be that the calling user or script does not even have a
->> terminal but still can spawn the chosen mergetool backend and
->> interact with the user via its GUI?  Or it may have a terminal that
->> is hard for the user to interact with, and the prompt and "read ans"
->> may get stuck.
+On Tue, Aug 14, 2012 at 10:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 >
-> It could be, although this certainly wasn't considered in the original
-> design. I know that we removed explicit references to /dev/tty and
-> replaced them with exec n>&m juggling which made things generally more
-> robust and allowed some basic shell tests to work more reliably. I
-> don't object to handling non-interactive mode better but it feels
-> unsatisfactory to only be able to resolve some types of conflict and
-> have to skip others.
+>> Parsing the request line of git-daemon is easy. But we could make it
+>> easier. An alternative arrangement would be to add a new command line
+>> flag to git daemon like --command-filter that names an executable
+>> git-daemon will invoke after parsing the request line. It can pass
+>> along the client IP address, command request, repository name, and
+>> resolved repository path, and tie stdin/stdout to the client. This
+>> binary can decide to exec the proper git binary for the named command,
+>> or just exit to disconnect the client and refuse service. This makes
+>> it simple for a tool like gitolite to plug into the git-daemon
+>> authorization path, without needing to be the network daemon itself,
+>> worry about number of active connection slots, etc.
+>
+> I think that is a good direction to go in, except that I am unsure
+> what kind of conversation do you want to allow between the "command
+> filter" helper and the client by exposing standard input and output
+> stream to to the helper.
 
-Exactly.  The mention of "a matching GUI" below you quoted was a
-suggestion to improve that "only resolve some but not others"
-problem.  The usual mergetool backend, e.g. meld, may not be capable
-of resolving symlink conflicts, but "git mergetool" could run a GUI
-dialog that gives the user "ours/theirs/fail" choice (or better yet
-"merge result value" textbox in addition) for such a path.  The same
-for delete/modify conflicts.
+Sorry, I was thinking the helper would exec the git command, and thus
+pass along the stdin/stdout socket.
 
->> In such an environment, the ideal behaviour for the "git mergetool"
->> frontend may be not to interact via the terminal at all and instead
->> run its interaction to choose the resolution using a matching GUI
->> interface.
+>  If the client side has a matching "pre
+> negotiate command" helper support, then presumably the helpers can
+> discuss what Git protocol proper does not care about before deciding
+> to allow the connection go through, but until that happens, opening
+> the stdio streams up to the helper sounds like an accident waiting
+> to happen to me (e.g. "fetch-pack" connects, the server side helper
+> reads the first pkt-line from the client, says "OK, you may proceed"
+> to the daemon, then the daemon spawns the "upload-pack", which will
+> obviously see a corrupt request stream from "fetch-pack").
+
+But seeing this, yes, that is a bad idea. Better to treat that like a
+hook, where exit status 0 allows the connection to continue, and exit
+status non-zero causes the connection to be closed. Maybe with an
+error printed to stderr (if any) being echoed first to the client if
+possible using the ERR formatting notation.
