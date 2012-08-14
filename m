@@ -1,97 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What should mergetool do with --no-prompt?
-Date: Tue, 14 Aug 2012 08:06:56 -0700
-Message-ID: <7vehn98qcv.fsf@alter.siamese.dyndns.org>
-References: <CAJDDKr5TK910n603jcmoq6WoaLL9DX9hgwF3Y+MmjngMpAXPQw@mail.gmail.com>
- <20120814071823.GA21031@hashpling.org>
+Subject: Re: [PATCH] rev-list docs: clarify --topo-order description
+Date: Tue, 14 Aug 2012 08:47:04 -0700
+Message-ID: <7va9xx8ohz.fsf@alter.siamese.dyndns.org>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+ <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+ <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tim Henigan <tim.henigan@gmail.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Aug 14 17:07:52 2012
+Cc: <git@vger.kernel.org>,
+	"Martin von Zweigbergk" <martin.von.zweigbergk@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 14 17:47:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1Iie-0003iW-1J
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 17:07:44 +0200
+	id 1T1JL8-00034R-OH
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 17:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756656Ab2HNPHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 11:07:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34342 "EHLO
+	id S1756044Ab2HNPrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 11:47:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54783 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932083Ab2HNPG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 11:06:59 -0400
+	id S1751672Ab2HNPrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 11:47:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AEF8796C;
-	Tue, 14 Aug 2012 11:06:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAA9C676B;
+	Tue, 14 Aug 2012 11:47:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CNncvbG8VrxTuPxrQPXGGAV9B8M=; b=jjV8Jt
-	/rHwM0TIs214a/imaFLbqKtgRY3S7lg+keKvAW1ovXY3PsPFFV28Bw2a4dY10wPY
-	e/TBD6svFWWLGx2Alm0F4qzxAG+dzfxZbKwA+RgeUjUxP/BY8xMYxTDo4QprryeF
-	NU6nWPVV28o6UjU9P3lDVz2UCp9gzOvYEmHjs=
+	:content-type; s=sasl; bh=FLEMOVJFk6R8rbQzMu26kg5av6s=; b=Uu9TiN
+	LlE+ybffhbePpjPw4gHWZZkPWYbwjp1o2+afUIKdE/jy7ibOIqe0F+hL6JqllE61
+	HcJJ4xn3wYpPQXH7Xwv2YfETA69ubjViZMw/8dxGLBW5xlWjTw23yCQpKjsXM9hl
+	vNBnjJgS+MCmM0zmAR+M46nHDtHaVZKRkgviA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TzWGQRJ3updK3nqolJqkzBZc9FTnntKh
-	qCZ+FHnRWg5xBsLjpcIqnJbOMnW0sWOvKa+VrYHyTlH4Y8yRc2wktGLWCxcv+kQM
-	qCjQo2SEKGJI4BJiF/D5Gor027QXEowKOnHxzD2uICWtejA+MPolCeOwN7kJWudX
-	ee2Y9Nfr/v0=
+	:content-type; q=dns; s=sasl; b=w39g98T+HZvL6M7BokgE+4TSXCIjJRkd
+	UnADLG8MdyLfpGIcSzY2gxpTM9PpDeQiny+WmCT42IRUzm6NBDjDzovWleyK7lSI
+	7fwI/PphI4F0IHTx0/x2nHHz0OcY5D+XRsWrHMmwp56j0Mt59cubxTZLLXpXHefl
+	Tl3wF1VCq9c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ECBF796A;
-	Tue, 14 Aug 2012 11:06:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97B4A6769;
+	Tue, 14 Aug 2012 11:47:06 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB57A7966; Tue, 14 Aug 2012
- 11:06:57 -0400 (EDT)
-In-Reply-To: <20120814071823.GA21031@hashpling.org> (Charles Bailey's message
- of "Tue, 14 Aug 2012 08:18:23 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 138456766; Tue, 14 Aug 2012
+ 11:47:05 -0400 (EDT)
+In-Reply-To: <87sjbpa5m8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 14 Aug 2012 16:51:59 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1297A4C-E621-11E1-BE83-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4C96D0D8-E627-11E1-AF21-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203405>
 
-Charles Bailey <charles@hashpling.org> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> On Tue, Aug 14, 2012 at 12:07:26AM -0700, David Aguilar wrote:
->> Right now there are two code paths, resolving deletion conflicts
->> and resolving symlink conflicts, in git-mergetool that do not
->> honor --no-prompt.  They force user-interaction with the shell
->> even though the caller (such as a program) said that they do
->> not want to be prompted.
->> 
->> This was an oversight from when this option was first added.
->> 
->> I think a simple and sensible thing to do would be for mergetool
->> to skip over these entries when --no-prompt is supplied.
->> 
->> Does this sound like a good idea?
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> --no-prompt is designed to remove the prompt before launching a
-> mergetool. This is because it is mostly pointless but does provide a
-> convenient point to interrupt (C-c) a large multifile conflict
-> resolution.
+>> Thomas Rast <trast@student.ethz.ch> writes:
+>>
+>>> So the --topo-order switch *ensures* that we process commits in
+>>> topological order even in the face of skewed clocks.
+>>
+>> Yes, I *think* that I attempted to show with the illustration.
 >
-> It was never supposed to be a batch mode switch. By it's very nature
-> mergetool is interactive so I don't see any advantage to pretending
-> otherwise.
+> But then the new description is wrong.  It claims that children are
+> always before parents, which is not true in the face of clock skew.
 
-Could it be that the calling user or script does not even have a
-terminal but still can spawn the chosen mergetool backend and
-interact with the user via its GUI?  Or it may have a terminal that
-is hard for the user to interact with, and the prompt and "read ans"
-may get stuck.
-
-In such an environment, the ideal behaviour for the "git mergetool"
-frontend may be not to interact via the terminal at all and instead
-run its interaction to choose the resolution using a matching GUI
-interface.  I see when "read ans" fails (e.g. the standard input to
-the mergetool is closed), resolve_{symlink,deleted}_merge will not
-get stuck but instead fail, so perhaps David's issue could be solved
-by running "git mergetool --tool=... </dev/null" or something?
+Ah, you are talking about the "even without this option" part.
+Yeah, that does not hold true.
