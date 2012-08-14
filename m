@@ -1,85 +1,148 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] rev-list docs: clarify --topo-order description
-Date: Tue, 14 Aug 2012 10:45:05 +0200
-Message-ID: <877gt16ewe.fsf@thomas.inf.ethz.ch>
-References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 10:45:25 2012
+From: Michal Novotny <minovotn@redhat.com>
+Subject: [PATCH] gitweb: Add option to limit repositories to be shown by ServerName
+Date: Tue, 14 Aug 2012 10:47:48 +0200
+Message-ID: <d4f61bb06c9a125113442ae63be15ccea9464afd.1344932897.git.minovotn@redhat.com>
+Cc: Michal Novotny <minovotn@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 14 10:48:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1CkY-0007bN-Ik
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 10:45:18 +0200
+	id 1T1CnE-0004OA-TG
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 10:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754794Ab2HNIpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 04:45:11 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:33121 "EHLO edge20.ethz.ch"
+	id S1755122Ab2HNIry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 04:47:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:60152 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754725Ab2HNIpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 04:45:08 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 10:45:04 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 10:45:06 +0200
-In-Reply-To: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 13 Aug 2012 15:21:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754725Ab2HNIrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 04:47:52 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q7E8lqOl020939
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Tue, 14 Aug 2012 04:47:52 -0400
+Received: from miglaptop.brq.redhat.com.com (dhcp-1-191.brq.redhat.com [10.34.1.191])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id q7E8loHR002054;
+	Tue, 14 Aug 2012 04:47:51 -0400
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203393>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
+this is the patch to limit repositories to be shown
+by the ServerName in the gitweb.cgi script. This is
+useful for cases you're hosting multiple websites on
+a single machine and you don't want all the repos to
+be shown in all of them.
 
->  --topo-order::
-> -
-> -	This option makes them appear in topological order (i.e.
-> -	descendant commits are shown before their parents).
-> +	This option makes them appear in topological order.  Even
-> +	without this option, descendant commits are shown before
-> +	their parents, but this tries to avoid showing commits on
-> +	multiple lines of history intermixed.
+Functionality: Simply create file called 'server' in
+               the git repository (the same location
+               like for 'description' file) and put
+               the server name to show this repo for.
 
-I don't think that is true in general.  Without any -order options, we
-process commits in date order, which *usually* means topological order,
-but not always.  You can easily verify this:
+Testing: It's been tested on a test server and everything
+         was working fine/as expected. If there's no
+         'server' file in the git repository it falls back
+         to the default option to show the repository as
+         it was working before this patch applied not to
+         introduce any regressive behaviour.
 
-  $ git init
-  $ date
-  Tue Aug 14 10:39:49 CEST 2012
-  $ echo initial >file
-  $ git add file
-  $ GIT_COMMITTER_DATE="Tue Aug 14 11:39:49 2012" git commit
-  $ echo foo >file
-  $ git commit -mfoo file
-  $ git checkout -bside HEAD^
-  $ echo bar >file
-  $ git commit -mbar file
-  $ git log --all --oneline
-  8c71325 bar
-  e5072d7 initial
-  1be702c foo
+Use case scenario: Imagine you have one server running HTTPd
+                   for 3 domains, let's call them domain1,
+                   domain2 and domain3, and you want all of
+                   them to have a git server accessible via
+                   gitweb at these URLs:
+                   1) http://domain1/git
+                   2) http://domain2/git
+                   3) http://domain3/git
 
-So the --topo-order switch *ensures* that we process commits in
-topological order even in the face of skewed clocks.
+                   Before this patch, all the URLs would be
+                   showing the same repos however we would
+                   like to limit repo1 to be shown only on
+                   domain1, repo2 to be shown only on domain2
+                   and repo3 to be shown only on domain3. Here
+                   my patch comes handy because you simply edit
+                   the 'repo1/server' file and put 'domain1' in
+                   here and it won't get shown on any other URL.
+                   The same for repo2 and repo3 and it will be
+                   shown only for the domain it belongs to.
+                   Also, if no 'server' file exists in the repo
+                   the repository is being shown so upgrading
+                   gitweb with no creation of 'server' files
+                   will preserve the old behaviour.
 
-I suspect that
+Hope this will help, at least it did help me on my test server.
 
-> +	their parents, but this tries to avoid showing commits on
-> +	multiple lines of history intermixed.
+Any feedback appreciated!
 
-is just a fortunate side effect of the topological sort.
+Thanks,
+Michal
 
+Signed-off-by: Michal Novotny <minovotn@redhat.com>
+---
+ gitweb/gitweb.perl | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3d6a705..1b74239 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2804,6 +2804,11 @@ sub git_get_project_description {
+ 	return git_get_file_or_project_config($path, 'description');
+ }
+ 
++sub git_get_project_server {
++	my $path = shift;
++	return git_get_file_or_project_config($path, 'server');
++}
++
+ sub git_get_project_category {
+ 	my $path = shift;
+ 	return git_get_file_or_project_config($path, 'category');
+@@ -2947,6 +2952,19 @@ sub git_get_project_url_list {
+ 	return wantarray ? @git_project_url_list : \@git_project_url_list;
+ }
+ 
++sub get_project_can_export {
++	my ($path) = @_;
++
++	if (defined $ENV{'SERVER_NAME'}) {
++		my $server = git_get_project_server($path) || "";
++
++		return (($server eq $ENV{'SERVER_NAME'}) or ($server eq ''));
++	}
++	else {
++		return 1;
++	}
++}
++
+ sub git_get_projects_list {
+ 	my $filter = shift || '';
+ 	my $paranoid = shift;
+@@ -2990,7 +3008,8 @@ sub git_get_projects_list {
+ 					next;
+ 				}
+ 				# we check related file in $projectroot
+-				if (check_export_ok("$projectroot/$path")) {
++				if (check_export_ok("$projectroot/$path") and
++					get_project_can_export($path)) {
+ 					push @list, { path => $path };
+ 					$File::Find::prune = 1;
+ 				}
+@@ -3016,7 +3035,8 @@ sub git_get_projects_list {
+ 			if ($filter && $path !~ m!^\Q$filter\E/!) {
+ 				next;
+ 			}
+-			if (check_export_ok("$projectroot/$path")) {
++			if (check_export_ok("$projectroot/$path") and
++				get_project_can_export($path)) {
+ 				my $pr = {
+ 					path => $path
+ 				};
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.11.2
