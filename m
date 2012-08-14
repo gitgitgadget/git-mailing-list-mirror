@@ -1,13 +1,12 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH/RFC v3 06/16] remote-svn, vcs-svn: Enable fetching to private refs.
-Date: Tue, 14 Aug 2012 21:13:08 +0200
-Message-ID: <1344971598-8213-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH/RFC v3 05/16] Add documentation for the 'bidi-import' capability of remote-helpers.
+Date: Tue, 14 Aug 2012 21:13:07 +0200
+Message-ID: <1344971598-8213-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1344971598-8213-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: florian.achleitner.2.6.31@gmail.com
 To: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
@@ -17,193 +16,84 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1McB-0003IV-7H
+	id 1T1McA-0003IV-Kb
 	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 21:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756587Ab2HNTRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 15:17:14 -0400
+	id S1756208Ab2HNTRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 15:17:11 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:44490 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755161Ab2HNTRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 15:17:11 -0400
+	with ESMTP id S1756519Ab2HNTRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 15:17:07 -0400
 Received: by mail-bk0-f46.google.com with SMTP id j10so265503bkw.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 12:17:11 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 14 Aug 2012 12:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=RJ5JZ6sicreX8Eg7zeIzX31aC2xZZgGKOJcjuAMzFQs=;
-        b=hg2oYlbunbCN9G0gLjLW0Y/uFwR6yplxZHKJ53cegTxp6Q0zBYE8lzs/7uHd6n4p/V
-         LQYytKWkgMhxLV/XtfYFts2Aaz7zFFXjiUK5zql4OObzScDmjgUUw5EQfIUfTPI6Q9+W
-         4DnedplrqTKu09ytY543yvOM9Wva5nzzUXVDUKXN3hlqKGC7GV9/r1GFF44nPnH2c4DJ
-         C9m//l4Fa7hjMj+6K76eTw5vZzIBhuqduIRqJ+7eFLWMCCdoDf7KT3/yQQzri5V3tGLl
-         q7UCg3PVSfqO7jXm3smuNKjX7IVnoTUX2BNA/g7OaK6iHFeRS+PSTCKMKkNzTpbRjgvU
-         Tq2Q==
-Received: by 10.205.125.4 with SMTP id gq4mr6683562bkc.109.1344971830948;
-        Tue, 14 Aug 2012 12:17:10 -0700 (PDT)
+        bh=NSUfOzkXV+6s6swqS4Po+ZJit6lDK0Rqb/7KIpvm8qo=;
+        b=iKLiFuz82l6synxdlGvp8u99IsgaIvo0YkXbunzslz0xKG/TLxLLxBDHOFL612KlCi
+         6tPyvs1AHZVFQmlMtmYIzuQbWukeGz9T260+GmbQlE4OC4dG42SpYoL74eYTcQDlG6we
+         cLcEEn2X34RvzvJ4BlWgejrkZHFPmNV4G98crdr3GBIX5i6pl1V5EYpWu9+S7bzI77/X
+         hJbRoClvLIt5AtJwL4U87HJ1yOqBSZEUGTmWzsoF2qM+eUJkql7RPyyJ6025NdsFmjwN
+         4WJW2d9D524EVUZFTk2tcH36Llh5XA//J7ZZ/Cq+CRkQJqZW0Ec7Njjkd9SyU4I/Wv+A
+         E1lg==
+Received: by 10.204.128.68 with SMTP id j4mr6665918bks.122.1344971826750;
+        Tue, 14 Aug 2012 12:17:06 -0700 (PDT)
 Received: from localhost.localdomain (089144206125.atnat0015.highway.a1.net. [89.144.206.125])
-        by mx.google.com with ESMTPS id fu8sm1681583bkc.5.2012.08.14.12.17.06
+        by mx.google.com with ESMTPS id fu8sm1681583bkc.5.2012.08.14.12.17.04
         (version=SSLv3 cipher=OTHER);
-        Tue, 14 Aug 2012 12:17:09 -0700 (PDT)
+        Tue, 14 Aug 2012 12:17:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1344971598-8213-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1344971598-8213-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203428>
-
-The reference to update by the fast-import stream is hard-coded.
-When fetching from a remote the remote-helper shall update refs
-in a private namespace, i.e. a private subdir of refs/.
-This namespace is defined by the 'refspec' capability, that the
-remote-helper advertises as a reply to the 'capablilities' command.
-
-Extend svndump and fast-export to allow passing the target ref.
-Update svn-fe to be compatible.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203429>
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 ---
-- fix hard-coded ref in test-svn-fe.c. Broke a testcase.
+ Documentation/git-remote-helpers.txt |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
- contrib/svn-fe/svn-fe.c |    2 +-
- test-svn-fe.c           |    2 +-
- vcs-svn/fast_export.c   |    4 ++--
- vcs-svn/fast_export.h   |    2 +-
- vcs-svn/svndump.c       |   14 +++++++-------
- vcs-svn/svndump.h       |    2 +-
- 6 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-index 35db24f..c796cc0 100644
---- a/contrib/svn-fe/svn-fe.c
-+++ b/contrib/svn-fe/svn-fe.c
-@@ -10,7 +10,7 @@ int main(int argc, char **argv)
- {
- 	if (svndump_init(NULL))
- 		return 1;
--	svndump_read((argc > 1) ? argv[1] : NULL);
-+	svndump_read((argc > 1) ? argv[1] : NULL, "refs/heads/master");
- 	svndump_deinit();
- 	svndump_reset();
- 	return 0;
-diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 83633a2..cb0d80f 100644
---- a/test-svn-fe.c
-+++ b/test-svn-fe.c
-@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
- 	if (argc == 2) {
- 		if (svndump_init(argv[1]))
- 			return 1;
--		svndump_read(NULL);
-+		svndump_read(NULL, "refs/heads/master");
- 		svndump_deinit();
- 		svndump_reset();
- 		return 0;
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 1f04697..11f8f94 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -72,7 +72,7 @@ static char gitsvnline[MAX_GITSVN_LINE_LEN];
- void fast_export_begin_commit(uint32_t revision, const char *author,
- 			const struct strbuf *log,
- 			const char *uuid, const char *url,
--			unsigned long timestamp)
-+			unsigned long timestamp, const char *local_ref)
- {
- 	static const struct strbuf empty = STRBUF_INIT;
- 	if (!log)
-@@ -84,7 +84,7 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
- 	} else {
- 		*gitsvnline = '\0';
- 	}
--	printf("commit refs/heads/master\n");
-+	printf("commit %s\n", local_ref);
- 	printf("mark :%"PRIu32"\n", revision);
- 	printf("committer %s <%s@%s> %ld +0000\n",
- 		   *author ? author : "nobody",
-diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index 8823aca..17eb13b 100644
---- a/vcs-svn/fast_export.h
-+++ b/vcs-svn/fast_export.h
-@@ -11,7 +11,7 @@ void fast_export_delete(const char *path);
- void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
- void fast_export_begin_commit(uint32_t revision, const char *author,
- 			const struct strbuf *log, const char *uuid,
--			const char *url, unsigned long timestamp);
-+			const char *url, unsigned long timestamp, const char *local_ref);
- void fast_export_end_commit(uint32_t revision);
- void fast_export_data(uint32_t mode, off_t len, struct line_buffer *input);
- void fast_export_blob_delta(uint32_t mode,
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index d81a078..288bb42 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -299,22 +299,22 @@ static void handle_node(void)
- 				node_ctx.text_length, &input);
- }
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index f5836e4..5faa48e 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -98,6 +98,20 @@ advertised with this capability must cover all refs reported by
+ the list command.  If no 'refspec' capability is advertised,
+ there is an implied `refspec *:*`.
  
--static void begin_revision(void)
-+static void begin_revision(const char *remote_ref)
- {
- 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
- 		return;
- 	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
- 		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
--		rev_ctx.timestamp);
-+		rev_ctx.timestamp, remote_ref);
- }
++'bidi-import'::
++	The fast-import commands 'cat-blob' and 'ls' can be used by remote-helpers
++    to retrieve information about blobs and trees that already exist in
++    fast-import's memory. This requires a channel from fast-import to the
++    remote-helper.
++    If it is advertised in addition to "import", git establishes a pipe from
++	fast-import to the remote-helper's stdin.
++	It follows that git and fast-import are both connected to the
++	remote-helper's stdin. Because git can send multiple commands to
++	the remote-helper it is required that helpers that use 'bidi-import'
++	buffer all 'import' commands of a batch before sending data to fast-import.
++    This is to prevent mixing commands and fast-import responses on the
++    helper's stdin.
++
+ Capabilities for Pushing
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+ 'connect'::
+@@ -286,7 +300,12 @@ terminated with a blank line. For each batch of 'import', the remote
+ helper should produce a fast-import stream terminated by a 'done'
+ command.
+ +
+-Supported if the helper has the "import" capability.
++Note that if the 'bidi-import' capability is used the complete batch
++sequence has to be buffered before starting to send data to fast-import
++to prevent mixing of commands and fast-import responses on the helper's
++stdin.
+++
++Supported if the helper has the 'import' capability.
  
--static void end_revision(void)
-+static void end_revision()
- {
- 	if (rev_ctx.revision)
- 		fast_export_end_commit(rev_ctx.revision);
- }
- 
--void svndump_read(const char *url)
-+void svndump_read(const char *url, const char *local_ref)
- {
- 	char *val;
- 	char *t;
-@@ -353,7 +353,7 @@ void svndump_read(const char *url)
- 			if (active_ctx == NODE_CTX)
- 				handle_node();
- 			if (active_ctx == REV_CTX)
--				begin_revision();
-+				begin_revision(local_ref);
- 			if (active_ctx != DUMP_CTX)
- 				end_revision();
- 			active_ctx = REV_CTX;
-@@ -366,7 +366,7 @@ void svndump_read(const char *url)
- 				if (active_ctx == NODE_CTX)
- 					handle_node();
- 				if (active_ctx == REV_CTX)
--					begin_revision();
-+					begin_revision(local_ref);
- 				active_ctx = NODE_CTX;
- 				reset_node_ctx(val);
- 				break;
-@@ -463,7 +463,7 @@ void svndump_read(const char *url)
- 	if (active_ctx == NODE_CTX)
- 		handle_node();
- 	if (active_ctx == REV_CTX)
--		begin_revision();
-+		begin_revision(local_ref);
- 	if (active_ctx != DUMP_CTX)
- 		end_revision();
- }
-diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
-index acb5b47..febeecb 100644
---- a/vcs-svn/svndump.h
-+++ b/vcs-svn/svndump.h
-@@ -3,7 +3,7 @@
- 
- int svndump_init(const char *filename);
- int svndump_init_fd(int in_fd, int back_fd);
--void svndump_read(const char *url);
-+void svndump_read(const char *url, const char *local_ref);
- void svndump_deinit(void);
- void svndump_reset(void);
- 
+ 'connect' <service>::
+ 	Connects to given service. Standard input and standard output
 -- 
 1.7.9.5
