@@ -1,116 +1,129 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Tue, 14 Aug 2012 22:12:23 +0200
-Message-ID: <87lihh8c7s.fsf@thomas.inf.ethz.ch>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
-	<87zk5x6fox.fsf@thomas.inf.ethz.ch>
-	<CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
-	<7v628lbdcw.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v3 02/16] Integrate remote-svn into svn-fe/Makefile.
+Date: Tue, 14 Aug 2012 13:14:12 -0700
+Message-ID: <7vd32t9qp7.fsf@alter.siamese.dyndns.org>
+References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1344971598-8213-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1344971598-8213-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 22:12:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 22:14:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1NTf-0002vc-Q1
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 22:12:36 +0200
+	id 1T1NVM-00055n-UC
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 22:14:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756972Ab2HNUM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 16:12:29 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:16825 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756336Ab2HNUM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 16:12:28 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 22:12:25 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 22:12:25 +0200
-In-Reply-To: <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
-	(Hilco Wijbenga's message of "Tue, 14 Aug 2012 11:32:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1756966Ab2HNUOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 16:14:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51606 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756336Ab2HNUOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 16:14:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1C587B60;
+	Tue, 14 Aug 2012 16:14:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9tm/9MLfs3tJBcpnOARIpkT3J8w=; b=k2mttG
+	2ojrTO3C2jLX3v27lSYK4KQ0WjiCC0tkbiLkju8Cl0zPNChPsjpzCVmgkplvCRRq
+	6t8k4JAxxMSTug/lWZl5EkXhvnpzfxbxDS5mCFqVITjigAzMR/T4whgkBddXk3WT
+	m1QPQi9TbbA0LCrLImqHyQc4Jgit8Jo6bAfsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qHzqNExPqNPnv0JF5GXdbyxD8QBFCeAr
+	f40fV4K7G7tbqVs/ZoeUGJj2La2cmTy3p6PRrqtcKGxAXzU70g/4yPJ12S2f7he3
+	eLABDjuSiq044D5mzeElcmaf0ApdLMPxUxPPNXGsmY+cZ2ROSDx7xCHWlxA0HcGP
+	dcQAK0AD6bI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF0947B5F;
+	Tue, 14 Aug 2012 16:14:14 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FFA87B5E; Tue, 14 Aug 2012
+ 16:14:14 -0400 (EDT)
+In-Reply-To: <1344971598-8213-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ (Florian Achleitner's message of "Tue, 14 Aug 2012 21:13:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E213F22-E64C-11E1-92F5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203443>
 
-Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-> On 14 August 2012 10:19, Junio C Hamano <gitster@pobox.com> wrote:
->> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->>
->>> On 14 August 2012 01:27, Thomas Rast <trast@student.ethz.ch> wrote:
->>>> [git pull with two args] it's ok if you use it with an URL instead
->>>> of a remote nickname
->>>
->>> Why would that be okay? What is the difference? Isn't the nickname
->>> just an alias for a URL?
->>
->> As long as you tell what refspecs to use on the command line, the
->> remote nickname behaves as "just an alias for a URL", so yes,
->> because Thomas is discussing "two-arg pull or fetch", one arg being
->> either nickname or URL and the other is an explicit refspec on the
->> command line, it would be okay because there is no difference in
->> that case.
+> Requires some sha.h to be used and the libraries
+> to be linked, this is currently hardcoded.
 >
-> I suppose I'm not entirely clear on how this two step process is
-> "safer". Doing "git fetch" would seem to be harmless, right? So the
-> problem is with "git merge" but master should always be "behind"
-> origin/master so that "git merge" should just FF to origin/master
-> which *should* be completely safe. Does that make sense? Especially
-> given our use of master as an integration branch?
+> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+> ---
+>  contrib/svn-fe/Makefile |   16 ++++++++++------
+>  1 file changed, 10 insertions(+), 6 deletions(-)
 >
-> [Given the trouble I have with getting people to use Git properly, I
-> prefer things as simple as possible. :-) ]
+> diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
+> index 360d8da..8f0eec2 100644
+> --- a/contrib/svn-fe/Makefile
+> +++ b/contrib/svn-fe/Makefile
+> @@ -1,14 +1,14 @@
+> -all:: svn-fe$X
+> +all:: svn-fe$X remote-svn$X
+>  
+>  CC = gcc
+>  RM = rm -f
+>  MV = mv
+>  
+> -CFLAGS = -g -O2 -Wall
+> +CFLAGS = -g -O2 -Wall -DSHA1_HEADER='<openssl/sha.h>' -Wdeclaration-after-statement
+>  LDFLAGS =
+>  ALL_CFLAGS = $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+> -EXTLIBS =
+> +EXTLIBS = -lssl -lcrypto -lpthread ../../xdiff/lib.a
 
-I meant something else than Junio hinted at.  Saying
+I haven't looked carefully, but didn't we have to do a bit more
+elaborate when linking with ssl/crypto in our main Makefile to be
+portable across various vintages of OpenSSL libraries?
 
-  git fetch origin master
-  # or by extension
-  git pull origin master
+Does contrib/svn-fe/ already depend on OpenSSL by the way?  It needs
+to be documented somewhere in the same directory.
 
-does not update the origin/* namespace, not even origin/master.  All
-fetching happens only into FETCH_HEAD.  This leads to confusion such as
-yours because origin/master and thus the upstream tracking displays will
-not know about the change.
+If one builds the main Git binary with NO_OPENSSL, can this still be
+built and linked?
 
-If you use it with an URL, such as one that might be sent with a pull
-request:
+What does this use xdiff/lib.a for?
 
-} The following changes since commit 62bc83349d52be49b037d2c800a7f4064cfbc5b5:
-} 
-}   The sixth batch of topics graduated to 'master' (2012-04-27 14:12:56 -0700)
-} 
-} are available in the git repository at:
-} 
-}   https://github.com/git-l10n/git-po/ master
+The above are just mental notes; I didn't read the later patches in
+the series that may already address these issues.
 
-(I picked a random pull request from the l10n coordinator, Jiang Xin)
-you would say
-
-  git pull https://github.com/git-l10n/git-po/ master
-
-and you would not have a reasonable expectation of git updating your
-remotes/*, even if you had a remote 'l10n' that points at that exact
-URL.  So you would not be confused if you pulled from there, but
-l10n/master didn't move.
-
-
-In some sense this is a really bad case of wrong UI design, because we
-(this happens on #git a lot) have to teach users not to use the command
-so they won't trip over this problem.  It would be better to fix the
-real issue instead.  IIRC it was even on the 1.8.0 wishlist...
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>  GIT_LIB = ../../libgit.a
+>  VCSSVN_LIB = ../../vcs-svn/lib.a
+> @@ -37,8 +37,12 @@ svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
+>  		$(ALL_LDFLAGS) $(LIBS)
+>  
+> -svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
+> -	$(QUIET_CC)$(CC) -I../../vcs-svn -o $*.o -c $(ALL_CFLAGS) $<
+> +remote-svn$X: remote-svn.o $(VCSSVN_LIB) $(GIT_LIB)
+> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ remote-svn.o \
+> +		$(ALL_LDFLAGS) $(LIBS)
+> +		
+> +%.o: %.c ../../vcs-svn/svndump.h
+> +	$(QUIET_CC)$(CC) -I../../vcs-svn -I../../ -o $*.o -c $(ALL_CFLAGS) $<
+>  
+>  svn-fe.html: svn-fe.txt
+>  	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
+> @@ -58,6 +62,6 @@ svn-fe.1: svn-fe.txt
+>  	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
+>  
+>  clean:
+> -	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
+> +	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1 remote-svn.o
+>  
+>  .PHONY: all clean FORCE
