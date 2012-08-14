@@ -1,100 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: validate & reconfirm interactive responses
-Date: Tue, 14 Aug 2012 15:57:26 -0700
-Message-ID: <7v1uj984kp.fsf@alter.siamese.dyndns.org>
-References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
- <1344983132-22578-1-git-send-email-gitster@pobox.com>
- <CAOeW2eEOAdVJrVfyZ4osEARXWuXncy3ZSa4ir8BZbUjNjMzbSw@mail.gmail.com>
+From: David Michael Barr <davidbarr@google.com>
+Subject: Re: [PATCH/RFC v3 00/16] GSOC remote-svn
+Date: Wed, 15 Aug 2012 09:59:12 +1000
+Message-ID: <CAFfmPPO4FRBocLDZr8WU2GJOTVXFY6+8jjO8mEoL+aRPtp6k2Q@mail.gmail.com>
+References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 00:57:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 01:59:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1Q3L-0007jE-QR
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 00:57:36 +0200
+	id 1T1R16-0003HF-4W
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 01:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012Ab2HNW5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 18:57:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64327 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752414Ab2HNW53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 18:57:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 334F480BD;
-	Tue, 14 Aug 2012 18:57:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IFryxXP3nncuBCOYHDezi5cQha0=; b=kzL+47
-	fB1GU/dzXtBKHfCVc+Robs1CSkAue+uQxaks5+ZbH4AAyVLn0l9w/cmgqY4h44Yj
-	utDfcYFUIFHpU2cwE5r84Bsk3BiJJHL6lx+VEpwLc0YfxR3P6f74s+SSKz4YuOZX
-	KvQL9m6/DhEZvtK1RORvm8gDh80MRNx7UaAzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lRMkeU+ub7Ld/bulME+O+Lt4QFXe3DVh
-	EY5TD9rpsLuepn0h2gHZPhjqftQh78Xw/0doxuGzgwol76OYOjchgzrnNfhDoOqn
-	3WhW0YpRQHtg+yL+hmpb0NN/w4HzNIemXey/O+HCYaCfThdnKNY6xYNwjTKRphhM
-	rWZQgqhbppM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20ADC80BC;
-	Tue, 14 Aug 2012 18:57:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC83F80A4; Tue, 14 Aug 2012
- 18:57:27 -0400 (EDT)
-In-Reply-To: <CAOeW2eEOAdVJrVfyZ4osEARXWuXncy3ZSa4ir8BZbUjNjMzbSw@mail.gmail.com> (Martin
- von Zweigbergk's message of "Tue, 14 Aug 2012 15:33:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B8430F8-E663-11E1-9553-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754613Ab2HNX7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 19:59:13 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:62212 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754238Ab2HNX7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 19:59:12 -0400
+Received: by obbuo13 with SMTP id uo13so1294144obb.19
+        for <git@vger.kernel.org>; Tue, 14 Aug 2012 16:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record;
+        bh=txG+OCjKXpnJxuHBQJOw22vybeBsscLhATf0LweiwVg=;
+        b=Gnlh4r2y1RpZNGLjjx3y4BHitgQKfGv3jv5ejNM2Z6OlyHryYijrV7yDp7F7y/sfbO
+         sp1Fauq6P1Q1KQV+SJurTS31P+MfmVnRGjXX4ADSjEyhmk4wNiMpbAMr1w1shOh7KuU6
+         LSUWeXvo+B3auuOwpyORE83diRrX/FqR+BfINL56g93QL3FZtvRZFJXhcw7lLgi/OGfx
+         F9Wc3yjBM2qxncOSgQYd0uH913DnFAo6IYU3r5ezl3QVd40mKQhFNyflReFgqZIcPEdn
+         6nZXiEwedxYOrC7Rx4Z/JDaWSLc5bXkmAHlVvj3aUlpajhYeVCByk4Mfeuw2a4yETr35
+         A4FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=txG+OCjKXpnJxuHBQJOw22vybeBsscLhATf0LweiwVg=;
+        b=Dx7VPVwc/FvxxbHH5YTq+uCyDIyYlyWB/cIekUE94VXZvfm1eLKytzRl2Fb1vEHEXj
+         O8c4mD/mnbXuqlcRc88xo1GukyzsKRovF4nGuMu98PIfO8jy+oE49Gb0X0o9FCGu+h2+
+         9zA7hYbQQhyuLXIT66L8mdZ1bIDi7IT9KJyb7puYS/6yVALG99tzWE1iUUurPKbOxRVg
+         9koweHF2xSMYmyXY8zo3QShJdRRy6kgNfrGrfoUJzNK75KQG6viNoS3GMdcXcGJl6r6L
+         DsZu27CzjTvt+bu6QJxiqK3083p3as9HkvCrDC6AkVS+/8px7KPP4y2K806skyxSfNjP
+         yGqA==
+Received: by 10.60.20.74 with SMTP id l10mr29211554oee.19.1344988752310;
+        Tue, 14 Aug 2012 16:59:12 -0700 (PDT)
+Received: by 10.60.20.74 with SMTP id l10mr29211539oee.19.1344988752131; Tue,
+ 14 Aug 2012 16:59:12 -0700 (PDT)
+Received: by 10.76.141.1 with HTTP; Tue, 14 Aug 2012 16:59:12 -0700 (PDT)
+In-Reply-To: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQmZacjy6/MoKcRExftJxibKklfBlLyUaR5e3wwAjbV9BMqNFOAeJ7iOODXwzrh3z0L+rYY9bs9dTJdik1DHJJtHBD14SQfPQev6pbJF7DeOHD8sGpUbOE/gUPE0iBHU+JWhap0MHHUywu4M4ay8Co2gzzFrwGrLRGaJDQ9Rwt/G92/b5e9AAeFPiCODKYb9qLPLNN5t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203460>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
-
-> On Tue, Aug 14, 2012 at 3:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> People answer 'y' to "Who should the emails appear to be from?"  and
->> 'n' to "Message-ID to be used as In-Reply-To for the first email?"
->> for some unknown reason.
+On Wed, Aug 15, 2012 at 5:13 AM, Florian Achleitner
+<florian.achleitner.2.6.31@gmail.com> wrote:
+> Hi.
 >
-> Yeah, I know :-(. I did feel stupid already. Thanks for improving.
+> Version 3 of this series adds the 'bidi-import' capability, as suggested
+> Jonathan.
+> Diff details are attached to the patches.
+> 04 and 05 are completely new.
+>
+> [PATCH/RFC v3 01/16] Implement a remote helper for svn in C.
+> [PATCH/RFC v3 02/16] Integrate remote-svn into svn-fe/Makefile.
+> [PATCH/RFC v3 03/16] Add svndump_init_fd to allow reading dumps from
+> [PATCH/RFC v3 04/16] Connect fast-import to the remote-helper via
+> [PATCH/RFC v3 05/16] Add documentation for the 'bidi-import'
+> [PATCH/RFC v3 06/16] remote-svn, vcs-svn: Enable fetching to private
+> [PATCH/RFC v3 07/16] Add a symlink 'git-remote-svn' in base dir.
+> [PATCH/RFC v3 08/16] Allow reading svn dumps from files via file://
+> [PATCH/RFC v3 09/16] vcs-svn: add fast_export_note to create notes
+> [PATCH/RFC v3 10/16] Create a note for every imported commit
+> [PATCH/RFC v3 11/16] When debug==1, start fast-import with "--stats"
+> [PATCH/RFC v3 12/16] remote-svn: add incremental import.
+> [PATCH/RFC v3 13/16] Add a svnrdump-simulator replaying a dump file
+> [PATCH/RFC v3 14/16] transport-helper: add import|export-marks to
+> [PATCH/RFC v3 15/16] remote-svn: add marks-file regeneration.
+> [PATCH/RFC v3 16/16] Add a test script for remote-svn.
 
-Actually, it is a very understandable mistake and I do not think it
-is a user stupidity.  It is a UI bug in the prompter that gives:
+Thank you Florian, this series was a great read. My apologies for the
+limited interaction over the course of summer. You have done well and
+engaged with the community to produce this result.
 
-  Who should the emails appear to be from? [Junio C Hamano <gitster@pobox.com>]
+Thank you Jonathan for the persistent reviews. No doubt they have
+contributed to the quality of the series.
 
-and does *not* tell the user that the way to accept the default is
-to just press RETURN.  It makes it look as if it is asking "Is it OK
-to use this?", and it is a natural response to say "Yes" to the
-prompt.
+Thank you Junio for your dedication to reviewing the traffic on this
+mailing list.
 
-We would want to do something like the following pseudo-patch, I
-think, but I do not know what is the best way to show both $prompt
-and the "press return" suggestion to the user, so I am not going to
-do this myself.
+I will no longer be reachable on this address after Friday.
 
-A tested patch to improve this is very much welcomed.
+I hope to make future contributions with the identity:
+David Michael Barr <b@rr-dav.id.au>
+This will be my persistent address.
 
-Thanks.
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 607137b..2ec0ce8 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -688,6 +688,9 @@ sub ask {
- 		unless defined $term->IN and defined fileno($term->IN) and
- 		       defined $term->OUT and defined fileno($term->OUT);
- 	while ($i++ < 10) {
-+		if (defined $default) {
-+			SAY "(press RETURN to accept the default)";
-+		}
- 		$resp = $term->readline($prompt);
- 		if (!defined $resp) { # EOF
- 			print "\n";
+--
+David Barr
