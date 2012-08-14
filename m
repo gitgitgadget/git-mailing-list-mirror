@@ -1,103 +1,127 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Implement ACL module architecture and sample MySQL ACL module
-Date: Tue, 14 Aug 2012 09:27:19 -0700
-Message-ID: <CAJo=hJtYz3OX1C6HS7ivhJKBOSg=Ex3rKEdTYSbcDfFT1Jh4hw@mail.gmail.com>
-References: <feafacf49186d7cf0eed0002a82289b318f56ff8.1344938189.git.minovotn@redhat.com>
- <7v1uj98nbj.fsf@alter.siamese.dyndns.org>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Your branch and 'origin/master' have diverged
+Date: Tue, 14 Aug 2012 10:04:03 -0700
+Message-ID: <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
+References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
+ <87zk5x6fox.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michal Novotny <minovotn@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 18:28:06 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 14 19:04:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1JyP-0006r3-MC
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 18:28:06 +0200
+	id 1T1KXf-0007VO-0Q
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 19:04:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756865Ab2HNQ1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 12:27:51 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:56341 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756808Ab2HNQ1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 12:27:41 -0400
-Received: by ggdk6 with SMTP id k6so642013ggd.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 09:27:40 -0700 (PDT)
+	id S1752885Ab2HNREZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 13:04:25 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:61556 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785Ab2HNREY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 13:04:24 -0400
+Received: by bkwj10 with SMTP id j10so221776bkw.19
+        for <git@vger.kernel.org>; Tue, 14 Aug 2012 10:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=I2dpGG1sfLTGDouvR/TBi8EYTDQwkKSvTTUlKC5r3Hk=;
-        b=DRqhrTcf70jotcvpspaUbcpKmwH4jbz89gd3DRc784G4XyclcPAIw8a7BaltJzRHQH
-         AwOLh5kcdtr19eWUm2w7z6WoYSB/aOGEm/oC3xaCpN/vSX83h83IbWCXAAEWpJztaXp4
-         7C/BQLKAMhz2W9CkC5WnReiIqkKfDp/kHgZCg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=I2dpGG1sfLTGDouvR/TBi8EYTDQwkKSvTTUlKC5r3Hk=;
-        b=P25l5cD5X2jFi/gstrKtMiR7ydt/UxV6u5+Dru+En36oPiACk/VsjXTTcELt6/S+I4
-         PkS3AwNwIiDvOLtZfPxuy05CIo/C6XkWwfuyHzZGeY53eYSCoSvoViA0lOmG4K2P+cgu
-         XGTqP54AX/cG363RWdnCpYDevZOIExq67WApsxbxRHKmaZzDQMmD6HW8JCaswb+98FpY
-         WTl+3U5409Y4cOCY4DjiYRDvmsYaMjie4MIq/5AyuidD0ZsDgQ2H3yWqseGR4/ZiWTQm
-         KaMdV6NcuRohQ/e0gGhZhxb2oeaBJQ1voTwhbdMzTLq8z3UcoQMYcVVDgMBemYvZFqLb
-         iw6g==
-Received: by 10.50.57.194 with SMTP id k2mr12775965igq.32.1344961659647; Tue,
- 14 Aug 2012 09:27:39 -0700 (PDT)
-Received: by 10.64.22.231 with HTTP; Tue, 14 Aug 2012 09:27:19 -0700 (PDT)
-In-Reply-To: <7v1uj98nbj.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQl5UCsGFEB1lr/i1ChZ9EAe0o0Nge5Guc8z1PklwvREkEKc71ZajnzNQieZegTYRZuvrXWe
+        bh=kUf/7l2XV7HAEgXFwHZyzS1oHMF+q4NVhrOFKupAVPk=;
+        b=gfAAv7X5JcNBo02iKA6WP9PI57MFQ1ZRcvLhX4oX0OJxqxgy8KNzD4srtEGo75OoLy
+         dcvO6Cf09KmCZp5Ci7y96e5bo4RzcUN9bfXQy6biGrxd+qJLBStFkNhPSYN21Wjs1oDa
+         NM6bhNy6pJrcuWp2W9XdGBzAKUzsuFE42nKylgJ5nBjCRI9pBsqZc15y+lIkwVTslR1S
+         PogWkfkR4165ByFFTkjmukc+hTljYJBgWhPa3ngHYrf3MoiHNjC+rTO8z8a5AAEtGG71
+         uV6AP3UtmV0kwFWsnEXJJv285mfbiXGxv4wrhpgZicv4XXrHO1qgI6fJmru3LqTuRl04
+         L0VA==
+Received: by 10.204.154.131 with SMTP id o3mr6533273bkw.87.1344963863259; Tue,
+ 14 Aug 2012 10:04:23 -0700 (PDT)
+Received: by 10.204.132.72 with HTTP; Tue, 14 Aug 2012 10:04:03 -0700 (PDT)
+In-Reply-To: <87zk5x6fox.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203413>
 
-On Tue, Aug 14, 2012 at 9:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michal Novotny <minovotn@redhat.com> writes:
+On 14 August 2012 01:27, Thomas Rast <trast@student.ethz.ch> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 >
->> Hi,
->> this is the patch to introduce the ACL module architecture into git
->> versioning system.
+>> # On branch master
+>> # Your branch and 'origin/master' have diverged,
+>> # and have 250 and 19 different commit(s) each, respectively.
+>> #
+>> nothing to commit (working directory clean)
+>>
+>> He asked me what to do and I told him to do what has always worked for
+>> me in the past when something like this happened: gitk, "reset master
+>> branch to here" (to a commit before the divergence and using --hard),
+>> git pull origin master. Problem solved.
 >
-> No, it doesn't.  It adds something only to "git daemon", but does
-> not affect any other uses of Git.
+> There are several layers of pitfalls and misunderstandings here.
+>
+> * Is your work origin/master..master (that is, anything in master but
+>   not origin/master) really so worthless as to make "scrap it all!" the
+>   normal course of resolution?
 
-Yes, this part of the commit message also confused me until I read
-through the patch further. :-(
+Of course, it's master. Nobody should be working on master directly.
 
->     Side note: I am not saying other uses of Git must be ACL
->     controlled by MySQL database.  They shouldn't be.  I am only
->     saying that the proposed commit log message must match what the
->     change does.
->
-> Please familiarize yourself with Documentation/SubmittingPatches
-> first, and then imitate the style in existing commits in the history
-> and posted patches by the "good" developers (you can tell who they
-> are by observing the list traffic for a few weeks), by the way.
->
-> As "git daemon" already has a mechanism to specify what repositories
-> are served with whitelist or blacklist, I am not sure if this patch
-> adds enough value to the system to make us want to add further
-> complexity only to carry more code to be audited for security.
->
-> Opinions?
+>   Or perhaps the real reason for the divergence is that upstream rewrote
+>   its master (eeeek!), in which case you should get them acquainted with
+>   the clue bat... and probably rebase instead of merge.
 
-Traditionally Git has been about providing the plumbing to handle the
-protocol and storage, and other tools that wrap git manage access
-controls, e.g. UNIX filesystem or gitolite. I would strongly prefer to
-keep that arrangement.
+Upstream is fine. Nobody else is having any problems.
 
-Parsing the request line of git-daemon is easy. But we could make it
-easier. An alternative arrangement would be to add a new command line
-flag to git daemon like --command-filter that names an executable
-git-daemon will invoke after parsing the request line. It can pass
-along the client IP address, command request, repository name, and
-resolved repository path, and tie stdin/stdout to the client. This
-binary can decide to exec the proper git binary for the named command,
-or just exit to disconnect the client and refuse service. This makes
-it simple for a tool like gitolite to plug into the git-daemon
-authorization path, without needing to be the network daemon itself,
-worry about number of active connection slots, etc.
+> * pull = fetch + merge!  Repeat this a few times until it sinks in.
+>   Then print it on A0 and stick it up in your office or something.
+
+Yes, I know.
+
+>   For your case this means that the pull command is roughly equivalent
+>   to
+>
+>     git fetch origin master
+>     git merge FETCH_HEAD
+>
+>   The two-arg form of fetch does *not* update origin/master.  Assuming
+>   you got the reset right, the merge will fast-forward to whatever
+>   origin's master points to -- but origin/master is still the old state!
+
+Ah, now we're getting to something I did *not* know. :-) So FETCH_HEAD
+!= origin/master? I tried to find out more information about
+FETCH_HEAD but there doesn't seem to be much. I have seen "FETCH_HEAD"
+show up in the terminal but always just ignored it as a Git
+implementation detail. When/how does origin/master get set then? I
+always assumed that was part of git fetch and then git merge would
+actually move master to origin/master.
+
+> * Resetting to something that you think will fast-forward, only to then
+>   fast-forward it to the newest state, is silly.  You can just reset to
+>   the newest state instead.
+
+:-) Well, yeah, now that you point it out... :-)
+
+Still, just resetting ignores all the problems that led to the current
+situation. Normally, when I reset and then FF I can be sure (if it
+works) that things were not completely screwed up. At least, that has
+always been my theory.
+
+> Taking all of this together, I think you should stop using two-arg
+> pull[*] or fetch, and replace your error-prone recipe with simply
+>
+>   git fetch
+>   git reset --hard origin/master
+>
+> Assuming, as before, that your local work is worthless.  Is it?
+> Otherwise it would be better to run something like
+>
+>   git fetch
+>   git rebase origin/master
+>
+>
+> [*] it's ok if you use it with an URL instead of a remote nickname
+
+Why would that be okay? What is the difference? Isn't the nickname
+just an alias for a URL?
