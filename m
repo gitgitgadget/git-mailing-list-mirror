@@ -1,82 +1,97 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git diff vs git diff-files
-Date: Tue, 14 Aug 2012 10:18:20 +0200
-Message-ID: <87vcgl999v.fsf@thomas.inf.ethz.ch>
-References: <CAF7PVPrex6sJMU+uvxQOSpB12qSTp2barTycow_-LZ8Ngbv7uQ@mail.gmail.com>
-	<87fw7qhm31.fsf@thomas.inf.ethz.ch>
-	<CAF7PVPqyaZQtca0KfWHirBY2Dvdtn2RT-_mxR8x5uUNsfbHmdQ@mail.gmail.com>
+Subject: Re: Your branch and 'origin/master' have diverged
+Date: Tue, 14 Aug 2012 10:27:58 +0200
+Message-ID: <87zk5x6fox.fsf@thomas.inf.ethz.ch>
+References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Bernd Jendrissek <bernd.jendrissek@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 10:18:38 2012
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 10:28:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1CKe-0005ql-Hn
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 10:18:32 +0200
+	id 1T1CTx-0007el-So
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 10:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574Ab2HNIS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 04:18:26 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:59873 "EHLO edge10.ethz.ch"
+	id S1754184Ab2HNI2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 04:28:03 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:1617 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753240Ab2HNISX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 04:18:23 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+	id S1753951Ab2HNI2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 04:28:00 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
  (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 10:18:20 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
- 2012 10:18:20 +0200
-In-Reply-To: <CAF7PVPqyaZQtca0KfWHirBY2Dvdtn2RT-_mxR8x5uUNsfbHmdQ@mail.gmail.com>
-	(Bernd Jendrissek's message of "Mon, 13 Aug 2012 18:06:04 +0200")
+ 2012 10:27:57 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.2.298.4; Tue, 14 Aug
+ 2012 10:27:58 +0200
+In-Reply-To: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
+	(Hilco Wijbenga's message of "Mon, 13 Aug 2012 12:58:40 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203390>
 
-Bernd Jendrissek <bernd.jendrissek@gmail.com> writes:
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-> On Mon, Aug 13, 2012 at 5:02 PM, Thomas Rast <trast@student.ethz.ch> wrote:
->> Can you share this repository?
+> # On branch master
+> # Your branch and 'origin/master' have diverged,
+> # and have 250 and 19 different commit(s) each, respectively.
+> #
+> nothing to commit (working directory clean)
 >
-> This weird behaviour doesn't even survive making a copy (cp -a) of the
-> whole repository, so I very much doubt making it available would be
-> illuminative. My disk's SMART data seems okay. The weird-quotient just
-> rose a bit.
+> He asked me what to do and I told him to do what has always worked for
+> me in the past when something like this happened: gitk, "reset master
+> branch to here" (to a commit before the divergence and using --hard),
+> git pull origin master. Problem solved.
 
-That sounds like an issue with stat() data, and then it doesn't.  cp -a
-would change all the inode numbers, triggering a full refresh of the
-index in 'git diff'.  But I'm not sure exactly how this can lead to
-disagreement, since both commands read *both* index and worktree version
-of the file.  Very confusing.
+There are several layers of pitfalls and misunderstandings here.
 
-Can you try the following:
+* Is your work origin/master..master (that is, anything in master but
+  not origin/master) really so worthless as to make "scrap it all!" the
+  normal course of resolution?
 
-  git ls-files --debug gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-  cp .git/index .git/index.orig
-  touch gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-  # note, it is important that you run diff first
-  git diff gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-  git diff-files -p gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
-  git ls-files --debug gnetlist/tests/common/outputs/osmond/TwoStageAmp-output.net
+  Or perhaps the real reason for the divergence is that upstream rewrote
+  its master (eeeek!), in which case you should get them acquainted with
+  the clue bat... and probably rebase instead of merge.
 
->> Or at least the pre- and post-change
->> files, transferred in such a way that there won't be any whitespace
->> damage (your snippets above show obvious damage).  You can use
->
-> http://www.bpj-code.co.za/downloads.php/bugs/TwoStageAmp-output.net?text
-> contains the output from git show a5ee1e7. Leave off the ?text for an
-> application/octet-stream download.
+* pull = fetch + merge!  Repeat this a few times until it sinks in.
+  Then print it on A0 and stick it up in your office or something.
 
-Umm, that's only one side of the diff, isn't it?  The hunk header claims
-that the hunk goes up to line 47, so there must be more changes beyond
-what you showed.
+  For your case this means that the pull command is roughly equivalent
+  to
+
+    git fetch origin master
+    git merge FETCH_HEAD
+
+  The two-arg form of fetch does *not* update origin/master.  Assuming
+  you got the reset right, the merge will fast-forward to whatever
+  origin's master points to -- but origin/master is still the old state!
+
+* Resetting to something that you think will fast-forward, only to then
+  fast-forward it to the newest state, is silly.  You can just reset to
+  the newest state instead.
+
+Taking all of this together, I think you should stop using two-arg
+pull[*] or fetch, and replace your error-prone recipe with simply
+
+  git fetch
+  git reset --hard origin/master
+
+Assuming, as before, that your local work is worthless.  Is it?
+Otherwise it would be better to run something like
+
+  git fetch
+  git rebase origin/master
+
+
+[*] it's ok if you use it with an URL instead of a remote nickname
 
 -- 
 Thomas Rast
