@@ -1,109 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] fetch-pack: mention server version with verbose
- output
-Date: Mon, 13 Aug 2012 22:02:10 -0400
-Message-ID: <20120814020210.GB7891@sigill.intra.peff.net>
-References: <20120810075816.GC8399@sigill.intra.peff.net>
- <7v7gt6jz3s.fsf@alter.siamese.dyndns.org>
- <20120810211509.GB888@sigill.intra.peff.net>
- <7v393uif9g.fsf@alter.siamese.dyndns.org>
- <7vboieehrf.fsf@alter.siamese.dyndns.org>
- <7v7gt2ehl4.fsf_-_@alter.siamese.dyndns.org>
- <20120813205423.GA31630@sigill.intra.peff.net>
- <7v628mcxdf.fsf@alter.siamese.dyndns.org>
- <20120813211109.GA32688@sigill.intra.peff.net>
- <20120814015927.GA7891@sigill.intra.peff.net>
+From: "Rahul Chandrashekar (RBEI/EMT2)" <Rahul.Chandrashekar@in.bosch.com>
+Subject: RE: OSLC connectivity to GIT in Java
+Date: Tue, 14 Aug 2012 10:58:39 +0800
+Message-ID: <A8EF229C37FCBD4CAC33610E4F20C5DE1C27916710@SGPMBX01.APAC.bosch.com>
+References: <1344859929250-7564860.post@n2.nabble.com>
+ <CACPiFCK_diX36uS6SCigO4VQZ4ghBVd2Dk3a_FWajBgoqQR8rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 04:02:19 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 14 04:59:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T16SZ-0001Qh-9Q
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 04:02:19 +0200
+	id 1T17Ll-0007aS-6a
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 04:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156Ab2HNCCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Aug 2012 22:02:13 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:36757 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754820Ab2HNCCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Aug 2012 22:02:12 -0400
-Received: (qmail 32172 invoked by uid 107); 14 Aug 2012 02:02:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Aug 2012 22:02:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2012 22:02:10 -0400
-Content-Disposition: inline
-In-Reply-To: <20120814015927.GA7891@sigill.intra.peff.net>
+	id S1755272Ab2HNC7Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Aug 2012 22:59:16 -0400
+Received: from smtp2-v.fe.bosch.de ([139.15.237.6]:56872 "EHLO
+	smtp2-v.fe.bosch.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754990Ab2HNC7P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Aug 2012 22:59:15 -0400
+Received: from vsmta14.fe.internet.bosch.com (unknown [10.4.98.30])
+	by imta23.fe.bosch.de (Postfix) with ESMTP id 9370228C01F4;
+	Tue, 14 Aug 2012 04:59:11 +0200 (CEST)
+Received: from localhost (vsgw2.fe.internet.bosch.com [10.4.98.13])
+	by vsmta14.fe.internet.bosch.com (Postfix) with SMTP id A02321B406FD;
+	Tue, 14 Aug 2012 04:59:11 +0200 (CEST)
+Received: from SI-PUB1000.de.bosch.com (10.3.153.157) by si-hub06.de.bosch.com
+ (10.3.153.48) with Microsoft SMTP Server (TLS) id 8.3.264.0; Tue, 14 Aug 2012
+ 04:59:03 +0200
+Received: from sgphub11.APAC.bosch.com (10.187.48.74) by
+ SI-PUB1000.de.bosch.com (10.3.153.157) with Microsoft SMTP Server (TLS) id
+ 14.2.309.2; Tue, 14 Aug 2012 04:59:03 +0200
+Received: from SGPMBX01.APAC.bosch.com ([10.187.48.231]) by
+ sgphub11.APAC.bosch.com ([10.187.48.74]) with mapi; Tue, 14 Aug 2012 10:58:40
+ +0800
+Thread-Topic: OSLC connectivity to GIT in Java
+Thread-Index: Ac15jCRbOQuEzOWuS2+gv9431xO1aAAPF1zg
+In-Reply-To: <CACPiFCK_diX36uS6SCigO4VQZ4ghBVd2Dk3a_FWajBgoqQR8rg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203381>
 
-On Mon, Aug 13, 2012 at 09:59:27PM -0400, Jeff King wrote:
+Hi Martin,
 
-> So if we want to avoid the allocation, then this is how I would do it:
-> by returning the feature's _value_ and not the whole key. Since we know
-> that the beginning part must obviously match what we fed it anyway, it
-> is not that interesting.
-> 
-> -- >8 --
-> Subject: [PATCH] parse_feature_request: make it easier to see feature values
+Thanks for the feedback, do you have any Links using which I can get th=
+e below scenario, as a matter of fact I am new to the below protocol an=
+d am taking baby steps for the same.
 
-And here is the rebased 4/4 on top of that.
 
-At this point, I think this part of the topic has received more than
-enough attention. Please feel free to apply these patches, your patches,
-or even just drop it altogether (and when somebody has a more compelling
-reason to actually parse such a value, they can resurrect the
-infrastructure patch).
+Mit freundlichen Gr=FC=DFen / Best Regards,
+Rahul Chandrashekar
 
--- >8 --
-Subject: [PATCH] fetch-pack: mention server version with verbose output
+Robert Bosch Engineering and Business Solutions Limited
+Engineering Methods and Tools (RBEI\EMT2)
+123, Industrial Layout, Hosur Road, Koramangala,
+Bangalore - 560 095
+INDIA
+www.bosch.com
 
-Fetch-pack's verbose mode is more of a debugging mode (and
-in fact takes two "-v" arguments to trigger via the
-porcelain layer). Let's mention the server version as
-another possible item of interest.
+Tel. +91 80 6657 1661
+VoIp. +49(711)811-3615170
+Mobile +91 9886944213
+rahul.chandrashekar@in.bosch.com
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/fetch-pack.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index bc7a0f9..3b2b5a4 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -787,6 +787,8 @@ static struct ref *do_fetch_pack(int fd[2],
- {
- 	struct ref *ref = copy_ref_list(orig_ref);
- 	unsigned char sha1[20];
-+	const char *agent_feature;
-+	int agent_len;
- 
- 	sort_ref_list(&ref, ref_compare_name);
- 
-@@ -823,8 +825,14 @@ static struct ref *do_fetch_pack(int fd[2],
- 			fprintf(stderr, "Server supports ofs-delta\n");
- 	} else
- 		prefer_ofs_delta = 0;
--	if (server_supports("agent"))
-+
-+	if ((agent_feature = server_feature_value("agent", &agent_len))) {
- 		agent_supported = 1;
-+		if (args.verbose && agent_len) {
-+			fprintf(stderr, "Server version is %.*s\n",
-+				agent_len, agent_feature);
-+		}
-+	}
- 
- 	if (everything_local(&ref, nr_match, match)) {
- 		packet_flush(fd[1]);
--- 
-1.7.12.rc2.11.gf0a1e27
+-----Original Message-----
+=46rom: Martin Langhoff [mailto:martin.langhoff@gmail.com]
+Sent: Tuesday, 14. August 2012 1:15 AM
+To: Rahul Chandrashekar (RBEI/EMT2)
+Cc: git@vger.kernel.org
+Subject: Re: OSLC connectivity to GIT in Java
+
+On Mon, Aug 13, 2012 at 8:12 AM, rahul.chandrashekar
+<rahul.chandrashekar@in.bosch.com> wrote:
+> I am interested to connect to a GIT SCM through OSLC.
+
+It seems to me a very strange request. There is a very well
+implemented, fit-for-purpose "git protocol". OSLC, after some
+googling, is a REST-style definition over HTTP.
+
+We already have a git-over-http protocol, not very efficient but opens
+a window of opportunity to those behind unreasonable firewalls.
+Perhaps it is a starting point for you.
+
+hth,
+
+
+
+m
+--
+ martin.langhoff@gmail.com
+ martin@laptop.org -- Software Architect - OLPC
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
