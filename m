@@ -1,83 +1,118 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rev-list docs: clarify --topo-order description
-Date: Mon, 13 Aug 2012 22:33:22 -0700
-Message-ID: <CAOeW2eE63JQbo+x7ZTDupt=auvo2_4Df790TPOtTEynCBK6z5g@mail.gmail.com>
-References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eGoNvgpbQ9iM0xHpSD1Z4XyC-J8VNVW0bVw3p9qOeijjg@mail.gmail.com>
-	<7vobmebdfc.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: Porting git to HP NonStop
+Date: Tue, 14 Aug 2012 09:05:18 +0200
+Message-ID: <000f01cd79eb$2a0b6e00$7e224a00$@schmitz-digital.de>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 07:33:31 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 14 09:05:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T19kv-0003YN-5r
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 07:33:29 +0200
+	id 1T1BBy-0005wC-Sv
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 09:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753738Ab2HNFdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 01:33:23 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43046 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752374Ab2HNFdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 01:33:23 -0400
-Received: by yhmm54 with SMTP id m54so4374yhm.19
-        for <git@vger.kernel.org>; Mon, 13 Aug 2012 22:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bF9GGeeBwIJ/XeCWnUjf7nKvJmKiGBb7Tsod5IersVw=;
-        b=g6WaD/sIPEYUiuryc6PfYe4FfXW9HJq2uKBMyaDwcmeBbc34X1XlEoYKlpzS01aWeK
-         GhsL+LclyDAtQ6LMImu6l81jrjerItjfngkZqV+sXiMKUVGy3zPlR9NByExC9SSw7Mpb
-         gZuojGq2fgJlFtRAy0/QCSECvxM8nHOkZUHDTD3PGo5IsZME2lATa//bwRHBxxZbW680
-         DHV6MkCgqwsvKO8Vtgj0bKpep+5parzovJR1cAB7lbNW3EUV/oCsidZir4WIFNnvpado
-         O9s2mUyCRS3RTTQrps3B9Kp9I0KoVJOedquVeUOzsqdlbi0uRYMT7arIphwdAaAYjxUA
-         SYSQ==
-Received: by 10.66.87.66 with SMTP id v2mr27480941paz.71.1344922402103; Mon,
- 13 Aug 2012 22:33:22 -0700 (PDT)
-Received: by 10.68.120.112 with HTTP; Mon, 13 Aug 2012 22:33:22 -0700 (PDT)
-In-Reply-To: <7vobmebdfc.fsf@alter.siamese.dyndns.org>
+	id S1753529Ab2HNHFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 03:05:24 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:56432 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752218Ab2HNHFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 03:05:23 -0400
+Received: from DualCore (dsdf-4d0a02a3.pool.mediaWays.net [77.10.2.163])
+	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
+	id 0M7hzg-1Tw9UQ2wWu-00vPWr; Tue, 14 Aug 2012 09:05:22 +0200
+In-Reply-To: 
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7Eflf4hv7CAADBEQIAFcByQ
+Content-Language: de
+X-Provags-ID: V02:K0:hLGedzv/11rA03hbDebJwtBsjQozNHHdwwh+2ueLiiy
+ 94WOBCntG8zqVYRFqzuQFJSUX7wMNyKNPpv2Hx1pyf4r9QRvsf
+ sBdMyVMrwr+UXNsu6So8oO9kUgw//rn/QqmymrLa+2Wb4fLhts
+ 4FiQwEt3unUGRz9QS6xarS5bdvd/gnsZ1mVBC4lgbw2GBNgKST
+ AGLKJxagnMurQ99X1hFxCgAWKOoUAVZi1XRkZ/L/0Kt6FGW0P9
+ p1cPF6b9udgkKckydGjLvj3xvGeokHKBqmXrv5uAvHqMDKGG6X
+ TBkwTPgtS1FV0ynWoAOpcX8UMhYqp0Aow6hZcMBQXT80xZNxBP
+ ErQTFYrfZAK/c3w0Ed5RgvwPU0THgAU3tGj9vCMP0Z83CgfSZX
+ Z52fXiImc2n8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203386>
 
-On Mon, Aug 13, 2012 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
->
->>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
->>> index 6a4b635..dc501ee 100644
->>> --- a/Documentation/rev-list-options.txt
->>> +++ b/Documentation/rev-list-options.txt
->>> @@ -579,15 +579,32 @@ Commit Ordering
->>>  By default, the commits are shown in reverse chronological order.
->>
->> It seems likely that those reading the above sentence will continue on
->> to read about --topo-order, but still, do you think the "descendant
->> commits are shown before parents" part belong here instead?
->
-> I do not think so.  When you are not limited (i.e. limit_list() is
-> not called), you could do something like "git rev-list 4 5" in a
-> history like this:
->
->         --1---5---2---3---4
->
-> and get end up getting "5 4 3 2 1", and "2" certainly doesn't get
-> shown before "5" does.
+> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> Sent: Friday, August 10, 2012 10:09 PM
+> To: 'Shawn Pearce'
+> Cc: 'git@vger.kernel.org'; 'rsbecker@nexbridge.com'
+> Subject: RE: Porting git to HP NonStop
+> 
+> > From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> > Sent: Friday, August 10, 2012 7:33 PM
+> > To: 'Shawn Pearce'
+> > Cc: 'git@vger.kernel.org'; 'rsbecker@nexbridge.com'
+> > Subject: RE: Porting git to HP NonStop
+> >
+> > > From: Shawn Pearce [mailto:spearce@spearce.org]
+> > > Sent: Friday, August 10, 2012 6:28 PM
+> > > To: Joachim Schmitz
+> > > Cc: git@vger.kernel.org; rsbecker@nexbridge.com
+> > > Subject: Re: Porting git to HP NonStop
+> > >
+> > > On Fri, Aug 10, 2012 at 8:04 AM, Joachim Schmitz
+> > > <jojo@schmitz-digital.de>
+> > > wrote:
+> <snip>
+> > > >> - HP NonStop doesn't have stat.st_?time.nsec, there are several
+> > > >> places
+> > > > what an
+> > > >> "#ifdef USE_NSEC" is missing, I can provide a diff if needed
+> > > >> (offending
+> > > >> files: builtin/fetch-pack.c and read-cache.c).
+> > >
+> > > I think this would be appreciated by anyone else that has a similar
+> > > problem where the platform lacks nsec.
+> >
+> > Will do.
+> 
+> OK, here we go:
+> 
+> /usr/local/bin/diff -EBbu ./builtin/fetch-pack.c.orig
+./builtin/fetch-pack.c
+<snip>
 
-Oh, interesting. I had no idea, although that does make sense. Thanks.
+Sorry, this is not needed if I just set NO_NSEC, so just forget about it
+(and thanks to Junio for telling be)
 
-Still, the "Even without this option" strongly suggests to me that
-what follows ("descendant commits are shown before parents") applies
-to the "By default" case. Would it be correct to say something like
-"By default, the commits are shown in reverse chronological order.
-When commit limiting is in effect, descendant commits are shown before
-parents."? I'm not sure the "commit limiting" section in the man page
-involves the same options as "limit_list" (I rather think they don't),
-but I don't know if there's a better term to use in the documentation
-either.
+> /usr/local/bin/diff -EBbu ./git-compat-util.h.orig ./git-compat-util.h
+> --- ./git-compat-util.h.orig    2012-07-30 15:50:38 -0500
+> +++ ./git-compat-util.h 2012-08-10 09:59:56 -0500
+> @@ -74,7 +74,8 @@
+>  # define _XOPEN_SOURCE 500
+>  # endif
+>  #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__)
+> && \
+> -      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__)
+> +      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) &&
+\
+> +      !defined(__TANDEM)
+>  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD
+> needs 600 for S_ISLNK() */  #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L
+> needs this */  #endif @@ -98,6 +99,11 @@  #include <stdlib.h>  #include
+> <stdarg.h>  #include <string.h>
+> +#ifdef __TANDEM
+> +# include <strings.h> /* for strcasecmp() */
+> +  typedef long int intptr_t;
+> +  typedef unsigned long int uintptr_t;
+> +#endif
+>  #include <errno.h>
+>  #include <limits.h>
+>  #include <sys/param.h>
+
+This one still stands though, unless someone can come up with a better idea?
+
+Bye, Jojo
