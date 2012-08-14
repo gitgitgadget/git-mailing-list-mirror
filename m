@@ -1,103 +1,126 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Tue, 14 Aug 2012 15:15:54 -0700
-Message-ID: <CAE1pOi3a9ZMFfJ2qjkaZ_O-DuQa3xkKtsMU5GYYUuiwcRoFjbg@mail.gmail.com>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
- <87zk5x6fox.fsf@thomas.inf.ethz.ch> <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
- <7v628lbdcw.fsf@alter.siamese.dyndns.org> <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
- <87lihh8c7s.fsf@thomas.inf.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 15 00:16:25 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] send-email: validate & reconfirm interactive responses
+Date: Tue, 14 Aug 2012 15:25:32 -0700
+Message-ID: <1344983132-22578-1-git-send-email-gitster@pobox.com>
+References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Stephen Boyd <bebarino@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 15 00:25:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1PPU-0005GH-GY
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 00:16:24 +0200
+	id 1T1PYT-0000g5-8t
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 00:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787Ab2HNWQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 18:16:18 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:47065 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304Ab2HNWQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 18:16:17 -0400
-Received: by bkwj10 with SMTP id j10so314508bkw.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 15:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nP7ciE+/Ri8tp0arHFRbBjTa2S8ZlpblqMttXuwJldc=;
-        b=jT8iL0DxTg8Xp1GOkwsAEe2vHxegmbRndxGQXmTSsTS7j0CAc0ZT8qMwYT/lG90075
-         5J7OBQ5wwzLNPLP3p3e6ww0/A48Bvx62zmt74j918+rwyKtQMpYQf/SkAG530XNz5GZ+
-         2KRGV3tvC7eAQ555lzsa1rxcQEOfv6djwLeI9bZOmfC2VSl/gHlUwjUqYKmEUTpRiBkm
-         XueNxtwkYpw34B+BVI5F9yyeDIY8nacmrW/z60TgJv0EEXqdaIPClsfnGuPahq2RTrhF
-         jxUaVXCWRKzSlEHkEadBPV0dTEfCGTE2EnX43DMrY3efxHn34h8EshYHGIykarhyDsAF
-         DGoA==
-Received: by 10.204.152.220 with SMTP id h28mr6944475bkw.30.1344982576035;
- Tue, 14 Aug 2012 15:16:16 -0700 (PDT)
-Received: by 10.204.132.72 with HTTP; Tue, 14 Aug 2012 15:15:54 -0700 (PDT)
-In-Reply-To: <87lihh8c7s.fsf@thomas.inf.ethz.ch>
+	id S1752133Ab2HNWZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 18:25:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48987 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751095Ab2HNWZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 18:25:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4844C9AD6;
+	Tue, 14 Aug 2012 18:25:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=2VUs
+	ruNlVh2StAz/GNouDuxBg+c=; b=r5wbBTTe3S0x1Z3CVMnT6CtU0/5e468PgNbu
+	wlwvJ3bK0mULon0uIg+Sv+gu7OW27wNWnpDKv6+BkvgCaLNLKEsd0yhxldXwlNpW
+	PRSK5sZ+4Ak23FRm6rDT0wpJdx5E3xohza4DNlEfK1mOXO5A7DhpYxWO249eXto/
+	BLKDytk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	Cx9684DzhnrSk+xvU907KSipZi6BT963qAvx2PoB1TqgGds83Zvm7TC10x9TD0Vr
+	xNuNVD9rL9ppcGLyA0y7kkZkZjmxypLkrAyRFQHocZebnwqfwO9r8NqQ12E6V0ef
+	Waz5PR1xzIUvUtw5WgKAnpabfCgBUiQxSYWJYpOtciI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 364089AD5;
+	Tue, 14 Aug 2012 18:25:34 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CF509AD4; Tue, 14 Aug 2012
+ 18:25:33 -0400 (EDT)
+X-Mailer: git-send-email 1.7.8.3.2.gc7cbb
+In-Reply-To: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
+X-Pobox-Relay-ID: F6911F12-E65E-11E1-8AE5-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203456>
 
-On 14 August 2012 13:12, Thomas Rast <trast@student.ethz.ch> wrote:
-> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->
->> On 14 August 2012 10:19, Junio C Hamano <gitster@pobox.com> wrote:
->>> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->>>
->>>> On 14 August 2012 01:27, Thomas Rast <trast@student.ethz.ch> wrote:
->>>>> [git pull with two args] it's ok if you use it with an URL instead
->>>>> of a remote nickname
->>>>
->>>> Why would that be okay? What is the difference? Isn't the nickname
->>>> just an alias for a URL?
->>>
->>> As long as you tell what refspecs to use on the command line, the
->>> remote nickname behaves as "just an alias for a URL", so yes,
->>> because Thomas is discussing "two-arg pull or fetch", one arg being
->>> either nickname or URL and the other is an explicit refspec on the
->>> command line, it would be okay because there is no difference in
->>> that case.
->>
->> I suppose I'm not entirely clear on how this two step process is
->> "safer". Doing "git fetch" would seem to be harmless, right? So the
->> problem is with "git merge" but master should always be "behind"
->> origin/master so that "git merge" should just FF to origin/master
->> which *should* be completely safe. Does that make sense? Especially
->> given our use of master as an integration branch?
->>
->> [Given the trouble I have with getting people to use Git properly, I
->> prefer things as simple as possible. :-) ]
->
-> I meant something else than Junio hinted at.  Saying
->
->   git fetch origin master
->   # or by extension
->   git pull origin master
->
-> does not update the origin/* namespace, not even origin/master.  All
-> fetching happens only into FETCH_HEAD.  This leads to confusion such as
-> yours because origin/master and thus the upstream tracking displays will
-> not know about the change.
+People answer 'y' to "Who should the emails appear to be from?"  and
+'n' to "Message-ID to be used as In-Reply-To for the first email?"
+for some unknown reason.  While it is possible that really have "y"
+as your local username and sending the mail to your local colleagues,
+it is plausible that it could be an error.
 
-I'll say. Now I'm really confused.
+Fortunately, our interactive prompter already has input validation
+mechanism built-in.  Enhance it so that we can optionally reconfirm
+and allow the user to pass an input that does not validate, and
+"softly" require input to the sender, in-reply-to, and recipient to
+contain "@" and "." in this order, which would catch most cases of
+mistakes.
 
-If what you say is true then what is updating origin/master? I've been
-using "git pull" daily for over a year and origin/master is definitely
-getting updated (at least according to gitk).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-send-email.perl | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-Mmm, just to make sure we are all talking about the same
-origin/master: I mean my local reference to the SHA1 of the commit
-that is master's HEAD on origin. After I have run "git pull",  *my*
-master and *my* origin/master point to the same commit. Or I'm
-*really* confused. Or I've confused you by using incorrect
-terminology. :-) Or by using the right terminology incorrectly. ;-)
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ef30c55..e89729b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -681,6 +681,7 @@ sub ask {
+ 	my ($prompt, %arg) = @_;
+ 	my $valid_re = $arg{valid_re};
+ 	my $default = $arg{default};
++	my $confirm_only = $arg{confirm_only};
+ 	my $resp;
+ 	my $i = 0;
+ 	return defined $default ? $default : undef
+@@ -698,6 +699,12 @@ sub ask {
+ 		if (!defined $valid_re or $resp =~ /$valid_re/) {
+ 			return $resp;
+ 		}
++		if ($confirm_only) {
++			my $yesno = $term->readline("Are you sure you want to use <$resp> [y/N]? ");
++			if (defined $yesno && $yesno =~ /y/i) {
++				return $resp;
++			}
++		}
+ 	}
+ 	return undef;
+ }
+@@ -745,13 +752,15 @@ sub file_declares_8bit_cte {
+ if (!defined $sender) {
+ 	$sender = $repoauthor || $repocommitter || '';
+ 	$sender = ask("Who should the emails appear to be from? [$sender] ",
+-	              default => $sender);
++	              default => $sender,
++		      valid_re => qr/\@.*\./, confirm_only => 1);
+ 	print "Emails will be sent from: ", $sender, "\n";
+ 	$prompting++;
+ }
+ 
+ if (!@initial_to && !defined $to_cmd) {
+-	my $to = ask("Who should the emails be sent to? ");
++	my $to = ask("Who should the emails be sent to? ",
++		     valid_re => qr/\@.*\./, confirm_only => 1);
+ 	push @initial_to, parse_address_line($to) if defined $to; # sanitized/validated later
+ 	$prompting++;
+ }
+@@ -777,7 +786,8 @@ sub expand_one_alias {
+ 
+ if ($thread && !defined $initial_reply_to && $prompting) {
+ 	$initial_reply_to = ask(
+-		"Message-ID to be used as In-Reply-To for the first email? ");
++		"Message-ID to be used as In-Reply-To for the first email? ",
++		valid_re => qr/\@.*\./, confirm_only => 1);
+ }
+ if (defined $initial_reply_to) {
+ 	$initial_reply_to =~ s/^\s*<?//;
+-- 
+1.7.12.rc2.18.g61b472e
