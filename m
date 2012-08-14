@@ -1,7 +1,7 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH/RFC v3 08/16] Allow reading svn dumps from files via file:// urls.
-Date: Tue, 14 Aug 2012 21:13:10 +0200
-Message-ID: <1344971598-8213-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH/RFC v3 09/16] vcs-svn: add fast_export_note to create notes
+Date: Tue, 14 Aug 2012 21:13:11 +0200
+Message-ID: <1344971598-8213-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
@@ -10,154 +10,122 @@ References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.co
  <1344971598-8213-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1344971598-8213-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
-Cc: florian.achleitner.2.6.31@gmail.com
+ <1344971598-8213-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Cc: florian.achleitner.2.6.31@gmail.com,
+	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 14 21:17:36 2012
+X-From: git-owner@vger.kernel.org Tue Aug 14 21:17:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1McL-0003cZ-2W
+	id 1T1McL-0003cZ-JU
 	for gcvg-git-2@plane.gmane.org; Tue, 14 Aug 2012 21:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756648Ab2HNTRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Aug 2012 15:17:21 -0400
+	id S1756674Ab2HNTRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Aug 2012 15:17:24 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:44490 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756588Ab2HNTRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Aug 2012 15:17:18 -0400
+	with ESMTP id S1756588Ab2HNTRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Aug 2012 15:17:22 -0400
 Received: by mail-bk0-f46.google.com with SMTP id j10so265503bkw.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 12:17:17 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 14 Aug 2012 12:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=H5q2g4FLC4PSs3P192dtbQ/pwI65G4yHcTObB01e6Zk=;
-        b=fH02Lg+V060w7WdUzCDB79zVeZKjDx6fTa6IOtFkqmj6QUBq4Op7VfyWDrDgT/bnXq
-         6Zp0HxMJyBY0+vTTLU/LX1E0px+BgB2t2Ez4TVg3YhidComS+Duf7K0lCfKxrYMiVJ3L
-         tPGzpGvGcOFY1rDqP/TnSOqImT0nU4RmBjxcqfPkPrm4hpDvoJZAejJIYnIk/1nDd74l
-         IBbPvLgyZuXaVxkhdp/vaXYZz3cr8oUARjbonMf74KJqTCpOV37JUqvkef9HgU8TRjhY
-         mz66pf4FuK+GMFYvJ+Hb/oL6GJdJtsYSZKsuDFU+xB79/8PrQVh7ZYlhuYH1YWdbJRdc
-         EEWQ==
-Received: by 10.205.122.147 with SMTP id gg19mr6707557bkc.73.1344971837759;
-        Tue, 14 Aug 2012 12:17:17 -0700 (PDT)
+        bh=vAFOST64AB6xXkSpJ33xknC9dc3y1wRiGEdbAtdkQR0=;
+        b=skeXw26IdTCFHIjRoJuCZH8nSblnIAJ0J1vV6q3WMnLSJaUViW1e56YALu9PhJ4vZ9
+         B2gNFtCuh23uBB6syRlmnyl8x02JvhkV2ztqTAMOZDqF9KFzqDG3HCK/1jduW6yNgjjq
+         tu64J+pR/7RbIAzpF1BCNda+wDmiTxaw3nJWJglJBOh62KvOQuZWHJj++PxNii/ypNqV
+         yzjBEjjPdt3cRZOAd3opJp5zinQOzGAO56adItZF/wowHMM8Q0OsmQQ5yQGKzNW4l/4Z
+         fh++ohTJNuripQ9b2SgDZT65puctoct2I90dmCTZxVWxEiPPH7a66zyB8XK41YXJhmCh
+         OQaQ==
+Received: by 10.204.13.82 with SMTP id b18mr6909754bka.118.1344971841491;
+        Tue, 14 Aug 2012 12:17:21 -0700 (PDT)
 Received: from localhost.localdomain (089144206125.atnat0015.highway.a1.net. [89.144.206.125])
-        by mx.google.com with ESMTPS id fu8sm1681583bkc.5.2012.08.14.12.17.13
+        by mx.google.com with ESMTPS id fu8sm1681583bkc.5.2012.08.14.12.17.17
         (version=SSLv3 cipher=OTHER);
-        Tue, 14 Aug 2012 12:17:15 -0700 (PDT)
+        Tue, 14 Aug 2012 12:17:20 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1344971598-8213-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1344971598-8213-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203433>
 
-For testing as well as for importing large, already
-available dumps, it's useful to bypass svnrdump and
-replay the svndump from a file directly.
+From: Dmitry Ivankov <divanorama@gmail.com>
 
-Add support for file:// urls in the remote url.
-e.g. svn::file:///path/to/dump
-When the remote helper finds an url starting with
-file:// it tries to open that file instead of invoking svnrdump.
+fast_export lacked a method to writes notes to fast-import stream.
+Add two new functions fast_export_note which is similar to
+fast_export_modify. And also add fast_export_buf_to_data to be able
+to write inline blobs that don't come from a line_buffer or from delta
+application.
 
+To be used like this:
+fast_export_begin_commit("refs/notes/somenotes", ...)
+
+fast_export_note("refs/heads/master", "inline")
+fast_export_buf_to_data(&data)
+or maybe
+fast_export_note("refs/heads/master", sha1)
+
+Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 ---
- contrib/svn-fe/remote-svn.c |   59 ++++++++++++++++++++++++++-----------------
- 1 file changed, 36 insertions(+), 23 deletions(-)
+ vcs-svn/fast_export.c |   12 ++++++++++++
+ vcs-svn/fast_export.h |    2 ++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/contrib/svn-fe/remote-svn.c b/contrib/svn-fe/remote-svn.c
-index ce59344..df1babc 100644
---- a/contrib/svn-fe/remote-svn.c
-+++ b/contrib/svn-fe/remote-svn.c
-@@ -10,6 +10,7 @@
- #include "argv-array.h"
- 
- static const char *url;
-+static int dump_from_file;
- static const char *private_ref;
- static const char *remote_ref = "refs/heads/master";
- 
-@@ -54,34 +55,39 @@ static int cmd_import(const char *line)
- 	struct argv_array svndump_argv = ARGV_ARRAY_INIT;
- 	struct child_process svndump_proc;
- 
--	memset(&svndump_proc, 0, sizeof (struct child_process));
--	svndump_proc.out = -1;
--	argv_array_push(&svndump_argv, "svnrdump");
--	argv_array_push(&svndump_argv, "dump");
--	argv_array_push(&svndump_argv, url);
--	argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
--	svndump_proc.argv = svndump_argv.argv;
--
--	code = start_command(&svndump_proc);
--	if (code)
--		die("Unable to start %s, code %d", svndump_proc.argv[0], code);
--	dumpin_fd = svndump_proc.out;
--
--	code = start_command(&svndump_proc);
--	if (code)
--		die("Unable to start %s, code %d", svndump_proc.argv[0], code);
--	dumpin_fd = svndump_proc.out;
-+	if(dump_from_file) {
-+		dumpin_fd = open(url, O_RDONLY);
-+		if(dumpin_fd < 0) {
-+			die_errno("Couldn't open svn dump file %s.", url);
-+		}
-+	}
-+	else {
-+		memset(&svndump_proc, 0, sizeof (struct child_process));
-+		svndump_proc.out = -1;
-+		argv_array_push(&svndump_argv, "svnrdump");
-+		argv_array_push(&svndump_argv, "dump");
-+		argv_array_push(&svndump_argv, url);
-+		argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
-+		svndump_proc.argv = svndump_argv.argv;
-+
-+		code = start_command(&svndump_proc);
-+		if (code)
-+			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
-+		dumpin_fd = svndump_proc.out;
- 
-+	}
- 	svndump_init_fd(dumpin_fd, STDIN_FILENO);
- 	svndump_read(url, private_ref);
- 	svndump_deinit();
- 	svndump_reset();
- 
- 	close(dumpin_fd);
--	code = finish_command(&svndump_proc);
--	if (code)
--		warning("%s, returned %d", svndump_proc.argv[0], code);
--	argv_array_clear(&svndump_argv);
-+	if(!dump_from_file) {
-+		code = finish_command(&svndump_proc);
-+		if (code)
-+			warning("%s, returned %d", svndump_proc.argv[0], code);
-+		argv_array_clear(&svndump_argv);
-+	}
- 
- 	return 0;
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 11f8f94..1ecae4b 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -68,6 +68,11 @@ void fast_export_modify(const char *path, uint32_t mode, const char *dataref)
+ 	putchar('\n');
  }
-@@ -158,8 +164,15 @@ int main(int argc, const char **argv)
- 	if (argc == 3)
- 		url_in = argv[2];
  
--	end_url_with_slash(&buf, url_in);
--	url = strbuf_detach(&buf, NULL);
-+	if (!prefixcmp(url_in, "file://")) {
-+		dump_from_file = 1;
-+		url = url_decode(url_in + sizeof("file://")-1);
-+	}
-+	else {
-+		dump_from_file = 0;
-+		end_url_with_slash(&buf, url_in);
-+		url = strbuf_detach(&buf, NULL);
-+	}
++void fast_export_note(const char *committish, const char *dataref)
++{
++	printf("N %s %s\n", dataref, committish);
++}
++
+ static char gitsvnline[MAX_GITSVN_LINE_LEN];
+ void fast_export_begin_commit(uint32_t revision, const char *author,
+ 			const struct strbuf *log,
+@@ -222,6 +227,13 @@ static long apply_delta(off_t len, struct line_buffer *input,
+ 	return ret;
+ }
  
- 	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
- 	private_ref = strbuf_detach(&buf, NULL);
++void fast_export_buf_to_data(const struct strbuf *data)
++{
++	printf("data %"PRIuMAX"\n", (uintmax_t)data->len);
++	fwrite(data->buf, data->len, 1, stdout);
++	fputc('\n', stdout);
++}
++
+ void fast_export_data(uint32_t mode, off_t len, struct line_buffer *input)
+ {
+ 	assert(len >= 0);
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index 17eb13b..9b32f1e 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -9,11 +9,13 @@ void fast_export_deinit(void);
+ 
+ void fast_export_delete(const char *path);
+ void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
++void fast_export_note(const char *committish, const char *dataref);
+ void fast_export_begin_commit(uint32_t revision, const char *author,
+ 			const struct strbuf *log, const char *uuid,
+ 			const char *url, unsigned long timestamp, const char *local_ref);
+ void fast_export_end_commit(uint32_t revision);
+ void fast_export_data(uint32_t mode, off_t len, struct line_buffer *input);
++void fast_export_buf_to_data(const struct strbuf *data);
+ void fast_export_blob_delta(uint32_t mode,
+ 			uint32_t old_mode, const char *old_data,
+ 			off_t len, struct line_buffer *input);
 -- 
 1.7.9.5
