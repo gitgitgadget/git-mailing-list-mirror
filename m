@@ -1,8 +1,8 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [PATCH/RFC v3 01/16] Implement a remote helper for svn in C.
-Date: Wed, 15 Aug 2012 14:00:31 +0200
-Message-ID: <38446278.5ZUZChB0NF@flomedio>
-References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1344971598-8213-2-git-send-email-florian.achleitner.2.6.31@gmail.com> <7vhas59r0b.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC v3 04/16] Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability.
+Date: Wed, 15 Aug 2012 14:00:33 +0200
+Message-ID: <2444647.P1AdWcSsQk@flomedio>
+References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1344971598-8213-5-git-send-email-florian.achleitner.2.6.31@gmail.com> <7v4no59phn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7Bit
@@ -10,394 +10,274 @@ Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
 	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 14:00:59 2012
+X-From: git-owner@vger.kernel.org Wed Aug 15 14:01:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1cHL-0008Lv-0L
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 14:00:51 +0200
+	id 1T1cHR-0008UL-J4
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 14:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439Ab2HOMAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 08:00:43 -0400
+	id S1751651Ab2HOMAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 08:00:50 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:38889 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129Ab2HOMAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 08:00:42 -0400
-Received: by bkwj10 with SMTP id j10so488287bkw.19
-        for <git@vger.kernel.org>; Wed, 15 Aug 2012 05:00:41 -0700 (PDT)
+	with ESMTP id S1751129Ab2HOMAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 08:00:49 -0400
+Received: by mail-bk0-f46.google.com with SMTP id j10so488287bkw.19
+        for <git@vger.kernel.org>; Wed, 15 Aug 2012 05:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
          :references:mime-version:content-transfer-encoding:content-type;
-        bh=ufmf6LDHwxFo6z4yDC6GpcWd+QqOyEa9f3QT/MLR8P0=;
-        b=ODMHYcnOQGMcjIcTKj89OWV1Yv70YGrLEy5Rq/Ka6LxELaGwOmHU6k75YubLTJaKRn
-         +LZJt2KcvzSIugMNu+EH2Z6WJaMPKifSs7ztopvBgJzpSOfbLuqy6KInij2sa9Df30mn
-         n5i7qrpq5qMPtCvtSVsmJnnLXR90lXwl1A3UN0ST+LTU1DUFm6/+jpJ3kbARN0T+JbrG
-         yXt/0evqb8jM+svOuEylYEOO2qz0/u8wYt/BssT70MeNBtLc9/7tOdLWtQ6s1juMGydZ
-         q3uP7Uw5PbKxx9IRkXKibw8DdJEnQ72+L+v40LmE9a34fwNBNvz7ERNQJWp3E3jrEDdT
-         Iz7Q==
-Received: by 10.204.154.211 with SMTP id p19mr7859520bkw.12.1345032040899;
-        Wed, 15 Aug 2012 05:00:40 -0700 (PDT)
+        bh=wjDp/jXhyssvhQTIR58AulMYGR9RrRmXuvL6jbcEExg=;
+        b=Pr2m3RZa3CAhSwXC2ZqSAHFw+eQydk4cNiPwJz8cTTka1Z79IzTgMR5kCyejK+Cs+D
+         WXY8JdZwULlrPHthEWbTQm1Glf66LXIs3TzsdK5hbe3urFvcHA+d7dSYIL9KRPZNzQlB
+         YeU6p/yGenSH4EO/SKd0tJ2jfBKrDpI2HXy3kf8lGFfDUDyAc0EtBybRLXRijaSPfZUH
+         XfOJNJIaVvTW5qdqN1uP5m43WGfEa9guasusU9WB+xMHDx84OiyX+BpIx/w4X1HdHS1Z
+         njDTSwR4PUoQHnfZdDpWVa7U5wwCGnV1UTCojOWRBe2ENsb9JDXDu6wUQKecavzrNLRI
+         zv2g==
+Received: by 10.204.154.214 with SMTP id p22mr7787759bkw.111.1345032048997;
+        Wed, 15 Aug 2012 05:00:48 -0700 (PDT)
 Received: from flomedio.localnet (089144206028.atnat0015.highway.a1.net. [89.144.206.28])
-        by mx.google.com with ESMTPS id m9sm666268bkm.10.2012.08.15.05.00.35
+        by mx.google.com with ESMTPS id m9sm666557bkm.10.2012.08.15.05.00.44
         (version=SSLv3 cipher=OTHER);
-        Wed, 15 Aug 2012 05:00:39 -0700 (PDT)
+        Wed, 15 Aug 2012 05:00:46 -0700 (PDT)
 User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <7vhas59r0b.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7v4no59phn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203470>
 
-On Tuesday 14 August 2012 13:07:32 Junio C Hamano wrote:
+On Tuesday 14 August 2012 13:40:20 Junio C Hamano wrote:
 > Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
-> > Enable basic fetching from subversion repositories. When processing remote
-> > URLs starting with svn::, git invokes this remote-helper.
-> > It starts svnrdump to extract revisions from the subversion repository in
-> > the 'dump file format', and converts them to a git-fast-import stream
-> > using the functions of vcs-svn/.
+> > The fast-import commands 'cat-blob' and 'ls' can be used by remote-helpers
+> > to retrieve information about blobs and trees that already exist in
+> > fast-import's memory. This requires a channel from fast-import to the
+> > remote-helper.
+> > remote-helpers that use this features shall advertise the new
+> > 'bidi-import'
 > 
-> (nit) the above is a bit too wide, isn't it?
+> s/this fea/these fea/
 > 
-> > Imported refs are created in a private namespace at
-> > refs/svn/<remote-name/master.
-> (nit) missing closing '>'?
+> > capability so signal that they require the communication channel.
 > 
-> > The revision history is imported linearly (no branch detection) and
-> > completely, i.e. from revision 0 to HEAD.
-> > 
-> > The 'bidi-import' capability is used. The remote-helper expects data from
-> > fast-import on its stdin. It buffers a batch of 'import' command lines
-> > in a string_list before starting to process them.
-> > 
+> s/so sig/to sig/, I think.
+> 
+> > When forking fast-import in transport-helper.c connect it to a dup of
+> > the remote-helper's stdin-pipe. The additional file descriptor is passed
+> > to fast-import via it's command line (--cat-blob-fd).
+> 
+> s/via it's/via its/;
+> 
+> > It follows that git and fast-import are connected to the remote-helpers's
+> > stdin.
+> > Because git can send multiple commands to the remote-helper on it's stdin,
+> > it is required that helpers that advertise 'bidi-import' buffer all input
+> > commands until the batch of 'import' commands is ended by a newline
+> > before sending data to fast-import.
+> > This is to prevent mixing commands and fast-import responses on the
+> > helper's stdin.
+> 
+> Please have a blank line each between paragraphs; a solid block of
+> text is very hard to follow.
+> 
 > > Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 > > ---
-> > diff:
-> > - incorporate review
-> > - remove redundant strbuf_init
-> > - add 'bidi-import' to capabilities
-> > - buffer all lines of a command batch in string_list
 > > 
-> >  contrib/svn-fe/remote-svn.c |  183
-> >  +++++++++++++++++++++++++++++++++++++++++++ 1 file changed, 183
-> >  insertions(+)
-> >  create mode 100644 contrib/svn-fe/remote-svn.c
+> >  transport-helper.c |   45 ++++++++++++++++++++++++++++++++-------------
+> >  1 file changed, 32 insertions(+), 13 deletions(-)
 > > 
-> > diff --git a/contrib/svn-fe/remote-svn.c b/contrib/svn-fe/remote-svn.c
-> > new file mode 100644
-> > index 0000000..ce59344
-> > --- /dev/null
-> > +++ b/contrib/svn-fe/remote-svn.c
-> > @@ -0,0 +1,183 @@
-> > +
-> 
-> Remove.
-> 
-> > +#include "cache.h"
-> > +#include "remote.h"
-> > +#include "strbuf.h"
-> > +#include "url.h"
-> > +#include "exec_cmd.h"
-> > +#include "run-command.h"
-> > +#include "svndump.h"
-> > +#include "notes.h"
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index cfe0988..257274b 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -10,6 +10,7 @@
+> > 
+> >  #include "string-list.h"
+> >  #include "thread-utils.h"
+> >  #include "sigchain.h"
+> > 
 > > +#include "argv-array.h"
-> > +
-> > +static const char *url;
-> > +static const char *private_ref;
-> > +static const char *remote_ref = "refs/heads/master";
+> > 
+> >  static int debug;
+> > 
+> > @@ -19,6 +20,7 @@ struct helper_data {
+> > 
+> >  	FILE *out;
+> >  	unsigned fetch : 1,
+> >  	
+> >  		import : 1,
+> > 
+> > +		bidi_import : 1,
+> > 
+> >  		export : 1,
+> >  		option : 1,
+> >  		push : 1,
+> > 
+> > @@ -101,6 +103,7 @@ static void do_take_over(struct transport *transport)
+> > 
+> >  static struct child_process *get_helper(struct transport *transport)
+> >  {
+> >  
+> >  	struct helper_data *data = transport->data;
+> > 
+> > +	struct argv_array argv = ARGV_ARRAY_INIT;
+> > 
+> >  	struct strbuf buf = STRBUF_INIT;
+> >  	struct child_process *helper;
+> >  	const char **refspecs = NULL;
+> > 
+> > @@ -122,11 +125,10 @@ static struct child_process *get_helper(struct
+> > transport *transport)> 
+> >  	helper->in = -1;
+> >  	helper->out = -1;
+> >  	helper->err = 0;
+> > 
+> > -	helper->argv = xcalloc(4, sizeof(*helper->argv));
+> > -	strbuf_addf(&buf, "git-remote-%s", data->name);
+> > -	helper->argv[0] = strbuf_detach(&buf, NULL);
+> > -	helper->argv[1] = transport->remote->name;
+> > -	helper->argv[2] = remove_ext_force(transport->url);
+> > +	argv_array_pushf(&argv, "git-remote-%s", data->name);
+> > +	argv_array_push(&argv, transport->remote->name);
+> > +	argv_array_push(&argv, remove_ext_force(transport->url));
+> > +	helper->argv = argv.argv;
 > 
-> Just wondering; is this name "master" (or "refs/heads/" for that
-> matter) significant in any way when talking to a subversion remote?
+> Much nicer than before thanks to argv_array ;-)
+> 
+> >  	helper->git_cmd = 0;
+> >  	helper->silent_exec_failure = 1;
+> > 
+> > @@ -141,6 +143,8 @@ static struct child_process *get_helper(struct
+> > transport *transport)> 
+> >  	data->helper = helper;
+> >  	data->no_disconnect_req = 0;
+> > 
+> > +	free((void*) helper_env[1]);
+> 
+> What is this free() for???
 
-No, it isn't. But it has to specify something in the list command.
-
+Sorry, legacy from previous versions, will be deleted.
 > 
-> > +static int cmd_capabilities(const char *line);
-> > +static int cmd_import(const char *line);
-> > +static int cmd_list(const char *line);
+> > +	argv_array_clear(&argv);
+> 
+> See below.
+> 
+> >  	/*
+> >  	
+> >  	 * Open the output as FILE* so strbuf_getline() can be used.
+> > 
+> > @@ -178,6 +182,8 @@ static struct child_process *get_helper(struct
+> > transport *transport)> 
+> >  			data->push = 1;
+> >  		
+> >  		else if (!strcmp(capname, "import"))
+> >  		
+> >  			data->import = 1;
+> > 
+> > +		else if (!strcmp(capname, "bidi-import"))
+> > +			data->bidi_import = 1;
+> > 
+> >  		else if (!strcmp(capname, "export"))
+> >  		
+> >  			data->export = 1;
+> >  		
+> >  		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
+> > 
+> > @@ -241,8 +247,6 @@ static int disconnect_helper(struct transport
+> > *transport)> 
+> >  		close(data->helper->out);
+> >  		fclose(data->out);
+> >  		res = finish_command(data->helper);
+> > 
+> > -		free((char *)data->helper->argv[0]);
+> > -		free(data->helper->argv);
+> > 
+> >  		free(data->helper);
+> >  		data->helper = NULL;
+> >  	
+> >  	}
+> > 
+> > @@ -376,14 +380,24 @@ static int fetch_with_fetch(struct transport
+> > *transport,> 
+> >  static int get_importer(struct transport *transport, struct child_process
+> >  *fastimport) {
+> >  
+> >  	struct child_process *helper = get_helper(transport);
+> > 
+> > +	struct helper_data *data = transport->data;
+> > +	struct argv_array argv = ARGV_ARRAY_INIT;
+> > +	int cat_blob_fd, code;
+> > 
+> >  	memset(fastimport, 0, sizeof(*fastimport));
+> >  	fastimport->in = helper->out;
+> > 
+> > -	fastimport->argv = xcalloc(5, sizeof(*fastimport->argv));
+> > -	fastimport->argv[0] = "fast-import";
+> > -	fastimport->argv[1] = "--quiet";
+> > +	argv_array_push(&argv, "fast-import");
+> > +	argv_array_push(&argv, "--quiet");
+> > 
+> > +	if (data->bidi_import) {
+> > +		cat_blob_fd = xdup(helper->in);
+> > +		argv_array_pushf(&argv, "--cat-blob-fd=%d", cat_blob_fd);
+> > +	}
+> > +	fastimport->argv = argv.argv;
+> > 
+> >  	fastimport->git_cmd = 1;
+> > 
+> > -	return start_command(fastimport);
 > > +
-> > +typedef int (*input_command_handler)(const char *);
-> > +struct input_command_entry {
-> > +	const char *name;
-> > +	input_command_handler fct;
-> > +	unsigned char batchable;	/* whether the command starts or is part of a
-> > batch */ +};
-> > +
-> > +static const struct input_command_entry input_command_list[] = {
-> > +		{ "capabilities", cmd_capabilities, 0 },
-> 
-> One level too deeply indented?
-> 
-> > +		{ "import", cmd_import, 1 },
-> > +		{ "list", cmd_list, 0 },
-> > +		{ NULL, NULL }
-> > +};
-> > +
-> > +static int cmd_capabilities(const char *line) {
-> > +	printf("import\n");
-> > +	printf("bidi-import\n");
-> > +	printf("refspec %s:%s\n\n", remote_ref, private_ref);
-> > +	fflush(stdout);
-> > +	return 0;
-> > +}
-> > +
-> > +static void terminate_batch(void)
-> > +{
-> > +	/* terminate a current batch's fast-import stream */
-> > +		printf("done\n");
-> 
-> Likewise.
-> 
-> > +		fflush(stdout);
-> > +}
-> > +
-> > +static int cmd_import(const char *line)
-> > +{
-> > +	int code;
-> > +	int dumpin_fd;
-> > +	unsigned int startrev = 0;
-> > +	struct argv_array svndump_argv = ARGV_ARRAY_INIT;
-> > +	struct child_process svndump_proc;
-> > +
-> > +	memset(&svndump_proc, 0, sizeof (struct child_process));
-> 
-> Please lose SP between sizeof and '('.
-> 
-> > +	svndump_proc.out = -1;
-> > +	argv_array_push(&svndump_argv, "svnrdump");
-> > +	argv_array_push(&svndump_argv, "dump");
-> > +	argv_array_push(&svndump_argv, url);
-> > +	argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
-> > +	svndump_proc.argv = svndump_argv.argv;
-> 
-> (just me making a mental note) We read from "svnrdump", which would
-> read (if it ever does) from the same stdin as ours and spits (if it
-> ever does) its errors to the same stderr as ours.
-
-Yes. svnrdump sometimes queries passwords, in this case it reads stdin, from 
-the the terminal, and it writes errors and the password prompt to stderr, the 
-terminal.
-
-> 
-> > +
-> > +	code = start_command(&svndump_proc);
-> > +	if (code)
-> > +		die("Unable to start %s, code %d", svndump_proc.argv[0], code);
-> > +	dumpin_fd = svndump_proc.out;
-> > +
-> > +	code = start_command(&svndump_proc);
-> > +	if (code)
-> > +		die("Unable to start %s, code %d", svndump_proc.argv[0], code);
-> > +	dumpin_fd = svndump_proc.out;
-> 
-> You start it twice without finishing the first invocation, or just a
-> double paste?
-
-Sorry, thats garbage. It's meant to be only once. This was a mistake in a 
-rebase merge.
-
-> 
-> > +	svndump_init_fd(dumpin_fd, STDIN_FILENO);
-> > +	svndump_read(url, private_ref);
-> > +	svndump_deinit();
-> > +	svndump_reset();
-> > +
-> > +	close(dumpin_fd);
-> 
-> (my mental note) And at this point, we finished feeding whatever
-> comes out of "svnrdump" to svndump_read().
-> 
-> > +	code = finish_command(&svndump_proc);
-> > +	if (code)
-> > +		warning("%s, returned %d", svndump_proc.argv[0], code);
-> > +	argv_array_clear(&svndump_argv);
-> > +
-> > +	return 0;
-> 
-> Other than the "twice?" puzzle, this function looks straightforward.
-> 
-> > +}
-> > +
-> > +static int cmd_list(const char *line)
-> > +{
-> > +	printf("? %s\n\n", remote_ref);
-> > +	fflush(stdout);
-> > +	return 0;
-> > +}
-> > +
-> > +static int do_command(struct strbuf *line)
-> > +{
-> > +	const struct input_command_entry *p = input_command_list;
-> > +	static struct string_list batchlines = STRING_LIST_INIT_DUP;
-> > +	static const struct input_command_entry *batch_cmd;
+> > +	code = start_command(fastimport);
+> > +	argv_array_clear(&argv);
+> > +	return code;
+> > 
+> >  }
+> >  
+> >  static int get_exporter(struct transport *transport,
+> > 
+> > @@ -438,11 +452,16 @@ static int fetch_with_import(struct transport
+> > *transport,> 
+> >  	}
+> >  	
+> >  	write_constant(data->helper->in, "\n");
+> > 
 > > +	/*
-> > +	 * commands can be grouped together in a batch.
-> > +	 * Batches are ended by \n. If no batch is active the program ends.
-> > +	 * During a batch all lines are buffered and passed to the handler
-> > function +	 * when the batch is terminated.
+> > +	 * remote-helpers that advertise the bidi-import capability are required
+> > to +	 * buffer the complete batch of import commands until this newline
+> > before +	 * sending data to fast-import.
+> > +	 * These helpers read back data from fast-import on their stdin, which
+> > could +	 * be mixed with import commands, otherwise.
 > > +	 */
-> > +	if (line->len == 0) {
-> > +		if (batch_cmd) {
-> > +			struct string_list_item *item;
-> > +			for_each_string_list_item(item, &batchlines)
-> > +				batch_cmd->fct(item->string);
+> > 
+> >  	if (finish_command(&fastimport))
+> >  	
+> >  		die("Error while running fast-import");
+> > 
+> > -	free(fastimport.argv);
+> > -	fastimport.argv = NULL;
 > 
-> (style) I think we tend to call these unnamed functions "fn" in our
-> codebase.
+> The updated code frees argv[] immediately after start_command()
+> returns, and it may happen to be safe to do so with the current
+> implementation of start_command() and friends, but I think it is a
+> bad taste to free argv[] (or env[] for that matter) before calling
+> finish_command().  These pieces of memory are still pointed by the
+> child_process structure, and users of the structure may want to use
+> contents of them (especially, argv[0]) for reporting errors and
+> various other purposes, e.g.
 > 
-> > +			terminate_batch();
-> > +			batch_cmd = NULL;
-> > +			string_list_clear(&batchlines, 0);
-> > +			return 0;	/* end of the batch, continue reading other commands. */
-> > +		}
-> > +		return 1;	/* end of command stream, quit */
-> > +	}
-> > +	if (batch_cmd) {
-> > +		if (strcmp(batch_cmd->name, line->buf))
-> > +			die("Active %s batch interrupted by %s", batch_cmd->name, line-
->buf);
-> > +		/* buffer batch lines */
-> > +		string_list_append(&batchlines, line->buf);
-> > +		return 0;
-> > +	}
+> 	child = get_helper();
 > 
-> A "batch-able" command, e.g. "import", will first cause the
-> batch_cmd to point at the command structure in this function, and
-> then the next and subsequent lines, as long as the input line is
-> exactly the same as the current batch_cmd->name, e.g. "import", is
-> appended into batchlines.
+>         trace("started %s\n", child->argv[0]);
 > 
-> Would this mean that you can feed something like this:
-> 
-> 	import foobar
->         import
->         import
->         import
-> 
->         another command
-> 
-> and buffer the four "import" lines in batchlines, and then on the
-> empty line, have the for-each-string-list-item loop to call
-> cmd_import() on "import foobar", "import", "import", then "import"
-> (literally, without anything other than "import" on the line).
-> 
-> How is that useful?  With that "if (strcmp(batch_cmd->name, line->buf))",
-> I cannot think of other valid input to make this "batch" mechanism
-> to trigger and do something useful.  Am I missing something?
-> 
-That's a mistake I made when adding the line buffering. It should allow 
-commands like:
+> 	if (finish_command(child))
+>         	return error("failed to cleanly finish %s", child->argv[0]);
 
-import foo
-import bar
-
-some other command.
-
-For this helper in it's current state it's anyways not useful to send more 
-than one import command, because it can only import revisions it doesn't yet 
-have. So a second import would always do nothing.
-The import batches are specified in Documentation/git-remote-helpers.txt.
-So this helper should support it, I thought.
-The buffering of import lines is necessary with the bidi-import capability, 
-suggested by Jonathan. It uses the helper's stdin for command input and for 
-reading fast-imports output. So we must make sure these two datastreams don't 
-mix.
-
-> > +
-> > +	for(p = input_command_list; p->name; p++) {
-> 
-> Have a SP between for and '('.
-> 
-> > +		if (!prefixcmp(line->buf, p->name) &&
-> > +				(strlen(p->name) == line->len || line->buf[strlen(p->name)] == ' 
-'))
-> > {
-> 
-> A line way too wide.
-> 
-> > +			if (p->batchable) {
-> > +				batch_cmd = p;
-> > +				string_list_append(&batchlines, line->buf);
-> > +				return 0;
-> > +			}
-> > +			return p->fct(line->buf);
-> > +		}
-> 
-> OK, so a command word on a line by itself, or a command word
-> followed by a SP (probably followed by its arguments) on a line
-> triggers a command lookup, and individual command implementation
-> parses the line.
-> 
-> > +	}
-> > +	warning("Unknown command '%s'\n", line->buf);
-> > +	return 0;
-> 
-> Why isn't this an error?
-
-Yeah, it should.
-
-> 
-> > +}
-> > +
-> > +int main(int argc, const char **argv)
-> > +{
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	int nongit;
-> > +	static struct remote *remote;
-> > +	const char *url_in;
-> > +
-> > +	git_extract_argv0_path(argv[0]);
-> > +	setup_git_directory_gently(&nongit);
-> > +	if (argc < 2 || argc > 3) {
-> > +		usage("git-remote-svn <remote-name> [<url>]");
-> > +		return 1;
-> > +	}
-> 
-> If this is an importer, you would be importing _into_ a git
-> repository, no?  How can you not error out when you are not in one?
-> In other words, why &nongit with *_gently()?
-
-Hm .. in fact it only feeds into fast-import. But you're right, it doesn't 
-make much sense. I took remote-curl.c as a guideline for these first lines.
-Will use the non-gentle function.
-
-> 
-> > +	remote = remote_get(argv[1]);
-> > +	url_in = remote->url[0];
-> > +	if (argc == 3)
-> > +		url_in = argv[2];
-> 
-> Shouldn't it be more like this?
-> 
-> 	url_in = (argc == 3) ? argv[2] : remote->url[0];
-
-Yes, much nicer.
-
-> 
-> > +	end_url_with_slash(&buf, url_in);
-> > +	url = strbuf_detach(&buf, NULL);
-> > +
-> > +	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
-> > +	private_ref = strbuf_detach(&buf, NULL);
-> > +
-> > +	while(1) {
-> > +		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
-> > +			if (ferror(stdin))
-> > +				die("Error reading command stream");
-> > +			else
-> > +				die("Unexpected end of command stream");
-> > +		}
-> > +		if (do_command(&buf))
-> > +			break;
-> > +		strbuf_reset(&buf);
-> > +	}
-> > +
-> > +	strbuf_release(&buf);
-> > +	free((void*)url);
-> > +	free((void*)private_ref);
-> > +	return 0;
-> > +}
+Yes, sounds reasonable. The present of immedate clearing has the advantage 
+that I don't have to store the struct argv_array, as struct child_process only 
+has a member for const char **argv.
+I'll improve postpone the free until the command finishes.
