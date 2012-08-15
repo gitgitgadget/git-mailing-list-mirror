@@ -1,124 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] rev-list docs: clarify --topo-order description
-Date: Wed, 15 Aug 2012 13:02:48 -0700
-Message-ID: <7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
-References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
- <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
- <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+From: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+Subject: Re: [PATCH/RFC v3 10/16] Create a note for every imported commit containing svn metadata.
+Date: Wed, 15 Aug 2012 22:10:18 +0200
+Message-ID: <3474533.sTggvtNqe8@flomedio>
+References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1344971598-8213-11-git-send-email-florian.achleitner.2.6.31@gmail.com> <7v1uj85427.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>,
-	"Martin von Zweigbergk" <martin.von.zweigbergk@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 15 22:03:20 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
+	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 22:10:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1jo9-0001Qf-3N
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 22:03:13 +0200
+	id 1T1jvL-0002sO-3R
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 22:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384Ab2HOUCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 16:02:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55933 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932382Ab2HOUCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 16:02:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CA439732;
-	Wed, 15 Aug 2012 16:02:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z57WtJQ1YPVs2NN1H8FmJexApDk=; b=QW7e4K
-	064buzN+9+tDlRk3rMC/p1JCdee//zU2JRu05FJDfFCqg+h61eINZBF7s+E3xeIU
-	Dah+4X1ljHG/qtz921T46AJWjvcKKrcEzHCQghZ60ZwGdpVh57dLez5KFhAoGCKK
-	UkBHkUd1slkBs2eCKiTkiE7jvY95Or78qi6Sw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lpovVV9OCA65PM/ZRmoOotDROtiQ81eP
-	hYlfTLnnnziXrY6M+9P6t87BZbqKe6GfRljDN4LTPY7vtI03j5nX+JrSvNxLUEgZ
-	9QQEoke/y3XG9tlKuT3fv3S1ruaUVB6ogOUUxTRJgb+0G6T6fGvpb7g6FL2HxArC
-	x9LlSTs2zyY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A4149730;
-	Wed, 15 Aug 2012 16:02:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62353972D; Wed, 15 Aug 2012
- 16:02:50 -0400 (EDT)
-In-Reply-To: <87sjbpa5m8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 14 Aug 2012 16:51:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 30EE1F1A-E714-11E1-B764-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757040Ab2HOUKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 16:10:30 -0400
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:29475 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756957Ab2HOUK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 16:10:27 -0400
+Received: from flomedio.localnet (91-115-86-169.adsl.highway.telekom.at [91.115.86.169])
+	(authenticated bits=0)
+	by mailrelay1.tugraz.at (8.14.4/8.14.4) with ESMTP id q7FKAJcL027458
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 15 Aug 2012 22:10:20 +0200 (CEST)
+User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <7v1uj85427.fsf@alter.siamese.dyndns.org>
+X-TUG-Backscatter-control: qyH/vN2riZ/masrHmZoJqQ
+X-Spam-Scanner: SpamAssassin 3.003000 
+X-Spam-Score-relay: 0.6
+X-Scanned-By: MIMEDefang 2.70 on 129.27.10.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was unclear what "--topo-order" was really about in the
-documentation.  It is not just about "children before parent", but
-also about "don't mix lineages".
+On Wednesday 15 August 2012 12:49:04 Junio C Hamano wrote:
+> Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
+> > To provide metadata from svn dumps for further processing, e.g.
+> > branch detection, attach a note to each imported commit that
+> > stores additional information.
+> > The notes are currently hard-coded in refs/notes/svn/revs.
+> > Currently the following lines from the svn dump are directly
+> > accumulated in the note. This can be refined on purpose, of course.
+> > - "Revision-number"
+> > - "Node-path"
+> > - "Node-kind"
+> > - "Node-action"
+> > - "Node-copyfrom-path"
+> > - "Node-copyfrom-rev"
+> > 
+> > Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+> > ---
+> > 
+> >  vcs-svn/fast_export.c |   13 +++++++++++++
+> >  vcs-svn/fast_export.h |    2 ++
+> >  vcs-svn/svndump.c     |   21 +++++++++++++++++++--
+> >  3 files changed, 34 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+> > index 1ecae4b..796dd1a 100644
+> > --- a/vcs-svn/fast_export.c
+> > +++ b/vcs-svn/fast_export.c
+> > @@ -12,6 +12,7 @@
+> > 
+> >  #include "svndiff.h"
+> >  #include "sliding_window.h"
+> >  #include "line_buffer.h"
+> > 
+> > +#include "cache.h"
+> 
+> Shouldn't it be near the beginning?  Also if you include "cache.h",
+> it probably makes git-compat-util and strbuf redundant.
 
-Reword the description for both "--date-order" and "--topo-order",
-and add an illustration to it.
+Ack.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-  Thomas Rast <trast@student.ethz.ch> writes:
+> 
+> >  #define MAX_GITSVN_LINE_LEN 4096
+> > 
+> > @@ -68,6 +69,18 @@ void fast_export_modify(const char *path, uint32_t
+> > mode, const char *dataref)> 
+> >  	putchar('\n');
+> >  
+> >  }
+> > 
+> > +void fast_export_begin_note(uint32_t revision, const char *author,
+> > +		const char *log, unsigned long timestamp)
+> > +{
+> > +	timestamp = 1341914616;
+> 
+> The magic number needs some comment.
+> 
+> > +	size_t loglen = strlen(log);
+> 
+> decl-after-statement.  I am starting to suspect that the assignment
+> is a leftover from an earlier debugging effort, though.
 
-  > But then the new description is wrong.  It claims that children are
-  > always before parents, which is not true in the face of clock skew.
-
-  Thanks for sanity-check.  Here is an updated one.
-
- Documentation/rev-list-options.txt | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 6a4b635..9404d08 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -578,16 +578,33 @@ Commit Ordering
- 
- By default, the commits are shown in reverse chronological order.
- 
----topo-order::
-+--date-order::
-+	Show no parents before all of its children are shown, but
-+	otherwise show commits in the commit timestamp order.
- 
--	This option makes them appear in topological order (i.e.
--	descendant commits are shown before their parents).
-+--topo-order::
-+	Show no parents before all of its children are shown, and
-+	avoid showing commits on multiple lines of history
-+	intermixed.
-++
-+For example, in a commit history like this:
-++
-+----------------------------------------------------------------
- 
----date-order::
-+    ---1----2----4----7
-+	\	       \
-+	 3----5----6----8---
- 
--	This option is similar to '--topo-order' in the sense that no
--	parent comes before all of its children, but otherwise things
--	are still ordered in the commit timestamp order.
-+----------------------------------------------------------------
-++
-+where the numbers denote the order of commit timestamps, `git
-+rev-list` and friends with `--date-order` show the commits in the
-+timestamp order: 8 7 6 5 4 3 2 1.
-++
-+With `--topo-order`, they would show 8 6 5 3 7 4 2 1 (or 8 7 4 2 6 5
-+3 1); some older commits are shown before newer ones in order to
-+avoid showing the commits from two parallel development track mixed
-+together.
- 
- --reverse::
- 
--- 
-1.7.12.rc2.85.g1de7134
+Oh yes sorry. Leftover from a previous experiment.
+Thx for your reviews Junio, I got too blind to see this.
