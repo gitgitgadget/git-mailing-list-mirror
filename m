@@ -1,108 +1,127 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
- "default" order
-Date: Wed, 15 Aug 2012 10:16:09 -0700
-Message-ID: <7vk3x06ppi.fsf@alter.siamese.dyndns.org>
-References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
- <50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
- <7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
- <CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
- <7vehnacxkf.fsf@alter.siamese.dyndns.org>
- <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
+Subject: Re: Your branch and 'origin/master' have diverged
+Date: Wed, 15 Aug 2012 10:30:35 -0700
+Message-ID: <7vfw7o6p1g.fsf@alter.siamese.dyndns.org>
+References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
+ <87zk5x6fox.fsf@thomas.inf.ethz.ch>
+ <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
+ <7v628lbdcw.fsf@alter.siamese.dyndns.org>
+ <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
+ <87lihh8c7s.fsf@thomas.inf.ethz.ch> <7vr4r98ah5.fsf@alter.siamese.dyndns.org>
+ <87sjbo63pl.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 19:16:20 2012
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 15 19:31:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1hCd-00041A-8d
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 19:16:19 +0200
+	id 1T1hQp-0005Sn-0G
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 19:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754789Ab2HORQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 13:16:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35879 "EHLO
+	id S1755999Ab2HORav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 13:30:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42958 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753597Ab2HORQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 13:16:12 -0400
+	id S1755960Ab2HORai (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 13:30:38 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA6348251;
-	Wed, 15 Aug 2012 13:16:11 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4D4486D6;
+	Wed, 15 Aug 2012 13:30:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mmQFTYOyVN2eZ8vcE1vfIWVtjZ8=; b=cNt4ps
-	fQfqe3QOimeG9gqGI907ycJX5LBZP5U+gEkFJgW6S7ptWiEKlUyOziWJNqgazY64
-	0vhEFFSna6voiFtrmJmIQ4usVcKn0guDT39oVSU4ZunAItKjqXmvmylc4tKTqLVn
-	dO/QRT4Jmwl5tM0ROPtw4zbXM5ZlLIppvfaZs=
+	:content-type; s=sasl; bh=1ZIsumwDqUHxbxKr9Hql3mT+FjQ=; b=rrrfVo
+	ymxLRJezpYq0vIZRyPqq3dUOdnTfuFGPR1/nBg0yzwtMjKdRwaVJPBx2AgNUAnp+
+	epf7l746trpo9Sd0WXASbkwXXbcBSicC/di267pfMelFvl/GUau8WpKTJCW/HiTY
+	y2NCLdSbblAinHwldnB6HlMjfd0b91hASoNXg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cPWqqxnZr3hhx5OP78fGmMaojbtz1H4i
-	qMzcpTr29OBY5IlzHweKGJPuw738diAxG9h4iRdvsY6Bxf+huWlJjfa9O7xna5z0
-	guSdv/kqxvrrdNIfqOM3rB66e+lganxbWl7I7XYjqsd2g1Xq4Rm6IhlOj+AckkG0
-	xw96M/AFlo8=
+	:content-type; q=dns; s=sasl; b=kyKBQlT80i5+1lkv44dYRsFUxgAuiRpS
+	07DlmbTSJ6tzd1Th1ZYbwmLNHVlb9yTMQsP2HEV9a482lZppwY5+m9RaaQ8sdhMx
+	L93klJ4/xrWmIMzgNJrl7J3jJ8dc+apxwQ5M5ceJXR5Y0rcsEMm48RNv55cjZKR8
+	0B1RZk8GtcI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D90D58250;
-	Wed, 15 Aug 2012 13:16:11 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFAFE86D5;
+	Wed, 15 Aug 2012 13:30:37 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45F63824F; Wed, 15 Aug 2012
- 13:16:11 -0400 (EDT)
-In-Reply-To: <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com> (Martin
- von Zweigbergk's message of "Tue, 14 Aug 2012 23:05:21 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3128C86D3; Wed, 15 Aug 2012
+ 13:30:37 -0400 (EDT)
+In-Reply-To: <87sjbo63pl.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Wed, 15 Aug 2012 08:59:02 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8FE5740-E6FC-11E1-BA42-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ED1E62BE-E6FE-11E1-B936-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203475>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> So all of the above case give the right result in the end as long
-> as the timestamps are chronological, and case 1) gives the right
-> result regardless. The other two cases only works in most cases
-> because the unexpcted sorting when no-walk is in effect
-> counteracts the final reversal.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Thomas Rast <trast@student.ethz.ch> writes:
+>>
+>>> In some sense this is a really bad case of wrong UI design, because we
+>>> (this happens on #git a lot) have to teach users not to use the command
+>>> so they won't trip over this problem.  It would be better to fix the
+>>> real issue instead.  IIRC it was even on the 1.8.0 wishlist...
+>>
+>> Is it?
+>>
+>> There already is a way to ask it to update the single tracking
+>> branch while fetching; "git fetch origin master" that
+>> unconditionally updates refs/remotes/origin/master without a way to
+>> tell it not to do so will be a grave usability regression.
+>
+> Grave?  Do you have any data/use-cases to back that up with?
 
-In short, if you have three commits in a row, A--B--C, with
-timestamps that are not skewed, and want to replay changes of B and
-then C in that order, all three you listed ends up doing the right
-thing.  But if you want to apply the change C and then B:
+When I get a pull request from say Eric, I would:
 
-    - "git cherry-pick A..C" is obviously not a way to do so, so we
-      won't discuss it further.
+	git fetch git-svn master
+        git show-branch remotes/git-svn/master FETCH_HEAD
 
-    - "git cherry-pick C B" is the most natural way the user would
-      want to express this request, but because of the sorting
-      (i.e. commit_list_sort_by_date() in prepare_revision_walk(),
-      combined with ->reverse in sequencer.c::prepare_revs()), it
-      applies B and then C.  That is the real bug.
+to see what happened since the last pull request on the other side.
+He may have rebased (which is not necessarily a crime), or I may see
+more commits in the output than what he lists in the request message
+(which may indicate I may have missed an earlier pull request from
+him).
 
-      Feeding the revs to "git cherry-pick --stdin" in the order the
-      user wishes them to be applied has the same issue.
+Such a sanity check will stop working if the first "fetch" updated
+my remotes/git-svn/master.  I would have to enable reflog for
+tracking branch and do something like this:
 
-> IIUC, this could be implemented by making cherry-pick iterate
-> over rev_info.pending.objects just like 'git show' does when not
-> walking.
+	git show-branch remotes/git-svn/master@{1} remotes/git-svn/master
 
-Yes, that was exactly why I said sequencer.c::prepare_revs() is
-wrong to call prepare_revision_walk() unconditionally, even when
-there is no revision walking involved.
+So I was correct in saying that without an easy escape hatch, such a
+change would be a regression.
 
-I actually think your approach to place the "do not sort when we are
-not walking" logic in prepare_revision_walk() makes more sense.
-"show" has to look at pending.objects[] because it needs to show
-objects other than commits (e.g. "git show :foo"), so there won't be
-any change in its implementation with your change.  It will have to
-look at pending.objects[] itself.
+But I think I (and others) could just train fingers to do
 
-But "cherry-pick" and sequencer-derived commands only deal with
-commits.  It would be far less error prone to let them call
-get_revision() repeatedly like all other revision enumerating
-commands do, than to have them go over the pending.objects[] list,
-dereferencing tags and using only commits.  The resulting callers
-would be more readable, too, I would think.
+	git fetch git-svn master:
+
+as a workaround.
+
+Updating Documentation/pull-fetch-param.txt would be a bear, though.
+The documentation is stale in that it was written in the days back
+when .git/remotes/ was the primary way to configure remotes, and was
+not adjusted to use the termilology used in the [remote "where"]
+section of the .git/config file (notice a mention of "'Pull: '
+lines" there), so it needs cosmetic adjustment anyway, but the
+semantics it spells is still up to date.  The current rule is very
+simple and understandable.  You either say from the command line
+exactly what should happen (refspec without colon is the same as the
+refspec with colon at the end, meaning "do not track"; if you want
+to track, you write what to update with the fetch), or we use the
+configured refspec (which again spells what should happen).
+
+The updated rule would be more complex.  If a remote nickname is
+used, and a refspec given from the command line is without colon, a
+new special rule overrides the current behaviour and tries to match
+with a configured refspec.  You would need to desribe what happens
+in that case.
