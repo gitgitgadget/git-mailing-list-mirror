@@ -1,91 +1,108 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v2] add some bash style we prefer
-Date: Wed, 15 Aug 2012 19:06:01 +0200
-Message-ID: <20120815170601.GB43523@book.hvoigt.net>
-References: <20120814203931.GB33843@book.hvoigt.net> <7vipcl89kg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
+ "default" order
+Date: Wed, 15 Aug 2012 10:16:09 -0700
+Message-ID: <7vk3x06ppi.fsf@alter.siamese.dyndns.org>
+References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
+ <50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
+ <7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
+ <7vehnacxkf.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 19:06:20 2012
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 19:16:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1h2t-0008EI-BS
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 19:06:15 +0200
+	id 1T1hCd-00041A-8d
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 19:16:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225Ab2HORGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 13:06:09 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:34375 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751457Ab2HORGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 13:06:08 -0400
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1T1h2g-0007t5-A5; Wed, 15 Aug 2012 19:06:02 +0200
-Content-Disposition: inline
-In-Reply-To: <7vipcl89kg.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754789Ab2HORQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 13:16:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35879 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753597Ab2HORQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 13:16:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA6348251;
+	Wed, 15 Aug 2012 13:16:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mmQFTYOyVN2eZ8vcE1vfIWVtjZ8=; b=cNt4ps
+	fQfqe3QOimeG9gqGI907ycJX5LBZP5U+gEkFJgW6S7ptWiEKlUyOziWJNqgazY64
+	0vhEFFSna6voiFtrmJmIQ4usVcKn0guDT39oVSU4ZunAItKjqXmvmylc4tKTqLVn
+	dO/QRT4Jmwl5tM0ROPtw4zbXM5ZlLIppvfaZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cPWqqxnZr3hhx5OP78fGmMaojbtz1H4i
+	qMzcpTr29OBY5IlzHweKGJPuw738diAxG9h4iRdvsY6Bxf+huWlJjfa9O7xna5z0
+	guSdv/kqxvrrdNIfqOM3rB66e+lganxbWl7I7XYjqsd2g1Xq4Rm6IhlOj+AckkG0
+	xw96M/AFlo8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D90D58250;
+	Wed, 15 Aug 2012 13:16:11 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45F63824F; Wed, 15 Aug 2012
+ 13:16:11 -0400 (EDT)
+In-Reply-To: <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Tue, 14 Aug 2012 23:05:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8FE5740-E6FC-11E1-BA42-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203474>
 
-During discussion of other patches these preferences have been revealed.
-Lets add them to the guidelines.
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-Here an updated version of the patch.
+> So all of the above case give the right result in the end as long
+> as the timestamps are chronological, and case 1) gives the right
+> result regardless. The other two cases only works in most cases
+> because the unexpcted sorting when no-walk is in effect
+> counteracts the final reversal.
 
-On Tue, Aug 14, 2012 at 02:09:35PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> > @@ -97,6 +102,7 @@ For shell scripts specifically (not exhaustive):
-> >     interface translatable. See "Marking strings for translation" in
-> >     po/README.
-> >  
-> > +
-> >  For C programs:
-> 
-> Probably not needed, as there is no such double space between C
-> and Documentation sections.
+In short, if you have three commits in a row, A--B--C, with
+timestamps that are not skewed, and want to replay changes of B and
+then C in that order, all three you listed ends up doing the right
+thing.  But if you want to apply the change C and then B:
 
-Sorry about that whitespace noise.
+    - "git cherry-pick A..C" is obviously not a way to do so, so we
+      won't discuss it further.
 
-Cheers Heiko
+    - "git cherry-pick C B" is the most natural way the user would
+      want to express this request, but because of the sorting
+      (i.e. commit_list_sort_by_date() in prepare_revision_walk(),
+      combined with ->reverse in sequencer.c::prepare_revs()), it
+      applies B and then C.  That is the real bug.
 
- Documentation/CodingGuidelines | 8 ++++++++
- 1 file changed, 8 insertions(+)
+      Feeding the revs to "git cherry-pick --stdin" in the order the
+      user wishes them to be applied has the same issue.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 4557711..e70d110 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -76,11 +76,19 @@ For shell scripts specifically (not exhaustive):
- 
-  - We do not use Process Substitution <(list) or >(list).
- 
-+ - We prefer writing all control structures without semicolon on the
-+   same line. E.g. "then" should be on the next line for if statements.
-+   The same applies to while, for, ...
-+
-  - We prefer "test" over "[ ... ]".
- 
-  - We do not write the noiseword "function" in front of shell
-    functions.
- 
-+ - We prefer a space between the function name and the parentheses. The
-+   opening "{" should also be on the same line.
-+   E.g.: my_function () {
-+
-  - As to use of grep, stick to a subset of BRE (namely, no \{m,n\},
-    [::], [==], nor [..]) for portability.
- 
--- 
-1.7.12.rc2.11.g5d52328
+> IIUC, this could be implemented by making cherry-pick iterate
+> over rev_info.pending.objects just like 'git show' does when not
+> walking.
+
+Yes, that was exactly why I said sequencer.c::prepare_revs() is
+wrong to call prepare_revision_walk() unconditionally, even when
+there is no revision walking involved.
+
+I actually think your approach to place the "do not sort when we are
+not walking" logic in prepare_revision_walk() makes more sense.
+"show" has to look at pending.objects[] because it needs to show
+objects other than commits (e.g. "git show :foo"), so there won't be
+any change in its implementation with your change.  It will have to
+look at pending.objects[] itself.
+
+But "cherry-pick" and sequencer-derived commands only deal with
+commits.  It would be far less error prone to let them call
+get_revision() repeatedly like all other revision enumerating
+commands do, than to have them go over the pending.objects[] list,
+dereferencing tags and using only commits.  The resulting callers
+would be more readable, too, I would think.
