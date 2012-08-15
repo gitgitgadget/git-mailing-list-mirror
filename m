@@ -1,58 +1,94 @@
-From: "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Wed, 15 Aug 2012 20:38:37 +0200
-Message-ID: <502BECAD.90307@ira.uka.de>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com> <87zk5x6fox.fsf@thomas.inf.ethz.ch> <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com> <7v628lbdcw.fsf@alter.siamese.dyndns.org> <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com> <87lihh8c7s.fsf@thomas.inf.ethz.ch> <7vr4r98ah5.fsf@alter.siamese.dyndns.org> <87sjbo63pl.fsf@thomas.inf.ethz.ch> <7vfw7o6p1g.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
+ "default" order
+Date: Wed, 15 Aug 2012 11:39:05 -0700
+Message-ID: <7vr4r857au.fsf@alter.siamese.dyndns.org>
+References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
+ <50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
+ <7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
+ <7vehnacxkf.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
+ <7vk3x06ppi.fsf@alter.siamese.dyndns.org>
+ <CAOeW2eFK+cKt9Tnh5oe74dU+f8rOOTaWk3KvE2rtUpgcOeDD7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 20:37:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 20:39:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1iTZ-0005YN-2e
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 20:37:53 +0200
+	id 1T1iUu-0007ED-4n
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 20:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab2HOShr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 14:37:47 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58542 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751026Ab2HOShq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2012 14:37:46 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1T1iTI-0003ND-IG; Wed, 15 Aug 2012 20:37:41 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 587 
-	id 1T1iTI-0007dZ-B1; Wed, 15 Aug 2012 20:37:36 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7vfw7o6p1g.fsf@alter.siamese.dyndns.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1345055861.619174000
+	id S1752163Ab2HOSjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 14:39:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44633 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751026Ab2HOSjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 14:39:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 380319A3F;
+	Wed, 15 Aug 2012 14:39:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tuPuw647IDYAcTP18bO5YtOfRvw=; b=NSRNIL
+	BDOtBvXsh4kIGNBI6YMhBK3V68wjtVsiUXTM9eR/H3eoNAiHfdcrMbSaSx5D+k8+
+	wlf9qGvOm8eilAIryfXfQvWyCJtHvO/U+NELIGXYggGoQ1MGlnFyOpRf6Y/uS62p
+	CSEyDb67OyD9028DiQCYlrioei+taf5D8f54s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hZJ6V9ptEpixjCV4pBQaUhkxXMLSxaKT
+	HG7SbgWY7qo+/EVqlZu4fsOjfnf7uh5iNZQcB1cLCA8eZ7Goz5WPn7BvOunlGrgj
+	G+ui8WBdkzOGg4PBOcHfImpVI6Vr2fOLaanWDpFJSQQC5fLNc3BpNcGUG7piLY3q
+	SSTizrhcR7E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2400A9A3E;
+	Wed, 15 Aug 2012 14:39:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B8049A3D; Wed, 15 Aug 2012
+ 14:39:06 -0400 (EDT)
+In-Reply-To: <CAOeW2eFK+cKt9Tnh5oe74dU+f8rOOTaWk3KvE2rtUpgcOeDD7g@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Wed, 15 Aug 2012 11:22:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7E7458AA-E708-11E1-8256-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203483>
 
-Am 15.08.2012 19:30, schrieb Junio C Hamano:
-> The current rule is very
-> simple and understandable.  You either say from the command line
-> exactly what should happen (refspec without colon is the same as the
-> refspec with colon at the end, meaning "do not track"; if you want
-> to track, you write what to update with the fetch), or we use the
-> configured refspec (which again spells what should happen).
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-Couldn't a similar new rule just say that refspec <name> is a short for 
-<name>:<name> ?
+> Makes sense, I'll try to implement it that way. I was afraid that
+> we would need to call prepare_revision_walk() once first and then
+> if we afterwards find out that we should not walk, we would need
+> to call it again without the reverse option.
 
-The exception would be in the case of a URL as remote, but that would 
-not be surprising to anyone, as there is no obvious target for the update
+> But after looking at
+> how rev_info.reverse is used, it seem like it's only used in
+> get_revision(), so we can leave it either on or off during the
+> prepare_revision_walk() and the and set appropriately before
+> calling get_revision(), like so:
+>
+>   init_revisions(&revs);
+>   revs.no_walk = REVISION_WALK_NO_WALK_UNSORTED;
+>   setup_revisions(...);
+>   prepare_revision_walk(&revs);
+>   revs.reverse = !revs.no_walk;
+
+Sorry, but I do not understand why you frutz with "reverse" after
+prepare, and not before.
+
+I think you can just set no_walk and let setup_revisions() turn it
+off upon seeing a range (this happens in add_pending_object()).
+After setup_revisions() returns, if no_walk is still set, you only
+got individual refs without ranges, so no reversing required.
+
+You also need to be careful about "revert" that shares the code;
+when reverting range A..C in your example, you want to undo C and
+then B, and you do not want to reverse them.
