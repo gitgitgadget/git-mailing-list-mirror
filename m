@@ -1,98 +1,80 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
- "default" order
-Date: Wed, 15 Aug 2012 13:50:01 -0700
-Message-ID: <CAOeW2eGcVQ74WLOOHWvKao9WXfWnJpOhQwE8Jxip_E4SzkFjyA@mail.gmail.com>
-References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
-	<50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
-	<7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
-	<7vehnacxkf.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
-	<7vk3x06ppi.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eFK+cKt9Tnh5oe74dU+f8rOOTaWk3KvE2rtUpgcOeDD7g@mail.gmail.com>
-	<7vr4r857au.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
+Date: Wed, 15 Aug 2012 12:39:37 -0700
+Message-ID: <7v628k54hy.fsf@alter.siamese.dyndns.org>
+References: <20120811070030.GA83665@book.hvoigt.net>
+ <7vd32whgvl.fsf@alter.siamese.dyndns.org>
+ <20120813170221.GB6418@book.hvoigt.net>
+ <7vmx1yel9d.fsf@alter.siamese.dyndns.org>
+ <20120815165054.GA43523@book.hvoigt.net>
+ <7v7gt06nyk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 22:50:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 15 21:39:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1kXc-0004Bx-7N
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 22:50:12 +0200
+	id 1T1jRT-00067I-6M
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 21:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756158Ab2HOUuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 16:50:04 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42564 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755013Ab2HOUuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 16:50:02 -0400
-Received: by pbbrr13 with SMTP id rr13so364900pbb.19
-        for <git@vger.kernel.org>; Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jAVe4TfhL2kj5Pi8Xwib4bKs35fp87JwUwueEGncnEQ=;
-        b=09dmhk0305DCJD3hHDNOe26zBvBuw8wEKz95nTcGJpG4tuhegt9gc9CAoGpKJe1TfL
-         nZEuuPofHcgyISifqowOPHsyUhtKGmR/hvrY3YgBddaZ8D+8hwjeA41i1anuzc4cu6Hr
-         V1xHWP9/D8TmeiTWlWEcv+BemU1Au6lJAWJ4LdEghBhvNIj9ZZYYDzYm1ZjQS8zet35p
-         8uN/dcYbsm0gGGDGHxjMZ9G2BGHmWACOCrEa8/t1I8QSYds4OFsm4uI2Xj0fJ+LGVImT
-         q8y4kwVln1gg1iZTm2O9b9+uLadOTh84clXZ86vHtKstVhP4SVfOKrrDSwDA9vSQtCwV
-         PsHw==
-Received: by 10.68.220.201 with SMTP id py9mr15918763pbc.137.1345063801520;
- Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
-Received: by 10.68.120.112 with HTTP; Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
-In-Reply-To: <7vr4r857au.fsf@alter.siamese.dyndns.org>
+	id S1753425Ab2HOTjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 15:39:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42073 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751026Ab2HOTjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 15:39:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14C068D9D;
+	Wed, 15 Aug 2012 15:39:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/D0NG3LXwSfyj/lN/fHOGUOZkn8=; b=IYas2o
+	XRqTNaEUunadceH+w5eSeM2n0UQqWKk7+y3agdO5hj1Eq9GKrmJoodk4rSiz9p6k
+	OYAmqw0/iI9KI0n4VyozMLWpl2WTuEp3QkV7AJFG9IRpdExAznxQwv0mpQPzzxaB
+	BGYvWZQjhXMcShLZriodYdWee+c46g3gGYL3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IGwozsnXaQBlQC3Pg/eSe5AuYnnizpmQ
+	uj8wHoYJz9tothurx9BSMLHyIjCr3WuGP5X/m8NJVvPPH7SVcfPmuvB6BGTinsfP
+	B1Ihx74oqrl/O2jCHAznORZzHuYODbUXG3IgQMRZYB4WNcBiT0AmqDYqWpnTcDG7
+	0sJZy2+YOkw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02C2F8D9B;
+	Wed, 15 Aug 2012 15:39:40 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D0208D9A; Wed, 15 Aug 2012
+ 15:39:39 -0400 (EDT)
+In-Reply-To: <7v7gt06nyk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 15 Aug 2012 10:53:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F3DB209E-E710-11E1-8F28-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2012 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> diff --git a/help.c b/help.c
+>> ...
+>> +
 >
->> Makes sense, I'll try to implement it that way. I was afraid that
->> we would need to call prepare_revision_walk() once first and then
->> if we afterwards find out that we should not walk, we would need
->> to call it again without the reverse option.
+> Yuck.
 >
->> But after looking at
->> how rev_info.reverse is used, it seem like it's only used in
->> get_revision(), so we can leave it either on or off during the
->> prepare_revision_walk() and the and set appropriately before
->> calling get_revision(), like so:
->>
->>   init_revisions(&revs);
->>   revs.no_walk = REVISION_WALK_NO_WALK_UNSORTED;
->>   setup_revisions(...);
->>   prepare_revision_walk(&revs);
->>   revs.reverse = !revs.no_walk;
->
-> Sorry, but I do not understand why you frutz with "reverse" after
-> prepare, and not before.
->
-> I think you can just set no_walk and let setup_revisions() turn it
-> off upon seeing a range (this happens in add_pending_object()).
+> Why should we need even a single line of the implementation of a
+> function that tells if a given pathname contains an executable
+> command, which we know is platform specific?  
 
-Ah, of course. For some reason I thought that was called from
-prepare_revision_walk()
+Sorry; sent without sufficient proofreading.  
 
-> After setup_revisions() returns, if no_walk is still set, you only
-> got individual refs without ranges, so no reversing required.
+Obviously we need such an implementation (per platform) somewhere in
+the system.
 
-Yes, it's in the other case (e.g. 'git cherry-pick A..C', when
-no_walk is not set), that we need to set reverse before walking.
-
-> You also need to be careful about "revert" that shares the code;
-> when reverting range A..C in your example, you want to undo C and
-> then B, and you do not want to reverse them.
-
-Yep. It looks like this, so should be safe. But thanks for the reminder.
-
-  if (opts->action != REPLAY_REVERT)
-        opts->revs->reverse ^= 1;
+What I meant to ask was "Why should we need a function whose
+implementation has to be platform-specific in this help.c file".
+The last part of the sentence was missing.
