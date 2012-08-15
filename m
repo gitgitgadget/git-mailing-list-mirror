@@ -1,113 +1,110 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
- "default" order
-Date: Wed, 15 Aug 2012 11:22:18 -0700
-Message-ID: <CAOeW2eFK+cKt9Tnh5oe74dU+f8rOOTaWk3KvE2rtUpgcOeDD7g@mail.gmail.com>
-References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
-	<50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
-	<7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
-	<7vehnacxkf.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
-	<7vk3x06ppi.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: URL-decode $my_url/$my_uri when stripping PATH_INFO
+Date: Wed, 15 Aug 2012 20:15:48 +0200
+Message-ID: <201208152015.49132.jnareb@gmail.com>
+References: <1344479366-8957-1-git-send-email-jaysoffian@gmail.com> <7vr4rgoz1u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 20:22:26 2012
+X-From: git-owner@vger.kernel.org Wed Aug 15 20:23:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1iEb-0002in-4l
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 20:22:25 +0200
+	id 1T1iFH-0003hp-F8
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 20:23:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752983Ab2HOSWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 14:22:19 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:52781 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026Ab2HOSWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 14:22:18 -0400
-Received: by pbbrr13 with SMTP id rr13so183239pbb.19
-        for <git@vger.kernel.org>; Wed, 15 Aug 2012 11:22:18 -0700 (PDT)
+	id S1752213Ab2HOSXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 14:23:01 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:59614 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085Ab2HOSXA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 14:23:00 -0400
+Received: by bkwj10 with SMTP id j10so630797bkw.19
+        for <git@vger.kernel.org>; Wed, 15 Aug 2012 11:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a5UC8oZBiYRoMdt8PjjwfdIjRvyspzQisdaRNIy6SmA=;
-        b=R/IdW6VkEyQrzgr56ORbcLL8T5vnBFbo3Ztb6BGHNEHiNWoBuDqkhruRMo/RI1qXSp
-         LeFk9jn0+ioZjxWd0AnTUYby0KWzRaUoV3NzfLwxztC44LLWeQZWYnyaRZjXxkl0IzV1
-         X82U95EO3MyYJT1InfbgfQJqnyqlZj9SIlO85Z0a084JCHZ8j8QsqIZxVBkwWmOmCySL
-         Vke+n5pP0yYiSnAXgrYsFfQsg+CvfhcJC+SURitPiUUoNgTaKnpiZXL7CWOd64l6S2lX
-         OjmElgMG07JEuwRq/PFJgxSEeGrTmrj82auFOgKYABy0dwN6+hT3fMEHeRHB5R5H5PPc
-         r5wQ==
-Received: by 10.68.224.161 with SMTP id rd1mr42703993pbc.133.1345054938090;
- Wed, 15 Aug 2012 11:22:18 -0700 (PDT)
-Received: by 10.68.120.112 with HTTP; Wed, 15 Aug 2012 11:22:18 -0700 (PDT)
-In-Reply-To: <7vk3x06ppi.fsf@alter.siamese.dyndns.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=0oBbwxBD98yA8DhXSmVgzZnem3CWb6bMXm2qD5ghw3A=;
+        b=TV1OP2eNobUx95f2LnE3a5rOiZHzHbtkJjNeHIH+zmbTeZpesof1BYXoG7/DXozNaE
+         W1SAWoeES9Opy8mPwT/xGvKg2aqXBDxL9IoVP5SIuEX3MtdHqtvVzaG4MTHL1eakgsep
+         1uhNpMfvOXLt0ACM+3QWqGV3SEC1pllfPKhRhUFEWVfCBQhTdN/aZc5NgxfJ58K1W+D5
+         Vbyv8MF31Pzsk51Rqppb+KBBzSpqhZYpeudpbm8CnxSY968QiMw1dW8IKjKEkmUCjNQG
+         MucSIJKN69hDNU63V1xZ/0i7Tp9IZJWIzrZRQs7Qy/6qHg50H6IS75mwhWBWzk1BVUAG
+         kftw==
+Received: by 10.205.121.132 with SMTP id gc4mr3384416bkc.131.1345054978825;
+        Wed, 15 Aug 2012 11:22:58 -0700 (PDT)
+Received: from [192.168.1.15] (epk75.neoplus.adsl.tpnet.pl. [83.20.52.75])
+        by mx.google.com with ESMTPS id hs2sm1171446bkc.1.2012.08.15.11.22.55
+        (version=SSLv3 cipher=OTHER);
+        Wed, 15 Aug 2012 11:22:56 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vr4rgoz1u.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203481>
 
-On Wed, Aug 15, 2012 at 10:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
->
->> So all of the above case give the right result in the end as long
->> as the timestamps are chronological, and case 1) gives the right
->> result regardless. The other two cases only works in most cases
->> because the unexpcted sorting when no-walk is in effect
->> counteracts the final reversal.
->
-> In short, if you have three commits in a row, A--B--C, with
-> timestamps that are not skewed, and want to replay changes of B and
-> then C in that order, all three you listed ends up doing the right
-> thing.  But if you want to apply the change C and then B:
->
->     - "git cherry-pick A..C" is obviously not a way to do so, so we
->       won't discuss it further.
->
->     - "git cherry-pick C B" is the most natural way the user would
->       want to express this request, but because of the sorting
->       (i.e. commit_list_sort_by_date() in prepare_revision_walk(),
->       combined with ->reverse in sequencer.c::prepare_revs()), it
->       applies B and then C.  That is the real bug.
->
->       Feeding the revs to "git cherry-pick --stdin" in the order the
->       user wishes them to be applied has the same issue.
+On Thu, 9 Aug 2012, Junio C Hamano wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+> 
+> > When gitweb is used as a DirectoryIndex, it attempts to strip
+> > PATH_INFO on its own, as $cgi->url() fails to do so.
+> >
+> > However, it fails to account for the fact that PATH_INFO has
+> > already been URL-decoded by the web server, but the value
+> > returned by $cgi->url() has not been. This causes the stripping
+> > to fail whenever the URL contains encoded characters.
+> >
+> > To see this in action, setup gitweb as a DirectoryIndex and
+> > then use it on a repository with a directory containing a
+> > space in the name. Navigate to tree view, examine the gitweb
+> > generated html and you'll see a link such as:
+> >
+> >   <a href="/test.git/tree/HEAD:/directory with spaces">directory with spaces</a>
+> >
+> > When clicked on, the browser will URL-encode this link, giving
+> > a $cgi->url() of the form:
+> >
+> >    /test.git/tree/HEAD:/directory%20with%20spaces
+> >
+> > While PATH_INFO is:
+> >
+> >    /test.git/tree/HEAD:/directory with spaces
+> >
+> > Fix this by calling unescape() on both $my_url and $my_uri before
+> > stripping PATH_INFO from them.
+> >
+> > Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> > ---
+> 
+> Thanks.  From a cursory look, with the help from the explanation in
+> the proposed commit log message, the change looks sensible.
+> 
+> I wonder if a breakage like this is something we can catch in one of
+> the t95xx series of tests, though.
 
-Exactly.
+No, it is unfortunately not possible with current test infrastructure
+for gitweb.  The gitweb_run from t/gitweb-lib.sh allows to set
+PATH_INFO and QUERY_STRING, but does not allow to set up URL.
 
-> I actually think your approach to place the "do not sort when we are
-> not walking" logic in prepare_revision_walk() makes more sense.
-> "show" has to look at pending.objects[] because it needs to show
-> objects other than commits (e.g. "git show :foo"), so there won't be
-> any change in its implementation with your change.  It will have to
-> look at pending.objects[] itself.
+That might change in the future...
 
-Yes, I noticed that's why "show" has to do it that way.
+> Jakub, Ack?
 
-> But "cherry-pick" and sequencer-derived commands only deal with
-> commits.  It would be far less error prone to let them call
-> get_revision() repeatedly like all other revision enumerating
-> commands do, than to have them go over the pending.objects[] list,
-> dereferencing tags and using only commits.  The resulting callers
-> would be more readable, too, I would think.
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
-Makes sense, I'll try to implement it that way. I was afraid that
-we would need to call prepare_revision_walk() once first and then
-if we afterwards find out that we should not walk, we would need
-to call it again without the reverse option. But after looking at
-how rev_info.reverse is used, it seem like it's only used in
-get_revision(), so we can leave it either on or off during the
-prepare_revision_walk() and the and set appropriately before
-calling get_revision(), like so:
+Uf ut us bot too late...
 
-  init_revisions(&revs);
-  revs.no_walk = REVISION_WALK_NO_WALK_UNSORTED;
-  setup_revisions(...);
-  prepare_revision_walk(&revs);
-  revs.reverse = !revs.no_walk;
-  // iterate over revisions
+
+-- 
+Jakub Narebski
+Poland
