@@ -1,109 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Wed, 15 Aug 2012 12:22:28 -0700
-Message-ID: <7va9xw55aj.fsf@alter.siamese.dyndns.org>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
- <87zk5x6fox.fsf@thomas.inf.ethz.ch>
- <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
- <7v628lbdcw.fsf@alter.siamese.dyndns.org>
- <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
- <87lihh8c7s.fsf@thomas.inf.ethz.ch> <7vr4r98ah5.fsf@alter.siamese.dyndns.org>
- <87sjbo63pl.fsf@thomas.inf.ethz.ch> <7vfw7o6p1g.fsf@alter.siamese.dyndns.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
+ "default" order
+Date: Wed, 15 Aug 2012 13:50:01 -0700
+Message-ID: <CAOeW2eGcVQ74WLOOHWvKao9WXfWnJpOhQwE8Jxip_E4SzkFjyA@mail.gmail.com>
+References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
+	<50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
+	<7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
+	<7vehnacxkf.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
+	<7vk3x06ppi.fsf@alter.siamese.dyndns.org>
+	<CAOeW2eFK+cKt9Tnh5oe74dU+f8rOOTaWk3KvE2rtUpgcOeDD7g@mail.gmail.com>
+	<7vr4r857au.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 15 21:22:46 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 15 22:50:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1jAu-0001wP-4k
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 21:22:40 +0200
+	id 1T1kXc-0004Bx-7N
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 22:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002Ab2HOTWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 15:22:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33317 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753390Ab2HOTWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 15:22:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AAC98826;
-	Wed, 15 Aug 2012 15:22:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9iaOKyG7XhlwWpZ6wulDtDfBCHg=; b=aqhUMo
-	MVCS6wJVp/Z1KZQCDFW3ky3MhNfHlaTrU3Nc+fO82Nd4ipQ6cEEl0NDzfu4fn8Fv
-	pOUlcVHpvhlPHco2hxQ+mAgmuluQguvrqSOLYN05J3uezxP4/KKeoDwKjHjDAOdB
-	b4lGefWBZ4q9wlfQRPlLXxrOx4iNoLvVSyXns=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EUzEQh0hIVPzsyFnwyI/30ZbpM66KP9P
-	7xoGE+h2LczvC1yQ9F6qZp4uS1XrlU0HHFHByiN8IBEKeKa8ZTrD/roEwMjjj/qu
-	0XlLqI8OWGcM7E7hhncX46Bikb1PB5WA3OwdFCztaBx+xFPLK0oEyPdkpIsJrwnS
-	1DDKGHjk/EY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07C938825;
-	Wed, 15 Aug 2012 15:22:32 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58C138821; Wed, 15 Aug 2012
- 15:22:31 -0400 (EDT)
-In-Reply-To: <7vfw7o6p1g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 15 Aug 2012 10:30:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8F1259A4-E70E-11E1-8022-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756158Ab2HOUuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 16:50:04 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42564 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755013Ab2HOUuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 16:50:02 -0400
+Received: by pbbrr13 with SMTP id rr13so364900pbb.19
+        for <git@vger.kernel.org>; Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jAVe4TfhL2kj5Pi8Xwib4bKs35fp87JwUwueEGncnEQ=;
+        b=09dmhk0305DCJD3hHDNOe26zBvBuw8wEKz95nTcGJpG4tuhegt9gc9CAoGpKJe1TfL
+         nZEuuPofHcgyISifqowOPHsyUhtKGmR/hvrY3YgBddaZ8D+8hwjeA41i1anuzc4cu6Hr
+         V1xHWP9/D8TmeiTWlWEcv+BemU1Au6lJAWJ4LdEghBhvNIj9ZZYYDzYm1ZjQS8zet35p
+         8uN/dcYbsm0gGGDGHxjMZ9G2BGHmWACOCrEa8/t1I8QSYds4OFsm4uI2Xj0fJ+LGVImT
+         q8y4kwVln1gg1iZTm2O9b9+uLadOTh84clXZ86vHtKstVhP4SVfOKrrDSwDA9vSQtCwV
+         PsHw==
+Received: by 10.68.220.201 with SMTP id py9mr15918763pbc.137.1345063801520;
+ Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
+Received: by 10.68.120.112 with HTTP; Wed, 15 Aug 2012 13:50:01 -0700 (PDT)
+In-Reply-To: <7vr4r857au.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Updating Documentation/pull-fetch-param.txt would be a bear, though.
-> The documentation is stale in that it was written in the days back
-> when .git/remotes/ was the primary way to configure remotes, and was
-> not adjusted to use the termilology used in the [remote "where"]
-> section of the .git/config file (notice a mention of "'Pull: '
-> lines" there), so it needs cosmetic adjustment anyway, but the
-> semantics it spells is still up to date.  The current rule is very
-> simple and understandable.  You either say from the command line
-> exactly what should happen (refspec without colon is the same as the
-> refspec with colon at the end, meaning "do not track"; if you want
-> to track, you write what to update with the fetch), or we use the
-> configured refspec (which again spells what should happen).
+On Wed, Aug 15, 2012 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 >
-> The updated rule would be more complex.  If a remote nickname is
-> used, and a refspec given from the command line is without colon, a
-> new special rule overrides the current behaviour and tries to match
-> with a configured refspec.  You would need to desribe what happens
-> in that case.
+>> Makes sense, I'll try to implement it that way. I was afraid that
+>> we would need to call prepare_revision_walk() once first and then
+>> if we afterwards find out that we should not walk, we would need
+>> to call it again without the reverse option.
+>
+>> But after looking at
+>> how rev_info.reverse is used, it seem like it's only used in
+>> get_revision(), so we can leave it either on or off during the
+>> prepare_revision_walk() and the and set appropriately before
+>> calling get_revision(), like so:
+>>
+>>   init_revisions(&revs);
+>>   revs.no_walk = REVISION_WALK_NO_WALK_UNSORTED;
+>>   setup_revisions(...);
+>>   prepare_revision_walk(&revs);
+>>   revs.reverse = !revs.no_walk;
+>
+> Sorry, but I do not understand why you frutz with "reverse" after
+> prepare, and not before.
+>
+> I think you can just set no_walk and let setup_revisions() turn it
+> off upon seeing a range (this happens in add_pending_object()).
 
-It would be something like this.
+Ah, of course. For some reason I thought that was called from
+prepare_revision_walk()
 
-When you tell "git fetch" to fetch one or more refs from a
-configured remote by explicitly listing them on the command line,
-e.g.
+> After setup_revisions() returns, if no_walk is still set, you only
+> got individual refs without ranges, so no reversing required.
 
-    git fetch <remote> <name>...
+Yes, it's in the other case (e.g. 'git cherry-pick A..C', when
+no_walk is not set), that we need to set reverse before walking.
 
-each <name>... goes through the following process:
+> You also need to be careful about "revert" that shares the code;
+> when reverting range A..C in your example, you want to undo C and
+> then B, and you do not want to reverse them.
 
-    - The <name> is turned into the full ref at the remote that
-      starts from refs/ form by applying the usual fetch dwimmery
-      (if <name> is a name of a branch, "refs/heads/<name>" would
-      likely to be the one that is fetched).
+Yep. It looks like this, so should be safe. But thanks for the reminder.
 
-    - Then, configured fetch refspecs for <remote> is looked up from
-      remote.<remote>.fetch configuration variable(s), or "Pull: "
-      line(s) of .git/remotes/<remote> file.
-
-    - If the LHS of a refspec found in the previous step matches the
-      full ref we computed in the first step, then the ref at the
-      RHS of the refspec (i.e. remote tracking branch), if any, is
-      updated.
-
-If there is no configured refspecs that match the name given from
-the command line, no remote tracking ref is updated.
+  if (opts->action != REPLAY_REVERT)
+        opts->revs->reverse ^= 1;
