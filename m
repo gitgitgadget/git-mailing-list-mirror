@@ -1,113 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: URL-decode $my_url/$my_uri when stripping
- PATH_INFO
-Date: Wed, 15 Aug 2012 11:47:04 -0700
-Message-ID: <7vipck56xj.fsf@alter.siamese.dyndns.org>
-References: <1344479366-8957-1-git-send-email-jaysoffian@gmail.com>
- <7vr4rgoz1u.fsf@alter.siamese.dyndns.org>
- <201208152015.49132.jnareb@gmail.com>
+Subject: Re: Your branch and 'origin/master' have diverged
+Date: Wed, 15 Aug 2012 12:07:59 -0700
+Message-ID: <7vehn855yo.fsf@alter.siamese.dyndns.org>
+References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
+ <87zk5x6fox.fsf@thomas.inf.ethz.ch>
+ <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
+ <7v628lbdcw.fsf@alter.siamese.dyndns.org>
+ <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
+ <87lihh8c7s.fsf@thomas.inf.ethz.ch> <7vr4r98ah5.fsf@alter.siamese.dyndns.org>
+ <87sjbo63pl.fsf@thomas.inf.ethz.ch> <7vfw7o6p1g.fsf@alter.siamese.dyndns.org>
+ <502BECAD.90307@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 20:47:20 2012
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: "Holger Hellmuth \(IKS\)" <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Aug 15 21:08:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1icc-0000J3-1e
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 20:47:14 +0200
+	id 1T1iwt-0000Vj-5l
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 21:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467Ab2HOSrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 14:47:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48797 "EHLO
+	id S1752763Ab2HOTIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 15:08:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58917 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751417Ab2HOSrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 14:47:07 -0400
+	id S1751738Ab2HOTID (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 15:08:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A80DD9CD3;
-	Wed, 15 Aug 2012 14:47:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07E36832D;
+	Wed, 15 Aug 2012 15:08:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G+StMgFmg1jHHQRYfqbpCixNY2s=; b=kCl40p
-	SDXmbGiw1Zi06DgKhHsQn2fd7B40bv66s+/jOUYhBjlebmv5PVjnMAxs6pv/EAHx
-	Oucjp9G3Ri7ew/0WKTtfIhu4Cc9JAHPIEzvfv+lJV+72WYfV6gxE529Cx5fpm2EJ
-	evMg1kfq53m7Fmr39zxpNF3nUBRVvHr9XYDtg=
+	:content-type; s=sasl; bh=2VKBMzkPfcihfU9dWC9Onl5d+z0=; b=B9vf/O
+	evliAZcclPwSdMWdwkxMhKDkc/s9O4/zf35weAxIJsVEwF0V4nq+UnCJPM36pmf7
+	TlTTp+d4RhnMe+msGrtqEQ0Nagm3R1oaSpu9yTNre8asrrARRJVatMt2rZaG3bvX
+	9Xg/QSzwHiu1TA3R2Lh3/hjbrDomm5wQAxfAc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QD0yKpS31vq/IqqxFIAoFBBSLbYTZBq7
-	iYBGFsIVUIM5WYQsFnXgY+RFw1q6GKwIYS4VSDdkJCdf/U+9F1ZVz28NPvQQsVmX
-	DDYbXW6Z/GuDdJqr6cbBNKDf2EsO1Drn9FWTnP/qEkRra20YfrnOId6m/Q7xszz3
-	NV/er1cT0mU=
+	:content-type; q=dns; s=sasl; b=qFoijdrdRRxD7LEYJUpz9Lg3+sNPkfH1
+	kXyNFsTVsdzViBcHxE2MJm5XuxOt9OHPO/i7QeZ6gAIUCOr7QyFxjdZzwuC4NPf4
+	xjbYljmx2NtF9c7WlG9tq99Y5GpHVWkZ2KSYw+AaUWaPkZGSVyXH5jhufuonN/gc
+	ouvwwL04fzM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 944929CD2;
-	Wed, 15 Aug 2012 14:47:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9177832C;
+	Wed, 15 Aug 2012 15:08:01 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8FEE9CD1; Wed, 15 Aug 2012
- 14:47:05 -0400 (EDT)
-In-Reply-To: <201208152015.49132.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed, 15 Aug 2012 20:15:48 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62B54832B; Wed, 15 Aug 2012
+ 15:08:01 -0400 (EDT)
+In-Reply-To: <502BECAD.90307@ira.uka.de> (Holger Hellmuth's message of "Wed,
+ 15 Aug 2012 20:38:37 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C3A844E-E709-11E1-8F53-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 88890A9E-E70C-11E1-91C0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203485>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+"Holger Hellmuth (IKS)" <hellmuth@ira.uka.de> writes:
 
-> On Thu, 9 Aug 2012, Junio C Hamano wrote:
->> Jay Soffian <jaysoffian@gmail.com> writes:
->> 
->> > When gitweb is used as a DirectoryIndex, it attempts to strip
->> > PATH_INFO on its own, as $cgi->url() fails to do so.
->> >
->> > However, it fails to account for the fact that PATH_INFO has
->> > already been URL-decoded by the web server, but the value
->> > returned by $cgi->url() has not been. This causes the stripping
->> > to fail whenever the URL contains encoded characters.
->> >
->> > To see this in action, setup gitweb as a DirectoryIndex and
->> > then use it on a repository with a directory containing a
->> > space in the name. Navigate to tree view, examine the gitweb
->> > generated html and you'll see a link such as:
->> >
->> >   <a href="/test.git/tree/HEAD:/directory with spaces">directory with spaces</a>
->> >
->> > When clicked on, the browser will URL-encode this link, giving
->> > a $cgi->url() of the form:
->> >
->> >    /test.git/tree/HEAD:/directory%20with%20spaces
->> >
->> > While PATH_INFO is:
->> >
->> >    /test.git/tree/HEAD:/directory with spaces
->> >
->> > Fix this by calling unescape() on both $my_url and $my_uri before
->> > stripping PATH_INFO from them.
->> >
->> > Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
->> > ---
->> 
->> Thanks.  From a cursory look, with the help from the explanation in
->> the proposed commit log message, the change looks sensible.
->> 
->> I wonder if a breakage like this is something we can catch in one of
->> the t95xx series of tests, though.
+> Am 15.08.2012 19:30, schrieb Junio C Hamano:
+>> The current rule is very
+>> simple and understandable.  You either say from the command line
+>> exactly what should happen (refspec without colon is the same as the
+>> refspec with colon at the end, meaning "do not track"; if you want
+>> to track, you write what to update with the fetch), or we use the
+>> configured refspec (which again spells what should happen).
 >
-> No, it is unfortunately not possible with current test infrastructure
-> for gitweb.  The gitweb_run from t/gitweb-lib.sh allows to set
-> PATH_INFO and QUERY_STRING, but does not allow to set up URL.
->
-> That might change in the future...
->
->> Jakub, Ack?
->
-> Acked-by: Jakub Narebski <jnareb@gmail.com>
->
-> Uf ut us bot too late...
+> Couldn't a similar new rule just say that refspec <name> is a short
+> for <name>:<name> ?
 
-Thanks.
+Of course not.
