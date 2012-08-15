@@ -1,94 +1,124 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [PATCH/RFC v3 14/16] transport-helper: add import|export-marks to fast-import command line.
-Date: Wed, 15 Aug 2012 23:06:20 +0200
-Message-ID: <1579004.p8CLksap2K@flomedio>
-References: <1344971598-8213-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <7vsjbo3pbo.fsf@alter.siamese.dyndns.org> <1501407.T1vfOr6Yzb@flomedio>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Wed, 15 Aug 2012 13:02:48 -0700
+Message-ID: <7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+ <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+ <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, David Michael Barr <davidbarr@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 23:06:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>,
+	"Martin von Zweigbergk" <martin.von.zweigbergk@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 15 22:03:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1knW-0006gm-8Z
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 23:06:38 +0200
+	id 1T1jo9-0001Qf-3N
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 22:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756484Ab2HOVGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 17:06:32 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54483 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754251Ab2HOVGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 17:06:31 -0400
-Received: by bkwj10 with SMTP id j10so683280bkw.19
-        for <git@vger.kernel.org>; Wed, 15 Aug 2012 14:06:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=+t9mk75J4BdUQhg6v9lJ+htIgIXEhU0YUq0MSjGXGmg=;
-        b=iqijmjQ3GX9B1UMgqONwaq1+sOBxl0pwbqsbL2zHZataYx+N1yXoS9RcabAV5hC376
-         tIGlqmpA0+DaFOdU2+9FdfRcrLI1/QmOKYr/OnpH6fT/eDJdOM1OwtZ5SelnRJI1Tntj
-         fjIYSLFPmmzG5/o0bG9QoiJX88wuLt/nYf0Mmnej8vx8wnb+OqH5EtsLQ36ICxV4LTPQ
-         wmbxhchSaoan2PnO5hQuOYhLD96gpa6917Z5KeavccI6AjBS92+1XW7qtJ5aLgZs36Y6
-         iJaWgaKhxcnMgLpLc7thnZ+n0tWNZl/hVPkYJTNhmo9IH7wzGqaUDsFrnOp5yMr1rZUo
-         ogDw==
-Received: by 10.205.137.8 with SMTP id im8mr8176754bkc.135.1345064790040;
-        Wed, 15 Aug 2012 14:06:30 -0700 (PDT)
-Received: from flomedio.localnet (91-115-86-169.adsl.highway.telekom.at. [91.115.86.169])
-        by mx.google.com with ESMTPS id t23sm1354246bks.4.2012.08.15.14.06.23
-        (version=SSLv3 cipher=OTHER);
-        Wed, 15 Aug 2012 14:06:28 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <1501407.T1vfOr6Yzb@flomedio>
+	id S932384Ab2HOUCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 16:02:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55933 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932382Ab2HOUCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 16:02:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CA439732;
+	Wed, 15 Aug 2012 16:02:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z57WtJQ1YPVs2NN1H8FmJexApDk=; b=QW7e4K
+	064buzN+9+tDlRk3rMC/p1JCdee//zU2JRu05FJDfFCqg+h61eINZBF7s+E3xeIU
+	Dah+4X1ljHG/qtz921T46AJWjvcKKrcEzHCQghZ60ZwGdpVh57dLez5KFhAoGCKK
+	UkBHkUd1slkBs2eCKiTkiE7jvY95Or78qi6Sw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lpovVV9OCA65PM/ZRmoOotDROtiQ81eP
+	hYlfTLnnnziXrY6M+9P6t87BZbqKe6GfRljDN4LTPY7vtI03j5nX+JrSvNxLUEgZ
+	9QQEoke/y3XG9tlKuT3fv3S1ruaUVB6ogOUUxTRJgb+0G6T6fGvpb7g6FL2HxArC
+	x9LlSTs2zyY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A4149730;
+	Wed, 15 Aug 2012 16:02:51 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62353972D; Wed, 15 Aug 2012
+ 16:02:50 -0400 (EDT)
+In-Reply-To: <87sjbpa5m8.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 14 Aug 2012 16:51:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 30EE1F1A-E714-11E1-B764-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 15 August 2012 22:20:45 Florian Achleitner wrote:
-> On Wednesday 15 August 2012 12:52:43 Junio C Hamano wrote:
-> > Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
-> > > fast-import internally uses marks that refer to an object via its sha1.
-> > > Those marks are created during import to find previously created
-> > > objects.
-> > > At exit the accumulated marks can be exported to a file and reloaded at
-> > > startup, so that the previous marks are available.
-> > > Add command line options to the fast-import command line to enable this.
-> > > The mark files are stored in info/fast-import/marks/<remote-name>.
-> > > 
-> > > Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-> > > ---
-> > > 
-> > >  transport-helper.c |    3 +++
-> > >  1 file changed, 3 insertions(+)
-> > > 
-> > > diff --git a/transport-helper.c b/transport-helper.c
-> > > index 7fb52d4..47db055 100644
-> > > --- a/transport-helper.c
-> > > +++ b/transport-helper.c
-> > > @@ -387,6 +387,9 @@ static int get_importer(struct transport *transport,
-> > > struct child_process *fasti>
-> > > 
-> > >  	fastimport->in = helper->out;
-> > >  	argv_array_push(&argv, "fast-import");
-> > >  	argv_array_push(&argv, debug ? "--stats" : "--quiet");
-> > > 
-> > > +	argv_array_push(&argv, "--relative-marks");
-> > > +	argv_array_pushf(&argv, "--import-marks-if-exists=marks/%s",
-> > > transport->remote->name); +	argv_array_pushf(&argv,
-> > > "--export-marks=marks/%s", transport->remote->name);
-> > 
-> > Is this something we want to do unconditionally?
-> 
-> Good question. It doesn't hurt, but it maybe . We could add another
-> capability for remote-helpers, that tells us if it needs masks. What do you
-> think?
+It was unclear what "--topo-order" was really about in the
+documentation.  It is not just about "children before parent", but
+also about "don't mix lineages".
 
-Btw, for fast-export, there is already such a capability. It specifies a 
-filename, in addition.
+Reword the description for both "--date-order" and "--topo-order",
+and add an illustration to it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+  Thomas Rast <trast@student.ethz.ch> writes:
+
+  > But then the new description is wrong.  It claims that children are
+  > always before parents, which is not true in the face of clock skew.
+
+  Thanks for sanity-check.  Here is an updated one.
+
+ Documentation/rev-list-options.txt | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 6a4b635..9404d08 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -578,16 +578,33 @@ Commit Ordering
+ 
+ By default, the commits are shown in reverse chronological order.
+ 
+---topo-order::
++--date-order::
++	Show no parents before all of its children are shown, but
++	otherwise show commits in the commit timestamp order.
+ 
+-	This option makes them appear in topological order (i.e.
+-	descendant commits are shown before their parents).
++--topo-order::
++	Show no parents before all of its children are shown, and
++	avoid showing commits on multiple lines of history
++	intermixed.
+++
++For example, in a commit history like this:
+++
++----------------------------------------------------------------
+ 
+---date-order::
++    ---1----2----4----7
++	\	       \
++	 3----5----6----8---
+ 
+-	This option is similar to '--topo-order' in the sense that no
+-	parent comes before all of its children, but otherwise things
+-	are still ordered in the commit timestamp order.
++----------------------------------------------------------------
+++
++where the numbers denote the order of commit timestamps, `git
++rev-list` and friends with `--date-order` show the commits in the
++timestamp order: 8 7 6 5 4 3 2 1.
+++
++With `--topo-order`, they would show 8 6 5 3 7 4 2 1 (or 8 7 4 2 6 5
++3 1); some older commits are shown before newer ones in order to
++avoid showing the commits from two parallel development track mixed
++together.
+ 
+ --reverse::
+ 
+-- 
+1.7.12.rc2.85.g1de7134
