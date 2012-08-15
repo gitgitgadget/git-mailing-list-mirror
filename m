@@ -1,86 +1,54 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Wed, 15 Aug 2012 08:59:02 +0200
-Message-ID: <87sjbo63pl.fsf@thomas.inf.ethz.ch>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
-	<87zk5x6fox.fsf@thomas.inf.ethz.ch>
-	<CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
-	<7v628lbdcw.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
-	<87lihh8c7s.fsf@thomas.inf.ethz.ch>
-	<7vr4r98ah5.fsf@alter.siamese.dyndns.org>
+From: Mina Almasry <almasry.mina@hotmail.com>
+Subject: Feature request - discard hunk in add --patch mode
+Date: Wed, 15 Aug 2012 04:36:22 -0400
+Message-ID: <BLU0-SMTP37070ADBEC060E1EA15944693B60@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 08:59:34 2012
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 15 10:42:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1XZm-0006Wt-5h
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 08:59:34 +0200
+	id 1T1ZBc-000586-Nd
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 10:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105Ab2HOG7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 02:59:08 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:34286 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447Ab2HOG7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 02:59:07 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 15 Aug
- 2012 08:59:02 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 15 Aug
- 2012 08:59:03 +0200
-In-Reply-To: <7vr4r98ah5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 14 Aug 2012 13:49:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1754021Ab2HOImg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 04:42:36 -0400
+Received: from blu0-omc3-s25.blu0.hotmail.com ([65.55.116.100]:63210 "EHLO
+	blu0-omc3-s25.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753096Ab2HOIme (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Aug 2012 04:42:34 -0400
+X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Aug 2012 04:42:34 EDT
+Received: from BLU0-SMTP370 ([65.55.116.74]) by blu0-omc3-s25.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 15 Aug 2012 01:36:24 -0700
+X-Originating-IP: [142.151.169.12]
+X-EIP: [uMRWVE6kMnDjzG0qMgAvw35jW916KPzb]
+X-Originating-Email: [almasry.mina@hotmail.com]
+Received: from [192.168.1.101] ([142.151.169.12]) by BLU0-SMTP370.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 15 Aug 2012 01:36:23 -0700
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20120714 Thunderbird/14.0
+X-OriginalArrivalTime: 15 Aug 2012 08:36:23.0531 (UTC) FILETIME=[0D6063B0:01CD7AC1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203464>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Thomas Rast <trast@student.ethz.ch> writes:
->
->> In some sense this is a really bad case of wrong UI design, because we
->> (this happens on #git a lot) have to teach users not to use the command
->> so they won't trip over this problem.  It would be better to fix the
->> real issue instead.  IIRC it was even on the 1.8.0 wishlist...
->
-> Is it?
->
-> There already is a way to ask it to update the single tracking
-> branch while fetching; "git fetch origin master" that
-> unconditionally updates refs/remotes/origin/master without a way to
-> tell it not to do so will be a grave usability regression.
+I frequently stage files using git add --patch command and I almost 
+always come across debug code I want to discard, but there is no option 
+for that in the prompt. The result is that I have to run an extra 
+command after the dialogue ends.
 
-Grave?  Do you have any data/use-cases to back that up with?
+I would like to add a feature to allow users to discard hunks using a 
+command like r! or d!
 
-I have never had a need for a fetch that doesn't update the remote
-namespace, nor heard anyone on IRC who has.  OTOH, I do have anecdotal
-evidence in support of "the current state is confusing": this thread, or
-the fact that Jan's IRC bot grew bot-quotes !fetch4/!pull4 that people
-use to warn users of 'git pull origin master' (it's apparently very
-common).
+I was wondering if that would be a welcome addition to git. I am willing 
+to work on the feature myself.
 
-
-The 1.8.0 thread is here, and Peff even said he had a patch he uses in
-his tree:
-
-http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=165758
-
-There's even a newer thread suggesting the same:
-
-http://thread.gmane.org/gmane.comp.version-control.git/192252
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Regards,
+Mina
