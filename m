@@ -1,186 +1,121 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] help: correct behavior for is_executable on Windows
-Date: Thu, 16 Aug 2012 00:29:13 +0200
-Message-ID: <20120815222911.GA44080@book.hvoigt.net>
-References: <20120811070030.GA83665@book.hvoigt.net> <7vd32whgvl.fsf@alter.siamese.dyndns.org> <20120813170221.GB6418@book.hvoigt.net> <7vmx1yel9d.fsf@alter.siamese.dyndns.org> <20120815165054.GA43523@book.hvoigt.net> <7v7gt06nyk.fsf@alter.siamese.dyndns.org>
+Date: Wed, 15 Aug 2012 16:15:08 -0700
+Message-ID: <7va9xv4uir.fsf@alter.siamese.dyndns.org>
+References: <20120811070030.GA83665@book.hvoigt.net>
+ <7vd32whgvl.fsf@alter.siamese.dyndns.org>
+ <20120813170221.GB6418@book.hvoigt.net>
+ <7vmx1yel9d.fsf@alter.siamese.dyndns.org>
+ <20120815165054.GA43523@book.hvoigt.net>
+ <7v7gt06nyk.fsf@alter.siamese.dyndns.org>
+ <20120815222911.GA44080@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 00:30:23 2012
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 16 01:15:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1m6Y-00056t-DY
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 00:30:22 +0200
+	id 1T1mo6-00035n-34
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 01:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753094Ab2HOWaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 18:30:14 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.29.8]:52208 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab2HOWaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 18:30:13 -0400
-Received: from [77.21.76.22] (helo=localhost)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1T1m5R-0001Mt-Ss; Thu, 16 Aug 2012 00:29:14 +0200
-Content-Disposition: inline
-In-Reply-To: <7v7gt06nyk.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1753630Ab2HOXPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 19:15:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54014 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751850Ab2HOXPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 19:15:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C39479053;
+	Wed, 15 Aug 2012 19:15:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dumQJ9WznNO0rglvMZlEOp/NdYc=; b=fIg42A
+	f0L36beE3NINmZlzJu180R9XdMH91BYDPKPIQTAN1vHODy7ZG1NK6c1o4zvy5o7q
+	dQaFY925CfBHCFwTlL8OlCCwUqeztjuXN51PKn8RjHWUSmM8hJtSFobB3DKzZiPr
+	CUIVRLj1dk0RfI1yqh8PtxDW4/f/e8pXNHnjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AwCB3NytbR8arxCTGIFXZ0aBMQ+k9bTx
+	Q4rfi594YEy9ZpwEIjrJ7PwFFfIFMsp9OPUbDW8N1s0PKkf4cbNrGPfnbNX6oQeL
+	T7rvVU9kISCcVaVCAu3DjbK5QD+obzlQwMGnbmQr3qU0soaGw7pfXzG0itvFojih
+	z9sfC5N9MqA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFB489052;
+	Wed, 15 Aug 2012 19:15:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 205229051; Wed, 15 Aug 2012
+ 19:15:11 -0400 (EDT)
+In-Reply-To: <20120815222911.GA44080@book.hvoigt.net> (Heiko Voigt's message
+ of "Thu, 16 Aug 2012 00:29:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0FBDCD20-E72F-11E1-B608-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-On Wed, Aug 15, 2012 at 10:53:55AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > On Mon, Aug 13, 2012 at 10:48:14AM -0700, Junio C Hamano wrote:
-> >> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> >> > What do you think?
-> >> 
-> >> Does having the "stat()" help on Windows in any way?  Does it ever
-> >> return an executable bit by itself?
-> >
-> > No, AFAIK it does not return anything about executability. But I think
-> > the stat is still necessary to verify that the file exists and is a
-> > regular file.
-> 
-> But if you are going to read it anyway, you can tell it from open()
-> and read() of the first 2 bytes failing, no?  That will still be an
-> implementation detail of platform specific "is_path_executable()".
+> I do not know why you are against filling that information into "struct
+> stat".
 
-No I am not opening the file anyway. Only when it does not have a
-".exe" postfix. That at least was the intention of my previous patch in
-this thread.
+Because it is *WRONG*.  Isn't it a good enough reason?
 
-> So you are forcing Windows an extra and unnecessary stat() that only
-> is needed on Cygwin, no?
+If the issue you are trying to solve were """stat emulation on
+Windows and Cygwin does not give the correct x-bit (and the user
+sometimes has to work it around with "update-index --chmod"), and by
+using other clues the emulation can be improved to give a better
+result""", I agree that it would be a good solution to have the
+"""Does it exist as a regular file and ends with ".exe"?  Otherwise
+does it start with "MZ" or "#!"?""" heuristics in a helper function
+correct_executable_stat(), and to have the implementation of stat
+emulation on these two platforms call that shared helper function.
 
-My first patch in this thread (which lead to this extraction) is about
-avoiding the open because it is possibly very costly on our git binaries
-in case a virus scanner is running.
+But look at the caller again.  The problem the caller wants this
+function to solve is not "I want you to stat this file."  It has a
+pathname, and only wants to know if it is an executable file.  It
+does not care about who owns it, what time it was last touched,
+etc., but calling the incomplete stat emulation on Windows will try
+to come up with an answer, and the is_executable() function discards
+most of it.  
 
-The optimized (and correct) check does only look at the given filename
-if it contains a ".exe" postfix. A directory (although unlikely) could
-also have such a suffix. Should we then consider that directory to be a
-git command? AFAICS there is no such check in the earlier codepath.
+In other words, you are solving a wrong problem with that approach.
 
-A stat is much cheaper since it does not open the file. For scripts the
-open is much cheaper than for our binaries because they are much
-smaller. For clarification: All the git builtin binaries basically
-contain the same code. Even though they are hardlinked, the system (or
-the scanner) does still consider them like individual files and executes
-a scan for each of them. That at least seems to be the case on a number
-of systems.
+"Run stat() and look at S_IXUSR" happens to be an implementation
+detail that is valid only on POSIX systems for a function to answer
+the question: "Is this an executable file?", and in that specific
+implementation, the answer to that question appears in the S_IXUSR
+bit of st.st_mode.  That does not mean the "struct stat" is the best
+container for the answer to that question on other platforms.  So
+why structure your abstraction around the inappropriate data
+structure?  Between the function (is_executable) and its callers,
+there is only one bit that needs to be passed.
 
-> > @@ -1347,7 +1348,8 @@ ifneq (,$(findstring MINGW,$(uname_S)))
-> >  	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
-> >  	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
-> >  		compat/win32/pthread.o compat/win32/syslog.o \
-> > -		compat/win32/poll.o compat/win32/dirent.o
-> > +		compat/win32/poll.o compat/win32/dirent.o \
-> > +		compat/win32/executable.o
-> 
-> Looks sensible, even though the filename does not tell what it does
-> about "executable".  is_executable.o might be a better name for them.
+My preference is to remove "static int is_executable()" function
+from help.c, have an "extern int is_executable(const char *)" that
+has platform-specific implementation in compat/ layer, and call it
+from help.c::list_commands_in_dir() without any #ifdef.  In
+git-compat-util.h, have something like:
 
-Agreed, I was not sure about the name anyway. is_executable.o sounds
-better.
+	#ifdef __CYGWIN__
+	#define is_executable(path) cygwin_is_executable(path)
+	#else
+        # ifdef WIN32
+        # define is_executable(path) win32_is_executable(path)
+	# endif
+	#endif
 
-> > diff --git a/help.c b/help.c
-> > index ebc2c42..d9fae3c 100644
-> > --- a/help.c
-> > +++ b/help.c
-> > @@ -106,34 +106,8 @@ static int is_executable(const char *name)
-> >  	    !S_ISREG(st.st_mode))
-> >  		return 0;
-> >  
-> > -#if defined(WIN32) || defined(__CYGWIN__)
-> > -	/* On Windows we cannot use the executable bit. The executable
-> > -	 * state is determined by extension only. We do this first
-> > -	 * because with virus scanners opening an executeable for
-> > -	 * reading is potentially expensive.
-> > -	 */
-> > -	if (has_extension(name, ".exe"))
-> > -		return S_IXUSR;
-> > -
-> > -#if defined(__CYGWIN__)
-> > -if ((st.st_mode & S_IXUSR) == 0)
-> > -#endif
-> > -{	/* now that we know it does not have an executable extension,
-> > -	   peek into the file instead */
-> > -	char buf[3] = { 0 };
-> > -	int n;
-> > -	int fd = open(name, O_RDONLY);
-> > -	st.st_mode &= ~S_IXUSR;
-> > -	if (fd >= 0) {
-> > -		n = read(fd, buf, 2);
-> > -		if (n == 2)
-> > -			/* look for a she-bang */
-> > -			if (!strcmp(buf, "#!"))
-> > -				st.st_mode |= S_IXUSR;
-> > -		close(fd);
-> > -	}
-> > -}
-> > -#endif
-> > +	correct_executable_stat(name, &st);
-> > +
-> 
-> Yuck.
-> 
-> Why should we need even a single line of the implementation of a
-> function that tells if a given pathname contains an executable
-> command, which we know is platform specific?  
-> 
-> On Posix systems, the implementation will be "stat() and check
-> S_IXUSR".  On pure Windows, it will be "check .exe, or open it and
-> read the first two bytes". On Cygwin, it will also be "check .exe,
-> stat() and check S_IXUSR, or open it and read the first two bytes.
-> 
-> It is not like the caller of is_executable() needed to run stat for
-> other purposes on its own and we can optimize by either borrowing
-> the stat data the caller already collected for us, or returning the
-> stat data we collected for later use by the caller.  The use of stat
-> is entirely contained in the POSIX implementation of this function.
-> 
-> Why are you so dead-set to shoehorn the different semantics into
-> "struct stat" that we know is not an appropriate abstraction across
-> platforms?
+        #ifndef is_exectutable
+	#define is_executable(path) posix_is_executable(path)
+	#endif
 
-I simply think filling in the correct information into the data
-structure we use on all platforms is the most transparent approach. We
-could also call this function
+        extern int is_executable(const char *);
 
-	correct_executable_stat_if_needed_by_platform()
-
-but I considered that name to be too long. As explained above: To be
-fully correct the stat call is still needed to make sure we are not
-looking at a directory. list_commands_in_dir() from help.c is iterating
-over all entries in a given directory so if we skip the stat we are not
-sure whether we look at something that is not a regular file. Even
-though its unlikely that there will be a directory named something.exe
-in the git executable directory I would still like to keep the check in
-there.
-
-When first looking at this I also thought about extending the windows
-stat replacement to do this whole logic. Then we could completely remove
-this platform specific thing. But I decided against that because when
-the file does not have a ".exe" postfix we would have an open call in all
-stats and to my knowledge that is very expensive on Windows.
-
-I do not know why you are against filling that information into "struct
-stat". I could rephrase the above into something like this
-
-	if (platform_is_executeable(name))
-		return 1;
-
-but its not that easy to replace to a no op by a macro anymore.
-
-Cheers Heiko
+I wouldn't mind seeing the implementation of posix_is_executable()
+in help.c, which will be dead-code on Windows and Cygwin, if that
+makes linking and Makefile easier.
