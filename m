@@ -1,122 +1,86 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 2/4] revisions passed to cherry-pick should be in
- "default" order
-Date: Tue, 14 Aug 2012 23:05:21 -0700
-Message-ID: <CAOeW2eH--Y_gq4jBBhd5EQRw+uuaNWrMT-Sua7CeJO-N9KHCLg@mail.gmail.com>
-References: <7vpq6ygcy1.fsf@alter.siamese.dyndns.org>
-	<50289e50.a19f320a.5d99.3fdfSMTPIN_ADDED@gmr-mx.google.com>
-	<7vtxw6d0ct.fsf@alter.siamese.dyndns.org>
-	<CAOeW2eEbe9_m_QSbsJUbWPhf6G17X3vqbh__TCefrB0G2VKXdw@mail.gmail.com>
-	<7vehnacxkf.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Your branch and 'origin/master' have diverged
+Date: Wed, 15 Aug 2012 08:59:02 +0200
+Message-ID: <87sjbo63pl.fsf@thomas.inf.ethz.ch>
+References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
+	<87zk5x6fox.fsf@thomas.inf.ethz.ch>
+	<CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
+	<7v628lbdcw.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
+	<87lihh8c7s.fsf@thomas.inf.ethz.ch>
+	<7vr4r98ah5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 15 08:06:05 2012
+X-From: git-owner@vger.kernel.org Wed Aug 15 08:59:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1Wk1-0000XN-CA
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 08:06:05 +0200
+	id 1T1XZm-0006Wt-5h
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Aug 2012 08:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304Ab2HOGFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Aug 2012 02:05:23 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:58900 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204Ab2HOGFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Aug 2012 02:05:22 -0400
-Received: by ghrr11 with SMTP id r11so1418859ghr.19
-        for <git@vger.kernel.org>; Tue, 14 Aug 2012 23:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ResbDLLoHtwMcMbnP9WuOO1NA08gNJ5iiNZxm1GXHfE=;
-        b=FqAf5OgsyoPC94ITx2pGXMLlZdhuQFg1Qbi+W3MDiiOpBte++u9LQ9j92EB14A7Mwi
-         z/ycVK6/fhjGZduTNWRWHBRfBFXoGZlUCBYrB3klJSOllZWBm5906BrrCfs28oQ47qLl
-         kKnVJMmA4Bnbdmyv9C5gD35w6wXW8pq+IWcXJYmcbISv5045R0K2kjzOxH/XnMel+Ump
-         RhhRUcBnMAOY6fw9+H5RuGUbvwTEb4qOGfcYE96gKD1hTptDmjVgqOltDeZIBBLOrH94
-         NamiNUOAQ80M1qtsoFA34BFMq+Od/5kXFGM+YXcMcyB/MeuL9BtCvkUZvz5WraH8ddNY
-         si0A==
-Received: by 10.68.224.170 with SMTP id rd10mr24879170pbc.106.1345010721382;
- Tue, 14 Aug 2012 23:05:21 -0700 (PDT)
-Received: by 10.68.120.112 with HTTP; Tue, 14 Aug 2012 23:05:21 -0700 (PDT)
-In-Reply-To: <7vehnacxkf.fsf@alter.siamese.dyndns.org>
+	id S1752105Ab2HOG7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Aug 2012 02:59:08 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:34286 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751447Ab2HOG7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Aug 2012 02:59:07 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 15 Aug
+ 2012 08:59:02 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Wed, 15 Aug
+ 2012 08:59:03 +0200
+In-Reply-To: <7vr4r98ah5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 14 Aug 2012 13:49:58 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203463>
 
-On Mon, Aug 13, 2012 at 2:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
->> To connect to the other mail I sent on this thread (in parallel with
->> yours), do you think "git cherrry-pick HEAD HEAD~1" should apply the
->> commits in the same order as "git cherry-pick HEAD~2..HEAD" (which
->> would give the same result if passed to 'rev-list --no-walk' for a
->> linear history) or in the order specified on the command line?
+>> In some sense this is a really bad case of wrong UI design, because we
+>> (this happens on #git a lot) have to teach users not to use the command
+>> so they won't trip over this problem.  It would be better to fix the
+>> real issue instead.  IIRC it was even on the 1.8.0 wishlist...
 >
-> Definitely the latter; I do not think of any semi-reasonable excuse
-> to do otherwise.
+> Is it?
+>
+> There already is a way to ask it to update the single tracking
+> branch while fetching; "git fetch origin master" that
+> unconditionally updates refs/remotes/origin/master without a way to
+> tell it not to do so will be a grave usability regression.
 
-Indeed. My patches tried to fix the wrong problem.
+Grave?  Do you have any data/use-cases to back that up with?
 
-Sorry I'm slow, but I think I'm finally starting to understand
-what you've been saying all along about the bug being in
-sequencer. I'll try to recapitulate a bit for my own and maybe
-others' understanding. For simplicity, let's assume a linear
-history with unique timestamps, but not necessarily increasing
-with each commit.
+I have never had a need for a fetch that doesn't update the remote
+namespace, nor heard anyone on IRC who has.  OTOH, I do have anecdotal
+evidence in support of "the current state is confusing": this thread, or
+the fact that Jan's IRC bot grew bot-quotes !fetch4/!pull4 that people
+use to warn users of 'git pull origin master' (it's apparently very
+common).
 
-Currently:
 
- 1) 'git cherry-pick A..C' picks the commits order in
-  reverse "default" order
+The 1.8.0 thread is here, and Peff even said he had a patch he uses in
+his tree:
 
- 2) 'git cherry-pick B C' picks the commits in chronological
-  order
+http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=165758
 
- 3) 'git rev-list --reverse A..C | git cherry-pick --stdin'
-  behaves just like 'git cherry-pick B C' and therefore picks
-  the commits in chronological order
+There's even a newer thread suggesting the same:
 
-In cases 2) and 3), even though cherry-pick tells the revision
-walker not to walk, it still sorts the commits in reverse
-chronological order. But cherry-pick also tells the revision
-walker explicitly to reverse the list, so in the end, the order
-is chronological.
+http://thread.gmane.org/gmane.comp.version-control.git/192252
 
-In case 2), however, the first ordering make no difference in
-this "limited" case (IIUC). So the "default" ordering (which
-would be C, then B in this case, regardless of timestamps), gets
-reversed and B gets applied first, followed by C.
-
-So all of the above case give the right result in the end as long
-as the timestamps are chronological, and case 1) gives the right
-result regardless. The other two cases only works in most cases
-because the unexpcted sorting when no-walk is in effect
-counteracts the final reversal.
-
-When I noticed that the order of inputs to cases 2) and 3) above
-was ignored, and thinking that 'git rev-list A..C | git
-cherry-pick --stdin' should mimic 'git cherry-pick A..C', I
-incorrectly thought that the error was the use of --reverse to
-'git rev-list' as well as the sorting done in the no-walk case. I
-think completely ignored case 2) at this point.
-
-I now think I understand that the sorting done in the no-walk
-case is indeed incorrect, but that the --reverse passed to
-rev-list is correct. Instead, the final reversal, which is
-currently unconditional, should not be done in the no-walk case.
-
-IIUC, this could be implemented by making cherry-pick iterate
-over rev_info.pending.objects just like 'git show' does when not
-walking.
-
-Junio, I think it makes sense to just drop this whole series for
-now. I'll probably include patch 1/4 in my stalled rebase-range
-series instead. If I understood you correctly, you didn't have
-any objections to that patch.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
