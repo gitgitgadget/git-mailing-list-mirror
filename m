@@ -1,68 +1,87 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] man: git pull -r is a short for --rebase
-Date: Thu, 16 Aug 2012 23:36:11 +0100
-Organization: OPDS
-Message-ID: <B7310EA0CC00423EB5B26E3FAAB54541@PhilipOakley>
-References: <20120816095018.GD5489@suse.cz> <7v1uj63iyx.fsf@alter.siamese.dyndns.org> <2BB1E674DD214C66B06660612F34109D@PhilipOakley> <7vk3wy1t7l.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Miklos Vajna" <vmiklos@suse.cz>, "Git List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 00:36:25 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] relative future date
+Date: Thu, 16 Aug 2012 16:02:01 -0700
+Message-ID: <1345158123-22189-1-git-send-email-gitster@pobox.com>
+References: <1341505087-13632-1-git-send-email-tomxue0126@gmail.com>
+Cc: Tom Xue <tomxue0126@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 17 01:02:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T28fw-0003V8-2N
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 00:36:24 +0200
+	id 1T295X-000867-CX
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 01:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933466Ab2HPWgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 18:36:04 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:19230 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932521Ab2HPWgB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Aug 2012 18:36:01 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq0NAJZ0LVBcHKfT/2dsb2JhbABFi0CtcwQBAQJ3gQiCGwUBAQUIAQEuHgEBIQsCAwUCAQMVAQslFAEEGgYHFwYTCAIBAgMBiAC6c4sKVzSBB4NlYAOIGYVCmAaCYA
-X-IronPort-AV: E=Sophos;i="4.77,781,1336345200"; 
-   d="scan'208";a="44892939"
-Received: from host-92-28-167-211.as13285.net (HELO PhilipOakley) ([92.28.167.211])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 16 Aug 2012 23:35:59 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755317Ab2HPXCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 19:02:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46135 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751804Ab2HPXCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 19:02:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B31208A38;
+	Thu, 16 Aug 2012 19:02:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=DnIZ
+	iHUopERBUYZY+QFZHilByEs=; b=vJhhDRpPXrQ1k3PSvplfD3t4M1p5bbSJGssR
+	8yU2v/Wk06G9PHKFvqtyquU+eFWIlcRa45RYUOF1tDBQ+LaIYpVyR7AexG88OjjC
+	ApHH1vkRXQKTWsar7tx1oV2zbOrteFpFSnLnb0ZPMFKyl/UUcGdaFBPlyN0EjLx6
+	rfunnsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	HUV79xAAvBPcfmVxcni91Sg5QVI0fBDRdBiPNTS0j1mBhNWjTj/krDxkO4b+SHN6
+	9EFp82tGzXE/LvFTMO4ElGMfOALdytEU12U4J2HNFgptFm2I8yzj9WMqp2jscbh5
+	LChzhgQJbNBH1Vd2GRzTKKBxbzXVjT/rrgh+0i/XRUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A03CE8A37;
+	Thu, 16 Aug 2012 19:02:05 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 062C48A36; Thu, 16 Aug 2012
+ 19:02:04 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.rc3
+In-Reply-To: <1341505087-13632-1-git-send-email-tomxue0126@gmail.com>
+X-Pobox-Relay-ID: 65990C88-E7F6-11E1-BC43-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Thursday, August 16, 2012 9:23 PM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> I wasn't aware of the  "abbreviated options" capability. Is meant to
->> be in the man pages as I couldn't find it, or is it described
->> differently?
->
-> $ git help gitcli
->
-> is the closest that comes to mind.
->
-> If it is not reachable from "git help git", we may want to sprinkle
-> some more linkgit:gitfoo[$n] around the documentation sources.  I
-> didn't check.
->
+Jundong Xue <tomxue0126@gmail.com> writes:
 
-I eventually found a reference in the parse-options API to the fact that
-'Long options may be abbreviated, as long as the abbreviation is
-unambiguous.'
+> tomxue@ubuntu:~/mycode/life$ git todo
+> * d768da9 - (in the future: 3 hours later) Meeting with vendor
+> * 5fcd556 - (in the future: 12 days later) Take my personal ho
+> * 9dd280b - (in the future: 11 months later)
+> * 4680099 - (in the future: 9 months later)
+> * 59d5266 - (in the future: 8 months later)
+> * b5308da - (in the future: 7 months later)
+> ...
 
-It may be worth bringing some of those parse-options API basics bullets'
-forward into the gitcli page, if appropriate.
+I was re-reading the backlog and after looking at it again, I do not
+think what the patch tries to do is a bad thing per-se.  There are
+changes I want to see _how_ it is done, though.
+
+Especially, the duplication of the exact same logic in the future
+and in the past was an unmaintainable mess.
+
+Here is an attempt to clean it up.
+
+Opinions?  If the list finds this is a worthwhile thing to do (I am
+neutral), it needs help from i18n people to mark format messages up
+properly again.
+
+Thanks.
+
+Junio C Hamano (2):
+  date: refactor the relative date logic from presentation
+  date: show relative dates in the future
+
+ date.c          | 187 +++++++++++++++++++++++++++++++++++++++++++-------------
+ t/t0006-date.sh |   2 +
+ 2 files changed, 146 insertions(+), 43 deletions(-)
+
+-- 
+1.7.12.rc3.69.gaf0166d
