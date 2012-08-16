@@ -1,68 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] test: git-stash conflict sets up rerere
-Date: Thu, 16 Aug 2012 15:00:08 -0700
-Message-ID: <7vehn6zedz.fsf@alter.siamese.dyndns.org>
-References: <CABURp0oXhZ5ysm4b3Z=7o+2TB+3wFdMjj4oEwxafApjD4c7ozA@mail.gmail.com>
- <1341693962-17090-1-git-send-email-hordp@cisco.com>
- <1341693962-17090-2-git-send-email-hordp@cisco.com>
- <7v8vetmzgz.fsf@alter.siamese.dyndns.org>
- <CABURp0rrTvQcjHLsVwXC5hfBOuRmFG4AzSj6ZQwM=MXn0FAUCQ@mail.gmail.com>
+From: Lars Winterfeld <lars.winterfeld@tu-ilmenau.de>
+Subject: Re: bug: "fatal: cannot pread pack file", version 1.7.5.4
+Date: Thu, 16 Aug 2012 15:10:42 -0700
+Message-ID: <fd74d7233b4b29fe06afad23fb87552a@localhost>
+References: <5638dec6e156f83385a3baa01cf9ac4d@localhost>
+ <20120702215736.GA5790@sigill.intra.peff.net> <m2vci5n5r5.fsf@igel.home>
+ <20120703032345.GA7143@sigill.intra.peff.net>
+ <CACsJy8AmCo82YxHA_6+rkbuJOjOG-HqCgjoP2tz753SXH5w8_Q@mail.gmail.com>
+ <20120703051426.GA12965@sigill.intra.peff.net>
+ <7vvcgizesm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 00:00:22 2012
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 00:12:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2872-0002vx-0Z
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 00:00:20 +0200
+	id 1T28It-00012u-Tv
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 00:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753616Ab2HPWAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 18:00:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50310 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752661Ab2HPWAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 18:00:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5504F9B4F;
-	Thu, 16 Aug 2012 18:00:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Am9DOBMFaUbclVIrhjLV9Z1VMqY=; b=pa3/2I
-	vELgNdVKvFgw0lQAeMfMTifROFYJmAOxgewAcx0mj8IQNLr02yf8NrAGmmhotsY+
-	om06uIPs7ZpfX0ucTppUCw7yQz1MagbShY9ZcIsvzLRPklwhAnX6vad9vWIU9gUP
-	/JG5IORLTmZtsL7GjhRyz1Qr+O/94pp+gssRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kI1OBsC7jUYw0i9sHtWQn/GaOIr2NUhW
-	v7wrSW5Y2hOm/f52BdVaBosFhuNasoM5q1n9xZcF9FaeAneQogq2xo8rp2M1M9Z1
-	MAGDMvYwtUG1cMQ3BEjY01TTmlL2KtG7cft8ggeNV6YB4LbibAhn8Qz29azzLgkp
-	mLd1vvFvBZ0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4197B9B4E;
-	Thu, 16 Aug 2012 18:00:11 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BDA8A9B49; Thu, 16 Aug 2012
- 18:00:09 -0400 (EDT)
-In-Reply-To: <CABURp0rrTvQcjHLsVwXC5hfBOuRmFG4AzSj6ZQwM=MXn0FAUCQ@mail.gmail.com> (Phil
- Hord's message of "Mon, 9 Jul 2012 10:41:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BF23452E-E7ED-11E1-A051-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933438Ab2HPWM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 18:12:28 -0400
+Received: from piggy.rz.tu-ilmenau.de ([141.24.4.8]:53593 "EHLO
+	piggy.rz.tu-ilmenau.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933416Ab2HPWMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 18:12:24 -0400
+Received: from venus.rz.tu-ilmenau.de (venus.rz.tu-ilmenau.de [141.24.4.158])
+	by piggy.rz.tu-ilmenau.de (8.13.7/8.13.7/Debian-2) with ESMTP id q7GMAgRN027076;
+	Fri, 17 Aug 2012 00:10:42 +0200
+In-Reply-To: <7vvcgizesm.fsf@alter.siamese.dyndns.org>
+X-Sender: 8WNMocA5eZ8I4TPBqpL5KU64mUxdq6/DoAPhElPChzV13XRp+f+Sog==@vger.kernel.org
+User-Agent: Roundcube Webmail/0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phil Hord <phil.hord@gmail.com> writes:
+Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Tue, Jul 03, 2012 at 11:25:16AM +0700, Nguyen Thai Ngoc Duy wrote:
+>>
+>>> On Tue, Jul 3, 2012 at 10:45 AM, Jeff King <peff@peff.net> wrote:
+>>> > On Tue, Jul 03, 2012 at 12:43:42AM +0200, Andreas Schwab wrote:
+>>> >
+>>> >> Jeff King <peff@peff.net> writes:
+>>> >>
+>>> >> > It's very odd for pread to report ENOENT (since it is always operating
+>>> >> > on an already-opened file descriptor).
+>>> >>
+>>> >> It doesn't, but gettext will clobber errno:
+>>> >>
+>>> >>               n = pread(pack_fd, inbuf, n, from);
+>>> >>               if (n < 0)
+>>> >>                       die_errno(_("cannot pread pack file"));
+>>> >>
+>>> >> There is nothing that saves errno.  This isn't limited to i18n though,
+>>> >> any function call in the arguments may potentially clobber errno.
+>>> >
+>>> > That's horribly lame of gettext. I don't expect arbitrary functions to
+>>> > save errno, but when the entire purpose of a function is to be a
+>>> > non-intrusive wrapper to massage messages to the user, it seems kind of
+>>> > evil to overwrite errno. Isn't the whole point of calling it "_" that
+>>> > you don't want to or have to notice it?
+>>>
+>>> Agreed.
+>>
+>> Hmm. According to gettext(3):
+>>
+>>   ERRORS
+>>          errno is not modified.
+>>
+>> And googling for "gettext" and "errno" reveals several bugfixes in GNU
+>> gettext to make sure that gettext preserves errno. I wonder if there are
+>> systems where that is not the case, though; I don't know what non-GNU
+>> gettext implementations are in common use these days. I'd still be
+>> curious to hear what platform the server is for this bug report.
+> 
+> Hrm, has this ever been resolved?
 
-> So, the next roll will remove the tests for MERGE_RR and will be more
-> explicit about the potential for mergetool confusion and/or the fact
-> that it is not explicitly tested here.
->
-> I'll wait a little longer for any further comments.
+Thank you for asking.
+My local git version is 1.7.5.4, the server version that I actually
+ended up pushing the files to was however still some 1.6.x.
+So it was a false alarm. Sorry about that.
 
-Mild ping to a seemingly stalled topic.
+As far as I can follow, there is no non-GNU gettext involved. Thanks
+for digging that deep into the problem, but it was my fault, probably
+not something about lost errno.
