@@ -1,77 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Your branch and 'origin/master' have diverged
-Date: Thu, 16 Aug 2012 12:21:42 -0400
-Message-ID: <20120816162142.GC2853@sigill.intra.peff.net>
-References: <CAE1pOi1WTbMSK8dOus6pFCa2C9vGA8QNE3+8w0LFmGkvcfq5fg@mail.gmail.com>
- <87zk5x6fox.fsf@thomas.inf.ethz.ch>
- <CAE1pOi1YFe9GB1L_==RTecEAipdTKj2-ixpwTnrmOgkkV8rkYw@mail.gmail.com>
- <7v628lbdcw.fsf@alter.siamese.dyndns.org>
- <CAE1pOi2DZNkYYwkH1MFh0m708T=DEdJawZCQgvk1HTGrqjkz2w@mail.gmail.com>
- <87lihh8c7s.fsf@thomas.inf.ethz.ch>
- <7vr4r98ah5.fsf@alter.siamese.dyndns.org>
- <87sjbo63pl.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] man: git pull -r is a short for --rebase
+Date: Thu, 16 Aug 2012 09:22:14 -0700
+Message-ID: <7v1uj63iyx.fsf@alter.siamese.dyndns.org>
+References: <20120816095018.GD5489@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Aug 16 18:21:55 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Aug 16 18:22:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T22pT-0004y9-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 18:21:52 +0200
+	id 1T22pz-0005b7-MP
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 18:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030276Ab2HPQVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 12:21:46 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39212 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030194Ab2HPQVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 12:21:45 -0400
-Received: (qmail 18556 invoked by uid 107); 16 Aug 2012 16:21:55 -0000
-Received: from 1153ahost247.starwoodbroadband.com (HELO sigill.intra.peff.net) (12.144.188.247)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Aug 2012 12:21:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2012 12:21:42 -0400
-Content-Disposition: inline
-In-Reply-To: <87sjbo63pl.fsf@thomas.inf.ethz.ch>
+	id S932904Ab2HPQWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 12:22:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51608 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932811Ab2HPQWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 12:22:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA9168290;
+	Thu, 16 Aug 2012 12:22:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g9br9tS5RJXehz9/s5XU5oGBI/I=; b=nUEi+L
+	1wofAMTl26LlaGcHLO7sTqSYSHxBr972bso/zRGlz5zOivZCKFZbMjJs5GIs6dVC
+	qN1Txx60i6kWk0XkPLV5h3BtQPwVuuyo7BUjXF3rbuANQ+ujTc2fGZOfLpv3rG9U
+	EHz8LSFfOIfV6SEImReiEBLQ2KHM7Vn2ROvsw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SAyWwBMa68aZfu549hKB5DmeG4Op87Cq
+	dirkyZ8+8q4Z/JzCXeVxz5QRUXvZgOrL3lqoaqEDRhlxWWd/L0ma3tSQ4bHD8+V5
+	69KAxFj/ofvPMlbFuoWhe1Am8VJkOcuvg400vNjSy6wnc7tAX4Y0n8ZHz4dZcKjR
+	73cFoUu99l8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C47D9828F;
+	Thu, 16 Aug 2012 12:22:16 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F10B828E; Thu, 16 Aug 2012
+ 12:22:16 -0400 (EDT)
+In-Reply-To: <20120816095018.GD5489@suse.cz> (Miklos Vajna's message of "Thu,
+ 16 Aug 2012 11:50:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B19B292-E7BE-11E1-B773-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2012 at 08:59:02AM +0200, Thomas Rast wrote:
+Miklos Vajna <vmiklos@suse.cz> writes:
 
-> I have never had a need for a fetch that doesn't update the remote
-> namespace, nor heard anyone on IRC who has.  OTOH, I do have anecdotal
-> evidence in support of "the current state is confusing": this thread, or
-> the fact that Jan's IRC bot grew bot-quotes !fetch4/!pull4 that people
-> use to warn users of 'git pull origin master' (it's apparently very
-> common).
-> 
-> The 1.8.0 thread is here, and Peff even said he had a patch he uses in
-> his tree:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=165758
-> 
-> There's even a newer thread suggesting the same:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/192252
+> ---
+>  Documentation/git-pull.txt |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index defb544..67fa5ee 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -101,6 +101,7 @@ include::merge-options.txt[]
+>  
+>  :git-pull: 1
+>  
+> +-r::
+>  --rebase::
+>  	Rebase the current branch on top of the upstream branch after
+>  	fetching.  If there is a remote-tracking branch corresponding to
 
-Yeah, I have been running with that patch for ages, and it has never
-been a problem for me. Of course, the problem cases are very specific
-workflows that I do not happen to use. There are definitely regressions
-for some workflows; the question is whether or not anybody is using
-those workflows (and/or would be bothered to adapt to using the reflog
-instead).
+I am not sure if this is worth it, as it comes from a natural
+"abbreviated options" support, i.e.
 
-Also note that there are several test failures with the patch, but I
-haven't investigated them (i.e., I don't know if the patch is buggy, if
-it is breaking a test in a way that is different than the expected
-regression, or if the test simply happens to depend on the current
-behavior and should be fixed).
+	-r|--r|--re|--reb|--reba|--rebas|--rebase)
+		rebase=true
 
--Peff
+And I do not think we particularly want to do
+
+    +-r::
+    +--r::
+    +--re::
+    +--reb::
+    +--reba::
+    +--rebas::
+     --rebase::
+            Rebase the current...
+
+for obvious reasons.
