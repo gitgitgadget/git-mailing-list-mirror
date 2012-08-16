@@ -1,199 +1,147 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH/RFC] index-pack: produce pack index version 3
-Date: Thu, 16 Aug 2012 08:54:00 -0700
-Message-ID: <CAJo=hJtgq7j67RU28ziQN4xUX7S5-YcaiApmcpMSYdamV-0SgQ@mail.gmail.com>
-References: <1344772889-8978-1-git-send-email-pclouds@gmail.com>
- <7vtxw8exii.fsf@alter.siamese.dyndns.org> <7vlihjgaaj.fsf@alter.siamese.dyndns.org>
- <CACsJy8CNp2w6PsMSrQ4aFBwHKbOGid4pVHUhE4xgmTatrnEepQ@mail.gmail.com>
- <7v8vdjfddk.fsf@alter.siamese.dyndns.org> <CAJo=hJtwS=fdjTCVsEQHdVn9p+_2k-wJ_W_zLtZkWGO+M4suNQ@mail.gmail.com>
- <7vmx1v2y01.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Thu, 16 Aug 2012 09:10:17 -0700
+Message-ID: <7v628i3jiu.fsf@alter.siamese.dyndns.org>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+ <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+ <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+ <7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+ <CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
+ <7vipcj2w9f.fsf@alter.siamese.dyndns.org>
+ <7vehn72vyl.fsf@alter.siamese.dyndns.org> <87pq6rw77l.fsf@thomas.inf.ethz.ch>
+ <502CC4E7.5060508@alum.mit.edu> <87k3wzujuy.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 16 17:54:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	<git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Aug 16 18:10:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T22Oz-0006KH-B0
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 17:54:29 +0200
+	id 1T22eg-0000Iz-VZ
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 18:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754373Ab2HPPyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 11:54:23 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:41145 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab2HPPyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 11:54:21 -0400
-Received: by yenl14 with SMTP id l14so3052854yen.19
-        for <git@vger.kernel.org>; Thu, 16 Aug 2012 08:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=MrxweFuH6UaW5lTgSIICH25NNZI/Y4TUGCUD1q647Po=;
-        b=KFt3PwqRdao9QGnMhsp5vtVCMlWynlViFZ1U7ZSekspjuwGGCKVN9KHloLvBgwGQqi
-         RETBNMB61JHUcqPZQQznC8d3YxlEzd8GcnTr7ntkJw0rpzTTbaMr89KLF1odWBocFcq/
-         HZgswxJ++XlwxkEyYJAAgZts1MKk7zZVVGPpY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=MrxweFuH6UaW5lTgSIICH25NNZI/Y4TUGCUD1q647Po=;
-        b=P1h4babBm36hsppDp7p3kMiXWNqYfsQH27FohdLrK+oMOpfeG7mK3fFP7yrkxSBejW
-         3tctvXOD7RPDegOj7H66h656/if/yQBAniGvY5e/kPzpGa0pMKjFZ0+DT/YF+0iBbqSQ
-         Cq8/YCFRXtmQfUNg8f0pKOa27MGDyKxJVIPhcBX07uduP+is2Lqqf4sBKcg65Mqd2Q5k
-         3/SzkYF1opXweBxNRCBfIrsCo8pez+cY3Xz1jjC+gUljc83IdXv2RgshYky0teWFSulb
-         eqhv3yUjNX0a5iaUHgp6i5QiC4CMgmPH8tpxKUI9c1JrTeBuGjTeSQhRWuK0nH17Fn1d
-         L6mg==
-Received: by 10.50.236.4 with SMTP id uq4mr2251403igc.18.1345132460628; Thu,
- 16 Aug 2012 08:54:20 -0700 (PDT)
-Received: by 10.64.141.50 with HTTP; Thu, 16 Aug 2012 08:54:00 -0700 (PDT)
-In-Reply-To: <7vmx1v2y01.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQlJo+XBCVJUv2E1Zn/9EvN5tMS075LxqhRRd/ssPW/G8VFdRuc9VbSe8u6yJPDg7/s87fwA
+	id S1030199Ab2HPQKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 12:10:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46108 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757434Ab2HPQKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 12:10:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2F389F35;
+	Thu, 16 Aug 2012 12:10:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PM2O+RDA/UF0PD97C4VlSUJLVGs=; b=kz3qQj
+	E3rgz+1yS1BLRPmLW8fxKiCTBErvbU0inY9R1SNUS/ltKduDxYLLzdsi355T4sMA
+	9qgGYqnHjCVYO9W2OeXVZYcKD/j7HkiKCe+VjCsFOfP5bS14Hj87jNThh8c621Ej
+	AvvjTl/ysW9hVSCleCBHx7QkFyCuzr7nR2vVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IP8bTctQgNQOLqtm42xbRhWoLirIl5+h
+	h/lBQPJmqqgAeE6JjWkim+UyfcYB1Bqiel48NBHOMNzboELMKqHtaaM995/rcM+a
+	qEnv5NUSlh9d66KVn0lNjxfC4uhtf2QZoUfrsoLHB+JReIVAAJux4J4hOW/q3A9X
+	Damrn+OYzI8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFFE39F34;
+	Thu, 16 Aug 2012 12:10:19 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06E5F9F31; Thu, 16 Aug 2012
+ 12:10:18 -0400 (EDT)
+In-Reply-To: <87k3wzujuy.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 16 Aug 2012 14:00:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DFAD488E-E7BC-11E1-87C2-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2012 at 10:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
+
+>> Why not turn the behavior on its head:
+>>
+>> * Change the default behavior to be something well-defined, easy to
+>> document, and convenient for humans, such as "topological order with
+>> ties broken by timestamp" or "approximate timestamp order, but
+>> respecting dependencies".
+>>
+>> * Add a new option, --arbitrary-order, that explicitly chooses
+>> efficiency instead of a defined order.
 >
->> ... But I think its worth giving
->> him a few weeks to finish getting the code ready, vs. rushing
->> something in that someone else thinks might help. We have waited more
->> than 6 years or whatever to improve packing. Colby's experiments are
->> showing massive improvements (40s enumeration cut to 100ms) with low
->> disk usage increase (<10%) and no pack file format changes.
+> I think that would be a rather bad decision, largely because (taking my
+> git.git as an example):
 >
-> No matter what you do, you would be saving the bitmap somewhere
-> outside the *.pack file, yes?  Will it be in some extended section
-> of the new *.idx file?
+>   $ time git log | head -1
+>   $ time git log --date-order | head -1
 
-Yes, because it is derived from the pack stream its stored external
-from it. We have chosen to append it as a new section below the CRC-32
-table in the *.idx file. It could also go into a new file stream
-(*.bdx?) but I don't think this is worthwhile. Its a bikeshed that can
-be painted once the algorithm has proven its value. If it can't do
-that, its irrelevant where its stored.
+You are correct to point out that introducing "--arbitrary-order"
+and force sorting by default is stupid for one reason, but forgot to
+stress the other equally important reason, I think.  Even though you
+came close to it here:
 
-> With the bitmap, your object enumeration phase may go very fast, and
-> you would be able to figure out, in response to a fetch request "I
-> have these tips of refs; please update me with these refs of yours",
-> the set of objects you would need to pack (i.e. the ones that are
-> reachable from your refs that were asked for, but that are not
-> reachable from the refs the requestor has).
+> ... if you just use 'git log' to quickly see the last
+> few commits.  At least to me, the optimization makes perfect sense.
 
-Yes. Not only that, but we are finding that the number of objects to
-send is fewer, resulting in a much smaller data stream. The bitmap
-gives us near perfect knowledge of everything the client has, not just
-the objects on the edge of the graph cut expressed by the ACKed have
-lines. Objects that existed earlier than the cut don't have to be
-reset.
+you may not have fully internalized that other reason yourself, I
+suspect, for the reason I mention in my last two paragraphs below.
 
-So the object enumeration phase goes very fast. The compressing
-objects phase is also time reduced, as fewer objects are needed to be
-considered, as fewer objects are being sent. With more complete
-knowledge of the have side, more deltas can be reused as-is, rather
-than re-encoded on the fly. This reduces the compressing objects phase
-time even further. And with fewer objects to send, we have easily seen
-trivial cases of a Linux kernel fetch that is 1 week behind Linus' tip
-save like 200K on an 800K transfer. Its hard to hate having all of the
-phases go faster, and transmit less data to the client.
+When you run "git log", you are asking only to see "the last few"
+commits.  The size of "few" actually depends on the occasion and the
+user, but the important thing to notice is that the definition of
+"the last" is fuzzily defined.  In such a request over a history
+like this:
 
-> Among these objects, there will be ones that are expressed as a
-> delta against what you are going to send, or as a delta against what
-> you know the recipient must already have (if you are using thin pack
-> transfer) in the packfiles you have, and you can send these deltas
-> as-is without recomputation.
+      ---A---B---C---D
+                      \
+    ---1---2---3---4---* = HEAD
 
-Yes. I point that out above before even reading this far in your message. :-(
+the user does not care the exact order, as long as the ones "closer"
+(again, a fuzzy definition) to HEAD come out earlier than the ones
+"farther" (and all of them have to come out eventually but that goes
+without saying).
 
-> But there will be ones that are either expressed as a base in your
-> packfile, or as a delta against something you are not going to send
-> and you know that the recipient does not have.  In order to turn
-> these objects into deltas, it may be necessary to have a way to
-> record which "delta chain" each object belongs to
+In the case of the above sample history, even with clock skews, the
+ones labeled with alphabets appear in the expected order among
+themselves, and the ones labeled with numbers also do, with or
+without sorting.  And all three orders match the use case of "git
+log" to view "the last few" commits just fine.  When we have the
+default, topo and date orders, all of which would give us output
+suitable for the purpose of showing "the last few", picking the one
+with the least latency is the right thing to do.
 
-Excellent observation. Instead of performing a hacky delta base search
-by looking at identical path names in the have set, finding another
-candidate in the same cluster of deltas that the object is currently
-encoded against would yield a pretty efficient delta on the wire. It
-doesn't have to be another object in the same chain, it could also be
-a sibling object that shares a similar transitive delta base.
+In other words, latency is important, but a short-latency solution
+is acceptable and preferred only if it gives a reasonable result.
+Giving useless output with small latency is not what we are aiming
+to do.
 
->, and if you are
-> introducing the mechanism to have extended sections in the new *.idx
-> file, that may be a good place to do so.
+> The right fix would be to dig up Peff's work on generation number
+> caching, and modify the algorithm to take generation numbers into
+> account.
 
-Thus far we haven't done an extended sections modification to the
-*.idx format. Its just a 'E003' version that requires the bitmaps to
-be present below the CRC-32 table. But I can see how framing this as a
-group of optional extensions would be worthwhile.
+I think you are totally wrong here, unless you are talking about a
+generation number that is different from what I recall from the
+older discussion.  Think of the sample history above, and imagine
+that the numbered ones are based on the current 'master', but that
+the alphabet ones are based on an ancient maintenance release that
+is 1000 generations behind (think of me running the command after
+finishing the day's integration cycle, sitting at the tip of 'pu',
+where the last topic merged is meant to be eventually merged to
+maint-1.7.9).  All of the commits depicted in the picture will have
+the commit timestamps in the past few hours.  Ancestors of A and 1,
+not drawn in the picture, were made yesterday or before.
 
->  When you need to express
-> an object that your bitmap told you to send (as opposed to rev-list
-> walking told you with the paths to the objects), you can find other
-> objects that belong to the same "delta chain" and that you know are
-> available to the recipient when it starts to fixing the thin pack
-> using that extra piece of information, in order to find the optimal
-> delta base to encode such an object against.
-
-Yes.
-
-> Just for fun, I applied the attached patch and repacked the history
-> leading to v1.7.12-rc3 with the default depth/window:
->
->   git rev-list --objects --all |
->   git pack-objects \
->       --no-reuse-delta --no-reuse-object --delta-base-offset \
->       [--no-namehash] pack
->
-> with and without the experimental --no-namehash option.  The result
-> is staggering.  With name-hash to group objects from the same path
-> close together in the delta window, the resulting pack is 33M.
-> Without the name-hash hint, the same pack is 163M!  Needless to say,
-> keeping the objects that should be hashed together inside a delta
-> window is really important.
-
-Cute experiment. Yes that name hash works as a decent predictor of
-which objects should go near each other in the delta window. So does
-the descending size sort.
-
-> An obvious way to record the "delta chain" is to simply keep the
-> name_hash of each object in the pack, which would need 2 bytes per
-> object in the pack, that would bloat pack_idx_entry size from 32
-> bytes to 34 bytes per entry.  That way, after your bitmap discovers
-> an object that cannot reuse existing deltas, you can throw it, other
-> such objects with the same name-hash, and then objects that you know
-> will be available to the recipient (you mark the last category of
-> objects as "preferred base"), into the delta_list so that they are
-> close together in the delta window.
-
-Yes, this is one thought I had. Inside of JGit I think the name hash
-is 32 bits, not 16 bits. Storing the name hash into the *.idx file
-means we need to codify what the name hash algorithm is for a given
-*.idx file version, and compatible implementations of Git must use the
-same hash function. Thus far the name hash has been an in-memory
-transient concept that doesn't need to be persisted across runs of the
-packer. Storing it means we have to do that.
-
-Another alternative is to try and group objects by delta clusters. Tag
-each object with some marker for the non-delta base object the delta
-chain it builds on top of. Delta groups are supposed to tend to be
-bushy and not long, so many many objects should share the same common
-base object. Most of them have the same name hash, but even when they
-don't their contents were near enough together that the prior packer
-run chose to combine these together. This avoids the need to encode
-the name-hash function into the *.idx file format, and instead lets us
-work with something that any implementation can easily observe from
-the file's contents.
-
-Tagging each object with its base could cost 4 bytes per entry, so
-32->36 bytes... a 12% increase in file size. It may be possible to
-organize these as bitmaps and get really good compression from deltas
-that are located near each other in the pack stream, but doing the
-lookup to identify which base would be more expensive. We would
-probably have to walk the object's delta chain backwards to identify
-the base, then inflate the bitmap to identify the candidate siblings.
+The current "default" output will give all of the depicted commits
+before showing the older commits that are not in the picture, and
+that is absolutely the right thing to do when you ask "git log" to
+view "the last few" commits.  Imagine what you will see if you used
+generation numbers instead of the commit timestamp.  You will see
+commits on the maintenance topic that can later be merged to an
+older codebase, only after you saw all the development history on
+the master branch since 1.7.9 release.  I do not think we want to
+call such an output "the right fix".
