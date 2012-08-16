@@ -1,70 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] retain reflogs for deleted refs
-Date: Thu, 16 Aug 2012 16:29:29 -0700
-Message-ID: <7vr4r6xvom.fsf@alter.siamese.dyndns.org>
-References: <20120719213225.GA20311@sigill.intra.peff.net>
- <20120719213311.GA20385@sigill.intra.peff.net>
- <7vy5mftm3q.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexey Muranov <alexey.muranov@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 17 01:29:40 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH 00/12] git p4: submit conflict handling
+Date: Thu, 16 Aug 2012 19:35:02 -0400
+Message-ID: <1345160114-27654-1-git-send-email-pw@padd.com>
+Cc: Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 17 01:35:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T29VS-0004Av-2A
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 01:29:38 +0200
+	id 1T29b4-0002H1-Ex
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 01:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932654Ab2HPX3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 19:29:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58721 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932527Ab2HPX3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 19:29:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 072569057;
-	Thu, 16 Aug 2012 19:29:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X7gP2mrn0tBeNrE89OVBU9GVu6w=; b=tkfmNk
-	dILPJR7QDePeM08wsGg2R+gEbTXz5jn56+PiXxOMMU9ND11BW6keUi+IRFSo6OaP
-	7TYr84ggo3nuVaAqtE3Bj4NMTTnBMZNq5VIkK2hrbJAf8IcV7cgieMvSSIBor2rT
-	vrGbCAgEwNA3+wCJEGgZifQNcab4j+90RVX8k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jjt/jH76Gouq5XfTMSXo1fpbzkFwu1yU
-	+bPaRc0vQJRTIZv4y3o6aqlqzyzS2YrlyRW0k5Ch55s0xrigz/R95pMfjdXfBmd9
-	30isT8ZQAsv5A7o7+Jg0J1PwFXj6piPWInVo2NyKDYplN77clH9RN6hcOHKiV2Wm
-	OGJvN452RA8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E238D9056;
-	Thu, 16 Aug 2012 19:29:31 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 612AD9053; Thu, 16 Aug 2012
- 19:29:31 -0400 (EDT)
-In-Reply-To: <7vy5mftm3q.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 19 Jul 2012 15:36:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3AE98A72-E7FA-11E1-9DCF-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753685Ab2HPXfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 19:35:19 -0400
+Received: from honk.padd.com ([74.3.171.149]:47751 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752883Ab2HPXfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 19:35:18 -0400
+Received: from arf.padd.com (unknown [50.55.149.165])
+	by honk.padd.com (Postfix) with ESMTPSA id 50F82D27;
+	Thu, 16 Aug 2012 16:35:17 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id ACD18313FD; Thu, 16 Aug 2012 19:35:14 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.rc2.111.g96f7c73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+These patches rework how git p4 deals with conflicts that
+arise during a "git p4 submit".  These may arise due to
+changes that happened in p4 since the last "git p4 sync".
 
-> I like the general direction.  Perhaps a long distant future
-> direction could be to also use the same trick in the ref namespace
-> so that we can have 'next' branch itself, and 'next/foo', 'next/bar'
-> forks that are based on the 'next' branch at the same time (it
-> obviously is a totally unrelated topic)?
+Luke: I especially wanted to get this out as you suggested
+that you had a different way of dealing with skipped commits.
 
-I notice that I was responsible for making this topic veer in the
-wrong direction by bringing up a new feature "having 'next' and
-'next/bar' at the same time" which nobody asked.  Perhaps we can
-drop that for now to simplify the scope of the topic, to bring the
-log graveyard back on track?
+The part that needs the most attention is the interaction
+loop that happens when a commit failed.  Currently, three
+options are offered:
+
+    [s]kip this commit, but continue to apply others
+    [a]pply the commit forcefully, generating .rej files
+    [w]rite the commit to a patch.txt file
+    and the implicit <ctrl-c> to stop
+
+After this series, it offers two:
+
+    [c]ontinue to apply others
+    [q]uit to stop
+
+This feels more natural to me, and I like the term "continue" rather
+than "skip" as it matches what rebase uses.  I'd like to know what
+others think of the new flow.
+
+Other observable changes are new command-line options:
+
+Alias -v for --verbose, similar to other git commands.
+
+The --dry-run option addresses Luke's concern in
+
+    http://thread.gmane.org/gmane.comp.version-control.git/201004/focus=201022
+
+when I removed an unused "self.interactive" variable
+that did a similar thing if you edited the code.  It prints
+commits that would be applied to p4.
+
+Option --prepare-p4-only is similar to --dry-run, in that
+it does not submit anything to p4, but it does prepare the
+p4 workspace, then prints long instructions about how to submit
+everything properly.  It also serves, perhaps, as a replacement for
+the [a]pply option in the submit-conflict loop.
+
+Pete Wyckoff (12):
+  git p4 test: remove bash-ism of combined export/assignment
+  git p4 test: use p4d -L option to suppress log messages
+  git p4: gracefully fail if some commits could not be applied
+  git p4: remove submit failure options [a]pply and [w]rite
+  git p4: move conflict prompt into run, use [c]ontinue and [q]uit
+  git p4: standardize submit cancel due to unchanged template
+  git p4: test clean-up after failed submit, fix added files
+  git p4: rearrange submit template construction
+  git p4: revert deleted files after submit cancel
+  git p4: accept -v for --verbose
+  git p4: add submit --dry-run option
+  git p4: add submit --prepare-p4-only option
+
+ Documentation/git-p4.txt           |  13 +-
+ git-p4.py                          | 213 +++++++++++++++------
+ t/lib-git-p4.sh                    |  10 +-
+ t/t9805-git-p4-skip-submit-edit.sh |   2 +-
+ t/t9807-git-p4-submit.sh           |  65 +++++++
+ t/t9810-git-p4-rcs.sh              |  50 +----
+ t/t9815-git-p4-submit-fail.sh      | 367 +++++++++++++++++++++++++++++++++++++
+ 7 files changed, 612 insertions(+), 108 deletions(-)
+ create mode 100755 t/t9815-git-p4-submit-fail.sh
+
+-- 
+1.7.11.4
