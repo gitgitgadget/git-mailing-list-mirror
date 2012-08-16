@@ -1,7 +1,7 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH/RFC v4 06/13] Read index-v5
-Date: Thu, 16 Aug 2012 11:58:42 +0200
-Message-ID: <1345111129-6925-7-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH/RFC v4 01/13] Move index v2 specific functions to their own file
+Date: Thu, 16 Aug 2012 11:58:37 +0200
+Message-ID: <1345111129-6925-2-git-send-email-t.gummerer@gmail.com>
 References: <1345111129-6925-1-git-send-email-t.gummerer@gmail.com>
 Cc: trast@student.ethz.ch, pclouds@gmail.com, mhagger@alum.mit.edu,
 	gitster@pobox.com, robin.rosenberg@dewire.com, t.gummerer@gmail.com
@@ -12,17 +12,17 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T1wrr-0000D2-Bs
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 11:59:56 +0200
+	id 1T1wrt-0000D2-6Y
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 11:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778Ab2HPJ7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 05:59:40 -0400
-Received: from li348-43.members.linode.com ([178.79.179.43]:48202 "EHLO
+	id S932076Ab2HPJ7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 05:59:53 -0400
+Received: from li348-43.members.linode.com ([178.79.179.43]:48155 "EHLO
 	tgummerer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754230Ab2HPJ7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 05:59:14 -0400
+	id S1756136Ab2HPJ7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 05:59:13 -0400
 Received: by tgummerer.com (Postfix, from userid 1001)
-	id 8B8324EFA5; Thu, 16 Aug 2012 11:59:09 +0200 (CEST)
+	id 96FEE4EF53; Thu, 16 Aug 2012 11:59:08 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.GIT
 In-Reply-To: <1345111129-6925-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
@@ -30,713 +30,1497 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make git read the index file version 5 without complaining.
+Move index version 2 specific functions to their own file,
+to prepare for the addition of a new index file format. With
+the split into two files we have the non-index specific
+functions in read-cache.c and the index-v2 specific functions
+in read-cache-v2.c
 
-This version of the reader doesn't read neither the cache-tree
-nor the resolve undo data, but doesn't choke on an index that
-includes such data.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Helped-by: Thomas Rast <trast@student.ethz.ch>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Makefile        |   1 +
- cache.h         |  73 ++++++++
- read-cache-v5.c | 556 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 630 insertions(+)
- create mode 100644 read-cache-v5.c
+ Makefile             |   2 +
+ cache.h              |  13 +-
+ read-cache-v2.c      | 581 ++++++++++++++++++++++++++++++++++++++++++++++++
+ read-cache.c         | 612 +++------------------------------------------------
+ read-cache.h         |  57 +++++
+ test-index-version.c |   7 +-
+ 6 files changed, 682 insertions(+), 590 deletions(-)
+ create mode 100644 read-cache-v2.c
+ create mode 100644 read-cache.h
 
 diff --git a/Makefile b/Makefile
-index 3ccd3a8..ef55509 100644
+index 6b0c961..3ccd3a8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -770,6 +770,7 @@ LIB_OBJS += quote.o
+@@ -645,6 +645,7 @@ LIB_H += progress.h
+ LIB_H += prompt.h
+ LIB_H += quote.h
+ LIB_H += reachable.h
++LIB_H += read-cache.h
+ LIB_H += reflog-walk.h
+ LIB_H += refs.h
+ LIB_H += remote.h
+@@ -768,6 +769,7 @@ LIB_OBJS += prompt.o
+ LIB_OBJS += quote.o
  LIB_OBJS += reachable.o
  LIB_OBJS += read-cache.o
- LIB_OBJS += read-cache-v2.o
-+LIB_OBJS += read-cache-v5.o
++LIB_OBJS += read-cache-v2.o
  LIB_OBJS += reflog-walk.o
  LIB_OBJS += refs.o
  LIB_OBJS += remote.o
 diff --git a/cache.h b/cache.h
-index bfe3099..bec9402 100644
+index 67f28b4..c77cdbe 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -110,6 +110,15 @@ struct cache_time {
- 	unsigned int nsec;
+@@ -94,16 +94,8 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+  */
+ #define DEFAULT_GIT_PORT 9418
+ 
+-/*
+- * Basic data structures for the directory cache
+- */
+ 
+ #define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
+-struct cache_header {
+-	unsigned int hdr_signature;
+-	unsigned int hdr_version;
+-	unsigned int hdr_entries;
+-};
+ 
+ #define INDEX_FORMAT_LB 2
+ #define INDEX_FORMAT_UB 4
+@@ -267,6 +259,7 @@ struct index_state {
+ 	unsigned name_hash_initialized : 1,
+ 		 initialized : 1;
+ 	struct hash_table name_hash;
++	struct index_ops *ops;
  };
  
-+/*
-+ * The *next pointer is used in read_entries_v5 for holding
-+ * all the elements of a directory, and points to the next
-+ * cache_entry in a directory.
-+ *
-+ * It is reset by the add_name_hash call in set_index_entry
-+ * to set it to point to the next cache_entry in the
-+ * correct in-memory format ordering.
-+ */
- struct cache_entry {
- 	struct cache_time ce_ctime;
- 	struct cache_time ce_mtime;
-@@ -128,11 +137,59 @@ struct cache_entry {
- 	char name[FLEX_ARRAY]; /* more */
- };
+ extern struct index_state the_index;
+@@ -471,8 +464,8 @@ extern int index_name_is_other(const struct index_state *, const char *, int);
+ #define CE_MATCH_RACY_IS_DIRTY		02
+ /* do stat comparison even if CE_SKIP_WORKTREE is true */
+ #define CE_MATCH_IGNORE_SKIP_WORKTREE	04
+-extern int ie_match_stat(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
+-extern int ie_modified(const struct index_state *, struct cache_entry *, struct stat *, unsigned int);
++extern int ie_match_stat(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
++extern int ie_modified(struct index_state *, struct cache_entry *, struct stat *, unsigned int);
  
-+struct directory_entry {
-+	struct directory_entry *next;
-+	struct directory_entry *next_hash;
-+	struct cache_entry *ce;
-+	struct cache_entry *ce_last;
-+	struct conflict_entry *conflict;
-+	struct conflict_entry *conflict_last;
-+	unsigned int conflict_size;
-+	unsigned int de_foffset;
-+	unsigned int de_cr;
-+	unsigned int de_ncr;
-+	unsigned int de_nsubtrees;
-+	unsigned int de_nfiles;
-+	unsigned int de_nentries;
-+	unsigned char sha1[20];
-+	unsigned short de_flags;
-+	unsigned int de_pathlen;
-+	char pathname[FLEX_ARRAY];
-+};
-+
-+struct conflict_part {
-+	struct conflict_part *next;
-+	unsigned short flags;
-+	unsigned short entry_mode;
-+	unsigned char sha1[20];
-+};
-+
-+struct conflict_entry {
-+	struct conflict_entry *next;
-+	unsigned int nfileconflicts;
-+	struct conflict_part *entries;
-+	unsigned int namelen;
-+	unsigned int pathlen;
-+	char name[FLEX_ARRAY];
-+};
-+
-+struct ondisk_conflict_part {
-+	unsigned short flags;
-+	unsigned short entry_mode;
-+	unsigned char sha1[20];
-+};
-+
-+#define CE_NAMEMASK  (0x0fff)
- #define CE_STAGEMASK (0x3000)
- #define CE_EXTENDED  (0x4000)
- #define CE_VALID     (0x8000)
-+#define CE_SMUDGED   (0x0400) /* index v5 only flag */
- #define CE_STAGESHIFT 12
- 
-+#define CONFLICT_CONFLICTED (0x8000)
-+#define CONFLICT_STAGESHIFT 13
-+#define CONFLICT_STAGEMASK (0x6000)
-+
- /*
-  * Range 0xFFFF0000 in ce_flags is divided into
-  * two parts: in-memory flags and on-disk ones.
-@@ -166,6 +223,18 @@ struct cache_entry {
- #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
- 
- /*
-+ * Representation of the extended on-disk flags in the v5 format.
-+ * They must not collide with the ordinary on-disk flags, and need to
-+ * fit in 16 bits.  Note however that v5 does not save the name
-+ * length.
-+ */
-+#define CE_INTENT_TO_ADD_V5  (0x4000)
-+#define CE_SKIP_WORKTREE_V5  (0x0800)
-+#if (CE_VALID|CE_STAGEMASK) & (CE_INTENTTOADD_V5|CE_SKIPWORKTREE_V5)
-+#error "v5 on-disk flags collide with ordinary on-disk flags"
-+#endif
-+
-+/*
-  * Safeguard to avoid saving wrong flags:
-  *  - CE_EXTENDED2 won't get saved until its semantic is known
-  *  - Bits in 0x0000FFFF have been saved in ce_flags already
-@@ -203,6 +272,8 @@ static inline unsigned create_ce_flags(unsigned stage)
- #define ce_skip_worktree(ce) ((ce)->ce_flags & CE_SKIP_WORKTREE)
- #define ce_mark_uptodate(ce) ((ce)->ce_flags |= CE_UPTODATE)
- 
-+#define conflict_stage(c) ((CONFLICT_STAGEMASK & (c)->flags) >> CONFLICT_STAGESHIFT)
-+
- #define ce_permissions(mode) (((mode) & 0100) ? 0755 : 0644)
- static inline unsigned int create_ce_mode(unsigned int mode)
- {
-@@ -249,6 +320,8 @@ static inline unsigned int canon_mode(unsigned int mode)
- }
- 
- #define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
-+#define directory_entry_size(len) (offsetof(struct directory_entry,pathname) + (len) + 1)
-+#define conflict_entry_size(len) (offsetof(struct conflict_entry,name) + (len) + 1)
- 
- struct index_state {
- 	struct cache_entry **cache;
-diff --git a/read-cache-v5.c b/read-cache-v5.c
+ struct pathspec {
+ 	const char **raw; /* get_pathspec() result, not freed by free_pathspec() */
+diff --git a/read-cache-v2.c b/read-cache-v2.c
 new file mode 100644
-index 0000000..2031969
+index 0000000..2c5e78b
 --- /dev/null
-+++ b/read-cache-v5.c
-@@ -0,0 +1,556 @@
++++ b/read-cache-v2.c
+@@ -0,0 +1,581 @@
 +#include "cache.h"
 +#include "read-cache.h"
 +#include "resolve-undo.h"
 +#include "cache-tree.h"
++#include "varint.h"
 +
-+#define ptr_add(x,y) ((void *)(((char *)(x)) + (y)))
++/* Mask for the name length in ce_flags in the on-disk index */
++#define CE_NAMEMASK  (0x0fff)
 +
 +struct cache_header {
-+	unsigned int hdr_ndir;
-+	unsigned int hdr_nfile;
-+	unsigned int hdr_fblockoffset;
-+	unsigned int hdr_nextension;
++	unsigned int hdr_entries;
 +};
 +
 +/*****************************************************************
 + * Index File I/O
 + *****************************************************************/
 +
++/*
++ * dev/ino/uid/gid/size are also just tracked to the low 32 bits
++ * Again - this is just a (very strong in practice) heuristic that
++ * the inode hasn't changed.
++ *
++ * We save the fields in big-endian order to allow using the
++ * index file over NFS transparently.
++ */
 +struct ondisk_cache_entry {
-+	unsigned short flags;
-+	unsigned short mode;
++	struct cache_time ctime;
 +	struct cache_time mtime;
++	unsigned int dev;
++	unsigned int ino;
++	unsigned int mode;
++	unsigned int uid;
++	unsigned int gid;
 +	unsigned int size;
-+	int stat_crc;
-+	unsigned char sha1[20];
-+};
-+
-+struct ondisk_directory_entry {
-+	unsigned int foffset;
-+	unsigned int cr;
-+	unsigned int ncr;
-+	unsigned int nsubtrees;
-+	unsigned int nfiles;
-+	unsigned int nentries;
 +	unsigned char sha1[20];
 +	unsigned short flags;
++	char name[FLEX_ARRAY]; /* more */
 +};
 +
-+static int check_crc32(int initialcrc,
-+			void *data,
-+			size_t len,
-+			unsigned int expected_crc)
++/*
++ * This struct is used when CE_EXTENDED bit is 1
++ * The struct must match ondisk_cache_entry exactly from
++ * ctime till flags
++ */
++struct ondisk_cache_entry_extended {
++	struct cache_time ctime;
++	struct cache_time mtime;
++	unsigned int dev;
++	unsigned int ino;
++	unsigned int mode;
++	unsigned int uid;
++	unsigned int gid;
++	unsigned int size;
++	unsigned char sha1[20];
++	unsigned short flags;
++	unsigned short flags2;
++	char name[FLEX_ARRAY]; /* more */
++};
++
++/* These are only used for v3 or lower */
++#define align_flex_name(STRUCT,len) ((offsetof(struct STRUCT,name) + (len) + 8) & ~7)
++#define ondisk_cache_entry_size(len) align_flex_name(ondisk_cache_entry,len)
++#define ondisk_cache_entry_extended_size(len) align_flex_name(ondisk_cache_entry_extended,len)
++#define ondisk_ce_size(ce) (((ce)->ce_flags & CE_EXTENDED) ? \
++			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
++			    ondisk_cache_entry_size(ce_namelen(ce)))
++
++static int verify_hdr(void *mmap, unsigned long size)
 +{
-+	int crc;
++	git_SHA_CTX c;
++	unsigned char sha1[20];
 +
-+	crc = crc32(initialcrc, (Bytef*)data, len);
-+	return crc == expected_crc;
-+}
++	if (size < sizeof(struct cache_version_header)
++			+ sizeof(struct cache_header) + 20)
++		die("index file smaller than expected");
 +
-+static int match_stat_crc(struct stat *st, uint32_t expected_crc)
-+{
-+	uint32_t data, stat_crc = 0;
-+	unsigned int ctimens = 0;
-+
-+	data = htonl(st->st_ctime);
-+	stat_crc = crc32(0, (Bytef*)&data, 4);
-+#ifdef USE_NSEC
-+	ctimens = ST_CTIME_NSEC(*st);
-+#endif
-+	data = htonl(ctimens);
-+	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
-+	data = htonl(st->st_ino);
-+	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
-+	data = htonl(st->st_dev);
-+	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
-+	data = htonl(st->st_uid);
-+	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
-+	data = htonl(st->st_gid);
-+	stat_crc = crc32(stat_crc, (Bytef*)&data, 4);
-+
-+	return stat_crc == expected_crc;
++	git_SHA1_Init(&c);
++	git_SHA1_Update(&c, mmap, size - 20);
++	git_SHA1_Final(sha1, &c);
++	if (hashcmp(sha1, (unsigned char *)mmap + size - 20))
++		return error("bad index file sha1 signature");
++	return 0;
 +}
 +
 +static int match_stat_basic(struct cache_entry *ce,
 +				struct stat *st,
 +				int changed)
 +{
-+
 +	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
 +		changed |= MTIME_CHANGED;
++	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
++		changed |= CTIME_CHANGED;
++
 +#ifdef USE_NSEC
 +	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
 +		changed |= MTIME_CHANGED;
++	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
++		changed |= CTIME_CHANGED;
 +#endif
-+	if (ce->ce_size != (unsigned int)st->st_size)
++
++	if (ce->ce_uid != (unsigned int) st->st_uid ||
++	    ce->ce_gid != (unsigned int) st->st_gid)
++		changed |= OWNER_CHANGED;
++	if (ce->ce_ino != (unsigned int) st->st_ino)
++		changed |= INODE_CHANGED;
++
++#ifdef USE_STDEV
++	/*
++	 * st_dev breaks on network filesystems where different
++	 * clients will have different views of what "device"
++	 * the filesystem is on
++	 */
++	if (ce->ce_dev != (unsigned int) st->st_dev)
++		changed |= INODE_CHANGED;
++#endif
++
++	if (ce->ce_size != (unsigned int) st->st_size)
 +		changed |= DATA_CHANGED;
 +
-+	if (trust_ctime && ce->ce_stat_crc != 0 && !match_stat_crc(st, ce->ce_stat_crc)) {
-+		changed |= OWNER_CHANGED;
-+		changed |= INODE_CHANGED;
-+	}
 +	/* Racily smudged entry? */
-+	if (ce->ce_flags & CE_SMUDGED) {
-+		if (!changed && !is_empty_blob_sha1(ce->sha1) && ce_modified_check_fs(ce, st))
++	if (!ce->ce_size) {
++		if (!is_empty_blob_sha1(ce->sha1))
 +			changed |= DATA_CHANGED;
 +	}
++
 +	return changed;
 +}
 +
-+static int verify_hdr(void *mmap, unsigned long size)
-+{
-+	uint32_t *filecrc;
-+	unsigned int header_size;
-+	struct cache_version_header *hdr;
-+	struct cache_header *hdr_v5;
-+
-+	if (size < sizeof(struct cache_version_header)
-+			+ sizeof (struct cache_header) + 4)
-+		die("index file smaller than expected");
-+
-+	hdr = mmap;
-+	hdr_v5 = ptr_add(mmap, sizeof(*hdr));
-+	/* Size of the header + the size of the extensionoffsets */
-+	header_size = sizeof(*hdr) + sizeof(*hdr_v5) + hdr_v5->hdr_nextension * 4;
-+	/* Initialize crc */
-+	filecrc = ptr_add(mmap, header_size);
-+	if (!check_crc32(0, hdr, header_size, ntohl(*filecrc)))
-+		return error("bad index file header crc signature");
-+	return 0;
-+}
-+
 +static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
-+						   struct directory_entry *de,
-+						   char *name,
-+						   size_t len,
-+						   size_t prefix_len)
-+{
-+	struct cache_entry *ce = xmalloc(cache_entry_size(len + de->de_pathlen));
-+	int flags;
-+
-+	flags = ntoh_s(ondisk->flags);
-+	ce->ce_ctime.sec  = 0;
-+	ce->ce_mtime.sec  = ntoh_l(ondisk->mtime.sec);
-+	ce->ce_ctime.nsec = 0;
-+	ce->ce_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
-+	ce->ce_dev        = 0;
-+	ce->ce_ino        = 0;
-+	ce->ce_mode       = ntoh_s(ondisk->mode);
-+	ce->ce_uid        = 0;
-+	ce->ce_gid        = 0;
-+	ce->ce_size       = ntoh_l(ondisk->size);
-+	ce->ce_flags      = flags & CE_STAGEMASK;
-+	ce->ce_flags     |= flags & CE_VALID;
-+	ce->ce_flags     |= flags & CE_SMUDGED;
-+	if (flags & CE_INTENT_TO_ADD_V5)
-+		ce->ce_flags |= CE_INTENT_TO_ADD;
-+	if (flags & CE_SKIP_WORKTREE_V5)
-+		ce->ce_flags |= CE_SKIP_WORKTREE;
-+	ce->ce_stat_crc   = ntoh_l(ondisk->stat_crc);
-+	ce->ce_namelen    = len + de->de_pathlen;
-+	hashcpy(ce->sha1, ondisk->sha1);
-+	memcpy(ce->name, de->pathname, de->de_pathlen);
-+	memcpy(ce->name + de->de_pathlen, name, len);
-+	ce->name[len + de->de_pathlen] = '\0';
-+	return ce;
-+}
-+
-+static struct directory_entry *directory_entry_from_ondisk(struct ondisk_directory_entry *ondisk,
++						   unsigned int flags,
 +						   const char *name,
 +						   size_t len)
 +{
-+	struct directory_entry *de = xmalloc(directory_entry_size(len));
-+
-+
-+	memcpy(de->pathname, name, len);
-+	de->pathname[len] = '\0';
-+	de->de_flags      = ntoh_s(ondisk->flags);
-+	de->de_foffset    = ntoh_l(ondisk->foffset);
-+	de->de_cr         = ntoh_l(ondisk->cr);
-+	de->de_ncr        = ntoh_l(ondisk->ncr);
-+	de->de_nsubtrees  = ntoh_l(ondisk->nsubtrees);
-+	de->de_nfiles     = ntoh_l(ondisk->nfiles);
-+	de->de_nentries   = ntoh_l(ondisk->nentries);
-+	de->de_pathlen    = len;
-+	hashcpy(de->sha1, ondisk->sha1);
-+	return de;
-+}
-+
-+static struct conflict_part *conflict_part_from_ondisk(struct ondisk_conflict_part *ondisk)
-+{
-+	struct conflict_part *cp = xmalloc(sizeof(struct conflict_part));
-+
-+	cp->flags      = ntoh_s(ondisk->flags);
-+	cp->entry_mode = ntoh_s(ondisk->entry_mode);
-+	hashcpy(cp->sha1, ondisk->sha1);
-+	return cp;
-+}
-+
-+static struct cache_entry *convert_conflict_part(struct conflict_part *cp,
-+						char * name,
-+						unsigned int len)
-+{
-+
 +	struct cache_entry *ce = xmalloc(cache_entry_size(len));
 +
-+	ce->ce_ctime.sec  = 0;
-+	ce->ce_mtime.sec  = 0;
-+	ce->ce_ctime.nsec = 0;
-+	ce->ce_mtime.nsec = 0;
-+	ce->ce_dev        = 0;
-+	ce->ce_ino        = 0;
-+	ce->ce_mode       = cp->entry_mode;
-+	ce->ce_uid        = 0;
-+	ce->ce_gid        = 0;
-+	ce->ce_size       = 0;
-+	ce->ce_flags      = conflict_stage(cp) << CE_STAGESHIFT;
-+	ce->ce_stat_crc   = 0;
-+	ce->ce_namelen    = len;
-+	hashcpy(ce->sha1, cp->sha1);
++	ce->ce_ctime.sec = ntoh_l(ondisk->ctime.sec);
++	ce->ce_mtime.sec = ntoh_l(ondisk->mtime.sec);
++	ce->ce_ctime.nsec = ntoh_l(ondisk->ctime.nsec);
++	ce->ce_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
++	ce->ce_dev   = ntoh_l(ondisk->dev);
++	ce->ce_ino   = ntoh_l(ondisk->ino);
++	ce->ce_mode  = ntoh_l(ondisk->mode);
++	ce->ce_uid   = ntoh_l(ondisk->uid);
++	ce->ce_gid   = ntoh_l(ondisk->gid);
++	ce->ce_size  = ntoh_l(ondisk->size);
++	ce->ce_flags = flags & ~CE_NAMEMASK;
++	ce->ce_namelen = len;
++	hashcpy(ce->sha1, ondisk->sha1);
 +	memcpy(ce->name, name, len);
 +	ce->name[len] = '\0';
 +	return ce;
 +}
 +
-+static struct directory_entry *read_directories(unsigned int *dir_offset,
-+				unsigned int *dir_table_offset,
-+				void *mmap,
-+				int mmap_size)
++/*
++ * Adjacent cache entries tend to share the leading paths, so it makes
++ * sense to only store the differences in later entries.  In the v4
++ * on-disk format of the index, each on-disk cache entry stores the
++ * number of bytes to be stripped from the end of the previous name,
++ * and the bytes to append to the result, to come up with its name.
++ */
++static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
 +{
-+	int i, ondisk_directory_size;
-+	uint32_t *filecrc, *beginning, *end;
-+	struct directory_entry *current = NULL;
-+	struct ondisk_directory_entry *disk_de;
-+	struct directory_entry *de;
-+	unsigned int data_len, len;
-+	char *name;
++	const unsigned char *ep, *cp = (const unsigned char *)cp_;
++	size_t len = decode_varint(&cp);
 +
-+	ondisk_directory_size = sizeof(disk_de->flags)
-+		+ sizeof(disk_de->foffset)
-+		+ sizeof(disk_de->cr)
-+		+ sizeof(disk_de->ncr)
-+		+ sizeof(disk_de->nsubtrees)
-+		+ sizeof(disk_de->nfiles)
-+		+ sizeof(disk_de->nentries)
-+		+ sizeof(disk_de->sha1);
-+	name = ptr_add(mmap, *dir_offset);
-+	beginning = ptr_add(mmap, *dir_table_offset);
-+	end = ptr_add(mmap, *dir_table_offset + 4);
-+	len = ntoh_l(*end) - ntoh_l(*beginning) - ondisk_directory_size - 5;
-+	disk_de = ptr_add(mmap, *dir_offset + len + 1);
-+	de = directory_entry_from_ondisk(disk_de, name, len);
-+	de->next = NULL;
-+
-+	/* Length of pathname + nul byte for termination + size of
-+	 * members of ondisk_directory_entry. (Just using the size
-+	 * of the stuct doesn't work, because there may be padding
-+	 * bytes for the struct)
-+	 */
-+	data_len = len + 1 + ondisk_directory_size;
-+
-+	filecrc = ptr_add(mmap, *dir_offset + data_len);
-+	if (!check_crc32(0, ptr_add(mmap, *dir_offset), data_len, ntoh_l(*filecrc)))
-+		goto unmap;
-+
-+	*dir_table_offset += 4;
-+	*dir_offset += data_len + 4; /* crc code */
-+
-+	current = de;
-+	for (i = 0; i < de->de_nsubtrees; i++) {
-+		current->next = read_directories(dir_offset, dir_table_offset,
-+						mmap, mmap_size);
-+		while (current->next)
-+			current = current->next;
-+	}
-+
-+	return de;
-+unmap:
-+	munmap(mmap, mmap_size);
-+	die("directory crc doesn't match for '%s'", de->pathname);
++	if (name->len < len)
++		die("malformed name field in the index");
++	strbuf_remove(name, name->len - len, len);
++	for (ep = cp; *ep; ep++)
++		; /* find the end */
++	strbuf_add(name, cp, ep - cp);
++	return (const char *)ep + 1 - cp_;
 +}
 +
-+static int read_entry(struct cache_entry **ce, struct directory_entry *de,
-+		      unsigned long *entry_offset,
-+		      void **mmap, unsigned long mmap_size,
-+		      unsigned int *foffsetblock)
-+{
-+	int len, offset_to_offset;
-+	char *name;
-+	uint32_t foffsetblockcrc;
-+	uint32_t *filecrc, *beginning, *end;
-+	struct ondisk_cache_entry *disk_ce;
-+
-+	name = ptr_add(*mmap, *entry_offset);
-+	beginning = ptr_add(*mmap, *foffsetblock);
-+	end = ptr_add(*mmap, *foffsetblock + 4);
-+	len = ntoh_l(*end) - ntoh_l(*beginning) - sizeof(struct ondisk_cache_entry) - 5;
-+	disk_ce = ptr_add(*mmap, *entry_offset + len + 1);
-+	*ce = cache_entry_from_ondisk(disk_ce, de, name, len, de->de_pathlen);
-+	filecrc = ptr_add(*mmap, *entry_offset + len + 1 + sizeof(*disk_ce));
-+	offset_to_offset = htonl(*foffsetblock);
-+	foffsetblockcrc = crc32(0, (Bytef*)&offset_to_offset, 4);
-+	if (!check_crc32(foffsetblockcrc,
-+		ptr_add(*mmap, *entry_offset), len + 1 + sizeof(*disk_ce),
-+		ntoh_l(*filecrc)))
-+		return -1;
-+
-+	/* TODO: return error if crc code is wrong */
-+	*entry_offset += len + 1 + sizeof(*disk_ce) + 4;
-+	return 0;
-+}
-+
-+static void ce_queue_push(struct cache_entry **head,
-+			     struct cache_entry **tail,
-+			     struct cache_entry *ce)
-+{
-+	if (!*head) {
-+		*head = *tail = ce;
-+		(*tail)->next = NULL;
-+		return;
-+	}
-+
-+	(*tail)->next = ce;
-+	ce->next = NULL;
-+	*tail = (*tail)->next;
-+}
-+
-+static void conflict_entry_push(struct conflict_entry **head,
-+				struct conflict_entry **tail,
-+				struct conflict_entry *conflict_entry)
-+{
-+	if (!*head) {
-+		*head = *tail = conflict_entry;
-+		(*tail)->next = NULL;
-+		return;
-+	}
-+
-+	(*tail)->next = conflict_entry;
-+	conflict_entry->next = NULL;
-+	*tail = (*tail)->next;
-+}
-+
-+static struct cache_entry *ce_queue_pop(struct cache_entry **head)
++static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
++					    unsigned long *ent_size,
++					    struct strbuf *previous_name)
 +{
 +	struct cache_entry *ce;
++	size_t len;
++	const char *name;
++	unsigned int flags;
 +
-+	ce = *head;
-+	*head = (*head)->next;
++	/* On-disk flags are just 16 bits */
++	flags = ntoh_s(ondisk->flags);
++	len = flags & CE_NAMEMASK;
++
++	if (flags & CE_EXTENDED) {
++		struct ondisk_cache_entry_extended *ondisk2;
++		int extended_flags;
++		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
++		extended_flags = ntoh_s(ondisk2->flags2) << 16;
++		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
++		if (extended_flags & ~CE_EXTENDED_FLAGS)
++			die("Unknown index entry format %08x", extended_flags);
++		flags |= extended_flags;
++		name = ondisk2->name;
++	}
++	else
++		name = ondisk->name;
++
++	if (!previous_name) {
++		/* v3 and earlier */
++		if (len == CE_NAMEMASK)
++			len = strlen(name);
++		ce = cache_entry_from_ondisk(ondisk, flags, name, len);
++
++		*ent_size = ondisk_ce_size(ce);
++	} else {
++		unsigned long consumed;
++		consumed = expand_name_field(previous_name, name);
++		ce = cache_entry_from_ondisk(ondisk, flags,
++					     previous_name->buf,
++					     previous_name->len);
++
++		*ent_size = (name - ((char *)ondisk)) + consumed;
++	}
 +	return ce;
 +}
 +
-+static void conflict_part_head_remove(struct conflict_part **head)
++static int read_index_extension(struct index_state *istate,
++				const char *ext, void *data, unsigned long sz)
 +{
-+	struct conflict_part *to_free;
-+
-+	to_free = *head;
-+	*head = (*head)->next;
-+	free(to_free);
-+}
-+
-+static void conflict_entry_head_remove(struct conflict_entry **head)
-+{
-+	struct conflict_entry *to_free;
-+
-+	to_free = *head;
-+	*head = (*head)->next;
-+	free(to_free);
-+}
-+
-+struct conflict_entry *create_new_conflict(char *name, int len, int pathlen)
-+{
-+	struct conflict_entry *conflict_entry;
-+
-+	if (pathlen)
-+		pathlen++;
-+	conflict_entry = xmalloc(conflict_entry_size(len));
-+	conflict_entry->entries = NULL;
-+	conflict_entry->nfileconflicts = 0;
-+	conflict_entry->namelen = len;
-+	memcpy(conflict_entry->name, name, len);
-+	conflict_entry->name[len] = '\0';
-+	conflict_entry->pathlen = pathlen;
-+	conflict_entry->next = NULL;
-+
-+	return conflict_entry;
-+}
-+
-+void add_part_to_conflict_entry(struct directory_entry *de,
-+					struct conflict_entry *entry,
-+					struct conflict_part *conflict_part)
-+{
-+
-+	struct conflict_part *conflict_search;
-+
-+	entry->nfileconflicts++;
-+	de->conflict_size += sizeof(struct ondisk_conflict_part);
-+	if (!entry->entries)
-+		entry->entries = conflict_part;
-+	else {
-+		conflict_search = entry->entries;
-+		while (conflict_search->next)
-+			conflict_search = conflict_search->next;
-+		conflict_search->next = conflict_part;
-+	}
-+}
-+
-+static int read_conflicts(struct conflict_entry **head,
-+			  struct directory_entry *de,
-+			  void **mmap, unsigned long mmap_size)
-+{
-+	struct conflict_entry *tail;
-+	unsigned int croffset, i;
-+	char *full_name;
-+
-+	croffset = de->de_cr;
-+	tail = NULL;
-+	for (i = 0; i < de->de_ncr; i++) {
-+		struct conflict_entry *conflict_new;
-+		unsigned int len, *nfileconflicts;
-+		char *name;
-+		void *crc_start;
-+		int k, offset;
-+		uint32_t *filecrc;
-+
-+		offset = croffset;
-+		crc_start = ptr_add(*mmap, offset);
-+		name = ptr_add(*mmap, offset);
-+		len = strlen(name);
-+		offset += len + 1;
-+		nfileconflicts = ptr_add(*mmap, offset);
-+		offset += 4;
-+
-+		full_name = xmalloc(sizeof(char) * (len + de->de_pathlen));
-+		memcpy(full_name, de->pathname, de->de_pathlen);
-+		memcpy(full_name + de->de_pathlen, name, len);
-+		conflict_new = create_new_conflict(full_name,
-+				len + de->de_pathlen, de->de_pathlen);
-+		for (k = 0; k < ntoh_l(*nfileconflicts); k++) {
-+			struct ondisk_conflict_part *ondisk;
-+			struct conflict_part *cp;
-+
-+			ondisk = ptr_add(*mmap, offset);
-+			cp = conflict_part_from_ondisk(ondisk);
-+			cp->next = NULL;
-+			add_part_to_conflict_entry(de, conflict_new, cp);
-+			offset += sizeof(struct ondisk_conflict_part);
-+		}
-+		filecrc = ptr_add(*mmap, offset);
-+		free(full_name);
-+		if (!check_crc32(0, crc_start,
-+			len + 1 + 4 + conflict_new->nfileconflicts
-+			* sizeof(struct ondisk_conflict_part),
-+			ntoh_l(*filecrc)))
-+			return -1;
-+		croffset = offset + 4;
-+		conflict_entry_push(head, &tail, conflict_new);
++	switch (CACHE_EXT(ext)) {
++	case CACHE_EXT_TREE:
++		istate->cache_tree = cache_tree_read(data, sz);
++		break;
++	case CACHE_EXT_RESOLVE_UNDO:
++		istate->resolve_undo = resolve_undo_read(data, sz);
++		break;
++	default:
++		if (*ext < 'A' || 'Z' < *ext)
++			return error("index uses %.4s extension, which we do not understand",
++				     ext);
++		fprintf(stderr, "ignoring %.4s extension\n", ext);
++		break;
 +	}
 +	return 0;
 +}
 +
-+static int read_entries(struct index_state *istate, struct directory_entry **de,
-+			unsigned long *entry_offset, void **mmap,
-+			unsigned long mmap_size, int *nr,
-+			unsigned int *foffsetblock)
++static int read_index_v2(struct index_state *istate, void *mmap, int mmap_size)
 +{
-+	struct cache_entry *head = NULL, *tail = NULL;
-+	struct conflict_entry *conflict_queue;
-+	struct cache_entry *ce;
 +	int i;
-+
-+	conflict_queue = NULL;
-+	if (read_conflicts(&conflict_queue, *de, mmap, mmap_size) < 0)
-+		return -1;
-+	for (i = 0; i < (*de)->de_nfiles; i++) {
-+		if (read_entry(&ce,
-+				*de,
-+				entry_offset,
-+				mmap,
-+				mmap_size,
-+				foffsetblock) < 0)
-+			return -1;
-+		ce_queue_push(&head, &tail, ce);
-+		*foffsetblock += 4;
-+
-+		/* Add the conflicted entries at the end of the index file
-+		 * to the in memory format
-+		 */
-+		if (conflict_queue &&
-+		    (conflict_queue->entries->flags & CONFLICT_CONFLICTED) != 0 &&
-+		    !cache_name_compare(conflict_queue->name, conflict_queue->namelen,
-+					ce->name, ce_namelen(ce))) {
-+			struct conflict_part *cp;
-+			cp = conflict_queue->entries;
-+			cp = cp->next;
-+			while (cp) {
-+				ce = convert_conflict_part(cp,
-+						conflict_queue->name,
-+						conflict_queue->namelen);
-+				ce_queue_push(&head, &tail, ce);
-+				conflict_part_head_remove(&cp);
-+			}
-+			conflict_entry_head_remove(&conflict_queue);
-+		}
-+	}
-+
-+	*de = (*de)->next;
-+
-+	while (head) {
-+		if (*de != NULL
-+		    && strcmp(head->name, (*de)->pathname) > 0) {
-+			read_entries(istate,
-+					de,
-+					entry_offset,
-+					mmap,
-+					mmap_size,
-+					nr,
-+					foffsetblock);
-+		} else {
-+			ce = ce_queue_pop(&head);
-+			set_index_entry(istate, *nr, ce);
-+			(*nr)++;
-+		}
-+	}
-+	return 0;
-+}
-+
-+static int read_index_v5(struct index_state *istate, void *mmap, int mmap_size)
-+{
-+	unsigned long entry_offset;
-+	unsigned int dir_offset, dir_table_offset;
++	unsigned long src_offset;
 +	struct cache_version_header *hdr;
-+	struct cache_header *hdr_v5;
-+	struct directory_entry *root_directory, *de;
-+	int nr;
-+	unsigned int foffsetblock;
++	struct cache_header *hdr_v2;
++	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
 +
 +	hdr = mmap;
-+	hdr_v5 = ptr_add(mmap, sizeof(*hdr));
++	hdr_v2 = (struct cache_header *)((char *)mmap + sizeof(*hdr));
 +	istate->version = ntohl(hdr->hdr_version);
-+	istate->cache_nr = ntohl(hdr_v5->hdr_nfile);
++	istate->cache_nr = ntohl(hdr_v2->hdr_entries);
 +	istate->cache_alloc = alloc_nr(istate->cache_nr);
 +	istate->cache = xcalloc(istate->cache_alloc, sizeof(struct cache_entry *));
 +	istate->initialized = 1;
 +
-+	/* Skip size of the header + crc sum + size of offsets */
-+	dir_offset = sizeof(*hdr) + sizeof(*hdr_v5) + 4 + (ntohl(hdr_v5->hdr_ndir) + 1) * 4;
-+	dir_table_offset = sizeof(*hdr) + sizeof(*hdr_v5) + 4;
-+	root_directory = read_directories(&dir_offset, &dir_table_offset, mmap, mmap_size);
++	if (istate->version == 4)
++		previous_name = &previous_name_buf;
++	else
++		previous_name = NULL;
 +
-+	entry_offset = ntohl(hdr_v5->hdr_fblockoffset);
++	src_offset = sizeof(*hdr) + sizeof(*hdr_v2);
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct ondisk_cache_entry *disk_ce;
++		struct cache_entry *ce;
++		unsigned long consumed;
 +
-+	nr = 0;
-+	foffsetblock = dir_offset;
-+	de = root_directory;
-+	while (de)
-+		if (read_entries(istate, &de, &entry_offset,
-+				&mmap, mmap_size, &nr, &foffsetblock) < 0)
++		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
++		ce = create_from_disk(disk_ce, &consumed, previous_name);
++		set_index_entry(istate, i, ce);
++
++		src_offset += consumed;
++	}
++	strbuf_release(&previous_name_buf);
++
++	while (src_offset <= mmap_size - 20 - 8) {
++		/* After an array of active_nr index entries,
++		 * there can be arbitrary number of extended
++		 * sections, each of which is prefixed with
++		 * extension name (4-byte) and section length
++		 * in 4-byte network byte order.
++		 */
++		uint32_t extsize;
++		memcpy(&extsize, (char *)mmap + src_offset + 4, 4);
++		extsize = ntohl(extsize);
++		if (read_index_extension(istate,
++					(const char *) mmap + src_offset,
++					(char *) mmap + src_offset + 8,
++					extsize) < 0)
++			goto unmap;
++		src_offset += 8;
++		src_offset += extsize;
++	}
++	return 0;
++unmap:
++	munmap(mmap, mmap_size);
++	die("index file corrupt");
++}
++
++#define WRITE_BUFFER_SIZE 8192
++static unsigned char write_buffer[WRITE_BUFFER_SIZE];
++static unsigned long write_buffer_len;
++
++static int ce_write_flush(git_SHA_CTX *context, int fd)
++{
++	unsigned int buffered = write_buffer_len;
++	if (buffered) {
++		git_SHA1_Update(context, write_buffer, buffered);
++		if (write_in_full(fd, write_buffer, buffered) != buffered)
 +			return -1;
++		write_buffer_len = 0;
++	}
 +	return 0;
 +}
 +
-+struct index_ops v5_ops = {
++static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
++{
++	while (len) {
++		unsigned int buffered = write_buffer_len;
++		unsigned int partial = WRITE_BUFFER_SIZE - buffered;
++		if (partial > len)
++			partial = len;
++		memcpy(write_buffer + buffered, data, partial);
++		buffered += partial;
++		if (buffered == WRITE_BUFFER_SIZE) {
++			write_buffer_len = buffered;
++			if (ce_write_flush(context, fd))
++				return -1;
++			buffered = 0;
++		}
++		write_buffer_len = buffered;
++		len -= partial;
++		data = (char *) data + partial;
++	}
++	return 0;
++}
++
++static int write_index_ext_header(git_SHA_CTX *context, int fd,
++				  unsigned int ext, unsigned int sz)
++{
++	ext = htonl(ext);
++	sz = htonl(sz);
++	return ((ce_write(context, fd, &ext, 4) < 0) ||
++		(ce_write(context, fd, &sz, 4) < 0)) ? -1 : 0;
++}
++
++static int ce_flush(git_SHA_CTX *context, int fd)
++{
++	unsigned int left = write_buffer_len;
++
++	if (left) {
++		write_buffer_len = 0;
++		git_SHA1_Update(context, write_buffer, left);
++	}
++
++	/* Flush first if not enough space for SHA1 signature */
++	if (left + 20 > WRITE_BUFFER_SIZE) {
++		if (write_in_full(fd, write_buffer, left) != left)
++			return -1;
++		left = 0;
++	}
++
++	/* Append the SHA1 signature at the end */
++	git_SHA1_Final(write_buffer + left, context);
++	left += 20;
++	return (write_in_full(fd, write_buffer, left) != left) ? -1 : 0;
++}
++
++static void ce_smudge_racily_clean_entry(struct index_state *istate, struct cache_entry *ce)
++{
++	/*
++	 * The only thing we care about in this function is to smudge the
++	 * falsely clean entry due to touch-update-touch race, so we leave
++	 * everything else as they are.  We are called for entries whose
++	 * ce_mtime match the index file mtime.
++	 *
++	 * Note that this actually does not do much for gitlinks, for
++	 * which ce_match_stat_basic() always goes to the actual
++	 * contents.  The caller checks with is_racy_timestamp() which
++	 * always says "no" for gitlinks, so we are not called for them ;-)
++	 */
++	struct stat st;
++
++	if (lstat(ce->name, &st) < 0)
++		return;
++	if (ce_match_stat_basic(istate, ce, &st))
++		return;
++	if (ce_modified_check_fs(ce, &st)) {
++		/* This is "racily clean"; smudge it.  Note that this
++		 * is a tricky code.  At first glance, it may appear
++		 * that it can break with this sequence:
++		 *
++		 * $ echo xyzzy >frotz
++		 * $ git-update-index --add frotz
++		 * $ : >frotz
++		 * $ sleep 3
++		 * $ echo filfre >nitfol
++		 * $ git-update-index --add nitfol
++		 *
++		 * but it does not.  When the second update-index runs,
++		 * it notices that the entry "frotz" has the same timestamp
++		 * as index, and if we were to smudge it by resetting its
++		 * size to zero here, then the object name recorded
++		 * in index is the 6-byte file but the cached stat information
++		 * becomes zero --- which would then match what we would
++		 * obtain from the filesystem next time we stat("frotz").
++		 *
++		 * However, the second update-index, before calling
++		 * this function, notices that the cached size is 6
++		 * bytes and what is on the filesystem is an empty
++		 * file, and never calls us, so the cached size information
++		 * for "frotz" stays 6 which does not match the filesystem.
++		 */
++		ce->ce_size = 0;
++	}
++}
++
++/* Copy miscellaneous fields but not the name */
++static char *copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
++				       struct cache_entry *ce)
++{
++	short flags;
++
++	ondisk->ctime.sec = htonl(ce->ce_ctime.sec);
++	ondisk->mtime.sec = htonl(ce->ce_mtime.sec);
++	ondisk->ctime.nsec = htonl(ce->ce_ctime.nsec);
++	ondisk->mtime.nsec = htonl(ce->ce_mtime.nsec);
++	ondisk->dev  = htonl(ce->ce_dev);
++	ondisk->ino  = htonl(ce->ce_ino);
++	ondisk->mode = htonl(ce->ce_mode);
++	ondisk->uid  = htonl(ce->ce_uid);
++	ondisk->gid  = htonl(ce->ce_gid);
++	ondisk->size = htonl(ce->ce_size);
++	hashcpy(ondisk->sha1, ce->sha1);
++
++	flags = ce->ce_flags;
++	flags |= (ce_namelen(ce) >= CE_NAMEMASK ? CE_NAMEMASK : ce_namelen(ce));
++	ondisk->flags = htons(flags);
++	if (ce->ce_flags & CE_EXTENDED) {
++		struct ondisk_cache_entry_extended *ondisk2;
++		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
++		ondisk2->flags2 = htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
++		return ondisk2->name;
++	}
++	else {
++		return ondisk->name;
++	}
++}
++
++static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
++			  struct strbuf *previous_name)
++{
++	int size;
++	struct ondisk_cache_entry *ondisk;
++	char *name;
++	int result;
++
++	if (!previous_name) {
++		size = ondisk_ce_size(ce);
++		ondisk = xcalloc(1, size);
++		name = copy_cache_entry_to_ondisk(ondisk, ce);
++		memcpy(name, ce->name, ce_namelen(ce));
++	} else {
++		int common, to_remove, prefix_size;
++		unsigned char to_remove_vi[16];
++		for (common = 0;
++		     (ce->name[common] &&
++		      common < previous_name->len &&
++		      ce->name[common] == previous_name->buf[common]);
++		     common++)
++			; /* still matching */
++		to_remove = previous_name->len - common;
++		prefix_size = encode_varint(to_remove, to_remove_vi);
++
++		if (ce->ce_flags & CE_EXTENDED)
++			size = offsetof(struct ondisk_cache_entry_extended, name);
++		else
++			size = offsetof(struct ondisk_cache_entry, name);
++		size += prefix_size + (ce_namelen(ce) - common + 1);
++
++		ondisk = xcalloc(1, size);
++		name = copy_cache_entry_to_ondisk(ondisk, ce);
++		memcpy(name, to_remove_vi, prefix_size);
++		memcpy(name + prefix_size, ce->name + common, ce_namelen(ce) - common);
++
++		strbuf_splice(previous_name, common, to_remove,
++			      ce->name + common, ce_namelen(ce) - common);
++	}
++
++	result = ce_write(c, fd, ondisk, size);
++	free(ondisk);
++	return result;
++}
++
++static int write_index_v2(struct index_state *istate, int newfd)
++{
++	git_SHA_CTX c;
++	struct cache_version_header hdr;
++	struct cache_header hdr_v2;
++	int i, err, removed, extended, hdr_version;
++	struct cache_entry **cache = istate->cache;
++	int entries = istate->cache_nr;
++	struct stat st;
++	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++
++	for (i = removed = extended = 0; i < entries; i++) {
++		if (cache[i]->ce_flags & CE_REMOVE)
++			removed++;
++
++		/* reduce extended entries if possible */
++		cache[i]->ce_flags &= ~CE_EXTENDED;
++		if (cache[i]->ce_flags & CE_EXTENDED_FLAGS) {
++			extended++;
++			cache[i]->ce_flags |= CE_EXTENDED;
++		}
++	}
++
++	/* demote version 3 to version 2 when the latter suffices */
++	if (istate->version == 3 || istate->version == 2)
++		istate->version = extended ? 3 : 2;
++
++	hdr_version = istate->version;
++
++	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
++	hdr.hdr_version = htonl(hdr_version);
++	hdr_v2.hdr_entries = htonl(entries - removed);
++
++	git_SHA1_Init(&c);
++	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
++		return -1;
++	if (ce_write(&c, newfd, &hdr_v2, sizeof(hdr_v2)) < 0)
++		return -1;
++
++	previous_name = (hdr_version == 4) ? &previous_name_buf : NULL;
++	for (i = 0; i < entries; i++) {
++		struct cache_entry *ce = cache[i];
++		if (ce->ce_flags & CE_REMOVE)
++			continue;
++		if (!ce_uptodate(ce) && is_racy_timestamp(istate, ce))
++			ce_smudge_racily_clean_entry(istate, ce);
++		if (ce_write_entry(&c, newfd, ce, previous_name) < 0)
++			return -1;
++	}
++	strbuf_release(&previous_name_buf);
++
++	/* Write extension data here */
++	if (istate->cache_tree) {
++		struct strbuf sb = STRBUF_INIT;
++
++		cache_tree_write(&sb, istate->cache_tree);
++		err = write_index_ext_header(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
++			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
++		strbuf_release(&sb);
++		if (err)
++			return -1;
++	}
++	if (istate->resolve_undo) {
++		struct strbuf sb = STRBUF_INIT;
++
++		resolve_undo_write(&sb, istate->resolve_undo);
++		err = write_index_ext_header(&c, newfd, CACHE_EXT_RESOLVE_UNDO,
++					     sb.len) < 0
++			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
++		strbuf_release(&sb);
++		if (err)
++			return -1;
++	}
++
++	if (ce_flush(&c, newfd) || fstat(newfd, &st))
++		return -1;
++	istate->timestamp.sec = (unsigned int)st.st_mtime;
++	istate->timestamp.nsec = ST_MTIME_NSEC(st);
++	return 0;
++}
++
++struct index_ops v2_ops = {
 +	match_stat_basic,
 +	verify_hdr,
-+	read_index_v5,
-+	NULL
++	read_index_v2,
++	write_index_v2
 +};
+diff --git a/read-cache.c b/read-cache.c
+index 2f8159f..6a8b4b1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -5,6 +5,7 @@
+  */
+ #define NO_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
++#include "read-cache.h"
+ #include "cache-tree.h"
+ #include "refs.h"
+ #include "dir.h"
+@@ -17,26 +18,9 @@
+ 
+ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int really);
+ 
+-/* Mask for the name length in ce_flags in the on-disk index */
+-
+-#define CE_NAMEMASK  (0x0fff)
+-
+-/* Index extensions.
+- *
+- * The first letter should be 'A'..'Z' for extensions that are not
+- * necessary for a correct operation (i.e. optimization data).
+- * When new extensions are added that _needs_ to be understood in
+- * order to correctly interpret the index file, pick character that
+- * is outside the range, to cause the reader to abort.
+- */
+-
+-#define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
+-#define CACHE_EXT_TREE 0x54524545	/* "TREE" */
+-#define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
+-
+ struct index_state the_index;
+ 
+-static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
++void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+ {
+ 	istate->cache[nr] = ce;
+ 	add_name_hash(istate, ce);
+@@ -143,7 +127,7 @@ static int ce_compare_gitlink(struct cache_entry *ce)
+ 	return hashcmp(sha1, ce->sha1);
+ }
+ 
+-static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
++int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
+ {
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFREG:
+@@ -163,7 +147,17 @@ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
+ 	return 0;
+ }
+ 
+-static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
++static void check_set_istate_ops(struct index_state *istate)
++{
++	if (!istate->version)
++		istate->version = INDEX_FORMAT_DEFAULT;
++	if (!istate->ops)
++		if (istate->version >= 2 && istate->version <=4)
++			istate->ops = &v2_ops;
++}
++
++int ce_match_stat_basic(struct index_state *istate,
++		struct cache_entry *ce, struct stat *st)
+ {
+ 	unsigned int changed = 0;
+ 
+@@ -195,47 +189,13 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+ 	default:
+ 		die("internal error: ce_mode is %o", ce->ce_mode);
+ 	}
+-	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
+-		changed |= MTIME_CHANGED;
+-	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
+-		changed |= CTIME_CHANGED;
+-
+-#ifdef USE_NSEC
+-	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
+-		changed |= MTIME_CHANGED;
+-	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
+-		changed |= CTIME_CHANGED;
+-#endif
+-
+-	if (ce->ce_uid != (unsigned int) st->st_uid ||
+-	    ce->ce_gid != (unsigned int) st->st_gid)
+-		changed |= OWNER_CHANGED;
+-	if (ce->ce_ino != (unsigned int) st->st_ino)
+-		changed |= INODE_CHANGED;
+-
+-#ifdef USE_STDEV
+-	/*
+-	 * st_dev breaks on network filesystems where different
+-	 * clients will have different views of what "device"
+-	 * the filesystem is on
+-	 */
+-	if (ce->ce_dev != (unsigned int) st->st_dev)
+-		changed |= INODE_CHANGED;
+-#endif
+-
+-	if (ce->ce_size != (unsigned int) st->st_size)
+-		changed |= DATA_CHANGED;
+-
+-	/* Racily smudged entry? */
+-	if (!ce->ce_size) {
+-		if (!is_empty_blob_sha1(ce->sha1))
+-			changed |= DATA_CHANGED;
+-	}
+ 
++	check_set_istate_ops(istate);
++	changed = istate->ops->match_stat_basic(ce, st, changed);
+ 	return changed;
+ }
+ 
+-static int is_racy_timestamp(const struct index_state *istate, struct cache_entry *ce)
++int is_racy_timestamp(const struct index_state *istate, struct cache_entry *ce)
+ {
+ 	return (!S_ISGITLINK(ce->ce_mode) &&
+ 		istate->timestamp.sec &&
+@@ -250,7 +210,7 @@ static int is_racy_timestamp(const struct index_state *istate, struct cache_entr
+ 		 );
+ }
+ 
+-int ie_match_stat(const struct index_state *istate,
++int ie_match_stat(struct index_state *istate,
+ 		  struct cache_entry *ce, struct stat *st,
+ 		  unsigned int options)
+ {
+@@ -278,7 +238,7 @@ int ie_match_stat(const struct index_state *istate,
+ 	if (ce->ce_flags & CE_INTENT_TO_ADD)
+ 		return DATA_CHANGED | TYPE_CHANGED | MODE_CHANGED;
+ 
+-	changed = ce_match_stat_basic(ce, st);
++	changed = ce_match_stat_basic(istate, ce, st);
+ 
+ 	/*
+ 	 * Within 1 second of this sequence:
+@@ -306,7 +266,7 @@ int ie_match_stat(const struct index_state *istate,
+ 	return changed;
+ }
+ 
+-int ie_modified(const struct index_state *istate,
++int ie_modified(struct index_state *istate,
+ 		struct cache_entry *ce, struct stat *st, unsigned int options)
+ {
+ 	int changed, changed_fs;
+@@ -1190,99 +1150,18 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
+ 	return refresh_cache_ent(&the_index, ce, really, NULL, NULL);
+ }
+ 
+-
+-/*****************************************************************
+- * Index File I/O
+- *****************************************************************/
+-
+-#define INDEX_FORMAT_DEFAULT 3
+-
+-/*
+- * dev/ino/uid/gid/size are also just tracked to the low 32 bits
+- * Again - this is just a (very strong in practice) heuristic that
+- * the inode hasn't changed.
+- *
+- * We save the fields in big-endian order to allow using the
+- * index file over NFS transparently.
+- */
+-struct ondisk_cache_entry {
+-	struct cache_time ctime;
+-	struct cache_time mtime;
+-	unsigned int dev;
+-	unsigned int ino;
+-	unsigned int mode;
+-	unsigned int uid;
+-	unsigned int gid;
+-	unsigned int size;
+-	unsigned char sha1[20];
+-	unsigned short flags;
+-	char name[FLEX_ARRAY]; /* more */
+-};
+-
+-/*
+- * This struct is used when CE_EXTENDED bit is 1
+- * The struct must match ondisk_cache_entry exactly from
+- * ctime till flags
+- */
+-struct ondisk_cache_entry_extended {
+-	struct cache_time ctime;
+-	struct cache_time mtime;
+-	unsigned int dev;
+-	unsigned int ino;
+-	unsigned int mode;
+-	unsigned int uid;
+-	unsigned int gid;
+-	unsigned int size;
+-	unsigned char sha1[20];
+-	unsigned short flags;
+-	unsigned short flags2;
+-	char name[FLEX_ARRAY]; /* more */
+-};
+-
+-/* These are only used for v3 or lower */
+-#define align_flex_name(STRUCT,len) ((offsetof(struct STRUCT,name) + (len) + 8) & ~7)
+-#define ondisk_cache_entry_size(len) align_flex_name(ondisk_cache_entry,len)
+-#define ondisk_cache_entry_extended_size(len) align_flex_name(ondisk_cache_entry_extended,len)
+-#define ondisk_ce_size(ce) (((ce)->ce_flags & CE_EXTENDED) ? \
+-			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
+-			    ondisk_cache_entry_size(ce_namelen(ce)))
+-
+-static int verify_hdr(struct cache_header *hdr, unsigned long size)
++static int verify_hdr_version(struct index_state *istate,
++		struct cache_version_header *hdr, unsigned long size)
+ {
+-	git_SHA_CTX c;
+-	unsigned char sha1[20];
+ 	int hdr_version;
+ 
+ 	if (hdr->hdr_signature != htonl(CACHE_SIGNATURE))
+ 		return error("bad signature");
+ 	hdr_version = ntohl(hdr->hdr_version);
+-	if (hdr_version < 2 || 4 < hdr_version)
++	if (hdr_version >= 2 && hdr_version <= 4)
++		istate->ops = &v2_ops;
++	else
+ 		return error("bad index version %d", hdr_version);
+-	git_SHA1_Init(&c);
+-	git_SHA1_Update(&c, hdr, size - 20);
+-	git_SHA1_Final(sha1, &c);
+-	if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
+-		return error("bad index file sha1 signature");
+-	return 0;
+-}
+-
+-static int read_index_extension(struct index_state *istate,
+-				const char *ext, void *data, unsigned long sz)
+-{
+-	switch (CACHE_EXT(ext)) {
+-	case CACHE_EXT_TREE:
+-		istate->cache_tree = cache_tree_read(data, sz);
+-		break;
+-	case CACHE_EXT_RESOLVE_UNDO:
+-		istate->resolve_undo = resolve_undo_read(data, sz);
+-		break;
+-	default:
+-		if (*ext < 'A' || 'Z' < *ext)
+-			return error("index uses %.4s extension, which we do not understand",
+-				     ext);
+-		fprintf(stderr, "ignoring %.4s extension\n", ext);
+-		break;
+-	}
+ 	return 0;
+ }
+ 
+@@ -1291,128 +1170,14 @@ int read_index(struct index_state *istate)
+ 	return read_index_from(istate, get_index_file());
+ }
+ 
+-#ifndef NEEDS_ALIGNED_ACCESS
+-#define ntoh_s(var) ntohs(var)
+-#define ntoh_l(var) ntohl(var)
+-#else
+-static inline uint16_t ntoh_s_force_align(void *p)
+-{
+-	uint16_t x;
+-	memcpy(&x, p, sizeof(x));
+-	return ntohs(x);
+-}
+-static inline uint32_t ntoh_l_force_align(void *p)
+-{
+-	uint32_t x;
+-	memcpy(&x, p, sizeof(x));
+-	return ntohl(x);
+-}
+-#define ntoh_s(var) ntoh_s_force_align(&(var))
+-#define ntoh_l(var) ntoh_l_force_align(&(var))
+-#endif
+-
+-static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
+-						   unsigned int flags,
+-						   const char *name,
+-						   size_t len)
+-{
+-	struct cache_entry *ce = xmalloc(cache_entry_size(len));
+-
+-	ce->ce_ctime.sec = ntoh_l(ondisk->ctime.sec);
+-	ce->ce_mtime.sec = ntoh_l(ondisk->mtime.sec);
+-	ce->ce_ctime.nsec = ntoh_l(ondisk->ctime.nsec);
+-	ce->ce_mtime.nsec = ntoh_l(ondisk->mtime.nsec);
+-	ce->ce_dev   = ntoh_l(ondisk->dev);
+-	ce->ce_ino   = ntoh_l(ondisk->ino);
+-	ce->ce_mode  = ntoh_l(ondisk->mode);
+-	ce->ce_uid   = ntoh_l(ondisk->uid);
+-	ce->ce_gid   = ntoh_l(ondisk->gid);
+-	ce->ce_size  = ntoh_l(ondisk->size);
+-	ce->ce_flags = flags & ~CE_NAMEMASK;
+-	ce->ce_namelen = len;
+-	hashcpy(ce->sha1, ondisk->sha1);
+-	memcpy(ce->name, name, len);
+-	ce->name[len] = '\0';
+-	return ce;
+-}
+-
+-/*
+- * Adjacent cache entries tend to share the leading paths, so it makes
+- * sense to only store the differences in later entries.  In the v4
+- * on-disk format of the index, each on-disk cache entry stores the
+- * number of bytes to be stripped from the end of the previous name,
+- * and the bytes to append to the result, to come up with its name.
+- */
+-static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
+-{
+-	const unsigned char *ep, *cp = (const unsigned char *)cp_;
+-	size_t len = decode_varint(&cp);
+-
+-	if (name->len < len)
+-		die("malformed name field in the index");
+-	strbuf_remove(name, name->len - len, len);
+-	for (ep = cp; *ep; ep++)
+-		; /* find the end */
+-	strbuf_add(name, cp, ep - cp);
+-	return (const char *)ep + 1 - cp_;
+-}
+-
+-static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
+-					    unsigned long *ent_size,
+-					    struct strbuf *previous_name)
+-{
+-	struct cache_entry *ce;
+-	size_t len;
+-	const char *name;
+-	unsigned int flags;
+-
+-	/* On-disk flags are just 16 bits */
+-	flags = ntoh_s(ondisk->flags);
+-	len = flags & CE_NAMEMASK;
+-
+-	if (flags & CE_EXTENDED) {
+-		struct ondisk_cache_entry_extended *ondisk2;
+-		int extended_flags;
+-		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
+-		extended_flags = ntoh_s(ondisk2->flags2) << 16;
+-		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
+-		if (extended_flags & ~CE_EXTENDED_FLAGS)
+-			die("Unknown index entry format %08x", extended_flags);
+-		flags |= extended_flags;
+-		name = ondisk2->name;
+-	}
+-	else
+-		name = ondisk->name;
+-
+-	if (!previous_name) {
+-		/* v3 and earlier */
+-		if (len == CE_NAMEMASK)
+-			len = strlen(name);
+-		ce = cache_entry_from_ondisk(ondisk, flags, name, len);
+-
+-		*ent_size = ondisk_ce_size(ce);
+-	} else {
+-		unsigned long consumed;
+-		consumed = expand_name_field(previous_name, name);
+-		ce = cache_entry_from_ondisk(ondisk, flags,
+-					     previous_name->buf,
+-					     previous_name->len);
+-
+-		*ent_size = (name - ((char *)ondisk)) + consumed;
+-	}
+-	return ce;
+-}
+-
+ /* remember to discard_cache() before reading a different cache! */
+ int read_index_from(struct index_state *istate, const char *path)
+ {
+-	int fd, i;
++	int fd;
+ 	struct stat st;
+-	unsigned long src_offset;
+-	struct cache_header *hdr;
++	struct cache_version_header *hdr;
+ 	void *mmap;
+ 	size_t mmap_size;
+-	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+ 
+ 	errno = EBUSY;
+ 	if (istate->initialized)
+@@ -1433,69 +1198,27 @@ int read_index_from(struct index_state *istate, const char *path)
+ 
+ 	errno = EINVAL;
+ 	mmap_size = xsize_t(st.st_size);
+-	if (mmap_size < sizeof(struct cache_header) + 20)
+-		die("index file smaller than expected");
+-
+ 	mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (mmap == MAP_FAILED)
+ 		die_errno("unable to map index file");
+ 
+ 	hdr = mmap;
+-	if (verify_hdr(hdr, mmap_size) < 0)
++	if (verify_hdr_version(istate, hdr, mmap_size) < 0)
+ 		goto unmap;
+ 
+-	istate->version = ntohl(hdr->hdr_version);
+-	istate->cache_nr = ntohl(hdr->hdr_entries);
+-	istate->cache_alloc = alloc_nr(istate->cache_nr);
+-	istate->cache = xcalloc(istate->cache_alloc, sizeof(struct cache_entry *));
+-	istate->initialized = 1;
+-
+-	if (istate->version == 4)
+-		previous_name = &previous_name_buf;
+-	else
+-		previous_name = NULL;
+-
+-	src_offset = sizeof(*hdr);
+-	for (i = 0; i < istate->cache_nr; i++) {
+-		struct ondisk_cache_entry *disk_ce;
+-		struct cache_entry *ce;
+-		unsigned long consumed;
+-
+-		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
+-		ce = create_from_disk(disk_ce, &consumed, previous_name);
+-		set_index_entry(istate, i, ce);
++	if (istate->ops->verify_hdr(mmap, mmap_size) < 0)
++		goto unmap;
+ 
+-		src_offset += consumed;
+-	}
+-	strbuf_release(&previous_name_buf);
++	istate->ops->read_index(istate, mmap, mmap_size);
+ 	istate->timestamp.sec = st.st_mtime;
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+ 
+-	while (src_offset <= mmap_size - 20 - 8) {
+-		/* After an array of active_nr index entries,
+-		 * there can be arbitrary number of extended
+-		 * sections, each of which is prefixed with
+-		 * extension name (4-byte) and section length
+-		 * in 4-byte network byte order.
+-		 */
+-		uint32_t extsize;
+-		memcpy(&extsize, (char *)mmap + src_offset + 4, 4);
+-		extsize = ntohl(extsize);
+-		if (read_index_extension(istate,
+-					 (const char *) mmap + src_offset,
+-					 (char *) mmap + src_offset + 8,
+-					 extsize) < 0)
+-			goto unmap;
+-		src_offset += 8;
+-		src_offset += extsize;
+-	}
+ 	munmap(mmap, mmap_size);
+ 	return istate->cache_nr;
+ 
+ unmap:
+ 	munmap(mmap, mmap_size);
+-	errno = EINVAL;
+ 	die("index file corrupt");
+ }
+ 
+@@ -1534,201 +1257,6 @@ int unmerged_index(const struct index_state *istate)
+ 	return 0;
+ }
+ 
+-#define WRITE_BUFFER_SIZE 8192
+-static unsigned char write_buffer[WRITE_BUFFER_SIZE];
+-static unsigned long write_buffer_len;
+-
+-static int ce_write_flush(git_SHA_CTX *context, int fd)
+-{
+-	unsigned int buffered = write_buffer_len;
+-	if (buffered) {
+-		git_SHA1_Update(context, write_buffer, buffered);
+-		if (write_in_full(fd, write_buffer, buffered) != buffered)
+-			return -1;
+-		write_buffer_len = 0;
+-	}
+-	return 0;
+-}
+-
+-static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
+-{
+-	while (len) {
+-		unsigned int buffered = write_buffer_len;
+-		unsigned int partial = WRITE_BUFFER_SIZE - buffered;
+-		if (partial > len)
+-			partial = len;
+-		memcpy(write_buffer + buffered, data, partial);
+-		buffered += partial;
+-		if (buffered == WRITE_BUFFER_SIZE) {
+-			write_buffer_len = buffered;
+-			if (ce_write_flush(context, fd))
+-				return -1;
+-			buffered = 0;
+-		}
+-		write_buffer_len = buffered;
+-		len -= partial;
+-		data = (char *) data + partial;
+-	}
+-	return 0;
+-}
+-
+-static int write_index_ext_header(git_SHA_CTX *context, int fd,
+-				  unsigned int ext, unsigned int sz)
+-{
+-	ext = htonl(ext);
+-	sz = htonl(sz);
+-	return ((ce_write(context, fd, &ext, 4) < 0) ||
+-		(ce_write(context, fd, &sz, 4) < 0)) ? -1 : 0;
+-}
+-
+-static int ce_flush(git_SHA_CTX *context, int fd)
+-{
+-	unsigned int left = write_buffer_len;
+-
+-	if (left) {
+-		write_buffer_len = 0;
+-		git_SHA1_Update(context, write_buffer, left);
+-	}
+-
+-	/* Flush first if not enough space for SHA1 signature */
+-	if (left + 20 > WRITE_BUFFER_SIZE) {
+-		if (write_in_full(fd, write_buffer, left) != left)
+-			return -1;
+-		left = 0;
+-	}
+-
+-	/* Append the SHA1 signature at the end */
+-	git_SHA1_Final(write_buffer + left, context);
+-	left += 20;
+-	return (write_in_full(fd, write_buffer, left) != left) ? -1 : 0;
+-}
+-
+-static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
+-{
+-	/*
+-	 * The only thing we care about in this function is to smudge the
+-	 * falsely clean entry due to touch-update-touch race, so we leave
+-	 * everything else as they are.  We are called for entries whose
+-	 * ce_mtime match the index file mtime.
+-	 *
+-	 * Note that this actually does not do much for gitlinks, for
+-	 * which ce_match_stat_basic() always goes to the actual
+-	 * contents.  The caller checks with is_racy_timestamp() which
+-	 * always says "no" for gitlinks, so we are not called for them ;-)
+-	 */
+-	struct stat st;
+-
+-	if (lstat(ce->name, &st) < 0)
+-		return;
+-	if (ce_match_stat_basic(ce, &st))
+-		return;
+-	if (ce_modified_check_fs(ce, &st)) {
+-		/* This is "racily clean"; smudge it.  Note that this
+-		 * is a tricky code.  At first glance, it may appear
+-		 * that it can break with this sequence:
+-		 *
+-		 * $ echo xyzzy >frotz
+-		 * $ git-update-index --add frotz
+-		 * $ : >frotz
+-		 * $ sleep 3
+-		 * $ echo filfre >nitfol
+-		 * $ git-update-index --add nitfol
+-		 *
+-		 * but it does not.  When the second update-index runs,
+-		 * it notices that the entry "frotz" has the same timestamp
+-		 * as index, and if we were to smudge it by resetting its
+-		 * size to zero here, then the object name recorded
+-		 * in index is the 6-byte file but the cached stat information
+-		 * becomes zero --- which would then match what we would
+-		 * obtain from the filesystem next time we stat("frotz").
+-		 *
+-		 * However, the second update-index, before calling
+-		 * this function, notices that the cached size is 6
+-		 * bytes and what is on the filesystem is an empty
+-		 * file, and never calls us, so the cached size information
+-		 * for "frotz" stays 6 which does not match the filesystem.
+-		 */
+-		ce->ce_size = 0;
+-	}
+-}
+-
+-/* Copy miscellaneous fields but not the name */
+-static char *copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
+-				       struct cache_entry *ce)
+-{
+-	short flags;
+-
+-	ondisk->ctime.sec = htonl(ce->ce_ctime.sec);
+-	ondisk->mtime.sec = htonl(ce->ce_mtime.sec);
+-	ondisk->ctime.nsec = htonl(ce->ce_ctime.nsec);
+-	ondisk->mtime.nsec = htonl(ce->ce_mtime.nsec);
+-	ondisk->dev  = htonl(ce->ce_dev);
+-	ondisk->ino  = htonl(ce->ce_ino);
+-	ondisk->mode = htonl(ce->ce_mode);
+-	ondisk->uid  = htonl(ce->ce_uid);
+-	ondisk->gid  = htonl(ce->ce_gid);
+-	ondisk->size = htonl(ce->ce_size);
+-	hashcpy(ondisk->sha1, ce->sha1);
+-
+-	flags = ce->ce_flags;
+-	flags |= (ce_namelen(ce) >= CE_NAMEMASK ? CE_NAMEMASK : ce_namelen(ce));
+-	ondisk->flags = htons(flags);
+-	if (ce->ce_flags & CE_EXTENDED) {
+-		struct ondisk_cache_entry_extended *ondisk2;
+-		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
+-		ondisk2->flags2 = htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
+-		return ondisk2->name;
+-	}
+-	else {
+-		return ondisk->name;
+-	}
+-}
+-
+-static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+-			  struct strbuf *previous_name)
+-{
+-	int size;
+-	struct ondisk_cache_entry *ondisk;
+-	char *name;
+-	int result;
+-
+-	if (!previous_name) {
+-		size = ondisk_ce_size(ce);
+-		ondisk = xcalloc(1, size);
+-		name = copy_cache_entry_to_ondisk(ondisk, ce);
+-		memcpy(name, ce->name, ce_namelen(ce));
+-	} else {
+-		int common, to_remove, prefix_size;
+-		unsigned char to_remove_vi[16];
+-		for (common = 0;
+-		     (ce->name[common] &&
+-		      common < previous_name->len &&
+-		      ce->name[common] == previous_name->buf[common]);
+-		     common++)
+-			; /* still matching */
+-		to_remove = previous_name->len - common;
+-		prefix_size = encode_varint(to_remove, to_remove_vi);
+-
+-		if (ce->ce_flags & CE_EXTENDED)
+-			size = offsetof(struct ondisk_cache_entry_extended, name);
+-		else
+-			size = offsetof(struct ondisk_cache_entry, name);
+-		size += prefix_size + (ce_namelen(ce) - common + 1);
+-
+-		ondisk = xcalloc(1, size);
+-		name = copy_cache_entry_to_ondisk(ondisk, ce);
+-		memcpy(name, to_remove_vi, prefix_size);
+-		memcpy(name + prefix_size, ce->name + common, ce_namelen(ce) - common);
+-
+-		strbuf_splice(previous_name, common, to_remove,
+-			      ce->name + common, ce_namelen(ce) - common);
+-	}
+-
+-	result = ce_write(c, fd, ondisk, size);
+-	free(ondisk);
+-	return result;
+-}
+-
+ static int has_racy_timestamp(struct index_state *istate)
+ {
+ 	int entries = istate->cache_nr;
+@@ -1756,83 +1284,9 @@ void update_index_if_able(struct index_state *istate, struct lock_file *lockfile
+ 
+ int write_index(struct index_state *istate, int newfd)
+ {
+-	git_SHA_CTX c;
+-	struct cache_header hdr;
+-	int i, err, removed, extended, hdr_version;
+-	struct cache_entry **cache = istate->cache;
+-	int entries = istate->cache_nr;
+-	struct stat st;
+-	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+-
+-	for (i = removed = extended = 0; i < entries; i++) {
+-		if (cache[i]->ce_flags & CE_REMOVE)
+-			removed++;
+-
+-		/* reduce extended entries if possible */
+-		cache[i]->ce_flags &= ~CE_EXTENDED;
+-		if (cache[i]->ce_flags & CE_EXTENDED_FLAGS) {
+-			extended++;
+-			cache[i]->ce_flags |= CE_EXTENDED;
+-		}
+-	}
+-
+-	if (!istate->version)
+-		istate->version = INDEX_FORMAT_DEFAULT;
+-
+-	/* demote version 3 to version 2 when the latter suffices */
+-	if (istate->version == 3 || istate->version == 2)
+-		istate->version = extended ? 3 : 2;
+-
+-	hdr_version = istate->version;
+-
+-	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+-	hdr.hdr_version = htonl(hdr_version);
+-	hdr.hdr_entries = htonl(entries - removed);
+-
+-	git_SHA1_Init(&c);
+-	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
+-		return -1;
+-
+-	previous_name = (hdr_version == 4) ? &previous_name_buf : NULL;
+-	for (i = 0; i < entries; i++) {
+-		struct cache_entry *ce = cache[i];
+-		if (ce->ce_flags & CE_REMOVE)
+-			continue;
+-		if (!ce_uptodate(ce) && is_racy_timestamp(istate, ce))
+-			ce_smudge_racily_clean_entry(ce);
+-		if (ce_write_entry(&c, newfd, ce, previous_name) < 0)
+-			return -1;
+-	}
+-	strbuf_release(&previous_name_buf);
++	check_set_istate_ops(istate);
+ 
+-	/* Write extension data here */
+-	if (istate->cache_tree) {
+-		struct strbuf sb = STRBUF_INIT;
+-
+-		cache_tree_write(&sb, istate->cache_tree);
+-		err = write_index_ext_header(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
+-			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
+-	}
+-	if (istate->resolve_undo) {
+-		struct strbuf sb = STRBUF_INIT;
+-
+-		resolve_undo_write(&sb, istate->resolve_undo);
+-		err = write_index_ext_header(&c, newfd, CACHE_EXT_RESOLVE_UNDO,
+-					     sb.len) < 0
+-			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
+-	}
+-
+-	if (ce_flush(&c, newfd) || fstat(newfd, &st))
+-		return -1;
+-	istate->timestamp.sec = (unsigned int)st.st_mtime;
+-	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+-	return 0;
++	return istate->ops->write_index(istate, newfd);
+ }
+ 
+ /*
+diff --git a/read-cache.h b/read-cache.h
+new file mode 100644
+index 0000000..f41ba75
+--- /dev/null
++++ b/read-cache.h
+@@ -0,0 +1,57 @@
++/* Index extensions.
++ *
++ * The first letter should be 'A'..'Z' for extensions that are not
++ * necessary for a correct operation (i.e. optimization data).
++ * When new extensions are added that _needs_ to be understood in
++ * order to correctly interpret the index file, pick character that
++ * is outside the range, to cause the reader to abort.
++ */
++
++#define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
++#define CACHE_EXT_TREE 0x54524545	/* "TREE" */
++#define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
++
++#define INDEX_FORMAT_DEFAULT 3
++
++/*
++ * Basic data structures for the directory cache
++ */
++struct cache_version_header {
++	unsigned int hdr_signature;
++	unsigned int hdr_version;
++};
++
++struct index_ops {
++	int (*match_stat_basic)(struct cache_entry *ce, struct stat *st, int changed);
++	int (*verify_hdr)(void *mmap, unsigned long size);
++	int (*read_index)(struct index_state *istate, void *mmap, int mmap_size);
++	int (*write_index)(struct index_state *istate, int newfd);
++};
++
++extern struct index_ops v2_ops;
++
++#ifndef NEEDS_ALIGNED_ACCESS
++#define ntoh_s(var) ntohs(var)
++#define ntoh_l(var) ntohl(var)
++#else
++static inline uint16_t ntoh_s_force_align(void *p)
++{
++	uint16_t x;
++	memcpy(&x, p, sizeof(x));
++	return ntohs(x);
++}
++static inline uint32_t ntoh_l_force_align(void *p)
++{
++	uint32_t x;
++	memcpy(&x, p, sizeof(x));
++	return ntohl(x);
++}
++#define ntoh_s(var) ntoh_s_force_align(&(var))
++#define ntoh_l(var) ntoh_l_force_align(&(var))
++#endif
++
++extern int ce_modified_check_fs(struct cache_entry *ce, struct stat *st);
++extern int ce_match_stat_basic(struct index_state *istate,
++		struct cache_entry *ce, struct stat *st);
++extern int is_racy_timestamp(const struct index_state *istate, struct cache_entry *ce);
++extern void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce);
+diff --git a/test-index-version.c b/test-index-version.c
+index bfaad9e..3899a2f 100644
+--- a/test-index-version.c
++++ b/test-index-version.c
+@@ -1,8 +1,13 @@
+ #include "cache.h"
+ 
++struct cache_version_header {
++	unsigned int hdr_signature;
++	unsigned int hdr_version;
++};
++
+ int main(int argc, const char **argv)
+ {
+-	struct cache_header hdr;
++	struct cache_version_header hdr;
+ 	int version;
+ 
+ 	memset(&hdr,0,sizeof(hdr));
 -- 
 1.7.11.2
