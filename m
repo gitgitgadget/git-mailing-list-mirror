@@ -1,76 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix Q-encoded multi-octet-char split in email.
-Date: Thu, 16 Aug 2012 14:52:45 -0700
-Message-ID: <7vr4r6zeqa.fsf@alter.siamese.dyndns.org>
-References: <1341279697-4596-1-git-send-email-gkatsu.ne@gmail.com>
- <20120703063511.GA16679@sigill.intra.peff.net>
- <CAGxub4-9E0W8ZgsPHeTyUyxmPD80LUd7NjSezg5Zt2-nZPBMJA@mail.gmail.com>
- <20120704064450.GA24807@sigill.intra.peff.net>
- <7v394py7r2.fsf@alter.siamese.dyndns.org>
- <20120718072753.GC12942@sigill.intra.peff.net>
+Subject: Re: [RFC PATCH 1/2] rm: don't fail when removing populated
+ submodules
+Date: Thu, 16 Aug 2012 14:56:20 -0700
+Message-ID: <7vmx1uzekb.fsf@alter.siamese.dyndns.org>
+References: <4FF4AAE7.40604@web.de> <4FF4AB1B.60805@web.de>
+ <7v1ukppear.fsf@alter.siamese.dyndns.org> <4FF830D6.7080708@web.de>
+ <7vsjd2n1wt.fsf@alter.siamese.dyndns.org> <4FF9A261.3040907@web.de>
+ <7vhathn0f4.fsf@alter.siamese.dyndns.org> <4FFB23EB.8060409@web.de>
+ <7vpq84k9n5.fsf@alter.siamese.dyndns.org> <4FFB3DB9.6090808@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Katsuyama Takeharu <gkatsu.ne@gmail.com>, git@vger.kernel.org,
-	Takeharu Katsuyama <tkatsu.ne@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 16 23:52:56 2012
+Cc: git@vger.kernel.org,
+	=?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Aug 16 23:56:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T27zr-0002Xq-5r
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 23:52:55 +0200
+	id 1T283I-0006xK-VU
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Aug 2012 23:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642Ab2HPVwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 17:52:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47101 "EHLO
+	id S1754391Ab2HPV4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 17:56:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48608 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751606Ab2HPVws (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 17:52:48 -0400
+	id S1753103Ab2HPV4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 17:56:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC3F499A2;
-	Thu, 16 Aug 2012 17:52:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 675C19A49;
+	Thu, 16 Aug 2012 17:56:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QME625MlSsWfaekGTXDbYV4uMpw=; b=wlSHqo
-	zZ4l8PwuCXuar18V3OIcTsgYAKu1NMaKzd9imkEaq6n2mSZxSTFKA0+OjFSazh0y
-	u1IACxUM1gKokuumEpT5WhtJCxFy/639xaIDg/ifOXnnETM5G3Wyj6WgamTjdAVL
-	L/2wrvA5XFktaKNd4o/IYX5GnhwcgxwKppUTQ=
+	:content-type; s=sasl; bh=z40vokL7aYqjRYLkfSRSff91CHU=; b=Rl55Jj
+	w3aFqr/cDCzHBuXwnkv3CYkahX58f3ZQkqI/jCC5Ce8YTgfPkanHDVmAAu8uenk3
+	yLtywLBmNRcBskG+EtqsO4Rli4vy47CwQH4eetIOCwH5Qax96YBMuM2j2iz2XzoQ
+	rsqQD1kBqPKnulKHKB5u7xE9eR6eb5gpXIL+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fRUJfsQ+WcpU4JKNcJf5dBVqYRCEbki7
-	Czpyo5teN7UAjWC/z7rWnO4RbsnbORRMMUwz+pSBdFLT/39ALisHnRKe7LifeUjH
-	KhSnpN6RTv4kzTxNkXKliyc0NnPc8uLArhjHUEnOHiHMNWCjhul0vLism9Ay00Fi
-	xNQafD0nWao=
+	:content-type; q=dns; s=sasl; b=t+FIydDnyW7vxkwI4cXVxnv2KtDgLW2T
+	D1V5ZrJGlYrQ+FTZMU/9MfFnQGSqDP1sEx5Z2QyeYQLgcgLFHzRwLHrOkQtJLA8+
+	zFv62Zfut1Wp3aYQeFi9ob70zjEBMetSBcdAW8MApOriaMx6oSu73ghUzOk0uueL
+	SApNHXT7VeA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D985399A1;
-	Thu, 16 Aug 2012 17:52:47 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 553BA9A48;
+	Thu, 16 Aug 2012 17:56:22 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56FDA99A0; Thu, 16 Aug 2012
- 17:52:47 -0400 (EDT)
-In-Reply-To: <20120718072753.GC12942@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 18 Jul 2012 03:27:53 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEA6B9A46; Thu, 16 Aug 2012
+ 17:56:21 -0400 (EDT)
+In-Reply-To: <4FFB3DB9.6090808@web.de> (Jens Lehmann's message of "Mon, 09
+ Jul 2012 22:23:21 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B76F3ABE-E7EC-11E1-B0DA-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3733FF1E-E7ED-11E1-92BA-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> On Tue, Jul 17, 2012 at 10:10:25PM -0700, Junio C Hamano wrote:
+> Am 09.07.2012 21:38, schrieb Junio C Hamano:
+>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> 
+>>> Cool, so let's drop this patch and I'll teach "rm" to handle
+>>> populated submodules according to what we do for regular files:
+>>> Make sure there are no modifications which could get lost (unless
+>>> "-f") and remove all tracked files and the gitfile from the work
+>>> tree (unless "--cached") before removing the submodule from the
+>>> index. If the submodule uses the old layout with the .git
+>>> directory instead of a gitfile we error out just like we do today.
+>> 
+>> Alternatively we could "mv" .git directory out of the way and the
+>> next "git checkout" of a branch that still has the submodule can
+>> make a gitfile to point there, no?
 >
->> Ping on a seemingly stalled thread.
+> Yup. That would mean a smooth transition for legacy .git-dir
+> submodules into the new gitfile world.
 >
-> Hrm. I could swear that Takeharu sent a follow-up using
-> pick_one_utf8_char directly that looked OK, but now I can't seem to find
-> it in the list archives. I wonder if it was off-list and I didn't
-> realize it.
+>>> And we didn't talk about untracked or ignored files which may live
+>>> inside the submodules work tree so far, but according to what a
+>>> "rm -r" does in the superproject they should still be around after
+>>> using "rm" on a populated submodule, right?
+>> 
+>> Until we add the "precious" class, untracked and ignored files are
+>> expendable, so if a submodule working tree has no modification and
+>> only has leftover *.o files, they can be nuked as part of submodule
+>> removal, but if it has an untracked and unignored *.c file for
+>> example, the "rm" operation without "-f" should be stopped, no?
 >
-> If I did not simply dream it, can you re-post the latest patch you
-> sent?
+> Ok, untracked files mark the submodule modified while ignored files
+> which are not tracked won't.
+>
+> Thanks for this discussion, I'll start hacking on that.
 
-Another ping on a seemingly stalled thread.
+A mild ping on seemingly stalled topic.
