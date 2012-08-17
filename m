@@ -1,102 +1,58 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
-Date: Fri, 17 Aug 2012 11:50:30 +0200
-Message-ID: <87sjbletjt.fsf@thomas.inf.ethz.ch>
-References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
-	<877gt16ewe.fsf@thomas.inf.ethz.ch>
-	<7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
-	<87sjbpa5m8.fsf@thomas.inf.ethz.ch>
-	<7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
-	<CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
-	<7vipcj2w9f.fsf@alter.siamese.dyndns.org>
-	<7vehn72vyl.fsf@alter.siamese.dyndns.org>
-	<87pq6rw77l.fsf@thomas.inf.ethz.ch> <502CC4E7.5060508@alum.mit.edu>
-	<87k3wzujuy.fsf@thomas.inf.ethz.ch>
-	<7v628i3jiu.fsf@alter.siamese.dyndns.org>
-	<874no1hnfg.fsf@thomas.inf.ethz.ch>
+From: Egon Elbre <egonelbre@gmail.com>
+Subject: Having an invalid HEAD file causes git not to recognize the repository
+Date: Fri, 17 Aug 2012 14:42:33 +0300
+Message-ID: <CANtNKfp+9HpvWkAO0vrm84oMiJNvjFg9T-UtNQko+ABHhEWj6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	<git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 11:50:46 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 17 13:42:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2JCS-0003JZ-6x
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 11:50:40 +0200
+	id 1T2Kws-0002FQ-ED
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 13:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964833Ab2HQJue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 05:50:34 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:2727 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756423Ab2HQJud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 05:50:33 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
- 2012 11:50:29 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
- 2012 11:50:30 +0200
-In-Reply-To: <874no1hnfg.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
-	"Fri, 17 Aug 2012 11:34:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755358Ab2HQLmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 07:42:36 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:37102 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755369Ab2HQLmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 07:42:35 -0400
+Received: by lbbgj3 with SMTP id gj3so2057371lbb.19
+        for <git@vger.kernel.org>; Fri, 17 Aug 2012 04:42:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FS090aoQ/7LpNX950UTaL/k9G1rPHAxtT0osJAoSdIw=;
+        b=SETyloaKRmC6L45xugWrzezcDIHB2tSuhWSzB7K+yqCp6MGz6KrCK5357gISwBVCrp
+         4a0JuuyUgvAF62AcnwH7tWLIUdKFQtljx7UdV7N0rVvo6e2AKO76CC8kMlFQU4HXA2U4
+         1Ac9hc0ZGOH3nTeHk4EH1RpUhASn0NeVrYhSHwgfvaaoYa1phF35Ssr3+Hb/JxM47DOw
+         H5BfV5KJbWeX6saS7weXkv9NWASX1JhDZpNE3ffzkn7mtOEb+AdaNWaoJ3V0tfA6lXdc
+         3AETbVOVBVXxNIvNZBj9hm+6+Px+vvdIPyYB54WIXn5KaXWVyU2lEVPNVkjofkNyP7FZ
+         JGiw==
+Received: by 10.112.102.8 with SMTP id fk8mr2088978lbb.71.1345203753464; Fri,
+ 17 Aug 2012 04:42:33 -0700 (PDT)
+Received: by 10.152.129.133 with HTTP; Fri, 17 Aug 2012 04:42:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203609>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Having an invalid HEAD file causes git not to recognize the repository
+and will cause an invalid message "fatal: Not a git repository (or any
+of the parent directories): .git" although there is a .git folder and
+everything seems okay in it. Solution was just to change HEAD to a
+valid ref/hash.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> The topo order algorithm can be modified to take advantage of
-> [generation numbers], in order to provide incremental processing:
->
->   Let S be the set of tentative sources
->
->   Let U be the set of vertices whose out-edges are no known yet
->     (i.e., the set of commits which haven't been loaded yet)
-[...]
->   while there are any vertices left:
->
->     pick any tentative source C from S that we "want to emit"
->
->     # Ascertain that no unknown commit (from U or further beyond) can be
->     # a descendant of C
->     while there is a D in U such that g(D) > g(C):
->       load D
->       remove D from U
->       add the parents of D to U if they were not already loaded
->       possibly remove some elements of S if their indegree became nonzero
->
->     if C was removed from S:
->       continue
->
->     remove C from the graph and emit it
+I ran into this problem when I had a BSOD during a rebase (ignore that
+I'm having to use Windows). This meant that only half of the hash got
+written into HEAD and all git commands I tried failed.
 
-By the way, this does bump the runtime of the algorithm a bit, depending
-on the data structure used for U.  Recall that ordinary topo-sort with a
-stack for S (i.e., --topo-order) runs linearly with the number of
-vertices.
+Not sure whether it's useful to add a better message for this case,
+but at least if somebody stumbles on it again, maybe they can find
+this text.
 
-If we use a priority queue for U, which lets us get at the
-highest-generation unknown commits easily, it potentially goes to n log n 
-if U reaches linear size at some point.
-
-That shouldn't hurt too much of course, since on the one hand it should
-rarely actually get that big, and OTOH --date-order has n log n runtime
-anyway (using a priority queue for S).
-
-Thanks for challenging me on my "it should work" feeling.  It was quite
-interesting to actually think it through and write down a workable
-algorithm.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
++ egon
