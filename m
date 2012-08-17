@@ -1,85 +1,80 @@
-From: vi0oss@gmail.com
-Subject: [PATCH] git-gui: Fix semi-working shortcuts for unstage and revert
-Date: Fri, 17 Aug 2012 06:19:34 +0300
-Message-ID: <1345173574-13087-1-git-send-email-vi0oss@gmail.com>
-Cc: vi0oss@gmail.com, patthoyts@users.sourceforge.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 05:20:27 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make 'git submodule update --force' always check out
+ submodules.
+Date: Thu, 16 Aug 2012 20:23:57 -0700
+Message-ID: <7v7gsyxktu.fsf@alter.siamese.dyndns.org>
+References: <1343239412-26780-1-git-send-email-szager@google.com>
+ <7vipdbbs0b.fsf@alter.siamese.dyndns.org> <50105C60.4050303@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Stefan Zager <szager@google.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 05:24:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2D6o-0004jl-0q
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 05:20:26 +0200
+	id 1T2DAN-0000Wj-7k
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 05:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933667Ab2HQDUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Aug 2012 23:20:18 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:54249 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933650Ab2HQDUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Aug 2012 23:20:17 -0400
-Received: by wibhq12 with SMTP id hq12so1088091wib.1
-        for <git@vger.kernel.org>; Thu, 16 Aug 2012 20:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=na8FX0uB2K2AJAHICxJrT8yhiYUifwAa11e+WJ8AVpE=;
-        b=JEobQGYakEcor0vE5Y9QRTzzN2JgpzCIraE3caMTsVCO3LIbgeVybvEZ4sZeTbgU9Q
-         3YJSXNR97LynsIRSvhtsDosBLahsGgcuwdcwlR1jDS+Cu9N9s08XPpSf6AJcgN9tOFNj
-         1SWaXM7DEFc8C4+SW+lnyKzHjMfIWIV6sDOkF2us6HkJI+yqZl6/OoMNvsuEC/hWc5II
-         invKdi1z44UpecRaAEQeZUZ9t+h1B/LB9my1lI2ixBqocWfLQMY7rvdQDUkHYgqPp6Z/
-         AVREEsxaKlnBH2o/CBDVOiETqv1dWeopqL56NX/Ajvp2JZ7yqG+KBfQgsN9zIAXfO7e8
-         uX/A==
-Received: by 10.180.84.169 with SMTP id a9mr1310668wiz.8.1345173615338;
-        Thu, 16 Aug 2012 20:20:15 -0700 (PDT)
-Received: from localhost.localdomain ([87.252.227.84])
-        by mx.google.com with ESMTPS id ep14sm7514077wid.0.2012.08.16.20.20.14
-        (version=SSLv3 cipher=OTHER);
-        Thu, 16 Aug 2012 20:20:14 -0700 (PDT)
-X-Mailer: git-send-email 1.7.8.5
+	id S933688Ab2HQDYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Aug 2012 23:24:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59064 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933650Ab2HQDX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Aug 2012 23:23:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B09C8115;
+	Thu, 16 Aug 2012 23:23:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+g9fg82mKreEgSN00y8dIKkl8pE=; b=NB3ILm
+	7nRlnnEFvG/DUvBFA9Y5KTfrJkmMquuHPZs1946H8hr9MeiN6kI8MN3lwia3GMhv
+	oYWcojq0jMq2D+xE+o5E4auebrnyGVCFWv3pgYzQpPJmv9s5Rp3hII1yIq4A0tyZ
+	x+eJNOh8dy7tGsoYTj/OyRaHg+AaBkZ9EP3Hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H3BjBLlHie3I2fdGMBa2IMzet8DUvcIm
+	AypVzpicS8xi83Pqpqy9DZxaexfPokN/QGNPuvxfKEm0PsvCBBBbyRgG/0w64Ngq
+	G37kebk0GfRAKTq7En72drTFT0X2R/Tn01ArcoRLyfwf2VWoLJekmL9xREyQP7is
+	6XMdiwvop54=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 184A18114;
+	Thu, 16 Aug 2012 23:23:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C4118113; Thu, 16 Aug 2012
+ 23:23:58 -0400 (EDT)
+In-Reply-To: <50105C60.4050303@web.de> (Jens Lehmann's message of "Wed, 25
+ Jul 2012 22:51:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FB9A8AB2-E81A-11E1-A69F-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Vitaly _Vi Shukela <vi0oss@gmail.com>
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Make Ctrl+U for unstaging and Ctrl+J for reverting selection behave
-more like Ctrl+T for adding.
+> Am 25.07.2012 20:44, schrieb Junio C Hamano:
+>> Stefan Zager <szager@google.com> writes:
+>> 
+>>> Currently, it will only do a checkout if the sha1 registered in the containing
+>>> repository doesn't match the HEAD of the submodule, regardless of whether the
+>>> submodule is dirty.  As discussed on the mailing list, the '--force' flag is a
+>>> strong indicator that the state of the submodule is suspect, and should be reset
+>>> to HEAD.
+>>>
+>>> Signed-off-by: Stefan Zager <szager@google.com>
+>>> ---
+>> 
+>> Looks sensible (again -- see http://thread.gmane.org/gmane.comp.version-control.git/197532
+>> for the original discussion).  Can submodule folks Ack it?
+>
+> I like it. Still I'd vote for amending the documentation like the
+> original thread proposed and would appreciate to have a test or two,
+> but apart from that I have no objections.
 
-They were working only when one area was focused (diff or commit message),
-now they should work everywhere.
-
-Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
----
-No reply to previous email received,
-re-sending with new Cc: as recommented on #git-devel.
-
- git-gui/git-gui.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index ba4e5c1..6618016 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3710,6 +3710,8 @@ bind $ui_diff <$M1B-Key-v> {break}
- bind $ui_diff <$M1B-Key-V> {break}
- bind $ui_diff <$M1B-Key-a> {%W tag add sel 0.0 end;break}
- bind $ui_diff <$M1B-Key-A> {%W tag add sel 0.0 end;break}
-+bind $ui_diff <$M1B-Key-j> {do_revert_selection;break}
-+bind $ui_diff <$M1B-Key-J> {do_revert_selection;break}
- bind $ui_diff <Key-Up>     {catch {%W yview scroll -1 units};break}
- bind $ui_diff <Key-Down>   {catch {%W yview scroll  1 units};break}
- bind $ui_diff <Key-Left>   {catch {%W xview scroll -1 units};break}
-@@ -3742,6 +3744,8 @@ bind .   <$M1B-Key-s> do_signoff
- bind .   <$M1B-Key-S> do_signoff
- bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
-+bind .   <$M1B-Key-u> do_unstage_selection
-+bind .   <$M1B-Key-U> do_unstage_selection
- bind .   <$M1B-Key-j> do_revert_selection
- bind .   <$M1B-Key-J> do_revert_selection
- bind .   <$M1B-Key-i> do_add_all
--- 
-1.7.8.5
+Mind ping on missing follow-ups.
