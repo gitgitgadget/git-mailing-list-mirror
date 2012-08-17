@@ -1,65 +1,78 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [RFC PATCH 1/2] rm: don't fail when removing populated submodules
-Date: Fri, 17 Aug 2012 14:11:20 -0400
-Message-ID: <CABURp0qujqHRg+PkScNGbHccHyheJZesWBsJSC=crhUczOG7Mg@mail.gmail.com>
-References: <4FF4AAE7.40604@web.de> <4FF4AB1B.60805@web.de>
- <7v1ukppear.fsf@alter.siamese.dyndns.org> <4FF830D6.7080708@web.de>
- <7vsjd2n1wt.fsf@alter.siamese.dyndns.org> <4FF9A261.3040907@web.de>
- <7vhathn0f4.fsf@alter.siamese.dyndns.org> <4FFB23EB.8060409@web.de>
- <7vpq84k9n5.fsf@alter.siamese.dyndns.org> <4FFB3DB9.6090808@web.de>
- <7vmx1uzekb.fsf@alter.siamese.dyndns.org> <502E74F8.4070209@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Fri, 17 Aug 2012 11:11:52 -0700
+Message-ID: <7vr4r5tml3.fsf@alter.siamese.dyndns.org>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+ <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+ <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+ <7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+ <CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
+ <7vipcj2w9f.fsf@alter.siamese.dyndns.org>
+ <7vehn72vyl.fsf@alter.siamese.dyndns.org> <87pq6rw77l.fsf@thomas.inf.ethz.ch>
+ <502CC4E7.5060508@alum.mit.edu> <87k3wzujuy.fsf@thomas.inf.ethz.ch>
+ <7v628i3jiu.fsf@alter.siamese.dyndns.org> <874no1hnfg.fsf@thomas.inf.ethz.ch>
+ <7v1uj5wi72.fsf@alter.siamese.dyndns.org> <87obm9a07z.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Aug 17 20:11:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	<git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 17 20:12:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2R1Q-0006Kw-QV
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 20:11:49 +0200
+	id 1T2R1d-0006eG-Qj
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 20:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758664Ab2HQSLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 14:11:43 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:39758 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095Ab2HQSLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 14:11:42 -0400
-Received: by qcro28 with SMTP id o28so3302870qcr.19
-        for <git@vger.kernel.org>; Fri, 17 Aug 2012 11:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6PVnr/aO8QU1Bjw+78hgRQI70NvKssmBMdcWBu463F8=;
-        b=NqAAWGYHMXijt3v35sKs1vPVKH/HUojR6GZsKMdv2SSr2rT0aBx06hJdfwr8xxyXJw
-         zfSgLdyiJ8yrdlK2yKw7x6yKCoHepyrzzjdwAdZUuTi3L1EaQNsDemrK1HijZ771IgIl
-         UU+JuZurzsH5Oew8Gj0hTnR76R7r14F0N7ncctvTmM5x+JUOfZMZ0JnuQjaFlX9exdVi
-         JJqGAe7wzUGtqw7vifdprCV/XgwH2DENlHrmO/v9hhiC1w/AoGAwrrDeD3jdPHxQzS11
-         4KBzF2DAf/x2nO1RA4G4pqQxVR+xAaavgWO0uXJTKfy2f/HzbILDW9TnGIFAHoL6jd20
-         dkyA==
-Received: by 10.229.137.12 with SMTP id u12mr4387851qct.28.1345227100458; Fri,
- 17 Aug 2012 11:11:40 -0700 (PDT)
-Received: by 10.229.52.77 with HTTP; Fri, 17 Aug 2012 11:11:20 -0700 (PDT)
-In-Reply-To: <502E74F8.4070209@web.de>
+	id S1758720Ab2HQSL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 14:11:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45250 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752095Ab2HQSLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 14:11:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6676816C;
+	Fri, 17 Aug 2012 14:11:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4tWWG2T86uM7OIDwaMfCjfXTkrU=; b=r4/ttr
+	uukr0jFhWgsV3Bpjkkajbor1Kh5rLWVylaA/0cMDQtl4g+yMN6fKiduDZaBtsGdf
+	E+jTwx7cuM8+7NokjdyUun1BSoZGh+zUUwuCGAfcaj5m/xw7sdZx/m8kpBYBV8Ss
+	XeOyVoTMm2R9qmOoC9cxsjAIZzw1LyLLFe5iY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K6C/WNKtsEWwtzjoKoVzsb+H5Cuv2ZGE
+	xqjuhiE3nW21h/qqevRiq7tDikp154xfEAAvouBzEwWCx1xEh6FFMSSXYuTQRLs/
+	CrYmsk6oKq4BIOE3Tgqfuxvc7dt9b+eqljt5UjOiWK1Eqdy86rjwkfOReJ3xEZf9
+	v61Qznl5x9Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2F158164;
+	Fri, 17 Aug 2012 14:11:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A5938163; Fri, 17 Aug 2012
+ 14:11:53 -0400 (EDT)
+In-Reply-To: <87obm9a07z.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Fri, 17 Aug 2012 19:37:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0641F456-E897-11E1-A4AC-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203638>
 
-On Fri, Aug 17, 2012 at 12:44 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->
-> I'm almost there. The only thing left is to check if a nested
-> submodule is using a git directory. In that case I expect "rm" to
-> fail even when -f is used to protect the submodule's history. I
-> still need to find a suitable command for recursing the submodules
-> and doing that check.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-I suppose the style of this is wrong, but this seems to work for me.
+> Umm, have you looked at the algorithm I proposed?
+> ...
+> So really, this is only about modifying the algorithm that generates the
+> existing order to allow for streaming output as it reads through
+> history.
 
-git submodule foreach --recursive '! test -f .git'
+Sorry, I thought you were optimizing sort_in_topological_order()
+found in commit.c, not the callchain that forms get_revision()
+in revision.c.
