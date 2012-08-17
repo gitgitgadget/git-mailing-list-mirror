@@ -1,103 +1,254 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH/RFC v4 01/16] GSOC remote-svn
-Date: Fri, 17 Aug 2012 22:25:41 +0200
-Message-ID: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH/RFC v4 01/16] Implement a remote helper for svn in C.
+Date: Fri, 17 Aug 2012 22:25:42 +0200
+Message-ID: <1345235157-702-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
+References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 22:26:26 2012
+X-From: git-owner@vger.kernel.org Fri Aug 17 22:26:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2T7g-0004mj-Dz
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 22:26:24 +0200
+	id 1T2T86-0005Jc-Lm
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 22:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758857Ab2HQU0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 16:26:13 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33191 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499Ab2HQU0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 16:26:10 -0400
-Received: by wicr5 with SMTP id r5so2005934wic.1
-        for <git@vger.kernel.org>; Fri, 17 Aug 2012 13:26:09 -0700 (PDT)
+	id S1758872Ab2HQU0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 16:26:45 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:58829 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758858Ab2HQU0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 16:26:43 -0400
+Received: by weyx8 with SMTP id x8so2687136wey.19
+        for <git@vger.kernel.org>; Fri, 17 Aug 2012 13:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=bKRnPqi0+5zVMFuRrLPg9q1XC0fS6dLPvqgdz5tr5dE=;
-        b=b9dpSy4zfnXe/78t1kBAxdIw2Kq2DP0yzypUnZINH6edUjmmj0Y6Z088q/k0DvN55N
-         wBS4uLJsI+LfJoc7nHUhgTubKXOLjRdKyCIS+Tk0ydn4OqV6rC5A5y2So2M6baVFrWii
-         B2pbV5bkkIuGuHLZOidO8gvT03LgDHrrolx9Tyc3Pp+aXtlhO7Lah4cCIvFKxacPnSGD
-         75DWx6RBkW0BmP9OqEv0jx1w/3Yr57iJNTD4BPCJn7WpXBcY5TlC6Vqtjws8jdZQofbt
-         YKD8SfUaOCm2r3YqgS3z8a7YTMG0jnBwuFOoIA2UHt6j8X3b23Xakk1l8EKR1peHmDhP
-         jG5Q==
-Received: by 10.180.84.1 with SMTP id u1mr7732514wiy.15.1345235169073;
-        Fri, 17 Aug 2012 13:26:09 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=yh0FpCgnTyvPt08lTHJabAS/AQUwNhaui6K4dktWP3w=;
+        b=MHDEvPlvDEAx3RsDHJHYUK1ZSiWA3yfybGHZ1DxpCE5Xe2aB3YjPmdScSBkAmR0J+z
+         WeqhKZj48CZ2wuTSjqf8FBufGS15mvh0gS0IGnNNid4s1AJItVXJN6EU79oPMihGuY8g
+         wIaDLWQDQJHkEaEPxvhP+ZNrO7On8dMHkchsBCJ0uxNHurxIqTKAr/9NBRQ9eQC2Ve6s
+         lnqB+6cp3BJ6X/nozV0+ej9/C20sR/ZxflK1ywR+aamxELpVVMjZix4QR9EXr9mTTxfh
+         Vlgi6gVzYq/1d5Ta1HKxd/zwflc/Zb4+CUe5LKJRREvozD/8ISwhYCRUofoeHCdNmQ59
+         STxQ==
+Received: by 10.216.237.193 with SMTP id y43mr3341682weq.75.1345235201946;
+        Fri, 17 Aug 2012 13:26:41 -0700 (PDT)
 Received: from flobuntu.lan (91-115-81-15.adsl.highway.telekom.at. [91.115.81.15])
-        by mx.google.com with ESMTPS id k2sm17372232wiz.7.2012.08.17.13.26.07
+        by mx.google.com with ESMTPS id k2sm17372232wiz.7.2012.08.17.13.26.39
         (version=SSLv3 cipher=OTHER);
-        Fri, 17 Aug 2012 13:26:08 -0700 (PDT)
+        Fri, 17 Aug 2012 13:26:40 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203643>
 
-Hi!
+Enable basic fetching from subversion repositories. When processing
+remote URLs starting with svn::, git invokes this remote-helper.
+It starts svnrdump to extract revisions from the subversion repository
+in the 'dump file format', and converts them to a git-fast-import stream
+using the functions of vcs-svn/.
 
-Thanks for the reviews!
-This series contains the follwing improvements. 
-I decided to summarize them here, sorted by topic instead of
-attaching them to the patches.
+Imported refs are created in a private namespace at
+refs/svn/<remote-name>/master.
+The revision history is imported linearly (no branch detection) and
+completely, i.e. from revision 0 to HEAD.
 
-all:
-- remove all merge garbage and debugging legacy (hopefully).
-- reviews: style
-- reorder patches
+The 'bidi-import' capability is used. The remote-helper expects data
+from fast-import on its stdin. It buffers a batch of 'import' command
+lines in a string_list before starting to process them.
 
-remote-svn:
-- review: refactor (fct -> fn), style
-- fix command batch detection
-- setup_git_dir, make non-gentle.
-- die on unknown commands, instead of warning
+Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+---
+ contrib/svn-fe/remote-svn.c |  174 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 174 insertions(+)
+ create mode 100644 contrib/svn-fe/remote-svn.c
 
-contrib/svn-fe/Makefile, symlink:
-- remove symlink-creating commit
-- create symlink after linking remote-svn in Makefile
-- the makefile is meant as a temporary solution. Therefore, it chooses
-  openssl/sha1.h unconditionally.
-
-argv_array:
-- new patch: add argv_array_detach and argv_array_free_detached
-
-transport-helper:
-- use those new functions
-- free argv always after finish_command.
-- remove patch that containing unconditional activation of --export-marks
-  --import-marks on fast-import command line.
-
-remote-svn:
-- instead use fast-import's 'feature' command to activate marks import/export.
-- use a more decriptive path for storing marks files.
-
-Florian
-
- [PATCH/RFC v4 01/16] Implement a remote helper for svn in C.
- [PATCH/RFC v4 02/16] Integrate remote-svn into svn-fe/Makefile.
- [PATCH/RFC v4 03/16] Add svndump_init_fd to allow reading dumps from
- [PATCH/RFC v4 04/16] Add argv_array_detach and
- [PATCH/RFC v4 05/16] Connect fast-import to the remote-helper via
- [PATCH/RFC v4 06/16] Add documentation for the 'bidi-import'
- [PATCH/RFC v4 07/16] When debug==1, start fast-import with "--stats"
- [PATCH/RFC v4 08/16] remote-svn, vcs-svn: Enable fetching to private
- [PATCH/RFC v4 09/16] Allow reading svn dumps from files via file://
- [PATCH/RFC v4 10/16] vcs-svn: add fast_export_note to create notes
- [PATCH/RFC v4 11/16] Create a note for every imported commit
- [PATCH/RFC v4 12/16] remote-svn: Activate import/export-marks for
- [PATCH/RFC v4 13/16] remote-svn: add incremental import.
- [PATCH/RFC v4 14/16] Add a svnrdump-simulator replaying a dump file
- [PATCH/RFC v4 15/16] remote-svn: add marks-file regeneration.
- [PATCH/RFC v4 16/16] Add a test script for remote-svn.
+diff --git a/contrib/svn-fe/remote-svn.c b/contrib/svn-fe/remote-svn.c
+new file mode 100644
+index 0000000..b853d54
+--- /dev/null
++++ b/contrib/svn-fe/remote-svn.c
+@@ -0,0 +1,174 @@
++#include "cache.h"
++#include "remote.h"
++#include "strbuf.h"
++#include "url.h"
++#include "exec_cmd.h"
++#include "run-command.h"
++#include "svndump.h"
++#include "notes.h"
++#include "argv-array.h"
++
++static const char *url;
++static const char *private_ref;
++static const char *remote_ref = "refs/heads/master";
++
++static int cmd_capabilities(const char *line);
++static int cmd_import(const char *line);
++static int cmd_list(const char *line);
++
++typedef int (*input_command_handler)(const char *);
++struct input_command_entry {
++	const char *name;
++	input_command_handler fn;
++	unsigned char batchable;	/* whether the command starts or is part of a batch */
++};
++
++static const struct input_command_entry input_command_list[] = {
++	{ "capabilities", cmd_capabilities, 0 },
++	{ "import", cmd_import, 1 },
++	{ "list", cmd_list, 0 },
++	{ NULL, NULL }
++};
++
++static int cmd_capabilities(const char *line) {
++	printf("import\n");
++	printf("bidi-import\n");
++	printf("refspec %s:%s\n\n", remote_ref, private_ref);
++	fflush(stdout);
++	return 0;
++}
++
++static void terminate_batch(void)
++{
++	/* terminate a current batch's fast-import stream */
++	printf("done\n");
++	fflush(stdout);
++}
++
++static int cmd_import(const char *line)
++{
++	int code;
++	int dumpin_fd;
++	unsigned int startrev = 0;
++	struct argv_array svndump_argv = ARGV_ARRAY_INIT;
++	struct child_process svndump_proc;
++
++	memset(&svndump_proc, 0, sizeof(struct child_process));
++	svndump_proc.out = -1;
++	argv_array_push(&svndump_argv, "svnrdump");
++	argv_array_push(&svndump_argv, "dump");
++	argv_array_push(&svndump_argv, url);
++	argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
++	svndump_proc.argv = svndump_argv.argv;
++
++	code = start_command(&svndump_proc);
++	if (code)
++		die("Unable to start %s, code %d", svndump_proc.argv[0], code);
++	dumpin_fd = svndump_proc.out;
++
++	svndump_init_fd(dumpin_fd, STDIN_FILENO);
++	svndump_read(url, private_ref);
++	svndump_deinit();
++	svndump_reset();
++
++	close(dumpin_fd);
++	code = finish_command(&svndump_proc);
++	if (code)
++		warning("%s, returned %d", svndump_proc.argv[0], code);
++	argv_array_clear(&svndump_argv);
++
++	return 0;
++}
++
++static int cmd_list(const char *line)
++{
++	printf("? %s\n\n", remote_ref);
++	fflush(stdout);
++	return 0;
++}
++
++static int do_command(struct strbuf *line)
++{
++	const struct input_command_entry *p = input_command_list;
++	static struct string_list batchlines = STRING_LIST_INIT_DUP;
++	static const struct input_command_entry *batch_cmd;
++	/*
++	 * commands can be grouped together in a batch.
++	 * Batches are ended by \n. If no batch is active the program ends.
++	 * During a batch all lines are buffered and passed to the handler function
++	 * when the batch is terminated.
++	 */
++	if (line->len == 0) {
++		if (batch_cmd) {
++			struct string_list_item *item;
++			for_each_string_list_item(item, &batchlines)
++				batch_cmd->fn(item->string);
++			terminate_batch();
++			batch_cmd = NULL;
++			string_list_clear(&batchlines, 0);
++			return 0;	/* end of the batch, continue reading other commands. */
++		}
++		return 1;	/* end of command stream, quit */
++	}
++	if (batch_cmd) {
++		if (prefixcmp(batch_cmd->name, line->buf))
++			die("Active %s batch interrupted by %s", batch_cmd->name, line->buf);
++		/* buffer batch lines */
++		string_list_append(&batchlines, line->buf);
++		return 0;
++	}
++
++	for (p = input_command_list; p->name; p++) {
++		if (!prefixcmp(line->buf, p->name) && (strlen(p->name) == line->len ||
++				line->buf[strlen(p->name)] == ' ')) {
++			if (p->batchable) {
++				batch_cmd = p;
++				string_list_append(&batchlines, line->buf);
++				return 0;
++			}
++			return p->fn(line->buf);
++		}
++	}
++	die("Unknown command '%s'\n", line->buf);
++	return 0;
++}
++
++int main(int argc, const char **argv)
++{
++	struct strbuf buf = STRBUF_INIT;
++	static struct remote *remote;
++	const char *url_in;
++
++	git_extract_argv0_path(argv[0]);
++	setup_git_directory();
++	if (argc < 2 || argc > 3) {
++		usage("git-remote-svn <remote-name> [<url>]");
++		return 1;
++	}
++
++	remote = remote_get(argv[1]);
++	url_in = (argc == 3) ? argv[2] : remote->url[0];
++
++	end_url_with_slash(&buf, url_in);
++	url = strbuf_detach(&buf, NULL);
++
++	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
++	private_ref = strbuf_detach(&buf, NULL);
++
++	while(1) {
++		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
++			if (ferror(stdin))
++				die("Error reading command stream");
++			else
++				die("Unexpected end of command stream");
++		}
++		if (do_command(&buf))
++			break;
++		strbuf_reset(&buf);
++	}
++
++	strbuf_release(&buf);
++	free((void*)url);
++	free((void*)private_ref);
++	return 0;
++}
+-- 
+1.7.9.5
