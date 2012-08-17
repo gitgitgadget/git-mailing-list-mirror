@@ -1,82 +1,87 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Problems with new location of submodule's GIT_DIR
-Date: Fri, 17 Aug 2012 13:38:18 -0400
-Message-ID: <CABURp0q84skieqmdd5qSBrdXFTOjNm5asQgVrB42UttrEOEpDw@mail.gmail.com>
-References: <1345217299.7952.83.camel@athena.dnet> <502E73E4.9080601@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Fri, 17 Aug 2012 10:40:35 -0700
+Message-ID: <7vk3wxv2lo.fsf@alter.siamese.dyndns.org>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+ <877gt16ewe.fsf@thomas.inf.ethz.ch> <7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+ <87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+ <7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+ <CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
+ <7vipcj2w9f.fsf@alter.siamese.dyndns.org>
+ <7vehn72vyl.fsf@alter.siamese.dyndns.org> <87pq6rw77l.fsf@thomas.inf.ethz.ch>
+ <502CC4E7.5060508@alum.mit.edu> <87k3wzujuy.fsf@thomas.inf.ethz.ch>
+ <7v628i3jiu.fsf@alter.siamese.dyndns.org> <874no1hnfg.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Daniel Milde <daniel@milde.cz>, git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Aug 17 19:38:46 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	<git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 17 19:40:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2QVR-0004cv-P6
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:38:46 +0200
+	id 1T2QXM-0007Fq-Up
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755722Ab2HQRil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 13:38:41 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:40590 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752846Ab2HQRij (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 13:38:39 -0400
-Received: by qcro28 with SMTP id o28so3277507qcr.19
-        for <git@vger.kernel.org>; Fri, 17 Aug 2012 10:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lMh3s63UVTUpAsao0EIZ2amZtzm6Vb9Fn7NA390Ow8M=;
-        b=LQBh6UpNtb+2wdIYH2hKHXDUpwzKg26hT2G3MDirGkwMYzMsBDSDQrDgQWILCClzJ9
-         nL7+pHB0VTfFPychpnBPqpcnMtwzkXVumQ+YjuGdU6sEtYTYT4sX0VrUJHXemCwF1717
-         DwU6TI4bNeXFAMBa629zTE6n7usZjzmvBbYaDOxdQoL6HHDVGQQdnKpbgm+hvUPqllvi
-         pZ4mtugyEhBO1JOdKT72Xsz/5C/fs01OAeJECz4342sLTras1s9YiFjOIkiw2xNWZGlJ
-         FnTEedHAv+NtVTgPjdZ9gxMeq6u/IZjdeLRXi9yqe6kLDfYJNJ6YBYvMA4W14csfp5k9
-         Z/6Q==
-Received: by 10.229.137.12 with SMTP id u12mr4319050qct.28.1345225118980; Fri,
- 17 Aug 2012 10:38:38 -0700 (PDT)
-Received: by 10.229.52.77 with HTTP; Fri, 17 Aug 2012 10:38:18 -0700 (PDT)
-In-Reply-To: <502E73E4.9080601@web.de>
+	id S1752865Ab2HQRkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 13:40:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61814 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750759Ab2HQRki (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 13:40:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3608C78F9;
+	Fri, 17 Aug 2012 13:40:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2jtGmYuI8k0mhee9BQEn0Cmcpr0=; b=GgkOhI
+	rH/UmIWNP28IsLDoFf73gSs9YpLsA9wBb7e00payl4gonlpxG5HnUh3zH1P8TCKW
+	AAIt85lCZZKuo5t3MwF00WTr674gUV8rIierRAdOkPx6CaVnY1893ES7qgJ8gSvH
+	07c8oomGO6J6CCiM7njxju0VFJn8NuPRQ+Sj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=upvQTPECYd0LDm8d0L4KvdE+ZcgFQbDL
+	4/mCoyTiYFt5/bV5aO6DurUQv7+QX7BWFN+wgiopP4djpmZQo/PFgAJubsW4KsJ9
+	VEQ7jbBxhlIyUrrUPXwR+ihpcgf1PO85twHRI0Kf/6n3YlNy9SoVHD7Mit8Atq8D
+	Ac9aei1nL5I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2361078F8;
+	Fri, 17 Aug 2012 13:40:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80FA178F7; Fri, 17 Aug 2012
+ 13:40:37 -0400 (EDT)
+In-Reply-To: <874no1hnfg.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Fri, 17 Aug 2012 11:34:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A7C4793E-E892-11E1-AB64-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203632>
 
-On Fri, Aug 17, 2012 at 12:40 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 17.08.2012 17:28, schrieb Daniel Milde:
->> Hi all,
->> I have encountered some difficulties with the new location of the
->> metainformation directory (GIT_DIR) of submodules.
->>
->> The change of location happened in 1.7.8:
->>
->>  * When populating a new submodule directory with "git submodule init",
->>    the $GIT_DIR metainformation directory for submodules is created
->> inside
->>    $GIT_DIR/modules/<name>/ directory of the superproject and referenced
->>    via the gitfile mechanism. This is to make it possible to switch
->>    between commits in the superproject that has and does not have the
->>    submodule in the tree without re-cloning.
->>
->> Which problems it causes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
->> 3) Submodules became dependent on superproject. This is quite bad if you
->> are using submodules a lot (e.g. versioning the whole working space),
->> because you cannot move or copy them out of the superproject now.
->
-> Okay, that use case is new to me. What is the intention when you move a
-> submodule out of the work tree? Couldn't you just as easily clone the
-> upstream repo again at the new place?
+> I hope I got that right.  The order of commits is still entirely
+> determined by the choice of "any tentative source", but the algorithm
+> should now stream nicely once the generation numbers are known.
 
-Not all git projects have upstreams.  Maybe this is a local project only.
+Thanks for an intereseting read.
 
-In any case, cloning the upstream anew does not preserve local history.
+Even though generation numbers are not always a good subsitute for
+timestamps depending on the use (see the other message), the algorithm
+to compute "topo-order" can take advantage of the generation numbers
+when they are available, as you illustrated in your message.
 
-Maybe the future 'git submodule mv' can be smart about moving a
-submodule to a new location outside of a superproject.  Maybe it can
-do so explicitly with the --export switch.
+We may want to think about adding a new field to the commit object,
+with a fallback mechanism to an external "cache" that is generated
+on-demand.
 
-Phil
+Once the mechanism is in place so that any caller of parse_commit()
+can depend on having a reliable .generation field in the commit
+object it receives from the function, we can start updating various
+traversal algorithms to take advantage of this new information.
