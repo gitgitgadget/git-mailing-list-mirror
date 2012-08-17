@@ -1,81 +1,112 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 03/12] git p4: gracefully fail if some commits could not
- be applied
-Date: Fri, 17 Aug 2012 07:58:57 -0400
-Message-ID: <20120817115857.GB29214@padd.com>
+Subject: Re: [PATCH 00/12] git p4: submit conflict handling
+Date: Fri, 17 Aug 2012 08:21:34 -0400
+Message-ID: <20120817122134.GA29257@padd.com>
 References: <1345160114-27654-1-git-send-email-pw@padd.com>
- <1345160114-27654-4-git-send-email-pw@padd.com>
- <502DF10A.2040306@diamand.org>
+ <502DDEF5.4090405@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Fri Aug 17 13:59:13 2012
+X-From: git-owner@vger.kernel.org Fri Aug 17 14:21:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2LCl-0006ax-4D
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 13:59:07 +0200
+	id 1T2LYf-0001jI-QF
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 14:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab2HQL7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 07:59:01 -0400
-Received: from honk.padd.com ([74.3.171.149]:41815 "EHLO honk.padd.com"
+	id S1753905Ab2HQMVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 08:21:39 -0400
+Received: from honk.padd.com ([74.3.171.149]:57271 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753265Ab2HQL7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 07:59:00 -0400
+	id S1755984Ab2HQMVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 08:21:38 -0400
 Received: from arf.padd.com (unknown [50.55.149.165])
-	by honk.padd.com (Postfix) with ESMTPSA id D838AD27;
-	Fri, 17 Aug 2012 04:58:59 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 4E6131E43;
+	Fri, 17 Aug 2012 05:21:37 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 7A703313FD; Fri, 17 Aug 2012 07:58:57 -0400 (EDT)
+	id EA16D313FD; Fri, 17 Aug 2012 08:21:34 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <502DF10A.2040306@diamand.org>
+In-Reply-To: <502DDEF5.4090405@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203613>
 
-luke@diamand.org wrote on Fri, 17 Aug 2012 08:21 +0100:
+luke@diamand.org wrote on Fri, 17 Aug 2012 07:04 +0100:
 > On 17/08/12 00:35, Pete Wyckoff wrote:
-> >If a commit fails to apply cleanly to the p4 tree, an interactive
-> >prompt asks what to do next.  In all cases (skip, apply, write),
-> >the behavior after the prompt had a few problems.
+> >These patches rework how git p4 deals with conflicts that
+> >arise during a "git p4 submit".  These may arise due to
+> >changes that happened in p4 since the last "git p4 sync".
 > >
-> >Change it so that it does not claim erroneously that all commits
-> >were applied.  Instead list the set of the patches under
-> >consideration, and mark with an asterisk those that were
-> >applied successfully.  Like this example:
+> >Luke: I especially wanted to get this out as you suggested
+> >that you had a different way of dealing with skipped commits.
+> >
+> >The part that needs the most attention is the interaction
+> >loop that happens when a commit failed.  Currently, three
+> >options are offered:
+> >
+> >     [s]kip this commit, but continue to apply others
+> >     [a]pply the commit forcefully, generating .rej files
+> >     [w]rite the commit to a patch.txt file
+> >     and the implicit<ctrl-c>  to stop
+> >
+> >After this series, it offers two:
+> >
+> >     [c]ontinue to apply others
+> >     [q]uit to stop
+> >
+> >This feels more natural to me, and I like the term "continue" rather
+> >than "skip" as it matches what rebase uses.  I'd like to know what
+> >others think of the new flow.
 > 
-> I could be wrong about this, but this change doesn't seem to help
-> out with "git p4 rebase", which for me at least, is where the
-> conflicts usually get picked up first.
+> The skip is still needed. In my workflow, git-p4 gets run
+> periodically and does the usual sync+rebase on behalf of all the
+> people who have pushed to the git repo.
+> 
+> If someone pushes a change which conflicts with something from
+> Perforce land, then what I want to happen is for the script to
+> discard the offending commit (git rebase --skip) and then carry on
+> with the others.
+> 
+> In 99% of cases this does exactly what I need, as conflicting
+> commits are usually caused by people committing the same fix to both
+> p4 and git at around the same time (someone breaks top-of-tree with
+> an obvious error, two separate people check in slightly different
+> fixes). Discarding the git commit then means that everything carries
+> on working.
+> 
+> I've got a small patch which makes skipping work non-interactively;
+> the thing it's missing is reporting the commits which are skipped.
 
-Right, this is only about the submit path.  I wasn't thinking
-about rebase when I worked on this code (or read your message
-about rebase ORIG_HEAD).
+This "discard offending commits" part I had not thought anyone
+would ever do.  Instead, why not do "git p4 rebase" on its own
+and use "git rebase --skip" to discard the offending ones
+explicitly.  It seems dangerous to do it implicitly as part
+of a multi-commit submit to p4.
 
-> I modified a file in p4, and the same file in git, and then did 'git
-> p4 rebase' and it just failed in the rebase in the usual way with a
-> big 'ol python backtrace.
+Thanks for sending your RFC work.  I see what you are thinking
+about.
 
-The backtraces are not pretty, and should be fixed.  I confess I
-never use git p4 rebase, because it should be only git p4 sync +
-git rebase @{u}.  There's no conflict handling at all in the git
-p4 code.
+Assuming that it really would be good to have a way to
+_automatically_ discard conflicting commits, then sure, keeping a
+list in submit and plumbing that into the rebase would work.  It
+still scares me.  There are quite a few special cases where it
+fails, of course, like if future commits involve dependencies on
+the one you want to skip.
 
-> If this patch series is intended to sort out conflict handling, then
-> it needs a bit more work.
+Would this alternative approach work: "git p4 submit
+--discard-conflicting-commits" (and/or the option).  It
+automatically hits "skip" after every submit failure.  When done,
+it does "git p4 sync" to get a report on what ended up in tree.
+Then instead of rebasing, the HEAD is simply taken to the top of
+the p4 tree.  No need to rebase if the rule is to discard all
+skipped patches.  Plus some reporting to say what was lost.
 
-This patch series tries to fix the conflict handling in the
-submit path only.  Have to start somewhere.
-
-What do you think we might do about the rebase path?  It feels
-like a situation that belongs to native git.  Are there
-p4-specific things like $Id$ tags that need help?  We could
-just catch the errors from git rebase more gracefully, or exec
-directly into git rebase.
+I will reroll my series once we've figured out how we want these
+to co-exist.
 
 		-- Pete
