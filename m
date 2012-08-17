@@ -1,115 +1,82 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
-Date: Fri, 17 Aug 2012 19:37:36 +0200
-Message-ID: <87obm9a07z.fsf@thomas.inf.ethz.ch>
-References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
-	<877gt16ewe.fsf@thomas.inf.ethz.ch>
-	<7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
-	<87sjbpa5m8.fsf@thomas.inf.ethz.ch>
-	<7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
-	<CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
-	<7vipcj2w9f.fsf@alter.siamese.dyndns.org>
-	<7vehn72vyl.fsf@alter.siamese.dyndns.org>
-	<87pq6rw77l.fsf@thomas.inf.ethz.ch> <502CC4E7.5060508@alum.mit.edu>
-	<87k3wzujuy.fsf@thomas.inf.ethz.ch>
-	<7v628i3jiu.fsf@alter.siamese.dyndns.org>
-	<874no1hnfg.fsf@thomas.inf.ethz.ch>
-	<7v1uj5wi72.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Problems with new location of submodule's GIT_DIR
+Date: Fri, 17 Aug 2012 13:38:18 -0400
+Message-ID: <CABURp0q84skieqmdd5qSBrdXFTOjNm5asQgVrB42UttrEOEpDw@mail.gmail.com>
+References: <1345217299.7952.83.camel@athena.dnet> <502E73E4.9080601@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	<git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 19:37:50 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Daniel Milde <daniel@milde.cz>, git <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Aug 17 19:38:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2QUV-0003OS-Pw
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:37:48 +0200
+	id 1T2QVR-0004cv-P6
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992Ab2HQRhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 13:37:42 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:38378 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752864Ab2HQRhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 13:37:40 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
- 2012 19:37:33 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
- 2012 19:37:36 +0200
-In-Reply-To: <7v1uj5wi72.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 17 Aug 2012 10:18:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [46.126.8.85]
+	id S1755722Ab2HQRil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 13:38:41 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:40590 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752846Ab2HQRij (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 13:38:39 -0400
+Received: by qcro28 with SMTP id o28so3277507qcr.19
+        for <git@vger.kernel.org>; Fri, 17 Aug 2012 10:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lMh3s63UVTUpAsao0EIZ2amZtzm6Vb9Fn7NA390Ow8M=;
+        b=LQBh6UpNtb+2wdIYH2hKHXDUpwzKg26hT2G3MDirGkwMYzMsBDSDQrDgQWILCClzJ9
+         nL7+pHB0VTfFPychpnBPqpcnMtwzkXVumQ+YjuGdU6sEtYTYT4sX0VrUJHXemCwF1717
+         DwU6TI4bNeXFAMBa629zTE6n7usZjzmvBbYaDOxdQoL6HHDVGQQdnKpbgm+hvUPqllvi
+         pZ4mtugyEhBO1JOdKT72Xsz/5C/fs01OAeJECz4342sLTras1s9YiFjOIkiw2xNWZGlJ
+         FnTEedHAv+NtVTgPjdZ9gxMeq6u/IZjdeLRXi9yqe6kLDfYJNJ6YBYvMA4W14csfp5k9
+         Z/6Q==
+Received: by 10.229.137.12 with SMTP id u12mr4319050qct.28.1345225118980; Fri,
+ 17 Aug 2012 10:38:38 -0700 (PDT)
+Received: by 10.229.52.77 with HTTP; Fri, 17 Aug 2012 10:38:18 -0700 (PDT)
+In-Reply-To: <502E73E4.9080601@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203631>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thomas Rast <trast@inf.ethz.ch> writes:
->
->> However, suppose we knew generation numbers.  I haven't actually looked
->> into the old threads again, but my understanding was that they are
->> numbers g(C) attached to each commit C such that
+On Fri, Aug 17, 2012 at 12:40 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 17.08.2012 17:28, schrieb Daniel Milde:
+>> Hi all,
+>> I have encountered some difficulties with the new location of the
+>> metainformation directory (GIT_DIR) of submodules.
 >>
->>   g(C) = 1 + max(g(P) for P a parent of C)   for non-root commits
+>> The change of location happened in 1.7.8:
 >>
->>   g(C) = 0                                   for root commits
+>>  * When populating a new submodule directory with "git submodule init",
+>>    the $GIT_DIR metainformation directory for submodules is created
+>> inside
+>>    $GIT_DIR/modules/<name>/ directory of the superproject and referenced
+>>    via the gitfile mechanism. This is to make it possible to switch
+>>    between commits in the superproject that has and does not have the
+>>    submodule in the tree without re-cloning.
 >>
->> They are invariant given the commit, so they can be cached.
->> ...
->> I hope I got that right.  The order of commits is still entirely
->> determined by the choice of "any tentative source", but the algorithm
->> should now stream nicely once the generation numbers are known.
+>> Which problems it causes:
+
+>> 3) Submodules became dependent on superproject. This is quite bad if you
+>> are using submodules a lot (e.g. versioning the whole working space),
+>> because you cannot move or copy them out of the superproject now.
 >
-> That matches the definition of generation number I remember from the
-> old discussion.  Now look at the illustration in this discussion
-> again:
->
->       ---A---B---C---D
->                       \
->     ---1---2---3---4---* = HEAD
-[...]
-> The numbered commits 1 2 3 4 are building on top of recent "master",
-> while alphabetized A B C D are building on aged maintenance track.
-> The difference in generation numbers between 1 and 2, 2 and 3,... A
-> and B, B and C, C and D are all one, and HEAD (the tip of 'pu') would
-> have generation number of commit 4 plus 1, as commit 4's generation
-> number would be a thousand or more ahead of that of commit D.  And
-> there are a thousand ancestors of '1' with larger generation numbers
-> than 'D'.
->
-> When the user runs "git log" (i.e. the casual "the last few commit"
-> macthes), the expectation of the user is "I want to see what I did
-> recently".  If you substituted the commit timestamp with such a
-> generation number, how would that expectation satisified?
+> Okay, that use case is new to me. What is the intention when you move a
+> submodule out of the work tree? Couldn't you just as easily clone the
+> upstream repo again at the new place?
 
-Umm, have you looked at the algorithm I proposed?
+Not all git projects have upstreams.  Maybe this is a local project only.
 
-It does not substitute the generation numbers for anything, let alone
-the date.  It merely uses them to determine a point where it knows
-"enough" of the history to be able to emit the next commit; that is,
-where it can use the generation numbers to prove that no unknown commit
-can be a descendant of what it wants to emit next.
+In any case, cloning the upstream anew does not preserve local history.
 
-It does *not* have to use the generation numbers in the final ordering
-of the commits.  That final order is determined by how the algorithm
-chooses the next candidate commit.  If you use a stack, it winds up
-being --topo-order.  If you use a date-ordered priority queue, it
-becomes --date-order.
+Maybe the future 'git submodule mv' can be smart about moving a
+submodule to a new location outside of a superproject.  Maybe it can
+do so explicitly with the --export switch.
 
-So really, this is only about modifying the algorithm that generates the
-existing order to allow for streaming output as it reads through
-history.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Phil
