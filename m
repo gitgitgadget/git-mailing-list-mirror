@@ -1,68 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cleanup precompose_utf8
-Date: Fri, 17 Aug 2012 10:30:33 -0700
-Message-ID: <7vobm9v32e.fsf@alter.siamese.dyndns.org>
-References: <7v393mxkpk.fsf@alter.siamese.dyndns.org>
- <1345215190-95976-1-git-send-email-robin.rosenberg@dewire.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Fri, 17 Aug 2012 19:37:36 +0200
+Message-ID: <87obm9a07z.fsf@thomas.inf.ethz.ch>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+	<877gt16ewe.fsf@thomas.inf.ethz.ch>
+	<7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+	<87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+	<7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+	<CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
+	<7vipcj2w9f.fsf@alter.siamese.dyndns.org>
+	<7vehn72vyl.fsf@alter.siamese.dyndns.org>
+	<87pq6rw77l.fsf@thomas.inf.ethz.ch> <502CC4E7.5060508@alum.mit.edu>
+	<87k3wzujuy.fsf@thomas.inf.ethz.ch>
+	<7v628i3jiu.fsf@alter.siamese.dyndns.org>
+	<874no1hnfg.fsf@thomas.inf.ethz.ch>
+	<7v1uj5wi72.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: tboegi@web.de, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 19:30:45 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	<git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 19:37:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2QNg-0002uA-En
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:30:44 +0200
+	id 1T2QUV-0003OS-Pw
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 19:37:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758599Ab2HQRak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 13:30:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55960 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758588Ab2HQRah (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 13:30:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7682D75E0;
-	Fri, 17 Aug 2012 13:30:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fQQqqUjzFZWRlYrXzbDpvrdXyeI=; b=RteQeO
-	xT+GVcsczzcPAZmV5BSHu+sV0WyVeZbkPY6wJvyfo19VsP6ZfR6t8DxASVmykXj0
-	2zAWwDvZWQcOeVOObunDvBc/02Wlsh93rmdBTZw8DH4IDV6D1W3tODFEAbQnObZx
-	50Mov/kQHjMBlof2E9U3rLHY6PydNONyASoKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eIM4Eh3IeCCqW/5499uFR8YMqtPQAP3y
-	MktJwwBcDJX6geJy/KdtMAWhP05uLiJbjJW6rW2L06EEc8XcGGJxYPX/xAgqYAj0
-	j9v3414scddX7m+ykI1jGxYIlmBGRcbCPcnKYh9fDY/SZ0gY8BOczki5YSfnrooz
-	+33Urk8u2mM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6243175DF;
-	Fri, 17 Aug 2012 13:30:37 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CFC575DE; Fri, 17 Aug 2012
- 13:30:34 -0400 (EDT)
-In-Reply-To: <1345215190-95976-1-git-send-email-robin.rosenberg@dewire.com>
- (Robin Rosenberg's message of "Fri, 17 Aug 2012 16:53:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 40AA1336-E891-11E1-9DF0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752992Ab2HQRhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 13:37:42 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:38378 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752864Ab2HQRhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 13:37:40 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
+ 2012 19:37:33 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (46.126.8.85) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
+ 2012 19:37:36 +0200
+In-Reply-To: <7v1uj5wi72.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 17 Aug 2012 10:18:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [46.126.8.85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203630>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Remove extraneous parentheses and braces
-> Remove redundant NUL-termination
-> Check result of unlink when probing for decomposed file names
+> Thomas Rast <trast@inf.ethz.ch> writes:
 >
-> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> ---
+>> However, suppose we knew generation numbers.  I haven't actually looked
+>> into the old threads again, but my understanding was that they are
+>> numbers g(C) attached to each commit C such that
+>>
+>>   g(C) = 1 + max(g(P) for P a parent of C)   for non-root commits
+>>
+>>   g(C) = 0                                   for root commits
+>>
+>> They are invariant given the commit, so they can be cached.
+>> ...
+>> I hope I got that right.  The order of commits is still entirely
+>> determined by the choice of "any tentative source", but the algorithm
+>> should now stream nicely once the generation numbers are known.
+>
+> That matches the definition of generation number I remember from the
+> old discussion.  Now look at the illustration in this discussion
+> again:
+>
+>       ---A---B---C---D
+>                       \
+>     ---1---2---3---4---* = HEAD
+[...]
+> The numbered commits 1 2 3 4 are building on top of recent "master",
+> while alphabetized A B C D are building on aged maintenance track.
+> The difference in generation numbers between 1 and 2, 2 and 3,... A
+> and B, B and C, C and D are all one, and HEAD (the tip of 'pu') would
+> have generation number of commit 4 plus 1, as commit 4's generation
+> number would be a thousand or more ahead of that of commit D.  And
+> there are a thousand ancestors of '1' with larger generation numbers
+> than 'D'.
+>
+> When the user runs "git log" (i.e. the casual "the last few commit"
+> macthes), the expectation of the user is "I want to see what I did
+> recently".  If you substituted the commit timestamp with such a
+> generation number, how would that expectation satisified?
 
-Thanks.  I've found and fixed a bit more style violations while we
-are at it.
+Umm, have you looked at the algorithm I proposed?
+
+It does not substitute the generation numbers for anything, let alone
+the date.  It merely uses them to determine a point where it knows
+"enough" of the history to be able to emit the next commit; that is,
+where it can use the generation numbers to prove that no unknown commit
+can be a descendant of what it wants to emit next.
+
+It does *not* have to use the generation numbers in the final ordering
+of the commits.  That final order is determined by how the algorithm
+chooses the next candidate commit.  If you use a stack, it winds up
+being --topo-order.  If you use a date-ordered priority queue, it
+becomes --date-order.
+
+So really, this is only about modifying the algorithm that generates the
+existing order to allow for streaming output as it reads through
+history.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
