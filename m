@@ -1,50 +1,55 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 03/12] git p4: gracefully fail if some commits could not
- be applied
-Date: Fri, 17 Aug 2012 08:53:35 +0200
-Message-ID: <502DEA6F.5080406@viscovery.net>
-References: <1345160114-27654-1-git-send-email-pw@padd.com> <1345160114-27654-4-git-send-email-pw@padd.com>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: Re: [PATCH] man: git pull -r is a short for --rebase
+Date: Fri, 17 Aug 2012 09:04:07 +0200
+Message-ID: <20120817070406.GD22313@suse.cz>
+References: <20120816095018.GD5489@suse.cz>
+ <7v1uj63iyx.fsf@alter.siamese.dyndns.org>
+ <502D5D97.3020906@kdbg.org>
+ <7v4no21raw.fsf@alter.siamese.dyndns.org>
+ <7vzk5uzgqa.fsf@alter.siamese.dyndns.org>
+ <20120817053826.GB22313@suse.cz>
+ <7vk3wyvy67.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 08:53:55 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 09:04:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2GRO-0003Yx-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 08:53:55 +0200
+	id 1T2GbS-0008NW-EM
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 09:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932694Ab2HQGxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 02:53:42 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:21147 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932639Ab2HQGxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 02:53:40 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1T2GTC-0003Pw-Bq; Fri, 17 Aug 2012 08:55:46 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 9C8551660F;
-	Fri, 17 Aug 2012 08:53:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <1345160114-27654-4-git-send-email-pw@padd.com>
-X-Spam-Score: -1.4 (-)
+	id S1754415Ab2HQHEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 03:04:13 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:40568 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750792Ab2HQHEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 03:04:12 -0400
+Received: from relay1.suse.de (unknown [195.135.220.254])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 7E534A39CE;
+	Fri, 17 Aug 2012 09:04:11 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vk3wyvy67.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 8/17/2012 1:35, schrieb Pete Wyckoff:
-> +++ b/t/t9815-git-p4-submit-fail.sh
-> @@ -0,0 +1,93 @@
-> +
-> +#!/bin/sh
+On Thu, Aug 16, 2012 at 11:18:40PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> From: Miklos Vajna <vmiklos@suse.cz>
+> Date: Thu, 16 Aug 2012 11:50:18 +0200
+> Subject: [PATCH] man: git pull -r is a short for --rebase
+> 
+> Letting the "--rebase" option squat on the short-and-sweet single
+> letter option "-r" was an unintended accident and was not even
+> documented, but the short option seems to be already used in the
+> wild. Let's document it so that other options that begin with "r"
+> would not be tempted to steal it.
 
-This initial blank line is an accident, right? ;-)
-
--- Hannes
+Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
