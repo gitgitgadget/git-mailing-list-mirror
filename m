@@ -1,56 +1,50 @@
-From: Manfred Rudigier <manfred.rudigier@omicron.at>
-Subject: GIT archive invocation with SHA sum
-Date: Fri, 17 Aug 2012 08:25:53 +0200
-Message-ID: <95DC1AA8EC908B48939B72CF375AA5E301473171E4@alice.at.omicron.at>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 03/12] git p4: gracefully fail if some commits could not
+ be applied
+Date: Fri, 17 Aug 2012 08:53:35 +0200
+Message-ID: <502DEA6F.5080406@viscovery.net>
+References: <1345160114-27654-1-git-send-email-pw@padd.com> <1345160114-27654-4-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 17 08:33:40 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 08:53:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2G7m-0003BI-6m
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 08:33:38 +0200
+	id 1T2GRO-0003Yx-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 08:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726Ab2HQGdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 02:33:31 -0400
-Received: from ns.omicron.at ([212.183.10.25]:51466 "EHLO ns.omicron.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751662Ab2HQGda convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2012 02:33:30 -0400
-X-Greylist: delayed 449 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Aug 2012 02:33:30 EDT
-Received: from counter.omicron.at ([212.183.10.29])
-	by ns.omicron.at (8.13.1/8.13.1) with ESMTP id q7H6PspF014753
-	for <git@vger.kernel.org>; Fri, 17 Aug 2012 08:25:59 +0200
-Received: from mary.at.omicron.at (mary.at.omicron.at [172.22.100.48])
-	by counter.omicron.at (8.14.4/8.14.4) with ESMTP id q7H6PspI009945
-	for <git@vger.kernel.org>; Fri, 17 Aug 2012 08:25:54 +0200
-Received: from alice.at.omicron.at ([172.22.100.49]) by mary.at.omicron.at
- ([172.22.100.48]) with mapi; Fri, 17 Aug 2012 08:25:54 +0200
-Thread-Topic: GIT archive invocation with SHA sum
-Thread-Index: Ac18Pf9Opxha+H3jTa62js3epAbQKg==
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: de-DE, en-US
+	id S932694Ab2HQGxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 02:53:42 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:21147 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932639Ab2HQGxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 02:53:40 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1T2GTC-0003Pw-Bq; Fri, 17 Aug 2012 08:55:46 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9C8551660F;
+	Fri, 17 Aug 2012 08:53:35 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <1345160114-27654-4-git-send-email-pw@padd.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Am 8/17/2012 1:35, schrieb Pete Wyckoff:
+> +++ b/t/t9815-git-p4-submit-fail.sh
+> @@ -0,0 +1,93 @@
+> +
+> +#!/bin/sh
 
-we have recently upgraded our Ubuntu server to 12.04, which comes with a newer version of GIT. However, we have noticed that git archive -remote does not work anymore by specifying the SHA sum of a commit.
+This initial blank line is an accident, right? ;-)
 
-By seaching the mailing list I have found out that this was already discussed before (http://thread.gmane.org/gmane.comp.version-control.git/191815). In our company we use the git archive -remote command for a similar purpose in our build system and we must currently stick with an older version of GIT until there is a solution for this.
-
-I have read that this restriction was made for some kind of security reason, and one possibility would be to add a config option on the server repo to turn off this safety check. As we manage the git repos ourselves, this would be perfectly ok for us.
-
-What is the current status of this - is there already such a config option?
-
-Regards,
-Manfred Rudigier
+-- Hannes
