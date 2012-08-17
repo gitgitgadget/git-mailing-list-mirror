@@ -1,109 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Problems with new location of submodule's GIT_DIR
-Date: Fri, 17 Aug 2012 18:40:04 +0200
-Message-ID: <502E73E4.9080601@web.de>
-References: <1345217299.7952.83.camel@athena.dnet>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Git feature request: --amend older commit
+Date: Fri, 17 Aug 2012 18:33:31 +0200
+Message-ID: <502E725B.2040906@alum.mit.edu>
+References: <20120817154749.11762.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Daniel Milde <daniel@milde.cz>
-X-From: git-owner@vger.kernel.org Fri Aug 17 18:40:19 2012
+Cc: git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Fri Aug 17 18:40:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2Pas-0003wt-0j
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 18:40:18 +0200
+	id 1T2PbH-0004UN-Uk
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 18:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758488Ab2HQQkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 12:40:13 -0400
-Received: from mout.web.de ([212.227.17.12]:60923 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758479Ab2HQQkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 12:40:11 -0400
-Received: from [192.168.178.41] ([91.3.156.248]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0MAvVk-1SsTxU00wO-00AJZC; Fri, 17 Aug 2012 18:40:08
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <1345217299.7952.83.camel@athena.dnet>
-X-Provags-ID: V02:K0:bLNCo6bjBxLrpcy0z2e2GqibeFykzg29QKTlNf5dhtN
- uxYT+5bhAa6+Y0KLoMM4i6GAXm7HA7/+7J/t+k/GMSux8tAIye
- geakC1ihEZURC+1ajBpwKjH2gUT/kw3rD+2bAutGprRG+WA6Ie
- GWwCnlv1aOFe2JNtHF94z15PTiJmte1R+2UDPVH6FR1ya/AMk0
- P6djgGWtzFisWQ5tr+akQ==
+	id S1758499Ab2HQQki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 12:40:38 -0400
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:57276 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758490Ab2HQQkh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Aug 2012 12:40:37 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Aug 2012 12:40:36 EDT
+X-AuditID: 1207440e-b7f036d0000008b5-4f-502e725e1b59
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 11.95.02229.E527E205; Fri, 17 Aug 2012 12:33:34 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7HGXWrE008930
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 17 Aug 2012 12:33:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <20120817154749.11762.qmail@science.horizon.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqBtXpBdg0N+sYNF1pZvJ4tSaeYwO
+	TB7b585n9vi8SS6AKYrbJimxpCw4Mz1P3y6BO+P+t0bWgu3sFTfPHGRuYPzO2sXIySEhYCLR
+	/6mJEcIWk7hwbz1bFyMXh5DAZUaJxT+PMEI4x5kkjk1ZBlbFK6AtsWPOebBuFgFViS9d39lA
+	bDYBXYlFPc1MILaoQIjEmm9ToOoFJU7OfMICYosIqElc758HZHNwMAuIS/T/AwsLC5hJzO66
+	CNYqJGAjcaP7HTuIzSlgK3FwyyomiHJriW+7i0DCzALyEtvfzmGewCgwC8mCWQhVs5BULWBk
+	XsUol5hTmqubm5iZU5yarFucnJiXl1qka6yXm1mil5pSuokREqR8Oxjb18scYhTgYFTi4Z3o
+	oxsgxJpYVlyZe4hRkoNJSZR3dYFegBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3hUfgcp5UxIr
+	q1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyGhwcAmvWrb7AKMWSl5+XqiTBm1MItECw
+	KDU9tSItM6cEoZSJgxNkEZeUSHFqXkpqUWJpSUY8KHrji4HxC5LiAbrBGKSdt7ggMRcoCtF6
+	ilGX4/PTk3cZhcB2SInzqoAUCYAUZZTmwa2ApapXjOJA3wvz+oBU8QDTHNykV0BLmICWrBQB
+	ebS4JBEhJdXAaHvrco/Y44TukoUdE8zic++nmLxkmLUzV1czjVnHpmzF1p89Nt1HpXceXMeg
+	zHIiT4nlctycCYYTeC49lL9VuGHhmd0sf3m+XXFmsf40oWv5PRvZtbWOWWEdF4UY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203622>
 
-Am 17.08.2012 17:28, schrieb Daniel Milde:
-> Hi all,
-> I have encountered some difficulties with the new location of the
-> metainformation directory (GIT_DIR) of submodules.
-> 
-> The change of location happened in 1.7.8:
-> 
->  * When populating a new submodule directory with "git submodule init",
->    the $GIT_DIR metainformation directory for submodules is created
-> inside
->    $GIT_DIR/modules/<name>/ directory of the superproject and referenced
->    via the gitfile mechanism. This is to make it possible to switch
->    between commits in the superproject that has and does not have the
->    submodule in the tree without re-cloning.
-> 
-> Which problems it causes:
-> 
-> 1) You cannot move submodule easily (change the path to submodule). You
-> can either remove the submodule and then add it again to different path,
-> or move the submodule directory and then edit path in its .git, change
-> path in superproject's .git/modules dir and in .git/config. This is
-> quite difficult in comparisson with previous behaviour when you can just
-> move the submodule and then stash changes.
+On 08/17/2012 05:47 PM, George Spelvin wrote:
+> With git's "commit frequently" style, I often find that I end up with a
+> commit that includes a typo in a comment or I forgot one call site when
+> updating functions or something.
+>
+> And it's a few commits later before I notice the simple oops.
+>
+> This is of course fixable by making a commit, rebase -i HEAD~4 (or whatever),
+> and marking the fixup for squashing into the previous commit.
+>
+> But it would be really handy if there were a one-step command for doing this.
+>
+> Something like "git commit --fixup HEAD~3", where "git commit --fixup HEAD"
+> would be equivalent to "git commit --amend". [...]
 
-Unfortunately that is currently the case. Plans are to have something
-like a "git submodule mv", which will do all the magic and make moving
-submodules easy again.
+Have you tried "git rebase --autosquash"?  It does part of what you are 
+asking for and additionally allows multiple fixup commits to be queued 
+up and processed in a single rebase.
 
-> 2) This change introduced many difficulties on Windows platform, because
-> there is limitation to path length and the way how paths are now
-> composed leads to strange errors when project with submodules is in
-> user's dir. 
+Michael
 
-Hmm, this sounds more like the problems we had with "c:" and "/c",
-which are fixed in current git. What version are you using?
-
-> 3) Submodules became dependent on superproject. This is quite bad if you
-> are using submodules a lot (e.g. versioning the whole working space),
-> because you cannot move or copy them out of the superproject now.
-
-Okay, that use case is new to me. What is the intention when you move a
-submodule out of the work tree? Couldn't you just as easily clone the
-upstream repo again at the new place?
-
-> I honestly don't know why this change was introduced because I have
-> never seen git removing any submodule while walking through the history.
-> I have seen only the message saying that directory is not empty and so
-> git will not remove it. Or is there another reason why this change was
-> added to git?
-
-But that is just the same as when a submodules appears and you check
-out a commit before the submodule was added. It should be removed but
-currently isn't, which we can change in a future git version now the
-git directory lives in a safe place. Other reasons are:
-
-*) Converting a directory tree into a submodules (or the other way
-   round) is currently virtually impossible to handle. But that'll
-   work just fine in the near future, which will make a lot of users
-   happy.
-
-*) It is easy to accidentally throw away the submodules history and
-   unpushed changes when removing it from the work tree (e.g. because
-   you don't work on that part of the tree anymore), which should
-   only contain tracked content and not repository data like it did.
-
-So we did that change to make submodule handling easier and to be able
-to support valid use cases which we couldn't. Sorry for the hassle,
-but we believe it is worth it in the long run.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
