@@ -1,76 +1,153 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: Is there a way to find out which commit "git rebase --skip" skipped?
-Date: Fri, 17 Aug 2012 10:32:12 +0100
-Message-ID: <502E0F9C.5010303@diamand.org>
-References: <CAE5ih78tYrX0F3AZ3vrE2p=_h24njhU_rTGEqbBHfJGkGuHmpw@mail.gmail.com> <7va9xu3kr5.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2] rev-list docs: clarify --topo-order description
+Date: Fri, 17 Aug 2012 11:34:27 +0200
+Message-ID: <874no1hnfg.fsf@thomas.inf.ethz.ch>
+References: <7vsjbqbfhm.fsf@alter.siamese.dyndns.org>
+	<877gt16ewe.fsf@thomas.inf.ethz.ch>
+	<7vzk5x8s1q.fsf@alter.siamese.dyndns.org>
+	<87sjbpa5m8.fsf@thomas.inf.ethz.ch>
+	<7vmx1v53fb.fsf_-_@alter.siamese.dyndns.org>
+	<CAOeW2eFZNuM_8bFB2cXGVRT0FpDC86fH=XMj9kviXs-UCo1fAA@mail.gmail.com>
+	<7vipcj2w9f.fsf@alter.siamese.dyndns.org>
+	<7vehn72vyl.fsf@alter.siamese.dyndns.org>
+	<87pq6rw77l.fsf@thomas.inf.ethz.ch> <502CC4E7.5060508@alum.mit.edu>
+	<87k3wzujuy.fsf@thomas.inf.ethz.ch>
+	<7v628i3jiu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>
+Content-Type: text/plain; charset="us-ascii"
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	<git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 17 11:33:25 2012
+X-From: git-owner@vger.kernel.org Fri Aug 17 11:34:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2Ivj-0006NF-MV
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 11:33:24 +0200
+	id 1T2Iwv-000830-7C
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 11:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964770Ab2HQJdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 05:33:17 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:65387 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756803Ab2HQJdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 05:33:14 -0400
-Received: by eeil10 with SMTP id l10so1157071eei.19
-        for <git@vger.kernel.org>; Fri, 17 Aug 2012 02:33:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=nkhODdqpVEsLaZ0d6p+p8SVYj8qb3Adqm/846R9LTm0=;
-        b=bZW/l0+ichJTLRhUW3DR+2b1Rmr5aDvUoD3NWCs6vkDSlZM+ofr9MYe1RXXXUxJYDk
-         d5DANCIKDDjMiXV6c6OQYBA2JGPPBRA8sW+TlouVAb8kAg/Pjw7ORYWw1JqQOrM4pfUV
-         Kfg88sYjE/NwNtS97mkhxvT4x56IM71MDejvKPwM9dY5XJY1oBR4F8qXCVp1dc4BizFO
-         xXUjvKBsjBnMovzrtIaAq7SURPVG8Du746nAkjqk0PP137j2tMqQUn7kDG+aBog6UXp2
-         hYRwWpAIq/zxN+ESxxojJjfdksmnagb1jWNDooDbYOTc6zFdibruRrxOdIojk21n1GwU
-         vM2w==
-Received: by 10.14.198.65 with SMTP id u41mr5510289een.22.1345195993398;
-        Fri, 17 Aug 2012 02:33:13 -0700 (PDT)
-Received: from [86.6.26.120] (cpc21-cmbg14-2-0-cust119.5-4.cable.virginmedia.com. [86.6.26.120])
-        by mx.google.com with ESMTPS id 45sm18564368eed.17.2012.08.17.02.33.12
-        (version=SSLv3 cipher=OTHER);
-        Fri, 17 Aug 2012 02:33:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
-In-Reply-To: <7va9xu3kr5.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQlHCSlOMOXcepqkAkQat5eTmviMiPLd0YQ5MHTJYAnoC4ymyVjQJcaC7Ws7nUUfEh0bFVas
+	id S1755311Ab2HQJeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 05:34:31 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:46859 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754645Ab2HQJea (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 05:34:30 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
+ 2012 11:34:24 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Fri, 17 Aug
+ 2012 11:34:27 +0200
+In-Reply-To: <7v628i3jiu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 16 Aug 2012 09:10:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203607>
 
-On 16/08/12 16:43, Junio C Hamano wrote:
-> Luke Diamand<luke@diamand.org>  writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
->> If I do "git rebase --skip", is there a way to find out the commit SHA
->> that was skipped (other than just parsing the output of the command) ?
+>> The right fix would be to dig up Peff's work on generation number
+>> caching, and modify the algorithm to take generation numbers into
+>> account.
 >
-> There currently isn't, and I do not think it is doable in general
-> when the command ever gives control back to the user to futz with
-> the history, expecting the user only to fix up the conflict and make
-> a single commit (in which case you would want to say "that old
-> commit was replayed as this commit with different patch id) or say
-> "rebase --skip" (in which case you could record "that old commit was
-> manually skipped), but the user can do other things like resetting
-> the head to lose commits that have been rebased already, adding new
-> commits manually before continuing, etc., all of which will be done
-> outside of your control.
+> I think you are totally wrong here, unless you are talking about a
+> generation number that is different from what I recall from the
+> older discussion.
 
-All I need is to be able to get the commit *immediately* after the 
-failed 'git rebase'. It looks like .git/ORIG_HEAD has exactly what I need.
+Hrm, now you're making me feel like I missed something.  But my
+reasoning goes roughly like this.
 
-Thanks,
-Luke
+Consider the commit graph as a DAG, where the parent pointers are
+directed edges from child to parent.  Thus, tip commits are sources and
+root commits are sinks.  One way to get a valid topo ordering, knowing
+the complete DAG, is:
+
+  while there are vertices left:
+    remove any source and emit it
+
+(You can also generate it from the sinks instead; I haven't actually
+checked what the code currently does.  But for the following, we need to
+start from the sources.)
+
+To implement this efficiently, one usually keeps track of the set S of
+sources, and inserts vertices that (by removal of their last
+in-neighbour) have become a source.
+
+The distinction between topo-order and date-order is the preference
+given in the choice of source.  IIUC, date-order prefers the newest
+source by committer date (using a priority queue or such for S), and
+topo-order prefers the source(s) which were parents of the vertex
+removed in the previous iteration (using a stack for S).
+
+The problem with this algorithm is that it requires knowledge of the
+DAG[1].  So with --topo-order, git dutifully loads the whole commit
+graph, and then runs the algorithm, leading to the discussed startup
+delay.
+
+However, suppose we knew generation numbers.  I haven't actually looked
+into the old threads again, but my understanding was that they are
+numbers g(C) attached to each commit C such that
+
+  g(C) = 1 + max(g(P) for P a parent of C)   for non-root commits
+
+  g(C) = 0                                   for root commits
+
+They are invariant given the commit, so they can be cached.  And they
+allow us to infer something about ancestry: if g(C)<=g(D), then C cannot
+possibly be a descendant of D.
+
+The topo order algorithm can be modified to take advantage of them, in
+order to provide incremental processing:
+
+  Let S be the set of tentative sources
+
+  Let U be the set of vertices whose out-edges are no known yet
+    (i.e., the set of commits which haven't been loaded yet)
+
+  Let max g(U) denote "max g(C) taken over all C in U".
+
+  Fill S and U from the revisions given:
+    load all positive revisions, let's call this set P
+    put all zero-indegree members of P in S
+    put all parents of members of P in U (as far as they are not also
+    members of P, and therefore loaded already)
+
+  while there are any vertices left:
+
+    pick any tentative source C from S that we "want to emit"
+
+    # Ascertain that no unknown commit (from U or further beyond) can be
+    # a descendant of C
+    while there is a D in U such that g(D) > g(C):
+      load D
+      remove D from U
+      add the parents of D to U if they were not already loaded
+      possibly remove some elements of S if their indegree became nonzero
+
+    if C was removed from S:
+      continue
+
+    remove C from the graph and emit it
+
+I hope I got that right.  The order of commits is still entirely
+determined by the choice of "any tentative source", but the algorithm
+should now stream nicely once the generation numbers are known.
+
+
+Footnotes: 
+
+[1] If there are any parent pointers not yet followed, they may in fact
+wind up (over at least one more commit) pointing to the commit you
+wanted to emit next, making that an invalid choice.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
