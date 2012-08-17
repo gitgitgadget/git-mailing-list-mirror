@@ -1,193 +1,128 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH/RFC v4 05/16] Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability.
-Date: Fri, 17 Aug 2012 22:25:46 +0200
-Message-ID: <1345235157-702-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH/RFC v4 04/16] Add argv_array_detach and argv_array_free_detached.
+Date: Fri, 17 Aug 2012 22:25:45 +0200
+Message-ID: <1345235157-702-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345235157-702-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345235157-702-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345235157-702-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1345235157-702-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 17 22:27:04 2012
+X-From: git-owner@vger.kernel.org Fri Aug 17 22:27:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2T8J-0005Xc-92
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 22:27:03 +0200
+	id 1T2T8I-0005Xc-4a
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Aug 2012 22:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758894Ab2HQU07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Aug 2012 16:26:59 -0400
+	id S1758886Ab2HQU0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Aug 2012 16:26:54 -0400
 Received: from mail-we0-f174.google.com ([74.125.82.174]:58829 "EHLO
 	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758884Ab2HQU0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Aug 2012 16:26:51 -0400
+	with ESMTP id S1758881Ab2HQU0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Aug 2012 16:26:48 -0400
 Received: by mail-we0-f174.google.com with SMTP id x8so2687136wey.19
-        for <git@vger.kernel.org>; Fri, 17 Aug 2012 13:26:50 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 17 Aug 2012 13:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=kgoD414c4xOnF0oIBv/XBbZQtow8iHYA1OQzGW+1S4Y=;
-        b=kmv8LHwng7uyRF9+pjPTue3qJO3MZYzfCvPWm3CasT1SWr/YIG7XrMdNfkjLq9KsPR
-         vQjj7sbLbcx+m6HKPel3GFFSwF58r1QcGsS2D/apoEDOO+7NPZLFFNhJ7oxnj5WkVFb9
-         jyBGZsC77B+mTib8Gd8mcFKiICh6ukoqP1gYs/IBEht7dF3GWu48q7I+dc7AHjRoSNpW
-         0cJO0s7jr4Bxq7uL6N3I53leEa8JAEAwk5UGK2O0KAX6u7P+FJsl/i1JU0FkQEG6pfNt
-         VCYxfg9tsmIvQDZsbR1x0lhsTS5R4RKyeM4wQUWPKfW5UlPkm+ZRgP39iJ4W/zAIkLSA
-         PW4Q==
-Received: by 10.216.147.4 with SMTP id s4mr3344843wej.9.1345235210452;
-        Fri, 17 Aug 2012 13:26:50 -0700 (PDT)
+        bh=KtNDEqVmliKWgmsHuF+sHHJ7i9W6B/u+9bRXsVgzCKs=;
+        b=wjK2l/Z7lv25h3fx1oDRLWVubaaqarsqwozCQvyljc76FvFw1Z99N8unhODi9XvwU4
+         nfLTEraiyzrOANZ4hZOA1eKCX3t8xASTqwKOcMHfd3LDHkUbSZEjd4vikIg44ly2aa1t
+         aOBHwWEpZi8r0w135B0pZQYt85ggo5kMQLGYNqIPwSPiBheS/rtvGGiQWwL+4GMo5Iky
+         0rzezfJc0sr3Ep9pfkdJVrhsilqYi4bvoSLS8RH977plGCOus4N9Jo5Q4JkFjfL8UtLc
+         kHCzOvbnr9pGUBXI9UGsYpdqXde9sEQ4Dl5qHZav/zad4LOT+YmFdOVo5zRiWZ2Wjgwg
+         07ig==
+Received: by 10.216.85.149 with SMTP id u21mr2977603wee.147.1345235208006;
+        Fri, 17 Aug 2012 13:26:48 -0700 (PDT)
 Received: from flobuntu.lan (91-115-81-15.adsl.highway.telekom.at. [91.115.81.15])
-        by mx.google.com with ESMTPS id k2sm17372232wiz.7.2012.08.17.13.26.48
+        by mx.google.com with ESMTPS id k2sm17372232wiz.7.2012.08.17.13.26.46
         (version=SSLv3 cipher=OTHER);
-        Fri, 17 Aug 2012 13:26:49 -0700 (PDT)
+        Fri, 17 Aug 2012 13:26:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1345235157-702-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1345235157-702-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203647>
 
-The fast-import commands 'cat-blob' and 'ls' can be used by remote-helpers
-to retrieve information about blobs and trees that already exist in
-fast-import's memory. This requires a channel from fast-import to the
-remote-helper.
+Allow detaching of ownership of the argv_array's contents and
+add a function to free those detached argv_arrays later.
 
-remote-helpers that use these features shall advertise the new 'bidi-import'
-capability to signal that they require the communication channel.
-When forking fast-import in transport-helper.c connect it to a dup of
-the remote-helper's stdin-pipe. The additional file descriptor is passed
-to fast-import via its command line (--cat-blob-fd).
-It follows that git and fast-import are connected to the remote-helpers's
-stdin.
+This makes it possible to use argv_array efficiently with the
+exiting struct child_process which only contains a member
+char **argv.
 
-Because git can send multiple commands to the remote-helper on it's stdin,
-it is required that helpers that advertise 'bidi-import' buffer all input
-commands until the batch of 'import' commands is ended by a newline
-before sending data to fast-import.
-This is to prevent mixing commands and fast-import responses on the
-helper's stdin.
+Add to documentation.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 ---
- transport-helper.c |   44 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 13 deletions(-)
+ Documentation/technical/api-argv-array.txt |    8 ++++++++
+ argv-array.c                               |   20 ++++++++++++++++++++
+ argv-array.h                               |    2 ++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index cfe0988..3523f1f 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -10,6 +10,7 @@
- #include "string-list.h"
- #include "thread-utils.h"
- #include "sigchain.h"
-+#include "argv-array.h"
- 
- static int debug;
- 
-@@ -19,6 +20,7 @@ struct helper_data {
- 	FILE *out;
- 	unsigned fetch : 1,
- 		import : 1,
-+		bidi_import : 1,
- 		export : 1,
- 		option : 1,
- 		push : 1,
-@@ -101,6 +103,7 @@ static void do_take_over(struct transport *transport)
- static struct child_process *get_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process *helper;
- 	const char **refspecs = NULL;
-@@ -122,11 +125,10 @@ static struct child_process *get_helper(struct transport *transport)
- 	helper->in = -1;
- 	helper->out = -1;
- 	helper->err = 0;
--	helper->argv = xcalloc(4, sizeof(*helper->argv));
--	strbuf_addf(&buf, "git-remote-%s", data->name);
--	helper->argv[0] = strbuf_detach(&buf, NULL);
--	helper->argv[1] = transport->remote->name;
--	helper->argv[2] = remove_ext_force(transport->url);
-+	argv_array_pushf(&argv, "git-remote-%s", data->name);
-+	argv_array_push(&argv, transport->remote->name);
-+	argv_array_push(&argv, remove_ext_force(transport->url));
-+	helper->argv = argv_array_detach(&argv, NULL);
- 	helper->git_cmd = 0;
- 	helper->silent_exec_failure = 1;
- 
-@@ -178,6 +180,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->push = 1;
- 		else if (!strcmp(capname, "import"))
- 			data->import = 1;
-+		else if (!strcmp(capname, "bidi-import"))
-+			data->bidi_import = 1;
- 		else if (!strcmp(capname, "export"))
- 			data->export = 1;
- 		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
-@@ -241,8 +245,7 @@ static int disconnect_helper(struct transport *transport)
- 		close(data->helper->out);
- 		fclose(data->out);
- 		res = finish_command(data->helper);
--		free((char *)data->helper->argv[0]);
--		free(data->helper->argv);
-+		argv_array_free_detached(data->helper->argv);
- 		free(data->helper);
- 		data->helper = NULL;
- 	}
-@@ -376,14 +379,23 @@ static int fetch_with_fetch(struct transport *transport,
- static int get_importer(struct transport *transport, struct child_process *fastimport)
- {
- 	struct child_process *helper = get_helper(transport);
-+	struct helper_data *data = transport->data;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+	int cat_blob_fd, code;
- 	memset(fastimport, 0, sizeof(*fastimport));
- 	fastimport->in = helper->out;
--	fastimport->argv = xcalloc(5, sizeof(*fastimport->argv));
--	fastimport->argv[0] = "fast-import";
--	fastimport->argv[1] = "--quiet";
-+	argv_array_push(&argv, "fast-import");
-+	argv_array_push(&argv, "--quiet");
- 
-+	if (data->bidi_import) {
-+		cat_blob_fd = xdup(helper->in);
-+		argv_array_pushf(&argv, "--cat-blob-fd=%d", cat_blob_fd);
-+	}
-+	fastimport->argv = argv.argv;
- 	fastimport->git_cmd = 1;
--	return start_command(fastimport);
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
+index 1b7d8f1..6b97d6d 100644
+--- a/Documentation/technical/api-argv-array.txt
++++ b/Documentation/technical/api-argv-array.txt
+@@ -49,3 +49,11 @@ Functions
+ `argv_array_clear`::
+ 	Free all memory associated with the array and return it to the
+ 	initial, empty state.
 +
-+	code = start_command(fastimport);
-+	return code;
- }
- 
- static int get_exporter(struct transport *transport,
-@@ -438,11 +450,17 @@ static int fetch_with_import(struct transport *transport,
++`argv_array_detach`::
++	Detach the argv array from the `struct argv_array`, transfering
++	ownership of the allocated array and strings.
++
++`argv_array_free_detached`::
++	Free the memory allocated by a `struct argv_array` that was later
++	detached and is now no longer needed.
+diff --git a/argv-array.c b/argv-array.c
+index 0b5f889..aab50d6 100644
+--- a/argv-array.c
++++ b/argv-array.c
+@@ -59,3 +59,23 @@ void argv_array_clear(struct argv_array *array)
  	}
+ 	argv_array_init(array);
+ }
++
++const char **argv_array_detach(struct argv_array *array, int *argc)
++{
++	const char **argv =
++		array->argv == empty_argv || array->argc == 0 ? NULL : array->argv;
++	if (argc)
++		*argc = array->argc;
++	argv_array_init(array);
++	return argv;
++}
++
++void argv_array_free_detached(const char **argv)
++{
++	if (argv) {
++		int i;
++		for (i = 0; argv[i]; i++)
++			free((char **)argv[i]);
++		free(argv);
++	}
++}
+diff --git a/argv-array.h b/argv-array.h
+index b93a69c..b3ef351 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -17,5 +17,7 @@ __attribute__((format (printf,2,3)))
+ void argv_array_pushf(struct argv_array *, const char *fmt, ...);
+ void argv_array_pushl(struct argv_array *, ...);
+ void argv_array_clear(struct argv_array *);
++const char **argv_array_detach(struct argv_array *array, int *argc);
++void argv_array_free_detached(const char **argv);
  
- 	write_constant(data->helper->in, "\n");
-+	/*
-+	 * remote-helpers that advertise the bidi-import capability are required to
-+	 * buffer the complete batch of import commands until this newline before
-+	 * sending data to fast-import.
-+	 * These helpers read back data from fast-import on their stdin, which could
-+	 * be mixed with import commands, otherwise.
-+	 */
- 
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
--	free(fastimport.argv);
--	fastimport.argv = NULL;
-+	argv_array_free_detached(fastimport.argv);
- 
- 	/*
- 	 * The fast-import stream of a remote helper that advertises
+ #endif /* ARGV_ARRAY_H */
 -- 
 1.7.9.5
