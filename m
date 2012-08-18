@@ -1,67 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-config.txt: fix example
-Date: Sat, 18 Aug 2012 13:45:15 -0700
-Message-ID: <7v393krktg.fsf@alter.siamese.dyndns.org>
-References: <1345311130-20426-1-git-send-email-mhagger@alum.mit.edu>
- <1345311130-20426-3-git-send-email-mhagger@alum.mit.edu>
-Mime-Version: 1.0
+From: Alexey Muranov <alexey.muranov@gmail.com>
+Subject: Re: [RFC 0/3] Reflogs for deleted refs: fix breakage and suggest namespace change
+Date: Sat, 18 Aug 2012 23:11:33 +0200
+Message-ID: <B88EFDF9-0AB6-49AC-87E5-7515B99AE601@gmail.com>
+References: <20120719213311.GA20385@sigill.intra.peff.net> <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu> <7vboi8rl2q.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1084)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Sat Aug 18 22:45:27 2012
+Content-Transfer-Encoding: 8BIT
+Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 18 23:11:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2ptd-0006Ix-LF
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 22:45:25 +0200
+	id 1T2qJ6-0002L4-87
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 23:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240Ab2HRUpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 16:45:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47599 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751108Ab2HRUpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 16:45:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D73479E03;
-	Sat, 18 Aug 2012 16:45:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6ZW289XIbb+CL+oGyMWsCHuqMNQ=; b=sKtsE4
-	K+whGPAPuRISkZLajoiyQ5Iig1+5skzU37DtsD3oJvnM5RHc0EhjMKFPkW99fg0l
-	5+TnwwgL9qzb6SbUjJYyQJM8f3XFA8UgyoY9aaCGZB3LUDud6/SxY7O26Whq+qZw
-	YVFvU1wbFlrrXiYm2xlgqrK8mflbD//+qreYI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hUGhI9Vr+TqmzuGHnSjk/q5gxW00605V
-	UovL4UVc7I5RNzIVMS0gQBw65h5lTPIJw24U4NwwFxufMv+zer09qDgEjWdRd6PN
-	9rsPJegs51EaDdnTVXodBkpRoI2sD4XPDcsknIAzLCenPsg89Cph22XccmhE0iJD
-	reBLW0zibdA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C495F9E02;
-	Sat, 18 Aug 2012 16:45:17 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 436869E01; Sat, 18 Aug 2012
- 16:45:17 -0400 (EDT)
-In-Reply-To: <1345311130-20426-3-git-send-email-mhagger@alum.mit.edu>
- (mhagger@alum.mit.edu's message of "Sat, 18 Aug 2012 19:32:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E39994C-E975-11E1-A7E8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752298Ab2HRVLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 17:11:39 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:59207 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751995Ab2HRVLh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2012 17:11:37 -0400
+Received: by eeil10 with SMTP id l10so1438457eei.19
+        for <git@vger.kernel.org>; Sat, 18 Aug 2012 14:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=CmrLHA3hV/uYVYQ+PyfWEh1FpTFShQlF7va0FjDKRAs=;
+        b=q7s9yZ+XIMUQFI1ay6EwEHXM/I0WazQjfZwDeAzS48tu97+V8/tiDMK+Dm7CZXMU6a
+         1kbXuHa3rJvLtJHeYQ6Ca9Dtt0TKT6FZURE4PEI14yhoQqUZGNcxNWi++poiEsfso66J
+         zV+Knk5r0IDXQlBIUqgU0XP8IC0eNVqu4emNhFnbzhB0ORhWulh6pPGLJNAKu8nq2nlU
+         CM8qinMgkxQHdN4DvpZsTQBq1LkK3RIYv5dyGJde6nC538u1JFo+YxeM6tNqHyPM5lxn
+         QEsX6vftM8jNbw0XUKG/H4r3MbfkI2VqXqIRHvlUqeSrIkQxhGQg5UvV8NH4t2O10VJ3
+         nmIg==
+Received: by 10.14.172.129 with SMTP id t1mr2549842eel.34.1345324296248;
+        Sat, 18 Aug 2012 14:11:36 -0700 (PDT)
+Received: from ?IPv6:2a01:e35:2f10:380:223:12ff:fe56:641a? ([2a01:e35:2f10:380:223:12ff:fe56:641a])
+        by mx.google.com with ESMTPS id u47sm29540647eeo.9.2012.08.18.14.11.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 18 Aug 2012 14:11:35 -0700 (PDT)
+In-Reply-To: <7vboi8rl2q.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203701>
 
-mhagger@alum.mit.edu writes:
+On 18 Aug 2012, at 22:39, Junio C Hamano wrote:
 
->  To add a new proxy, without altering any of the existing ones, use
->  
->  ------------
-> -% git config core.gitproxy '"proxy-command" for example.com'
-> +% git config --add core.gitproxy '"proxy-command" for example.com'
->  ------------
+> Do we _know_ already what the "ultimate destination" looks like?  
+> 
+> If the answer is yes, then I agree, but otherwise, I doubt it is a
+> good idea to introduce unnecessary complexity to the system that may
+> have to be ripped out and redone.
+> 
+> I didn't get the impression that we know the "ultimate destination"
+> from the previous discussion, especially if we discount the tangent
+> around "having next and next/foo at the same time" which was on
+> nobody's wish, but I may be misremembering things.
 
-Sensible; thanks.
+Excuse me if i miss something again, but i might be willing to discuss the "ultimate destination".  Could you possibly state in simple terms what the problem with determining the "ultimate destination" is?  I hope my opinion might be useful because i do not know anything about the actual implementation of Git, but for a while i thought i was understanding it's intended mathematical model, until i ran into unexpected for me default behavior of not pruning when fetching.
+
+To just give a quick idea of my ideas, i thought that 'fetching' in Git was an inevitable evil that stands apart from other operations and is necessary only because the computer communication on Earth is not sufficiently developed to keep all Git repositories constantly in sync, and because one might prefer to work with a somewhat dated snapshot of a remote than with the constantly changing current version. I thought "snapshot" could be a good alternative name for "fetch".
+
+-Alexey.
