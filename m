@@ -1,89 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-gui: remove .git/CHERRY_PICK_HEAD after
- committing
-Date: Sat, 18 Aug 2012 13:28:12 -0700
-Message-ID: <7vobm8rllv.fsf@alter.siamese.dyndns.org>
-References: <1345280851-6626-1-git-send-email-bbolli@ewanet.ch>
- <1345280851-6626-2-git-send-email-bbolli@ewanet.ch>
+Subject: Re: Problems with git fetch confusing foo and foo.git repos
+Date: Sat, 18 Aug 2012 13:33:58 -0700
+Message-ID: <7vk3wwrlc9.fsf@alter.siamese.dyndns.org>
+References: <1345299904.27428.50.camel@ted> <1345301383.27428.55.camel@ted>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Beat Bolli <bbolli@ewanet.ch>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Aug 18 22:28:23 2012
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	"Ashfield\, Bruce" <Bruce.Ashfield@windriver.com>,
+	"saul.wold" <saul.wold@intel.com>
+To: Richard Purdie <richard.purdie@linuxfoundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 22:34:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2pd8-0003bs-22
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 22:28:22 +0200
+	id 1T2pjM-0002cq-SM
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 22:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763Ab2HRU2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 16:28:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37396 "EHLO
+	id S1752262Ab2HRUeC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 16:34:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40353 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751108Ab2HRU2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 16:28:14 -0400
+	id S1751357Ab2HRUeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2012 16:34:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D19395D5;
-	Sat, 18 Aug 2012 16:28:14 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 700D297DE;
+	Sat, 18 Aug 2012 16:34:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YUEUDIh7K9GBq0XlTBVUEHUkhVk=; b=RTrXUO
-	ItL/go8pfs4kd21CQgUCfNjda5FIx+3jFL4iHacbET5ZmWAaZwUgduCFBAMPhDNE
-	GInKymgoZU2+/dinimzrAPb63kx31ncH8CV6JQ8Ioc2Xw60Y9EuU1uKT44DapXJA
-	afjX3rUJTlDvEfahqz6SAPuJJm9pKMlaNMxuI=
+	:content-type; s=sasl; bh=68+zbfpXyzIN0L6wD43Pdd2pT6A=; b=LYu24B
+	BRlayZiSabLZR5VpuIGqwYZOgLwiwt4nRJN8D+vmwMTrMlNGywod/wvJARPY2LFy
+	/UR7gypCOlKfecHn7zAy5sHz3ntvwNLQPkz6ay9NZT3glXYDAdk73tg0NEUUyeoG
+	BUMtzv/+3PuuJpqKOSoRKEz6Bfig82GhmXSGQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eX2YINcufd9meLjr5JjPoFrT6UBZW6nZ
-	7IOwirvThnMqvZPZsqDFj/eQ/iynBh6jydoj7iitNX9pn18rPKyD56o7KhD1c+Lb
-	oTwc3C+PsDrtCH30VGGbVnOkFdUg2DDQ0kCex3Cb2ttj36PtMlGNYLk2HMsjDqtY
-	WHirJkctu/4=
+	:content-type; q=dns; s=sasl; b=H2XC6LW/U4NpPpRssOcXPuYBekDiJIef
+	qbGUTWoVurJ0nHt/TaYIXp+uRIRXjwkptAzIuQe2WotoY0HSaol1hGoWF2M8iZG6
+	KYQC3hWcVme9QgkZTr3X4CtTRC7vJ8t8144Ai13fF343z6uUe8JLcE+4avbs8cLz
+	7uEYxGwhnZg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BA2A95D4;
-	Sat, 18 Aug 2012 16:28:14 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C26397DC;
+	Sat, 18 Aug 2012 16:34:00 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C384795D2; Sat, 18 Aug 2012
- 16:28:13 -0400 (EDT)
-In-Reply-To: <1345280851-6626-2-git-send-email-bbolli@ewanet.ch> (Beat
- Bolli's message of "Sat, 18 Aug 2012 11:07:31 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B666197D9; Sat, 18 Aug 2012
+ 16:33:59 -0400 (EDT)
+In-Reply-To: <1345301383.27428.55.camel@ted> (Richard Purdie's message of
+ "Sat, 18 Aug 2012 15:49:43 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C2F8D12-E973-11E1-BAE3-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0A62E80A-E974-11E1-8F34-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203695>
 
-Beat Bolli <bbolli@ewanet.ch> writes:
+Richard Purdie <richard.purdie@linuxfoundation.org> writes:
 
-> Adding __git_ps1() to one's bash prompt displays various repo status
-> info after each command. After committing a git cherry-pick -n using
-> git-gui, the prompt still contains the "|CHERRY-PICKING" flag.
->
-> Delete the file causing this flag when cleaning up.
->
-> Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
-> ---
->  git-gui/lib/commit.tcl |    1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-> index 78c5eeb..864b687 100644
-> --- a/git-gui/lib/commit.tcl
-> +++ b/git-gui/lib/commit.tcl
-> @@ -409,6 +409,7 @@ A rescan will be automatically started now.
->  	catch {file delete [gitdir MERGE_MSG]}
->  	catch {file delete [gitdir SQUASH_MSG]}
->  	catch {file delete [gitdir GITGUI_MSG]}
-> +	catch {file delete [gitdir CHERRY_PICK_HEAD]}
->  
->  	# -- Let rerere do its thing.
->  	#
+> I'd add that I think the commit made for the original problem[1] has
+> fixed this scenario since it now will prefer foo over foo.git also in
+> the fetch case even if the / is removed from the url.
 
-It makes me wonder if the above sequence of file delete should all
-be removed and use "git commit" instead of "git commit-tree" in the
-implementation of this Tcl procedure instead.
+OK.
 
-Pat?
+As understand it, these "check various possibilities e.g. $name,
+$name.git $name/.git" were never meant to be a way to encourage
+users to have multiple repositories next to each other under
+confusing names in the first place.  It was merely to allow users to
+have one of them (some may prefer $name/ that is with working tree,
+so we allow $name/.git to be discovered, while some may want to have
+a bare repository at $name.git that is bare, so we also allow it to
+be discovered).  The recent tweak was to favor the case where the
+name asked explicitly by the user is matched first, and it does not
+fundamentally change the intent of the basic design in any way.
+
+Thanks for confirming that the tweak works well for you.
+
+> My test machines
+> don't have that version yet though and I'm left with a problem where git
+> is older than 1.7.9.2. 
+
+So what do you want to see happen next?
