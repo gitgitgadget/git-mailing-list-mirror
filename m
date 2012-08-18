@@ -1,65 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v4 01/16] GSOC remote-svn
-Date: Fri, 17 Aug 2012 21:16:59 -0700
-Message-ID: <7v4no0u950.fsf@alter.siamese.dyndns.org>
-References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
-Mime-Version: 1.0
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Test failures in t4034
+Date: Sat, 18 Aug 2012 02:03:26 -0400
+Message-ID: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.0 \(1485\))
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 06:17:52 2012
+Content-Transfer-Encoding: 8BIT
+Cc: Thomas Rast <trast@student.ethz.ch>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 08:13:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2aTv-0003za-U2
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 06:17:52 +0200
+	id 1T2cI2-0001Of-Pw
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 08:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342Ab2HRERF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 00:17:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38991 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751207Ab2HRERD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 00:17:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB2CF9735;
-	Sat, 18 Aug 2012 00:17:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=lnoNP5n5u9vI3sZbhTM1D4RCn9k=; b=i3kjpPWNXFwDAFjRQ4pj
-	3nCANOUpWOHmgXjdG4Y4j6DnQGTKP+UFWwen1piI4VgoxPy784izmN7LTghCKDsC
-	HMbS+NqBYW4wfjcgMGBqPp7QeQ0daLyv1LhOL6i5BDLnY1jgrPfJrLRQ1xUSYNXM
-	oJlCh5qrHWOasJM82gXs4Vw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=XzNMLi7jpBeuQcSNHdEVSVDzbpbPkqiAGpX2OFkyHa+zZD
-	QhIsL1LTJIng5yylvb/Mads0lXofO9r6W60KBTWmgRbq+sz5t4T+Toie7GoLflL8
-	aw1ZeZtFvHvUzqKPQhVDiWekh3ecYm5Q4JBg2ZbXtDz6zgcmI/mSq0iP6rCh4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B2C9734;
-	Sat, 18 Aug 2012 00:17:01 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D94F99733; Sat, 18 Aug 2012
- 00:17:00 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8ED32700-E8EB-11E1-80CE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752172Ab2HRGNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 02:13:07 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:54521 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245Ab2HRGNE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2012 02:13:04 -0400
+X-Greylist: delayed 577 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 02:13:04 EDT
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 3AC6C92981FF; Sat, 18 Aug 2012 06:03:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=3.5 tests=ALL_TRUSTED,BAYES_50
+	autolearn=ham version=3.2.5
+Received: from [192.168.1.10] (cpe-72-230-193-225.stny.res.rr.com [72.230.193.225])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id A57AE92981FE;
+	Sat, 18 Aug 2012 06:03:25 +0000 (UTC)
+X-Mailer: Apple Mail (2.1485)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203670>
 
-Comments from mentors and people interested in remote helpers?
+I've been getting a couple of test failures and finally had the time to track them down.
 
-I did minimum line wrapping, typofix and small compilation fixes
-and queued these on 'pu'; I think I saw one commit whose message
-I didn't quite get what it was trying to say, and another that was
-missing S-o-b (I left them untouched).
+t4034-diff-words fails tests "22 diff driver 'bibtex'" and "26 diff driver 'html'".  Bisecting shows that the file started giving me errors in commit 8d96e72 "t4034: bulk verify builtin word regex sanity", which appears to introduce those tests.  I don't see anything obviously wrong with the tests and I'm not familiar with the diff-words code, so I'm not sure what's wrong.
 
-The result merged to 'pu' seems to fail 9020, by the way.
+I am running on OS X 10.8, with Xcode 4.4.1 (llvm-gcc 4.2.1).
 
-Thanks.
+Test results follow:
+
+---------- 8< ----------
+
+expecting success: 
+		cp "$TEST_DIRECTORY/t4034/bibtex/pre" \
+			"$TEST_DIRECTORY/t4034/bibtex/post" \
+			"$TEST_DIRECTORY/t4034/bibtex/expect" . &&
+		echo "* diff=bibtex" >.gitattributes &&
+		word_diff --color-words
+	
+--- expect	2012-08-18 05:54:29.000000000 +0000
++++ output.decrypted	2012-08-18 05:54:29.000000000 +0000
+@@ -8,8 +8,8 @@
+   author={Aldous, <RED>D.<RESET><GREEN>David<RESET>},
+   journal={Information Theory, IEEE Transactions on},<RESET>
+   volume={<RED>33<RESET><GREEN>Bogus.<RESET>},
+-  number={<RED>2<RESET><GREEN>4<RESET>},
++  number={4},
+   pages={219--223},<RESET>
+-  year=<GREEN>1987,<RESET>
+-<GREEN>  note={This is in fact a rather funny read since ethernet works well in practice. The<RESET> {<RED>1987<RESET><GREEN>\em pre} reference is the right one, however.<RESET>}<RED>,<RESET>
++  year=<RED>{1987},<RESET><GREEN>1987,<RESET>
++  note={This is in fact a rather funny read since ethernet works well in practice. The {\em pre} reference is the right one, however.}
+ }<RESET>
+not ok - 22 diff driver 'bibtex'
+
+---------- 8< ----------
+
+expecting success: 
+		cp "$TEST_DIRECTORY/t4034/html/pre" \
+			"$TEST_DIRECTORY/t4034/html/post" \
+			"$TEST_DIRECTORY/t4034/html/expect" . &&
+		echo "* diff=html" >.gitattributes &&
+		word_diff --color-words
+	
+--- expect	2012-08-18 05:54:29.000000000 +0000
++++ output.decrypted	2012-08-18 05:54:29.000000000 +0000
+@@ -4,5 +4,5 @@
+ <BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,3 @@<RESET>
+ <tag <GREEN>newattr="newvalue"<RESET>><GREEN>added<RESET> content</tag>
+-<tag attr=<RED>"value"<RESET><GREEN>"newvalue"<RESET>><RED>content<RESET><GREEN>changed<RESET></tag>
+-<<RED>tag<RESET><GREEN>newtag<RESET>>content <RED>&entity;<RESET><GREEN>&newentity;<RESET><<RED>/tag<RESET><GREEN>/newtag<RESET>>
++<tag attr="newvalue">changed</tag>
++<newtag>content &newentity;</newtag>
+not ok - 26 diff driver 'html'
