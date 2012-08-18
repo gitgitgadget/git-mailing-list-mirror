@@ -1,82 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git feature request: --amend older commit
-Date: Sat, 18 Aug 2012 14:57:19 -0700
-Message-ID: <7vr4r3rhhc.fsf@alter.siamese.dyndns.org>
-References: <20120817154749.11762.qmail@science.horizon.com>
- <20120818014139.GA11100@gentoo.cinci.rr.com>
+From: Richard Purdie <richard.purdie@linuxfoundation.org>
+Subject: Re: Problems with git fetch confusing foo and foo.git repos
+Date: Sat, 18 Aug 2012 23:06:05 +0100
+Message-ID: <1345327565.27428.75.camel@ted>
+References: <1345299904.27428.50.camel@ted> <1345301383.27428.55.camel@ted>
+	 <7vk3wwrlc9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "George Spelvin" <linux@horizon.com>
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 23:57:30 2012
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	"Ashfield, Bruce" <Bruce.Ashfield@windriver.com>,
+	"saul.wold" <saul.wold@intel.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 19 00:06:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2r1N-00028O-Fi
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 23:57:29 +0200
+	id 1T2rA2-0003lo-AG
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 00:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753853Ab2HRV5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 17:57:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43410 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753490Ab2HRV5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 17:57:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C95248C2C;
-	Sat, 18 Aug 2012 17:57:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uLKpYst3MpmIp1brAsMCtRlokIo=; b=qFD1rA
-	Q4PdQ9GHWSnu7r2teau0FqMn+JNW81kZzH/3DmVjV3bW8boSvfPXyDgBG7EkrweP
-	s5UXWrRPKEdEKpvZq+ZHcS4mTeDiwy/0NdnvSLPzjtpeo7yyK4yvOFtNkL6XUOrD
-	osEW+E7Gxhjh6V1F4kq26+SNiF3VthQ2jD584=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bmOL0oAuqydnwsHOIiQKYCQ4elX1frLz
-	M8CKTwYmOOI2CGHj6XHkx01Bmqo93/bYxW+ErRbf+ik3cZMas6s0fjE+Pn+ygnwP
-	P9BTz8I704ZMOozjMmi7kMNRUI+oVr+BWBY/gBHLgPQPK/SSiUeM2jOEkp4/K2aM
-	OXLzv6yHcuE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B723A8C2B;
-	Sat, 18 Aug 2012 17:57:21 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28A728C2A; Sat, 18 Aug 2012
- 17:57:21 -0400 (EDT)
-In-Reply-To: <20120818014139.GA11100@gentoo.cinci.rr.com> (Jared Hance's
- message of "Fri, 17 Aug 2012 21:41:39 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF76D864-E97F-11E1-ABA1-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752376Ab2HRWGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 18:06:21 -0400
+Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:64325 "EHLO
+	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752353Ab2HRWGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2012 18:06:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IM6DRs020864;
+	Sat, 18 Aug 2012 23:06:13 +0100
+Received: from tim.rpsys.net ([127.0.0.1])
+ by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 19304-06; Sat, 18 Aug 2012 23:06:09 +0100 (BST)
+Received: from [192.168.3.10] ([192.168.3.10])
+	(authenticated bits=0)
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IM6435020858
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 18 Aug 2012 23:06:06 +0100
+In-Reply-To: <7vk3wwrlc9.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
+X-Virus-Scanned: amavisd-new at rpsys.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203704>
 
-Jared Hance <jaredhance@gmail.com> writes:
+On Sat, 2012-08-18 at 13:33 -0700, Junio C Hamano wrote:
+> Richard Purdie <richard.purdie@linuxfoundation.org> writes:
+> 
+> > I'd add that I think the commit made for the original problem[1] has
+> > fixed this scenario since it now will prefer foo over foo.git also in
+> > the fetch case even if the / is removed from the url.
+> 
+> OK.
+> 
+> As understand it, these "check various possibilities e.g. $name,
+> $name.git $name/.git" were never meant to be a way to encourage
+> users to have multiple repositories next to each other under
+> confusing names in the first place.  It was merely to allow users to
+> have one of them (some may prefer $name/ that is with working tree,
+> so we allow $name/.git to be discovered, while some may want to have
+> a bare repository at $name.git that is bare, so we also allow it to
+> be discovered).  The recent tweak was to favor the case where the
+> name asked explicitly by the user is matched first, and it does not
+> fundamentally change the intent of the basic design in any way.
+> 
+> Thanks for confirming that the tweak works well for you.
 
-[administrivia: do not deflect a direct response to you away by
-using mail-followup-to header, thanks]
+I'm responsible for "generic" source fetching infrastructure and
+unfortunately I haven't been able to prevent users ending up with
+"repositories next to each other under confusing names" much as I might
+like to. Users tend to manage to find all the corner cases in something
+like this :)
 
-> On Fri, Aug 17, 2012 at 11:47:49AM -0400, George Spelvin wrote:
->> Something like "git commit --fixup HEAD~3", where "git commit --fixup HEAD"
->> would be equivalent to "git commit --amend".
+> > My test machines
+> > don't have that version yet though and I'm left with a problem where git
+> > is older than 1.7.9.2. 
+> 
+> So what do you want to see happen next?
 
-Yes, as an end-user facing command set, "git commit --amend HEAD~3" would
-not be a bad addition.
+I was a bit confused earlier whether there was any remaining issue. With
+the recent versions I've now confirmed there isn't and the bug is fixed
+(which I really appreciate). Sorry for the noise.
 
-> Such a simple task shouldn't require an interactive command.
+My remaining question was whether there was any better way to work
+around this in older versions of git. I've ended up implementing the
+symlink solution I mentioned which whilst ugly, will hopefully put this
+issue to rest for me.
 
-In some cases, yes.  But the devil is in the details, and whoever
-wants to work on must be prepared to see cases where the remainder
-of the commits after rewriting an older commit will not replay
-cleanly on top of it.  At that point, it won't be a simple task
-anymore.  At least, it must make it clear what the user should do
-when "commit --amend HEAD~3" (and subsequent rebuilding of HEAD~2,
-HEAD~1 and HEAD on top of the amended result) needs a help from the
-user to resolve conflicts.  It may be just the matter of mentioning
-"from here on, follow the procedure you would use when you are
-running 'rebase -i'", if the chosen mechanism to implement the
-sequencing behind the "commit --amend HEAD~3" UI is "rebase -i".
+(http://git.yoctoproject.org/cgit.cgi/poky/commit/?id=a86bd422641ce083ba0cdb4efe2a4c307eb36f7e in case anyone cares)
+
+Cheers,
+
+Richard
