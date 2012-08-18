@@ -1,84 +1,62 @@
 From: mhagger@alum.mit.edu
-Subject: [RFC 2/3] Delete reflogs for dead references to allow pruning
-Date: Sat, 18 Aug 2012 19:14:45 +0200
-Message-ID: <1345310086-20089-3-git-send-email-mhagger@alum.mit.edu>
-References: <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Alexey Muranov <alexey.muranov@gmail.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 18 19:23:10 2012
+Subject: [PATCH 0/2] Fix two minor problems in the docs for git-config
+Date: Sat, 18 Aug 2012 19:32:08 +0200
+Message-ID: <1345311130-20426-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 18 19:36:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2mjt-0007UQ-FX
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 19:23:09 +0200
+	id 1T2mx9-0008M6-1G
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 19:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab2HRRWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 13:22:51 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:51670 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752566Ab2HRRWa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2012 13:22:30 -0400
-X-Greylist: delayed 442 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 13:22:29 EDT
-X-AuditID: 12074412-b7f216d0000008e3-de-502fcd9b5561
+	id S1756551Ab2HRRgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 13:36:41 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:49118 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756669Ab2HRRcb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Aug 2012 13:32:31 -0400
+X-AuditID: 1207440f-b7fde6d00000095c-3c-502fd1aea168
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 76.0B.02275.B9DCF205; Sat, 18 Aug 2012 13:15:07 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.36.02396.EA1DF205; Sat, 18 Aug 2012 13:32:30 -0400 (EDT)
 Received: from michael.fritz.box (p57A25507.dip.t-dialin.net [87.162.85.7])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7IHEnrT001968
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7IHWF9p002696
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 18 Aug 2012 13:15:05 -0400
+	Sat, 18 Aug 2012 13:32:29 -0400
 X-Mailer: git-send-email 1.7.11.3
-In-Reply-To: <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsUixO6iqDv7rH6AQd8GHouFff3MFl1Xupks
-	GnqvMFtMuN/AbHF7xXxmix8tPcwWK3ctZHJg9/j7/gOTx85Zd9k9nvXuYfS4eEnZY+6nRawe
-	nzfJBbBFcdskJZaUBWem5+nbJXBnLF3bzlpwma3i67NVbA2MW1m7GDk5JARMJKatnskOYYtJ
-	XLi3nq2LkYtDSOAyo8Tp1odQzmkmiUVft7KAVLEJSEm8bOwB6xARkJX4fngjI0gRs8BEJold
-	O+cwgySEBdwkTl0/AWazCKhKPG6dBtbAK+Ai0dx0jg1inaLEj+9rwGo4BVwlXt3dCmYLAdVM
-	O/GeeQIj7wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6uZkleqkppZsYIUEntINx/Um5
-	Q4wCHIxKPLwKa/QChFgTy4orcw8xSnIwKYnyvj+jHyDEl5SfUpmRWJwRX1Sak1p8iFGCg1lJ
-	hFf3BFA5b0piZVVqUT5MSpqDRUmc9+didT8hgfTEktTs1NSC1CKYrAwHh5IE7w6QoYJFqemp
-	FWmZOSUIaSYOThDBBbKBB2jDSZBC3uKCxNzizHSIolOMilLivAtBEgIgiYzSPLgBsPTwilEc
-	6B9h3usgVTzA1ALX/QpoMBPQ4JUiuiCDSxIRUlINjCuOf73CIW4jrLfXI8o95ifzVI0LGxU+
-	s2+dvuaz4YxZl3UtWLfMqfrPbLKm/912pVXWnCyyt9SC7FL7vt8w+Nkapu29xouLWecau9gL
-	j+kvnx7W2W4e3HXnif8K0XdSaWJhjyfzbQ/ZdeT7puYHf65VVx7w/j13ruvSqpUy 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqLvuon6Awaw+DouuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M44ee4jY8FBporlby6wNDA2
+	MXUxcnBICJhI/D3v38XICWSKSVy4t56ti5GLQ0jgMqPEqa0LmCCc00wSq093sIBUsQlISbxs
+	7GEHsUUE1CQmth0CizMLOEhs/tzICGILC7hJ/D9zkQ3EZhFQlVi5dDZYPa+Ai0TfncesENsU
+	JX58X8M8gZF7ASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdE73czBK91JTSTYwQ3/PvYOxa
+	L3OIUYCDUYmHV2GNXoAQa2JZcWXuIUZJDiYlUd73Z/QDhPiS8lMqMxKLM+KLSnNSiw8xSnAw
+	K4nw6p4AKudNSaysSi3Kh0lJc7AoifOqL1H3ExJITyxJzU5NLUgtgsnKcHAoSfDuuAA0VLAo
+	NT21Ii0zpwQhzcTBCSK4QDbwAG04AVLIW1yQmFucmQ5RdIpRUUqcdxtIQgAkkVGaBzcAFqWv
+	GMWB/hHmvQpSxQOMcLjuV0CDmYAGrxTRBRlckoiQkmpgdI2e2zR/kVXlcsmnjnHXDYOKoxiX
+	FD8v/7XDu2GnRdOchrhZtjYeirJCqU0H/nxR2bZr7pJQy7N3d0nKPYrp0HrELepdPouTOaP4
+	9GTmvx4XVv7Qvay0NyX/y8E14T4NLZNjAmbuupTHE2ebmyG1Rcx+ubepQWzdvCCllNWcWULC
+	V64ezahUYinOSDTUYi4qTgQAhFKKVa0CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203681>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-This test is broken by "retain reflogs for deleted refs".  Explicitly
-delete the reflogs in the graveyard to allow the corresponding commits
-to be pruned.
+This is just something I stumbled across.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
+Michael Haggerty (2):
+  git-config.txt: properly escape quotation marks in example
+  git-config.txt: fix example
 
-Probably there should be a "git reflog" subcommand to do this.
+ Documentation/git-config.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- t/t9300-fast-import.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 266ae30..dc6c67d 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1700,6 +1700,7 @@ INPUT_END
- 
- test_expect_success 'P: verbatim SHA gitlinks' '
- 	git branch -D sub &&
-+	rm -rf .git/logs/graveyard &&
- 	git gc && git prune &&
- 	git fast-import <input &&
- 	test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
 -- 
 1.7.11.3
