@@ -1,95 +1,95 @@
-From: Richard Purdie <richard.purdie@linuxfoundation.org>
-Subject: Problems with git fetch confusing foo and foo.git repos
-Date: Sat, 18 Aug 2012 15:25:04 +0100
-Message-ID: <1345299904.27428.50.camel@ted>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] test: some testcases failed if cwd is on a symlink
+Date: Sat, 18 Aug 2012 14:41:11 +0000 (UTC)
+Message-ID: <loom.20120818T162226-852@post.gmane.org>
+References: <001c60538df409d94618e80cc3faaae586ccf053.1343116581.git.worldhello.net@gmail.com> <7vboj5gqqo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Ashfield, Bruce" <Bruce.Ashfield@windriver.com>,
-	"saul.wold" <saul.wold@intel.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 18 16:37:05 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 18 16:45:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2k99-00054v-5Y
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 16:37:03 +0200
+	id 1T2kHE-00062M-RO
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 16:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753422Ab2HROg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 10:36:57 -0400
-Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:61061 "EHLO
-	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751649Ab2HROg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 10:36:56 -0400
-X-Greylist: delayed 699 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 10:36:55 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IEPDLQ018399;
-	Sat, 18 Aug 2012 15:25:13 +0100
-Received: from tim.rpsys.net ([127.0.0.1])
- by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 14548-06; Sat, 18 Aug 2012 15:25:09 +0100 (BST)
-Received: from [192.168.3.10] ([192.168.3.10])
-	(authenticated bits=0)
-	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IEP3LZ018385
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 18 Aug 2012 15:25:05 +0100
-X-Mailer: Evolution 3.2.3-0ubuntu6 
-X-Virus-Scanned: amavisd-new at rpsys.net
+	id S1754029Ab2HROpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 10:45:13 -0400
+Received: from plane.gmane.org ([80.91.229.3]:48335 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753538Ab2HROpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2012 10:45:11 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1T2kGu-0005d6-6R
+	for git@vger.kernel.org; Sat, 18 Aug 2012 16:45:04 +0200
+Received: from p57A25507.dip.t-dialin.net ([87.162.85.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 18 Aug 2012 16:45:04 +0200
+Received: from mhagger by p57A25507.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 18 Aug 2012 16:45:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.162.85.7 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203674>
 
-A while ago I reported a problem[1] where having:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-/somewhere/foo
-and
-/somewhere/foo.git
+> 
+> Jiang Xin <worldhello.net <at> gmail.com> writes:
+> 
+> > Run command 'git rev-parse --git-dir' under subdir will return realpath
+> > of '.git' directory. Some test scripts compare this realpath against
+> > "$TRASH_DIRECTORY", they are not equal if current working directory is
+> > on a symlink.
+> >
+> > In this fix, get realpath of "$TRASH_DIRECTORY", store it in
+> > "$TRASH_REALPATH" variable, and use it when necessary.
+> 
+> I wonder if running test in a real directory (in other words, "fix"
+> your cwd) may be a simpler, more robust and generally a better
+> solution, e.g. something silly like...
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index acda33d..7f6fb0a 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -15,6 +15,8 @@
+>  # You should have received a copy of the GNU General Public License
+>  # along with this program.  If not, see http://www.gnu.org/licenses/ .
+> 
+> +cd "$(pwd -P)"
+> +
+>  # if --tee was passed, write the output not only to the terminal, but
+>  # additionally to the file test-results/$BASENAME.out, too.
+>  case "$GIT_TEST_TEE_STARTED, $* " in
 
-as bare repositories and trying to clone them using alternates could
-cause git to confuse them.
+What is the status of this bug?  Today I wasted a bunch of time trying to track 
+down a build breakage that was ultimately caused by this problem.  I was running 
+the test suite on master with "--root=/dev/shm" (my usual setting), but this 
+caused tests t4035 and t9903 to fail as described upthread.  (It turns out that 
+on my system, /dev/shm is a symlink to /run/shm.)
 
-The "conclusion" was that I needed to do:
+For me, the failure is fixed by Jiang Xin's patch, but it is not fixed by 
+Junio's.  In the case of t4035 in failing test "git diff --ignore-all-space, 
+both files outside repo", right before "git diff" is called,
 
-git clone -s -n /somewhere/foo/ x
+PWD=/run/shm/trash directory.t4035-diff-quiet/test-outside/non/git
+GIT_CEILING_DIRECTORIES=/dev/shm/trash directory.t4035-diff-quiet/test-outside
 
-to stop it looking at the .git version. Ok, fine. Ugly but I can live
-with it and we added the workaround[2].
+I can work around the problem by using "--root=/run/shm".  But it would be good 
+to get this problem fixed one way or the other to spare other people the same 
+pain.
 
-I've now discovered we only half solved the problem. Whilst the
-alternates might get setup correctly, the branch names and revisions get
-fetched from the .git version still.
-
-It appears that even if you have a repository setup with an origin url
-of "/somewhere/foo/", when you run git fetch origin -f  refs/*:refs/*,
-it will look at foo.git if it exists.
-
-The problem is the trailing slash is stripped off by the code in
-git-fetch itself. It appears to have done this since it was converted
-from a .sh function. It means it appears impossible to fetch the
-branchnames/revisions from foo when foo.git exists.
-
-I work with build systems that build complete linux systems and we're
-running into failures caused by this. I really need pre-existing
-versions of git to work so I can't even patch git to work around the
-problem without significant cost. So far the only way I've figured out
-to avoid this is to create a symlink to /somewhere/foo/ and then set url
-to point at the symlink. This way I can prevent it from finding the
-other directory.
-
-I thought I'd mention this in the hopes git can be fixed to behave
-better in this situation and perhaps I can drop the hacks I'm going to
-have to add sometime in the future.
-
-If anyone has any ideas for better workarounds I'd love to hear about
-them...
-
-[1] "Alternates corruption issue", 2012/1/31
-[2] http://git.yoctoproject.org/cgit.cgi/poky/commit/bitbake/lib/bb/fetch2/git.py?id=64662290d3e7deb0b6093b3959c3f3eddb873893
-
-Cheers,
-
-Richard
+Michael
