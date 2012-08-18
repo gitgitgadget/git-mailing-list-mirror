@@ -1,154 +1,103 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH v3 1/2] git-svn.perl: consider all ranges for a given
- merge, instead of only tip-by-tip
-Date: Sat, 18 Aug 2012 12:49:19 -0700
-Message-ID: <502FF1BF.104@vilain.net>
-References: <1344705265-10939-1-git-send-email-stevenrwalter@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v4 01/16] GSOC remote-svn
+Date: Sat, 18 Aug 2012 13:13:47 -0700
+Message-ID: <7vzk5srm9w.fsf@alter.siamese.dyndns.org>
+References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <7v4no0u950.fsf@alter.siamese.dyndns.org> <8572000.QUVXl8yetS@flobuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: normalperson@yhbt.net, avarab@gmail.com, git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 18 21:59:46 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Michael Barr <b@rr-dav.id.au>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 18 22:13:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2pBQ-0005KF-57
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 21:59:44 +0200
+	id 1T2pPB-0004Cz-3V
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 22:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383Ab2HRT7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 15:59:36 -0400
-Received: from uk.vilain.net ([92.48.122.123]:44000 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751036Ab2HRT7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 15:59:32 -0400
-X-Greylist: delayed 607 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 15:59:32 EDT
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id 6D0438284; Sat, 18 Aug 2012 20:49:24 +0100 (BST)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [192.168.1.136] (c-50-136-135-232.hsd1.ca.comcast.net [50.136.135.232])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uk.vilain.net (Postfix) with ESMTPSA id CDF068272;
-	Sat, 18 Aug 2012 20:49:21 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
-In-Reply-To: <1344705265-10939-1-git-send-email-stevenrwalter@gmail.com>
+	id S1751410Ab2HRUNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 16:13:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64702 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750984Ab2HRUNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2012 16:13:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 728C19341;
+	Sat, 18 Aug 2012 16:13:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tpGbgsphoX1/L7wONAww9R2nSB0=; b=IAPwsR
+	CSi57xzYaQhCJM7XwUrdOkNsoE2epEtH0hT076XUgjDpANuS2U/JJryGhkCGNEmi
+	dhetVFQZw/BAbYtUf9pKoD/he12x4pjhXyKaypd/nvL9WzWzelQ43WnXcMju0rOh
+	jj44+vAZ4Qz9SHmf7s4Qm+K7+IRYE9Eoz24Uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Cu+qdxsmcTtpozi7R+PqH8JpkVvAffhK
+	ekayC8oMIkEL23OHONSxVehgEoalCIsN+kq/GAXJlWL2ltDRsnlpQeQPDw88D0py
+	YoudH3nIc72+11KDz2t+dD3Jh5SfCYxDBdNcWJ+2BQOL0EHP6xHjn7K71OXxtrRA
+	CD9aVaoJyfw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F5F69340;
+	Sat, 18 Aug 2012 16:13:49 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BADE6933F; Sat, 18 Aug 2012
+ 16:13:48 -0400 (EDT)
+In-Reply-To: <8572000.QUVXl8yetS@flobuntu> (Florian Achleitner's message of
+ "Sat, 18 Aug 2012 20:06:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3895B3D6-E971-11E1-8484-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203692>
 
-On 08/11/2012 10:14 AM, Steven Walter wrote:
-> Consider the case where you have trunk, branchA of trunk, and branchB of
-> branchA.  trunk is merged back into branchB, and then branchB is
-> reintegrated into trunk.  The merge of branchB into trunk will have
-> svn:mergeinfo property references to both branchA and branchB.
+Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-Nice start, and then...
-
->    When
-> performing the check_cherry_pick check on branchB,
-
-You switch from a user story to an implementation detail.  Perhaps you 
-could state the user action which is affected here and mention the 
-implementation details in parentheses.
-
->   it is necessary to
-> eliminate the merged contents of branchA as well as branchB, or else the
-> merge will be incorrectly ignored as a cherry-pick.
+> On Friday 17 August 2012 21:16:59 Junio C Hamano wrote:
+>> Comments from mentors and people interested in remote helpers?
+>> 
+>> I did minimum line wrapping, typofix and small compilation fixes
+>> and queued these on 'pu'; I think I saw one commit whose message
+>> I didn't quite get what it was trying to say, and another that was
+>> missing S-o-b (I left them untouched).
 >
-> Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
-> ---
->   git-svn.perl                                    |    8 ++-
->   t/t9163-git-svn-fetch-merge-branch-of-branch.sh |   60 +++++++++++++++++++++++
->   2 files changed, 63 insertions(+), 5 deletions(-)
->   create mode 100755 t/t9163-git-svn-fetch-merge-branch-of-branch.sh
+> Should I provide a better version? I found the commit that I forgot to sign-
+> off, but I'm not sure which message you mean.
+
+There was a one with "E.g:" followed by an incomplete sentence that
+did not parse for me.  Can you fetch 'pu', run format-patch on your
+topic and compare the output with what you sent to the list?
+
+>> The result merged to 'pu' seems to fail 9020, by the way.
 >
-> diff --git a/git-svn.perl b/git-svn.perl
-> index ca038ec..abcec11 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -3657,14 +3657,14 @@ sub find_extra_svn_parents {
->   	my @merge_tips;
->   	my $url = $self->{url};
->   	my $uuid = $self->ra_uuid;
-> -	my %ranges;
-> +	my @all_ranges;
->   	for my $merge ( @merges ) {
->   		my ($tip_commit, @ranges) =
->   			lookup_svn_merge( $uuid, $url, $merge );
->   		unless (!$tip_commit or
->   				grep { $_ eq $tip_commit } @$parents ) {
->   			push @merge_tips, $tip_commit;
-> -			$ranges{$tip_commit} = \@ranges;
-> +			push @all_ranges, @ranges;
->   		} else {
->   			push @merge_tips, undef;
->   		}
-> @@ -3679,8 +3679,6 @@ sub find_extra_svn_parents {
->   		my $spec = shift @merges;
->   		next unless $merge_tip and $excluded{$merge_tip};
->   
-> -		my $ranges = $ranges{$merge_tip};
-> -
->   		# check out 'new' tips
->   		my $merge_base;
->   		eval {
-> @@ -3702,7 +3700,7 @@ sub find_extra_svn_parents {
->   		my (@incomplete) = check_cherry_pick(
->   			$merge_base, $merge_tip,
->   			$parents,
-> -			@$ranges,
-> +			@all_ranges,
->   		       );
+> That's because contrib/svn-fe isn't built automatically if you call make in 
+> the toplevel dir. 
+> It dies with "fatal: Unable to find remote helper for 'svn'", because the 
+> helper is not built. We currently need to run make in contrib/svn-fe 
+> seperately.
+> That's a bit awkward.
 
-This all looks very plausibly correct.
+That indicates that one necessary patch to add logic to Makefile to
+go and build that subdirectory, at least before running the test,
+but possibly as part of the "all" target, is missing, isn't it?
 
->   		if ( @incomplete ) {
-> diff --git a/t/t9163-git-svn-fetch-merge-branch-of-branch.sh b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
-> new file mode 100755
-> index 0000000..13ae7e3
-> --- /dev/null
-> +++ b/t/t9163-git-svn-fetch-merge-branch-of-branch.sh
-> @@ -0,0 +1,60 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Steven Walter
-> +#
-> +
-> +test_description='git svn merge detection'
-> +. ./lib-git-svn.sh
-> +
-> +svn_ver="$(svn --version --quiet)"
-> +case $svn_ver in
-> +0.* | 1.[0-4].*)
-> +	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
-> +	test_done
-> +	;;
-> +esac
-> +
-> +test_expect_success 'initialize source svn repo' '
-> +	svn_cmd mkdir -m x "$svnrepo"/trunk &&
-> +	svn_cmd mkdir -m x "$svnrepo"/branches &&
-> +	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
-> +	(
-> +		cd "$SVN_TREE" &&
-> +		touch foo &&
-> +		svn_cmd add foo &&
-> +		svn_cmd commit -m "initial commit" &&
-> +		svn_cmd cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
-> +		svn_cmd switch "$svnrepo"/branches/branch1 &&
+Or you can add, at the beginning of your tests files that require
+the contrib bit, to have something like
 
-You refer to these as "branchA" and "branchB" in your commit message.  
-It would be easier to follow if you were consistent.
+	if test -e "$GIT_BUILD_DIR/remote-svn"
+        then
+		test_set_prereq REMOTE_SVN
+	fi
 
-Otherwise, nice fix.  I'm glad that someone is finding the corner cases 
-in this code!  :)
+and protect your tests with the prerequisite, e.g.
 
-Sam
+	test_expect_success REMOTE_SVN 'test svn:// URL' '
+        	...
+	'
+
+without changing the top-level Makefile.
