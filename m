@@ -1,69 +1,95 @@
-From: Beat Bolli <bbolli@ewanet.ch>
-Subject: [PATCH 2/2] git-gui: remove .git/CHERRY_PICK_HEAD after committing
-Date: Sat, 18 Aug 2012 11:07:31 +0200
-Message-ID: <1345280851-6626-2-git-send-email-bbolli@ewanet.ch>
-References: <1345280851-6626-1-git-send-email-bbolli@ewanet.ch>
-Cc: Beat Bolli <bbolli@ewanet.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 18 11:17:30 2012
+From: Richard Purdie <richard.purdie@linuxfoundation.org>
+Subject: Problems with git fetch confusing foo and foo.git repos
+Date: Sat, 18 Aug 2012 15:25:04 +0100
+Message-ID: <1345299904.27428.50.camel@ted>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Ashfield, Bruce" <Bruce.Ashfield@windriver.com>,
+	"saul.wold" <saul.wold@intel.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 18 16:37:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2f9s-0006ZR-Fy
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 11:17:28 +0200
+	id 1T2k99-00054v-5Y
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Aug 2012 16:37:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265Ab2HRJQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Aug 2012 05:16:40 -0400
-Received: from smtp2.mail.fcom.ch ([212.60.46.171]:42211 "EHLO
-	smtp2.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752451Ab2HRJQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Aug 2012 05:16:38 -0400
-X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 05:16:38 EDT
-Received: from smtp2.mail.fcom.ch (localhost [127.0.0.1])
-	by smtp2 (Postfix) with ESMTP id B6AC52D4C1;
-	Sat, 18 Aug 2012 11:07:59 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2.mail.fcom.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=5.0 tests=BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=no version=3.2.5
-Received: from drbeat.li (143-45-60-212-pool.cable.fcom.ch [212.60.45.143])
-	by smtp2 (Postfix) with ESMTPS id 8DB1A2D4B5;
-	Sat, 18 Aug 2012 11:07:59 +0200 (CEST)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id 49EBF17F17; Sat, 18 Aug 2012 11:07:58 +0200 (CEST)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1345280851-6626-1-git-send-email-bbolli@ewanet.ch>
-X-AV-Checked: ClamAV using ClamSMTP
+	id S1753422Ab2HROg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Aug 2012 10:36:57 -0400
+Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:61061 "EHLO
+	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751649Ab2HROg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Aug 2012 10:36:56 -0400
+X-Greylist: delayed 699 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Aug 2012 10:36:55 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IEPDLQ018399;
+	Sat, 18 Aug 2012 15:25:13 +0100
+Received: from tim.rpsys.net ([127.0.0.1])
+ by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 14548-06; Sat, 18 Aug 2012 15:25:09 +0100 (BST)
+Received: from [192.168.3.10] ([192.168.3.10])
+	(authenticated bits=0)
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id q7IEP3LZ018385
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 18 Aug 2012 15:25:05 +0100
+X-Mailer: Evolution 3.2.3-0ubuntu6 
+X-Virus-Scanned: amavisd-new at rpsys.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203673>
 
-Adding __git_ps1() to one's bash prompt displays various repo status
-info after each command. After committing a git cherry-pick -n using
-git-gui, the prompt still contains the "|CHERRY-PICKING" flag.
+A while ago I reported a problem[1] where having:
 
-Delete the file causing this flag when cleaning up.
+/somewhere/foo
+and
+/somewhere/foo.git
 
-Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
----
- git-gui/lib/commit.tcl |    1 +
- 1 file changed, 1 insertion(+)
+as bare repositories and trying to clone them using alternates could
+cause git to confuse them.
 
-diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-index 78c5eeb..864b687 100644
---- a/git-gui/lib/commit.tcl
-+++ b/git-gui/lib/commit.tcl
-@@ -409,6 +409,7 @@ A rescan will be automatically started now.
- 	catch {file delete [gitdir MERGE_MSG]}
- 	catch {file delete [gitdir SQUASH_MSG]}
- 	catch {file delete [gitdir GITGUI_MSG]}
-+	catch {file delete [gitdir CHERRY_PICK_HEAD]}
- 
- 	# -- Let rerere do its thing.
- 	#
--- 
-1.7.10.4
+The "conclusion" was that I needed to do:
+
+git clone -s -n /somewhere/foo/ x
+
+to stop it looking at the .git version. Ok, fine. Ugly but I can live
+with it and we added the workaround[2].
+
+I've now discovered we only half solved the problem. Whilst the
+alternates might get setup correctly, the branch names and revisions get
+fetched from the .git version still.
+
+It appears that even if you have a repository setup with an origin url
+of "/somewhere/foo/", when you run git fetch origin -f  refs/*:refs/*,
+it will look at foo.git if it exists.
+
+The problem is the trailing slash is stripped off by the code in
+git-fetch itself. It appears to have done this since it was converted
+from a .sh function. It means it appears impossible to fetch the
+branchnames/revisions from foo when foo.git exists.
+
+I work with build systems that build complete linux systems and we're
+running into failures caused by this. I really need pre-existing
+versions of git to work so I can't even patch git to work around the
+problem without significant cost. So far the only way I've figured out
+to avoid this is to create a symlink to /somewhere/foo/ and then set url
+to point at the symlink. This way I can prevent it from finding the
+other directory.
+
+I thought I'd mention this in the hopes git can be fixed to behave
+better in this situation and perhaps I can drop the hacks I'm going to
+have to add sometime in the future.
+
+If anyone has any ideas for better workarounds I'd love to hear about
+them...
+
+[1] "Alternates corruption issue", 2012/1/31
+[2] http://git.yoctoproject.org/cgit.cgi/poky/commit/bitbake/lib/bb/fetch2/git.py?id=64662290d3e7deb0b6093b3959c3f3eddb873893
+
+Cheers,
+
+Richard
