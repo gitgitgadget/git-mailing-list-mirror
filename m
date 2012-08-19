@@ -1,67 +1,107 @@
-From: Alexey Muranov <alexey.muranov@gmail.com>
-Subject: Re: [RFC 0/3] Reflogs for deleted refs: fix breakage and suggest namespace change
-Date: Sun, 19 Aug 2012 09:15:26 +0200
-Message-ID: <49E12233-CD0E-410A-81BC-964B6CBE7DE8@gmail.com>
-References: <20120719213311.GA20385@sigill.intra.peff.net> <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu> <7vboi8rl2q.fsf@alter.siamese.dyndns.org> <B88EFDF9-0AB6-49AC-87E5-7515B99AE601@gmail.com> <7vehn3rbom.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 09:16:19 2012
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: Porting git to HP NonStop
+Date: Sun, 19 Aug 2012 10:57:47 +0200
+Message-ID: <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com> <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de> <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <rsbecker@nexbridge.com>
+To: "'Shawn Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Aug 19 10:58:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2zkA-0007j5-CP
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 09:16:18 +0200
+	id 1T31L7-0006nj-SC
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 10:58:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491Ab2HSHPc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Aug 2012 03:15:32 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44169 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752842Ab2HSHPa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2012 03:15:30 -0400
-Received: by eeil10 with SMTP id l10so1495935eei.19
-        for <git@vger.kernel.org>; Sun, 19 Aug 2012 00:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=PfkK/fZcLrUtbpaQWfdRlEb2YIl5S+TCynIEpaqnhMs=;
-        b=vIjnYLVHcniWGjr1Na29/+GA3u1NBbT4T2aYV1/ROdj+qtHJv3hgYfc4gULMKfboOh
-         +zdmawVraQwEIItCrHfiJ3Lg48sDxsXAzbYzaoe/glcHvkLr8rnEsWjRgHoL9j/wsOjh
-         bDZePktjnuDwofJoQ9cZuLc1fWLt7rx6mETA/E/Y4bLXjpg3S4C+7vIw439Z+ciyQFed
-         A4j1QPe+9OKgZCZJq/XoEhdn3tL+1d+OmClWHhPlK13gdNxWWCbTYuMbvmGyq93LVwvd
-         apbvJJd/70MxUqKqGQsGnCRdBdGcv4jsTQhmB3cSpiEh0K6YRsfXdq8CN4RKlbtas0A8
-         RfLA==
-Received: by 10.14.215.197 with SMTP id e45mr3786327eep.36.1345360529029;
-        Sun, 19 Aug 2012 00:15:29 -0700 (PDT)
-Received: from ?IPv6:2a01:e35:2f10:380:223:12ff:fe56:641a? ([2a01:e35:2f10:380:223:12ff:fe56:641a])
-        by mx.google.com with ESMTPS id 45sm32291085eed.17.2012.08.19.00.15.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Aug 2012 00:15:28 -0700 (PDT)
-In-Reply-To: <7vehn3rbom.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1084)
+	id S1753307Ab2HSI62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 04:58:28 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:65012 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752511Ab2HSI6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 04:58:25 -0400
+Received: from DualCore (dsdf-4db5d806.pool.mediaWays.net [77.181.216.6])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0MVb0p-1TBajN1uAx-00Z3N2; Sun, 19 Aug 2012 10:58:02 +0200
+In-Reply-To: <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7EfAdIAjkoB0Br5KJXuoL5A
+Content-Language: de
+X-Provags-ID: V02:K0:m7ys4UNJWruAYNw+9lqsjJULIrfkLsuQaAiuJkGXdP/
+ 54lv41krWgUpvoRXH5uvwp6hRjOkB6/U+0ODCz8aUApX3PrSmB
+ EqinktVHpDeibNXR/mCFk6obIwjO2R+nj/JZ7bzIxCqhjSPace
+ g1vjE/RzU13qiyNPb91pYKqnXe+vgxFX7m+z1gf0TGm0SEH0sA
+ Q2abP/By/ZXdyf1cjQKXoqNb1Mj8WHZFppFDd0B6E7vbEUzkR9
+ zmewurW2JXskYA6Wq3YZAIt/4/pdJUUsXNxg03i211O0T57oYr
+ rKzPDWXqhMPfnM1XYrW72geSvbnk2Uhfav//x+4BCtdi1ti6Z7
+ GlSdo8hN6tkK4tym9zgPu0D0zD/vYb0Mp0bhZ7VZ29+3ki4rmH
+ XsBKVyxfK55tg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203714>
 
-On 19 Aug 2012, at 02:02, Junio C Hamano wrote:
+> From: Shawn Pearce [mailto:spearce@spearce.org]
+> Sent: Friday, August 10, 2012 7:38 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org; rsbecker@nexbridge.com
+> Subject: Re: Porting git to HP NonStop
+> 
+> On Fri, Aug 10, 2012 at 10:32 AM, Joachim Schmitz
+<jojo@schmitz-digital.de>
+> wrote:
+> >> then use `git init --bare` in a new directory to copy in the
+> >> templates,
+> > and see if
+> >> its the template copying code that is making an incorrect copy.
+> >
+> > "git init --bare" gives the same error. It isn't copying any of the
+> > subdirectories, only the file 'description'
+> 
+> Time to start debugging copy_templates_1 in builtin/init-db.c. :-(
 
-> Alexey Muranov <alexey.muranov@gmail.com> writes:
->=20
->> I hope my opinion might be useful because i do not know anything
->> about the actual implementation of Git,...
->=20
-> That sounds like contradiction.
+Found the problem: our mkdir(dir,flags) fails with ENOENT when dir ends with
+a '/'.
+Not sure whether this us a bug on out platform or just allowed by POSIX and
+as such a wrong assumption in git though?
 
-I meant that i am psychologically not attached to the current behavior,=
- and may provide a na=EFve view point, if you like.
+[shortly after]
+A bit of googleing revealed that there is a GNUlib solution for this, which
+claims that at least NetBSD 1.5.2 has the same problem.
+(http://www.opensource.apple.com/source/gpatch/gpatch-2/patch/mkdir.c)
 
--Alexey.
+And apparently this has been discussed on the git mailing list too, 2 years
+ago:
+http://lists-archives.com/git/728359-git-s-use-of-mkdir-2.html, there's a
+patch too.
+
+For now I've fixed it like this:
+/usr/local/bin/diff -EBbu ./builtin/init-db.c.orig ./builtin/init-db.c
+--- ./builtin/init-db.c.orig    2012-08-19 03:55:50 -0500
++++ ./builtin/init-db.c 2012-08-19 03:39:57 -0500
+@@ -25,7 +25,16 @@
+
+ static void safe_create_dir(const char *dir, int share)
+ {
++#ifdef __TANDEM /* our mkdir() can't cope with a trailing '/' */
++       char mydir[PATH_MAX];
++
++       strcpy(mydir,dir);
++       if (dir[strlen(dir)-1] == '/')
++               mydir[strlen(dir)-1] = '\0';
++       if (mkdir(mydir, 0777) < 0) {
++#else
+        if (mkdir(dir, 0777) < 0) {
++#endif
+                if (errno != EEXIST) {
+                        perror(dir);
+                        exit(1);
+
+
+
+Bye, Jojo 
