@@ -1,91 +1,82 @@
-From: Alexey Muranov <alexey.muranov@gmail.com>
-Subject: Re: [RFC 0/3] Reflogs for deleted refs: fix breakage and suggest namespace change
-Date: Mon, 20 Aug 2012 00:09:16 +0200
-Message-ID: <9E4BBC27-5B26-4048-93D4-FE02C550F4E2@gmail.com>
-References: <20120719213311.GA20385@sigill.intra.peff.net> <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu> <7vboi8rl2q.fsf@alter.siamese.dyndns.org> <B88EFDF9-0AB6-49AC-87E5-7515B99AE601@gmail.com> <7vehn3rbom.fsf@alter.siamese.dyndns.org> <A15D5621-7EF5-4409-967A-0DA20B007899@gmail.com> <7v1uj2pysd.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: mhagger@alum.mit.edu, Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 00:09:29 2012
+From: Robert Luberda <robert@debian.org>
+Subject: Re: [PATCH/RFC] git svn: don't introduce new paragraph for git-svn-id
+Date: Sun, 19 Aug 2012 23:46:57 +0200
+Organization: Debian
+Message-ID: <50315ED1.6080803@debian.org>
+References: <1343856197-6393-1-git-send-email-robert@debian.org> <20120801214318.GA10384@dcvr.yhbt.net> <5019AD3A.8030609@debian.org> <20120801230118.GA15479@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Aug 20 00:45:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3DgV-0002PY-HK
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 00:09:27 +0200
+	id 1T3EEu-0007mZ-40
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 00:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310Ab2HSWJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Aug 2012 18:09:21 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:53185 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911Ab2HSWJU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2012 18:09:20 -0400
-Received: by eeil10 with SMTP id l10so1601412eei.19
-        for <git@vger.kernel.org>; Sun, 19 Aug 2012 15:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=RCl35h1ggzLp+3ouyIgaFz4IbJh2BdlZSupelHBC3MQ=;
-        b=bU4yrCfMXh81jlnhXZAoNuSYht0F2ayfnHAmjB1DSOUA8BW+XD1ZVIG8v/ThBjz/Ai
-         TJPB5DmgZNUvqLAycDKQoNbyA6tRpNwQpOZC5YkalXu6M8HwTFXr7o2QNOdrRARn/ZG0
-         OKTEtREXsNgGkbr2G3t8gj7H8Ws4bO8SBs3K8EnGHKB6VugeUtZbM/Yy3f+4BSMjBT2B
-         ikcfDqT6lXBSr4kZmqpFskC9BmG3QBmWqpNPStC8jabpilfbuBuTtmK4HS8UKTV/O98u
-         5c71VVjwCdVr5WJJlPz+5Mfvc+L9AlKy+vT/cV2DAZcWsAUICPu5Q/aAyRrImEU4HXBj
-         S0kA==
-Received: by 10.14.172.193 with SMTP id t41mr6051162eel.25.1345414158899;
-        Sun, 19 Aug 2012 15:09:18 -0700 (PDT)
-Received: from ?IPv6:2a01:e35:2f10:380:223:12ff:fe56:641a? ([2a01:e35:2f10:380:223:12ff:fe56:641a])
-        by mx.google.com with ESMTPS id a7sm36655939eep.14.2012.08.19.15.09.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Aug 2012 15:09:18 -0700 (PDT)
-In-Reply-To: <7v1uj2pysd.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1084)
+	id S1751499Ab2HSWoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 18:44:16 -0400
+Received: from master.debian.org ([70.103.162.29]:34405 "EHLO
+	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751333Ab2HSWoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 18:44:14 -0400
+Received: from localhost ([127.0.0.1] helo=vox.robbo.home)
+	by master.debian.org with esmtp (Exim 4.72)
+	(envelope-from <robert@debian.org>)
+	id 1T3EE9-0006fX-Ka; Sun, 19 Aug 2012 22:44:13 +0000
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by vox.robbo.home (Postfix) with ESMTP id 1E84EE312E;
+	Sun, 19 Aug 2012 23:46:57 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.6esrpre) Gecko/20120817 Icedove/10.0.6
+In-Reply-To: <20120801230118.GA15479@dcvr.yhbt.net>
+X-Enigmail-Version: 1.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203739>
 
-On 19 Aug 2012, at 19:38, Junio C Hamano wrote:
+Eric Wong wrote:
 
-> Alexey Muranov <alexey.muranov@gmail.com> writes:
+Hi,
+>> I don't think it will be hard to make it configurable. I can try to make
+>> such a change, do you have any preferences about the option and
+>> configuration key names?
 > 
->> 2. I think that allowing both "next" and "next/foo" complicates
->> the mapping from branch names to file paths, and it does not seem
->> necessary if dead reflogs are moved away to "graveyard" anyway.
-> 
-> It is unclear why the first two lines above leads to the conclusion
-> "it does not seem necessary" (but honestly, I do not particularly
-> care).
+> No preference off the top of my head.  As long as it makes sense to
+> enough people here and is consistent in style with existing options in
+> git.
 
-I thought that the first reason that allowing "next" and "next/foo" seemed necessary was avoiding conflicts with dead reflogs or between dead reflogs.  If dead reflog for "next/foo" is moved away, it will not conflict with a new one for "next".  There remains a problem with a conflict between dead "next/foo" and dead "next".  This can be solved as Jeff suggested by adding special "escape" symbols, or as i suggested below, by keeping reflogs deleted on different occasions in different "timestamp" directories.
+I have been quite a busy recently, so it took me longer that I thought.
 
->> 3. There remains the question what to do with dead reflogs for
->> different branches having the same name.  Maybe, keep the death
->> date and time under the graveyard directory and not allow the user
->> to delete 2 times in less than 1 second?
->> 
->> /logs/graveyard/yyyy-mm-dd-hhmmss/refs/heads/next/foo
-> 
-> How would that help us in what way?
-> 
-> When I ask "git log -g next/foo" for the "next/foo" branch that
-> currently exists, I want to see the update history of its tip since
-> I created it for the last time, and then an entry that says I
-> created it at such and such time.  If I used to have the branch
-> before but deleted, then the output should be followed by another
-> entry that says I deleted it at such and such time, followed by the
-> history of the tip updates.
+It was quite hard for me to think some sensible option name, and finally
+have chosen --trim-svn-log (svn.trimsvnlog as config key name). Please
+let me know if such name is ok for you. If not, I'll try to find a
+different one (but as I wrote I'm not really good at giving names to
+options/functions/variables, etc. :()
 
-I only suggested how to resolve conflicts between dead reflogs in graveyard if "next" and "next/foo" cannot coexist.
-For example, if first "next/foo" was created and deleted, and then "next" was created and deleted.  It also seems nice to me to have dead reflogs for different identically named branches (created and deleted independently) in separate files.
+I considered making the option a default one for new git svn clones, so
+that existing repositories would use the older approach, but I gave up
+the idea, and implemented the simpler solution, in which the option must
+be given explicitly if one needs the new behavior. If making it a
+default for new clones would make sense for you, I can try to implement
+this as well.
 
-It is possible to collect the information for "git log -g next/foo" by looking through all "timestamp" subdirectories in graveyard.
+For consistency, the `--add-author-from' option was modified not to add
+an extra new line before 'From: ' line when the newly introduced option
+is in effect.
 
--Alexey.
+I'm sending a new patch in next e-mail, could you please look at it and
+share any comments you might have? One thing I was not sure about is the
+requirement, introduced in the change, of having a whitespace character
+after a colon in pseudo-header lines
+(e.g. `From:somebody <somebody@somewhere.com>' won't be considered as a
+pseudo-header) - is this consistent with a way git handles
+headers/pseudo-headers?
+
+Best regards,
+robert
