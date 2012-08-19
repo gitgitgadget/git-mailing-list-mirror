@@ -1,121 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test failures in t4034
-Date: Sat, 18 Aug 2012 23:12:23 -0700
-Message-ID: <7v7gsvquk8.fsf@alter.siamese.dyndns.org>
-References: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com>
+Subject: Re: [PATCH/RFC v4 01/16] GSOC remote-svn
+Date: Sat, 18 Aug 2012 23:35:38 -0700
+Message-ID: <7v1uj3qthh.fsf@alter.siamese.dyndns.org>
+References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <7v4no0u950.fsf@alter.siamese.dyndns.org> <8572000.QUVXl8yetS@flobuntu>
+ <7vzk5srm9w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 08:13:19 2012
+Cc: David Michael Barr <b@rr-dav.id.au>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 19 08:35:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T2yl8-0005zq-K8
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 08:13:14 +0200
+	id 1T2z6z-0001Gt-6v
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 08:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668Ab2HSGM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Aug 2012 02:12:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54826 "EHLO
+	id S1752108Ab2HSGfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 02:35:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61963 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751363Ab2HSGM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2012 02:12:26 -0400
+	id S1751786Ab2HSGfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 02:35:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85C2295F4;
-	Sun, 19 Aug 2012 02:12:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0EC69804;
+	Sun, 19 Aug 2012 02:35:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1kRinb0p9rkbRpiLjkR/shj4eFg=; b=mg4YDl
-	ZWw4ceTaA8MjfTRdU7pmQFX7WUGsh4yBLDXqpRfmhWW2ojr5mOWrGLOod2/mRv+3
-	+8W5qvOsFAfXs/rINEWDeVTjzM/ZkjbIg2lLnyrDOwMMu57v2fiWGj1xjJvJ4eoW
-	g6vQ8IlKtHHjVFFvOct9vqlc1oUYn2DPNSMfg=
+	:content-type; s=sasl; bh=iG+TEIohWvp0fZWC0oz1lqMN3zE=; b=XD4rPU
+	XoIxCPIkWWdRTh4pymip9O9nQQ2i/ZILrElYtkZNehvU/5u2FKvQqgDwXAiCtDq8
+	BX5Cmo15BoMYLRbdEvnvUBML0itFEJTLVpvVxr87MyfCpH7tkqbgcAN0aF5eSM7M
+	j/KZ+i+ciO+1YDCuoSphNEBY7eyQGd/r6HAxI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wGJvC/Gu9TMivauhwtjHXBx8JXCELNLN
-	CTYYZK0K9un8wzoT6sXUTxmpqlFARv1THu0kUYFcOzQYl6Pi5CdnyjEG3NYidpe2
-	RY+1fB/8RmjXqmlR37ziorlZVlbEACiyRKQWFQXCRVFgF2oRQdlhnieJqCnueNCu
-	iUhAldRC/RU=
+	:content-type; q=dns; s=sasl; b=Uyt8njf9umWw7m0QuY1CFIhdgqs/u9wV
+	RWJuU43TsZ1zQZdQB1gGDcdcOdOjrpV2tTDgvOdoM0Z4hsHyfnxPnyKrZo66D2cW
+	c3pQ7g/0AxZnjDoaRGFQ6XepqBGtwpdUpTzl1ZgiPgG7AmZPhmJrp6rMOAIxJtkO
+	GqtE6i5nU78=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73B3995F3;
-	Sun, 19 Aug 2012 02:12:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD8BA9803;
+	Sun, 19 Aug 2012 02:35:41 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5E4695F2; Sun, 19 Aug 2012
- 02:12:24 -0400 (EDT)
-In-Reply-To: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com>
- (Brian Gernhardt's message of "Sat, 18 Aug 2012 02:03:26 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB20E9802; Sun, 19 Aug 2012
+ 02:35:40 -0400 (EDT)
+In-Reply-To: <7vzk5srm9w.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 18 Aug 2012 13:13:47 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D8373812-E9C4-11E1-8945-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 186359EA-E9C8-11E1-AF33-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203710>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I've been getting a couple of test failures and finally had the time to track them down.
+> Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 >
-> t4034-diff-words fails tests "22 diff driver 'bibtex'" and "26
-> diff driver 'html'".  Bisecting shows that the file started giving
-> me errors in commit 8d96e72 "t4034: bulk verify builtin word regex
-> sanity", which appears to introduce those tests.  I don't see
-> anything obviously wrong with the tests and I'm not familiar with
-> the diff-words code, so I'm not sure what's wrong.
+>> On Friday 17 August 2012 21:16:59 Junio C Hamano wrote:
+>>> Comments from mentors and people interested in remote helpers?
+>>> 
+>>> I did minimum line wrapping, typofix and small compilation fixes
+>>> and queued these on 'pu'; I think I saw one commit whose message
+>>> I didn't quite get what it was trying to say, and another that was
+>>> missing S-o-b (I left them untouched).
+>>
+>> Should I provide a better version? I found the commit that I forgot to sign-
+>> off, but I'm not sure which message you mean.
 >
-> I am running on OS X 10.8, with Xcode 4.4.1 (llvm-gcc 4.2.1).
->
-> Test results follow:
->
-> ---------- 8< ----------
->
-> expecting success: 
-> 		cp "$TEST_DIRECTORY/t4034/bibtex/pre" \
-> 			"$TEST_DIRECTORY/t4034/bibtex/post" \
-> 			"$TEST_DIRECTORY/t4034/bibtex/expect" . &&
-> 		echo "* diff=bibtex" >.gitattributes &&
-> 		word_diff --color-words
-> 	
-> --- expect	2012-08-18 05:54:29.000000000 +0000
-> +++ output.decrypted	2012-08-18 05:54:29.000000000 +0000
-> @@ -8,8 +8,8 @@
->    author={Aldous, <RED>D.<RESET><GREEN>David<RESET>},
->    journal={Information Theory, IEEE Transactions on},<RESET>
->    volume={<RED>33<RESET><GREEN>Bogus.<RESET>},
-> -  number={<RED>2<RESET><GREEN>4<RESET>},
-> +  number={4},
->    pages={219--223},<RESET>
-> -  year=<GREEN>1987,<RESET>
-> -<GREEN>  note={This is in fact a rather funny read since ethernet works well in practice. The<RESET> {<RED>1987<RESET><GREEN>\em pre} reference is the right one, however.<RESET>}<RED>,<RESET>
-> +  year=<RED>{1987},<RESET><GREEN>1987,<RESET>
-> +  note={This is in fact a rather funny read since ethernet works well in practice. The {\em pre} reference is the right one, however.}
->  }<RESET>
-> not ok - 22 diff driver 'bibtex'
+> There was a one with "E.g:" followed by an incomplete sentence that
+> did not parse for me.  Can you fetch 'pu', run format-patch on your
+> topic and compare the output with what you sent to the list?
 
-Thanks for a report.  Off the top of my head, there may be three
-possibilities.
+Just to show how, here is what I did just now.
 
- (1) The compiled binary of Git is broken on your platform and not
-     formatting the escape sequence correctly.  I somehow think it
-     is very unlikely, as the code to do so is pretty much platform
-     agonistic (color.c does not use anything fancy from system
-     libraries).
+  (0) Store your 16-patch series and 5-patch series in a mbox;
 
- (2) The test script, the part that converts the escape sequence to
-     human readable form, is broken---not written in a portable awk.
+  (1) Check where the tip of fa/vcs-svn topic is at.
 
- (3) The implementation of awk on your platform was broken by your
-     supplier, with the same infinite wisdom they broke the UTF-8
-     pathnames on their filesystem implementation with ;-)
+      $ git log --oneline --first-parent master..pu | grep fa/
+      2ce959b Merge branch 'fa/vcs-svn' into pu
+      574ffe1 Merge branch 'fa/remote-svn' into pu
 
-Can you help isolating the issue first to see if it is (1) or one of
-the other two?
+  (2) Check where the topic was based on.
 
-Run "cd t && sh t4034-diff-words -i" to force stop the test upon the
-first breakage, and inspect the "output" before the awk script
-test_decode_color munges it.  Does it show a red number 2 and green
-number 4 on the line that begins with "number=" (or if you have an
-access to a box on which this test passes, grab the raw output from
-it by running this test, and make byte-for-byte comparison)?  
+      $ git log --oneline --first-parent master..2ce959b^2
+      ...
+      1385a48 Implement a remote helper for svn in C
+
+  (3) Detach at the same base and apply the mbox from step (0).
+
+      $ git checkout 1385a48^
+      $ git am --whitespace=nowarn mbox
+
+  (4) Format them (i.e. as the way you sent them, without my fixup)
+
+      $ git format-patch --stdout master >./+fa-0
+
+  (5) Format with my fixup
+
+      $ git format-patch --stdout master..2ce959b^2 >./+fa-1
+
+  (6) Compare them.  The differences are my fixups.
+
+      $ diff -u ./+fa-0 ./+fa-1 | less
+
+Patch #17 "vcs-svn: Add sha1 calculation to fast_export ..." was the
+one with a sentence whose purpose was unclear to me.
+
+By the time you see this message, the tip of "pu" may have been
+updated with further updates, so please do not trust 2ce959b above.
+
+Thanks.
