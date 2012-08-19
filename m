@@ -1,58 +1,65 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC PATCH 1/2] rm: don't fail when removing populated submodules
-Date: Sun, 19 Aug 2012 21:38:48 +0200
-Message-ID: <503140C8.3090603@web.de>
-References: <4FF4AAE7.40604@web.de> <4FF4AB1B.60805@web.de> <7v1ukppear.fsf@alter.siamese.dyndns.org> <4FF830D6.7080708@web.de> <7vsjd2n1wt.fsf@alter.siamese.dyndns.org> <4FF9A261.3040907@web.de> <7vhathn0f4.fsf@alter.siamese.dyndns.org> <4FFB23EB.8060409@web.de> <7vpq84k9n5.fsf@alter.siamese.dyndns.org> <4FFB3DB9.6090808@web.de> <7vmx1uzekb.fsf@alter.siamese.dyndns.org> <502E74F8.4070209@web.de> <CABURp0qujqHRg+PkScNGbHccHyheJZesWBsJSC=crhUczOG7Mg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Test failures in t4034
+Date: Sun, 19 Aug 2012 23:36:02 +0200
+Message-ID: <50315C42.5060403@kdbg.org>
+References: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com> <5030FD49.6060704@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 21:39:07 2012
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Aug 19 23:36:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3BL1-0002ij-43
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 21:39:07 +0200
+	id 1T3DAx-0007d6-Kz
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 23:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab2HSTjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Aug 2012 15:39:00 -0400
-Received: from mout.web.de ([212.227.17.12]:53686 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751379Ab2HSTi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2012 15:38:59 -0400
-Received: from [192.168.178.41] ([79.193.94.6]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0MLxrY-1T270L49TI-008TRi; Sun, 19 Aug 2012 21:38:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <CABURp0qujqHRg+PkScNGbHccHyheJZesWBsJSC=crhUczOG7Mg@mail.gmail.com>
-X-Provags-ID: V02:K0:Whu1s6XiM4kmCmICKolJOEmVjjoPYlAfzrK88tetqp3
- hag/WqPl5a28G51BIUbU1iXAD/HrBaCH6/ixiLmiXCNYM518tV
- QuKDLFx0x2+OqdnbVIrMarhYIoikON6BcAJUdOO4Z29165dexR
- yzQa0xmVPp9bGzcAsyS1hwoXwiloMANftTG5fX9eOo8LO51FxU
- 3rqv7ah2+HoLZ8GydZo3A==
+	id S1752170Ab2HSVgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 17:36:08 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:13824 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751200Ab2HSVgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 17:36:07 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id A1F8313004D;
+	Sun, 19 Aug 2012 23:36:03 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 60B3A19F3C6;
+	Sun, 19 Aug 2012 23:36:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <5030FD49.6060704@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203735>
 
-Am 17.08.2012 20:11, schrieb Phil Hord:
-> On Fri, Aug 17, 2012 at 12:44 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->>
->> I'm almost there. The only thing left is to check if a nested
->> submodule is using a git directory. In that case I expect "rm" to
->> fail even when -f is used to protect the submodule's history. I
->> still need to find a suitable command for recursing the submodules
->> and doing that check.
+Am 19.08.2012 16:50, schrieb Ramsay Jones:
+> Brian Gernhardt wrote:
+>> I've been getting a couple of test failures and finally had the
+>> time to track them down.
+>> 
+>> t4034-diff-words fails tests "22 diff driver 'bibtex'" and "26 diff
+>> driver 'html'".  Bisecting shows that the file started giving me
+>> errors in commit 8d96e72 "t4034: bulk verify builtin word regex
+>> sanity", which appears to introduce those tests.  I don't see
+>> anything obviously wrong with the tests and I'm not familiar with
+>> the diff-words code, so I'm not sure what's wrong.
+>> 
+>> I am running on OS X 10.8, with Xcode 4.4.1 (llvm-gcc 4.2.1).
 > 
-> I suppose the style of this is wrong, but this seems to work for me.
-> 
-> git submodule foreach --recursive '! test -f .git'
+> I had the same problem (or at least it *looks* like the same problem)
+> on Linux last year (May 2011), which turned out to be a bug in the
+> regex routines in an old version of glibc.
 
-Thanks! I was looking for something less expensive, but given that
-I don't expect removing submodules to be a performance critical
-operation this test should just work fine.
+I also had the same problem, but did not remember why I don't have it
+anymore. Now that you mention it: It was the same situation and I came
+to the same conclusion (old glibc, bogus regex implementation). I worked
+it around with NO_REGEX=YesPlease in config.mak.
+
+-- Hannes
