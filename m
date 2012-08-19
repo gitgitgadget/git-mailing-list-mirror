@@ -1,113 +1,57 @@
-From: theProphet <dreamingforward-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: git add "This file is for the blah class"
-Date: Sun, 19 Aug 2012 11:45:46 -0700 (PDT)
-Message-ID: <e0c6edc0-9ff5-491e-9e74-d91cd1330f47@googlegroups.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: read-cache-v5.c: compiler warnings
+Date: Sun, 19 Aug 2012 20:13:48 +0100
+Message-ID: <50313AEC.1060700@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_1031_21777848.1345401946568"
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-From: git-users+bncCLC3jq6SGBDd6MSBBRoE_ZaMeg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Aug 19 20:45:52 2012
-Return-path: <git-users+bncCLC3jq6SGBDd6MSBBRoE_ZaMeg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-pb0-f58.google.com ([209.85.160.58])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncCLC3jq6SGBDd6MSBBRoE_ZaMeg-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1T3AVT-0004h8-Qu
-	for gcggu-git-users@m.gmane.org; Sun, 19 Aug 2012 20:45:52 +0200
-Received: by pbcmd12 with SMTP id md12sf3732156pbc.3
-        for <gcggu-git-users@m.gmane.org>; Sun, 19 Aug 2012 11:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:date:from:to:cc:message-id:subject:mime-version
-         :x-original-sender:x-original-authentication-results:reply-to
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=pJCbSrLoPWPCZ/OCt9eUIvLgaDunlFJch3timKACFKc=;
-        b=bqEY1baDKSWdArhETGrAIVhwfjiCiBi4X8xFrgaCdbAFg3ZpsvqRWwjY9s1cGm3swz
-         JFwQ8Nqv8KvoRa/K8JJGaK5oyGA2SUJ1cPoVII4v64roRhn+myRvgQfviOBjNaP13w7a
-         KAjKtf95q9Txx7DqM9V+Im1Tzeh9WSbO9a0CM=
-Received: by 10.182.13.35 with SMTP id e3mr265874obc.12.1345401949059;
-        Sun, 19 Aug 2012 11:45:49 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.182.47.99 with SMTP id c3ls3614952obn.0.gmail; Sun, 19 Aug
- 2012 11:45:48 -0700 (PDT)
-Received: by 10.182.11.40 with SMTP id n8mr262694obb.1.1345401948356;
-        Sun, 19 Aug 2012 11:45:48 -0700 (PDT)
-X-Original-Sender: dreamingforward-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Original-Authentication-Results: ls.google.com; spf=pass (google.com: domain of
- dreamingforward-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates internal as permitted sender)
- smtp.mail=dreamingforward-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass
- header.i=@gmail.com
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203728>
-
-------=_Part_1031_21777848.1345401946568
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: t.gummerer@gmail.com
+X-From: git-owner@vger.kernel.org Sun Aug 19 21:17:26 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1T3B01-0008A0-Gc
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 21:17:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754601Ab2HSTRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 15:17:20 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:40745 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754572Ab2HSTQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 15:16:44 -0400
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id E4493A0C07F;
+	Sun, 19 Aug 2012 20:16:43 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 6D002A0C084;	Sun, 19 Aug 2012 20:16:43 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;	Sun, 19 Aug 2012 20:16:42 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 9
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203729>
 
-I'm finding it annoying when browsing repositories at github and such that 
-the description on every file and directory is only the last commit message 
-given for that file.
+Hi Thomas,
 
-I think it would be much more organizationally useful if the "git add" 
-command accepted a message that will be associated with that file that 
-describes its purpose.  A file name just isn't adequate to do the job and 
-there's nowhere else where this is tracked.
+Just an FYI; two out of the three gcc compilers I use (Linux, cygwin
+but not MingW), issue the following warnings:
 
-Thanks guys!
+        CC read-cache-v5.o
+    read-cache-v5.c: In function `write_index_v5':
+    read-cache-v5.c:1011: warning: 'dir' might be used uninitialized in this function
+    read-cache-v5.c:1012: warning: 'search' might be used uninitialized in this function
+    read-cache-v5.c:1012: warning: 'found' might be used uninitialized in this function
 
-mark
-github/Social-Garden.
+[commit d2537158 ("Write index-v5", 16-08-2012)]
 
+Normally I would take a look and offer a patch, but I haven't found time
+to do so in the last 10 days. So, I'm just giving you a heads up ... ;-P
 
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To view this discussion on the web visit https://groups.google.com/d/msg/git-users/-/z8QL0uzNBCIJ.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+HTH
 
-
-------=_Part_1031_21777848.1345401946568
-Content-Type: text/html; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-
-I'm finding it annoying when browsing repositories at github and such that =
-the description on every file and directory is only the last commit message=
- given for that file.<div><br></div><div>I think it would be much more orga=
-nizationally useful if the "git add" command accepted a message that will b=
-e associated with that file that describes its purpose. &nbsp;A file name j=
-ust isn't adequate to do the job and there's nowhere else where this is tra=
-cked.</div><div><br></div><div>Thanks guys!</div><div><br></div><div>mark</=
-div><div>github/Social-Garden.</div><div><br></div><div><br></div>
-
-<p></p>
-
--- <br />
-You received this message because you are subscribed to the Google Groups "=
-Git for human beings" group.<br />
-To view this discussion on the web visit <a href=3D"https://groups.google.c=
-om/d/msg/git-users/-/z8QL0uzNBCIJ">https://groups.google.com/d/msg/git-user=
-s/-/z8QL0uzNBCIJ</a>.<br />=20
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org<br />
-To unsubscribe from this group, send email to git-users+unsubscribe@googleg=
-roups.com.<br />
-
-For more options, visit this group at http://groups.google.com/group/git-us=
-ers?hl=3Den.<br />
-
-
-
-------=_Part_1031_21777848.1345401946568--
+ATB,
+Ramsay Jones
