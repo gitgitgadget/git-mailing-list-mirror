@@ -1,110 +1,111 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC 0/3] Reflogs for deleted refs: fix breakage and suggest
- namespace change
-Date: Sun, 19 Aug 2012 15:19:18 +0200
-Message-ID: <5030E7D6.8020206@alum.mit.edu>
-References: <20120719213311.GA20385@sigill.intra.peff.net> <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu> <7vboi8rl2q.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] test: some testcases failed if cwd is on a symlink
+Date: Sun, 19 Aug 2012 15:57:19 +0200
+Message-ID: <5030F0BF.2090500@alum.mit.edu>
+References: <001c60538df409d94618e80cc3faaae586ccf053.1343116581.git.worldhello.net@gmail.com> <7vboj5gqqo.fsf@alter.siamese.dyndns.org> <loom.20120818T162226-852@post.gmane.org> <7vfw7krl8r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Alexey Muranov <alexey.muranov@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 19 15:27:12 2012
+X-From: git-owner@vger.kernel.org Sun Aug 19 16:04:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T35X6-0002i9-F1
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 15:27:12 +0200
+	id 1T367C-0007CE-TE
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Aug 2012 16:04:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801Ab2HSN00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Aug 2012 09:26:26 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:49048 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751661Ab2HSN0Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2012 09:26:24 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Aug 2012 09:26:24 EDT
-X-AuditID: 1207440c-b7f616d00000270b-5c-5030e7dad862
+	id S1752468Ab2HSOEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 10:04:25 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:54311 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752364Ab2HSOEX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Aug 2012 10:04:23 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Aug 2012 10:04:23 EDT
+X-AuditID: 1207440d-b7f236d000000943-0b-5030f0c1fd00
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 12.02.09995.AD7E0305; Sun, 19 Aug 2012 09:19:22 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id C4.45.02371.1C0F0305; Sun, 19 Aug 2012 09:57:21 -0400 (EDT)
 Received: from [192.168.69.140] (p57A24F38.dip.t-dialin.net [87.162.79.56])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7JDJJL1008595
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7JDvJEL009958
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 19 Aug 2012 09:19:20 -0400
+	Sun, 19 Aug 2012 09:57:20 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <7vboi8rl2q.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsUixO6iqHvruUGAwdwuKYuFff3MFl1Xupks
-	GnqvMFtMuN/AbPGjpYfZYuWuhUwObB47Z91l93jWu4fR4+IlZY+5nxaxenzeJBfAGsVtk5RY
-	UhacmZ6nb5fAnbHw3zrWgsMCFZeaFrE1MC7k7WLk5JAQMJFY/+E1O4QtJnHh3nq2LkYuDiGB
-	y4wSJ9ves0A4p5kklnUuZgWp4hXQlth2Yg0biM0ioCpx4ONSZhCbTUBXYlFPMxOILSoQIrHm
-	2xRGiHpBiZMzn7CA2CICahIT2w6BDWUWuMYoMfvAPLCEsECMxNmml2DNQgJzGSUWL9EBsTkF
-	zCT+7PoItoxZQEfiXd8DZghbXmL72znMExgFZiHZMQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSn
-	JusWJyfm5aUW6Rrq5WaW6KWmlG5ihAQ8zw7Gb+tkDjEKcDAq8fBqahkECLEmlhVX5h5ilORg
-	UhLl/fAUKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE1z8XKMebklhZlVqUD5OS5mBREudVXaLu
-	JySQnliSmp2aWpBaBJOV4eBQkuCNAUa2kGBRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJ
-	RjwoWuOLgfEKkuIB2hsE0s5bXJCYCxSFaD3FaMzx+enJu4wck2+dvcsoxJKXn5cqJc5rD1Iq
-	AFKaUZoHtwiW6l4xigP9LcwbCFLFA0yTcPNeAa1iAlr1aC7YqpJEhJRUA+OS/q4W7+0PI9MV
-	z3N+7rb6N3+vgqkXe12Sy7PXq6xi5nqcsZTYeWzDXs1AlpPKWt8fXmBkYZOx/LLq 
+In-Reply-To: <7vfw7krl8r.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqHvwg0GAwaZVMhZdV7qZLBp6rzA7
+	MHlcvKTs8XmTXABTFLdNUmJJWXBmep6+XQJ3xv31+xgLFvJVLOpfw9TAeJ+ri5GTQ0LAROL4
+	kmYWCFtM4sK99WxdjFwcQgKXGSVaJ39ih3BOM0k8u3CSDaSKV0Bb4m//PUYQm0VAVWL1n09g
+	NpuArsSinmYmEFtUIERizbcpjBD1ghInZz4B2yAioCYxse0QkM3BwSwgLtH/DywsLOAucfcp
+	yBiQXXcYJa7+uAw2h1PATOLighawImYBHYl3fQ+YIWx5ie1v5zBPYBSYhWTFLCRls5CULWBk
+	XsUol5hTmqubm5iZU5yarFucnJiXl1qka6SXm1mil5pSuokREqi8Oxj/r5M5xCjAwajEw6up
+	ZRAgxJpYVlyZe4hRkoNJSZT3w1OgEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFe/1ygHG9KYmVV
+	alE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgpcPGJFCgkWp6akVaZk5JQhpJg5O
+	kOFcUiLFqXkpqUWJpSUZ8aBYjS8GRitIigdoLyNIO29xQWIuUBSi9RSjMce8ByfvMnJ8fgok
+	hVjy8vNSpcR5dUBKBUBKM0rz4BbBUtQrRnGgv4V5WUCqeIDpDW7eK6BVTECrHs0FW1WSiJCS
+	amDMtz+ud3RatOjWqM4Px5xNE0890mLteTe56X+/ss2NsscfBZ49m73g62fBvt7jtyVXzV0m
+	tJMtcduEK6sbEiaH7PDxlMhQ9zgS4HvM8nfM4fV/G20X7ny/y2xVqVTrtP3rdE3D 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203720>
 
-On 08/18/2012 10:39 PM, Junio C Hamano wrote:
-> mhagger@alum.mit.edu writes:
+On 08/18/2012 10:36 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
->> Given that a flag day would anyway be required to add a d/f-tolerant
->> system, I could live with a separate "graveyard" namespace as
->> originally proposed by Jeff.
->>
->> However, I still think that as long as we are making a jump, we could
->> try to land closer to the ultimate destination.
+>> I can work around the problem by using "--root=/run/shm". 
 > 
-> Do we _know_ already what the "ultimate destination" looks like?  
+> I do not necessarily think it is a work around.
 
-No; we can only guess.  I just wanted to submit some code so that the
-existence/absence of code would not prejudice the decision.
+http://en.wiktionary.org/wiki/workaround:
+2. (computing) A procedure or a temporary fix that bypasses a problem
+   and allows the user to continue working until a better solution
+   can be provided; a kluge.
 
-> If the answer is yes, then I agree, but otherwise, I doubt it is a
-> good idea to introduce unnecessary complexity to the system that may
-> have to be ripped out and redone.
+For me that is exactly what it was.
+
+> A low-impact approach may be to update the part that parses --root
+> option to do
 > 
-> I didn't get the impression that we know the "ultimate destination"
-> from the previous discussion, especially if we discount the tangent
-> around "having next and next/foo at the same time" which was on
-> nobody's wish, but I may be misremembering things.
+> 	root=$(...)
+>         root=$( cd "$root" && /bin/pwd )
+> 
+> or something.
 
-It's been a wish of mine, but it's pretty low priority.  I've also
-brainstormed about some other changes that could be connected with a new
-repo format:
+I just verified that the combination of your two suggestions (i.e., the
+patch below) fixes the problem for me.
 
-* Allow "deleted" loose references (for example denoted by value 0{40})
-that override packed references with the same name.  This would remove
-the need to rewrite the packed-refs file when a reference is deleted.
-(A prerequisite for this change would be to allow next and next/foo at
-the same time.)
-
-* Push HEAD and its friends down out of $GIT_DIR into a
-reference-specific directory.
-
-* Rename lock files to look less like reference names (e.g., something
-like "refs/foo~lock" instead of "refs/foo.lock").
-
-* Somehow munge reference names in a way to avoid other filesystem
-limitations -- e.g., case insensitivity, filenames like "com" and "prn"
-or with multiple dots under Windows.
-
-* ...or maybe a packed-refs file that can (usually) be updated in-place,
-and get rid of loose references entirely.
+Nevertheless, I'm not sure that this is the best solution.  The test
+failures that occur without this change suggest to me that
+GIT_CEILING_DIRECTORIES is implemented in a fragile way.
 
 Michael
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index bb4f886..c7f320f 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -15,6 +15,8 @@
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see http://www.gnu.org/licenses/ .
+
++cd "$(pwd -P)"
++
+ # if --tee was passed, write the output not only to the terminal, but
+ # additionally to the file test-results/$BASENAME.out, too.
+ case "$GIT_TEST_TEE_STARTED, $* " in
+@@ -166,6 +168,7 @@ do
+                shift ;; # was handled already
+        --root=*)
+                root=$(expr "z$1" : 'z[^=]*=\(.*\)')
++               root=$(cd "$root" && /bin/pwd)
+                shift ;;
+        *)
+                echo "error: unknown test option '$1'" >&2; exit 1 ;;
+
 
 -- 
 Michael Haggerty
