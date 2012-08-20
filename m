@@ -1,108 +1,71 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Porting git to HP NonStop
-Date: Mon, 20 Aug 2012 18:09:14 +0200
-Message-ID: <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com> <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de> <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com> <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de> <7v628epzia.fsf@alter.siamese.dyndns.org> <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de> <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2012, #06; Sun, 19)
+Date: Mon, 20 Aug 2012 09:21:50 -0700
+Message-ID: <7vobm5lejl.fsf@alter.siamese.dyndns.org>
+References: <7v393im4jy.fsf@alter.siamese.dyndns.org>
+ <CABPQNSZ+JskSvEUFbxy78eqB5cg1npq7n_thaVhhoXxd-DK+MQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Shawn Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>,
-	<rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 18:09:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
+	Stefan Zager <szager@google.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Mon Aug 20 18:22:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3UXh-0003EX-61
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 18:09:29 +0200
+	id 1T3Ujo-0004Ld-Cf
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 18:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041Ab2HTQJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 12:09:23 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:57086 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755523Ab2HTQJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 12:09:22 -0400
-Received: from DualCore (dsdf-4db55923.pool.mediaWays.net [77.181.89.35])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0Lp8j6-1TZY6b1TD2-00fMzy; Mon, 20 Aug 2012 18:09:17 +0200
-In-Reply-To: <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7EfAdIAjkoB0Br5KAKVWWsnAm8TuDMCb+a+7QMjYLRhlZv4e7A=
-Content-Language: de
-X-Provags-ID: V02:K0:zwKWvdovhy7bI1FX1YJUKhjORVd+KcxY9FlE6yIe+na
- W/PtzA1BdSwNJeuhUC+yVeQaVaMQn5+KmY2fH/6L3HvmMnrO0H
- 34sziSRPmTESfsGBb3gKAM1wVWIyN9qe0aNUsc5R2GtTZfH8wx
- 65svOass8e2x+dd7t+kz5C05l2B0T4nT0QnI9w5CVZcLlK/zjU
- D1dqmFRXu9kj1pXivr3E6NtLajcpXBwQHAKe/RqTN7hzj7OuBk
- Yq6ZHEoB6dy+O49woWSTUFTG/kk8Sb1ewDVGJu+EAtIcDnyF+M
- 0hHLn2m6LDDC4gXQ5sZ/TZtST0kb0zkFM6iMgIq1tHJKK1xD1Y
- UQp3Sqoe/cvctMsf8g1BhwaQiWeZWNAOAPJxHFcKygkI2oKSwn
- bOBbY5IliJMpg==
+	id S1752427Ab2HTQVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 12:21:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56000 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752243Ab2HTQVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 12:21:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE81273B2;
+	Mon, 20 Aug 2012 12:21:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L6bVGC6xcXTQbbHVfxvmAlmBZ5g=; b=toAePv
+	/KI73i/lE2qadQAkdZk5zTv+aR91zM+413u7jDQbq9w+ynX6CSzP4907C/bQZnNe
+	wi+1nGP+gebWnXKntIegpru3k5TaoQfZ7cfjO+WThqHqBy0I2HdN/svIVVZ4E2kf
+	Oa37FEnwI7Sks+gNANAXYWmYobIN+cnCz7RZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ta+5u90Faj9hBiqG4wznD2FMqUVb2/IU
+	FfqI7xLsYO8p6W3WXfGcpha7RQyZGjWdx5huaxF6LGjf5Pl2OOrODGE1XhIBefF9
+	uLNt4gUcnwBVeCayPQ27042uz6lWwj6/Llrd2XjuIUl2WL+4xumycrFCW8/s/Phc
+	wjczAa45EAc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9C4373AE;
+	Mon, 20 Aug 2012 12:21:52 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 190CF73AD; Mon, 20 Aug 2012
+ 12:21:52 -0400 (EDT)
+In-Reply-To: <CABPQNSZ+JskSvEUFbxy78eqB5cg1npq7n_thaVhhoXxd-DK+MQ@mail.gmail.com> (Erik
+ Faye-Lund's message of "Mon, 20 Aug 2012 09:03:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2673B0C2-EAE3-11E1-93A0-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203849>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Monday, August 20, 2012 4:42 PM
-> To: Joachim Schmitz
-> Cc: 'Shawn Pearce'; git@vger.kernel.org; rsbecker@nexbridge.com
-> Subject: Re: Porting git to HP NonStop
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> > OK, I'll go for a compat/mkdir.c though.
-> 
-> No.  See below.
-> 
-> > We shouldn't call it tandem.c as Tandem, the Company, doesn't exist
-> > anymore and since more than a decade (bough by Compaq, then HP), only
-> > the __TANDEM survived in our compiler and headers/libraries. Could
-> > call it NonStop.c, but I don't really like that idea either, I'd
-> > rather keep it more generic, just in case someone else might need it
-> > too, or that issue someday gets fixed for NonStop.
-> 
-> compat/hp_nonstop.c is also fine, but I think matching "#ifdef __TANDEM"
-is
-> the most sensible.
-> 
-> And I wouldn't call it just "mkdir", as it is more likely than not that we
-will find
-> other incompatibilities that needs to be absorbed in the compat/ layer,
-and we
-> can add it to compat/tandem.c, but not to compat/mkdir.c, as that will be
-> another nonstop specific tweak.
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-I haven't found any other to be needed. Well, poll, maybe, but with only
-minor tweaks for the win32 one works for me (and those tweaks are compatible
-with win32
+> On Mon, Aug 20, 2012 at 9:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * ef/win32-cred-helper (2012-08-16) 1 commit
+>>  - contrib: add win32 credential-helper
+>>
+>> Credential helper for Win32 (is this GUI???).
+>
+> No, and credential helpers shouldn't be either.
 
-> A separate file, compat/tandem/mkdir.c, is fine, though.
-> 
-> > I'll go for git_mkdir(), similar to other git wrappers, (like for
-> > mmap, pread, fopen, snprintf, vsnprintf, qsort).
-> 
-> Again, no.  Your breakage is that having underlying system mkdir that does
-not
-> understand trailing slash, which may not be specific to __TANDEM, but
-still is
-> _not_ the only possible mode of breakage.
-
-Well, it is the only one GNUlib's mkdir caters for and I'd regard that an
-authoritative source...
-
-> Squatting on a generic "git_mkdir()" name makes it harder for other people
-to
-> name their compat mkdir functions to tweak for the breakage on their
-> platforms.  The examples you listed are all "the platform does not offer
-it, so
-> we implement the whole thing" kind, so it is in a different genre.
-
-Nope, git_fopen() definitly is a wrapper for fopen(), as is git_vsnprintf()
-for vsnprintf().
-
-Bye, Jojo
+Hrm, doesn't it even do "the application wants to access your
+keychain.  Allow it [Y/N]?" kind of thing?
