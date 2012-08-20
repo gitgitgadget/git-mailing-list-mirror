@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 45/66] i18n: read-tree: mark parseopt strings for translation
-Date: Mon, 20 Aug 2012 19:32:34 +0700
-Message-ID: <1345465975-16927-46-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 46/66] i18n: remote: mark parseopt strings for translation
+Date: Mon, 20 Aug 2012 19:32:35 +0700
+Message-ID: <1345465975-16927-47-git-send-email-pclouds@gmail.com>
 References: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -21,126 +21,252 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3RLA-00005C-Fw
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:44:20 +0200
+	id 1T3RLB-00005C-3p
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:44:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545Ab2HTMoL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:44:11 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:50850 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755377Ab2HTMoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 08:44:09 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr13so6886118pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:44:09 -0700 (PDT)
+	id S1755563Ab2HTMoS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:44:18 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:54012 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555Ab2HTMoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 08:44:16 -0400
+Received: by mail-pz0-f46.google.com with SMTP id y13so2156474dad.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=V0zm0yh5lfLgRWOt1MT8cp5VaBWoaqcVuNBBHmSZyQA=;
-        b=R3RvERwqOhJY0x6oWY8Lj166hUzUnADfNzHl6F5RhFemeuAdCdgMHDvPXjTlJJQ1kX
-         pUtqFo6ofkiPOLXkCO32+RzvwrQN9GUzCZjR4NwtlAQf37BoK1lO8nyCGtJMtC1Dbul1
-         KuIvgBCRP43k8qMiD2+cImr4Y0bUq770o9nRpFmId1pfSzQJohSGOWeBTQHHhXYXwUP+
-         38cyId4lW4HdKCxWLNrxvkPBtX4jj1aaaMmMOoPYPdfrVLWcm8vvX0RLtgkbEOSAlGb2
-         gkEq+Kjm1EMGF+TR13mBThhOaKwt4lK2NPAp5aVsd0OjCYsSj6Uf17kgMq4xnRSNuu9E
-         We/Q==
-Received: by 10.66.78.99 with SMTP id a3mr29411752pax.22.1345466649675;
-        Mon, 20 Aug 2012 05:44:09 -0700 (PDT)
+        bh=Zfc5FB4roVytAUKIqHyRVWD2mmi56AVj3dG7mbEwUYc=;
+        b=jjvoFjyOZknGuaUdSElhE/PDaU4rJXDQWENklDYDnwT/gX/nh9tSlEEj3mWby7zLPF
+         PvJ1OQfyeR8P27S/7Y13HDBvl+LEqASGH0qlwfCmJg3kUgcAS9HYiW6P1bsq3hHaFJLw
+         o0yNH7pNSpe4NppTb82dSDQPpuxwYLBwpNItlPpJF0Xj8aZqUINad62Fxp/6dPZsvXAu
+         oe1iG+JF++f3hKvhy93ApQVecg0Wa7X/vB8qwVDULdrfuA93GwK7YJ/eG4ToEnb6VRhv
+         RvNiqbole5J7GBukJZmBZK4ZofQ0jI74VJeFUuBhpbRIixGOyCZHp1CCxzU7vxMLyOFA
+         GH3Q==
+Received: by 10.66.75.195 with SMTP id e3mr29504660paw.32.1345466656231;
+        Mon, 20 Aug 2012 05:44:16 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.38.247])
-        by mx.google.com with ESMTPS id ox5sm11024301pbc.75.2012.08.20.05.44.06
+        by mx.google.com with ESMTPS id ko8sm1251922pbc.40.2012.08.20.05.44.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 05:44:09 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:38:05 +0700
+        Mon, 20 Aug 2012 05:44:15 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:38:15 +0700
 X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 In-Reply-To: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203818>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/read-tree.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ builtin/remote.c | 84 ++++++++++++++++++++++++++++--------------------=
+--------
+ 1 file changed, 42 insertions(+), 42 deletions(-)
 
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index df6c4c8..042ac1b 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -33,7 +33,7 @@ static int list_tree(unsigned char *sha1)
- }
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 920262d..8a670d8 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -8,66 +8,66 @@
+ #include "refs.h"
 =20
- static const char * const read_tree_usage[] =3D {
--	"git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=3D=
-<prefix>] [-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-spar=
-se-checkout] [--index-output=3D<file>] (--empty | <tree-ish1> [<tree-is=
-h2> [<tree-ish3>]])",
-+	N_("git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefi=
-x=3D<prefix>] [-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-=
-sparse-checkout] [--index-output=3D<file>] (--empty | <tree-ish1> [<tre=
-e-ish2> [<tree-ish3>]])"),
+ static const char * const builtin_remote_usage[] =3D {
+-	"git remote [-v | --verbose]",
+-	"git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags] [=
+--mirror=3D<fetch|push>] <name> <url>",
+-	"git remote rename <old> <new>",
+-	"git remote rm <name>",
+-	"git remote set-head <name> (-a | -d | <branch>)",
+-	"git remote [-v | --verbose] show [-n] <name>",
+-	"git remote prune [-n | --dry-run] <name>",
+-	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remot=
+e>)...]",
+-	"git remote set-branches [--add] <name> <branch>...",
+-	"git remote set-url [--push] <name> <newurl> [<oldurl>]",
+-	"git remote set-url --add <name> <newurl>",
+-	"git remote set-url --delete <name> <url>",
++	N_("git remote [-v | --verbose]"),
++	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags=
+] [--mirror=3D<fetch|push>] <name> <url>"),
++	N_("git remote rename <old> <new>"),
++	N_("git remote rm <name>"),
++	N_("git remote set-head <name> (-a | -d | <branch>)"),
++	N_("git remote [-v | --verbose] show [-n] <name>"),
++	N_("git remote prune [-n | --dry-run] <name>"),
++	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <re=
+mote>)...]"),
++	N_("git remote set-branches [--add] <name> <branch>..."),
++	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
++	N_("git remote set-url --add <name> <newurl>"),
++	N_("git remote set-url --delete <name> <url>"),
  	NULL
  };
 =20
-@@ -104,37 +104,37 @@ int cmd_read_tree(int argc, const char **argv, co=
-nst char *unused_prefix)
- 	struct unpack_trees_options opts;
- 	int prefix_set =3D 0;
- 	const struct option read_tree_options[] =3D {
--		{ OPTION_CALLBACK, 0, "index-output", NULL, "file",
--		  "write resulting index to <file>",
-+		{ OPTION_CALLBACK, 0, "index-output", NULL, N_("file"),
-+		  N_("write resulting index to <file>"),
- 		  PARSE_OPT_NONEG, index_output_cb },
- 		OPT_SET_INT(0, "empty", &read_empty,
--			    "only empty the index", 1),
--		OPT__VERBOSE(&opts.verbose_update, "be verbose"),
--		OPT_GROUP("Merging"),
-+			    N_("only empty the index"), 1),
-+		OPT__VERBOSE(&opts.verbose_update, N_("be verbose")),
-+		OPT_GROUP(N_("Merging")),
- 		OPT_SET_INT('m', NULL, &opts.merge,
--			    "perform a merge in addition to a read", 1),
-+			    N_("perform a merge in addition to a read"), 1),
- 		OPT_SET_INT(0, "trivial", &opts.trivial_merges_only,
--			    "3-way merge if no file level merging required", 1),
-+			    N_("3-way merge if no file level merging required"), 1),
- 		OPT_SET_INT(0, "aggressive", &opts.aggressive,
--			    "3-way merge in presence of adds and removes", 1),
-+			    N_("3-way merge in presence of adds and removes"), 1),
- 		OPT_SET_INT(0, "reset", &opts.reset,
--			    "same as -m, but discard unmerged entries", 1),
--		{ OPTION_STRING, 0, "prefix", &opts.prefix, "<subdirectory>/",
--		  "read the tree into the index under <subdirectory>/",
-+			    N_("same as -m, but discard unmerged entries"), 1),
-+		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
-+		  N_("read the tree into the index under <subdirectory>/"),
- 		  PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP },
- 		OPT_SET_INT('u', NULL, &opts.update,
--			    "update working tree with merge result", 1),
-+			    N_("update working tree with merge result"), 1),
- 		{ OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
--		  "gitignore",
--		  "allow explicitly ignored files to be overwritten",
-+		  N_("gitignore"),
-+		  N_("allow explicitly ignored files to be overwritten"),
- 		  PARSE_OPT_NONEG, exclude_per_directory_cb },
- 		OPT_SET_INT('i', NULL, &opts.index_only,
--			    "don't check the working tree after merging", 1),
--		OPT__DRY_RUN(&opts.dry_run, "don't update the index or the work tree=
-"),
-+			    N_("don't check the working tree after merging"), 1),
-+		OPT__DRY_RUN(&opts.dry_run, N_("don't update the index or the work t=
-ree")),
- 		OPT_SET_INT(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
--			    "skip applying sparse checkout filter", 1),
-+			    N_("skip applying sparse checkout filter"), 1),
- 		OPT_SET_INT(0, "debug-unpack", &opts.debug_unpack,
--			    "debug unpack-trees", 1),
-+			    N_("debug unpack-trees"), 1),
+ static const char * const builtin_remote_add_usage[] =3D {
+-	"git remote add [<options>] <name> <url>",
++	N_("git remote add [<options>] <name> <url>"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_rename_usage[] =3D {
+-	"git remote rename <old> <new>",
++	N_("git remote rename <old> <new>"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_rm_usage[] =3D {
+-	"git remote rm <name>",
++	N_("git remote rm <name>"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_sethead_usage[] =3D {
+-	"git remote set-head <name> (-a | -d | <branch>])",
++	N_("git remote set-head <name> (-a | -d | <branch>])"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_setbranches_usage[] =3D {
+-	"git remote set-branches <name> <branch>...",
+-	"git remote set-branches --add <name> <branch>...",
++	N_("git remote set-branches <name> <branch>..."),
++	N_("git remote set-branches --add <name> <branch>..."),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_show_usage[] =3D {
+-	"git remote show [<options>] <name>",
++	N_("git remote show [<options>] <name>"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_prune_usage[] =3D {
+-	"git remote prune [<options>] <name>",
++	N_("git remote prune [<options>] <name>"),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_update_usage[] =3D {
+-	"git remote update [<options>] [<group> | <remote>]...",
++	N_("git remote update [<options>] [<group> | <remote>]..."),
+ 	NULL
+ };
+=20
+ static const char * const builtin_remote_seturl_usage[] =3D {
+-	"git remote set-url [--push] <name> <newurl> [<oldurl>]",
+-	"git remote set-url --add <name> <newurl>",
+-	"git remote set-url --delete <name> <url>",
++	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
++	N_("git remote set-url --add <name> <newurl>"),
++	N_("git remote set-url --delete <name> <url>"),
+ 	NULL
+ };
+=20
+@@ -160,17 +160,17 @@ static int add(int argc, const char **argv)
+ 	int i;
+=20
+ 	struct option options[] =3D {
+-		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
++		OPT_BOOLEAN('f', "fetch", &fetch, N_("fetch the remote branches")),
+ 		OPT_SET_INT(0, "tags", &fetch_tags,
+-			    "import all tags and associated objects when fetching",
++			    N_("import all tags and associated objects when fetching"),
+ 			    TAGS_SET),
+ 		OPT_SET_INT(0, NULL, &fetch_tags,
+-			    "or do not fetch any tag at all (--no-tags)", TAGS_UNSET),
+-		OPT_STRING_LIST('t', "track", &track, "branch",
+-				"branch(es) to track"),
+-		OPT_STRING('m', "master", &master, "branch", "master branch"),
+-		{ OPTION_CALLBACK, 0, "mirror", &mirror, "push|fetch",
+-			"set up remote as a mirror to push to or fetch from",
++			    N_("or do not fetch any tag at all (--no-tags)"), TAGS_UNSET),
++		OPT_STRING_LIST('t', "track", &track, N_("branch"),
++				N_("branch(es) to track")),
++		OPT_STRING('m', "master", &master, N_("branch"), N_("master branch")=
+),
++		{ OPTION_CALLBACK, 0, "mirror", &mirror, N_("push|fetch"),
++			N_("set up remote as a mirror to push to or fetch from"),
+ 			PARSE_OPT_OPTARG, parse_mirror_opt },
+ 		OPT_END()
+ 	};
+@@ -1088,7 +1088,7 @@ static int show(int argc, const char **argv)
+ {
+ 	int no_query =3D 0, result =3D 0, query_flag =3D 0;
+ 	struct option options[] =3D {
+-		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
++		OPT_BOOLEAN('n', NULL, &no_query, N_("do not query remotes")),
+ 		OPT_END()
+ 	};
+ 	struct ref_states states;
+@@ -1196,9 +1196,9 @@ static int set_head(int argc, const char **argv)
+=20
+ 	struct option options[] =3D {
+ 		OPT_BOOLEAN('a', "auto", &opt_a,
+-			    "set refs/remotes/<name>/HEAD according to remote"),
++			    N_("set refs/remotes/<name>/HEAD according to remote")),
+ 		OPT_BOOLEAN('d', "delete", &opt_d,
+-			    "delete refs/remotes/<name>/HEAD"),
++			    N_("delete refs/remotes/<name>/HEAD")),
+ 		OPT_END()
+ 	};
+ 	argc =3D parse_options(argc, argv, NULL, options, builtin_remote_seth=
+ead_usage,
+@@ -1250,7 +1250,7 @@ static int prune(int argc, const char **argv)
+ {
+ 	int dry_run =3D 0, result =3D 0;
+ 	struct option options[] =3D {
+-		OPT__DRY_RUN(&dry_run, "dry run"),
++		OPT__DRY_RUN(&dry_run, N_("dry run")),
  		OPT_END()
  	};
 =20
+@@ -1318,7 +1318,7 @@ static int update(int argc, const char **argv)
+ 	int i, prune =3D 0;
+ 	struct option options[] =3D {
+ 		OPT_BOOLEAN('p', "prune", &prune,
+-			    "prune remotes after fetching"),
++			    N_("prune remotes after fetching")),
+ 		OPT_END()
+ 	};
+ 	const char **fetch_argv;
+@@ -1404,7 +1404,7 @@ static int set_branches(int argc, const char **ar=
+gv)
+ {
+ 	int add_mode =3D 0;
+ 	struct option options[] =3D {
+-		OPT_BOOLEAN('\0', "add", &add_mode, "add branch"),
++		OPT_BOOLEAN('\0', "add", &add_mode, N_("add branch")),
+ 		OPT_END()
+ 	};
+=20
+@@ -1433,11 +1433,11 @@ static int set_url(int argc, const char **argv)
+ 	struct strbuf name_buf =3D STRBUF_INIT;
+ 	struct option options[] =3D {
+ 		OPT_BOOLEAN('\0', "push", &push_mode,
+-			    "manipulate push URLs"),
++			    N_("manipulate push URLs")),
+ 		OPT_BOOLEAN('\0', "add", &add_mode,
+-			    "add URL"),
++			    N_("add URL")),
+ 		OPT_BOOLEAN('\0', "delete", &delete_mode,
+-			    "delete URLs"),
++			    N_("delete URLs")),
+ 		OPT_END()
+ 	};
+ 	argc =3D parse_options(argc, argv, NULL, options, builtin_remote_setu=
+rl_usage,
+@@ -1566,7 +1566,7 @@ static int show_all(void)
+ int cmd_remote(int argc, const char **argv, const char *prefix)
+ {
+ 	struct option options[] =3D {
+-		OPT__VERBOSE(&verbose, "be verbose; must be placed before a subcomma=
+nd"),
++		OPT__VERBOSE(&verbose, N_("be verbose; must be placed before a subco=
+mmand")),
+ 		OPT_END()
+ 	};
+ 	int result;
 --=20
 1.7.12.rc2.18.g61b472e
