@@ -1,85 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Can show relative date of the commit with future
- timestamp
-Date: Mon, 20 Aug 2012 15:51:04 -0700
-Message-ID: <7vsjbhgotj.fsf@alter.siamese.dyndns.org>
-References: <1341505087-13632-1-git-send-email-tomxue0126@gmail.com>
- <7vy5myqftw.fsf@alter.siamese.dyndns.org>
- <CA+P7oHuCbeJ5shfL5OVhSypgygzmQwn-RGPD8UvFUFuqnoV9fA@mail.gmail.com>
- <CA+P7oHtGsBoRGsUzg4qqm7sZJ=+1Jh06Gmj1uw+k0-S9Gk+DXQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2012, #06; Sun, 19)
+Date: Mon, 20 Aug 2012 15:52:28 -0700
+Message-ID: <7vobm5gor7.fsf@alter.siamese.dyndns.org>
+References: <7v393im4jy.fsf@alter.siamese.dyndns.org>
+ <20120820224808.GA30139@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jundong Xue <tomxue0126@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 00:51:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 00:52:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3aoV-0006yr-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 00:51:15 +0200
+	id 1T3apo-0007wU-LD
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 00:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756736Ab2HTWvJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 18:51:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33229 "EHLO
+	id S1756585Ab2HTWwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 18:52:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33728 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756727Ab2HTWvG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Aug 2012 18:51:06 -0400
+	id S1754289Ab2HTWwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 18:52:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A2449303;
-	Mon, 20 Aug 2012 18:51:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 966129332;
+	Mon, 20 Aug 2012 18:52:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=yy3iAbmLZkrIMVRC7tpof/Jod
-	SQ=; b=OtEucpj8Wl8Oaowz86xVaLKC1P2IAKqt2/vHXTsU3D9JcWGhLZzhEuOl4
-	RyzG38xnQZtgJlSktrq5U9nCgDK3WeWZkTkWi+KdMF+OUpaDzpxQyjCmTUO7/G9y
-	RNxyU6S896VvVDjygCqFinUJ9G47MNaT63Ko5CXwVslnRq8n9E=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qwK1MrjUz1aHq/ZKwxAtjAaR0fU=; b=G1zm98
+	hADqo2taVTFo+sPOFPLcXENeA/iZCisdeVYYwFW9qD6j4A/xB+xyjk/BeFE9bx88
+	uV63N0PiExPLAYCn+QFSj/TH1xgEIjtGoYxa47llu/lbtV0PnZdA398Y2tN+Ke2U
+	mqW1LhJ4U68+1DHm+JfIXAIN1nHlNkGjJeh+Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=SDD4JOqhbTP8rIjzu09
-	ffxyNdt/8z3bIHReM5SetXLz7rPRO5T416Ej+9VdkmAKFLPT/Fs/UCN5u2B0BusH
-	Q1VLYOii9hx3NifUHfeYfJAwug/b4s/FvXlsGN+fU/9c5xThto3YGNttbkr8V38B
-	e5ciDThAyy8Yvxjm/Qac+v84=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Hg5/OViInJ7yfyahbDRbtbAvEvlJ3Jtp
+	C1HpWHX7LTMdVkaewGcBgph4DNRGfnQNMvO0b44mnYSCOewtZH/bofB5LQc6oyWI
+	HmC+YX/bmxmSoqNG7Uau/PHA4crXMc9i2k4LSHZ58LoKcHCpZL4EfK8dMRzuHOye
+	+8jmiqLjX9I=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27EBC9302;
-	Mon, 20 Aug 2012 18:51:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 839F69331;
+	Mon, 20 Aug 2012 18:52:30 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96A089301; Mon, 20 Aug 2012
- 18:51:05 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE8079330; Mon, 20 Aug 2012
+ 18:52:29 -0400 (EDT)
+In-Reply-To: <20120820224808.GA30139@padd.com> (Pete Wyckoff's message of
+ "Mon, 20 Aug 2012 18:48:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8638366E-EB19-11E1-A7D8-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B87E9F6E-EB19-11E1-9295-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203905>
 
-Jundong Xue <tomxue0126@gmail.com> writes:
+Pete Wyckoff <pw@padd.com> writes:
 
-> tomxue@ubuntu:~/mycode/life$ git todo
-> * d768da9 - (in the future: 3 hours later) Meeting with vendor =E2=80=
-=94 Tom
-> Xue (HEAD, master)
-> * 5fcd556 - (in the future: 12 days later) Take my personal holiday =E2=
-=80=94 Tom Xue
-> * 9dd280b - (in the future: 11 months later) =E7=AB=AF=E5=8D=88=E8=8A=
-=82 =E2=80=94 Tom Xue
-> * 4680099 - (in the future: 9 months later) =E6=B8=85=E6=98=8E=E8=8A=82=
- =E2=80=94 Tom Xue
-> * 59d5266 - (in the future: 8 months later) =E5=85=83=E5=AE=B5=E8=8A=82=
- =E2=80=94 Tom Xue
-> * b5308da - (in the future: 7 months later) =E9=99=A4=E5=A4=95 =E2=80=
-=94 Tom Xue
-> ...
+> gitster@pobox.com wrote on Mon, 20 Aug 2012 00:00 -0700:
+>> * pw/p4-submit-conflicts (2012-08-16) 12 commits
+>>  - git p4: add submit --prepare-p4-only option
+>>  - git p4: add submit --dry-run option
+>>  - git p4: accept -v for --verbose
+>>  - git p4: revert deleted files after submit cancel
+>>  - git p4: rearrange submit template construction
+>>  - git p4: test clean-up after failed submit, fix added files
+>>  - git p4: standardize submit cancel due to unchanged template
+>>  - git p4: move conflict prompt into run, use [c]ontinue and [q]uit
+>>  - git p4: remove submit failure options [a]pply and [w]rite
+>>  - git p4: gracefully fail if some commits could not be applied
+>>  - git p4 test: use p4d -L option to suppress log messages
+>>  - git p4 test: remove bash-ism of combined export/assignment
+>> 
+>> I saw Pete and Luke going back and forth collaborating, so I take
+>> that this may still be rerolled---if not, please holler.
+>
+> Yes, expect a reroll; this isn't ready to go as-is.  We'll
+> continue the back and forth.
 
-I was re-reading the backlog and after looking at it again, I do not
-think what the patch tries to do is a bad thing.  There are changes
-I want to see _how_ it is done, though.
+Ok, will wait until the dust settles.
 
-Especially, the duplication of the exact same logic in the future
-and in the past is an unmaintainable mess.
+>> * pw/p4-use-client-spec-branch-detection (2012-08-11) 5 commits
+>>  - git p4: make branch detection work with --use-client-spec
+>>  - git p4: do wildcard decoding in stripRepoPath
+>>  - git p4: set self.branchPrefixes in initialization
+>>  - git p4 test: add broken --use-client-spec --detect-branches tests
+>>  - git p4 test: move client_view() function to library
+>
+> I've got a
+>
+>     Tested-by: Matthew Korich <matthew@korich.net>
+>
+> to add in the top-most commit "make branch detection work...".
+> Should I send a whole reroll, just one patch, or simply a note
+> like this?  In general, for next time, please.
 
-I have queued a replacement in 'pu'.
+I can amend it here.  Thanks.
