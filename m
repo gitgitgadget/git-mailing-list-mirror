@@ -1,92 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] git svn: handle errors and concurrent commits in
- dcommit
-Date: Sun, 19 Aug 2012 18:20:23 -0700
-Message-ID: <7v393inyug.fsf@alter.siamese.dyndns.org>
-References: <1343856397-6536-1-git-send-email-robert@debian.org>
- <20120802104421.GA13271@dcvr.yhbt.net> <5021F9D4.1010700@debian.org>
- <20120808230754.GB24956@dcvr.yhbt.net>
- <7v1ujgot8h.fsf@alter.siamese.dyndns.org>
- <20120810195133.GA16423@dcvr.yhbt.net> <50316C07.30907@debian.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Robert Luberda <robert@debian.org>
-X-From: git-owner@vger.kernel.org Mon Aug 20 03:21:09 2012
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: [PATCH 1/2] git-svn.perl: consider all ranges for a given merge, instead of only tip-by-tip
+Date: Sun, 19 Aug 2012 21:39:40 -0400
+Message-ID: <1345426781-7754-1-git-send-email-stevenrwalter@gmail.com>
+References: <20120819193356.GA6203@dcvr.yhbt.net>
+Cc: Steven Walter <stevenrwalter@gmail.com>
+To: normalperson@yhbt.net, sam@vilain.net, avarab@gmail.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 03:38:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3Gg0-0007yp-PW
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 03:21:09 +0200
+	id 1T3Gwn-0006Hd-G2
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 03:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab2HTBU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Aug 2012 21:20:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47023 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751952Ab2HTBU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Aug 2012 21:20:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C05E99E3;
-	Sun, 19 Aug 2012 21:20:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=caSfcoyqjL/Eh/Ikfiikg6ByJbA=; b=mqx6FN
-	8JcvO0sjeaTGD6HCs8yt4cZQJ6CjNmVmS8F1DecSfKVdiGahSdHWytDH4iIOqOWG
-	aFgAkf6lw1K1l3Pez7sgx4OFU3i2vmyuMQzC2KnEkgUu7JYu9dK5YSQO7epE/5eZ
-	rjFaPwueNM8WplE7AGEtvIBmBi8AooNWR2p0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U5xA/VC0oBa8U9eDiKYNu0WW8JkyDP7Y
-	hXfe6QxohCR4RO9aaTRFBpc9X6VuRMaE+EB2z5R6cyQEkRrvjqzeEzKeT/tTT1Ui
-	YwcYI3Zl5SRSpcRy+VLV9DIXGU1Ya1NdgLAwaFTGAyGEMzcnQcXcWSe/Z65CbE6W
-	SzytDFHkifk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE3FD99E2;
-	Sun, 19 Aug 2012 21:20:25 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A64099E1; Sun, 19 Aug 2012
- 21:20:25 -0400 (EDT)
-In-Reply-To: <50316C07.30907@debian.org> (Robert Luberda's message of "Mon,
- 20 Aug 2012 00:43:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3826717A-EA65-11E1-AAFE-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752375Ab2HTBhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Aug 2012 21:37:43 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:64634 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800Ab2HTBhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Aug 2012 21:37:41 -0400
+Received: by yhmm54 with SMTP id m54so4799462yhm.19
+        for <git@vger.kernel.org>; Sun, 19 Aug 2012 18:37:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=qRccxftvXOaLysDs1M4RqIuRBoS75CH2AbsBxa6HLC0=;
+        b=g/MypJoM+t2KtKKROjImbAkOi0zXbhT7Y5/gh5SfIWWZXG3WQUm6qlzc27m0o8elEd
+         JiPOILDKI6nJqKf/dWsieY8mQ7zIwANUe0E7IsHIQbQwyt8Y6dCf57N8rwi6T8MZ4QSC
+         5t/FsMxVRngdvinQmjo/1BbkoUiWq0F3NRq8s3ciupW1b6w068m1JbzJ5qyQ9splu/OV
+         j9Xyq+kKV6T1JrYdwhPEZta3qCnOViG25TnK7DAfXbClF5qE8CFv1J1bTUZ8uUS/n1wO
+         BsXZ73XGG+mooF7/dv9OK+Fe8fXvkCMIM+QjXjj8bdg9oIICW65NhpXOnz/2SxvTlHdU
+         89Yw==
+Received: by 10.50.191.227 with SMTP id hb3mr8437972igc.45.1345426660373;
+        Sun, 19 Aug 2012 18:37:40 -0700 (PDT)
+Received: from brock (CPE-76-177-45-54.natcky.res.rr.com. [76.177.45.54])
+        by mx.google.com with ESMTPS id fu4sm11528246igc.4.2012.08.19.18.37.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 19 Aug 2012 18:37:39 -0700 (PDT)
+Received: by brock (Postfix, from userid 1000)
+	id B7D8E26048C; Sun, 19 Aug 2012 21:39:42 -0400 (EDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <20120819193356.GA6203@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203750>
 
-Robert Luberda <robert@debian.org> writes:
+Consider the case where you have trunk, branch1 of trunk, and branch2 of
+branch1.  trunk is merged back into branch2, and then branch2 is
+reintegrated into trunk.  The merge of branch2 into trunk will have
+svn:mergeinfo property references to both branch1 and branch2.  When
+git-svn fetches the commit that merges branch2 (check_cherry_pick),
+it is necessary to eliminate the merged contents of branch1 as well as
+branch2, or else the merge will be incorrectly ignored as a cherry-pick.
 
-> Eric Wong wrote:
->
-> Hi,
->
->> Junio C Hamano <gitster@pobox.com> wrote:
->>> I should have asked this yesterday, but do you mean you want to have
->>> your "maint" in the upcoming 1.7.12?  This does look like a useful
->>> thing to do, but does not seem like a regression fix to me.
->> 
->> Yeah, I wasn't sure what to name it since my master is still carrying
->> Michael's larger SVN 1.7 changes.   Perhaps I should've named my "maint"
->> "for-git-master" in this case...
->
->
-> While working on my next patch, I've accidentally discovered that bash gives
-> the following errors in the test file introduced in my commit :
->
-> ./t9164-git-svn-dcommit-concrrent.sh: line 65: $hook: ambiguous redirect
-> ./t9164-git-svn-dcommit-concrrent.sh: line 66: $hook: ambiguous redirect
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+---
+ perl/Git/SVN.pm                                 |    8 ++-
+ t/t9165-git-svn-fetch-merge-branch-of-branch.sh |   60 +++++++++++++++++++++++
+ 2 files changed, 63 insertions(+), 5 deletions(-)
+ create mode 100755 t/t9165-git-svn-fetch-merge-branch-of-branch.sh
 
-Thanks.  It is this one (especially the latter half "Note that")
-in the Documentation/CodingGuidelines.
-
- - Redirection operators should be written with space before, but no
-   space after them.  In other words, write 'echo test >"$file"'
-   instead of 'echo test> $file' or 'echo test > $file'.  Note that
-   even though it is not required by POSIX to double-quote the
-   redirection target in a variable (as shown above), our code does so
-   because some versions of bash issue a warning without the quotes.
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 8478d0c..2707003 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1695,14 +1695,14 @@ sub find_extra_svn_parents {
+ 	my @merge_tips;
+ 	my $url = $self->{url};
+ 	my $uuid = $self->ra_uuid;
+-	my %ranges;
++	my @all_ranges;
+ 	for my $merge ( @merges ) {
+ 		my ($tip_commit, @ranges) =
+ 			lookup_svn_merge( $uuid, $url, $merge );
+ 		unless (!$tip_commit or
+ 				grep { $_ eq $tip_commit } @$parents ) {
+ 			push @merge_tips, $tip_commit;
+-			$ranges{$tip_commit} = \@ranges;
++			push @all_ranges, @ranges;
+ 		} else {
+ 			push @merge_tips, undef;
+ 		}
+@@ -1717,8 +1717,6 @@ sub find_extra_svn_parents {
+ 		my $spec = shift @merges;
+ 		next unless $merge_tip and $excluded{$merge_tip};
+ 
+-		my $ranges = $ranges{$merge_tip};
+-
+ 		# check out 'new' tips
+ 		my $merge_base;
+ 		eval {
+@@ -1740,7 +1738,7 @@ sub find_extra_svn_parents {
+ 		my (@incomplete) = check_cherry_pick(
+ 			$merge_base, $merge_tip,
+ 			$parents,
+-			@$ranges,
++			@all_ranges,
+ 		       );
+ 
+ 		if ( @incomplete ) {
+diff --git a/t/t9165-git-svn-fetch-merge-branch-of-branch.sh b/t/t9165-git-svn-fetch-merge-branch-of-branch.sh
+new file mode 100755
+index 0000000..13ae7e3
+--- /dev/null
++++ b/t/t9165-git-svn-fetch-merge-branch-of-branch.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Steven Walter
++#
++
++test_description='git svn merge detection'
++. ./lib-git-svn.sh
++
++svn_ver="$(svn --version --quiet)"
++case $svn_ver in
++0.* | 1.[0-4].*)
++	skip_all="skipping git-svn test - SVN too old ($svn_ver)"
++	test_done
++	;;
++esac
++
++test_expect_success 'initialize source svn repo' '
++	svn_cmd mkdir -m x "$svnrepo"/trunk &&
++	svn_cmd mkdir -m x "$svnrepo"/branches &&
++	svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
++	(
++		cd "$SVN_TREE" &&
++		touch foo &&
++		svn_cmd add foo &&
++		svn_cmd commit -m "initial commit" &&
++		svn_cmd cp -m branch "$svnrepo"/trunk "$svnrepo"/branches/branch1 &&
++		svn_cmd switch "$svnrepo"/branches/branch1 &&
++		touch bar &&
++		svn_cmd add bar &&
++		svn_cmd commit -m branch1 &&
++		svn_cmd cp -m branch "$svnrepo"/branches/branch1 "$svnrepo"/branches/branch2 &&
++		svn_cmd switch "$svnrepo"/branches/branch2 &&
++		touch baz &&
++		svn_cmd add baz &&
++		svn_cmd commit -m branch2 &&
++		svn_cmd switch "$svnrepo"/trunk &&
++		touch bar2 &&
++		svn_cmd add bar2 &&
++		svn_cmd commit -m trunk &&
++		svn_cmd switch "$svnrepo"/branches/branch2 &&
++		svn_cmd merge "$svnrepo"/trunk &&
++		svn_cmd commit -m "merge trunk"
++		svn_cmd switch "$svnrepo"/trunk &&
++		svn_cmd merge --reintegrate "$svnrepo"/branches/branch2 &&
++		svn_cmd commit -m "merge branch2"
++	) &&
++	rm -rf "$SVN_TREE"
++'
++
++test_expect_success 'clone svn repo' '
++	git svn init -s "$svnrepo" &&
++	git svn fetch
++'
++
++test_expect_success 'verify merge commit' 'x=$(git rev-parse HEAD^2) &&
++	y=$(git rev-parse branch2) &&
++	test "x$x" = "x$y"
++'
++
++test_done
+-- 
+1.7.9.5
