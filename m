@@ -1,76 +1,111 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: What's cooking in git.git (Aug 2012, #06; Sun, 19)
-Date: Mon, 20 Aug 2012 18:48:08 -0400
-Message-ID: <20120820224808.GA30139@padd.com>
-References: <7v393im4jy.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 06/16] Add documentation for the 'bidi-import'
+ capability of remote-helpers
+Date: Mon, 20 Aug 2012 15:50:35 -0700
+Message-ID: <7vzk5pgouc.fsf@alter.siamese.dyndns.org>
+References: <1345499542-15536-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345499542-15536-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 00:48:23 2012
+Cc: git@vger.kernel.org, David Michael Barr <b@rr-dav.id.au>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 00:50:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3alf-00054Z-8L
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 00:48:19 +0200
+	id 1T3ao1-0006cJ-Ta
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 00:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667Ab2HTWsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 18:48:13 -0400
-Received: from honk.padd.com ([74.3.171.149]:44368 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756618Ab2HTWsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 18:48:12 -0400
-Received: from arf.padd.com (unknown [50.55.149.165])
-	by honk.padd.com (Postfix) with ESMTPSA id 20B9ED27;
-	Mon, 20 Aug 2012 15:48:11 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 3AFFB31424; Mon, 20 Aug 2012 18:48:08 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v393im4jy.fsf@alter.siamese.dyndns.org>
+	id S1756683Ab2HTWul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 18:50:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33043 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756618Ab2HTWuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 18:50:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1983392E2;
+	Mon, 20 Aug 2012 18:50:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=rtIBw++tfv3ZnYz8zttsjHdeqeI=; b=tTWs430V9K1xBDa88IQb
+	dBzQqy8NKz3lU2Bj9aBuBCpgdyhm9glc/h9s6q7Nt3WWClI1uPquowdAGgCUSy4v
+	/vyScxx77N0A8mmydODZ/WSk3Mynmp54Mss0NvcUfAxtnGrIcs+jCncnqsT/Ytza
+	T5/XQHWaHah8fk92sjLeRmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Jy45X6eKSgzfkYlNBWOoImTq1Fw5HWmecPl6tp/F+wEcc2
+	jKIH/L7nZnGtkbY5LzxsgwR+ONCUxHPE0sSjD7IWfPtL95K85QX+8osXxDRLG80B
+	G48iPqrLiAf3KrgpLevPBvRFdLFE+jBp9SXfZskRmJ6C+7EzFK77O2RMeePAY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 062F292E1;
+	Mon, 20 Aug 2012 18:50:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2F9792DE; Mon, 20 Aug 2012
+ 18:50:36 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 74F5350A-EB19-11E1-A057-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203903>
 
-gitster@pobox.com wrote on Mon, 20 Aug 2012 00:00 -0700:
-> * pw/p4-submit-conflicts (2012-08-16) 12 commits
->  - git p4: add submit --prepare-p4-only option
->  - git p4: add submit --dry-run option
->  - git p4: accept -v for --verbose
->  - git p4: revert deleted files after submit cancel
->  - git p4: rearrange submit template construction
->  - git p4: test clean-up after failed submit, fix added files
->  - git p4: standardize submit cancel due to unchanged template
->  - git p4: move conflict prompt into run, use [c]ontinue and [q]uit
->  - git p4: remove submit failure options [a]pply and [w]rite
->  - git p4: gracefully fail if some commits could not be applied
->  - git p4 test: use p4d -L option to suppress log messages
->  - git p4 test: remove bash-ism of combined export/assignment
-> 
-> I saw Pete and Luke going back and forth collaborating, so I take
-> that this may still be rerolled---if not, please holler.
+Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-Yes, expect a reroll; this isn't ready to go as-is.  We'll
-continue the back and forth.
+> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-remote-helpers.txt |   21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+> index f5836e4..5faa48e 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -98,6 +98,20 @@ advertised with this capability must cover all refs reported by
+>  the list command.  If no 'refspec' capability is advertised,
+>  there is an implied `refspec *:*`.
+>  
+> +'bidi-import'::
+> +	The fast-import commands 'cat-blob' and 'ls' can be used by remote-helpers
+> +    to retrieve information about blobs and trees that already exist in
+> +    fast-import's memory. This requires a channel from fast-import to the
+> +    remote-helper.
+> +    If it is advertised in addition to "import", git establishes a pipe from
+> +	fast-import to the remote-helper's stdin.
+> +	It follows that git and fast-import are both connected to the
+> +	remote-helper's stdin. Because git can send multiple commands to
+> +	the remote-helper it is required that helpers that use 'bidi-import'
+> +	buffer all 'import' commands of a batch before sending data to fast-import.
+> +    This is to prevent mixing commands and fast-import responses on the
+> +    helper's stdin.
+> +
 
-> * pw/p4-use-client-spec-branch-detection (2012-08-11) 5 commits
->  - git p4: make branch detection work with --use-client-spec
->  - git p4: do wildcard decoding in stripRepoPath
->  - git p4: set self.branchPrefixes in initialization
->  - git p4 test: add broken --use-client-spec --detect-branches tests
->  - git p4 test: move client_view() function to library
+Funny indentation we see here...
 
-I've got a
-
-    Tested-by: Matthew Korich <matthew@korich.net>
-
-to add in the top-most commit "make branch detection work...".
-Should I send a whole reroll, just one patch, or simply a note
-like this?  In general, for next time, please.
-
-Thanks,
-
-		-- Pete
+>  Capabilities for Pushing
+>  ~~~~~~~~~~~~~~~~~~~~~~~~
+>  'connect'::
+> @@ -286,7 +300,12 @@ terminated with a blank line. For each batch of 'import', the remote
+>  helper should produce a fast-import stream terminated by a 'done'
+>  command.
+>  +
+> -Supported if the helper has the "import" capability.
+> +Note that if the 'bidi-import' capability is used the complete batch
+> +sequence has to be buffered before starting to send data to fast-import
+> +to prevent mixing of commands and fast-import responses on the helper's
+> +stdin.
+> ++
+> +Supported if the helper has the 'import' capability.
+>  
+>  'connect' <service>::
+>  	Connects to given service. Standard input and standard output
