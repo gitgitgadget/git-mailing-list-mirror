@@ -1,77 +1,63 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [PATCH/RFC v4 01/16] GSOC remote-svn
-Date: Mon, 20 Aug 2012 15:52:02 +0200
-Message-ID: <6231669.WggyDX4Xa3@flomedio>
-References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <8572000.QUVXl8yetS@flobuntu> <7vzk5srm9w.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH 0/3] Improve branch UI for setting upstream information
+Date: Mon, 20 Aug 2012 15:47:37 +0200
+Message-ID: <1345470460-28734-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 15:52:15 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 20 16:00:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3SOt-0004W3-DE
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 15:52:15 +0200
+	id 1T3SWp-0002Ng-Am
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 16:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783Ab2HTNwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 09:52:09 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:45962 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341Ab2HTNwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 09:52:08 -0400
-Received: by bkwj10 with SMTP id j10so1862213bkw.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 06:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=zXJJUxWHKxHabMOMZTcQ18q2Y/kkGwClt+syPheCa88=;
-        b=KQNiD3wAsF4Uew3S2LVSY9/JA6vXySCTJYVENKkdXbciGs8+Jmnav7l3cTyfgfCesO
-         gNa67+H56f9YbgJsf3hAhmyKPmpoMcZz5TG5QmUT3op3/Rg/bBBJzzEuTEvBiLVRTSDO
-         gbdPtoN3SavKEc64dFvDswOS/LF73p1Z6xTB01O2x9uTzclxUMN46vD7oyZBs6BB4wn7
-         Llo2c5D2fn5DrwG7wL51E18YjNt431D6lhF5VTRHEWn1UvCRzKeq/WFqB+A9cZ+9dYa2
-         Xs8C4TiybzYbN9kSU7YoAdGZla/SZZ+f/CoeeV4deyDDttkxgT+jzIoiEIbk96yF9PI5
-         qqnw==
-Received: by 10.204.130.146 with SMTP id t18mr4368848bks.65.1345470726682;
-        Mon, 20 Aug 2012 06:52:06 -0700 (PDT)
-Received: from flomedio.localnet (93-82-147-129.adsl.highway.telekom.at. [93.82.147.129])
-        by mx.google.com with ESMTPS id hg13sm6240004bkc.7.2012.08.20.06.52.04
-        (version=SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 06:52:05 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <7vzk5srm9w.fsf@alter.siamese.dyndns.org>
+	id S1756502Ab2HTOAR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 10:00:17 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:47722 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755176Ab2HTN4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 09:56:17 -0400
+Received: from flaca.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by hessy.dwim.me (Postfix) with ESMTPA id BC7B5802C6
+	for <git@vger.kernel.org>; Mon, 20 Aug 2012 15:47:40 +0200 (CEST)
+Received: (nullmailer pid 28772 invoked by uid 1000);
+	Mon, 20 Aug 2012 13:47:40 -0000
+X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203843>
 
-On Saturday 18 August 2012 13:13:47 Junio C Hamano wrote:
-> That indicates that one necessary patch to add logic to Makefile to
-> go and build that subdirectory, at least before running the test,
-> but possibly as part of the "all" target, is missing, isn't it?
-> 
-> Or you can add, at the beginning of your tests files that require
-> the contrib bit, to have something like
-> 
->         if test -e "$GIT_BUILD_DIR/remote-svn"
->         then
->                 test_set_prereq REMOTE_SVN
->         fi
-> 
-> and protect your tests with the prerequisite, e.g.
-> 
->         test_expect_success REMOTE_SVN 'test svn:// URL' '
->                 ...
->         '
-> 
-> without changing the top-level Makefile.
+Hi all,
 
-What version would you prefer? Currently nothing in contrib/ is built by the 
-toplevel Makefile..
+After way too long, here's the next iteration of the concept that
+began with swapping arguments in --set-upstream like -m does.
+
+After the feedback from the list, --set-upstream-to was born and
+--set-upstream is being deprecated in favour of either --track or
+--set-upstream-to depening on which of the behaviours the user wants
+to have.
+
+Using --set-upsteam with one argument now also leads to a message
+explaining how to undo it. For that, branch has learnt
+--unset-upstream which will remove the upstream information for the
+given branch (or HEAD).
+
+Carlos Mart=C3=ADn Nieto (3):
+  branch: introduce --set-upstream-to
+  branch: add --unset-upstream option
+  branch: suggest how to undo a --set-upstream when given one branch
+
+ Documentation/git-branch.txt | 14 +++++++-
+ builtin/branch.c             | 65 +++++++++++++++++++++++++++++++++--
+ t/t3200-branch.sh            | 82 ++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 157 insertions(+), 4 deletions(-)
+
+--=20
+1.7.11.1.104.ge7b44f1
