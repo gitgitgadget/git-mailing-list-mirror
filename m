@@ -1,102 +1,76 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [RFC 1/5] GSOC: prepare svndump for branch detection
-Date: Sun, 19 Aug 2012 23:26:04 -0700 (PDT)
-Message-ID: <5679616.CtEd2rlvlO@flomedio>
-References: <1345236010-1648-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <CACPE+fvkTNNHXbFTwhoH7=aQKoc9YqtfTBOkJDugUogni0sYww@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast_export.c: Fix a compiler warning
+Date: Sun, 19 Aug 2012 23:50:31 -0700
+Message-ID: <7vfw7im4zs.fsf@alter.siamese.dyndns.org>
+References: <5031063E.3090405@ramsay1.demon.co.uk>
+ <2715225.vOk3BtNY6o@flomedio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: David Michael Barr <b@rr-dav.id.au>
-X-From: git-owner@vger.kernel.org Mon Aug 20 08:26:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 08:50:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3LRG-00052r-2I
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 08:26:14 +0200
+	id 1T3Lp6-0005Kb-CG
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 08:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab2HTG0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 02:26:08 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:38308 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542Ab2HTG0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 02:26:07 -0400
-Received: by weyx8 with SMTP id x8so3691436wey.19
-        for <git@vger.kernel.org>; Sun, 19 Aug 2012 23:26:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=1+i5Z8w24jscD/1vKyiMUIgnzmumwJSsCXuIAGnu9wU=;
-        b=eOklyoRLKf/YxfYwF2HBVIWrIlCUZLQ9xRU+7cBqZf+HaUMBjb8W0VqYNQFXp/eFVy
-         iacPJthL2IsSH8WuXLkDvNHEnMxtgVa8L/49oUWeKJ8ydv8vHsFWyLI1a0bdnQZ2WkhL
-         gziCwYbQiSMyxMvvfeNmj6mwXF90uwL1GIPkywom3/8EKeyevMM5IEzBPBtxdEeF+uE1
-         Q9EbSmjnxeiQGaitWKRqJf0nph9ofdjoqIa1bdIWbsUbR37hitxiIwXP2wcDrP0jmbg1
-         V2Qb8fzcAcPUCo5ZkZpa6t23xTa0iTqWtKfqAxFG7id/9kpMUjGam2HNI+qnqdIugY6/
-         moPg==
-Received: by 10.216.144.234 with SMTP id n84mr1361561wej.78.1345443965053;
-        Sun, 19 Aug 2012 23:26:05 -0700 (PDT)
-Received: from flomedio.localnet (089144206224.atnat0015.highway.a1.net. [89.144.206.224])
-        by mx.google.com with ESMTPS id z11sm39232922wiv.10.2012.08.19.23.26.02
-        (version=SSLv3 cipher=OTHER);
-        Sun, 19 Aug 2012 23:26:04 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <CACPE+fvkTNNHXbFTwhoH7=aQKoc9YqtfTBOkJDugUogni0sYww@mail.gmail.com>
+	id S1755294Ab2HTGuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 02:50:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63811 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752437Ab2HTGue (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 02:50:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8788E4B51;
+	Mon, 20 Aug 2012 02:50:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RNqa4hXcw1V5MSuDeLFFBfzVIqc=; b=vP8aj9
+	RwTDmHhyxJyRk7OLKRP5xn72qOTYRhcxfNvG6BVuKbtAdXkTA74F7pCHUWOoutAf
+	4VF8/t9BIrn8PfKVqOGTNC61PgcAM1Y6HYENJp2HOlL9cR8Y5+Dyq/lLFXTCem1c
+	RCxaBpoyh42+eiI/9jdOTs97XLWf5s4RcxcnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Rq44+JhEeri/hsrzm3RXIl5wYeJABlLT
+	mL335pTecAtHHdHFxtRV31bRJ/w1pxW0BcQDenj1kMUQ7KTXre+NJrnEilX+E+WD
+	4bIcojPJiMFcjPZixK6/JKpZn+qzp8ymqmZxUGPT70xuVkxeku5dgG/dH6B9OHHE
+	/BzIYXwo2HU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 755CE4B50;
+	Mon, 20 Aug 2012 02:50:33 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E69FF4B4F; Mon, 20 Aug 2012
+ 02:50:32 -0400 (EDT)
+In-Reply-To: <2715225.vOk3BtNY6o@flomedio> (Florian Achleitner's message of
+ "Mon, 20 Aug 2012 08:19:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 567684CA-EA93-11E1-BD7D-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203760>
 
-On Sunday 19 August 2012 04:37:35 David Michael Barr wrote:
-> On Sat, Aug 18, 2012 at 6:40 AM, Florian Achleitner
-> 
-> <florian.achleitner.2.6.31@gmail.com> wrote:
-> > Hi!
-> > 
-> > This patch series should prepare vcs-svn/svndump.* for branch
-> > detection. When starting with this feature I found that the existing
-> > functions are not yet appropriate for that.
-> > These rewrites the node handling part of svndump.c, it is very
-> > invasive. The logic in handle_node is not simple, I hope that I
-> > understood every case the existing code tries to adress.
-> > At least it doesn't break an existing testcase.
-> > 
-> > The series applies on top of:
-> > [PATCH/RFC v4 16/16] Add a test script for remote-svn.
-> > I could also rebase it onto master if you think it makes sense.
-> > 
-> > Florian
-> > 
-> >  [RFC 1/5] vcs-svn: Add sha1 calculaton to fast_export and
-> 
-> This change makes me uncomfortable.
-> We are doubling up on hashing with fast-import.
-> This introduces git-specific logic into vcs-svn.
+Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-You might need to read the rest of the series to see why I did this.
-Short version: For fast-import, I seperated sending data from the commits, it 
-is sent using the 'blob' command.
-You have two choices of referencing that blobs later, by using a mark, or by 
-giving their sha1. Marks are already used for marking commits, and there is 
-only one "mark namespace". So I couldn't use marks to reference the blobs in  
-a nice way. This allows for referencing them by their sha1.
+>> If you need to re-roll your patches in the 'fa/remote-svn' branch, could
+>> you please squash this fix into them. [This was implemented on top of
+>> commit 2ce959ba, but you will probably want to make the equivalent change
+>> to commit d319a37c ("Create a note for every imported commit containing
+>> svn metadata", 17-08-2012) instead. Note that, because of the context
+>> lines in the patch, it won't apply as-is.]
+>
+> Ok, I'll add it to the next version. This warning only occurs when building 
+> for 32bit, thus I never saw it. There would be a format flag for printf that 
+> sprecifies the platform's size_t integer type: "z". 
 
-> 
-> >  [RFC 2/5] svndump: move struct definitions to .h.
-> >  [RFC 3/5] vcs-svn/svndump: restructure node_ctx, rev_ctx handling
-> >  [RFC 4/5] vcs-svn/svndump: rewrite handle_node(),
-> >  [RFC 5/5] vcs-svn: remove repo_tree
-> 
-> I haven't read the rest of the series yet but I expect
-> it is less controversial than the first patch.
-
-Hm.. I'm not sure ;)
-> 
-> --
-> David Michael Barr
-
-Florian 
+Yeah, I also queued 05ce866 (fixup: add missing cast to
+vcs-svn/fast_export.c, 2012-08-18) on top of your series before
+pushing 'pu' out yesterday.  Have you had a chance to look at these
+fixups?  There are others you would find in my tree, including minor
+log message typofixes.
