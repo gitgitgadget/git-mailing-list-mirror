@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 05/66] i18n: blame: mark parseopt strings for translation
-Date: Mon, 20 Aug 2012 19:31:54 +0700
-Message-ID: <1345465975-16927-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 06/66] i18n: branch: mark parseopt strings for translation
+Date: Mon, 20 Aug 2012 19:31:55 +0700
+Message-ID: <1345465975-16927-7-git-send-email-pclouds@gmail.com>
 References: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,170 +15,172 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:38 2012
+X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3RGb-0005NG-31
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:37 +0200
+	id 1T3RGj-0005QB-7r
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754224Ab2HTMjb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:31 -0400
+	id S1754404Ab2HTMjh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:37 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:58663 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753802Ab2HTMj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 08:39:29 -0400
+	with ESMTP id S1752852Ab2HTMjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 08:39:35 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rr13so6883151pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:29 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=NYZQWXbp87aZ7o11oe41ZcTep6ZX6Am9tkzZs8edjtM=;
-        b=whigoyw3IB5Sk9dxB0eC7oitxdxMdpQyvhUA3Z6s5MPk0j/gnjbiqQf87eS2tWjG+3
-         Xdx6CZQKZwf5+djNkqa8Qz4Lb3XaJXMZeXaljTF6F8sAYpSVUoUKlHhsFRUhFfBcgEOD
-         M4fPXP3Qjxrbdb1AvpSuDjych9uitsgYAyHUyb2r6PLTq3XmJQt3wEex6ip9zkU4u11H
-         m658UtM7YSS7+69eh+XetvVEVkBXFGCW81Ikgf72K3A43ebET692FvCAAcOTCtQGbreB
-         C5YCoUJEaPWzFy8d3nSAMWJyEARSxwnw11Ywnh3PeGmfruw/8n3tPDaYL+utGgyVPpFj
-         cHQQ==
-Received: by 10.66.83.234 with SMTP id t10mr29445079pay.39.1345466368993;
-        Mon, 20 Aug 2012 05:39:28 -0700 (PDT)
+        bh=cNFOJYzsumTFv5eIPzvhTem741n5GKvH70ZLUioZE7I=;
+        b=0Z+dGQg+ePSgLEsqeylTiNMgCKSIq1dAG6hN4jEWCfHufD2sWVdlHUeE7vWe1Ero7Y
+         wd1/E6tUwHSZp6BKLCNuQlFOLPArjXMg8k/rWketejiXreBkbgIcsZR8qb+EkVc0FPnH
+         sEfA9lPWXz3SR6fiAnLktbANJo55ALDLEbw9OngDluWM4NIOZnt4glOOn4Er2i0mSeov
+         FmQHFvo8PuXnOwGvv32GFAGTdcWJDXvPANg1HC24U1GmzTRLiNniWvCi17VcnY2MxTMd
+         +L9UjY5nIF5nq3uOrUz3COGvfhd4Top0Sj8pN/xfzDnv4o9u1hsLzX5LooC8Jn8Ot4i8
+         aKrg==
+Received: by 10.66.88.198 with SMTP id bi6mr29494157pab.23.1345466375024;
+        Mon, 20 Aug 2012 05:39:35 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.38.247])
-        by mx.google.com with ESMTPS id jz4sm11044073pbc.17.2012.08.20.05.39.25
+        by mx.google.com with ESMTPS id iq1sm11034411pbc.37.2012.08.20.05.39.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 05:39:28 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:28 +0700
+        Mon, 20 Aug 2012 05:39:34 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:35 +0700
 X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 In-Reply-To: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203778>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/blame.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ builtin/branch.c | 56 ++++++++++++++++++++++++++++--------------------=
+--------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 0d50273..c0c99c3 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -22,12 +22,12 @@
- #include "utf8.h"
- #include "userdiff.h"
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0e060f2..3f34101 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -19,10 +19,10 @@
+ #include "column.h"
 =20
--static char blame_usage[] =3D "git blame [options] [rev-opts] [rev] [-=
--] file";
-+static char blame_usage[] =3D N_("git blame [options] [rev-opts] [rev]=
- [--] file");
-=20
- static const char *blame_opt_usage[] =3D {
- 	blame_usage,
- 	"",
--	"[rev-opts] are documented in git-rev-list(1)",
-+	N_("[rev-opts] are documented in git-rev-list(1)"),
+ static const char * const builtin_branch_usage[] =3D {
+-	"git branch [options] [-r | -a] [--merged | --no-merged]",
+-	"git branch [options] [-l] [-f] <branchname> [<start-point>]",
+-	"git branch [options] [-r] (-d | -D) <branchname>...",
+-	"git branch [options] (-m | -M) [<oldbranch>] <newbranch>",
++	N_("git branch [options] [-r | -a] [--merged | --no-merged]"),
++	N_("git branch [options] [-l] [-f] <branchname> [<start-point>]"),
++	N_("git branch [options] [-r] (-d | -D) <branchname>..."),
++	N_("git branch [options] (-m | -M) [<oldbranch>] <newbranch>"),
  	NULL
  };
 =20
-@@ -2315,27 +2315,27 @@ int cmd_blame(int argc, const char **argv, cons=
-t char *prefix)
- 	static const char *revs_file =3D NULL;
- 	static const char *contents_from =3D NULL;
- 	static const struct option options[] =3D {
--		OPT_BOOLEAN(0, "incremental", &incremental, "Show blame entries as w=
-e find them, incrementally"),
--		OPT_BOOLEAN('b', NULL, &blank_boundary, "Show blank SHA-1 for bounda=
-ry commits (Default: off)"),
--		OPT_BOOLEAN(0, "root", &show_root, "Do not treat root commits as bou=
-ndaries (Default: off)"),
--		OPT_BOOLEAN(0, "show-stats", &show_stats, "Show work cost statistics=
-"),
--		OPT_BIT(0, "score-debug", &output_option, "Show output score for bla=
-me entries", OUTPUT_SHOW_SCORE),
--		OPT_BIT('f', "show-name", &output_option, "Show original filename (D=
-efault: auto)", OUTPUT_SHOW_NAME),
--		OPT_BIT('n', "show-number", &output_option, "Show original linenumbe=
-r (Default: off)", OUTPUT_SHOW_NUMBER),
--		OPT_BIT('p', "porcelain", &output_option, "Show in a format designed=
- for machine consumption", OUTPUT_PORCELAIN),
--		OPT_BIT(0, "line-porcelain", &output_option, "Show porcelain format =
-with per-line commit information", OUTPUT_PORCELAIN|OUTPUT_LINE_PORCELA=
-IN),
--		OPT_BIT('c', NULL, &output_option, "Use the same output mode as git-=
-annotate (Default: off)", OUTPUT_ANNOTATE_COMPAT),
--		OPT_BIT('t', NULL, &output_option, "Show raw timestamp (Default: off=
-)", OUTPUT_RAW_TIMESTAMP),
--		OPT_BIT('l', NULL, &output_option, "Show long commit SHA1 (Default: =
-off)", OUTPUT_LONG_OBJECT_NAME),
--		OPT_BIT('s', NULL, &output_option, "Suppress author name and timesta=
-mp (Default: off)", OUTPUT_NO_AUTHOR),
--		OPT_BIT('e', "show-email", &output_option, "Show author email instea=
-d of name (Default: off)", OUTPUT_SHOW_EMAIL),
--		OPT_BIT('w', NULL, &xdl_opts, "Ignore whitespace differences", XDF_I=
-GNORE_WHITESPACE),
--		OPT_BIT(0, "minimal", &xdl_opts, "Spend extra cycles to find better =
-match", XDF_NEED_MINIMAL),
--		OPT_STRING('S', NULL, &revs_file, "file", "Use revisions from <file>=
- instead of calling git-rev-list"),
--		OPT_STRING(0, "contents", &contents_from, "file", "Use <file>'s cont=
-ents as the final image"),
--		{ OPTION_CALLBACK, 'C', NULL, &opt, "score", "Find line copies withi=
-n and across files", PARSE_OPT_OPTARG, blame_copy_callback },
--		{ OPTION_CALLBACK, 'M', NULL, &opt, "score", "Find line movements wi=
-thin and across files", PARSE_OPT_OPTARG, blame_move_callback },
--		OPT_CALLBACK('L', NULL, &bottomtop, "n,m", "Process only line range =
-n,m, counting from 1", blame_bottomtop_callback),
-+		OPT_BOOLEAN(0, "incremental", &incremental, N_("Show blame entries a=
-s we find them, incrementally")),
-+		OPT_BOOLEAN('b', NULL, &blank_boundary, N_("Show blank SHA-1 for bou=
-ndary commits (Default: off)")),
-+		OPT_BOOLEAN(0, "root", &show_root, N_("Do not treat root commits as =
-boundaries (Default: off)")),
-+		OPT_BOOLEAN(0, "show-stats", &show_stats, N_("Show work cost statist=
-ics")),
-+		OPT_BIT(0, "score-debug", &output_option, N_("Show output score for =
-blame entries"), OUTPUT_SHOW_SCORE),
-+		OPT_BIT('f', "show-name", &output_option, N_("Show original filename=
- (Default: auto)"), OUTPUT_SHOW_NAME),
-+		OPT_BIT('n', "show-number", &output_option, N_("Show original linenu=
-mber (Default: off)"), OUTPUT_SHOW_NUMBER),
-+		OPT_BIT('p', "porcelain", &output_option, N_("Show in a format desig=
-ned for machine consumption"), OUTPUT_PORCELAIN),
-+		OPT_BIT(0, "line-porcelain", &output_option, N_("Show porcelain form=
-at with per-line commit information"), OUTPUT_PORCELAIN|OUTPUT_LINE_POR=
-CELAIN),
-+		OPT_BIT('c', NULL, &output_option, N_("Use the same output mode as g=
-it-annotate (Default: off)"), OUTPUT_ANNOTATE_COMPAT),
-+		OPT_BIT('t', NULL, &output_option, N_("Show raw timestamp (Default: =
-off)"), OUTPUT_RAW_TIMESTAMP),
-+		OPT_BIT('l', NULL, &output_option, N_("Show long commit SHA1 (Defaul=
-t: off)"), OUTPUT_LONG_OBJECT_NAME),
-+		OPT_BIT('s', NULL, &output_option, N_("Suppress author name and time=
-stamp (Default: off)"), OUTPUT_NO_AUTHOR),
-+		OPT_BIT('e', "show-email", &output_option, N_("Show author email ins=
-tead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
-+		OPT_BIT('w', NULL, &xdl_opts, N_("Ignore whitespace differences"), X=
-DF_IGNORE_WHITESPACE),
-+		OPT_BIT(0, "minimal", &xdl_opts, N_("Spend extra cycles to find bett=
-er match"), XDF_NEED_MINIMAL),
-+		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("Use revisions from=
- <file> instead of calling git-rev-list")),
-+		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("Use <file>=
-'s contents as the final image")),
-+		{ OPTION_CALLBACK, 'C', NULL, &opt, N_("score"), N_("Find line copie=
-s within and across files"), PARSE_OPT_OPTARG, blame_copy_callback },
-+		{ OPTION_CALLBACK, 'M', NULL, &opt, N_("score"), N_("Find line movem=
-ents within and across files"), PARSE_OPT_OPTARG, blame_move_callback }=
-,
-+		OPT_CALLBACK('L', NULL, &bottomtop, N_("n,m"), N_("Process only line=
- range n,m, counting from 1"), blame_bottomtop_callback),
+@@ -718,56 +718,56 @@ int cmd_branch(int argc, const char **argv, const=
+ char *prefix)
+ 	struct commit_list *with_commit =3D NULL;
+=20
+ 	struct option options[] =3D {
+-		OPT_GROUP("Generic options"),
++		OPT_GROUP(N_("Generic options")),
+ 		OPT__VERBOSE(&verbose,
+-			"show hash and subject, give twice for upstream branch"),
+-		OPT__QUIET(&quiet, "suppress informational messages"),
+-		OPT_SET_INT('t', "track",  &track, "set up tracking mode (see git-pu=
+ll(1))",
++			N_("show hash and subject, give twice for upstream branch")),
++		OPT__QUIET(&quiet, N_("suppress informational messages")),
++		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git=
+-pull(1))"),
+ 			BRANCH_TRACK_EXPLICIT),
+-		OPT_SET_INT( 0, "set-upstream",  &track, "change upstream info",
++		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
+ 			BRANCH_TRACK_OVERRIDE),
+-		OPT__COLOR(&branch_use_color, "use colored output"),
+-		OPT_SET_INT('r', "remotes",     &kinds, "act on remote-tracking bran=
+ches",
++		OPT__COLOR(&branch_use_color, N_("use colored output")),
++		OPT_SET_INT('r', "remotes",     &kinds, N_("act on remote-tracking b=
+ranches"),
+ 			REF_REMOTE_BRANCH),
+ 		{
+-			OPTION_CALLBACK, 0, "contains", &with_commit, "commit",
+-			"print only branches that contain the commit",
++			OPTION_CALLBACK, 0, "contains", &with_commit, N_("commit"),
++			N_("print only branches that contain the commit"),
+ 			PARSE_OPT_LASTARG_DEFAULT,
+ 			parse_opt_with_commit, (intptr_t)"HEAD",
+ 		},
+ 		{
+-			OPTION_CALLBACK, 0, "with", &with_commit, "commit",
+-			"print only branches that contain the commit",
++			OPTION_CALLBACK, 0, "with", &with_commit, N_("commit"),
++			N_("print only branches that contain the commit"),
+ 			PARSE_OPT_HIDDEN | PARSE_OPT_LASTARG_DEFAULT,
+ 			parse_opt_with_commit, (intptr_t) "HEAD",
+ 		},
  		OPT__ABBREV(&abbrev),
- 		OPT_END()
+=20
+-		OPT_GROUP("Specific git-branch actions:"),
+-		OPT_SET_INT('a', "all", &kinds, "list both remote-tracking and local=
+ branches",
++		OPT_GROUP(N_("Specific git-branch actions:")),
++		OPT_SET_INT('a', "all", &kinds, N_("list both remote-tracking and lo=
+cal branches"),
+ 			REF_REMOTE_BRANCH | REF_LOCAL_BRANCH),
+-		OPT_BIT('d', "delete", &delete, "delete fully merged branch", 1),
+-		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2)=
+,
+-		OPT_BIT('m', "move", &rename, "move/rename a branch and its reflog",=
+ 1),
+-		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target ex=
+ists", 2),
+-		OPT_BOOLEAN(0, "list", &list, "list branch names"),
+-		OPT_BOOLEAN('l', "create-reflog", &reflog, "create the branch's refl=
+og"),
++		OPT_BIT('d', "delete", &delete, N_("delete fully merged branch"), 1)=
+,
++		OPT_BIT('D', NULL, &delete, N_("delete branch (even if not merged)")=
+, 2),
++		OPT_BIT('m', "move", &rename, N_("move/rename a branch and its reflo=
+g"), 1),
++		OPT_BIT('M', NULL, &rename, N_("move/rename a branch, even if target=
+ exists"), 2),
++		OPT_BOOLEAN(0, "list", &list, N_("list branch names")),
++		OPT_BOOLEAN('l', "create-reflog", &reflog, N_("create the branch's r=
+eflog")),
+ 		OPT_BOOLEAN(0, "edit-description", &edit_description,
+-			    "edit the description for the branch"),
+-		OPT__FORCE(&force_create, "force creation (when already exists)"),
++			    N_("edit the description for the branch")),
++		OPT__FORCE(&force_create, N_("force creation (when already exists)")=
+),
+ 		{
+ 			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
+-			"commit", "print only not merged branches",
++			N_("commit"), N_("print only not merged branches"),
+ 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
+ 			opt_parse_merge_filter, (intptr_t) "HEAD",
+ 		},
+ 		{
+ 			OPTION_CALLBACK, 0, "merged", &merge_filter_ref,
+-			"commit", "print only merged branches",
++			N_("commit"), N_("print only merged branches"),
+ 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
+ 			opt_parse_merge_filter, (intptr_t) "HEAD",
+ 		},
+-		OPT_COLUMN(0, "column", &colopts, "list branches in columns"),
++		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
+ 		OPT_END(),
  	};
+=20
 --=20
 1.7.12.rc2.18.g61b472e
