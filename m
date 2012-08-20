@@ -1,93 +1,120 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: Re: [RFC 1/5] GSOC: prepare svndump for branch detection
-Date: Mon, 20 Aug 2012 19:43:53 +0200
-Message-ID: <3221500.GV11OifKyt@flomedio>
-References: <1345236010-1648-1-git-send-email-florian.achleitner.2.6.31@gmail.com> <1701463.olu8UUX9CV@flomedio> <20120820164530.GD168@mannheim-rule.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] precompose-utf8: do not call checks for non-ascii "utf8"
+Date: Mon, 20 Aug 2012 11:13:32 -0700
+Message-ID: <7vobm5jusz.fsf_-_@alter.siamese.dyndns.org>
+References: <7v393mxkpk.fsf@alter.siamese.dyndns.org>
+ <1345215190-95976-1-git-send-email-robin.rosenberg@dewire.com>
+ <7vobm9v32e.fsf@alter.siamese.dyndns.org> <50311DEB.4050700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Michael Barr <b@rr-dav.id.au>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 19:44:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 20 20:13:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3W1H-0004rE-6E
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 19:44:07 +0200
+	id 1T3WTu-0003r8-Ga
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 20:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987Ab2HTRoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 13:44:01 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:35220 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750772Ab2HTRn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 13:43:59 -0400
-Received: by bkwj10 with SMTP id j10so1942934bkw.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 10:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding:content-type;
-        bh=VSSggq8ZI2J1CQ+wHXBTRpOIOtPhNI5XTTgHn7fMg7I=;
-        b=zXYRISmya8mLnGKaGCRk/rhLvsPNnHzsWMr5TPovKBmObmPSTZpDIPdj2uEfC2vXSr
-         TU3+Nkw+ZVLKyPx+Fb65LycARydcMpTgtEspHtF1eQW7WRuAhbsQGa9EsTLolbEaZ1QC
-         37AgsAWEKj7bONDi0sy2BoQi9wtjyblCi9otPy60FLVuoSvDkOr9Gy8NzsSSilzXMbt2
-         io1INSk/2y3lSVNi5TFrsfGlvjc7sspCQSRbyuUIYb84aDRfqfacWQh81hWgWknEX69f
-         nRhGU4+eWM4EsjJ7Fk1e5Lexzjyt+RTA6rrvn9GllKmLhfg1LyPGBHXrj5y13RO3pMZG
-         FsiQ==
-Received: by 10.204.130.209 with SMTP id u17mr4619436bks.35.1345484638006;
-        Mon, 20 Aug 2012 10:43:58 -0700 (PDT)
-Received: from flomedio.localnet (91-115-90-54.adsl.highway.telekom.at. [91.115.90.54])
-        by mx.google.com with ESMTPS id fu8sm6585471bkc.5.2012.08.20.10.43.55
-        (version=SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 10:43:56 -0700 (PDT)
-User-Agent: KMail/4.8.4 (Linux/3.0.0-24-generic; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <20120820164530.GD168@mannheim-rule.local>
+	id S1751775Ab2HTSNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 14:13:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42950 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751421Ab2HTSNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 14:13:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BB2F92F5;
+	Mon, 20 Aug 2012 14:13:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zsfjofvuql5BWxOWs0R5rvsiQew=; b=XyWrfC
+	pZf8oFyHZYdiq6oTYrwMk16/0NAWzloToO/ZF27P6GOJTGM7nWLwkeMYSfr3S5kt
+	330XhtssTZpJn5KBim7U9PMeYUO7ikcQCQdzQBQ7vV+YUPQgT22Yu+Cb+rXPzjAC
+	ExG2XmIQpnDvNH68OFHKU4S/+6JGMDcuFlJns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KF3D0WY55NPhqAi1Sb2Lc2xCzIgJzMB2
+	pkb04K34YYAoVsBjsQ5pxEgVQZLSwlvnJRIuyVKHmDj+LkERGISd8ComgStdPXxN
+	xHFCRaUHJmPcJUvIZypOUHNoPxZkx1L+pGDmQk5rh0Ts4J02ZqY8f5wOekzL+ET5
+	X2Jr1Qc+K9M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8942C92F3;
+	Mon, 20 Aug 2012 14:13:34 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3AF592F2; Mon, 20 Aug 2012
+ 14:13:33 -0400 (EDT)
+In-Reply-To: <50311DEB.4050700@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of "Sun, 19 Aug 2012 19:10:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C1090E16-EAF2-11E1-89DC-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203864>
 
-On Monday 20 August 2012 09:45:30 Jonathan Nieder wrote:
-> Florian Achleitner wrote:
-> > Currently, the mark number is equal to the svn revision number the commit
-> > corresponds to. I didn't want to break that, but not mandatory. We could
-> > also split the mark namespace by reserving one or more of the most
-> > significant bits as a type specifier.
-> > I'll develop a marks-based version ..
-> 
-> Have we already exhausted possibilities that don't involve changing
-> vcs-svn/ code quite so much?  One possibility mentioned before was to
-> post-process the stream that svn-fe produces, which seemed appealing
-> from a debuggability point of view.
-> 
+As suggested by Linus, this function is not checking UTF-8-ness of the
+string; it only is seeing if it is pure US-ASCII.
 
-Do you mean like another program in the pipe, that translates the fast-import 
-stream produced by svn-fe into another fast-import stream?
-svnrdump | svn-fe | svnbranchdetect | git-fast-import ?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-My two previous ideas were meant like this:
-1. Import everything into git and detect branches on the stuff in git, or
-2. detect branches as it imports.
+ * Just for completeness, this on top.
 
-Both require to create commits for their work. So the idea behind these 
-patches is to split the creation of commits from the creation of data. So that 
-the data can be sent immediatly as it is coming in from svnrdump, and 
-therefore save memory by not buffering it. 
+ compat/precompose_utf8.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-And create the commits later. Either all linear and splitting it into branches 
-later which requires creating commits but not data, or creating branched 
-commits immediatly. This requires to inspect all  node data before starting a 
-commit.
-
-Anyways it's just an idea..
-
-> Curious,
-> Jonathan
-
-Hope that helps,
-Florian
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 3190d50..8cf5955 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -13,20 +13,20 @@ typedef char *iconv_ibp;
+ static const char *repo_encoding = "UTF-8";
+ static const char *path_encoding = "UTF-8-MAC";
+ 
+-static size_t has_utf8(const char *s, size_t maxlen, size_t *strlen_c)
++static size_t has_non_ascii(const char *s, size_t maxlen, size_t *strlen_c)
+ {
+-	const uint8_t *utf8p = (const uint8_t *)s;
++	const uint8_t *ptr = (const uint8_t *)s;
+ 	size_t strlen_chars = 0;
+ 	size_t ret = 0;
+ 
+-	if (!utf8p || !*utf8p)
++	if (!ptr || !*ptr)
+ 		return 0;
+ 
+-	while (*utf8p && maxlen) {
+-		if (*utf8p & 0x80)
++	while (*ptr && maxlen) {
++		if (*ptr & 0x80)
+ 			ret++;
+ 		strlen_chars++;
+-		utf8p++;
++		ptr++;
+ 		maxlen--;
+ 	}
+ 	if (strlen_c)
+@@ -77,7 +77,7 @@ void precompose_argv(int argc, const char **argv)
+ 	while (i < argc) {
+ 		size_t namelen;
+ 		oldarg = argv[i];
+-		if (has_utf8(oldarg, (size_t)-1, &namelen)) {
++		if (has_non_ascii(oldarg, (size_t)-1, &namelen)) {
+ 			newarg = reencode_string_iconv(oldarg, namelen, ic_precompose);
+ 			if (newarg)
+ 				argv[i] = newarg;
+@@ -130,7 +130,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ 		prec_dir->dirent_nfc->d_ino  = res->d_ino;
+ 		prec_dir->dirent_nfc->d_type = res->d_type;
+ 
+-		if ((precomposed_unicode == 1) && has_utf8(res->d_name, (size_t)-1, NULL)) {
++		if ((precomposed_unicode == 1) && has_non_ascii(res->d_name, (size_t)-1, NULL)) {
+ 			if (prec_dir->ic_precompose == (iconv_t)-1) {
+ 				die("iconv_open(%s,%s) failed, but needed:\n"
+ 						"    precomposed unicode is not supported.\n"
+-- 
+1.7.12.129.g11de995
