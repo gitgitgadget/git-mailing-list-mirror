@@ -1,212 +1,96 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
-Subject: [PATCH 3/3] branch: suggest how to undo a --set-upstream when given one branch
-Date: Mon, 20 Aug 2012 15:47:40 +0200
-Message-ID: <1345470460-28734-4-git-send-email-cmn@elego.de>
-References: <1345470460-28734-1-git-send-email-cmn@elego.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Porting git to HP NonStop
+Date: Mon, 20 Aug 2012 07:41:37 -0700
+Message-ID: <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+ <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+ <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+ <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+ <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+ <7v628epzia.fsf@alter.siamese.dyndns.org>
+ <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 16:01:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "'Shawn Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>,
+	<rsbecker@nexbridge.com>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Mon Aug 20 16:41:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3SYE-0003Og-6b
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 16:01:54 +0200
+	id 1T3TAs-0005uD-QU
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 16:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756467Ab2HTOAP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 10:00:15 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:47721 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1755203Ab2HTN4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 09:56:17 -0400
-Received: from flaca.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by hessy.dwim.me (Postfix) with ESMTPA id CB9E4816D2
-	for <git@vger.kernel.org>; Mon, 20 Aug 2012 15:47:41 +0200 (CEST)
-Received: (nullmailer pid 28779 invoked by uid 1000);
-	Mon, 20 Aug 2012 13:47:40 -0000
-X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
-In-Reply-To: <1345470460-28734-1-git-send-email-cmn@elego.de>
+	id S1756668Ab2HTOll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 10:41:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41554 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754703Ab2HTOlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 10:41:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F8509821;
+	Mon, 20 Aug 2012 10:41:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YTYrdxrm0NOOAiq6DtWlL/rzNMU=; b=v8Rwq7
+	lj7TD4z3ojT8z53yjYNlAE9A5OrBc4R6adX9sBr8zMkr6ZfdaNudfy1l8TmB7yIU
+	VQAUa9E6zEueaSOawjDRELxR1LUDLRyFESWazZjaXmL063FAC3NBjItYuKnfL8KI
+	NnzFR46XgL50B7eLb/hd3RlWn/Lj3EKSmNCLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s1jTTokFJfrnZUE8cex4BSRTdN+uvpcO
+	QOcgVivoCs0P4J3DG/yCUgTaC82hSUC2mJo050HOyPAKRTNIhuZ/aCqxen1BygKk
+	RyMC/+6w03Rcd7dzVeZBbRm0o/NQ/13zr2ESN9n5xaHqusdBEOogmmgxOetNA2T0
+	S33cYsInPns=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C4459820;
+	Mon, 20 Aug 2012 10:41:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9586C981E; Mon, 20 Aug 2012
+ 10:41:38 -0400 (EDT)
+In-Reply-To: <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Mon, 20 Aug 2012 12:22:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 261D5776-EAD5-11E1-899C-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203847>
 
-This interface is error prone, and a better one (--set-upstream-to)
-exists. Suggest how to fix a --set-upstream invocation in case the
-user only gives one argument, which makes it likely that he meant to
-do the opposite, like with
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-    git branch --set-upstream origin/master
+> OK, I'll go for a compat/mkdir.c though.
 
-when they meant one of
+No.  See below.
 
-    git branch --set-upstream origin/master master
-    git branch --set-upstream-to origin/master
+> We shouldn't call it tandem.c as Tandem, the Company, doesn't exist anymore
+> and since more than a decade (bough by Compaq, then HP), only the __TANDEM
+> survived in our compiler and headers/libraries. Could call it NonStop.c, but
+> I don't really like that idea either, I'd rather keep it more generic, just
+> in case someone else might need it too, or that issue someday gets fixed for
+> NonStop.
 
-While we're at it, add a notice that the --set-upstream flag is
-deprecated and will be removed at some point.
+compat/hp_nonstop.c is also fine, but I think matching "#ifdef __TANDEM" is
+the most sensible.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+And I wouldn't call it just "mkdir", as it is more likely than not
+that we will find other incompatibilities that needs to be absorbed
+in the compat/ layer, and we can add it to compat/tandem.c, but not
+to compat/mkdir.c, as that will be another nonstop specific tweak. 
+A separate file, compat/tandem/mkdir.c, is fine, though.
 
----
+> I'll go for git_mkdir(), similar to other git wrappers, (like for mmap,
+> pread, fopen, snprintf, vsnprintf, qsort).
 
-This produces suboptimal output in case that A tracks B and we do
-
-    git checkout B
-    git branch --set-upstream A
-
-as it will suggest
-
-    git branch --set-upstream A B
-
-as a way of undoing what we just did. Avoiding it becomes a bit messy
-(yet another layer of ifs), so I've left it out. Anybody reckon it's
-worth recognising this?
----
- builtin/branch.c  | 35 +++++++++++++++++++++++++++++++++++
- t/t3200-branch.sh | 52 +++++++++++++++++++++++++++++++++++++++++++++++=
-+++++
- 2 files changed, 87 insertions(+)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 08068f7..33641d9 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -707,6 +707,21 @@ static int edit_branch_description(const char *bra=
-nch_name)
- 	return status;
- }
-=20
-+static void print_set_upstream_warning(const char *branch, int branch_=
-existed, const char *old_upstream)
-+{
-+	fprintf(stderr, _("If you wanted to make '%s' track '%s', do this:\n\=
-n"), head, branch);
-+	if (branch_existed) {
-+		if (old_upstream)
-+			fprintf(stderr, _("    git branch --set-upstream %s %s\n"), old_ups=
-tream, branch);
-+		else
-+			fprintf(stderr, _("    git branch --unset-upstream %s\n"), branch);
-+	} else {
-+		fprintf(stderr, _("    git branch -d %s\n"), branch);
-+	}
-+
-+	fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch);
-+}
-+
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete =3D 0, rename =3D 0, force_create =3D 0, list =3D 0;
-@@ -877,10 +892,30 @@ int cmd_branch(int argc, const char **argv, const=
- char *prefix)
- 		git_config_set_multivar(buf.buf, NULL, NULL, 1);
- 		strbuf_release(&buf);
- 	} else if (argc > 0 && argc <=3D 2) {
-+		struct branch *branch =3D branch_get(argv[0]);
-+		const char *old_upstream =3D NULL;
-+		int branch_existed =3D 0;
-+
- 		if (kinds !=3D REF_LOCAL_BRANCH)
- 			die(_("-a and -r options to 'git branch' do not make sense with a b=
-ranch name"));
-+
-+		if (track =3D=3D BRANCH_TRACK_OVERRIDE)
-+			fprintf(stderr, _("The --set-upstream flag is deprecated and will b=
-e removed. Consider using --track or --set-upstream-to\n"));
-+
-+		/*
-+		 * Save what argv[0] was pointing to so we can give
-+		 * the --set-upstream-to hint
-+		 */
-+		if (branch_has_merge_config(branch))
-+			old_upstream =3D shorten_unambiguous_ref(branch->merge[0]->dst, 0);
-+
-+		branch_existed =3D ref_exists(branch->refname);
- 		create_branch(head, argv[0], (argc =3D=3D 2) ? argv[1] : head,
- 			      force_create, reflog, 0, quiet, track);
-+
-+		if (argc =3D=3D 1 && track =3D=3D BRANCH_TRACK_OVERRIDE)
-+			print_set_upstream_warning(argv[0], branch_existed, old_upstream);
-+
- 	} else
- 		usage_with_options(builtin_branch_usage, options);
-=20
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 93e5d6e..702bffa 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -399,6 +399,58 @@ test_expect_success 'test --unset-upstream on a pa=
-rticular branch' \
-      test_must_fail git config branch.my14.remote &&
-      test_must_fail git config branch.my14.merge'
-=20
-+test_expect_success 'test --set-upstream help message with one arg' \
-+    'git branch --set-upstream origin/master 2>actual &&
-+     test_when_finished git branch -d origin/master &&
-+     cat >expected <<EOF &&
-+The --set-upstream flag is deprecated and will be removed. Consider us=
-ing --track or --set-upstream-to
-+If you wanted to make '"'master'"' track '"'origin/master'"', do this:
-+
-+    git branch -d origin/master
-+    git branch --set-upstream-to origin/master
-+EOF
-+     test_cmp expected actual
-+'
-+
-+test_expect_success '--set-upstream with a branch that already has an =
-upstream' \
-+    'git branch --set-upstream-to my12 master &&
-+     git branch --set-upstream-to my13 my12 &&
-+     test_when_finished git branch --unset-upstream my12 &&
-+     test_when_finished git branch --unset-upstream my13 &&
-+     git branch --set-upstream my12 2>actual &&
-+     cat actual &&
-+     cat >expected <<EOF &&
-+The --set-upstream flag is deprecated and will be removed. Consider us=
-ing --track or --set-upstream-to
-+If you wanted to make '"'master'"' track '"'my12'"', do this:
-+
-+    git branch --set-upstream my13 my12
-+    git branch --set-upstream-to my12
-+EOF
-+     test_cmp expected actual
-+'
-+
-+test_expect_success '--set-upstream with a branch that has no upstream=
-' \
-+    'git branch --set-upstream my12 2>actual &&
-+     test_when_finished git branch --unset-upstream my12
-+     cat >expected <<EOF &&
-+The --set-upstream flag is deprecated and will be removed. Consider us=
-ing --track or --set-upstream-to
-+If you wanted to make '"'master'"' track '"'my12'"', do this:
-+
-+    git branch --unset-upstream my12
-+    git branch --set-upstream-to my12
-+EOF
-+     test_cmp expected actual
-+'
-+
-+test_expect_success '--set-upstream with two args should only show the=
- deprecation message' \
-+    'git branch --set-upstream master my13 2>actual &&
-+     test_when_finished git branch --unset-upstream master &&
-+     cat >expected <<EOF &&
-+The --set-upstream flag is deprecated and will be removed. Consider us=
-ing --track or --set-upstream-to
-+EOF
-+     test_cmp expected actual
-+'
-+
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
- $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +000=
-0	branch: Created from master
---=20
-1.7.11.1.104.ge7b44f1
+Again, no.  Your breakage is that having underlying system mkdir
+that does not understand trailing slash, which may not be specific
+to __TANDEM, but still is _not_ the only possible mode of breakage.
+Squatting on a generic "git_mkdir()" name makes it harder for other
+people to name their compat mkdir functions to tweak for the
+breakage on their platforms.  The examples you listed are all "the
+platform does not offer it, so we implement the whole thing" kind,
+so it is in a different genre.
