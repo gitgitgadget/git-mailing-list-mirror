@@ -1,88 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v4 01/16] GSOC remote-svn
-Date: Mon, 20 Aug 2012 09:23:16 -0700
-Message-ID: <7vk3wtleh7.fsf@alter.siamese.dyndns.org>
-References: <1345235157-702-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <8572000.QUVXl8yetS@flobuntu> <7vzk5srm9w.fsf@alter.siamese.dyndns.org>
- <6231669.WggyDX4Xa3@flomedio>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2012, #06; Sun, 19)
+Date: Mon, 20 Aug 2012 18:23:45 +0200
+Message-ID: <CABPQNSZpS6YX-WSp7nYnav+Szk0V-N9nx-F+RXtZLw7s6KMBQg@mail.gmail.com>
+References: <7v393im4jy.fsf@alter.siamese.dyndns.org> <CABPQNSZ+JskSvEUFbxy78eqB5cg1npq7n_thaVhhoXxd-DK+MQ@mail.gmail.com>
+ <7vobm5lejl.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 20 18:23:26 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
+	Stefan Zager <szager@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 20 18:24:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3UlB-0005Ru-G2
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 18:23:25 +0200
+	id 1T3UmH-0006I8-2l
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 18:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119Ab2HTQXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 12:23:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56653 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752392Ab2HTQXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 12:23:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 015B3743F;
-	Mon, 20 Aug 2012 12:23:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/RsUDffG0EzymxdNbO8EPkM1W0Y=; b=Fkj5Q+
-	RKXodPJNZ6w5AemmdI4oJMePHthayGWP1MQCPsSFW+De32D6gVp2vqiaL2bLU87G
-	N9fgyMaOYNmkCSd8jwfKkUI4ZILMXChZB8r/4IBnXWJo1PX4KlHvXXN8jnrdCpmf
-	SECfSawSbwiWACVAbAyYRwKQY4oqhTiLDayrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J2Zxe7cxycvbSINo2t2nTGkLkaZjevZJ
-	s7JEaggKPNe2F6iqmLbJZSbGtgIJuBkLGB2wP6vVaJLN2PFmqyycqRRvBH31A79S
-	veTWozS5vsgzYnLKMt4c3uibZvtcWVZlLkqo96XS3L4fCVIkeABCY20mv99OFdig
-	hKST2h3qbt4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E30A8743E;
-	Mon, 20 Aug 2012 12:23:18 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CA6E743D; Mon, 20 Aug 2012
- 12:23:18 -0400 (EDT)
-In-Reply-To: <6231669.WggyDX4Xa3@flomedio> (Florian Achleitner's message of
- "Mon, 20 Aug 2012 15:52:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59D1B6B2-EAE3-11E1-9B9C-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753318Ab2HTQY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 12:24:27 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:52289 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753051Ab2HTQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 12:24:26 -0400
+Received: by vbbff1 with SMTP id ff1so5488035vbb.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 09:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=H6E0TImvjaXvZ0dI8vVa8Wgk7U2/Dkyq6YFHQQk7ZV4=;
+        b=P3Sk9YPj2qFxdeGFRUXC02sNJ7+7UXn+6bK+YBD8R6LZiKJoJA+1XMYcBu0/gvyJnC
+         FXxnzyFn2/IEZfYC11JAUQAEDOOz+QLLmtzicKJYb5dc5/8l1XRwh3J3KeFqRoK8Bhyn
+         eslIYGXFyZeEbf30+DBw+eHjRnqfrg4vYV5pyvw7oy9ZyQneXRAZasLdGOUZFf53ra4z
+         HUMpMCpQreSP02fmCMPYfCulyAo9h/eJGTf/FgSTue2OAOMiLauxsnSzW+vB0yFaVXjn
+         rD0D3K7GwWK4dyWr3gd6Cmdq/SG1CzrXh2KvVspOawIEczfol0MxfPBB65ujx/0ZR2KW
+         38MA==
+Received: by 10.52.95.46 with SMTP id dh14mr9065053vdb.114.1345479865416; Mon,
+ 20 Aug 2012 09:24:25 -0700 (PDT)
+Received: by 10.58.237.166 with HTTP; Mon, 20 Aug 2012 09:23:45 -0700 (PDT)
+In-Reply-To: <7vobm5lejl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203851>
 
-Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
-
-> On Saturday 18 August 2012 13:13:47 Junio C Hamano wrote:
->> That indicates that one necessary patch to add logic to Makefile to
->> go and build that subdirectory, at least before running the test,
->> but possibly as part of the "all" target, is missing, isn't it?
->> 
->> Or you can add, at the beginning of your tests files that require
->> the contrib bit, to have something like
->> 
->>         if test -e "$GIT_BUILD_DIR/remote-svn"
->>         then
->>                 test_set_prereq REMOTE_SVN
->>         fi
->> 
->> and protect your tests with the prerequisite, e.g.
->> 
->>         test_expect_success REMOTE_SVN 'test svn:// URL' '
->>                 ...
->>         '
->> 
->> without changing the top-level Makefile.
+On Mon, Aug 20, 2012 at 6:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
 >
-> What version would you prefer? Currently nothing in contrib/ is built by the 
-> toplevel Makefile..
+>> On Mon, Aug 20, 2012 at 9:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> * ef/win32-cred-helper (2012-08-16) 1 commit
+>>>  - contrib: add win32 credential-helper
+>>>
+>>> Credential helper for Win32 (is this GUI???).
+>>
+>> No, and credential helpers shouldn't be either.
+>
+> Hrm, doesn't it even do "the application wants to access your
+> keychain.  Allow it [Y/N]?" kind of thing?
+>
 
-The latter approach of running tests only for people who went to
-contrib/vcs-svn and built things there may be more conservative.  I
-could be persuaded either way.
+No. On Windows, you can freely access the keychain as long as a user
+is logged in and the machine is not locked.
