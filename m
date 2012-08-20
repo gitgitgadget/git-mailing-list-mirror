@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 07/66] i18n: cat-file: mark parseopt strings for translation
-Date: Mon, 20 Aug 2012 19:31:56 +0700
-Message-ID: <1345465975-16927-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 08/66] i18n: check-attr: mark parseopt strings for translation
+Date: Mon, 20 Aug 2012 19:31:57 +0700
+Message-ID: <1345465975-16927-9-git-send-email-pclouds@gmail.com>
 References: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,100 +15,89 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:46 2012
+X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3RGj-0005QB-SQ
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:46 +0200
+	id 1T3RGw-0005aB-5t
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754615Ab2HTMjm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:42 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:58663 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754433Ab2HTMjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 08:39:41 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr13so6883151pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:41 -0700 (PDT)
+	id S1753977Ab2HTMjt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:49 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:35576 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753880Ab2HTMjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 08:39:47 -0400
+Received: by dady13 with SMTP id y13so2154416dad.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=dv9/L6KxVpCVM7dApPdxoYHGnqfrJ0JJUJsLzgKWOg0=;
-        b=vmrIXQYCLe3SIf9IT11+JVsXUp0HPViUTaI+p/ocCyNv4yvxCw2zAQZhGDa3sZta5o
-         mQFG7xl3gt5gEw2yJzLs6mwdWOJCq1paCOZnEpaY49FYLpm+Ud/DdO/HcakQiBcYSUB7
-         5kpOysHVdLw/Zt1yXsXIHXyHAa9Jxq5Hr0wY8Wj9+wGLn8ChOZ25sWqbKgMoeOv5ygSY
-         cpqLsXdkbRQCmXLRyTAPzNukoQnL//TaZcBMrtSxxr8S5/0TCJp/m7m28E22uMxjxC93
-         mvCwLhBQqxBAIuw5KaDIM1uo5hT7IwYYX+eZ2sUD2VPLv3jmCDLcoOjhsfZxeDiCr7et
-         tCtw==
-Received: by 10.66.81.202 with SMTP id c10mr18097341pay.80.1345466381100;
-        Mon, 20 Aug 2012 05:39:41 -0700 (PDT)
+        bh=4nE7Z0qOK7o1gfNM0zD9THJbMJqgrEuu8v8IvtB5W4s=;
+        b=FZfN6Ky+La0L8uzsKJBk2LOwQv2FDCTK2PPwIzx0cWzKubRb4F/pW2IruObpgus9bE
+         hBbjK6GG5jsfZaYJsrtTngx0XJTZqtYfz9e8M74eLIUPOR8eXiAQZCLiez63LOwQJfZM
+         /e26kJrKtWPmznTlsCAtD5LSFm0NNhpunYaroS7s8D4RFuh4OAgH9p8maNUd6wrxllFm
+         VQxU6VgnXag9G9DyvLXyfsM5TBPJylWUUCZigX1bjh07YpDw2EsYgef8JaXn11y5biye
+         Cps11l7/3J4X12YAxLr2FaY7JMTPs7aoZULasx1qLw/2iiXaaR39uGMbUFLowXFKsrTc
+         NExw==
+Received: by 10.68.200.98 with SMTP id jr2mr34159071pbc.81.1345466387325;
+        Mon, 20 Aug 2012 05:39:47 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.38.247])
-        by mx.google.com with ESMTPS id nr8sm11035198pbc.43.2012.08.20.05.39.37
+        by mx.google.com with ESMTPS id nv6sm11035585pbc.42.2012.08.20.05.39.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 05:39:40 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:41 +0700
+        Mon, 20 Aug 2012 05:39:46 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:47 +0700
 X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 In-Reply-To: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203780>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/cat-file.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ builtin/check-attr.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index af74e77..512072a 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -244,8 +244,8 @@ static int batch_objects(int print_contents)
- }
-=20
- static const char * const cat_file_usage[] =3D {
--	"git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>",
--	"git cat-file (--batch|--batch-check) < <list_of_objects>",
-+	N_("git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>"),
-+	N_("git cat-file (--batch|--batch-check) < <list_of_objects>"),
- 	NULL
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index 44c421e..e1ff575 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -8,19 +8,19 @@ static int all_attrs;
+ static int cached_attrs;
+ static int stdin_paths;
+ static const char * const check_attr_usage[] =3D {
+-"git check-attr [-a | --all | attr...] [--] pathname...",
+-"git check-attr --stdin [-a | --all | attr...] < <list-of-paths>",
++N_("git check-attr [-a | --all | attr...] [--] pathname..."),
++N_("git check-attr --stdin [-a | --all | attr...] < <list-of-paths>"),
+ NULL
  };
 =20
-@@ -263,19 +263,19 @@ int cmd_cat_file(int argc, const char **argv, con=
-st char *prefix)
- 	const char *exp_type =3D NULL, *obj_name =3D NULL;
+ static int null_term_line;
 =20
- 	const struct option options[] =3D {
--		OPT_GROUP("<type> can be one of: blob, tree, commit, tag"),
--		OPT_SET_INT('t', NULL, &opt, "show object type", 't'),
--		OPT_SET_INT('s', NULL, &opt, "show object size", 's'),
-+		OPT_GROUP(N_("<type> can be one of: blob, tree, commit, tag")),
-+		OPT_SET_INT('t', NULL, &opt, N_("show object type"), 't'),
-+		OPT_SET_INT('s', NULL, &opt, N_("show object size"), 's'),
- 		OPT_SET_INT('e', NULL, &opt,
--			    "exit with zero when there's no error", 'e'),
--		OPT_SET_INT('p', NULL, &opt, "pretty-print object's content", 'p'),
-+			    N_("exit with zero when there's no error"), 'e'),
-+		OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p=
-'),
- 		OPT_SET_INT(0, "textconv", &opt,
--			    "for blob objects, run textconv on object's content", 'c'),
-+			    N_("for blob objects, run textconv on object's content"), 'c'),
- 		OPT_SET_INT(0, "batch", &batch,
--			    "show info and content of objects fed from the standard input",
-+			    N_("show info and content of objects fed from the standard inpu=
-t"),
- 			    BATCH),
- 		OPT_SET_INT(0, "batch-check", &batch,
--			    "show info about objects fed from the standard input",
-+			    N_("show info about objects fed from the standard input"),
- 			    BATCH_CHECK),
- 		OPT_END()
- 	};
+ static const struct option check_attr_options[] =3D {
+-	OPT_BOOLEAN('a', "all", &all_attrs, "report all attributes set on fil=
+e"),
+-	OPT_BOOLEAN(0,  "cached", &cached_attrs, "use .gitattributes only fro=
+m the index"),
+-	OPT_BOOLEAN(0 , "stdin", &stdin_paths, "read file names from stdin"),
++	OPT_BOOLEAN('a', "all", &all_attrs, N_("report all attributes set on =
+file")),
++	OPT_BOOLEAN(0,  "cached", &cached_attrs, N_("use .gitattributes only =
+from the index")),
++	OPT_BOOLEAN(0 , "stdin", &stdin_paths, N_("read file names from stdin=
+")),
+ 	OPT_BOOLEAN('z', NULL, &null_term_line,
+-		"input paths are terminated by a null character"),
++		N_("input paths are terminated by a null character")),
+ 	OPT_END()
+ };
+=20
 --=20
 1.7.12.rc2.18.g61b472e
