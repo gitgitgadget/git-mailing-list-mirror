@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/66] i18n: mark "style" in OPT_COLUMN() for translation
-Date: Mon, 20 Aug 2012 19:31:50 +0700
-Message-ID: <1345465975-16927-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 02/66] i18n: archive: mark parseopt strings for translation
+Date: Mon, 20 Aug 2012 19:31:51 +0700
+Message-ID: <1345465975-16927-3-git-send-email-pclouds@gmail.com>
 References: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,70 +15,150 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:16 2012
+X-From: git-owner@vger.kernel.org Mon Aug 20 14:39:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3RGF-00056E-IS
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:15 +0200
+	id 1T3RGG-00056E-9k
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Aug 2012 14:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab2HTMjG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:06 -0400
+	id S1753966Ab2HTMjM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Aug 2012 08:39:12 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:58663 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753412Ab2HTMjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 08:39:05 -0400
+	with ESMTP id S1753802Ab2HTMjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 08:39:11 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rr13so6883151pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:04 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 05:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=jLcaV/OunR/w2Dh6DYmLqE53KI1zsGXOjaWCgxWa6pI=;
-        b=QGiFGz6aky7x9IEr/1Rc8+A9mohZZboOm7z7VmCE6ccEQFbbdcH6k2sLcl68vnyLO5
-         KvAVuHWOUEF6QNWjqjvysMrW3aG4GZQUCQqMq3FpQyIsaJkU7K6smTqyeXhrpLRxhHsS
-         yZAe9WRENkcnspvv/BZ4MDGlcNUoZVBDX9B+HVk7a3yX7IQVs6tTlYSPT4y6VT5TJZsL
-         EzGiB1FaQVRlT89q7cveq3rMreR4QpNRRJl62AYne6nDOx4DlrwyDE0/u5Z3c2x8c3oB
-         ipNfAxNbcRVB29wmOBXL8jXfjRW/KqCMVIlKtxtARHODpBC5tH3pYf2worQx05+CIgst
-         dtfg==
-Received: by 10.68.219.226 with SMTP id pr2mr34135995pbc.1.1345466344729;
-        Mon, 20 Aug 2012 05:39:04 -0700 (PDT)
+        bh=hYqxg3BXJhWHHMx1+3IwFCxI3PGowwvwqCQmS0LILx4=;
+        b=aY6HfKGEC4uuUwLb9Wh5Ss+e+dEZciKEvVTR6Yr8r02Pz5twKOVX+BfR24U4DZRD8r
+         Ufy6xbcsjBgAreTQQ2r3PdEdKYaDyJdKxV2sUfO2yhx6NAdIdaxqZSbU4TPxWKZqpCy0
+         G03qVuNH0QF1gZQ7xTMA6QlpbAmm4OvN57UtPYG4HtpIK1a3+Pw4467Us9JdMtDW1Sgs
+         O+MtCDHzk3HLLXAnCHnJPDo4oRyGf8PF6BzA8wgONRhTLVvqOODyX/jHRjBhQswZbZ89
+         d/dTk2Mc9uM/jLS8SauWMnp6xCKveKfr6VIuEL5pGBg2gyADGVNmLFXo0oMkteZhZ0Ds
+         kmHw==
+Received: by 10.68.217.202 with SMTP id pa10mr34491699pbc.15.1345466350844;
+        Mon, 20 Aug 2012 05:39:10 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.38.247])
-        by mx.google.com with ESMTPS id ty1sm7956293pbc.76.2012.08.20.05.39.01
+        by mx.google.com with ESMTPS id os1sm11038741pbc.31.2012.08.20.05.39.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 05:39:03 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:04 +0700
+        Mon, 20 Aug 2012 05:39:10 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 20 Aug 2012 19:33:10 +0700
 X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 In-Reply-To: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203773>
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203774>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- parse-options.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ archive.c         | 38 +++++++++++++++++++-------------------
+ builtin/archive.c | 12 ++++++------
+ 2 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/parse-options.h b/parse-options.h
-index 77a4a8b..71a39c6 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -238,6 +238,6 @@ extern int parse_opt_noop_cb(const struct option *,=
- const char *, int);
- #define OPT__COLOR(var, h) \
- 	OPT_COLOR_FLAG(0, "color", (var), (h))
- #define OPT_COLUMN(s, l, v, h) \
--	{ OPTION_CALLBACK, (s), (l), (v), "style", (h), PARSE_OPT_OPTARG, par=
-seopt_column_callback }
-+	{ OPTION_CALLBACK, (s), (l), (v), N_("style"), (h), PARSE_OPT_OPTARG,=
- parseopt_column_callback }
+diff --git a/archive.c b/archive.c
+index a484433..2584324 100644
+--- a/archive.c
++++ b/archive.c
+@@ -7,10 +7,10 @@
+ #include "unpack-trees.h"
 =20
- #endif
+ static char const * const archive_usage[] =3D {
+-	"git archive [options] <tree-ish> [<path>...]",
+-	"git archive --list",
+-	"git archive --remote <repo> [--exec <cmd>] [options] <tree-ish> [<pa=
+th>...]",
+-	"git archive --remote <repo> [--exec <cmd>] --list",
++	N_("git archive [options] <tree-ish> [<path>...]"),
++	N_("git archive --list"),
++	N_("git archive --remote <repo> [--exec <cmd>] [options] <tree-ish> [=
+<path>...]"),
++	N_("git archive --remote <repo> [--exec <cmd>] --list"),
+ 	NULL
+ };
+=20
+@@ -319,16 +319,16 @@ static int parse_archive_args(int argc, const cha=
+r **argv,
+ 	int worktree_attributes =3D 0;
+ 	struct option opts[] =3D {
+ 		OPT_GROUP(""),
+-		OPT_STRING(0, "format", &format, "fmt", "archive format"),
+-		OPT_STRING(0, "prefix", &base, "prefix",
+-			"prepend prefix to each pathname in the archive"),
+-		OPT_STRING('o', "output", &output, "file",
+-			"write the archive to this file"),
++		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
++		OPT_STRING(0, "prefix", &base, N_("prefix"),
++			N_("prepend prefix to each pathname in the archive")),
++		OPT_STRING('o', "output", &output, N_("file"),
++			N_("write the archive to this file")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+-			"read .gitattributes in working directory"),
+-		OPT__VERBOSE(&verbose, "report archived files on stderr"),
+-		OPT__COMPR('0', &compression_level, "store only", 0),
+-		OPT__COMPR('1', &compression_level, "compress faster", 1),
++			N_("read .gitattributes in working directory")),
++		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
++		OPT__COMPR('0', &compression_level, N_("store only"), 0),
++		OPT__COMPR('1', &compression_level, N_("compress faster"), 1),
+ 		OPT__COMPR_HIDDEN('2', &compression_level, 2),
+ 		OPT__COMPR_HIDDEN('3', &compression_level, 3),
+ 		OPT__COMPR_HIDDEN('4', &compression_level, 4),
+@@ -336,15 +336,15 @@ static int parse_archive_args(int argc, const cha=
+r **argv,
+ 		OPT__COMPR_HIDDEN('6', &compression_level, 6),
+ 		OPT__COMPR_HIDDEN('7', &compression_level, 7),
+ 		OPT__COMPR_HIDDEN('8', &compression_level, 8),
+-		OPT__COMPR('9', &compression_level, "compress better", 9),
++		OPT__COMPR('9', &compression_level, N_("compress better"), 9),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('l', "list", &list,
+-			"list supported archive formats"),
++			N_("list supported archive formats")),
+ 		OPT_GROUP(""),
+-		OPT_STRING(0, "remote", &remote, "repo",
+-			"retrieve the archive from remote repository <repo>"),
+-		OPT_STRING(0, "exec", &exec, "cmd",
+-			"path to the remote git-upload-archive command"),
++		OPT_STRING(0, "remote", &remote, N_("repo"),
++			N_("retrieve the archive from remote repository <repo>")),
++		OPT_STRING(0, "exec", &exec, N_("cmd"),
++			N_("path to the remote git-upload-archive command")),
+ 		OPT_END()
+ 	};
+=20
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 931956d..e7965bf 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -88,12 +88,12 @@ int cmd_archive(int argc, const char **argv, const =
+char *prefix)
+ 	const char *output =3D NULL;
+ 	const char *remote =3D NULL;
+ 	struct option local_opts[] =3D {
+-		OPT_STRING('o', "output", &output, "file",
+-			"write the archive to this file"),
+-		OPT_STRING(0, "remote", &remote, "repo",
+-			"retrieve the archive from remote repository <repo>"),
+-		OPT_STRING(0, "exec", &exec, "cmd",
+-			"path to the remote git-upload-archive command"),
++		OPT_STRING('o', "output", &output, N_("file"),
++			N_("write the archive to this file")),
++		OPT_STRING(0, "remote", &remote, N_("repo"),
++			N_("retrieve the archive from remote repository <repo>")),
++		OPT_STRING(0, "exec", &exec, N_("cmd"),
++			N_("path to the remote git-upload-archive command")),
+ 		OPT_END()
+ 	};
+=20
 --=20
 1.7.12.rc2.18.g61b472e
