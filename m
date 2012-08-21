@@ -1,90 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/7] Fix tests under GETTEXT_POISON on pack-object
-Date: Tue, 21 Aug 2012 10:53:57 -0700
-Message-ID: <7v8vd8dtca.fsf@alter.siamese.dyndns.org>
-References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
- <1345523464-14586-6-git-send-email-pclouds@gmail.com>
- <20120821051706.GA55686@mannheim-rule.local>
- <CACsJy8DHdj61sH8DjLsUfKdb4yzbnACWdCsgmFDtjJqq08c2TQ@mail.gmail.com>
- <20120821142441.GA56154@mannheim-rule.local>
+Subject: Re: [RFC 0/3] Reflogs for deleted refs: fix breakage and suggest
+ namespace change
+Date: Tue, 21 Aug 2012 10:56:45 -0700
+Message-ID: <7v4nnwdt7m.fsf@alter.siamese.dyndns.org>
+References: <20120719213311.GA20385@sigill.intra.peff.net>
+ <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu>
+ <7vboi8rl2q.fsf@alter.siamese.dyndns.org>
+ <20120821082719.GA13252@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 19:54:11 2012
+Cc: mhagger@alum.mit.edu,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Alexey Muranov <alexey.muranov@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 21 19:57:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3seW-0008UA-G1
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 19:54:08 +0200
+	id 1T3shC-0002Lh-9J
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 19:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171Ab2HURyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 13:54:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37948 "EHLO
+	id S1758238Ab2HUR4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 13:56:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39292 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751497Ab2HURx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 13:53:59 -0400
+	id S1755894Ab2HUR4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 13:56:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4642B788D;
-	Tue, 21 Aug 2012 13:53:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A06A37916;
+	Tue, 21 Aug 2012 13:56:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vbTwvHQQ3oEIfkwJc65Y4Dih/UE=; b=tu9nU2
-	P0wm7g0J9l07cLB5cIjbIXnxp6L62LYEmOS5QkEmQmLgAvgRrTxChPPbs3/DQ/t/
-	aROxEhuCLTM/6N1zckdLq0S7+QEHVYTSQmBrSY7wjwUYa/V3wx0a9h/rOCJZAN5D
-	Gkt69AAkRxyKgP1Ues1mRiqT3cad5MRj3TaCc=
+	:content-type; s=sasl; bh=qMAfBKgGOv0WCzKMl5X3kCRM6W4=; b=bkjwhr
+	1clXgKCUBlNxAIleOgoO4XbReG0+N0i63mnhIYbrHhDz3bzNJsYxXyIanAKBnuvb
+	oy5IXvPsqeJmaNDorLhwibbRzLhFMymicYWqetWXhPSp0yqxmG39TKRxRdp9IG7w
+	U0khfNfNqeA5Z0pTpgu5jBbfzFZ/9+enjjrl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K2vGLnomJcRmqCIcoGR6zZDXSIHbcEOX
-	/Jbt+O0jzJF2v+DUdotH42kW1J/UYc7Lfj10fsFkd50ehe6oDGUIfiL1rn028AMk
-	OCvdATi7X7pR7pwpMAVnCMeabThzHqfqhfDggPsdjRI+vLLzhjOWPiInB6vVShGg
-	hSoYPi6cYW4=
+	:content-type; q=dns; s=sasl; b=JcXyQfiknCvucScIhQrIWR+GnhCQF9uQ
+	jxzxpKcndE4zXbMfpshskNz8GpK8b1R+aykvCij4kRIGhba5tdVf+3my8ufYfqg4
+	023ebIbzOnFbbmtoVnY62EowvBHbEiJI1prKMICVhStb94b8XdJdq5XuJAgtqOHx
+	yuGXm02+gQo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34341788C;
-	Tue, 21 Aug 2012 13:53:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DEFB7915;
+	Tue, 21 Aug 2012 13:56:47 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77E68788B; Tue, 21 Aug 2012
- 13:53:58 -0400 (EDT)
-In-Reply-To: <20120821142441.GA56154@mannheim-rule.local> (Jonathan Nieder's
- message of "Tue, 21 Aug 2012 07:24:41 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 132757914; Tue, 21 Aug 2012
+ 13:56:47 -0400 (EDT)
+In-Reply-To: <20120821082719.GA13252@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 21 Aug 2012 04:27:19 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2ED4BF00-EBB9-11E1-B394-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9354E3B0-EBB9-11E1-B27A-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203978>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Nguyen Thai Ngoc Duy wrote:
->> On Tue, Aug 21, 2012 at 12:17 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
->>>> @@ -35,7 +35,7 @@ test_expect_success 'upload-pack fails due to error in pack-objects packing' '
->>>>       printf "0032want %s\n00000009done\n0000" \
->>>>               $(git rev-parse HEAD) >input &&
->>>>       test_must_fail git upload-pack . <input >/dev/null 2>output.err &&
->>>> -     grep "unable to read" output.err &&
->>>> +     test_i18ngrep "unable to read" output.err &&
->>>>       grep "pack-objects died" output.err
->>>
->>> Wouldn't it make sense to change the second "grep" of output intended
->>> for humans to test_i18ngrep while at it?
->>
->> This comes from error("git upload-pack: git-pack-objects died with
->> error.") in unpack-trees.c, which is not i18n-ized yet. There's
->> another test in t5530 that does the same grep. I think we should leave
->> it as is until we mark the string for translation, then gettext poison
->> will spot it (verified) and we can fix it.
->
-> I don't understand the distinction you're making.  Isn't the message
-> intended for humans, and wouldn't changing that one line to
-> test_i18ngrep now save trouble later?  Tests are meant to check git's
-> intended behavior, not to exactly match its current behavior.
+> So in other words, I do not think any ultimate destination that I find
+> palatable would be achievable without making the full format jump
+> anyway. If all things were equal, I'd say there is no reason not to get
+> as close as we can. But I find some of the proposals significantly less
+> readable (in particular, the directory-munging is IMHO much harder to
+> read). And it is not as if it is buying us anything; you still have to
+> make a magic translation between a dead log and a live one.
 
-Correct; your suggestion is good.
+Yes, that is where the earlier comment of mine on this topic came from.
+
+> Another option I've considered is simply holding back the graveyard
+> topic, working on the d/f tolerant storage, and then implementing the
+> graveyards on top (which is basically free at that point). But as you
+> note, it is not really a commonly-requested feature. If it were easy,
+> I'd say let's do it. But the idea of bumping repositoryformatversion for
+> the first time in git's history just to add a feature nobody wants is
+> not very appealing to me.
+
+Amen.
