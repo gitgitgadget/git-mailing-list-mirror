@@ -1,11 +1,12 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/7] Gettext poison fixes
-Date: Tue, 21 Aug 2012 11:30:57 +0700
-Message-ID: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/7] Fix tests under GETTEXT_POISON on relative dates
+Date: Tue, 21 Aug 2012 11:30:58 +0700
+Message-ID: <1345523464-14586-2-git-send-email-pclouds@gmail.com>
+References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -19,79 +20,71 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3g8Y-0006os-Bg
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:32:18 +0200
+	id 1T3g8Y-0006os-RN
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056Ab2HUEba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 00:31:30 -0400
+	id S1751390Ab2HUEcO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Aug 2012 00:32:14 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:62578 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab2HUEb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 00:31:28 -0400
-Received: by pbbrr13 with SMTP id rr13so7914089pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:31:28 -0700 (PDT)
+	with ESMTP id S1751079Ab2HUEbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 00:31:38 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr13so7914089pbb.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=0uw8fnE/8G2eR//s8qSlO9/CQjOUTrJ7KFFjefwlYwE=;
-        b=r1cts9RQ6brnnIexlBCX02Fa1Wb0ZoOU68wU4e+w++T61xZcIMIJ9Sr6XGwwgxD++r
-         sk3glhR4m0X/iKlW2rxN9fw9aOv2aMAZL6KXxw1VRm3sPkTwvRwuq/T7gOoQiEoVWWtR
-         gDYdHb1Fj567C0v1Ggn39PsWB0oCN3/c00pQGODncqM77zUUZAn/D6vHTzpXwd6is7iy
-         G7mBbsOTPHCoFTuIsT1/ykRZx6rFKCb6DmbTpDCfmMueZq9aGiza5BHhENMrBgR00c0N
-         nj++X1SdrRPULoyJMgl4rj8AAVDg1d6IvEnwG+/gh0qrGFhUDlFHcDQyTdKW2vZC6boq
-         572A==
-Received: by 10.66.83.8 with SMTP id m8mr34970913pay.48.1345523487954;
-        Mon, 20 Aug 2012 21:31:27 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=SJpl2fw41KDxvKhRnZU1s4ylnK7NXQJl2WCvvIeagkY=;
+        b=BbOdd7w6FSqeeDyHHpy765WB7/4o+NI5td6DvBz0DCOR5ezKyIM8eF3Ef0/KGabJnQ
+         LEL62OGtI15SxaAnMIJuNNjCuOCJ35YKPKIFclkt7BJQOWrxKynkrL+XECkBFG/kQQuU
+         SUlMVPlyz8P3Kri4IT/Zd7t1PMWbj10WTYRQ1xWiy0KZdxlIrWeZvOrYYdY4SE1+mur2
+         97zBh4P7wxAw+Kb3fsGk683CLdww69WeAp5XfPrht5SGB0qMKNvzYIv+4LsWqLRgXJT+
+         Xoz8ORSB9WAmfOjyGsykkxbHst26cxZWykf2WaDGxwtn+K2XFyaQYpN6FDzZOrRCF5lS
+         mjyg==
+Received: by 10.66.75.104 with SMTP id b8mr34954769paw.21.1345523498528;
+        Mon, 20 Aug 2012 21:31:38 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id oc2sm561593pbb.69.2012.08.20.21.31.23
+        by mx.google.com with ESMTPS id pq1sm602300pbb.3.2012.08.20.21.31.33
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 21:31:27 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:31:12 +0700
+        Mon, 20 Aug 2012 21:31:37 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:31:22 +0700
 X-Mailer: git-send-email 1.7.12.rc2
+In-Reply-To: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203928>
 
-Not much to say. With this series, the test suite should pass again with
-gettext poison on. It's independent with the parseopt-i18n series I
-sent yesterday as the test suite was broken even before.
+=46rom: Jiang Xin <worldhello.net@gmail.com>
 
-Jiang Xin (7):
-  Fix tests under GETTEXT_POISON on relative dates
-  Fix tests under GETTEXT_POISON on git-stash
-  Fix tests under GETTEXT_POISON on diffstat
-  Fix tests under GETTEXT_POISON on git-apply
-  Fix tests under GETTEXT_POISON on pack-object
-  Fix tests under GETTEXT_POISON on git-remote
-  Fix tests under GETTEXT_POISON on parseopt
+Use a i18n-specific test_i18ncmp in t/t0006-data.sh for relative dates
+tests. This issue was was introduced in v1.7.10-230-g7d29a:
 
- t/t0006-date.sh                 |  2 +-
- t/t0040-parse-options.sh        | 34 +++++++++++++++++++++++++++++-----
- t/t1300-repo-config.sh          |  2 +-
- t/t1502-rev-parse-parseopt.sh   |  2 +-
- t/t2006-checkout-index-basic.sh |  4 ++--
- t/t2107-update-index-basic.sh   |  4 ++--
- t/t3004-ls-files-basic.sh       |  4 ++--
- t/t3200-branch.sh               |  4 ++--
- t/t3501-revert-cherry-pick.sh   |  4 ++--
- t/t3903-stash.sh                |  2 +-
- t/t4006-diff-mode.sh            |  8 ++++----
- t/t4012-diff-binary.sh          |  4 ++--
- t/t4120-apply-popt.sh           |  4 ++--
- t/t4133-apply-filenames.sh      |  4 ++--
- t/t4200-rerere.sh               |  4 ++--
- t/t4202-log.sh                  |  2 +-
- t/t4205-log-pretty-formats.sh   |  4 ++--
- t/t5300-pack-object.sh          |  4 ++--
- t/t5505-remote.sh               | 22 ++++++++++++++--------
- t/t5530-upload-pack-error.sh    |  2 +-
- t/t6500-gc.sh                   |  4 ++--
- t/t7508-status.sh               |  2 +-
- t/t7600-merge.sh                |  2 +-
- 23 files changed, 79 insertions(+), 49 deletions(-)
+    7d29a i18n: mark relative dates for translation
 
--- 
+and been broken under GETTEXT_POISON=3DYesPlease since.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t0006-date.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 1d29810..e53cf6d 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -11,7 +11,7 @@ check_show() {
+ 	echo "$t -> $2" >expect
+ 	test_expect_${3:-success} "relative date ($2)" "
+ 	test-date show $t >actual &&
+-	test_cmp expect actual
++	test_i18ncmp expect actual
+ 	"
+ }
+=20
+--=20
 1.7.12.rc2
