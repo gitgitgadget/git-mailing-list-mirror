@@ -1,79 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fallback on getpwuid if envar HOME is unset
-Date: Tue, 21 Aug 2012 15:40:49 -0400
-Message-ID: <20120821194049.GB15667@sigill.intra.peff.net>
-References: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
- <20120821023033.GB20271@sigill.intra.peff.net>
- <CAFFUb6UypNJ-8p8Hs14+QMGeU3KSG+pQX7NJTeh3OtBoTZoO3g@mail.gmail.com>
- <7vzk5ocdg7.fsf@alter.siamese.dyndns.org>
- <CAFFUb6XMGgG=6uUzd0Xs1TXWFbJhDpMz1FeFdC8jHqaRi8Y58A@mail.gmail.com>
- <7vvcgccaol.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Fix git-svn for SVN 1.7
+Date: Tue, 21 Aug 2012 21:03:52 +0000
+Message-ID: <20120821210352.GA13200@dcvr.yhbt.net>
+References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
+ <20120802103122.GA24385@dcvr.yhbt.net>
+ <20120802160753.GA17158@copier>
+ <7vy5lxce9r.fsf@alter.siamese.dyndns.org>
+ <7vehn0gaam.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Conley Owens <cco3@android.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	"Michael G. Schwern" <schwern@pobox.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 21:41:08 2012
+X-From: git-owner@vger.kernel.org Tue Aug 21 23:04:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3uJv-0002tK-0R
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 21:40:59 +0200
+	id 1T3vcM-00070d-NG
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 23:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756957Ab2HUTkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 15:40:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44063 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756635Ab2HUTkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 15:40:51 -0400
-Received: (qmail 2127 invoked by uid 107); 21 Aug 2012 19:41:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 15:41:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 15:40:49 -0400
+	id S1758387Ab2HUVDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 17:03:55 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40191 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757349Ab2HUVDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 17:03:53 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2E703EA2C;
+	Tue, 21 Aug 2012 21:03:52 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vvcgccaol.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vehn0gaam.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203989>
 
-On Tue, Aug 21, 2012 at 12:22:18PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Unless you found a reason not to in the meantime, that is.  Is what
+> I have on 'pu' still good, or do you (Eric and/or Michael) have any
+> updates you'd rather have me pull instead?
 
-> Conley Owens <cco3@android.com> writes:
-> 
-> > Yes, that's the upstart I'm referring to.  This makes sense.  However, it's a
-> > confusing situation to run into.  Would a warning about an unset $HOME be
-> > appropriate?
-> 
-> Unsetting HOME is an easy way to skip what is in ~/.gitconfig when
-> helping other people on this list, and I wouldn't mind such a
-> warning while I knowingly unset it, I can imagine other helpful
-> people may find such a warning irritating and complain "I know I do
-> not have $HOME set, as I earlier explicitly did unset it myself!".
-> 
-> So, I am on the fence on this one, but because
-> 
->  (1) no warning would mean upstart scripts writers need to be aware
->      of lack of $HOME, but they need to be aware of it for reasons
->      unrelated to Git anyway; and
-> 
->  (2) a warning while trying vanilla Git behaviour to help others
->      might be irritating, it is not an every day use anyway.
-> 
-> I do not think it matters either way in practice.
-
-I do not use upstart, but presumably it logs the stderr of jobs it runs.
-Which means that a warning about unset $HOME would help debugging for
-people who care about looking in ~/.gitconfig, but would become a noisy
-nuisance for people whose jobs did not care.
-
-Personally, I think it would be much friendlier of upstart to give the
-user's jobs a sane minimal environment. That is what cron has always
-done, setting HOME, LOGNAME, and SHELL. But that is my uninformed
-5-second opinion as a long-time Unix user; I have not looked at upstart
-at all, so perhaps there is some argument I haven't seen.
-
--Peff
+No updates, everything is still good.
