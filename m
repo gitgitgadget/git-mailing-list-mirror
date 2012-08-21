@@ -1,78 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: misleading diff-hunk header
-Date: Tue, 21 Aug 2012 15:29:08 -0700
-Message-ID: <7vwr0rc217.fsf@alter.siamese.dyndns.org>
-References: <503385D0.5070605@tim.thechases.com>
- <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com>
- <5033C7D5.1030404@kdbg.org>
+Subject: Re: [PATCH/RFC] git svn: don't introduce new paragraph for
+ git-svn-id
+Date: Tue, 21 Aug 2012 15:35:44 -0700
+Message-ID: <7vsjbfc1q7.fsf@alter.siamese.dyndns.org>
+References: <1343856197-6393-1-git-send-email-robert@debian.org>
+ <20120801214318.GA10384@dcvr.yhbt.net> <5019AD3A.8030609@debian.org>
+ <20120801230118.GA15479@dcvr.yhbt.net> <50315ED1.6080803@debian.org>
+ <20120821214538.GA4879@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tim Chase <git@tim.thechases.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 00:30:01 2012
+Cc: Robert Luberda <robert@debian.org>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 22 00:35:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3wxR-0003UB-2H
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 00:29:57 +0200
+	id 1T3x3D-0007bN-Dw
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 00:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab2HUW3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 18:29:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64759 "EHLO
+	id S1752540Ab2HUWft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 18:35:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34431 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751536Ab2HUW3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 18:29:13 -0400
+	id S1751862Ab2HUWfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 18:35:47 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F32E691B3;
-	Tue, 21 Aug 2012 18:29:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2127992B5;
+	Tue, 21 Aug 2012 18:35:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vmgAMXVGMtDcIx18Fj/YsIQ/vE0=; b=ii2sjj
-	j5hlIiK/cGfHsqYz2X9JQQMNkGDz2Wvb79JxJN3IMPuqukdowfhVLCffPYvV7iAg
-	hcu8bbNS3T7c+mMHcDuuDomH6wJZfyHq4z7O92dALNRrK+dI+Q5oAbCzycgfcx4A
-	vlAZPYayrAp59k/60/v15vu8+hHd5NH6SBMpo=
+	:content-type; s=sasl; bh=Ajz8hZGwfF+c+JIa8qHfh1hPGWo=; b=M0d3QF
+	oyf0hD7OCefwkEi3CP6KLSYAl2rMo616TUKk2+GMLbI69EotJZmC6Qzi/ebbJcEi
+	6YXBFWvcf53ZVqV2nb2YBrHZ+GcAaBzJhkQBwvp42zXbLIF/r5KELcm9+isUpRlY
+	PvGDpEbhl+Yo+E0ungPTW9mCT6BVr/4gRj0mU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B1Zo34l8ba8vgRdmzrG8FTyDg3os2eir
-	iJg/JZBUhAJfMKKdCi3wucb/xV9P9WxLHONuRcHp8oUVDRUF3AFaW6+Csk94f+7B
-	EpPJ1JcadzMk9KkjhaH4vNSWkikdBjiiWJKMwcQlWOcO97i8lo4yoDTMKmlN2Jwq
-	LdFkkGuS+fE=
+	:content-type; q=dns; s=sasl; b=NdNaJAdmgVlCEaHJO6Dpwv8Ns20f00QR
+	8C7wxAGP/Ll1qw1hNKaALyd59x7Fz+F4ZBWGhAXhHgtMuArHidALfmGN9saKdgf8
+	lWYv2KBr5QDgK0/X4DvoFErZjfFBPUwTr5IMlJWxRkWgZRy2m+/SKZEm0EA3/Yfr
+	x29AGtMYQ0Y=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFB1B91B2;
-	Tue, 21 Aug 2012 18:29:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D65292B4;
+	Tue, 21 Aug 2012 18:35:47 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CD1F91B0; Tue, 21 Aug 2012
- 18:29:09 -0400 (EDT)
-In-Reply-To: <5033C7D5.1030404@kdbg.org> (Johannes Sixt's message of "Tue, 21
- Aug 2012 19:39:33 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75D0792B1; Tue, 21 Aug 2012
+ 18:35:46 -0400 (EDT)
+In-Reply-To: <20120821214538.GA4879@dcvr.yhbt.net> (Eric Wong's message of
+ "Tue, 21 Aug 2012 21:45:38 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A0347304-EBDF-11E1-94A3-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8CC76C58-EBE0-11E1-BAFB-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204001>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> Am 21.08.2012 17:42, schrieb Tim Chase:
->> On 08/21/12 10:22, Thomas Rast wrote:
->>>> misleadingly suggesting that the change occurred in the call_me()
->>>> function, rather than in main()
->>>
->>> I think that's intentional, and matches what 'diff -p' does...
->> 
->> Okay...I tested "diff -p" and can't argue (much) with historical
->> adherence.  It just makes it hard for me to gather some stats on the
->> functions that changed, and requires that I look in more than one
->> place (both in the header, and in the leading context) rather than
->> having a single authoritative place to grep.
+> Robert Luberda <robert@debian.org> wrote:
+>> I have been quite a busy recently, so it took me longer that I thought.
 >
-> If it's only for stats, why not just remove the context with -U0?
+> No worries, thanks for following up.
+>
+>> It was quite hard for me to think some sensible option name, and finally
+>> have chosen --trim-svn-log (svn.trimsvnlog as config key name). Please
+>> let me know if such name is ok for you. If not, I'll try to find a
+>> different one (but as I wrote I'm not really good at giving names to
+>> options/functions/variables, etc. :()
+>
+> I think having "svn" in "svn.trimsvnlog" twice is redundant and not ideal.
+> Perhaps just --trim-log and svn.trimlog?
 
-I actually think you want a way to say -U<sufficiently-large> in
-this case instead of unsightly -U99999.
+Do we ever want to trim "our" log when relaying the Git commits back
+to subversion?  Having "svn" in "trimsvnlog" makes it clear that the
+logs from subversion side is getting trimmed.
+
+> Default behavior should not change, especially not without warning.
+
+Makes sense.
