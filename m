@@ -1,71 +1,223 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 5/7] Fix tests under GETTEXT_POISON on pack-object
-Date: Tue, 21 Aug 2012 17:39:12 +0700
-Message-ID: <CACsJy8DHdj61sH8DjLsUfKdb4yzbnACWdCsgmFDtjJqq08c2TQ@mail.gmail.com>
-References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
- <1345523464-14586-6-git-send-email-pclouds@gmail.com> <20120821051706.GA55686@mannheim-rule.local>
+From: Michal Novotny <minovotn@redhat.com>
+Subject: Re: [PATCH] daemon: --access-hook option
+Date: Tue, 21 Aug 2012 12:57:35 +0200
+Message-ID: <5033699F.5030207@redhat.com>
+References: <feafacf49186d7cf0eed0002a82289b318f56ff8.1344938189.git.minovotn@redhat.com> <7v1uj98nbj.fsf@alter.siamese.dyndns.org> <CAJo=hJtYz3OX1C6HS7ivhJKBOSg=Ex3rKEdTYSbcDfFT1Jh4hw@mail.gmail.com> <7vsjbp768y.fsf@alter.siamese.dyndns.org> <CAJo=hJu7W6JnNLYvahaQ43ZNqDtrurTOLCnLfZacVJKeL6VMFg@mail.gmail.com> <7vpq6t9v5s.fsf@alter.siamese.dyndns.org> <7vobmc7n80.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 12:39:50 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 12:58:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3lsD-00076r-Py
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 12:39:50 +0200
+	id 1T3m9m-0001X9-Og
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 12:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756423Ab2HUKjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 06:39:45 -0400
-Received: from mail-gg0-f174.google.com ([209.85.161.174]:35845 "EHLO
-	mail-gg0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756371Ab2HUKjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 06:39:43 -0400
-Received: by ggdk6 with SMTP id k6so5681051ggd.19
-        for <git@vger.kernel.org>; Tue, 21 Aug 2012 03:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=UWzn7FKNKumkUW6faG8JWJhryAvtkmMnzpZufakXxEY=;
-        b=mBUkHS3Rtomrc1cguNxqZUf3p1dbrmC9o5LbLqQQqNrhEQYDvKNnwCP1ksjymTVnkP
-         hmqeKTQTIcjsuvT6sgETj1PSw8PDA0Z5kJyOx1y7t5BIrIP68DS3daSFD0psaRTyznzr
-         hPLBlYFvaUIam6l5qbrdb5XZViMI1V1o2+bCSw4d8cBtOqZlJ0eSNtrcRB2aLW4iS8hS
-         84qXoEeWVPdVNDsQHqnuFwRqxIsHrrFBEq0nZgtMRN3yXoCUT2ixPkYHdbt/tGgf1Ca8
-         gy9EZK1IZ/z6vUa1f1k7G4fQcBgwLDp/oRAxXh08Za6b9tQoTnsPNxcgo8ED+4MCOvsl
-         2I4g==
-Received: by 10.50.159.130 with SMTP id xc2mr12961093igb.15.1345545582297;
- Tue, 21 Aug 2012 03:39:42 -0700 (PDT)
-Received: by 10.64.35.12 with HTTP; Tue, 21 Aug 2012 03:39:12 -0700 (PDT)
-In-Reply-To: <20120821051706.GA55686@mannheim-rule.local>
+	id S1756727Ab2HUK5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 06:57:43 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:49504 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756614Ab2HUK5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 06:57:40 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q7LAvcgG000562
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 21 Aug 2012 06:57:38 -0400
+Received: from miglaptop.brq.redhat.com (dhcp-1-191.brq.redhat.com [10.34.1.191])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q7LAvaWZ005238;
+	Tue, 21 Aug 2012 06:57:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120717 Thunderbird/14.0
+In-Reply-To: <7vobmc7n80.fsf_-_@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203963>
 
-On Tue, Aug 21, 2012 at 12:17 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> --- a/t/t5530-upload-pack-error.sh
->> +++ b/t/t5530-upload-pack-error.sh
->> @@ -35,7 +35,7 @@ test_expect_success 'upload-pack fails due to error in pack-objects packing' '
->>       printf "0032want %s\n00000009done\n0000" \
->>               $(git rev-parse HEAD) >input &&
->>       test_must_fail git upload-pack . <input >/dev/null 2>output.err &&
->> -     grep "unable to read" output.err &&
->> +     test_i18ngrep "unable to read" output.err &&
->>       grep "pack-objects died" output.err
+Right, this approach of having ACL using the --access-hook option looks
+much better. At least you got inspired this could be useful for somebody ;-)
+
+Michal
+
+On 08/15/2012 07:12 AM, Junio C Hamano wrote:
+> The --access-hook option to "git daemon" specifies an external
+> command to be run every time a client connects, with
 >
-> Wouldn't it make sense to change the second "grep" of output intended
-> for humans to test_i18ngrep while at it?
+>  - service name (e.g. "upload-pack", etc.),
+>  - path to the repository,
+>  - hostname (%H),
+>  - canonical hostname (%CH),
+>  - ip address (%IP),
+>  - tcp port (%P)
+>
+> as its command line arguments.  The external command can decide to
+> decline the service by exiting with a non-zero status (or to allow it
+> by exiting with a zero status).  It can also look at the $REMOTE_ADDR
+> and $REMOTE_PORT environment variables to learn about the requestor
+> when making this decision.
+>
+> The external command can optionally write a single line to its
+> standard output to be sent to the requestor as an error message when
+> it declines the service.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * This time, minimally tested, with a documentation update.
+>
+>  Documentation/git-daemon.txt | 16 +++++++++
+>  daemon.c                     | 77 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 93 insertions(+)
+>
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index 31b28fc..c3ba4d7 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -16,6 +16,7 @@ SYNOPSIS
+>  	     [--reuseaddr] [--detach] [--pid-file=<file>]
+>  	     [--enable=<service>] [--disable=<service>]
+>  	     [--allow-override=<service>] [--forbid-override=<service>]
+> +	     [--access-hook=<path>]
+>  	     [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>] [--user=<user> [--group=<group>]]
+>  	     [<directory>...]
+>  
+> @@ -171,6 +172,21 @@ the facility of inet daemon to achieve the same before spawning
+>  	errors are not enabled, all errors report "access denied" to the
+>  	client. The default is --no-informative-errors.
+>  
+> +--access-hook=<path>::
+> +	Every time a client connects, first run an external command
+> +	specified by the <path> with service name (e.g. "upload-pack"),
+> +	path to the repository, hostname (%H), canonical hostname
+> +	(%CH), ip address (%IP), and tcp port (%P) as its command line
+> +	arguments. The external command can decide to decline the
+> +	service by exiting with a non-zero status (or to allow it by
+> +	exiting with a zero status).  It can also look at the $REMOTE_ADDR
+> +	and $REMOTE_PORT environment variables to learn about the
+> +	requestor when making this decision.
+> ++
+> +The external command can optionally write a single line to its
+> +standard output to be sent to the requestor as an error message when
+> +it declines the service.
+> +
+>  <directory>::
+>  	A directory to add to the whitelist of allowed directories. Unless
+>  	--strict-paths is specified this will also include subdirectories
+> diff --git a/daemon.c b/daemon.c
+> index ab21e66..4602b46 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -30,6 +30,7 @@ static const char daemon_usage[] =
+>  "           [--interpolated-path=<path>]\n"
+>  "           [--reuseaddr] [--pid-file=<file>]\n"
+>  "           [--(enable|disable|allow-override|forbid-override)=<service>]\n"
+> +"           [--access-hook=<path>]\n"
+>  "           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>]\n"
+>  "                      [--detach] [--user=<user> [--group=<group>]]\n"
+>  "           [<directory>...]";
+> @@ -256,6 +257,71 @@ static int daemon_error(const char *dir, const char *msg)
+>  	return -1;
+>  }
+>  
+> +static char *access_hook;
+> +
+> +static int run_access_hook(struct daemon_service *service, const char *dir, const char *path)
+> +{
+> +	struct child_process child;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	const char *argv[8];
+> +	const char **arg = argv;
+> +	char *eol;
+> +	int seen_errors = 0;
+> +
+> +#define STRARG(x) ((x) ? (x) : "")
+> +	*arg++ = access_hook;
+> +	*arg++ = service->name;
+> +	*arg++ = path;
+> +	*arg++ = STRARG(hostname);
+> +	*arg++ = STRARG(canon_hostname);
+> +	*arg++ = STRARG(ip_address);
+> +	*arg++ = STRARG(tcp_port);
+> +	*arg = NULL;
+> +#undef STRARG
+> +
+> +	memset(&child, 0, sizeof(child));
+> +	child.use_shell = 1;
+> +	child.argv = argv;
+> +	child.no_stdin = 1;
+> +	child.no_stderr = 1;
+> +	child.out = -1;
+> +	if (start_command(&child)) {
+> +		logerror("daemon access hook '%s' failed to start",
+> +			 access_hook);
+> +		goto error_return;
+> +	}
+> +	if (strbuf_read(&buf, child.out, 0) < 0) {
+> +		logerror("failed to read from pipe to daemon access hook '%s'",
+> +			 access_hook);
+> +		strbuf_reset(&buf);
+> +		seen_errors = 1;
+> +	}
+> +	if (close(child.out) < 0) {
+> +		logerror("failed to close pipe to daemon access hook '%s'",
+> +			 access_hook);
+> +		seen_errors = 1;
+> +	}
+> +	if (finish_command(&child))
+> +		seen_errors = 1;
+> +
+> +	if (!seen_errors) {
+> +		strbuf_release(&buf);
+> +		return 0;
+> +	}
+> +
+> +error_return:
+> +	strbuf_ltrim(&buf);
+> +	if (!buf.len)
+> +		strbuf_addstr(&buf, "service rejected");
+> +	eol = strchr(buf.buf, '\n');
+> +	if (eol)
+> +		*eol = '\0';
+> +	errno = EACCES;
+> +	daemon_error(dir, buf.buf);
+> +	strbuf_release(&buf);
+> +	return -1;
+> +}
+> +
+>  static int run_service(char *dir, struct daemon_service *service)
+>  {
+>  	const char *path;
+> @@ -304,6 +370,13 @@ static int run_service(char *dir, struct daemon_service *service)
+>  	}
+>  
+>  	/*
+> +	 * Optionally, a hook can choose to deny access to the
+> +	 * repository depending on the phase of the moon.
+> +	 */
+> +	if (access_hook && run_access_hook(service, dir, path))
+> +		return -1;
+> +
+> +	/*
+>  	 * We'll ignore SIGTERM from now on, we have a
+>  	 * good client.
+>  	 */
+> @@ -1142,6 +1215,10 @@ int main(int argc, char **argv)
+>  			export_all_trees = 1;
+>  			continue;
+>  		}
+> +		if (!prefixcmp(arg, "--access-hook=")) {
+> +			access_hook = arg + 14;
+> +			continue;
+> +		}
+>  		if (!prefixcmp(arg, "--timeout=")) {
+>  			timeout = atoi(arg+10);
+>  			continue;
 
-This comes from error("git upload-pack: git-pack-objects died with
-error.") in unpack-trees.c, which is not i18n-ized yet. There's
-another test in t5530 that does the same grep. I think we should leave
-it as is until we mark the string for translation, then gettext poison
-will spot it (verified) and we can fix it.
 -- 
-Duy
+Michal Novotny <minovotn@redhat.com>, RHCE, Red Hat
+Virtualization | libvirt-php bindings | php-virt-control.org
