@@ -1,82 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fallback on getpwuid if envar HOME is unset
-Date: Tue, 21 Aug 2012 12:22:18 -0700
-Message-ID: <7vvcgccaol.fsf@alter.siamese.dyndns.org>
-References: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
- <20120821023033.GB20271@sigill.intra.peff.net>
- <CAFFUb6UypNJ-8p8Hs14+QMGeU3KSG+pQX7NJTeh3OtBoTZoO3g@mail.gmail.com>
- <7vzk5ocdg7.fsf@alter.siamese.dyndns.org>
- <CAFFUb6XMGgG=6uUzd0Xs1TXWFbJhDpMz1FeFdC8jHqaRi8Y58A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: receive.denyNonNonFastForwards not denying force update
+Date: Tue, 21 Aug 2012 15:33:31 -0400
+Message-ID: <20120821193331.GA15667@sigill.intra.peff.net>
+References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
+ <CAHgXSooFj2PJtcOWqsVNHUzMBQnH0cYzPjfs1CkzVuufwRVrog@mail.gmail.com>
+ <7vzk5pjxy3.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_hMTGhiKDow3x-UZ7eNnTtpLd2=QUf6-YoQF1-O1ywi2w@mail.gmail.com>
+ <7v628dght9.fsf@alter.siamese.dyndns.org>
+ <20120821015738.GA20271@sigill.intra.peff.net>
+ <7vpq6kgazt.fsf@alter.siamese.dyndns.org>
+ <20120821061059.GA26516@sigill.intra.peff.net>
+ <20120821062219.GB26516@sigill.intra.peff.net>
+ <7v1uj0fauk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Conley Owens <cco3@android.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 21:22:35 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	John Arthorne <arthorne.eclipse@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 21:33:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3u26-0005nV-As
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 21:22:34 +0200
+	id 1T3uCt-0005oK-U1
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 21:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754551Ab2HUTW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 15:22:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49997 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754043Ab2HUTWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 15:22:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBA268CE6;
-	Tue, 21 Aug 2012 15:22:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c/he0dMzHgixC0coPlB5UcXFyf0=; b=hJzJZL
-	/dD1IjeUJjXw1vSFwomtopX/Akur85pVtRd6e3pCBEXzWQ1AhrFgivFgu/Y5pdXT
-	fG9cb5veLi4Av9re+WUJiD+vM5Se8WZuIoIhVPm98eBw+TyAqG1nVL3R9XAuzGGy
-	KHy+rxNS9hot5iuMFMjREXE7tAv1S1erQvMXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jrb09uwo/l1t0IySxKYIsLjys+D7c9c1
-	LIc9VeuwUM8zW673Q4QDjxzsE2pq5seLqd/V0U8afymbO7dPalLSBy0UOXV9wG5C
-	wlau7TA37/DOkH6McnhrDjL/94cCjfVqRcWIHAXw+I5yxXnG2JEdbnH60FRAbUr0
-	9c4YTeYhJwA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9F498CE5;
-	Tue, 21 Aug 2012 15:22:20 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 096108CE4; Tue, 21 Aug 2012
- 15:22:19 -0400 (EDT)
-In-Reply-To: <CAFFUb6XMGgG=6uUzd0Xs1TXWFbJhDpMz1FeFdC8jHqaRi8Y58A@mail.gmail.com> (Conley
- Owens's message of "Tue, 21 Aug 2012 11:33:40 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 86CC8E98-EBC5-11E1-B26E-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755552Ab2HUTdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 15:33:38 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:44051 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753717Ab2HUTdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 15:33:36 -0400
+Received: (qmail 2077 invoked by uid 107); 21 Aug 2012 19:33:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 15:33:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 15:33:31 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1uj0fauk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203987>
 
-Conley Owens <cco3@android.com> writes:
+On Tue, Aug 21, 2012 at 09:50:27AM -0700, Junio C Hamano wrote:
 
-> Yes, that's the upstart I'm referring to.  This makes sense.  However, it's a
-> confusing situation to run into.  Would a warning about an unset $HOME be
-> appropriate?
+> > Subject: [PATCH] gitignore: report access errors of exclude files
+> >
+> > When we try to access gitignore files, we check for their
+> > existence with a call to "access". We silently ignore
+> > missing files. However, if a file is not readable, this may
+> > be a configuration error; let's warn the user.
+> >
+> > For $GIT_DIR/info/excludes or core.excludesfile, we can just
+> > use access_or_warn. However, for per-directory files we
+> > actually try to open them, so we must add a custom warning.
+> 
+> There are a couple of users of add_excludes_from_file() that is
+> outside the per-directory walking in ls-files and unpack-trees; I
+> think both are OK with this change, but the one in ls-files may want
+> to issue a warning or even an error upon ENOENT.
+> 
+> Not a regression with this patch; just something we may want to do
+> while we are in the vicinity.
 
-Unsetting HOME is an easy way to skip what is in ~/.gitconfig when
-helping other people on this list, and I wouldn't mind such a
-warning while I knowingly unset it, I can imagine other helpful
-people may find such a warning irritating and complain "I know I do
-not have $HOME set, as I earlier explicitly did unset it myself!".
+The two I see are:
 
-So, I am on the fence on this one, but because
+  1. unpack-trees:verify_absent
 
- (1) no warning would mean upstart scripts writers need to be aware
-     of lack of $HOME, but they need to be aware of it for reasons
-     unrelated to Git anyway; and
+     This looks like it is reading info/sparse-checkout. But I think it
+     is OK for that file to be missing, no?
 
- (2) a warning while trying vanilla Git behaviour to help others
-     might be irritating, it is not an every day use anyway.
+  2. ls-files:option_parse_exclude_from
 
-I do not think it matters either way in practice.
+      This handles --exclude-from. I would expect most callers to be
+      converted to --exclude-standard these days, but originally callers
+      did something like:
+
+        git ls-files \
+          --exclude-from=$GIT_DIR/info/exclude \
+          --exclude-per-directory=.gitignore \
+          ...
+
+       While it would be friendlier to a user calling ls-files to warn
+       about a missing entry in the first case (since they explicitly
+       typed it, they presumably expect it to work). But for a script
+       calling the ls-files plumbing, that --exclude-from has always
+       meant "if it's there, use it, but otherwise, don't worry".
+
+       Probably no such callers exist anymore, but complaining would be
+       a regression for them.
+
+-Peff
