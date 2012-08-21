@@ -1,13 +1,15 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH] Build in gettext poison feature unconditionally
-Date: Tue, 21 Aug 2012 11:39:30 +0700
-Message-ID: <1345523970-14914-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/7] Fix tests under GETTEXT_POISON on git-apply
+Date: Tue, 21 Aug 2012 11:31:01 +0700
+Message-ID: <1345523464-14586-5-git-send-email-pclouds@gmail.com>
+References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
@@ -18,194 +20,128 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3gFs-0001ta-PB
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:39:53 +0200
+	id 1T3gFs-0001ta-2Z
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878Ab2HUEju convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Aug 2012 00:39:50 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39824 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952Ab2HUEjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 00:39:47 -0400
-Received: by pbbrr13 with SMTP id rr13so7922805pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:39:47 -0700 (PDT)
+	id S1751750Ab2HUEjr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Aug 2012 00:39:47 -0400
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:52466 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952Ab2HUEjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 00:39:45 -0400
+Received: by dakf10 with SMTP id f10so3250841dak.11
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=roCbnfdSecWVAn/J/ZGt7f2PSkSLBtvYc6tWIl5pDhU=;
-        b=zn8d1qQi1dkYm3zrvb88d6gpKOfRtyhaENVJnsq/HXNR36Bo3qjSglMqkTjonkSoD1
-         71n7gz99pasfhnDTis3O2F8mwXS/Su5mFx3lMgoVAdsujYmRleXsuujAKWh96+h1fQId
-         IPmGx5gddNmoCfqWeOC8derpYObthZ+pOqtPLRkT4424LS4QHQiel/SvH5mqdoU76IUK
-         1x8TXdLmyF2GS4id2bYnNyLlJiNoNRBDmKBUFdU0CAh8Cu+zBD+qzHmtAMQm2rtoqZGD
-         Mh4TJtMX7tVzV8KBZAJDiCYDsiPThbb7ol2wVNRtiWCTQ+/sgcQZ6YPLjNaJW1LB29jX
-         RvUw==
-Received: by 10.68.221.42 with SMTP id qb10mr40328361pbc.155.1345523987086;
-        Mon, 20 Aug 2012 21:39:47 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=GIJpFWWbvqTZ0wDTq+IrJW/pEJuYq02DCPUmf8A6jp0=;
+        b=hIkYXql/Aq9AJALlvbIqn/j/VLwE31Y7voBVu0ptgBeVx4+/dA7+asSp1ZCdeg7ApT
+         UJK3yM104bMSTHrg82qZLSCn08C924UV6G0wz2XmH4sd2xC8JSZ4cWD/KrGSny8ryJV+
+         13zrkpMZvnajQyj1ejCkNaqoXTqe6qxWofkY+HpiI/fhW7mtUtojrsU9m44VqqVmMa+7
+         6XybvdWG0Pmls+yl2WfdthMT59ChXtTHuF2LY/JqoBvbxuZlwsimi9MdhkWJjAqMkBP1
+         h38gAGqhSK9EF0N+l3xcLwqZUJRN6LIhIrVeTgVZDe/zRhCZePES9xRPsIQys1azvHNT
+         25rg==
+Received: by 10.68.240.7 with SMTP id vw7mr1104380pbc.152.1345523527779;
+        Mon, 20 Aug 2012 21:32:07 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id oc2sm577048pbb.69.2012.08.20.21.39.42
+        by mx.google.com with ESMTPS id nd2sm601774pbc.7.2012.08.20.21.32.03
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 21:39:46 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:39:31 +0700
+        Mon, 20 Aug 2012 21:32:07 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:31:53 +0700
 X-Mailer: git-send-email 1.7.12.rc2
+In-Reply-To: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203935>
 
-Making gettext poison second citizen makes it easy to forget to run
-the test suite with it. This is step one to running test suite with
-gettext poison by default.
+=46rom: Jiang Xin <worldhello.net@gmail.com>
 
-The runtime cost should be small. "gcc -O2" inlines _() and
-use_gettext_poison(). But even if it does not, performance should not
-be impacted as _() calls are usually not on critical path. If some of
-them are, we better fix there as gettext() may or may not be cheap
-anyway.
+Use i18n-specific test functions in test scripts for git-apply.
+This issue was was introduced in the following commits:
 
-A new target is added to run test with poisoned gettext: test-poison
+    de373 i18n: apply: mark parseopt strings for translation
+    3638e i18n: apply: mark strings for translation
 
+and been broken under GETTEXT_POISON=3DYesPlease since.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- I don't know the story behind this compile-time switch. The series [1]
- that introduces it does not say much.
+ t/t4012-diff-binary.sh     | 4 ++--
+ t/t4120-apply-popt.sh      | 4 ++--
+ t/t4133-apply-filenames.sh | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
- This at least makes it easier for me to run poison tests instead of
- building another binary, if I remember it. Next step could be make
- "make test" run both normal and poison modes, but I'm not sure how to
- do it nicely yet.
-
- [1] http://thread.gmane.org/gmane.comp.version-control.git/167307/focu=
-s=3D167438
-
- Makefile  | 12 +++---------
- gettext.c | 10 ----------
- gettext.h | 12 +++++++-----
- po/README | 13 ++++---------
- 4 files changed, 14 insertions(+), 33 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 6b0c961..8255fb9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -258,11 +258,6 @@ all::
- # Define HAVE_DEV_TTY if your system can open /dev/tty to interact wit=
-h the
- # user.
- #
--# Define GETTEXT_POISON if you are debugging the choice of strings mar=
-ked
--# for translation.  In a GETTEXT_POISON build, you can turn all string=
-s marked
--# for translation into gibberish by setting the GIT_GETTEXT_POISON var=
-iable
--# (to any value) in your environment.
--#
- # Define JSMIN to point to JavaScript minifier that functions as
- # a filter to have gitweb.js minified.
- #
-@@ -1594,9 +1589,6 @@ endif
- ifdef NO_SYMLINK_HEAD
- 	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
- endif
--ifdef GETTEXT_POISON
--	BASIC_CFLAGS +=3D -DGETTEXT_POISON
--endif
- ifdef NO_GETTEXT
- 	BASIC_CFLAGS +=3D -DNO_GETTEXT
- 	USE_GETTEXT_SCHEME ?=3D fallthrough
-@@ -2497,7 +2489,6 @@ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
- 	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=3DYesPlease >>$@
- endif
- 	@echo NO_GETTEXT=3D\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\=
-' >>$@
--	@echo GETTEXT_POISON=3D\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POI=
-SON)))'\' >>$@
- ifdef GIT_PERF_REPEAT_COUNT
- 	@echo GIT_PERF_REPEAT_COUNT=3D\''$(subst ','\'',$(subst ','\'',$(GIT_=
-PERF_REPEAT_COUNT)))'\' >>$@
- endif
-@@ -2545,6 +2536,9 @@ export NO_SVN_TESTS
- test: all
- 	$(MAKE) -C t/ all
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index ec4deea..1215ae5 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -63,7 +63,7 @@ test_expect_success 'apply --numstat understands diff=
+ --binary format' '
 =20
-+poison-test: all
-+	$(MAKE) POISON_GETTEXT=3DYesPlease -C t/ all
-+
- perf: all
- 	$(MAKE) -C t/perf/ all
+ # apply needs to be able to skip the binary material correctly
+ # in order to report the line number of a corrupt patch.
+-test_expect_success 'apply detecting corrupt patch correctly' '
++test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch cor=
+rectly' '
+ 	git diff >output &&
+ 	sed -e "s/-CIT/xCIT/" <output >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+@@ -73,7 +73,7 @@ test_expect_success 'apply detecting corrupt patch co=
+rrectly' '
+ 	test "$detected" =3D xCIT
+ '
 =20
-diff --git a/gettext.c b/gettext.c
-index f75bca7..6aa822c 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -16,16 +16,6 @@
- #	endif
- #endif
+-test_expect_success 'apply detecting corrupt patch correctly' '
++test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch cor=
+rectly' '
+ 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+ 	detected=3D`cat detected` &&
+diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
+index a33d510..c5fecdf 100755
+--- a/t/t4120-apply-popt.sh
++++ b/t/t4120-apply-popt.sh
+@@ -32,7 +32,7 @@ test_expect_success 'apply git diff with -p2' '
+ test_expect_success 'apply with too large -p' '
+ 	cp file1.saved file1 &&
+ 	test_must_fail git apply --stat -p3 patch.file 2>err &&
+-	grep "removing 3 leading" err
++	test_i18ngrep "removing 3 leading" err
+ '
 =20
--#ifdef GETTEXT_POISON
--int use_gettext_poison(void)
--{
--	static int poison_requested =3D -1;
--	if (poison_requested =3D=3D -1)
--		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
--	return poison_requested;
--}
--#endif
--
- #ifndef NO_GETTEXT
- static void init_gettext_charset(const char *domain)
- {
-diff --git a/gettext.h b/gettext.h
-index 57ba8bb..a77554f 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -36,11 +36,13 @@ static inline void git_setup_gettext(void)
- }
- #endif
+ test_expect_success 'apply (-p2) traditional diff with funny filenames=
+' '
+@@ -54,7 +54,7 @@ test_expect_success 'apply (-p2) traditional diff wit=
+h funny filenames' '
+ test_expect_success 'apply with too large -p and fancy filename' '
+ 	cp file1.saved file1 &&
+ 	test_must_fail git apply --stat -p3 patch.escaped 2>err &&
+-	grep "removing 3 leading" err
++	test_i18ngrep "removing 3 leading" err
+ '
 =20
--#ifdef GETTEXT_POISON
--extern int use_gettext_poison(void);
--#else
--#define use_gettext_poison() 0
--#endif
-+static inline int use_gettext_poison(void)
-+{
-+	static int poison_requested =3D -1;
-+	if (poison_requested =3D=3D -1)
-+		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
-+	return poison_requested;
-+}
+ test_expect_success 'apply (-p2) diff, mode change only' '
+diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
+index 94da990..2ecb421 100755
+--- a/t/t4133-apply-filenames.sh
++++ b/t/t4133-apply-filenames.sh
+@@ -30,9 +30,9 @@ EOF
 =20
- static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
- {
-diff --git a/po/README b/po/README
-index c1520e8..e25752b 100644
---- a/po/README
-+++ b/po/README
-@@ -270,16 +270,11 @@ something in the test suite might still depend on=
- the US English
- version of the strings, e.g. to grep some error message or other
- output.
+ test_expect_success 'apply diff with inconsistent filenames in headers=
+' '
+ 	test_must_fail git apply bad1.patch 2>err &&
+-	grep "inconsistent new filename" err &&
++	test_i18ngrep "inconsistent new filename" err &&
+ 	test_must_fail git apply bad2.patch 2>err &&
+-	grep "inconsistent old filename" err
++	test_i18ngrep "inconsistent old filename" err
+ '
 =20
--To smoke out issues like these Git can be compiled with gettext poison
--support, at the top-level:
-+To smoke out issues like these you should run the test suite with
-+gettext poison support, which emits gibberish on every call to
-+gettext:
-=20
--    make GETTEXT_POISON=3DYesPlease
--
--That'll give you a git which emits gibberish on every call to
--gettext. It's obviously not meant to be installed, but you should run
--the test suite with it:
--
--    cd t && prove -j 9 ./t[0-9]*.sh
-+    cd t && GETTEXT_POISON=3DYesPlease prove -j 9 ./t[0-9]*.sh
-=20
- If tests break with it you should inspect them manually and see if
- what you're translating is sane, i.e. that you're not translating
+ test_done
 --=20
 1.7.12.rc2
