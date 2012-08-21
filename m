@@ -1,105 +1,89 @@
-From: greened@obbligato.org
-Subject: Re: [PATCH/RFC] [git-subtree.sh] Use raw subject and body modifier "%B" instead of "%s%n%n%b" for commit
-Date: Mon, 20 Aug 2012 20:52:15 -0500
-Message-ID: <87628df1v4.fsf@waller.obbligato.org>
-References: <1344561358-2953-1-git-send-email-techlivezheng@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fallback on getpwuid if envar HOME is unset
+Date: Mon, 20 Aug 2012 22:30:34 -0400
+Message-ID: <20120821023033.GB20271@sigill.intra.peff.net>
+References: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, apenwarr@gmail.com
-To: Techlive Zheng <techlivezheng@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 04:24:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Conley Owens <cco3@android.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 04:31:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3e8i-0007h8-3q
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 04:24:20 +0200
+	id 1T3eFZ-0003Yp-75
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 04:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755188Ab2HUCXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 22:23:46 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:38997 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755027Ab2HUCXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 22:23:33 -0400
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1T3djk-0000fn-Dz; Mon, 20 Aug 2012 20:58:32 -0500
-In-Reply-To: <1344561358-2953-1-git-send-email-techlivezheng@gmail.com>
-	(Techlive Zheng's message of "Fri, 10 Aug 2012 09:15:57 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Techlive Zheng <techlivezheng@gmail.com> writes: > I don't
-    know if it is the right place to post this patch, I have sended > an email
-    to the original author apenwarr and have no response. According > to <https://github.com/apenwarr/git-subtree/blob/master/THIS-REPO-IS-OBSOLETE>,
-    > this is the place, but <https://github.com/git/git/blob/master/contrib/README>
-    says > different, which is really confusing. Anyway, here I am. [...] 
- Content analysis details:   (-0.9 points, 5.0 required)
-  pts rule name              description
- - 
+	id S1754945Ab2HUCai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 22:30:38 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43252 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754206Ab2HUCah (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 22:30:37 -0400
+Received: (qmail 25851 invoked by uid 107); 21 Aug 2012 02:30:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Aug 2012 22:30:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2012 22:30:34 -0400
+Content-Disposition: inline
+In-Reply-To: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203922>
 
-Techlive Zheng <techlivezheng@gmail.com> writes:
+On Mon, Aug 20, 2012 at 06:28:57PM -0700, Conley Owens wrote:
 
-> I don't know if it is the right place to post this patch, I have sended
-> an email to the original author apenwarr and have no response. According
-> to <https://github.com/apenwarr/git-subtree/blob/master/THIS-REPO-IS-OBSOLETE>,
-> this is the place, but <https://github.com/git/git/blob/master/contrib/README> says
-> different, which is really confusing. Anyway, here I am.
+> From f64ba3c908b33a2ea5a5ad1f0e5800af76b82ce9 Mon Sep 17 00:00:00 2001
+> From: Conley Owens <cco3@android.com>
+> Date: Mon, 20 Aug 2012 18:23:40 -0700
+> Subject: [PATCH] Fallback on getpwuid if envar HOME is unset
 
-This is the place.
+Please drop these lines from the message body; they are redundant with
+your email's headers.
 
-> Recently, I imported a foreign git project as a sub directory into a
-> main repo which I intend to maintain as primary.
+This seems sensible on the surface, but I'm a bit curious: why isn't
+$HOME set? And are there any reasons that somebody who has unset HOME
+would not want to fallback?  For example, running under Apache, HOME is
+often unset when calling CGI programs. Would it make sense for us to
+look in ~www-data/.gitconfig in that case?
 
-Ok.
+> diff --git a/path.c b/path.c
+> index 66acd24..60affab 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -144,6 +144,11 @@ void home_config_paths(char **global, char **xdg,
+> char *file)
+>         char *to_free = NULL;
+> 
+>         if (!home) {
+> +         struct passwd *pw = xgetpwuid_self();
+> +         home = pw->pw_dir;
+> +       }
+> +
+> +       if (!home) {
+>                 if (global)
+>                         *global = NULL;
+>         } else {
 
-> Due to the project I imported has its own remote repo which hosted
-> on the github, I expected after a 'git-subtree.sh split' the newly
-> generated subtree branch would be exactly identical to the original
-> branch. 
+If we do go this route, it would probably make sense to wrap this like:
 
-I would have thought so too.
+  const char *home_directory(void)
+  {
+          const char *dir = getenv("HOME");
+          if (!dir) {
+                  struct passwd *pw = xgetpwuid_self();
+                  dir = pw->pw_dir;
+          }
+          return dir;
+  }
 
-> Unfortunately, it is not. I have fixed the committer date and make
-> everything looks the same with the original branch, but they just did
-> not end up with same commit sha1 hash. Then, I used `git cat-file -p`
-> to view the raw output of the both commits and found that the commit
-> generate by git-subtree has a extra 'new-line' character appended at
-> the end of the subject which causes the problem.
+and then call it consistently everywhere we do getenv("HOME"). You'd
+want to double-check that each caller only uses the result for a short
+period (unlike getenv, the results of getpwuid will be overwritten at
+the next call).
 
-Hmm.
-
-> I checked the source and found "%s%n%n%b" were used to generate the
-> commit message, this works the fine when a commit has a subject as
-> well as a body, but most of my commits only have a subject under
-> which condition a extra 'new-line' character is appended.
-
-Ah.  Yes, we should fix this.
-
-> Instead, a raw subject and body message modifier '%B' should be used.
-
-Ok.
-
-> Though I think this patch should be applied by default, but the mistake
-> has been there for a long time, applying this patch may cause the patched
-> git-subtree generate a different branch for those whose subtree branch
-> has already been generated using the old git-subtree. Maybe this should
-> be explained in the help or man page, and add a condition check or a
-> compatible mode somehow.
-
-The problem is in the split code?  I'm not sure this is a big issue.  I
-can run some experiments.
-
-                      -Dave
+-Peff
