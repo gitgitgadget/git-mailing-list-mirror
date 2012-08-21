@@ -1,91 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix git-svn for SVN 1.7
-Date: Mon, 20 Aug 2012 21:04:49 -0700
-Message-ID: <7vehn0gaam.fsf@alter.siamese.dyndns.org>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <20120802103122.GA24385@dcvr.yhbt.net> <20120802160753.GA17158@copier>
- <7vy5lxce9r.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/7] Gettext poison fixes
+Date: Tue, 21 Aug 2012 11:30:57 +0700
+Message-ID: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
-	"Michael G. Schwern" <schwern@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Aug 21 06:05:14 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 21 06:32:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3fiL-0000bg-Bz
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:05:13 +0200
+	id 1T3g8Y-0006os-Bg
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835Ab2HUEE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 00:04:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54397 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716Ab2HUEEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 00:04:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08FF78A93;
-	Tue, 21 Aug 2012 00:04:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I3DWL5ClbKIsyH4Sp9os39dfUU4=; b=X9RYLQ
-	rY7spjDB4Ji6wYlIFzeQC+YmTOLWFXuMC9L6ARNhtDFl1B34JlqF+yciE2g2NMZJ
-	WtCE+YyJBs5b+jnZfwnWFcl879yP8d+UbUT4mJ3NZsRGYGBI4Qsdkkxq4r/OZdKM
-	RjGBg3ziLjAzKs0ZfF76sNAQcnRvgz4MErzjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PzuhzMj2EHEo4sgjlif3FJjcomepsEz7
-	2qBJ4rlIu7B+sKFwl/T3H4Dj+fJ69ixsvjLPt4q4vrtcXdTDXyqpNX1qgfsINEei
-	shRvBE0UQoSTQPG0AeKTnWaJdvPUqiqVzOnIOtArYQWPTivMRdo63d7F527MUBGV
-	g6bKcE0yFws=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E9AEC8A92;
-	Tue, 21 Aug 2012 00:04:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E4F78A91; Tue, 21 Aug 2012
- 00:04:51 -0400 (EDT)
-In-Reply-To: <7vy5lxce9r.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 02 Aug 2012 11:58:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B350060-EB45-11E1-B1FF-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751056Ab2HUEba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 00:31:30 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:62578 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890Ab2HUEb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 00:31:28 -0400
+Received: by pbbrr13 with SMTP id rr13so7914089pbb.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=0uw8fnE/8G2eR//s8qSlO9/CQjOUTrJ7KFFjefwlYwE=;
+        b=r1cts9RQ6brnnIexlBCX02Fa1Wb0ZoOU68wU4e+w++T61xZcIMIJ9Sr6XGwwgxD++r
+         sk3glhR4m0X/iKlW2rxN9fw9aOv2aMAZL6KXxw1VRm3sPkTwvRwuq/T7gOoQiEoVWWtR
+         gDYdHb1Fj567C0v1Ggn39PsWB0oCN3/c00pQGODncqM77zUUZAn/D6vHTzpXwd6is7iy
+         G7mBbsOTPHCoFTuIsT1/ykRZx6rFKCb6DmbTpDCfmMueZq9aGiza5BHhENMrBgR00c0N
+         nj++X1SdrRPULoyJMgl4rj8AAVDg1d6IvEnwG+/gh0qrGFhUDlFHcDQyTdKW2vZC6boq
+         572A==
+Received: by 10.66.83.8 with SMTP id m8mr34970913pay.48.1345523487954;
+        Mon, 20 Aug 2012 21:31:27 -0700 (PDT)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id oc2sm561593pbb.69.2012.08.20.21.31.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 20 Aug 2012 21:31:27 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:31:12 +0700
+X-Mailer: git-send-email 1.7.12.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203927>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Not much to say. With this series, the test suite should pass again with
+gettext poison on. It's independent with the parseopt-i18n series I
+sent yesterday as the test suite was broken even before.
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Hi,
->>
->> Eric Wong wrote:
->>> "Michael G. Schwern" <schwern@pobox.com> wrote:
->>
->>>> This patch series fixes git-svn for SVN 1.7 tested against SVN 1.7.5 and
->>>> 1.6.18.  Patch 7/8 is where SVN 1.7 starts passing.
->>>
->>> Thanks Michael.  I've made minor editorial changes (mostly rewording
->>> commit titles to fit the larger project).
->>
->> Thanks from me as well.  I'm still worried about whether the increased
->> use of canonicalize_url will introduce regressions for the existing
->> SVN 1.6 support, and I should have time to look it over this weekend.
->
-> Likewise.  I'd prefer to see it cook during the feature freeze and
-> not merge to 'master' until post 1.7.12 cycle opens.
+Jiang Xin (7):
+  Fix tests under GETTEXT_POISON on relative dates
+  Fix tests under GETTEXT_POISON on git-stash
+  Fix tests under GETTEXT_POISON on diffstat
+  Fix tests under GETTEXT_POISON on git-apply
+  Fix tests under GETTEXT_POISON on pack-object
+  Fix tests under GETTEXT_POISON on git-remote
+  Fix tests under GETTEXT_POISON on parseopt
 
-So we had a chance to cook this late topic outside 'master' during
-the feature freeze.  As you already queued and signed it off, I am
-going to fast-track this down to 'master' as promised.
+ t/t0006-date.sh                 |  2 +-
+ t/t0040-parse-options.sh        | 34 +++++++++++++++++++++++++++++-----
+ t/t1300-repo-config.sh          |  2 +-
+ t/t1502-rev-parse-parseopt.sh   |  2 +-
+ t/t2006-checkout-index-basic.sh |  4 ++--
+ t/t2107-update-index-basic.sh   |  4 ++--
+ t/t3004-ls-files-basic.sh       |  4 ++--
+ t/t3200-branch.sh               |  4 ++--
+ t/t3501-revert-cherry-pick.sh   |  4 ++--
+ t/t3903-stash.sh                |  2 +-
+ t/t4006-diff-mode.sh            |  8 ++++----
+ t/t4012-diff-binary.sh          |  4 ++--
+ t/t4120-apply-popt.sh           |  4 ++--
+ t/t4133-apply-filenames.sh      |  4 ++--
+ t/t4200-rerere.sh               |  4 ++--
+ t/t4202-log.sh                  |  2 +-
+ t/t4205-log-pretty-formats.sh   |  4 ++--
+ t/t5300-pack-object.sh          |  4 ++--
+ t/t5505-remote.sh               | 22 ++++++++++++++--------
+ t/t5530-upload-pack-error.sh    |  2 +-
+ t/t6500-gc.sh                   |  4 ++--
+ t/t7508-status.sh               |  2 +-
+ t/t7600-merge.sh                |  2 +-
+ 23 files changed, 79 insertions(+), 49 deletions(-)
 
-Unless you found a reason not to in the meantime, that is.  Is what
-I have on 'pu' still good, or do you (Eric and/or Michael) have any
-updates you'd rather have me pull instead?
-
-Thanks.
+-- 
+1.7.12.rc2
