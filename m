@@ -1,117 +1,88 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: receive.denyNonNonFastForwards not denying force update
-Date: Mon, 20 Aug 2012 18:53:53 -0700
-Message-ID: <CA+sFfMexCWLza65bVp2uXoqo3+yY5MPBBcGugoEA6UCEwAv6Ow@mail.gmail.com>
-References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
-	<CAHgXSooFj2PJtcOWqsVNHUzMBQnH0cYzPjfs1CkzVuufwRVrog@mail.gmail.com>
-	<7vzk5pjxy3.fsf@alter.siamese.dyndns.org>
-	<CAMK1S_hMTGhiKDow3x-UZ7eNnTtpLd2=QUf6-YoQF1-O1ywi2w@mail.gmail.com>
-	<7v628dght9.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org
+Subject: Re: [PATCH] subtree.sh: Use raw subject and body modifier "%B" instead of "%s%n%n%b"
+Date: Mon, 20 Aug 2012 20:56:12 -0500
+Message-ID: <87zk5pdn43.fsf@waller.obbligato.org>
+References: <1344561358-2953-1-git-send-email-techlivezheng@gmail.com>
+	<1344561358-2953-2-git-send-email-techlivezheng@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	John Arthorne <arthorne.eclipse@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 03:54:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, apenwarr@gmail.com
+To: Techlive Zheng <techlivezheng@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 03:56:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3dfN-0004m6-4x
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 03:54:01 +0200
+	id 1T3di2-0006Zw-Lg
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 03:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170Ab2HUBx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 21:53:56 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:41644 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751638Ab2HUBxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 21:53:54 -0400
-Received: by vbbff1 with SMTP id ff1so6021585vbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 18:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1LXkIRf7ai2Z9VFVSaylbdVMBrUdB+MvcNksqxLb7mI=;
-        b=OjZzNxuJkCqR6cYXQo63m1Toqg6Y1T2kHPIHjEch6KBKig5kjPwhK1zjIj18UW7y3B
-         JdJU216hfUN6V4JOATJYIbX6fwYpb1obcwHk2m7yqtmEw9eo8ybwiZsLNg9gv0E5ezoi
-         oG2nkZoBHyx8C/2uDXgArujEhgFq4Y7ZygeotFKMtKQe1cDZbYnKuQYecA2j++InjAvI
-         VPk5P6Z6y2FrgUc4t4f8gGmMbEVawektivyUV7qwPjrN9pP+v1QmwvGaxfNApYFb+3d4
-         K4uJq/znT/eGPf9AgHQsHbazTnFYg4PnaN7FjlIO+ar2d0P0wgI/+R1YxwAlmBl+oQlB
-         y5bw==
-Received: by 10.220.225.194 with SMTP id it2mr12021864vcb.32.1345514033740;
- Mon, 20 Aug 2012 18:53:53 -0700 (PDT)
-Received: by 10.58.29.233 with HTTP; Mon, 20 Aug 2012 18:53:53 -0700 (PDT)
-In-Reply-To: <7v628dght9.fsf@alter.siamese.dyndns.org>
+	id S1755111Ab2HUB4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 21:56:37 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:38986 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754955Ab2HUB4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 21:56:25 -0400
+X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Aug 2012 21:56:25 EDT
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1T3dnU-0000iA-QQ; Mon, 20 Aug 2012 21:02:25 -0500
+In-Reply-To: <1344561358-2953-2-git-send-email-techlivezheng@gmail.com>
+	(Techlive Zheng's message of "Fri, 10 Aug 2012 09:15:58 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Techlive Zheng <techlivezheng@gmail.com> writes: > "%s%n%n%b"
+    is not always equal to "%B". If the commit msg does not have > a body, this
+    will append an extra new-line character to the msg title > which would cause
+    the splited commit has a new sha1 hash. In most cases, > this does not matter,
+    but for a project which did not merged using this > script initially, the
+    'split' command would not genereate the same > commits as the orginal which
+    may cause conflicts. > > Signed-off-by: Techlive Zheng <techlivezheng@gmail.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203915>
 
-On Mon, Aug 20, 2012 at 6:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
+Techlive Zheng <techlivezheng@gmail.com> writes:
+
+> "%s%n%n%b" is not always equal to "%B". If the commit msg does not have
+> a body, this will append an extra new-line character to the msg title
+> which would cause the splited commit has a new sha1 hash. In most cases,
+> this does not matter, but for a project which did not merged using this
+> script initially, the 'split' command would not genereate the same
+> commits as the orginal which may cause conflicts.
 >
->> On Mon, Aug 20, 2012 at 10:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> John Arthorne <arthorne.eclipse@gmail.com> writes:
->>>
->>>> For all the details see this bugzilla, particularly comment #59 where we
->>>> finally narrowed this down:
->>>>
->>>> https://bugs.eclipse.org/bugs/show_bug.cgi?id=343150
->>>
->>> What does "at the system level" in your "does *not* work at the
->>> system level." exactly mean?
->>
->> "git config --system receive.denynonfastforwards true" is not honored.
->>  At all.  (And I checked there was nothing overriding it).
->>
->> "--global" does work (is honored).
->>
->> Tested on 1.7.11
+> Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
+> ---
+>  contrib/subtree/git-subtree.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Thanks, and interesting.
->
-> Does anybody recall if this is something we did on purpose?  After
-> eyeballing the callchain starting from cmd_receive_pack() down to
-> receive_pack_config(), nothing obvious jumps at me.
->
-> Could this be caused by a chrooted environment not having
-> /etc/gitconfig (now I am just speculating)?
->
-> A quick "strace -f -o /tmp/tr git push ../neigh" seems to indicate
-> that at least access() is called on "/etc/gitconfig" as I expect,
-> which makes me think that near the beginning of git_config_early(),
-> we would read from /etc/gitconfig if the file existed (I do not
-> install any distro "git", so there is no /etc/gitconfig on my box).
->
-> Puzzled.
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 920c664..5598210 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -296,7 +296,7 @@ copy_commit()
+>  	# We're going to set some environment vars here, so
+>  	# do it in a subshell to get rid of them safely later
+>  	debug copy_commit "{$1}" "{$2}" "{$3}"
+> -	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%s%n%n%b' "$1" |
+> +	git log -1 --pretty=format:'%an%n%ae%n%ad%n%cn%n%ce%n%cd%n%B' "$1" |
+>  	(
+>  		read GIT_AUTHOR_NAME
+>  		read GIT_AUTHOR_EMAIL
 
-Seems to work for me.  Force push was denied when
-receive.denyNonFastForwards was set to true in system-level gitconfig.
- Tested with git installed in my home directory, so my system-level
-gitconfig was at $HOME/etc/gitconfig.
+This looks good to me.  I assume this passes all the tests.  Can you add
+a test for this bug so we don't regress?  Junio, I am good with this
+patch as soon as we get a test for the problem.
 
-Sitaram and John, are you sure you modified the correct file?  Also be
-sure you're using the git-receive-pack that expects the system
-gitconfig at the place that you think it is.
+Thanks!
 
-The system-level gitconfig is hard-coded in the git binary and may not
-always be at /etc/gitconfig.  It is usually set to be relative to the
-installation directory "$prefix" in the Makefile.  I don't think we
-expose the path to the system-level gitconfig file anywhere in the ui.
- One way to figure out where it should be is to use 'git config' to
-edit it like this:
-
-   git config --system -e
-
-Hopefully your editor exposes the path that it is editing even if you
-don't have permission to modify it.
-
-I'm thinking that the git-receive-pack binary that you guys used
-expects the system gitconfig to be in a different location than the
-one you modified.
-
--Brandon
+                             -Dave
