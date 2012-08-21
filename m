@@ -1,109 +1,196 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] test: some testcases failed if cwd is on a symlink
-Date: Tue, 21 Aug 2012 07:59:33 +0200
-Message-ID: <503323C5.9050500@alum.mit.edu>
-References: <001c60538df409d94618e80cc3faaae586ccf053.1343116581.git.worldhello.net@gmail.com> <7vboj5gqqo.fsf@alter.siamese.dyndns.org> <loom.20120818T162226-852@post.gmane.org> <7vfw7krl8r.fsf@alter.siamese.dyndns.org> <5030F0BF.2090500@alum.mit.edu> <7vharyq1c6.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: receive.denyNonNonFastForwards not denying force update
+Date: Tue, 21 Aug 2012 02:10:59 -0400
+Message-ID: <20120821061059.GA26516@sigill.intra.peff.net>
+References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
+ <CAHgXSooFj2PJtcOWqsVNHUzMBQnH0cYzPjfs1CkzVuufwRVrog@mail.gmail.com>
+ <7vzk5pjxy3.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_hMTGhiKDow3x-UZ7eNnTtpLd2=QUf6-YoQF1-O1ywi2w@mail.gmail.com>
+ <7v628dght9.fsf@alter.siamese.dyndns.org>
+ <20120821015738.GA20271@sigill.intra.peff.net>
+ <7vpq6kgazt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	John Arthorne <arthorne.eclipse@gmail.com>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 08:06:47 2012
+X-From: git-owner@vger.kernel.org Tue Aug 21 08:11:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3hby-0002wu-MV
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 08:06:47 +0200
+	id 1T3hgE-00058r-UF
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 08:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929Ab2HUGGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 02:06:42 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:49713 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752784Ab2HUGGk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Aug 2012 02:06:40 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Aug 2012 02:06:39 EDT
-X-AuditID: 1207440c-b7f616d00000270b-0e-503323c9d795
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 80.C2.09995.9C323305; Tue, 21 Aug 2012 01:59:37 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25F8F.dip.t-dialin.net [87.162.95.143])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7L5xYXQ006631
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 21 Aug 2012 01:59:36 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <7vharyq1c6.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqHtS2TjAYMEVOYuuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7Y++25IIFQhWTu7QaGJ/xdTFyckgImEg8+bed
-	GcIWk7hwbz1bFyMXh5DAZUaJk7+vMEE4Z5gk1k7sZO9i5ODgFdCW2PcjGKSBRUBVornxHyuI
-	zSagK7Gop5kJxBYVCJFY820KI4jNKyAocXLmExYQW0RATWJi2yEWkDHMAuIS/f/AwsIC7hJ3
-	n35ihFi1jEli6csnYHM4Bcwk/p75ywZiMwvoSLzre8AMYctLbH87h3kCo8AsJCtmISmbhaRs
-	ASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQEOXZwfhtncwhRgEORiUe
-	3hdTjAKEWBPLiitzDzFKcjApifJekDMOEOJLyk+pzEgszogvKs1JLT7EKMHBrCTC28gAlONN
-	SaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfDyA2NRSLAoNT21Ii0zpwQh
-	zcTBCTKcS0qkODUvJbUosbQkIx4UpfHFwDgFSfEA7X2vBLK3uCAxFygK0XqKUZfj89OTdxmF
-	WPLy81KlxHmfghQJgBRllObBrYAlpFeM4kAfC/MqgFzCA0xmcJNeAS1hAlryaK4ByJKSRISU
-	VANjqvHCdbcmNmS6v0mSUzjqbTF3dof3rS1tP0N/nrnwfPvl818OZs5SODTx42/RSG37h0pf
-	OqKjbL9ulk84/nL6quY7emaMb5ce8feSU4vb9ienUsT2oO/hD1nJu3at7rBVz7OY 
+	id S1753504Ab2HUGLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 02:11:04 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43419 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752724Ab2HUGLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 02:11:03 -0400
+Received: (qmail 28269 invoked by uid 107); 21 Aug 2012 06:11:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 02:11:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 02:10:59 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpq6kgazt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203939>
 
-On 08/19/2012 06:43 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Aug 20, 2012 at 08:49:42PM -0700, Junio C Hamano wrote:
+
+> > No, I do not think it was on purpose. And it would be very hard to do
+> > so, anyway; config callbacks are not given any information about the
+> > source of the config variable, and cannot distinguish between repo,
+> > global, and system-level config variables.
 > 
->> I just verified that the combination of your two suggestions (i.e., the
->> patch below) fixes the problem for me.
+> I was looking for setenv() to refuse system wide defaults; that
+> actually is fairly simple.
+
+Ah. I was thinking we had ripped those out (since they were primarily
+about the test suite, and we found other ways of working around them),
+but we do indeed still have GIT_CONFIG_NOSYSTEM.  So yet another
+possibility is that the OP has that environment variable set for some
+odd reason.
+
+> > That seems far more likely to me. Another possibility is that the
+> > file is not readable by the user running receive-pack.
 > 
-> Good to know.
-> 
-> The only remaining two worries from me are if everybody has working
-> pwd at that early point in the script (I think MINGW replaces pwd
-> with its own), and if the latter one should really be "/bin/pwd"
-> everywhere.  Saying "Give the true path to --root when you run it"
-> can sidestep the latter issue ;-)
-> 
->> Nevertheless, I'm not sure that this is the best solution.  The test
->> failures that occur without this change suggest to me that
->> GIT_CEILING_DIRECTORIES is implemented in a fragile way.
-> 
-> Hrmph.  How would you improve it?  chdir() around twice and compare?
+> Good point. We explicitly use access(R_OK) and pretend as if a path
+> that is known to exist but not readable is missing; perhaps we may
+> want to diagnose this as a misconfiguration and issue a warning?
 
-I believe that the old-school method is to stat(2) the two directories
-and check whether their device IDs and inode numbers are identical.  But
-I don't know whether that is portable to other allegedly
-POSIX-compatible OSs, or even works with all modern filesystems (I think
-there was just a thread about a FUSE filesystem that sometimes changes
-inode numbers).
+I think that makes sense. Like this patch?
 
-Another alternative is to write a function that knows how to convert an
-arbitrary path into an absolute path, including converting relative
-paths to absolute, resolving symlinks, eliminating redundant "/" and
-".", resolving "..", and perhaps canonicalizing "/" vs. "\" and
-who-knows-what-else on Windows.  It takes a bit of care to implement
-this correctly, but it might be a useful function to have around.
-Python's library function os.path.realpath() is an example [1].
+-- >8 --
+Subject: [PATCH] config: warn on inaccessible files
 
-Either approach would avoid chdir()ing around even temporarily, which
-would anyway be bad form in git proper (as opposed to the test suite).
-And it would avoid the need to chdir() permanently in the test suite,
-which can have the effect of making directory names appear in unfamiliar
-forms.
+Before reading a config file, we check "!access(path, R_OK)"
+to make sure that the file exists and is readable. If it's
+not, then we silently ignore it.
 
-I'm afraid I don't have time to work on this now; I'm still trying to
-finish the next iteration of the post-receive-email hook script replacement.
+For the case of ENOENT, this is fine, as the presence of the
+file is optional. For other cases, though, it may indicate a
+configuration error (e.g., not having permissions to read
+the file). Let's print a warning in these cases to let the
+user know.
 
-Michael
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This catches the common code path of git itself trying to read the
+config file.  The "git config foo.bar" lookup path does not warn, as it
+just tries to fopen each file (and silently bails if a file cannot be
+opened).  However, since before doing its actual lookup, it would run
+git_config() anyway, you will already have seen the warning.
 
-[1] (Python) source code here:
+You can get multiple warnings from this, as some programs read the
+config multiple times. I don't think it's really worth caring about, as
+you would want to fix such a misconfiguration quickly anyway.
 
-    http://hg.python.org/cpython/file/20985f52b65e/Lib/posixfile.py
+A bigger question is whether people are stuck living with such a
+misconfiguration (e.g., inaccessible directories made by a clueless
+admin), and would be annoyed at having no way to turn this feature off.
 
+ builtin/config.c  |  4 ++--
+ config.c          | 10 +++++-----
+ git-compat-util.h |  3 +++
+ wrapper.c         |  8 ++++++++
+ 4 files changed, 18 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index 8cd08da..b0394ef 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -396,8 +396,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			 */
+ 			die("$HOME not set");
+ 
+-		if (access(user_config, R_OK) &&
+-		    xdg_config && !access(xdg_config, R_OK))
++		if (access_or_warn(user_config, R_OK) &&
++		    xdg_config && !access_or_warn(xdg_config, R_OK))
+ 			given_config_file = xdg_config;
+ 		else
+ 			given_config_file = user_config;
+diff --git a/config.c b/config.c
+index 2b706ea..08e47e2 100644
+--- a/config.c
++++ b/config.c
+@@ -60,7 +60,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 		path = buf.buf;
+ 	}
+ 
+-	if (!access(path, R_OK)) {
++	if (!access_or_warn(path, R_OK)) {
+ 		if (++inc->depth > MAX_INCLUDE_DEPTH)
+ 			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
+ 			    cf && cf->name ? cf->name : "the command line");
+@@ -939,23 +939,23 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ 
+ 	home_config_paths(&user_config, &xdg_config, "config");
+ 
+-	if (git_config_system() && !access(git_etc_gitconfig(), R_OK)) {
++	if (git_config_system() && !access_or_warn(git_etc_gitconfig(), R_OK)) {
+ 		ret += git_config_from_file(fn, git_etc_gitconfig(),
+ 					    data);
+ 		found += 1;
+ 	}
+ 
+-	if (xdg_config && !access(xdg_config, R_OK)) {
++	if (xdg_config && !access_or_warn(xdg_config, R_OK)) {
+ 		ret += git_config_from_file(fn, xdg_config, data);
+ 		found += 1;
+ 	}
+ 
+-	if (user_config && !access(user_config, R_OK)) {
++	if (user_config && !access_or_warn(user_config, R_OK)) {
+ 		ret += git_config_from_file(fn, user_config, data);
+ 		found += 1;
+ 	}
+ 
+-	if (repo_config && !access(repo_config, R_OK)) {
++	if (repo_config && !access_or_warn(repo_config, R_OK)) {
+ 		ret += git_config_from_file(fn, repo_config, data);
+ 		found += 1;
+ 	}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 35b095e..5a520e2 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -604,6 +604,9 @@ int rmdir_or_warn(const char *path);
+  */
+ int remove_or_warn(unsigned int mode, const char *path);
+ 
++/* Call access(2), but warn for any error besides ENOENT. */
++int access_or_warn(const char *path, int mode);
++
+ /* Get the passwd entry for the UID of the current process. */
+ struct passwd *xgetpwuid_self(void);
+ 
+diff --git a/wrapper.c b/wrapper.c
+index b5e33e4..b40c7e7 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -403,6 +403,14 @@ int remove_or_warn(unsigned int mode, const char *file)
+ 	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
+ }
+ 
++int access_or_warn(const char *path, int mode)
++{
++	int ret = access(path, mode);
++	if (ret && errno != ENOENT)
++		warning(_("unable to access '%s': %s"), path, strerror(errno));
++	return ret;
++}
++
+ struct passwd *xgetpwuid_self(void)
+ {
+ 	struct passwd *pw;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.12.4.g4e9f38f
