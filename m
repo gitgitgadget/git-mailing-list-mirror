@@ -1,89 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fallback on getpwuid if envar HOME is unset
-Date: Mon, 20 Aug 2012 22:30:34 -0400
-Message-ID: <20120821023033.GB20271@sigill.intra.peff.net>
-References: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: receive.denyNonNonFastForwards not denying force update
+Date: Mon, 20 Aug 2012 20:46:16 -0700
+Message-ID: <7vtxvwgb5j.fsf@alter.siamese.dyndns.org>
+References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
+ <CAHgXSooFj2PJtcOWqsVNHUzMBQnH0cYzPjfs1CkzVuufwRVrog@mail.gmail.com>
+ <7vzk5pjxy3.fsf@alter.siamese.dyndns.org>
+ <CAMK1S_hMTGhiKDow3x-UZ7eNnTtpLd2=QUf6-YoQF1-O1ywi2w@mail.gmail.com>
+ <7v628dght9.fsf@alter.siamese.dyndns.org>
+ <CA+sFfMexCWLza65bVp2uXoqo3+yY5MPBBcGugoEA6UCEwAv6Ow@mail.gmail.com>
+ <CAG+J_Dz3SHyNSUBuFcHu-x8gkE+wj5wJGLOfopNQw0dBThtSuA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Conley Owens <cco3@android.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 04:31:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <drafnel@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	John Arthorne <arthorne.eclipse@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 05:46:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3eFZ-0003Yp-75
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 04:31:25 +0200
+	id 1T3fQB-0006vS-6X
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 05:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754945Ab2HUCai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Aug 2012 22:30:38 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43252 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754206Ab2HUCah (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Aug 2012 22:30:37 -0400
-Received: (qmail 25851 invoked by uid 107); 21 Aug 2012 02:30:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Aug 2012 22:30:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2012 22:30:34 -0400
-Content-Disposition: inline
-In-Reply-To: <CAFFUb6WiXJ0n4NkhOQ=+mcfs+uaAo2_G6TOs7L=AuPwPVfxyMg@mail.gmail.com>
+	id S1750994Ab2HUDqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Aug 2012 23:46:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47283 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750807Ab2HUDqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Aug 2012 23:46:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D55C487DE;
+	Mon, 20 Aug 2012 23:46:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+dapjYF31s56t2hcL7XYbUpXLX4=; b=abkG+I
+	L9iZ35mF42uV8W+0chuMM9szwqevrE9AdWCg4yulFY1fgzxOeL+96TlAt/BGlejs
+	6TfecGjHJzTFjCo5vWc26XILFo+Q8aMXFILgz3O51uD63ek4AG7vR8N3HV8j52YM
+	xAXVGx4HSIbIX09yIE90MZbuWzVbBPkACOPDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qJOM8pnI4kp8BIC/o1m6iDjUwSRxryiU
+	3AiWRO3DV1CphWjJagbOoNWvHbuV5TcamMOcXCuppfsReZpswDLAUDQiUNbYBN7t
+	7holY4sxTKmwcZ673zdylhf5HiCBFflFMbVlaz/C0L0TyvDx7dHMN1QM4qkIjGev
+	evUN56HDwls=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2D3587DD;
+	Mon, 20 Aug 2012 23:46:18 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 438B687DC; Mon, 20 Aug 2012
+ 23:46:18 -0400 (EDT)
+In-Reply-To: <CAG+J_Dz3SHyNSUBuFcHu-x8gkE+wj5wJGLOfopNQw0dBThtSuA@mail.gmail.com> (Jay
+ Soffian's message of "Mon, 20 Aug 2012 22:16:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C3C7FCFC-EB42-11E1-86EF-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203923>
 
-On Mon, Aug 20, 2012 at 06:28:57PM -0700, Conley Owens wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> From f64ba3c908b33a2ea5a5ad1f0e5800af76b82ce9 Mon Sep 17 00:00:00 2001
-> From: Conley Owens <cco3@android.com>
-> Date: Mon, 20 Aug 2012 18:23:40 -0700
-> Subject: [PATCH] Fallback on getpwuid if envar HOME is unset
+> On Mon, Aug 20, 2012 at 9:53 PM, Brandon Casey <drafnel@gmail.com> wrote:
+>>    git config --system -e
+>>
+>> Hopefully your editor exposes the path that it is editing even if you
+>> don't have permission to modify it.
+>
+>   GIT_EDITOR=echo git config --system -e
+>
+> works for me.
 
-Please drop these lines from the message body; they are redundant with
-your email's headers.
-
-This seems sensible on the surface, but I'm a bit curious: why isn't
-$HOME set? And are there any reasons that somebody who has unset HOME
-would not want to fallback?  For example, running under Apache, HOME is
-often unset when calling CGI programs. Would it make sense for us to
-look in ~www-data/.gitconfig in that case?
-
-> diff --git a/path.c b/path.c
-> index 66acd24..60affab 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -144,6 +144,11 @@ void home_config_paths(char **global, char **xdg,
-> char *file)
->         char *to_free = NULL;
-> 
->         if (!home) {
-> +         struct passwd *pw = xgetpwuid_self();
-> +         home = pw->pw_dir;
-> +       }
-> +
-> +       if (!home) {
->                 if (global)
->                         *global = NULL;
->         } else {
-
-If we do go this route, it would probably make sense to wrap this like:
-
-  const char *home_directory(void)
-  {
-          const char *dir = getenv("HOME");
-          if (!dir) {
-                  struct passwd *pw = xgetpwuid_self();
-                  dir = pw->pw_dir;
-          }
-          return dir;
-  }
-
-and then call it consistently everywhere we do getenv("HOME"). You'd
-want to double-check that each caller only uses the result for a short
-period (unlike getenv, the results of getpwuid will be overwritten at
-the next call).
-
--Peff
+Clever ;-)
