@@ -1,158 +1,211 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 6/7] Fix tests under GETTEXT_POISON on git-remote
-Date: Tue, 21 Aug 2012 11:31:03 +0700
-Message-ID: <1345523464-14586-7-git-send-email-pclouds@gmail.com>
-References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH] Build in gettext poison feature unconditionally
+Date: Tue, 21 Aug 2012 11:39:30 +0700
+Message-ID: <1345523970-14914-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 21 06:38:33 2012
+X-From: git-owner@vger.kernel.org Tue Aug 21 06:39:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3gEa-0001H7-MP
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:38:33 +0200
+	id 1T3gFs-0001ta-PB
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 06:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716Ab2HUEiX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Aug 2012 00:38:23 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:48556 "EHLO
+	id S1751878Ab2HUEju convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Aug 2012 00:39:50 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:39824 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585Ab2HUEiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 00:38:07 -0400
-Received: by pbbrr13 with SMTP id rr13so7921045pbb.19
-        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:38:06 -0700 (PDT)
+	with ESMTP id S1750952Ab2HUEjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 00:39:47 -0400
+Received: by pbbrr13 with SMTP id rr13so7922805pbb.19
+        for <git@vger.kernel.org>; Mon, 20 Aug 2012 21:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1MaBY+w8zV/8+fVEgljKQ9wx8m949V4CnqhNwhDlWDk=;
-        b=Pan7Cz5I7nNVJIbkJlTGZ+Qa560+DjG6H6OVDsz51Z3QLnQjGu8xo/2ZN0UHf88g/D
-         BA3gsXuGu2UJc8eP35vUXBKT/RWuMvtfi/Mt7ZeGq+Qj6ETzCBBSfp3Cd85ff5qBV5XB
-         dgX+H9yIDfTUg46o023hYqfcJlaYK2Nd62xxGfwjMr0fVKTfcBMhD9XvX4/XW0XQelSs
-         yDKVjDoF5wVrKiwod3WCS7owpmRj7eLiVuMA+SWXPvqs+q1YzfcyQQ1tZSDsJzwqB0bq
-         qtf6HBhnksgv2dhTfeKeyIHSjMRbDrDzd2tMkcq5UC6FjATJUkL/IK5ZxXH45hDruTnx
-         LXdA==
-Received: by 10.66.76.227 with SMTP id n3mr34783348paw.53.1345523546598;
-        Mon, 20 Aug 2012 21:32:26 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=roCbnfdSecWVAn/J/ZGt7f2PSkSLBtvYc6tWIl5pDhU=;
+        b=zn8d1qQi1dkYm3zrvb88d6gpKOfRtyhaENVJnsq/HXNR36Bo3qjSglMqkTjonkSoD1
+         71n7gz99pasfhnDTis3O2F8mwXS/Su5mFx3lMgoVAdsujYmRleXsuujAKWh96+h1fQId
+         IPmGx5gddNmoCfqWeOC8derpYObthZ+pOqtPLRkT4424LS4QHQiel/SvH5mqdoU76IUK
+         1x8TXdLmyF2GS4id2bYnNyLlJiNoNRBDmKBUFdU0CAh8Cu+zBD+qzHmtAMQm2rtoqZGD
+         Mh4TJtMX7tVzV8KBZAJDiCYDsiPThbb7ol2wVNRtiWCTQ+/sgcQZ6YPLjNaJW1LB29jX
+         RvUw==
+Received: by 10.68.221.42 with SMTP id qb10mr40328361pbc.155.1345523987086;
+        Mon, 20 Aug 2012 21:39:47 -0700 (PDT)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id wh7sm587604pbc.33.2012.08.20.21.32.22
+        by mx.google.com with ESMTPS id oc2sm577048pbb.69.2012.08.20.21.39.42
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Aug 2012 21:32:25 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:32:12 +0700
+        Mon, 20 Aug 2012 21:39:46 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 21 Aug 2012 11:39:31 +0700
 X-Mailer: git-send-email 1.7.12.rc2
-In-Reply-To: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203934>
 
-=46rom: Jiang Xin <worldhello.net@gmail.com>
+Making gettext poison second citizen makes it easy to forget to run
+the test suite with it. This is step one to running test suite with
+gettext poison by default.
 
-Use i18n-specific test functions in test scripts for git-remote.
-This issue was was introduced in v1.7.10-233-gbb16d5:
+The runtime cost should be small. "gcc -O2" inlines _() and
+use_gettext_poison(). But even if it does not, performance should not
+be impacted as _() calls are usually not on critical path. If some of
+them are, we better fix there as gettext() may or may not be cheap
+anyway.
 
-    bb16d5 i18n: remote: mark strings for translation
+A new target is added to run test with poisoned gettext: test-poison
 
-and been broken under GETTEXT_POISON=3DYesPlease since.
-
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t5505-remote.sh | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ I don't know the story behind this compile-time switch. The series [1]
+ that introduces it does not say much.
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e8af615..07045e3 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -27,10 +27,16 @@ tokens_match () {
- 	test_cmp expect actual
- }
+ This at least makes it easier for me to run poison tests instead of
+ building another binary, if I remember it. Next step could be make
+ "make test" run both normal and poison modes, but I'm not sure how to
+ do it nicely yet.
+
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/167307/focu=
+s=3D167438
+
+ Makefile  | 12 +++---------
+ gettext.c | 10 ----------
+ gettext.h | 12 +++++++-----
+ po/README | 13 ++++---------
+ 4 files changed, 14 insertions(+), 33 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6b0c961..8255fb9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -258,11 +258,6 @@ all::
+ # Define HAVE_DEV_TTY if your system can open /dev/tty to interact wit=
+h the
+ # user.
+ #
+-# Define GETTEXT_POISON if you are debugging the choice of strings mar=
+ked
+-# for translation.  In a GETTEXT_POISON build, you can turn all string=
+s marked
+-# for translation into gibberish by setting the GIT_GETTEXT_POISON var=
+iable
+-# (to any value) in your environment.
+-#
+ # Define JSMIN to point to JavaScript minifier that functions as
+ # a filter to have gitweb.js minified.
+ #
+@@ -1594,9 +1589,6 @@ endif
+ ifdef NO_SYMLINK_HEAD
+ 	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
+ endif
+-ifdef GETTEXT_POISON
+-	BASIC_CFLAGS +=3D -DGETTEXT_POISON
+-endif
+ ifdef NO_GETTEXT
+ 	BASIC_CFLAGS +=3D -DNO_GETTEXT
+ 	USE_GETTEXT_SCHEME ?=3D fallthrough
+@@ -2497,7 +2489,6 @@ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+ 	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=3DYesPlease >>$@
+ endif
+ 	@echo NO_GETTEXT=3D\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\=
+' >>$@
+-	@echo GETTEXT_POISON=3D\''$(subst ','\'',$(subst ','\'',$(GETTEXT_POI=
+SON)))'\' >>$@
+ ifdef GIT_PERF_REPEAT_COUNT
+ 	@echo GIT_PERF_REPEAT_COUNT=3D\''$(subst ','\'',$(subst ','\'',$(GIT_=
+PERF_REPEAT_COUNT)))'\' >>$@
+ endif
+@@ -2545,6 +2536,9 @@ export NO_SVN_TESTS
+ test: all
+ 	$(MAKE) -C t/ all
 =20
-+tokens_i18nmatch () {
-+	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
-+	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
-+	test_i18ncmp expect actual
-+}
++poison-test: all
++	$(MAKE) POISON_GETTEXT=3DYesPlease -C t/ all
 +
- check_remote_track () {
- 	actual=3D$(git remote show "$1" | sed -ne 's|^    \(.*\) tracked$|\1|=
-p')
- 	shift &&
--	tokens_match "$*" "$actual"
-+	tokens_i18nmatch "$*" "$actual"
+ perf: all
+ 	$(MAKE) -C t/perf/ all
+=20
+diff --git a/gettext.c b/gettext.c
+index f75bca7..6aa822c 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -16,16 +16,6 @@
+ #	endif
+ #endif
+=20
+-#ifdef GETTEXT_POISON
+-int use_gettext_poison(void)
+-{
+-	static int poison_requested =3D -1;
+-	if (poison_requested =3D=3D -1)
+-		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
+-	return poison_requested;
+-}
+-#endif
+-
+ #ifndef NO_GETTEXT
+ static void init_gettext_charset(const char *domain)
+ {
+diff --git a/gettext.h b/gettext.h
+index 57ba8bb..a77554f 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -36,11 +36,13 @@ static inline void git_setup_gettext(void)
  }
+ #endif
 =20
- check_tracking_branch () {
-@@ -131,8 +137,8 @@ EOF
- 	git remote rm oops 2>actual2 &&
- 	git branch -d foobranch &&
- 	git tag -d footag &&
--	test_cmp expect1 actual1 &&
--	test_cmp expect2 actual2
-+	test_i18ncmp expect1 actual1 &&
-+	test_i18ncmp expect2 actual2
- )
- '
+-#ifdef GETTEXT_POISON
+-extern int use_gettext_poison(void);
+-#else
+-#define use_gettext_poison() 0
+-#endif
++static inline int use_gettext_poison(void)
++{
++	static int poison_requested =3D -1;
++	if (poison_requested =3D=3D -1)
++		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
++	return poison_requested;
++}
 =20
-@@ -192,7 +198,7 @@ test_expect_success 'show' '
- 	 git config --add remote.two.push refs/heads/master:refs/heads/anothe=
-r &&
- 	 git remote show origin two > output &&
- 	 git branch -d rebase octopus &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
+ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
+ {
+diff --git a/po/README b/po/README
+index c1520e8..e25752b 100644
+--- a/po/README
++++ b/po/README
+@@ -270,16 +270,11 @@ something in the test suite might still depend on=
+ the US English
+ version of the strings, e.g. to grep some error message or other
+ output.
 =20
- cat > test/expect << EOF
-@@ -217,7 +223,7 @@ test_expect_success 'show -n' '
- 	 cd test &&
- 	 git remote show -n origin > output &&
- 	 mv ../one.unreachable ../one &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
+-To smoke out issues like these Git can be compiled with gettext poison
+-support, at the top-level:
++To smoke out issues like these you should run the test suite with
++gettext poison support, which emits gibberish on every call to
++gettext:
 =20
- test_expect_success 'prune' '
-@@ -255,7 +261,7 @@ EOF
- test_expect_success 'set-head --auto fails w/multiple HEADs' '
- 	(cd test &&
- 	 test_must_fail git remote set-head --auto two >output 2>&1 &&
--	test_cmp expect output)
-+	test_i18ncmp expect output)
- '
+-    make GETTEXT_POISON=3DYesPlease
+-
+-That'll give you a git which emits gibberish on every call to
+-gettext. It's obviously not meant to be installed, but you should run
+-the test suite with it:
+-
+-    cd t && prove -j 9 ./t[0-9]*.sh
++    cd t && GETTEXT_POISON=3DYesPlease prove -j 9 ./t[0-9]*.sh
 =20
- cat >test/expect <<EOF
-@@ -285,7 +291,7 @@ test_expect_success 'prune --dry-run' '
- 	 test_must_fail git rev-parse refs/remotes/origin/side &&
- 	(cd ../one &&
- 	 git branch -m side side2) &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
-=20
- test_expect_success 'add --mirror && prune' '
-@@ -705,7 +711,7 @@ test_expect_success 'remote prune to cause a dangli=
-ng symref' '
- 		cd seven &&
- 		git remote prune origin
- 	) >err 2>&1 &&
--	grep "has become dangling" err &&
-+	test_i18ngrep "has become dangling" err &&
-=20
- 	: And the dangling symref will not cause other annoying errors &&
- 	(
+ If tests break with it you should inspect them manually and see if
+ what you're translating is sane, i.e. that you're not translating
 --=20
 1.7.12.rc2
