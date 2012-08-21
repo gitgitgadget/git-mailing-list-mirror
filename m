@@ -1,72 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC 2/3] Delete reflogs for dead references to allow pruning
-Date: Tue, 21 Aug 2012 04:33:45 -0400
-Message-ID: <20120821083345.GB13252@sigill.intra.peff.net>
-References: <1345310086-20089-1-git-send-email-mhagger@alum.mit.edu>
- <1345310086-20089-3-git-send-email-mhagger@alum.mit.edu>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] difftool: silence warning
+Date: Tue, 21 Aug 2012 02:04:04 -0700
+Message-ID: <CAJDDKr5W5YJoMEkX7_ax_pvwdibJ81LMzsM0Rnkn1=9=Nu25EA@mail.gmail.com>
+References: <1345532358-11742-1-git-send-email-rosslagerwall@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Alexey Muranov <alexey.muranov@gmail.com>, git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Aug 21 10:34:04 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ross Lagerwall <rosslagerwall@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 11:04:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3juV-0000KD-B6
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 10:34:03 +0200
+	id 1T3kO2-00005L-Mg
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 11:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281Ab2HUId6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 04:33:58 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43589 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753628Ab2HUIds (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 04:33:48 -0400
-Received: (qmail 29849 invoked by uid 107); 21 Aug 2012 08:34:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 04:34:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 04:33:45 -0400
-Content-Disposition: inline
-In-Reply-To: <1345310086-20089-3-git-send-email-mhagger@alum.mit.edu>
+	id S1754709Ab2HUJEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 05:04:09 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:59643 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753472Ab2HUJEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 05:04:05 -0400
+Received: by vbbff1 with SMTP id ff1so6268602vbb.19
+        for <git@vger.kernel.org>; Tue, 21 Aug 2012 02:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=eJjFpmyV5GQk1SuXD1Cy7w1sN+H+wOtz+uWGCqw2BVI=;
+        b=zNvNzTdOjyJVprcylJ3AxdnK74syJq78I9L8DYbVQ/oPjU9prN+8GD3/7R6wpm/N08
+         FF1s8d+bWx4lR63Lk0ivtW70LsXlJ5ULRH1TmjwR+G930iGNfIJ+oaa7pNGRihSYKhSA
+         V2TjfaixFoXlfAAsLr8O27JZo7g2x9GrqwXXrOZbBVVfMNtiouCmxL1jXH2dvXquTs2p
+         JgWY2F6KJ5BdgeOwdrDhzJlUFaIYhzu/BVPXHv8y+zQ5HAqmHm+elKKt7ZV0LlJyqm5E
+         zEVbYZMNm3k5UUbYd8GJzOd6Ba/jO2BV+0PA9968oxy/hdviN7CRAd/HVAIDVTWgQbmB
+         b5eg==
+Received: by 10.58.151.197 with SMTP id us5mr14018984veb.14.1345539844419;
+ Tue, 21 Aug 2012 02:04:04 -0700 (PDT)
+Received: by 10.58.173.104 with HTTP; Tue, 21 Aug 2012 02:04:04 -0700 (PDT)
+In-Reply-To: <1345532358-11742-1-git-send-email-rosslagerwall@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203956>
 
-On Sat, Aug 18, 2012 at 07:14:45PM +0200, mhagger@alum.mit.edu wrote:
+On Mon, Aug 20, 2012 at 11:59 PM, Ross Lagerwall
+<rosslagerwall@gmail.com> wrote:
+> Silence a warning given when running git difftool --dir-diff and
+> there are no changes.
+> This is because command_oneline returns undef when the command has no
+> output, not ''.
+>
+> Signed-off-by: Ross Lagerwall <rosslagerwall@gmail.com>
 
-> From: Michael Haggerty <mhagger@alum.mit.edu>
-> 
-> This test is broken by "retain reflogs for deleted refs".  Explicitly
-> delete the reflogs in the graveyard to allow the corresponding commits
-> to be pruned.
-> 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Thanks
+
+This patch is obviously correct, but it won't apply in git's "next" branch.
+Can you please prepare a patch based on the version in next?
+
+
+A small question on Perl style for the list... is it better say this?
+
+   exit(0) unless $diffrtn;
+
+or is it better to explicitly check for undef using defined($diffrtn)
+like was done in this patch? I would assume that explicit is preferred.
+
+
 > ---
-> 
-> Probably there should be a "git reflog" subcommand to do this.
-> 
->  t/t9300-fast-import.sh | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 266ae30..dc6c67d 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -1700,6 +1700,7 @@ INPUT_END
->  
->  test_expect_success 'P: verbatim SHA gitlinks' '
->  	git branch -D sub &&
-> +	rm -rf .git/logs/graveyard &&
-
-I think "git reflog expire --expire=now refs/heads/sub" would be less
-leaky. That didn't work in my initial version, but it obviously should.
-I'll include a tweaked version of your fix when I re-roll.
-
--Peff
+>  git-difftool.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index ae1e052..1cfcbb3 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -117,7 +117,7 @@ sub setup_dir_diff
+>         # by Git->repository->command*.
+>         my $diffrepo = Git->repository(Repository => $repo_path, WorkingCopy => $workdir);
+>         my $diffrtn = $diffrepo->command_oneline('diff', '--raw', '--no-abbrev', '-z', @ARGV);
+> -       exit(0) if (length($diffrtn) == 0);
+> +       exit(0) unless defined($diffrtn);
+>
+>         # Setup temp directories
+>         my $tmpdir = tempdir('git-diffall.XXXXX', CLEANUP => 1, TMPDIR => 1);
+> --
+> 1.7.11.4
+-- 
+David
