@@ -1,71 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Having an invalid HEAD file causes git not to recognize the
- repository
-Date: Tue, 21 Aug 2012 03:24:03 -0400
-Message-ID: <20120821072403.GD3238@sigill.intra.peff.net>
-References: <CANtNKfp+9HpvWkAO0vrm84oMiJNvjFg9T-UtNQko+ABHhEWj6w@mail.gmail.com>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCHv2 1/2] t6300: test sort with multiple keys
+Date: Tue, 21 Aug 2012 09:46:06 +0200
+Message-ID: <91678e1e50f23bdb2c3b2c5716f92d870a233e77.1345534654.git.draenog@pld-linux.org>
+References: <e5b3ab37553f384235f3cb14e42f7e2b56507bde.1345410836.git.draenog@pld-linux.org>
+ <7vk3wuo0sa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Egon Elbre <egonelbre@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 09:24:19 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 21 09:46:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3iow-00024V-Ps
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 09:24:15 +0200
+	id 1T3jAW-0006W7-E4
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 09:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751497Ab2HUHYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 03:24:08 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43525 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751107Ab2HUHYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 03:24:06 -0400
-Received: (qmail 29029 invoked by uid 107); 21 Aug 2012 07:24:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 03:24:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 03:24:03 -0400
+	id S1751641Ab2HUHq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 03:46:27 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:34306 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751306Ab2HUHqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 03:46:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 59C445F0048;
+	Tue, 21 Aug 2012 09:47:25 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id Wbgw7ZBx+bhg; Tue, 21 Aug 2012 09:47:08 +0200 (CEST)
+Received: from gatekeeper2.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 0B3C75F0047;
+	Tue, 21 Aug 2012 09:47:08 +0200 (CEST)
+Received: by gatekeeper2.camk.edu.pl (Postfix, from userid 1293)
+	id 9399446745; Tue, 21 Aug 2012 09:46:06 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <CANtNKfp+9HpvWkAO0vrm84oMiJNvjFg9T-UtNQko+ABHhEWj6w@mail.gmail.com>
+In-Reply-To: <7vk3wuo0sa.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203950>
 
-On Fri, Aug 17, 2012 at 02:42:33PM +0300, Egon Elbre wrote:
+Documentation of git-for-each-ref says that --sort=<key> option can be
+used multiple times, in which case the last key becomes the primary key.
+However this functionality was never checked in test suite and is
+currently broken. This commit adds appropriate test in preparation for fix.
 
-> Having an invalid HEAD file causes git not to recognize the repository
-> and will cause an invalid message "fatal: Not a git repository (or any
-> of the parent directories): .git" although there is a .git folder and
-> everything seems okay in it. Solution was just to change HEAD to a
-> valid ref/hash.
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ t/t6300-for-each-ref.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Right. When we search for a .git directory, we do a few sanity checks on
-each candidate, like whether it has a properly-formatted HEAD, and
-whether it has "objects" and "refs" directories. We have to balance
-these heuristics to avoid false negatives (like yours, when the
-directory was meant to be a repository but looked bogus) with false
-positives (when we accidentally treat some random directory like a git
-repository).
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 1721784..a0d82d4 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -456,4 +456,14 @@ test_atom refs/tags/signed-long contents "subject line
+ body contents
+ $sig"
+ 
++cat >expected <<\EOF
++408fe76d02a785a006c2e9c669b7be5589ede96d <committer@example.com> refs/tags/master
++90b5ebede4899eda64893bc2a4c8f1d6fb6dfc40 <committer@example.com> refs/tags/bogo
++EOF
++
++test_expect_failure 'Verify sort with multiple keys' '
++	git for-each-ref --format="%(objectname) %(taggeremail) %(refname)" --sort=objectname --sort=taggeremail \
++		refs/tags/bogo refs/tags/master > actual &&
++	test_cmp expected actual
++'
+ test_done
+-- 
+1.7.12.rc3
 
-Since you don't have a working repository, the best we could do is say
-"well, this looks like a repository, but it's broken, so I kept
-looking". I think the best approach would probably be to have a new
-GIT_TRACE_GITDIR environment variable to help debug git-dir lookup
-(i.e., to print out details of the search as it happens).
 
-> I ran into this problem when I had a BSOD during a rebase (ignore that
-> I'm having to use Windows). This meant that only half of the hash got
-> written into HEAD and all git commands I tried failed.
-
-That generally shouldn't happen, as we write new ref content to a
-temporary file and then rename it into place atomically. I wonder if
-there is a problem with the atomicity there (we do not fsync after
-close, which some filesystems might want), or if it was simply
-filesystem corruption related to your BSOD.
-
--Peff
+-- 
+  Kacper Kornet
