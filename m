@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: receive.denyNonNonFastForwards not denying force update
-Date: Tue, 21 Aug 2012 02:22:19 -0400
-Message-ID: <20120821062219.GB26516@sigill.intra.peff.net>
+Date: Tue, 21 Aug 2012 02:26:07 -0400
+Message-ID: <20120821062607.GC26516@sigill.intra.peff.net>
 References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
  <CAHgXSooFj2PJtcOWqsVNHUzMBQnH0cYzPjfs1CkzVuufwRVrog@mail.gmail.com>
  <7vzk5pjxy3.fsf@alter.siamese.dyndns.org>
@@ -10,58 +10,50 @@ References: <CAHgXSop42qWcAEGn6=og8Pistv_Jrwhgcnv3B_ORVtSMi1fCHA@mail.gmail.com>
  <20120821015738.GA20271@sigill.intra.peff.net>
  <7vpq6kgazt.fsf@alter.siamese.dyndns.org>
  <20120821061059.GA26516@sigill.intra.peff.net>
+ <20120821062219.GB26516@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Sitaram Chamarty <sitaramc@gmail.com>,
 	John Arthorne <arthorne.eclipse@gmail.com>,
 	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 21 08:22:29 2012
+X-From: git-owner@vger.kernel.org Tue Aug 21 08:26:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3hrA-0002i6-JX
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 08:22:28 +0200
+	id 1T3hur-0004he-NR
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Aug 2012 08:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046Ab2HUGWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 02:22:23 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43435 "EHLO
+	id S1753151Ab2HUG0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 02:26:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43444 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751514Ab2HUGWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 02:22:22 -0400
-Received: (qmail 28331 invoked by uid 107); 21 Aug 2012 06:22:34 -0000
+	id S1752765Ab2HUG0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 02:26:10 -0400
+Received: (qmail 28375 invoked by uid 107); 21 Aug 2012 06:26:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 02:22:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 02:22:19 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Aug 2012 02:26:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2012 02:26:07 -0400
 Content-Disposition: inline
-In-Reply-To: <20120821061059.GA26516@sigill.intra.peff.net>
+In-Reply-To: <20120821062219.GB26516@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203941>
 
-On Tue, Aug 21, 2012 at 02:10:59AM -0400, Jeff King wrote:
+On Tue, Aug 21, 2012 at 02:22:19AM -0400, Jeff King wrote:
 
-> I think that makes sense. Like this patch?
+> And this might be a good follow-on:
 > 
 > -- >8 --
-> Subject: [PATCH] config: warn on inaccessible files
-> 
-> Before reading a config file, we check "!access(path, R_OK)"
-> to make sure that the file exists and is readable. If it's
-> not, then we silently ignore it.
-> 
-> For the case of ENOENT, this is fine, as the presence of the
-> file is optional. For other cases, though, it may indicate a
-> configuration error (e.g., not having permissions to read
-> the file). Let's print a warning in these cases to let the
-> user know.
+> Subject: [PATCH] gitignore: report access errors of exclude files
 
-And this might be a good follow-on:
+...and it would probably help if I gave you the version that actually
+compiled.
 
 -- >8 --
 Subject: [PATCH] gitignore: report access errors of exclude files
@@ -81,7 +73,7 @@ Signed-off-by: Jeff King <peff@peff.net>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 240bf0c..4ee16b5 100644
+index 240bf0c..ea74048 100644
 --- a/dir.c
 +++ b/dir.c
 @@ -397,6 +397,8 @@ int add_excludes_from_file_to_list(const char *fname,
@@ -89,7 +81,7 @@ index 240bf0c..4ee16b5 100644
  	fd = open(fname, O_RDONLY);
  	if (fd < 0 || fstat(fd, &st) < 0) {
 +		if (errno != ENOENT)
-+			warn(_("unable to access '%s': %s"), fname, strerror(errno));
++			warning(_("unable to access '%s': %s"), fname, strerror(errno));
  		if (0 <= fd)
  			close(fd);
  		if (!check_index ||
