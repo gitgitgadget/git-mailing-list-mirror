@@ -1,140 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test failures in t4034
-Date: Tue, 21 Aug 2012 15:09:36 -0700
-Message-ID: <7v1uizdhi7.fsf@alter.siamese.dyndns.org>
-References: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com>
- <5030FD49.6060704@ramsay1.demon.co.uk>
- <7vboi6nzym.fsf@alter.siamese.dyndns.org>
- <5033D573.9030103@ramsay1.demon.co.uk>
+Subject: Re: misleading diff-hunk header
+Date: Tue, 21 Aug 2012 15:29:08 -0700
+Message-ID: <7vwr0rc217.fsf@alter.siamese.dyndns.org>
+References: <503385D0.5070605@tim.thechases.com>
+ <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com>
+ <5033C7D5.1030404@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Git List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Wed Aug 22 00:09:46 2012
+Cc: Tim Chase <git@tim.thechases.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 00:30:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T3wdt-0005Iv-GX
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 00:09:45 +0200
+	id 1T3wxR-0003UB-2H
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 00:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932127Ab2HUWJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Aug 2012 18:09:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56643 "EHLO
+	id S1754546Ab2HUW3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Aug 2012 18:29:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64759 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758608Ab2HUWJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Aug 2012 18:09:38 -0400
+	id S1751536Ab2HUW3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Aug 2012 18:29:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AB4E8E26;
-	Tue, 21 Aug 2012 18:09:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F32E691B3;
+	Tue, 21 Aug 2012 18:29:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MyeRQrM/fomfFldLYwZYHfssuyE=; b=ohz9vN
-	VIe1mcj7lRggZYMEsbS4dDnapGkQoDCdgONuw+IIUS4us6B56ZNk497P3TIpO3Fk
-	OLooZw/tTmpWdpCR8picUrBXWpt6m3+qr9BTFwFIBjMPwByAk4LU6QcNJpMglbUJ
-	zsUXqwNqq0GE9lQVkjSdGwRY1sGRTJbQvZrH8=
+	:content-type; s=sasl; bh=vmgAMXVGMtDcIx18Fj/YsIQ/vE0=; b=ii2sjj
+	j5hlIiK/cGfHsqYz2X9JQQMNkGDz2Wvb79JxJN3IMPuqukdowfhVLCffPYvV7iAg
+	hcu8bbNS3T7c+mMHcDuuDomH6wJZfyHq4z7O92dALNRrK+dI+Q5oAbCzycgfcx4A
+	vlAZPYayrAp59k/60/v15vu8+hHd5NH6SBMpo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y9yiS/YK2df51WLwUEUxFbDb5ygKdKhH
-	YsfktmBH4n2WAcRnCi/xnGzw3dcBw9bmMJZSrJiYGtO9Wp/MnwycIfPSJ01rFqQu
-	ODV2tNjkUPsDRkLu4nnYQ4yYIUUsil+Zp/gconlMqkuD8/+crx3cBM/zMdd2M6e+
-	5q+CyjjsT5c=
+	:content-type; q=dns; s=sasl; b=B1Zo34l8ba8vgRdmzrG8FTyDg3os2eir
+	iJg/JZBUhAJfMKKdCi3wucb/xV9P9WxLHONuRcHp8oUVDRUF3AFaW6+Csk94f+7B
+	EpPJ1JcadzMk9KkjhaH4vNSWkikdBjiiWJKMwcQlWOcO97i8lo4yoDTMKmlN2Jwq
+	LdFkkGuS+fE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47A9B8E25;
-	Tue, 21 Aug 2012 18:09:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFB1B91B2;
+	Tue, 21 Aug 2012 18:29:12 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 812698E24; Tue, 21 Aug 2012
- 18:09:37 -0400 (EDT)
-In-Reply-To: <5033D573.9030103@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Tue, 21 Aug 2012 19:37:39 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CD1F91B0; Tue, 21 Aug 2012
+ 18:29:09 -0400 (EDT)
+In-Reply-To: <5033C7D5.1030404@kdbg.org> (Johannes Sixt's message of "Tue, 21
+ Aug 2012 19:39:33 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E59C22D2-EBDC-11E1-AF13-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A0347304-EBDF-11E1-94A3-01B42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/203999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204000>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> I think that, after some testing, this (or something like it) is the
-> best that we can do. What do you think?
+> Am 21.08.2012 17:42, schrieb Tim Chase:
+>> On 08/21/12 10:22, Thomas Rast wrote:
+>>>> misleadingly suggesting that the change occurred in the call_me()
+>>>> function, rather than in main()
+>>>
+>>> I think that's intentional, and matches what 'diff -p' does...
+>> 
+>> Okay...I tested "diff -p" and can't argue (much) with historical
+>> adherence.  It just makes it hard for me to gather some stats on the
+>> functions that changed, and requires that I look in more than one
+>> place (both in the header, and in the leading context) rather than
+>> having a single authoritative place to grep.
 >
-> ATB,
-> Ramsay Jones
->
-> -- >8 --
-> Subject: [PATCH] test-regex: Add a test to check for a bug in the regex routines
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> ---
-> diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-> index 9bee8bf..da2c504 100755
-> --- a/t/t0070-fundamental.sh
-> +++ b/t/t0070-fundamental.sh
-> @@ -25,4 +25,9 @@ test_expect_success POSIXPERM 'mktemp to unwritable directory prints filename' '
->  	grep "cannotwrite/test" err
->  '
->  
-> +test_expect_success 'check for a bug in the regex routines' '
-> +	# if this test fails, re-build git with NO_REGEX=1
-> +	test-regex
-> +'
+> If it's only for stats, why not just remove the context with -U0?
 
-OK.
-
->  test_done
-> diff --git a/test-regex.c b/test-regex.c
-> new file mode 100644
-> index 0000000..9259985
-> --- /dev/null
-> +++ b/test-regex.c
-> @@ -0,0 +1,35 @@
-> +#include <stdlib.h>
-> +#include <stdio.h>
-> +#include <stdarg.h>
-> +#include <sys/types.h>
-> +#include <regex.h>
-> +
-> +static void die(const char *fmt, ...)
-> +{
-> +	va_list p;
-> +
-> +	va_start(p, fmt);
-> +	vfprintf(stderr, fmt, p);
-> +	va_end(p);
-> +	fputc('\n', stderr);
-> +	exit(128);
-> +}
-
-Looks like a bit of overkill for only two call sites, whose output
-we would never see because it is behind the test, but OK.
-
-> +int main(int argc, char **argv)
-> +{
-> +	char *pat = "[^={} \t]+";
-> +	char *str = "={}\nfred";
-> +	regex_t r;
-> +	regmatch_t m[1];
-> +
-> +	if (regcomp(&r, pat, REG_EXTENDED | REG_NEWLINE))
-> +		die("failed regcomp() for pattern '%s'", pat);
-> +	if (regexec(&r, str, 1, m, 0))
-> +		die("no match of pattern '%s' to string '%s'", pat, str);
-> +
-> +	/* http://sourceware.org/bugzilla/show_bug.cgi?id=3957  */
-> +	if (m[0].rm_so == 3) /* matches '\n' when it should not */
-> +		exit(1);
-
-This could be the third call site of die() that tells the user to
-build with NO_REGEX=1.  Then "cd t && sh t0070-fundamental.sh -i -v" would
-give that message directly to the user.
-
-> +	exit(0);
-> +}
-
-Thanks.
+I actually think you want a way to say -U<sufficiently-large> in
+this case instead of unsightly -U99999.
