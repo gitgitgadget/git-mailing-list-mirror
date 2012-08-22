@@ -1,103 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Porting git to HP NonStop
-Date: Wed, 22 Aug 2012 11:26:36 -0700
-Message-ID: <7vy5l67pgj.fsf@alter.siamese.dyndns.org>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
- <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
- <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
- <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
- <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
- <7v628epzia.fsf@alter.siamese.dyndns.org>
- <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
- <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
- <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
- <7v4nnxld24.fsf@alter.siamese.dyndns.org>
- <002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
- <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
- <503519B3.1020403@kdbg.org>
- <CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com>
+From: Drew Northup <n1xim.email@gmail.com>
+Subject: Re: [PATCH 66/66] Use imperative form in help usage to describe an action
+Date: Wed, 22 Aug 2012 14:32:18 -0400
+Message-ID: <CAM9Z-nmrtU_a1v_4C_j=YAF7_HZ4+hGnBUcp969JfAbSXgUBig@mail.gmail.com>
+References: <1345465975-16927-1-git-send-email-pclouds@gmail.com>
+	<1345465975-16927-67-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Joachim Schmitz <jojo@schmitz-digital.de>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
-	rsbecker@nexbridge.com
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 20:26:50 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:32:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Fdd-0002HN-CH
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:26:45 +0200
+	id 1T4Fj9-0000r7-Jr
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933244Ab2HVS0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 14:26:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47516 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933208Ab2HVS0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 14:26:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98D5380FE;
-	Wed, 22 Aug 2012 14:26:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J4oGOzBrOZhcY8Ov1WLeTvbe9xs=; b=M5Zj2Y
-	qTsNmLJIEZ3g4izFjGZddjzJ+AkD0xiHtrsMxMjULYG+4RvUCdFoINB13wGyo2hb
-	rUtLf6m2Jzc6IOixezG1Uavy8pUY27fn2Ag6uE3Toj0jksMMmiBNkoLFcXOxFUfn
-	axFSSspb5Jhy4bRyO8qVZQ6FoP5yOfuOETXkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oIJNZSAojXcHYO5s1rj8kwXCkVx1XU9u
-	BFy3pv3riHlGdgI3MmjTsbkiVf39TmxB0oAGbiJA3s+UYdme3aOF+Xvr+jEaG+RC
-	m4cJ9+ytTCPYaMMEIVpoKqkj7OXaRN8B9VNJHRffNvjwRl7hxO2euF5o4RzujSwY
-	IfI5LCelJFw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 853CA80FD;
-	Wed, 22 Aug 2012 14:26:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8CD480FC; Wed, 22 Aug 2012
- 14:26:37 -0400 (EDT)
-In-Reply-To: <CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com> (Brandon
- Casey's message of "Wed, 22 Aug 2012 11:09:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E922EC88-EC86-11E1-8BA1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933251Ab2HVScW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Aug 2012 14:32:22 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:39734 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933208Ab2HVScU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2012 14:32:20 -0400
+Received: by bkwj10 with SMTP id j10so435959bkw.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 11:32:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yoSg+jS/7THgR7s+EN4zDOm2YgWyTO5FN1BqfrvUxms=;
+        b=hSHeDRR/MYC04uh7ExkzTAcSR5Q9wp4beFGmg3zGqgH6e7yVgpZuFOYgunCh/tSv3e
+         AdEJCEbDBFg7/ZQ4+MhUPDj8hQLLSk9mMz89KpkOfI4d8LcIoAr5kRqHA1j7JJRFMhRS
+         AAYZQFaVLv5bj9hGS+Ykpi4tB8fCeWpZVmEaGBwEJaV8weddlM19N6eD8pksARny+6em
+         0cqaizMngGiQoXxDGz8B5pg/K7I03RqjeMJy/5qf++mvcCdBPk3d4+ILOuVVpVHIDvfY
+         Pw5kf4zWeYuYrHz+kXEcSBWZgqGXlYUZUWHofXupzTBkWihsFUNt1weQxBvpHqTtlkli
+         uO/w==
+Received: by 10.205.137.8 with SMTP id im8mr6769773bkc.135.1345660338987; Wed,
+ 22 Aug 2012 11:32:18 -0700 (PDT)
+Received: by 10.204.10.87 with HTTP; Wed, 22 Aug 2012 11:32:18 -0700 (PDT)
+In-Reply-To: <1345465975-16927-67-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204063>
 
-Brandon Casey <drafnel@gmail.com> writes:
-
-> On Wed, Aug 22, 2012 at 10:41 AM, Johannes Sixt <j6t@kdbg.org> wrote:
->> Am 22.08.2012 19:00, schrieb Brandon Casey:
->>>  So I think the body of [compat_mkdir] can become
->>> something like:
->>>
->>>    if (len && dir[len-1] == '/')
->>>        dir = tmp_dir = xstrndup(dir, len-1);
->>
->> Don't use x* wrappers in the compat layer, at least not those that
->> allocate memory: They behave unpredictably due to try_to_free_routine
->> and may lead to recursive invocations.
+On Mon, Aug 20, 2012 at 8:32 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
 >
-> I thought that rule only applied to die handlers.  i.e. don't use the
-> x* wrappers to allocate memory in a die handler like
-> compat/win32/syslog.c.  At least that's what I wrote in 040a6551 when
-> you pointed out this issue back then.
->
-> Admittedly, it could get pretty sticky trying to trace the die
-> handlers to ensure they don't invoke your new compat/ function.  So,
-> yeah, adopting this rule of not using x* wrappers that allocate memory
-> in compat/ generally seems like a good idea.
->
-> Should we also try to detect recursive invocation of die and friends?
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  My guts tell me this is correct, but my English foundation is shakin=
+g
+>  so I say "change in the name of consistency"!
 
-> In theory recursion could be triggered by any die handler that makes
-> use of a code path that calls an x* wrapper that allocates memory,
-> couldn't it?
+Your gut is working just fine. I haven't attempted to apply the patch,
+but the English changes check out just fine. It could be argued that
+these all should have taken the imperative form from the beginning as
+the user is directing the program to do something (perhaps vicariously
+via the documentation).
 
-Correct, but at that point we will end up dying anyway, so...
+The other perspective I can think of off hand is that the
+documentation is describing what the program options do to the user (a
+different "audience")--which explains why the text wasn't in
+imperative form to begin with.
+
+--=20
+-Drew Northup
+--------------------------------------------------------------
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
