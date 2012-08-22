@@ -1,90 +1,93 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: Porting git to HP NonStop
-Date: Wed, 22 Aug 2012 11:09:56 -0700
-Message-ID: <CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
-	<CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
-	<004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
-	<CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
-	<01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
-	<7v628epzia.fsf@alter.siamese.dyndns.org>
-	<000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
-	<7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
-	<001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
-	<7v4nnxld24.fsf@alter.siamese.dyndns.org>
-	<002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
-	<CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
-	<503519B3.1020403@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+Date: Wed, 22 Aug 2012 11:17:22 -0700
+Message-ID: <7v7gsq94gd.fsf@alter.siamese.dyndns.org>
+References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de>
+ <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
+ <003001cd808b$9d505730$d7f10590$@schmitz-digital.de>
+ <7vk3wq964r.fsf@alter.siamese.dyndns.org>
+ <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
-	rsbecker@nexbridge.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 20:10:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:17:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4FNU-0007nb-Q4
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:10:05 +0200
+	id 1T4FUp-00085F-52
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933021Ab2HVSJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 14:09:59 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:48922 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758435Ab2HVSJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 14:09:57 -0400
-Received: by vcbfk26 with SMTP id fk26so1346947vcb.19
-        for <git@vger.kernel.org>; Wed, 22 Aug 2012 11:09:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=sa9mxM5z1pE/+yC/AivkjAbI8FXx8zz9AM5oxsBA35k=;
-        b=flbE3iZ1aux28bA5PzWR/m90hjqqzndarIxucqwEeJ25DwU4N8qLDsnhCs6fC84ROz
-         b4zxu3ohHmam/Ax+yEvt+MREVrBmupDq+hBS6p8f1yUNj+bRx2HR6gyNIiaNbnso7Z0F
-         4zhhuMxnNufBeNgi3L0f362Ye0A84eQ28yA1aFQ6DDM0mAs/7njd+KkrAtDn9JHAZFIx
-         yzWJRffHrqJZGzjvjPDTu5YMXiEaZL9qNPAO76NCa9hn+wpMc3B0GfRxWqTuFnGneRNp
-         BOc2C9cskclzNiZ4/wwBjFn+Y1zqYQpSs5Q/mP9MNhJxY+5O/JR8fJ3Kb1s+cC0GL0mA
-         4LIQ==
-Received: by 10.52.31.230 with SMTP id d6mr6011498vdi.87.1345658996589; Wed,
- 22 Aug 2012 11:09:56 -0700 (PDT)
-Received: by 10.58.29.233 with HTTP; Wed, 22 Aug 2012 11:09:56 -0700 (PDT)
-In-Reply-To: <503519B3.1020403@kdbg.org>
+	id S933218Ab2HVSR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 14:17:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43268 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933208Ab2HVSRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 14:17:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B5329EE2;
+	Wed, 22 Aug 2012 14:17:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SvqevrFP2nnNkdcbEmz4plNuamM=; b=O/J3xm
+	fES4q8GUNanlVkpCW1lF2IiMnlAA/2arrtrnmsNpHzDRb4ZKauDOS7W+1TIB8gan
+	9z9v2eyJv60PpORx4WozFPrs+EjfybTyHo+CEI9ZbxJIdDSyj/NAYFoiiq1+spbr
+	jvjg822TnnAblWuOzT/AgTZ2S0AnMC/Zne+xA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BwsPy/Xr/bF9iXHGjhK/Hxz6zEQ7zsq7
+	m+OwBiMU1XRDM47xlY0DVETlQ77+A+5tGnWMazZa/dkbUrjxWrsniwNaIjQcgH+e
+	zSS69K0TEeI5CrHxCV7dB8eYgu323XFsuH6UEgH9X8RPp8QKqpb3GC3kQp/2Rz2N
+	I9N/13Ktomk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 790A39EE1;
+	Wed, 22 Aug 2012 14:17:24 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2EAB9EE0; Wed, 22 Aug 2012
+ 14:17:23 -0400 (EDT)
+In-Reply-To: <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Wed, 22 Aug 2012 19:59:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9EE93178-EC85-11E1-83E4-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204058>
 
-On Wed, Aug 22, 2012 at 10:41 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 22.08.2012 19:00, schrieb Brandon Casey:
->>  So I think the body of [compat_mkdir] can become
->> something like:
->>
->>    if (len && dir[len-1] == '/')
->>        dir = tmp_dir = xstrndup(dir, len-1);
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+
 >
-> Don't use x* wrappers in the compat layer, at least not those that
-> allocate memory: They behave unpredictably due to try_to_free_routine
-> and may lead to recursive invocations.
+> This reverts be22d92 (http: avoid empty error messages for some curl errors,
+> 2011-09-05) on platforms with older versions of libcURL.
+>
+> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> ---
+>  http.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/http.c b/http.c
+> index b61ac85..18bc6bf 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -806,10 +806,12 @@ static int http_request(const char *url, void *result,
+> int target, int options)
 
-I thought that rule only applied to die handlers.  i.e. don't use the
-x* wrappers to allocate memory in a die handler like
-compat/win32/syslog.c.  At least that's what I wrote in 040a6551 when
-you pointed out this issue back then.
+Likewrapped X-<
 
-Admittedly, it could get pretty sticky trying to trace the die
-handlers to ensure they don't invoke your new compat/ function.  So,
-yeah, adopting this rule of not using x* wrappers that allocate memory
-in compat/ generally seems like a good idea.
-
-Should we also try to detect recursive invocation of die and friends?
-In theory recursion could be triggered by any die handler that makes
-use of a code path that calls an x* wrapper that allocates memory,
-couldn't it?
-
--Brandon
+>  				ret = HTTP_REAUTH;
+>  			}
+>  		} else {
+> +#if LIBCURL_VERSION_NUM >= 0x070c00
+>  			if (!curl_errorstr[0])
+>  				strlcpy(curl_errorstr,
+>  
+> curl_easy_strerror(results.curl_result),
+>  					sizeof(curl_errorstr));
+> +#endif
+>  			ret = HTTP_ERROR;
+>  		}
+>  	} else {
