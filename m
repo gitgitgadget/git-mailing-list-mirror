@@ -1,88 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 01/16] GSOC remote-svn
-Date: Wed, 22 Aug 2012 13:54:08 -0700
-Message-ID: <7v1uiy7imn.fsf@alter.siamese.dyndns.org>
-References: <1345662961-9587-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+Date: Wed, 22 Aug 2012 14:01:39 -0700
+Message-ID: <7vwr0q63po.fsf@alter.siamese.dyndns.org>
+References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de>
+ <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
+ <003001cd808b$9d505730$d7f10590$@schmitz-digital.de>
+ <7vk3wq964r.fsf@alter.siamese.dyndns.org>
+ <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de>
+ <7v7gsq94gd.fsf@alter.siamese.dyndns.org>
+ <004101cd8096$fce3a700$f6aaf500$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 22:54:20 2012
+Cc: <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:01:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4HwR-0002B0-4p
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 22:54:19 +0200
+	id 1T4I3j-0004EY-Lb
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 23:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933337Ab2HVUyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 16:54:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50682 "EHLO
+	id S933344Ab2HVVBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 17:01:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53889 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933298Ab2HVUyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 16:54:11 -0400
+	id S933330Ab2HVVBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 17:01:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD02A85D2;
-	Wed, 22 Aug 2012 16:54:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19B2187DB;
+	Wed, 22 Aug 2012 17:01:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gXcLjnI6qUZJqTF785ns4LmAgBs=; b=wYwB+l
-	vmo2luVU23dElpLX3sP3Zx1qMTTE82Nm/JcX/PJVH4MzWC7D6m8KlYzoKuW5J/Oi
-	p7uKFaK1tcX/0kr6f5sHKtQzD0vXKvdhbXJtHu1SuofTDnT2I8l/q6pkVgMBeyJL
-	T8L+Hyfl+JMN3BAXa2WQYSqx1aQrv4hp5J79c=
+	:content-type; s=sasl; bh=db/vw2jTyrE38GkWtRYzXF9Hj+c=; b=m/vNvS
+	uSQRS1V5UqvMbIwE8ZVn/pu0CmAXYXxRNVhND/TXsKiNYpJWx4ro56j69NYZEvd2
+	7UuMQ1y2XNa97phWo/jkU5psi0SWKDIZHvbt8ZcPWiTvAgXL4IfilPQyB1pFINkG
+	erHNECLu6FQjRt06nh4kzHaeYIPZszI/XYUAw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=icW+8/M+vXKYpy5Ahj5svjirwzt1cXq1
-	mPkxU7KpnecLWpbhk3NZZ1eAbExjSJbF7uDShdt3n5NiMcmpZCurKVvrULuP5hhg
-	tRMmRBIGJMdyXIF/G+lZi0gjkQ8/SxtF9TMKsCWtYzzBWahLCEoxY0f1jK+5ZCYV
-	z378Z8rJUWs=
+	:content-type; q=dns; s=sasl; b=M5eVZMNZssES3ZzbxS+7Xk5Mx7oe27oy
+	ST9GJxRAju3/OazgPlhtNm9omyV5wYUWxIpwa+Difx33JbcYJ0vGIeQZ0fXGgRgd
+	rQi1pwxoErfxHe5lVEZHNO1oaVvPxhjBPbRcNsCnsGbaAqC8+PFyPvvKKtDaYkou
+	ovPZhHyj360=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A97E085D1;
-	Wed, 22 Aug 2012 16:54:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0853D87DA;
+	Wed, 22 Aug 2012 17:01:43 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D5AC85D0; Wed, 22 Aug 2012
- 16:54:09 -0400 (EDT)
-In-Reply-To: <1345662961-9587-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- (Florian Achleitner's message of "Wed, 22 Aug 2012 21:15:45 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7721387D9; Wed, 22 Aug 2012
+ 17:01:42 -0400 (EDT)
+In-Reply-To: <004101cd8096$fce3a700$f6aaf500$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Wed, 22 Aug 2012 20:50:22 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 85703AFA-EC9B-11E1-8E76-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 931BD316-EC9C-11E1-8E4E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204094>
 
-Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-> Another improved series with fixups by Junio, and a little by me.
-> Diff:
-> - fix inconsistend indent in Documentation/git-remote-helpers.txt
-> - remove trailing newline in Makefile
-> - fix argument list and usage of regenerate_marks(void) in remote-svn.c
+>> > diff --git a/http.c b/http.c
+>> > index b61ac85..18bc6bf 100644
+>> > --- a/http.c
+>> > +++ b/http.c
+>> > @@ -806,10 +806,12 @@ static int http_request(const char *url, void
+>> > *result, int target, int options)
+>> 
+>> Likewrapped X-<
 >
->
-> [PATCH v6 01/16] Implement a remote helper for svn in C
-> [PATCH v6 02/16] Add git-remote-testsvn to Makefile
-> [PATCH v6 03/16] Add svndump_init_fd to allow reading dumps from
-> [PATCH v6 04/16] Add argv_array_detach and argv_array_free_detached
-> [PATCH v6 05/16] Connect fast-import to the remote-helper via pipe,
-> [PATCH v6 06/16] Add documentation for the 'bidi-import' capability
-> [PATCH v6 07/16] When debug==1, start fast-import with "--stats"
-> [PATCH v6 08/16] remote-svn, vcs-svn: Enable fetching to private
-> [PATCH v6 09/16] Allow reading svn dumps from files via file:// urls
-> [PATCH v6 10/16] vcs-svn: add fast_export_note to create notes
-> [PATCH v6 11/16] Create a note for every imported commit containing
-> [PATCH v6 12/16] remote-svn: Activate import/export-marks for
-> [PATCH v6 13/16] remote-svn: add incremental import
-> [PATCH v6 14/16] Add a svnrdump-simulator replaying a dump file for
-> [PATCH v6 15/16] remote-svn: add marks-file regeneration
-> [PATCH v6 16/16] Add a test script for remote-svn
+> Any suggestion?
 
-It seems that only 15/16 needs to be replaced, so I'll do that and
-rebuild 'pu' before pushing it out, which I was about to do with the
-patches from the last round.
+Other than "don't wrap" (or "get a real MUA and MTA" X-<),
+unfortunately no.
 
-Thanks.
+I do not know if you have checked MUA specific hints section of
+Documentation/SubmittingPatches; there may be environment specific
+hints described for a MUA you may have at hand (or not).
