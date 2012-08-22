@@ -1,77 +1,96 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
-Date: Wed, 22 Aug 2012 23:05:47 +0200
-Message-ID: <004601cd80a9$e79bace0$b6d306a0$@schmitz-digital.de>
-References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de> <7v8vd6alqe.fsf@alter.siamese.dyndns.org> <003001cd808b$9d505730$d7f10590$@schmitz-digital.de> <7vk3wq964r.fsf@alter.siamese.dyndns.org> <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de> <7v7gsq94gd.fsf@alter.siamese.dyndns.org> <004101cd8096$fce3a700$f6aaf500$@schmitz-digital.de> <7vwr0q63po.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Porting git to HP NonStop
+Date: Wed, 22 Aug 2012 14:12:17 -0700
+Message-ID: <7vobm2637y.fsf@alter.siamese.dyndns.org>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+ <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+ <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+ <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+ <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+ <7v628epzia.fsf@alter.siamese.dyndns.org>
+ <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
+ <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+ <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
+ <7v4nnxld24.fsf@alter.siamese.dyndns.org>
+ <002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
+ <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
+ <503519B3.1020403@kdbg.org>
+ <CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com>
+ <CA+sFfMdL=h=aoX7mCWfXJ+QvDLH7gvzWWo9HMXKSaTv+ykx-8w@mail.gmail.com>
+ <004401cd80a3$4b0cff60$e126fe20$@schmitz-digital.de>
+ <7v628a7iu5.fsf@alter.siamese.dyndns.org>
+ <004501cd80a9$d01ecc00$705c6400$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 23:06:07 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, <rsbecker@nexbridge.com>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed Aug 22 23:12:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4I7o-0001HZ-Mg
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 23:06:05 +0200
+	id 1T4IDz-0001uL-FM
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 23:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933190Ab2HVVF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 17:05:59 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:53052 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751508Ab2HVVF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 17:05:58 -0400
-Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0M96Lt-1SwLUt1PzB-00CPwA; Wed, 22 Aug 2012 23:05:54 +0200
-In-Reply-To: <7vwr0q63po.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHjEtoBTcn41aOpScwQkPT+c62HTAJeVUchAO6Wu9cBkiD+9QGuygBoAMLnBsUBv8N3IgG0C8qlluUJh8A=
-Content-Language: de
-X-Provags-ID: V02:K0:D0Ks5hFZ6tu44yZVWQoNaskXM6RtGBtwG05uKQq2Rui
- WSSZo6+FTmq3vAIEw0Dw0GYKWTHxVi8FsVM/i3JUBI71F3ZbUY
- bE8TO1eDCfh6R0OXCNXVJZI/8+dAMJ33BjBgL/axs+lzYRJI+J
- e5LZ4hEgfkf8ta+k4W0zTFBMVoV30hLKqyci/5WLKzNQmxUGij
- LfrelcMQnA1WNHLVT4k97b2oYAikpgooLcsgwV4UiK3bET+yqU
- 6uMR4GO8HyB9WVRPBn33JTiPh4sie4RYQ+7ajon7pOWxrSDX2O
- 3KRYEAszQR06CncPJ9cHkz5Zd6lhO0TED+HZOrgTvGWMrbJOCU
- xLx9C+weSJMcznUTnoOcEARCtP5dOkSovuvd212SsaHjECHJfp
- oWo+OakzF8KKw==
+	id S933304Ab2HVVMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 17:12:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59176 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933209Ab2HVVMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 17:12:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 368738A78;
+	Wed, 22 Aug 2012 17:12:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eJLfjPMTCH7jmPtDWuaSBzgplmc=; b=LB5sOv
+	+xu9NBQQ3afHuXoZFnhkb5xQRCUZ/2lGO9ocxf79TbJkQ2R2/W4LgWr48mqt2fF6
+	afGFBFegsOVK2QXddEYe7Z7Fu9jM7AQDrFD+gLz1XtezRWrB1zTpVhARx+saqMeq
+	LLzQw2ciB9EtkabqBZz1U9ifauz5pWXLN9pAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eGMZZPOiaENU0cx6zu0QNZ60HJGnAhXq
+	kcKLf3iRaaSRqmteAztHqoNo/aB0cD3BWDyYDyCyYHcnwCgwi0BHMInnuEWHdqdv
+	uybI53hzR90Z9M3kHvU/Pj9ijg7R24ldPQOMCUdcL/phPK91qa2GD0lYSRH96T0C
+	AdNNwm4+NOM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D9EF8A77;
+	Wed, 22 Aug 2012 17:12:20 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 736AB8A76; Wed, 22 Aug 2012
+ 17:12:19 -0400 (EDT)
+In-Reply-To: <004501cd80a9$d01ecc00$705c6400$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Wed, 22 Aug 2012 23:05:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0EC80380-EC9E-11E1-90F0-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204098>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Wednesday, August 22, 2012 11:02 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> >> > diff --git a/http.c b/http.c
-> >> > index b61ac85..18bc6bf 100644
-> >> > --- a/http.c
-> >> > +++ b/http.c
-> >> > @@ -806,10 +806,12 @@ static int http_request(const char *url, void
-> >> > *result, int target, int options)
-> >>
-> >> Likewrapped X-<
-> >
-> > Any suggestion?
-> 
-> Other than "don't wrap" (or "get a real MUA and MTA" X-<), unfortunately
-no.
-> 
-> I do not know if you have checked MUA specific hints section of
-> Documentation/SubmittingPatches; there may be environment specific hints
-> described for a MUA you may have at hand (or not).
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-I checked, but Outlook isn't mentioned :-(
+>> If it helps your port, compat/itimer.c sounds like a good place.
+>> Doesn't it need a new header file to introduce structures and constants,
+> too?
+>
+> You mean the ITIMER_* and struct itimerval, right?
+> On NonStop these are available in <sys/time.h>, so here's no need to add
+> them.
 
-Bye, Jojo
+At least you would need a header to declare these two functions and
+make them visible so that the remainder of the codebase will not
+have to know about git_setitimer(), no?  Or does your header files
+on NonStop declare setitimer() but does not implement it?
+
+As your proposed name is not compat/tandem.c but more generic
+sounding compat/itimer.c, we would have to plan for systems other
+than NonStop, so we may later have to introduce makefile variables
+to ask that header file to declare the structure and define the
+constants that are missing from such a system.  While you are
+porting to NonStop, you may not have to define/declare them, but
+knowing that these files are the place to later do so is part of the
+planning.
