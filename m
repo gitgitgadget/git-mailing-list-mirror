@@ -1,99 +1,105 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
-Date: Wed, 22 Aug 2012 19:28:58 +0200
-Message-ID: <003001cd808b$9d505730$d7f10590$@schmitz-digital.de>
-References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de> <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Porting git to HP NonStop
+Date: Wed, 22 Aug 2012 10:30:02 -0700
+Message-ID: <7vvcga96n9.fsf@alter.siamese.dyndns.org>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+ <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+ <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+ <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+ <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+ <7v628epzia.fsf@alter.siamese.dyndns.org>
+ <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
+ <7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+ <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
+ <7v4nnxld24.fsf@alter.siamese.dyndns.org>
+ <002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
+ <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:29:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	rsbecker@nexbridge.com
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 19:30:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Ejx-00019C-NT
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:29:14 +0200
+	id 1T4Ekw-0002LK-KI
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964959Ab2HVR3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 13:29:07 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:60225 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964869Ab2HVR3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 13:29:06 -0400
-Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0LkQN1-1Tg3Ol1F9f-00cNtW; Wed, 22 Aug 2012 19:29:04 +0200
-In-Reply-To: <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHjEtoBTcn41aOpScwQkPT+c62HTAJeVUchlyf9mwA=
-Content-Language: de
-X-Provags-ID: V02:K0:I1NJi8RVwj7aHwYoy9fz+OEXN5uxHvA4ineuP0/t8mM
- UtQBLbP/pilS2x78Dq3Yyo3CyAKhlsgbpAaBcGWzt67lc4dUPi
- KzV9mIshnJF/twGnylvYkozsKL5lwMIa7R/xItOsFEH/tWIaL6
- ez6TNdn9HYBjZqILLYRi2+dXWkdwASjuWMu4LJtmykm1zAfqbL
- meUCC5EkpBa2ff9I9kqb1BChnV5BrsX6toAOjHR0BNHvbIZudi
- xmKxo12aDePWUfKy6UN+wbGHh7ufwrl5m0eq2LVnbqY/50KRjl
- 1edadBTS7BuUXvpLX3X3rBgakkMP/OOSMMfHLfmVvTfK4eON9b
- UYFcz6+pZWdXVKzwRjql+rV8G80gYdZu3GMGd3htoj/s5K3P9W
- DgfTLnHrvxU5g==
+	id S932510Ab2HVRaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 13:30:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53104 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964848Ab2HVRaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 13:30:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A1EF9361;
+	Wed, 22 Aug 2012 13:30:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xZJe0hNmQhIFhIaX9A+bFZuj9uQ=; b=mC/4sy
+	JOCPTx680gvyyBVm4fFLo4nHPG3rjsiuMmjAkQPWUH2mrXgPWcH9/V6DQk55bL8B
+	ISNhEgLDoU+5I9PC6LsSMSBOO9thISjbE5oCcnYMlm++biYo95kzzZ3V8CfYEmrp
+	kK/jNoBr/dyL9/WeuqM3cugiqvrcecPrToevs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R+/hnCAtvuWEEPasX3nEOI7w6qDkFvpJ
+	fJXnAWjCLByvST4TGF+OK08Z3peaGjvtjQF/obbvDa69tksESVGHQRUpo8xkP1xx
+	22Ad0KuKm1rikzuFaXuQLJNKsCvTmzZ8mt5hIObc9xbzG1fPa3ZJN5VG/Ye3Hlup
+	9CQeljhBMCA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 717D39360;
+	Wed, 22 Aug 2012 13:30:05 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8011935A; Wed, 22 Aug 2012
+ 13:30:03 -0400 (EDT)
+In-Reply-To: <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com> (Brandon
+ Casey's message of "Wed, 22 Aug 2012 10:00:42 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 021D0DE8-EC7F-11E1-B03F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204041>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Wednesday, August 22, 2012 7:19 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> 
-> At the very least, please mention that this reverts be22d92 (http:
-> avoid empty error messages for some curl errors, 2011-09-05) on platforms
-> with older versions of libcURL.
+Brandon Casey <drafnel@gmail.com> writes:
 
-a) Of course I didn't know that, thanks for telling me.
-b) How and where to add that? In the Subject of an email, in the body, right
-at the front?
-Like this:
-----
+> On Wed, Aug 22, 2012 at 9:30 AM, Joachim Schmitz
+> <jojo@schmitz-digital.de> wrote:
+>
+>> OK, so how about this:
+>> /usr/local/bin/diff -EBbu ./compat/mkdir.c.orig ./compat/mkdir.c
+>> --- ./compat/mkdir.c.orig       2012-08-21 05:02:11 -0500
+>> +++ ./compat/mkdir.c    2012-08-21 05:02:11 -0500
+>> @@ -0,0 +1,24 @@
+>> +#include "../git-compat-util.h"
+>> +#undef mkdir
+>> +
+>> +/* for platforms that can't deal with a trailing '/' */
+>> +int compat_mkdir_wo_trailing_slash(const char *dir, mode_t mode)
+>> +{
+>> +       int retval;
+>> +       char *tmp_dir = NULL;
+>> +       size_t len = strlen(dir);
+>> + ...
+> Why not rearrange this so that you assign to dir the value of tmp_dir
+> and then just pass dir to mkdir.  Then you can avoid the recast of dir
+> to (char*) in the else branch.  Later, just call free(tmp_dir).  Also,
+> we have xstrndup.  So I think the body of your function can become
+> something like:
+>
+>    if (len && dir[len-1] == '/')
+>        dir = tmp_dir = xstrndup(dir, len-1);
+>
+>    retval = mkdir(dir, mode);
+>    free(tmp_dir);
 
-This reverts be22d92 (http: avoid empty error messages for some curl errors,
-2011-09-05) on platforms with older versions of libcURL.
+Nice.  And we have xmemdupz() would be even better as you
+followed-up.
 
-Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
----
- http.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/http.c b/http.c
-index b61ac85..18bc6bf 100644
---- a/http.c
-+++ b/http.c
-@@ -806,10 +806,12 @@ static int http_request(const char *url, void *result,
-int target, int options)
-                                ret = HTTP_REAUTH;
-                        }
-                } else {
-+#if LIBCURL_VERSION_NUM >= 0x070c00
-                        if (!curl_errorstr[0])
-                                strlcpy(curl_errorstr,
- 
-curl_easy_strerror(results.curl_result),
-                                        sizeof(curl_errorstr));
-+#endif
-                        ret = HTTP_ERROR;
-                }
-        } else {
---
-1.7.12
-
-Bye, Jojo
+Thanks.
