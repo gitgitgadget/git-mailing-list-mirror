@@ -1,73 +1,128 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Porting git to HP NonStop
-Date: Wed, 22 Aug 2012 20:18:14 +0200
-Message-ID: <004001cd8092$7f9e6540$7edb2fc0$@schmitz-digital.de>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com> <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de> <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com> <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de> <7v628epzia.fsf@alter.siamese.dyndns.org> <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de> <7vy5l9lj6m.fsf@alter.siamese.dyndns.org> <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de> <7v4nnxld24.fsf@alter.siamese.dyndns.org> <002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de> <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com> <503519B3.1020403@kdbg.org> <003e01cd8090$55126fd0$ff374f70$@schmitz-digital.de> <50352053.609@kdbg.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: Porting git to HP NonStop
+Date: Wed, 22 Aug 2012 11:24:34 -0700
+Message-ID: <CA+sFfMdNmT5+sVdiRsWyBYNUwF+nkPcAiBswGsTjp3Yr4yZLUQ@mail.gmail.com>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+	<CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+	<004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+	<CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+	<01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+	<7v628epzia.fsf@alter.siamese.dyndns.org>
+	<000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
+	<7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+	<001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
+	<7v4nnxld24.fsf@alter.siamese.dyndns.org>
+	<002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
+	<CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
+	<503519B3.1020403@kdbg.org>
+	<CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "'Brandon Casey'" <drafnel@gmail.com>,
-	"'Junio C Hamano'" <gitster@pobox.com>,
-	"'Shawn Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>,
-	<rsbecker@nexbridge.com>
-To: "'Johannes Sixt'" <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 20:18:55 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	rsbecker@nexbridge.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:24:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4FW1-00015g-2c
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:18:53 +0200
+	id 1T4Fbe-0008Io-G6
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933197Ab2HVSSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 14:18:47 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:62326 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933100Ab2HVSSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 14:18:46 -0400
-Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MgHFG-1TGzCl09sU-00NI2D; Wed, 22 Aug 2012 20:18:21 +0200
-In-Reply-To: <50352053.609@kdbg.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7EfAdIAjkoB0Br5KAKVWWsnAm8TuDMCb+a+7QMjYLRhAalBYtECWH7b+QJMED4YAf2RaVICtbjc6wMYwuxrAc2I9d6VIAkjQA==
-Content-Language: de
-X-Provags-ID: V02:K0:lkRfLOdHLBgE4HGPfKV9uLjSrkb65iU4X9SyFu4DBi6
- OrV1jBlbWtBug84IIgaMXGTgwL+ubCX3/rK0VT9eerE/9O6Fq2
- 6+W3BWOkahuYW54sPbTe/p+uFysMqVC7slipY7qslT6N8LEsc+
- sPWcMXzdbXXK3vjbI/iSNDUV1nB/xs0hIntWsbfFoSrq4BJYYl
- vePtFbWaEVyfpyh2okLEN4Uejiv8XzPEDHWi29gYilknhUjfhU
- 6vPkbOb7OS57hsJt/262YR80jQTHJJqHTck3cSAYCABkLRN+6p
- XLWw8RZsUDTUhCXCiU/UiYAuNYqzSRrhFag4QM9wCfB7EEt0Ih
- ijVYiLy5XJaHU74kRAvike8noKy8hT3VMFD4DYtth3DxGI8lZg
- LGvT1UB1z6fcw==
+	id S933227Ab2HVSYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 14:24:37 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:36270 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933220Ab2HVSYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 14:24:35 -0400
+Received: by vcbfk26 with SMTP id fk26so1362943vcb.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 11:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=N18jJIei19fW9x0QPLCqFRNtjexWk/v/fPkaYV49hwM=;
+        b=wxIKS6wUBJ0QynW/ZMG4h1ON0Xn+P0BT07dF/BUtpA25MbLFNuCNUGBTdfzUskKelo
+         KeCiLk5QDDG3xvFQ+/NiJ0NRq6hcI+JaXoDQB7v5JePz2o0vDmvcQKc6rxXxRbVQywRX
+         e0k4xOt+qPFEzgQIZwHKAPjSR+cnCYacD2T7qrwKiqemWJvK6jlQ1u9KFiChravN4wUU
+         BRT48KEwnbIRnHWC9oTdHkTpX0XqDcrztIIOc9o/Kduy/98YT/wwLtdgWDb+E9NUEbKZ
+         how5vT0AkAu0d183U2OgFeR6SvdY9d6pqR3iIxgjZJ7sPd6mDHf0kLo7tC8a8I/rBlSg
+         RGTQ==
+Received: by 10.58.33.234 with SMTP id u10mr18680123vei.49.1345659874969; Wed,
+ 22 Aug 2012 11:24:34 -0700 (PDT)
+Received: by 10.58.29.233 with HTTP; Wed, 22 Aug 2012 11:24:34 -0700 (PDT)
+In-Reply-To: <CA+sFfMedWVAgqvHS67V6L=ROjdN6M3p3pYTUDk98xgozX4djEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204060>
 
-> -----Original Message-----
-> From: Johannes Sixt [mailto:j6t@kdbg.org]
-> Sent: Wednesday, August 22, 2012 8:09 PM
-> To: Joachim Schmitz
-> Cc: 'Brandon Casey'; 'Junio C Hamano'; 'Shawn Pearce'; git@vger.kernel.org;
-> rsbecker@nexbridge.com
-> Subject: Re: Porting git to HP NonStop
-> 
-> Am 22.08.2012 20:02, schrieb Joachim Schmitz:
-> >> From: Johannes Sixt [mailto:j6t@kdbg.org] Don't use x* wrappers in
-> >> the compat layer, at least not those that allocate
-> >> memory: They behave unpredictably due to try_to_free_routine and may
-> >> lead to recursive invocations.
-> >
-> > I was just following orders ;-)
-> > What about the other proposal, xmemdupz? Same story I guess?
-> 
-> xmemdupz calls xmalloc, so, yes, same story.
+On Wed, Aug 22, 2012 at 11:09 AM, Brandon Casey <drafnel@gmail.com> wrote:
+> On Wed, Aug 22, 2012 at 10:41 AM, Johannes Sixt <j6t@kdbg.org> wrote:
 
-So back to my original patch, using strdup, check the return value, etc.
+>> Don't use x* wrappers in the compat layer, at least not those that
+>> allocate memory: They behave unpredictably due to try_to_free_routine
+>> and may lead to recursive invocations.
+>
+> I thought that rule only applied to die handlers.  i.e. don't use the
+> x* wrappers to allocate memory in a die handler like
+> compat/win32/syslog.c.  At least that's what I wrote in 040a6551 when
+> you pointed out this issue back then.
+>
+> Admittedly, it could get pretty sticky trying to trace the die
+> handlers to ensure they don't invoke your new compat/ function.  So,
+> yeah, adopting this rule of not using x* wrappers that allocate memory
+> in compat/ generally seems like a good idea.
+>
+> Should we also try to detect recursive invocation of die and friends?
+> In theory recursion could be triggered by any die handler that makes
+> use of a code path that calls an x* wrapper that allocates memory,
+> couldn't it?
 
-Bye, Jojo
+Perhaps something like:
+
+diff --git a/usage.c b/usage.c
+index a2a6678..2d0ff35 100644
+--- a/usage.c
++++ b/usage.c
+@@ -80,8 +80,15 @@ void NORETURN usage(const char *err)
+
+ void NORETURN die(const char *err, ...)
+ {
++       static int dying;
+        va_list params;
+
++       if (dying) {
++               fputs("fatal: recursion detected in die handler\n", stderr);
++               exit(128);
++       }
++       dying = 1;
++
+        va_start(params, err);
+        die_routine(err, params);
+        va_end(params);
+@@ -89,11 +96,18 @@ void NORETURN die(const char *err, ...)
+
+ void NORETURN die_errno(const char *fmt, ...)
+ {
++       static int dying;
+        va_list params;
+        char fmt_with_err[1024];
+        char str_error[256], *err;
+        int i, j;
+
++       if (dying) {
++               fputs("fatal: recursion detected in die handler\n", stderr);
++               exit(128);
++       }
++       dying = 1;
++
+        err = strerror(errno);
+        for (i = j = 0; err[i] && j < sizeof(str_error) - 1; ) {
+                if ((str_error[j++] = err[i++]) != '%')
+
+-Brandon
