@@ -1,141 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Support generate poison .mo files for testing
-Date: Wed, 22 Aug 2012 04:13:31 -0700
-Message-ID: <7vboi3b2n8.fsf@alter.siamese.dyndns.org>
-References: <7va9xofbgo.fsf@alter.siamese.dyndns.org>
- <1345613246-4053-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] fetch/push: allow refs/*:refs/*
+Date: Wed, 22 Aug 2012 04:28:47 -0700
+Message-ID: <7v7gsrb1xs.fsf@alter.siamese.dyndns.org>
+References: <1345484397-10958-1-git-send-email-gitster@pobox.com>
+ <1345484397-10958-2-git-send-email-gitster@pobox.com>
+ <50332E2D.2070602@alum.mit.edu> <7vpq6kdu31.fsf@alter.siamese.dyndns.org>
+ <50348C97.4040606@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 13:13:44 2012
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 22 13:28:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T48sX-0007wx-Lv
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 13:13:41 +0200
+	id 1T497J-0008NT-Lv
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 13:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399Ab2HVLNg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Aug 2012 07:13:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52954 "EHLO
+	id S1751311Ab2HVL2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 07:28:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58792 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753098Ab2HVLNe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2012 07:13:34 -0400
+	id S1751086Ab2HVL2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 07:28:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DDE77D06;
-	Wed, 22 Aug 2012 07:13:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB0168026;
+	Wed, 22 Aug 2012 07:28:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=v7iCEiV8ho5L
-	v6/h5+zee5WzZsc=; b=dhLmXLVltZ4NDqULPxxLXlTiAt3erOv+N2T44NxhZM6o
-	7x9yPIXMdBPwNLE0ep9AaQMRvnIjw8SrYd4yJdxcrXhCh7Rqn6tdnb3bsfOVK6tx
-	7QAhH+j3iHO9oic6K277iJeeZoiswqDE6N+DKgqdJcZ/kDPg4ByJqp/AuaxuZgI=
+	:content-type; s=sasl; bh=DBCQZg8PNHpWVzPPpnxybBlmpI4=; b=jdqYnJ
+	sKFGe+pgT0QEnzge4JPT1UE7E/Kuj6jd+9LiscmmZWV3BVqRJEpNP5OArL2Ix/by
+	YU10q7msbGyCmJDguK+W52QRLuSy3Y5u9WClzLDxWK51lohKhziXA4Oj1qDXQQU0
+	UFTJWq1DGd4GDzijIXd+ZLVjP1xlo03VxwPC0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=phv0gM
-	QVy9Dw7hYgwmBJY8pJqlF7fNpEfot9b8GEBY6xV5m9vwgFElrhgP4pVpGLpef3wQ
-	HulU9ScXvfX9Zr36xUWXDdNIIIzY7yYmsQPIF3ri24+Ub244ue1FzIhBNbBg/LmE
-	zIHv3Uy4GIqTP3biZvl8xU3w1/6U2pHoZZMaY=
+	:content-type; q=dns; s=sasl; b=ICj3YFiZH5w63sF5iwz1Q9KGAvJX9FoO
+	9lWUP1HEDwgkxVR8IbcRaS8LCNUmxI3XWf+kgRGUwagcCCIoHAp/w86HI1lqYjM1
+	e1BYl9jc/iFENJ/zFVCOlkCXncrtbjqo1UGBizytM0OcGKrA1rTaq/frMe+Wy6IM
+	707C99A88Ic=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BF6B7D05;
-	Wed, 22 Aug 2012 07:13:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C84C98025;
+	Wed, 22 Aug 2012 07:28:49 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B252C7D03; Wed, 22 Aug 2012
- 07:13:32 -0400 (EDT)
-In-Reply-To: <1345613246-4053-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 22 Aug
- 2012 12:27:26 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C3418024; Wed, 22 Aug 2012
+ 07:28:49 -0400 (EDT)
+In-Reply-To: <50348C97.4040606@alum.mit.edu> (Michael Haggerty's message of
+ "Wed, 22 Aug 2012 09:39:03 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68C62668-EC4A-11E1-9165-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8B059DE2-EC4C-11E1-81D7-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204012>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> test-poisongen does a similar job to gettext poison feature except
-> that it does it at build time. Gibberish .mo files are generated for
-> all supported langauges and put in po/build/poison-locale. Target
-> "poison-locale" is for this.
+>> The remote side can also throw phony "I have this object, too, but
+>> not at a particular ref---this entry is only to let you know I have
+>> it, so that we can negotiate minimal transfer better" entries that
+>> are labelled with strings that do not begin with "refs/" and do not
+>> pass check_refname_format() (and because they are not refs, they do
+>> not have to pass the test) at us, and we do not want to filter them
+>> out in this function.  But we do not want anything that is malformed
+>> under "refs/".
+>
+> Thanks for the explanation.  I'm trying to dig some more into this so
+> that I can add some documentation, because this area of the code is
+> rather obscure.
+>
+> Here is the loop being discussed, in full (from builtin/fetch-pack.c,
+> filter_refs()):
+> ...
+> Empirically (determined by instrumenting the code and running the git
+> test suite):
+>
+> * The first branch of the if statement is only executed for ref->name of
+> the form "refs/tags/foo^{}" for various "foo".
 
-What is the significance of this locale being "Gibberish"?
-Currently, for any string, we give "### gettext poison ###" or
-something but the only thing we care about in the poison mode is
-that it is different from the message id, no?  I was wondering if
-these phony translations can be something simple like "Add QQ at the
-beginning of the message id string" and still can catch mistakenly
-marked messages that come from the plumbing layer, or something.
+We do not want "fetch --mirror" and "refs/*:refs/*" to add a tag
+whose name is "foo^{}" to us.
 
-As you have already written a printf skipper that looks fairly
-conservative, perhaps I shouldn't be worried too much about it, but
-we seem to be spending considerable effort on the "poison", and it
-makes me wonder (even though no better alternative comes to mind) if
-we could do better.  The reason we do "poison" (be it the current
-one or locale based one) in the first place is so that we want to
-make sure messages from the plumbing are not marked for i18n, and we
-do so by running our test under the "poison" mode that produces
-output different from the in-code text that are marked for i18n,
-which somehow feels quite a roundabout way of doing so.
+> * The second branch of the if is *never* executed.
 
-> User can run the test with these .mo files by setting POISON_LOCALE
-> while running the test suite. User must also set LANG/LC_* correctly
-> (and the system is supposed to support that locale).
+I am not familiar with (nor particularly interested in) the "args.depth"
+code, so I have no comment on this part offhand.
 
->  OK let me redo step one. test-poisongen requires libgettextpo. I'm
->  not sure if this library if gnu specific. We may need another flag
->  for it instead of NO_GETTEXT. We don't need a fake language code wit=
-h
->  this approach.
-	=09
-OK.
+> * The third branch is invoked for various reference names under "refs/"
+> (including oddballs like "refs/for/refs/heads/master", "refs/stash",
+> "refs/replace/<SHA1>"), and also for "HEAD".
+>
+> This doesn't quite agree with your explanation, because the phony refs
+> (at least in this dataset) *do* start with "refs/" and they *are* trashed.
 
->  Makefile         |  19 ++++++++
->  t/test-lib.sh    |  10 +++-
->  test-poisongen.c | 139 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  wrap-for-bin.sh  |   6 ++-
->  4 files changed, 171 insertions(+), 3 deletions(-)
->  mode change 100644 =3D> 100755 t/test-lib.sh
->  create mode 100644 test-poisongen.c
->  mode change 100644 =3D> 100755 wrap-for-bin.sh
+Try fetching from a repository that has an alternate, and you would
+see those ".have" phoney refs.
 
-Thanks.  I suspect two mode changes weren't intentional?
-
-> +static void translate(const char *msg, struct strbuf *buf)
-> +{
-> +	const char *end =3D msg + strlen(msg);
-> +	const char *text =3D "* GETTEXT POISON *";
-> +	int text_len =3D strlen(text);
-> +	int t =3D 0;
-> +
-> +	strbuf_reset(buf);
-> +	/* preserve \n and printf format specifiers because msgfmt
-> +	   barfs otherwise. */
-> +	while (msg < end) {
-> +		/* printf specifiers and shell variables, it's a quite
-> +		   relax check */
-> +		if ((*msg =3D=3D '%' || *msg =3D=3D '$') && msg+1 < end) {
-> +			strbuf_addch(buf, *msg++);
-> +			do
-> +			       strbuf_addch(buf, *msg);
-> +			while (msg < end && !isspace(*msg++));
-> +		} else if (*msg =3D=3D '\n') {
-> +			/* we only need to preserve trailing newlines, doing
-> +			   more does not really harm */
-> +			strbuf_addch(buf, '\n');
-> +			msg++;
-> +		} else {
-> +			strbuf_addch(buf, text[t]);
-> +			t =3D (t + 1) % text_len;
-> +			msg++;
-> +		}
-> +	}
-> +}
+But yes, they are trashed as well, as they are not likely to match,
+so you are right; the ".have" entries are red-herring (they have
+already been used before the caller calls this function for their
+sole purpose of marking the other side has).
