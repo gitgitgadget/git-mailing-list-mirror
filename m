@@ -1,96 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Prefer sysconf(_SC_OPEN_MAX) over
- getrlimit(RLIMIT_NOFILE,...)
-Date: Wed, 22 Aug 2012 10:23:00 -0700
-Message-ID: <7v4nnualjf.fsf@alter.siamese.dyndns.org>
-References: <002301cd807f$4e19ad80$ea4d0880$@schmitz-digital.de>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: Porting git to HP NonStop
+Date: Wed, 22 Aug 2012 10:23:09 -0700
+Message-ID: <CA+sFfMd5zzfZVrGJSMkr2ga8kTg6Tiun=HBdHkg6rV-stjDT8Q@mail.gmail.com>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>
+	<CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>
+	<004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>
+	<CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>
+	<01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>
+	<7v628epzia.fsf@alter.siamese.dyndns.org>
+	<000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>
+	<7vy5l9lj6m.fsf@alter.siamese.dyndns.org>
+	<001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>
+	<7v4nnxld24.fsf@alter.siamese.dyndns.org>
+	<002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>
+	<CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>
+	<002f01cd808a$2e027e90$8a077bb0$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:23:11 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org,
+	rsbecker@nexbridge.com
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed Aug 22 19:23:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Ee6-0002Ic-Mq
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:23:11 +0200
+	id 1T4EeJ-0002aW-Ie
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964822Ab2HVRXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 13:23:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49462 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964824Ab2HVRXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 13:23:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25C4B9157;
-	Wed, 22 Aug 2012 13:23:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cGqi2uq+13aY5oSfEqnFGuTBlNI=; b=LQ5ma5
-	xisjIQBkNz8d6vuUXzfcINysU3vDeER+F1UpVDmLODRjcnzMDy+SSbFTqiqNu6Iv
-	GfoSSf1mzgIke8mjt3H5VFqC5WbpQrVR8N1ALws5U3CICtnu/EYGdN6N7qFuVydO
-	VfRaNIeUOw2cwVAoJM+GbNGl83gLGyJjIJDKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HRW/2mFQKOK2Dhrr43b0q0iCM0hlSC/Y
-	b61BSbR/d8XQ+/KsSEp2U8Mb/Ph445wITb/JHQVOsk+BMyPhaouCc114b+9Mdt8N
-	yc8JuTwSVleC1OKu1o7NMZLXz/z92By/0M04PpzcIdWE4EJDQp6dV2z2P2v7JeHc
-	SA3W2fEKSH4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 127089156;
-	Wed, 22 Aug 2012 13:23:03 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AD559155; Wed, 22 Aug 2012
- 13:23:02 -0400 (EDT)
-In-Reply-To: <002301cd807f$4e19ad80$ea4d0880$@schmitz-digital.de> (Joachim
- Schmitz's message of "Wed, 22 Aug 2012 18:00:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 06F2FD06-EC7E-11E1-A7CC-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S964942Ab2HVRXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 13:23:11 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:54771 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964824Ab2HVRXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 13:23:09 -0400
+Received: by vcbfk26 with SMTP id fk26so1291851vcb.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 10:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=LaQAGArK1aRle/33FB2yqtulQxwdFeYF7WxXwxqlCgo=;
+        b=OCwVRoCB+Tq+BZ0AtyGjTL9iNIq8kQelHcGQc0MIaEy8yHek72MkUHmK55kNF5ezbn
+         Oxv41wYpm06X+yMC4lk+qe/+wjhQZZxz3GsMywmkv0/HNW9RqDzRQ7wOuXNi4vf69ikg
+         6vVHsqOIFPLRarl5DeclWHX35QVMGOdN0u8bx6YdDOtgwWqJD/vtbAme/dL8jRNUZ1IP
+         zqQci4PG/ezmNSBS3LT3wfNU0o0bvqlTPsLtA0bVf/bw6+4/rgDdPGdTNMuUtq0p5lKN
+         ZrVqZ3eSfj5s8JqE6d5b0ilZSgSz9nNcKar2U8whd3bHd0kSARqSGsUfMowkrqVAe8L8
+         xVHg==
+Received: by 10.220.149.131 with SMTP id t3mr10212781vcv.1.1345656189189; Wed,
+ 22 Aug 2012 10:23:09 -0700 (PDT)
+Received: by 10.58.29.233 with HTTP; Wed, 22 Aug 2012 10:23:09 -0700 (PDT)
+In-Reply-To: <002f01cd808a$2e027e90$8a077bb0$@schmitz-digital.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204038>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+On Wed, Aug 22, 2012 at 10:18 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+>> From: Brandon Casey [mailto:drafnel@gmail.com]
+>> Sent: Wednesday, August 22, 2012 7:01 PM
+>> To: Joachim Schmitz
+>> Cc: Junio C Hamano; Shawn Pearce; git@vger.kernel.org;
+>> rsbecker@nexbridge.com
+>> Subject: Re: Porting git to HP NonStop
+>>
+>> On Wed, Aug 22, 2012 at 9:30 AM, Joachim Schmitz <jojo@schmitz-digital.de>
+>> wrote:
+>>
+>> > OK, so how about this:
+>> > /usr/local/bin/diff -EBbu ./compat/mkdir.c.orig ./compat/mkdir.c
+>> > --- ./compat/mkdir.c.orig       2012-08-21 05:02:11 -0500
+>> > +++ ./compat/mkdir.c    2012-08-21 05:02:11 -0500
+>> > @@ -0,0 +1,24 @@
+>> > +#include "../git-compat-util.h"
+>> > +#undef mkdir
+>> > +
+>> > +/* for platforms that can't deal with a trailing '/' */ int
+>> > +compat_mkdir_wo_trailing_slash(const char *dir, mode_t mode) {
+>> > +       int retval;
+>> > +       char *tmp_dir = NULL;
+>> > +       size_t len = strlen(dir);
+>> > +
+>> > +       if (len && dir[len-1] == '/') {
+>> > +               if ((tmp_dir = strdup(dir)) == NULL)
+>> > +                       return -1;
+>> > +               tmp_dir[len-1] = '\0';
+>> > +       }
+>> > +       else
+>> > +               tmp_dir = (char *)dir;
+>> > +
+>> > +       retval = mkdir(tmp_dir, mode);
+>> > +       if (tmp_dir != dir)
+>> > +               free(tmp_dir);
+>> > +
+>> > +       return retval;
+>> > +}
+>>
+>> Why not rearrange this so that you assign to dir the value of tmp_dir and then
+>> just pass dir to mkdir.  Then you can avoid the recast of dir to (char*) in the
+>> else branch.  Later, just call free(tmp_dir).  Also, we have xstrndup.  So I think
+>> the body of your function can become something like:
+>>
+>>    if (len && dir[len-1] == '/')
+>>        dir = tmp_dir = xstrndup(dir, len-1);
+>
+> xstndup() can't fail?
 
-> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> ---
->  sha1_file.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index af5cfbd..76714ad 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -747,6 +747,9 @@ static int open_packed_git_1(struct packed_git *p)
->                 return error("packfile %s index unavailable", p->pack_name);
->
->         if (!pack_max_fds) {
-> +#ifdef _SC_OPEN_MAX
-> +               unsigned int max_fds = sysconf(_SC_OPEN_MAX);
-> +#else
->                 struct rlimit lim;
->                 unsigned int max_fds;
->
-> @@ -754,6 +757,7 @@ static int open_packed_git_1(struct packed_git *p)
->                         die_errno("cannot get RLIMIT_NOFILE");
->
->                 max_fds = lim.rlim_cur;
-> +#endif
->
->                 /* Save 3 for stdin/stdout/stderr, 22 for work */
->                 if (25 < max_fds)
-> --
-> 1.7.12
+Correct.  It will either succeed or die.  It will also try to free up
+some memory used by git if possible.
 
-Looks sane but it would be more readable to make this a small helper
-function, so that we do not need to have #ifdef/#endif in the
-primary flow of the code.
-
-By the way, I noticed that you seem to be sending patches out of
-git, instead of "diff -ru", which is a good sign ;-).  But all of
-your patches are whitespace damaged and cannot be applied X-<.
+-Brandon
