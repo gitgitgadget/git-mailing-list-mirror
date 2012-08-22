@@ -1,93 +1,85 @@
-From: Brian Foster <brian.foster@maxim-ic.com>
-Subject: [Q] Comparing differences introduced by two commits?
-Date: Wed, 22 Aug 2012 14:10:12 +0200
-Message-ID: <2794881.R5SsgFdXjR@laclwks004>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Support generate poison .mo files for testing
+Date: Wed, 22 Aug 2012 19:37:04 +0700
+Message-ID: <CACsJy8Dp5FZd9Ko6o18r5TeS5dfbjv61wOmP1452zyvHfX5LMQ@mail.gmail.com>
+References: <7va9xofbgo.fsf@alter.siamese.dyndns.org> <1345613246-4053-1-git-send-email-pclouds@gmail.com>
+ <7vboi3b2n8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 22 14:30:17 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 14:37:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4A4Z-0004qV-TJ
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 14:30:12 +0200
+	id 1T4ABq-0004d8-1C
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 14:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755911Ab2HVMaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 08:30:05 -0400
-Received: from antispam01.maxim-ic.com ([205.153.101.182]:54429 "EHLO
-	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752864Ab2HVMaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 08:30:03 -0400
-X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Aug 2012 08:30:03 EDT
-X-ASG-Debug-ID: 1345637417-02ae98188a278120001-QuoKaX
-Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam01.maxim-ic.com with ESMTP id 8oSaFtIEoBcq4CrA for <git@vger.kernel.org>; Wed, 22 Aug 2012 07:10:17 -0500 (CDT)
-X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
-Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
- maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Wed, 22 Aug 2012 07:10:15 -0500
-Received: from laclwks004.localnet (10.201.0.45) by
- maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Wed, 22 Aug 2012 05:10:14 -0700
-X-ASG-Orig-Subj: [Q] Comparing differences introduced by two commits?
-User-Agent: KMail/4.8.4 (Linux/3.2.0-29-generic; KDE/4.8.4; x86_64; ; )
-X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
-X-Barracuda-Start-Time: 1345637417
-X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at maxim-ic.com
-X-Barracuda-Spam-Score: 0.12
-X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.106384
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.12 CN_BODY_332            BODY: CN_BODY_332
+	id S1756851Ab2HVMhh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Aug 2012 08:37:37 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54605 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752648Ab2HVMhf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2012 08:37:35 -0400
+Received: by ialo24 with SMTP id o24so821627ial.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 05:37:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yHta9EW6E/dTSEiMRaW1XaMpYxm2mLAVJfCH3ndScJo=;
+        b=MAvSOlGRT7en4Bth0tlhr36UcDO8k3fAu9768ux+xaZQXoIztceOIS6dJI1qh2l+MC
+         vlRwAF45qQP8FvbQTRvhjdC4Q+Sl3lEHsJUjoZxwvP/UUAhtg1Ia8NmeJdUCdSxmtsyt
+         w2mvNo7tq9b9aNzwEOWIBM9KNC2/LL9cxUSnFlKH1CChwY4SB5up+wdv5e2r2GFeUGPJ
+         BL3bNkcNE+dftRWKvfp6OO1Tw3rw2jrpPsvPy94u+VzsNRybxuMOvyLl+g+75vDpMYuy
+         tHm7kXwksSiD2nVKCfnWoSaxaaVTQlzaTgI3LHlALfQsGg7xB4Mouw8W5m7cNZLaXqZR
+         LQKA==
+Received: by 10.50.220.194 with SMTP id py2mr2006182igc.15.1345639054652; Wed,
+ 22 Aug 2012 05:37:34 -0700 (PDT)
+Received: by 10.64.35.12 with HTTP; Wed, 22 Aug 2012 05:37:04 -0700 (PDT)
+In-Reply-To: <7vboi3b2n8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204014>
 
+On Wed, Aug 22, 2012 at 6:13 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+>
+>> test-poisongen does a similar job to gettext poison feature except
+>> that it does it at build time. Gibberish .mo files are generated for
+>> all supported langauges and put in po/build/poison-locale. Target
+>> "poison-locale" is for this.
+>
+> What is the significance of this locale being "Gibberish"?
+> Currently, for any string, we give "### gettext poison ###" or
+> something but the only thing we care about in the poison mode is
+> that it is different from the message id, no?  I was wondering if
+> these phony translations can be something simple like "Add QQ at the
+> beginning of the message id string" and still can catch mistakenly
+> marked messages that come from the plumbing layer, or something.
 
-Hello,
+I'm gradually getting there, partly thanks to your question about
+grepping "tracked" in another thread. This patch does not really
+generate random strings. It repeats the pattern "* gettext poison *"
+for evey character that can be replaced. But a better way could be
+replacing "tracked" with "t r a c k e d". We know the rule so we can
+recreate the that string from "tracked" in test_i18n*. Or reverse the
+upper/lower case, whichever is easier for the recreation by test_i18n*
 
- I have two commits A and B.  They are on separate branches.
- Commit A is a older version of B.  I want to see what, if
- any, differences there are between what commit A changes
- and what commit B changes.  (The relative positions of
- two commits may also differ in the two branches; that is, 
- there may have been some commit re-ordering.)
+>>  mode change 100644 =3D> 100755 t/test-lib.sh
+>>  create mode 100644 test-poisongen.c
+>>  mode change 100644 =3D> 100755 wrap-for-bin.sh
+>
+> Thanks.  I suspect two mode changes weren't intentional?
 
- Ideally, the contents of the commit-message are also taken
- into account (albeit things like the commit-Id, dates, and
- so on will differ and therefore should be ignored).
-
- I realize the history leading up to each commit can itself
- cause what the commits change to differ, even if the "net
- result" of the two commits is the same.  For my purposes,
- this is a noise issue, and I'm happy to consider A and B 
- as not causing the same changes (i.e., as being different),
- albeit if the only difference is the line numbers, then it
- would be nice to ignore that.
-
- In the past I've done:
-
-    diff <(git show A) <(git show B)
-
- which produces rather messy output but is Ok when dealing
- with just one or two sets of A/B commits.  I now have a
- large-ist set of A/B commits, and the above is impractical.
-
- Some searching hasn't found any suggestions I'm too happy
- with, albeit I've very possibly overlooked something.
-
- Any suggestions?
-cheers!
-	-blf-
-
--- 
-Brian Foster
-Principal MTS, Software        |  La Ciotat, France
-Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
+It's an emacs hook gone bad.
+--=20
+Duy
