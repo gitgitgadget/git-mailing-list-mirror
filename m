@@ -1,122 +1,94 @@
 From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
-Date: Wed, 22 Aug 2012 19:59:58 +0200
-Message-ID: <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de>
-References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de> <7v8vd6alqe.fsf@alter.siamese.dyndns.org> <003001cd808b$9d505730$d7f10590$@schmitz-digital.de> <7vk3wq964r.fsf@alter.siamese.dyndns.org>
+Subject: RE: Porting git to HP NonStop
+Date: Wed, 22 Aug 2012 20:01:17 +0200
+Message-ID: <003d01cd8090$214ca710$63e5f530$@schmitz-digital.de>
+References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de> <CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com> <004701cd771e$21b7cbb0$65276310$@schmitz-digital.de> <CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com> <01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de> <7v628epzia.fsf@alter.siamese.dyndns.org> <000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de> <7vy5l9lj6m.fsf@alter.siamese.dyndns.org> <001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de> <7v4nnxld24.fsf@alter.siamese.dyndns.org> <002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de> <CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com> <7vvcga96n9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 20:00:30 2012
+Cc: "'Shawn Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>,
+	<rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Brandon Casey'" <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 20:01:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4FEC-0005Re-0Q
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:00:28 +0200
+	id 1T4FFM-0006oz-NA
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 20:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758641Ab2HVSAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 14:00:22 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:50736 "EHLO
+	id S1756124Ab2HVSBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 14:01:36 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:50590 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758495Ab2HVSAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 14:00:20 -0400
+	with ESMTP id S1755571Ab2HVSBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 14:01:34 -0400
 Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0M3jZR-1TuySz3Up7-00rIhS; Wed, 22 Aug 2012 20:00:05 +0200
-In-Reply-To: <7vk3wq964r.fsf@alter.siamese.dyndns.org>
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0MOiCE-1SzGtR1gd4-0063Ao; Wed, 22 Aug 2012 20:01:24 +0200
+In-Reply-To: <7vvcga96n9.fsf@alter.siamese.dyndns.org>
 X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQHjEtoBTcn41aOpScwQkPT+c62HTAJeVUchAO6Wu9cBkiD+9ZcUACOQ
+Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7EfAdIAjkoB0Br5KAKVWWsnAm8TuDMCb+a+7QMjYLRhAalBYtECWH7b+QJMED4YAf2RaVICOYYBSZVLGMjQ
 Content-Language: de
-X-Provags-ID: V02:K0:618VZTw3Xxydo9D7X9rx7D+fwNHvVmhJDAEiXpKaTFg
- VJDzPMVkMcD9UimH/ae2yvDE56enk1fTkNKKtoNIBAiROV/1BP
- 6rRqs0tMYhhdGAGBYOUypo8eVwVKRhFZanqBlFElv156aJp2vN
- RH8Jj13OAd2aWsOVNginHezfAKd8yOvTbNdQdgVa5LD8yKizxD
- J7gZ7+TJ3CO2Cz9jC3vysrIC4OWCxeLfAQ2uPcNOvKLBLvfcOf
- epSyJItDNKGkkrbFHv/Ju6ku+TjxnWI2qgSOHZ64rmcSU+G2To
- 0OaGgIHFcPWYMpdxThW5MfG2Gy9QtJQE5aWjZbamRkDPK+qFD6
- Dt+IjOoJtnvbQiQImnZfgcbzoqdVM+P3Rhr3jojSEAVLHf4UEw
- WGQa7HhtHNRYQ==
+X-Provags-ID: V02:K0:MyXN6KZHOomXhEsFPuKTMYkvwJlbjUU1AUIbHFuj+jz
+ 8FqtCJFtnhE2uzFGM/6w1cpBkw9g3R/nJOEyB37pDO2LLtfQr4
+ HklWAPyivinJEIUurHyjeN5jPBf49wGmNlbDtIKGGjLvsq0aim
+ RVO1X5dhBHqD0BDs8Obeg9lyMi1ahGuaFcVdN994MFSuAWHI8c
+ esqxZjcf6RLvVyTTts1r0nM5ASghfiiMsChhC8vV+Se2CwPbqp
+ 0POBvYdRq4hUpuWOhfyquFk1//t2/hEV5oBZ1Eq9TZSbKo5IDC
+ of4mlstn9yBBgGE5x8kHerI4E0gyJpGXL8r6LFv3DJpjr4YtZ3
+ hhJLSMKqUZGmPL8hIl0eENEeNRg7yb84RQmprAFnGy9KnPtZ7R
+ NtnQEqwL3Eagw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204052>
 
+> -----Original Message-----
 > From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Wednesday, August 22, 2012 7:41 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+> Sent: Wednesday, August 22, 2012 7:30 PM
+> To: Brandon Casey
+> Cc: Joachim Schmitz; Shawn Pearce; git@vger.kernel.org;
+> rsbecker@nexbridge.com
+> Subject: Re: Porting git to HP NonStop
 > 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> Brandon Casey <drafnel@gmail.com> writes:
 > 
-> > Like this:
-> > ----
+> > On Wed, Aug 22, 2012 at 9:30 AM, Joachim Schmitz
+> > <jojo@schmitz-digital.de> wrote:
 > >
-> > This reverts be22d92 (http: avoid empty error messages for some curl
-> > errors,
-> > 2011-09-05) on platforms with older versions of libcURL.
+> >> OK, so how about this:
+> >> /usr/local/bin/diff -EBbu ./compat/mkdir.c.orig ./compat/mkdir.c
+> >> --- ./compat/mkdir.c.orig       2012-08-21 05:02:11 -0500
+> >> +++ ./compat/mkdir.c    2012-08-21 05:02:11 -0500
+> >> @@ -0,0 +1,24 @@
+> >> +#include "../git-compat-util.h"
+> >> +#undef mkdir
+> >> +
+> >> +/* for platforms that can't deal with a trailing '/' */ int
+> >> +compat_mkdir_wo_trailing_slash(const char *dir, mode_t mode) {
+> >> +       int retval;
+> >> +       char *tmp_dir = NULL;
+> >> +       size_t len = strlen(dir);
+> >> + ...
+> > Why not rearrange this so that you assign to dir the value of tmp_dir
+> > and then just pass dir to mkdir.  Then you can avoid the recast of dir
+> > to (char*) in the else branch.  Later, just call free(tmp_dir).  Also,
+> > we have xstrndup.  So I think the body of your function can become
+> > something like:
 > >
-> > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> > ---
-> 
-> Perfect ;-)
-> 
-> >  http.c | 2 ++
-> >  1 file changed, 2 insertions(+)
+> >    if (len && dir[len-1] == '/')
+> >        dir = tmp_dir = xstrndup(dir, len-1);
 > >
-> > diff --git a/http.c b/http.c
-> > index b61ac85..18bc6bf 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -806,10 +806,12 @@ static int http_request(const char *url, void
-> > *result, int target, int options)
-> >                                 ret = HTTP_REAUTH;
-> >                         }
+> >    retval = mkdir(dir, mode);
+> >    free(tmp_dir);
 > 
-> Now we need to see where these whitespace breakages are coming from and
-> fix it, and I think it should be done earlier than later, as I expect we
-will be
-> seeing more patches from you in the coming weeks.
+> Nice.  And we have xmemdupz() would be even better as you followed-up.
 
-OK, next attempt (this time I downloaded the patch file to my PC first and
-used Wordpad for copy/past rather than cat in a PuTTY session)
----
-
-This reverts be22d92 (http: avoid empty error messages for some curl errors,
-2011-09-05) on platforms with older versions of libcURL.
-
-Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
----
- http.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/http.c b/http.c
-index b61ac85..18bc6bf 100644
---- a/http.c
-+++ b/http.c
-@@ -806,10 +806,12 @@ static int http_request(const char *url, void *result,
-int target, int options)
- 				ret = HTTP_REAUTH;
- 			}
- 		} else {
-+#if LIBCURL_VERSION_NUM >= 0x070c00
- 			if (!curl_errorstr[0])
- 				strlcpy(curl_errorstr,
- 
-curl_easy_strerror(results.curl_result),
- 					sizeof(curl_errorstr));
-+#endif
- 			ret = HTTP_ERROR;
- 		}
- 	} else {
--- 
-1.7.12
-
-Better?
+How's that one used?
 
 Bye, Jojo
