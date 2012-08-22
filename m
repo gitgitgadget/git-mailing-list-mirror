@@ -1,67 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] Fix tests under GETTEXT_POISON on git-remote
-Date: Wed, 22 Aug 2012 12:39:38 -0700
-Message-ID: <7vehmy7m2t.fsf@alter.siamese.dyndns.org>
-References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
- <1345523464-14586-7-git-send-email-pclouds@gmail.com>
- <7v628bdhol.fsf@alter.siamese.dyndns.org>
- <CANYiYbE9sJNOXxxFX_xdow=tnWfUwBYOx4S0_CgaB+bUQxDSRg@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
+Date: Wed, 22 Aug 2012 21:59:03 +0200
+Message-ID: <004301cd80a0$94fddc00$bef99400$@schmitz-digital.de>
+References: <002101cd8078$eb2eb4f0$c18c1ed0$@schmitz-digital.de> <7vd32ialzo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:39:48 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>,
+	"'Johannes Sixt'" <j6t@kdbg.org>,
+	"'Marius Storm-Olsen'" <mstormo@gmail.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:59:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4GmJ-0008Pm-FA
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:39:47 +0200
+	id 1T4H5E-0001qY-UH
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332Ab2HVTjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 15:39:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48469 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754200Ab2HVTjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 15:39:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94BF29334;
-	Wed, 22 Aug 2012 15:39:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OAJJaDeC9IFhTGgcTbLT1ac8cFQ=; b=gha6Ho
-	hNws/dJYV88G6RhAIRvJG/wpLxcaAaegvzr8sDqgPy2PUaqvoOl7hIBlwKVgQFxy
-	tn3SDwRZqfsnrKw/NfOn07JpVxoVywzoFrky6CjUerYs2aDXrJ91ojvcZm8IrTLZ
-	ivuiUAKpf3Vah3zf+STReAo6GvFu9bv9gFcBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O0GHS1K223ohyx5GgzF/2aGCNhIlOl19
-	SpckBK3D4erIORjkdECXWpXOEcaz8piKYC9Q4BagtQe1zraEHJFBoeuZ6rPTzwxH
-	9D6o9Tn9YQOzoHgqvAhVWYdZn7cBIgDkskjfXdcu+7yVpyn0Xgpo109sThnqDuLg
-	mTby00HPHc4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8177A9333;
-	Wed, 22 Aug 2012 15:39:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1B9F9332; Wed, 22 Aug 2012
- 15:39:39 -0400 (EDT)
-In-Reply-To: <CANYiYbE9sJNOXxxFX_xdow=tnWfUwBYOx4S0_CgaB+bUQxDSRg@mail.gmail.com> (Jiang
- Xin's message of "Wed, 22 Aug 2012 22:56:18 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D125498-EC91-11E1-B4F9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754724Ab2HVT7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 15:59:15 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:61312 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170Ab2HVT7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 15:59:13 -0400
+Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0MOCMW-1SylJ40JaG-005WUk; Wed, 22 Aug 2012 21:59:10 +0200
+In-Reply-To: 
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQD/eQtdRAcjQut3cNsfzSYRhS9vOQEpqCMymPjV2GCAACrf0A==
+Content-Language: de
+X-Provags-ID: V02:K0:gkIiKc7p7+ZNEITM1r36Nr8lIv0S4J6GrVx/2mVSw7B
+ 5HxSNQC3HRNAtqjSWF0EKbWcqybDnSUIVpo2sicxC4HnQ0e1EA
+ dihK5umTyVF8Gv+2CfJ8QWwEl55l+haGONkXkn4JzpzU0QIux7
+ u6xKVeLqJd6BXn43KV5BHYsDcQYfYm2jH3oj9MAd68WyDalGca
+ hPF65WmaiqR7JVhrqpmRfmArEdgBkiVhyQJwcFJqmC8WVLaz1n
+ PI+BVUoEeIh0Hq58I2kbtRd8uDfTLwsRdGxmorPQyU0MRaqkGQ
+ C35y+Kco9amf+znWWK6AhIBnkBz6AQOa5rMEd/5LNqeBEmZA+y
+ oMhnAw+NHYbIIBPL5O12L/+zuy9cLRiU8PfFai71rk4z3R7+x3
+ K7iQ6B3xOwHng==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204088>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> Sent: Wednesday, August 22, 2012 7:44 PM
+> To: 'Junio C Hamano'
+> Cc: 'git@vger.kernel.org'; 'Erik Faye-Lund'; 'Johannes Sixt'; 'Marius
+Storm-
+> Olsen'
+> Subject: RE: [PATCH] Support non-WIN32 system lacking poll() while keeping
+> the WIN32 part intact
+> 
+> > From: Junio C Hamano [mailto:gitster@pobox.com]
+> > Sent: Wednesday, August 22, 2012 7:13 PM
+> > To: Joachim Schmitz
+> > Cc: git@vger.kernel.org; Erik Faye-Lund; Johannes Sixt; Marius
+> > Storm-Olsen
+> > Subject: Re: [PATCH] Support non-WIN32 system lacking poll() while
+> > keeping the WIN32 part intact
+> >
+> > "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> >
+> > > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> > > ---
+> > >  Makefile            | 18 ++++++++++++++----
+> > >  compat/win32/poll.c |  8 ++++++--
+> > >  2 files changed, 20 insertions(+), 6 deletions(-)
+> > >
+> > > diff --git a/Makefile b/Makefile
+...
+> > > @@ -1601,6 +1606,11 @@ ifdef NO_GETTEXT ...
+> > > +ifdef NO_POLL
+> > > +       NO_SYS_POLL_H = YesPlease
+> > > +       COMPAT_CFLAGS += -DNO_POLL -Icompat/win32 # so it find poll.h
+> > > +       COMPAT_OBJS += compat/win32/poll.c
 
-> Maybe we should bypass all testcases which calling check_remote_track().
+This is of course wrong! Needs to be poll.o, not poll.c
 
-Sounds like it.
+> > > endif
+> >
+> > In general, I think this is a good direction to go.  If the existing
+> > emulation in win32/poll.c turns out to be usable across platforms and
+> > not windows specific, sharing it would be a good idea.
+> >
+> > But if the emulation is no longer windows specific, shouldn't you also
+> > move it outside compat/win32/ and somewhere more generic?
+> 
+> Should be possible. Esp. as with the current setup make issues a warning:
+> 
+> Makefile:2329: target `compat/win32/poll.c' doesn't match the target
+pattern
+> 
+> Haven't yet been able to spot where that comes from.
+
+See above.
+ 
