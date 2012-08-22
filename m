@@ -1,72 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Support non-WIN32 system lacking poll() while keeping
- the WIN32 part intact
-Date: Wed, 22 Aug 2012 10:48:13 -0700
-Message-ID: <7vfw7e95sy.fsf@alter.siamese.dyndns.org>
-References: <002101cd8078$eb2eb4f0$c18c1ed0$@schmitz-digital.de>
- <7vd32ialzo.fsf@alter.siamese.dyndns.org>
- <003501cd808d$bd21b7a0$376526e0$@schmitz-digital.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Document the --done option.
+Date: Wed, 22 Aug 2012 10:47:58 -0700
+Message-ID: <CAGdFq_jTOY=+DJfuFdx8w8U-hQe9kFBLQDMaESpbeQKDafko2A@mail.gmail.com>
+References: <20120822105705.GA30472@thyrsus.com> <7vobm2968x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>,
-	"'Johannes Sixt'" <j6t@kdbg.org>,
-	"'Marius Storm-Olsen'" <mstormo@gmail.com>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:48:26 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: esr@thyrsus.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 19:49:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4F2U-0007Pq-C4
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:48:22 +0200
+	id 1T4F39-0008CX-SM
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753092Ab2HVRsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 13:48:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61714 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752676Ab2HVRsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 13:48:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50D1697F1;
-	Wed, 22 Aug 2012 13:48:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XmmWp39KA6zoewiy2EqvK8gRuSk=; b=s7nDOb
-	kP4Fo9lIZKlEwG+iquk39EuGzilnmMTns76i28qzt9aeqKvWT7yoIY4J17AWYJjZ
-	3qWK2gYs/RTT56iBTQ6nkoOSm5Dzj/M/L+QbSE8Ai3JZYsKjzFjOKNBobfOwTE+t
-	/lxg0OrhPKHy8mua73o8cqXL9fWl7DQL71yX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MuMK6KJyAGZlrjRBsqiLXOFtunc6EYlY
-	RbuXvjFTqMzqnwWxRW0b5zobk+6DdyO7+XZvdIFSyYU1jONH9+JotZw0tAke1NcW
-	euES3eq7fI6JwAgTMaQMHF3N7VPT1R8J9xEy5XZwVGiLTIpPYG05hLbcgAVM3Jlw
-	dL3J9DbnssU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E3DD97F0;
-	Wed, 22 Aug 2012 13:48:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFB5D97EC; Wed, 22 Aug 2012
- 13:48:14 -0400 (EDT)
-In-Reply-To: <003501cd808d$bd21b7a0$376526e0$@schmitz-digital.de> (Joachim
- Schmitz's message of "Wed, 22 Aug 2012 19:44:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C571826-EC81-11E1-B2F3-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755149Ab2HVRst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 13:48:49 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34267 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754342Ab2HVRsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 13:48:39 -0400
+Received: by obbuo13 with SMTP id uo13so1699255obb.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 10:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mOQRZq8NaHzO/A5k3oBRfNRLgcFQI/vfUfWQ1R0j1XU=;
+        b=wZ67nSZsCMNwP/MCrB9FsfCPESGMWguk0umwwh1VN1mu5ds93s01R6fXlY0zQC8fNM
+         uPGLh2euoDUhD+ZpYcVjeAsEG2nWB1CUP1coA+8as+QR3HjcRz0uVQoznJcb/FAjjWMr
+         KrScbthbNaZuMssscdHxyNbQ02DfbVVswGdg4XZ7iIYGLZUf2ZBUVs+U3K1+3dxtSPbz
+         8lz/4z/kRFyWnI3g2E6uix80kWQ3NpFGkFmXWjCS4iTNsO0rccPsbpJludP5s/99+/Yh
+         anm0tWUHLJIku6Mc8pmbuvUzlAWIyMVUIL1AhXbqyXtXA3FFpqXS7Qo9EeukQBCRZ7cI
+         fdUw==
+Received: by 10.182.37.41 with SMTP id v9mr16541726obj.23.1345657719063; Wed,
+ 22 Aug 2012 10:48:39 -0700 (PDT)
+Received: by 10.76.85.65 with HTTP; Wed, 22 Aug 2012 10:47:58 -0700 (PDT)
+In-Reply-To: <7vobm2968x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204048>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-
->> Do you really need to have both?  I suspect "If you do not have a usable
->> sys/poll.h, set NO_SYS_POLL_H" may be a simpler alternative, but there
-> must
+On Wed, Aug 22, 2012 at 10:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Eric S. Raymond" <esr@thyrsus.com> writes:
 >
-> Hmm, Not having <sys/poll.h> and not having poll() are different thinks,
-> aren't they?
+>> ---
+>
+> A forgotten Sign-off?
+>
+> Sverre, the text matches my understanding as well as what be56862
+> (fast-import: introduce 'done' command, 2011-07-16) says it did.
+> Ack?
 
-Ahh, OK, I forgot the other combination: working poll() but inclusion
-of sys/poll.h is unnecessary.  OK.
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
+
+-- 
+Cheers,
+
+Sverre Rabbelier
