@@ -1,193 +1,114 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH v6 05/16] Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability
-Date: Wed, 22 Aug 2012 21:15:50 +0200
-Message-ID: <1345662961-9587-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH v6 12/16] remote-svn: Activate import/export-marks for fast-import
+Date: Wed, 22 Aug 2012 21:15:57 +0200
+Message-ID: <1345662961-9587-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1345662961-9587-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1345662961-9587-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:17:06 2012
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:17:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4GQJ-0001jV-58
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:17:03 +0200
+	id 1T4GQQ-0001jV-HQ
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965041Ab2HVTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 15:16:45 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53740 "EHLO
+	id S965067Ab2HVTRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 15:17:03 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:46610 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964997Ab2HVTQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 15:16:39 -0400
-Received: by mail-bk0-f46.google.com with SMTP id j10so449687bkw.19
-        for <git@vger.kernel.org>; Wed, 22 Aug 2012 12:16:38 -0700 (PDT)
+	with ESMTP id S965055Ab2HVTQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 15:16:53 -0400
+Received: by mail-bk0-f46.google.com with SMTP id j10so449679bkw.19
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 12:16:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=aNo8VBlZVCaX+K+xhf5NIIJ8nuzZlKUqDfgTXv/Pdac=;
-        b=zCdzCE6pJvUffUT8DwEZBtxgqMrJdDEjqO6CB72v2UypYP2qHKhmXgCtrmvqmbr2h4
-         +h65zo2MnGIi2Zd2vj/ooxGZM/+GugJ9uTffMpar6Y6+4TMapVYvhYcqoN/tXklGPEjS
-         RSYrVtOUOEHaCdq235AiW63hmhigsull8oWkjvv6LepiZvsMdd98z0XtQ7gmW5NaK80b
-         H/zdSGQx0QOsmj4NTgfJvtZ2gp4DzYo/NsBpT8aKX0gtWBe+tXvD8KaE8DQU5VIL9BO4
-         xMHDpzTO2vicC0rgA4cx5Sgv17RvoWDgNLFX1gfREaKYN9y1xdduZtU8e1dZhPzV/udL
-         B/TA==
-Received: by 10.204.130.151 with SMTP id t23mr7119408bks.94.1345662998165;
-        Wed, 22 Aug 2012 12:16:38 -0700 (PDT)
+        bh=QrTLSDllwR82ZEfJGuqrjFdvgS8wHb6Tvr2O+W9UZgo=;
+        b=aZdg8FReQ1S5rU+GGUOn3V1ngzsqZjeaUyJKDbbYyWAiIL8XHMRUaSt0NGr+PcULLn
+         hujL1SmBPs3+VnXIBy2mPOsNOMtR9wh0+JsJsvyryxlbPz3rRN6AkbeKWT8EH73ARYY4
+         ZUUzRBO3earZReU6zmdqllLJlBbLexDdR0kFO6i9l7KBm8ErmKqQZhVMIIgzuy6wk81s
+         3S9HkQTctO1W+bXmL6/Dgn2qy6xciy6nXBKJSxu9Cc9VTso8CbmVT5qF6SliNf+KTNeZ
+         2XSaKdy9INnqp4J9feNPVy5Za4f0JCJsUdoMZLrsA9aQCstYo9G8lXWZ34tQkR3HPNb1
+         kKtg==
+Received: by 10.204.148.82 with SMTP id o18mr6924078bkv.41.1345663012883;
+        Wed, 22 Aug 2012 12:16:52 -0700 (PDT)
 Received: from localhost.localdomain (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id ht18sm3346763bkc.16.2012.08.22.12.16.36
+        by mx.google.com with ESMTPS id ht18sm3346763bkc.16.2012.08.22.12.16.50
         (version=SSLv3 cipher=OTHER);
-        Wed, 22 Aug 2012 12:16:37 -0700 (PDT)
+        Wed, 22 Aug 2012 12:16:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1345662961-9587-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1345662961-9587-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204077>
 
-The fast-import commands 'cat-blob' and 'ls' can be used by
-remote-helpers to retrieve information about blobs and trees that
-already exist in fast-import's memory. This requires a channel from
-fast-import to the remote-helper.
-
-remote-helpers that use these features shall advertise the new
-'bidi-import' capability to signal that they require the communication
-channel.  When forking fast-import in transport-helper.c connect it to
-a dup of the remote-helper's stdin-pipe. The additional file
-descriptor is passed to fast-import via its command line
-(--cat-blob-fd).  It follows that git and fast-import are connected to
-the remote-helpers's stdin.
-
-Because git can send multiple commands to the remote-helper on it's
-stdin, it is required that helpers that advertise 'bidi-import' buffer
-all input commands until the batch of 'import' commands is ended by a
-newline before sending data to fast-import.  This is to prevent mixing
-commands and fast-import responses on the helper's stdin.
+Enable import and export of a marks file by sending the appropriate
+feature commands to fast-import before sending data.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- transport-helper.c |   44 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 13 deletions(-)
+ remote-testsvn.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index cfe0988..3523f1f 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -10,6 +10,7 @@
- #include "string-list.h"
- #include "thread-utils.h"
- #include "sigchain.h"
-+#include "argv-array.h"
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index 2b9d151..b6e7968 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -12,6 +12,7 @@ static const char *url;
+ static int dump_from_file;
+ static const char *private_ref;
+ static const char *remote_ref = "refs/heads/master";
++static const char *marksfilename;
  
- static int debug;
- 
-@@ -19,6 +20,7 @@ struct helper_data {
- 	FILE *out;
- 	unsigned fetch : 1,
- 		import : 1,
-+		bidi_import : 1,
- 		export : 1,
- 		option : 1,
- 		push : 1,
-@@ -101,6 +103,7 @@ static void do_take_over(struct transport *transport)
- static struct child_process *get_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process *helper;
- 	const char **refspecs = NULL;
-@@ -122,11 +125,10 @@ static struct child_process *get_helper(struct transport *transport)
- 	helper->in = -1;
- 	helper->out = -1;
- 	helper->err = 0;
--	helper->argv = xcalloc(4, sizeof(*helper->argv));
--	strbuf_addf(&buf, "git-remote-%s", data->name);
--	helper->argv[0] = strbuf_detach(&buf, NULL);
--	helper->argv[1] = transport->remote->name;
--	helper->argv[2] = remove_ext_force(transport->url);
-+	argv_array_pushf(&argv, "git-remote-%s", data->name);
-+	argv_array_push(&argv, transport->remote->name);
-+	argv_array_push(&argv, remove_ext_force(transport->url));
-+	helper->argv = argv_array_detach(&argv, NULL);
- 	helper->git_cmd = 0;
- 	helper->silent_exec_failure = 1;
- 
-@@ -178,6 +180,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->push = 1;
- 		else if (!strcmp(capname, "import"))
- 			data->import = 1;
-+		else if (!strcmp(capname, "bidi-import"))
-+			data->bidi_import = 1;
- 		else if (!strcmp(capname, "export"))
- 			data->export = 1;
- 		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
-@@ -241,8 +245,7 @@ static int disconnect_helper(struct transport *transport)
- 		close(data->helper->out);
- 		fclose(data->out);
- 		res = finish_command(data->helper);
--		free((char *)data->helper->argv[0]);
--		free(data->helper->argv);
-+		argv_array_free_detached(data->helper->argv);
- 		free(data->helper);
- 		data->helper = NULL;
+ static int cmd_capabilities(const char *line);
+ static int cmd_import(const char *line);
+@@ -74,6 +75,10 @@ static int cmd_import(const char *line)
+ 			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
+ 		dumpin_fd = svndump_proc.out;
  	}
-@@ -376,14 +379,23 @@ static int fetch_with_fetch(struct transport *transport,
- static int get_importer(struct transport *transport, struct child_process *fastimport)
- {
- 	struct child_process *helper = get_helper(transport);
-+	struct helper_data *data = transport->data;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+	int cat_blob_fd, code;
- 	memset(fastimport, 0, sizeof(*fastimport));
- 	fastimport->in = helper->out;
--	fastimport->argv = xcalloc(5, sizeof(*fastimport->argv));
--	fastimport->argv[0] = "fast-import";
--	fastimport->argv[1] = "--quiet";
-+	argv_array_push(&argv, "fast-import");
-+	argv_array_push(&argv, "--quiet");
- 
-+	if (data->bidi_import) {
-+		cat_blob_fd = xdup(helper->in);
-+		argv_array_pushf(&argv, "--cat-blob-fd=%d", cat_blob_fd);
-+	}
-+	fastimport->argv = argv.argv;
- 	fastimport->git_cmd = 1;
--	return start_command(fastimport);
++	/* setup marks file import/export */
++	printf("feature import-marks-if-exists=%s\n"
++			"feature export-marks=%s\n", marksfilename, marksfilename);
 +
-+	code = start_command(fastimport);
-+	return code;
+ 	svndump_init_fd(dumpin_fd, STDIN_FILENO);
+ 	svndump_read(url, private_ref);
+ 	svndump_deinit();
+@@ -172,6 +177,10 @@ int main(int argc, const char **argv)
+ 	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
+ 	private_ref = strbuf_detach(&buf, NULL);
+ 
++	strbuf_addf(&buf, "%s/info/fast-import/remote-svn/%s.marks",
++		get_git_dir(), remote->name);
++	marksfilename = strbuf_detach(&buf, NULL);
++
+ 	while(1) {
+ 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
+ 			if (ferror(stdin))
+@@ -187,5 +196,6 @@ int main(int argc, const char **argv)
+ 	strbuf_release(&buf);
+ 	free((void*)url);
+ 	free((void*)private_ref);
++	free((void*)marksfilename);
+ 	return 0;
  }
- 
- static int get_exporter(struct transport *transport,
-@@ -438,11 +450,17 @@ static int fetch_with_import(struct transport *transport,
- 	}
- 
- 	write_constant(data->helper->in, "\n");
-+	/*
-+	 * remote-helpers that advertise the bidi-import capability are required to
-+	 * buffer the complete batch of import commands until this newline before
-+	 * sending data to fast-import.
-+	 * These helpers read back data from fast-import on their stdin, which could
-+	 * be mixed with import commands, otherwise.
-+	 */
- 
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
--	free(fastimport.argv);
--	fastimport.argv = NULL;
-+	argv_array_free_detached(fastimport.argv);
- 
- 	/*
- 	 * The fast-import stream of a remote helper that advertises
 -- 
 1.7.9.5
