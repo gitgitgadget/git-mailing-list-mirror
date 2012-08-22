@@ -1,116 +1,97 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Porting git to HP NonStop
-Date: Wed, 22 Aug 2012 19:30:42 +0200
-Message-ID: <003101cd808b$db381e70$91a85b50$@schmitz-digital.de>
-References: <003a01cd7709$63725260$2a56f720$@schmitz-digital.de>	<CAJo=hJvwih+aOMg6SKP94_1q-az1XV-1Pcf=_fGbvdDcDpC23A@mail.gmail.com>	<004701cd771e$21b7cbb0$65276310$@schmitz-digital.de>	<CAJo=hJsz3ooDAV-0S-BDknnbQPK9ASEYw8b7t7PyKEtJ5jgxQA@mail.gmail.com>	<01a801cd7de8$b4c311a0$1e4934e0$@schmitz-digital.de>	<7v628epzia.fsf@alter.siamese.dyndns.org>	<000601cd7ebd$a4ef5740$eece05c0$@schmitz-digital.de>	<7vy5l9lj6m.fsf@alter.siamese.dyndns.org>	<001801cd7eee$24f95a50$6eec0ef0$@schmitz-digital.de>	<7v4nnxld24.fsf@alter.siamese.dyndns.org>	<002a01cd8083$69fb9960$3df2cc20$@schmitz-digital.de>	<CA+sFfMdnixrUekh40Sde05tkap7Oj19=5D6J6aYVVD1krqPZkw@mail.gmail.com>	<002f01cd808a$2e027e90$8a077bb0$@schmitz-digital.de> <CA+sFfMd5zzfZVrGJSMkr2ga8kTg6Tiun=HBdHkg6rV-stjDT8Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document the --done option.
+Date: Wed, 22 Aug 2012 10:38:38 -0700
+Message-ID: <7vobm2968x.fsf@alter.siamese.dyndns.org>
+References: <20120822105705.GA30472@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Shawn Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>,
-	<rsbecker@nexbridge.com>
-To: "'Brandon Casey'" <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:31:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com, Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 19:38:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Ely-0003gu-07
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:31:18 +0200
+	id 1T4EtE-00049H-22
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933196Ab2HVRbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 13:31:12 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:55041 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751930Ab2HVRbL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Aug 2012 13:31:11 -0400
-Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MC7ge-1SvTL60KaO-009Niv; Wed, 22 Aug 2012 19:30:48 +0200
-In-Reply-To: <CA+sFfMd5zzfZVrGJSMkr2ga8kTg6Tiun=HBdHkg6rV-stjDT8Q@mail.gmail.com>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJtb+yK82c1fE/4VXt1krEuodTb9QKmN7EfAdIAjkoB0Br5KAKVWWsnAm8TuDMCb+a+7QMjYLRhAalBYtECWH7b+QJMED4YAf2RaVIB/2GPoAIbSAlPlTwG+DA=
-Content-Language: de
-X-Provags-ID: V02:K0:+u0vdmroiKih8byegaZtDBvZDQK1gvg+Ec32YJnmBGx
- wjmUP0PlB3tUPD34e1L0hbbQvhBmfsPIPDQmgPiZzJyktF0e6f
- odLvI9g8Y98hwOk8VTteQKP0QCizKxD/T3tLB+uX9d16kRtWt9
- R1SL9dFyE+wMCONkHFu3gkDJnnOFBqQTtFYsfKUg/ldIVvaF36
- jsi1TgzxvHOGBJpXGGGxbUyb7MHBJfv3BTnUUnnq+2Nu8Gr0pE
- yWSdsEHl0eCfOZTUyxWciN1+sLjEuCGwkMi0/Wi7te52wj8l9w
- eFbhBlhf0xe+QGNkk8EWjZq9XaJSNeGvbXPpey5i/oVLCyVA6l
- OUsaV2zwGxtt/0Tg3TxGhHHBH2ucye9zGnyZ1SytQ7kri4HTQP
- 7yOmUNLDadFSQ==
+	id S1752750Ab2HVRin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 13:38:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56886 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751692Ab2HVRil (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 13:38:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9828F955E;
+	Wed, 22 Aug 2012 13:38:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pudQScEeKrLY/slKhN06gEsyVac=; b=WR7u9w
+	4l9a7m8IXSdoxO/tPG9SBAGq9t8VybU6PKCGcmKmyKzHUEljHlu8tMfYh8qzT8sg
+	ZOsmWVIEwAyuSVKj2w/NKpVaMh4ksB422N1y2MnyQj5qMpjiAvyU6bMJCXp5jz3J
+	jPZF61bTwmKZ7cfgV7nXUX7+7LRqj46yeqZZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QgW5uL9+ayzV+0BeFjMu1FJo2jObdg+R
+	rjX3oZ9fauoKEDdJWg4hhmJxKk8AFq4rpGxtaCDtwxHx17qJQCSHeotEW1LKfDdi
+	rHR5489a7VK6LYtT8V6pc0HWJXQ/zFsx7K4xi+oVfkgx9XFRUB6aRk5tbf9bKe1a
+	qxXO2Hbs2eE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85DD1955D;
+	Wed, 22 Aug 2012 13:38:40 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E00A7955C; Wed, 22 Aug 2012
+ 13:38:39 -0400 (EDT)
+In-Reply-To: <20120822105705.GA30472@thyrsus.com> (Eric S. Raymond's message
+ of "Wed, 22 Aug 2012 06:57:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 35BB267A-EC80-11E1-A229-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204043>
 
-> From: Brandon Casey [mailto:drafnel@gmail.com]
-> Sent: Wednesday, August 22, 2012 7:23 PM
-> To: Joachim Schmitz
-> Cc: Junio C Hamano; Shawn Pearce; git@vger.kernel.org;
-> rsbecker@nexbridge.com
-> Subject: Re: Porting git to HP NonStop
-> 
-> On Wed, Aug 22, 2012 at 10:18 AM, Joachim Schmitz <jojo@schmitz-digital.de>
-> wrote:
-> >> From: Brandon Casey [mailto:drafnel@gmail.com]
-> >> Sent: Wednesday, August 22, 2012 7:01 PM
-> >> To: Joachim Schmitz
-> >> Cc: Junio C Hamano; Shawn Pearce; git@vger.kernel.org;
-> >> rsbecker@nexbridge.com
-> >> Subject: Re: Porting git to HP NonStop
-> >>
-> >> On Wed, Aug 22, 2012 at 9:30 AM, Joachim Schmitz
-> >> <jojo@schmitz-digital.de>
-> >> wrote:
-> >>
-> >> > OK, so how about this:
-> >> > /usr/local/bin/diff -EBbu ./compat/mkdir.c.orig ./compat/mkdir.c
-> >> > --- ./compat/mkdir.c.orig       2012-08-21 05:02:11 -0500
-> >> > +++ ./compat/mkdir.c    2012-08-21 05:02:11 -0500
-> >> > @@ -0,0 +1,24 @@
-> >> > +#include "../git-compat-util.h"
-> >> > +#undef mkdir
-> >> > +
-> >> > +/* for platforms that can't deal with a trailing '/' */ int
-> >> > +compat_mkdir_wo_trailing_slash(const char *dir, mode_t mode) {
-> >> > +       int retval;
-> >> > +       char *tmp_dir = NULL;
-> >> > +       size_t len = strlen(dir);
-> >> > +
-> >> > +       if (len && dir[len-1] == '/') {
-> >> > +               if ((tmp_dir = strdup(dir)) == NULL)
-> >> > +                       return -1;
-> >> > +               tmp_dir[len-1] = '\0';
-> >> > +       }
-> >> > +       else
-> >> > +               tmp_dir = (char *)dir;
-> >> > +
-> >> > +       retval = mkdir(tmp_dir, mode);
-> >> > +       if (tmp_dir != dir)
-> >> > +               free(tmp_dir);
-> >> > +
-> >> > +       return retval;
-> >> > +}
-> >>
-> >> Why not rearrange this so that you assign to dir the value of tmp_dir
-> >> and then just pass dir to mkdir.  Then you can avoid the recast of
-> >> dir to (char*) in the else branch.  Later, just call free(tmp_dir).
-> >> Also, we have xstrndup.  So I think the body of your function can become
-> something like:
-> >>
-> >>    if (len && dir[len-1] == '/')
-> >>        dir = tmp_dir = xstrndup(dir, len-1);
-> >
-> > xstndup() can't fail?
-> 
-> Correct.  It will either succeed or die.  It will also try to free up some memory
-> used by git if possible.
+"Eric S. Raymond" <esr@thyrsus.com> writes:
 
-OK. So let's use that then.
+> ---
 
-Bye, Jojo
+A forgotten Sign-off?
+
+Sverre, the text matches my understanding as well as what be56862
+(fast-import: introduce 'done' command, 2011-07-16) says it did.
+Ack?
+
+>  Documentation/git-fast-import.txt |    8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+> index 2620d28..9291ea0 100644
+> --- a/Documentation/git-fast-import.txt
+> +++ b/Documentation/git-fast-import.txt
+> @@ -39,6 +39,10 @@ OPTIONS
+>  	See ``Date Formats'' below for details about which formats
+>  	are supported, and their syntax.
+>  
+> +-- done::
+> +	Terminate with error if there is no 'done' command at the 
+> +	end of the stream.
+> +
+>  --force::
+>  	Force updating modified existing branches, even if doing
+>  	so would cause commits to be lost (as the new commit does
+> @@ -1047,7 +1051,9 @@ done::
+>  	Error out if the stream ends without a 'done' command.
+>  	Without this feature, errors causing the frontend to end
+>  	abruptly at a convenient point in the stream can go
+> -	undetected.
+> +	undetected.  This may occur, for example, if an import
+> +	front end dies in mid-operation without emitting SIGTERM
+> +	or SIGKILL at its subordinate git fast-import instance.
+>  
+>  `option`
+>  ~~~~~~~~
+> -- 
+> 1.7.9.5
