@@ -1,7 +1,7 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH v6 11/16] Create a note for every imported commit containing svn metadata
-Date: Wed, 22 Aug 2012 21:15:56 +0200
-Message-ID: <1345662961-9587-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH v6 08/16] remote-svn, vcs-svn: Enable fetching to private refs
+Date: Wed, 22 Aug 2012 21:15:53 +0200
+Message-ID: <1345662961-9587-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1345662961-9587-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
@@ -10,218 +10,203 @@ References: <1345662961-9587-1-git-send-email-florian.achleitner.2.6.31@gmail.co
  <1345662961-9587-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1345662961-9587-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1345662961-9587-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1345662961-9587-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1345662961-9587-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:17:06 2012
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:17:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4GQL-0001jV-F1
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:17:05 +0200
+	id 1T4GQK-0001jV-3d
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965062Ab2HVTQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 15:16:58 -0400
+	id S965052Ab2HVTQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 15:16:50 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:53740 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965053Ab2HVTQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 15:16:51 -0400
+	with ESMTP id S965034Ab2HVTQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 15:16:45 -0400
 Received: by mail-bk0-f46.google.com with SMTP id j10so449687bkw.19
-        for <git@vger.kernel.org>; Wed, 22 Aug 2012 12:16:50 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 22 Aug 2012 12:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=NIK+GBl+kvzB6CXtl0d2pw33C59BlO9dI/1g7Q7N+8Q=;
-        b=Cit2iNQO7TgbEp06HLj6h83v/4dpS7RQnMXdCjUY/f/tFXZy3IlwDzOtfijdNTa3F3
-         3Y4fijN0K+g/bf5yTFbUcp72lnT69LZh3SMxzJhHYkwr3oeakyI35Jcylpt2r5MVvW4i
-         PDL0Ga4enpuQIEMNpJuobocLNIxsFgAGeehGDVlt2Lo8PIEbb+bx9adAgbHz2v4apMEi
-         vS48i0IPUYpWE02u5wFodKeYLkZXB1MLU13coGrGfv+LbOVwQB3uBUG5XbI8xzdMu7n8
-         dXMHC1DeU5S3ka913anhVfyjSkqFekq2BrirJnrOb9pN8p83xzNkD6oul8vTH1VU8Mb8
-         Zpxw==
-Received: by 10.204.129.76 with SMTP id n12mr6851670bks.18.1345663010564;
-        Wed, 22 Aug 2012 12:16:50 -0700 (PDT)
+        bh=xa8miDTRPgj2CvUJxsjxis2L6ZzKNHSUxXtOnIF0n/o=;
+        b=KdXv6vkyC+O9G0V4XN8KtkIX1n2aoKlbKKSOdVKklQ6+UYf/Iahm7r6qeYfMbiXjnL
+         SD4Rf1WNngPKML7K4EEwapw2eoKiHcj3T/IrQseCFinNS07wUWAekgoqvJIqjMwohECq
+         0TJu64V6p+dfwOh71aY0ALns+AR7ec1zn7DfgP0PW4090OsFaH6xMPOYo9txGS7++toe
+         cOcJTJBoljrCyQdqB6zUWNQ2nykr2cXwylo3fbBXg/FcFiiTwJn5Q52l3ET3/5wAjhDD
+         5dIEnO7JRWVAfjlqyfpL+P5kR06Ym7mCV+CEKxKyZ/vXVHAXdJ1ry2T7cYO+aNMhau8Z
+         kSLw==
+Received: by 10.205.123.8 with SMTP id gi8mr6838402bkc.92.1345663004130;
+        Wed, 22 Aug 2012 12:16:44 -0700 (PDT)
 Received: from localhost.localdomain (cm56-227-93.liwest.at. [86.56.227.93])
-        by mx.google.com with ESMTPS id ht18sm3346763bkc.16.2012.08.22.12.16.48
+        by mx.google.com with ESMTPS id ht18sm3346763bkc.16.2012.08.22.12.16.42
         (version=SSLv3 cipher=OTHER);
-        Wed, 22 Aug 2012 12:16:49 -0700 (PDT)
+        Wed, 22 Aug 2012 12:16:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1345662961-9587-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1345662961-9587-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204074>
 
-To provide metadata from svn dumps for further processing, e.g.
-branch detection, attach a note to each imported commit that stores
-additional information.  The notes are currently hard-coded in
-refs/notes/svn/revs.  Currently the following lines from the svn dump
-are directly accumulated in the note. This can be refined as needed.
+The reference to update by the fast-import stream is hard-coded.  When
+fetching from a remote the remote-helper shall update refs in a
+private namespace, i.e. a private subdir of refs/.  This namespace is
+defined by the 'refspec' capability, that the remote-helper advertises
+as a reply to the 'capabilities' command.
 
- - "Revision-number"
- - "Node-path"
- - "Node-kind"
- - "Node-action"
- - "Node-copyfrom-path"
- - "Node-copyfrom-rev"
+Extend svndump and fast-export to allow passing the target ref.
+Update svn-fe to be compatible.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- vcs-svn/fast_export.c |   14 ++++++++++++--
- vcs-svn/fast_export.h |    2 ++
- vcs-svn/svndump.c     |   21 +++++++++++++++++++--
- 3 files changed, 33 insertions(+), 4 deletions(-)
+ contrib/svn-fe/svn-fe.c |    2 +-
+ test-svn-fe.c           |    2 +-
+ vcs-svn/fast_export.c   |    4 ++--
+ vcs-svn/fast_export.h   |    2 +-
+ vcs-svn/svndump.c       |   14 +++++++-------
+ vcs-svn/svndump.h       |    2 +-
+ 6 files changed, 13 insertions(+), 13 deletions(-)
 
+diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
+index 35db24f..c796cc0 100644
+--- a/contrib/svn-fe/svn-fe.c
++++ b/contrib/svn-fe/svn-fe.c
+@@ -10,7 +10,7 @@ int main(int argc, char **argv)
+ {
+ 	if (svndump_init(NULL))
+ 		return 1;
+-	svndump_read((argc > 1) ? argv[1] : NULL);
++	svndump_read((argc > 1) ? argv[1] : NULL, "refs/heads/master");
+ 	svndump_deinit();
+ 	svndump_reset();
+ 	return 0;
+diff --git a/test-svn-fe.c b/test-svn-fe.c
+index 83633a2..cb0d80f 100644
+--- a/test-svn-fe.c
++++ b/test-svn-fe.c
+@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
+ 	if (argc == 2) {
+ 		if (svndump_init(argv[1]))
+ 			return 1;
+-		svndump_read(NULL);
++		svndump_read(NULL, "refs/heads/master");
+ 		svndump_deinit();
+ 		svndump_reset();
+ 		return 0;
 diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 1ecae4b..df51c59 100644
+index 1f04697..11f8f94 100644
 --- a/vcs-svn/fast_export.c
 +++ b/vcs-svn/fast_export.c
-@@ -3,8 +3,7 @@
-  * See LICENSE for details.
-  */
- 
--#include "git-compat-util.h"
--#include "strbuf.h"
-+#include "cache.h"
- #include "quote.h"
- #include "fast_export.h"
- #include "repo_tree.h"
-@@ -68,6 +67,17 @@ void fast_export_modify(const char *path, uint32_t mode, const char *dataref)
- 	putchar('\n');
- }
- 
-+void fast_export_begin_note(uint32_t revision, const char *author,
-+		const char *log, unsigned long timestamp)
-+{
-+	size_t loglen = strlen(log);
-+	printf("commit refs/notes/svn/revs\n");
-+	printf("committer %s <%s@%s> %ld +0000\n", author, author, "local", timestamp);
-+	printf("data %"PRIuMAX"\n", (uintmax_t)loglen);
-+	fwrite(log, loglen, 1, stdout);
-+	fputc('\n', stdout);
-+}
-+
- void fast_export_note(const char *committish, const char *dataref)
+@@ -72,7 +72,7 @@ static char gitsvnline[MAX_GITSVN_LINE_LEN];
+ void fast_export_begin_commit(uint32_t revision, const char *author,
+ 			const struct strbuf *log,
+ 			const char *uuid, const char *url,
+-			unsigned long timestamp)
++			unsigned long timestamp, const char *local_ref)
  {
- 	printf("N %s %s\n", dataref, committish);
+ 	static const struct strbuf empty = STRBUF_INIT;
+ 	if (!log)
+@@ -84,7 +84,7 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
+ 	} else {
+ 		*gitsvnline = '\0';
+ 	}
+-	printf("commit refs/heads/master\n");
++	printf("commit %s\n", local_ref);
+ 	printf("mark :%"PRIu32"\n", revision);
+ 	printf("committer %s <%s@%s> %ld +0000\n",
+ 		   *author ? author : "nobody",
 diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index 9b32f1e..c2f6f11 100644
+index 8823aca..17eb13b 100644
 --- a/vcs-svn/fast_export.h
 +++ b/vcs-svn/fast_export.h
-@@ -10,6 +10,8 @@ void fast_export_deinit(void);
- void fast_export_delete(const char *path);
+@@ -11,7 +11,7 @@ void fast_export_delete(const char *path);
  void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
- void fast_export_note(const char *committish, const char *dataref);
-+void fast_export_begin_note(uint32_t revision, const char *author,
-+		const char *log, unsigned long timestamp);
  void fast_export_begin_commit(uint32_t revision, const char *author,
  			const struct strbuf *log, const char *uuid,
- 			const char *url, unsigned long timestamp, const char *local_ref);
+-			const char *url, unsigned long timestamp);
++			const char *url, unsigned long timestamp, const char *local_ref);
+ void fast_export_end_commit(uint32_t revision);
+ void fast_export_data(uint32_t mode, off_t len, struct line_buffer *input);
+ void fast_export_blob_delta(uint32_t mode,
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 288bb42..cd65b51 100644
+index d81a078..288bb42 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -48,7 +48,7 @@ static struct {
- static struct {
- 	uint32_t revision;
- 	unsigned long timestamp;
--	struct strbuf log, author;
-+	struct strbuf log, author, note;
- } rev_ctx;
- 
- static struct {
-@@ -77,6 +77,7 @@ static void reset_rev_ctx(uint32_t revision)
- 	rev_ctx.timestamp = 0;
- 	strbuf_reset(&rev_ctx.log);
- 	strbuf_reset(&rev_ctx.author);
-+	strbuf_reset(&rev_ctx.note);
+@@ -299,22 +299,22 @@ static void handle_node(void)
+ 				node_ctx.text_length, &input);
  }
  
- static void reset_dump_ctx(const char *url)
-@@ -310,8 +311,15 @@ static void begin_revision(const char *remote_ref)
- 
- static void end_revision()
+-static void begin_revision(void)
++static void begin_revision(const char *remote_ref)
  {
--	if (rev_ctx.revision)
-+	struct strbuf mark = STRBUF_INIT;
-+	if (rev_ctx.revision) {
- 		fast_export_end_commit(rev_ctx.revision);
-+		fast_export_begin_note(rev_ctx.revision, "remote-svn",
-+				"Note created by remote-svn.", rev_ctx.timestamp);
-+		strbuf_addf(&mark, ":%"PRIu32, rev_ctx.revision);
-+		fast_export_note(mark.buf, "inline");
-+		fast_export_buf_to_data(&rev_ctx.note);
-+	}
+ 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
+ 		return;
+ 	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
+ 		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
+-		rev_ctx.timestamp);
++		rev_ctx.timestamp, remote_ref);
  }
  
- void svndump_read(const char *url, const char *local_ref)
-@@ -358,6 +366,7 @@ void svndump_read(const char *url, const char *local_ref)
+-static void end_revision(void)
++static void end_revision()
+ {
+ 	if (rev_ctx.revision)
+ 		fast_export_end_commit(rev_ctx.revision);
+ }
+ 
+-void svndump_read(const char *url)
++void svndump_read(const char *url, const char *local_ref)
+ {
+ 	char *val;
+ 	char *t;
+@@ -353,7 +353,7 @@ void svndump_read(const char *url)
+ 			if (active_ctx == NODE_CTX)
+ 				handle_node();
+ 			if (active_ctx == REV_CTX)
+-				begin_revision();
++				begin_revision(local_ref);
+ 			if (active_ctx != DUMP_CTX)
  				end_revision();
  			active_ctx = REV_CTX;
- 			reset_rev_ctx(atoi(val));
-+			strbuf_addf(&rev_ctx.note, "%s\n", t);
- 			break;
- 		case sizeof("Node-path"):
- 			if (constcmp(t, "Node-"))
-@@ -369,10 +378,12 @@ void svndump_read(const char *url, const char *local_ref)
- 					begin_revision(local_ref);
+@@ -366,7 +366,7 @@ void svndump_read(const char *url)
+ 				if (active_ctx == NODE_CTX)
+ 					handle_node();
+ 				if (active_ctx == REV_CTX)
+-					begin_revision();
++					begin_revision(local_ref);
  				active_ctx = NODE_CTX;
  				reset_node_ctx(val);
-+				strbuf_addf(&rev_ctx.note, "%s\n", t);
  				break;
- 			}
- 			if (constcmp(t + strlen("Node-"), "kind"))
- 				continue;
-+			strbuf_addf(&rev_ctx.note, "%s\n", t);
- 			if (!strcmp(val, "dir"))
- 				node_ctx.type = REPO_MODE_DIR;
- 			else if (!strcmp(val, "file"))
-@@ -383,6 +394,7 @@ void svndump_read(const char *url, const char *local_ref)
- 		case sizeof("Node-action"):
- 			if (constcmp(t, "Node-action"))
- 				continue;
-+			strbuf_addf(&rev_ctx.note, "%s\n", t);
- 			if (!strcmp(val, "delete")) {
- 				node_ctx.action = NODEACT_DELETE;
- 			} else if (!strcmp(val, "add")) {
-@@ -401,11 +413,13 @@ void svndump_read(const char *url, const char *local_ref)
- 				continue;
- 			strbuf_reset(&node_ctx.src);
- 			strbuf_addstr(&node_ctx.src, val);
-+			strbuf_addf(&rev_ctx.note, "%s\n", t);
- 			break;
- 		case sizeof("Node-copyfrom-rev"):
- 			if (constcmp(t, "Node-copyfrom-rev"))
- 				continue;
- 			node_ctx.srcRev = atoi(val);
-+			strbuf_addf(&rev_ctx.note, "%s\n", t);
- 			break;
- 		case sizeof("Text-content-length"):
- 			if (constcmp(t, "Text") && constcmp(t, "Prop"))
-@@ -475,6 +489,7 @@ static void init(int report_fd)
- 	strbuf_init(&dump_ctx.url, 4096);
- 	strbuf_init(&rev_ctx.log, 4096);
- 	strbuf_init(&rev_ctx.author, 4096);
-+	strbuf_init(&rev_ctx.note, 4096);
- 	strbuf_init(&node_ctx.src, 4096);
- 	strbuf_init(&node_ctx.dst, 4096);
- 	reset_dump_ctx(NULL);
-@@ -506,6 +521,8 @@ void svndump_deinit(void)
- 	reset_rev_ctx(0);
- 	reset_node_ctx(NULL);
- 	strbuf_release(&rev_ctx.log);
-+	strbuf_release(&rev_ctx.author);
-+	strbuf_release(&rev_ctx.note);
- 	strbuf_release(&node_ctx.src);
- 	strbuf_release(&node_ctx.dst);
- 	if (buffer_deinit(&input))
+@@ -463,7 +463,7 @@ void svndump_read(const char *url)
+ 	if (active_ctx == NODE_CTX)
+ 		handle_node();
+ 	if (active_ctx == REV_CTX)
+-		begin_revision();
++		begin_revision(local_ref);
+ 	if (active_ctx != DUMP_CTX)
+ 		end_revision();
+ }
+diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
+index acb5b47..febeecb 100644
+--- a/vcs-svn/svndump.h
++++ b/vcs-svn/svndump.h
+@@ -3,7 +3,7 @@
+ 
+ int svndump_init(const char *filename);
+ int svndump_init_fd(int in_fd, int back_fd);
+-void svndump_read(const char *url);
++void svndump_read(const char *url, const char *local_ref);
+ void svndump_deinit(void);
+ void svndump_reset(void);
+ 
 -- 
 1.7.9.5
