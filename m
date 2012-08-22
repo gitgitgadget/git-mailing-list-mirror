@@ -1,63 +1,67 @@
-From: Maaartin-1 <grajcar1@seznam.cz>
-Subject: git-log combining different detail levels
-Date: Wed, 22 Aug 2012 21:25:06 +0200
-Message-ID: <50353212.7060109@seznam.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/7] Fix tests under GETTEXT_POISON on git-remote
+Date: Wed, 22 Aug 2012 12:39:38 -0700
+Message-ID: <7vehmy7m2t.fsf@alter.siamese.dyndns.org>
+References: <1345523464-14586-1-git-send-email-pclouds@gmail.com>
+ <1345523464-14586-7-git-send-email-pclouds@gmail.com>
+ <7v628bdhol.fsf@alter.siamese.dyndns.org>
+ <CANYiYbE9sJNOXxxFX_xdow=tnWfUwBYOx4S0_CgaB+bUQxDSRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 22 21:39:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 21:39:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Gm8-00088Y-Bs
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:39:36 +0200
+	id 1T4GmJ-0008Pm-FA
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 21:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634Ab2HVTjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 15:39:31 -0400
-Received: from smtp1.seznam.cz ([77.75.72.43]:57442 "EHLO smtp1.seznam.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753992Ab2HVTja (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 15:39:30 -0400
-X-Greylist: delayed 856 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Aug 2012 15:39:29 EDT
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=beta; d=seznam.cz;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding:X-Smtpd:X-Seznam-User:X-Session:X-Country:X-Session-Info;
-	b=n0MWpwXKZWczMjMZM6fcD5IsAv8VHDYJgXgkOo9Kcxg01Vy1qWLwZjE46Z0l6xfmb
-	ty2pn13JFN6DrTCceMYcx02tYDkTSvKofet8KqKYNgGKZxuHETnB4CdvHwOByIE3pzp
-	JCtJUmc9Mv5Qe9rJ9K0dW5/sE+l2YYow1Pd+8Yc=
-Received: from [10.0.3.200] (188-120-197-152.luckynet.cz [188.120.197.152])
-	by email-relay2.go.seznam.cz (Seznam SMTPD UNKNOWN@exported) with ESMTP;
-	Wed, 22 Aug 2012 21:25:07 +0200 (CEST)  
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-X-Smtpd: UNKNOWN@exported
-X-Seznam-User: grajcar1@seznam.cz
-X-Session: 10
-X-Country: CZ
-X-Session-Info: (sid='3d1900000009', ip='188.120.197.152', helo='[10.0.3.200]', login='grajcar1@seznam.cz', from='grajcar1@seznam.cz', country='CZ', duration='00:00:01.107')
+	id S1755332Ab2HVTjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 15:39:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48469 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754200Ab2HVTjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 15:39:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94BF29334;
+	Wed, 22 Aug 2012 15:39:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OAJJaDeC9IFhTGgcTbLT1ac8cFQ=; b=gha6Ho
+	hNws/dJYV88G6RhAIRvJG/wpLxcaAaegvzr8sDqgPy2PUaqvoOl7hIBlwKVgQFxy
+	tn3SDwRZqfsnrKw/NfOn07JpVxoVywzoFrky6CjUerYs2aDXrJ91ojvcZm8IrTLZ
+	ivuiUAKpf3Vah3zf+STReAo6GvFu9bv9gFcBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O0GHS1K223ohyx5GgzF/2aGCNhIlOl19
+	SpckBK3D4erIORjkdECXWpXOEcaz8piKYC9Q4BagtQe1zraEHJFBoeuZ6rPTzwxH
+	9D6o9Tn9YQOzoHgqvAhVWYdZn7cBIgDkskjfXdcu+7yVpyn0Xgpo109sThnqDuLg
+	mTby00HPHc4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8177A9333;
+	Wed, 22 Aug 2012 15:39:40 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1B9F9332; Wed, 22 Aug 2012
+ 15:39:39 -0400 (EDT)
+In-Reply-To: <CANYiYbE9sJNOXxxFX_xdow=tnWfUwBYOx4S0_CgaB+bUQxDSRg@mail.gmail.com> (Jiang
+ Xin's message of "Wed, 22 Aug 2012 22:56:18 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D125498-EC91-11E1-B4F9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204087>
 
-Quite often I need to see some changes in more detail and others only briefly, so I get some idea about the context. For example I'd like something like merging the outputs of
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-git log -p -S Bandersnatch
-and
-git log --name-status --oneline
+> Maybe we should bypass all testcases which calling check_remote_track().
 
-together, so I know better what happened.
-
-A simpler (and maybe more important) example is merging
-
-git log -p some/dir
-and
-git log --name-status
-
-so I could see all the changes, and the chosen ones with all details.
-
-Is this somehow possible?
-
-Regards, Maaartin.
+Sounds like it.
