@@ -1,77 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2012, #06; Tue, 21)
-Date: Wed, 22 Aug 2012 10:25:55 -0700
-Message-ID: <7vzk5m96u4.fsf@alter.siamese.dyndns.org>
-References: <7vk3wrc04o.fsf@alter.siamese.dyndns.org>
- <CACsJy8CVe53URvheehhGnxpOdhhidd67UY6OD5KD-X-f9hGBQg@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+Date: Wed, 22 Aug 2012 19:28:58 +0200
+Message-ID: <003001cd808b$9d505730$d7f10590$@schmitz-digital.de>
+References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de> <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 22 19:26:05 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 22 19:29:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Egu-0005mI-8k
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:26:04 +0200
+	id 1T4Ejx-00019C-NT
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Aug 2012 19:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964950Ab2HVRZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Aug 2012 13:25:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51075 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964824Ab2HVRZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Aug 2012 13:25:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41FB89244;
-	Wed, 22 Aug 2012 13:25:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nGmToX/6DEDDoRezN9NL9QpaeCQ=; b=KYD7PA
-	AEypuE7460NPn2kawRbic0yrqXzJGnF2RsumDCs3WWiQgIL/EZt7kC029ZRfgRtb
-	JuzcF2KfflA0JTYRJrVvyZYgP8vtlV/G6hsfofwQ7ApZ7oCtJmrZA7fXB8TIkXgp
-	/V+RlWaHSWX1Y/2q9mWnEEjEWHU6Eu1zWzuzM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N2QhgQ+NsOVks6I+hDL458o69P7S11bV
-	gyLDIRXfN2BbmrS5VG9Fh8yZ7d4YcUXPiZq1W+GgGxyr4hSKTpKsfR41+CAXOEDO
-	0iJjn3rPoruGf8BzpkWT4NRJzD5NAlUxsbp1XYOE9OTlbImp6IggF2EDQgEeZCff
-	0dfRSiTdcDw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E1749243;
-	Wed, 22 Aug 2012 13:25:57 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D7969242; Wed, 22 Aug 2012
- 13:25:56 -0400 (EDT)
-In-Reply-To: <CACsJy8CVe53URvheehhGnxpOdhhidd67UY6OD5KD-X-f9hGBQg@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 22 Aug 2012 20:51:01 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6EC8E86E-EC7E-11E1-9C3B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S964959Ab2HVR3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Aug 2012 13:29:07 -0400
+Received: from moutng.kundenserver.de ([212.227.17.10]:60225 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964869Ab2HVR3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Aug 2012 13:29:06 -0400
+Received: from DualCore (dsdf-4d0a052e.pool.mediaWays.net [77.10.5.46])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0LkQN1-1Tg3Ol1F9f-00cNtW; Wed, 22 Aug 2012 19:29:04 +0200
+In-Reply-To: <7v8vd6alqe.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQHjEtoBTcn41aOpScwQkPT+c62HTAJeVUchlyf9mwA=
+Content-Language: de
+X-Provags-ID: V02:K0:I1NJi8RVwj7aHwYoy9fz+OEXN5uxHvA4ineuP0/t8mM
+ UtQBLbP/pilS2x78Dq3Yyo3CyAKhlsgbpAaBcGWzt67lc4dUPi
+ KzV9mIshnJF/twGnylvYkozsKL5lwMIa7R/xItOsFEH/tWIaL6
+ ez6TNdn9HYBjZqILLYRi2+dXWkdwASjuWMu4LJtmykm1zAfqbL
+ meUCC5EkpBa2ff9I9kqb1BChnV5BrsX6toAOjHR0BNHvbIZudi
+ xmKxo12aDePWUfKy6UN+wbGHh7ufwrl5m0eq2LVnbqY/50KRjl
+ 1edadBTS7BuUXvpLX3X3rBgakkMP/OOSMMfHLfmVvTfK4eON9b
+ UYFcz6+pZWdXVKzwRjql+rV8G80gYdZu3GMGd3htoj/s5K3P9W
+ DgfTLnHrvxU5g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204040>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Wednesday, August 22, 2012 7:19 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> 
+> At the very least, please mention that this reverts be22d92 (http:
+> avoid empty error messages for some curl errors, 2011-09-05) on platforms
+> with older versions of libcURL.
 
-> On Wed, Aug 22, 2012 at 6:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> * nd/i18n-parseopt-help (2012-08-20) 54 commits
->>  - i18n: shortlog: mark parseopt strings for translation
->> ...
->>  - i18n: mark "style" in OPT_COLUMN() for translation
->>
->> A lot of i18n mark-up for the help text from "git <cmd> -h".
->
-> It's a 66 patch series, but only 54 here. 55/66 [1] to 66/66 [2] did
-> not make it to your inbox?
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/203827
-> [2] http://article.gmane.org/gmane.comp.version-control.git/203838
+a) Of course I didn't know that, thanks for telling me.
+b) How and where to add that? In the Subject of an email, in the body, right
+at the front?
+Like this:
+----
 
-I do recall discarding one (the one about _(" tracked")), but
-otherwise no I didn't throw anything else away on purpose.
+This reverts be22d92 (http: avoid empty error messages for some curl errors,
+2011-09-05) on platforms with older versions of libcURL.
 
-Let me recheck.  Thanks for letting me know.
+Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+---
+ http.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/http.c b/http.c
+index b61ac85..18bc6bf 100644
+--- a/http.c
++++ b/http.c
+@@ -806,10 +806,12 @@ static int http_request(const char *url, void *result,
+int target, int options)
+                                ret = HTTP_REAUTH;
+                        }
+                } else {
++#if LIBCURL_VERSION_NUM >= 0x070c00
+                        if (!curl_errorstr[0])
+                                strlcpy(curl_errorstr,
+ 
+curl_easy_strerror(results.curl_result),
+                                        sizeof(curl_errorstr));
++#endif
+                        ret = HTTP_ERROR;
+                }
+        } else {
+--
+1.7.12
+
+Bye, Jojo
