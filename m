@@ -1,121 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re*: mergetool: support --tool-help option like difftool does
-Date: Thu, 23 Aug 2012 10:39:14 -0700
-Message-ID: <7vvcg94if1.fsf@alter.siamese.dyndns.org>
-References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com>
- <500CFAE1.3070304@gmail.com> <7vr4s2mnir.fsf@alter.siamese.dyndns.org>
- <7vipdemm0a.fsf_-_@alter.siamese.dyndns.org>
- <7vzk5m41gk.fsf_-_@alter.siamese.dyndns.org>
- <CAJDDKr42YtfcpARQx6Vx8-Uy7KF3yEoGOQ0VzPKsWQA_hG=MgA@mail.gmail.com>
+Subject: Re: [PATCH] specifying ranges: we did not mean to make ".." an empty
+ set
+Date: Thu, 23 Aug 2012 10:51:42 -0700
+Message-ID: <7vobm14hu9.fsf@alter.siamese.dyndns.org>
+References: <7vd32i5y8w.fsf@alter.siamese.dyndns.org>
+ <20120823082916.GA6963@sigill.intra.peff.net>
+ <874nntq0sb.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 19:39:33 2012
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Aug 23 19:52:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4bNP-0000cc-08
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:39:27 +0200
+	id 1T4bZc-0001nr-CG
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754726Ab2HWRjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 13:39:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32902 "EHLO
+	id S1759003Ab2HWRvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 13:51:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39159 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752134Ab2HWRjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 13:39:17 -0400
+	id S1758633Ab2HWRvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 13:51:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0DAE8D0F;
-	Thu, 23 Aug 2012 13:39:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 535AC9070;
+	Thu, 23 Aug 2012 13:51:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rHAKi/OWcUHkwdRwYQWfTL1V5Aw=; b=QFq7YM
-	aTYUp6Dc1kZi/69WOPAIQEqt0wy0m9tjaTmHI1OmcvuMyxfEY1Yzf+XngKMnhBX2
-	MUECloMDjtlBGpAX1USHigE60IiajIDUzAXPYOw82Igi4j4BvqcKKCVpxsX6JI6t
-	B3zKQqniuK20Syzu5s5hdmjYEgOYSUJY6/8II=
+	:content-type; s=sasl; bh=hHQlXBONSnTVxB/Art5yC4K7Ujk=; b=xxPiFp
+	qvDcCgD0EBEApi5eafoszuiTrVLcbBqu0KAlr2rhgilkJAqMzMpfzHcmqdGy+KMK
+	L1a81CcSKMGRIbrLYGvQrD5/uMUDt4rIndoynJ5W4ckRm8ut7NIKvliYx3qJNxGx
+	PCYGd/gOw4uiLaWU0h9aM501peVE3v6Nhwpsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n++yQG/GYQ87Xl92TY1VNh8ODZwEB8JH
-	A0+4oEafk8qSH5OpNOLEeADpKIsB3j0t0FnxNF3dUqzIeSskj5ZTyfqSWCqu6SZQ
-	X/ln7+se7rUwOhAzWWZ1yET9yLPo5GRBaCd28Ik+iBYWvh6WW401cxXd/rQ7TzU5
-	40KbtMA/fWQ=
+	:content-type; q=dns; s=sasl; b=Cx2szW3TACExl1HD7+ThmI/9xW9eSiP7
+	jALQEzgzNfIP+B4sdHO1hYCtyDqST8j4lC2ljH6gyvsxBjFaHkzQNXf9mX56ITzj
+	LTc1LxzpwFMG895M1lvMZi94DjuylBho1E67DRG/2bLSU/Sv1gbn3r21aERoOiu5
+	rwzJVOXkXvA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB6538D0E;
-	Thu, 23 Aug 2012 13:39:16 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4083F906F;
+	Thu, 23 Aug 2012 13:51:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AE588D0C; Thu, 23 Aug 2012
- 13:39:16 -0400 (EDT)
-In-Reply-To: <CAJDDKr42YtfcpARQx6Vx8-Uy7KF3yEoGOQ0VzPKsWQA_hG=MgA@mail.gmail.com> (David
- Aguilar's message of "Thu, 23 Aug 2012 00:39:06 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF51A906E; Thu, 23 Aug 2012
+ 13:51:43 -0400 (EDT)
+In-Reply-To: <874nntq0sb.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 23 Aug 2012 13:56:52 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 75CB9D02-ED49-11E1-BB81-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 335364BC-ED4B-11E1-850B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204160>
 
-David Aguilar <davvid@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
->> After hinting a low-hanging-fruit that would be an easy way for new
->> people to dip their toes, I saw no takers for one month, so I ended
->> up doing it myself.
+> I don't think that ".." is really a no-op.  It is true that HEAD..HEAD
+> does not itself result in any revisions, but it *could* be used as a
+> silly shorthand to introduce ^HEAD into the objects being walked.  This
+> can make a difference if it then excludes other objects, too.
 >
-> My bad,...
+> I would argue that such use is misguided, and I am in favor of the
+> patch, but in theory it is possible.
 
-Not yours.  These hints I drop from time to time are meant for eager
-new people who want to dip their toes to the development (we don't
-do "assignments" but these are the closest that we have); you no
-longer quite qualify as "new" ;-)
+You could say "log --all .. --" when you mean "log --all ^HEAD",
+because .. === HEAD..HEAD === ^HEAD HEAD and HEAD is already
+contained in --all.  So it is a valid point.
 
-> While on the mergetool topic...
+You however cannot say "log --all .." without double-dash to
+disambiguate, as you would get:
 
-Now we are not talking about "dip their toes" low hanging fruit
-anymore ;-)
+    $ git log --all ..
+    fatal: ambiguous argument '..': both revision and filename
 
-> Would the ability to resolve the various merge situations using
-> the command-line be a wanted addition?
->
-> This would let a submodule or deleted/modified encountering
-> user do something like:
->
-> $ git mergetool --theirs -- submodule
->
-> ...and not have to remember the various git commands that it runs.
+Any existing practice that used to produce useful results couldn't
+have been using ".." without an explicit "--", I think, and with the
+disambiguation that favors to take ".." as the parent directory,
+"log --all .. --" still means "log --all ^HEAD".
 
-Does it have to run various git commands?  For a normal path, all it
-needs to do is "git checkout --theirs $path", no?
-
-What does it mean to resolve a conflicted merge of a gitlink to take
-"theirs"?  We obviously would want to point the resolved gitlink at
-the submodule commit their side wants in the resulting index but what,
-if any, should we do to the submodule itself?
-
-Stepping back a bit, if there is no conflict, and as a result of a
-clean merge (this applies to the case where you check out another
-branch that has different commit at the submodule path), if gitlink
-changed to point at a different commit in the submodule, what should
-happen?
-
-If you start from a clean working tree, with your gitlink pointing
-at the commit that matches HEAD in the submodule, and if the working
-tree of the submodule does not have any local modification, it may
-be ideal to check out the new commit in the submodule (are there
-cases where "git checkout other_branch" in the superproject does not
-want to touch the submodule working tree?).
-
-There are cases where it is not possible; checking out the new
-commit in the submodule working tree may not succeed due to local
-modifications.  But is that kind of complication limited to the
-merge resolution case?  Isn't it shared with normal "switching
-branches" case as well?
-
-If so, it could be that your "git mergetool --theirs -- submodule"
-is working around a wrong problem, and the right solution may be to
-make "git checkout --theirs -- $path" to always do an appropriate
-thing regardless of what kind of object $path is, no?
+So I think we are still OK.
