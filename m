@@ -1,101 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Support generate poison .mo files for testing
-Date: Thu, 23 Aug 2012 18:00:57 +0700
-Message-ID: <CACsJy8Ak0iR9WytPys1uy=M52TVh+0y4DWrv63Efvie4nsRORA@mail.gmail.com>
-References: <7va9xofbgo.fsf@alter.siamese.dyndns.org> <1345613246-4053-1-git-send-email-pclouds@gmail.com>
- <7vtxvuand1.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] specifying ranges: we did not mean to make ".." an empty set
+Date: Thu, 23 Aug 2012 13:56:52 +0200
+Message-ID: <874nntq0sb.fsf@thomas.inf.ethz.ch>
+References: <7vd32i5y8w.fsf@alter.siamese.dyndns.org>
+	<20120823082916.GA6963@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 13:01:39 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 23 13:57:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4VAN-0001PN-OH
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 13:01:36 +0200
+	id 1T4W2E-0003Cb-Fl
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 13:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030369Ab2HWLBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 07:01:30 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39015 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030351Ab2HWLB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 07:01:28 -0400
-Received: by ialo24 with SMTP id o24so1114347ial.19
-        for <git@vger.kernel.org>; Thu, 23 Aug 2012 04:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=upTwm2saB8RoNAT77HMTD/w5yleJJuzZmzyd6Re4jlY=;
-        b=J7eiHUm7PHeRjhK4BA7aP9ZA8KArjP/qWf/hDaUYQ0Lb+dm8TapIQrS1CJ9c38laBc
-         Pt5c+7jJO5k8qd6TGJiChpDSVRp65ywHJcQqxfbO/2TCm7tEN3pwEJIrJ4gGewmcrfTw
-         DtnvXGcGJlUpnIUAgh1/GnaEuvQHl+CctZ/YDmJqt/tZ8vy6n6Jbu/Bx/KEfJqnfJLj1
-         qxNlVeHzghem1JghJrP5BEmXBrQ3GamwUHMo5r4dhKvUvWW3eNXun9XIXFV/grNRFZVN
-         tBUcKeHHq9ND6/OHkcSDV3y+ysUK5GWZk/pDr7OOdNOkLy7VDWal1hyEmkMTaUFQ4ZfS
-         9MuA==
-Received: by 10.42.60.139 with SMTP id q11mr814924ich.53.1345719688032; Thu,
- 23 Aug 2012 04:01:28 -0700 (PDT)
-Received: by 10.64.35.12 with HTTP; Thu, 23 Aug 2012 04:00:57 -0700 (PDT)
-In-Reply-To: <7vtxvuand1.fsf@alter.siamese.dyndns.org>
+	id S1757598Ab2HWL5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 07:57:09 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:29796 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752279Ab2HWL44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 07:56:56 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 Aug
+ 2012 13:56:45 +0200
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 Aug
+ 2012 13:56:52 +0200
+In-Reply-To: <20120823082916.GA6963@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 23 Aug 2012 04:29:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204147>
 
-On Wed, Aug 22, 2012 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> why are you special casing a run of non-blank letters that begin
-> with a dollar sign (swapping two ints is done with "%2$d %1$d", a
-> percent still at the beginning, so there must be something else I am
-> missing)?
+Jeff King <peff@peff.net> writes:
 
-'$' is for shell variables. I should separate it from C messages. All
-these because now that we run the (fake) translation through gettext
-toolchain, it'll catch us if we don't preserve dynamic parts
-correctly.
-
-> Also why do you stop at isspace()?  Isn't a " " (space) a flag that
-> means "If the first character of a signed conversion is not a sign
-> or if a signed conversion results in no characters, a <space> shall
-> be prefixed to the result."
-
-A hurry attempt to get past msgfmt. I should refine these code, either by...
-
-> As the flags, min-width, precision, and length do not share the same
-> character as the conversion that has to come at the end, I think you
-> only want to do something like
+> On Wed, Aug 22, 2012 at 03:59:43PM -0700, Junio C Hamano wrote:
 >
->         /*
->          * conversion specifier characters, taken from:
->          * http://pubs.opengroup.org/onlinepubs/9699919799/functions/printf.html
->          */
->         static const char printf_conversion[] = "diouxXfFeEgGaAcspnCS%";
+>> Either end of revision range operator can be omitted to default to HEAD,
+>> as in "origin.." (what did I do since I forked) or "..origin" (what did
+>> they do since I forked).  But the current parser interprets ".."  as an
+>> empty range "HEAD..HEAD", and worse yet, because ".." does exist on the
+>> filesystem, we get this annoying output:
+>> 
+>>   $ cd Documentation/howto
+>>   $ git log .. ;# give me recent commits that touch Documentation/ area.
+>>   fatal: ambiguous argument '..': both revision and filename
+>>   Use '--' to separate filenames from revisions
+>> 
+>> Surely we could say "git log ../" or even "git log -- .." to disambiguate,
+>> but we shouldn't have to.
+>> 
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >
->         ...
+> Hmm, for some reason I had no recollection of the original thread at
+> all. And yet reading the archives, I apparently had quite a bit to say.
+> Reading again with fresh eyes, I still think this is sane.
 >
->         while (msg < end) {
->                 if (*msg == '%') {
->                         strbuf_addch(buf, *msg++);
->                         while (msg < end) {
->                                 int ch = *msg++;
->                                 strbuf_addch(buf, ch);
->                                 if (strchr(printf_conversion, ch))
->                                         break;
->                         }
->                         /* copied the printf part literally */
->                         continue;
->                 }
->                 ... keep \n ...
->                 ... muck with string ...
->         }
->
-> perhaps?
+> I don't think assigning any revision magic to ".." besides "the empty
+> range" makes sense at all for the reasons you gave in the original
+> thread. And the empty range is a pointless no-op. So I don't see any
+> real argument in favor of disambiguating towards the revision.
 
-following this, or copying the matching logic from msgfmt source.
+I don't think that ".." is really a no-op.  It is true that HEAD..HEAD
+does not itself result in any revisions, but it *could* be used as a
+silly shorthand to introduce ^HEAD into the objects being walked.  This
+can make a difference if it then excludes other objects, too.
+
+I would argue that such use is misguided, and I am in favor of the
+patch, but in theory it is possible.
+
 -- 
-Duy
+Thomas Rast
+trast@{inf,student}.ethz.ch
