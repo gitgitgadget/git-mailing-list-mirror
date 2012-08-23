@@ -1,82 +1,57 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] specifying ranges: we did not mean to make ".." an empty set
-Date: Thu, 23 Aug 2012 13:56:52 +0200
-Message-ID: <874nntq0sb.fsf@thomas.inf.ethz.ch>
-References: <7vd32i5y8w.fsf@alter.siamese.dyndns.org>
-	<20120823082916.GA6963@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: in_merge_bases() is too expensive for recent "pu" update
+Date: Thu, 23 Aug 2012 19:32:33 +0700
+Message-ID: <CACsJy8C-VxzwigyUDHnUkXN7vhB+93X96pH9MvgB0ps7v-_NmQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 23 13:57:15 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 14:33:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4W2E-0003Cb-Fl
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 13:57:14 +0200
+	id 1T4Wb5-0003DK-7G
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 14:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757598Ab2HWL5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 07:57:09 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:29796 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279Ab2HWL44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 07:56:56 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 Aug
- 2012 13:56:45 +0200
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.2.298.4; Thu, 23 Aug
- 2012 13:56:52 +0200
-In-Reply-To: <20120823082916.GA6963@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 23 Aug 2012 04:29:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1756172Ab2HWMdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 08:33:07 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:33887 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753390Ab2HWMdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 08:33:04 -0400
+Received: by ialo24 with SMTP id o24so1233962ial.19
+        for <git@vger.kernel.org>; Thu, 23 Aug 2012 05:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=rtPafKaqCk1Vtpg0wuLxiccu3I0UgRiVIdRrypPPqHs=;
+        b=PmzGV4MTZESWFnJNCfCVHWG48IE2A0UQ2h9qH0xJhmV26tvZyPpx5XY6sWEKJtAi2t
+         wEPT3n33ZVX0Qgs+DXRYV+Jfitb0EoCLTOYo+r2+Ey3wZQqlGcgpgyLCp4yW+dWkZINE
+         2h6tJjWSjmZWGqyE4+F0qWFXmdBtYPxth3/kpFc+OxQ83WJT3lU9wE+fI28GytDOSJTa
+         GY5/tkfQOyINlvmEyywEoWvTUp7BLX9UrXcovrS5BM3Me6k99sgQ/yt6UOUANyh9MDUV
+         bfipYXCHbJZI1I0pAy5Ek1NA8+e8RVSlR1QmvZWP9WeG1BQG05CnyfE8qr6nhDZSEFRa
+         fHKQ==
+Received: by 10.50.220.194 with SMTP id py2mr1372354igc.15.1345725183492; Thu,
+ 23 Aug 2012 05:33:03 -0700 (PDT)
+Received: by 10.64.35.12 with HTTP; Thu, 23 Aug 2012 05:32:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204148>
 
-Jeff King <peff@peff.net> writes:
+I just did a "git fetch". It took 19 seconds (measured with
+gettimeofday) to finish in_merge_bases() in update_local_ref() in
+fetch.c, just to print this line
 
-> On Wed, Aug 22, 2012 at 03:59:43PM -0700, Junio C Hamano wrote:
->
->> Either end of revision range operator can be omitted to default to HEAD,
->> as in "origin.." (what did I do since I forked) or "..origin" (what did
->> they do since I forked).  But the current parser interprets ".."  as an
->> empty range "HEAD..HEAD", and worse yet, because ".." does exist on the
->> filesystem, we get this annoying output:
->> 
->>   $ cd Documentation/howto
->>   $ git log .. ;# give me recent commits that touch Documentation/ area.
->>   fatal: ambiguous argument '..': both revision and filename
->>   Use '--' to separate filenames from revisions
->> 
->> Surely we could say "git log ../" or even "git log -- .." to disambiguate,
->> but we shouldn't have to.
->> 
->> Helped-by: Jeff King <peff@peff.net>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Hmm, for some reason I had no recollection of the original thread at
-> all. And yet reading the archives, I apparently had quite a bit to say.
-> Reading again with fresh eyes, I still think this is sane.
->
-> I don't think assigning any revision magic to ".." besides "the empty
-> range" makes sense at all for the reasons you gave in the original
-> thread. And the empty range is a pointless no-op. So I don't see any
-> real argument in favor of disambiguating towards the revision.
+ + a4f2db3...b95a282 pu         -> origin/pu  (forced update)
 
-I don't think that ".." is really a no-op.  It is true that HEAD..HEAD
-does not itself result in any revisions, but it *could* be used as a
-silly shorthand to introduce ^HEAD into the objects being walked.  This
-can make a difference if it then excludes other objects, too.
-
-I would argue that such use is misguided, and I am in favor of the
-patch, but in theory it is possible.
-
+It's partly my fault because I'm on gcc -O0. But should it not take
+that much time for one line? As a grumpy user, I'd be perfectly ok
+with git saying "probably forced update, check it yourself" if the
+spent time exceeds half a second. On the same token, if diffstat takes
+too long for git-pull, then perhaps just stop and print "do it
+yourself".
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Duy
