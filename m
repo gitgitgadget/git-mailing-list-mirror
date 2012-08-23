@@ -1,57 +1,180 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Make 'git submodule update --force' always check out
- submodules.
-Date: Thu, 23 Aug 2012 20:51:52 +0200
-Message-ID: <50367BC8.3090902@web.de>
-References: <20120822233610.710C01C2DAF@stefro.sfo.corp.google.com> <7v8vd65qob.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCHv2 3/3] branch: deprecate --set-upstream and show help if we detect possible mistaken use
+Date: Thu, 23 Aug 2012 20:56:26 +0200
+Message-ID: <1345748186-1081-1-git-send-email-cmn@elego.de>
+References: <7vk3wtjt3o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Zager <szager@google.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 20:52:23 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Aug 23 20:56:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4cVy-0005Ra-Bh
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 20:52:22 +0200
+	id 1T4caP-0003Jo-Q6
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 20:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934204Ab2HWSwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 14:52:14 -0400
-Received: from mout.web.de ([212.227.17.11]:55190 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934199Ab2HWSwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 14:52:11 -0400
-Received: from [192.168.178.41] ([79.193.90.245]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0MFtKQ-1Spiob1lAM-00FI9N; Thu, 23 Aug 2012 20:52:01
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7v8vd65qob.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:qOlqzjR1OuwmsCHWF/88XEbANk/JywQoYyCgDLvJzlD
- vXZsfY31N4mZpU3Hh/YSBbwzBwU70q3bLlrrSv0+eghx9kf+mS
- IKpzhMgiu+J9ew0+kmo0LLc0YR5bGBUtQpc47WX2tGEm3FZb/o
- Wd5rgo0d0D2NHuNIeWz6jMpdtlpKIqG7MBn/ezhpOy/o6XoNBb
- WuuWv6np4GFFTu9cDuM0Q==
+	id S1030668Ab2HWS4c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Aug 2012 14:56:32 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:50323 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S934225Ab2HWS42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 14:56:28 -0400
+Received: from flaca.cmartin.tk (unknown [80.157.11.26])
+	by hessy.dwim.me (Postfix) with ESMTPA id 6ECF98169F;
+	Thu, 23 Aug 2012 20:56:27 +0200 (CEST)
+Received: (nullmailer pid 1128 invoked by uid 1000);
+	Thu, 23 Aug 2012 18:56:26 -0000
+X-Mailer: git-send-email 1.7.12
+In-Reply-To: <7vk3wtjt3o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204165>
 
-Am 23.08.2012 03:43, schrieb Junio C Hamano:
-> Stefan Zager <szager@google.com> writes:
-> 
->> Currently, it will only do a checkout if the sha1 registered in the containing
->> repository doesn't match the HEAD of the submodule, regardless of whether the
->> submodule is dirty.  As discussed on the mailing list, the '--force' flag is a
->> strong indicator that the state of the submodule is suspect, and should be reset
->> to HEAD.
->>
->> Signed-off-by: Stefan Zager <szager@google.com>
->> ---
-> 
-> Thanks for a reroll.  Will queue; looking good ;-)
+This interface is error prone, and a better one (--set-upstream-to)
+exists. Add a message listing the alternatives and suggest how to fix
+a --set-upstream invocation in case the user only gives one argument
+which causes a local branch with the same name as a remote-tracking
+one to be created. The typical case is
 
-Yup, nicely done!
+    git branch --set-upstream origin/master
+
+when the user meant
+
+    git branch --set-upstream master origin/master
+
+assuming that the current branch is master. Show a message telling the
+user how to undo their action and get what they wanted. For the
+command above, the message would be
+
+The --set-upstream flag is deprecated and will be removed. Consider usi=
+ng --track or --set-upstream-to
+Branch origin/master set up to track local branch master.
+
+If you wanted to make 'master' track 'origin/master', do this:
+
+    git branch -d origin/master
+    git branch --set-upstream-to origin/master
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+
+The 'track' in the message is still not great, but it does fit with
+the one above. Maybe if we make it say "If youw wanted [...] track the
+remote-tracking branch 'origin/master'" it would be clearer?
+
+I've simplified and tightened the logic. Now it will only show the
+undo message if the branch didn't exist locally and there is a
+remote-tracking branch of the same name.
+
+ builtin/branch.c  | 26 ++++++++++++++++++++++++++
+ t/t3200-branch.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 08068f7..a0302a2 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -877,10 +877,36 @@ int cmd_branch(int argc, const char **argv, const=
+ char *prefix)
+ 		git_config_set_multivar(buf.buf, NULL, NULL, 1);
+ 		strbuf_release(&buf);
+ 	} else if (argc > 0 && argc <=3D 2) {
++		struct branch *branch =3D branch_get(argv[0]);
++		int branch_existed =3D 0, remote_tracking =3D 0;
++		struct strbuf buf =3D STRBUF_INIT;
++
+ 		if (kinds !=3D REF_LOCAL_BRANCH)
+ 			die(_("-a and -r options to 'git branch' do not make sense with a b=
+ranch name"));
++
++		if (track =3D=3D BRANCH_TRACK_OVERRIDE)
++			fprintf(stderr, _("The --set-upstream flag is deprecated and will b=
+e removed. Consider using --track or --set-upstream-to\n"));
++
++		strbuf_addf(&buf, "refs/remotes/%s", branch->name);
++		remote_tracking =3D ref_exists(buf.buf);
++		strbuf_release(&buf);
++
++		branch_existed =3D ref_exists(branch->refname);
+ 		create_branch(head, argv[0], (argc =3D=3D 2) ? argv[1] : head,
+ 			      force_create, reflog, 0, quiet, track);
++
++		/*
++		 * We only show the instructions if the user gave us
++		 * one branch which doesn't exist locally, but is the
++		 * name of a remote-tracking branch.
++		 */
++		if (argc =3D=3D 1 && track =3D=3D BRANCH_TRACK_OVERRIDE &&
++		    !branch_existed && remote_tracking) {
++			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this=
+:\n\n"), head, branch->name);
++			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
++			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch-=
+>name);
++		}
++
+ 	} else
+ 		usage_with_options(builtin_branch_usage, options);
+=20
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 93e5d6e..e9e11cf 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -399,6 +399,40 @@ test_expect_success 'test --unset-upstream on a pa=
+rticular branch' \
+      test_must_fail git config branch.my14.remote &&
+      test_must_fail git config branch.my14.merge'
+=20
++test_expect_success '--set-upstream shows message when creating a new =
+branch that exists as remote-tracking' \
++    'git update-ref refs/remotes/origin/master HEAD &&
++     git branch --set-upstream origin/master 2>actual &&
++     test_when_finished git update-ref -d refs/remotes/origin/master &=
+&
++     test_when_finished git branch -d origin/master &&
++     cat >expected <<EOF &&
++The --set-upstream flag is deprecated and will be removed. Consider us=
+ing --track or --set-upstream-to
++
++If you wanted to make '"'master'"' track '"'origin/master'"', do this:
++
++    git branch -d origin/master
++    git branch --set-upstream-to origin/master
++EOF
++     test_cmp expected actual
++'
++
++test_expect_success '--set-upstream with two args only shows the depre=
+cation message' \
++    'git branch --set-upstream master my13 2>actual &&
++     test_when_finished git branch --unset-upstream master &&
++     cat >expected <<EOF &&
++The --set-upstream flag is deprecated and will be removed. Consider us=
+ing --track or --set-upstream-to
++EOF
++     test_cmp expected actual
++'
++
++test_expect_success '--set-upstream with one arg only shows the deprec=
+ation message if the branch existed' \
++    'git branch --set-upstream my13 2>actual &&
++     test_when_finished git branch --unset-upstream master &&
++     cat >expected <<EOF &&
++The --set-upstream flag is deprecated and will be removed. Consider us=
+ing --track or --set-upstream-to
++EOF
++     test_cmp expected actual
++'
++
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+ $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +000=
+0	branch: Created from master
+--=20
+1.7.12
