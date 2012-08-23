@@ -1,157 +1,100 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 04/17] Name local variables more consistently
-Date: Thu, 23 Aug 2012 10:10:29 +0200
-Message-ID: <1345709442-16046-5-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 10/17] Remove ineffective optimization
+Date: Thu, 23 Aug 2012 10:10:35 +0200
+Message-ID: <1345709442-16046-11-git-send-email-mhagger@alum.mit.edu>
 References: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 10:19:02 2012
+X-From: git-owner@vger.kernel.org Thu Aug 23 10:19:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Sd4-0000fx-01
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 10:19:02 +0200
+	id 1T4SdC-0000rv-7p
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 10:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933718Ab2HWISz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 04:18:55 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:52683 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933655Ab2HWISo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2012 04:18:44 -0400
-X-Greylist: delayed 452 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Aug 2012 04:18:44 EDT
-X-AuditID: 1207440f-b7fde6d00000095c-08-5035e59f8842
+	id S933720Ab2HWIS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 04:18:59 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:59284 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933716Ab2HWISz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2012 04:18:55 -0400
+X-AuditID: 1207440d-b7f236d000000943-0f-5035e5b192f7
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id D8.11.02396.F95E5305; Thu, 23 Aug 2012 04:11:11 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 79.50.02371.1B5E5305; Thu, 23 Aug 2012 04:11:29 -0400 (EDT)
 Received: from michael.fritz.box (p57A2588E.dip.t-dialin.net [87.162.88.142])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7N8AkV4030408
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7N8AkVA030408
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 23 Aug 2012 04:11:09 -0400
+	Thu, 23 Aug 2012 04:11:28 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLIsWRmVeSWpSXmKPExsUixO6iqDv/qWmAwa3bshZdV7qZLBp6rzBb
-	3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujHuf1zMV
-	zJOuaGo+yt7AuFe0i5GTQ0LAROJq0xZWCFtM4sK99WxdjFwcQgKXGSVe3fjNBOGcZZL4saWB
-	DaSKTUBK4mVjDzuILSKgJjGx7RALiM0skCLR8bybEcQWFrCVuDz5MdhUFgFViX9bloPZvAIu
-	Epf27mWE2KYo8eP7GmYQm1PAVWLB901gcSGgmo+NN5knMPIuYGRYxSiXmFOaq5ubmJlTnJqs
-	W5ycmJeXWqRropebWaKXmlK6iRESQPw7GLvWyxxiFOBgVOLhfWFuGiDEmlhWXJl7iFGSg0lJ
-	lPffI6AQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd7weUA53pTEyqrUonyYlDQHi5I4r/oSdT8h
-	gfTEktTs1NSC1CKYrAwHh5IE750nQI2CRanpqRVpmTklCGkmDk4QwQWygQdow1OQQt7igsTc
-	4sx0iKJTjIpS4rwnQRICIImM0jy4AbBYf8UoDvSPMO85kCoeYJqA634FNJgJaLDaVWOQwSWJ
-	CCmpBkbO9A0XlW95x29jzZD4etIg/XTbiVNMp0ULJpiejpY9KuG1+VTDg/Cr3n//T+VZ/vLd
-	GkeGap++46aHoydFC/nZ7rI6WHdXpIvtyZbEzf8+HAz6Uylbo5T4OGjid0llf6kSkW1aXKzM
-	Uisj9yrWe1r+iXgSPlfulMR5rdaSawUTqx1OPV6/+qgSS3FGoqEWc1FxIgD/5AiZ 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqLvxqWmAwaJpPBZdV7qZLBp6rzBb
+	3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujPWf7rAX
+	HOSu2LdjM1sD4xzOLkZODgkBE4kPr46wQ9hiEhfurWfrYuTiEBK4zCix59MKZpCEkMBZJonW
+	D0ogNpuAlMTLxh6wBhEBNYmJbYdYQGxmgRSJjufdjCC2sICZxMYZp5hAbBYBVYn3jdfZQGxe
+	AVeJ7pszmSCWKUr8+L4GbD4nUHzB902MELtcJD423mSewMi7gJFhFaNcYk5prm5uYmZOcWqy
+	bnFyYl5eapGukV5uZoleakrpJkZI+PDuYPy/TuYQowAHoxIP7wtz0wAh1sSy4srcQ4ySHExK
+	orz/HgGF+JLyUyozEosz4otKc1KLDzFKcDArifCGzwPK8aYkVlalFuXDpKQ5WJTEedWWqPsJ
+	CaQnlqRmp6YWpBbBZGU4OJQkeCWBcSIkWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIR
+	D4qM+GJgbICkeID2KoK08xYXJOYCRSFaTzHqcvw/efIuoxBLXn5eqpQ4rwlIkQBIUUZpHtwK
+	WLJ4xSgO9LEwrztIFQ8w0cBNegW0hAloidpVY5AlJYkIKakGRr0fd+6eXnL/rNsRnQkpiu9u
+	HtEQvrw6Pm3zyizROz+l1mfviVrV8lu4L9g4dNqljCRmteLZ3H9KIvw1FvwPZWV0PcUcsiFo
+	+5sXFh/fLnV9bf27rufblMmvGm6/25p39WS3qedPl9lrz/cofQx61TWjJ3xZT7LX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204125>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Use the names (nr_heads, heads) consistently across functions, instead
-of sometimes naming the same values (nr_match, match).
+I cannot find a scenario in which this function is called any
+significant number of times, so simplify the code by always allocating
+an array for return_refs rather than trying to use a stack-allocated
+array for small lists.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fetch-pack.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/fetch-pack.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index cc21047..f11545e 100644
+index 0426cf4..9398059 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
-@@ -521,7 +521,7 @@ static void mark_recent_complete_commits(unsigned long cutoff)
- 	}
- }
- 
--static void filter_refs(struct ref **refs, int nr_match, char **match)
-+static void filter_refs(struct ref **refs, int nr_heads, char **heads)
- {
- 	struct ref **return_refs;
+@@ -527,17 +527,10 @@ static void filter_refs(struct ref **refs, int *nr_heads, char **heads)
  	struct ref *newlist = NULL;
-@@ -530,12 +530,12 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
- 	struct ref *fastarray[32];
+ 	struct ref **newtail = &newlist;
+ 	struct ref *ref, *next;
+-	struct ref *fastarray[32];
  	int match_pos;
  
--	if (nr_match && !args.fetch_all) {
--		if (ARRAY_SIZE(fastarray) < nr_match)
--			return_refs = xcalloc(nr_match, sizeof(struct ref *));
-+	if (nr_heads && !args.fetch_all) {
-+		if (ARRAY_SIZE(fastarray) < nr_heads)
-+			return_refs = xcalloc(nr_heads, sizeof(struct ref *));
- 		else {
- 			return_refs = fastarray;
--			memset(return_refs, 0, sizeof(struct ref *) * nr_match);
-+			memset(return_refs, 0, sizeof(struct ref *) * nr_heads);
- 		}
- 	}
+-	if (*nr_heads && !args.fetch_all) {
+-		if (ARRAY_SIZE(fastarray) < *nr_heads)
+-			return_refs = xcalloc(*nr_heads, sizeof(struct ref *));
+-		else {
+-			return_refs = fastarray;
+-			memset(return_refs, 0, sizeof(struct ref *) * *nr_heads);
+-		}
+-	}
++	if (*nr_heads && !args.fetch_all)
++		return_refs = xcalloc(*nr_heads, sizeof(struct ref *));
  	else
-@@ -556,12 +556,12 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
- 		}
- 		else {
- 			int cmp = -1;
--			while (match_pos < nr_match) {
--				cmp = strcmp(ref->name, match[match_pos]);
-+			while (match_pos < nr_heads) {
-+				cmp = strcmp(ref->name, heads[match_pos]);
- 				if (cmp < 0) /* definitely do not have it */
- 					break;
- 				else if (cmp == 0) { /* definitely have it */
--					match[match_pos][0] = '\0';
-+					heads[match_pos][0] = '\0';
- 					return_refs[match_pos] = ref;
- 					break;
- 				}
-@@ -576,7 +576,7 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
+ 		return_refs = NULL;
  
- 	if (!args.fetch_all) {
- 		int i;
--		for (i = 0; i < nr_match; i++) {
-+		for (i = 0; i < nr_heads; i++) {
- 			ref = return_refs[i];
- 			if (ref) {
- 				*newtail = ref;
-@@ -595,7 +595,7 @@ static void mark_alternate_complete(const struct ref *ref, void *unused)
- 	mark_complete(NULL, ref->old_sha1, 0, NULL);
+@@ -584,8 +577,7 @@ static void filter_refs(struct ref **refs, int *nr_heads, char **heads)
+ 				newtail = &ref->next;
+ 			}
+ 		}
+-		if (return_refs != fastarray)
+-			free(return_refs);
++		free(return_refs);
+ 	}
+ 	*refs = newlist;
  }
- 
--static int everything_local(struct ref **refs, int nr_match, char **match)
-+static int everything_local(struct ref **refs, int nr_heads, char **heads)
- {
- 	struct ref *ref;
- 	int retval;
-@@ -646,7 +646,7 @@ static int everything_local(struct ref **refs, int nr_match, char **match)
- 		}
- 	}
- 
--	filter_refs(refs, nr_match, match);
-+	filter_refs(refs, nr_heads, heads);
- 
- 	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
- 		const unsigned char *remote = ref->old_sha1;
-@@ -777,8 +777,7 @@ static int get_pack(int xd[2], char **pack_lockfile)
- 
- static struct ref *do_fetch_pack(int fd[2],
- 		const struct ref *orig_ref,
--		int nr_match,
--		char **match,
-+		int nr_heads, char **heads,
- 		char **pack_lockfile)
- {
- 	struct ref *ref = copy_ref_list(orig_ref);
-@@ -819,7 +818,7 @@ static struct ref *do_fetch_pack(int fd[2],
- 			fprintf(stderr, "Server supports ofs-delta\n");
- 	} else
- 		prefer_ofs_delta = 0;
--	if (everything_local(&ref, nr_match, match)) {
-+	if (everything_local(&ref, nr_heads, heads)) {
- 		packet_flush(fd[1]);
- 		goto all_done;
- 	}
 -- 
 1.7.11.3
