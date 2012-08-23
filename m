@@ -1,92 +1,75 @@
-From: Avishay Lavie <avishay.lavie@gmail.com>
-Subject: [PATCH] git svn: Only follow first parents when populating
- svn:mergeinfo properties
-Date: Thu, 23 Aug 2012 19:07:15 +0300
-Message-ID: <CAHkK2bpCjmxTKmBj6Wqgmky2YjRk8_MQF6th8xxc6XoStdVOeg@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Existing utility to track compiled files in another sister
+ repository, for rollouts
+Date: Thu, 23 Aug 2012 18:28:09 +0200
+Message-ID: <CACBZZX6SVSn17nfSarQC1qgz-TxcDDn5tvHb0BkyW9S8DcLY4w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Bryan Jacobs <bjacobs@woti.com>, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam@vilain.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 23 18:07:57 2012
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 23 18:28:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Zwp-0004fw-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 18:07:55 +0200
+	id 1T4aGv-0000zw-KH
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 18:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758848Ab2HWQHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 12:07:42 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:62722 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755459Ab2HWQHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 12:07:36 -0400
-Received: by vcbfk26 with SMTP id fk26so987088vcb.19
-        for <git@vger.kernel.org>; Thu, 23 Aug 2012 09:07:36 -0700 (PDT)
+	id S1752781Ab2HWQ2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 12:28:35 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:52747 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323Ab2HWQ2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 12:28:33 -0400
+Received: by obbuo13 with SMTP id uo13so2088033obb.19
+        for <git@vger.kernel.org>; Thu, 23 Aug 2012 09:28:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        bh=GjHFzIII5Uc233GXIcdoE7aGidO8gkQJ9AVRM5izQS0=;
-        b=M7Mtrw/mBv9lYQrS0FDoIGOoY49mo+UqSu/MzhdnN6XAacf5GPUYesQ/dDreVEcAdO
-         VsujxJKiXrFbk4XxS2us5OFHX1snyfAe3NbZsZvhuXNONM3oYk4omRnXOVw0kO1d6bB5
-         z0Gksfj8RPvFe1hpLbxyC7bg9RhBeQDXtAKoRm9+mrAYAEEXb7WvN5K51pcqyAXFIPjh
-         2rzKvz0FTY9W25RyB8gppGi4E2/p6zUeqDYuw9JP7Vv0PGovxWpORmktFeDas3INp9d+
-         evgrYGADeMmmwsb3rvLS6L75C3fLlAXEL5Jk2QU0+zHNElTc/kl+daVANDICaw3GHupT
-         0Psg==
-Received: by 10.58.151.197 with SMTP id us5mr1933030veb.14.1345738055719; Thu,
- 23 Aug 2012 09:07:35 -0700 (PDT)
-Received: by 10.58.66.226 with HTTP; Thu, 23 Aug 2012 09:07:15 -0700 (PDT)
-X-Google-Sender-Auth: wvsBckciy9CNd_bpjWrT6qs7-JU
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=D9CRKs0qWWHpPsfCQTQHfRBjGnkCqFQRcM/m5Msgmpk=;
+        b=EIa9/Pj8l6XFg239ZTSTMrNSv8npBu8qVJ+26jLPRxs+j1gkKKcxSc+LPaC9bJN43V
+         5kg3Uj9+v2OOALXg6Ahcdg0aXJ0LCzbhtLS6gz17IkE7gkCtaxWljTYze23562YV8wXJ
+         1SduCtu2QWVn3kCIIW8JvG8aAwkIJR6wGKpaE38r2T7Hy0bsd6H6afdzlG5HtettU6aN
+         APsZsn7KXm7ie1JvWWN6/+ZZbUHs768q2uvAZIFShcRS+amvdPm6/GThWU0jN44qh1G7
+         FDjlkqXmYHjxVvtj7C7izhE2NLotU52N+VMr3D66+dGymxfQ5jiL0wDz1uSKic3Dtvxl
+         J/Ig==
+Received: by 10.182.145.8 with SMTP id sq8mr1611972obb.50.1345739309832; Thu,
+ 23 Aug 2012 09:28:29 -0700 (PDT)
+Received: by 10.182.48.34 with HTTP; Thu, 23 Aug 2012 09:28:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204153>
 
-Subject: [PATCH] git svn: Only follow first parents when populating
-svn:mergeinfo
- properties.
+I'm planning on using Git for a deployment process where the steps are
+basically:
 
-When svn.pushmergeinfo is set, git-svn tries to correctly populate mergeinfo
-properties when encountering a merge commit. It does so by first aggregating
-the mergeinfo property of the merged parent into the target, and then
-adding to it the SVN revision number of any commit reachable from the
-merged parent but not from the first (target) parent.
+ 1. You log into a deployment host, cd into software.git, do git pull
+ 2. A tool runs "make" for you, creates a deployment-YYYYMMDD-HHMMSS tag
+ 3. That make step will create a bunch of generated (text) files
+ 4. Get a list of these with : git clean -dxfn
+ 5. Copy those to to software-generated.git, removing any that we
+didn't just create, adding any that are new
+ 6. Commit that, tag it with generated-deployment-YYYYMMDD-HHMMSS
+ 7. Push out both our generated software.git and
+software-generated.git tag to our servers
+ 8. git reset --hard both of those to our newly pushed out tags
+ 9. Do git clean -dxf on software.git remove old generated files
+ 10. Copy new generated files from generated-software.git to software.git
+ 11. Restart our application to pick up the new software
 
-If a third branch was merged into the merged parent (e.g. X was merged into Y
-and Y was then merged into Z), its revisions will be listed twice --
-once as part
-of aggregating Y's mergeinfo property into Z's, and once more when walking
-the tree and finding X's commits reachable from Y's tip. While the first listing
-correctly lists those revisions as merged from X, the second listing
-will list them
-as merged from Y, creating incorrect mergeinfo properties that later cause
-unnecessary lookups and warnings when git-svn-fetching.
+For this I'll need to write some "git snapshot-commit" tool for #5 and
+#6 to commit whatever the current state of the directory is (with
+removed/added files), and hack up something to do #9-#10.
 
-Adding '--first-parent' to the rev-list command fixes this by only walking the
-part of the tree that's directly included in the merged branch (Y) and not any
-branches merged into it (X).
+This should all be relatively easy, I was just wondering if there was
+any prior art on this that I could use instead of hacking it up
+myself.
 
-Signed-off-by: Avishay Lavie <avishay.lavie@gmail.com>
----
- git-svn.perl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 828b8f0..f69a4d6 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -728,7 +728,7 @@ sub populate_merge_info {
-
-  next if $parent eq $parents[0]; # Skip first parent
-  # Add new changes being placed in tree by merge
-- my @cmd = (qw/rev-list --reverse/,
-+ my @cmd = (qw/rev-list --first-parent --reverse/,
-    $parent, qw/--not/);
-  foreach my $par (@parents) {
-  unless ($par eq $parent) {
--- 
-1.7.10.msysgit.1
+For what it's worth the reason I'm using Git like this for deployment
+is that I'm converting things away from an rsync-based sync process
+that's becoming increasingly slow since rsync with -c needs to
+recursively checksum everything we're syncing out (which is quite a
+lot), since it's all text files Git can be really efficient in just
+transferring deltas and quickly doing a hard reset to a new commit.
