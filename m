@@ -1,125 +1,69 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] vcs-svn: Fix 'fa/remote-svn' and 'fa/vcs-svn' in pu
-Date: Thu, 23 Aug 2012 18:55:39 +0100
-Message-ID: <50366E9B.7040803@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: in_merge_bases() is too expensive for recent "pu" update
+Date: Thu, 23 Aug 2012 11:08:46 -0700
+Message-ID: <7vd32h4h1t.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8C-VxzwigyUDHnUkXN7vhB+93X96pH9MvgB0ps7v-_NmQ@mail.gmail.com>
+ <878vd5k7uu.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: florian.achleitner.2.6.31@gmail.com
-X-From: git-owner@vger.kernel.org Thu Aug 23 19:59:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Aug 23 20:09:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4bgO-00036S-3Z
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:59:04 +0200
+	id 1T4bq1-00007m-Lf
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 20:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759157Ab2HWR66 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Aug 2012 13:58:58 -0400
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:33438 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756161Ab2HWR64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Aug 2012 13:58:56 -0400
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 8FC12AC406D;
-	Thu, 23 Aug 2012 18:58:54 +0100 (BST)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])	by mdfmta004.tch.inty.net (Postfix) with ESMTP id D21D2AC406C;	Thu, 23 Aug 2012 18:58:52 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tch.inty.net (Postfix) with ESMTP;	Thu, 23 Aug 2012 18:58:51 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-X-MDF-HostID: 17
+	id S932387Ab2HWSIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 14:08:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46576 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932177Ab2HWSIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 14:08:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94AB5947C;
+	Thu, 23 Aug 2012 14:08:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WURZ5HNkEXAluBKVRM1913oVkcI=; b=MIhr7t
+	NUWNd8ELh4oTPbLiBfiXjJH3+MeGrcnpO7nNxY1L/ykXaY4NU/Fkv94M1FfxjFlX
+	oXTuFJXpYmKSJfCbZbLMOIzPIE13+arR+UzSpiyPFHv8Q1WLi3l6D64LVzRjzKHL
+	FxbUoZjDTJSgqiX4lNxiigaOjBlivDYMm6BGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LM53XBHCrbxsokS7rlsTqo2TCx6a91m2
+	0n914Vik3Ed5UBnLE4tLOWmhsJ5ZrRdaFTW9lWeJGbCY9CzhBKiALsS7K7cRjOSR
+	zWOOaNl8unjBSyy5PLiYSuBRG5gDQTpP6AWEc6OK7baydXqIAiPESWWei6A4LTa2
+	CiazmzXcz4E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 814E6947B;
+	Thu, 23 Aug 2012 14:08:48 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2DAE947A; Thu, 23 Aug 2012
+ 14:08:47 -0400 (EDT)
+In-Reply-To: <878vd5k7uu.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Thu, 23 Aug 2012 16:20:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 95D7B83E-ED4D-11E1-A268-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204163>
 
+Thomas Rast <trast@student.ethz.ch> writes:
 
+> At the very least it should be possible to change in_merge_bases() to
+> not do any of the post-filtering; perhaps like the patch below.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Florian,
-
-The build on pu is currently broken:
-
-        CC remote-testsvn.o
-        LINK git-remote-testsvn
-    cc: vcs-svn/lib.a: No such file or directory
-    make: *** [git-remote-testsvn] Error 1
-
-This is caused by a dependency missing from the git-remote-testsvn
-link rule. The addition of the $(VCSSVN_LIB) dependency, which should
-be squashed into commit ea1f4afb ("Add git-remote-testsvn to Makefile",
-20-08-2012), fixes the build.
-
-However, this leads to a failure of test t9020.5 and (not unrelated)
-compiler warnings:
-
-        CC vcs-svn/svndump.o
-    vcs-svn/svndump.c: In function =91handle_node=92:
-    vcs-svn/svndump.c:246: warning: left shift count >=3D width of type
-    vcs-svn/svndump.c:345: warning: format =91%lu=92 expects type =91lo=
-ng \
-        unsigned int=92, but argument 3 has type =91uintmax_t=92
-
-The fix for the shift count warning is to cast the lhs of the shift
-expression to uintmax_t. The format warning is fixed by using the
-PRIuMAX format macro. These fixes should be squashed into commit
-78d9d4138 ("vcs-svn/svndump: rewrite handle_node(), begin|end_revision(=
-)",
-20-08-2012).
-
-HTH
-
-ATB,
-Ramsay Jones
-
- Makefile          | 2 +-
- vcs-svn/svndump.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 9cede84..761ae05 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2356,7 +2356,7 @@ git-http-push$X: revision.o http.o http-push.o GI=
-T-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
-) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-=20
--git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS)
-+git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN=
-_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
-) $(LIBS) \
- 	$(VCSSVN_LIB)
-=20
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 28ce2aa..eb97e8e 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -243,7 +243,7 @@ static void handle_node(struct node_ctx_t *node)
- 	const char *old_data =3D NULL;
- 	uint32_t old_mode =3D REPO_MODE_BLB;
- 	struct strbuf sb =3D STRBUF_INIT;
--	static uintmax_t blobmark =3D 1UL << (bitsizeof(uintmax_t) - 1);
-+	static uintmax_t blobmark =3D (uintmax_t) 1UL << (bitsizeof(uintmax_t=
-) - 1);
-=20
-=20
- 	if (have_text && type =3D=3D REPO_MODE_DIR)
-@@ -342,7 +342,7 @@ static void handle_node(struct node_ctx_t *node)
- 						node->text_length, &input);
- 			}
-=20
--			strbuf_addf(&sb, ":%lu", blobmark);
-+			strbuf_addf(&sb, ":%"PRIuMAX, blobmark);
- 			node->dataref =3D sb.buf;
- 		}
- 	}
---=20
-1.7.12
+I do not recall the details but the post-filtering was added after
+the initial naive version without it that was posted to the list did
+not work correctly in corner cases.  I wouldn't doubt that N*(N-1)
+loop can be optimized to something with log(N), but I offhand find
+it hard to believe "to not do any" could be correct without seeing
+more detailed analysis.
