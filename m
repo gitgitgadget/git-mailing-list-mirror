@@ -1,70 +1,87 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] l10n: preserve trailing spaces in Vietnamese translation
-Date: Thu, 23 Aug 2012 17:38:33 +0700
-Message-ID: <CACsJy8BdhPdwC0Uy4nvny0HWSurvshy7Ve=m-DoRpeznsVUFQg@mail.gmail.com>
-References: <1345640253-31705-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH] Support generate poison .mo files for testing
+Date: Thu, 23 Aug 2012 17:53:52 +0700
+Message-ID: <CACsJy8Bc=GZH+d_VLMqHFKz93zBed5oHjOjUgWa4piY-tpdUNA@mail.gmail.com>
+References: <7va9xofbgo.fsf@alter.siamese.dyndns.org> <1345613246-4053-1-git-send-email-pclouds@gmail.com>
+ <7vboi3b2n8.fsf@alter.siamese.dyndns.org> <CACsJy8Dp5FZd9Ko6o18r5TeS5dfbjv61wOmP1452zyvHfX5LMQ@mail.gmail.com>
+ <7v393ec2w9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Tran Ngoc Quan <vnwildman@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Marco Sousa <marcomsousa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 23 12:39:24 2012
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 23 12:54:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4Uot-0003Pc-4U
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 12:39:23 +0200
+	id 1T4V3X-0008Io-I2
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 12:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933937Ab2HWKjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Aug 2012 06:39:09 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63563 "EHLO
+	id S1030341Ab2HWKy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 06:54:26 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42559 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933899Ab2HWKjE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2012 06:39:04 -0400
-Received: by ialo24 with SMTP id o24so1084980ial.19
-        for <git@vger.kernel.org>; Thu, 23 Aug 2012 03:39:04 -0700 (PDT)
+	with ESMTP id S1030305Ab2HWKyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 06:54:24 -0400
+Received: by ialo24 with SMTP id o24so1104077ial.19
+        for <git@vger.kernel.org>; Thu, 23 Aug 2012 03:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=V4yr0FF/JqOojlIojK0JBeXOC0YCixG+DjNH4BY2zLc=;
-        b=RsfDLPlxs5sr2L2U0kdywkloyl5pIJIbC2q9Ga0PO2SfQiarygZpNRcQ15Kji9g0c0
-         iNZGxqiicn/00F1ffYJ39yP1wse/CKxBzxQu/2In6b/FNRJ48nbbbttnvuO7G1VYAYCK
-         uu3j7zM6NFM2aZw4OTOC1PdLiKdW456pxR3lSs/6mUVONmFjP/osOfvTtBLcKgjiIjF+
-         oj5oBXqATv4Tf5FAcRKeQr6w61GkNKHgdPCXe5aM4P8/so4yA9Eb5J7acGfD8pkV5hgZ
-         6ZaZD3pKFuNUiJMiLN5Ijth42YLA1QmG6n0ApIFOvIS5NTHf/0APVGG6XfwO/fJ5qqFd
-         K6YA==
-Received: by 10.43.45.200 with SMTP id ul8mr800815icb.36.1345718343963; Thu,
- 23 Aug 2012 03:39:03 -0700 (PDT)
-Received: by 10.64.35.12 with HTTP; Thu, 23 Aug 2012 03:38:33 -0700 (PDT)
-In-Reply-To: <1345640253-31705-1-git-send-email-pclouds@gmail.com>
+         :cc:content-type;
+        bh=igJ94WpcUKMudsNoYSljErykF9sFaGSAldnaJvUMMtE=;
+        b=xRSjSZhdGxBh3afLpJf1ZMCQVYD1OCZK5VHg9iPL5aM7CbZLAmKkB0LNRMVyVTIv0e
+         MPXloRsQ4oyOmL4TFTNVG8edmWpuW2iHLGcJA/XtJF/OfV56S9kglBBmDfz8XN5xVEaM
+         3Sg+mAd0Rdc9xN0n9I9VKXVn1tO3w3JeYnBkiLU0Tc1njj+qqaR8IzgmY3+KpQP2Rnx9
+         Ex8xGaYcpxMZgERdkqW62bkcPob7RyJRBhhlHq/mZOTDPTlSuh2JPZ0Xfo7Ddq9iErKj
+         cq8sFIDrg33N3+CHEHhbMV3zu/yalhucQRwPm6xdfNRJ+vWhEyh2LZ0GZa/VV44bPZQD
+         GgsA==
+Received: by 10.50.184.135 with SMTP id eu7mr5454047igc.15.1345719263150; Thu,
+ 23 Aug 2012 03:54:23 -0700 (PDT)
+Received: by 10.64.35.12 with HTTP; Thu, 23 Aug 2012 03:53:52 -0700 (PDT)
+In-Reply-To: <7v393ec2w9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204145>
 
-2012/8/22 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> The trailing spaces in msgid can be used to separate the next
-> word. Accidentally removing it means we may see "On branchmaster"
-> instead of "On branch master".
+On Wed, Aug 22, 2012 at 11:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> But a better way could be
+>> replacing "tracked" with "t r a c k e d". We know the rule so we can
+>> recreate the that string from "tracked" in test_i18n*. Or reverse the
+>> upper/lower case, whichever is easier for the recreation by test_i18n*
+>
+> That does not make much sense to me, so either one of us must be
+> slightly confused.  I thought the only purpose of testing with the
+> "poison" was to find messages that must not be localized but were
+> localized by mistake.  For that, we have to make sure that anything
+> that uses test_i18n* is reading from Porcelain, in other words, we
+> must use the byte-for-byte comparison without using test_i18n* when
+> verifying the plumbing output.  And the primary requirement for this
+> arrangement to work is that the expected output in C locale and the
+> actual ouptut in the synthetic poison locale are reliably different.
+> They do not have to be reversible (I was actually going to suggest
+> rot13 of the original instead of cycling through the "* gettext
+> poison *" in your patch --- prefixing with QQ would not work, as it
+> is likely that the test with "grep" may not be anchored at the left
+> end).
 
-I don't speak Portugese but I think that translation has the same
-problem. This is on git.git by the way, not git-l10n repository.
+Yes, for verifying plumbing output that should be enough.
 
-#: wt-status.c:737
-msgid "On branch "
-msgstr "Na rama"
+> Teaching test_i18n* to fuzzily match the expected output in C locale
+> against the actual output in synthetic poison locale may or may not
+> be doable, but spending any cycle working on that sounds like a
+> total waste of time (even though it might be fun).  It does not test
+> that we are translating Porcelain messages correctly.
 
->  #: wt-status.c:978
->  msgid "On branch "
-> -msgstr "Tr=C3=AAn nh=C3=A1nh"
-> +msgstr "Tr=C3=AAn nh=C3=A1nh "
---=20
+Right. I was aiming at testing translated messages but obviously went
+off track trying to test a fake locale instead. Thanks for stopping
+me.
+-- 
 Duy
