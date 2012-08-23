@@ -1,95 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Existing utility to track compiled files in another sister
- repository, for rollouts
-Date: Thu, 23 Aug 2012 10:57:34 -0700
-Message-ID: <7vk3wp4hkh.fsf@alter.siamese.dyndns.org>
-References: <CACBZZX6SVSn17nfSarQC1qgz-TxcDDn5tvHb0BkyW9S8DcLY4w@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] vcs-svn: Fix 'fa/remote-svn' and 'fa/vcs-svn' in pu
+Date: Thu, 23 Aug 2012 18:55:39 +0100
+Message-ID: <50366E9B.7040803@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 23 19:57:49 2012
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: florian.achleitner.2.6.31@gmail.com
+X-From: git-owner@vger.kernel.org Thu Aug 23 19:59:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4bf6-0001Ix-Gz
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:57:44 +0200
+	id 1T4bgO-00036S-3Z
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030232Ab2HWR5j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Aug 2012 13:57:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41578 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933689Ab2HWR5h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2012 13:57:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0908691AF;
-	Thu, 23 Aug 2012 13:57:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vmi+cF0wLyAK
-	hQob3hqp17GpqMI=; b=ISnHaPVPSLDioiBQvAzjwWCvepM7Zw1qhsCzeIw7f0+c
-	ykUeU22nv5mWh5alg074g5CyCx+icjVHNYUEW8+/XBytMGTGo06O+drKTHY/vP5X
-	x/B4O+IwDvVDY4jtbNoP0DTclkMmvk7YC8STjL+1uqCdJVoVyZy/lLWhPN4FBr0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Qzo9+p
-	u9y9ZUqtKKibAhoxe7izX6Vj0sJPDG5H2xiaS7YaED4borg7M6uGlmM0GQE48RGx
-	LbR8WUOaaz+4FIpBiEv/pC6R57HoSEInbYZgXay7FOJ3b7Dp6ALPaBDlMzelMUnU
-	HFvaSj2yIgg7z7Eew/uyK0Hx2zfF4MaHacSsg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAEA591AE;
-	Thu, 23 Aug 2012 13:57:36 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4491991AD; Thu, 23 Aug 2012
- 13:57:36 -0400 (EDT)
-In-Reply-To: <CACBZZX6SVSn17nfSarQC1qgz-TxcDDn5tvHb0BkyW9S8DcLY4w@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 23 Aug
- 2012 18:28:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 05781B36-ED4C-11E1-B2E5-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759157Ab2HWR66 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Aug 2012 13:58:58 -0400
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:33438 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756161Ab2HWR64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Aug 2012 13:58:56 -0400
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 8FC12AC406D;
+	Thu, 23 Aug 2012 18:58:54 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])	by mdfmta004.tch.inty.net (Postfix) with ESMTP id D21D2AC406C;	Thu, 23 Aug 2012 18:58:52 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta004.tch.inty.net (Postfix) with ESMTP;	Thu, 23 Aug 2012 18:58:51 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204162>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->  5. Copy those to to software-generated.git, removing any that we
-> didn't just create, adding any that are new
->  6. Commit that, tag it with generated-deployment-YYYYMMDD-HHMMSS
 
->  9. Do git clean -dxf on software.git remove old generated files
->  10. Copy new generated files from generated-software.git to software=
-=2Egit
->
-> For this I'll need to write some "git snapshot-commit" tool for #5 an=
-d
-> #6 to commit whatever the current state of the directory is (with
-> removed/added files), and hack up something to do #9-#10.
->
-> This should all be relatively easy, I was just wondering if there was
-> any prior art on this that I could use instead of hacking it up
-> myself.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-=46WIW, dodoc script in my todo branch was hacked up to respond to my
-push into k.org repository, pull 'master' into "documentation build
-repo" at the k.org machine and check it out, build docs and then
-"removing any that we didn't create, adding any that are new" to
-update the html and man "branches", and push it back to the main
-repository, so in that sense, it has all the logic that was needed
-(and more, as the rebuilt documentation from two revisions may only
-differ from version stamp asciidoc-to-html/man toolchain adds, which
-need to be filtered out when updating html/man branches).
+Hi Florian,
 
-There no longer is post-update hook at k.org, so I have to run it
-manually at the end of day's integration cycle, just before pushing
-things out.
+The build on pu is currently broken:
 
-I wrote it myself, not because I looked for suitable reusable code
-and didn't find any, but because I was too lazy to look for existing
-tools and evaluating them.
+        CC remote-testsvn.o
+        LINK git-remote-testsvn
+    cc: vcs-svn/lib.a: No such file or directory
+    make: *** [git-remote-testsvn] Error 1
+
+This is caused by a dependency missing from the git-remote-testsvn
+link rule. The addition of the $(VCSSVN_LIB) dependency, which should
+be squashed into commit ea1f4afb ("Add git-remote-testsvn to Makefile",
+20-08-2012), fixes the build.
+
+However, this leads to a failure of test t9020.5 and (not unrelated)
+compiler warnings:
+
+        CC vcs-svn/svndump.o
+    vcs-svn/svndump.c: In function =91handle_node=92:
+    vcs-svn/svndump.c:246: warning: left shift count >=3D width of type
+    vcs-svn/svndump.c:345: warning: format =91%lu=92 expects type =91lo=
+ng \
+        unsigned int=92, but argument 3 has type =91uintmax_t=92
+
+The fix for the shift count warning is to cast the lhs of the shift
+expression to uintmax_t. The format warning is fixed by using the
+PRIuMAX format macro. These fixes should be squashed into commit
+78d9d4138 ("vcs-svn/svndump: rewrite handle_node(), begin|end_revision(=
+)",
+20-08-2012).
+
+HTH
+
+ATB,
+Ramsay Jones
+
+ Makefile          | 2 +-
+ vcs-svn/svndump.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9cede84..761ae05 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2356,7 +2356,7 @@ git-http-push$X: revision.o http.o http-push.o GI=
+T-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+=20
+-git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS)
++git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN=
+_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) $(LIBS) \
+ 	$(VCSSVN_LIB)
+=20
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index 28ce2aa..eb97e8e 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -243,7 +243,7 @@ static void handle_node(struct node_ctx_t *node)
+ 	const char *old_data =3D NULL;
+ 	uint32_t old_mode =3D REPO_MODE_BLB;
+ 	struct strbuf sb =3D STRBUF_INIT;
+-	static uintmax_t blobmark =3D 1UL << (bitsizeof(uintmax_t) - 1);
++	static uintmax_t blobmark =3D (uintmax_t) 1UL << (bitsizeof(uintmax_t=
+) - 1);
+=20
+=20
+ 	if (have_text && type =3D=3D REPO_MODE_DIR)
+@@ -342,7 +342,7 @@ static void handle_node(struct node_ctx_t *node)
+ 						node->text_length, &input);
+ 			}
+=20
+-			strbuf_addf(&sb, ":%lu", blobmark);
++			strbuf_addf(&sb, ":%"PRIuMAX, blobmark);
+ 			node->dataref =3D sb.buf;
+ 		}
+ 	}
+--=20
+1.7.12
