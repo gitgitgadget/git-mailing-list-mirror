@@ -1,7 +1,7 @@
 From: "Philipp A. Hartmann" <pah@qo.cx>
-Subject: [PATCH 4/4] osxkeychain: port to generic credential helper implementation
-Date: Thu, 23 Aug 2012 18:57:48 +0200
-Message-ID: <1345741068-11004-5-git-send-email-pah@qo.cx>
+Subject: [PATCH 2/4] contrib: add generic credential helper
+Date: Thu, 23 Aug 2012 18:57:46 +0200
+Message-ID: <1345741068-11004-3-git-send-email-pah@qo.cx>
 References: <1345741068-11004-1-git-send-email-pah@qo.cx>
 Cc: Jeff King <peff@peff.net>, John Szakmeister <john@szakmeister.net>,
 	"Philipp A. Hartmann" <pah@qo.cx>
@@ -12,351 +12,341 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4asV-0005um-33
+	id 1T4asV-0005um-Jb
 	for gcvg-git-2@plane.gmane.org; Thu, 23 Aug 2012 19:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759096Ab2HWRHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Aug 2012 13:07:12 -0400
-Received: from offis4.offis.uni-oldenburg.de ([134.106.51.109]:34514 "EHLO
+	id S1759100Ab2HWRHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Aug 2012 13:07:16 -0400
+Received: from offis4.offis.uni-oldenburg.de ([134.106.51.109]:34518 "EHLO
 	offis4.offis.uni-oldenburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755128Ab2HWRHE (ORCPT
+	by vger.kernel.org with ESMTP id S1755591Ab2HWRHE (ORCPT
 	<rfc822;git@vger.kernel.org>); Thu, 23 Aug 2012 13:07:04 -0400
-X-Greylist: delayed 531 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Aug 2012 13:07:03 EDT
 Received: by offis4.offis.uni-oldenburg.de (Postfix, from userid 1003)
-	id E0645741D79; Thu, 23 Aug 2012 18:58:13 +0200 (CEST)
+	id 17F95741DA9; Thu, 23 Aug 2012 18:58:11 +0200 (CEST)
 X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
 	offis4.offis.uni-oldenburg.de
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.7 required=5.0 tests=ALL_TRUSTED,BAYES_50
 	autolearn=disabled version=3.3.2
-X-Spam-DCC: : offis4 1282; Body=1 Fuz1=1 Fuz2=1
+X-Spam-DCC: : offis4 1282; Body=3 Fuz1=3 Fuz2=3
 X-Spam-score: -1.7 ()
 X-Spam-hits: -1.7
 Received: from localhost (ritchie.offis.uni-oldenburg.de [134.106.53.254])
-	by offis4.offis.uni-oldenburg.de (Postfix) with ESMTP id 9250E741DAD;
-	Thu, 23 Aug 2012 18:58:10 +0200 (CEST)
+	by offis4.offis.uni-oldenburg.de (Postfix) with ESMTP id 57B96741DA7;
+	Thu, 23 Aug 2012 18:58:09 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1345741068-11004-1-git-send-email-pah@qo.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204157>
 
 From: "Philipp A. Hartmann" <pah@qo.cx>
 
-This reduces code duplication in the osxkeychain helper by
-basing the implementation on the generic helper implementation.
+This adds a generic implementation for credential helpers.
 
-Alongside, the return codes of the helper are tightened to be
-more consistent in corner cases and the memory containing
-cleartext passwords is explicitly cleared when possible.
+It provides a header file credential_helper.h containing
+a simplified credential API and common helper functions.
+The implementation in credential_helper.c already provides
+a main() function and chooses the credential operation
+from a function table:
+
+  struct credential_operation const credential_helper_ops[] =
+  {
+      { "get",   my_backend_get   },
+      { "store", my_backend_store },
+      { "erase", my_backend_erase },
+      CREDENTIAL_OP_END
+  };
+
+With this, a specific credential helper backend usually only
+needs to implement these operation callbacks.
 
 Signed-off-by: Philipp A. Hartmann <pah@qo.cx>
 ---
- contrib/credential/helper/credential_helper.h      |    9 +
- contrib/credential/osxkeychain/Makefile            |   22 ++-
- .../osxkeychain/git-credential-osxkeychain.c       |  183 ++++++++------------
- 3 files changed, 96 insertions(+), 118 deletions(-)
+ contrib/credential/helper/credential_helper.c |  149 +++++++++++++++++++++++++
+ contrib/credential/helper/credential_helper.h |  116 +++++++++++++++++++
+ 2 files changed, 265 insertions(+)
+ create mode 100644 contrib/credential/helper/credential_helper.c
+ create mode 100644 contrib/credential/helper/credential_helper.h
 
-diff --git a/contrib/credential/helper/credential_helper.h b/contrib/credential/helper/credential_helper.h
-index 8266078..76b6e50 100644
---- a/contrib/credential/helper/credential_helper.h
-+++ b/contrib/credential/helper/credential_helper.h
-@@ -113,4 +113,13 @@ static inline char *xstrdup(const char *str)
- 	return ret;
- }
- 
-+static inline char *xstrndup(const char *str, size_t len)
+diff --git a/contrib/credential/helper/credential_helper.c b/contrib/credential/helper/credential_helper.c
+new file mode 100644
+index 0000000..e99c2ec
+--- /dev/null
++++ b/contrib/credential/helper/credential_helper.c
+@@ -0,0 +1,149 @@
++/*
++ * Copyright (C) 2012 Philipp A. Hartmann <pah@qo.cx>
++ *
++ * This file is licensed under the GPL v2, or a later version
++ * at the discretion of Linus.
++ *
++ * This credential struct and API is simplified from git's
++ * credential.{h,c} to be used within credential helper
++ * implementations.
++ */
++
++#include <credential_helper.h>
++
++void credential_init(struct credential *c)
 +{
-+	char *ret = strndup(str,len);
++	memset(c, 0, sizeof(*c));
++}
++
++void credential_clear(struct credential *c)
++{
++	free(c->protocol);
++	free(c->host);
++	free(c->path);
++	free(c->username);
++	free_password(c->password);
++
++	credential_init(c);
++}
++
++int credential_read(struct credential *c)
++{
++	char    buf[1024];
++	ssize_t line_len = 0;
++	char   *key      = buf;
++	char   *value;
++
++	while (fgets(buf, sizeof(buf), stdin))
++	{
++		line_len = strlen(buf);
++
++		if(buf[line_len-1]=='\n')
++			buf[--line_len]='\0';
++
++		if(!line_len)
++			break;
++
++		value = strchr(buf,'=');
++		if(!value) {
++			warning("invalid credential line: %s", key);
++			return -1;
++		}
++		*value++ = '\0';
++
++		if (!strcmp(key, "protocol")) {
++			free(c->protocol);
++			c->protocol = xstrdup(value);
++		} else if (!strcmp(key, "host")) {
++			free(c->host);
++			c->host = xstrdup(value);
++			value = strrchr(c->host,':');
++			if (value) {
++				*value++ = '\0';
++				c->port = atoi(value);
++			}
++		} else if (!strcmp(key, "path")) {
++			free(c->path);
++			c->path = xstrdup(value);
++		} else if (!strcmp(key, "username")) {
++			free(c->username);
++			c->username = xstrdup(value);
++		} else if (!strcmp(key, "password")) {
++			free_password(c->password);
++			c->password = xstrdup(value);
++			while (*value) *value++ = '\0';
++		}
++		/*
++		 * Ignore other lines; we don't know what they mean, but
++		 * this future-proofs us when later versions of git do
++		 * learn new lines, and the helpers are updated to match.
++		 */
++	}
++	return 0;
++}
++
++void credential_write_item(FILE *fp, const char *key, const char *value)
++{
++	if (!value)
++		return;
++	fprintf(fp, "%s=%s\n", key, value);
++}
++
++void credential_write(const struct credential *c)
++{
++	/* only write username/password, if set */
++	credential_write_item(stdout, "username", c->username);
++	credential_write_item(stdout, "password", c->password);
++}
++
++static void usage(const char *name)
++{
++	struct credential_operation const *try_op = credential_helper_ops;
++	const char *basename = strrchr(name,'/');
++
++	basename = (basename) ? basename + 1 : name;
++	fprintf(stderr, "Usage: %s <", basename);
++	while(try_op->name) {
++		fprintf(stderr,"%s",(try_op++)->name);
++		if(try_op->name)
++			fprintf(stderr,"%s","|");
++	}
++	fprintf(stderr,"%s",">\n");
++}
++
++/*
++ * generic main function for credential helpers
++ */
++int main(int argc, char *argv[])
++{
++	int ret = EXIT_SUCCESS;
++
++	struct credential_operation const *try_op = credential_helper_ops;
++	struct credential                  cred   = CREDENTIAL_INIT;
++
++	if (!argv[1]) {
++		usage(argv[0]);
++		goto out;
++	}
++
++	/* lookup operation callback */
++	while(try_op->name && strcmp(argv[1], try_op->name))
++		try_op++;
++
++	/* unsupported operation given -- ignore silently */
++	if(!try_op->name || !try_op->op)
++		goto out;
++
++	ret = credential_read(&cred);
++	if(ret)
++		goto out;
++
++	/* perform credential operation */
++	ret = (*try_op->op)(&cred);
++
++	credential_write(&cred);
++
++out:
++	credential_clear(&cred);
++	return ret;
++}
+diff --git a/contrib/credential/helper/credential_helper.h b/contrib/credential/helper/credential_helper.h
+new file mode 100644
+index 0000000..8266078
+--- /dev/null
++++ b/contrib/credential/helper/credential_helper.h
+@@ -0,0 +1,116 @@
++/*
++ * Copyright (C) 2012 Philipp A. Hartmann <pah@qo.cx>
++ *
++ * This file is licensed under the GPL v2, or a later version
++ * at the discretion of Linus.
++ *
++ * This credential struct and API is simplified from git's
++ * credential.{h,c} to be used within credential helper
++ * implementations.
++ */
++#ifndef CREDENTIAL_HELPER_H_INCLUDED_
++#define CREDENTIAL_HELPER_H_INCLUDED_
++
++#include <stdio.h>
++#include <string.h>
++#include <stdarg.h>
++#include <stdlib.h>
++#include <errno.h>
++
++struct credential
++{
++	char          *protocol;
++	char          *host;
++	unsigned short port;
++	char          *path;
++	char          *username;
++	char          *password;
++};
++
++#define CREDENTIAL_INIT \
++  { NULL,NULL,0,NULL,NULL,NULL }
++
++void credential_init(struct credential *c);
++void credential_clear(struct credential *c);
++int  credential_read(struct credential *c);
++void credential_write(const struct credential *c);
++
++typedef int (*credential_op_cb)(struct credential*);
++
++struct credential_operation
++{
++	char             *name;
++	credential_op_cb op;
++};
++
++#define CREDENTIAL_OP_END \
++  { NULL,NULL }
++
++/*
++ * Table with operation callbacks is defined in concrete
++ * credential helper implementation and contains entries
++ * like { "get", function_to_get_credential } terminated
++ * by CREDENTIAL_OP_END.
++ */
++extern struct credential_operation const credential_helper_ops[];
++
++/* ---------------- common helper functions ---------------- */
++
++static inline void free_password(char *password)
++{
++	char *c = password;
++	if (!password)
++		return;
++
++	while (*c) *c++ = '\0';
++	free(password);
++}
++
++static inline void warning(const char *fmt, ...)
++{
++	va_list ap;
++
++	va_start(ap, fmt);
++	fprintf(stderr, "warning: ");
++	vfprintf(stderr, fmt, ap);
++	fprintf(stderr, "\n" );
++	va_end(ap);
++}
++
++static inline void error(const char *fmt, ...)
++{
++	va_list ap;
++
++	va_start(ap, fmt);
++	fprintf(stderr, "error: ");
++	vfprintf(stderr, fmt, ap);
++	fprintf(stderr, "\n" );
++	va_end(ap);
++}
++
++static inline void die(const char *fmt, ...)
++{
++	va_list ap;
++
++	va_start(ap,fmt);
++	error(fmt, ap);
++	va_end(ap);
++	exit(EXIT_FAILURE);
++}
++
++static inline void die_errno(int err)
++{
++	error("%s", strerror(err));
++	exit(EXIT_FAILURE);
++}
++
++static inline char *xstrdup(const char *str)
++{
++	char *ret = strdup(str);
 +	if (!ret)
 +		die_errno(errno);
 +
 +	return ret;
 +}
 +
- #endif /* CREDENTIAL_HELPER_H_INCLUDED_ */
-diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-index 4b3a08a..64ee7c5 100644
---- a/contrib/credential/osxkeychain/Makefile
-+++ b/contrib/credential/osxkeychain/Makefile
-@@ -1,4 +1,5 @@
--all:: git-credential-osxkeychain
-+MAIN:=git-credential-osxkeychain
-+all:: $(MAIN)
- 
- CC = gcc
- RM = rm -f
-@@ -7,11 +8,20 @@ CFLAGS = -g -O2 -Wall
- -include ../../../config.mak.autogen
- -include ../../../config.mak
- 
--git-credential-osxkeychain: git-credential-osxkeychain.o
--	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) -Wl,-framework -Wl,Security
-+INCS:=
-+LIBS:=-Wl,-framework -Wl,Security
-+HELPER:=../helper
-+VPATH +=$(HELPER)
- 
--git-credential-osxkeychain.o: git-credential-osxkeychain.c
--	$(CC) -c $(CFLAGS) $<
-+SRCS:=$(MAIN).c
-+SRCS+=credential_helper.c
-+OBJS:=$(SRCS:.c=.o)
-+
-+%.o: %.c
-+	$(CC) $(CFLAGS) $(CPPFLAGS) -I$(HELPER) $(INCS) -o $@ -c $<
-+
-+$(MAIN): $(OBJS)
-+	$(CC) -o $@ $(LDFLAGS) $^ $(LIBS)
- 
- clean:
--	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
-+	@$(RM) $(MAIN) $(OBJS)
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index 6beed12..60bd973 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -1,53 +1,40 @@
-+
-+#include <credential_helper.h>
-+
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <Security/Security.h>
- 
- static SecProtocolType protocol;
--static char *host;
--static char *path;
--static char *username;
--static char *password;
--static UInt16 port;
--
--static void die(const char *err, ...)
--{
--	char msg[4096];
--	va_list params;
--	va_start(params, err);
--	vsnprintf(msg, sizeof(msg), err, params);
--	fprintf(stderr, "%s\n", msg);
--	va_end(params);
--	exit(1);
--}
--
--static void *xstrdup(const char *s1)
--{
--	void *ret = strdup(s1);
--	if (!ret)
--		die("Out of memory");
--	return ret;
--}
- 
- #define KEYCHAIN_ITEM(x) (x ? strlen(x) : 0), x
--#define KEYCHAIN_ARGS \
-+#define KEYCHAIN_ARGS(c) \
- 	NULL, /* default keychain */ \
--	KEYCHAIN_ITEM(host), \
-+	KEYCHAIN_ITEM(c->host), \
- 	0, NULL, /* account domain */ \
--	KEYCHAIN_ITEM(username), \
--	KEYCHAIN_ITEM(path), \
--	port, \
-+	KEYCHAIN_ITEM(c->username), \
-+	KEYCHAIN_ITEM(c->path), \
-+	(UInt16) c->port, \
- 	protocol, \
- 	kSecAuthenticationTypeDefault
- 
--static void write_item(const char *what, const char *buf, int len)
-+static int prepare_internet_password(struct credential *c)
- {
--	printf("%s=", what);
--	fwrite(buf, 1, len, stdout);
--	putchar('\n');
-+	if (!c->protocol)
-+		return -1;
-+	else if (!strcmp(c->protocol, "https"))
-+		protocol = kSecProtocolTypeHTTPS;
-+	else if (!strcmp(c->protocol, "http"))
-+		protocol = kSecProtocolTypeHTTP;
-+	else /* we don't yet handle other protocols */
-+		return -1;
-+
-+	return 0;
- }
- 
--static void find_username_in_item(SecKeychainItemRef item)
-+static void
-+find_username_in_item(SecKeychainItemRef item, struct credential *c)
- {
- 	SecKeychainAttributeList list;
- 	SecKeychainAttribute attr;
-@@ -59,27 +46,37 @@ static void find_username_in_item(SecKeychainItemRef item)
- 	if (SecKeychainItemCopyContent(item, NULL, &list, NULL, NULL))
- 		return;
- 
--	write_item("username", attr.data, attr.length);
-+	free(c->username);
-+	c->username = xstrndup(attr.data, attr.length);
-+
- 	SecKeychainItemFreeContent(&list, NULL);
- }
- 
--static void find_internet_password(void)
-+static int find_internet_password(struct credential *c)
- {
- 	void *buf;
- 	UInt32 len;
- 	SecKeychainItemRef item;
- 
--	if (SecKeychainFindInternetPassword(KEYCHAIN_ARGS, &len, &buf, &item))
--		return;
-+	/* Silently ignore unsupported protocols */
-+	if (prepare_internet_password(c))
-+		return EXIT_SUCCESS;
- 
--	write_item("password", buf, len);
--	if (!username)
--		find_username_in_item(item);
-+	if (SecKeychainFindInternetPassword(KEYCHAIN_ARGS(c), &len, &buf, &item))
-+		return EXIT_SUCCESS;
-+
-+	free_password(c->password);
-+	c->password = xstrndup(buf, len);
-+	memset(buf,len,'\0');
-+
-+	if (!c->username)
-+		find_username_in_item(item, c);
- 
- 	SecKeychainItemFreeContent(NULL, buf);
-+	return EXIT_SUCCESS;
- }
- 
--static void delete_internet_password(void)
-+static int delete_internet_password(struct credential *c)
- {
- 	SecKeychainItemRef item;
- 
-@@ -88,86 +85,48 @@ static void delete_internet_password(void)
- 	 * will give us; if you want to do something more fancy, use the
- 	 * Keychain manager.
- 	 */
--	if (!protocol || !host)
--		return;
-+	if (!c->protocol || !c->host)
-+		return EXIT_FAILURE;
- 
--	if (SecKeychainFindInternetPassword(KEYCHAIN_ARGS, 0, NULL, &item))
--		return;
-+	/* Silently ignore unsupported protocols */
-+	if (prepare_internet_password(c))
-+		return EXIT_SUCCESS;
-+
-+	if (SecKeychainFindInternetPassword(KEYCHAIN_ARGS(c), 0, NULL, &item))
-+		return EXIT_SUCCESS;
- 
--	SecKeychainItemDelete(item);
-+	if (!SecKeychainItemDelete(item))
-+		return EXIT_SUCCESS;
-+
-+	return EXIT_FAILURE;
- }
- 
--static void add_internet_password(void)
-+static int add_internet_password(struct credential *c)
- {
- 	/* Only store complete credentials */
--	if (!protocol || !host || !username || !password)
--		return;
-+	if (!c->protocol || !c->host || !c->username || !c->password)
-+		return EXIT_FAILURE;
-+
-+	if (prepare_internet_password(c))
-+		return EXIT_FAILURE;
- 
- 	if (SecKeychainAddInternetPassword(
--	      KEYCHAIN_ARGS,
--	      KEYCHAIN_ITEM(password),
-+	      KEYCHAIN_ARGS(c),
-+	      KEYCHAIN_ITEM(c->password),
- 	      NULL))
--		return;
--}
-+		return EXIT_FAILURE;
- 
--static void read_credential(void)
--{
--	char buf[1024];
--
--	while (fgets(buf, sizeof(buf), stdin)) {
--		char *v;
--
--		if (!strcmp(buf, "\n"))
--			break;
--		buf[strlen(buf)-1] = '\0';
--
--		v = strchr(buf, '=');
--		if (!v)
--			die("bad input: %s", buf);
--		*v++ = '\0';
--
--		if (!strcmp(buf, "protocol")) {
--			if (!strcmp(v, "https"))
--				protocol = kSecProtocolTypeHTTPS;
--			else if (!strcmp(v, "http"))
--				protocol = kSecProtocolTypeHTTP;
--			else /* we don't yet handle other protocols */
--				exit(0);
--		}
--		else if (!strcmp(buf, "host")) {
--			char *colon = strchr(v, ':');
--			if (colon) {
--				*colon++ = '\0';
--				port = atoi(colon);
--			}
--			host = xstrdup(v);
--		}
--		else if (!strcmp(buf, "path"))
--			path = xstrdup(v);
--		else if (!strcmp(buf, "username"))
--			username = xstrdup(v);
--		else if (!strcmp(buf, "password"))
--			password = xstrdup(v);
--	}
-+	return EXIT_SUCCESS;
- }
- 
--int main(int argc, const char **argv)
-+/*
-+ * Table with helper operation callbacks, used by generic
-+ * credential helper main function.
-+ */
-+struct credential_operation const credential_helper_ops[] =
- {
--	const char *usage =
--		"Usage: git credential-osxkeychain <get|store|erase>";
--
--	if (!argv[1])
--		die(usage);
--
--	read_credential();
--
--	if (!strcmp(argv[1], "get"))
--		find_internet_password();
--	else if (!strcmp(argv[1], "store"))
--		add_internet_password();
--	else if (!strcmp(argv[1], "erase"))
--		delete_internet_password();
--	/* otherwise, ignore unknown action */
--
--	return 0;
--}
-+	{ "get",   find_internet_password   },
-+	{ "store", add_internet_password    },
-+	{ "erase", delete_internet_password },
-+	CREDENTIAL_OP_END
-+};
++#endif /* CREDENTIAL_HELPER_H_INCLUDED_ */
 -- 
 1.7.10.4
