@@ -1,73 +1,105 @@
-From: Colin McCabe <cmccabe@alumni.cmu.edu>
-Subject: bug: when applying binary diffs, -p0 is ignored
-Date: Fri, 24 Aug 2012 15:09:09 -0700
-Message-ID: <CA+qbEUOw9zR1_kdXU=mB8_KADq2NRT_qxSvGT+SfS55dUM8j6A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document the --done option.
+Date: Fri, 24 Aug 2012 16:19:09 -0700
+Message-ID: <7voblzyj2q.fsf@alter.siamese.dyndns.org>
+References: <20120822105705.GA30472@thyrsus.com>
+ <7vobm2968x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 25 00:09:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Sat Aug 25 01:19:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5247-0006hI-4g
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 00:09:19 +0200
+	id 1T539u-0004MH-51
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 01:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402Ab2HXWJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 18:09:12 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:65439 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758962Ab2HXWJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 18:09:09 -0400
-Received: by obbuo13 with SMTP id uo13so5321154obb.19
-        for <git@vger.kernel.org>; Fri, 24 Aug 2012 15:09:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=PQ8yAeUvEZj0/3dfgcjleF/9CThpFu+3/qO6ZXS4vP0=;
-        b=DwPV9da4mGFClLcDi0qTiUYk71pvk25M5CRK/enb+UjwA7bKVFc9wm6nnZ0LqqgoCP
-         CXu46AvCFvG2Z3de58ySBMA3DRt3f8u8bMnpG4WP3v8mgZL0DGznDhEJdgWPwm4AQUxx
-         WaG2Z64TjWamn27ortSrXLfohMWWA6Hsx0jo2sXUaQ7YYlnXW4lXc/1IO+WU46lvBigY
-         iS8k6mXVB5mmVU833AFNnRNDaEBkgDjj0l3b3ZP3/K5eNTPtzyQiGpgXdqb4S5SHD9Px
-         YIkJfDC4I+lDF7FNy/sTtUxYt+2NwemtdvLbvKvrTRZOeXpiI7A8sG0dc4eanvSmNQBo
-         sSZg==
-Received: by 10.60.169.75 with SMTP id ac11mr5165877oec.12.1345846149197; Fri,
- 24 Aug 2012 15:09:09 -0700 (PDT)
-Received: by 10.76.7.137 with HTTP; Fri, 24 Aug 2012 15:09:09 -0700 (PDT)
-X-Google-Sender-Auth: pOi4ccX1kLio4Oj6NXxGglJk_58
+	id S1755194Ab2HXXTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 19:19:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61433 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755028Ab2HXXTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 19:19:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03EA38B48;
+	Fri, 24 Aug 2012 19:19:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SEef31UaKsg9pudLFhEQPR4r6fU=; b=nt2J7M
+	EGEhOTC8PDDHyTu4gRCZid4qxwhy/t5RiwvjDimx14pzNsMi6AfRNqeqrR/rh4Yy
+	TRGef5PbEuOwJ20/TaJl6FvJThXnb3RxvivXmNfO86otgCCcsbl7minHbuFf1g0A
+	oi9QSkHae+jWY8PiT+nJgZYJR+cexVu7RuB1A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L53A7+zgypSpH3NlUb/yb/atfePUmZZp
+	Pq3phAaHlOH9Pinm7SIRdO1M8fJ+63nVDJp0qL9zFYFLNKiJW4KTM6SucSNJslR2
+	FHSPdjh6/elCcCTk6XkjwvP84K/Z+lGZ+WRzbowCTIM1sx0tAVJPJVSxWkTY+Zxp
+	/Taoov7QeIQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E52E48B47;
+	Fri, 24 Aug 2012 19:19:11 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A29158B46; Fri, 24 Aug 2012
+ 19:19:10 -0400 (EDT)
+In-Reply-To: <7vobm2968x.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 22 Aug 2012 10:38:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C3B5C7E-EE42-11E1-84DE-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204238>
 
-I found a bug in git's handling of binary diff segments.
+Junio C Hamano <gitster@pobox.com> writes:
 
-When applying binary diffs using -p0, the prefix (or --strip) argument
-is ignored.
+> "Eric S. Raymond" <esr@thyrsus.com> writes:
+>
+>> ---
+>
+> A forgotten Sign-off?
 
-For example, try this:
-git apply -p0 --binary <<'EOF'
-diff --git a/init.tar.gz a/init.tar.gz
-new file mode 100644
-index 0000000000000000000000000000000000000000..
-         386b94f511a17a8a3d62eb6cec14694cb9b9b51d
-GIT binary patch
-literal 118
-zcmb2|=3qGT-8_JS`RzGFp(Y0bmIKvX{ySXzs`-OhSfm*K#a}SG%CY!eN_LjnjGuP-
-zFH<V7m)|X1{OzyyaqIde8O2kg^q0P?b&0-p<;muDS-IC{I=+*S-L~Mn{_^zwEo=Tu
-UurR>Dep|-nAGgFaXfQAU0L+LoA^-pY
+Ping?  Just telling us that this is Signed-off is fine.
 
-literal 0
-HcmV?d00001
+Thanks.
 
-EOF
-
-It will create init.tar.gz, but in the root of the repository, not in a/
-
-(Sorry if my mailer wraps the long index line)
-
-cheers,
-Colin McCabe
+>
+> Sverre, the text matches my understanding as well as what be56862
+> (fast-import: introduce 'done' command, 2011-07-16) says it did.
+> Ack?
+>
+>>  Documentation/git-fast-import.txt |    8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+>> index 2620d28..9291ea0 100644
+>> --- a/Documentation/git-fast-import.txt
+>> +++ b/Documentation/git-fast-import.txt
+>> @@ -39,6 +39,10 @@ OPTIONS
+>>  	See ``Date Formats'' below for details about which formats
+>>  	are supported, and their syntax.
+>>  
+>> +-- done::
+>> +	Terminate with error if there is no 'done' command at the 
+>> +	end of the stream.
+>> +
+>>  --force::
+>>  	Force updating modified existing branches, even if doing
+>>  	so would cause commits to be lost (as the new commit does
+>> @@ -1047,7 +1051,9 @@ done::
+>>  	Error out if the stream ends without a 'done' command.
+>>  	Without this feature, errors causing the frontend to end
+>>  	abruptly at a convenient point in the stream can go
+>> -	undetected.
+>> +	undetected.  This may occur, for example, if an import
+>> +	front end dies in mid-operation without emitting SIGTERM
+>> +	or SIGKILL at its subordinate git fast-import instance.
+>>  
+>>  `option`
+>>  ~~~~~~~~
+>> -- 
+>> 1.7.9.5
