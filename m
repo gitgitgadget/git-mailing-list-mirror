@@ -1,72 +1,141 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Support non-WIN32 system lacking poll() while keeping
- the WIN32 part intact
-Date: Fri, 24 Aug 2012 12:46:36 -0700
-Message-ID: <7vboi0yswz.fsf@alter.siamese.dyndns.org>
-References: <004001cd81f9$21e68e10$65b3aa30$@schmitz-digital.de>
- <7vsjbc1dg1.fsf@alter.siamese.dyndns.org>
- <005401cd822a$67687a30$36396e90$@schmitz-digital.de>
+Subject: Re: [RFC] Support for HP NonStop
+Date: Fri, 24 Aug 2012 13:12:52 -0700
+Message-ID: <7v4nnsyrp7.fsf@alter.siamese.dyndns.org>
+References: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
 To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Fri Aug 24 21:46:47 2012
+X-From: git-owner@vger.kernel.org Fri Aug 24 22:13:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4zqA-0001AV-O5
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 21:46:47 +0200
+	id 1T50Fa-0006g8-T6
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 22:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760118Ab2HXTql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 15:46:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37311 "EHLO
+	id S933214Ab2HXUM5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Aug 2012 16:12:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48808 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757692Ab2HXTqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 15:46:39 -0400
+	id S932890Ab2HXUMz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2012 16:12:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67FD09FCF;
-	Fri, 24 Aug 2012 15:46:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8693C85D9;
+	Fri, 24 Aug 2012 16:12:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q7LGoAzaB5l8nvfqlxgw3b31FyY=; b=IhUOD1
-	/b60+eaI0vwW+rTixzNuMbOJS4fUxJ+Y8w9bwqMA7iv0Z12sMxek9K6CE6x4XR54
-	zTmcU28j5CyPLzn720OhLBV/cFAkaj/dwU8vHUTE14XoCNRo+gpSX92SoAamB040
-	BRCzIYWLEotRAU7WK9aU1muFrvuur3AVnxBvs=
+	:content-type:content-transfer-encoding; s=sasl; bh=2JnZvC2cCNLn
+	C29UlsGoNVL7+lY=; b=pdICTec9xwf/0O+7pv9zhgv/lDKfzHlPv242aofM+HEY
+	pS4vh8MeZ/Wtmq74iWK5qMObqxrKBTEf+p31TC6v3tfwb1gMwHyXNa96fWZBAp5i
+	dFlTUj987BNzAorJoio/mfrJV9Ku7PYStW5GwGthr6s08oh11/M28y2OqFlwkcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JMMsPg5TKbrANDddD5TiaNSq0oQeiKPg
-	SYEX/h7wO/qgXvlOBvIHDECZR0OuwmEWig3/3ME9woQMO4+eWLhnxNpelk7/PhV8
-	pTx8vSuEI/S7j+Fneg7Wv0XvK/HO672Tie6rLg5Zl9Gh0K8675x8hC4D8iQilC/5
-	vni40JrD7pA=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=P9de9n
+	6cPCjnffbUqjcC/Zlg3co84AljaHTLoYohpKPHdty3lYvKCyFurAOm2SFWCFxafs
+	qJRWt2JgD/yTeFwHQffs2Mtu6fHg5ZlC4OUrC01ejzjFH8hU5/ujpzy9yE7SIeAm
+	VrXIhVIN8H+pji9pBBUv32Ydf/hj6hjoOMjmo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53B8A9FCE;
-	Fri, 24 Aug 2012 15:46:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7376485D8;
+	Fri, 24 Aug 2012 16:12:54 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C65ED9FCD; Fri, 24 Aug 2012
- 15:46:37 -0400 (EDT)
-In-Reply-To: <005401cd822a$67687a30$36396e90$@schmitz-digital.de> (Joachim
- Schmitz's message of "Fri, 24 Aug 2012 20:58:09 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4ACD85D7; Fri, 24 Aug 2012
+ 16:12:53 -0400 (EDT)
+In-Reply-To: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Fri, 24 Aug 2012 21:22:04 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AF098D4-EE24-11E1-8528-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1643CAD2-EE28-11E1-B453-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204230>
 
 "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-> Different, but related question: would poll.[ch] be allowed to #include "git-compat-util.h"?
+> Hi folks
+>
+> On top of the patches I=E2=80=99ve submitted so far, which were neede=
+d for HP NonStop,=20
+> but possibly useful for other platforms too, here is one that is at l=
+east in parts NonStop specific
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index a047221..d6a142a 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -74,7 +74,8 @@
+> # define _XOPEN_SOURCE 500
+> # endif
+> #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC=
+__) && \
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(_M_UNIX) && !defined(__sgi) =
+&& !defined(__DragonFly__)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(_M_UNIX) && !defined(__sgi) =
+&& !defined(__DragonFly__) && \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(__TANDEM)
+> #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD ne=
+eds 600 fo
+> #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+> #endif
+> +#ifdef __TANDEM /* or HAVE_STRINGS_H ? */
+> +#include <strings.h> /* for strcasecmp() */
+> +#endif
+> #include <errno.h>
+> #include <limits.h>
+> #include <sys/param.h>
 
-Seeing other existing generic wrappers directly under compat/,
-e.g. fopen.c, mkdtemp.c, doing so, I would say why not.
+Yeah, it appears that glibc headers have strcasecmp() and friends in
+the <string.h> and that was why majority of us were fine without
+including <strings.h>.  A cursory look of /usr/include/strings.h on
+a GNU system suggests that it is safe to include <strings.h> after
+we incude <string.h> on that platform.
 
-Windows folks (I see Erik is already CC'ed, which is good ;-),
-please work with Joachim to make sure such a move won't break your
-builds.  I believe that it should just be the matter of updating a
-couple of paths in the top-level Makefile.
+I think it is OK to leave it "__TANDEM /* or HAVE_STRINGS_H? */" for
+now and let the next person who wants to port us to a platform that
+needs this inclusion turn it to HAVE_STRINGS_H.  Alternatively, we
+bite the bullet now and include <strings.h> on any platform that has
+the header file and see if anybody complains (that reminds me; I at
+least should get one flavor of BSD build environment for this kind
+of thing myself).
 
-Thanks.
+> @@ -141,6 +145,10 @@
+> #else
+> #include <stdint.h>
+> #endif
+> +#ifdef __TANDEM /* or NO_INTPTR_T resp. NO_UINTPTR_T? */
+> +typedef int intptr_t;
+> +typedef unsigned int uintptr_t;
+> +#endif
+
+A bit wider context for this hunk is
+
+	#ifndef NO_INTTYPES_H
+        #include <inttypes.h>
+        #else
+        #include <stdint.h>
+	#endif
+
+So we have been assuming that <stdint.h> has intptr_t but __TANDEM
+apparently doesn't.  POSIX requires intptr_t and uintptr_t to be
+declared for systems conforming to XSI, but otherwise these are
+optional (in other words, some XSI non-conforming platforms may have
+them in <stdint.h>), so it would not help to check _XOPEN_UNIX to
+see if the system is XSI X-<.  We would need NO_INTPTR_T as you
+hinted above, perhaps like this.
+
+	#ifndef NO_INTTYPES_H
+        #include <inttypes.h>
+        #else
+        #include <stdint.h>
+	#endif
+	#ifdef NO_INTPTR_T
+        typedef int intptr_t;
+        typedef unsigned int uintptr_t;
+	#endif
+
+By the way, is "int" wide enough, or should they be "long"?
