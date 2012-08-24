@@ -1,113 +1,181 @@
-From: Catalin Pol <catalin.pol@gmail.com>
-Subject: Re: a small git proposal
-Date: Fri, 24 Aug 2012 15:56:08 +0300
-Message-ID: <CACZFoOFPohLCs-3QY97TUEZCxq-qV0cNW408rEQ0exws37Pdrw@mail.gmail.com>
-References: <CACZFoOGjRX_CT5hpYcqN4_67he5gyAC-oGaPwZfcOx6w4QuxVQ@mail.gmail.com>
-	<CAE1pOi0MXhQyKBa=s0ecwzUZhNkYcCA-_pwM0VC7vx9ECFrG0Q@mail.gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
+Date: Fri, 24 Aug 2012 15:05:26 +0200
+Message-ID: <004001cd81f9$21e68e10$65b3aa30$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 24 14:56:22 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "Erik Faye-Lund" <kusmabite@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 15:05:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4tQy-0001LY-GH
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 14:56:20 +0200
+	id 1T4ta9-0005wN-LD
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 15:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759365Ab2HXM4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 08:56:11 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:47216 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759339Ab2HXM4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 08:56:09 -0400
-Received: by obbuo13 with SMTP id uo13so4056503obb.19
-        for <git@vger.kernel.org>; Fri, 24 Aug 2012 05:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=f/zTMd6TqVQjjFOpTKxOuOFVNYWZIqf0xhtyPM7MWVc=;
-        b=gtrUADXEhPtpSaZhbTfhejDbAxIceSvnSuLFh4Vw3HEyHsN7PpJHmmgBYN3BX4oqag
-         5f67hb1BjlRJDs03/nvNU9zKqyv5mrz+In5TaWFn+57wR1sRr6zA5kpubjsDQ8TZJjIZ
-         9sN9J8k4S0K7lFUr1wmTKiaGBjnTxK14n6071c9pWOVAzsOxLx0M2fwItJsKwVq3eKFI
-         X0m/blWYtySgkTVJpUIagO8m0ER7B/D6pe2BdEMVVp0r2W8Zxbu/h5RAbpgM2CsxQh5I
-         XI9vW+waZ4g9tosOqt3KjR+tmvwy91K/gtNaIFZl0pX3xkENhn3H3gSmhV6P+z0IhFJ7
-         1/KA==
-Received: by 10.50.53.171 with SMTP id c11mr1987080igp.57.1345812968680; Fri,
- 24 Aug 2012 05:56:08 -0700 (PDT)
-Received: by 10.64.54.66 with HTTP; Fri, 24 Aug 2012 05:56:08 -0700 (PDT)
-In-Reply-To: <CAE1pOi0MXhQyKBa=s0ecwzUZhNkYcCA-_pwM0VC7vx9ECFrG0Q@mail.gmail.com>
+	id S1759358Ab2HXNFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 09:05:42 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:60013 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753970Ab2HXNFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 09:05:40 -0400
+Received: from DualCore (dsdf-4db5d8d2.pool.mediaWays.net [77.181.216.210])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0M8pIq-1Sx9Hf3e2e-00CrfA; Fri, 24 Aug 2012 15:05:36 +0200
+References: 
+In-Reply-To: 
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac2B3N3Lx3QEXop1QJeuCeNNx9/SoQAGekGw
+Content-Language: de
+X-Provags-ID: V02:K0:l+x4TNhPpH5SyBHvvCtPhQc9yvLxPoZVVChXegADUqV
+ QTrZ/K92iC75HSz9aNX7lCNdoe++urjn1oXRIkMNkcKUeEx+hU
+ rAryJ656Bt7xOOmXnJdMMMXUT8WBzjxy+rOO7aLivoGCjPRlMM
+ 73GCj/y05PwXrfJkqEm0eudg9GaezyWs3runMBlRAU46Omu4xO
+ p+1TI+82fU/PVO41IzFfSVEANNQ7OlkdQ7Tb8cR7ZKOLz5HzUh
+ XJaOxIq3Umo7NDfkE7U/yHNyZk+8lwmc3oL126x0JnpcuwP2A0
+ SL5A0LLLYW80Sj8/j8X3hgUMs/aFKdubjg9uTowjZURclspfUm
+ DcHYsH2aXuPqiQKHnRutvMQp0/088CzPkgJxRAuOamUP5lqlcH
+ HveB6KbQtIwtA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204209>
 
-Thanks for the tip. It should give me a good starting point for what
-I'm about to do, since notes seem to be able to add comments for
-objects without changing the commit tree (which was one of the things
-I was aiming for and quite frankly, one of the parts that worried me
-on the implementation side).
+> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> Sent: Friday, August 24, 2012 11:45 AM
+> To: Junio C Hamano (gitster@pobox.com)
+> Cc: git@vger.kernel.org; Erik Faye-Lund (kusmabite@gmail.com)
+> Subject: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
+> 
+> 
+> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> ---
+> This time I hopefully didn't screw up whitespace and line breaks.
+> 
+>  Makefile            | 18 ++++++++++++++----
+>  compat/win32/poll.c |  8 ++++++--
+>  2 files changed, 20 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 66e8216..e150816 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -152,6 +152,11 @@ all::
+>  #
+>  # Define NO_MMAP if you want to avoid mmap.
+>  #
+> +# Define NO_SYS_POLL_H if you don't have sys/poll.h.
+> +#
+> +# Define NO_POLL if you do not have or do not want to use poll.
+> +# This also implies NO_SYS_POLL_H.
+> +#
+>  # Define NO_PTHREADS if you do not have or do not want to use Pthreads.
+>  #
+>  # Define NO_PREAD if you have a problem with pread() system call (e.g.
+> @@ -1216,7 +1221,7 @@ ifeq ($(uname_S),Windows)
+>  	NO_PREAD = YesPlease
+>  	NEEDS_CRYPTO_WITH_SSL = YesPlease
+>  	NO_LIBGEN_H = YesPlease
+> -	NO_SYS_POLL_H = YesPlease
+> +	NO_POLL = YesPlease
+>  	NO_SYMLINK_HEAD = YesPlease
+>  	NO_IPV6 = YesPlease
+>  	NO_UNIX_SOCKETS = YesPlease
+> @@ -1257,7 +1262,7 @@ ifeq ($(uname_S),Windows)
+>  	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -
+> D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+>  	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
+>  		compat/win32/pthread.o compat/win32/syslog.o \
+> -		compat/win32/poll.o compat/win32/dirent.o
+> +		compat/win32/dirent.o
+>  	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -
+> Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+>  	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+>  	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
+> @@ -1312,7 +1317,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>  	NO_PREAD = YesPlease
+>  	NEEDS_CRYPTO_WITH_SSL = YesPlease
+>  	NO_LIBGEN_H = YesPlease
+> -	NO_SYS_POLL_H = YesPlease
+> +	NO_POLL = YesPlease
+>  	NO_SYMLINK_HEAD = YesPlease
+>  	NO_UNIX_SOCKETS = YesPlease
+>  	NO_SETENV = YesPlease
+> @@ -1347,7 +1352,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>  	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+>  	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+>  		compat/win32/pthread.o compat/win32/syslog.o \
+> -		compat/win32/poll.o compat/win32/dirent.o
+> +		compat/win32/dirent.o
+>  	EXTLIBS += -lws2_32
+>  	PTHREAD_LIBS =
+>  	X = .exe
+> @@ -1601,6 +1606,11 @@ ifdef NO_GETTEXT
+>  	BASIC_CFLAGS += -DNO_GETTEXT
+>  	USE_GETTEXT_SCHEME ?= fallthrough
+>  endif
+> +ifdef NO_POLL
+> +	NO_SYS_POLL_H = YesPlease
+> +	COMPAT_CFLAGS += -DNO_POLL -Icompat/win32 # so it finds poll.h
+> +	COMPAT_OBJS += compat/win32/poll.o
+> +endif
+>  ifdef NO_STRCASESTR
+>  	COMPAT_CFLAGS += -DNO_STRCASESTR
+>  	COMPAT_OBJS += compat/strcasestr.o
+> diff --git a/compat/win32/poll.c b/compat/win32/poll.c
+> index 403eaa7..49541f1 100644
+> --- a/compat/win32/poll.c
+> +++ b/compat/win32/poll.c
+> @@ -24,7 +24,9 @@
+>  # pragma GCC diagnostic ignored "-Wtype-limits"
+>  #endif
+> 
+> -#include <malloc.h>
+> +#if defined(WIN32)
+> +# include <malloc.h>
+> +#endif
+> 
+>  #include <sys/types.h>
+> 
+> @@ -48,7 +50,9 @@
+>  #else
+>  # include <sys/time.h>
+>  # include <sys/socket.h>
+> -# include <sys/select.h>
+> +# ifndef NO_SYS_SELECT_H
+> +#  include <sys/select.h>
+> +# endif
+>  # include <unistd.h>
+>  #endif
+> 
+> --
+> 1.7.12
 
-However, what I want to implement has a few differences:
-    a) the flags I'm proposing form a limited set of strings, as I'm
-interested in finding which files have a particular flag (I did
-mention the idea to add comment as well when adding a certain flag,
-but that was something extra, since most of the searching/listing was
-around the set of flags of a certain file, not around the comment
-itself... I can cook up some more usage and output examples if anyone
-thinks it can clear things up). I realize this can be achieved by
-using a sound naming convention (and a simple grep for a particular
-prefix when listing all notes would handle the search by flag I
-mentioned) - unfortunately, some other differences don't seem to be
-covered as you'll see below
-    b) I would like to have all subsequent versions of a file to
-inherit the flags/tags of the original file, until specified
-otherwise; in the original idea that a 'feature tag' (or 'flag' as I
-keep calling them lately - seems a better name that 'feature tag')
-remains on the file until someone decides that feature is no longer
-implemented in the file (for example, a file implements a certain
-technique since version 3 until version 15, when the implementation of
-a particular method changed entirely). Unfortunately, what seems to be
-a good choice to preserve a state of a file until not needed are
-branches, but then I would need to have the same version of the file
-on different branches (a file can have multiple flags after all, since
-multiple features are usually implemented in a file)
 
-Anyway, I just wanted to point out that the notes you suggested are
-not quite what I was looking for, but it should be a good
-implementation starting point, so again, lots of thanks.
+There is a downside with this: In order to make use of it, in Makefile it 
+adds "-Icompat/win32" to COMPAR_CFLAGS. This results in 
+compat/win32/dirent.h to be found, rather than /usr/include/dirent.h. 
+This should be fine for WIN32, but for everybody else may not. 
+For HP NonStop in particular it results in a warning:
 
-Catalin Pol
+        };
+         ^
+"... /compat/win32/dirent.h", line 17: warning(133): expected an identifier
 
+And this is because there it uses an unnamed union, which is a GCC extension 
+(just like unnamed struct), but not part of C89/C99/POSIX.
 
-On Thu, Aug 23, 2012 at 6:16 PM, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> On 23 August 2012 08:10, Catalin Pol <catalin.pol@gmail.com> wrote:
->> Hi everyone,
->>
->> This is my first email to this mailing list, so this may be somehow
->> too straight forward... the idea is that I was thinking to develop a
->> new feature in Git (although I'm kind of new to git myself).
->> I wrote a small description of what I intend to do and I figured I
->> could use some pointers (how I can improve it, any possible usage
->> scenarios you can think for it and so on). Details are available at
->> the gist link below or as attachment to this email (I zipped the text
->> file since it was more it is larger than 10k and I didn't want it to
->> get rejected by the email server... although it still might)
->>
->> gist link:    https://gist.github.com/3437530
->>
->> I made the gist public, so feel free to edit it directly... or, if you
->> prefer, just email me with any comments. I'm opened to any suggestion,
->> so feel free to send me any kind of comment (maybe I'm trying to
->> implement something that is already in git for example, and since I'm
->> a bit of a newbie in the git world, I didn't notice any way to obtain
->> my desired workflow).
->>
->> Thanks in advance for any feedback,
->
-> Have you looked at "git notes"?
+One possible solution might be to move compat/win32/poll.[ch] to compat/.
+Another is to just ignore the warning, at least here it seems to work just fine?
+Or to avoid using an unnamed union. But the later 2 cases would still mean that
+we include the wrong dirent.h, so the 1st solution seems the cleanest.
+
+Any other idea?
+Let me know your thoughts...
+
+Bye, Jojo
