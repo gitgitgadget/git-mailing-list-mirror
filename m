@@ -1,108 +1,72 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: [RFC] Support for HP NonStop
-Date: Fri, 24 Aug 2012 21:22:04 +0200
-Message-ID: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Support non-WIN32 system lacking poll() while keeping
+ the WIN32 part intact
+Date: Fri, 24 Aug 2012 12:46:36 -0700
+Message-ID: <7vboi0yswz.fsf@alter.siamese.dyndns.org>
+References: <004001cd81f9$21e68e10$65b3aa30$@schmitz-digital.de>
+ <7vsjbc1dg1.fsf@alter.siamese.dyndns.org>
+ <005401cd822a$67687a30$36396e90$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 24 21:22:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Fri Aug 24 21:46:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4zSb-0005Zk-87
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 21:22:25 +0200
+	id 1T4zqA-0001AV-O5
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 21:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760051Ab2HXTWU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Aug 2012 15:22:20 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:58786 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758130Ab2HXTWR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2012 15:22:17 -0400
-Received: from DualCore (dsdf-4db5d8d2.pool.mediaWays.net [77.181.216.210])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0LiWYm-1Tf9gp2STc-00dEi9; Fri, 24 Aug 2012 21:22:15 +0200
-References: 
-In-Reply-To: 
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2B5aqsx7X29Ba9QAajUvjl8QL5ZAAR8GwA
-Content-Language: de
-X-Provags-ID: V02:K0:Y2LS5mtRIcI56Ews1TEcCALwVf/4iDpF6aEChfwa/XX
- y8ZbGM03mJ5/LsDTsAA6MJKxZ3oI3ttgzmF056JvpTmRtZkB3d
- xZ3Y/cwQyQKdmfo1zFxzMZ13QqIBX3zbNJ16k29qjGuvVBDzoa
- Nylf+ZJakYD2RGDc0A1cAKrrZ4mRUOqeCJ/7pOwuGtUgOZQ2XD
- U9FZbUSeyKH+CA6Wfvv7MfyFQYvdavQlyKL9S8V2+8jjSmRgdL
- wNoOROUxrvHGSzDiHuCfXmxT06TKxZUlkBRKFq4s43XXGK2r0N
- Z7U/LIGjDJmb493GKvWoxGFT78+nNKS6bk/henPHQYXvBlCy3w
- 1LZI8HHH10WkypnUC48xLvBrvvhAXlxfL/ULKpl/mRFgLNoEgQ
- 0Rab/Q4ziB4wQ==
+	id S1760118Ab2HXTql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 15:46:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37311 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757692Ab2HXTqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 15:46:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67FD09FCF;
+	Fri, 24 Aug 2012 15:46:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q7LGoAzaB5l8nvfqlxgw3b31FyY=; b=IhUOD1
+	/b60+eaI0vwW+rTixzNuMbOJS4fUxJ+Y8w9bwqMA7iv0Z12sMxek9K6CE6x4XR54
+	zTmcU28j5CyPLzn720OhLBV/cFAkaj/dwU8vHUTE14XoCNRo+gpSX92SoAamB040
+	BRCzIYWLEotRAU7WK9aU1muFrvuur3AVnxBvs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JMMsPg5TKbrANDddD5TiaNSq0oQeiKPg
+	SYEX/h7wO/qgXvlOBvIHDECZR0OuwmEWig3/3ME9woQMO4+eWLhnxNpelk7/PhV8
+	pTx8vSuEI/S7j+Fneg7Wv0XvK/HO672Tie6rLg5Zl9Gh0K8675x8hC4D8iQilC/5
+	vni40JrD7pA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53B8A9FCE;
+	Fri, 24 Aug 2012 15:46:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C65ED9FCD; Fri, 24 Aug 2012
+ 15:46:37 -0400 (EDT)
+In-Reply-To: <005401cd822a$67687a30$36396e90$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Fri, 24 Aug 2012 20:58:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AF098D4-EE24-11E1-8528-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204229>
 
-Hi folks
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-On top of the patches I=92ve submitted so far, which were needed for HP=
- NonStop,=20
-but possibly useful for other platforms too, here is one that is at lea=
-st in parts NonStop specific
+> Different, but related question: would poll.[ch] be allowed to #include "git-compat-util.h"?
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a047221..d6a142a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -74,7 +74,8 @@
-# define _XOPEN_SOURCE 500
-# endif
-#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__=
-) && \
--=A0=A0=A0=A0=A0 !defined(_M_UNIX) && !defined(__sgi) && !defined(__Dra=
-gonFly__)
-+=A0=A0=A0=A0=A0 !defined(_M_UNIX) && !defined(__sgi) && !defined(__Dra=
-gonFly__) && \
-+=A0=A0=A0=A0=A0 !defined(__TANDEM)
-#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD need=
-s 600 fo
-#define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-#endif
-+#ifdef __TANDEM /* or HAVE_STRINGS_H ? */
-+#include <strings.h> /* for strcasecmp() */
-+#endif
-#include <errno.h>
-#include <limits.h>
-#include <sys/param.h>
-@@ -141,6 +145,10 @@
-#else
-#include <stdint.h>
-#endif
-+#ifdef __TANDEM /* or NO_INTPTR_T resp. NO_UINTPTR_T? */
-+typedef int intptr_t;
-+typedef unsigned int uintptr_t;
-+#endif
-#if defined(__CYGWIN__)
-#undef _XOPEN_SOURCE
-#include <grp.h>
+Seeing other existing generic wrappers directly under compat/,
+e.g. fopen.c, mkdtemp.c, doing so, I would say why not.
 
-The 1st hunk avoids a =91is already defined with a different value warn=
-ing, and I
-believe this is the only and right way to fix this, but on the 2nd and =
-3rd hunk=20
-I=92d need advice on how to properly add those. The #ifdef __TANDEM=85#=
-endif=20
-works fine for me, but doesn=92t seem 100% clean to me.
-In the comment I mention alternatives.
+Windows folks (I see Erik is already CC'ed, which is good ;-),
+please work with Joachim to make sure such a move won't break your
+builds.  I believe that it should just be the matter of updating a
+couple of paths in the top-level Makefile.
 
-strcasecamp() is declared in <strings.h> as per C99/POSIX, and in C99 m=
-ode a prototype has=20
-to be seen by the compiler.
-
-intptr_t and uintprt_t seem to be optional in C99 and are not provided =
-for NonStop
-
-What do you think?
-
-Bye, Jojo
+Thanks.
