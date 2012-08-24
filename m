@@ -1,160 +1,108 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 6/6] test-parse-options: mark parseopt help strings for pseudotranslation
-Date: Fri, 24 Aug 2012 12:43:06 +0700
-Message-ID: <1345786986-10826-7-git-send-email-pclouds@gmail.com>
-References: <1345786986-10826-1-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 04/17] Name local variables more consistently
+Date: Fri, 24 Aug 2012 09:05:12 +0200
+Message-ID: <503727A8.3040600@alum.mit.edu>
+References: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu> <1345709442-16046-5-git-send-email-mhagger@alum.mit.edu> <20120823083918.GB6963@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 24 07:44:37 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 24 09:12:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4mh9-00017Y-Hr
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 07:44:36 +0200
+	id 1T4o49-00048M-Rl
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 09:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753687Ab2HXFo3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Aug 2012 01:44:29 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39005 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243Ab2HXFo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 01:44:27 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr13so2795592pbb.19
-        for <git@vger.kernel.org>; Thu, 23 Aug 2012 22:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=tkioCcIgbiVg5zqz65YAjPT+TRYURhCRBLq5S2Zf/mM=;
-        b=dA9X+NZayqhHn3KlB3BcubDg2i2+OPYseMjclaVXBgz0Eh8kXNjUVH9/OTtTuASKca
-         y9nRkx0JuuJAjKE3u5x33bPjO0Ai0LiLt2JYMbofpVvRZ17atUK7d0Aq3maFoAeVRzR+
-         gp7tjHSPVRbNle2il2djZ5vRiuBWqRkqy9+4arPpWzg7FKXrJltxcnOZ9tzoEv+tkkt7
-         A3EWjjqNjWkaNBDG8apV0KGWInbuANBRxLG+K6enMwyk7oCsC90fF16cQqnywLM0/ScG
-         u6WzvUpuQSRQOfj/s4VmDRpluSAwJ3SvB51r6K9EYjRaEryMNY3FuoZou6keMs2dXZ5t
-         EXWw==
-Received: by 10.66.78.69 with SMTP id z5mr8385183paw.14.1345787067526;
-        Thu, 23 Aug 2012 22:44:27 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id io1sm7558252pbc.67.2012.08.23.22.44.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Aug 2012 22:44:27 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 24 Aug 2012 12:44:10 +0700
-X-Mailer: git-send-email 1.7.12.rc2
-In-Reply-To: <1345786986-10826-1-git-send-email-pclouds@gmail.com>
+	id S1756203Ab2HXHMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 03:12:20 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:46616 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755100Ab2HXHMS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2012 03:12:18 -0400
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Aug 2012 03:12:18 EDT
+X-AuditID: 12074414-b7f846d0000008b8-05-503727abe18b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.2E.02232.BA727305; Fri, 24 Aug 2012 03:05:15 -0400 (EDT)
+Received: from [192.168.69.140] (p57A25109.dip.t-dialin.net [87.162.81.9])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7O75DrN020737
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 24 Aug 2012 03:05:14 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <20120823083918.GB6963@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqLta3TzAYMpTMYuuK91MFg29V5gt
+	frT0MDswezzr3cPocfGSssfnTXIBzFHcNkmJJWXBmel5+nYJ3Bk7l71hL/jIU3G4i7OBcRZX
+	FyMHh4SAicSmFRZdjJxAppjEhXvr2boYuTiEBC4zSpzYf5oZwjnFJLH0HEiGk4NXQFui78dP
+	dhCbRUBV4sqCbrA4m4CuxKKeZiYQW1QgRGLNtymMEPWCEidnPmEBsUUEZCW+H94IFmcWsJZY
+	8fowWL2wgKPEtQUNjBDLVjNK/Fq1hRUkwSlgJTFjZQ87yKXMAuoS6+cJQfTKS2x/O4d5AqPA
+	LCQrZiFUzUJStYCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSNiK7GA8
+	clLuEKMAB6MSD2/BBLMAIdbEsuLK3EOMkhxMSqK8M9XMA4T4kvJTKjMSizPii0pzUosPMUpw
+	MCuJ8M5/DFTOm5JYWZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBKweMTyHB
+	otT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UJTGFwPjFCTFA7R3GshNvMUFiblAUYjW
+	U4y6HJ+fnrzLKMSSl5+XKiXOewOkSACkKKM0D24FLEm9YhQH+liYlwHkEh5ggoOb9ApoCRPQ
+	ErWrxiBLShIRUlINjJ7x3t9WKjk4mD86a1CkvOWU1+2lr/N9pyn8PLhvxcLXiSqJwt8uTtug
+	EdrBED29R/e7mbTojrJKJ+9mTa6suvrz/9yV/xxeejjpX8REe4F1/rmLb11jUdjE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204188>
 
-This reduces the number of false positives in untranslated.log when we
-check for unmarked strings.
+On 08/23/2012 10:39 AM, Jeff King wrote:
+> On Thu, Aug 23, 2012 at 10:10:29AM +0200, mhagger@alum.mit.edu wrote:
+> 
+>> From: Michael Haggerty <mhagger@alum.mit.edu>
+>>
+>> Use the names (nr_heads, heads) consistently across functions, instead
+>> of sometimes naming the same values (nr_match, match).
+> 
+> I think this is fine, although:
+> 
+>> --- a/builtin/fetch-pack.c
+>> +++ b/builtin/fetch-pack.c
+>> @@ -521,7 +521,7 @@ static void mark_recent_complete_commits(unsigned long cutoff)
+>>  	}
+>>  }
+>>  
+>> -static void filter_refs(struct ref **refs, int nr_match, char **match)
+>> +static void filter_refs(struct ref **refs, int nr_heads, char **heads)
+>>  {
+>>  	struct ref **return_refs;
+>>  	struct ref *newlist = NULL;
+>> @@ -530,12 +530,12 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
+>>  	struct ref *fastarray[32];
+>>  	int match_pos;
+> 
+> This match_pos is an index into the "match" array, which becomes "head".
+> Should it become head_pos?
+> 
+> And then bits like this:
+> 
+>> -			while (match_pos < nr_match) {
+>> -				cmp = strcmp(ref->name, match[match_pos]);
+>> +			while (match_pos < nr_heads) {
+>> +				cmp = strcmp(ref->name, heads[match_pos]);
+> 
+> Would be:
+> 
+>   while (head_pos < nr_heads)
+> 
+> which makes more sense to me.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- test-parse-options.c | 62 ++++++++++++++++++++++++++------------------=
---------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+I was up in the air about this, because match_pos *is* the position at
+which a match is attempted.  But since the name also strikes you as
+wrong, I will change it in the next version.
 
-diff --git a/test-parse-options.c b/test-parse-options.c
-index 4a94327..09ddf74 100644
---- a/test-parse-options.c
-+++ b/test-parse-options.c
-@@ -33,50 +33,50 @@ int main(int argc, const char **argv)
- {
- 	const char *prefix =3D "prefix/";
- 	const char *usage[] =3D {
--		"test-parse-options <options>",
-+		N_("test-parse-options <options>"),
- 		NULL
- 	};
- 	struct option options[] =3D {
--		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
--		OPT_BOOL('D', "no-doubt", &boolean, "begins with 'no-'"),
-+		OPT_BOOL(0, "yes", &boolean, N_("get a boolean")),
-+		OPT_BOOL('D', "no-doubt", &boolean, N_("begins with 'no-'")),
- 		{ OPTION_SET_INT, 'B', "no-fear", &boolean, NULL,
--		  "be brave", PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
--		OPT_COUNTUP('b', "boolean", &boolean, "increment by one"),
-+		  N_("be brave"), PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
-+		OPT_COUNTUP('b', "boolean", &boolean, N_("increment by one")),
- 		OPT_BIT('4', "or4", &boolean,
--			"bitwise-or boolean with ...0100", 4),
--		OPT_NEGBIT(0, "neg-or4", &boolean, "same as --no-or4", 4),
-+			N_("bitwise-or boolean with ...0100"), 4),
-+		OPT_NEGBIT(0, "neg-or4", &boolean, N_("same as --no-or4"), 4),
- 		OPT_GROUP(""),
--		OPT_INTEGER('i', "integer", &integer, "get a integer"),
--		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
--		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
--		OPT_DATE('t', NULL, &timestamp, "get timestamp of <time>"),
--		OPT_CALLBACK('L', "length", &integer, "str",
--			"get length of <str>", length_callback),
--		OPT_FILENAME('F', "file", &file, "set file to <file>"),
--		OPT_GROUP("String options"),
--		OPT_STRING('s', "string", &string, "string", "get a string"),
--		OPT_STRING(0, "string2", &string, "str", "get another string"),
--		OPT_STRING(0, "st", &string, "st", "get another string (pervert orde=
-ring)"),
--		OPT_STRING('o', NULL, &string, "str", "get another string"),
-+		OPT_INTEGER('i', "integer", &integer, N_("get a integer")),
-+		OPT_INTEGER('j', NULL, &integer, N_("get a integer, too")),
-+		OPT_SET_INT(0, "set23", &integer, N_("set integer to 23"), 23),
-+		OPT_DATE('t', NULL, &timestamp, N_("get timestamp of <time>")),
-+		OPT_CALLBACK('L', "length", &integer, N_("str"),
-+			N_("get length of <str>"), length_callback),
-+		OPT_FILENAME('F', "file", &file, N_("set file to <file>")),
-+		OPT_GROUP(N_("String options")),
-+		OPT_STRING('s', "string", &string, N_("string"), N_("get a string"))=
-,
-+		OPT_STRING(0, "string2", &string, N_("str"), N_("get another string"=
-)),
-+		OPT_STRING(0, "st", &string, N_("st"), N_("get another string (perve=
-rt ordering)")),
-+		OPT_STRING('o', NULL, &string, N_("str"), N_("get another string")),
- 		OPT_NOOP_NOARG(0, "obsolete"),
- 		OPT_SET_PTR(0, "default-string", &string,
--			"set string to default", (unsigned long)"default"),
--		OPT_STRING_LIST(0, "list", &list, "str", "add str to list"),
--		OPT_GROUP("Magic arguments"),
--		OPT_ARGUMENT("quux", "means --quux"),
--		OPT_NUMBER_CALLBACK(&integer, "set integer to NUM",
-+			N_("set string to default"), (unsigned long)"default"),
-+		OPT_STRING_LIST(0, "list", &list, N_("str"), N_("add str to list")),
-+		OPT_GROUP(N_("Magic arguments")),
-+		OPT_ARGUMENT("quux", N_("means --quux")),
-+		OPT_NUMBER_CALLBACK(&integer, N_("set integer to NUM"),
- 			number_callback),
--		{ OPTION_COUNTUP, '+', NULL, &boolean, NULL, "same as -b",
-+		{ OPTION_COUNTUP, '+', NULL, &boolean, NULL, N_("same as -b"),
- 		  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_NODASH },
- 		{ OPTION_COUNTUP, 0, "ambiguous", &ambiguous, NULL,
--		  "positive ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
-+		  N_("positive ambiguity"), PARSE_OPT_NOARG | PARSE_OPT_NONEG },
- 		{ OPTION_COUNTUP, 0, "no-ambiguous", &ambiguous, NULL,
--		  "negative ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
--		OPT_GROUP("Standard options"),
-+		  N_("negative ambiguity"), PARSE_OPT_NOARG | PARSE_OPT_NONEG },
-+		OPT_GROUP(N_("Standard options")),
- 		OPT__ABBREV(&abbrev),
--		OPT__VERBOSE(&verbose, "be verbose"),
--		OPT__DRY_RUN(&dry_run, "dry run"),
--		OPT__QUIET(&quiet, "be quiet"),
-+		OPT__VERBOSE(&verbose, N_("be verbose")),
-+		OPT__DRY_RUN(&dry_run, N_("dry run")),
-+		OPT__QUIET(&quiet, N_("be quiet")),
- 		OPT_END(),
- 	};
- 	int i;
---=20
-1.7.12.rc2
+Thanks for this and all of your other comments!
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
