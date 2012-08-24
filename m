@@ -1,141 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Support for HP NonStop
-Date: Fri, 24 Aug 2012 13:12:52 -0700
-Message-ID: <7v4nnsyrp7.fsf@alter.siamese.dyndns.org>
-References: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de>
+From: Iain Paton <ipaton0@gmail.com>
+Subject: git no longer prompting for password
+Date: Fri, 24 Aug 2012 21:19:28 +0100
+Message-ID: <5037E1D0.6030900@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Fri Aug 24 22:13:03 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 24 22:20:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T50Fa-0006g8-T6
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 22:13:03 +0200
+	id 1T50Mr-0006Ro-In
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 22:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933214Ab2HXUM5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Aug 2012 16:12:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48808 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932890Ab2HXUMz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2012 16:12:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8693C85D9;
-	Fri, 24 Aug 2012 16:12:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2JnZvC2cCNLn
-	C29UlsGoNVL7+lY=; b=pdICTec9xwf/0O+7pv9zhgv/lDKfzHlPv242aofM+HEY
-	pS4vh8MeZ/Wtmq74iWK5qMObqxrKBTEf+p31TC6v3tfwb1gMwHyXNa96fWZBAp5i
-	dFlTUj987BNzAorJoio/mfrJV9Ku7PYStW5GwGthr6s08oh11/M28y2OqFlwkcA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=P9de9n
-	6cPCjnffbUqjcC/Zlg3co84AljaHTLoYohpKPHdty3lYvKCyFurAOm2SFWCFxafs
-	qJRWt2JgD/yTeFwHQffs2Mtu6fHg5ZlC4OUrC01ejzjFH8hU5/ujpzy9yE7SIeAm
-	VrXIhVIN8H+pji9pBBUv32Ydf/hj6hjoOMjmo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7376485D8;
-	Fri, 24 Aug 2012 16:12:54 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4ACD85D7; Fri, 24 Aug 2012
- 16:12:53 -0400 (EDT)
-In-Reply-To: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de> (Joachim
- Schmitz's message of "Fri, 24 Aug 2012 21:22:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1643CAD2-EE28-11E1-B453-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760057Ab2HXUUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 16:20:13 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:57845 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753539Ab2HXUUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 16:20:11 -0400
+Received: by wgbdr13 with SMTP id dr13so1777024wgb.1
+        for <git@vger.kernel.org>; Fri, 24 Aug 2012 13:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=gjxZDuslNc90+aEsbqV1bvR7QB64JhJNNdxnf9VI6qU=;
+        b=I8dmgzbRNz6pg1XUaI40V+yR9LG+WYg1J139ESRGLfq7HX+gHi/L5VVCqfMRRgNnCx
+         bBItPsRZEbwlI1O3TIJOciM6ZcImf002nXU15XLaRKXfduhZWprhfCbZV1SKvXMMhl7l
+         +2bOaX+/4DGV+Pg3FWufV8VwdET4eGWbJWqv2g5MrvrPxQ5CWXknkMcCMIrnFsMxtwSw
+         /5HMAazToRm5ob/kBRKfNJn6kyCvfS24007pYdXWHyNhXZdewsWheR37jYHQaIlYEDb5
+         cTYWxPW9Bg7LCUcBqQB8P6pQVO2/zGkoc2C2L/of0jWa6eV6FF29fysFnuiKzla1ol9t
+         MhDQ==
+Received: by 10.216.158.212 with SMTP id q62mr3151610wek.53.1345839609768;
+        Fri, 24 Aug 2012 13:20:09 -0700 (PDT)
+Received: from [10.44.16.58] (hades.darkvoyage.org.uk. [81.187.177.1])
+        by mx.google.com with ESMTPS id r9sm355402wia.2.2012.08.24.13.20.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 24 Aug 2012 13:20:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120615 Thunderbird/13.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204231>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+Hi List,
 
-> Hi folks
->
-> On top of the patches I=E2=80=99ve submitted so far, which were neede=
-d for HP NonStop,=20
-> but possibly useful for other platforms too, here is one that is at l=
-east in parts NonStop specific
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index a047221..d6a142a 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -74,7 +74,8 @@
-> # define _XOPEN_SOURCE 500
-> # endif
-> #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC=
-__) && \
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(_M_UNIX) && !defined(__sgi) =
-&& !defined(__DragonFly__)
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(_M_UNIX) && !defined(__sgi) =
-&& !defined(__DragonFly__) && \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !defined(__TANDEM)
-> #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD ne=
-eds 600 fo
-> #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-> #endif
-> +#ifdef __TANDEM /* or HAVE_STRINGS_H ? */
-> +#include <strings.h> /* for strcasecmp() */
-> +#endif
-> #include <errno.h>
-> #include <limits.h>
-> #include <sys/param.h>
+A recent update to git 1.7.12 from 1.7.3.5 seems to have changed something - trying to push to a smart http backend no longer prompts for a password and hence fails the server auth.
 
-Yeah, it appears that glibc headers have strcasecmp() and friends in
-the <string.h> and that was why majority of us were fine without
-including <strings.h>.  A cursory look of /usr/include/strings.h on
-a GNU system suggests that it is safe to include <strings.h> after
-we incude <string.h> on that platform.
+The server is currently running git 1.7.9 behind apache 2.4.3 with an almost verbatim copy of the apache config from the git-http-backend manpage.
 
-I think it is OK to leave it "__TANDEM /* or HAVE_STRINGS_H? */" for
-now and let the next person who wants to port us to a platform that
-needs this inclusion turn it to HAVE_STRINGS_H.  Alternatively, we
-bite the bullet now and include <strings.h> on any platform that has
-the header file and see if anybody complains (that reminds me; I at
-least should get one flavor of BSD build environment for this kind
-of thing myself).
+Backtracking through the versions I've skipped and this doesn't seem to be a new problem, client side up to 1.7.7.7 works, 1.7.8 onwards don't. Server side version doesn't seem to make a difference.
 
-> @@ -141,6 +145,10 @@
-> #else
-> #include <stdint.h>
-> #endif
-> +#ifdef __TANDEM /* or NO_INTPTR_T resp. NO_UINTPTR_T? */
-> +typedef int intptr_t;
-> +typedef unsigned int uintptr_t;
-> +#endif
+user@fubar01:~/test# git --version
+git version 1.7.7.7
+user@fubar01:~/test# git push http://ipaton@10.0.0.1/git/test.git master
+Password: 
 
-A bit wider context for this hunk is
+type the password in and the push is successful
 
-	#ifndef NO_INTTYPES_H
-        #include <inttypes.h>
-        #else
-        #include <stdint.h>
-	#endif
+user@fubar01:~/test# git --version
+git version 1.7.8
+user@fubar01:~/test# git push http://ipaton@10.0.0.1/git/test.git master --verbose
+Pushing to http://ipaton@10.0.0.1/git/test.git
+Counting objects: 6, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (5/5), 491 bytes, done.
+Total 5 (delta 0), reused 0 (delta 0)
+error: RPC failed; result=22, HTTP code = 401
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
 
-So we have been assuming that <stdint.h> has intptr_t but __TANDEM
-apparently doesn't.  POSIX requires intptr_t and uintptr_t to be
-declared for systems conforming to XSI, but otherwise these are
-optional (in other words, some XSI non-conforming platforms may have
-them in <stdint.h>), so it would not help to check _XOPEN_UNIX to
-see if the system is XSI X-<.  We would need NO_INTPTR_T as you
-hinted above, perhaps like this.
+Watching the connection with wireshark shows that it does appear to try to authenticate with the correct username, but without a password. Not surprising since it doesn't ask for one..
 
-	#ifndef NO_INTTYPES_H
-        #include <inttypes.h>
-        #else
-        #include <stdint.h>
-	#endif
-	#ifdef NO_INTPTR_T
-        typedef int intptr_t;
-        typedef unsigned int uintptr_t;
-	#endif
+googling for git and password just seems to give results where people want it to stop asking for a password, which is the oppsite of what I want!  
+Looking at changelogs for 1.7.8 and I'm not really seeing anything that says I need to do something different.
 
-By the way, is "int" wide enough, or should they be "long"?
+Any help or pointers appreciated.
+
+Thanks,
+Iain
