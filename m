@@ -1,94 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/17] Clean up how fetch_pack() handles the heads list
-Date: Thu, 23 Aug 2012 21:23:33 -0700
-Message-ID: <7vd32g3ol6.fsf@alter.siamese.dyndns.org>
-References: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu>
- <20120823092624.GG6963@sigill.intra.peff.net>
- <49DEA56853C64B9B900D3C7F886D4FA6@PhilipOakley>
- <20120823195648.GB15268@sigill.intra.peff.net>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+Date: Fri, 24 Aug 2012 07:30:01 +0200
+Message-ID: <002101cd81b9$828f1380$87ad3a80$@schmitz-digital.de>
+References: <002201cd807d$0e83d300$2b8b7900$@schmitz-digital.de> <7v8vd6alqe.fsf@alter.siamese.dyndns.org> <003001cd808b$9d505730$d7f10590$@schmitz-digital.de> <7vk3wq964r.fsf@alter.siamese.dyndns.org> <003c01cd808f$f24e2a60$d6ea7f20$@schmitz-digital.de> <7v7gsq94gd.fsf@alter.siamese.dyndns.org> <004101cd8096$fce3a700$f6aaf500$@schmitz-digital.de> <7vwr0q63po.fsf@alter.siamese.dyndns.org> <000601cd8101$a6f81900$f4e84b00$@schmitz-digital.de> <7vlih52tag.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mhagger@alum.mit.edu, git@vger.kernel.org
-To: Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 24 06:23:45 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 07:30:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4lQu-00011d-1t
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 06:23:44 +0200
+	id 1T4mTW-0007F0-5A
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 07:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513Ab2HXEXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 00:23:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52987 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751777Ab2HXEXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 00:23:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F8CD9342;
-	Fri, 24 Aug 2012 00:23:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RH19ZYw6FNoEnmgvouuX6vqGkTc=; b=Xp8Kcf
-	RLG5PRk+46u5tkhDshz5Fy3aDcaNo+KSYP0yFAhsWbfPf6Z++TeqqfIcj/l0IHTV
-	2mwt23f1QSPYmIQ0KKavQdlL3fzYDcFk94L/xyERnUfqPDFcfqtqnlK3Pq5ECHBe
-	rlKOdxjF4mvn5wrQpRh7IX6z++V0Nm/5hlnGs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y0AO9W0DMzUDIZ1jWTzclIGbYPJ9L27f
-	JwCg5o2gswNeDD5d4Xq3YCWHt51oqQxB8yPOUeZi/mCliTR2CMfEBrZxjMdqkLg6
-	TeIp/A3wgRnntWoKEASeV9S47DcgxZDAghFcoCZWKn3w7JrbDcFqSe/s0KtpUlTy
-	GvOWy10OIT8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D85A9341;
-	Fri, 24 Aug 2012 00:23:35 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 857ED933F; Fri, 24 Aug 2012
- 00:23:34 -0400 (EDT)
-In-Reply-To: <20120823195648.GB15268@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 23 Aug 2012 15:56:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 77F0BE14-EDA3-11E1-919B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752367Ab2HXFaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 01:30:24 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:57513 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761Ab2HXFaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 01:30:22 -0400
+Received: from DualCore (dsdf-4db5d8d2.pool.mediaWays.net [77.181.216.210])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MQM9c-1TEnOw0aBo-00UOS6; Fri, 24 Aug 2012 07:30:10 +0200
+In-Reply-To: <7vlih52tag.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQHjEtoBTcn41aOpScwQkPT+c62HTAJeVUchAO6Wu9cBkiD+9QGuygBoAMLnBsUBv8N3IgG0C8qlAfdwMNsBrrMfU5bJ9ttw
+Content-Language: de
+X-Provags-ID: V02:K0:BMJYsEyzCDQLbXtSixvXt73aTaajgG/kvJLsDZVseKP
+ ySslA8DC/YN6xfEtFLWVv8rY2EPxmWYgO4oqN6xlXC/2OgvxZP
+ 11sKkUGkNu1D7o9CJ/Lhhu/Yvvv3mVlTO8Pjf3xI3je6C8E7V9
+ XBiP8IzA2mHINLdf78PRYSJwuMrG9mfceDDVvcITAFjJNr4Zso
+ jHtDJA70mLYGWTty9Pv3eBMo90biM3JPfemMO4tUDEsEOK+K7v
+ s7wFd1gz9A5Mn4hPZeHvS74rELWcCTpRBeJHOq7usxtWqH0s6L
+ 7FZpOMNg/4DDFO8dQjInmvHxTe+o+tynvmYYxQtFnj3IncQTfd
+ NrqHeEO/sC8EeJltPfutV25WQkcKFxFTzbVecmVOG+812F0YVn
+ WmilDI1X0/hpg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204180>
 
-Jeff King <peff@peff.net> writes:
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Thursday, August 23, 2012 11:27 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> >> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> >> Sent: Wednesday, August 22, 2012 11:06 PM
+> >> To: 'Junio C Hamano'
+> >> Cc: 'git@vger.kernel.org'
+> >> Subject: RE: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+> >>
+> >> > From: Junio C Hamano [mailto:gitster@pobox.com]
+> >> > Sent: Wednesday, August 22, 2012 11:02 PM
+> >> > To: Joachim Schmitz
+> >> > Cc: git@vger.kernel.org
+> >> > Subject: Re: [PATCH] Don't use curl_easy_strerror prior to curl-7.12.0
+> >> >
+> >> > "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> >> >
+> >> > >> > diff --git a/http.c b/http.c
+> >> > >> > index b61ac85..18bc6bf 100644
+> >> > >> > --- a/http.c
+> >> > >> > +++ b/http.c
+> >> > >> > @@ -806,10 +806,12 @@ static int http_request(const char *url, void
+> >> > >> > *result, int target, int options)
+> >> > >>
+> >> > >> Likewrapped X-<
+> >> > >
+> >> > > Any suggestion?
+> >> >
+> >> > Other than "don't wrap" (or "get a real MUA and MTA" X-<), unfortunately no.
+> >> >
+> >> > I do not know if you have checked MUA specific hints section of
+> >> > Documentation/SubmittingPatches; there may be environment specific hints
+> >> > described for a MUA you may have at hand (or not).
+> >>
+> >> I checked, but Outlook isn't mentioned :-(
+> >
+> > OK, Outlook inserts line breaks at position 76. I can't switch it off completely, but can set it to anything between 30 and 132.
+I
+> > set it to 132 now, does that look OK now?
+> 
+> Yeah, modulo that with all the above noise and with "---" before the
+> log message you inserted by hand before the real commit log message,
 
->> It may be (?) that it is a good time to think about a 'datedepth'
->> capability to bypass the current counted-depth shallow fetch that can
->> cause so much trouble. With a date limited depth the relevant tags
->> could also be fetched.
->
-> I don't have anything against such an idea, but I think it is orthogonal
-> to the issue being discussed here.
+OK, those are not allowed then? Or would they need to look different?
 
-Correct.
+> and also the log message is not properly line-wrapped, it is getting
+> closer to what is expected of a patch to be applied.
+> 
+> I've applied it by hand and fixed the log message up, so no need to
+> resend this particular one.  Thanks.
 
-The biggest problem with the "shallow" hack is that the deepening
-fetch counts from the tip of the refs at the time of deepening when
-deepening the history (i.e. "clone --depth", followed by number of
-"fetch", followed by "fetch --depth").  If you start from a shallow
-clone of depth 1, repeated fetch to keep up while the history grew
-by 100, you would still have a connected history down to the initial
-cauterization point, and "fetch --depth=200" would give you a
-history that is deeper than your original clone by 100 commits.  But
-if you start from the same shallow clone of depth 1, did not do
-anything while the history grew by 100, and then decide to fetch
-again with "fetch --depth=20", it does not grow.  It just makes
-20-commit deep history from the updated tip, and leave the commit
-from your original clone dangling.
+Thanks
 
-The problem with "depth" does not have anything to do with how it is
-specified at the UI level.  The end-user input is used to find out
-at what set of commits the history is cauterized, and once they are
-computed, the "shallow" logic solely works on "is the history before
-these cauterization points, or after, in topological terms." (and it
-has to be that way to make sure we get reproducible results).  Even
-if a new way to specify these cauterization points in terms of date
-is introduced, it does not change anything and does not solve the
-fundamental problem the code has when deepening.
+> > This reverts be22d92 (http: avoid empty error messages for some curl errors, 2011-09-05) on platforms with older versions of
+> > libcURL.
+
+You meant that linewrap between "of" and libcURL?, Or well, that was the 132 position... Or do you want these messages being wrapped
+at <=80?
+
+Bye, Jojo
