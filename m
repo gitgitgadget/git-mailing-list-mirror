@@ -1,91 +1,130 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: in_merge_bases() is too expensive for recent "pu" update
-Date: Fri, 24 Aug 2012 09:15:56 -0700
-Message-ID: <7vobm01d1f.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8C-VxzwigyUDHnUkXN7vhB+93X96pH9MvgB0ps7v-_NmQ@mail.gmail.com>
- <878vd5k7uu.fsf@thomas.inf.ethz.ch> <7vd32h4h1t.fsf@alter.siamese.dyndns.org>
- <7v393d49xs.fsf@alter.siamese.dyndns.org> <87393cbp6b.fsf@thomas.inf.ethz.ch>
- <20120824151511.GB15162@sigill.intra.peff.net>
+Subject: Re: [PATCH v2] Prefer sysconf(_SC_OPEN_MAX) over
+ getrlimit(RLIMIT_NOFILE,...)
+Date: Fri, 24 Aug 2012 09:43:42 -0700
+Message-ID: <7v393c1br5.fsf@alter.siamese.dyndns.org>
+References: <002f01cd81de$28f43bf0$7adcb3d0$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 24 18:16:17 2012
+Cc: <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Fri Aug 24 18:43:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4wYK-0007zs-P4
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 18:16:09 +0200
+	id 1T4wzB-0008Tm-6F
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 18:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759662Ab2HXQQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 12:16:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35541 "EHLO
+	id S1759744Ab2HXQnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 12:43:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48993 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755090Ab2HXQP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 12:15:59 -0400
+	id S1759709Ab2HXQnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 12:43:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 360738CA6;
-	Fri, 24 Aug 2012 12:15:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 721C493DB;
+	Fri, 24 Aug 2012 12:43:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ACWzfD7J5VK3ShiRxNPYyGchPjo=; b=wrLh3c
-	lnDDRmMOIhk2TAMJZB51FqgzWKygUiGOcWgHy5Qk0QcxcdMuvRpwXOU5CKFaQ24j
-	1ICOR4oISTpuA2KwLRa/OkiEWt7890cv6T+jpbXCL6wmtidcwXwA1ryG4rBpoXpc
-	QkRyp+Rs3pXM7DNSlKDy1Nzr/D960luE5LypI=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=PxnYXJx8L4FgVq1+UkICIHAyk10=; b=Tsj+V856mVTO6Gxjg8tn
+	Jo3aTNl5xBj8ao6bVRAerp16pJzGJbaRTutlYmloVpbJhTLYgw4CjOx8jVYUcwel
+	ZtJGVZ6RoRn2gAwQQuFUJT8W8RJhI2v0AuGj7UpW0ccMjUwOyerJGQGNKAwXVXO8
+	B977++JYYJ/zJYcqP4obS5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sH1DzOzMwbTr9ShEmC9eV4ETWFfAwXIB
-	H2EmljCRpCpbZ9KPt3plmPHwoD6aw8PdCwX9dM36lMWoi1n2QHo8AIut9fvKPvQF
-	/BIrUFYNZmnwg9QUbE7BeY/zfUiuRw/LVSgqopORJYFiws0RH/+aeERfkv0AEsxx
-	VP3Qj5JddFw=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=mFIGuaqurcnbmVIKcXnYVJqvqKbOeQI9l+lEvgLeS7e++l
+	uWRaUbQIq8FArlF9Hllf5hhphGq9IlvGkI4LnX+XqGp3tfayg67vKXcbRB4k6mTh
+	ZQzwmzyajf8g8hQSrZ8HryMfhByg6HYzRgWH5qzIGgeQgWW4bYGIuH4iY8pYU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 227118CA5;
-	Fri, 24 Aug 2012 12:15:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F5F893DA;
+	Fri, 24 Aug 2012 12:43:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C4688CA0; Fri, 24 Aug 2012
- 12:15:57 -0400 (EDT)
-In-Reply-To: <20120824151511.GB15162@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 24 Aug 2012 11:15:11 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B18CA93D8; Fri, 24 Aug 2012
+ 12:43:43 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FCBB4CA0-EE06-11E1-B8CF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DDDFDE5A-EE0A-11E1-80F6-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204220>
 
-Jeff King <peff@peff.net> writes:
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-> I thought you were just interested in speeding up is_descendent_of. You
-> should be able to do that without a generation number. Just start from A
-> and B as above, do the two-color painting, and do not add the parents of
-> any two-color commits (because you know they are ancestors of both, and
-> therefore you cannot find either by looking backwards). If you paint "B"
-> amber, then it is a descendent of "A" (and vice versa if you paint "A"
-> blue).
+> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> ---
+> As discussed now as a small helper function rather than #ifdef/#endif in the primary flow of the code.
+> And hopefully without having screwed up whitespace and line breaks
 
-Yes, that is what merge_bases_many() (the one without the post
-processing to cull candidates) is primarily doing.  The function
-also does the "STALE" bit processing that aims to reduce the number
-of candidates in "no clock skew" cases with minimum effort, to
-mimimize the cost of get_merge_bases_many() in the post-processing
-phase, but removing the "STALE" bit processing shouldn't affect the
-correctness of get_merge_bases_many() and would help performance of
-merge_bases_many() proper, which is useful for is_descendant_of().
+The formatting looks fine.
 
-> The reason I did not do that for "tag --contains" is that I wanted to
-> do a simultaneous walk for all tags. That would require N color bits for
-> N tags, and we have a limited space in each commit object. I didn't time
-> using a separate hash table to store those bits outside of the commit
-> objects. That would have a higher constant, but should still yield good
-> big-O complexity.
+Perhaps I am being overly paranoid, but I would prefer not to change
+things for people who have been using getrlimit().  For them, if
+they also have sysconf(_SC_OPEN_MAX), your code _ought to_ work, but
+if it does not work for whatever reason (perhaps some platforms
+claim to have both, but getrlimit() works and sysconf(_SC_OPEN_MAX)
+is broken), it will given them an unnecessary regression.
 
-It may not be a bad idea to at least try and see the performance
-implications of moving many users of object->flags to a new
-implementation of per-purpose flag bits based on the decoration
-infrastracture.
+So how about doing it this way instead?
+
+-- >8 --
+Subject: sha1_file.c: introduce get_max_fd_limit() helper
+
+Not all platforms have getrlimit(), but there are other ways to see
+the maximum number of files that a process can have open.  If
+getrlimit() is unavailable, fall back to sysconf(_SC_OPEN_MAX) if
+available, and use OPEN_MAX from <limits.h>.
+
+Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ sha1_file.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
+
+diff --git c/sha1_file.c w/sha1_file.c
+index af5cfbd..9152974 100644
+--- c/sha1_file.c
++++ w/sha1_file.c
+@@ -731,6 +731,24 @@ void free_pack_by_name(const char *pack_name)
+ 	}
+ }
+ 
++static unsigned int get_max_fd_limit(void)
++{
++#ifdef RLIMIT_NOFILE
++	struct rlimit lim;
++
++	if (getrlimit(RLIMIT_NOFILE, &lim))
++		die_errno("cannot get RLIMIT_NOFILE");
++
++	return lim.rlim_cur;
++#elif defined(_SC_OPEN_MAX)
++	return sysconf(_SC_OPEN_MAX);
++#elif defined(OPEN_MAX)
++	return OPEN_MAX;
++#else
++	return 1; /* see the caller ;-) */
++#endif
++}
++
+ /*
+  * Do not call this directly as this leaks p->pack_fd on error return;
+  * call open_packed_git() instead.
+@@ -747,13 +765,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 		return error("packfile %s index unavailable", p->pack_name);
+ 
+ 	if (!pack_max_fds) {
+-		struct rlimit lim;
+-		unsigned int max_fds;
+-
+-		if (getrlimit(RLIMIT_NOFILE, &lim))
+-			die_errno("cannot get RLIMIT_NOFILE");
+-
+-		max_fds = lim.rlim_cur;
++		unsigned int max_fds = get_max_fd_limit();
+ 
+ 		/* Save 3 for stdin/stdout/stderr, 22 for work */
+ 		if (25 < max_fds)
