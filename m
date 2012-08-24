@@ -1,73 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib: GnomeKeyring support + generic helper
- implementation
-Date: Fri, 24 Aug 2012 14:46:31 -0700
-Message-ID: <7vzk5kx8so.fsf@alter.siamese.dyndns.org>
-References: <1345741068-11004-1-git-send-email-pah@qo.cx>
- <7vfw7cyx4n.fsf@alter.siamese.dyndns.org>
- <20120824213342.GB16285@sigill.intra.peff.net>
+Subject: Re: [RFC] Support for HP NonStop
+Date: Fri, 24 Aug 2012 14:50:43 -0700
+Message-ID: <7vvcg8x8lo.fsf@alter.siamese.dyndns.org>
+References: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de>
+ <7v4nnsyrp7.fsf@alter.siamese.dyndns.org>
+ <005701cd8239$1a828300$4f878900$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	"Philipp A. Hartmann" <pah@qo.cx>, git@vger.kernel.org,
-	John Szakmeister <john@szakmeister.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 24 23:46:43 2012
+Cc: <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Fri Aug 24 23:50:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T51iD-0005Zr-I7
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 23:46:41 +0200
+	id 1T51mG-000241-4r
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 23:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757224Ab2HXVqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 17:46:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57222 "EHLO
+	id S1757812Ab2HXVur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 17:50:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59194 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752905Ab2HXVqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 17:46:34 -0400
+	id S1752905Ab2HXVup (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 17:50:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06C4899A1;
-	Fri, 24 Aug 2012 17:46:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13A9B9A6B;
+	Fri, 24 Aug 2012 17:50:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kp6gNc4so0rGka7d1DslSFmlfrA=; b=AvSUh2
-	2Tgzoo0FLIlAWoxNAxxCHnvk0H2VQj0ZHQU7TSo8xwOd1vgU1kmVuZB5Q+OXdrlL
-	gAVC7974t7vzNhF7FMdVR59O+faJOd7GURxQEMdZF18uZhsa7ntAI8Ne+k5Mo6LC
-	zXJDngfJtAs5ElVNUPH9taqL508OwZ7IHtzJY=
+	:content-type; s=sasl; bh=RUD2fvPaHMtnMJeBYK/bxPfoAiU=; b=sbkxaU
+	RMsd+9hauwbx5P7qMLFcpsQIWLScWaKlN/hmyLMPo3en18JHrSBWXiN5ejscKFFG
+	J1uDiqxKeQ6YdW7WasFsRELXzCnixfbr1X4fNxrIRVdDwsnyCCMD4IgvvvB9ueKP
+	xyySUA5Qx8VRlZIc4VfE0xHmagUEYVitnaPRQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q6gP8z2WE7h6e1QqDYrHqTVx5pJemYCX
-	HN3LSL+amrYZcoVED5rQbUfEqSXSaay7hxqLJSCfnpWxRg+xp7Bp8uD8WiYwjvNW
-	uTVQ5pn+2vZFQA6x2inLHK7gtVgceCOmzbmdeyKWwIqa+R9bJjrFoZV0fH63gzPE
-	hQ4trBogefU=
+	:content-type; q=dns; s=sasl; b=woRAFlDzs7m+xTVFQ7lkvmSLEY1LG5b6
+	Gc+DQVDZDz0x/yPltiREMHw2GHjqjaZj4n70nbp3SDz/poqMmFKsac2rS44M63WD
+	2jvBJpnz2ZnHLurZ0c6obXQOwzz/hSmQKxbWRrLcreTzI0IS6OgBG3jF3AhqxUum
+	tHER+rRK7/Y=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E44CC99A0;
-	Fri, 24 Aug 2012 17:46:33 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3A7F9A6A;
+	Fri, 24 Aug 2012 17:50:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F0EB999F; Fri, 24 Aug 2012
- 17:46:32 -0400 (EDT)
-In-Reply-To: <20120824213342.GB16285@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 24 Aug 2012 17:33:42 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7161D9A69; Fri, 24 Aug 2012
+ 17:50:44 -0400 (EDT)
+In-Reply-To: <005701cd8239$1a828300$4f878900$@schmitz-digital.de> (Joachim
+ Schmitz's message of "Fri, 24 Aug 2012 22:43:22 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2B47E6AE-EE35-11E1-84FB-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C17D3D18-EE35-11E1-AAEA-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204236>
 
-Jeff King <peff@peff.net> writes:
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-> However, the shared bits are simple enough that maybe that is not a
-> concern. An interesting test would be to add a 5/4 porting Erik's win32
-> credential helper, since that is the platform least like our other ones.
+> Reminds me of a related issue: in compat/fnmatch/fnmatch.c there is this:
+> #if HAVE_STRING_H || defined _LIBC
+> # include <string.h>
+> #else
+> # include <strings.h>
+> #endif
+>
+> There's no place where HAVE_STRING_H get set
+> This looks wrong to me,...
 
-Very true.
+This is because it is a borrowed file from glibc, and we try to
+minimize changes to such a file.
 
-> So I am OK with this series, but I am also OK with leaving it at patch
-> 1, and just keeping the implementations separate.
+If you need HAVE_STRING_H to force inclusion of <string.h> on your
+platform, doing this:
 
-Amen.
+>        COMPAT_CFLAGS += -DHAVE_STRING_H=1 # needed in compat/fnmatch/fnmatch.c
+
+is perfectly the right thing to do.
+
+> Do platforms exist without string.h?
+> Maybe fnmatch.c should look like this instead?
+
+We try to minimize changes to such a file we borrow from upstream;
+especially we do not do so lightly when we have to ask "do platforms
+exist?"  Of course, they do---otherwise glibc folks wouldn't have
+written such a conditional.
