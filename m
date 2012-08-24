@@ -1,100 +1,139 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] branch -v: align even when the first column is in UTF-8
-Date: Fri, 24 Aug 2012 21:17:52 +0700
-Message-ID: <1345817872-7943-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: misleading diff-hunk header
+Date: Fri, 24 Aug 2012 10:29:09 -0400
+Message-ID: <20120824142908.GA15162@sigill.intra.peff.net>
+References: <503385D0.5070605@tim.thechases.com>
+ <87a9xoi82i.fsf@thomas.inf.ethz.ch>
+ <5033AC55.8080405@tim.thechases.com>
+ <7vfw7gdtfg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 24 16:24:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Tim Chase <git@tim.thechases.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 24 16:29:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T4uny-0003BG-UP
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 16:24:11 +0200
+	id 1T4usy-0001fT-HJ
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Aug 2012 16:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186Ab2HXOYE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Aug 2012 10:24:04 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:49924 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932247Ab2HXOYC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Aug 2012 10:24:02 -0400
-Received: by pbbrr13 with SMTP id rr13so3562876pbb.19
-        for <git@vger.kernel.org>; Fri, 24 Aug 2012 07:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=LCwIyo1rFEOCZSa4Gz8tBC7nsvN20HZJ6/IyLGmZxLw=;
-        b=T+ksuDnDKXquJ50rMi+oEFN4S9bj57sAQRjJxINCrLlDp6x8BbzEcc8onYL/MyO+in
-         nHhb3ejyj65zfqr9G82f+2VEq0OxPdV/RwSrGgcr6Qq9x20Fvdj3GLEOr6QlP+zjUJxr
-         iNQqikvWRuGcqJZAD3Sm7P5fUDMTQY9ezatgvWc/pXy27ZdQ1sgluHL1OlqZ9xy4/CQe
-         L4alpIhIvJ7bCUZuE/eKTxwRs9ZgTNC6Zfn3zCSVcAgXtBc+3O3mng6PE0bCw4tOMGzK
-         6V/lCMd00qLndHb3jdaP/1QkDilv/8xLHFv5f0ngG6td8D0vKRSaNUi27B3DovkyV84V
-         dkmg==
-Received: by 10.68.235.236 with SMTP id up12mr13312004pbc.79.1345818241879;
-        Fri, 24 Aug 2012 07:24:01 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.35.79])
-        by mx.google.com with ESMTPS id pj8sm8398873pbb.60.2012.08.24.07.23.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 24 Aug 2012 07:23:59 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 24 Aug 2012 21:17:54 +0700
-X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
+	id S932261Ab2HXO3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 10:29:15 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47302 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754396Ab2HXO3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 10:29:13 -0400
+Received: (qmail 712 invoked by uid 107); 24 Aug 2012 14:29:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Aug 2012 10:29:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2012 10:29:09 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfw7gdtfg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204212>
 
-Branch names are usually in ASCII so they are not the problem. The
-problem most likely comes from "(no branch)" translation, which is in
-UTF-8 and makes length calculation just wrong.
+On Tue, Aug 21, 2012 at 10:52:03AM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- So far all git translations are utf-8 compatible. Branch names may
- use filesystem encoding, but then packed-refs specifies no encoding.
- Anyway branch names should be in utf-8.. at least internally, imo.
+> >>> diff.{type}.xfuncname seems to start searching backwards in
+> >>> from the beginning of the hunk, not the first differing line.
+> >> [...]
+> >>>   @@ -4,4 +4,5 @@ int call_me(int maybe)
+> >>>
+> >>>    int main()
+> >>>    {
+> >>>   +  return 0;
+> >>>    }
+> >>>
+> >>> misleadingly suggesting that the change occurred in the call_me()
+> >>> function, rather than in main()
+> >> 
+> >> I think that's intentional, and matches what 'diff -p' does.  It gives
+> >> you the context before the hunk.  After all, if a new function starts in
+> >> the leading context lines, you can see that in the usual diff data.
+> 
+> Correct.  It is about "give the user _more_ hint/clue on the context
+> of the hunk", in addition to what the user can see in the
+> pre-context of the hunk, so it is pointless to hoist "int main()"
+> there.
 
- builtin/branch.c | 8 +++++---
- 1 t=E1=BA=ADp tin =C4=91=C3=A3 b=E1=BB=8B thay =C4=91=E1=BB=95i, 5 =C4=
-=91=C6=B0=E1=BB=A3c th=C3=AAm v=C3=A0o(+), 3 b=E1=BB=8B x=C3=B3a(-)
+I don't think it is pointless. If you are skimming a diff, then the hunk
+headers stand out to easily show which functions were touched. Of
+course, as you mentioned later in your email, it is not an exhaustive
+list, and I think for Tim's use case, he needs to actually read and
+parse the whole patch.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0e060f2..7c1ffa8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -17,6 +17,7 @@
- #include "revision.h"
- #include "string-list.h"
- #include "column.h"
-+#include "utf8.h"
-=20
- static const char * const builtin_branch_usage[] =3D {
- 	"git branch [options] [-r | -a] [--merged | --no-merged]",
-@@ -490,11 +491,12 @@ static void print_ref_item(struct ref_item *item,=
- int maxwidth, int verbose,
- 	}
-=20
- 	strbuf_addf(&name, "%s%s", prefix, item->name);
--	if (verbose)
-+	if (verbose) {
-+		int utf8_compensation =3D strlen(name.buf) - utf8_strwidth(name.buf)=
-;
- 		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
--			    maxwidth, name.buf,
-+			    maxwidth + utf8_compensation, name.buf,
- 			    branch_get_color(BRANCH_COLOR_RESET));
--	else
-+	} else
- 		strbuf_addf(&out, "%c %s%s%s", c, branch_get_color(color),
- 			    name.buf, branch_get_color(BRANCH_COLOR_RESET));
-=20
---=20
-1.7.12.rc2.18.g61b472e
+But mentioning call_me here _is_ pointless, because it is not relevant
+context at all (it was not modified; it just happens to be located near
+the code in question).  So I would argue that showing main() is more
+useful to a reader.
+
+It gets even more obvious as you increase the context. Imagine I have
+code like this:
+
+   int foo(void)
+   {
+          return 1;
+   }
+
+   int bar(void)
+   {
+          return 2;
+   }
+
+   int baz(void)
+   {
+          return 3;
+   }
+
+and I modify "baz" to return "4" instead. With the regular diff
+settings, the hunk header would claim that "bar()" is the context in the
+hunk header. But if I ask for -U7, then "foo()" is mentioned in the hunk
+header. To me, that doesn't make sense; the modification is exactly the
+same, so why would the hunk header differ?
+
+I suppose one could argue that the hunk header is not showing the
+context of the change, but rather the context of the surrounding context
+lines. But that doesn't seem useful to me.
+
+We discussed this a while ago and you did a "how about this" patch:
+
+  http://article.gmane.org/gmane.comp.version-control.git/181385
+
+Gmane seems to be acting up this morning, so here is the patch (and your
+comment) for reference:
+
+> Would this be sufficient?  Instead of looking for the first line that
+> matches the "beginning" pattern going backwards starting from one line
+> before the displayed context, we start our examination at the first line
+> shown in the context.
+> 
+>  xdiff/xemit.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index 277e2ee..5f9c0e0 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -131,7 +131,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+>  
+>  		if (xecfg->flags & XDL_EMIT_FUNCNAMES) {
+>  			long l;
+> -			for (l = s1 - 1; l >= 0 && l > funclineprev; l--) {
+> +			for (l = s1; l >= 0 && l > funclineprev; l--) {
+>  				const char *rec;
+>  				long reclen = xdl_get_rec(&xe->xdf1, l, &rec);
+>  				long newfunclen = ff(rec, reclen, funcbuf,
+
+In the case we were discussing then, the modified function started on
+the first line of context. But as Tim's example shows, it doesn't
+necessarily have to. I think it would make more sense to start counting
+from the first modified line.
+
+-Peff
