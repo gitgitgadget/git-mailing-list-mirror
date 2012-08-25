@@ -1,99 +1,124 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH RFC 0/2] Mixing English and a local language
-Date: Sun, 26 Aug 2012 02:26:54 +0700
-Message-ID: <1345922816-20616-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git no longer prompting for password
+Date: Sat, 25 Aug 2012 16:39:05 -0400
+Message-ID: <20120825203904.GA10470@sigill.intra.peff.net>
+References: <5037E1D0.6030900@gmail.com>
+ <20120824212501.GA16285@sigill.intra.peff.net>
+ <5038E781.1090008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 25 21:34:02 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Iain Paton <ipaton0@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 22:39:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5M7M-0007SI-JC
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 21:34:00 +0200
+	id 1T5N8a-0007E4-Lb
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 22:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757347Ab2HYTdf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Aug 2012 15:33:35 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:44666 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757327Ab2HYTdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2012 15:33:11 -0400
-Received: by pbbrr13 with SMTP id rr13so5316467pbb.19
-        for <git@vger.kernel.org>; Sat, 25 Aug 2012 12:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=WipE5aQtkghqedXFSxjKqVo/M24MwoUh+Mp8KqL5OZ8=;
-        b=k3YA3VriwgMz9wmKmSYWC6C3NV8kFlDhdFJQ2ZrSB+cxUAgL/ghYFQeqAQJRbh6pnW
-         wp81MaJMK1kr4LAXEMbVKvJYzwh/6ltt9KkWQVmFWMv5CBol075Dp5JCiq/3T1r7jztM
-         KQfaVh3qibQLC6ZceEgOZjC8HTVGrfy7yDkBwIeNBI53FbMStjIUi4pAPtwOC452xDXA
-         R7TrtLHM41u4UWtikBAV+j7bigScyCH8r2wdFEKKHVkKFTARS/r4m6oiJxZBYGnNNuRF
-         cYu0DcUprw5VK2A2Zszx4QQjhd+w8perue9coWt+g2RX/iT/e98luqSrmTo5npmnKJC+
-         RIJw==
-Received: by 10.68.138.166 with SMTP id qr6mr22413309pbb.69.1345923190692;
-        Sat, 25 Aug 2012 12:33:10 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.35.79])
-        by mx.google.com with ESMTPS id po4sm7968060pbb.13.2012.08.25.12.33.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 25 Aug 2012 12:33:09 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 26 Aug 2012 02:27:03 +0700
-X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
+	id S1754559Ab2HYUjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 16:39:14 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48450 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751931Ab2HYUjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2012 16:39:12 -0400
+Received: (qmail 14187 invoked by uid 107); 25 Aug 2012 20:39:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 25 Aug 2012 16:39:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Aug 2012 16:39:05 -0400
+Content-Disposition: inline
+In-Reply-To: <5038E781.1090008@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204286>
 
-The l10n effort leads to a situation where a contributor can submit a
-patch with some auto-generated information in his language, which may
-not be the team's language. We need to make sure exchange medium like
-patch is always in a common language that the team understands.
+On Sat, Aug 25, 2012 at 03:56:01PM +0100, Iain Paton wrote:
 
-Now this team language may not necessarily be English. However there
-are technical difficulties involved in switching between two
-languages. The only way I can think of, on top of gettext, is provide
-git translations in multiple domains. Say diff machinery uses
-"git-diff" domain while the rest is in "git". We can drive gettext to
-use language X for diff machinery, and Y for the rest. For that, we
-replace gettext() with dgettext().
+> > It's like the initial http requests do not get a 401, and the push
+> > proceeds, and then some later request causes a 401 when we do not expect
+> > it. Which is doubly odd, since we should also be able to handle that
+> > case (the first 401 we get should cause us to ask for a password).
+> 
+> Yes, I deliberately have it set for anonymous pull and authenticated push. 
+> So the initial contact with the server doesn't ask for auth.
 
-It's cumbersome. And there has not been any sign that there will be
-a real user for it. So I assume that the "team language" will always
-be English. It's simpler and should cover 90% of the user base. If
-someday people ask for that, supporting it is simply a matter of
-rewriting C_() and CQ_() macros in the first patch to use dgettext()
-instead.
+OK, I see what's going on. It looks like it is configured to do so by
+rejecting the POST request. So this first request works:
 
-Switching between a language and English is easier. We just need an
-if/else to decide whether to call gettext(). Which is what the first
-patch does, just for certain parts of diff machinery. Error messages
-will alway be in native language.
+> > GET /git/test.git/info/refs?service=git-receive-pack HTTP/1.1
+> User-Agent: git/1.7.8
+> Host: 10.44.16.74
+> Accept: */*
+> Pragma: no-cache
+> 
+> < HTTP/1.1 200 OK
 
-The second patch puts format-patch output in English unconditionally.
-Again I'm partly lazy and not so sure that there will be needs for
-format-patch to produce in native language. If someone needs it, we
-can introduce a new config key that flip no_l10n flag back to 0.
+which is the first step of the conversation, in which the client gets
+the set of refs from the remote. Then it tries to POST the pack:
 
-More commands may follow format-patch. I think that 'apply' should also
-use English for non-tty output, unless users request it to be in local
-language. IOW local language is treated pretty much like coloring.
+> > POST /git/test.git/git-receive-pack HTTP/1.1
+> User-Agent: git/1.7.8
+> Host: 10.44.16.74
+> Accept-Encoding: deflate, gzip
+> Content-Type: application/x-git-receive-pack-request
+> Accept: application/x-git-receive-pack-result
+> Content-Length: 412
+> 
+> * upload completely sent off: 412 out of 412 bytes
+> < HTTP/1.1 401 Unauthorized
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-  Allow to print diffstat in English regardless current locale
-  format-patch: always print diffstat in English
+And we get blocked on that request. I didn't quote it above, but note
+how the client actually generates and sends the full pack before being
+told "no, you can't do this".
 
- builtin/apply.c |  2 +-
- builtin/log.c   |  1 +
- diff.c          | 19 ++++++++++++-------
- diff.h          |  3 ++-
- 4 files changed, 16 insertions(+), 9 deletions(-)
+So that explains the output you see; we really are generating and
+sending the pack, and only then getting a 401. And it also explains why
+git does not prompt and retry; we follow a different code path for POSTs
+that does not trigger the retry code.
 
---=20
-1.7.12.rc1.27.g6d3049b.dirty
+This is not optimal, as we send the pack data only to find out that we
+are not authenticated. There is code to avoid sending the _whole_ pack
+(it's the probe_rpc code in remote-curl.c), so I think you'd just be
+wasting 64K, which is not too bad. So we could teach git to retry if the
+POST fails, and I think it would work OK.
+
+But I don't think there is any reason not to block the push request
+right from the first receive-pack request we see, which catches the
+issue even earlier, and with less overhead (and of course works with
+existing git clients :) ).
+
+> apache config has the following:
+> [...]
+> <LocationMatch "^/git/.*/git-receive-pack$">
+>         AuthType Basic
+>         AuthUserFile /data/git/htpasswd
+>         AuthGroupfile /data/git/groups 
+>         AuthName "Git Access"
+> 
+>         Require group committers
+> </LocationMatch>
+> 
+> nothing untoward there I think and google turns up lots of examples where 
+> people are doing essentially the same thing.
+
+I think your regex is the culprit. The first request comes in with:
+
+> > GET /git/test.git/info/refs?service=git-receive-pack HTTP/1.1
+
+The odd URL is because we are probing to see if the server even supports
+smart-http. But note that it does not match your regex above, which
+requires "/git-receive-pack". It looks like that is pulled straight from
+the git-http-backend manpage. I think the change in v1.7.8 broke people
+using that configuration.
+
+I tend to think the right thing is to fix the configuration (both on
+your system and in the documentation), but we should probably also fix
+git to handle this situation more gracefully, since it used to work and
+has been advertised in the documentation for a long time.
+
+-Peff
