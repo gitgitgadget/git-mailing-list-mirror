@@ -1,97 +1,136 @@
 From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH v6 15/16] remote-svn: add marks-file regeneration
-Date: Sat, 25 Aug 2012 17:55:13 +0200
-Message-ID: <001c01cd82da$03abbb00$0b033100$@schmitz-digital.de>
+Subject: Re: [PATCH/RFC v4 02/13] read-cache.c: Re-read index if index file changed
+Date: Sat, 25 Aug 2012 18:02:39 +0200
+Message-ID: <001d01cd82db$0dc00870$29401950$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
-To: <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 17:55:36 2012
+To: <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 18:03:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5Ihy-00089x-Os
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 17:55:35 +0200
+	id 1T5Ipq-0007Qd-3G
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 18:03:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909Ab2HYPz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 11:55:29 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:62997 "EHLO
+	id S1753164Ab2HYQCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 12:02:54 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:50687 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242Ab2HYPz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2012 11:55:27 -0400
+	with ESMTP id S1750784Ab2HYQCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2012 12:02:52 -0400
 Received: from DualCore (dsdf-4d0a03be.pool.mediaWays.net [77.10.3.190])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0M6fVk-1TsZPU3QEW-00wWdn; Sat, 25 Aug 2012 17:55:25 +0200
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0LsR2m-1TkruV0s8W-0123Sr; Sat, 25 Aug 2012 18:02:51 +0200
 X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2C2gLvAb1n8HILTy6eFwlSeL6x8A==
+Thread-Index: Ac2C2w0i71hpNMziTkGsR/z3vgRoWw==
 Content-Language: de
-X-Provags-ID: V02:K0:GNG2WHxzIIudljvkZWHUtG77F/4zf7zk6KshjJvpZD9
- i4uWmr7q+sdCoaxQKgW4Yp8mnYhHlUkWfw18gGUsa2kigsatH5
- sJaiK7bNy+EqJ1ojjeYOqBTzr4uBAmGUNRFdhEQhWAqtC0RvrZ
- zYSoz8UA83UI9d6/DIW9jKMxTzUA9SZ+9IftZsfPARY1ncDd3a
- WZf/RY7rbxE3SxBZpQ3fLVXjZRu0SqOe2pLZvea4kIYfM+lDE7
- TwqHw+FXgrQOj1ZlBptwAd4hODC52xGeEZpl4ZUcQDuswpBblt
- usae3e8Psiz6ddEy+/HSicnld4K/qYE3eqn6F2vCX7jn99blf4
- 1xCbIjGDAbSa2RyT/5usmln1xT/wi8dHWqi2w/ecdTC9xmAIa6
- ZKRzNXBMg4NDw==
+X-Provags-ID: V02:K0:EjaUmr35QNcBJxLR3HRNsoJ0I7LqXeQtCB5A0ncT2np
+ zIPgeTJA4R1bqa/A9spaTBW36wAE3icgyTAXdH1UPliLkYX540
+ Awaip7PZV1lql9cjUfqm6ghKQt7vcnXaqkQWpmEPyabr9YOdSh
+ 8iMUdEwAeMdZkX/ekv68Eo3jQ4bArfezXHovvjcxXNQS49CjJO
+ bTHFOM3TkHrK6TLv2MyDhjbJ8N0GW55iMjY7IG2dyd37tjTwvd
+ CrAYOALefU+FX6xPyvgRSUmEnDLlJTpNY0+OFzf6dNvOCO+Vaw
+ zQ4Oo2K7rogkdCoDWyxJ+CHdGpEpOFY/+5X8vi4fr1bQLNlG5E
+ SpXYyCNRzegJYZX+wX3NhNItKI2qtrbrJzOYVrej4+W8YNN6Pm
+ XnEAS4voesbuQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204275>
 
-"Florian Achleitner" <florian.achleitner.2.6.31@gmail.com> schrieb im Newsbeitrag
-news:<1345662961-9587-16-git-send-email-florian.achleitner.2.6.31@gmail.com>...
-> fast-import mark files are stored outside the object database and are
-> therefore not fetched and can be lost somehow else.  marks provide a
-> svn revision --> git sha1 mapping, while the notes that are attached
-> to each commit when it is imported provide a git sha1 --> svn revision
-> mapping.
+"Thomas Gummerer" <t.gummerer@gmail.com> schrieb im Newsbeitrag news:<1345111129-6925-3-git-send-email-t.gummerer@gmail.com>...
+> Add the possibility of re-reading the index file, if it changed
+> while reading.
 > 
-> If the marks file is not available or not plausible, regenerate it by
-> walking through the notes tree.  , i.e.  The plausibility check tests
-> if the highest revision in the marks file matches the revision of the
-> top ref. It doesn't ensure that the mark file is completely correct.
-> This could only be done with an effort equal to unconditional
-> regeneration.
+> The index file might change during the read, causing outdated
+> information to be displayed. We check if the index file changed
+> by using its stat data as heuristic.
 > 
-> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
->  remote-testsvn.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
+>  read-cache.c | 87 +++++++++++++++++++++++++++++++++++++++++-------------------
+>  1 file changed, 60 insertions(+), 27 deletions(-)
 > 
-> diff --git a/remote-testsvn.c b/remote-testsvn.c
-> index e90d221..09dc304 100644
-> --- a/remote-testsvn.c
-> +++ b/remote-testsvn.c
+> diff --git a/read-cache.c b/read-cache.c
+> index 6a8b4b1..cdd8480 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
 ...
-> +static void check_or_regenerate_marks(int latestrev) {
-> +	FILE *marksfile;
-> +	char *line = NULL;
-> +	size_t linelen = 0;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	int found = 0;
+> @@ -1186,38 +1209,48 @@ int read_index_from(struct index_state *istate, const char *path)
+>  	errno = ENOENT;
+>  	istate->timestamp.sec = 0;
+>  	istate->timestamp.nsec = 0;
+> -	fd = open(path, O_RDONLY);
+> -	if (fd < 0) {
+> -		if (errno == ENOENT)
+> -			return 0;
+> -		die_errno("index file open failed");
+> -	}
+> +	do {
+> +		err = 0;
+> +		fd = open(path, O_RDONLY);
+> +		if (fd < 0) {
+> +			if (errno == ENOENT)
+> +				return 0;
+> +			die_errno("index file open failed");
+> +		}
+>  
+> -	if (fstat(fd, &st))
+> -		die_errno("cannot stat the open index");
+> +		if (fstat(fd, &st_old))
+> +			die_errno("cannot stat the open index");
+>  
+> -	errno = EINVAL;
+> -	mmap_size = xsize_t(st.st_size);
+> -	mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+> -	close(fd);
+> -	if (mmap == MAP_FAILED)
+> -		die_errno("unable to map index file");
+> +		errno = EINVAL;
+> +		mmap_size = xsize_t(st_old.st_size);
+> +		mmap = xmmap(NULL, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+> +		close(fd);
+> +		if (mmap == MAP_FAILED)
+> +			die_errno("unable to map index file");
+>  
+> -	hdr = mmap;
+> -	if (verify_hdr_version(istate, hdr, mmap_size) < 0)
+> -		goto unmap;
+> +		hdr = mmap;
+> +		if (verify_hdr_version(istate, hdr, mmap_size) < 0)
+> +			err = 1;
+>  
+> -	if (istate->ops->verify_hdr(mmap, mmap_size) < 0)
+> -		goto unmap;
+> +		if (istate->ops->verify_hdr(mmap, mmap_size) < 0)
+> +			err = 1;
+>  
+> -	istate->ops->read_index(istate, mmap, mmap_size);
+> -	istate->timestamp.sec = st.st_mtime;
+> -	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+> +		if (istate->ops->read_index(istate, mmap, mmap_size) < 0)
+> +			err = 1;
+> +		istate->timestamp.sec = st_old.st_mtime;
+> +		istate->timestamp.nsec = ST_MTIME_NSEC(st_old);
+> +		if (lstat(path, &st_new))
+> +			die_errno("cannot stat the open index");
+>  
+> -	munmap(mmap, mmap_size);
+> -	return istate->cache_nr;
+> +		munmap(mmap, mmap_size);
 > +
-> +	if (latestrev < 1)
-> +		return;
+> +		if (!index_changed(st_old, st_new) && !err)
+> +			return istate->cache_nr;
 > +
-> +	init_notes(NULL, notes_ref, NULL, 0);
-> +	marksfile = fopen(marksfilename, "r");
-> +	if (!marksfile) {
-> +		regenerate_marks();
-> +		marksfile = fopen(marksfilename, "r");
-> +		if (!marksfile)
-> +			die_errno("cannot read marks file %s!", marksfilename);
-> +		fclose(marksfile);
-> +	} else {
-> +		strbuf_addf(&sb, ":%d ", latestrev);
-> +		while (getline(&line, &linelen, marksfile) != -1) {
+> +		usleep(10*1000);
 
-getline() is not available to anybody, e.g. it is not in HP NonStop.
+
+usleep() is not available to anybody, e.g. it is not in HP NonStop (not in every case at least)
 
 Bye, Jojo
