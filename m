@@ -1,89 +1,104 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH v2 00/17] Clean up how fetch_pack() handles the heads list
-Date: Sat, 25 Aug 2012 08:44:10 +0200
-Message-ID: <1345877067-11841-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/17] Fix formatting.
+Date: Sat, 25 Aug 2012 08:44:13 +0200
+Message-ID: <1345877067-11841-4-git-send-email-mhagger@alum.mit.edu>
+References: <1345877067-11841-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 08:52:04 2012
+X-From: git-owner@vger.kernel.org Sat Aug 25 08:52:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5ADz-0001Io-E9
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 08:52:03 +0200
+	id 1T5AEB-0001ZC-HF
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 08:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692Ab2HYGv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 02:51:56 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:51639 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753586Ab2HYGvy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2012 02:51:54 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Aug 2012 02:51:54 EDT
-X-AuditID: 1207440d-b7f236d000000943-9d-50387463ee6b
+	id S1753826Ab2HYGwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 02:52:10 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:44813 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753586Ab2HYGwH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2012 02:52:07 -0400
+X-AuditID: 1207440f-b7fde6d00000095c-e2-5038746fd256
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 69.13.02371.36478305; Sat, 25 Aug 2012 02:44:51 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AB.C4.02396.F6478305; Sat, 25 Aug 2012 02:45:03 -0400 (EDT)
 Received: from michael.fritz.box (p57A257CD.dip.t-dialin.net [87.162.87.205])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7P6igSb011615
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7P6igSe011615
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 Aug 2012 02:44:49 -0400
+	Sat, 25 Aug 2012 02:45:01 -0400
 X-Mailer: git-send-email 1.7.11.3
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqJtcYhFgsP2OlkXXlW4mi4beK8wW
+In-Reply-To: <1345877067-11841-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixO6iqJtfYhFg8GS6uUXXlW4mi4beK8wW
 	t1fMZ7b40dLDbNE5VdaB1ePv+w9MHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M74t72Qt+MRdcfPINKYGxoOcXYycHBICJhL3Vs5hhbDFJC7cW88GYgsJXGaUOLBeqouR
-	C8g+yySxf/Z5sCI2ASmJl4097CC2iICaxMS2QywgRcwCXYwSy9f9AusWFvCSOHN8FVgDi4Cq
-	xKT3EM28Ai4Sqxs2M0JsU5T48X0N8wRG7gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30
-	cjNL9FJTSjcxQkKEdwfj/3UyhxgFOBiVeHhvnDEPEGJNLCuuzD3EKMnBpCTKK1ZoESDEl5Sf
-	UpmRWJwRX1Sak1p8iFGCg1lJhPc7A1CONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUg
-	tQgmK8PBoSTBW1sM1ChYlJqeWpGWmVOCkGbi4AQRXCAbeIA2zAcp5C0uSMwtzkyHKDrFqCgl
-	zjsbJCEAksgozYMbAIvmV4ziQP8I884sAqriASYCuO5XQIOZgAaXu5qDDC5JREhJNTD6bboQ
-	uXqBU8iq5YpzvNxmSt8SiCtTCL/pyvQygFPSY8rTWzNe/C9xbDyY0Xcp7lmE85YD7+M8hXfy
-	nPP7X+/7sqq20mPXdfbEN6Vs6c9MFr9WbGM2mFLv73VL+NZzgQ7OQzZm1bl+fz1SaxfJtu91
-	unimRGM2e8vxE481AprfXb7qvXnaVy4lluKMREMt5qLiRACBz/H/wQIAAA==
+	7RK4M34ufclUsJ67Ys+7VrYGxqMcXYycHBICJhI3lj1jgbDFJC7cW8/WxcjFISRwmVGi5fk0
+	KOcsk8TNJ+uYQKrYBKQkXjb2sIPYIgJqEhPbDrGAFDELdDFKLF/3iw0kISygKdHx9AAriM0i
+	oCpxqXMa2ApeAReJ99dXQ61TlPjxfQ0ziM0p4Cox4ddFsKFCQDVNx66wTGDkXcDIsIpRLjGn
+	NFc3NzEzpzg1Wbc4OTEvL7VI10QvN7NELzWldBMjJKj4dzB2rZc5xCjAwajEw3vjjHmAEGti
+	WXFl7iFGSQ4mJVFesUKLACG+pPyUyozE4oz4otKc1OJDjBIczEoivN8ZgHK8KYmVValF+TAp
+	aQ4WJXFe9SXqfkIC6YklqdmpqQWpRTBZGQ4OJQne78VAjYJFqempFWmZOSUIaSYOThDBBbKB
+	B2jDXZBC3uKCxNzizHSIolOMilLivKdAEgIgiYzSPLgBsPh/xSgO9I8w78wioCoeYOqA634F
+	NJgJaHC5qznI4JJEhJRUA+OCI7cjCiq9+lcam82ZF98Y5BDM7hOqzW35ZJmX8JSWc028azbV
+	35Uov3zbONSvnOMmS+0O0VWeR6x/aq9OPf+fyYrx87PsJ3rLuAVimwUrDO47zBKK8rY1S/m4
+	wuw58zZWoTlOV2pXlRVFpky74da/Ntppd8ePmOi4HVVLT1qtvaupPD1TSomlOCPR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204262>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Re-roll, incorporating Jeff's suggestions.  Some commit messages have
-also been improved, but the only interdiff is that match_pos is
-renamed to head_pos in filter_refs().
 
-This patch series applies to the merge between master and
-jc/maint-push-refs-all, though the dependency on the latter is only
-textual.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/fetch-pack.c |  8 ++++----
+ fetch-pack.h         | 12 ++++++------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-Michael Haggerty (17):
-  t5500: add tests of error output for missing refs
-  Rename static function fetch_pack() to http_fetch_pack()
-  Fix formatting.
-  Name local variables more consistently
-  Do not check the same head_pos twice
-  Let fetch_pack() inform caller about number of unique heads
-  Pass nr_heads to do_pack_ref() by reference
-  Pass nr_heads to everything_local() by reference
-  Pass nr_heads to filter_refs() by reference
-  Remove ineffective optimization
-  filter_refs(): do not leave gaps in return_refs
-  filter_refs(): compress unmatched refs in heads array
-  cmd_fetch_pack: return early if finish_connect() returns an error
-  Report missing refs even if no existing refs were received
-  cmd_fetch_pack(): simplify computation of return value
-  fetch_pack(): free matching heads
-  filter_refs(): simplify logic
-
- builtin/fetch-pack.c  | 128 ++++++++++++++++++++------------------------------
- fetch-pack.h          |  19 +++++---
- http-walker.c         |   4 +-
- t/t5500-fetch-pack.sh |  32 ++++++++++++-
- transport.c           |   8 ++--
- 5 files changed, 101 insertions(+), 90 deletions(-)
-
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 7912d2b..cc21047 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -1062,10 +1062,10 @@ static int compare_heads(const void *a, const void *b)
+ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 		       int fd[], struct child_process *conn,
+ 		       const struct ref *ref,
+-		const char *dest,
+-		int nr_heads,
+-		char **heads,
+-		char **pack_lockfile)
++		       const char *dest,
++		       int nr_heads,
++		       char **heads,
++		       char **pack_lockfile)
+ {
+ 	struct stat st;
+ 	struct ref *ref_cpy;
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 7c2069c..1dbe90f 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -18,11 +18,11 @@ struct fetch_pack_args {
+ };
+ 
+ struct ref *fetch_pack(struct fetch_pack_args *args,
+-		int fd[], struct child_process *conn,
+-		const struct ref *ref,
+-		const char *dest,
+-		int nr_heads,
+-		char **heads,
+-		char **pack_lockfile);
++		       int fd[], struct child_process *conn,
++		       const struct ref *ref,
++		       const char *dest,
++		       int nr_heads,
++		       char **heads,
++		       char **pack_lockfile);
+ 
+ #endif
 -- 
 1.7.11.3
