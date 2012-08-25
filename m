@@ -1,90 +1,82 @@
-From: Tim Chase <git@tim.thechases.com>
-Subject: Re: misleading diff-hunk header
-Date: Fri, 24 Aug 2012 19:41:54 -0500
-Message-ID: <50381F52.9030007@tim.thechases.com>
-References: <503385D0.5070605@tim.thechases.com> <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com> <7vfw7gdtfg.fsf@alter.siamese.dyndns.org> <20120824142908.GA15162@sigill.intra.peff.net> <20120824164415.GA23262@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 25 02:40:53 2012
+From: travis.carden@gmail.com
+Subject: [PATCH] Improve "Not a git repository" error messages
+Date: Fri, 24 Aug 2012 22:33:41 -0500
+Message-ID: <1345865621-6941-1-git-send-email-travis.carden@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com, travis.carden@gmail.com
+X-From: git-owner@vger.kernel.org Sat Aug 25 05:34:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T54Qk-0000Ds-Ga
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 02:40:50 +0200
+	id 1T578R-0002wZ-C8
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 05:34:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810Ab2HYAkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Aug 2012 20:40:45 -0400
-Received: from boston.accountservergroup.com ([50.22.11.22]:56215 "EHLO
-	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753046Ab2HYAkn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Aug 2012 20:40:43 -0400
-Received: from ppp-70-251-69-251.dsl.rcsntx.swbell.net ([70.251.69.251] helo=[192.168.1.12])
-	by boston.accountservergroup.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tim.thechases.com>)
-	id 1T54QZ-000ARQ-Oq; Fri, 24 Aug 2012 19:40:39 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111120 Icedove/3.1.16
-In-Reply-To: <20120824164415.GA23262@sigill.intra.peff.net>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tim.thechases.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753634Ab2HYDeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Aug 2012 23:34:00 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34067 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752928Ab2HYDd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Aug 2012 23:33:58 -0400
+Received: by obbuo13 with SMTP id uo13so5598368obb.19
+        for <git@vger.kernel.org>; Fri, 24 Aug 2012 20:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=eEdxStljAo4+PC9eIqPPnmKiwfIdUaQJpEAf7lj1wGw=;
+        b=KONZMpBPqAJugoZr27YV6eNnfRdGKBKw4T6appEr1xT9qTrqc4f7iGm+z6JIV/yJX0
+         dF+1oReg3c/55XhIGoHuO1aAkNC6uZTJswQci6pzmRcLAQOE9X7s38sPvjQztgov27UO
+         rD0yJV2JqieQKmrtyXToSoF6PQrDuLxiREz7s8hIUoUniCZCK93wCjZ9TmvJ7NpSnfY9
+         p7BKshsrWMaaDJ+K1Q21YirVWJLT0giixviXKLfFrWscDDU/yToJt1vlrBhsWNIco5g3
+         MogWCY725zb6mzuM0CrwvlhEjoheH70BJrZ6+S4gLAbjYTgislq1+uO8IbxMXoSaTx6b
+         7zzw==
+Received: by 10.182.111.39 with SMTP id if7mr5468563obb.56.1345865637841;
+        Fri, 24 Aug 2012 20:33:57 -0700 (PDT)
+Received: from quickstart.om.cox.net (ip24-252-18-14.om.om.cox.net. [24.252.18.14])
+        by mx.google.com with ESMTPS id d4sm10997677obx.3.2012.08.24.20.33.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 24 Aug 2012 20:33:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204244>
 
-On 08/24/12 11:44, Jeff King wrote:
-> With the old code, you'd get:
-> 
-> 	diff --git a/old b/new
-> 	index f384549..1066a25 100644
-> 	--- a/old
-> 	+++ b/new
-> 	@@ -2,3 +2,3 @@ one
-> 	 two
-> 	-three
-> 	+three -- modified
-> 	 four
-> 
-> So the hunk header is showing you something useful; the element just
-> above your context. But with my patch, you'd see:
-> 
-> 	diff --git a/old b/new
-> 	index f384549..1066a25 100644
-> 	--- a/old
-> 	+++ b/new
-> 	@@ -2,3 +2,3 @@ two
-> 	 two
-> 	-three
-> 	+three -- modified
-> 	 four
-> 
-> I.e., it shows the element just before the change, which is already in
-> the context anyway. So it's actually less useful. Although note that the
-> current behavior is not all that useful, either; it is not really giving
-> you any information about the change, but rather just showing one extra
-> line of context.
-> 
-> So I would say that which you would prefer might depend on exactly what
-> you are diffing. But I would also argue that in any case where the new
-> code produces a worse result, the hunk header was not all that useful to
-> begin with.
+From: Travis Carden <travis.carden@gmail.com>
 
-If the documented purpose of "diff -p" (and by proxy
-diff.{type}.xfuncname) is to show the name of the *function*
-containing the changed lines, and all you have is a list of lines
-with no function names, it's pretty arbitrary to call either
-behavior "worse". :-)
+The former messages changed grammatical subject in the middle.
 
--tkc
+Signed-off-by: Travis Carden <travis.carden@gmail.com>
+---
+This is my first attempt at contributing to the Git project.
+I'm kind of testing the water with a simple patch to see how
+friendly the community is. Thanks!
+
+ setup.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 9139bee..0cd88e5 100644
+--- a/setup.c
++++ b/setup.c
+@@ -599,7 +599,7 @@ static const char *setup_bare_git_dir(char *cwd, int offset, int len, int *nongi
+ static const char *setup_nongit(const char *cwd, int *nongit_ok)
+ {
+ 	if (!nongit_ok)
+-		die("Not a git repository (or any of the parent directories): %s", DEFAULT_GIT_DIR_ENVIRONMENT);
++		die("Not a git repository (or a descendant of one): %s", DEFAULT_GIT_DIR_ENVIRONMENT);
+ 	if (chdir(cwd))
+ 		die_errno("Cannot come back to cwd");
+ 	*nongit_ok = 1;
+@@ -706,7 +706,7 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 					return NULL;
+ 				}
+ 				cwd[offset] = '\0';
+-				die("Not a git repository (or any parent up to mount point %s)\n"
++				die("Not a git repository (or a descendant of one up to mount point %s)\n"
+ 				"Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).", cwd);
+ 			}
+ 		}
+-- 
+1.7.9.5
