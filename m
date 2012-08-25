@@ -1,69 +1,97 @@
-From: Tim Chase <git@tim.thechases.com>
-Subject: Re: misleading diff-hunk header
-Date: Sat, 25 Aug 2012 07:56:06 -0500
-Message-ID: <5038CB66.1040006@tim.thechases.com>
-References: <503385D0.5070605@tim.thechases.com> <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com> <7vfw7gdtfg.fsf@alter.siamese.dyndns.org> <20120824142908.GA15162@sigill.intra.peff.net> <20120824164415.GA23262@sigill.intra.peff.net> <50381F52.9030007@tim.thechases.com> <7va9xjy4or.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH v6 15/16] remote-svn: add marks-file regeneration
+Date: Sat, 25 Aug 2012 17:55:13 +0200
+Message-ID: <001c01cd82da$03abbb00$0b033100$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 14:55:48 2012
+Cc: <git@vger.kernel.org>
+To: <florian.achleitner.2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 25 17:55:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5Fty-0006cN-Q3
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 14:55:47 +0200
+	id 1T5Ihy-00089x-Os
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 17:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755090Ab2HYMzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 08:55:00 -0400
-Received: from boston.accountservergroup.com ([50.22.11.22]:34587 "EHLO
-	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752843Ab2HYMy7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2012 08:54:59 -0400
-Received: from ppp-70-251-69-251.dsl.rcsntx.swbell.net ([70.251.69.251] helo=[192.168.1.12])
-	by boston.accountservergroup.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tim.thechases.com>)
-	id 1T5FtA-0003Kx-H4; Sat, 25 Aug 2012 07:54:56 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111120 Icedove/3.1.16
-In-Reply-To: <7va9xjy4or.fsf@alter.siamese.dyndns.org>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tim.thechases.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752909Ab2HYPz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 11:55:29 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:62997 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242Ab2HYPz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2012 11:55:27 -0400
+Received: from DualCore (dsdf-4d0a03be.pool.mediaWays.net [77.10.3.190])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0M6fVk-1TsZPU3QEW-00wWdn; Sat, 25 Aug 2012 17:55:25 +0200
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac2C2gLvAb1n8HILTy6eFwlSeL6x8A==
+Content-Language: de
+X-Provags-ID: V02:K0:GNG2WHxzIIudljvkZWHUtG77F/4zf7zk6KshjJvpZD9
+ i4uWmr7q+sdCoaxQKgW4Yp8mnYhHlUkWfw18gGUsa2kigsatH5
+ sJaiK7bNy+EqJ1ojjeYOqBTzr4uBAmGUNRFdhEQhWAqtC0RvrZ
+ zYSoz8UA83UI9d6/DIW9jKMxTzUA9SZ+9IftZsfPARY1ncDd3a
+ WZf/RY7rbxE3SxBZpQ3fLVXjZRu0SqOe2pLZvea4kIYfM+lDE7
+ TwqHw+FXgrQOj1ZlBptwAd4hODC52xGeEZpl4ZUcQDuswpBblt
+ usae3e8Psiz6ddEy+/HSicnld4K/qYE3eqn6F2vCX7jn99blf4
+ 1xCbIjGDAbSa2RyT/5usmln1xT/wi8dHWqi2w/ecdTC9xmAIa6
+ ZKRzNXBMg4NDw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204274>
 
-On 08/24/12 23:29, Junio C Hamano wrote:
-> Tim Chase <git@tim.thechases.com> writes:
->> If the documented purpose of "diff -p" (and by proxy
->> diff.{type}.xfuncname) is to show the name of the *function*
->> containing the changed lines,....
+"Florian Achleitner" <florian.achleitner.2.6.31@gmail.com> schrieb im Newsbeitrag
+news:<1345662961-9587-16-git-send-email-florian.achleitner.2.6.31@gmail.com>...
+> fast-import mark files are stored outside the object database and are
+> therefore not fetched and can be lost somehow else.  marks provide a
+> svn revision --> git sha1 mapping, while the notes that are attached
+> to each commit when it is imported provide a git sha1 --> svn revision
+> mapping.
 > 
-> Yeah, the documentation is misleading, but I do not offhand think of
-> a better phrasing. Perhaps you could send in a patch to improve it.
+> If the marks file is not available or not plausible, regenerate it by
+> walking through the notes tree.  , i.e.  The plausibility check tests
+> if the highest revision in the marks file matches the revision of the
+> top ref. It doesn't ensure that the mark file is completely correct.
+> This could only be done with an effort equal to unconditional
+> regeneration.
 > 
-> How does GNU manual explain the option?
+> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  remote-testsvn.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+> 
+> diff --git a/remote-testsvn.c b/remote-testsvn.c
+> index e90d221..09dc304 100644
+> --- a/remote-testsvn.c
+> +++ b/remote-testsvn.c
+...
+> +static void check_or_regenerate_marks(int latestrev) {
+> +	FILE *marksfile;
+> +	char *line = NULL;
+> +	size_t linelen = 0;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	int found = 0;
+> +
+> +	if (latestrev < 1)
+> +		return;
+> +
+> +	init_notes(NULL, notes_ref, NULL, 0);
+> +	marksfile = fopen(marksfilename, "r");
+> +	if (!marksfile) {
+> +		regenerate_marks();
+> +		marksfile = fopen(marksfilename, "r");
+> +		if (!marksfile)
+> +			die_errno("cannot read marks file %s!", marksfilename);
+> +		fclose(marksfile);
+> +	} else {
+> +		strbuf_addf(&sb, ":%d ", latestrev);
+> +		while (getline(&line, &linelen, marksfile) != -1) {
 
-Tersely. :-)
+getline() is not available to anybody, e.g. it is not in HP NonStop.
 
-       -p  --show-c-function
-              Show which C function each change is in.
-
-And that's it.  To describe the current behavior, it might be better
-written as "Find and show the first function definition prior to the
-hunk".  The code in diff(1) actually just uses the regexp something
-like "^[a-z]" which happens to find function definitions, but can
-also find module-level variable definitions, structs, etc.
-
--tkc
+Bye, Jojo
