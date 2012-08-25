@@ -1,107 +1,119 @@
 From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH v6 15/16] remote-svn: add marks-file regeneration
-Date: Sat, 25 Aug 2012 20:55:05 +0200
-Message-ID: <002401cd82f3$24a465f0$6ded31d0$@schmitz-digital.de>
+Subject: Re: [PATCH 1/3] remote-testsvn.c: Avoid the getline() GNU extension function
+Date: Sat, 25 Aug 2012 21:03:33 +0200
+Message-ID: <k1b7ij$p8v$1@ger.gmane.org>
+References: <503907B3.9040101@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="us-ascii"
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <ramsay@ramsay1.demon.co.uk>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 20:56:10 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 25 21:10:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5LWk-0006lw-AX
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 20:56:10 +0200
+	id 1T5LkN-0003H7-2R
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 21:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756954Ab2HYSzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 14:55:21 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:51704 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756862Ab2HYSzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2012 14:55:19 -0400
-Received: from DualCore (dsdf-4d0a03be.pool.mediaWays.net [77.10.3.190])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0McWDw-1TN0vF2lVI-00Hgzi; Sat, 25 Aug 2012 20:55:18 +0200
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2C2gLvAb1n8HILTy6eFwlSeL6x8AAGKhDw
-Content-Language: de
-X-Provags-ID: V02:K0:G2+Yn6jOcRHHSPLQfJwrlkWGQM2AcSFx+psn/97PBE/
- snMR01l941BmYwvl3vCBEKiQ+sI3vGA/FQl7ZWdCtJr+51j037
- 6ZPgW34YMxf7SUCrn9YK7Q5ZF6TZnzprR9TRjYl5R3Y3yfOM0z
- h32NWUPOxK62gJcL7H9lowUDR1Cb/rX02KkJqQDgp4vFEcBZv3
- 7V9Gv2xOpjSIOCio3QhP+NKdsG6E09mNR5xUHXC6C4/Za7Gud3
- qI4wTyxhpJsiZDjekFglI7JuKyoS+MMrwGkQ5GUUBL8uUFiuHi
- 48RNLeVFoNkwURn/DRGWv+huYVP4dpXzv0/mq/w1/Jw8T4RJsV
- neWpRQElNSBHE1B4B4Sb7FEsffgiTP1QLzqdVEXZC29w1eKXyz
- fDwYg5nrFonNw==
+	id S1757137Ab2HYTKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 15:10:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:57231 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753313Ab2HYTKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2012 15:10:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1T5LkB-00036B-AM
+	for git@vger.kernel.org; Sat, 25 Aug 2012 21:10:03 +0200
+Received: from dsdf-4d0a03be.pool.mediaways.net ([77.10.3.190])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 25 Aug 2012 21:10:03 +0200
+Received: from jojo by dsdf-4d0a03be.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 25 Aug 2012 21:10:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4d0a03be.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204281>
 
-> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
-> Sent: Saturday, August 25, 2012 5:55 PM
-> To: 'florian.achleitner.2.6.31@gmail.com'
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH v6 15/16] remote-svn: add marks-file regeneration
-> 
-> "Florian Achleitner" <florian.achleitner.2.6.31@gmail.com> schrieb im Newsbeitrag news:<1345662961-9587-16-git-send-email-
-> florian.achleitner.2.6.31@gmail.com>...
-> > fast-import mark files are stored outside the object database and are
-> > therefore not fetched and can be lost somehow else.  marks provide a
-> > svn revision --> git sha1 mapping, while the notes that are attached
-> > to each commit when it is imported provide a git sha1 --> svn revision
-> > mapping.
-> >
-> > If the marks file is not available or not plausible, regenerate it by
-> > walking through the notes tree.  , i.e.  The plausibility check tests
-> > if the highest revision in the marks file matches the revision of the
-> > top ref. It doesn't ensure that the mark file is completely correct.
-> > This could only be done with an effort equal to unconditional
-> > regeneration.
-> >
-> > Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >  remote-testsvn.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 68 insertions(+)
-> >
-> > diff --git a/remote-testsvn.c b/remote-testsvn.c
-> > index e90d221..09dc304 100644
-> > --- a/remote-testsvn.c
-> > +++ b/remote-testsvn.c
-> ...
-> > +static void check_or_regenerate_marks(int latestrev) {
-> > +	FILE *marksfile;
-> > +	char *line = NULL;
-> > +	size_t linelen = 0;
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +	int found = 0;
-> > +
-> > +	if (latestrev < 1)
-> > +		return;
-> > +
-> > +	init_notes(NULL, notes_ref, NULL, 0);
-> > +	marksfile = fopen(marksfilename, "r");
-> > +	if (!marksfile) {
-> > +		regenerate_marks();
-> > +		marksfile = fopen(marksfilename, "r");
-> > +		if (!marksfile)
-> > +			die_errno("cannot read marks file %s!", marksfilename);
-> > +		fclose(marksfile);
-> > +	} else {
-> > +		strbuf_addf(&sb, ":%d ", latestrev);
-> > +		while (getline(&line, &linelen, marksfile) != -1) {
-> 
-> getline() is not available to anybody, e.g. it is not in HP NonStop.
+Ramsay Jones wrote:
+> The getline() function is a GNU extension (you need to define
+> _GNU_SOURCE before including stdio.h) and is, therefore, not
+> portable. In particular, getline() is not available on MinGW.
+>
+> In order to support non-GNU systems, we replace the call to
+> getline() with (almost) equivalent code using strbuf_getline().
+> Note that, unlike getline(), strbuf_getline() removes the
+> newline terminator from the returned string. This difference
+> in semantics does not matter at this call-site. Also, we note
+> that the original code was leaking the memory allocated to
+> 'line' by getline().
+>
+> Signed-off-by: Ramsay Jones ramsay@ramsay1.demon.co.uk
 
-I'd like to confirm that Ramsey's patch works for me too, so I second his request.
-(Subject: [PATCH 1/3] remote-testsvn.c: Avoid the getline() GNU extension function)
+Tested-by: Joachim Schmitz jojo@schmitz-digital.de
 
-Bye, Jojo
+> ---
+>
+> Hi Florian,
+>
+> Could you please squash this into commit 0320cef0 ("remote-svn: add
+> marks-file regeneration", 22-08-2012).
+>
+> ATB,
+> Ramsay Jones
+>
+> remote-testsvn.c | 8 ++++----
+> 1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/remote-testsvn.c b/remote-testsvn.c
+> index 09dc304..d0b81d5 100644
+> --- a/remote-testsvn.c
+> +++ b/remote-testsvn.c
+> @@ -121,9 +121,8 @@ static void regenerate_marks(void)
+>
+> static void check_or_regenerate_marks(int latestrev) {
+>  FILE *marksfile;
+> - char *line = NULL;
+> - size_t linelen = 0;
+>  struct strbuf sb = STRBUF_INIT;
+> + struct strbuf line = STRBUF_INIT;
+>  int found = 0;
+>
+>  if (latestrev < 1)
+> @@ -139,8 +138,8 @@ static void check_or_regenerate_marks(int
+>  latestrev) { fclose(marksfile);
+>  } else {
+>  strbuf_addf(&sb, ":%d ", latestrev);
+> - while (getline(&line, &linelen, marksfile) != -1) {
+> - if (!prefixcmp(line, sb.buf)) {
+> + while (strbuf_getline(&line, marksfile, '\n') != EOF) {
+> + if (!prefixcmp(line.buf, sb.buf)) {
+>  found++;
+>  break;
+>  }
+> @@ -151,6 +150,7 @@ static void check_or_regenerate_marks(int
+>  latestrev) { }
+>  free_notes(NULL);
+>  strbuf_release(&sb);
+> + strbuf_release(&line);
+> }
+>
+> static int cmd_import(const char *line)
+
+I'd like to second this request, having the same problem on HP NonStop and 
+this patch fixes it for me too.
+
+Bye, Jojo 
