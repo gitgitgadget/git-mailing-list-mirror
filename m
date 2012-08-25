@@ -1,71 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: misleading diff-hunk header
-Date: Fri, 24 Aug 2012 21:29:56 -0700
-Message-ID: <7va9xjy4or.fsf@alter.siamese.dyndns.org>
-References: <503385D0.5070605@tim.thechases.com>
- <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com>
- <7vfw7gdtfg.fsf@alter.siamese.dyndns.org>
- <20120824142908.GA15162@sigill.intra.peff.net>
- <20120824164415.GA23262@sigill.intra.peff.net>
- <50381F52.9030007@tim.thechases.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 06/17] Let fetch_pack() inform caller about number of
+ unique heads
+Date: Sat, 25 Aug 2012 07:05:31 +0200
+Message-ID: <50385D1B.8010404@alum.mit.edu>
+References: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu> <1345709442-16046-7-git-send-email-mhagger@alum.mit.edu> <20120823085409.GD6963@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Tim Chase <git@tim.thechases.com>
-X-From: git-owner@vger.kernel.org Sat Aug 25 06:30:11 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 25 07:12:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T580f-0007oV-Gf
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 06:30:09 +0200
+	id 1T58g0-0003iR-CQ
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 07:12:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933Ab2HYEaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 00:30:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47728 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830Ab2HYEaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Aug 2012 00:30:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EB649D11;
-	Sat, 25 Aug 2012 00:29:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=erzE7MhJg38fPdwzpEqNrfzI6UU=; b=tysXqf
-	JYjjTJlsXrL+S7+C3TqpT+nqs5eZUR3MifAZCy4334TtsrBb2E+MEf7ZX8Yzktwm
-	a+J8EraSeaAL+TwKWdNhr3W0FH0AWFDerfsUmHqVVO7FkYFLOx+ykGkMCRZmZ5S/
-	//FSY8D5AF5r5ocCOPag8OxMA3sCcVczODGO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dMp/Ya/6AszxQPTlOXjLP78aA5tFBZ7A
-	e0VwO+HgEAR78tvm9V/CfGwEcpjQ5Pj7UzUxxZgHA4NSSBGtVIMlRXZwHfHY4BOM
-	KTUqSAokA+fiF7SK6QBXbbNIIQAZB6fKkAs2PkqqaR9ahnEmIVNBNBWY15mOfQnv
-	jNaY6rz0z2k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D3B19D0F;
-	Sat, 25 Aug 2012 00:29:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 969CE9D0E; Sat, 25 Aug 2012
- 00:29:58 -0400 (EDT)
-In-Reply-To: <50381F52.9030007@tim.thechases.com> (Tim Chase's message of
- "Fri, 24 Aug 2012 19:41:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8746DF68-EE6D-11E1-8A19-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751330Ab2HYFMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 01:12:40 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:48593 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750944Ab2HYFMi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2012 01:12:38 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Aug 2012 01:12:37 EDT
+X-AuditID: 1207440c-b7f616d00000270b-98-50385d1f92c5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1C.34.09995.F1D58305; Sat, 25 Aug 2012 01:05:35 -0400 (EDT)
+Received: from [192.168.69.140] (p57A257CD.dip.t-dialin.net [87.162.87.205])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7P55WPx008149
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 25 Aug 2012 01:05:34 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <20120823085409.GD6963@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqCsfaxFgsHOulkXXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7ozvi16wFhwRqjizdjVTA2Mv
+	fxcjJ4eEgInE8m2fmCBsMYkL99azdTFycQgJXGaU2PinnwnCOcMksW7zc2aQKl4BbYmzZ14y
+	gtgsAqoSvdOmsILYbAK6Eot6msEmiQqESKz5NoURol5Q4uTMJywgtoiArMT3wxvB4swC1hIr
+	Xh8GqxcWiJBY3fUSrEZIYDWjxMm7niA2p4CVxILzX4HiHED16hLr5wlBtMpLbH87h3kCo8As
+	JBtmIVTNQlK1gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrpJkZI4PLsYPy2
+	TuYQowAHoxIP740z5gFCrIllxZW5hxglOZiURHnXh1sECPEl5adUZiQWZ8QXleakFh9ilOBg
+	VhLh/c4AlONNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfCejwJqFCxK
+	TU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFaXwxMFJBUjxAe1ViQPYWFyTmAkUhWk8x
+	6nJ8fnryLqMQS15+XqqUOK8ASJEASFFGaR7cCliaesUoDvSxMK8vSBUPMMXBTXoFtIQJaEm5
+	qznIkpJEhJRUA6Oc64pdnj9dbqsuT3716r+sUOY3/U4+tcDiuiAJDsOIsGIRwXtF26w9rMLP
+	sUXcmXxfRpShJL94U8Vs7zrnCwJ/lrpO2F31V/NuvZiO0UyptD/tD5trYk4w/o2Q 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204246>
 
-Tim Chase <git@tim.thechases.com> writes:
+On 08/23/2012 10:54 AM, Jeff King wrote:
+> On Thu, Aug 23, 2012 at 10:10:31AM +0200, mhagger@alum.mit.edu wrote:
+> 
+>> From: Michael Haggerty <mhagger@alum.mit.edu>
+>>
+>> fetch_pack() remotes duplicates from the list (nr_heads, heads),
+>> thereby shrinking the list.  But previously, the caller was not
+>> informed about the shrinkage.  This would cause a spurious error
+>> message to be emitted by cmd_fetch_pack() if "git fetch-pack" is
+>> called with duplicate refnames.
+>>
+>> So change the signature of fetch_pack() to accept nr_heads by
+>> reference, and if any duplicates were removed then modify it to
+>> reflect the number of remaining references.
+>>
+>> The last test of t5500 inexplicably *required* "git fetch-pack" to
+>> fail when fetching a list of references that contains duplicates;
+>> i.e., it insisted on the buggy behavior.  So change the test to expect
+>> the correct behavior.
+> 
+> Eek, yeah, the current behavior is obviously wrong. The
+> remove_duplicates code comes from 310b86d (fetch-pack: do not barf when
+> duplicate re patterns are given, 2006-11-25) and clearly meant for
+> fetch-pack to handle this case gracefully.
+> 
+>> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+>> index 3cc3346..0d4edcb 100755
+>> --- a/t/t5500-fetch-pack.sh
+>> +++ b/t/t5500-fetch-pack.sh
+>> @@ -391,7 +391,7 @@ test_expect_success 'fetch mixed refs from cmdline and stdin' '
+>>  test_expect_success 'test duplicate refs from stdin' '
+>>  	(
+>>  	cd client &&
+>> -	test_must_fail git fetch-pack --stdin --no-progress .. <../input.dup
+>> +	git fetch-pack --stdin --no-progress .. <../input.dup
+>>  	) >output &&
+>>  	cut -d " " -f 2 <output | sort >actual &&
+>>  	test_cmp expect actual
+> 
+> It's interesting that the output was the same before and after the fix.
+> I guess that is because the error comes at the very end, when we are
+> making sure all of the provided heads have been consumed.
 
-> If the documented purpose of "diff -p" (and by proxy
-> diff.{type}.xfuncname) is to show the name of the *function*
-> containing the changed lines,....
+"git fetch-pack" emits information about successfully-received
+references regardless of whether some requested references were not
+received.  The "no such remote ref %s" output goes to stderr.  So the
+only difference between before/after fix should be what is written to
+stderr, whereas the test only looks at stdout.
 
-Yeah, the documentation is misleading, but I do not offhand think of
-a better phrasing. Perhaps you could send in a patch to improve it.
+Michael
 
-How does GNU manual explain the option?
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
