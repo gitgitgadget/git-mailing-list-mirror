@@ -1,111 +1,213 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 06/17] Let fetch_pack() inform caller about number of
- unique heads
-Date: Sat, 25 Aug 2012 07:05:31 +0200
-Message-ID: <50385D1B.8010404@alum.mit.edu>
-References: <1345709442-16046-1-git-send-email-mhagger@alum.mit.edu> <1345709442-16046-7-git-send-email-mhagger@alum.mit.edu> <20120823085409.GD6963@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: bug: when applying binary diffs, -p0 is ignored
+Date: Fri, 24 Aug 2012 22:25:53 -0700
+Message-ID: <7v393by23i.fsf@alter.siamese.dyndns.org>
+References: <CA+qbEUOw9zR1_kdXU=mB8_KADq2NRT_qxSvGT+SfS55dUM8j6A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 25 07:12:53 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Colin McCabe <cmccabe@alumni.cmu.edu>
+X-From: git-owner@vger.kernel.org Sat Aug 25 07:26:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T58g0-0003iR-CQ
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 07:12:52 +0200
+	id 1T58tQ-0001gH-3g
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Aug 2012 07:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330Ab2HYFMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Aug 2012 01:12:40 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:48593 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750944Ab2HYFMi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Aug 2012 01:12:38 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Aug 2012 01:12:37 EDT
-X-AuditID: 1207440c-b7f616d00000270b-98-50385d1f92c5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1C.34.09995.F1D58305; Sat, 25 Aug 2012 01:05:35 -0400 (EDT)
-Received: from [192.168.69.140] (p57A257CD.dip.t-dialin.net [87.162.87.205])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7P55WPx008149
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 Aug 2012 01:05:34 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <20120823085409.GD6963@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqCsfaxFgsHOulkXXlW4mi4beK8wW
-	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7ozvi16wFhwRqjizdjVTA2Mv
-	fxcjJ4eEgInE8m2fmCBsMYkL99azdTFycQgJXGaU2PinnwnCOcMksW7zc2aQKl4BbYmzZ14y
-	gtgsAqoSvdOmsILYbAK6Eot6msEmiQqESKz5NoURol5Q4uTMJywgtoiArMT3wxvB4swC1hIr
-	Xh8GqxcWiJBY3fUSrEZIYDWjxMm7niA2p4CVxILzX4HiHED16hLr5wlBtMpLbH87h3kCo8As
-	JBtmIVTNQlK1gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrpJkZI4PLsYPy2
-	TuYQowAHoxIP740z5gFCrIllxZW5hxglOZiURHnXh1sECPEl5adUZiQWZ8QXleakFh9ilOBg
-	VhLh/c4AlONNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfCejwJqFCxK
-	TU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFaXwxMFJBUjxAe1ViQPYWFyTmAkUhWk8x
-	6nJ8fnryLqMQS15+XqqUOK8ASJEASFFGaR7cCliaesUoDvSxMK8vSBUPMMXBTXoFtIQJaEm5
-	qznIkpJEhJRUA6Oc64pdnj9dbqsuT3716r+sUOY3/U4+tcDiuiAJDsOIsGIRwXtF26w9rMLP
-	sUXcmXxfRpShJL94U8Vs7zrnCwJ/lrpO2F31V/NuvZiO0UyptD/tD5trYk4w/o2Q 
+	id S1752024Ab2HYF0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Aug 2012 01:26:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33817 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751865Ab2HYFZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Aug 2012 01:25:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 313455467;
+	Sat, 25 Aug 2012 01:25:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SYum7+BynwlaqX66r1wBihXt4pg=; b=vmTs/K
+	vENiX0S5OVpki4W8sDqaJahQcecRaamnfxFb0goVnl8aPSMMvr0b+LQ/yBRgkKzO
+	k/R5Hs/kzn5CGNtCCtJL6P9i99kUKpv4JG/ztacZXaYeXyL1IWisYgCKrAoM+VMk
+	muUuZFv5FtDsaY6FgoOTLV1dbkqrGXFYdlxxw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PBq1f9rPRXtETs6E3Tce0nZBiDEeAo2R
+	WEPNhUsPMWFZutEDyWHO8yrRXxbdv18p39JcCD1aPokFKxNtC8DO4yGw8/pTus71
+	oAmHGOt+esviuCeAJY3OG0gCtubmUNVHMD1dPKEA7sOyfmyZ3U2wb0s76+xL2sVb
+	lHssboHBp0w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D8525466;
+	Sat, 25 Aug 2012 01:25:56 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2672F5465; Sat, 25 Aug 2012
+ 01:25:55 -0400 (EDT)
+In-Reply-To: <CA+qbEUOw9zR1_kdXU=mB8_KADq2NRT_qxSvGT+SfS55dUM8j6A@mail.gmail.com> (Colin
+ McCabe's message of "Fri, 24 Aug 2012 15:09:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 57EE5392-EE75-11E1-8576-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204247>
 
-On 08/23/2012 10:54 AM, Jeff King wrote:
-> On Thu, Aug 23, 2012 at 10:10:31AM +0200, mhagger@alum.mit.edu wrote:
-> 
->> From: Michael Haggerty <mhagger@alum.mit.edu>
->>
->> fetch_pack() remotes duplicates from the list (nr_heads, heads),
->> thereby shrinking the list.  But previously, the caller was not
->> informed about the shrinkage.  This would cause a spurious error
->> message to be emitted by cmd_fetch_pack() if "git fetch-pack" is
->> called with duplicate refnames.
->>
->> So change the signature of fetch_pack() to accept nr_heads by
->> reference, and if any duplicates were removed then modify it to
->> reflect the number of remaining references.
->>
->> The last test of t5500 inexplicably *required* "git fetch-pack" to
->> fail when fetching a list of references that contains duplicates;
->> i.e., it insisted on the buggy behavior.  So change the test to expect
->> the correct behavior.
-> 
-> Eek, yeah, the current behavior is obviously wrong. The
-> remove_duplicates code comes from 310b86d (fetch-pack: do not barf when
-> duplicate re patterns are given, 2006-11-25) and clearly meant for
-> fetch-pack to handle this case gracefully.
-> 
->> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
->> index 3cc3346..0d4edcb 100755
->> --- a/t/t5500-fetch-pack.sh
->> +++ b/t/t5500-fetch-pack.sh
->> @@ -391,7 +391,7 @@ test_expect_success 'fetch mixed refs from cmdline and stdin' '
->>  test_expect_success 'test duplicate refs from stdin' '
->>  	(
->>  	cd client &&
->> -	test_must_fail git fetch-pack --stdin --no-progress .. <../input.dup
->> +	git fetch-pack --stdin --no-progress .. <../input.dup
->>  	) >output &&
->>  	cut -d " " -f 2 <output | sort >actual &&
->>  	test_cmp expect actual
-> 
-> It's interesting that the output was the same before and after the fix.
-> I guess that is because the error comes at the very end, when we are
-> making sure all of the provided heads have been consumed.
+Colin McCabe <cmccabe@alumni.cmu.edu> writes:
 
-"git fetch-pack" emits information about successfully-received
-references regardless of whether some requested references were not
-received.  The "no such remote ref %s" output goes to stderr.  So the
-only difference between before/after fix should be what is written to
-stderr, whereas the test only looks at stdout.
+> I found a bug in git's handling of binary diff segments.
+>
+> When applying binary diffs using -p0, the prefix (or --strip) argument
+> is ignored.
 
-Michael
+Thanks for a report.  An ancient bug well spotted.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Perhaps this will help.
+
+-- >8 --
+Subject: apply: compute patch->def_name correctly under -p0
+
+Back when "git apply" was written, we made sure that the user can
+skip more than the default number of path components (i.e. 1) by
+giving "-p<n>", but the logic for doing so was built around the
+notion of "we skip N slashes and stop".  This obviously does not
+work well when running under -p0 where we do not want to skip any,
+but still want to skip SP/HT that separates the pathnames of
+preimage and postimage and want to reject absolute pathnames.
+
+Stop using "stop_at_slash()", and instead introduce a new helper
+"skip_tree_prefix()" with similar logic but works correctly even for
+the -p0 case.
+
+This is an ancient bug, but has been masked for a long time because
+most of the patches are text and have other clues to tell us the
+name of the preimage and the postimage.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/apply.c | 55 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 25 deletions(-)
+
+diff --git i/builtin/apply.c w/builtin/apply.c
+index 3bf71dc..4a511b3 100644
+--- i/builtin/apply.c
++++ w/builtin/apply.c
+@@ -1095,15 +1095,23 @@ static int gitdiff_unrecognized(const char *line, struct patch *patch)
+ 	return -1;
+ }
+ 
+-static const char *stop_at_slash(const char *line, int llen)
++/*
++ * Skip p_value leading components from "line"; as we do not accept
++ * absolute paths, return NULL in that case.
++ */
++static const char *skip_tree_prefix(const char *line, int llen)
+ {
+-	int nslash = p_value;
++	int nslash;
+ 	int i;
+ 
++	if (!p_value)
++		return (llen && line[0] == '/') ? NULL : line;
++
++	nslash = p_value;
+ 	for (i = 0; i < llen; i++) {
+ 		int ch = line[i];
+ 		if (ch == '/' && --nslash <= 0)
+-			return &line[i];
++			return (i == 0) ? NULL : &line[i + 1];
+ 	}
+ 	return NULL;
+ }
+@@ -1133,12 +1141,11 @@ static char *git_header_name(const char *line, int llen)
+ 		if (unquote_c_style(&first, line, &second))
+ 			goto free_and_fail1;
+ 
+-		/* advance to the first slash */
+-		cp = stop_at_slash(first.buf, first.len);
+-		/* we do not accept absolute paths */
+-		if (!cp || cp == first.buf)
++		/* strip the a/b prefix including trailing slash */
++		cp = skip_tree_prefix(first.buf, first.len);
++		if (!cp)
+ 			goto free_and_fail1;
+-		strbuf_remove(&first, 0, cp + 1 - first.buf);
++		strbuf_remove(&first, 0, cp - first.buf);
+ 
+ 		/*
+ 		 * second points at one past closing dq of name.
+@@ -1152,22 +1159,21 @@ static char *git_header_name(const char *line, int llen)
+ 		if (*second == '"') {
+ 			if (unquote_c_style(&sp, second, NULL))
+ 				goto free_and_fail1;
+-			cp = stop_at_slash(sp.buf, sp.len);
+-			if (!cp || cp == sp.buf)
++			cp = skip_tree_prefix(sp.buf, sp.len);
++			if (!cp)
+ 				goto free_and_fail1;
+ 			/* They must match, otherwise ignore */
+-			if (strcmp(cp + 1, first.buf))
++			if (strcmp(cp, first.buf))
+ 				goto free_and_fail1;
+ 			strbuf_release(&sp);
+ 			return strbuf_detach(&first, NULL);
+ 		}
+ 
+ 		/* unquoted second */
+-		cp = stop_at_slash(second, line + llen - second);
+-		if (!cp || cp == second)
++		cp = skip_tree_prefix(second, line + llen - second);
++		if (!cp)
+ 			goto free_and_fail1;
+-		cp++;
+-		if (line + llen - cp != first.len + 1 ||
++		if (line + llen - cp != first.len ||
+ 		    memcmp(first.buf, cp, first.len))
+ 			goto free_and_fail1;
+ 		return strbuf_detach(&first, NULL);
+@@ -1179,10 +1185,9 @@ static char *git_header_name(const char *line, int llen)
+ 	}
+ 
+ 	/* unquoted first name */
+-	name = stop_at_slash(line, llen);
+-	if (!name || name == line)
++	name = skip_tree_prefix(line, llen);
++	if (!name)
+ 		return NULL;
+-	name++;
+ 
+ 	/*
+ 	 * since the first name is unquoted, a dq if exists must be
+@@ -1196,10 +1201,9 @@ static char *git_header_name(const char *line, int llen)
+ 			if (unquote_c_style(&sp, second, NULL))
+ 				goto free_and_fail2;
+ 
+-			np = stop_at_slash(sp.buf, sp.len);
+-			if (!np || np == sp.buf)
++			np = skip_tree_prefix(sp.buf, sp.len);
++			if (!np)
+ 				goto free_and_fail2;
+-			np++;
+ 
+ 			len = sp.buf + sp.len - np;
+ 			if (len < second - name &&
+@@ -1231,13 +1235,14 @@ static char *git_header_name(const char *line, int llen)
+ 		case '\n':
+ 			return NULL;
+ 		case '\t': case ' ':
+-			second = stop_at_slash(name + len, line_len - len);
++			if (!name[len + 1])
++				return NULL;
++			second = skip_tree_prefix(name + len + 1,
++						  line_len - (len + 1));
+ 			if (!second)
+ 				return NULL;
+-			second++;
+-			if (second[len] == '\n' && !strncmp(name, second, len)) {
++			if (second[len] == '\n' && !strncmp(name, second, len))
+ 				return xmemdupz(name, len);
+-			}
+ 		}
+ 	}
+ }
