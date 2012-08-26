@@ -1,75 +1,91 @@
-From: "Philipp A. Hartmann" <pah@qo.cx>
-Subject: Re: [PATCH] contrib: GnomeKeyring support + generic helper implementation
-Date: Sun, 26 Aug 2012 20:16:44 +0200
-Message-ID: <503A680C.3090406@qo.cx>
-References: <1345741068-11004-1-git-send-email-pah@qo.cx> <7vfw7cyx4n.fsf@alter.siamese.dyndns.org> <20120824213342.GB16285@sigill.intra.peff.net> <7vzk5kx8so.fsf@alter.siamese.dyndns.org> <7vr4qtv94h.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: libgit2 status
+Date: Sun, 26 Aug 2012 11:28:12 -0700
+Message-ID: <7vharpv77n.fsf@alter.siamese.dyndns.org>
+References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, John Szakmeister <john@szakmeister.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 20:25:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: greened@obbligato.org, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Aug 26 20:28:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5hWY-0005h1-SE
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 20:25:27 +0200
+	id 1T5hZR-0006QB-Di
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 20:28:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815Ab2HZSZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Aug 2012 14:25:14 -0400
-Received: from mail.sorgh.de ([88.198.99.83]:57056 "EHLO mail.sorgh.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754629Ab2HZSZM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Aug 2012 14:25:12 -0400
-X-Greylist: delayed 502 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Aug 2012 14:25:11 EDT
-Received: from [172.16.42.5] (g230082099.adsl.alicedsl.de [92.230.82.99])
-	by mail.sorgh.de (Postfix) with ESMTPSA id 959CE2009E;
-	Sun, 26 Aug 2012 20:18:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.6esrpre) Gecko/20120817 Icedove/10.0.6
-In-Reply-To: <7vr4qtv94h.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.1
+	id S1754592Ab2HZS2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Aug 2012 14:28:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51481 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753088Ab2HZS2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2012 14:28:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CA2B8D79;
+	Sun, 26 Aug 2012 14:28:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZNmddhB8aXPg/TqOYIHVKGgDK9k=; b=GLz8fF
+	PIVj1/IFb16uI/QPhZ1Yq9GH/xF6NZNkLnGMGpkT0sGUtqQ7oc+ohAPv+2tdXyqV
+	VHkzpGMmCFjm4DWr7z7avzphyuylqFcfBeRdmxB3IIeiqZmOEyfytQ8zxen0dbh/
+	iU0bQmzpJNaxWuSmZAJWcGE66q5zR0YiLMw2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JD3/u8qQk4u0R/3kfBjY+iXfOKvYRKc1
+	ZEYBwOzv/PIB/RFBEg4DjoejjTFMdse956/AlV1RfiEWI0GZ3xaXXtW6A3qNrsUA
+	lcS4HU+b9FmAdPK1B7x2xAObcgItm0hwWvyj80BLGZwZT2DSN64LsiYc+c8olVWa
+	cT00we+hAf8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 324068D77;
+	Sun, 26 Aug 2012 14:28:15 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81D1D8D76; Sun, 26 Aug 2012
+ 14:28:14 -0400 (EDT)
+In-Reply-To: <5038A148.4020003@op5.se> (Andreas Ericsson's message of "Sat,
+ 25 Aug 2012 11:56:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CC645398-EFAB-11E1-BC2A-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204305>
 
-n 26/08/12 19:46, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Jeff King <peff@peff.net> writes:
->>
->>> However, the shared bits are simple enough that maybe that is not a
->>> concern. An interesting test would be to add a 5/4 porting Erik's win32
->>> credential helper, since that is the platform least like our other ones.
->>
->> Very true.
+Andreas Ericsson <ae@op5.se> writes:
 
-In principle, I agree that with the current set of helper
-implementations, the generic infrastructure may not yet pay off.
+> Politically, I'm not sure how keen the git community is on handing
+> over control to the core stuff of git to a commercial entity, but it
+> doesn't seem to be a dying project, so I'd say go ahead and do it.
 
->>> So I am OK with this series, but I am also OK with leaving it at patch
->>> 1, and just keeping the implementations separate.
->>
->> Amen.
-> 
-> Just to make sure we do not leave loose ends, could somebody try to
-> see if the new "generic helper" infrastructure is useful to shrink
-> Erik's win32 credential helper implementation?
+I do not think commercial-ness of any entity comes into the picture.
 
-I'll try to give it a shot now, although I won't be able to test it.
-I'll send the results as a single 5/4 addition to the previous series.
+The only three things that matter are license compatibility (I think
+libgit2 licensed under GPLv2 + linkage exception is doing just fine
+in that department), maturity and quality of it (it is in early
+development phase), and the openness of the development process (it
+could do better by finding ways to better interact with the
+mainstream git development discussion that happens here in the
+longer term).
 
-> If we see much code reduction and improved clarity, this refactoring
-> may worth keeping.  Otherwise it may be sufficient to drop the later
-> ones in the series.  Without knowing which, it is hard to decide.
+And the last one should really be a "longer term" item.  It is more
+important for its codebase to get mature and robust, and that can
+only happen by various projects and products (e.g. GitHub for Mac)
+using it to improve it.  I do not think "subtree" (or anything in
+contrib/ for that matter) is part of "the core stuff of git", and do
+not see a problem; such a move may help both subtree and libgit2.
 
-If we decide that the generic implementation is useful, I'll then resend
-the reordered series adding the generic helper first, then refactoring
-the existing ones and adding the new one for GnomeKeyring last.
+Over a much longer timeperiod, I wouldn't be surprised if some "core
+stuff" gets reimplemented on top of libgit2 and distributed as part
+of the git-core.
 
-Thanks,
-  Philipp
+There will be substantial integration and logistics hassles ahead of
+us before that can happen, though.  E.g.  we could point at libgit2
+as our submodule, but that is not the only way to make git depend on
+libgit2; it could just be a Build-Depends like we depend on libz.
+Looking at the build dependency of libgit2 itself, I do not think
+tighter integration of the libgit2 itself into the git-core is not
+likely to happen very soon, and also is not necessarily a good thing
+to do.
