@@ -1,137 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git no longer prompting for password
-Date: Sun, 26 Aug 2012 06:13:41 -0400
-Message-ID: <20120826101341.GA12566@sigill.intra.peff.net>
-References: <5037E1D0.6030900@gmail.com>
- <20120824212501.GA16285@sigill.intra.peff.net>
- <5038E781.1090008@gmail.com>
- <20120825203904.GA10470@sigill.intra.peff.net>
- <5039F327.9010003@gmail.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: misleading diff-hunk header
+Date: Sun, 26 Aug 2012 12:43:35 +0200
+Message-ID: <5039FDD7.2090800@gmail.com>
+References: <503385D0.5070605@tim.thechases.com> <87a9xoi82i.fsf@thomas.inf.ethz.ch> <5033AC55.8080405@tim.thechases.com> <7vfw7gdtfg.fsf@alter.siamese.dyndns.org> <20120824142908.GA15162@sigill.intra.peff.net> <20120824164415.GA23262@sigill.intra.peff.net> <50381F52.9030007@tim.thechases.com> <7va9xjy4or.fsf@alter.siamese.dyndns.org> <5038CB66.1040006@tim.thechases.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Iain Paton <ipaton0@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 12:14:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Tim Chase <git@tim.thechases.com>
+X-From: git-owner@vger.kernel.org Sun Aug 26 12:43:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5ZrZ-0004MQ-EH
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 12:14:37 +0200
+	id 1T5aJv-00031p-G9
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 12:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736Ab2HZKNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Aug 2012 06:13:49 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48732 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753652Ab2HZKNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2012 06:13:48 -0400
-Received: (qmail 18129 invoked by uid 107); 26 Aug 2012 10:14:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 26 Aug 2012 06:14:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Aug 2012 06:13:41 -0400
-Content-Disposition: inline
-In-Reply-To: <5039F327.9010003@gmail.com>
+	id S1753868Ab2HZKnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Aug 2012 06:43:47 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:35685 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753436Ab2HZKnq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2012 06:43:46 -0400
+Received: by bkwj10 with SMTP id j10so948313bkw.19
+        for <git@vger.kernel.org>; Sun, 26 Aug 2012 03:43:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=a+GyWBZ8C4uyPYda7cuEpj0tENiiwFSLQhjR806A5zY=;
+        b=uzaC5fOkvwzUAULafKBAtZ92vbSaIi+uEM3ecQaTZdnsvXVkcQ1NAzaUPpqbS+UNPI
+         OKdQmi2Bs5AWIT/L1YxDp62BRrSYBqeilztSaDUGCi3NmxyHq8e/uXEsdjO/LGJaPk0O
+         DUHGT1zxB/cRL9lUR71HuXRggxrcVSKFRqAipplcH6HdqNedba26viRdXSoSZRxbVN8H
+         XFEjtjlDDK7gX2bmHJKUlG5pMWTNYqgZX51mjOJHri2XvRT9v4x8F7pFNmtYgk73J830
+         SF/2enZZDJ0coF2Gzd32rvNmsAwg01f4m0AUInBdH51C71oBCpqNOxq3x6gCTohixsc/
+         y+rg==
+Received: by 10.204.4.130 with SMTP id 2mr3029212bkr.37.1345977824707;
+        Sun, 26 Aug 2012 03:43:44 -0700 (PDT)
+Received: from [192.168.178.21] (host166-38-dynamic.56-82-r.retail.telecomitalia.it. [82.56.38.166])
+        by mx.google.com with ESMTPS id gq2sm8671216bkc.13.2012.08.26.03.43.43
+        (version=SSLv3 cipher=OTHER);
+        Sun, 26 Aug 2012 03:43:44 -0700 (PDT)
+In-Reply-To: <5038CB66.1040006@tim.thechases.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204297>
 
-On Sun, Aug 26, 2012 at 10:57:59AM +0100, Iain Paton wrote:
-
-> > The odd URL is because we are probing to see if the server even supports
-> > smart-http. But note that it does not match your regex above, which
-> > requires "/git-receive-pack". It looks like that is pulled straight from
-> > the git-http-backend manpage. I think the change in v1.7.8 broke people
-> > using that configuration.
+On 08/25/2012 02:56 PM, Tim Chase wrote:
+> On 08/24/12 23:29, Junio C Hamano wrote:
+>> Tim Chase <git@tim.thechases.com> writes:
+>>> If the documented purpose of "diff -p" (and by proxy
+>>> diff.{type}.xfuncname) is to show the name of the *function*
+>>> containing the changed lines,....
+>>
+>> Yeah, the documentation is misleading, but I do not offhand think of
+>> a better phrasing. Perhaps you could send in a patch to improve it.
+>>
+>> How does GNU manual explain the option?
 > 
-> Yes, it was lifted straight out of the manpage, albeit a couple of years 
-> ago now and there have been additions to the manpage since then. 
-> I did check, and the basic config is identical in the current manpage.
+> Tersely. :-)
 > 
-> I can't be the only one using a config that's based on the example in 
-> the manpage surely ?  So I'm surprised this hasn't come up previously.
+>        -p  --show-c-function
+>               Show which C function each change is in.
+>
+That's in the manpage, which is basically just a copy of the output from
+"diff --help".  In the texinfo manual (which is the real documentation),
+there are additional explanations, saying, among other things:
 
-Yeah, I'm surprised it took this long to come up, too. Perhaps most
-people just do anonymous http, and then rely on ssh for pushing to
-achieve the same effect. Or maybe my analysis of the problem is wrong.
-:)
+    To show in which functions differences occur for C and similar languages,
+    you can use the --show-c-function (-p) option. This option automatically
+    defaults to the context output format (see Context Format), with the
+    default number of lines of context. You can override that number with
+    -C lines elsewhere in the command line. You can override both the format
+    and the number with -U lines elsewhere in the command line.
+    The -p option is equivalent to -F '^[[:alpha:]$_]' if the unified format
+    is specified, otherwise -c -F '^[[:alpha:]$_]' (see Specified Headings).
+    GNU diff provides this option for the sake of convenience.
+    ...
+    The --show-function-line (-F) option finds the nearest unchanged line
+    that precedes each hunk of differences and matches the given regular
+    expression.
 
-I'm preparing some patches to the test suite that will demonstrate the
-problem (we test dumb-http auth, but we don't do any smart-http auth at
-all in the test suite), and then a fix on top to let us prompt for the
-password in this instance. I think we should also update the
-documentation, but the existing advice has been given long enough that
-people are going to use it for some time, and I consider your issue to
-be a regression in v1.7.8 that should be fixed.
+You can find more information in the on-line documentation:
 
-> So after some head scratching trying to work out how to do the equivalent of 
-> LocationMatch but on the query string I came up with the following:
-> 
-> ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
-> 
-> <Directory /usr/libexec/git-core>
->         Require ip 10.44.0.0/16
->         <If "%{THE_REQUEST} =~ /git-receive-pack/">
->                 AuthType Basic
->                 AuthUserFile /data/git/htpasswd
->                 AuthGroupfile /data/git/groups
->                 AuthName "Git Access"
-> 
->                 Require group committers
->         </If>
-> </Directory>
-> 
-> and I've removed the LocationMatch section completely.
+  <http://www.gnu.org/software/diffutils/manual/diffutils.html>
 
-Yeah, I think that will work. It feels a little weird and hacky. E.g.,
-what if you had a repo named git-receive-pack? Unlikely, of course, but
-I'd want the config we advertise in the manpage to be as robust as
-possible.
-
-I don't know enough about Apache to know off-hand if there is a cleaner
-way. I'll investigate a bit more before doing my documentation patch.
-
-> So for accesses to git-http-backend I require auth if anything in the request 
-> includes git-receive-pack and that causes a prompt for the username/password 
-> as required, while at the same time it still allows anonymous pull.
-> 
-> It appears that the clone operation uses
-> 
-> GET /git/test.git/info/refs?service=git-upload-pack HTTP/1.1
-> 
-> to probe for smart-http ?  So this would be ok ?
-
-Right. Anything invoking receive-pack is always a push.
-
-> I'm not sure this is ideal, I don't really know enough about the protocol to know 
-> if I'll see git-receive-pack elsewhere. Possibly if someone includes it in the 
-> name of a repo it'll blow up in my face.
-
-Yep, exactly. That should be the only place, though, I think (branch
-names, for example, are never part of the URL).
-
-> I can always change it to match only on QUERY_STRING and put the LocationMatch 
-> back in if that happens.
-
-I think that would be cleaner. It would be even nicer if you could
-really just match "service=" as a query parameter, but I don't know that
-apache parses that at all. I also don't know if Apache does any
-canonicalization of the QUERY_STRING. When matching, you'd want to make
-sure there is no way of a client sneaking in a parameter that git would
-understand to mean a push, but that your pattern would not notice (so,
-e.g., just matching "git-receive-pack$" would not be sufficient, as I
-could request "?service=git-receive-pack&fooled_you=true". I don't
-recall whether git rejects nonsense like that itself.
-
-> If that's all that's required, I'm fine with an easy change to httpd.conf
-> 
-> Thanks for the help Jeff.
-
-No problem. I'll probably be a day or two on the patches, as the http
-tests are in need of some refactoring before adding more tests. But in
-the meantime, I think your config change is a sane work-around.
-
--Peff
+HTH,
+  Stefano
