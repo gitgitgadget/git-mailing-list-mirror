@@ -1,142 +1,95 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Re*: mergetool: support --tool-help option like difftool does
-Date: Sun, 26 Aug 2012 20:38:22 +0200
-Message-ID: <503A6D1E.5070909@web.de>
-References: <500CF8CE.90906@gmail.com> <500CF9D2.30102@gmail.com> <500CFAE1.3070304@gmail.com> <7vr4s2mnir.fsf@alter.siamese.dyndns.org> <7vipdemm0a.fsf_-_@alter.siamese.dyndns.org> <7vzk5m41gk.fsf_-_@alter.siamese.dyndns.org> <CAJDDKr42YtfcpARQx6Vx8-Uy7KF3yEoGOQ0VzPKsWQA_hG=MgA@mail.gmail.com> <7vvcg94if1.fsf@alter.siamese.dyndns.org> <CAJDDKr6zk3ztEXeX8=vn3apZ3k1DxdCAu2ZDyqtNnb=Cb5ZUvQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] doc: "git checkout -b/-B/--orphan" always takes a branch
+ name
+Date: Sun, 26 Aug 2012 11:42:19 -0700
+Message-ID: <7v4nnpv6k4.fsf@alter.siamese.dyndns.org>
+References: <CAHtLG6QgnvG6eYEChojY_jB25QWqxis6brbst2ff5FixFLAXAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 26 20:39:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 26 20:42:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5hkN-0000tv-U3
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 20:39:44 +0200
+	id 1T5hn2-0001fu-Tr
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Aug 2012 20:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504Ab2HZSja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Aug 2012 14:39:30 -0400
-Received: from mout.web.de ([212.227.17.12]:52261 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155Ab2HZSix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2012 14:38:53 -0400
-Received: from [192.168.178.41] ([91.3.164.193]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LxOHm-1Tgb7u3oYE-016P3e; Sun, 26 Aug 2012 20:38:30
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <CAJDDKr6zk3ztEXeX8=vn3apZ3k1DxdCAu2ZDyqtNnb=Cb5ZUvQ@mail.gmail.com>
-X-Provags-ID: V02:K0:Cld5UPNhcw+1Ptl2PbSP+F1Kia/kWsVToGBL3fYwMum
- UNfY+NsJ+I9eHml+WXqMXXrX53LIU+YlQQpxJ1tHlM4i38aQdx
- odsRTxYTuiaGWZw/iudPFC8mBd6/X7HfmxrhYg8PQhWtIFxEWR
- GW9wmGcitmuJ4ad45wo8CfYprewI7DDvy8KmnfyLd4qSiBx+HR
- 6q2Zsorvh1d8BGRu8KE2A==
+	id S1754860Ab2HZSmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Aug 2012 14:42:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56523 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754230Ab2HZSmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2012 14:42:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 693FD8FB4;
+	Sun, 26 Aug 2012 14:42:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3nY05BQiMDFQGFYmEJBK7GVGODQ=; b=LPhXv3
+	gCLUfR2lC7tC0Ut8bRP6GdOM0t+n6cWTMqZb6buyUkBqED7RHMN+px6XsCcUQsPC
+	OZbvx7Kl2aeewOVKmVfP31wx89MUVXMclCo2elO7biWtDyZ9AINZssMTZEHETEWG
+	j+J92GtNE0f/EIrGz/BD2yIr+KC2ufpKCpKks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F8RENgGTRok/50vWIaT9+c/QHG1Lzfxc
+	89qGFMOGEw5rkeauFujXrIPNaCt3x4AZJLq7VFYxEupP49VD6A+Q6/vQ7/NvLQr3
+	VHkm0y8iSBYzQBTJYpzVli0wefTYG3fYGJXsFKV2dV38NXUjMQ9zGg6yW2HfuPyI
+	/OJ2GSRmQPk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 575A98FB3;
+	Sun, 26 Aug 2012 14:42:21 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA2FB8FB2; Sun, 26 Aug 2012
+ 14:42:20 -0400 (EDT)
+In-Reply-To: <CAHtLG6QgnvG6eYEChojY_jB25QWqxis6brbst2ff5FixFLAXAw@mail.gmail.com>
+ (=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Sun, 26 Aug 2012 15:27:26
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C4BEB474-EFAD-11E1-8D89-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204309>
 
-Am 24.08.2012 10:31, schrieb David Aguilar:
-> On Thu, Aug 23, 2012 at 10:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> David Aguilar <davvid@gmail.com> writes:
->>> Would the ability to resolve the various merge situations using
->>> the command-line be a wanted addition?
->>>
->>> This would let a submodule or deleted/modified encountering
->>> user do something like:
->>>
->>> $ git mergetool --theirs -- submodule
->>>
->>> ...and not have to remember the various git commands that it runs.
->>
->> Does it have to run various git commands?  For a normal path, all it
->> needs to do is "git checkout --theirs $path", no?
->>
->> What does it mean to resolve a conflicted merge of a gitlink to take
->> "theirs"?  We obviously would want to point the resolved gitlink at
->> the submodule commit their side wants in the resulting index but what,
->> if any, should we do to the submodule itself?
->>
->> Stepping back a bit, if there is no conflict, and as a result of a
->> clean merge (this applies to the case where you check out another
->> branch that has different commit at the submodule path), if gitlink
->> changed to point at a different commit in the submodule, what should
->> happen?
->>
->> If you start from a clean working tree, with your gitlink pointing
->> at the commit that matches HEAD in the submodule, and if the working
->> tree of the submodule does not have any local modification, it may
->> be ideal to check out the new commit in the submodule (are there
->> cases where "git checkout other_branch" in the superproject does not
->> want to touch the submodule working tree?).
->>
->> There are cases where it is not possible; checking out the new
->> commit in the submodule working tree may not succeed due to local
->> modifications.  But is that kind of complication limited to the
->> merge resolution case?  Isn't it shared with normal "switching
->> branches" case as well?
->>
->> If so, it could be that your "git mergetool --theirs -- submodule"
->> is working around a wrong problem, and the right solution may be to
->> make "git checkout --theirs -- $path" to always do an appropriate
->> thing regardless of what kind of object $path is, no?
-> 
-> True.
+While the synopsis section makes it clear that the new branch name
+is the parameter to these flags, the option description did not.
 
-I agree.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-checkout.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> Admittedly, I'm not a heavy submodule user myself so I
-> tried crafting the directory vs submodule conflict to see
-> what the usability is like.
-> 
-> checkout --theirs and --ours could learn a few tricks.
-
-Me thinks that after I successfully taught checkout to properly
-recurse into submodule work trees too it should know all those
-tricks. In my current version it can handle directory/submodule
-conversions in both directions, this should be sufficient to
-make "checkout --theirs/--ours" work properly. Note to self: add
-tests for that.
-
-> When trying to choose the directory in that situation
-> I had to  had to "git rm --cached" the submodule path
-> so that git would recognize that there was no longer a conflict.
-> 
-> That makes sense to me because I was following along by
-> reading the mergetool code, but I don't think most users
-> would know to "git rm" a path which they intend to keep.
-
-True. But a submodule recursing checkout would do the right thing
-here too.
-
-> Afterwards, the .git file is left behind, which could cause
-> problems elsewhere since we really don't want a .git file
-> in that situation.
-
-Hmm, either you remove all the files tracked in the submodule
-together with the gitfile or you'll possibly have former submodule
-files lying around there too. Recursive checkout will do all that
-for you.
-
->  I'm not even sure what to do about the
-> .gitmodules file either.
-
-Maybe we should issue a warning when the .gitmodules file is not
-consistent with the [non]existence of a submodule in the work tree?
-
-> That said, this really isn't an issue, per say.
-> I first poked at it because I noticed that mergetool
-> still needed stdin for some things.
-> 
-> It's certainly an edge case, and perhaps this just shows
-> that mergetool really is the right porcelain for the job
-> when a user runs into these types of conflicts
-> (the stdin thing really isn't an issue).
-
-It looks to me as if the submodule/directory conflict can be handled
-by a recursive checkout without having to add something to mergetool.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index c0a96e6..e3270cd 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -84,11 +84,11 @@ entries; instead, unmerged entries are ignored.
+ 	When checking out paths from the index, check out stage #2
+ 	('ours') or #3 ('theirs') for unmerged paths.
+ 
+--b::
++-b <new_branch>::
+ 	Create a new branch named <new_branch> and start it at
+ 	<start_point>; see linkgit:git-branch[1] for details.
+ 
+--B::
++-B <new_branch>::
+ 	Creates the branch <new_branch> and start it at <start_point>;
+ 	if it already exists, then reset it to <start_point>. This is
+ 	equivalent to running "git branch" with "-f"; see
+@@ -124,7 +124,7 @@ explicitly give a name with '-b' in such a case.
+ 	<commit> is not a branch name.  See the "DETACHED HEAD" section
+ 	below for details.
+ 
+---orphan::
++--orphan <new_branch>::
+ 	Create a new 'orphan' branch, named <new_branch>, started from
+ 	<start_point> and switch to it.  The first commit made on this
+ 	new branch will have no parents and it will be the root of a new
+-- 
+1.7.12.252.gef4e272
