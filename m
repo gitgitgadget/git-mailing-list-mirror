@@ -1,74 +1,84 @@
-From: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
-Subject: Inverting the --committer option to git-log with v1.7.5.4
-Date: Sun, 26 Aug 2012 18:30:40 -0400
-Message-ID: <CAPRhCbuOsiHNOHJUTN8Na9qEqoTAbCb-G41WFscjYhDppKOLGg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Inverting the --committer option to git-log with v1.7.5.4
+Date: Sun, 26 Aug 2012 15:43:06 -0700
+Message-ID: <7vr4qttgud.fsf@alter.siamese.dyndns.org>
 References: <CAPRhCbtfx+kA8BbPwSYcYfvg5S0b6yWP5TqJHD_LCN-CMFw75w@mail.gmail.com>
+ <CAPRhCbuOsiHNOHJUTN8Na9qEqoTAbCb-G41WFscjYhDppKOLGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 00:30:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Todd A. Jacobs" <nospam+listmail@codegnome.org>
+X-From: git-owner@vger.kernel.org Mon Aug 27 00:43:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5lM0-0004VZ-E1
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 00:30:48 +0200
+	id 1T5lY7-0007jl-MN
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 00:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681Ab2HZWam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Aug 2012 18:30:42 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37882 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753007Ab2HZWal (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Aug 2012 18:30:41 -0400
-Received: by ialo24 with SMTP id o24so6924549ial.19
-        for <git@vger.kernel.org>; Sun, 26 Aug 2012 15:30:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:x-originating-ip:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=vWkdi1Y7aIJZdGWWaJWtpteMjiuOPuvx9Juwol6zaNY=;
-        b=hogz1n7GMPGUDulZ3o1OsrpnM4lRltvrkvwriAFRRI76noszWbHGjmBPr1ZAKAoKKz
-         CSwzFFhnFYCXCTEGy6Q1FPHojKw/tnzf38sK2JD28Rdxugs1q18s0SPmAiCpf/8l7grH
-         eVh+uSKfcTK4CRU6E9Iwd4lx4kPAJKT3GFfxRGMGaDsVbUhs8OFUJ4V4hcggtwHTQ353
-         frlRvbd4mdLJ8qTLVAGeg1RsB5hic7uBT2oxwjYkyPtp88xqicCkVY3d4k6BGx6RP/oh
-         rzi9uieq4XOvqQQU+BSnhqi8UMHjAQ4bcdEKrrt4Wd/VNb6lmTqMCAGJ9EqdqaYpn3Ez
-         1AKw==
-Received: by 10.50.190.170 with SMTP id gr10mr8366998igc.29.1346020240745;
- Sun, 26 Aug 2012 15:30:40 -0700 (PDT)
-Received: by 10.231.6.90 with HTTP; Sun, 26 Aug 2012 15:30:40 -0700 (PDT)
-X-Originating-IP: [74.107.73.157]
-In-Reply-To: <CAPRhCbtfx+kA8BbPwSYcYfvg5S0b6yWP5TqJHD_LCN-CMFw75w@mail.gmail.com>
-X-Google-Sender-Auth: DuoTVSCb5-vjz7nQFv0623RYaJU
-X-Gm-Message-State: ALoCoQkBJGYOEmFDQP1pxQRAv7EBFhvaEeEGMDDJN2O3JM9aBPlaoBQWONcjZXVpHtQPojCJ1oZD
+	id S1753321Ab2HZWnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Aug 2012 18:43:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48730 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752198Ab2HZWnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Aug 2012 18:43:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F06B98BC;
+	Sun, 26 Aug 2012 18:43:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kSUM3G4Q43gBosnr/s7/KQBLp14=; b=YEpUhB
+	g4WgkYlsnG0FtTWDOQQEyAa7f4jBNUYqWeHVYdfi9PN7WRm9fw57J0L+Is4h+0L7
+	WZNU2HrEUSQND60nMIK6KSLbAV3+JLPoDoAU5nfoj7K4Dy7ovPyXAio56JUpsXwe
+	qfjkp12yfbp9FOFbDkWTTS9+/ecyHevNyIwLE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V+ji/oRp61PeUGJAwTX0Kkqc+Oqo0dFy
+	/N3NRXJOD3OxlWHAOXO1XKsIN86VsXz3X87ncaSyEGltTgBXRdWLXNrgA322u8sZ
+	hm9IUTROCZnL/KYRO6FFMsiY8Thcnc2QRPDXtZlWUpQNuhi1Kzk23dq0Ois08cwQ
+	3/dDsJ9OhIk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C5CB98BA;
+	Sun, 26 Aug 2012 18:43:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F37E598B9; Sun, 26 Aug 2012
+ 18:43:07 -0400 (EDT)
+In-Reply-To: <CAPRhCbuOsiHNOHJUTN8Na9qEqoTAbCb-G41WFscjYhDppKOLGg@mail.gmail.com> (Todd A.
+ Jacobs's message of "Sun, 26 Aug 2012 18:30:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6802064C-EFCF-11E1-B03D-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204316>
 
-I wanted to search a repository for all commits that were *not*
-committed by a particular person. While I eventually managed to build
-a regular expression that worked for my limited use case, it seems
-like there ought to be a more sensible way to find the data I'm
-looking for.
+"Todd A. Jacobs" <nospam+listmail@codegnome.org> writes:
 
-As an example, this didn't work:
+> Is there currently a better way to request logs for "everyone but
+> committer x" in Git? If not, is this a feature that someone who
+> understands the Git source might find useful enough to add in?
 
-    git log --format=fuller --not --committer="Foo Bar"
+No, there is not.
 
-Apparently, the --not flag doesn't invert the grep for committer; it
-only inverts the revision specifiers. It seems like there should be
-something that works like grep's --invert-match option, but I couldn't
-find it.
+I wouldn't comment on the potential usefulness of such a feature,
+but I do not think there is anything fundamentally wrong to enhance
+the limited form of "--grep/--author/--committer" the "log" family
+of commands currently support to a full "grep boolean expressions"
+that is supported by "git grep" command to let you say something
+like:
 
-On the other hand, this will work, but is painful and error-prone to
-build if you have a lot of committers:
+	git log --author=rezrov --grep=nitfol \
+        	--and \( --committer=xyzzy --or	--committer=frotz \) \
+		--all --not master
 
-    # Assuming the address is foo.bar@example.com
-    git log --format=fuller --committer='[^r]@'
+to grab commits from all topics that are not yet merged to 'master',
+authored by rezrov and talks about nitfol, that are committed either
+by xyzzy or frotz.
 
-Is there currently a better way to request logs for "everyone but
-committer x" in Git? If not, is this a feature that someone who
-understands the Git source might find useful enough to add in?
+The command line syntax to integrate the "grep boolean expressions"
+needs to be carefully thought out, as "--not" on the "log" family of
+commands is already used to mean something entirely different (it is
+a revision range operator), though.
