@@ -1,62 +1,49 @@
-From: Aaron Gray <aaronngray.lists@gmail.com>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
 Subject: Re: exporting a .git file ?
-Date: Mon, 27 Aug 2012 15:48:12 +0100
-Message-ID: <CANkmNDe10dtgtJ2sTJvS_75iY3v75_GCh219+dEOYGBurLaT2g@mail.gmail.com>
+Date: Mon, 27 Aug 2012 18:53:16 +0400
+Message-ID: <20120827185316.a18222bf90216d87dea9f23a@domain007.com>
 References: <CANkmNDc7VP4QiocxuB7JMuQyZy5nDT=ertow_ib2Hri_=XRMOA@mail.gmail.com>
- <CAPBPrnu1FNbWP+k6Nq5NudBFYZu9njjbcL+oL7m-z5sajuXpBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 16:48:40 2012
+To: Aaron Gray <aaronngray.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 16:53:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T60cK-0003a7-4M
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 16:48:40 +0200
+	id 1T60gx-0006Kg-1p
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 16:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591Ab2H0Ose (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Aug 2012 10:48:34 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52774 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752169Ab2H0Osd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2012 10:48:33 -0400
-Received: by dady13 with SMTP id y13so2591445dad.19
-        for <git@vger.kernel.org>; Mon, 27 Aug 2012 07:48:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5VQuQnxcs8FfEOa1t9pNa3VBeLoVtXOjode1xFPEXCI=;
-        b=uDmy39UmBkrWTO8lI2FxTphQc9ce4uwjjjZk2I3t/l0sm0tqgLjmQBD+EO9O9Rk1MO
-         UBrymXoZMctcLPwVe0OUigtCd9V0+HsMq2rJQ41XsE/pabAmQ7Pz0kOk121t62O7q9oQ
-         HgWBC6MEBtigt0r0kPt+RviD8J8KDvz8+8fi/AavgSaLpFyJ59IQyaWW++VnMRzdL+BV
-         dbwSF7vD7oW5oiGb4y6Jwj1TrsfLaJ0YgfJw2JNevK3EvJgqaUDz2Hzgr1ys3LlnWr26
-         B1kX271LLxKMZOdHr+9k6GGd6B69KGPh16yC9XjW0JMGwEzE7Eac/qsQXx6ZKtYIa4OE
-         fDjw==
-Received: by 10.68.129.38 with SMTP id nt6mr35432814pbb.76.1346078913259; Mon,
- 27 Aug 2012 07:48:33 -0700 (PDT)
-Received: by 10.66.85.233 with HTTP; Mon, 27 Aug 2012 07:48:12 -0700 (PDT)
-In-Reply-To: <CAPBPrnu1FNbWP+k6Nq5NudBFYZu9njjbcL+oL7m-z5sajuXpBg@mail.gmail.com>
+	id S1752597Ab2H0OxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 10:53:21 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:41595 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035Ab2H0OxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 10:53:20 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q7RErGU9014145;
+	Mon, 27 Aug 2012 18:53:17 +0400
+In-Reply-To: <CANkmNDc7VP4QiocxuB7JMuQyZy5nDT=ertow_ib2Hri_=XRMOA@mail.gmail.com>
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204348>
 
-On 27 August 2012 15:45, Dan Johnson <computerdruid@gmail.com> wrote:
-> On Mon, Aug 27, 2012 at 10:32 AM, Aaron Gray <aaronngray.lists@gmail.com> wrote:
->> Hi,
->>
->> Is there anyway to get my git repository as a single file ?
->
-> You're probably looking for the git bundle command (see git bundle
-> --help), but it's possible you might just want to use tar.
->
-> Hope that helps,
+On Mon, 27 Aug 2012 15:32:40 +0100
+Aaron Gray <aaronngray.lists@gmail.com> wrote:
 
-Great thanks Dan, comes in under 2 megs, thats great.
+> Is there anyway to get my git repository as a single file ?
+Depends on what you really need.
 
-Aaron
+If you need to export the repository *history* of one or more
+references (branches or tags), use `git bundle` to create a
+specially-formatted file which can be imported using Git on another
+machine.
+
+If you need to just export the snapshot of the files maintained in the
+repository at the specified commit, use `git export`.
