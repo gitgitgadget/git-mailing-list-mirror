@@ -1,102 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git checkout -t -B
-Date: Mon, 27 Aug 2012 10:03:39 -0700
-Message-ID: <7vk3wks1w4.fsf@alter.siamese.dyndns.org>
-References: <CAHtLG6QgnvG6eYEChojY_jB25QWqxis6brbst2ff5FixFLAXAw@mail.gmail.com>
- <7v8vd1v6q2.fsf@alter.siamese.dyndns.org>
- <CACsJy8A=GooUesw0hJ7AiDO7M3v1Ybbox8+rwWJfn6urJQUUFw@mail.gmail.com>
+Subject: Re: libgit2 status
+Date: Mon, 27 Aug 2012 10:10:42 -0700
+Message-ID: <7vfw78s1kd.fsf@alter.siamese.dyndns.org>
+References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
+ <7vharpv77n.fsf@alter.siamese.dyndns.org>
+ <nnglih0jotj.fsf@transit.us.cray.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 19:03:57 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, <greened@obbligato.org>,
+	<git@vger.kernel.org>
+To: <dag@cray.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 19:10:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T62j7-0005UO-Me
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 19:03:50 +0200
+	id 1T62pw-0001Vo-9y
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 19:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753546Ab2H0RDn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 13:03:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46161 "EHLO
+	id S1753688Ab2H0RKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 13:10:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49191 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753444Ab2H0RDm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 13:03:42 -0400
+	id S1753613Ab2H0RKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 13:10:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FC7369E6;
-	Mon, 27 Aug 2012 13:03:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DB006BE6;
+	Mon, 27 Aug 2012 13:10:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AxR6th0lfSNu
-	NwaJJIMSm3sQkHg=; b=GgvDwWXKcDYKd+UXGCCG6ghkf05/lxhPK+wZXMcGurlz
-	BFnAW+nnEdtnv7O8VeGzB+NWASNzrYwY3N3DHgVzDVRDhTt/R3jFjJbe0oJQZM8i
-	TD13u816BS1ZLRGb34DXuA0CN5HE7roWf9SYFQinCAdLilyDte8OjiVhDhpBkAc=
+	:content-type; s=sasl; bh=NjZ3qLP8fo26orQK8YvPdRHNnmg=; b=UoQzSA
+	PUzpGnXZVydxf3zHkCyktJnPuwxQpcxFG3ybfBFNTJ8hP6s0jD+Rwyeg9XirkOmQ
+	Al1APadT5lx9uv4S5Hsts+QALm8TVl62M6X2atbTt5YcCk83nODsLLofDKQ0YSTg
+	jU0BFj3ydShBq+pTxZQxF9DwV9GK9PAncAtq8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KafEUy
-	mOawff2E1BTHeCiQcQmNgRAzQJNogy0t8XWXopfhotV3uZj3MZgKEzZ+BHRozXJr
-	bdyMdDNCr0iF9ZihncLlmRPIFF7wMURwbBKu/4gFTHsN8K0nzdIVtcoBQPNqU0VA
-	vNYtDRiRjiWxru4vW4ZSY57F6piFf0xuTR3b4=
+	:content-type; q=dns; s=sasl; b=uSBlM4qL4qQxkbj6ReOK00xd4HBS4VYB
+	g6i6KI/1EO0t0IuMp0KExHAIF8+MJnbpFhEyJOdlT5AyFIWIw9PvMrqztaL0DSC4
+	MNs19xrnlC3rFCkHVBLbXyAuYbWsHOVhUPT12p1t9av+AFMDOzU8qP5lknPSLfAx
+	5sqQJJBFysI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D1E669E5;
-	Mon, 27 Aug 2012 13:03:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A8316BE5;
+	Mon, 27 Aug 2012 13:10:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6DE869E4; Mon, 27 Aug 2012
- 13:03:40 -0400 (EDT)
-In-Reply-To: <CACsJy8A=GooUesw0hJ7AiDO7M3v1Ybbox8+rwWJfn6urJQUUFw@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 27 Aug 2012 19:20:28 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD4286BE3; Mon, 27 Aug 2012
+ 13:10:43 -0400 (EDT)
+In-Reply-To: <nnglih0jotj.fsf@transit.us.cray.com> (dag@cray.com's message of
+ "Mon, 27 Aug 2012 11:13:12 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 26AC3718-F069-11E1-AA41-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 22D0EAD4-F06A-11E1-BEA0-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204358>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+<dag@cray.com> writes:
 
-> On Mon, Aug 27, 2012 at 1:38 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
->>
->>> git checkout -t -B origin/abcde
->>> works
->>>
->>> but
->>> git checkout -B -t origin/abcde
->>> does not.
->>>
->>> Could you document the order of parameters or fix the behaviour?
->>
->> It is crystal clear that -b/-B/--orphan must be followed by the name
->> of the branch you are creating from the SYNOPSIS section of the
->> documentation.
+> I am hoping to move git-subtree into core once it performs a little
+> better and I've fixed a couple of bugs.  Will basing it on libgit2 delay
+> that process significantly?  Six months delay is no problem.  2 years
+> would be problematic.
 >
-> Yet it's not very clear from the error message:
->
->     fatal: git checkout: updating paths is incompatible with switchin=
-g branches.
->     Did you intend to checkout 'origin/abcde' which can not be
-> resolved as commit?
->
-> I wonder if we should reject -t as a value of -[Bb] by adding new
-> parseopt flag to reject values starting with '-'.
+> I would be happy to be a guinea pig for libgit2 in order to improve it,
+> but I don't want to significantly impact git-subtree's move to core.
+> I'll have to figure out the right balance there given feedback.
 
-You should be able to cope with other invalid branch names in the
-same codepath, but your approach would not help at all if the user
-said "git checkout -B q..f origin/abcde".  Futzing with parseopt is
-not a reasonable answer to this one.
-
-Ideally you would want
-
-	fatal: "-t" is not an acceptable name for a branch
-
-in this case; if it is cumbersome to arrange, at the very least,=20
-
-	updating paths is incompatible with checking out the branch "-t".
-
-would be clearer.
+I expect it will take some time for libgit2 to allow our Makefile to
+start saying "LDFLAGS += -libgit2"; it will need to become as stable
+and widespread as other libraries we depend on, e.g. -lz and -lcurl.
