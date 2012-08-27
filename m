@@ -1,88 +1,96 @@
-From: Oswald Buddenhagen <ossi@kde.org>
-Subject: Re: Bringing a bit more sanity to =?utf-8?b?JEdJVF9ESVIvb2JqZWN0cy9pbmZvL2FsdGVybmF0ZXM/?=
-Date: Mon, 27 Aug 2012 22:39:23 +0000 (UTC)
-Message-ID: <loom.20120827T233125-780@post.gmane.org>
-References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v3 0/7] Gettext poison fixes
+Date: Tue, 28 Aug 2012 06:59:10 +0800
+Message-ID: <cover.1346108242.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 28 00:39:46 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 28 00:59:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T67yD-0004s6-4P
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 00:39:45 +0200
+	id 1T68HD-0007cx-Pd
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 00:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284Ab2H0Wji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Aug 2012 18:39:38 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40360 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751080Ab2H0Wjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2012 18:39:37 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1T67y3-0004mI-UP
-	for git@vger.kernel.org; Tue, 28 Aug 2012 00:39:36 +0200
-Received: from i59F75C97.versanet.de ([89.247.92.151])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Aug 2012 00:39:35 +0200
-Received: from ossi by i59F75C97.versanet.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Aug 2012 00:39:35 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.247.92.151 (Mozilla/5.0 (X11; Linux x86_64; rv:10.0.5) Gecko/20100101 Firefox/10.0.5 Iceweasel/10.0.5)
+	id S1754879Ab2H0W7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 18:59:17 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:61072 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753150Ab2H0W7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 18:59:16 -0400
+Received: by pbbrr13 with SMTP id rr13so8239394pbb.19
+        for <git@vger.kernel.org>; Mon, 27 Aug 2012 15:59:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=gW0jOtH+eVo8j3j/g/o9rtfbLD8qnkrVgOaHDDUpwIY=;
+        b=xhafW68jjETlnhYPwP0a7+heiWC9QRJ5mJ8BzGjcKNZkzvwNhzVTz0R/9qO3qt6ZoP
+         9gD3f1YP4KZgcnfq90AFE6xyH2q2aIxmQgRkkuyZi3kvlTwkZpAJWIfCd6KE4cIyI9Na
+         c+t+J01N/jJMZPmZ3ORzZl2tvOnMKDBOsQckZnvTGgpcpiRQB5H4syiFOdx7iB67eRoI
+         Akjwy0YqlchfN+43jqVVfmph1H7HFZVNSAU8epqFBDedHu4Z4axZWGYc1I8Z1wsOh9dV
+         8RCNAfwmjjv58VzT6Sn6WNfDfupMqd/01c6IAhm9l41klE7QJvidl0eLg8w3OCOHB2H2
+         4wCA==
+Received: by 10.68.241.99 with SMTP id wh3mr38312116pbc.16.1346108355779;
+        Mon, 27 Aug 2012 15:59:15 -0700 (PDT)
+Received: from localhost.foo.bar ([123.115.151.199])
+        by mx.google.com with ESMTPS id qn13sm15577687pbb.71.2012.08.27.15.59.12
+        (version=SSLv3 cipher=OTHER);
+        Mon, 27 Aug 2012 15:59:14 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.92.g949df84
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204377>
 
-hi,
+With this series, the test suite should pass again with gettext
+poison on.
 
-Junio C Hamano <gitster <at> pobox.com> writes:
-> The "alternates" mechanism [...]
+Updates in v3:
+ * patch 1/7: fix typo in commit log message.
+ * patch 6/7: remove tailing '&&'.
 
-sorry for the somewhat late response - i found this thread only now.
+Jiang Xin (7):
+  Fix tests under GETTEXT_POISON on relative dates
+  Fix tests under GETTEXT_POISON on git-stash
+  Fix tests under GETTEXT_POISON on diffstat
+  Fix tests under GETTEXT_POISON on git-apply
+  Fix tests under GETTEXT_POISON on pack-object
+  Fix tests under GETTEXT_POISON on git-remote
+  Fix tests under GETTEXT_POISON on parseopt
 
-at qt-project.org we have a somewhat peculiar setup: we have the qt4 repository,
-and a bunch of qt5 repositories which resulted from a split. qt5 is under active
-development, but qt4 is still maintained. that means that we need to cherry-pick
-between those repositories quite a lot. for an optimal cherry-picking experience
-one needs three-way-merging, which means we need shared object stores. which is
-where the problems start:
+ t/t0006-date.sh                 |  2 +-
+ t/t0040-parse-options.sh        | 34 +++++++++++++++++++++++++++++-----
+ t/t1300-repo-config.sh          |  2 +-
+ t/t1502-rev-parse-parseopt.sh   |  2 +-
+ t/t2006-checkout-index-basic.sh |  4 ++--
+ t/t2107-update-index-basic.sh   |  4 ++--
+ t/t3004-ls-files-basic.sh       |  4 ++--
+ t/t3200-branch.sh               |  4 ++--
+ t/t3501-revert-cherry-pick.sh   |  4 ++--
+ t/t3903-stash.sh                |  2 +-
+ t/t4006-diff-mode.sh            |  8 ++++----
+ t/t4012-diff-binary.sh          |  4 ++--
+ t/t4120-apply-popt.sh           |  4 ++--
+ t/t4133-apply-filenames.sh      |  4 ++--
+ t/t4200-rerere.sh               |  4 ++--
+ t/t4202-log.sh                  |  2 +-
+ t/t4205-log-pretty-formats.sh   |  4 ++--
+ t/t5300-pack-object.sh          |  4 ++--
+ t/t5505-remote.sh               | 28 +++++++++++++++++-----------
+ t/t5530-upload-pack-error.sh    |  4 ++--
+ t/t6500-gc.sh                   |  4 ++--
+ t/t7508-status.sh               |  2 +-
+ t/t7600-merge.sh                |  2 +-
+ 23 files changed, 83 insertions(+), 53 deletions(-)
 
-my first approach was just a common objects/ directory with all repositories
-symlinking into it. problems:
-- the object store can never be garbage-collected. with a lot of heavy rebasing
-and temporarily added remotes, it gets messy after a while.
-- there is a constant risk of destroying the object store by inadvertently
-running git gc - which is particularly likely with git-gui, as it seems to be
-retarded enough to ignore the auto-gc setting.
-
-so the second approach is the "bare aggregator repo" which adds all other repos
-as remotes, and the other repos link back via alternates. problems:
-- to actually share objects, one always needs to push to the aggregator
-- tags having a shared namespace doesn't actually work, because the repos have
-the same tags on different commits (they are independent repos, after all)
-- one still cannot safely garbage-collect the aggregator, as the refs don't
-include the stashes and the index, so rebasing may invalidate these more
-transient objects.
-
-i would re-propose hallvard's "volatile" alternates (at least i think that's
-what he was talking about two weeks ago): they can be used to obtain objects,
-but every object which is in any way referenced from the current clone must be
-available locally (or from a "regular" alternate). that means that diffing, etc.
-would get objects only temporarily, while cherry-picking would actually copy
-(some of) the objects. this would make it possible to "cross-link" repositories,
-safely and without any "3rd parties".
-
-thoughts?
-
-regards
+-- 
+1.7.12.92.g949df84
