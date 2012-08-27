@@ -1,125 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8] fix password prompting for "half-auth" servers
-Date: Mon, 27 Aug 2012 10:14:35 -0700
-Message-ID: <7vbohws1dw.fsf@alter.siamese.dyndns.org>
-References: <5037E1D0.6030900@gmail.com>
- <20120824212501.GA16285@sigill.intra.peff.net> <5038E781.1090008@gmail.com>
- <20120825203904.GA10470@sigill.intra.peff.net> <5039F327.9010003@gmail.com>
- <20120826101341.GA12566@sigill.intra.peff.net>
- <20120827132145.GA17265@sigill.intra.peff.net>
+From: cmn@elego.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
+Subject: Re: [PATCH 2/3] branch: add --unset-upstream option
+Date: Mon, 27 Aug 2012 19:30:34 +0200
+Message-ID: <87a9xgnsxx.fsf@centaur.cmartin.tk>
+References: <1345470460-28734-1-git-send-email-cmn@elego.de>
+	<1345470460-28734-3-git-send-email-cmn@elego.de>
+	<7vpq6h2tmk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Iain Paton <ipaton0@gmail.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 27 19:14:50 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 19:30:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T62th-0003qo-Uv
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 19:14:46 +0200
+	id 1T6397-0006cX-K3
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 19:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814Ab2H0ROj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Aug 2012 13:14:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50787 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753650Ab2H0ROi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2012 13:14:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5712A6CFF;
-	Mon, 27 Aug 2012 13:14:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XCbsuPdXbK0YntTQPBnl2uQe78w=; b=lOBiQj
-	OYiYuYOw1HU4NgcHnnkJYhIs4496PyakHZ5Vvw7Z2YS+dqinV2ZRmQGPOQ2QAIWT
-	ODlnzgMq0qKSElEXE3NtQNLmagMDOAmFoe8HGm4m8wgpce75L9zXshpbPkotMCKb
-	GxbO4V3moeoANyQA2Z7J8E5a7WTqLx1CJIoH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n7ROyLaYCHjZ/jt/vMdEimh5efCImN8L
-	anYxO6tLkExxU5cq/xgDwi9wdPblViclrdfOzmuAwEDpF+LBOalguOE3a1Py0kpq
-	V1l8vrisbn3bgW6n6An8+HHdDuouATfbCP6suImXREYYHPMYyRJksDrmSgrYcBmI
-	mDyBELU/LuA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 458276CFA;
-	Mon, 27 Aug 2012 13:14:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 960D86CF8; Mon, 27 Aug 2012
- 13:14:37 -0400 (EDT)
-In-Reply-To: <20120827132145.GA17265@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 27 Aug 2012 09:21:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AE1DFAC8-F06A-11E1-807A-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753686Ab2H0Raf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 13:30:35 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:54046 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753613Ab2H0Rae convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 13:30:34 -0400
+Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
+	by hessy.dwim.me (Postfix) with ESMTPA id 8BC9C800D4;
+	Mon, 27 Aug 2012 19:30:32 +0200 (CEST)
+Received: (nullmailer pid 11373 invoked by uid 1000);
+	Mon, 27 Aug 2012 17:30:34 -0000
+In-Reply-To: <7vpq6h2tmk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 23 Aug 2012 14:20:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204360>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-(+cc: Shawn)
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>
+>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+>> index e9019ac..93e5d6e 100755
+>> --- a/t/t3200-branch.sh
+>> +++ b/t/t3200-branch.sh
+>> @@ -383,6 +383,22 @@ test_expect_success 'use --set-upstream-to modi=
+fy a particular branch' \
+>>       test "$(git config branch.my13.remote)" =3D "." &&
+>>       test "$(git config branch.my13.merge)" =3D "refs/heads/master"=
+'
+>> =20
+>> +test_expect_success 'test --unset-upstream on HEAD' \
+>> +    'git branch my14
+>> +     test_config branch.master.remote foo &&
+>> +     test_config branch.master.merge foo &&
+>> +     git branch --set-upstream-to my14 &&
+>> +     git branch --unset-upstream &&
+>> +     test_must_fail git config branch.master.remote &&
+>> +     test_must_fail git config branch.master.merge'
+>> +
+>> +test_expect_success 'test --unset-upstream on a particular branch' =
+\
+>> +    'git branch my15
+>> +     git branch --set-upstream-to master my14 &&
+>> +     git branch --unset-upstream my14 &&
+>> +     test_must_fail git config branch.my14.remote &&
+>> +     test_must_fail git config branch.my14.merge'
+>> +
+>
+> What should happen when you say "--unset-upstream" on a branch B
+> that does not have B@{upstream}?  Should it fail?  Should it be
+> silently ignored?  Is it undefined that we do not want to test?
 
-> On Sun, Aug 26, 2012 at 06:13:41AM -0400, Jeff King wrote:
->
->> No problem. I'll probably be a day or two on the patches, as the http
->> tests are in need of some refactoring before adding more tests. But in
->> the meantime, I think your config change is a sane work-around.
->
-> OK, here is the series.  For those just joining us, the problem is that
-> git will not correctly prompt for credentials when pushing to a
-> repository which allows the initial GET of
-> ".../info/refs?service=git-receive-pack", but then gives a 401 when we
-> try to POST the pack. This has never worked for a plain URL, but used to
-> work if you put the username in the URL (because we would
-> unconditionally load the credentials before making any requests). That
-> was broken by 986bbc0, which does not do that proactive prompting for
-> smart-http, meaning such repositories cannot be pushed to at all.
->
-> Such a server-side setup is questionable in my opinion (because the
-> client will actually create the pack before failing), but we have been
-> advertising it for a long time in git-http-backend(1) as the right way
-> to make repositories that are anonymous for fetching but require auth
-> for pushing.
->
-> The fix is somewhat uglier than I would like, but I think it's practical
-> and the right thing to do (see the final patch for lots of discussion).
-> I built this on the current tip of "master".  It might make sense to
-> backport it directly on top of 986bbc0 for the maint track. There are
-> conflicts, but they are all textual. Another option would be to revert
-> 986bbc0 for the maint track, as that commit is itself fixing a minor bug
-> that is of decreasing relevance (it fixed extra password prompting when
-> .netrc was in use, but one can work around it by dropping the username
-> from the URL).
->
-> The patches are:
->
->   [1/8]: t5550: put auth-required repo in auth/dumb
->   [2/8]: t5550: factor out http auth setup
->   [3/8]: t/lib-httpd: only route auth/dumb to dumb repos
->   [4/8]: t/lib-httpd: recognize */smart/* repos as smart-http
->   [5/8]: t: test basic smart-http authentication
->
-> These are all refactoring of the test scripts in preparation for 6/8
-> (and are where all of the conflicts lie).
->
->   [6/8]: t: test http access to "half-auth" repositories
->
-> This demonstrates the bug.
->
->   [7/8]: http: factor out http error code handling
->
-> Refactoring to support 8/8.
->
->   [8/8]: http: prompt for credentials on failed POST
->
-> And this one is the actual fix.
->
-> I'd like to have a 9/8 which tweaks the git-http-backend documentation
-> to provide better example apache config, but I haven't yet figured out
-> the right incantation. Suggestions from apache gurus are welcome.
->
-> -Peff
+I'd say it should be ignored, as the end result we want is for there to
+be no upstream information. What we do underneath is remove a couple of
+config options, wich doesn't fail if they didn't insist in the first
+place.
+
+Would you like a test that makes sure two --unset-upstream in a row
+don't cause any errors?
+
+   cmn
