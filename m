@@ -1,120 +1,127 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v2 6/7] Fix tests under GETTEXT_POISON on git-remote
-Date: Tue, 28 Aug 2012 05:25:53 +0800
-Message-ID: <CANYiYbGudJ56j=o5SDJur2dv2=icCe2FYad88dV_5tBzLAbZnA@mail.gmail.com>
-References: <1b42b555cd785e19e95c730ac00271a2fee64edb.1346045253.git.worldhello.net@gmail.com>
-	<08d87cf811ed6ea328303b8ca26f1ab32cacfba9.1346045253.git.worldhello.net@gmail.com>
-	<7398781c6d647557954f4a0c7df29fc98aad842b.1346045253.git.worldhello.net@gmail.com>
-	<d20c47e9618f998b84934c0310f3de51d791e83f.1346045253.git.worldhello.net@gmail.com>
-	<a2e20a1e1ae4be42b763904177cf634a6e291f15.1346045253.git.worldhello.net@gmail.com>
-	<1345523464-14586-1-git-send-email-pclouds@gmail.com>
-	<cover.1346045253.git.worldhello.net@gmail.com>
-	<f56c058cfd76d02ed42b0c5b7161bde6bd51ddd0.1346045253.git.worldhello.net@gmail.com>
-	<7v4nnoti3l.fsf@alter.siamese.dyndns.org>
+From: cmn@eleog.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
+Subject: Re: [PATCH 2/3] branch: add --unset-upstream option
+Date: Mon, 27 Aug 2012 23:33:46 +0200
+Message-ID: <87vcg4m345.fsf@centaur.cmartin.tk>
+References: <1345470460-28734-1-git-send-email-cmn@elego.de>
+	<1345470460-28734-3-git-send-email-cmn@elego.de>
+	<7vpq6h2tmk.fsf@alter.siamese.dyndns.org>
+	<87a9xgnsxx.fsf@centaur.cmartin.tk>
+	<7vy5l0qknd.fsf@alter.siamese.dyndns.org>
+	<7vmx1gqk12.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 23:26:06 2012
+X-From: git-owner@vger.kernel.org Mon Aug 27 23:34:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T66os-0006SD-Ku
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 23:26:03 +0200
+	id 1T66x7-0003qh-B5
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 23:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708Ab2H0VZz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 17:25:55 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:53793 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754684Ab2H0VZy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 17:25:54 -0400
-Received: by ialo24 with SMTP id o24so9170159ial.19
-        for <git@vger.kernel.org>; Mon, 27 Aug 2012 14:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=DJ6hD+kNIL2iagetWQz5alet1M28krBAtMmBBlMwdCY=;
-        b=luLrqLnQcO5u/vrgU5FgXdVq0TW+EESLCpjG5asr2VNiSagdkBMwf6qrFDTuI0kBjR
-         GdLXKNfIlOWd1fMxRlliSny2ELPMt+6a2mps+z1HgKbdelvf4ZV1o+XCBfBZIOeLAOwz
-         974eCyz7UhAIs1xaEx0Es5UgjlgUdFUXkylx1iUPY1Vrb8h5t8BHxUOUy0tJFPrcON1t
-         ftzBmXPm0BltCzKphMFJiZt0TIzAJsLquKDArIBf4X3GRurXUIL31mpgLsrSKiS8TxOl
-         xr4F848hgo3RwQCQon3V4jZBmhTqHfrXXFGvn1dZXRhC6jWqRqSCGLfQwuGftQuC/TNL
-         FPKw==
-Received: by 10.50.45.162 with SMTP id o2mr11698649igm.0.1346102753962; Mon,
- 27 Aug 2012 14:25:53 -0700 (PDT)
-Received: by 10.50.17.104 with HTTP; Mon, 27 Aug 2012 14:25:53 -0700 (PDT)
-In-Reply-To: <7v4nnoti3l.fsf@alter.siamese.dyndns.org>
+	id S1754378Ab2H0Vdp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 17:33:45 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:54387 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754219Ab2H0Vdp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 17:33:45 -0400
+Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
+	by hessy.dwim.me (Postfix) with ESMTPA id C511E80040;
+	Mon, 27 Aug 2012 23:33:43 +0200 (CEST)
+Received: (nullmailer pid 18241 invoked by uid 1000);
+	Mon, 27 Aug 2012 21:33:46 -0000
+In-Reply-To: <7vmx1gqk12.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 27 Aug 2012 11:14:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204373>
 
-2012/8/28 Junio C Hamano <gitster@pobox.com>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Use i18n-specific test functions in test scripts for git-remote.
->> This issue was was introduced in v1.7.10-233-gbb16d5:
+>> cmn@elego.de (Carlos Mart=C3=ADn Nieto) writes:
 >>
->>     bb16d5 i18n: remote: mark strings for translation
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>>>>
+>>>>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+>>>>> index e9019ac..93e5d6e 100755
+>>>>> --- a/t/t3200-branch.sh
+>>>>> +++ b/t/t3200-branch.sh
+>>>>> @@ -383,6 +383,22 @@ test_expect_success 'use --set-upstream-to m=
+odify a particular branch' \
+>>>>>       test "$(git config branch.my13.remote)" =3D "." &&
+>>>>>       test "$(git config branch.my13.merge)" =3D "refs/heads/mast=
+er"'
+>>>>> =20
+>>>>> +test_expect_success 'test --unset-upstream on HEAD' \
+>>>>> +    'git branch my14
+>>>>> +     test_config branch.master.remote foo &&
+>>>>> +     test_config branch.master.merge foo &&
+>>>>> +     git branch --set-upstream-to my14 &&
+>>>>> +     git branch --unset-upstream &&
+>>>>> +     test_must_fail git config branch.master.remote &&
+>>>>> +     test_must_fail git config branch.master.merge'
+>>>>> +
+>>>>> +test_expect_success 'test --unset-upstream on a particular branc=
+h' \
+>>>>> +    'git branch my15
+>>>>> +     git branch --set-upstream-to master my14 &&
+>>>>> +     git branch --unset-upstream my14 &&
+>>>>> +     test_must_fail git config branch.my14.remote &&
+>>>>> +     test_must_fail git config branch.my14.merge'
+>>>>> +
+>>>>
+>>>> What should happen when you say "--unset-upstream" on a branch B
+>>>> that does not have B@{upstream}?  Should it fail?  Should it be
+>>>> silently ignored?  Is it undefined that we do not want to test?
+>>>
+>>> I'd say it should be ignored, as the end result we want is for ther=
+e to
+>>> be no upstream information. What we do underneath is remove a coupl=
+e of
+>>> config options, wich doesn't fail if they didn't insist in the firs=
+t
+>>> place.
 >>
->> and been broken under GETTEXT_POISON=3DYesPlease since.
+>> I am not sure about that reasoning.
 >>
->> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> ...
->> @@ -77,6 +75,14 @@ test_expect_success 'add another remote' '
->>  )
->>  '
+>>     $ git config --unset core.nosuchvariable ; echo $?
+>>     5
 >>
->> +test_expect_success C_LOCALE_OUTPUT 'add another remote' '
->> +(
->> +     cd test &&
->> +     check_remote_track origin master side &&
->> +     check_remote_track second master side another &&
->> +)
->> +'
+>> looks like a failure to me.
+>>
+>> More importantly, wouldn't we want to catch typo in
+>>
+>> 	git branch --unset-upstream mext
+>>
+>> which admittedly should come from a different codepath (I do not
+>> think your patch checks if "mext" branch exists before going ahead
+>> to the config--unset dance)?
 >
-> This couldn't have possibly passed with the trailing &&, or am I
-> missing something?  There is already "add another remote" before
-> this test that adds "second" remote.  Is this test about "add
-> yet another remote", or is it checking the result of adding "second"
-> that was done in the previous step?
-
-The trailing "&&=E2=80=9C is a copy & paste error. I only run my fixup =
-in
-GIT_GETTEXT_POISON mode in a harry, not noticed the bypassed
-testcase has this serious bug.
-
-I split the original "add another remote" into two blocks. One is a
-normal testcase, and another has a C_LOCALE_OUTPUT prereq
-flag. This is because other testcases depend on the operations in
-"add another remote" testcase ('git remote add -f second ../two'),
-and these testcases would fail if add C_LOCALE_OUTPUT
-prereq to the whole "add another remote" testcase.
-
+> Sorry, the last paragraph was incomplete.
 >
-> Will queue with an obvious fix-up with retitle, 'check tracking', or
-> something.
+> In general, we should detect errors and allow the user to choose to
+> ignore.
 >
-> Thanks.
+> A script that wants to make sure that B does not have an upstream,
+> without knowing if it already has one, can say "--unset-upstream B"
+> and choose to ignore the error if B does not have an upstream. =20
+>
+> If the script is carefully written, it would try to check if B has
+> one and call "--unset-upstream B" only when it doesn't.  A casually
+> written loose script would say "--unset-upstream B 2>/dev/null"
+> and keep going (it would not notice other kinds of errors, but that
+> is what makes it "casual and loose").
 
+OK, that's a good point, I'll update the patch.
 
-
---=20
-=E8=92=8B=E9=91=AB
-
-=E5=8C=97=E4=BA=AC=E7=BE=A4=E8=8B=B1=E6=B1=87=E4=BF=A1=E6=81=AF=E6=8A=80=
-=E6=9C=AF=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8
-=E9=82=AE=E4=BB=B6: worldhello.net@gmail.com
-=E7=BD=91=E5=9D=80: http://www.ossxp.com/
-=E5=8D=9A=E5=AE=A2: http://www.worldhello.net/
-=E5=BE=AE=E5=8D=9A: http://weibo.com/gotgit/
-=E7=94=B5=E8=AF=9D: 010-51262007, 18601196889
+   cmn
