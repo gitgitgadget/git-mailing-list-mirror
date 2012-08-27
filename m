@@ -1,127 +1,93 @@
-From: cmn@eleog.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
-Subject: Re: [PATCH 2/3] branch: add --unset-upstream option
-Date: Mon, 27 Aug 2012 23:33:46 +0200
-Message-ID: <87vcg4m345.fsf@centaur.cmartin.tk>
-References: <1345470460-28734-1-git-send-email-cmn@elego.de>
-	<1345470460-28734-3-git-send-email-cmn@elego.de>
-	<7vpq6h2tmk.fsf@alter.siamese.dyndns.org>
-	<87a9xgnsxx.fsf@centaur.cmartin.tk>
-	<7vy5l0qknd.fsf@alter.siamese.dyndns.org>
-	<7vmx1gqk12.fsf@alter.siamese.dyndns.org>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: libgit2 status
+Date: Mon, 27 Aug 2012 23:40:27 +0200
+Message-ID: <20120827214027.GA511@vidovic>
+References: <87a9xkqtfg.fsf@waller.obbligato.org>
+ <5038A148.4020003@op5.se>
+ <7vharpv77n.fsf@alter.siamese.dyndns.org>
+ <nnglih0jotj.fsf@transit.us.cray.com>
+ <7vfw78s1kd.fsf@alter.siamese.dyndns.org>
+ <nngsjb8i30w.fsf@transit.us.cray.com>
+ <7v6284qfw8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: dag@cray.com, Andreas Ericsson <ae@op5.se>, greened@obbligato.org,
+	git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 23:34:35 2012
+X-From: git-owner@vger.kernel.org Mon Aug 27 23:40:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T66x7-0003qh-B5
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 23:34:33 +0200
+	id 1T6732-0008IT-8x
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 23:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754378Ab2H0Vdp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 17:33:45 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:54387 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754219Ab2H0Vdp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 17:33:45 -0400
-Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
-	by hessy.dwim.me (Postfix) with ESMTPA id C511E80040;
-	Mon, 27 Aug 2012 23:33:43 +0200 (CEST)
-Received: (nullmailer pid 18241 invoked by uid 1000);
-	Mon, 27 Aug 2012 21:33:46 -0000
-In-Reply-To: <7vmx1gqk12.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 27 Aug 2012 11:14:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1754583Ab2H0Vke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 17:40:34 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:60011 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754329Ab2H0Vkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 17:40:33 -0400
+Received: by wicr5 with SMTP id r5so4142061wic.1
+        for <git@vger.kernel.org>; Mon, 27 Aug 2012 14:40:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=nvBy/ulEH/+HRTRNgNWqlw/fnMBGBkDwYP5dl/gKCek=;
+        b=mLjQZuIC+fChLRGca/UrA/Fdv/MWW80xmwuE4WEffUCP9eht6hIqmvD6aDgo1U15pP
+         HxkkXwfY8Z9BbS6sJtySbjtZGEX7HLhXnLRBBJJKd1olIQW7vcCPyle9t+Xh+y3Ic/O1
+         c1jSahzyPsDIsCZZVE6HXqB2gOcNCuMlLs6Zt+ebeAD1t9pN9w0tYUG0IUhWcGB5Zo8F
+         7z6RNyinoLqMdLiwCyNj5BqV2dmvaeNy7vbEDmzs2ulk47uXHGQDsXAVfQhR8gneRzSk
+         OKQDZQdP+6OHbJh+5Q7aeDLMJMv/LYnqpsMzViXKzfH1NPxGrd4ry2ZF60vMYfZ/MnLj
+         O77g==
+Received: by 10.216.44.3 with SMTP id m3mr7936726web.129.1346103631831;
+        Mon, 27 Aug 2012 14:40:31 -0700 (PDT)
+Received: from vidovic (146.132.84.79.rev.sfr.net. [79.84.132.146])
+        by mx.google.com with ESMTPS id t7sm1995013wix.6.2012.08.27.14.40.29
+        (version=SSLv3 cipher=OTHER);
+        Mon, 27 Aug 2012 14:40:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v6284qfw8.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204374>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The 27/08/12, Junio C Hamano wrote:
+> <dag@cray.com> writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >>> I would be happy to be a guinea pig for libgit2 in order to improve it,
+> >>> but I don't want to significantly impact git-subtree's move to core.
+> >>> I'll have to figure out the right balance there given feedback.
+> >>
+> >> I expect it will take some time for libgit2 to allow our Makefile to
+> >> start saying "LDFLAGS += -libgit2"; it will need to become as stable
+> >> and widespread as other libraries we depend on, e.g. -lz and -lcurl.
+> >
+> > Well that's a chicken-and-egg problem, isn't it.  How will a library
+> > become widespread unless something uses it?
+> 
+> That something will not be the git core itself.  Otherwise we will
+> lose a stable reference implementation to catch its bugs.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> cmn@elego.de (Carlos Mart=C3=ADn Nieto) writes:
->>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->>>>
->>>>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
->>>>> index e9019ac..93e5d6e 100755
->>>>> --- a/t/t3200-branch.sh
->>>>> +++ b/t/t3200-branch.sh
->>>>> @@ -383,6 +383,22 @@ test_expect_success 'use --set-upstream-to m=
-odify a particular branch' \
->>>>>       test "$(git config branch.my13.remote)" =3D "." &&
->>>>>       test "$(git config branch.my13.merge)" =3D "refs/heads/mast=
-er"'
->>>>> =20
->>>>> +test_expect_success 'test --unset-upstream on HEAD' \
->>>>> +    'git branch my14
->>>>> +     test_config branch.master.remote foo &&
->>>>> +     test_config branch.master.merge foo &&
->>>>> +     git branch --set-upstream-to my14 &&
->>>>> +     git branch --unset-upstream &&
->>>>> +     test_must_fail git config branch.master.remote &&
->>>>> +     test_must_fail git config branch.master.merge'
->>>>> +
->>>>> +test_expect_success 'test --unset-upstream on a particular branc=
-h' \
->>>>> +    'git branch my15
->>>>> +     git branch --set-upstream-to master my14 &&
->>>>> +     git branch --unset-upstream my14 &&
->>>>> +     test_must_fail git config branch.my14.remote &&
->>>>> +     test_must_fail git config branch.my14.merge'
->>>>> +
->>>>
->>>> What should happen when you say "--unset-upstream" on a branch B
->>>> that does not have B@{upstream}?  Should it fail?  Should it be
->>>> silently ignored?  Is it undefined that we do not want to test?
->>>
->>> I'd say it should be ignored, as the end result we want is for ther=
-e to
->>> be no upstream information. What we do underneath is remove a coupl=
-e of
->>> config options, wich doesn't fail if they didn't insist in the firs=
-t
->>> place.
->>
->> I am not sure about that reasoning.
->>
->>     $ git config --unset core.nosuchvariable ; echo $?
->>     5
->>
->> looks like a failure to me.
->>
->> More importantly, wouldn't we want to catch typo in
->>
->> 	git branch --unset-upstream mext
->>
->> which admittedly should come from a different codepath (I do not
->> think your patch checks if "mext" branch exists before going ahead
->> to the config--unset dance)?
->
-> Sorry, the last paragraph was incomplete.
->
-> In general, we should detect errors and allow the user to choose to
-> ignore.
->
-> A script that wants to make sure that B does not have an upstream,
-> without knowing if it already has one, can say "--unset-upstream B"
-> and choose to ignore the error if B does not have an upstream. =20
->
-> If the script is carefully written, it would try to check if B has
-> one and call "--unset-upstream B" only when it doesn't.  A casually
-> written loose script would say "--unset-upstream B 2>/dev/null"
-> and keep going (it would not notice other kinds of errors, but that
-> is what makes it "casual and loose").
+This is exactly what I'm most afraid about. I tend to think it's a
+chicken-and-egg problem, too.
 
-OK, that's a good point, I'll update the patch.
+Do you expect one big merge of a very stable libgit2 at some point?
+Because, asking others to implement widely used tools on top of libgit2
+in order to have it as stable/tested as curl is not going to happen, IMHO.
 
-   cmn
+Otherwise, what about going with this optionnal "LDFLAGS += -libgit2"
+ASAP with good disclaimer that it's only intended for development and
+testing purpose? Then, git-core could slowly rely on functions of
+libgit2, one after the other.
+
+
+-- 
+Nicolas Sebrecht
