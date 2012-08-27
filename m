@@ -1,79 +1,116 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: exporting a .git file ?
-Date: Mon, 27 Aug 2012 17:40:17 +0200
-Message-ID: <503B94E1.5010803@alum.mit.edu>
-References: <CANkmNDc7VP4QiocxuB7JMuQyZy5nDT=ertow_ib2Hri_=XRMOA@mail.gmail.com> <CAPBPrnu1FNbWP+k6Nq5NudBFYZu9njjbcL+oL7m-z5sajuXpBg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] test: set the realpath of CWD as TRASH_DIRECTORY
+Date: Mon, 27 Aug 2012 09:15:06 -0700
+Message-ID: <7vk3wktiph.fsf@alter.siamese.dyndns.org>
+References: <5030F0BF.2090500@alum.mit.edu>
+ <f58965733e604a9fe6ed72384d0307062403b478.1346043214.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Aaron Gray <aaronngray.lists@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 17:40:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 27 18:15:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T61QV-0007fT-3y
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 17:40:31 +0200
+	id 1T61yA-00074o-Te
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 18:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679Ab2H0PkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Aug 2012 11:40:21 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:61262 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751653Ab2H0PkV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 11:40:21 -0400
-X-AuditID: 12074412-b7f216d0000008e3-0f-503b94e43c04
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 77.4F.02275.4E49B305; Mon, 27 Aug 2012 11:40:20 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7RFeIwo004742
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 27 Aug 2012 11:40:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <CAPBPrnu1FNbWP+k6Nq5NudBFYZu9njjbcL+oL7m-z5sajuXpBg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqPtkinWAwdZHPBZXn91ltTj2+DOT
-	RdeVbiYHZo+ds+6ye3zeJBfAFMVtk5RYUhacmZ6nb5fAnfHv/xzWgjNsFcsmmTcwrmbtYuTk
-	kBAwkeg78JoRwhaTuHBvPVsXIxeHkMBlRon2bftZIZzjTBLNZ9rBOngFtCUOvv7BDGKzCKhK
-	9GzpYAOx2QR0JRb1NDOB2KICIRJrvk1hhKgXlDg58wkLiC0ioCnRM3EB2BxmgRiJf0c3gs0R
-	FlCReHLxKjvEsqmMEieWbQIr4hQIlDi/YyJQMwdQg7rE+nlCEL3yEtvfzmGewCgwC8mKWQhV
-	s5BULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6aXm1mil5pSuokRErBCOxjXn5Q7xCjA
-	wajEwxt00ypAiDWxrLgy9xCjJAeTkiiv2CTrACG+pPyUyozE4oz4otKc1OJDjBIczEoivN/3
-	WwYI8aYkVlalFuXDpKQ5WJTEeX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8M6ZDDRUsCg1PbUi
-	LTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSn8cXASAVJ8QDtVQamBSHe4oLEXKAoROspRl2O
-	z09P3mUUYsnLz0uVEuf9BrJDAKQoozQPbgUsPb1iFAf6WJj3N0gVDzC1wU16BbSECWjJfkWw
-	JSWJCCmpBsZ1C6byFs2Z65ziUsG5+HtMXUzIus1W3Y37Zm9u9lfJc31ns2ep/u6ey38Xvp7I
-	YCzXtcV9z+fd/2QbpIxPN069NWPjh78vVl5tXt0cv9Rqxv5Nbvn7HG1Pf/vXOuGn 
+	id S1753299Ab2H0QPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 12:15:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56534 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753093Ab2H0QPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 12:15:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35EBC7AE9;
+	Mon, 27 Aug 2012 12:15:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PZesIsSr/cvWGzZgUO7RyPSfDJo=; b=wPZ4Ol
+	iBV7YibR5H+SCHzD1OQePEYunoBRk8fYAXLiCNkxzU8FzYuf4m4wpO8Y1zymFRqg
+	sCwA4r4y5dxZ/Q+d0OcG78R1oiC2D7QvquEDpNoDZNQWGgAyGcTIrUhPfW+inFOH
+	zwEGwbw7MSK1rXanFkuPeEMJi5jaZNgHw3qYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s3h6zpXvDglzl0cXE+LsAtgwYTAoJOCS
+	e5qMWXXg+4bS/0Oyk/u4OKP4FHsX+gCljmzO6uxWKESWLVRqfSk7BdK16zUvSMBg
+	IR4ggrC6TTEizfhV/JXYhkvXIu+9nI3WpMk3q+FpbxdfWXA5hkzBEmFIjVi0rkUG
+	bT5B0Uk0XfU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FEF47AE8;
+	Mon, 27 Aug 2012 12:15:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85D467AE6; Mon, 27 Aug 2012
+ 12:15:08 -0400 (EDT)
+In-Reply-To: <f58965733e604a9fe6ed72384d0307062403b478.1346043214.git.worldhello.net@gmail.com> (Jiang Xin's message of "Mon, 27 Aug 2012 13:13:36 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5EC9A8B2-F062-11E1-9B37-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204351>
 
-On 08/27/2012 04:45 PM, Dan Johnson wrote:
-> On Mon, Aug 27, 2012 at 10:32 AM, Aaron Gray <aaronngray.lists@gmail.com> wrote:
->> Hi,
->>
->> Is there anyway to get my git repository as a single file ?
-> 
-> You're probably looking for the git bundle command (see git bundle
-> --help), but it's possible you might just want to use tar.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Please note that a "git bundle" will contain the contents of the
-repository (commits, log messages, etc) but not the local configuration
-like .git/config, .git/info/*, nor some other information like the
-reflogs (history of old values of references).  This is probably what
-you want.
+> Some testcases will fail if current work directory is on a symlink.
+>
+>     symlink$ sh ./t4035-diff-quiet.sh
+>     $ sh ./t4035-diff-quiet.sh --root=/symlink
+>     $ TEST_OUTPUT_DIRECTORY=/symlink sh ./t4035-diff-quiet.sh
+>
+> This is because the realpath of ".git" directory will be returned when
+> running the command 'git rev-parse --git-dir' in a subdir of the work
+> tree, and the realpath may not equal to "$TRASH_DIRECTORY".
+>
+> In this fix, "$TRASH_DIRECTORY" is determined right after the realpath
+> of CWD is resolved.
+>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> ---
 
-A "tar" of the .git directory, by contrast, would include this local
-information unless you exclude it explicitly.
+I think this is in line with what was discussed in the other thread
+Michael brought this up.  Thanks for following it through.
 
-Michael
+Michael, this looks good to me; anything I missed?
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 78c42..9a59ca8 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -531,17 +531,17 @@ fi
+>  test="trash directory.$(basename "$0" .sh)"
+>  test -n "$root" && test="$root/$test"
+>  case "$test" in
+> -/*) TRASH_DIRECTORY="$test" ;;
+> - *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$test" ;;
+> +/*) ;;
+> + *) test="$TEST_OUTPUT_DIRECTORY/$test" ;;
+>  esac
+> -test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
+> +test ! -z "$debug" || remove_trash=$test
+>  rm -fr "$test" || {
+>  	GIT_EXIT_OK=t
+>  	echo >&5 "FATAL: Cannot prepare test area"
+>  	exit 1
+>  }
+>  
+> -HOME="$TRASH_DIRECTORY"
+> +HOME="$test"
+>  export HOME
+>  
+>  if test -z "$TEST_NO_CREATE_REPO"; then
+> @@ -552,6 +552,7 @@ fi
+>  # Use -P to resolve symlinks in our working directory so that the cwd
+>  # in subprocesses like git equals our $PWD (for pathname comparisons).
+>  cd -P "$test" || exit 1
+> +TRASH_DIRECTORY="$(pwd)"
+>  
+>  this_test=${0##*/}
+>  this_test=${this_test%%-*}
