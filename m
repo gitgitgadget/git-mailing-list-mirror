@@ -1,186 +1,126 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 6/7] Fix tests under GETTEXT_POISON on git-remote
-Date: Tue, 28 Aug 2012 06:59:16 +0800
-Message-ID: <89668a45ea6ffe2a537dc6116062d5994252534d.1346108242.git.worldhello.net@gmail.com>
-References: <cover.1346108242.git.worldhello.net@gmail.com>
- <1954d94a032f1cedee953a7db5da8f6d37e4c7d9.1346108242.git.worldhello.net@gmail.com>
- <4e2f6d25bc4588f478bb3b6866290f2feabc03d0.1346108242.git.worldhello.net@gmail.com>
- <19564c3c4288172ab1cf2c7097a750f5689faba8.1346108242.git.worldhello.net@gmail.com>
- <c7c8ebb234e8bd0771cfd7d2f715f06d86e5c472.1346108242.git.worldhello.net@gmail.com>
- <c89b2d6f6636e693c27ed52fb57231664a61336b.1346108242.git.worldhello.net@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git checkout -t -B
+Date: Tue, 28 Aug 2012 00:09:44 +0100
+Organization: OPDS
+Message-ID: <10B409063A944B298250064D2DB0BAB7@PhilipOakley>
+References: <CAHtLG6QgnvG6eYEChojY_jB25QWqxis6brbst2ff5FixFLAXAw@mail.gmail.com> <7v8vd1v6q2.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 28 00:59:56 2012
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	=?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 28 01:09:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T68Hg-00081z-Pc
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 00:59:53 +0200
+	id 1T68RI-0005nK-Cd
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 01:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916Ab2H0W7j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 18:59:39 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:61072 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754908Ab2H0W7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2012 18:59:36 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr13so8239394pbb.19
-        for <git@vger.kernel.org>; Mon, 27 Aug 2012 15:59:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Mrv332ZIaJ0tE6t7uOtKMUJ+Y9QCrbVXEeGHBnZsB+E=;
-        b=YCcskf69iGsuKvPOtx4snhptEPlzg4A0T5YZerRSYLWABZ/beu9LJ45pjFUPSiNKqV
-         M+wDvTFz99uBqWhaO5u4JjyhsH1WnVUN3XdRutDKAsnJhsN+WJPoDFOq0tuNlZA/x06O
-         1BqoWfqYmMeRS6V0igsHY0dQPU+T+CUzQhTgEBAxJe5Ii4Fs//SqvF1JKG4LHBOjEOzY
-         eaHDyKQE7jzGh3iPhKKm0A9BRjsxX5x/8vlveVr3rHjqSadid9P+MJWbpcruwZfBwZnB
-         hosiB24sm424Hm55tRSchJ4sSdeJEMo6oiJjz0zpUoTQselJqIY7hZYysfUYhZAyjepT
-         OHhA==
-Received: by 10.68.221.42 with SMTP id qb10mr37700885pbc.155.1346108376702;
-        Mon, 27 Aug 2012 15:59:36 -0700 (PDT)
-Received: from localhost.foo.bar ([123.115.151.199])
-        by mx.google.com with ESMTPS id qn13sm15577687pbb.71.2012.08.27.15.59.33
-        (version=SSLv3 cipher=OTHER);
-        Mon, 27 Aug 2012 15:59:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.92.g949df84
-In-Reply-To: <c89b2d6f6636e693c27ed52fb57231664a61336b.1346108242.git.worldhello.net@gmail.com>
-In-Reply-To: <cover.1346108242.git.worldhello.net@gmail.com>
-References: <cover.1346108242.git.worldhello.net@gmail.com>
+	id S1754875Ab2H0XJm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Aug 2012 19:09:42 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:25376 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754849Ab2H0XJl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Aug 2012 19:09:41 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsEMAGL3O1BZ8rU+/2dsb2JhbABFhgOFP641AQKBAoEIghsFAQEEAQgBARkPAQUeAQEhCwIDBQIBAQIVAQQCBSECAhQBBAgSBgcXBgESCAIBAgMBh20DBgqnZIk1DYlOgSGJBGOBEAtLg2EyYAONXIYmjGGFB4Jk
+X-IronPort-AV: E=Sophos;i="4.80,322,1344207600"; 
+   d="scan'208";a="45736451"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 28 Aug 2012 00:09:39 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204385>
 
-Use i18n-specific test functions in test scripts for git-remote, and
-bypass some testcases using C_LOCALE_OUTPUT prereq flag. This issue
-was was introduced in v1.7.10-233-gbb16d5:
+=46rom: "Junio C Hamano" <gitster@pobox.com>
+Sent: Sunday, August 26, 2012 7:38 PM
+> =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
+>
+>> git checkout -t -B origin/abcde
+>> works
+>>
+>> but
+>> git checkout -B -t origin/abcde
+>> does not.
+>>
+>> Could you document the order of parameters or fix the behaviour?
+>
+> It is crystal clear that -b/-B/--orphan must be followed by the name
+> of the branch you are creating from the SYNOPSIS section of the
+> documentation.
+>
+>    NAME
+>    ----
+>    git-checkout - Checkout a branch or paths to the working tree
+>
+>    SYNOPSIS
+>    --------
+>    [verse]
+>    ...
+>    'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>]
+> [<st..
+>    ...
 
-    bb16d5 i18n: remote: mark strings for translation
+I didn't find it immediately obvious, but with 6/6 hindsight it is=20
+clearly indicated.
 
-and been broken under GETTEXT_POISON=3DYesPlease since.
+However the -t option isn't listed within the synopsis, and does=20
+immediately follow the -b & -B in the options list which could confuse=20
+some readers who would stick it after the -b ;-)
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- t/t5505-remote.sh | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+Should the -t and -l options be shown in the synopsis?
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e8af6..4b720 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -52,7 +52,7 @@ test_expect_success setup '
+>
+> However, the option description can use some improvement.  It
+> currently reads:
+>
+>    -b::
+>            Create a new branch named <new_branch> and start it at
+>            <start_point>; see linkgit:git-branch[1] for details.
+>
+> as if it and <new_branch> are freestanding arguments.
+>
+> I think we should describe the option like this:
+>
+>    -b <new_branch>::
+>            Create a new branch named <new_branch> and start it at
+>            <start_point>; see linkgit:git-branch[1] for details.
+>
+> The description for "-B" and "--orphan" options share the same
+> issue.
+>
+> I suspect that documentation for other commands may share this
+> issue.  It would be good if somebody can check the option
+> description section and make sure there is no discrepancy like this
+> by comparing it to the SYNOPSIS section (or "git cmd -h") for all
+> manual pages.
+>
+> I'll patch only "git-checkout.txt" myself for now; hint, hint.
+
+I searched for all occurrences of '[[' which would indicate a double=20
+optional argument within the synopsis and only found git-read-tree.
+
+I don't think it has the same problem but I wasn't sure of the priority=
 =20
- '
+order between the '[]' and '|' selectors in the multi-choice cases.
+
+I haven't seen anything definitive on how one should read the synopsis.=
 =20
--test_expect_success 'remote information for the origin' '
-+test_expect_success C_LOCALE_OUTPUT 'remote information for the origin=
-' '
- (
- 	cd test &&
- 	tokens_match origin "$(git remote)" &&
-@@ -66,8 +66,6 @@ test_expect_success 'add another remote' '
- 	cd test &&
- 	git remote add -f second ../two &&
- 	tokens_match "origin second" "$(git remote)" &&
--	check_remote_track origin master side &&
--	check_remote_track second master side another &&
- 	check_tracking_branch second master side another &&
- 	git for-each-ref "--format=3D%(refname)" refs/remotes |
- 	sed -e "/^refs\/remotes\/origin\//d" \
-@@ -77,6 +75,14 @@ test_expect_success 'add another remote' '
- )
- '
-=20
-+test_expect_success C_LOCALE_OUTPUT 'check tracking for add another re=
-mote' '
-+(
-+	cd test &&
-+	check_remote_track origin master side &&
-+	check_remote_track second master side another
-+)
-+'
-+
- test_expect_success 'remote forces tracking branches' '
- (
- 	cd test &&
-@@ -95,7 +101,7 @@ test_expect_success 'remove remote' '
- )
- '
-=20
--test_expect_success 'remove remote' '
-+test_expect_success C_LOCALE_OUTPUT 'remove remote' '
- (
- 	cd test &&
- 	tokens_match origin "$(git remote)" &&
-@@ -131,8 +137,8 @@ EOF
- 	git remote rm oops 2>actual2 &&
- 	git branch -d foobranch &&
- 	git tag -d footag &&
--	test_cmp expect1 actual1 &&
--	test_cmp expect2 actual2
-+	test_i18ncmp expect1 actual1 &&
-+	test_i18ncmp expect2 actual2
- )
- '
-=20
-@@ -192,7 +198,7 @@ test_expect_success 'show' '
- 	 git config --add remote.two.push refs/heads/master:refs/heads/anothe=
-r &&
- 	 git remote show origin two > output &&
- 	 git branch -d rebase octopus &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
-=20
- cat > test/expect << EOF
-@@ -217,7 +223,7 @@ test_expect_success 'show -n' '
- 	 cd test &&
- 	 git remote show -n origin > output &&
- 	 mv ../one.unreachable ../one &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
-=20
- test_expect_success 'prune' '
-@@ -255,7 +261,7 @@ EOF
- test_expect_success 'set-head --auto fails w/multiple HEADs' '
- 	(cd test &&
- 	 test_must_fail git remote set-head --auto two >output 2>&1 &&
--	test_cmp expect output)
-+	test_i18ncmp expect output)
- '
-=20
- cat >test/expect <<EOF
-@@ -285,7 +291,7 @@ test_expect_success 'prune --dry-run' '
- 	 test_must_fail git rev-parse refs/remotes/origin/side &&
- 	(cd ../one &&
- 	 git branch -m side side2) &&
--	 test_cmp expect output)
-+	 test_i18ncmp expect output)
- '
-=20
- test_expect_success 'add --mirror && prune' '
-@@ -705,7 +711,7 @@ test_expect_success 'remote prune to cause a dangli=
-ng symref' '
- 		cd seven &&
- 		git remote prune origin
- 	) >err 2>&1 &&
--	grep "has become dangling" err &&
-+	test_i18ngrep "has become dangling" err &&
-=20
- 	: And the dangling symref will not cause other annoying errors &&
- 	(
---=20
-1.7.12.92.g949df84
+I thought the order of some option could be exchanged, as rev-parse say=
+s=20
+that they can be combined (for the right commands).
+
+>
+> Thanks.
+> --
