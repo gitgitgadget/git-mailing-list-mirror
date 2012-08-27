@@ -1,102 +1,131 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/8] fix password prompting for "half-auth" servers
-Date: Mon, 27 Aug 2012 09:21:45 -0400
-Message-ID: <20120827132145.GA17265@sigill.intra.peff.net>
-References: <5037E1D0.6030900@gmail.com>
- <20120824212501.GA16285@sigill.intra.peff.net>
- <5038E781.1090008@gmail.com>
- <20120825203904.GA10470@sigill.intra.peff.net>
- <5039F327.9010003@gmail.com>
- <20120826101341.GA12566@sigill.intra.peff.net>
+Subject: [PATCH 1/8] t5550: put auth-required repo in auth/dumb
+Date: Mon, 27 Aug 2012 09:23:37 -0400
+Message-ID: <20120827132337.GA17375@sigill.intra.peff.net>
+References: <20120827132145.GA17265@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Iain Paton <ipaton0@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 27 15:22:17 2012
+X-From: git-owner@vger.kernel.org Mon Aug 27 15:23:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T5zGi-0000Ny-MI
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 15:22:17 +0200
+	id 1T5zIA-0000xz-4J
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Aug 2012 15:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750891Ab2H0NVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Aug 2012 09:21:48 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39677 "EHLO
+	id S1751330Ab2H0NXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Aug 2012 09:23:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39684 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750732Ab2H0NVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Aug 2012 09:21:48 -0400
-Received: (qmail 12645 invoked by uid 107); 27 Aug 2012 13:22:03 -0000
+	id S1750933Ab2H0NXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Aug 2012 09:23:39 -0400
+Received: (qmail 12744 invoked by uid 107); 27 Aug 2012 13:23:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 Aug 2012 09:22:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2012 09:21:45 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 Aug 2012 09:23:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2012 09:23:37 -0400
 Content-Disposition: inline
-In-Reply-To: <20120826101341.GA12566@sigill.intra.peff.net>
+In-Reply-To: <20120827132145.GA17265@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204334>
 
-On Sun, Aug 26, 2012 at 06:13:41AM -0400, Jeff King wrote:
+In most of our tests, we put repos to be accessed by dumb
+protocols in /dumb, and repos to be accessed by smart
+protocols in /smart.  In our test apache setup, the whole
+/auth hierarchy requires authentication. However, we don't
+bother to split it by smart and dumb here because we are not
+currently testing smart-http authentication at all.
 
-> No problem. I'll probably be a day or two on the patches, as the http
-> tests are in need of some refactoring before adding more tests. But in
-> the meantime, I think your config change is a sane work-around.
+That will change in future patches, so let's be explicit
+that we are interested in testing dumb access here. This
+also happens to match what t5540 does for the push tests.
 
-OK, here is the series.  For those just joining us, the problem is that
-git will not correctly prompt for credentials when pushing to a
-repository which allows the initial GET of
-".../info/refs?service=git-receive-pack", but then gives a 401 when we
-try to POST the pack. This has never worked for a plain URL, but used to
-work if you put the username in the URL (because we would
-unconditionally load the credentials before making any requests). That
-was broken by 986bbc0, which does not do that proactive prompting for
-smart-http, meaning such repositories cannot be pushed to at all.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5550-http-fetch.sh | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-Such a server-side setup is questionable in my opinion (because the
-client will actually create the pack before failing), but we have been
-advertising it for a long time in git-http-backend(1) as the right way
-to make repositories that are anonymous for fetching but require auth
-for pushing.
-
-The fix is somewhat uglier than I would like, but I think it's practical
-and the right thing to do (see the final patch for lots of discussion).
-I built this on the current tip of "master".  It might make sense to
-backport it directly on top of 986bbc0 for the maint track. There are
-conflicts, but they are all textual. Another option would be to revert
-986bbc0 for the maint track, as that commit is itself fixing a minor bug
-that is of decreasing relevance (it fixed extra password prompting when
-.netrc was in use, but one can work around it by dropping the username
-from the URL).
-
-The patches are:
-
-  [1/8]: t5550: put auth-required repo in auth/dumb
-  [2/8]: t5550: factor out http auth setup
-  [3/8]: t/lib-httpd: only route auth/dumb to dumb repos
-  [4/8]: t/lib-httpd: recognize */smart/* repos as smart-http
-  [5/8]: t: test basic smart-http authentication
-
-These are all refactoring of the test scripts in preparation for 6/8
-(and are where all of the conflicts lie).
-
-  [6/8]: t: test http access to "half-auth" repositories
-
-This demonstrates the bug.
-
-  [7/8]: http: factor out http error code handling
-
-Refactoring to support 8/8.
-
-  [8/8]: http: prompt for credentials on failed POST
-
-And this one is the actual fix.
-
-I'd like to have a 9/8 which tweaks the git-http-backend documentation
-to provide better example apache config, but I haven't yet figured out
-the right incantation. Suggestions from apache gurus are welcome.
-
--Peff
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index b06f817..5ad2123 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -41,9 +41,9 @@ test_expect_success 'clone http repository' '
+ '
+ 
+ test_expect_success 'create password-protected repository' '
+-	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/auth/" &&
++	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/" &&
+ 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
+-	       "$HTTPD_DOCUMENT_ROOT_PATH/auth/repo.git"
++	       "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/repo.git"
+ '
+ 
+ test_expect_success 'setup askpass helpers' '
+@@ -81,28 +81,28 @@ expect_askpass() {
+ test_expect_success 'cloning password-protected repository can fail' '
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
+-	test_must_fail git clone "$HTTPD_URL/auth/repo.git" clone-auth-fail &&
++	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-fail &&
+ 	expect_askpass both wrong
+ '
+ 
+ test_expect_success 'http auth can use user/pass in URL' '
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
+-	git clone "$HTTPD_URL_USER_PASS/auth/repo.git" clone-auth-none &&
++	git clone "$HTTPD_URL_USER_PASS/auth/dumb/repo.git" clone-auth-none &&
+ 	expect_askpass none
+ '
+ 
+ test_expect_success 'http auth can use just user in URL' '
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+-	git clone "$HTTPD_URL_USER/auth/repo.git" clone-auth-pass &&
++	git clone "$HTTPD_URL_USER/auth/dumb/repo.git" clone-auth-pass &&
+ 	expect_askpass pass user@host
+ '
+ 
+ test_expect_success 'http auth can request both user and pass' '
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+-	git clone "$HTTPD_URL/auth/repo.git" clone-auth-both &&
++	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-both &&
+ 	expect_askpass both user@host
+ '
+ 
+@@ -114,7 +114,7 @@ test_expect_success 'http auth respects credential helper config' '
+ 	}; f" &&
+ 	>askpass-query &&
+ 	echo wrong >askpass-response &&
+-	git clone "$HTTPD_URL/auth/repo.git" clone-auth-helper &&
++	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-helper &&
+ 	expect_askpass none
+ '
+ 
+@@ -122,7 +122,7 @@ test_expect_success 'http auth can get username from config' '
+ 	test_config_global "credential.$HTTPD_URL.username" user@host &&
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+-	git clone "$HTTPD_URL/auth/repo.git" clone-auth-user &&
++	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-user &&
+ 	expect_askpass pass user@host
+ '
+ 
+@@ -130,7 +130,7 @@ test_expect_success 'configured username does not override URL' '
+ 	test_config_global "credential.$HTTPD_URL.username" wrong &&
+ 	>askpass-query &&
+ 	echo user@host >askpass-response &&
+-	git clone "$HTTPD_URL_USER/auth/repo.git" clone-auth-user2 &&
++	git clone "$HTTPD_URL_USER/auth/dumb/repo.git" clone-auth-user2 &&
+ 	expect_askpass pass user@host
+ '
+ 
+-- 
+1.7.11.5.10.g3c8125b
