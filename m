@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 16/16] Add a test script for remote-svn
-Date: Tue, 28 Aug 2012 11:01:56 -0700
-Message-ID: <7vk3wi28tn.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v7 15/16] remote-svn: add marks-file regeneration
+Date: Tue, 28 Aug 2012 10:59:42 -0700
+Message-ID: <7vpq6a28tp.fsf@alter.siamese.dyndns.org>
 References: <1346143790-23491-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
@@ -18,7 +18,6 @@ References: <1346143790-23491-1-git-send-email-florian.achleitner.2.6.31@gmail.c
  <1346143790-23491-14-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-15-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-16-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-17-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: GIT Mailing-list <git@vger.kernel.org>,
@@ -35,147 +34,161 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6Q89-0003i1-1m
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:03:13 +0200
+	id 1T6Q88-0003i1-HU
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab2H1SDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 14:03:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40868 "EHLO
+	id S1752777Ab2H1SDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 14:03:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40828 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752260Ab2H1SDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 14:03:03 -0400
+	id S1752725Ab2H1SDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 14:03:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA72D9234;
-	Tue, 28 Aug 2012 14:03:02 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A988C922E;
+	Tue, 28 Aug 2012 14:03:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=GBgCANZvZMDMc9wq2DOJdPcNSxo=; b=fIF7pSmKUks48kOmAzlW
-	2aAmDrHkTp8IHcHvcz6vIldLT9W/t+sAuc+zGmb/0MJ2Tx4QMroXyDrVkTh8+vcU
-	VeuduCUA42kOgpQM7GRXknvcQwhky3+Txbn64+hVqJ0wo7pktHUUkgECPUl5iJVa
-	pd8Cnwo/bxUL4ulP21MGcXg=
+	 s=sasl; bh=u7OVlYqRnQLhSvYAMThRFNkuvGg=; b=O+4XxXEpecL8kat1Zyhp
+	04uckTib1KDTdBpXN8otw37QGp+Zonl140DYfiEqlNWtwCoujcsPvwGGbUjmhSek
+	198bhkTJ7StKiyy+n/9skGBuPNLGTrpQvmvz4w+nmG0zRYTVC0xrjW7Z4fOXDRVa
+	F7ITpIPH3ZbhOozv3+Ksy5o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=B99xjWrvjaqtZy6X9w+CAbnA5vXlAOF1HavE5jwplHPM4J
-	AaG3ec9BldfuBOBVrIFTLQN81bWiZZsEyvFZzbF7Kex78xqAy6mwSSFpQ0r2/wk6
-	9GhOFwh0YXccwe54h7kfkk2RQgWYF6Dnv8UsXLl2rafLix6hGt3aZ9GUWZKKw=
+	 q=dns; s=sasl; b=EawfLExkXBE6GLnhL2sMkH9NCfFksJkGMKxJDJGKGfGkB6
+	tIIq1qpxCtV/F8IBs+tDorzkvdWdROHPo7m3d3tVZavbprEaMcAmte+EKSWgeKxs
+	ePdmcYX5/R9K+4byeceXIV5QOJ5XWhoDnzRggkjhGo0Q6nTCORBFvJq0EE6sY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C526D9233;
-	Tue, 28 Aug 2012 14:03:02 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95F7B922D;
+	Tue, 28 Aug 2012 14:03:00 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 072DA9230; Tue, 28 Aug 2012
- 14:03:01 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC23F922B; Tue, 28 Aug 2012
+ 14:02:59 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9BB632A8-F13A-11E1-A63D-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9A676DB8-F13A-11E1-83F9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204442>
 
 Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
 
-> Use svnrdump_sim.py to emulate svnrdump without an svn server.
-> Tests fetching, incremental fetching, fetching from file://,
-> and the regeneration of fast-import's marks file.
+> fast-import mark files are stored outside the object database and are
+> therefore not fetched and can be lost somehow else.  marks provide a
+> svn revision --> git sha1 mapping, while the notes that are attached
+> to each commit when it is imported provide a git sha1 --> svn revision
+> mapping.
+>
+> If the marks file is not available or not plausible, regenerate it by
+> walking through the notes tree.  , i.e.  The plausibility check tests
+> if the highest revision in the marks file matches the revision of the
+> top ref. It doesn't ensure that the mark file is completely correct.
+> This could only be done with an effort equal to unconditional
+> regeneration.
 >
 > Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  t/t9020-remote-svn.sh |   82 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 82 insertions(+)
->  create mode 100755 t/t9020-remote-svn.sh
+>  remote-testsvn.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
 >
-> diff --git a/t/t9020-remote-svn.sh b/t/t9020-remote-svn.sh
-> new file mode 100755
-> index 0000000..e6ed4ca
-> --- /dev/null
-> +++ b/t/t9020-remote-svn.sh
-> @@ -0,0 +1,82 @@
-> +#!/bin/sh
-> +
-> +test_description='tests remote-svn'
-> +
-> +. ./test-lib.sh
-> +
-> +if ! test_have_prereq PYTHON
-> +then
-> +	skip_all='skipping remote-svn tests, python not available'
-> +	test_done
-> +fi
-> +
-> +# We override svnrdump by placing a symlink to the svnrdump-emulator in .
-> +export PATH="$HOME:$PATH"
-> +ln -sf $GIT_BUILD_DIR/contrib/svn-fe/svnrdump_sim.py "$HOME/svnrdump"
-> +
-> +init_git () {
-> +	rm -fr .git &&
-> +	git init &&
-> +	#git remote add svnsim testsvn::sim:///$TEST_DIRECTORY/t9020/example.svnrdump
-> +	# let's reuse an exisiting dump file!?
-> +	git remote add svnsim testsvn::sim://$TEST_DIRECTORY/t9154/svn.dump
-> +	git remote add svnfile testsvn::file://$TEST_DIRECTORY/t9154/svn.dump
+> diff --git a/remote-testsvn.c b/remote-testsvn.c
+> index e90d221..d0b81d5 100644
+> --- a/remote-testsvn.c
+> +++ b/remote-testsvn.c
+> @@ -86,6 +86,73 @@ static int parse_rev_note(const char *msg, struct rev_note *res) {
+>  	return 0;
+>  }
+>  
+> +static int note2mark_cb(const unsigned char *object_sha1,
+> +		const unsigned char *note_sha1, char *note_path,
+> +		void *cb_data) {
+> +	FILE *file = (FILE *)cb_data;
+> +	char *msg;
+> +	unsigned long msglen;
+> +	enum object_type type;
+> +	struct rev_note note;
+> +	if (!(msg = read_sha1_file(note_sha1, &type, &msglen)) ||
+> +			!msglen || type != OBJ_BLOB) {
+> +		free(msg);
+> +		return 1;
+> +	}
+
+The same comments as an earlier patch in the series applies here,
+regarding chained assignments in coditional, whether each case is an
+error that needs to be reported, and the sign of the error return
+value.
+
+> +	if (parse_rev_note(msg, &note))
+> +		return 2;
+> +	if (fprintf(file, ":%d %s\n", note.rev_nr, sha1_to_hex(object_sha1)) < 1)
+> +		return 3;
+> +	return 0;
 > +}
 > +
-> +if test -e "$GIT_BUILD_DIR/git-remote-testsvn"
-> +then
-> +	test_set_prereq REMOTE_SVN
-> +fi
+> +static void regenerate_marks(void)
+> +{
+> +	int ret;
+> +	FILE *marksfile;
+> +	marksfile = fopen(marksfilename, "w+");
+> +	if (!marksfile)
+> +		die_errno("Couldn't create mark file %s.", marksfilename);
+> +	ret = for_each_note(NULL, 0, note2mark_cb, marksfile);
+> +	if (ret)
+> +		die("Regeneration of marks failed, returned %d.", ret);
+> +	fclose(marksfile);
+> +}
 > +
-> +test_debug '
-> +	git --version
-> +	which git
-> +	which svnrdump
-> +'
-> +
-> +test_expect_success REMOTE_SVN 'simple fetch' '
-> +	init_git &&
-> +	git fetch svnsim &&
-> +	test_cmp .git/refs/svn/svnsim/master .git/refs/remotes/svnsim/master  &&
-> +	cp .git/refs/remotes/svnsim/master master.good
-> +'
-> +
-> +test_debug '
-> +	cat .git/refs/svn/svnsim/master
-> +	cat .git/refs/remotes/svnsim/master
-> +'
-> +
-> +test_expect_success REMOTE_SVN 'repeated fetch, nothing shall change' '
-> +	git fetch svnsim &&
-> +	test_cmp master.good .git/refs/remotes/svnsim/master
-> +'
-> +
-> +test_expect_success REMOTE_SVN 'fetch from a file:// url gives the same result' '
-> +	git fetch svnfile
-> +'
-> +
-> +test_expect_failure REMOTE_SVN 'the sha1 differ because the git-svn-id line in the commit msg contains the url' '
-> +	test_cmp .git/refs/remotes/svnfile/master .git/refs/remotes/svnsim/master
-> +'
-> +
-> +test_expect_success REMOTE_SVN 'mark-file regeneration' '
-> +	# filter out any other marks, that can not be regenerated. Only up to 3 digit revisions are allowed here
-> +	grep ":[0-9]\{1,3\} " .git/info/fast-import/remote-svn/svnsim.marks > .git/info/fast-import/remote-svn/svnsim.marks.old &&
-> +	rm .git/info/fast-import/remote-svn/svnsim.marks &&
-> +	git fetch svnsim &&
-> +	test_cmp .git/info/fast-import/remote-svn/svnsim.marks.old .git/info/fast-import/remote-svn/svnsim.marks
-> +'
+> +static void check_or_regenerate_marks(int latestrev) {
 
-Could these loooooong lines be made a bit more manageable?  It is
-getting extremely hard to follow.
+Style.
 
+> +	FILE *marksfile;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct strbuf line = STRBUF_INIT;
+> +	int found = 0;
+> +
+> +	if (latestrev < 1)
+> +		return;
 
-> +test_expect_success REMOTE_SVN 'incremental imports must lead to the same head' '
-> +	export SVNRMAX=3 &&
-> +	init_git &&
-> +	git fetch svnsim &&
-> +	test_cmp .git/refs/svn/svnsim/master .git/refs/remotes/svnsim/master  &&
-> +	unset SVNRMAX &&
-> +	git fetch svnsim &&
-> +	test_cmp master.good .git/refs/remotes/svnsim/master
-> +'
+It's more pleasant to read to have a blank line between the end of
+decls and the first statement, like this function does.  Please fix
+two functions that appear before this function in this file to match.
+
+> +	init_notes(NULL, notes_ref, NULL, 0);
+> +	marksfile = fopen(marksfilename, "r");
+> +	if (!marksfile) {
+> +		regenerate_marks();
+> +		marksfile = fopen(marksfilename, "r");
+> +		if (!marksfile)
+> +			die_errno("cannot read marks file %s!", marksfilename);
+> +		fclose(marksfile);
+> +	} else {
+> +		strbuf_addf(&sb, ":%d ", latestrev);
+> +		while (strbuf_getline(&line, marksfile, '\n') != EOF) {
+> +			if (!prefixcmp(line.buf, sb.buf)) {
+> +				found++;
+> +				break;
+> +			}
+> +		}
+> +		fclose(marksfile);
+> +		if (!found)
+> +			regenerate_marks();
+> +	}
+> +	free_notes(NULL);
+> +	strbuf_release(&sb);
+> +	strbuf_release(&line);
+> +}
 > +
-> +test_debug 'git branch -a'
-> +
-> +test_done
- 
+>  static int cmd_import(const char *line)
+>  {
+>  	int code;
+> @@ -111,6 +178,7 @@ static int cmd_import(const char *line)
+>  			free(note_msg);
+>  		}
+>  	}
+> +	check_or_regenerate_marks(startrev - 1);
+>  
+>  	if (dump_from_file) {
+>  		dumpin_fd = open(url, O_RDONLY);
