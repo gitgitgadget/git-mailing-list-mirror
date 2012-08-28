@@ -1,108 +1,146 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH/RFC] Add gui.displayuntracked option
-Date: Tue, 28 Aug 2012 23:46:47 +0300
-Message-ID: <20120828204647.GA15612@findesk>
+From: Jeff King <peff@peff.net>
+Subject: Re: I think git show is broken
+Date: Tue, 28 Aug 2012 17:29:34 -0400
+Message-ID: <20120828212934.GA396@sigill.intra.peff.net>
+References: <503D022B.6070001@redlion.net>
+ <503D046B.7090606@redlion.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 28 22:54:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org
+To: Matthew Caron <Matt.Caron@redlion.net>
+X-From: git-owner@vger.kernel.org Tue Aug 28 23:29:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6SoG-00075N-D6
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 22:54:52 +0200
+	id 1T6TM5-0002wW-Ld
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 23:29:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752901Ab2H1Uyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 16:54:45 -0400
-Received: from p3plsmtpa09-07.prod.phx3.secureserver.net ([173.201.193.236]:57932
-	"EHLO p3plsmtpa09-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752276Ab2H1Uyp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Aug 2012 16:54:45 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Aug 2012 16:54:45 EDT
-Received: from findesk ([89.27.29.195])
-	by p3plsmtpa09-07.prod.phx3.secureserver.net with 
-	id sLmX1j0014CavkR01Lmd4y; Tue, 28 Aug 2012 13:46:38 -0700
+	id S1752926Ab2H1V3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 17:29:39 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41186 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751939Ab2H1V3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 17:29:38 -0400
+Received: (qmail 25569 invoked by uid 107); 28 Aug 2012 21:29:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Aug 2012 17:29:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Aug 2012 17:29:34 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <503D046B.7090606@redlion.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204453>
 
-When git is used to track only a subset of a directory, or
-there is no sure way to divide files to ignore from files to track,
-git user have to live with large number of untracked files. These files
-present in file list, and should always be scrolled through
-to handle real changes. Situation can become even worse, then number
-of the untracked files grows above the maxfilesdisplayed limit. In the
-case, even staged files can be hidden by git-gui.
+On Tue, Aug 28, 2012 at 01:48:27PM -0400, Matthew Caron wrote:
 
-This change introduces new configuration variable gui.displayuntracked,
-which, when set to false, instructs git-gui not to show untracked files
-in files list. They can be staged from commandline or other tools (like
-IDE of file manager), then they become visible. Default value of the
-option is true, which is compatible with current behavior.
+> On 08/28/2012 01:38 PM, Matthew Caron wrote:
+> >(otherwise, there was a very strange change made to its functionality,
+> >which the documentation does not reflect)
+> 
+> Never mind.
+> 
+> I was looking in the wrong spot. The issue is not with
+> --pretty=oneline, it's with --quiet. In 1.7.0.4, --quiet worked like
+> -s. It no longer does in 1.7.9.5. Switching to -s cures the problem.
 
-Signed-off-by: Max Kirillov <max@max630.net>
+Yes, that is what's going on. But it's still a regression. There was
+some discussion of what --quiet should do here:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/171357
+
+which resulted in a patch that took away --quiet. But then this thread:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/174665
+
+resulted in restoring it as a synonym for "-s". Unfortunately there's a
+bug in that fix, which you are seeing. Patch is below.
+
+-- >8 --
+Subject: [PATCH] log: fix --quiet synonym for -s
+
+Originally the "--quiet" option was parsed by the
+diff-option parser into the internal QUICK option. This had
+the effect of silencing diff output from the log (which was
+not intended, but happened to work and people started to
+use it). But it also had other odd side effects at the diff
+level (for example, it would suppress the second commit in
+"git show A B").
+
+To fix this, commit 1c40c36 converted log to parse-options
+and handled the "quiet" option separately, not passing it
+on to the diff code. However, it simply ignored the option,
+which was a regression for people using it as a synonym for
+"-s". Commit 01771a8 then fixed that by interpreting the
+option to add DIFF_FORMAT_NO_OUTPUT to the list of output
+formats.
+
+However, that commit did not fix it in all cases. It sets
+the flag after setup_revisions is called. Naively, this
+makes sense because you would expect the setup_revisions
+parser to overwrite our output format flag if "-p" or
+another output format flag is seen.
+
+However, that is not how the NO_OUTPUT flag works. We
+actually store it in the bit-field as just another format.
+At the end of setup_revisions, we call diff_setup_done,
+which post-processes the bitfield and clears any other
+formats if we have set NO_OUTPUT. By setting the flag after
+setup_revisions is done, diff_setup_done does not have a
+chance to make this tweak, and we end up with other format
+options still set.
+
+As a result, the flag would have no effect in "git log -p
+--quiet" or "git show --quiet".  Fix it by setting the
+format flag before the call to setup_revisions.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- git-gui/git-gui.sh     |   14 ++++++++++----
- git-gui/lib/option.tcl |    1 +
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ builtin/log.c   |  2 +-
+ t/t7007-show.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index ba4e5c1..504fc4a 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -897,6 +897,7 @@ set font_descs {
- 	{fontdiff font_diff {mc "Diff/Console Font"}}
- }
- set default_config(gui.stageuntracked) ask
-+set default_config(gui.displayuntracked) true
+diff --git a/builtin/log.c b/builtin/log.c
+index ecc2793..c22469c 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -109,9 +109,9 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN |
+ 			     PARSE_OPT_KEEP_DASHDASH);
  
- ######################################################################
- ##
-@@ -1535,18 +1536,23 @@ proc rescan_stage2 {fd after} {
- 	set buf_rdf {}
- 	set buf_rlo {}
+-	argc = setup_revisions(argc, argv, rev, opt);
+ 	if (quiet)
+ 		rev->diffopt.output_format |= DIFF_FORMAT_NO_OUTPUT;
++	argc = setup_revisions(argc, argv, rev, opt);
  
--	set rescan_active 3
-+	set rescan_active 2
- 	ui_status [mc "Scanning for modified files ..."]
- 	set fd_di [git_read diff-index --cached -z [PARENT]]
- 	set fd_df [git_read diff-files -z]
--	set fd_lo [eval git_read ls-files --others -z $ls_others]
+ 	/* Any arguments at this point are not recognized */
+ 	if (argc > 1)
+diff --git a/t/t7007-show.sh b/t/t7007-show.sh
+index a40cd36..e41fa00 100755
+--- a/t/t7007-show.sh
++++ b/t/t7007-show.sh
+@@ -108,4 +108,16 @@ test_expect_success 'showing range' '
+ 	test_cmp expect actual.filtered
+ '
  
- 	fconfigure $fd_di -blocking 0 -translation binary -encoding binary
- 	fconfigure $fd_df -blocking 0 -translation binary -encoding binary
--	fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
++test_expect_success '-s suppresses diff' '
++	echo main3 >expect &&
++	git show -s --format=%s main3 >actual &&
++	test_cmp expect actual
++'
 +
- 	fileevent $fd_di readable [list read_diff_index $fd_di $after]
- 	fileevent $fd_df readable [list read_diff_files $fd_df $after]
--	fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
++test_expect_success '--quiet suppresses diff' '
++	echo main3 >expect &&
++	git show --quiet --format=%s main3 >actual &&
++	test_cmp expect actual
++'
 +
-+	if {[is_config_true gui.displayuntracked]} {
-+		set fd_lo [eval git_read ls-files --others -z $ls_others]
-+		fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
-+		fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
-+		incr rescan_active
-+	}
- }
- 
- proc load_message {file} {
-diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
-index 0cf1da1..2177db6 100644
---- a/git-gui/lib/option.tcl
-+++ b/git-gui/lib/option.tcl
-@@ -159,6 +159,7 @@ proc do_options {} {
- 		{c gui.encoding {mc "Default File Contents Encoding"}}
- 		{b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
- 		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
-+		{b gui.displayuntracked {mc "Show untracked files"}}
- 		} {
- 		set type [lindex $option 0]
- 		set name [lindex $option 1]
+ test_done
 -- 
-1.7.9.1
+1.7.11.5.10.g3c8125b
