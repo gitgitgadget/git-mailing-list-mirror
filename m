@@ -1,109 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: libgit2 status
-Date: Tue, 28 Aug 2012 11:36:57 -0700
-Message-ID: <7vvcg2zwvq.fsf@alter.siamese.dyndns.org>
-References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
- <7vharpv77n.fsf@alter.siamese.dyndns.org>
- <nnglih0jotj.fsf@transit.us.cray.com>
- <7vfw78s1kd.fsf@alter.siamese.dyndns.org>
- <nngsjb8i30w.fsf@transit.us.cray.com>
- <7v6284qfw8.fsf@alter.siamese.dyndns.org> <20120827214027.GA511@vidovic>
- <nngr4qqhp7x.fsf@transit.us.cray.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <dag@cray.com>, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Andreas Ericsson <ae@op5.se>, <greened@obbligato.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 28 20:37:18 2012
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: GC of alternate object store (was: Bringing a bit more sanity to $GIT_DIR/objects/info/alternates?)
+Date: Tue, 28 Aug 2012 21:19:53 +0200 (CEST)
+Message-ID: <hbf.20120828vnfp@bombur.uio.no>
+References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
+	<loom.20120827T233125-780@post.gmane.org>
+Cc: git@vger.kernel.org
+To: Oswald Buddenhagen <ossi@kde.org>
+X-From: git-owner@vger.kernel.org Tue Aug 28 21:20:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6Qf1-0007nO-8z
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:37:11 +0200
+	id 1T6RKX-0000c1-MF
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 21:20:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275Ab2H1ShC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 14:37:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57493 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751014Ab2H1ShA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 14:37:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94A069CF8;
-	Tue, 28 Aug 2012 14:36:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=aa9Wn7EtMWUDFhykTToxMzYGM34=; b=flQ6HfKqcGOo7MIDpWbU
-	xoDSnUT0Wsugh/E3G5jf7PgNFcojs/qGO2JwLzlHLFB2lkMwqL5GYkENn87uk1z3
-	ZPYFKCD5qE3h/DZ0InDlZJRKCwIFX3wjTxenl9uIZ4GjPCe0WKUIF2NuzfYgDl6o
-	DjJ05YqHrm+hmyXwFiDPRO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=T1eE7gX81X9YN2DfW2n603ll3zNfCrhfJqbQLR2gcNVP56
-	fjhB1NVCuyOHJ9Jr+MtZPWULCgeDGCIMR6e1mYNnSWaIIFQmVd7taC50a8vrjV11
-	9rsDidDG1/G1B8x5yN+qZnGE2WgjPeVQSErrf7Ig9rgkMqtpQEekR62mz5IaA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8148F9CF7;
-	Tue, 28 Aug 2012 14:36:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE7139CF6; Tue, 28 Aug 2012
- 14:36:58 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59C5CF7A-F13F-11E1-857E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752160Ab2H1TT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 15:19:57 -0400
+Received: from mail-out2.uio.no ([129.240.10.58]:56832 "EHLO mail-out2.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751199Ab2H1TTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 15:19:55 -0400
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by mail-out2.uio.no with esmtp (Exim 4.75)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1T6RKM-0005rA-AU; Tue, 28 Aug 2012 21:19:54 +0200
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx2.uio.no with esmtp  (Exim 4.80)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1T6RKL-0006J9-PF; Tue, 28 Aug 2012 21:19:54 +0200
+Received: by bombur.uio.no (Postfix, from userid 2112)
+	id 86C1E81C; Tue, 28 Aug 2012 21:19:53 +0200 (CEST)
+In-Reply-To: <loom.20120827T233125-780@post.gmane.org>
+X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 4 sum msgs/h 1 total rcpts 2565 max rcpts/h 20 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.5, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-1.018,UIO_DOLLAR=0.5,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 46BCE0DBAACAF88ED46DCB2DF587ED5EE5691CB0
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -54 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1338 max/h 33 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204448>
 
-<dag@cray.com> writes:
+Oswald Buddenhagen wrote:
+> (...)so the second approach is the "bare aggregator repo" which adds
+> all other repos as remotes, and the other repos link back via
+> alternates. problems:
+> 
+> - to actually share objects, one always needs to push to the aggregator
 
-> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
->
->> Do you expect one big merge of a very stable libgit2 at some point?
->
-> I don't think there's any need to merge libgit2 into the git project
-> source.  As a library, it should be perfectly usable as a project of its
-> own, just like libcurl and libz.
->
->> Otherwise, what about going with this optionnal "LDFLAGS += -libgit2"
->> ASAP with good disclaimer that it's only intended for development and
->> testing purpose? Then, git-core could slowly rely on functions of
->> libgit2, one after the other.
->
-> This makes a lot of sense to me.
+Run a cron job which frequently does that?
 
-As I already said in my earlier message in $gmane/204305, I wouldn't
-be surprised if some "core stuff" gets reimplemented on top of
-libgit2 and distributed as part of the git-core.  But at this
-moment, I see that just as a blip of possibility far in the future.
+> - tags having a shared namespace doesn't actually work, because the
+> repos have the same tags on different commits (they are independent
+> repos, after all)
 
-It would most likely start slowly, by adding lg-client/cat-file.c
-that is linked with libgit2 when "make USE_LIBGIT2=YesPlease" was
-asked for, and we compile the tried-and-true builtin/cat-file.c
-otherwise ("cat-file" may actually not the most trivial first step,
-though, but I think readers get the idea).
+Junio's proposal partially fixes that: It pushes refs/* instead of
+refs/heads/*, to refs/remotes/<borrowing repo>/.  However...
 
-Even after most if not all commands have counterparts reimplemented
-on libgit2, I do not think we can afford to drop any of the original
-for a long time.  For that to happen, at the very least:
+> - one still cannot safely garbage-collect the aggregator, as the refs
+> don't include the stashes and the index, so rebasing may invalidate
+> these more transient objects.
 
- - libgit2 must be available in major distros so that people can say
-   "[yum|apt-get] install libgit2-dev"; and
+Also if you copy a repo (e.g. making a backup) instead of cloning it,
+and then start using both, they'll push into the same namespace -
+overwriting each other's refs.  Non-fast-forward pushes can thus lose
+refs to objects needed by the other repo.
 
- - the version of it packaged for major distros are recent and
-   stable enough, so that we never have to say "distro X ships with
-   libgit2 that is too old, so people on that distro have to compile
-   it from the source."
+receive.denyNonFastForwards only rejects pushes to refs/heads/ or
+something.  (A feature, as I learned when I reported it as bug:-)
+IIRC Git has no config option to reject all non-fast-forward pushes.
 
-which is the quality we expect from libraries we would depend on,
-like -lz, -lcurl, etc.
+> i would re-propose hallvard's "volatile" alternates (at least i think that's
+> what he was talking about two weeks ago): they can be used to obtain
+> objects, but every object which is in any way referenced from the current
+> clone must be available locally (or from a "regular" alternate). that means
+> that diffing, etc.  would get objects only temporarily, while cherry-picking
+> would actually copy (some of) the objects. this would make it possible to
+> "cross-link" repositories, safely and without any "3rd parties".
 
-It is OK if we have to conditionally compile out some of our code in
-the periphery when libgit2 that is available on the platform is too
-old (we allow it for -lcurl already).
+I'm afraid that idea by itself won't work:-(  Either you borrow from a
+store or not.  If Git uses an object from the volatile store, it can't
+always know if the caller needs the object to be copied.
 
-But all of the above assumes one thing: the reimplementated result
-does not suck ;-) which is a large unknown.
+OTOH volatile stores which you do *not* borrow from would be useful:
+Let fetch/repack/gc/whatever copy missing objects from there.
+
+
+2nd attempt for a way to gc of the alternate repo:  Copy the with
+removed objects into each borrowing repo, then gc them.   Like this:
+
+1. gc, but pack all to-be-removed objects into a "removable" pack.
+
+2. Hardlink/copy the removable pack - with a .keep file - into
+   borrowing repos when feasible:  I.e. repos you can find and
+   have write access to.  Update their .git/objects/info/packs.
+   (Is there a Git command for this?)  Repeat until nothing to do,
+   in case someone created a new repo during this step.
+
+3. Move the pack from the alternate repo to a backup object store
+   which will keep it for a while.
+
+4. Delete the .keep files from step (2).  They were needed in case
+   a user gc'ed away an object from the pack and then added an
+   identical object - borrowed from the to-be-removed pack.
+
+5. gc/repack the other repos at your leisure.
+
+666. Repos you could not update in step (2), can get temporarily
+   broken.  Their owners must link the pack from the backup store by
+   hand, or use that store as a volatile store and then gc/repack.
+
+Loose objects are a problem:  If a repo has longer expiry time(s)
+than the alternate store, it will get loads of loose objects from all
+repos which push into the alternate store.  Worse, gc can *unpack*
+those objects, consuming a lot of space.  See threads "git gc == git
+garbage-create from removed branch" (3 May) and "Keeping unreachable
+objects in a separate pack instead of loose?" (10 Jun).
+
+Presumably the work-arounds are:
+- Use long expiry times in the alternate repo.  I don't know which
+  expiration config settings are relevant how.
+- Add some command which checks and warns if the repo has longer
+  expiry time than the repo it borrows from.
+Also I hope Git will be changed to instead pack such loose objects
+somewhere, as discussed in the above threads.
+
+All in all, this isn't something you'd want to do every day.  But it
+looks doable and can be scripted.
