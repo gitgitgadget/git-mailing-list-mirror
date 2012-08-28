@@ -1,111 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 08/16] remote-svn, vcs-svn: Enable fetching to private
- refs
-Date: Tue, 28 Aug 2012 10:53:06 -0700
-Message-ID: <7vvcg228tr.fsf@alter.siamese.dyndns.org>
-References: <1346143790-23491-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: Re: [PATCH 7/8] http: factor out http error code handling
+Date: Tue, 28 Aug 2012 11:06:52 -0700
+Message-ID: <7vd32a28n7.fsf@alter.siamese.dyndns.org>
+References: <20120827132145.GA17265@sigill.intra.peff.net>
+ <20120827132604.GG17375@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Joachim Schmitz <jojo@schmitz-digital.de>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 28 20:03:25 2012
+Cc: Iain Paton <ipaton0@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 28 20:07:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6Q8K-0003pV-Fz
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:03:24 +0200
+	id 1T6QBo-0005y8-PB
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786Ab2H1SDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 14:03:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40799 "EHLO
+	id S1751603Ab2H1SG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 14:06:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42998 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751904Ab2H1SC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 14:02:58 -0400
+	id S1752225Ab2H1SGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 14:06:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77F629228;
-	Tue, 28 Aug 2012 14:02:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DB6B939D;
+	Tue, 28 Aug 2012 14:06:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=FFrTOiKSZfmVkw8gSWffu5QwJzQ=; b=ZDpeJfctDrXBdhTd7fII
-	2ErLsm1fMs6q6aXQz9vJUO0c1KP1FSHCOk3YeVLAcuvvXmC8UA26soNlUbLapUAW
-	JfFNaUcVgPwLC4rqUst6QYcbBrFb7Hac3GwZwIKW74uIqHbuVPYV+DY/q8vEjW8J
-	EiHToprxdHsZNhUX4SOIZR8=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=XGUxZHNptSS57s2kRord+QOA7yE=; b=CXbzNrW5MrG0jqMIzWa7
+	4MldA9a+EvXwKKSB+yG3nKqbH0n2l4R/vOQWGsPlNKDE68SmBOSMRtXVvNNhI6DF
+	Q/H1oYLE1xiT+kqMmtLH+hmO1yFtYYbX+88WB2d0/P8c5eVnTMBqyXFqZbqBAmni
+	HjS58HuUuLcJsnu/l+yVGYE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=BNq64NQm/CaFEvNWtIm9LuJKQaoVM6Sxky7eQldVH8xDIX
-	6vXzQ/AmhoD/Rh7oEYvqYuQNQruAd6+Z32kZG3vyIkm22ZMnJ7En96oDGVV7kHrn
-	i1mE9/r+8jj0YeJVgGhZ/5vBxQmX8CHzWqW4jdST8XF/aKQ3C5cgOcmVH6Z0o=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=MDXVA8H6fvz5M2SjWUVtwexFZiVpr9J9f4mlfM15iCB2xa
+	30Zi/5LDsKiimSyNozrg6upA6AWekpxjATgrZjZLj5Zd2/29RaCeZdK1t4XzGqNg
+	qz6NwzRew8k/InWOVdvSaVYyRvXm6X7bRVanDZQ+zNvbJpNzgmcMFy/sKiPlo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64C629227;
-	Tue, 28 Aug 2012 14:02:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ABC5939C;
+	Tue, 28 Aug 2012 14:06:54 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B93869223; Tue, 28 Aug 2012
- 14:02:57 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A147B9399; Tue, 28 Aug 2012
+ 14:06:53 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 992AD9C6-F13A-11E1-B279-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 25C237DA-F13B-11E1-A97E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204444>
 
-Florian Achleitner <florian.achleitner.2.6.31@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> The reference to update by the fast-import stream is hard-coded.  When
-> fetching from a remote the remote-helper shall update refs in a
-> private namespace, i.e. a private subdir of refs/.  This namespace is
-> defined by the 'refspec' capability, that the remote-helper advertises
-> as a reply to the 'capabilities' command.
+> Most of our http requests go through the http_request()
+> interface, which does some nice post-processing on the
+> results. In particular, it handles prompting for missing
+> credentials as well as approving and rejecting valid or
+> invalid credentials. Unfortunately, it only handles GET
+> requests. Making it handle POSTs would be quite complex, so
+> let's pull result handling code into its own function so
+> that it can be reused from the POST code paths.
 >
-> Extend svndump and fast-export to allow passing the target ref.
-> Update svn-fe to be compatible.
->
-> Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
-> ...
-> diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-> index d81a078..288bb42 100644
-> --- a/vcs-svn/svndump.c
-> +++ b/vcs-svn/svndump.c
-> @@ -299,22 +299,22 @@ static void handle_node(void)
->  				node_ctx.text_length, &input);
+>  http.c | 51 ++++++++++++++++++++++++++++-----------------------
+>  http.h |  1 +
+>  2 files changed, 29 insertions(+), 23 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index b61ac85..6793137 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -745,6 +745,33 @@ char *get_remote_object_url(const char *url, const char *hex,
+>  	return strbuf_detach(&buf, NULL);
 >  }
 >  
-> -static void begin_revision(void)
-> +static void begin_revision(const char *remote_ref)
->  {
->  	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
->  		return;
->  	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
->  		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
-> -		rev_ctx.timestamp);
-> +		rev_ctx.timestamp, remote_ref);
->  }
+> +int handle_curl_result(struct active_request_slot *slot)
+> +{
+> +	struct slot_results *results = slot->results;
+> +
+> +	if (results->curl_result == CURLE_OK) {
+> +		credential_approve(&http_auth);
+> +		return HTTP_OK;
+> +	} else if (missing_target(results))
+> +...
+> +		return HTTP_ERROR;
+> +	}
+> +}
+> +
+> @@ -820,9 +828,6 @@ static int http_request(const char *url, void *result, int target, int options)
+>  	curl_slist_free_all(headers);
+>  	strbuf_release(&buf);
 >  
-> -static void end_revision(void)
-> +static void end_revision()
+> -	if (ret == HTTP_OK)
+> -		credential_approve(&http_auth);
 
-Don't.
+OK, now this is part of handle_curl_result() so the caller does not
+have to worry about it, which is nice ;-)
 
->  {
->  	if (rev_ctx.revision)
->  		fast_export_end_commit(rev_ctx.revision);
+>  	return ret;
 >  }
