@@ -1,19 +1,10 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH v7 12/16] remote-svn: Activate import/export-marks for fast-import
-Date: Tue, 28 Aug 2012 10:49:46 +0200
-Message-ID: <1346143790-23491-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH v7 03/16] Add svndump_init_fd to allow reading dumps from arbitrary FDs
+Date: Tue, 28 Aug 2012 10:49:37 +0200
+Message-ID: <1346143790-23491-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1346143790-23491-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1346143790-23491-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
@@ -29,90 +20,104 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6HWN-00022f-3O
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 10:51:39 +0200
+	id 1T6HWJ-00022f-P1
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 10:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112Ab2H1Ive (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 04:51:34 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:51578 "EHLO
+	id S1751784Ab2H1IvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 04:51:10 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42001 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024Ab2H1IvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 04:51:25 -0400
-Received: by mail-bk0-f46.google.com with SMTP id j10so1533185bkw.19
-        for <git@vger.kernel.org>; Tue, 28 Aug 2012 01:51:25 -0700 (PDT)
+	with ESMTP id S1751588Ab2H1IvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 04:51:04 -0400
+Received: by mail-bk0-f46.google.com with SMTP id j10so1532823bkw.19
+        for <git@vger.kernel.org>; Tue, 28 Aug 2012 01:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=QrTLSDllwR82ZEfJGuqrjFdvgS8wHb6Tvr2O+W9UZgo=;
-        b=Vm4yUeNQy8jgOSmWDvRHtsMiAWuETX4+8WmWc7gqWV30G0fv7Z5iRos83pTRaJEtv7
-         9vf5xMUQ7iyf3Lii2ADwGVgKIXI8y4FY4ob46KOhqjhzxNb5/IwqPzh59M2atIimoezm
-         gW79PMzTsZVTk9RAzk5mDmscmxiTpSfO+TTNROCBmfbVbtNmfgiaaXESd1OMLy0Kn6PF
-         4hq5lqyWUUmDAH643dxMD9wvpSQSQECf94xI49fhhlM8vDkx/nF+kDJtFVqHdkLLgEF2
-         SASOSMPIJyL6zGQK2nvUxaKiT6KN4JuIlp9mnV2j4bv6YuwD7BPbErbCKHLj8i3GGqb/
-         jdxg==
-Received: by 10.204.152.137 with SMTP id g9mr4698492bkw.106.1346143885143;
-        Tue, 28 Aug 2012 01:51:25 -0700 (PDT)
+        bh=61bsyBjgvzC0LLn343FRLVlK2Jy+AdwBiZL3eIQ/M7g=;
+        b=LJC2I3tQRgfsJ/dNACJZ84C/rw9LvRfULr7N9LuAvxStNXOzdz4cplaizkE7XSLQ2b
+         GlOZAoh6uLowyTgkBIpU42eI5FwfS74/15xt9Kbw1jL3BuofDbxCVj8Hd+wo0P9uzxUP
+         s74a45KgphfJmZwCGyn+mdmfZWmTK6NkD7DY8N5fgto4FsHkUJ8yej3pLg32cgQ2fOKY
+         UYiv3rL0xGH/t7jcO1vslXhKNUBdz2hCPCNO5yGLPtlB1UJeUqgDALuXXvY1MlhDHTVN
+         fNOKdkx18XaSA0ouc/q66hAQI0zSpOeA0MY3AMoEvMvlFGBEmlGOvh3JM0WqK52AvHER
+         dkUw==
+Received: by 10.204.157.156 with SMTP id b28mr4712069bkx.27.1346143863324;
+        Tue, 28 Aug 2012 01:51:03 -0700 (PDT)
 Received: from flobuntu.lan (91-115-85-203.adsl.highway.telekom.at. [91.115.85.203])
-        by mx.google.com with ESMTPS id m9sm12047800bkm.10.2012.08.28.01.51.23
+        by mx.google.com with ESMTPS id m9sm12047800bkm.10.2012.08.28.01.51.01
         (version=SSLv3 cipher=OTHER);
-        Tue, 28 Aug 2012 01:51:24 -0700 (PDT)
+        Tue, 28 Aug 2012 01:51:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1346143790-23491-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1346143790-23491-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204406>
 
-Enable import and export of a marks file by sending the appropriate
-feature commands to fast-import before sending data.
+The existing function only allows reading from a filename or from
+stdin. Allow passing of a FD and an additional FD for the back report
+pipe. This allows us to retrieve the name of the pipe in the caller.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- remote-testsvn.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ vcs-svn/svndump.c |   22 ++++++++++++++++++----
+ vcs-svn/svndump.h |    1 +
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/remote-testsvn.c b/remote-testsvn.c
-index 2b9d151..b6e7968 100644
---- a/remote-testsvn.c
-+++ b/remote-testsvn.c
-@@ -12,6 +12,7 @@ static const char *url;
- static int dump_from_file;
- static const char *private_ref;
- static const char *remote_ref = "refs/heads/master";
-+static const char *marksfilename;
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index 2b168ae..d81a078 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -468,11 +468,9 @@ void svndump_read(const char *url)
+ 		end_revision();
+ }
  
- static int cmd_capabilities(const char *line);
- static int cmd_import(const char *line);
-@@ -74,6 +75,10 @@ static int cmd_import(const char *line)
- 			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
- 		dumpin_fd = svndump_proc.out;
- 	}
-+	/* setup marks file import/export */
-+	printf("feature import-marks-if-exists=%s\n"
-+			"feature export-marks=%s\n", marksfilename, marksfilename);
+-int svndump_init(const char *filename)
++static void init(int report_fd)
+ {
+-	if (buffer_init(&input, filename))
+-		return error("cannot open %s: %s", filename, strerror(errno));
+-	fast_export_init(REPORT_FILENO);
++	fast_export_init(report_fd);
+ 	strbuf_init(&dump_ctx.uuid, 4096);
+ 	strbuf_init(&dump_ctx.url, 4096);
+ 	strbuf_init(&rev_ctx.log, 4096);
+@@ -482,6 +480,22 @@ int svndump_init(const char *filename)
+ 	reset_dump_ctx(NULL);
+ 	reset_rev_ctx(0);
+ 	reset_node_ctx(NULL);
++	return;
++}
 +
- 	svndump_init_fd(dumpin_fd, STDIN_FILENO);
- 	svndump_read(url, private_ref);
- 	svndump_deinit();
-@@ -172,6 +177,10 @@ int main(int argc, const char **argv)
- 	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
- 	private_ref = strbuf_detach(&buf, NULL);
- 
-+	strbuf_addf(&buf, "%s/info/fast-import/remote-svn/%s.marks",
-+		get_git_dir(), remote->name);
-+	marksfilename = strbuf_detach(&buf, NULL);
++int svndump_init(const char *filename)
++{
++	if (buffer_init(&input, filename))
++		return error("cannot open %s: %s", filename ? filename : "NULL", strerror(errno));
++	init(REPORT_FILENO);
++	return 0;
++}
 +
- 	while(1) {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
- 			if (ferror(stdin))
-@@ -187,5 +196,6 @@ int main(int argc, const char **argv)
- 	strbuf_release(&buf);
- 	free((void*)url);
- 	free((void*)private_ref);
-+	free((void*)marksfilename);
++int svndump_init_fd(int in_fd, int back_fd)
++{
++	if(buffer_fdinit(&input, xdup(in_fd)))
++		return error("cannot open fd %d: %s", in_fd, strerror(errno));
++	init(xdup(back_fd));
  	return 0;
  }
+ 
+diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
+index df9ceb0..acb5b47 100644
+--- a/vcs-svn/svndump.h
++++ b/vcs-svn/svndump.h
+@@ -2,6 +2,7 @@
+ #define SVNDUMP_H_
+ 
+ int svndump_init(const char *filename);
++int svndump_init_fd(int in_fd, int back_fd);
+ void svndump_read(const char *url);
+ void svndump_deinit(void);
+ void svndump_reset(void);
 -- 
 1.7.9.5
