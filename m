@@ -1,118 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] checkout: reorder option handling
-Date: Tue, 28 Aug 2012 13:45:31 -0700
-Message-ID: <7vipc2zqxg.fsf@alter.siamese.dyndns.org>
-References: <7vr4qroel6.fsf@alter.siamese.dyndns.org>
- <1346161748-25651-1-git-send-email-pclouds@gmail.com>
- <1346161748-25651-3-git-send-email-pclouds@gmail.com>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH/RFC] Add gui.displayuntracked option
+Date: Tue, 28 Aug 2012 23:46:47 +0300
+Message-ID: <20120828204647.GA15612@findesk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 28 22:45:43 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 28 22:54:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6SfO-0001T9-0y
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 22:45:42 +0200
+	id 1T6SoG-00075N-D6
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 22:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753238Ab2H1Upf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Aug 2012 16:45:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55405 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753097Ab2H1Upe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Aug 2012 16:45:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 181F48733;
-	Tue, 28 Aug 2012 16:45:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zgR4oE1YSeJV
-	2Oqo4VlF33cjeks=; b=a2qZyGysXxENpnx+j4FkeNQcoywQ/sJDen95qbW0DXmM
-	EaCVVWdk3N1PfBhuxLZCX70VDQgedi5t63IH9tMOV9vNIC3rIt0EkofymNugF0Nw
-	oITaPS4oOujRwgSbgVdT5WTJoOP1Ar4ftz+7SjoGKBr0gWoHecUawwD0myxi3KM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=m141OW
-	6shgVkI8ORCPserhiTw+zoAYg4bYR5txBbEepfU3cvhfcPO/mN4fyUYWhRc8HcUN
-	XIl0ScmXA+Z4xsRODs8z4vOGDmu5z2dzYRmkb8Q746I0rPMJd+DvTMOj9ncRO7v+
-	fnQkE/VmnwsoSJ8H+244wsa5IdjDqS/9D5Gn0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 058008732;
-	Tue, 28 Aug 2012 16:45:34 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00FC7872F; Tue, 28 Aug 2012
- 16:45:32 -0400 (EDT)
-In-Reply-To: <1346161748-25651-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 28 Aug
- 2012 20:49:07 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4FBAD658-F151-11E1-87FE-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752901Ab2H1Uyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 16:54:45 -0400
+Received: from p3plsmtpa09-07.prod.phx3.secureserver.net ([173.201.193.236]:57932
+	"EHLO p3plsmtpa09-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752276Ab2H1Uyp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Aug 2012 16:54:45 -0400
+X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Aug 2012 16:54:45 EDT
+Received: from findesk ([89.27.29.195])
+	by p3plsmtpa09-07.prod.phx3.secureserver.net with 
+	id sLmX1j0014CavkR01Lmd4y; Tue, 28 Aug 2012 13:46:38 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204452>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+When git is used to track only a subset of a directory, or
+there is no sure way to divide files to ignore from files to track,
+git user have to live with large number of untracked files. These files
+present in file list, and should always be scrolled through
+to handle real changes. Situation can become even worse, then number
+of the untracked files grows above the maxfilesdisplayed limit. In the
+case, even staged files can be hidden by git-gui.
 
-> checkout operates in three different modes. On top of that it tries t=
-o
-> be smart by guessing the branch name for switching. This results in
-> messy option handling code. This patch reorders it so:
->
->  - easy option handling comes first
->  - the big chunk of branch name guessing comes next
->  - mode detection comes last. Once the mode is known, check again to
->    see if users specify any incompatible options
->  - the actual action is done
->
-> Another slight improvement is always print branch name (or commit
-> name) when printing errors related ot them. This helps catch the case
-> where an option is mistaken as branch/commit.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> ...
-> +	/* Easy mode-independent incompatible checks */
->  	if (opts.force_detach && (opts.new_branch || opts.new_orphan_branch=
-))
->  		die(_("--detach cannot be used with -b/-B/--orphan"));
+This change introduces new configuration variable gui.displayuntracked,
+which, when set to false, instructs git-gui not to show untracked files
+in files list. They can be staged from commandline or other tools (like
+IDE of file manager), then they become visible. Default value of the
+option is true, which is compatible with current behavior.
 
-Did you catch "--detach -B" combination without checking new_branch_for=
-ce?
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ git-gui/git-gui.sh     |   14 ++++++++++----
+ git-gui/lib/option.tcl |    1 +
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
->  	if (opts.force_detach && 0 < opts.track)
->  		die(_("--detach cannot be used with -t"));
-> +	if (opts.force && opts.merge)
-> +		die(_("git checkout: -f and -m are incompatible"));
-> +
-> +	if (conflict_style) {
-> +		opts.merge =3D 1; /* implied */
-> +		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-> +	}
-
-"checkout --conflict=3Ddiff3 -f <branch>" would imply combination of
-"-m" and "-f", which is supposed to be forbidden in the previous
-check, no?
-
-I very much like the idea of separating things in phases like your
-proposed log message explains.  But I wonder if the order should be
-to do dwimming and parameter canonicalization first, then decide the
-mode (these might have to be swapped, as the same parameter may dwim
-down to different things depending on the mode), and finally check
-for sanity before performing.
-
-To avoid confusion, it also might not be a bad idea to remove
-new_branch_force and new_orphan_branch from the structure and
-introduce "enum branch_creation_type" or something, and always have
-the new branch name in "new_branch" field (this needs to get various
-pointers into opts out of the parseopt options[] array; parse into
-separate variables and decide what to put in "struct checkout_opts"),
-independent from how that branch is going to be created (either -b,
--B, or --orphan).
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index ba4e5c1..504fc4a 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -897,6 +897,7 @@ set font_descs {
+ 	{fontdiff font_diff {mc "Diff/Console Font"}}
+ }
+ set default_config(gui.stageuntracked) ask
++set default_config(gui.displayuntracked) true
+ 
+ ######################################################################
+ ##
+@@ -1535,18 +1536,23 @@ proc rescan_stage2 {fd after} {
+ 	set buf_rdf {}
+ 	set buf_rlo {}
+ 
+-	set rescan_active 3
++	set rescan_active 2
+ 	ui_status [mc "Scanning for modified files ..."]
+ 	set fd_di [git_read diff-index --cached -z [PARENT]]
+ 	set fd_df [git_read diff-files -z]
+-	set fd_lo [eval git_read ls-files --others -z $ls_others]
+ 
+ 	fconfigure $fd_di -blocking 0 -translation binary -encoding binary
+ 	fconfigure $fd_df -blocking 0 -translation binary -encoding binary
+-	fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
++
+ 	fileevent $fd_di readable [list read_diff_index $fd_di $after]
+ 	fileevent $fd_df readable [list read_diff_files $fd_df $after]
+-	fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
++
++	if {[is_config_true gui.displayuntracked]} {
++		set fd_lo [eval git_read ls-files --others -z $ls_others]
++		fconfigure $fd_lo -blocking 0 -translation binary -encoding binary
++		fileevent $fd_lo readable [list read_ls_others $fd_lo $after]
++		incr rescan_active
++	}
+ }
+ 
+ proc load_message {file} {
+diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
+index 0cf1da1..2177db6 100644
+--- a/git-gui/lib/option.tcl
++++ b/git-gui/lib/option.tcl
+@@ -159,6 +159,7 @@ proc do_options {} {
+ 		{c gui.encoding {mc "Default File Contents Encoding"}}
+ 		{b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
+ 		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
++		{b gui.displayuntracked {mc "Show untracked files"}}
+ 		} {
+ 		set type [lindex $option 0]
+ 		set name [lindex $option 1]
+-- 
+1.7.9.1
