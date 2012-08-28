@@ -1,130 +1,91 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: GC of alternate object store (was: Bringing a bit more sanity to $GIT_DIR/objects/info/alternates?)
-Date: Tue, 28 Aug 2012 21:19:53 +0200 (CEST)
-Message-ID: <hbf.20120828vnfp@bombur.uio.no>
-References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
-	<loom.20120827T233125-780@post.gmane.org>
-Cc: git@vger.kernel.org
-To: Oswald Buddenhagen <ossi@kde.org>
-X-From: git-owner@vger.kernel.org Tue Aug 28 21:20:06 2012
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: git checkout -t -B
+Date: Tue, 28 Aug 2012 21:01:21 +0100
+Organization: OPDS
+Message-ID: <87A0826508F54AD6A049B71BC5AD8E0A@PhilipOakley>
+References: <CAHtLG6QgnvG6eYEChojY_jB25QWqxis6brbst2ff5FixFLAXAw@mail.gmail.com> <7v8vd1v6q2.fsf@alter.siamese.dyndns.org> <10B409063A944B298250064D2DB0BAB7@PhilipOakley> <7vsjb7q5rq.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 28 22:01:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6RKX-0000c1-MF
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 21:20:06 +0200
+	id 1T6RyY-00005w-Up
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 22:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160Ab2H1TT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 15:19:57 -0400
-Received: from mail-out2.uio.no ([129.240.10.58]:56832 "EHLO mail-out2.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751199Ab2H1TTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 15:19:55 -0400
-Received: from mail-mx2.uio.no ([129.240.10.30])
-	by mail-out2.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1T6RKM-0005rA-AU; Tue, 28 Aug 2012 21:19:54 +0200
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx2.uio.no with esmtp  (Exim 4.80)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1T6RKL-0006J9-PF; Tue, 28 Aug 2012 21:19:54 +0200
-Received: by bombur.uio.no (Postfix, from userid 2112)
-	id 86C1E81C; Tue, 28 Aug 2012 21:19:53 +0200 (CEST)
-In-Reply-To: <loom.20120827T233125-780@post.gmane.org>
-X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 4 sum msgs/h 1 total rcpts 2565 max rcpts/h 20 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.5, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-1.018,UIO_DOLLAR=0.5,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 46BCE0DBAACAF88ED46DCB2DF587ED5EE5691CB0
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -54 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1338 max/h 33 blacklist 0 greylist 0 ratelimit 0
+	id S1753147Ab2H1UBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 16:01:19 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:44640 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753081Ab2H1UBS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Aug 2012 16:01:18 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AskNAAcjPVBZ8rU+/2dsb2JhbABFhgOFP64qBAEBAnuBCIIbBQEBBAEIAQEZFR4BASELAgMFAgEDFQEEAgUhAgIUAQQaBgcXBhMIAgECAwGHdgqpEpMzgSGJZ4EQC0uDYTJgA41cmA+CZA
+X-IronPort-AV: E=Sophos;i="4.80,328,1344207600"; 
+   d="scan'208";a="549109656"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 28 Aug 2012 21:01:16 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204449>
 
-Oswald Buddenhagen wrote:
-> (...)so the second approach is the "bare aggregator repo" which adds
-> all other repos as remotes, and the other repos link back via
-> alternates. problems:
-> 
-> - to actually share objects, one always needs to push to the aggregator
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Tuesday, August 28, 2012 12:22 AM
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> I searched for all occurrences of '[[' which would indicate a double
+>> optional argument within the synopsis and only found git-read-tree.
+>
+> Double-optional?  That is not an issue.
 
-Run a cron job which frequently does that?
+For clarification, I was picking out the particular case that I saw in
+the git checkout syntax of an option (which necessarily starts with a
+first `[` ) which is actually then a multi-choice option, so has a
+second '[' for that, and then has the required parameter after the
+closing ']' of the multi-choice, then another ']' after the parameter - 
+hence my 'double optional argument' statement.
 
-> - tags having a shared namespace doesn't actually work, because the
-> repos have the same tags on different commits (they are independent
-> repos, after all)
+It was the multi-choice option, with parameter case that I was looking
+for, as that multi-choice part would be easy to confuse with the normal
+list of many options.
 
-Junio's proposal partially fixes that: It pushes refs/* instead of
-refs/heads/*, to refs/remotes/<borrowing repo>/.  However...
+>
+> If an option always takes a parameter, we would have
+>
+> git cmd [--option parameter]
+>
+> instead of one of
+>
+> git cmd [--option]
+> git cmd [--option] parameter
+> git cmd [--option] parameter...
+>
+> and if we had
+>
+> --option::
+>        This option distims the parameter ...
+>
+> that needs to be updated to
+>
+> --option parameter::
+>        This option distims the parameter ...
 
-> - one still cannot safely garbage-collect the aggregator, as the refs
-> don't include the stashes and the index, so rebasing may invalidate
-> these more transient objects.
+Agreed.
 
-Also if you copy a repo (e.g. making a backup) instead of cloning it,
-and then start using both, they'll push into the same namespace -
-overwriting each other's refs.  Non-fast-forward pushes can thus lose
-refs to objects needed by the other repo.
-
-receive.denyNonFastForwards only rejects pushes to refs/heads/ or
-something.  (A feature, as I learned when I reported it as bug:-)
-IIRC Git has no config option to reject all non-fast-forward pushes.
-
-> i would re-propose hallvard's "volatile" alternates (at least i think that's
-> what he was talking about two weeks ago): they can be used to obtain
-> objects, but every object which is in any way referenced from the current
-> clone must be available locally (or from a "regular" alternate). that means
-> that diffing, etc.  would get objects only temporarily, while cherry-picking
-> would actually copy (some of) the objects. this would make it possible to
-> "cross-link" repositories, safely and without any "3rd parties".
-
-I'm afraid that idea by itself won't work:-(  Either you borrow from a
-store or not.  If Git uses an object from the volatile store, it can't
-always know if the caller needs the object to be copied.
-
-OTOH volatile stores which you do *not* borrow from would be useful:
-Let fetch/repack/gc/whatever copy missing objects from there.
-
-
-2nd attempt for a way to gc of the alternate repo:  Copy the with
-removed objects into each borrowing repo, then gc them.   Like this:
-
-1. gc, but pack all to-be-removed objects into a "removable" pack.
-
-2. Hardlink/copy the removable pack - with a .keep file - into
-   borrowing repos when feasible:  I.e. repos you can find and
-   have write access to.  Update their .git/objects/info/packs.
-   (Is there a Git command for this?)  Repeat until nothing to do,
-   in case someone created a new repo during this step.
-
-3. Move the pack from the alternate repo to a backup object store
-   which will keep it for a while.
-
-4. Delete the .keep files from step (2).  They were needed in case
-   a user gc'ed away an object from the pack and then added an
-   identical object - borrowed from the to-be-removed pack.
-
-5. gc/repack the other repos at your leisure.
-
-666. Repos you could not update in step (2), can get temporarily
-   broken.  Their owners must link the pack from the backup store by
-   hand, or use that store as a volatile store and then gc/repack.
-
-Loose objects are a problem:  If a repo has longer expiry time(s)
-than the alternate store, it will get loads of loose objects from all
-repos which push into the alternate store.  Worse, gc can *unpack*
-those objects, consuming a lot of space.  See threads "git gc == git
-garbage-create from removed branch" (3 May) and "Keeping unreachable
-objects in a separate pack instead of loose?" (10 Jun).
-
-Presumably the work-arounds are:
-- Use long expiry times in the alternate repo.  I don't know which
-  expiration config settings are relevant how.
-- Add some command which checks and warns if the repo has longer
-  expiry time than the repo it borrows from.
-Also I hope Git will be changed to instead pack such loose objects
-somewhere, as discussed in the above threads.
-
-All in all, this isn't something you'd want to do every day.  But it
-looks doable and can be scripted.
+Philip
