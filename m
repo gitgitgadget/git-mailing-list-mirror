@@ -1,143 +1,109 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC v2 PATCH] Teach rm to remove submodules unless they contain
- a git directory
-Date: Tue, 28 Aug 2012 20:29:29 +0200
-Message-ID: <503D0E09.8010605@web.de>
-References: <503BCD91.6080107@web.de> <7v1uisqcef.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: libgit2 status
+Date: Tue, 28 Aug 2012 11:36:57 -0700
+Message-ID: <7vvcg2zwvq.fsf@alter.siamese.dyndns.org>
+References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
+ <7vharpv77n.fsf@alter.siamese.dyndns.org>
+ <nnglih0jotj.fsf@transit.us.cray.com>
+ <7vfw78s1kd.fsf@alter.siamese.dyndns.org>
+ <nngsjb8i30w.fsf@transit.us.cray.com>
+ <7v6284qfw8.fsf@alter.siamese.dyndns.org> <20120827214027.GA511@vidovic>
+ <nngr4qqhp7x.fsf@transit.us.cray.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	Phil Hord <phil.hord@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 28 20:29:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <dag@cray.com>, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Andreas Ericsson <ae@op5.se>, <greened@obbligato.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 28 20:37:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6QXi-0003Fb-JU
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:29:38 +0200
+	id 1T6Qf1-0007nO-8z
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425Ab2H1S3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 14:29:32 -0400
-Received: from mout.web.de ([212.227.15.3]:60508 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751236Ab2H1S3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 14:29:31 -0400
-Received: from [192.168.178.41] ([91.3.154.93]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0LyUsk-1Tjj8J1rk6-015GKQ; Tue, 28 Aug 2012 20:29:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <7v1uisqcef.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:BjQSfVxWmjo5FzbKc1P0pyIh8m294Ycp8CbP3roYdXw
- Zny3B+DP1+Gp3bsH2lp6d3K2t3ALEk7ArK4tGuuf6rgqXepRKB
- egk5Hztwmc8Noz88uXMuwu7hSznLCpwiMzVwETTQmNcyMh3U8X
- AxO3gXy8pR6incsSTnhoVugzpnhzIWpjQWltxjteG+sGYcER/u
- Y6/D/xz9OUNB7EzmpjnSw==
+	id S1752275Ab2H1ShC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 14:37:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57493 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751014Ab2H1ShA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 14:37:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94A069CF8;
+	Tue, 28 Aug 2012 14:36:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=aa9Wn7EtMWUDFhykTToxMzYGM34=; b=flQ6HfKqcGOo7MIDpWbU
+	xoDSnUT0Wsugh/E3G5jf7PgNFcojs/qGO2JwLzlHLFB2lkMwqL5GYkENn87uk1z3
+	ZPYFKCD5qE3h/DZ0InDlZJRKCwIFX3wjTxenl9uIZ4GjPCe0WKUIF2NuzfYgDl6o
+	DjJ05YqHrm+hmyXwFiDPRO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=T1eE7gX81X9YN2DfW2n603ll3zNfCrhfJqbQLR2gcNVP56
+	fjhB1NVCuyOHJ9Jr+MtZPWULCgeDGCIMR6e1mYNnSWaIIFQmVd7taC50a8vrjV11
+	9rsDidDG1/G1B8x5yN+qZnGE2WgjPeVQSErrf7Ig9rgkMqtpQEekR62mz5IaA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8148F9CF7;
+	Tue, 28 Aug 2012 14:36:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE7139CF6; Tue, 28 Aug 2012
+ 14:36:58 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59C5CF7A-F13F-11E1-857E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204447>
 
-Am 27.08.2012 22:59, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->> +{
->> +	int i;
->> +	int errs = 0;
->> +
->> +	for (i = 0; i < list.nr; i++) {
->> +		const char *name = list.entry[i].name;
->> +		int pos;
->> +		struct cache_entry *ce;
->> +		struct stat st;
->> +
->> +		pos = cache_name_pos(name, strlen(name));
->> +		if (pos < 0)
->> +			continue; /* ignore unmerged entry */
-> 
-> Would this cause "git rm -f path" for an unmerged submodule bypass
-> the safety check?
+<dag@cray.com> writes:
 
-Oops, thanks for spotting that. So replacing the "continue;" with
-"pos = -pos-1;" should do the trick here, right? Will add some
-tests for unmerged submodules ...
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+>
+>> Do you expect one big merge of a very stable libgit2 at some point?
+>
+> I don't think there's any need to merge libgit2 into the git project
+> source.  As a library, it should be perfectly usable as a project of its
+> own, just like libcurl and libz.
+>
+>> Otherwise, what about going with this optionnal "LDFLAGS += -libgit2"
+>> ASAP with good disclaimer that it's only intended for development and
+>> testing purpose? Then, git-core could slowly rely on functions of
+>> libgit2, one after the other.
+>
+> This makes a lot of sense to me.
 
->> +		ce = active_cache[pos];
->> +
->> +		if (!S_ISGITLINK(ce->ce_mode) ||
->> +		    (lstat(ce->name, &st) < 0) ||
->> +		    is_empty_dir(name))
->> +			continue;
->> +
->> +		if (!submodule_uses_gitfile(name))
->> +			errs = error(_("submodule '%s' (or one of its nested "
->> +				     "submodules) uses a .git directory\n"
->> +				     "(use 'rm -rf' if you really want to remove "
->> +				     "it including all of its history)"), name);
->> +	}
->> +
->> +	return errs;
->> +}
-> 
-> The call to this function comes at the very end and gives us yes/no
-> for the entire set of paths.  After getting this error for one
-> submodule and bunch of other non-submodule paths, what is the
-> procedure for the user to remove it that we want to recommend in our
-> documentation?  Would it go like this?
-> 
-> 	$ git rm path1 path2 sub path3
-> 	... get the above error ...
-> 	$ git submodule --to-gitfile sub
->         $ rm -fr sub
->         $ git rm sub
->         ... then finally ...
->         $ git rm path1 path2 path3
+As I already said in my earlier message in $gmane/204305, I wouldn't
+be surprised if some "core stuff" gets reimplemented on top of
+libgit2 and distributed as part of the git-core.  But at this
+moment, I see that just as a blip of possibility far in the future.
 
-With current git I'd recommend:
+It would most likely start slowly, by adding lg-client/cat-file.c
+that is linked with libgit2 when "make USE_LIBGIT2=YesPlease" was
+asked for, and we compile the tried-and-true builtin/cat-file.c
+otherwise ("cat-file" may actually not the most trivial first step,
+though, but I think readers get the idea).
 
- 	$ git rm path1 path2 sub path3
- 	... get the above error ...
-        $ rm -fr sub
- 	... try again ...
-        $ git rm path1 path2 sub path3
+Even after most if not all commands have counterparts reimplemented
+on libgit2, I do not think we can afford to drop any of the original
+for a long time.  For that to happen, at the very least:
 
-Maybe I should add the hint to repeat the git rm after removing the
-submodule to the error output?
+ - libgit2 must be available in major distros so that people can say
+   "[yum|apt-get] install libgit2-dev"; and
 
-Once we implemented "git submodule --to-gitfile" it could be used
-instead of "rm -fr sub" to preserve the submodule's repo if the user
-wants to.
+ - the version of it packaged for major distros are recent and
+   stable enough, so that we never have to say "distro X ships with
+   libgit2 that is too old, so people on that distro have to compile
+   it from the source."
 
-BTW: I added the same message twice, here for the forced case and in
-check_local_mod() when not forced. Is there a recommended way to assign
-a localized message to a static variable, so I could define it only once
-and reuse it?
+which is the quality we expect from libraries we would depend on,
+like -lz, -lcurl, etc.
 
->> @@ -80,8 +116,11 @@ static int check_local_mod(unsigned char *head, int index_only)
->>
->>  		/*
->>  		 * Is the index different from the file in the work tree?
->> +		 * If it's a submodule, is its work tree modified?
->>  		 */
->> -		if (ce_match_stat(ce, &st, 0))
->> +		if (ce_match_stat(ce, &st, 0) ||
->> +		    (S_ISGITLINK(ce->ce_mode) &&
->> +		     !ok_to_remove_submodule(ce->name)))
->>  			local_changes = 1;
-> 
-> As noted before, because we also skip these "does it match the
-> index?  does it match the HEAD?" checks for unmerged paths in this
-> function, a submodule that has local changes or new files is
-> eligible for removal during a conflicted merge.  I have a feeling
-> that this should be tightened a bit; wouldn't we want to check at
-> least in the checked out version (i.e. stage #2 in the index) if the
-> path were a submodule, even if we are in the middle of a conflicted
-> merge?  After all, the top level merge shouldn't have touched the
-> submodule working tree, so the local modes and new files must have
-> come from the end user action that was done _before_ the conflicted
-> merge started, and not expendable, no?
+It is OK if we have to conditionally compile out some of our code in
+the periphery when libgit2 that is available on the platform is too
+old (we allow it for -lcurl already).
 
-Right, I'll change that.
+But all of the above assumes one thing: the reimplementated result
+does not suck ;-) which is a large unknown.
