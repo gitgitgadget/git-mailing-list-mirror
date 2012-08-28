@@ -1,56 +1,61 @@
-From: Matthew Caron <Matt.Caron@redlion.net>
-Subject: Re: I think git show is broken
-Date: Tue, 28 Aug 2012 13:48:27 -0400
-Message-ID: <503D046B.7090606@redlion.net>
-References: <503D022B.6070001@redlion.net>
+From: <dag@cray.com>
+Subject: Re: libgit2 status
+Date: Tue, 28 Aug 2012 12:59:46 -0500
+Message-ID: <nngr4qqhp7x.fsf@transit.us.cray.com>
+References: <87a9xkqtfg.fsf@waller.obbligato.org> <5038A148.4020003@op5.se>
+	<7vharpv77n.fsf@alter.siamese.dyndns.org>
+	<nnglih0jotj.fsf@transit.us.cray.com>
+	<7vfw78s1kd.fsf@alter.siamese.dyndns.org>
+	<nngsjb8i30w.fsf@transit.us.cray.com>
+	<7v6284qfw8.fsf@alter.siamese.dyndns.org>
+	<20120827214027.GA511@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Matthew Caron <Matt.Caron@redlion.net>
-X-From: git-owner@vger.kernel.org Tue Aug 28 19:48:36 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	<greened@obbligato.org>, <git@vger.kernel.org>
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 28 20:00:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6Ptz-0002j5-Sk
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 19:48:36 +0200
+	id 1T6Q55-0001ri-Dh
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 20:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182Ab2H1Rs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 13:48:29 -0400
-Received: from msex2.hq.corp.redlion.net ([205.159.151.218]:24467 "EHLO
-	msex2.hq.corp.redlion.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042Ab2H1Rs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 13:48:28 -0400
-Received: from MSEX1.hq.corp.redlion.net (172.16.2.15) by
- msex2.hq.corp.redlion.net (172.16.2.18) with Microsoft SMTP Server (TLS) id
- 14.0.722.0; Tue, 28 Aug 2012 13:48:28 -0400
-Received: from BL-MSEX1.hq.corp.redlion.net (10.128.0.5) by
- msex1.hq.corp.redlion.net (172.16.2.15) with Microsoft SMTP Server (TLS) id
- 14.1.355.2; Tue, 28 Aug 2012 13:48:27 -0400
-Received: from [10.128.3.6] (10.128.3.6) by BL-MSEX1.hq.corp.redlion.net
- (10.128.0.5) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Aug 2012
- 13:48:27 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <503D022B.6070001@redlion.net>
+	id S1752151Ab2H1R7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 13:59:55 -0400
+Received: from exprod6og101.obsmtp.com ([64.18.1.181]:38988 "EHLO
+	exprod6og101.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751686Ab2H1R7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 13:59:54 -0400
+Received: from CFWEX01.americas.cray.com ([136.162.34.11]) (using TLSv1) by exprod6ob101.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKUD0HFLBb+8S/9JIFg91xjdaXBAWRdTla@postini.com; Tue, 28 Aug 2012 10:59:54 PDT
+Received: from transit.us.cray.com (172.31.17.53) by CFWEX01.americas.cray.com
+ (172.30.88.25) with Microsoft SMTP Server (TLS) id 14.2.318.1; Tue, 28 Aug
+ 2012 12:59:47 -0500
+In-Reply-To: <20120827214027.GA511@vidovic> (Nicolas Sebrecht's message of
+	"Mon, 27 Aug 2012 23:40:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204436>
 
-On 08/28/2012 01:38 PM, Matthew Caron wrote:
-> (otherwise, there was a very strange change made to its functionality,
-> which the documentation does not reflect)
+Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
 
-Never mind.
+> Do you expect one big merge of a very stable libgit2 at some point?
 
-I was looking in the wrong spot. The issue is not with --pretty=oneline, 
-it's with --quiet. In 1.7.0.4, --quiet worked like -s. It no longer does 
-in 1.7.9.5. Switching to -s cures the problem.
+I don't think there's any need to merge libgit2 into the git project
+source.  As a library, it should be perfectly usable as a project of its
+own, just like libcurl and libz.
 
--- 
-Matthew Caron, Software Build Engineer
-Sixnet, a Red Lion business | www.sixnet.com
-+1 (518) 877-5173 x138 office
+> Otherwise, what about going with this optionnal "LDFLAGS += -libgit2"
+> ASAP with good disclaimer that it's only intended for development and
+> testing purpose? Then, git-core could slowly rely on functions of
+> libgit2, one after the other.
+
+This makes a lot of sense to me.
+
+                            -David
