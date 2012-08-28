@@ -1,13 +1,19 @@
 From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH v7 06/16] Add documentation for the 'bidi-import' capability of remote-helpers
-Date: Tue, 28 Aug 2012 10:49:40 +0200
-Message-ID: <1346143790-23491-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
+Subject: [PATCH v7 12/16] remote-svn: Activate import/export-marks for fast-import
+Date: Tue, 28 Aug 2012 10:49:46 +0200
+Message-ID: <1346143790-23491-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
 References: <1346143790-23491-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
  <1346143790-23491-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
+ <1346143790-23491-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Cc: David Michael Barr <b@rr-dav.id.au>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
@@ -17,91 +23,96 @@ Cc: David Michael Barr <b@rr-dav.id.au>,
 	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 28 10:51:38 2012
+X-From: git-owner@vger.kernel.org Tue Aug 28 10:51:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6HWK-00022f-7p
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 10:51:36 +0200
+	id 1T6HWN-00022f-3O
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Aug 2012 10:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875Ab2H1IvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 04:51:14 -0400
+	id S1752112Ab2H1Ive (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Aug 2012 04:51:34 -0400
 Received: from mail-bk0-f46.google.com ([209.85.214.46]:51578 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751588Ab2H1IvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 04:51:11 -0400
-Received: by bkwj10 with SMTP id j10so1533185bkw.19
-        for <git@vger.kernel.org>; Tue, 28 Aug 2012 01:51:10 -0700 (PDT)
+	with ESMTP id S1752024Ab2H1IvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Aug 2012 04:51:25 -0400
+Received: by mail-bk0-f46.google.com with SMTP id j10so1533185bkw.19
+        for <git@vger.kernel.org>; Tue, 28 Aug 2012 01:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=vh4dlNy+nY9Pl3ZyyPrx9L+nGChyAd+TvlRlGuxc3QY=;
-        b=V4y5H1PgGTl0xDT1dsBPbnSrHDBB+dQAce5hk/YZRaFFtg7eCU7v9YuAbkqoBqAMVF
-         cfTVEA22+kxRSOyzpAvo/cmj2OfvI8jRIOjTRdywbKxMQ8LdS/kFpND8gDSlRRbm110a
-         FNprzasvTawgsbaD0KEOqaHnqF1aAkN3oip+c/Wdtieoqky2XcVlGeS+VWYW0w7nzixx
-         /RdP/bA11xmC+cYqUx7PKNjdwrIzO/N5R1HTDVlue112fSGwjO5LniMieZF8/GQ1f7NS
-         gB5Wiw1Xd41fMcxyFtiAYhRO4WBtP0mE1w11R53rrL7HTC6pCmtqFRyRevmE62GTC+O2
-         j3Tw==
-Received: by 10.204.136.215 with SMTP id s23mr4527336bkt.32.1346143870414;
-        Tue, 28 Aug 2012 01:51:10 -0700 (PDT)
+        bh=QrTLSDllwR82ZEfJGuqrjFdvgS8wHb6Tvr2O+W9UZgo=;
+        b=Vm4yUeNQy8jgOSmWDvRHtsMiAWuETX4+8WmWc7gqWV30G0fv7Z5iRos83pTRaJEtv7
+         9vf5xMUQ7iyf3Lii2ADwGVgKIXI8y4FY4ob46KOhqjhzxNb5/IwqPzh59M2atIimoezm
+         gW79PMzTsZVTk9RAzk5mDmscmxiTpSfO+TTNROCBmfbVbtNmfgiaaXESd1OMLy0Kn6PF
+         4hq5lqyWUUmDAH643dxMD9wvpSQSQECf94xI49fhhlM8vDkx/nF+kDJtFVqHdkLLgEF2
+         SASOSMPIJyL6zGQK2nvUxaKiT6KN4JuIlp9mnV2j4bv6YuwD7BPbErbCKHLj8i3GGqb/
+         jdxg==
+Received: by 10.204.152.137 with SMTP id g9mr4698492bkw.106.1346143885143;
+        Tue, 28 Aug 2012 01:51:25 -0700 (PDT)
 Received: from flobuntu.lan (91-115-85-203.adsl.highway.telekom.at. [91.115.85.203])
-        by mx.google.com with ESMTPS id m9sm12047800bkm.10.2012.08.28.01.51.08
+        by mx.google.com with ESMTPS id m9sm12047800bkm.10.2012.08.28.01.51.23
         (version=SSLv3 cipher=OTHER);
-        Tue, 28 Aug 2012 01:51:09 -0700 (PDT)
+        Tue, 28 Aug 2012 01:51:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1346143790-23491-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
+In-Reply-To: <1346143790-23491-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204405>
+
+Enable import and export of a marks file by sending the appropriate
+feature commands to fast-import before sending data.
 
 Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-remote-helpers.txt |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ remote-testsvn.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index f5836e4..5ce4cda 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -98,6 +98,20 @@ advertised with this capability must cover all refs reported by
- the list command.  If no 'refspec' capability is advertised,
- there is an implied `refspec *:*`.
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index 2b9d151..b6e7968 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -12,6 +12,7 @@ static const char *url;
+ static int dump_from_file;
+ static const char *private_ref;
+ static const char *remote_ref = "refs/heads/master";
++static const char *marksfilename;
  
-+'bidi-import'::
-+	The fast-import commands 'cat-blob' and 'ls' can be used by remote-helpers
-+	to retrieve information about blobs and trees that already exist in
-+	fast-import's memory. This requires a channel from fast-import to the
-+	remote-helper.
-+	If it is advertised in addition to "import", git establishes a pipe from
-+	fast-import to the remote-helper's stdin.
-+	It follows that git and fast-import are both connected to the
-+	remote-helper's stdin. Because git can send multiple commands to
-+	the remote-helper it is required that helpers that use 'bidi-import'
-+	buffer all 'import' commands of a batch before sending data to fast-import.
-+	This is to prevent mixing commands and fast-import responses on the
-+	helper's stdin.
+ static int cmd_capabilities(const char *line);
+ static int cmd_import(const char *line);
+@@ -74,6 +75,10 @@ static int cmd_import(const char *line)
+ 			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
+ 		dumpin_fd = svndump_proc.out;
+ 	}
++	/* setup marks file import/export */
++	printf("feature import-marks-if-exists=%s\n"
++			"feature export-marks=%s\n", marksfilename, marksfilename);
 +
- Capabilities for Pushing
- ~~~~~~~~~~~~~~~~~~~~~~~~
- 'connect'::
-@@ -286,7 +300,12 @@ terminated with a blank line. For each batch of 'import', the remote
- helper should produce a fast-import stream terminated by a 'done'
- command.
- +
--Supported if the helper has the "import" capability.
-+Note that if the 'bidi-import' capability is used the complete batch
-+sequence has to be buffered before starting to send data to fast-import
-+to prevent mixing of commands and fast-import responses on the helper's
-+stdin.
-++
-+Supported if the helper has the 'import' capability.
+ 	svndump_init_fd(dumpin_fd, STDIN_FILENO);
+ 	svndump_read(url, private_ref);
+ 	svndump_deinit();
+@@ -172,6 +177,10 @@ int main(int argc, const char **argv)
+ 	strbuf_addf(&buf, "refs/svn/%s/master", remote->name);
+ 	private_ref = strbuf_detach(&buf, NULL);
  
- 'connect' <service>::
- 	Connects to given service. Standard input and standard output
++	strbuf_addf(&buf, "%s/info/fast-import/remote-svn/%s.marks",
++		get_git_dir(), remote->name);
++	marksfilename = strbuf_detach(&buf, NULL);
++
+ 	while(1) {
+ 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
+ 			if (ferror(stdin))
+@@ -187,5 +196,6 @@ int main(int argc, const char **argv)
+ 	strbuf_release(&buf);
+ 	free((void*)url);
+ 	free((void*)private_ref);
++	free((void*)marksfilename);
+ 	return 0;
+ }
 -- 
 1.7.9.5
