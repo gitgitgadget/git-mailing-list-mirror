@@ -1,81 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GC of alternate object store
-Date: Wed, 29 Aug 2012 08:52:27 -0700
-Message-ID: <7v3935y9tw.fsf@alter.siamese.dyndns.org>
-References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
- <loom.20120827T233125-780@post.gmane.org> <hbf.20120828vnfp@bombur.uio.no>
- <20120829074249.GA14408@ugly.local>
+From: Emmanuel Michon <emmanuel_michon@sigmadesigns.com>
+Subject: (minor concern) git using the pager should not be a default
+Date: Wed, 29 Aug 2012 18:02:06 +0200
+Message-ID: <503E3CFE.1080603@sigmadesigns.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org
-To: Oswald Buddenhagen <ossi@kde.org>
-X-From: git-owner@vger.kernel.org Wed Aug 29 17:52:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 29 18:18:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6kZK-0006PO-H7
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 17:52:38 +0200
+	id 1T6kyd-0006yi-1j
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 18:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753994Ab2H2Pwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 11:52:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59396 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752790Ab2H2Pwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 11:52:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 433938EF3;
-	Wed, 29 Aug 2012 11:52:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mLh55vC/pbB28aGNQA1l7zhPHPU=; b=lgQ+LA
-	nO4fhnVdFHXwWJe/d3wAWB0/SffReEce72HYyEACbbzcgEKqJ9aTpGoi+HyUIMEu
-	HmG2mHVsH6UT9Zkj0x8oZzZrgUlT0XKRiCdBlTeFs6HD3DX1ALi+aFvheHu/ccxu
-	5QRG/E+YpLSgTQOqBf/Az5nwlKZXQeSOcFwm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qRHbJ7MGbGhmRJrB/purB4FZhdwnv+6v
-	90safpbgsFibGsHAjeAP03IpZdZrwWXy3z/qwOb5f7iZIdExhU7ofIZ4gH8f6Lwj
-	oPFZxRZbW8HNIhR/la4ahMUS7P3pghhgldWbxFPxlcFLtLnFfRuF/nts4OHWMvky
-	f/m896GkMmc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D9738EF0;
-	Wed, 29 Aug 2012 11:52:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B7B58EEC; Wed, 29 Aug 2012
- 11:52:29 -0400 (EDT)
-In-Reply-To: <20120829074249.GA14408@ugly.local> (Oswald Buddenhagen's
- message of "Wed, 29 Aug 2012 09:42:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 89A3BFBA-F1F1-11E1-AF13-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754125Ab2H2QSl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Aug 2012 12:18:41 -0400
+Received: from maildk.sigmadesigns.com ([195.215.56.173]:58458 "EHLO
+	maildk.sigmadesigns.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013Ab2H2QSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 12:18:40 -0400
+X-Greylist: delayed 990 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Aug 2012 12:18:39 EDT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+X-Enigmail-Version: 1.4.4
+X-Originating-IP: [172.27.0.175]
+X-FEAS-SYSTEM-WL: emmanuel_michon@sigmadesigns.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204482>
 
-Oswald Buddenhagen <ossi@kde.org> writes:
+Hello,
 
-> On Tue, Aug 28, 2012 at 09:19:53PM +0200, Hallvard Breien Furuseth wrote:
-> ...
->> Junio's proposal partially fixes that: It pushes refs/* instead of
->> refs/heads/*, to refs/remotes/<borrowing repo>/.  However...
->> 
-> i did exacty that. the tags are *still* not populated - git just tries
-> very hard to treat them specially.
+I'm risking myself on this mailing list after looking for some advise o=
+n
+IRC. Basically I know about this previous attempt
+http://marc.info/?l=3Dgit&m=3D122955045415845&w=3D2 but my request has =
+little
+to do with emacs.
 
-Just this part (I won't comment on the other parts in this discussion).
+I believe UNIX recommends some rules in the =ABless is more=BB spirit w=
+hen
+designing command line applications [basically listed here:
+http://en.wikipedia.org/wiki/Unix_philosophy].
 
-Doesn't
+As far as I understand those, stdin/out/err would be better left with
+minimum processing. Silent execution with $? =3D 0 is the best thing th=
+at
+can happen.
 
-	git push $over_there 'refs/*:refs/remotes/mine/*'
+Per those rules, which I think apply to Linux apps, it would be
+preferrable if the *default* setup of git didn't fork a pager, didn't
+use colors, didn't behave differently whether piped or not.
 
-push your tag v1.0 to refs/remotes/mine/v1.0 over there?  The
-version of git I ship seems to do this just fine.
+Of course I would be the first to always call the tool with
+git diff |less
+excepted when I do git diff |diffstat
+or enjoy such options as command line or environment switches to git.
+when I want.
 
-> and the "stash" file is also ignored, unfortunately.
+So the point is more about the appropriateness of pushing that special
+ergonomy to all users, knowing it makes most users happy.
 
-There is a work in progress to do this on 'pu'.
+Isn't the design principle superior to the wishes of the masses?
+
+Thanks for reading,
+Don't laugh,
+Keep on the good work.
+
+Sincerely yours,
+
+e.m.
