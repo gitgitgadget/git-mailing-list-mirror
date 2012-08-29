@@ -1,61 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: (minor concern) git using the pager should not be a default
-Date: Wed, 29 Aug 2012 10:19:00 -0700
-Message-ID: <7vligxwr97.fsf@alter.siamese.dyndns.org>
-References: <503E3CFE.1080603@sigmadesigns.com>
+From: Dan Johnson <computerdruid@gmail.com>
+Subject: Re: [PATCH v2 1/3] teach log --no-walk=unsorted, which avoids sorting
+Date: Wed, 29 Aug 2012 13:34:08 -0400
+Message-ID: <CAPBPrnstykXxTEH56YFDqU2XW+o8WRKBN6=QOTpLJ1jRU7DXCA@mail.gmail.com>
+References: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+	<1346220956-25034-1-git-send-email-martinvonz@gmail.com>
+	<1346220956-25034-2-git-send-email-martinvonz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Emmanuel Michon <emmanuel_michon@sigmadesigns.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 19:19:16 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 19:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6lv8-0002D2-4P
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 19:19:14 +0200
+	id 1T6m9h-0005Nu-EO
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 19:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab2H2RTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 13:19:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33871 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753606Ab2H2RTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 13:19:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F9518760;
-	Wed, 29 Aug 2012 13:19:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cUVPcZDFEK9fp9fPt7i26BPHwjA=; b=pf5Klo
-	84qWru/mgpJxtu8HOb8qnrF4XjaLffUHA5TqSSOk6sjV81arwOdJJ9Yj+4bQiGWJ
-	rzlgJszyE9ZkhcnrFNWWXFstrbD1Jh3sgLXneXWyLCX51T08yNgh2P7eMpSt7tER
-	WhKGyY/C1H9P8vkAcS+XMcjRC5jjNcEk3BPEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TwJz6DLHek55lsGX/KPudQJoKvlepy2o
-	dzzas3WSSk2osoSVvYjKmEz636IucJFD/g8zopeArYK/mCXuhc94dl06Fdim9edW
-	5MEKz0Ef6RCzNOfHJ0pOR+9c4r2d8cvQNRRkfHGFAAS3JnDT2AUveqabEX9E+Ssn
-	dak6Dm7tc7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D05C875D;
-	Wed, 29 Aug 2012 13:19:03 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E29BF875C; Wed, 29 Aug 2012
- 13:19:02 -0400 (EDT)
-In-Reply-To: <503E3CFE.1080603@sigmadesigns.com> (Emmanuel Michon's message
- of "Wed, 29 Aug 2012 18:02:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A115068E-F1FD-11E1-9C38-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753673Ab2H2ReL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 13:34:11 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:47551 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753324Ab2H2ReJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 13:34:09 -0400
+Received: by eekc1 with SMTP id c1so354936eek.19
+        for <git@vger.kernel.org>; Wed, 29 Aug 2012 10:34:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wtOzLnlGG8Q1Jsp4/t8tB3OdY9exhqyGIDN3PKn6sVU=;
+        b=yWkjtEbhJNa49oSnb+4rGbH5IGCisfM8SSwyEK2sJ7J5eaHzLKi4Q5yFAQLZwaV2F9
+         4IhIqLI6OUF8Ns6xbtLga7Zn0uqQNwfAveBvPxvAs5eO3YR3PXN1hExdUFAxHDWIiOPu
+         aLnQN5tOZlhmacCi844dO7Z+cC2LDfhsZEJfS4ESXkfQYC6SjjyiQWQqPogzGrHtC2cB
+         D8PQ3vzBQ9bOO6waG5jfMxu+CBcpUZrPIIgOBpE44yj6ChvhdrLrTrr1hNyDyR8tnn6N
+         h/lEcWHOwVlLoPibaRgV6C3dekxTvtoXPDpD2oUGOkH5GP5SYsjUUxp1Y/9+EUvw+M3C
+         jipQ==
+Received: by 10.14.4.201 with SMTP id 49mr3038676eej.0.1346261648756; Wed, 29
+ Aug 2012 10:34:08 -0700 (PDT)
+Received: by 10.14.119.199 with HTTP; Wed, 29 Aug 2012 10:34:08 -0700 (PDT)
+In-Reply-To: <1346220956-25034-2-git-send-email-martinvonz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204488>
 
-Emmanuel Michon <emmanuel_michon@sigmadesigns.com> writes:
+On Wed, Aug 29, 2012 at 2:15 AM, Martin von Zweigbergk
+<martinvonz@gmail.com> wrote:
+> When 'git log' is passed the --no-walk option, no revision walk takes
+> place, naturally. Perhaps somewhat surprisingly, however, the provided
+> revisions still get sorted by commit date. So e.g 'git log --no-walk
+> HEAD HEAD~1' and 'git log --no-walk HEAD~1 HEAD' give the same result
+> (unless the two revisions share the commit date, in which case they
+> will retain the order given on the command line). As the commit that
+> introduced --no-walk (8e64006 (Teach revision machinery about
+> --no-walk, 2007-07-24)) points out, the sorting is intentional, to
+> allow things like
+>
+>  git log --abbrev-commit --pretty=oneline --decorate --all --no-walk
+>
+> to show all refs in order by commit date.
+>
+> But there are also other cases where the sorting is not wanted, such
+> as
+>
+>  <command producing revisions in order> |
+>        git log --oneline --no-walk --stdin
+>
+> To accomodate both cases, leave the decision of whether or not to sort
+> up to the caller, by allowing --no-walk={sorted,unsorted}, defaulting
+> to 'sorted' for backward-compatibility reasons.
+>
+> Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+> ---
 
-> Isn't the design principle superior to the wishes of the masses?
+Perhaps I am missing something from an earlier discussion, but it is
+not obvious to me why this is an option to the no-walk behavior and
+not something like --sorted/--unsorted as a separate option.
 
-Only when you are living an ideal fantasy land.
+In other words, I don't understand why you always want to sort if you
+are doing revision walking.
+
+Thanks for any explanation,
+-Dan
