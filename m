@@ -1,90 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] test: set the realpath of CWD as TRASH_DIRECTORY
-Date: Tue, 28 Aug 2012 23:06:53 -0700
-Message-ID: <7vmx1exmde.fsf@alter.siamese.dyndns.org>
-References: <5030F0BF.2090500@alum.mit.edu>
- <f58965733e604a9fe6ed72384d0307062403b478.1346043214.git.worldhello.net@gmail.com> <7vk3wktiph.fsf@alter.siamese.dyndns.org> <503D973D.8040402@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 29 08:07:04 2012
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: [PATCH v2 0/3] revision (no-)walking in order
+Date: Tue, 28 Aug 2012 23:15:53 -0700
+Message-ID: <1346220956-25034-1-git-send-email-martinvonz@gmail.com>
+References: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 29 08:17:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6bQd-0007gI-Sz
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 08:07:04 +0200
+	id 1T6bai-0006nI-Au
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 08:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751620Ab2H2GG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 02:06:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59741 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750986Ab2H2GGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 02:06:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A5346F3D;
-	Wed, 29 Aug 2012 02:06:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1GPpfJRt9g1ecCYcXTh/bwa+D58=; b=DZXDV3
-	ZRnfC+ozISzdv4SVvzVawWGNT0U6Fblx1aEdBKaXWfvhL17ijf1r/UGtVoF9IgdV
-	D1/uVMoPMsw+Svxm+6fB6pzrxsFsN6SPDko7P5ygb7hyEbsdbhsPyf7LC9G1J7hM
-	4Ddj0ORRBuXC82+GCZbf/EkCgVMM0yexItso4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vXc4EXsHB1L/DIV2e9VmFYJu7DoGHYeA
-	Nm1gdD1eouI/KnSI13DqsS65dyJy8kWnTDY8mn3V1I9+uxKwwsWq+xPIiZj2zRPG
-	upqrLBWeefc8MhBMB3gT8O6cLyfkhiz3E44ZFlVHo41qSgz4JevS4s6hBFUGGznt
-	4pIMFUEg6r8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 571B26F3C;
-	Wed, 29 Aug 2012 02:06:55 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3F5B6F3B; Wed, 29 Aug 2012
- 02:06:54 -0400 (EDT)
-In-Reply-To: <503D973D.8040402@alum.mit.edu> (Michael Haggerty's message of
- "Wed, 29 Aug 2012 06:14:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB9B7AB4-F19F-11E1-883B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751707Ab2H2GQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 02:16:40 -0400
+Received: from mail-yw0-f74.google.com ([209.85.213.74]:40070 "EHLO
+	mail-yw0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750986Ab2H2GQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 02:16:40 -0400
+Received: by yhl10 with SMTP id 10so20121yhl.1
+        for <git@vger.kernel.org>; Tue, 28 Aug 2012 23:16:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-gm-message-state;
+        bh=kHBJqcRayvL6r2pWLXgOV0XYRgBA6XvQFsdCtFI2WU4=;
+        b=dxdENQHl59ReO25Fg5jaUb0JnitXCbiDsHgYLQ4TQlXveMmI1znnpmDDhDo57SjtZ2
+         8BrNlsXvu708dCqzn16swBvmGenhiuBqp9doIG0MZG5tu3hSUL6OmjPUU12OplfgOKLZ
+         AQpoRtFh6Crq39hQAbeVoGFPRZwDdXZFFbDj7uBEIkp8DK4XtGbFeMeCFLZ0BJrWBZ7G
+         lWNXcwHjsBwfpil3W3VpHmgxtVFJqIH9BqlT4x5IoYAOExSXZU8jrNZzDstF2wzKCy8Q
+         nNP/OC7+RyjcREHYOOb0ACmm9vfFy64chzeLsYdHt7iOQ+8vqKFm79tpK5fc0yZlFz2V
+         0CMg==
+Received: by 10.236.173.202 with SMTP id v50mr396608yhl.8.1346220999426;
+        Tue, 28 Aug 2012 23:16:39 -0700 (PDT)
+Received: by 10.236.173.202 with SMTP id v50mr396593yhl.8.1346220999328;
+        Tue, 28 Aug 2012 23:16:39 -0700 (PDT)
+Received: from wpzn4.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id u67si6743490yhi.7.2012.08.28.23.16.39
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Tue, 28 Aug 2012 23:16:39 -0700 (PDT)
+Received: from handduk2.mtv.corp.google.com (handduk2.mtv.corp.google.com [172.18.98.93])
+	by wpzn4.hot.corp.google.com (Postfix) with ESMTP id 3B4201E0043;
+	Tue, 28 Aug 2012 23:16:39 -0700 (PDT)
+Received: by handduk2.mtv.corp.google.com (Postfix, from userid 151024)
+	id CCFC5C2AB1; Tue, 28 Aug 2012 23:16:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.1.104.ge7b44f1
+In-Reply-To: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+X-Gm-Message-State: ALoCoQkTrmFxxlKFm2PAd/nt2R6ZeopeIO2jIOzwcqK5DOkkKDBHbR/rOExsD8T5FQ2RPlyCkTcZYcb6ATuR69t5zYNpN6tlFFugx0d6H61eXmbu1f8WAdujl4n1EWzukeWirwH4II+SPEElPbeH7z+hAT4tq+dcEIgfHa/ful8+TB/IpqmSdhpQxOJpLyDA/jtI9j24xlwm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204464>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+I'm still working on a re-roll of my rebase-range series, but I think
+these three are quite unrelated and shouldn't be held up by that other
+series.
 
-> But it also changes almost 600 *other* tests from "succeed even in the
-> presence of symlinks" to "never tested in the presence of symlinks", and
-> I think that is surrendering more ground than necessary.
+Junio, thanks for all the help with explaining revision walking. It
+was a little blurry for a long time, but at least I feel more
+comfortable with these few patches now.
 
-Ouch.  I did not know have 600+ tests that cares about CEILING.
+Btw, the rebase-range series seems to need (or be greatly simplified),
+although I'm not 100% sure yet, by teaching patch-id --keep-empty,
+which would be its first command line option. Let me know if you
+(plural) sees a problem with that.
 
-> I would rather
-> see one of the following approaches:
->
-> *If* the official policy is that GIT_CEILING_DIRECTORIES is not reliable
-> in the presence of symlinks, then (a) that limitation should be
-> mentioned in the documentation; (b) the affected tests should either be
-> skipped in the case of symlinked directories or they (alone!) should
-> take measures to work around the problem.
+Btw2, I'm migrating my email to martinvonz@gmail.com (not y@google.com
+;-) which saves a few keystrokes and matches some of my other
+accounts, so these patches will be the first ones from the new
+address.
 
-What exactly is broken in CEILING?
+Martin von Zweigbergk (3):
+  teach log --no-walk=unsorted, which avoids sorting
+  demonstrate broken 'git cherry-pick three one two'
+  cherry-pick/revert: respect order of revisions to pick
 
-I somehow thought that Jiang's patch was to make sure any variables
-that contain pathnames (and make sure future paths we might grab out
-of $(pwd)) are realpath without symlinks early in the test set-up,
-and with that arrangement, no symlink gotcha should come into
-picture, with or without CEILING.
+ Documentation/rev-list-options.txt  | 12 ++++++++----
+ builtin/log.c                       |  2 +-
+ builtin/revert.c                    |  2 +-
+ revision.c                          | 18 +++++++++++++++---
+ revision.h                          |  6 +++++-
+ sequencer.c                         |  4 +++-
+ t/t3508-cherry-pick-many-commits.sh | 15 +++++++++++++++
+ t/t4202-log.sh                      | 10 ++++++++++
+ 8 files changed, 58 insertions(+), 11 deletions(-)
 
-Perhaps the setting of the CEILING has not been correctly converted
-with the patch?
-
-Or is there something fundamentally broken, even if we do not have
-any symlinks involved, with CEILING check?
-
-Puzzled..
+-- 
+1.7.11.1.104.ge7b44f1
