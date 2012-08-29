@@ -1,113 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] (BROKEN) get_merge_bases_many(): walk from many tips
- in parallel
-Date: Tue, 28 Aug 2012 16:39:11 -0700
-Message-ID: <7vvcg2y4bk.fsf@alter.siamese.dyndns.org>
-References: <1346109123-12357-1-git-send-email-gitster@pobox.com>
- <1346109123-12357-6-git-send-email-gitster@pobox.com>
- <7vipc3q041.fsf@alter.siamese.dyndns.org>
- <7v8vcyzomw.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2] test: set the realpath of CWD as TRASH_DIRECTORY
+Date: Wed, 29 Aug 2012 06:14:53 +0200
+Message-ID: <503D973D.8040402@alum.mit.edu>
+References: <5030F0BF.2090500@alum.mit.edu> <f58965733e604a9fe6ed72384d0307062403b478.1346043214.git.worldhello.net@gmail.com> <7vk3wktiph.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 29 01:39:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 06:22:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6VNU-0002ee-W0
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 01:39:25 +0200
+	id 1T6Znl-0000jB-R4
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 06:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753Ab2H1XjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Aug 2012 19:39:15 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38645 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750973Ab2H1XjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Aug 2012 19:39:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEE659933;
-	Tue, 28 Aug 2012 19:39:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wBo4TpdVLCVTzM5rluPSvMpnyYE=; b=vOYMwo
-	6ofChNsZ8fyMQIfPFktdKr03e6Lp4Rdm6Z7J3/TFZlSnP1NSvOEt1aLgWW0A46tN
-	WK7ca/ne9mTibQ/lS1kc0VMrKcNikYhEsQLVx/1p+MXBYK32+Kwf5dKHiOrGcu1s
-	nyHJa02FOx17/X5vo9lnB25awfTQyZ/EOinpM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ap0rV1o5drtUx2WsGBnB7Av18oD/c3Dq
-	1FtTj1KVxubsdVNyf9wopF5jOwisIdQ1GKtNO1muIZPyVN0YTp9DMNJthy5FJvNi
-	Ru4rNSW8Ye7e6YvE6Its/2yxli2yuZvXFLD4jyLGDu+9XhYIUjKChlFsUXAWFG7r
-	a5s7rzfdtbc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBBD49931;
-	Tue, 28 Aug 2012 19:39:13 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43E729930; Tue, 28 Aug 2012
- 19:39:13 -0400 (EDT)
-In-Reply-To: <7v8vcyzomw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 28 Aug 2012 14:35:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 92B27A5C-F169-11E1-BE97-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750956Ab2H2EWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 00:22:00 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:63735 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750845Ab2H2EV7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Aug 2012 00:21:59 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Aug 2012 00:21:59 EDT
+X-AuditID: 1207440f-b7fde6d00000095c-fe-503d9741765b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id DD.C2.02396.1479D305; Wed, 29 Aug 2012 00:14:57 -0400 (EDT)
+Received: from [192.168.69.140] (p57A2548E.dip.t-dialin.net [87.162.84.142])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7T4EteW024987
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 29 Aug 2012 00:14:56 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
+In-Reply-To: <7vk3wktiph.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsUixO6iqOs43TbAYPIDDouuK91MFg29V5gt
+	1r+7yuzA7LFz1l12j4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M74NM+t4KhERWfPWeYGxq/C
+	XYycHBICJhKTXrWwQthiEhfurWfrYuTiEBK4zChxavoyKOcMk8SRX5eBHA4OXgFtic+/fUAa
+	WARUJWbeXs4CYrMJ6Eos6mlmArFFBUIk1nybwghi8woISpyc+QSsRkRATWJi2yEwm1nAQ6J9
+	1Tp2EFsYyP57YB0TxK4VjBKznzwAa+YUMJN4vHUNE0SDjsS7vgfMELa8xPa3c5gnMArMQrJj
+	FpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQICV3+HYxd62UO
+	MQpwMCrx8B76axMgxJpYVlyZe4hRkoNJSZTXbZptgBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
+	3qemQDnelMTKqtSifJiUNAeLkjiv+hJ1PyGB9MSS1OzU1ILUIpisBgeHwJp1qy8wSrHk5eel
+	KknwTgNZIFiUmp5akZaZU4JQysTBCbKIS0qkODUvJbUosbQkIx4UwfHFwBgGSfEA3TAVpJ23
+	uCAxFygK0XqK0Zjj/8mTdxk5Pj8FkkJgm6TEectBSgVASjNK8+AWwZLZK0ZxYBgI8yaDVPEA
+	EyHcvFdAq5iAVu1XtAZZVZKIkJJqYExZxHOnNWFf5+21tnf8fx3Y2JQawfCi5q4jz4N3D59P
+	LbO9q5Oxxfby8j0xq5k8XS7XeifJFHxt+6UReOPiJJEPAb2PZjjq2uyt2MjIaD9V 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204460>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
+On 08/27/2012 06:15 PM, Junio C Hamano wrote:
+> Jiang Xin <worldhello.net@gmail.com> writes:
+> 
+>> Some testcases will fail if current work directory is on a symlink.
 >>
->>>  	for (i = 0; i < cnt; i++) {
->>> -		if (rslt[i])
->>> +		/*
->>> +		 * Is rslt[i] an ancestor of any of the others?
->>> +		 * then it is not interesting to us.
->>> +		 */
->>> +		for (j = 0; j < i; j++)
->>> +			others[j] = rslt[j];
->>> +		for (j = 1 + 1; j < cnt; j++)
+>>     symlink$ sh ./t4035-diff-quiet.sh
+>>     $ sh ./t4035-diff-quiet.sh --root=/symlink
+>>     $ TEST_OUTPUT_DIRECTORY=/symlink sh ./t4035-diff-quiet.sh
 >>
->> s/1 + 1/i + 1/;
+>> This is because the realpath of ".git" directory will be returned when
+>> running the command 'git rev-parse --git-dir' in a subdir of the work
+>> tree, and the realpath may not equal to "$TRASH_DIRECTORY".
 >>
->> With that, all tests seem to pass ;-)
->
-> "git merge-base" itself seems to have more room for improvement.
-> Trying to recompute bases for recent 200 merges in the kernel
-> history with the attached script does not show any improvement with
-> or without the series on top of recent "master".  Correctnesswise it
-> seems to be OK, though---I get byte-for-byte identical output.
->
-> -- >8 --
-> #!/bin/sh
->
-> git rev-list --committer=torvalds@linux-foundation.org \
->     --max-parents=2 --min-parents=2 --parents v3.5..v3.6-rc2 >RL
->
-> cmd='
-> 	while read result parent1 parent2
-> 	do
-> 		$GIT merge-base $parent1 $parent2
-> 	done <RL
-> '
->
-> GIT="rungit master" time sh -c "$cmd" >:stock
-> GIT=../git.git/git time sh -c "$cmd" >:optim
-> cmp :stock :optim
-> -- 8< --
+>> In this fix, "$TRASH_DIRECTORY" is determined right after the realpath
+>> of CWD is resolved.
+>>
+>> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>> Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>> ---
+> 
+> I think this is in line with what was discussed in the other thread
+> Michael brought this up.  Thanks for following it through.
+> 
+> Michael, this looks good to me; anything I missed?
 
-I have this suspicion that it is spending most of its time in
-insert-by-date.  Luckily, merge_bases_many() is totally outside of
-the usual revision traversal and its use of the commit list is
-pretty well isolated.
+I can confirm that this patch eliminates the test failures that I was
+seeing in t4035 and t9903.
 
-Peff, can I interest you into resurrecting your $gmane/174007 and
-$gmane/174008 (we do not need pop_commit_from_queue() in the latter;
-everything can stay as static to commit.c for now) to see how well
-priority queue based approach would perform?
+But it also changes almost 600 *other* tests from "succeed even in the
+presence of symlinks" to "never tested in the presence of symlinks", and
+I think that is surrendering more ground than necessary.  I would rather
+see one of the following approaches:
+
+*If* the official policy is that GIT_CEILING_DIRECTORIES is not reliable
+in the presence of symlinks, then (a) that limitation should be
+mentioned in the documentation; (b) the affected tests should either be
+skipped in the case of symlinked directories or they (alone!) should
+take measures to work around the problem.
+
+*If* the official policy is that GIT_CEILING_DIRECTORIES should work in
+the presence of symlinks, then (a) we should add a failing test case
+that specifically documents this bug; (b) other tests that fail as a
+side effect of this bug even though they are trying to test something
+else should either be skipped in the case of symlinked directories or
+they (alone!) should take measures to work around the problem; (c) the
+bug should be fixed as soon as possible.
+
+In fact, we could even go further:
+
+* The "cd -P" in test-lib.sh could be changed to "cd -L", to avoid
+masking other problems related to symlinks.  If I make that change, I
+get test failures in 10 files when using --root=/symlinkeddir, and not
+all of them are obviously related to GIT_CEILING_DIRECTORIES.  Some of
+these might simply be sloppiness in how the test scripts are written,
+but others might be bugs in git proper.
+
+* We could *intentionally* access the trash directories via a symlink on
+systems that support symlinks (much like the trash directory names
+intentionally include a space) to get *systematic* test coverage of
+symlink issues, rather than occasional testing and mysterious failures
+when somebody happens to have a symlink in his build path or root.
+
+(But it is still the case that I don't have time to work on this.)
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
