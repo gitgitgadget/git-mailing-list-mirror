@@ -1,90 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/3] name-rev: lose unnecessary typedef
-Date: Wed, 29 Aug 2012 14:17:22 -0700
-Message-ID: <1346275044-10171-2-git-send-email-gitster@pobox.com>
-References: <7vharmxkzl.fsf@alter.siamese.dyndns.org>
- <1346275044-10171-1-git-send-email-gitster@pobox.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-To: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] commit: use a priority queue in merge base functions
+Date: Wed, 29 Aug 2012 14:18:02 -0700
+Message-ID: <7vy5kxv1md.fsf@alter.siamese.dyndns.org>
+References: <20120829110812.GA14069@sigill.intra.peff.net>
+ <20120829111147.GB14734@sigill.intra.peff.net>
+ <7vtxvlwt7o.fsf@alter.siamese.dyndns.org>
+ <20120829205332.GA16064@sigill.intra.peff.net>
+ <20120829205525.GA28696@sigill.intra.peff.net>
+ <20120829210032.GA29179@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Wed Aug 29 23:18:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6ped-0008Mc-TK
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 23:18:28 +0200
+	id 1T6ped-0008Mc-AL
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 23:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754551Ab2H2VR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 17:17:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47473 "EHLO
+	id S1754606Ab2H2VSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 17:18:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47854 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754468Ab2H2VR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 17:17:28 -0400
+	id S1754504Ab2H2VSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 17:18:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FEA48CA7;
-	Wed, 29 Aug 2012 17:17:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C22E8CDF;
+	Wed, 29 Aug 2012 17:18:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Nozn
-	BmR6mXoRw3iQHT2azuWXozU=; b=gDnCGSooGtKZw8r2SEs3mGsN07nJtYy2DlI7
-	4HfwTsDnnEZZOinkkuoXJ8sFnKB/lyAp1PNLxpq6qAxSWwmI+hWcoO1d0HOyITTd
-	Nj17iVna37kQmwQDapwxVlnCr+wu+vYFyDcJvFtqCoa8tVRDif7CdaWezKWCSA1N
-	qV1unec=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rup2AqeHqWfy80wLNQrIwpYq1YU=; b=QgQ1Qh
+	rh96HWed1n4QJOpTwyAENnbZZ4onSu0jJGjI9Nv10IIkwdwA9oMw2lJZ3RH4y1Wn
+	glCfaslBTiMTdmeuezk0VD2JbVHKbZgf1tlmoET8uAEcSW38LT0XSwnmPegTJsCP
+	269J345nBUV14HRQL5c4xiwICbRg2EUQoTtns=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	Im5pPTQlnDN4t/VRWwZLTSeKI6jWvMLPq1ucbUCSPUwmlIMkIwOkX3hq7DQb9YAJ
-	BxvmUTfsqYpp5cM9lu1lhoZlwSnaWMug0EgeOjOEYcGFlkya13LjPwmEfZXO2/T0
-	csehi96y3v8MyWFIsSTRP+u5hRQhB7zXppEqA1GqJBw=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WxJ82lQiGw2qU66hpb9qZBr9CMWZqK6f
+	2H092I9J+akmPCfoI92b+JyaOtkrbGixlISE3rPP3ctB+0P7YEAqIqcdRxYD+68X
+	b4xuPMby5yVDjD1yAcn6g+BtAoeLrNqVhcIyQo4zkL/8V0m6GirPu6HvysKYdOqJ
+	3IkUltGUIlg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F26218CA6;
-	Wed, 29 Aug 2012 17:17:27 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29E3E8CDE;
+	Wed, 29 Aug 2012 17:18:05 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C45E8CA4; Wed, 29 Aug 2012
- 17:17:27 -0400 (EDT)
-X-Mailer: git-send-email 1.7.12.285.ga3d5fc0
-In-Reply-To: <1346275044-10171-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: EF32F24C-F21E-11E1-887E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F26258CDD; Wed, 29 Aug 2012
+ 17:18:03 -0400 (EDT)
+In-Reply-To: <20120829210032.GA29179@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 29 Aug 2012 17:00:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0505D486-F21F-11E1-929C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204504>
 
-Just spell it "struct rev_name"; it makes it more clear what is
-going on.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/name-rev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+>> +	while (result.nr)
+>> +		commit_list_append(queue_pop(&result), &tail);
+>> +	queue_clear(&result);
+>> +	queue_clear(&list);
+>> +	return ret;
+>
+> I forgot to to port the STALE flag handling here.
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 1b37458..8af2cfa 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -7,11 +7,11 @@
- 
- #define CUTOFF_DATE_SLOP 86400 /* one day */
- 
--typedef struct rev_name {
-+struct rev_name {
- 	const char *tip_name;
- 	int generation;
- 	int distance;
--} rev_name;
-+};
- 
- static long cutoff = LONG_MAX;
- 
-@@ -43,7 +43,7 @@ static void name_rev(struct commit *commit,
- 	}
- 
- 	if (name == NULL) {
--		name = xmalloc(sizeof(rev_name));
-+		name = xmalloc(sizeof(struct rev_name));
- 		commit->util = name;
- 		goto copy_data;
- 	} else if (name->distance > distance) {
--- 
-1.7.12.285.ga3d5fc0
+Figures..  Thanks.
