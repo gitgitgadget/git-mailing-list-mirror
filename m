@@ -1,7 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] name-rev: --weight option (WIP)
-Date: Wed, 29 Aug 2012 14:17:24 -0700
-Message-ID: <1346275044-10171-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/3] name_rev: clarify when a new tip-name is assigned to a
+ commit
+Date: Wed, 29 Aug 2012 14:17:23 -0700
+Message-ID: <1346275044-10171-3-git-send-email-gitster@pobox.com>
 References: <7vharmxkzl.fsf@alter.siamese.dyndns.org>
  <1346275044-10171-1-git-send-email-gitster@pobox.com>
 Cc: Greg KH <gregkh@linuxfoundation.org>
@@ -12,190 +13,136 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6pec-0008Mc-PT
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 23:18:27 +0200
+	id 1T6pec-0008Mc-8R
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 23:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603Ab2H2VR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 17:17:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47531 "EHLO
+	id S1754598Ab2H2VR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 17:17:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47507 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754504Ab2H2VRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 17:17:32 -0400
+	id S1754495Ab2H2VRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 17:17:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83A438CB1;
-	Wed, 29 Aug 2012 17:17:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50ACC8CAC;
+	Wed, 29 Aug 2012 17:17:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=lgsI
-	SwpjMqYOI3HQLHwh43XkDKg=; b=eowrfK/TJt9LJ18mnizTXR1hlJEyP2zLc9Id
-	j3ABW9oqpVC7FJNlTJVTcCVTlmUx/lerZsMtYebGAWZx4nAQIsB52P2ogkDj3FFT
-	Kcno2Cp0G0se6MI39e7ViDHM+hRXxCDjTxW+8cjeoN2ZMA42iviBMiWLVmfaTsVc
-	Hr9D0mQ=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=z6m3
+	0IqPtY8fk/xFEUXTX0kS/nY=; b=DqEtgQz6jVYfkXsH3NqPqrQF1aBtPVhdv3D+
+	glWUZl7ZH6whvVO2E5p5zh8xw7euJlbuDiUy5sYids1NuwFk0ntJTxUUkmuk6QWR
+	55V9+jwd2/O11KNbY8K1s0Ne8a53KUzXxaEenB8dA1zRecQkpHF0SnV1t+iVKij6
+	X/ZfUjg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	e0nAlyIKpfugVrMcKGaM/w0qM9+IrPVYnTKMOGwjCxYiDcn/nbjf/6aY1ybrMKdz
-	aC+nU/A6RgQeARo8vwg/qigzQRDbvqGzvZr9f6Z20y4TpFgZ49hi3uMwtTKoiJuj
-	/VCbKF6EkiRQNA3Dn4qBWRi8zeoZTWqGGQ0aRK9S4b8=
+	u303VWfDdCRZgfAm44DWf7lItfSIdplNSifwbV51Z9J3gO84QHAHjsaRjFz5VQYE
+	J5cSjLyQ8nu3i6yEKQb8CHl+S5h/kAkf22m5k0f/ipz1A2NQv15x9xTiEwlZzZ5D
+	asBwytB1qMl2Y0S2bLwz5gWzRTt3O/rkd2frZkke0LM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 716278CB0;
-	Wed, 29 Aug 2012 17:17:32 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E8D58CAB;
+	Wed, 29 Aug 2012 17:17:30 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C4368CAE; Wed, 29 Aug 2012
- 17:17:31 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53BF88CA9; Wed, 29 Aug 2012
+ 17:17:29 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.285.ga3d5fc0
 In-Reply-To: <1346275044-10171-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F1BD05D4-F21E-11E1-9058-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F05E920C-F21E-11E1-8E5F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204502>
 
-Instead of naming a rev after a tip that is topologically closest,
-use the tip that is the oldest one among those which contain the
-rev.
+In preparation for the later changes, restructure the logic a little
+bit to separate how the code decides to use the new "tip" for naming
+a particular commit, and what happens based on the decision.
 
-The semantics "name-rev --weight" would give is closer to what
-people expect from "describe --contains".
-
-Note that this is fairly expensive (see NEEDSWORK comment in the
-code).
+Also re-indent and correct style of this function while we are at it.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/name-rev.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 95 insertions(+), 2 deletions(-)
+ builtin/name-rev.c | 45 +++++++++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index ebbf541..69da41d 100644
+index 8af2cfa..ebbf541 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
-@@ -4,6 +4,8 @@
- #include "tag.h"
- #include "refs.h"
- #include "parse-options.h"
-+#include "diff.h"
-+#include "revision.h"
+@@ -19,12 +19,13 @@ static long cutoff = LONG_MAX;
+ #define MERGE_TRAVERSAL_WEIGHT 65535
  
- #define CUTOFF_DATE_SLOP 86400 /* one day */
+ static void name_rev(struct commit *commit,
+-		const char *tip_name, int generation, int distance,
+-		int deref)
++		     const char *tip_name, int generation, int distance,
++		     int deref)
+ {
+ 	struct rev_name *name = (struct rev_name *)commit->util;
+ 	struct commit_list *parents;
+-	int parent_number = 1;
++	int parent_number;
++	int use_this_tip = 0;
  
-@@ -11,8 +13,85 @@ struct rev_name {
- 	const char *tip_name;
- 	int generation;
- 	int distance;
-+	int weight;
- };
- 
-+/*
-+ * Historically, "name-rev" named a rev based on the tip that is
-+ * closest to it.
-+ *
-+ * It does not give a good answer to "what is the earliest tag that
-+ * contains the commit?", however, because you can build a new commit
-+ * on top of an ancient commit X, merge it to the tip and tag the
-+ * result, which would make X reachable from the new tag in two hops,
-+ * even though it appears in the part of the history that is contained
-+ * in other ancient tags.
-+ *
-+ * In order to answer that question, "name-rev" can be told to name a
-+ * rev based on the tip that has smallest number of commits behind it.
-+ */
-+static int use_weight;
-+
-+/*
-+ * NEEDSWORK: the result of this computation must be cached to
-+ * a dedicated notes tree, keyed by the commit object name.
-+ */
-+static int compute_tip_weight(struct commit *commit)
-+{
-+	struct rev_info revs;
-+	int weight = 1; /* give root the weight of 1 */
-+
-+	reset_revision_walk();
-+	init_revisions(&revs, NULL);
-+	add_pending_object(&revs, (struct object *)commit, NULL);
-+	prepare_revision_walk(&revs);
-+	while (get_revision(&revs))
-+		weight++;
-+	return weight;
-+}
-+
-+static int tip_weight(const char *tip, size_t reflen)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	unsigned char sha1[20];
-+	struct commit *commit;
-+	struct rev_name *name;
-+
-+	strbuf_add(&buf, tip, reflen);
-+	if (get_sha1(buf.buf, sha1))
-+		die("Internal error: cannot parse tip '%s'", tip);
-+	strbuf_release(&buf);
-+
-+	commit = lookup_commit_reference_gently(sha1, 0);
-+	if (!commit)
-+		die("Internal error: cannot look up commit '%s'", tip);
-+	name = commit->util;
-+	if (!name)
-+		die("Internal error: a tip without name '%s'", tip);
-+	if (!name->weight)
-+		name->weight = compute_tip_weight(commit);
-+	return name->weight;
-+}
-+
-+static int tip_weight_cmp(const char *a, const char *b)
-+{
-+	size_t reflen_a, reflen_b;
-+	static const char traversal[] = "^~";
-+
-+	/*
-+	 * A "tip" may look like <refname> followed by traversal
-+	 * instruction (e.g. ^2~74).  We only are interested in
-+	 * the weight of the ref part.
-+	 */
-+	reflen_a = strcspn(a, traversal);
-+	reflen_b = strcspn(b, traversal);
-+
-+	if (reflen_a == reflen_b && !memcmp(a, b, reflen_a))
-+		return 0;
-+
-+	return tip_weight(a, reflen_a) - tip_weight(b, reflen_b);
-+}
-+
- static long cutoff = LONG_MAX;
- 
- /* How many generations are maximally preferred over _one_ merge traversal? */
-@@ -49,8 +128,20 @@ static void name_rev(struct commit *commit,
- 		use_this_tip = 1;
+ 	if (!commit->object.parsed)
+ 		parse_commit(commit);
+@@ -42,21 +43,26 @@ static void name_rev(struct commit *commit,
+ 			die("generation: %d, but deref?", generation);
  	}
  
--	if (distance < name->distance)
--		use_this_tip = 1;
-+	if (!use_weight) {
-+		if (distance < name->distance)
-+			use_this_tip = 1;
-+	} else {
-+		if (!name->tip_name)
-+			use_this_tip = 1;
-+		else {
-+			int cmp = tip_weight_cmp(name->tip_name, tip_name);
-+			if (0 < cmp)
-+				use_this_tip = 1;
-+			else if (!cmp && distance < name->distance)
-+				use_this_tip = 1;
-+		}
+-	if (name == NULL) {
+-		name = xmalloc(sizeof(struct rev_name));
++	if (!name) {
++		name = xcalloc(1, sizeof(struct rev_name));
+ 		commit->util = name;
+-		goto copy_data;
+-	} else if (name->distance > distance) {
+-copy_data:
+-		name->tip_name = tip_name;
+-		name->generation = generation;
+-		name->distance = distance;
+-	} else
++		use_this_tip = 1;
 +	}
- 
- 	if (!use_this_tip)
++
++	if (distance < name->distance)
++		use_this_tip = 1;
++
++	if (!use_this_tip)
  		return;
-@@ -241,6 +332,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN(0, "undefined", &allow_undefined, "allow to print `undefined` names"),
- 		OPT_BOOLEAN(0, "always",     &always,
- 			   "show abbreviated commit object as fallback"),
-+		OPT_BOOLEAN(0, "weight", &use_weight,
-+			    "name revs based on the oldest tip that contain them"),
- 		OPT_END(),
- 	};
  
+-	for (parents = commit->parents;
+-			parents;
+-			parents = parents->next, parent_number++) {
++	name->tip_name = tip_name;
++	name->generation = generation;
++	name->distance = distance;
++
++	/* Propagate our name to our parents */
++	for (parents = commit->parents, parent_number = 1;
++	     parents;
++	     parents = parents->next, parent_number++) {
+ 		if (parent_number > 1) {
+ 			int len = strlen(tip_name);
+ 			char *new_name = xmalloc(len +
+@@ -68,16 +74,15 @@ copy_data:
+ 				len -= 2;
+ 			if (generation > 0)
+ 				sprintf(new_name, "%.*s~%d^%d", len, tip_name,
+-						generation, parent_number);
++					generation, parent_number);
+ 			else
+ 				sprintf(new_name, "%.*s^%d", len, tip_name,
+-						parent_number);
+-
++					parent_number);
+ 			name_rev(parents->item, new_name, 0,
+-				distance + MERGE_TRAVERSAL_WEIGHT, 0);
++				 distance + MERGE_TRAVERSAL_WEIGHT, 0);
+ 		} else {
+ 			name_rev(parents->item, tip_name, generation + 1,
+-				distance + 1, 0);
++				 distance + 1, 0);
+ 		}
+ 	}
+ }
 -- 
 1.7.12.285.ga3d5fc0
