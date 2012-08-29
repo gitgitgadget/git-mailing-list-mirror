@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 2/3] checkout: move more parameters to struct checkout_opts
-Date: Wed, 29 Aug 2012 20:55:23 +0700
-Message-ID: <1346248524-11616-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 3/3] checkout: reorder option handling
+Date: Wed, 29 Aug 2012 20:55:24 +0700
+Message-ID: <1346248524-11616-3-git-send-email-pclouds@gmail.com>
 References: <CACsJy8Cjbg2tb_E+D7hMwPZNFWhvEF1eNpf5HUBzJnBoQQaMAg@mail.gmail.com>
  <1346248524-11616-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,287 +12,326 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 29 16:02:28 2012
+X-From: git-owner@vger.kernel.org Wed Aug 29 16:02:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6iqc-0007Hv-16
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 16:02:22 +0200
+	id 1T6iqr-0007ak-3r
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 16:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775Ab2H2OCP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Aug 2012 10:02:15 -0400
+	id S1753799Ab2H2OCa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Aug 2012 10:02:30 -0400
 Received: from mail-pb0-f46.google.com ([209.85.160.46]:45785 "EHLO
 	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753731Ab2H2OCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 10:02:14 -0400
+	with ESMTP id S1753779Ab2H2OC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 10:02:29 -0400
 Received: by mail-pb0-f46.google.com with SMTP id rr13so1274461pbb.19
-        for <git@vger.kernel.org>; Wed, 29 Aug 2012 07:02:14 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 29 Aug 2012 07:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=RooAat5NZCpxnMBlavMmFoKMt1JM9H7hBFW9fST2Bv0=;
-        b=h1IAZg2bo+3SY0FOT7lJCe3Sa2EqWv8IeiPAbQZSYUv0k7zQHxGs3xnCLtriJkzsrE
-         J9blUr6AsFQPcmkQWLwy88QqtUwRW1+qFf9gLnAdN9UjGbLXU55VXmDiyt4YJs2DR4c/
-         m5mjYRBlcn0UWec1hTay3ARMO4UpvizK8mXK7iyz4lwwnB10IgVSUSxItYZ0sX8qSeov
-         Uq9toH5edahxBoTDHweNdGVn8pQG12MFRtMhVXx/RKkmjHUr+9FrFo3u8LhclnTS4BFq
-         HpKeW9Edb/yWdRAj9wedmEQaygR3qdarr+I+hXeaLg7MPFHAvUE3JvwYb9PEwrfked0Z
-         Hk0g==
-Received: by 10.68.134.228 with SMTP id pn4mr5014928pbb.147.1346248934455;
-        Wed, 29 Aug 2012 07:02:14 -0700 (PDT)
+        bh=deLYbMJEQe52vVB/sxCP9qNq0t2+dNigsNGYllUhU2c=;
+        b=f8pEvVBnwmEhCXIlGUL52JPiR6ndalHFKXpj/wgKLd2zWA+xdfd8TX5B+8Sv10ssEd
+         oRxpwaA0aziwaHexbfeY0svbBgJjJufw9utIsGg3VnNbqcZVK2FZBffSmjl2X8U/CWbr
+         cM7nmrUHVC/rTtYkkBxs37LmdXSvqfhxgyE2baHMoG4+qWejV8KV7MtVjVLrLzbOGhwt
+         7b6qyeFFu22vtDCxXcJgDz44yCvKQjWxPKYtOuCZHO/dIJbJ8yk8J/rfyzJgrlGQ/knH
+         WGzIN8ssq7TGAulRHj8qSuealv3Gn2JrJjOP++6OG7co2pduNZfv2yWSxnh3Yha2x2j9
+         40CQ==
+Received: by 10.66.72.197 with SMTP id f5mr3960381pav.20.1346248949051;
+        Wed, 29 Aug 2012 07:02:29 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.49.176])
-        by mx.google.com with ESMTPS id pn4sm19399650pbb.50.2012.08.29.07.02.00
+        by mx.google.com with ESMTPS id pj10sm19397980pbb.46.2012.08.29.07.02.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Aug 2012 07:02:06 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 29 Aug 2012 20:55:47 +0700
+        Wed, 29 Aug 2012 07:02:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 29 Aug 2012 20:56:09 +0700
 X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 In-Reply-To: <1346248524-11616-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204480>
 
+checkout operates in three different modes. On top of that it tries to
+be smart by guessing the branch name for switching. This results in
+messy option handling code. This patch reorders it so that
+
+ - cmd_checkout() is responsible for parsing, preparing input and
+   determinining mode
+
+ - Code of each mode is in cmd_checkout_entry() and cmd_switch(),
+   where sanity checks are performed per mode
+
+Another slight improvement is always print branch name (or commit
+name) when printing errors related ot them. This helps catch the case
+where an option is mistaken as branch/commit.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c | 68 ++++++++++++++++++++++++++++------------------=
+ I'm not entirely sure about this chunk
+
+ +	if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED) {
+ +		if (opts->new_orphan_branch)
+ +			die(_("%s cannot be used with %s"), "--orphan", "-t");
+ +		if (opts->force_detach)
+ +			die(_("%s cannot be used with %s"), "--detach", "-t");
+ +	} else
+ +		opts->track =3D git_branch_track;
+
+ If we don't want -t and --orphan/--detach together, then we probably s=
+hould ignore
+ branch.autosetupmerge when --orphan/--detach is specified.
+
+ I did not unify new_branch, new_branch_force and new_orphan_branch.
+ They touch other parts of the code and should probably be done
+ separately.
+
+ builtin/checkout.c | 169 ++++++++++++++++++++++++++++++++-------------=
 --------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+ 1 file changed, 101 insertions(+), 68 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3e3f086..78abaeb 100644
+index 78abaeb..8289bcd 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -28,6 +28,7 @@ static const char * const checkout_usage[] =3D {
- };
-=20
- struct checkout_opts {
-+	int patch_mode;
- 	int quiet;
- 	int merge;
- 	int force;
-@@ -35,15 +36,17 @@ struct checkout_opts {
- 	int writeout_stage;
- 	int overwrite_ignore;
-=20
--	/* not set by parse_options */
--	int branch_exists;
--
- 	const char *new_branch;
- 	const char *new_branch_force;
- 	const char *new_orphan_branch;
- 	int new_branch_log;
- 	enum branch_track track;
- 	struct diff_options diff_options;
-+
-+	int branch_exists;
-+	const char *prefix;
-+	const char **pathspec;
-+	struct tree *source_tree;
- };
-=20
- static int post_checkout_hook(struct commit *old, struct commit *new,
-@@ -214,8 +217,7 @@ static int checkout_merged(int pos, struct checkout=
- *state)
+@@ -930,6 +930,81 @@ static int switch_unborn_to_new_branch(const struc=
+t checkout_opts *opts)
  	return status;
  }
 =20
--static int checkout_paths(struct tree *source_tree, const char **paths=
-pec,
--			  const char *prefix, const struct checkout_opts *opts)
-+static int checkout_paths(const struct checkout_opts *opts)
- {
- 	int pos;
- 	struct checkout state;
-@@ -230,34 +232,34 @@ static int checkout_paths(struct tree *source_tre=
-e, const char **pathspec,
- 	struct lock_file *lock_file =3D xcalloc(1, sizeof(struct lock_file));
-=20
- 	newfd =3D hold_locked_index(lock_file, 1);
--	if (read_cache_preload(pathspec) < 0)
-+	if (read_cache_preload(opts->pathspec) < 0)
- 		return error(_("corrupt index file"));
-=20
--	if (source_tree)
--		read_tree_some(source_tree, pathspec);
-+	if (opts->source_tree)
-+		read_tree_some(opts->source_tree, opts->pathspec);
-=20
--	for (pos =3D 0; pathspec[pos]; pos++)
-+	for (pos =3D 0; opts->pathspec[pos]; pos++)
- 		;
- 	ps_matched =3D xcalloc(1, pos);
-=20
- 	for (pos =3D 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce =3D active_cache[pos];
--		if (source_tree && !(ce->ce_flags & CE_UPDATE))
-+		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
- 			continue;
--		match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, ps_matched);
-+		match_pathspec(opts->pathspec, ce->name, ce_namelen(ce), 0, ps_match=
-ed);
- 	}
-=20
--	if (report_path_error(ps_matched, pathspec, prefix))
-+	if (report_path_error(ps_matched, opts->pathspec, opts->prefix))
- 		return 1;
-=20
- 	/* "checkout -m path" to recreate conflicted state */
- 	if (opts->merge)
--		unmerge_cache(pathspec);
-+		unmerge_cache(opts->pathspec);
-=20
- 	/* Any unmerged paths? */
- 	for (pos =3D 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce =3D active_cache[pos];
--		if (match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, NULL)) {
-+		if (match_pathspec(opts->pathspec, ce->name, ce_namelen(ce), 0, NULL=
-)) {
- 			if (!ce_stage(ce))
- 				continue;
- 			if (opts->force) {
-@@ -282,9 +284,9 @@ static int checkout_paths(struct tree *source_tree,=
- const char **pathspec,
- 	state.refresh_cache =3D 1;
- 	for (pos =3D 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce =3D active_cache[pos];
--		if (source_tree && !(ce->ce_flags & CE_UPDATE))
-+		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
- 			continue;
--		if (match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, NULL)) {
-+		if (match_pathspec(opts->pathspec, ce->name, ce_namelen(ce), 0, NULL=
-)) {
- 			if (!ce_stage(ce)) {
- 				errs |=3D checkout_entry(ce, &state, NULL);
- 				continue;
-@@ -706,7 +708,8 @@ static void orphaned_commit_warning(struct commit *=
-old, struct commit *new)
- 	free(refs.objects);
- }
-=20
--static int switch_branches(const struct checkout_opts *opts, struct br=
-anch_info *new)
-+static int switch_branches(const struct checkout_opts *opts,
-+			   struct branch_info *new)
- {
- 	int ret =3D 0;
- 	struct branch_info old;
-@@ -760,8 +763,7 @@ static int git_checkout_config(const char *var, con=
-st char *value, void *cb)
- 	return git_xmerge_config(var, value, NULL);
- }
-=20
--static int interactive_checkout(const char *revision, const char **pat=
-hspec,
--				struct checkout_opts *opts)
-+static int interactive_checkout(const char *revision, const char **pat=
-hspec)
- {
- 	return run_add_interactive(revision, "--patch=3Dcheckout", pathspec);
- }
-@@ -931,11 +933,8 @@ static int switch_unborn_to_new_branch(const struc=
-t checkout_opts *opts)
++static int cmd_checkout_entry(const struct checkout_opts *opts,
++			      const struct branch_info *new)
++{
++	if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED)
++		die(_("%s cannot be used with updating paths"), "--track");
++
++	if (opts->new_branch_log)
++		die(_("%s cannot be used with updating paths"), "-l");
++
++	if (opts->force && opts->patch_mode)
++		die(_("%s cannot be used with updating paths"), "-f");
++
++	if (opts->force_detach)
++		die(_("%s cannot be used with updating paths"), "--detach");
++
++	if (opts->merge && opts->patch_mode)
++		die(_("%s cannot be used with %s"), "--merge", "--patch");
++
++	if (opts->force && opts->merge)
++		die(_("%s cannot be used with %s"), "-f", "-m");
++
++	if (opts->new_branch)
++		die(_("Cannot update paths and switch to branch '%s' at the same tim=
+e."),
++		    opts->new_branch);
++
++	if (opts->patch_mode)
++		return interactive_checkout(new->name, opts->pathspec);
++	else
++		return checkout_paths(opts);
++}
++
++static int cmd_switch(struct checkout_opts *opts,
++		      struct branch_info *new)
++{
++	if (opts->pathspec)
++		die(_("paths cannot be used with switching branches"));
++
++	if (opts->patch_mode)
++		die(_("%s cannot be used with switching branches"),
++		    "--patch");
++
++	if (opts->writeout_stage)
++		die(_("%s cannot be used with switching branches"),
++		    "--ours/--theirs");
++
++	if (opts->force && opts->merge)
++		die(_("%s cannot be used with %s"), "-f", "-m");
++
++	if (opts->force_detach && opts->new_branch)
++		die(_("%s cannot be used with %s"),
++		    "--detach", "-b/-B/--orphan");
++
++	if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED) {
++		if (opts->new_orphan_branch)
++			die(_("%s cannot be used with %s"), "--orphan", "-t");
++		if (opts->force_detach)
++			die(_("%s cannot be used with %s"), "--detach", "-t");
++	} else
++		opts->track =3D git_branch_track;
++
++	if (new->name && !new->commit)
++		die(_("Cannot switch branch to a non-commit '%s'."),
++		    new->name);
++
++	if (!new->commit && opts->new_branch) {
++		unsigned char rev[20];
++		int flag;
++
++		if (!read_ref_full("HEAD", rev, 0, &flag) &&
++		    (flag & REF_ISSYMREF) && is_null_sha1(rev))
++			return switch_unborn_to_new_branch(opts);
++	}
++	return switch_branches(opts, new);
++}
++
  int cmd_checkout(int argc, const char **argv, const char *prefix)
  {
  	struct checkout_opts opts;
--	unsigned char rev[20];
- 	struct branch_info new;
--	struct tree *source_tree =3D NULL;
- 	char *conflict_style =3D NULL;
--	int patch_mode =3D 0;
- 	int dwim_new_local_branch =3D 1;
- 	struct option options[] =3D {
- 		OPT__QUIET(&opts.quiet, "suppress progress reporting"),
-@@ -957,7 +956,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
- 		OPT_BOOLEAN(0, "overwrite-ignore", &opts.overwrite_ignore, "update i=
-gnored files (default)"),
- 		OPT_STRING(0, "conflict", &conflict_style, "style",
- 			   "conflict style (merge or diff3)"),
--		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively")=
-,
-+		OPT_BOOLEAN('p', "patch", &opts.patch_mode, "select hunks interactiv=
-ely"),
- 		{ OPTION_BOOLEAN, 0, "guess", &dwim_new_local_branch, NULL,
- 		  "second guess 'git checkout no-such-branch'",
- 		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
-@@ -967,6 +966,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
- 	memset(&opts, 0, sizeof(opts));
- 	memset(&new, 0, sizeof(new));
- 	opts.overwrite_ignore =3D 1;
-+	opts.prefix =3D prefix;
+@@ -976,26 +1051,22 @@ int cmd_checkout(int argc, const char **argv, co=
+nst char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
 =20
- 	gitmodules_config();
- 	git_config(git_checkout_config, &opts);
-@@ -984,7 +984,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
+-	/* we can assume from now on new_branch =3D !new_branch_force */
+-	if (opts.new_branch && opts.new_branch_force)
+-		die(_("-B cannot be used with -b"));
++	if (conflict_style) {
++		opts.merge =3D 1; /* implied */
++		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
++	}
++
++	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_=
+branch) > 1)
++		die(_("-b, -B and --orphan are mutually exclusive"));
+=20
+-	/* copy -B over to -b, so that we can just check the latter */
  	if (opts.new_branch_force)
  		opts.new_branch =3D opts.new_branch_force;
 =20
--	if (patch_mode && (opts.track > 0 || opts.new_branch
-+	if (opts.patch_mode && (opts.track > 0 || opts.new_branch
- 			   || opts.new_branch_log || opts.merge || opts.force
- 			   || opts.force_detach))
- 		die (_("--patch is incompatible with all other options"));
-@@ -1039,13 +1039,15 @@ int cmd_checkout(int argc, const char **argv, c=
+-	if (opts.patch_mode && (opts.track > 0 || opts.new_branch
+-			   || opts.new_branch_log || opts.merge || opts.force
+-			   || opts.force_detach))
+-		die (_("--patch is incompatible with all other options"));
+-
+-	if (opts.force_detach && (opts.new_branch || opts.new_orphan_branch))
+-		die(_("--detach cannot be used with -b/-B/--orphan"));
+-	if (opts.force_detach && 0 < opts.track)
+-		die(_("--detach cannot be used with -t"));
++	if (opts.new_orphan_branch)
++		opts.new_branch =3D opts.new_orphan_branch;
+=20
+ 	/* --track without -b should DWIM */
+-	if (0 < opts.track && !opts.new_branch) {
++	if (opts.track !=3D BRANCH_TRACK_UNSPECIFIED && !opts.new_branch) {
+ 		const char *argv0 =3D argv[0];
+ 		if (!argc || !strcmp(argv0, "--"))
+ 			die (_("--track needs a branch name"));
+@@ -1009,22 +1080,6 @@ int cmd_checkout(int argc, const char **argv, co=
+nst char *prefix)
+ 		opts.new_branch =3D argv0 + 1;
+ 	}
+=20
+-	if (opts.new_orphan_branch) {
+-		if (opts.new_branch)
+-			die(_("--orphan and -b|-B are mutually exclusive"));
+-		if (opts.track > 0)
+-			die(_("--orphan cannot be used with -t"));
+-		opts.new_branch =3D opts.new_orphan_branch;
+-	}
+-
+-	if (conflict_style) {
+-		opts.merge =3D 1; /* implied */
+-		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+-	}
+-
+-	if (opts.force && opts.merge)
+-		die(_("git checkout: -f and -m are incompatible"));
+-
+ 	/*
+ 	 * Extract branch name from command line arguments, so
+ 	 * all that is left is pathspecs.
+@@ -1052,62 +1107,40 @@ int cmd_checkout(int argc, const char **argv, c=
 onst char *prefix)
- 	 * remote branches, erroring out for invalid or ambiguous cases.
- 	 */
- 	if (argc) {
-+		unsigned char rev[20];
- 		int dwim_ok =3D
--			!patch_mode &&
-+			!opts.patch_mode &&
- 			dwim_new_local_branch &&
- 			opts.track =3D=3D BRANCH_TRACK_UNSPECIFIED &&
- 			!opts.new_branch;
- 		int n =3D parse_branchname_arg(argc, argv, dwim_ok,
--				&new, &source_tree, rev, &opts.new_branch);
-+					     &new, &opts.source_tree,
-+					     rev, &opts.new_branch);
- 		argv +=3D n;
  		argc -=3D n;
  	}
-@@ -1054,13 +1056,13 @@ int cmd_checkout(int argc, const char **argv, c=
-onst char *prefix)
- 		opts.track =3D git_branch_track;
 =20
+-	if (opts.track =3D=3D BRANCH_TRACK_UNSPECIFIED)
+-		opts.track =3D git_branch_track;
+-
  	if (argc) {
--		const char **pathspec =3D get_pathspec(prefix, argv);
-+		opts.pathspec =3D get_pathspec(prefix, argv);
+ 		opts.pathspec =3D get_pathspec(prefix, argv);
 =20
--		if (!pathspec)
-+		if (!opts.pathspec)
+ 		if (!opts.pathspec)
  			die(_("invalid path specification"));
 =20
--		if (patch_mode)
--			return interactive_checkout(new.name, pathspec, &opts);
-+		if (opts.patch_mode)
-+			return interactive_checkout(new.name, opts.pathspec);
+-		if (opts.patch_mode)
+-			return interactive_checkout(new.name, opts.pathspec);
+-
+-		/* Checkout paths */
+-		if (opts.new_branch) {
+-			if (argc =3D=3D 1) {
+-				die(_("git checkout: updating paths is incompatible with switching=
+ branches.\nDid you intend to checkout '%s' which can not be resolved a=
+s commit?"), argv[0]);
+-			} else {
+-				die(_("git checkout: updating paths is incompatible with switching=
+ branches."));
+-			}
+-		}
++		/* Try to give more helpful suggestion, new_branch &&
++		   argc > 1 will be caught later */
++		if (opts.new_branch && argc =3D=3D 1)
++			die(_("Cannot update paths and switch to branch '%s' at the same ti=
+me.\n"
++			      "Did you intend to checkout '%s' which can not be resolved as=
+ commit?"),
++			    opts.new_branch, argv[0]);
 =20
- 		/* Checkout paths */
- 		if (opts.new_branch) {
-@@ -1077,11 +1079,11 @@ int cmd_checkout(int argc, const char **argv, c=
-onst char *prefix)
+ 		if (opts.force_detach)
+ 			die(_("git checkout: --detach does not take a path argument"));
+=20
  		if (1 < !!opts.writeout_stage + !!opts.force + !!opts.merge)
- 			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
+-			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
 patible when\nchecking out of the index."));
-=20
--		return checkout_paths(source_tree, pathspec, prefix, &opts);
-+		return checkout_paths(&opts);
+-
+-		return checkout_paths(&opts);
++			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
+patible when\n"
++			      "checking out of the index."));
  	}
 =20
--	if (patch_mode)
--		return interactive_checkout(new.name, NULL, &opts);
-+	if (opts.patch_mode)
-+		return interactive_checkout(new.name, NULL);
-=20
+-	if (opts.patch_mode)
+-		return interactive_checkout(new.name, NULL);
+-
  	if (opts.new_branch) {
  		struct strbuf buf =3D STRBUF_INIT;
+=20
+-		opts.branch_exists =3D validate_new_branchname(opts.new_branch, &buf=
+,
+-							     !!opts.new_branch_force,
+-							     !!opts.new_branch_force);
++		opts.branch_exists =3D
++			validate_new_branchname(opts.new_branch, &buf,
++						!!opts.new_branch_force,
++						!!opts.new_branch_force);
+=20
+ 		strbuf_release(&buf);
+ 	}
+=20
+-	if (new.name && !new.commit) {
+-		die(_("Cannot switch branch to a non-commit."));
+-	}
+-	if (opts.writeout_stage)
+-		die(_("--ours/--theirs is incompatible with switching branches."));
+-
+-	if (!new.commit && opts.new_branch) {
+-		unsigned char rev[20];
+-		int flag;
+-
+-		if (!read_ref_full("HEAD", rev, 0, &flag) &&
+-		    (flag & REF_ISSYMREF) && is_null_sha1(rev))
+-			return switch_unborn_to_new_branch(&opts);
+-	}
+-	return switch_branches(&opts, &new);
++	if (opts.patch_mode || opts.pathspec)
++		return cmd_checkout_entry(&opts, &new);
++	else
++		return cmd_switch(&opts, &new);
+ }
 --=20
 1.7.12.rc2.18.g61b472e
