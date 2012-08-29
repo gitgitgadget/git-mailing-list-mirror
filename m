@@ -1,128 +1,83 @@
-From: Greg KH <gregkh@linuxfoundation.org>
-Subject: Re: Funny 'git describe --contains' output
-Date: Wed, 29 Aug 2012 11:17:32 -0700
-Message-ID: <20120829181731.GD3906@kroah.com>
-References: <20120829044840.GA25869@kroah.com>
- <7vr4qqxmt8.fsf@alter.siamese.dyndns.org>
- <7vharmxkzl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] checkout: reorder option handling
+Date: Wed, 29 Aug 2012 11:37:21 -0700
+Message-ID: <7v7gshwnmm.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8Cjbg2tb_E+D7hMwPZNFWhvEF1eNpf5HUBzJnBoQQaMAg@mail.gmail.com>
+ <1346248524-11616-1-git-send-email-pclouds@gmail.com>
+ <1346248524-11616-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 20:17:54 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 29 20:37:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6mpn-0004iN-7q
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 20:17:47 +0200
+	id 1T6n8t-0005rh-30
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 20:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223Ab2H2SRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 14:17:37 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:41835 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604Ab2H2SRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 14:17:36 -0400
-Received: by pbbrr13 with SMTP id rr13so1656398pbb.19
-        for <git@vger.kernel.org>; Wed, 29 Aug 2012 11:17:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent
-         :x-gm-message-state;
-        bh=T5/mtB0tm7SiadDTGkWyp0YnAOKojQ2OsakjhigNohs=;
-        b=g+ukcFsMtGaezYMHiLQsrEmXNWNZOTZVPc1htdJ0xUN4aJfjA/SYRUfQNNFqw9ybtp
-         chHPSuyRC0LqoMgYOLnKBcq7BbMpxMtJeYFBJ6TtqMhJPPislWf+C30XPnmE8SxLeKcf
-         vWnjuJOAa3o3uBj0xDz6yiB347ICChpa+WYrFwUhGbyRf4hcm2RFOk4YhkTzM1K+D54Z
-         7dKjQ1Hw/0EaA2wMvOiLJwrAKYLKDZSNaagQurzY5YdLKg7a0ez4djPWK/31bXdmLM1C
-         4wFRsD3zJyqKPSiele2hnTyT1+fLIY7OPXeXCo5M5gKjyF+9IVGDELS8n05HrmRQoETU
-         WSZA==
-Received: by 10.66.76.197 with SMTP id m5mr4806047paw.66.1346264256317;
-        Wed, 29 Aug 2012 11:17:36 -0700 (PDT)
-Received: from localhost ([38.96.16.75])
-        by mx.google.com with ESMTPS id ox5sm19715274pbc.75.2012.08.29.11.17.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Aug 2012 11:17:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vharmxkzl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Gm-Message-State: ALoCoQkFXJc9gCAhYPSCJl2yNjB56U53DRiZwVrrbSVJMz7hYzoaVENJVr3yio82nWf7by4DHMxH
+	id S1754374Ab2H2ShY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Aug 2012 14:37:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38932 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754220Ab2H2ShY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Aug 2012 14:37:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A3D99EC6;
+	Wed, 29 Aug 2012 14:37:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zx1kpzKTm8ZN
+	qCr8Lk7aEulEmQA=; b=X4ieU8ihGea68qmZhsnUOrKfEjGPdMLf1d/nX0gugUJY
+	taM0yXaA/8lnjhZLiAkTGY1nT/Qj/aoigMh/3DH05dcJ5iTfN+opJVZYv6RKJCSt
+	Gr0037fPqlEmY2Ev34PWuSIemiaomMHd/gIRc0+++P3/LKh2G6nwYVf0m+amrGo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nGf3Yf
+	u2/sLhs/EIFuLKwfmsVgADcIR5vSp0quJDRE9L6BSAzhNH8FctULf3Ytm8oCy73r
+	GKBPa53yEyuhENzc89lAKVt222MGqfeAotSvisBttjKF+/wgwDcxekz2s2zH4d8G
+	P0YSRzxngJowqNz7RZ4jC0wfEQjErIVUrzjtY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37E2E9EC5;
+	Wed, 29 Aug 2012 14:37:23 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9FF99EC4; Wed, 29 Aug 2012
+ 14:37:22 -0400 (EDT)
+In-Reply-To: <1346248524-11616-3-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 29 Aug
+ 2012 20:55:24 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 925CB9E2-F208-11E1-9611-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204492>
 
-On Tue, Aug 28, 2012 at 11:36:46PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Greg KH <gregkh@linuxfoundation.org> writes:
-> >
-> >> In the Linux kernel tree, commit 0136db586c028f71e7cc21cc183064ff0d5919
-> >> is a bit "odd".
-> >>
-> >> If I go to look to see what release it was in, I normally do:
-> >> 	$ git describe --contains 0136db586c028f71e7cc21cc183064ff0d5919
-> >> 	v3.6-rc1~59^2~56^2~76
-> >> ...
-> >> Any ideas?
-> >
-> > That is 59 + 1 + 56 + 1 + 76 = 193 steps away from the tag v3.6-rc1.
-> >
-> > $ git name-rev --refs=refs/tags/v3.5-rc1 0136db58
-> > 0136db58 tags/v3.5-rc1~83^2~81^2~76
-> >
-> > which is 83 + 1 + 81 + 1 + 76 = 242 steps away from that tag.
-> >
-> > So it _is_ odd that the newly tagged tip merged a branch that had
-> > smaller development since it merged the commit, but name-rev seems
-> > to be measuring the steps it takes from the tags to reach the commit
-> > and giving us the one that gives the shortest path correctly.
-> >
-> > Obviously, that is not the same as "which tag is the oldest one
-> > among the ones that can reach this commit?"
-> 
-> As is usual for what I say, the above is an explanation of what we
-> are seeing, not necessarily a justification.
-> 
-> Given a history of this shape:
-> 
->         o---o---o---o TONS!!!
->                      \
->  ---o--o--o--o--o--Y--o---o---Z
->      \   /               /
->       \ /               /
->        X---------------o
-> 
-> where Y is v3.5-rc1 and Z is v3.6-rc1, "name-rev X" measures the
-> distance of the shortest path between Z and X (Z^^2^ = 3 steps away)
-> and between Y and X (Y~3^2 = 4 steps away), and uses the tag with
-> the shortest path.
-> 
-> But in order to answer "which is the earlier tag that merges X",
-> what "name-rev" measures is not very interesting.
-> 
-> What we want to see is the tag whose "weight" (imagine these commits
-> are beads on strings, and you hold the tag between your fingers and
-> lift it, pulling all the commits behind it on the history) is the
-> smallest and reaches the commit X in question.  The distance on the
-> shortest path to X totally ignores tons of merges that went into the
-> mainline between Y and Z.  That is what makes name-rev not useful
-> for this purpose.
-> 
-> That "weight" is what Linus's "rev-list | wc -l" showed, but it is
-> fairly expensive to compute.  We do have a code that computes such
-> weight in the history bisection code (it computes this exact weight
-> for each and every commit that is still suspect, and picks the one
-> that is half-way).  We know how to compute it, but I suspect that
-> applying that code naively to name-rev would make it unusably slow.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Thanks for the full explaination.  "Normally" this never is an issue for
-me, as this is the first time, in the history of Linux stable kernel
-releases, that I've ever noticed this.  And I agree, it's probably not
-something that can easily be resolved in git, given how it's calculated.
+>  I'm not entirely sure about this chunk
+>
+>  +	if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED) {
+>  +		if (opts->new_orphan_branch)
+>  +			die(_("%s cannot be used with %s"), "--orphan", "-t");
+>  +		if (opts->force_detach)
+>  +			die(_("%s cannot be used with %s"), "--detach", "-t");
+>  +	} else
+>  +		opts->track =3D git_branch_track;
+>
+>  If we don't want -t and --orphan/--detach together, then we probably=
+ should ignore
+>  branch.autosetupmerge when --orphan/--detach is specified.
 
-thanks,
+Yeah, I agree.
 
-greg k-h
+>  I did not unify new_branch, new_branch_force and new_orphan_branch.
+>  They touch other parts of the code and should probably be done
+>  separately.
+
+That sounds like a very sensible decision.
