@@ -1,229 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] commit: use a priority queue in merge base functions
-Date: Wed, 29 Aug 2012 07:11:47 -0400
-Message-ID: <20120829111147.GB14734@sigill.intra.peff.net>
-References: <20120829110812.GA14069@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/3] checkout: reorder option handling
+Date: Wed, 29 Aug 2012 19:16:10 +0700
+Message-ID: <CACsJy8Cjbg2tb_E+D7hMwPZNFWhvEF1eNpf5HUBzJnBoQQaMAg@mail.gmail.com>
+References: <7vr4qroel6.fsf@alter.siamese.dyndns.org> <1346161748-25651-1-git-send-email-pclouds@gmail.com>
+ <1346161748-25651-3-git-send-email-pclouds@gmail.com> <7vipc2zqxg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 29 13:12:00 2012
+X-From: git-owner@vger.kernel.org Wed Aug 29 14:17:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6gBi-0002Md-I3
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 13:11:59 +0200
+	id 1T6hCf-000892-BF
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Aug 2012 14:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923Ab2H2LLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 07:11:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46976 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752541Ab2H2LLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 07:11:52 -0400
-Received: (qmail 31728 invoked by uid 107); 29 Aug 2012 11:12:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 Aug 2012 07:12:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2012 07:11:47 -0400
-Content-Disposition: inline
-In-Reply-To: <20120829110812.GA14069@sigill.intra.peff.net>
+	id S1752979Ab2H2MQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 08:16:42 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:49124 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793Ab2H2MQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 08:16:41 -0400
+Received: by qaas11 with SMTP id s11so3439510qaa.19
+        for <git@vger.kernel.org>; Wed, 29 Aug 2012 05:16:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ny+MBI3L7mh5dxhAcaLe5bqSKT5UASTkYboie+7PG9I=;
+        b=CQW2/I/F0eByr0N79p07YDQ7/9nqNo+DeT8EAUP0kcej+J1ZFN/mDayhhK9w1kkDIh
+         H0GJ76g9FaNxHhVR3GhU/BOdbg8jGVKCOP6g6azLNAXIHlPpFsZpjLXgRIT3QxGzwJHp
+         bP9QN/KxlWwLYzGdWq2unlRU6YGA8CR8HXHZF8Feo0sqh4p0yICxpVafp+reNq9x95CD
+         bBMgUFegQsxdBewG3+z0n980zlEMFIaSpfSJIcazm8eqcFPxiOnteVg95nRwGl+bnPYm
+         vX426lQnk6P+X3EshAF4kHqRbxF8R0+vqmzJAm+IV+T8LSOQUk4oiH0kiAuulfPq7h5O
+         nljg==
+Received: by 10.224.220.138 with SMTP id hy10mr3172754qab.21.1346242601029;
+ Wed, 29 Aug 2012 05:16:41 -0700 (PDT)
+Received: by 10.49.4.6 with HTTP; Wed, 29 Aug 2012 05:16:10 -0700 (PDT)
+In-Reply-To: <7vipc2zqxg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204477>
 
-The merge-base functions internally keep a commit lists and
-insert by date, which causes a linear search of the commit
-list for each insertion. Let's use a priority queue instead.
+On Wed, Aug 29, 2012 at 3:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +     /* Easy mode-independent incompatible checks */
+>>       if (opts.force_detach && (opts.new_branch || opts.new_orphan_branch))
+>>               die(_("--detach cannot be used with -b/-B/--orphan"));
+>
+> Did you catch "--detach -B" combination without checking new_branch_force?
 
-Unfortunately, from my experiments, this didn't actually
-cause any speedup.
+I did not. Will move this check further down once opts.new_branch is final.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'd probably split this into a few commits if we were really going to
-apply it, but since it doesn't actually make anything faster, I doubt
-the code churn is worth it.
+>>       if (opts.force_detach && 0 < opts.track)
+>>               die(_("--detach cannot be used with -t"));
+>> +     if (opts.force && opts.merge)
+>> +             die(_("git checkout: -f and -m are incompatible"));
+>> +
+>> +     if (conflict_style) {
+>> +             opts.merge = 1; /* implied */
+>> +             git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+>> +     }
+>
+> "checkout --conflict=diff3 -f <branch>" would imply combination of
+> "-m" and "-f", which is supposed to be forbidden in the previous
+> check, no?
 
- commit.c | 78 ++++++++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 47 insertions(+), 31 deletions(-)
+Yep. That last "if" must be moved up.
 
-diff --git a/commit.c b/commit.c
-index 380f4ec..c64ef94 100644
---- a/commit.c
-+++ b/commit.c
-@@ -7,6 +7,7 @@
- #include "revision.h"
- #include "notes.h"
- #include "gpg-interface.h"
-+#include "queue.h"
- 
- int save_commit_buffer = 1;
- 
-@@ -360,6 +361,15 @@ struct commit_list *commit_list_insert(struct commit *item, struct commit_list *
- 	return new_list;
- }
- 
-+static void commit_list_append(struct commit *item, struct commit_list ***tail)
-+{
-+	struct commit_list *new_list = xmalloc(sizeof(*new_list));
-+	new_list->item = item;
-+	new_list->next = NULL;
-+	**tail = new_list;
-+	*tail = &new_list->next;
-+}
-+
- unsigned commit_list_count(const struct commit_list *l)
- {
- 	unsigned c = 0;
-@@ -422,6 +432,16 @@ struct commit *pop_most_recent_commit(struct commit_list **list,
- 	return ret;
- }
- 
-+static int commit_datecmp(const void *va, const void *vb)
-+{
-+	const struct commit *a = va, *b = vb;
-+	if (a->date < b->date)
-+		return -1;
-+	else if (a->date > b->date)
-+		return 1;
-+	return 0;
-+}
-+
- void clear_commit_marks(struct commit *commit, unsigned int mark)
- {
- 	while (commit) {
-@@ -569,22 +589,23 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
- 
- static const unsigned all_flags = (PARENT1 | PARENT2 | STALE | RESULT);
- 
--static struct commit *interesting(struct commit_list *list)
-+static int interesting(struct queue *q)
- {
--	while (list) {
--		struct commit *commit = list->item;
--		list = list->next;
-+	int i;
-+	for (i = 0; i < q->nr; i++) {
-+		struct commit *commit = q->items[i];
- 		if (commit->object.flags & STALE)
- 			continue;
--		return commit;
-+		return 1;
- 	}
--	return NULL;
-+	return 0;
- }
- 
- static struct commit_list *merge_bases_many(struct commit *one, int n, struct commit **twos)
- {
--	struct commit_list *list = NULL;
--	struct commit_list *result = NULL;
-+	struct queue result = { commit_datecmp };
-+	struct queue list = { commit_datecmp };
-+	struct commit_list *ret = NULL, **tail = &ret;
- 	int i;
- 
- 	for (i = 0; i < n; i++) {
-@@ -593,7 +614,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
- 			 * We do not mark this even with RESULT so we do not
- 			 * have to clean it up.
- 			 */
--			return commit_list_insert(one, &result);
-+			return commit_list_insert(one, &ret);
- 	}
- 
- 	if (parse_commit(one))
-@@ -604,28 +625,24 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
- 	}
- 
- 	one->object.flags |= PARENT1;
--	commit_list_insert_by_date(one, &list);
-+	queue_insert(&list, one);
- 	for (i = 0; i < n; i++) {
- 		twos[i]->object.flags |= PARENT2;
--		commit_list_insert_by_date(twos[i], &list);
-+		queue_insert(&list, twos[i]);
- 	}
- 
--	while (interesting(list)) {
-+	while (interesting(&list)) {
- 		struct commit *commit;
- 		struct commit_list *parents;
--		struct commit_list *next;
- 		int flags;
- 
--		commit = list->item;
--		next = list->next;
--		free(list);
--		list = next;
-+		commit = queue_pop(&list);
- 
- 		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
- 		if (flags == (PARENT1 | PARENT2)) {
- 			if (!(commit->object.flags & RESULT)) {
- 				commit->object.flags |= RESULT;
--				commit_list_insert_by_date(commit, &result);
-+				queue_insert(&result, commit);
- 			}
- 			/* Mark parents of a found merge stale */
- 			flags |= STALE;
-@@ -639,21 +656,16 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
- 			if (parse_commit(p))
- 				return NULL;
- 			p->object.flags |= flags;
--			commit_list_insert_by_date(p, &list);
-+			queue_insert(&list, p);
- 		}
- 	}
- 
- 	/* Clean up the result to remove stale ones */
--	free_commit_list(list);
--	list = result; result = NULL;
--	while (list) {
--		struct commit_list *next = list->next;
--		if (!(list->item->object.flags & STALE))
--			commit_list_insert_by_date(list->item, &result);
--		free(list);
--		list = next;
--	}
--	return result;
-+	while (result.nr)
-+		commit_list_append(queue_pop(&result), &tail);
-+	queue_clear(&result);
-+	queue_clear(&list);
-+	return ret;
- }
- 
- struct commit_list *get_octopus_merge_bases(struct commit_list *in)
-@@ -690,7 +702,8 @@ struct commit_list *get_merge_bases_many(struct commit *one,
- {
- 	struct commit_list *list;
- 	struct commit **rslt, **others;
--	struct commit_list *result;
-+	struct commit_list *result, **tail = &result;
-+	struct queue commit_queue = { commit_datecmp };
- 	int cnt, i, j;
- 
- 	result = merge_bases_many(one, n, twos);
-@@ -744,11 +757,14 @@ struct commit_list *get_merge_bases_many(struct commit *one,
- 			list = list->next;
- 		}
- 		if (!list)
--			commit_list_insert_by_date(rslt[i], &result);
-+			queue_insert(&commit_queue, rslt[i]);
- 		free_commit_list(list);
- 	}
- 	free(rslt);
- 	free(others);
-+	while (commit_queue.nr)
-+		commit_list_append(queue_pop(&commit_queue), &tail);
-+	queue_clear(&commit_queue);
- 	return result;
- }
- 
+> I very much like the idea of separating things in phases like your
+> proposed log message explains.  But I wonder if the order should be
+> to do dwimming and parameter canonicalization first, then decide the
+> mode (these might have to be swapped, as the same parameter may dwim
+> down to different things depending on the mode), and finally check
+> for sanity before performing.
+
+I do a few sanity checks after the mode has been decided and obviously
+missed some as you pointed out above. Will move them all down. So
+parameter canonicalization, dwim, then separate code paths for each
+mode, which includes sanity checks.
+
+> To avoid confusion, it also might not be a bad idea to remove
+> new_branch_force and new_orphan_branch from the structure and
+> introduce "enum branch_creation_type" or something, and always have
+> the new branch name in "new_branch" field (this needs to get various
+> pointers into opts out of the parseopt options[] array; parse into
+> separate variables and decide what to put in "struct checkout_opts"),
+> independent from how that branch is going to be created (either -b,
+> -B, or --orphan).
+
+OK
 -- 
-1.7.12.35.g38689e3
+Duy
