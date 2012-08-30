@@ -1,111 +1,172 @@
-From: Ammon Riley <ammon.riley@gmail.com>
-Subject: [PATCH] Make git-svn branch patterns match complete URL
-Date: Thu, 30 Aug 2012 15:53:57 -0700
-Message-ID: <1346367237-28242-1-git-send-email-ammon.riley@gmail.com>
-Cc: Ammon Riley <ammon.riley@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 4/4] get_merge_bases_many(): walk from many tips in parallel
+Date: Thu, 30 Aug 2012 16:13:08 -0700
+Message-ID: <1346368388-23576-5-git-send-email-gitster@pobox.com>
+References: <1346368388-23576-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 00:54:18 2012
+X-From: git-owner@vger.kernel.org Fri Aug 31 01:13:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7Dcv-00073Z-Jl
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 00:54:17 +0200
+	id 1T7DvS-00075a-Kt
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 01:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782Ab2H3WyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 18:54:11 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:61623 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524Ab2H3WyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 18:54:09 -0400
-Received: by pbbrr13 with SMTP id rr13so3896852pbb.19
-        for <git@vger.kernel.org>; Thu, 30 Aug 2012 15:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=7ntHw4Uh3R6mW5mGjJiI4OnJYzEZk8HQWDJRaNvt6ZE=;
-        b=1ItsIPmmPbZGA2ZlZcnWaUAfqxgY141EYHX1/xc+Z6iO6mUNx60dEWaPmRHHvYXlgF
-         mWR+s+pqYdrRRjdN/58chO69xSbZtUQXZiJ7exQYMboQCKMmyX0bc5cC2tuLSWL4gcjk
-         a55nuGR9c18JmoXQkjHS58Ql8MuVswJnMgHrJg0QqDY27TcZj0qR3MHV7iz44Q6UwQKR
-         DJn5NKEurhm0mpz675s7f7Wbbb9TahVrJlLZPSTHRWpO4O22+Ex49t062bIWSGhGuEiI
-         rkyY/+5xpi8MdMHnzK0eTvRJQpN3NAXG1NV1y477IbT9ZATR396DCx2p+9j2DOneoSWC
-         WUHQ==
-Received: by 10.68.129.164 with SMTP id nx4mr13858644pbb.28.1346367249021;
-        Thu, 30 Aug 2012 15:54:09 -0700 (PDT)
-Received: from igloo.hlit.local ([12.108.21.226])
-        by mx.google.com with ESMTPS id b4sm2304115pbw.28.2012.08.30.15.54.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Aug 2012 15:54:08 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.3
+	id S1752926Ab2H3XNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 19:13:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40879 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823Ab2H3XNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 19:13:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AA008D12
+	for <git@vger.kernel.org>; Thu, 30 Aug 2012 19:13:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=0rFn
+	o3kiNf3e5foT5nhcFv/lXIQ=; b=XVo4cJ4UKPixfT5Rp8RifXka4tN0CRFDdOBg
+	iWoH6jXuO7++mZSWARJZaBUzl0KIXYFwyfOQ4EW9WPrurSGjqAHPefVDlM5jOANz
+	bJSito7y7fGwImRv2rJDlIIyzclKcAsFZFysYp0yKuNwkZNebfZxXcIH593HLct5
+	qC2SiDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Zqob6m
+	SBhv9macpXle+xNZCy2wpUIXjf0cHTh8luqPK/r2nJ72NGJ6ffo5oTcT6BF1bVyc
+	qZbcXbFRVnyrR+5MQ0UK6QsS84DZTort4W+SJ5eRgyxdvt0brVX+NlTeMoeZWNqV
+	bAA7Si+hLD5HGdj2r88xAI69C1WN3GlHJkuQc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B5858D11
+	for <git@vger.kernel.org>; Thu, 30 Aug 2012 19:13:18 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 989A38D0D for
+ <git@vger.kernel.org>; Thu, 30 Aug 2012 19:13:17 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.293.g6aeebca
+In-Reply-To: <1346368388-23576-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 48480442-F2F8-11E1-A3F7-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204573>
 
-When using the {word,[...]} style of configuration for tags and branches,
-it appears the intent is to only match whole path parts, since the words
-in the {} pattern are meta-character quoted.
+The get_merge_bases_many() function reduces the result returned by
+the merge_bases_many() function, which is a set of possible merge
+bases, by excluding commits that can be reached from other commits.
+We used to do N*(N-1) traversals for this, but we can check if one
+commit reaches which other (N-1) commits by a single traversal, and
+repeat it for all the candidates to find the answer.
 
-When the pattern word appears in the beginning or middle of the url,
-it's matched completely, since the left side, pattern, and (non-empty)
-right side are joined together with path separators.
-
-However, when the pattern word appears at the end of the URL, the
-right side is an empty pattern, and the resulting regex matches
-more than just the specified pattern.
-
-For example, if you specify something along the lines of
-
-    branches = branches/project/{release_1,release_2}
-
-and your repository also contains "branches/project/release_1_2", you
-will also get the release_1_2 branch.  By restricting the match regex
-with anchors, this is avoided.
-
-Signed-off-by: Ammon Riley <ammon.riley@gmail.com>
+Introduce remove_redundant() helper function to do this painting; we
+should be able to use it to reimplement reduce_heads() as well.
 ---
-Tested with Subversion 1.6; applies against maint, and master.
+ commit.c | 79 +++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 58 insertions(+), 21 deletions(-)
 
- perl/Git/SVN/GlobSpec.pm      | 4 +++-
- t/t9154-git-svn-fancy-glob.sh | 9 +++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/perl/Git/SVN/GlobSpec.pm b/perl/Git/SVN/GlobSpec.pm
-index 96cfd98..c95f5d7 100644
---- a/perl/Git/SVN/GlobSpec.pm
-+++ b/perl/Git/SVN/GlobSpec.pm
-@@ -44,7 +44,9 @@ sub new {
- 	my $right = join('/', @right);
- 	$re = join('/', @patterns);
- 	$re = join('\/',
--		   grep(length, quotemeta($left), "($re)", quotemeta($right)));
-+		   grep(length, quotemeta($left),
-+                                "($re)(?=/|\$)",
-+                                quotemeta($right)));
- 	my $left_re = qr/^\/\Q$left\E(\/|$)/;
- 	bless { left => $left, right => $right, left_regex => $left_re,
- 	        regex => qr/$re/, glob => $glob, depth => $depth }, $class;
-diff --git a/t/t9154-git-svn-fancy-glob.sh b/t/t9154-git-svn-fancy-glob.sh
-index a6a56a6..b780e0e 100755
---- a/t/t9154-git-svn-fancy-glob.sh
-+++ b/t/t9154-git-svn-fancy-glob.sh
-@@ -21,6 +21,15 @@ test_expect_success 'add red branch' "
- 	test_must_fail git rev-parse refs/remotes/blue
- 	"
+diff --git a/commit.c b/commit.c
+index d39a9e9..2ff5061 100644
+--- a/commit.c
++++ b/commit.c
+@@ -692,6 +692,60 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+ 	return ret;
+ }
  
-+test_expect_success 'add gre branch' "
-+	GIT_CONFIG=.git/svn/.metadata git config --unset svn-remote.svn.branches-maxRev &&
-+	git config svn-remote.svn.branches 'branches/{red,gre}:refs/remotes/*' &&
-+	git svn fetch &&
-+	git rev-parse refs/remotes/red &&
-+	test_must_fail git rev-parse refs/remotes/green &&
-+	test_must_fail git rev-parse refs/remotes/blue
-+	"
++static int remove_redundant(struct commit **array, int cnt)
++{
++	/*
++	 * Some commit in the array may be an ancestor of
++	 * another commit.  Move such commit to the end of
++	 * the array, and return the number of commits that
++	 * are independent from each other.
++	 */
++	struct commit **work;
++	unsigned char *redundant;
++	int *filled_index;
++	int i, j, filled;
 +
- test_expect_success 'add green branch' "
- 	GIT_CONFIG=.git/svn/.metadata git config --unset svn-remote.svn.branches-maxRev &&
- 	git config svn-remote.svn.branches 'branches/{red,green}:refs/remotes/*' &&
++	work = xcalloc(cnt, sizeof(*work));
++	redundant = xcalloc(cnt, 1);
++	filled_index = xmalloc(sizeof(*filled_index) * (cnt - 1));
++
++	for (i = 0; i < cnt; i++) {
++		struct commit_list *common;
++
++		if (redundant[i])
++			continue;
++		for (j = filled = 0; j < cnt; j++) {
++			if (i == j || redundant[j])
++				continue;
++			filled_index[filled] = j;
++			work[filled++] = array[j];
++		}
++		common = paint_down_to_common(array[i], filled, work);
++		if (array[i]->object.flags & PARENT2)
++			redundant[i] = 1;
++		for (j = 0; j < filled; j++)
++			if (work[j]->object.flags & PARENT1)
++				redundant[filled_index[j]] = 1;
++		clear_commit_marks(array[i], all_flags);
++		for (j = 0; j < filled; j++)
++			clear_commit_marks(work[j], all_flags);
++		free_commit_list(common);
++	}
++
++	/* Now collect the result */
++	memcpy(work, array, sizeof(*array) * cnt);
++	for (i = filled = 0; i < cnt; i++)
++		if (!redundant[i])
++			array[filled++] = work[i];
++	for (j = filled, i = 0; i < cnt; i++)
++		if (redundant[i])
++			array[j++] = work[i];
++	free(work);
++	free(redundant);
++	free(filled_index);
++	return filled;
++}
++
+ struct commit_list *get_merge_bases_many(struct commit *one,
+ 					 int n,
+ 					 struct commit **twos,
+@@ -700,7 +754,7 @@ struct commit_list *get_merge_bases_many(struct commit *one,
+ 	struct commit_list *list;
+ 	struct commit **rslt;
+ 	struct commit_list *result;
+-	int cnt, i, j;
++	int cnt, i;
+ 
+ 	result = merge_bases_many(one, n, twos);
+ 	for (i = 0; i < n; i++) {
+@@ -731,28 +785,11 @@ struct commit_list *get_merge_bases_many(struct commit *one,
+ 	clear_commit_marks(one, all_flags);
+ 	for (i = 0; i < n; i++)
+ 		clear_commit_marks(twos[i], all_flags);
+-	for (i = 0; i < cnt - 1; i++) {
+-		for (j = i+1; j < cnt; j++) {
+-			if (!rslt[i] || !rslt[j])
+-				continue;
+-			result = merge_bases_many(rslt[i], 1, &rslt[j]);
+-			clear_commit_marks(rslt[i], all_flags);
+-			clear_commit_marks(rslt[j], all_flags);
+-			for (list = result; list; list = list->next) {
+-				if (rslt[i] == list->item)
+-					rslt[i] = NULL;
+-				if (rslt[j] == list->item)
+-					rslt[j] = NULL;
+-			}
+-		}
+-	}
+ 
+-	/* Surviving ones in rslt[] are the independent results */
++	cnt = remove_redundant(rslt, cnt);
+ 	result = NULL;
+-	for (i = 0; i < cnt; i++) {
+-		if (rslt[i])
+-			commit_list_insert_by_date(rslt[i], &result);
+-	}
++	for (i = 0; i < cnt; i++)
++		commit_list_insert_by_date(rslt[i], &result);
+ 	free(rslt);
+ 	return result;
+ }
 -- 
-1.7.11.3
+1.7.12.293.g6aeebca
