@@ -1,161 +1,89 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 5/4] wincred: port to generic credential helper (UNTESTED)
-Date: Thu, 30 Aug 2012 20:27:02 +0200
-Message-ID: <CABPQNSZsXnf2kjcN+Qma8pApjGRF6SD5iJjB2Ow6GuGts0Z=Kg@mail.gmail.com>
-References: <503A680C.3090406@qo.cx> <1346018649-3002-1-git-send-email-pah@qo.cx>
-Reply-To: kusmabite@gmail.com
+From: carlos@cmartin.tk (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
+Subject: Re: [PATCHv2 0/3] Improve branch UI for setting upstream information
+Date: Thu, 30 Aug 2012 20:57:56 +0200
+Message-ID: <87fw745hsb.fsf@centaur.cmartin.tk>
+References: <1346347393-8425-1-git-send-email-cmn@elego.de>
+	<7v1uios2ma.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: "Philipp A. Hartmann" <pah@qo.cx>
-X-From: git-owner@vger.kernel.org Thu Aug 30 20:28:13 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 20:58:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T79TN-0000j9-Sn
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 20:28:10 +0200
+	id 1T79wF-0000Fb-VG
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 20:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737Ab2H3S2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 14:28:01 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:62277 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088Ab2H3S2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 14:28:00 -0400
-Received: by vcbfk26 with SMTP id fk26so2318084vcb.19
-        for <git@vger.kernel.org>; Thu, 30 Aug 2012 11:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Gbdb/ft0kWRHGudL3aVuwP9mCjw+zzUT0EzuzM+DYgs=;
-        b=IHJiWhBr8nWp909RaAUxtgdH522MPLcx3scti8rc938u3e8cQzc2f6i1eKlO0yRpPP
-         cIQM9DLrFwiYZx+Esr3/0zv3jssNJ/JWUYgJ1NHhOPNwRybgHuF9RsOLwQ0A/ZRIf1BG
-         wPCX+LX/aNtYOxXvRkyLmjSippe3HhvuhiZ9q+ko9H6VP0Cz16nC6sxjjdYBpgJ5rbSc
-         KwPjazl9N9zruEGZdoE9Le2IthXzSbEBY1h9hYyA+9qPiXLui78oUANF1/JWJtVd+6Ku
-         Eo1K3lGxI6MQRE6APS+DjObfHOccwi2rCklF0mmM2EY1785Esmt/gc48gUQgibbHq0Wj
-         xkzg==
-Received: by 10.52.94.97 with SMTP id db1mr3135729vdb.71.1346351279281; Thu,
- 30 Aug 2012 11:27:59 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Thu, 30 Aug 2012 11:27:02 -0700 (PDT)
-In-Reply-To: <1346018649-3002-1-git-send-email-pah@qo.cx>
+	id S1750982Ab2H3S5x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Aug 2012 14:57:53 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:57972 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750802Ab2H3S5x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2012 14:57:53 -0400
+Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
+	by hessy.dwim.me (Postfix) with ESMTPA id 0DF8280030;
+	Thu, 30 Aug 2012 20:57:52 +0200 (CEST)
+Received: (nullmailer pid 9064 invoked by uid 1000);
+	Thu, 30 Aug 2012 18:57:56 -0000
+In-Reply-To: <7v1uios2ma.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 30 Aug 2012 10:37:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204562>
 
-On Mon, Aug 27, 2012 at 12:04 AM, Philipp A. Hartmann <pah@qo.cx> wrote:
-> From: "Philipp A. Hartmann" <pah@qo.cx>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 >
-> This patch is an experiment to port the wincred helper
-> to the generic implementation.  As of know, it is
-> completely untested.
+>> As a result of making --unset-upstream fail if the given branch
+>> doesn't exist, I discovered a copy-paste error in on the the tests i=
+n
+>> the patch after it, so I'm resending the whole thing.
+>>
+>> The changes from the last reroll are the tightening of the situation=
+s
+>> where git will show an error message (not it's just if the branch is
+>> new and exists as remote-tracking) which I already sent as a reply i=
+n
+>> the other thread; and making --unset-upstream error out on bad input=
+,
+>> which I already mentioned above.
 >
-> In addition to porting the helper to the generic API,
-> this patch clears up all passwords from memory, which
-> reduces the total amount to saved lines.
+> Thanks.
 >
-> Signed-off-by: Philipp A. Hartmann <pah@qo.cx>
-> ---
+> In addition to "--unset-upstream must fail on i-dont-exist branch"
+> in [2/3], I am wondering if we would want to also make sure the
+> command fails when the upstream information is not set for the
+> branch, i.e. something like the following on top.
 >
-> The porting was fairly easy, but due to the lack of a testing
-> platform, it is completely untested.
+> What do you think?
 >
-> Erik: Can you try to have look?
+>  t/t3200-branch.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git i/t/t3200-branch.sh w/t/t3200-branch.sh
+> index 1018e8b..a0aaedd 100755
+> --- i/t/t3200-branch.sh
+> +++ w/t/t3200-branch.sh
+> @@ -393,7 +393,9 @@ test_expect_success 'test --unset-upstream on HEA=
+D' \
+>       git branch --set-upstream-to my14 &&
+>       git branch --unset-upstream &&
+>       test_must_fail git config branch.master.remote &&
+> -     test_must_fail git config branch.master.merge'
+> +     test_must_fail git config branch.master.merge &&
+> +     test_must_fail git branch --unset-upstream
+> +'
 
-Sorry for the late reply, I'm currently in bed with pneumonia.
+Yeah, this looks good, makes sure that it will still behave correctly
+even if the code path for these two situations diverges.
 
-But I gave it a quick go, but as-is it's a NACK; a wall of warnings and errors.
-
-But with this patch on top, it seems to at least compile OK:
-
----8<---
-diff --git a/contrib/credential/helper/credential_helper.h
-b/contrib/credential/helper/credential_helper.h
-index 7e73fc6..13b611e 100644
---- a/contrib/credential/helper/credential_helper.h
-+++ b/contrib/credential/helper/credential_helper.h
-@@ -125,6 +125,7 @@ static inline char *xstrdup(const char *str)
- 	return ret;
- }
-
-+#ifndef NO_STRNDUP
- static inline char *xstrndup(const char *str, size_t len)
- {
- 	char *ret = strndup(str,len);
-@@ -133,5 +134,6 @@ static inline char *xstrndup(const char *str, size_t len)
-
- 	return ret;
- }
-+#endif
-
- #endif /* CREDENTIAL_HELPER_H_INCLUDED_ */
-diff --git a/contrib/credential/wincred/Makefile
-b/contrib/credential/wincred/Makefile
-index ee7a8ef..3900322 100644
---- a/contrib/credential/wincred/Makefile
-+++ b/contrib/credential/wincred/Makefile
-@@ -1,9 +1,10 @@
- MAIN:=git-credential-wincred
--all:: $(MAIN)
-+all:: $(MAIN).exe
-
- CC = gcc
- RM = rm -f
- CFLAGS = -O2 -Wall
-+CPPFLAGS = -DNO_STRNDUP
-
- -include ../../../config.mak.autogen
- -include ../../../config.mak
-diff --git a/contrib/credential/wincred/git-credential-wincred.c
-b/contrib/credential/wincred/git-credential-wincred.c
-index 721e59f..e26ba47 100644
---- a/contrib/credential/wincred/git-credential-wincred.c
-+++ b/contrib/credential/wincred/git-credential-wincred.c
-@@ -6,6 +6,7 @@
- #include <stdio.h>
- #include <io.h>
- #include <fcntl.h>
-+#include <credential_helper.h>
-
- /* MinGW doesn't have wincred.h, so we need to define stuff */
-
-@@ -124,9 +125,8 @@ static int prepare_credential(struct credential *c)
- 		wusername = utf8_to_utf16_dup(c->username);
- 	if (c->password)
- 		wpassword = utf8_to_utf16_dup(c->password);
--	if (c->port) {
--		snprintf(port_buf,"%hd",c->port);
--	}
-+	if (c->port)
-+		snprintf(port_buf, sizeof(port_buf), "%hd", c->port);
- 	return EXIT_SUCCESS;
- }
-
-@@ -170,7 +170,7 @@ static int get_credential(struct credential *c)
-
- 	/* search for the first credential that matches username */
- 	for (i = 0; i < num_creds; ++i)
--		if (match_cred(creds[i])) {
-+		if (match_cred(creds[i], c)) {
- 			cred = creds[i];
- 			break;
- 		}
----8<---
-
-However, I haven't been able to successfully run the tests on the
-result. When I did, I got this error:
-
----8<---
-rm: cannot remove `t/trash directory.t0303-credential-external/stderr': Permissi
-on denied
-rm: cannot remove `t/trash directory.t0303-credential-external/stdout': Permissi
-on denied
-rm: cannot remove directory `t/trash directory.t0303-credential-external': Direc
-tory not empty
----8<---
-
-And I'm not currently feeling up to debugging stuck processes or whatever it is.
+   cmn
