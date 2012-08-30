@@ -1,86 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git blame shows wrong "Not commited yet" entries
-Date: Thu, 30 Aug 2012 14:32:47 -0700
-Message-ID: <7v7gsgqd4w.fsf@alter.siamese.dyndns.org>
-References: <1055159053.19198.1345536909730.JavaMail.ngmail@webmail24.arcor-online.net>
- <303882026.440710.1346315214352.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] commit: use a priority queue in merge base functions
+Date: Thu, 30 Aug 2012 17:48:03 -0400
+Message-ID: <20120830214802.GB18636@sigill.intra.peff.net>
+References: <20120829110812.GA14069@sigill.intra.peff.net>
+ <20120829111147.GB14734@sigill.intra.peff.net>
+ <7vtxvlwt7o.fsf@alter.siamese.dyndns.org>
+ <20120829205332.GA16064@sigill.intra.peff.net>
+ <20120829205525.GA28696@sigill.intra.peff.net>
+ <20120829210032.GA29179@sigill.intra.peff.net>
+ <20120829210540.GA31756@sigill.intra.peff.net>
+ <20120830125421.GA5687@sigill.intra.peff.net>
+ <20120830130327.GB5687@sigill.intra.peff.net>
+ <7vy5kws5jn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker66@arcor.de>
-X-From: git-owner@vger.kernel.org Thu Aug 30 23:33:00 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 23:48:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7CMD-0000ls-UH
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 23:32:58 +0200
+	id 1T7Cb0-00042k-EZ
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 23:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523Ab2H3Vcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 17:32:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58325 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752495Ab2H3Vcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 17:32:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE5978F63;
-	Thu, 30 Aug 2012 17:32:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=weA6bhFR5s2e8ouUGAYHna4QJ/M=; b=Et3Rj3
-	oITXV8J5jFnRmRWEB3+Y1ThLiSqiBYt1IliUi7jdY4c+T1MuURXSsB0PWVk8RzUq
-	TKvNgiMNnuwm/1Bb8TSyAA0lz3vMjaAj+gAKH9vKFKptnlOqHMHZ2OduwTxXGoR3
-	mz+AFB1tE82QgDM6t6li383FHO2ZM50WeauvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CoeeRXyEqZktXsEhwAyUSfB8IlAlg1Bl
-	bdYSXIjxz8UJeYuDQfpzRb+ECjOe1dAKimwfgE1kO51lIhzmxI/xuhfrC0MMSA9O
-	DAx333623NmteSyalXUasXTAts9LOFBuMs3r7fAOoAwYzSPSDOdpdXmJIbsU/m9y
-	vNix6qc20XA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC5DB8F62;
-	Thu, 30 Aug 2012 17:32:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47E228F61; Thu, 30 Aug 2012
- 17:32:49 -0400 (EDT)
-In-Reply-To: <303882026.440710.1346315214352.JavaMail.ngmail@webmail08.arcor-online.net>
- (Thomas Ackermann's message of "Thu, 30 Aug 2012 10:26:54 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3F1DDA30-F2EA-11E1-8725-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752815Ab2H3VsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 17:48:07 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48389 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752419Ab2H3VsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 17:48:05 -0400
+Received: (qmail 13310 invoked by uid 107); 30 Aug 2012 21:48:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 30 Aug 2012 17:48:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2012 17:48:03 -0400
+Content-Disposition: inline
+In-Reply-To: <7vy5kws5jn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204568>
 
-Thomas Ackermann <th.acker66@arcor.de> writes:
+On Thu, Aug 30, 2012 at 09:33:48AM -0700, Junio C Hamano wrote:
 
-> I am using MsysGit 1.7.11 on WinXP 32 bit and experience the folllowing strange behaviour:
->  
-> For a file like "File.txt" in the repo, "git blame file.txt" (note the lower case)
-> shows "Not commited yet" for every single line in the file. 
-> "git blame File.txt" (correct upper case spelling) gives the correct output.
-> "core.ignorecase" is "true" so this behaviour is not what I expected.
+> Jeff King <peff@peff.net> writes:
+> 
+> > The script originally comes from here:
+> >
+> >   http://thread.gmane.org/gmane.comp.version-control.git/33566/focus=33852
+> >
+> > and the discussion implies that the AUTHOR_DATEs were added to avoid a
+> > race condition with the timestamps. But why would that ever have worked?
+> 
+> I do not see how AUTHOR_DATE would affect anything there, either,
+> other than to give reprodusible object names.  The test only sets
+> committer-date upfront, so without setting author-date, you would
+> still get different object names on commits.  Which suggests me that
+> there may be something that tiebreaks based on object names?
 
-What happens when you do this?
+Hmm. I wouldn't think so. The order should come from timestamps, with
+ties broken by order of insertion, which in turn comes from traversal,
+which depends only on parent order. We do check some raw sha1s in the
+expected output, but it is only for blobs, not commits.  I guess it
+could be some weirdness inside merge-recursive, though, and
+not part of the merge-base computation.
 
-	$ echo garbage >no-such-file-tracked.txt
-        $ git blame no-such-file-tracked.txt
+So I really don't know how AUTHOR_DATE would change anything. And
+indeed, after removing them it still passes on my machine.
 
-If you see everything attributed to the working tree file, I _think_
-you are seeing exactly the same thing.  As far as your repository
-history is concerned, "file.txt" is never tracked ("File.txt" is),
-and when Git asks the contents for "file.txt" in the working tree,
-Windows case insensitive filesystem gives it the contents of
-"File.txt" instead, all lines in which is initially attributed to
-the working tree.  When blame tries to pass the blame around to the
-commit at HEAD and down the history, it never finds "file.txt", so
-all the blame is given to this phamtom contents from "File.txt"
-Windows gave you as if it were stored in "file.txt", which does not
-really exist.
+However, I think I may understand why it fails if you tweak the
+committer dates.
 
-An obvious workaround is to say "git blame File.txt".  You might be
-able to patch MsysGit so that "git blame file.txt" errors out when
-it does not find such a path in the HEAD commit, though.
+When my unstable-queue was used, I noticed that the merge bases returned
+were the same (as you would expect), but that they came in a different
+order. Which makes sense, as the order of multiple bases would not
+necessarily be deterministic (they do not have an ancestry relationship,
+or they would not be merge bases).
+
+So the issue is that when you do a recursive merge with multiple bases,
+the order in which you visit the recursive bases is going to impact the
+exact conflicts you see. In theory, after the merge is done, you're
+going to be at the same state, but the conflicts you see along the way
+will be different. And it is this conflicted state that the test is
+looking at.
+
+The current test expects a particular order of merge bases based on the
+same-second commit timestamps. There is no race condition because of the
+setting of GIT_COMMITTER_DATE at the beginning (and _that_ is the real
+thing that fixed the race conditions Dscho saw in the thread above; the
+AUTHOR_DATE was just a red herring).
+
+So the test is not broken or racy, which is good. It is just testing
+something that is somewhat of an implementation detail. We could switch
+it to use test_tick, and then adjust the expected output to look for the
+expected conflict that git happens to generate in that case. But that is
+no better than the current behavior.
+
+But I'm not sure there is a way to test what it wants to test (that we
+hit a conflict that involves one of the recursive merge bases) without
+relying on the implementation detail. So I'm inclined to just leave it
+in place.
+
+-Peff
