@@ -1,111 +1,80 @@
-From: Marco Stornelli <marco.stornelli@gmail.com>
-Subject: [PATCH v2] Thunderbird: fix appp.sh format problems
-Date: Thu, 30 Aug 2012 10:48:14 +0200
-Message-ID: <503F28CE.2090400@gmail.com>
+From: Oswald Buddenhagen <ossi@kde.org>
+Subject: Re: GC of alternate object store
+Date: Thu, 30 Aug 2012 11:53:14 +0200
+Message-ID: <20120830095314.GA29038@troll08.europe.nokia.com>
+References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
+ <loom.20120827T233125-780@post.gmane.org>
+ <hbf.20120828vnfp@bombur.uio.no>
+ <20120829074249.GA14408@ugly.local>
+ <7v3935y9tw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 10:55:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 11:53:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T70Wi-0003KP-TJ
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 10:55:01 +0200
+	id 1T71RC-0006Hk-Vw
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 11:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370Ab2H3Iyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 04:54:54 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:41209 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752066Ab2H3Iyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 04:54:53 -0400
-Received: by wgbdr13 with SMTP id dr13so1354733wgb.1
-        for <git@vger.kernel.org>; Thu, 30 Aug 2012 01:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=+jlb0O8U6dGd75PG5CNUYRkt3JbS86ftPSxtMtPqfaQ=;
-        b=YyO2mrx9riD3kF5NRwhOL1o2SD314U8kDf9YPRjfvtvJ6+Wa+SJQVWgg+REwW6fEV+
-         Zfv5qnPJL/sbi+Vibrq2ORVRhc87maUiC+OOnB+aXK5waFuLOS4vcmcLC+VhFjuasH5T
-         ogvB+iPXOHhYKILvbA7QWNoZCk4EakV6/1TvBR8Kxj4pbLGmv7lP6l6tbGTxQiedImzK
-         0xzflFloLGUqJL37XwHe+55WpOuNocrtHpw8su4XKaDhFAoBsCjgEmCuiT2Z9uRlvuCq
-         dKwTfWSawLpmkJlcB3WxDQ9R60mJZCpX6VHl5KzKNQGIIJw4zu3jaxmUdFJVWhxAFmD/
-         +elw==
-Received: by 10.216.194.102 with SMTP id l80mr2683981wen.19.1346316892328;
-        Thu, 30 Aug 2012 01:54:52 -0700 (PDT)
-Received: from [82.49.176.139] (host139-176-dynamic.49-82-r.retail.telecomitalia.it. [82.49.176.139])
-        by mx.google.com with ESMTPS id k2sm3278416wiz.7.2012.08.30.01.54.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Aug 2012 01:54:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120601 Thunderbird/13.0
+	id S1751574Ab2H3JxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 05:53:17 -0400
+Received: from byte.kde.org ([212.110.188.12]:37345 "EHLO
+	byte1.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263Ab2H3JxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 05:53:16 -0400
+Received: from localhost ([127.0.0.1] helo=troll08)
+	by byte1.vm.bytemark.co.uk with esmtp (Exim 4.72)
+	(envelope-from <ossi@kde.org>)
+	id 1T71R4-0006z1-Lm; Thu, 30 Aug 2012 10:53:14 +0100
+Received: by troll08 (masqmail 0.3.4, from userid 1002)
+	id 1T71R4-7sI-00; Thu, 30 Aug 2012 11:53:14 +0200
+Content-Disposition: inline
+In-Reply-To: <7v3935y9tw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+52 (3a30d398fbbb) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204530>
 
-The current script has got the following problems:
+On Wed, Aug 29, 2012 at 08:52:27AM -0700, Junio C Hamano wrote:
+> (I won't comment on the other parts in this discussion).
+> 
+which is kinda unfortunate. ;)
 
-1) It doesn't work if the language used by Thunderbird is not English;
-2) The field To: filled by format-patch is not evaluated;
-3) The field Cc: is loaded only from Cc used in the commit message
-instead of using even the Cc field filled by format-patch in the email
-header.
+> Oswald Buddenhagen <ossi@kde.org> writes:
+> > i did exacty that. the tags are *still* not populated - git just tries
+> > very hard to treat them specially.
+> 
+> Doesn't
+> 
+> 	git push $over_there 'refs/*:refs/remotes/mine/*'
+> 
+> push your tag v1.0 to refs/remotes/mine/v1.0 over there?  The
+> version of git I ship seems to do this just fine.
+> 
+as i wrote before, i'm pulling, not pushing, so any differences could be
+blamed on that (or git version 1.7.12.23.g948900e).
+anyway, it seems this new version does fetch the tags under the remotes'
+namespaces, after all - but it still imports them into the global tag
+namespace as well, which of course makes a mess with the duplicated
+tags.
 
-Added comments for point 1). Fixed point 2) and 3).
+and for many repos i'm getting something like this (this is kinda new):
 
-Signed-off-by: Marco Stornelli <marco.stornelli@gmail.com>
----
-v2: changed the commit message to reflect better the script implementation
+Fetching qtbase
+remote: Counting objects: 62375, done.
+remote: Compressing objects: 100% (28049/28049), done.
+remote: Total 55704 (delta 45280), reused 36646 (delta 27368)
+Receiving objects: 100% (55704/55704), 16.76 MiB | 4.94 MiB/s, done.
+Resolving deltas: 100% (45280/45280), completed with 3017 local objects.
+fatal: bad object 90f0f499ec5953d60d616a2ff541ecaf8b0c31a2
+error: ../qt5/qtbase did not send all necessary objects
 
- contrib/thunderbird-patch-inline/appp.sh |   18 ++++++++++++++----
- 1 files changed, 14 insertions(+), 4 deletions(-)
+both the aggregator and the fetched repos run cleanly through fsck.
 
-diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
-index 5eb4a51..e6e1b85 100755
---- a/contrib/thunderbird-patch-inline/appp.sh
-+++ b/contrib/thunderbird-patch-inline/appp.sh
-@@ -6,6 +6,9 @@
- 
- # ExternalEditor can be downloaded at http://globs.org/articles.php?lng=en&pg=2
- 
-+# NOTE: You must change some words in this script according to the language
-+# used by Mozilla Thunderbird, as <Subject>, <To>, <Don't remove this line>.
-+
- CONFFILE=~/.appprc
- 
- SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
-@@ -26,17 +29,24 @@ fi
- cd - > /dev/null
- 
- SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
--HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
- BODY=`sed -e "1,/${SEP}/d" $1`
- CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
- DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
- 
--CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
--	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
-+export PATCH
-+CCS=`perl -e 'local $/=undef; open FILE, $ENV{'PATCH'}; $text=<FILE>;
-+close FILE; $cc = $1 if $text =~ /Cc: (.*?(,\n .*?)*)\n/s; $cc =~ s/\n//g;
-+print $cc;'`
-+
-+TO=`perl -e 'local $/=undef; open FILE, $ENV{'PATCH'}; $text=<FILE>;
-+close FILE; $to = $1 if $text =~ /To: (.*?(,\n .*?)*)\n/s; $to =~ s/\n//g;
-+print $to;'`
- 
-+# Change <Subject> before next line according to Thunderbird language
- echo "$SUBJECT" > $1
-+# Change <To> according to Thunderbird language
-+echo "To: $TO" >> $1
- echo "Cc: $CCS" >> $1
--echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
- echo "$SEP" >> $1
- 
- echo "$CMT_MSG" >> $1
--- 
-1.7.3.4
+regards
