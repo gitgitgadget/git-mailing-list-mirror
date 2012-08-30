@@ -1,195 +1,143 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Thu, 30 Aug 2012 18:40:25 +0200
-Message-ID: <002201cd86ce$285841b0$7908c510$@schmitz-digital.de>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de> <7vr4qqzsbe.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Thunderbird: fix appp.sh format problems
+Date: Thu, 30 Aug 2012 10:00:52 -0700
+Message-ID: <7vtxvks4aj.fsf@alter.siamese.dyndns.org>
+References: <503F28CE.2090400@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 18:41:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marco Stornelli <marco.stornelli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 19:01:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T77nc-0004mw-CR
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 18:40:56 +0200
+	id 1T7874-0007kK-RD
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 19:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307Ab2H3Qkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 12:40:49 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:57645 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754058Ab2H3Qks (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 12:40:48 -0400
-Received: from DualCore (dsdf-4db50202.pool.mediaWays.net [77.181.2.2])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0LfSYr-1TQXFl2cTh-00p3df; Thu, 30 Aug 2012 18:40:44 +0200
-In-Reply-To: <7vr4qqzsbe.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIhsC26HFNXVNf5LMacgAbi0X2P9gIuBdH5lrjK11A=
-Content-Language: de
-X-Provags-ID: V02:K0:XesN8qZi+zt17/K3i//ftea5BMXxOW4VZF2wc88sqcd
- KlJMj2fDKffZCQAF7J4vCQMN79HsSOKt12j17GCe/2j79mmKzH
- e4pg9GRn8qtZcwv/DsWpLkPL6nDgCVakSGY4MQCoglaHQboAau
- pXp5I4+cvIY57q/Rrot9LzkokeTlFETa4nmR1G/BOB6lxIOiAD
- MVgobS5wrX/1p1SUZNBFdSjLsQHACwYrJ1WLe2ELD2q9rj0HHa
- Fb5RUd+KHS5uEMBQkqUYtavFI3+TbQbQGgxYeCGe6VIdmTnwB6
- M8NN1+s6zPGBtKX9YQO0lz0eq5N9HinGem9OslO4B+eWDdFslj
- isfWPvx5HCmMhind8iBEm+5wleXD0tSd83DAgN271+3aIFtj9T
- QHN34UMyn7DDQ==
+	id S1753379Ab2H3RA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 13:00:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45536 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751907Ab2H3RAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 13:00:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 755578E54;
+	Thu, 30 Aug 2012 13:00:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=frBq+8mAF9visOThxH5pd8KoIZA=; b=gzm3sS
+	q48ISqMQrMGp2jDkMs6mgbReKn3w9lwA1RGUr7bHCEUBNOpc9KEXAqc35v6FVL9c
+	0JNoCQMq8P5vfroMXXFu2aNlYPRlS3TRxhYBgWT1xe0VwOB9ctB1Qs459kKljmml
+	usNzkY/qfDfA6zaaHyheiOsL6pD48MzaHVnMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Mdbe5iofRHQsTQ/UK9WVx1TsH27mGj94
+	7wZnbKYhnlQYlUl/2KvcYl3OkZmFZZQPlBmxVFWe1K3i0036efSwGI+iclKVc6dT
+	obpq7vvkfpXUR9Z9olA/+MZXaOE9Hoji/hBV8kG4oCQdL2QKZhV/zH4ieEy5F+wE
+	mz5DMUt02j0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 607768E51;
+	Thu, 30 Aug 2012 13:00:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8ED4E8E50; Thu, 30 Aug 2012
+ 13:00:53 -0400 (EDT)
+In-Reply-To: <503F28CE.2090400@gmail.com> (Marco Stornelli's message of "Thu,
+ 30 Aug 2012 10:48:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 42322BCA-F2C4-11E1-BCE5-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204549>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Tuesday, August 28, 2012 10:16 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> > Implementation includes getitimer(), but for now it is static.
-> > Supports ITIMER_REAL only.
-> >
-> > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> > ---
-> > May need a header file for ITIMER_*, struct itimerval and the prototypes,
-> > But for now, and the HP NonStop platform this isn't needed, here
-> > <sys/time> has ITIMER_* and struct timeval, and the prototypes can
-> > vo into git-compat-util.h for now (Patch 2/2)
-> >
-> >  compat/itimer.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 50 insertions(+)
-> >  create mode 100644 compat/itimer.c
-> >
-> > diff --git a/compat/itimer.c b/compat/itimer.c
-> > new file mode 100644
-> > index 0000000..713f1ff
-> > --- /dev/null
-> > +++ b/compat/itimer.c
-> > @@ -0,0 +1,50 @@
-> > +#include "../git-compat-util.h"
-> > +
-> > +static int git_getitimer(int which, struct itimerval *value)
-> > +{
-> > +	int ret = 0;
-> > +
-> > +	switch (which) {
-> > +		case ITIMER_REAL:
-> > +			value->it_value.tv_usec = 0;
-> > +			value->it_value.tv_sec = alarm(0);
-> > +			ret = 0; /* if alarm() fails, we get a SIGLIMIT */
-> > +			break;
-> > +		case ITIMER_VIRTUAL: /* FALLTHRU */
-> > +		case ITIMER_PROF: errno = ENOTSUP; ret = -1; break;
-> > +		default: errno = EINVAL; ret = -1;
-> > +	}
-> 
-> Just a style thing, but we align case arms and switch statements,
-> like this:
-> 
-> 	switch (which) {
->         case ...:
->         	stmt;
->                 break;
-> 	default:
->         	stmt;
->                 break;
-> 	}
+Marco Stornelli <marco.stornelli@gmail.com> writes:
 
-OK, I'll fix the syle
+> The current script has got the following problems:
+>
+> 1) It doesn't work if the language used by Thunderbird is not English;
+> 2) The field To: filled by format-patch is not evaluated;
+> 3) The field Cc: is loaded only from Cc used in the commit message
+> instead of using even the Cc field filled by format-patch in the email
+> header.
+>
+> Added comments for point 1). Fixed point 2) and 3).
+>
+> Signed-off-by: Marco Stornelli <marco.stornelli@gmail.com>
+> ---
+> v2: changed the commit message to reflect better the script implementation
 
-> Because alarm() runs in integral seconds granularity, this could
-> return 0.0 sec (i.e. "do not re-trigger this alarm any more") in
-> ovalue after setting alarm(1) (via git_setitimer()) and calling this
-> function (via git_setitimer() again) before the timer expires, no?
-> Is it a desired behaviour?
+I actually thought what the log message of the previous version
+claimed to do was much more sensible.
 
-Unintentional, never really thought about this.
- 
-> What I am most worried about is that callers _might_ take this
-> emulation too seriously, grab the remainder from getitimer(), and
-> drives a future call to getitimer() with the returned value, and
-> accidentally cause the "recurring" nature of the request to be
-> disabled.
-> 
-> I see no existing code calls setitimer() with non-NULL ovalue, and I
-> do not think we would add a new caller that would do so in any time
-> soon, so it may not be a bad idea to drop support of returning the
-> remaining timer altogether from this emulation layer (just like
-> giving anything other than ITIMER_REAL gives us ENOTSUP).  That
-> would sidestep the whole "we cannot answer how many milliseconds are
-> still remaining on the timer when using emulation based on alarm()".
+The language used in the above 3 items describe what you perceive as
+a problem, but it is unclear what the desired behaviour that is
+different from the current one is.  (2) "... is not evaluated"
+implies ", which is a problem, so fix it by evaluating it", but
+there is no single obvious fix to (3) "loaded only from Cc in commit
+and not Cc from format-patch".  Should it ignore Cc from commit log
+message, or should it take Cc from both log message and e-mail
+header?  I personally think it should the former, but it is not
+clear which you think is the right thing to do (or perhaps you have
+a third answer) if you only say "Fixed point 3".
+>
+>  contrib/thunderbird-patch-inline/appp.sh |   18 ++++++++++++++----
+>  1 files changed, 14 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
+> index 5eb4a51..e6e1b85 100755
+> --- a/contrib/thunderbird-patch-inline/appp.sh
+> +++ b/contrib/thunderbird-patch-inline/appp.sh
+> @@ -6,6 +6,9 @@
+>  
+>  # ExternalEditor can be downloaded at http://globs.org/articles.php?lng=en&pg=2
+>  
+> +# NOTE: You must change some words in this script according to the language
+> +# used by Mozilla Thunderbird, as <Subject>, <To>, <Don't remove this line>.
+> +
+>  CONFFILE=~/.appprc
+>  
+>  SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
+> @@ -26,17 +29,24 @@ fi
+>  cd - > /dev/null
+>  
+>  SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
+> -HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
+>  BODY=`sed -e "1,/${SEP}/d" $1`
+>  CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
+>  DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
+>  
+> -CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+> -	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
+> +export PATCH
+> +CCS=`perl -e 'local $/=undef; open FILE, $ENV{'PATCH'}; $text=<FILE>;
+> +close FILE; $cc = $1 if $text =~ /Cc: (.*?(,\n .*?)*)\n/s; $cc =~ s/\n//g;
+> +print $cc;'`
+> +
+> +TO=`perl -e 'local $/=undef; open FILE, $ENV{'PATCH'}; $text=<FILE>;
+> +close FILE; $to = $1 if $text =~ /To: (.*?(,\n .*?)*)\n/s; $to =~ s/\n//g;
+> +print $to;'`
+>  
+> +# Change <Subject> before next line according to Thunderbird language
+>  echo "$SUBJECT" > $1
 
-Should we leave tv_usec untouched then? That was we round up on the next (and subsequent?) round(s). Or just set to ENOTSUP in
-setitimer if ovalue is !NULL?
+"before next line"???  I do not think you meant to rename the
+variable $SUBJECT to $<localized string for subject>.
 
-> > +int git_setitimer(int which, const struct itimerval *value,
-> > +				struct itimerval *ovalue)
-> > +{
-> > +	int ret = 0;
-> > +
-> > +	if (!value
-> > +		|| value->it_value.tv_usec < 0
-> > +		|| value->it_value.tv_usec > 1000000
-> > +		|| value->it_value.tv_sec < 0) {
-> > +		errno = EINVAL;
-> > +		return -1;
-> > +	}
-> > +
-> > +	else if (ovalue)
-> > +		if (!git_getitimer(which, ovalue))
-> > +			return -1; /* errno set in git_getitimer() */
-> > +
-> > +	else
-> > +	switch (which) {
-> > +		case ITIMER_REAL:
-> > +			alarm(value->it_value.tv_sec +
-> > +				(value->it_value.tv_usec > 0) ? 1 : 0);
-> 
-> Why is this capped to 1 second?  Is this because no existing code
-> uses the timer for anything other than 1 second or shorter?  If that
-> is the case, that needs at least some documenting (or a possibly
-> support for longer expiration, if it is not too cumbersome to add).
+> +# Change <To> according to Thunderbird language
 
-As you mention alarm() has only seconds resolution. It is tv_sec plus 1 if there are tv_usecs > 0, it is rounding up, so we don't
-cancel the alarm() if tv_sec is 0 but tv_usec is not. Looks OK to me?
- 
-> > +			ret = 0; /* if alarm() fails, we get a SIGLIMIT */
-> > +			break;
-> > +		case ITIMER_VIRTUAL: /* FALLTHRU */
-> > +		case ITIMER_PROF: errno = ENOTSUP; ret = -1; break;
-> 
-> Please don't add a misleading "fallthru" label here.  We do not say
-> "fallthru" when "two case arms do _exactly_ the same thing".  Only
-> when the one arm does some pre-action before the common action, i.e.
-> 
-> 	switch (which) {
->         case one:
->         	do some thing specific to one;
->                 /* fallthru */
-> 	case two:
-> 		do some thing common between one and two;
-> 		break;
-> 	}
-> 
-> we label it "fallthru" to make it clear to the readers that it is
-> not "missing a break" but is deliberate.
+	# Change "To: " according to...
 
-I'll fix those too.
+would be less confusing, as the line has to "to" on it when viewed
+case insensitively.
 
-> > +		default: errno = EINVAL; ret = -1;
-> > +	}
-> > +
-> > +	return ret;
-> > +}
-> 
-> Thanks.
+> +echo "To: $TO" >> $1
 
-Bye, Jojo
+>  echo "Cc: $CCS" >> $1
+> -echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
+>  echo "$SEP" >> $1
+>  
+>  echo "$CMT_MSG" >> $1
