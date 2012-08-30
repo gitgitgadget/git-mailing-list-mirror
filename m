@@ -1,80 +1,82 @@
-From: Oswald Buddenhagen <ossi@kde.org>
-Subject: Re: GC of alternate object store
-Date: Thu, 30 Aug 2012 11:53:14 +0200
-Message-ID: <20120830095314.GA29038@troll08.europe.nokia.com>
-References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
- <loom.20120827T233125-780@post.gmane.org>
- <hbf.20120828vnfp@bombur.uio.no>
- <20120829074249.GA14408@ugly.local>
- <7v3935y9tw.fsf@alter.siamese.dyndns.org>
+From: Stijn Souffriau <stijn.souffriau@essensium.com>
+Subject: dangling submodule references after rebase
+Date: Thu, 30 Aug 2012 11:56:52 +0200
+Message-ID: <503F38E4.1010108@essensium.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 11:53:27 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 11:57:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T71RC-0006Hk-Vw
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 11:53:23 +0200
+	id 1T71Uk-0002sq-Ve
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 11:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574Ab2H3JxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 05:53:17 -0400
-Received: from byte.kde.org ([212.110.188.12]:37345 "EHLO
-	byte1.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263Ab2H3JxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 05:53:16 -0400
-Received: from localhost ([127.0.0.1] helo=troll08)
-	by byte1.vm.bytemark.co.uk with esmtp (Exim 4.72)
-	(envelope-from <ossi@kde.org>)
-	id 1T71R4-0006z1-Lm; Thu, 30 Aug 2012 10:53:14 +0100
-Received: by troll08 (masqmail 0.3.4, from userid 1002)
-	id 1T71R4-7sI-00; Thu, 30 Aug 2012 11:53:14 +0200
-Content-Disposition: inline
-In-Reply-To: <7v3935y9tw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+52 (3a30d398fbbb) (2011-07-01)
+	id S1751975Ab2H3J44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 05:56:56 -0400
+Received: from 132.79-246-81.adsl-static.isp.belgacom.be ([81.246.79.132]:56341
+	"EHLO viper.mind.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307Ab2H3J4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 05:56:55 -0400
+Received: from [172.16.0.18]
+	by viper.mind.be with esmtp (Exim 4.69)
+	(envelope-from <stijn.souffriau@essensium.com>)
+	id 1T71Ub-0003PW-AU
+	for git@vger.kernel.org; Thu, 30 Aug 2012 11:56:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20120714 Thunderbird/14.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204531>
 
-On Wed, Aug 29, 2012 at 08:52:27AM -0700, Junio C Hamano wrote:
-> (I won't comment on the other parts in this discussion).
-> 
-which is kinda unfortunate. ;)
+Hi all,
 
-> Oswald Buddenhagen <ossi@kde.org> writes:
-> > i did exacty that. the tags are *still* not populated - git just tries
-> > very hard to treat them specially.
-> 
-> Doesn't
-> 
-> 	git push $over_there 'refs/*:refs/remotes/mine/*'
-> 
-> push your tag v1.0 to refs/remotes/mine/v1.0 over there?  The
-> version of git I ship seems to do this just fine.
-> 
-as i wrote before, i'm pulling, not pushing, so any differences could be
-blamed on that (or git version 1.7.12.23.g948900e).
-anyway, it seems this new version does fetch the tags under the remotes'
-namespaces, after all - but it still imports them into the global tag
-namespace as well, which of course makes a mess with the duplicated
-tags.
+I am using a repository that has a sub module which is being committed 
+to frequently by myself as well as others. Because of the heavy 
+concurrent development I need to do a lot of rebasing. Since the sub 
+module commit hashes referenced by the parent repository can become 
+dangling as a result of rebasing the sub module I am required to do lots 
+of manual "fixing" of the references in the parent repository using an 
+interactive rebase. This is a tedious, error-prone procedure which I 
+would like to automate.
 
-and for many repos i'm getting something like this (this is kinda new):
+I was wondering if anyone has thought about solving this problem yet in 
+the past and what might be a good solution?
 
-Fetching qtbase
-remote: Counting objects: 62375, done.
-remote: Compressing objects: 100% (28049/28049), done.
-remote: Total 55704 (delta 45280), reused 36646 (delta 27368)
-Receiving objects: 100% (55704/55704), 16.76 MiB | 4.94 MiB/s, done.
-Resolving deltas: 100% (45280/45280), completed with 3017 local objects.
-fatal: bad object 90f0f499ec5953d60d616a2ff541ecaf8b0c31a2
-error: ../qt5/qtbase did not send all necessary objects
+I was thinking something along the lines of extending the add and commit 
+commands so that a parent repository would signal to the sub modules 
+that it's index or some if it's commits reference certain sub module 
+commits; and also the rebase command so that it would update the parent 
+repository commits with new hashes using the information stored by the 
+add or commit commands. The procedure would have to be made recursive 
+because changing commits in the parent repository might also require 
+changing commits in it's parent repository as well.
 
-both the aggregator and the fetched repos run cleanly through fsck.
+I'm still no quite sure for which sub module rebase operations the 
+referencing parent repository commits would actually have to be 
+"updated". The reason being that the rebased commits might still be 
+referenced by another branch and so they might continue to exist after 
+the rebase which raises the question if the parent repository commits 
+need to be udated or not. I think this question would have to be 
+answered by the add and commit commands which would also have to specify 
+a referenced branch in addition to referenced commits so that the parent 
+repo commits would only have to be updated if the commits on this branch 
+are rebased. By default this could be the branch checked out in the sub 
+module at the time the referencing commit was made.
 
-regards
+For obvious reasons this should only be done for newly made, unpushed 
+and unpulled commits in the repository. However, it might be interesting 
+to also enable people to manually bind a parent repo commits to a 
+submodule branch so that the commits in this parent repo branch are 
+updated when the sub module branch is rebased.
+
+I would like see this feature end up in the mainline and so I'm very 
+interested in your opinions.
+
+Thanks,
+
+Stijn
