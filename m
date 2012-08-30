@@ -1,56 +1,94 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [RFH] .mailmap late summer cleaning
-Date: Thu, 30 Aug 2012 16:21:20 +0200
-Message-ID: <CAN0XMOJW48Bmajwuwq-kN9iF86kyrepLSmS0q7ySaFG-1FvBfQ@mail.gmail.com>
-References: <7vpq69wrd8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] "git name-rev --weight"
+Date: Thu, 30 Aug 2012 08:54:40 -0700
+Message-ID: <7vk3wgtlxb.fsf@alter.siamese.dyndns.org>
+References: <7vharmxkzl.fsf@alter.siamese.dyndns.org>
+ <1346275044-10171-1-git-send-email-gitster@pobox.com>
+ <068F712399864538B59054590881E19C@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 16:21:29 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, "Greg KH" <gregkh@linuxfoundation.org>,
+	Jeff King <peff@peff.net>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Aug 30 17:54:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T75ce-00022d-UA
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 16:21:29 +0200
+	id 1T7751-0000FF-8c
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 17:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570Ab2H3OVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 10:21:22 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:59183 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752250Ab2H3OVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 10:21:21 -0400
-Received: by weyx8 with SMTP id x8so1034939wey.19
-        for <git@vger.kernel.org>; Thu, 30 Aug 2012 07:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vcSmKZbHouRz9x4MQFYznnW1TMtbAaL20299jd53mXo=;
-        b=bDtJ7G/asKlvCPWVDriy+6ZEt0weKl0zkaRbyDY15d9ahgsbuTNH0M+Qppw9AiNJaj
-         qofZGXDfHsULf75aVQkgu7tIp1EhFydSoSTyfHoFeWxL24EfQ+uDJu+x1jGZSXrMQCTN
-         FT0f0Wws4FyG/lVE5L+UapNPJ2YFgTS3PE0dAb1LmES0xgoat6CL4k8nHlEjX7lpADxT
-         AWBsYGtNPcY9RA/02/Cf2QfFbzweRzBlLk4XHORKYHHOBhgwrJe6h9LfXDEQXqXa/seP
-         fL/r/KTFp2OMrfypXRls5GNf9P5TeCAa/G4+Bvle/eYoR6k8GP5QDXIJRPLEbxAEZIIt
-         1iKA==
-Received: by 10.217.1.197 with SMTP id n47mr2971594wes.27.1346336480351; Thu,
- 30 Aug 2012 07:21:20 -0700 (PDT)
-Received: by 10.194.23.201 with HTTP; Thu, 30 Aug 2012 07:21:20 -0700 (PDT)
-In-Reply-To: <7vpq69wrd8.fsf@alter.siamese.dyndns.org>
+	id S1751925Ab2H3Pyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 11:54:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43692 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750848Ab2H3Pyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 11:54:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F1357630;
+	Thu, 30 Aug 2012 11:54:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IIk8ga1tHRaHtzsG+DSSFltdCuU=; b=q42nQx
+	A3UIpq26oXNihMz7KqKmeCBreMt6VnBECmqB0EmDUZyMQGb/AWp++HwLu2ZW3nas
+	IKJSQUiwN075YEDTf/TgvBLewDCO+J9QGGnR112csR4X/GD3nhHAUAQ8SUTgVlOQ
+	pHL9DxHRxGvL/6JfdeiT79OW2vdnL5UZDhDlg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hBvE90sq5ifLcTHLTkkTkNjdVuFq/KkR
+	nZh9oqKnbqF/J0TmoxpDPsuNODE3iC31TnMJwQfbLZgH1oAD39t3rVp4JlW1PLpP
+	Vt9AYcuLY0cPF4txpqXlcuWztp/TFPL0JK7/hU0awF8ADzkR2GUpWRStmzczaraW
+	NuXtE+/JtKc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BC13762E;
+	Thu, 30 Aug 2012 11:54:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E324B762C; Thu, 30 Aug 2012
+ 11:54:41 -0400 (EDT)
+In-Reply-To: <068F712399864538B59054590881E19C@PhilipOakley> (Philip Oakley's
+ message of "Thu, 30 Aug 2012 08:06:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 02E7E58A-F2BB-11E1-94E7-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204542>
 
-On Wed, Aug 29, 2012 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-...
->     Martin von Zweigbergk <martinvonz@gmail.com> <y@google.com>
->
-> I'll collect responses to this message, and update the file sometime
-> late next week.
->
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+> Is "--weight" the right term to use for the user (cli) interface?
+> Wouldn't '--oldest' (or similar) be a better statement of what is
+> desired (absent clock skew).
+>
+> While 'weight' may be a good internal technical description it didn't
+> convey to me what was being sought (maybe -- deepest'?).
+
+I agree with you that weight represents what it internally does.  I
+however think that "oldest" is not quite good, as it still leaves
+the source of possible confusion.  It has at least 3 (or 4,
+depending on how you count) possible meanings.
+
+ - Is it the one with the oldest timestamp (and if so, do we use the
+   committer date, or do we use the tagger date that may be much
+   newer than the committer date)?
+
+ - Is it the one with its longest path down to the root is the
+   shortest (i.e. with smallest generation number)?
+
+ - Is it the one with the smallest number of ancestor commits?
+
+For the purpose of "oldest tag that contains this commit", I think
+the last one would give the most intuitive answer, but depending on
+your use case, you may want to enhance the command to support other
+definition of "oldest"; it does not feel quite right to have this
+particular definition (the last one) squat on the generic "--oldest"
+name.
+
+We could punt to tautology and call it "--contains", meaning that is
+the logic used to implement "describe --contains" ;-) but that is
+not satisfactory, either.
+
+I dunno.
