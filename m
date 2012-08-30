@@ -1,89 +1,89 @@
-From: carlos@cmartin.tk (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
-Subject: Re: [PATCHv2 0/3] Improve branch UI for setting upstream information
-Date: Thu, 30 Aug 2012 20:57:56 +0200
-Message-ID: <87fw745hsb.fsf@centaur.cmartin.tk>
-References: <1346347393-8425-1-git-send-email-cmn@elego.de>
-	<7v1uios2ma.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/4] wincred: port to generic credential helper
+ (UNTESTED)
+Date: Thu, 30 Aug 2012 13:11:10 -0700
+Message-ID: <7vpq68qgwx.fsf@alter.siamese.dyndns.org>
+References: <503A680C.3090406@qo.cx>
+ <1346018649-3002-1-git-send-email-pah@qo.cx>
+ <CABPQNSZsXnf2kjcN+Qma8pApjGRF6SD5iJjB2Ow6GuGts0Z=Kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 20:58:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Philipp A. Hartmann" <pah@qo.cx>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Aug 30 22:11:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T79wF-0000Fb-VG
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 20:58:00 +0200
+	id 1T7B5E-0001Ha-St
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 22:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982Ab2H3S5x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Aug 2012 14:57:53 -0400
-Received: from hessy.cmartin.tk ([78.47.67.53]:57972 "EHLO hessy.dwim.me"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750802Ab2H3S5x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2012 14:57:53 -0400
-Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
-	by hessy.dwim.me (Postfix) with ESMTPA id 0DF8280030;
-	Thu, 30 Aug 2012 20:57:52 +0200 (CEST)
-Received: (nullmailer pid 9064 invoked by uid 1000);
-	Thu, 30 Aug 2012 18:57:56 -0000
-In-Reply-To: <7v1uios2ma.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 30 Aug 2012 10:37:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+	id S1752026Ab2H3ULO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 16:11:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49589 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751121Ab2H3ULN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 16:11:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C43094A7;
+	Thu, 30 Aug 2012 16:11:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TvQi46/lbj4Ntg5fgK+Xp0miGFU=; b=GYCYDp
+	uJ5XJy1cBY1ALcj1/I3y0A3IM47Mr0BV+eo+O+QE7hepPg8oZSBrpg8lbnWiYKU3
+	tm96zRUM34oAFsBQUjhlTpyCNBGkIWAUX2bAiRKrf8e1ejJNdzo82t9l9o3tGKus
+	62igV9uJSUME14j+Qpx11uu/VrCYpWFnq4M0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I2egO/Q1un7DyT7DF5memiKmzmCZgZMs
+	ua+1RMk+y2sAgYtF9dihhKnsMSbB4Ce/oicCuOegb8N6jvKNxayBIgJAqqIeumgG
+	M6IlY3uLvMMGXLcQFCuXvRkO1q/XAaaBvFxN9r3PJoqIOIOlf1n3ponYV2uptXoq
+	e3XWTW6byNU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19FA694A6;
+	Thu, 30 Aug 2012 16:11:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F29694A5; Thu, 30 Aug 2012
+ 16:11:11 -0400 (EDT)
+In-Reply-To: <CABPQNSZsXnf2kjcN+Qma8pApjGRF6SD5iJjB2Ow6GuGts0Z=Kg@mail.gmail.com> (Erik
+ Faye-Lund's message of "Thu, 30 Aug 2012 20:27:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D7C70510-F2DE-11E1-8D71-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204563>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->
->> As a result of making --unset-upstream fail if the given branch
->> doesn't exist, I discovered a copy-paste error in on the the tests i=
-n
->> the patch after it, so I'm resending the whole thing.
+> On Mon, Aug 27, 2012 at 12:04 AM, Philipp A. Hartmann <pah@qo.cx> wrote:
+>> From: "Philipp A. Hartmann" <pah@qo.cx>
 >>
->> The changes from the last reroll are the tightening of the situation=
-s
->> where git will show an error message (not it's just if the branch is
->> new and exists as remote-tracking) which I already sent as a reply i=
-n
->> the other thread; and making --unset-upstream error out on bad input=
-,
->> which I already mentioned above.
+>> This patch is an experiment to port the wincred helper
+>> to the generic implementation.  As of know, it is
+>> completely untested.
+>>
+>> In addition to porting the helper to the generic API,
+>> this patch clears up all passwords from memory, which
+>> reduces the total amount to saved lines.
+>>
+>> Signed-off-by: Philipp A. Hartmann <pah@qo.cx>
+>> ---
+>>
+>> The porting was fairly easy, but due to the lack of a testing
+>> platform, it is completely untested.
+>>
+>> Erik: Can you try to have look?
 >
-> Thanks.
+> Sorry for the late reply, I'm currently in bed with pneumonia.
 >
-> In addition to "--unset-upstream must fail on i-dont-exist branch"
-> in [2/3], I am wondering if we would want to also make sure the
-> command fails when the upstream information is not set for the
-> branch, i.e. something like the following on top.
->
-> What do you think?
->
->  t/t3200-branch.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git i/t/t3200-branch.sh w/t/t3200-branch.sh
-> index 1018e8b..a0aaedd 100755
-> --- i/t/t3200-branch.sh
-> +++ w/t/t3200-branch.sh
-> @@ -393,7 +393,9 @@ test_expect_success 'test --unset-upstream on HEA=
-D' \
->       git branch --set-upstream-to my14 &&
->       git branch --unset-upstream &&
->       test_must_fail git config branch.master.remote &&
-> -     test_must_fail git config branch.master.merge'
-> +     test_must_fail git config branch.master.merge &&
-> +     test_must_fail git branch --unset-upstream
-> +'
+> But I gave it a quick go, but as-is it's a NACK; a wall of warnings and errors.
 
-Yeah, this looks good, makes sure that it will still behave correctly
-even if the code path for these two situations diverges.
+Thanks, and get well soon.
 
-   cmn
+For now, let's not worry about merging the "let's share code across
+helpers" bit that comes later in Philipp's series.
