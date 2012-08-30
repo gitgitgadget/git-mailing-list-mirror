@@ -1,126 +1,66 @@
-From: Orgad and Raizel Shaneh <orgads@gmail.com>
-Subject: Re: relative objects/info/alternates doesn't work on remote
- SMB repo
-Date: Thu, 30 Aug 2012 16:34:09 +0300
-Message-ID: <CAGHpTBLbPvkEGqh5PGbtNS0MKY5YutaQpx3D_Fv5oSWeR52K9A@mail.gmail.com>
-References: <CAGHpTBKNurqd0xcz9A9bC8MQU8yHfef0ozJ2Khr9uQvwHoyP2g@mail.gmail.com>
-	<CACsJy8BSpX7UxAEhZTqNnazAtSMp7oZtyxiBdnVoCXefWpTDEw@mail.gmail.com>
-	<CAGHpTB+TbrQLw7E+RpP8y0euYrLNOC6-sic-4x3pbxcAborFLQ@mail.gmail.com>
-	<CACsJy8B3=33FE-SbOD6Su4v_DbyuYsxfh-DxAzbJbJa5B2pyLg@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [RFH] .mailmap late summer cleaning
+Date: Thu, 30 Aug 2012 16:12:28 +0200
+Message-ID: <CABPQNSY2DYQSzq3PJQmeL+oheEF0FDbnas0Y3SSyKQhOhNtQOA@mail.gmail.com>
+References: <7vpq69wrd8.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: msysgit+bncCILqpr-rHxDS1_2BBRoEytGoFg@googlegroups.com Thu Aug 30 15:34:15 2012
-Return-path: <msysgit+bncCILqpr-rHxDS1_2BBRoEytGoFg@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f186.google.com ([209.85.213.186])
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 16:17:42 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCILqpr-rHxDS1_2BBRoEytGoFg@googlegroups.com>)
-	id 1T74sv-0005tT-HI
-	for gcvm-msysgit@m.gmane.org; Thu, 30 Aug 2012 15:34:13 +0200
-Received: by yenl8 with SMTP id l8sf1524775yen.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 30 Aug 2012 06:34:10 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1T75Yy-0005Dm-NX
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 16:17:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752965Ab2H3ONM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 10:13:12 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:64257 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901Ab2H3ONL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 10:13:11 -0400
+Received: by vbbff1 with SMTP id ff1so1902973vbb.19
+        for <git@vger.kernel.org>; Thu, 30 Aug 2012 07:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=Cww92VSUNoeC6ktB6cooGwxxG/6mfKLsMzsIzLb07wM=;
-        b=pWjgrjyOZtGK1jBJiSEhe1PKy3D83ifek7dhbq/dE0p8wSUTr09CS8ard6X5rg+cuB
-         LZNoKXWoo+sXBLWpM/mEr2fCnSil1UXTWzVOegXnt5BSycJs/QaNxpCu2Fmto35ljpu8
-         q0GKBZpsQyXWGl1+wWDV0dGYkTl6Y4erw+VE87IkXEUyBn/ZBs66dl3lIWoIvimTBkNN
-         Lt8y7VXG7JcSrsIhEJsmMnd+Z2I6PbnW1mNFIQo5z1z6X1zKBzEplPiFV/02Mpesim9k
-         6ZQzFj6r9fpttoiptPkZuioRzHR7snTvlEmHO15X8gOWjpge2euwz4ApfrlnQ+80Kv7d
-         dzQw==
-Received: by 10.236.190.100 with SMTP id d64mr496892yhn.17.1346333650720;
-        Thu, 30 Aug 2012 06:34:10 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.236.154.232 with SMTP id h68ls3519016yhk.2.gmail; Thu, 30 Aug
- 2012 06:34:09 -0700 (PDT)
-Received: by 10.236.138.232 with SMTP id a68mr3685582yhj.28.1346333649446;
-        Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-Received: by 10.236.138.232 with SMTP id a68mr3685581yhj.28.1346333649432;
-        Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-Received: from mail-qc0-f173.google.com (mail-qc0-f173.google.com [209.85.216.173])
-        by gmr-mx.google.com with ESMTPS id k34si407844qcz.1.2012.08.30.06.34.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-Received-SPF: pass (google.com: domain of orgads@gmail.com designates 209.85.216.173 as permitted sender) client-ip=209.85.216.173;
-Received: by qcab12 with SMTP id b12so1585611qca.32
-        for <msysgit@googlegroups.com>; Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-Received: by 10.229.135.11 with SMTP id l11mr2863685qct.116.1346333649149;
- Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-Received: by 10.49.131.8 with HTTP; Thu, 30 Aug 2012 06:34:09 -0700 (PDT)
-In-Reply-To: <CACsJy8B3=33FE-SbOD6Su4v_DbyuYsxfh-DxAzbJbJa5B2pyLg@mail.gmail.com>
-X-Original-Sender: orgads@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of orgads@gmail.com designates 209.85.216.173 as permitted sender)
- smtp.mail=orgads@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204539>
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=KV3XG131ddOAbkMMF9VbyVqD+R+NrtF1/mz+0+038lo=;
+        b=UEOJ8kI4+EN4LW+W5Ios8GdHiy6KFvT4snw1rqWjqql0QzJhUxie1me6xvQxsTWX1l
+         BqzRQVxgnpr18AlK48sx1UY2EJoBrZH8UQw9JCgs9DHsDmDKYbVlZgLv9iAtDK1t/Apt
+         sQe7qHYksA+wEdn3tNOPpD3mNPaRw007wG5pSLEK3RggFLBxrqbN0a7QCIMNUVsgOM4S
+         RcVOQc2A42IHAFeD4/sT4MxyYwmrSrwW6PeXY+A9JvQNhjNyPJrhCIrdwSZOHzA/cdFd
+         15p2x4WcFfZNd/0SBnlSYcfPsLb05WNaMYtRSTeWJmMpiVu384MJj8nkXZZBXmOpUP74
+         6p3w==
+Received: by 10.220.222.20 with SMTP id ie20mr3369602vcb.13.1346335990174;
+ Thu, 30 Aug 2012 07:13:10 -0700 (PDT)
+Received: by 10.58.196.232 with HTTP; Thu, 30 Aug 2012 07:12:28 -0700 (PDT)
+In-Reply-To: <7vpq69wrd8.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204540>
 
-On Thu, Aug 30, 2012 at 4:22 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Thu, Aug 30, 2012 at 8:12 PM, Orgad and Raizel Shaneh
-> <orgads@gmail.com> wrote:
->>> Could be path normalization. What does "git rev-parse --git-dir" say?
->>> Try to run it at top working directory and a subdirectory as well.
->>>
->>> If you set GIT_OBJECT_DIRECTORY environment variable to
->>> //server/share/foo/repo/.git/objects, does it work?
->>
->> git rev-parse --git-dir in a subdirectory has //server
+On Wed, Aug 29, 2012 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> We have the "mailmap" mechanism to unify entries for a person with
+> multiple e-mail addresses into one "Name <address>", but it seems
+> that the .mailmap file hasn't been keeping up to the changes in the
+> real world.
 >
-> Hmm where is your git repository? That does not look like a git
-> repository's path.
+> Does any of you contributors who has commits in my tree want to
+> update how you appear in "shortlog -e -s -n" output?  It may show
+> your ancient e-mail address, for example.  If so, here is what I
+> want you to do.
+>
+<snip>
+>
+> I'll collect responses to this message, and update the file sometime
+> late next week.
 >
 
-Let me try to explain again.
-I have /d/share/bare, which is a bare repository, and /d/share/repo
-which is a clone with a relative path to bare/.git/objects in its
-.git/objects/info/alternates
-
-D:\share is configured as a SMB shared folder. It is accessed using
-//server/share.
-I do not clone from this directory, but work directly in it using 'cd
-//server/share', then performing git operations.
-
->> setting GIT_OBJECT_DIRECTORY prints "fatal: bad object HEAD" on git status.
->
-> I guessed you put your repo in .../repo/.git, but I was probably
-> wrong. Try setting again, pointing GIT_OBJECT_DIRECTORY to the
-> "objects" directory inside your repository. I just want to make see if
-> it's because git miscalculates this path. If setting the env variable
-> works, then it probably does.
-> --
-> Duy
-
-Same result. fatal: bad object HEAD. Tried even using a full (local)
-path to the objects dir.
-
-- Orgad
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Erik Faye-Lund <kusmabite@gmail.com> <kusmabite@googlemail.com>
