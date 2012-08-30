@@ -1,90 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Thu, 30 Aug 2012 10:13:49 -0700
-Message-ID: <7vfw74s3oy.fsf@alter.siamese.dyndns.org>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de>
- <7vr4qqzsbe.fsf@alter.siamese.dyndns.org>
- <002201cd86ce$285841b0$7908c510$@schmitz-digital.de>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH 1/2] Support for setitimer() on platforms lacking it
+Date: Thu, 30 Aug 2012 19:22:48 +0200
+Message-ID: <003101cd86d4$14b494a0$3e1dbde0$@schmitz-digital.de>
+References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de> <7vr4qqzsbe.fsf@alter.siamese.dyndns.org> <002201cd86ce$285841b0$7908c510$@schmitz-digital.de> <7vfw74s3oy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Thu Aug 30 19:14:00 2012
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 19:23:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T78Jb-0000tQ-QU
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 19:14:00 +0200
+	id 1T78Sd-0005WJ-Eq
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 19:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017Ab2H3RNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 13:13:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52690 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753546Ab2H3RNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 13:13:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4ECB928E;
-	Thu, 30 Aug 2012 13:13:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KgQ/QDqqTI/Bfh+DcSSzDVXLheU=; b=bXxnYt
-	SxKBC1wJnS0ZeMbFux89jcG/2RdztZxLTc97crDJEZt6NRsZlIsscLphyqVvtTqs
-	Bo3u7x8ETIy0Ivr/i/s16BFmQhEnVcD/26z3PYgubxda1izNgsMk16wvL6o7EjwV
-	Auko5hR/IyUP8zq0bMHNSxmx4pq/7rd0BgJxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p8wiJuywg5F0IEpuMqri+FN4lWnAvrdU
-	LPQiFUSR2kSVkbUSvrnptPqq/e2Osr83EvDv0UtZoC828sOQ+t+5KQk91xvn5tq6
-	iYiqhswkiEKiHyZYYKXElKqNFRSPeJwKTHL+bVweruJMlkxW1l3vricdqzZYyum8
-	zy0y56KFrOk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B32C1928D;
-	Thu, 30 Aug 2012 13:13:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12246928B; Thu, 30 Aug 2012
- 13:13:50 -0400 (EDT)
-In-Reply-To: <002201cd86ce$285841b0$7908c510$@schmitz-digital.de> (Joachim
- Schmitz's message of "Thu, 30 Aug 2012 18:40:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 119D8BB0-F2C6-11E1-87B6-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752244Ab2H3RXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 13:23:12 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:55578 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876Ab2H3RXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 13:23:10 -0400
+Received: from DualCore (dsdf-4db50202.pool.mediaWays.net [77.181.2.2])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0MdWxQ-1TH8K01KCi-00Px6K; Thu, 30 Aug 2012 19:23:08 +0200
+In-Reply-To: <7vfw74s3oy.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQIhsC26HFNXVNf5LMacgAbi0X2P9gIuBdH5AgQ1j9EAzDU6SJaiUuww
+Content-Language: de
+X-Provags-ID: V02:K0:duNOULzvHNaE0hR5WeMHB4MHfqVWIOoEwlqNd5rLqaj
+ 0k3uF99y+R5xcL0FirU6fgLQX6JKx8V5BCcez50LIxdt5/OOj8
+ ewQqPDU0n0bx4v598Ikhhmewbz4NsHsUgYAMCvDO6vrRRkWPjA
+ sTTs1KuavgTDeVavCZZu2Ee0HVMrBUJQqbhgDOlmixhwBNezex
+ Vbf5rPt/IRS6nT9ddlkM/yePZbR/sS40AkgmM4GWYlrjUt6Akr
+ Gnq/XRSTGVhBpZHzRXWNaXnGp4t9BOtiXdM/cX3rHrWuDmthY3
+ EEXukbmVkwIEk+1IdeUOLVfrDwj0YBSi85atY9E0oKeiLXRhKs
+ AkgdpfoS+BEygjG3xbRUhz+Ej7N93iQxdFBjCkAYGo72kFCaHk
+ fKm7Jq4yMP6og==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204551>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Thursday, August 30, 2012 7:14 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> >> I see no existing code calls setitimer() with non-NULL ovalue, and I
+> >> do not think we would add a new caller that would do so in any time
+> >> soon, so it may not be a bad idea to drop support of returning the
+> >> remaining timer altogether from this emulation layer (just like
+> >> giving anything other than ITIMER_REAL gives us ENOTSUP).  That
+> >> would sidestep the whole "we cannot answer how many milliseconds are
+> >> still remaining on the timer when using emulation based on alarm()".
+> >
+> > Should we leave tv_usec untouched then? That was we round up on
+> > the next (and subsequent?) round(s). Or just set to ENOTSUP in
+> > setitimer if ovalue is !NULL?
+> 
+> I was alluding to the latter.
 
->> I see no existing code calls setitimer() with non-NULL ovalue, and I
->> do not think we would add a new caller that would do so in any time
->> soon, so it may not be a bad idea to drop support of returning the
->> remaining timer altogether from this emulation layer (just like
->> giving anything other than ITIMER_REAL gives us ENOTSUP).  That
->> would sidestep the whole "we cannot answer how many milliseconds are
->> still remaining on the timer when using emulation based on alarm()".
->
-> Should we leave tv_usec untouched then? That was we round up on
-> the next (and subsequent?) round(s). Or just set to ENOTSUP in
-> setitimer if ovalue is !NULL?
+OK, will do that then.
 
-I was alluding to the latter.
+> >> > +	switch (which) {
+> >> > +		case ITIMER_REAL:
+> >> > +			alarm(value->it_value.tv_sec +
+> >> > +				(value->it_value.tv_usec > 0) ? 1 : 0);
+> >>
+> >> Why is this capped to 1 second?  Is this because no existing code
+> >> uses the timer for anything other than 1 second or shorter?  If that
+> >> is the case, that needs at least some documenting (or a possibly
+> >> support for longer expiration, if it is not too cumbersome to add).
+> >
+> > As you mention alarm() has only seconds resolution. It is tv_sec
+> > plus 1 if there are tv_usecs > 0, it is rounding up, so we don't
+> > cancel the alarm() if tv_sec is 0 but tv_usec is not. Looks OK to
+> > me?
+> 
+> Can a caller use setitimer to be notified in 5 seconds?
 
->> > +	switch (which) {
->> > +		case ITIMER_REAL:
->> > +			alarm(value->it_value.tv_sec +
->> > +				(value->it_value.tv_usec > 0) ? 1 : 0);
->> 
->> Why is this capped to 1 second?  Is this because no existing code
->> uses the timer for anything other than 1 second or shorter?  If that
->> is the case, that needs at least some documenting (or a possibly
->> support for longer expiration, if it is not too cumbersome to add).
->
-> As you mention alarm() has only seconds resolution. It is tv_sec
-> plus 1 if there are tv_usecs > 0, it is rounding up, so we don't
-> cancel the alarm() if tv_sec is 0 but tv_usec is not. Looks OK to
-> me?
+Yes, by setting tv_sec to 5 and tv_usec to 0, or be setting tv_sec to 4 and tv_usec to something > 0.
 
-Can a caller use setitimer to be notified in 5 seconds?
+Unless I screwed up the operator precedence?
+To make it clearer (any possibly correct?):
+
+	switch (which) {
+		case ITIMER_REAL:
+			alarm(value->it_value.tv_sec +
+				((value->it_value.tv_usec > 0) ? 1 : 0));
+
+Or even just
+	switch (which) {
+		case ITIMER_REAL:
+			alarm(value->it_value.tv_sec + (value->it_value.tv_usec > 0));
