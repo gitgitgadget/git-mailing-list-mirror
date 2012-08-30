@@ -1,107 +1,94 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: relative objects/info/alternates doesn't work on remote
- SMB repo
-Date: Thu, 30 Aug 2012 20:22:12 +0700
-Message-ID: <CACsJy8B3=33FE-SbOD6Su4v_DbyuYsxfh-DxAzbJbJa5B2pyLg@mail.gmail.com>
-References: <CAGHpTBKNurqd0xcz9A9bC8MQU8yHfef0ozJ2Khr9uQvwHoyP2g@mail.gmail.com>
- <CACsJy8BSpX7UxAEhZTqNnazAtSMp7oZtyxiBdnVoCXefWpTDEw@mail.gmail.com> <CAGHpTB+TbrQLw7E+RpP8y0euYrLNOC6-sic-4x3pbxcAborFLQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] commit: use a priority queue in merge base functions
+Date: Thu, 30 Aug 2012 09:24:32 -0400
+Message-ID: <20120830132432.GC5687@sigill.intra.peff.net>
+References: <20120829110812.GA14069@sigill.intra.peff.net>
+ <20120829111147.GB14734@sigill.intra.peff.net>
+ <7vtxvlwt7o.fsf@alter.siamese.dyndns.org>
+ <20120829205332.GA16064@sigill.intra.peff.net>
+ <20120829205525.GA28696@sigill.intra.peff.net>
+ <20120829210032.GA29179@sigill.intra.peff.net>
+ <20120829210540.GA31756@sigill.intra.peff.net>
+ <20120830125421.GA5687@sigill.intra.peff.net>
+ <20120830130327.GB5687@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Orgad and Raizel Shaneh <orgads@gmail.com>
-X-From: msysgit+bncCLWW9eeFGBCn0v2BBRoEJIY5vw@googlegroups.com Thu Aug 30 15:22:53 2012
-Return-path: <msysgit+bncCLWW9eeFGBCn0v2BBRoEJIY5vw@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 15:24:44 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCLWW9eeFGBCn0v2BBRoEJIY5vw@googlegroups.com>)
-	id 1T74hu-00074K-00
-	for gcvm-msysgit@m.gmane.org; Thu, 30 Aug 2012 15:22:50 +0200
-Received: by qcsc2 with SMTP id c2sf1520215qcs.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 30 Aug 2012 06:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:from
-         :date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=0pMGpHAwDvBmPYyTI+iO9/6hs8wEYe9vAXveZMo/S80=;
-        b=ufipg7CLH1tEPErKBdBFrcR6JVbZsdowHzQXxhPyG/nSLbXW2AZ1+EMlc7IxH0gzxh
-         7SQUPb+0aHEI0LUdMDM5ym78wLdAN3koSY3YVZZCjtZYrBu8BGrnIBHn9zIjLS70t+Fq
-         VYDxcaa5JRTXJvutInaaU7NGg6Y/vPFhc7OsNI+nU4MIxUhQwYBm0PbIziOTV+jC50CX
-         rC4LJTPq0zGPvtc4OVyANGKUPVQCnJMTn9kdskxzF5ckqa+PIZTtUhipxmhSCPB5oH5G
-         SxVhkkZaaJnmUuaCPzHNoUHtxnD6bSIP6wcUWvwWO4QVbof3huiiYabEts12zqtE9fAs
-         Rmyw==
-Received: by 10.224.209.133 with SMTP id gg5mr1179442qab.5.1346332967294;
-        Thu, 30 Aug 2012 06:22:47 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.224.95.200 with SMTP id e8ls5085926qan.5.gmail; Thu, 30 Aug
- 2012 06:22:46 -0700 (PDT)
-Received: by 10.224.189.75 with SMTP id dd11mr3385004qab.6.1346332966487;
-        Thu, 30 Aug 2012 06:22:46 -0700 (PDT)
-Received: by 10.224.189.75 with SMTP id dd11mr3385001qab.6.1346332966477;
-        Thu, 30 Aug 2012 06:22:46 -0700 (PDT)
-Received: from mail-qa0-f51.google.com (mail-qa0-f51.google.com [209.85.216.51])
-        by gmr-mx.google.com with ESMTPS id g28si401205qcq.2.2012.08.30.06.22.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Aug 2012 06:22:46 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 209.85.216.51 as permitted sender) client-ip=209.85.216.51;
-Received: by qadz3 with SMTP id z3so160944qad.3
-        for <msysgit@googlegroups.com>; Thu, 30 Aug 2012 06:22:46 -0700 (PDT)
-Received: by 10.224.17.145 with SMTP id s17mr10911144qaa.99.1346332966355;
- Thu, 30 Aug 2012 06:22:46 -0700 (PDT)
-Received: by 10.49.4.6 with HTTP; Thu, 30 Aug 2012 06:22:12 -0700 (PDT)
-In-Reply-To: <CAGHpTB+TbrQLw7E+RpP8y0euYrLNOC6-sic-4x3pbxcAborFLQ@mail.gmail.com>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of pclouds@gmail.com designates 209.85.216.51 as permitted sender)
- smtp.mail=pclouds@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204537>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1T74ji-0001Bg-RW
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 15:24:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752064Ab2H3NYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 09:24:36 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48144 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751590Ab2H3NYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 09:24:35 -0400
+Received: (qmail 9746 invoked by uid 107); 30 Aug 2012 13:24:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 30 Aug 2012 09:24:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2012 09:24:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20120830130327.GB5687@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204538>
 
-On Thu, Aug 30, 2012 at 8:12 PM, Orgad and Raizel Shaneh
-<orgads@gmail.com> wrote:
->> Could be path normalization. What does "git rev-parse --git-dir" say?
->> Try to run it at top working directory and a subdirectory as well.
->>
->> If you set GIT_OBJECT_DIRECTORY environment variable to
->> //server/share/foo/repo/.git/objects, does it work?
->
-> git rev-parse --git-dir in a subdirectory has //server
+On Thu, Aug 30, 2012 at 09:03:27AM -0400, Jeff King wrote:
 
-Hmm where is your git repository? That does not look like a git
-repository's path.
+> So I was able to have my queue behave just like commit_list by fixing
+> the stability issue. But I still have no clue what is going on in t6024.
+> It does this for each commit it makes:
+> 
+>   [...]
+>   GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
+>   [...]
+>   GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
+>   [...]
+> 
+> which is just bizarre. At first I thought it was buggy, and that it
+> really wanted to be setting COMMITTER_DATE (in which case it should
+> really just be using test_tick, anyway). But if you do that, the test
+> fails (even using a regular commit_list)!
+> 
+> So is the test buggy? Or are the identical commit timestamps part of the
+> intended effect? I can't see how that would be, since:
+> 
+>   1. You would need to set COMMITTER_DATE for that anyway, as you are
+>      otherwise creating a race condition.
+> 
+>   2. Why would you set AUTHOR_DATE? It's not used by the merge code at
+>      all.
+> 
+> The script originally comes from here:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/33566/focus=33852
+> 
+> and the discussion implies that the AUTHOR_DATEs were added to avoid a
+> race condition with the timestamps. But why would that ever have worked?
 
-> setting GIT_OBJECT_DIRECTORY prints "fatal: bad object HEAD" on git status.
+That thread mentions that this is to fix "Shawn's bug", which I think is
+this:
 
-I guessed you put your repo in .../repo/.git, but I was probably
-wrong. Try setting again, pointing GIT_OBJECT_DIRECTORY to the
-"objects" directory inside your repository. I just want to make see if
-it's because git miscalculates this path. If setting the env variable
-works, then it probably does.
--- 
-Duy
+  http://article.gmane.org/gmane.comp.version-control.git/33559
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+IOW, the real thing that t6024 is trying to test is that we handle the
+fake empty tree properly. And the AUTHOR_DATEs probably were just there
+to try to fix the race condition, and they should really just be
+test_ticks (and I can't see how they ever would have helped anything; I
+suspect they were a placebo inserted at the same time as another change,
+and got credited with fixing the race).
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+That still leaves the question of why the test fails when the commits
+get distinct timestamps.
+
+-Peff
