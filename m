@@ -1,97 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] name-rev: --weight option (WIP)
-Date: Wed, 29 Aug 2012 23:36:11 -0400
-Message-ID: <20120830033611.GA32268@sigill.intra.peff.net>
-References: <7vharmxkzl.fsf@alter.siamese.dyndns.org>
- <1346275044-10171-1-git-send-email-gitster@pobox.com>
- <1346275044-10171-4-git-send-email-gitster@pobox.com>
- <7vligxuv6l.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Greg KH <gregkh@linuxfoundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 05:37:08 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/6] describe --contains / name-rev --weight
+Date: Wed, 29 Aug 2012 20:50:23 -0700
+Message-ID: <1346298629-13730-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 05:51:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6vZ1-0005kU-8n
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 05:37:03 +0200
+	id 1T6vmu-0007XS-AY
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 05:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab2H3DgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Aug 2012 23:36:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47649 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754356Ab2H3DgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Aug 2012 23:36:17 -0400
-Received: (qmail 4995 invoked by uid 107); 30 Aug 2012 03:36:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 Aug 2012 23:36:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2012 23:36:11 -0400
-Content-Disposition: inline
-In-Reply-To: <7vligxuv6l.fsf@alter.siamese.dyndns.org>
+	id S1751254Ab2H3Dud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Aug 2012 23:50:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48003 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750990Ab2H3Duc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Aug 2012 23:50:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E0C488A2
+	for <git@vger.kernel.org>; Wed, 29 Aug 2012 23:50:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=p2V0rYIfuaK22gyPOJ4eRcSvqLY
+	=; b=HJYLdk3M7Fc8s+CV9bIvyKqGSfNc5KQ5PbOmgZmb3jb/v0xoL73e7Rvz/49
+	UL4V17fgtGLeUX3bO3AbOwpf4LDd68QKj6O9wSsCjV9wl93XjRS6hJc7LcQDkBsR
+	gdCRUZWXD8pWQQVkQR7qTsnKVcZQULvQQ2cI5Ja+SmkgA5JI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=nInmhGnLtzE5cj4Oy0arh//+Q9N9d
+	cmMieBLZotcgCf4q5CIaX3Sr8YIaVyq2c8xrqM/u48Jt3GsuFdEmDFRNAKxQUSYl
+	W2e5FX9xU1ROJaItD7wXSATVqLSYy1N0X8eDBkLMX5zb+R1OJop14kqiOCTg2CQz
+	IpxIE5NzMKwSMo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DB5F88A1
+	for <git@vger.kernel.org>; Wed, 29 Aug 2012 23:50:31 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA24B889E for
+ <git@vger.kernel.org>; Wed, 29 Aug 2012 23:50:30 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.286.g9df01f7
+X-Pobox-Relay-ID: D8119EA6-F255-11E1-9525-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204509>
 
-On Wed, Aug 29, 2012 at 04:37:06PM -0700, Junio C Hamano wrote:
+Greg KH noticed that the commit 0136db586c that was merged to the
+mainline back in v3.5-rc1 days was merged again as part of a
+different branch to the mainline before v3.6-rc1.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Note that this is fairly expensive (see NEEDSWORK comment in the
-> > code).
-> 
-> And this is with the "notes-cache".
-> [...]
-> +static int get_tip_weight(struct commit *commit)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	size_t sz;
-> +	int weight;
-> +	char *note = notes_cache_get(&weight_cache, commit->object.sha1, &sz);
-> +
-> +	if (note && !strtol_i(note, 10, &weight)) {
-> +		free(note);
-> +		return weight;
-> +	}
-> +	free(note);
-> +
-> +	weight = compute_tip_weight(commit);
-> +	strbuf_addf(&buf, "%d", weight);
-> +	notes_cache_put(&weight_cache, commit->object.sha1,
-> +			buf.buf, buf.len);
-> +	strbuf_release(&buf);
-> +	weight_cache_updated = 1;
-> +	return weight;
-> +}
+"git describe --contains" gives the commit a name based on the newer
+v3.6-rc1 tag, which was surprising.
 
-It looks like you didn't update compute_tip_weight at all, so it will
-still do the full traversal down to the roots. I wonder if you can
-define the weight as a recursive function of the parents. Using the sum
-of the weights of the parents is not right, because you would
-double-count in this situation:
+This is because "describe --contains" calls "name-rev", which tries
+to use the tag that minimizes the steps between the tag and the
+commit being named.  The branch merged recently to the mainline did
+not have as much work done on top of the commit as the old branch
+that was merged earlier, and "name-rev" chose to use the newer tag
+to base the name on.
 
-  A--B--C--D---M
-      \       /
-       E--F--G
+The new "--weight" option introduced by this series tells it to use
+the oldest tag that contains the commit being named instead.  This
+matches what people expect from "describe --contains" better.
 
-That would double-count "A" and "B" in this example. But maybe there is
-a clever way to define it that avoids that.
+Junio C Hamano (6):
+  name-rev: lose unnecessary typedef
+  name_rev: clarify the logic to assign a new tip-name to a commit
+  name-rev: --weight option
+  name-rev --weight: cache the computed weight in notes
+  name-rev --weight: tests and documentation
+  describe --contains: use "name-rev --weight"
 
-The advantage would be that you could cheaply find the weights of new
-commits by only traversing back to the last cached one. I did something
-similar with the generation number cache (but the recursive definition
-is easier there).
+ Documentation/git-name-rev.txt |  14 ++-
+ builtin/describe.c             |   3 +-
+ builtin/name-rev.c             | 195 ++++++++++++++++++++++++++++++++++++-----
+ t/t6039-name-rev.sh            |  62 +++++++++++++
+ 4 files changed, 248 insertions(+), 26 deletions(-)
+ create mode 100755 t/t6039-name-rev.sh
 
-> +	if (use_weight)
-> +		notes_cache_init(&weight_cache, "name-rev-weight", "2012-08-29");
-
-Is that a sufficient validity field? What about grafts or replace
-objects? For the generation cache, I used a hash of the graft and
-replace fields.
-
--Peff
+-- 
+1.7.12.286.g9df01f7
