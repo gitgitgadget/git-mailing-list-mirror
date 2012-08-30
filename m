@@ -1,85 +1,66 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/3] "git name-rev --weight"
-Date: Thu, 30 Aug 2012 08:06:33 +0100
-Organization: OPDS
-Message-ID: <068F712399864538B59054590881E19C@PhilipOakley>
-References: <7vharmxkzl.fsf@alter.siamese.dyndns.org> <1346275044-10171-1-git-send-email-gitster@pobox.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Thomas Ackermann <th.acker66@arcor.de>
+Subject: git blame shows wrong "Not commited yet" entries
+Date: Thu, 30 Aug 2012 10:26:54 +0200 (CEST)
+Message-ID: <303882026.440710.1346315214352.JavaMail.ngmail@webmail08.arcor-online.net>
+References: <1055159053.19198.1345536909730.JavaMail.ngmail@webmail24.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Greg KH" <gregkh@linuxfoundation.org>
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 30 09:06:42 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 30 10:27:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T6ypr-0007DN-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 09:06:39 +0200
+	id 1T705p-0008I2-1n
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 10:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752448Ab2H3HGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 03:06:33 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:45655 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751912Ab2H3HGc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2012 03:06:32 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4NAKkPP1BZ8rU+/2dsb2JhbABFi0OuOAQBAQJ3gQiCGwUBAQQBCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGARIIAgECAwGHdgq8RosIMBNNC0sag3lgA4gahUKYD4Jk
-X-IronPort-AV: E=Sophos;i="4.80,338,1344207600"; 
-   d="scan'208";a="401941213"
-Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 30 Aug 2012 08:06:30 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752531Ab2H3I05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 04:26:57 -0400
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:37128 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752371Ab2H3I04 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2012 04:26:56 -0400
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mx.arcor.de (Postfix) with ESMTP id 69605263A5
+	for <git@vger.kernel.org>; Thu, 30 Aug 2012 10:26:54 +0200 (CEST)
+Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 6665E7FE3DE
+	for <git@vger.kernel.org>; Thu, 30 Aug 2012 10:26:54 +0200 (CEST)
+Received: from webmail08.arcor-online.net (webmail08.arcor-online.net [151.189.8.44])
+	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 5EDD21AB533
+	for <git@vger.kernel.org>; Thu, 30 Aug 2012 10:26:54 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net 5EDD21AB533
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1346315214; bh=QQH1LJvAKP3tnahd88OWmfXIUMyd7ezFNqnCrwGBB1I=;
+	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Qag2ISjMUhHqDwzw5lqw/WKvMNvgo0EY05EiC2Nj49/K1QMjuwGMPtb/zS1dpL3Ii
+	 NWa5HmE01EKLUpPRtmYA9fWXPfT3csVm17M3LzcYzdPMlmsLAMv5XQKdivqK9kbLQZ
+	 /0sHxQTGPZ31y0gMyxVzVhGyoWY2pDymJtbmUYHc=
+Received: from [178.2.244.115] by webmail08.arcor-online.net (151.189.8.44) with HTTP (Arcor Webmail); Thu, 30 Aug 2012 10:26:54 +0200 (CEST)
+In-Reply-To: <1055159053.19198.1345536909730.JavaMail.ngmail@webmail24.arcor-online.net>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.2.244.115
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204526>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Wednesday, August 29, 2012 10:17 PM
-> So here is an attempt to teach "name-rev" a mode that tries to base
-> its name on oldest tag that can reach the commit.  It needs the
-> reset_revision_walk() call recently added to the revision traversal
-> API, and applies to bcc0a3e (v1.7.11-rc0~111^2~2) or newer.
->
-> Note that this can benefit from caching, as the "weight" of the tag
-> (rather, the commit that is tagged) will never change once a history
-> is made, but that part is left as an exercise to the reader.
+ 
+Hi,
 
-Is "--weight" the right term to use for the user (cli) interface? 
-Wouldn't '--oldest' (or similar) be a better statement of what is 
-desired (absent clock skew).
+I am using MsysGit 1.7.11 on WinXP 32 bit and experience the folllowing strange behaviour:
+ 
+For a file like "File.txt" in the repo, "git blame file.txt" (note the lower case)
+shows "Not commited yet" for every single line in the file. 
+"git blame File.txt" (correct upper case spelling) gives the correct output.
+"core.ignorecase" is "true" so this behaviour is not what I expected.
 
-While 'weight' may be a good internal technical description it didn't 
-convey to me what was being sought (maybe -- deepest'?).
+Is this a bug in MsysGit or some kind of intended behaviour (or bug) in Git?
 
->
-> It correctly names 0136db586c in the kernel history as based on
-> v3.5-rc1 as tags/v3.5-rc1~83^2~81^2~76, not on v3.6-rc1, as we saw
-> on the list recently.
->
-> Once it is verified to operate correctly and updated to perform
-> properly, we can start passing --weight when "describe --contains"
-> runs the command.
->
-> Junio C Hamano (3):
->  name-rev: lose unnecessary typedef
->  name_rev: clarify when a new tip-name is assigned to a commit
->  name-rev: --weight option (WIP)
->
-> builtin/name-rev.c | 142 
-> ++++++++++++++++++++++++++++++++++++++++++++---------
-> 1 file changed, 120 insertions(+), 22 deletions(-)
->
-> -- 
-> 1.7.12.285.ga3d5fc0
->
+
+---
+Thomas
