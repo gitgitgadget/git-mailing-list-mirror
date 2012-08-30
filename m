@@ -1,358 +1,196 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3 3/3] checkout: reorder option handling
-Date: Thu, 30 Aug 2012 19:45:50 +0700
-Message-ID: <1346330750-17937-1-git-send-email-pclouds@gmail.com>
-References: <1346248524-11616-3-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] commit: use a priority queue in merge base functions
+Date: Thu, 30 Aug 2012 08:54:21 -0400
+Message-ID: <20120830125421.GA5687@sigill.intra.peff.net>
+References: <20120829110812.GA14069@sigill.intra.peff.net>
+ <20120829111147.GB14734@sigill.intra.peff.net>
+ <7vtxvlwt7o.fsf@alter.siamese.dyndns.org>
+ <20120829205332.GA16064@sigill.intra.peff.net>
+ <20120829205525.GA28696@sigill.intra.peff.net>
+ <20120829210032.GA29179@sigill.intra.peff.net>
+ <20120829210540.GA31756@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 30 14:52:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 14:54:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T74ET-0007ew-JG
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 14:52:26 +0200
+	id 1T74GX-00026d-UO
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 14:54:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671Ab2H3MwS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Aug 2012 08:52:18 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:63913 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590Ab2H3MwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 08:52:17 -0400
-Received: by dady13 with SMTP id y13so1194641dad.19
-        for <git@vger.kernel.org>; Thu, 30 Aug 2012 05:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=96QgNYGBGaitTBrnkH9vx8uLvZfr3S9G8YSYPVOtBDc=;
-        b=1ICmAeFNgaN2uky3qG60QlMoP/THPeTSLLr1UCJQIZ/5ddz3oPtUg17ZCD3qrpICMq
-         fquYOO63I1rNfWlheFGVCBtomQOViC9/ybUn7M8ECQfV8hB814/M3I1GnRMemehSOseo
-         M9UkmdjKZxXK8wXicXA6W4mQw5zCZPt4nX4VTcjp2jiNgEmot9aK1+oGM/QvsGMI7J3g
-         eKgBbD4OdYOrC/hHdrlOxyl35dxqKTEA27VoMszDScdipuBwLN3epyMzhPoNjpfxL8d8
-         c3faibQJIYwus22wkTC08EFEnOWEkrmeoSrLfuWPiNMYc9mUZs6jO3GFFpjNVA2fY0es
-         FdXQ==
-Received: by 10.68.224.161 with SMTP id rd1mr11638799pbc.133.1346331136822;
-        Thu, 30 Aug 2012 05:52:16 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.49.176])
-        by mx.google.com with ESMTPS id sj5sm1539533pbc.30.2012.08.30.05.52.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Aug 2012 05:52:12 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 30 Aug 2012 19:45:51 +0700
-X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
-In-Reply-To: <1346248524-11616-3-git-send-email-pclouds@gmail.com>
+	id S1751895Ab2H3My1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 08:54:27 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48117 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750864Ab2H3My1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 08:54:27 -0400
+Received: (qmail 8938 invoked by uid 107); 30 Aug 2012 12:54:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 30 Aug 2012 08:54:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2012 08:54:21 -0400
+Content-Disposition: inline
+In-Reply-To: <20120829210540.GA31756@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204534>
 
-checkout operates in three different modes. On top of that it tries to
-be smart by guessing the branch name for switching. This results in
-messy option handling code. This patch reorders it so that
+On Wed, Aug 29, 2012 at 05:05:40PM -0400, Jeff King wrote:
 
- - cmd_checkout() is responsible for parsing, preparing input and
-   determining mode
+> You would want this on top:
+> [...]
+> but t6024 still fails (it clearly is finding a different merge base than
+> the test expects).  I'll trace through it, but it will have to be later
+> tonight.
 
- - Code of each mode is in checkout_paths() and checkout_branch(),
-   where sanity checks are performed
+The problem in t6024 is caused by the fact that the commit timestamps
+for every commit are identical. The linear commit_list has the property
+that we always insert a new commit at the end of a chain of commits with
+the same timestamp. So it works as a stable priority queue in the sense
+that items with the same priority are returned in insertion order.
 
-Another slight improvement is always print branch name (or commit
-name) when printing errors related ot them. This helps catch the case
-where an option is mistaken as branch/commit.
+But the heap-based priority queue does not. Nor can it do so without
+extra storage requirements, as heaps are inherently unstable. The
+simplest way to make it stable is to add an insertion counter to the
+comparison function. The patch below does this, and it resolves the
+issue. It does waste one int per queue element.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Changes since v2 (the first two patches are not resent):
+I think you could also make a priority queue based on a binary search
+tree that would be stable. It's slightly less efficient to create an
+initial queue (you can heapify in O(n), but building the tree takes O(n
+lg n)).  But we do not care about that, as we always build the queue by
+inserting elements, anyway.  The other downside of using a tree is that
+you would want a self-balancing tree for good performance (especially
+since we tend to insert commits in sorted order), which increases the
+code complexity.
 
-  - leave track mode unspecified if --detach/--orphan is specified
-  - merge cmd_checkout_entry() into checkout_paths()
-  - rename cmd_switch() to checkout_branch()
+Anyway, since this isn't yielding any performance benefit, I'm not going
+to go down that route. But stability of the queue is something that we
+need to consider if we ever do replace commit_list with a different data
+structure.
 
- builtin/checkout.c | 177 ++++++++++++++++++++++++++++++---------------=
---------
- 1 t=E1=BA=ADp tin =C4=91=C3=A3 b=E1=BB=8B thay =C4=91=E1=BB=95i, 102 =C4=
-=91=C6=B0=E1=BB=A3c th=C3=AAm v=C3=A0o(+), 75 b=E1=BB=8B x=C3=B3a(-)
+Here's the patch to make the existing priority queue stable (by wasting
+space) in case we ever want to use it.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 78abaeb..b0c5133 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -217,7 +217,8 @@ static int checkout_merged(int pos, struct checkout=
- *state)
- 	return status;
- }
-=20
--static int checkout_paths(const struct checkout_opts *opts)
-+static int checkout_paths(const struct checkout_opts *opts,
-+			  const char *revision)
+-Peff
+
+diff --git a/commit.c b/commit.c
+index 8259871..a99d909 100644
+--- a/commit.c
++++ b/commit.c
+@@ -593,7 +593,7 @@ static int interesting(struct queue *q)
  {
- 	int pos;
- 	struct checkout state;
-@@ -229,7 +230,35 @@ static int checkout_paths(const struct checkout_op=
-ts *opts)
- 	int stage =3D opts->writeout_stage;
- 	int merge =3D opts->merge;
- 	int newfd;
--	struct lock_file *lock_file =3D xcalloc(1, sizeof(struct lock_file));
-+	struct lock_file *lock_file;
-+
-+	if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED)
-+		die(_("%s cannot be used with updating paths"), "--track");
-+
-+	if (opts->new_branch_log)
-+		die(_("%s cannot be used with updating paths"), "-l");
-+
-+	if (opts->force && opts->patch_mode)
-+		die(_("%s cannot be used with updating paths"), "-f");
-+
-+	if (opts->force_detach)
-+		die(_("%s cannot be used with updating paths"), "--detach");
-+
-+	if (opts->merge && opts->patch_mode)
-+		die(_("%s cannot be used with %s"), "--merge", "--patch");
-+
-+	if (opts->force && opts->merge)
-+		die(_("%s cannot be used with %s"), "-f", "-m");
-+
-+	if (opts->new_branch)
-+		die(_("Cannot update paths and switch to branch '%s' at the same tim=
-e."),
-+		    opts->new_branch);
-+
-+	if (opts->patch_mode)
-+		return run_add_interactive(revision, "--patch=3Dcheckout",
-+					   opts->pathspec);
-+
-+	lock_file =3D xcalloc(1, sizeof(struct lock_file));
-=20
- 	newfd =3D hold_locked_index(lock_file, 1);
- 	if (read_cache_preload(opts->pathspec) < 0)
-@@ -763,11 +792,6 @@ static int git_checkout_config(const char *var, co=
-nst char *value, void *cb)
- 	return git_xmerge_config(var, value, NULL);
+ 	int i;
+ 	for (i = 0; i < q->nr; i++) {
+-		struct commit *commit = q->items[i];
++		struct commit *commit = q->items[i].item;
+ 		if (commit->object.flags & STALE)
+ 			continue;
+ 		return 1;
+diff --git a/queue.c b/queue.c
+index 7be6b86..1bdd948 100644
+--- a/queue.c
++++ b/queue.c
+@@ -3,18 +3,28 @@ static void queue_heapify_up(struct queue *pq)
+ 
+ static inline void queue_swap(struct queue *pq, unsigned i, unsigned j)
+ {
+-	void *tmp = pq->items[i];
++	struct queue_item tmp = pq->items[i];
+ 	pq->items[i] = pq->items[j];
+ 	pq->items[j] = tmp;
  }
-=20
--static int interactive_checkout(const char *revision, const char **pat=
-hspec)
--{
--	return run_add_interactive(revision, "--patch=3Dcheckout", pathspec);
--}
--
- struct tracking_name_data {
- 	const char *name;
- 	char *remote;
-@@ -930,6 +954,51 @@ static int switch_unborn_to_new_branch(const struc=
-t checkout_opts *opts)
- 	return status;
- }
-=20
-+static int checkout_branch(struct checkout_opts *opts,
-+			   struct branch_info *new)
+ 
++static inline int queue_cmp(struct queue *pq, unsigned i, unsigned j)
 +{
-+	if (opts->pathspec)
-+		die(_("paths cannot be used with switching branches"));
-+
-+	if (opts->patch_mode)
-+		die(_("%s cannot be used with switching branches"),
-+		    "--patch");
-+
-+	if (opts->writeout_stage)
-+		die(_("%s cannot be used with switching branches"),
-+		    "--ours/--theirs");
-+
-+	if (opts->force && opts->merge)
-+		die(_("%s cannot be used with %s"), "-f", "-m");
-+
-+	if (opts->force_detach && opts->new_branch)
-+		die(_("%s cannot be used with %s"),
-+		    "--detach", "-b/-B/--orphan");
-+
-+	if (opts->new_orphan_branch) {
-+		if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED)
-+			die(_("%s cannot be used with %s"), "--orphan", "-t");
-+	} else if (opts->force_detach) {
-+		if (opts->track !=3D BRANCH_TRACK_UNSPECIFIED)
-+			die(_("%s cannot be used with %s"), "--detach", "-t");
-+	} else if (opts->track =3D=3D BRANCH_TRACK_UNSPECIFIED)
-+		opts->track =3D git_branch_track;
-+
-+	if (new->name && !new->commit)
-+		die(_("Cannot switch branch to a non-commit '%s'."),
-+		    new->name);
-+
-+	if (!new->commit && opts->new_branch) {
-+		unsigned char rev[20];
-+		int flag;
-+
-+		if (!read_ref_full("HEAD", rev, 0, &flag) &&
-+		    (flag & REF_ISSYMREF) && is_null_sha1(rev))
-+			return switch_unborn_to_new_branch(opts);
-+	}
-+	return switch_branches(opts, new);
++	int cmp = pq->cmp(pq->items[i].item, pq->items[j].item);
++	if (cmp)
++		return cmp;
++	if (pq->items[i].counter < pq->items[j].counter)
++		return 1;
++	return -1;
 +}
 +
- int cmd_checkout(int argc, const char **argv, const char *prefix)
+ static void queue_heapify_up(struct queue *pq)
  {
- 	struct checkout_opts opts;
-@@ -976,26 +1045,22 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
- 	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
-=20
--	/* we can assume from now on new_branch =3D !new_branch_force */
--	if (opts.new_branch && opts.new_branch_force)
--		die(_("-B cannot be used with -b"));
-+	if (conflict_style) {
-+		opts.merge =3D 1; /* implied */
-+		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-+	}
-+
-+	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_=
-branch) > 1)
-+		die(_("-b, -B and --orphan are mutually exclusive"));
-=20
--	/* copy -B over to -b, so that we can just check the latter */
- 	if (opts.new_branch_force)
- 		opts.new_branch =3D opts.new_branch_force;
-=20
--	if (opts.patch_mode && (opts.track > 0 || opts.new_branch
--			   || opts.new_branch_log || opts.merge || opts.force
--			   || opts.force_detach))
--		die (_("--patch is incompatible with all other options"));
--
--	if (opts.force_detach && (opts.new_branch || opts.new_orphan_branch))
--		die(_("--detach cannot be used with -b/-B/--orphan"));
--	if (opts.force_detach && 0 < opts.track)
--		die(_("--detach cannot be used with -t"));
-+	if (opts.new_orphan_branch)
-+		opts.new_branch =3D opts.new_orphan_branch;
-=20
- 	/* --track without -b should DWIM */
--	if (0 < opts.track && !opts.new_branch) {
-+	if (opts.track !=3D BRANCH_TRACK_UNSPECIFIED && !opts.new_branch) {
- 		const char *argv0 =3D argv[0];
- 		if (!argc || !strcmp(argv0, "--"))
- 			die (_("--track needs a branch name"));
-@@ -1009,22 +1074,6 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
- 		opts.new_branch =3D argv0 + 1;
- 	}
-=20
--	if (opts.new_orphan_branch) {
--		if (opts.new_branch)
--			die(_("--orphan and -b|-B are mutually exclusive"));
--		if (opts.track > 0)
--			die(_("--orphan cannot be used with -t"));
--		opts.new_branch =3D opts.new_orphan_branch;
--	}
--
--	if (conflict_style) {
--		opts.merge =3D 1; /* implied */
--		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
--	}
--
--	if (opts.force && opts.merge)
--		die(_("git checkout: -f and -m are incompatible"));
--
- 	/*
- 	 * Extract branch name from command line arguments, so
- 	 * all that is left is pathspecs.
-@@ -1052,62 +1101,40 @@ int cmd_checkout(int argc, const char **argv, c=
-onst char *prefix)
- 		argc -=3D n;
- 	}
-=20
--	if (opts.track =3D=3D BRANCH_TRACK_UNSPECIFIED)
--		opts.track =3D git_branch_track;
--
- 	if (argc) {
- 		opts.pathspec =3D get_pathspec(prefix, argv);
-=20
- 		if (!opts.pathspec)
- 			die(_("invalid path specification"));
-=20
--		if (opts.patch_mode)
--			return interactive_checkout(new.name, opts.pathspec);
--
--		/* Checkout paths */
--		if (opts.new_branch) {
--			if (argc =3D=3D 1) {
--				die(_("git checkout: updating paths is incompatible with switching=
- branches.\nDid you intend to checkout '%s' which can not be resolved a=
-s commit?"), argv[0]);
--			} else {
--				die(_("git checkout: updating paths is incompatible with switching=
- branches."));
--			}
--		}
-+		/* Try to give more helpful suggestion, new_branch &&
-+		   argc > 1 will be caught later */
-+		if (opts.new_branch && argc =3D=3D 1)
-+			die(_("Cannot update paths and switch to branch '%s' at the same ti=
-me.\n"
-+			      "Did you intend to checkout '%s' which can not be resolved as=
- commit?"),
-+			    opts.new_branch, argv[0]);
-=20
- 		if (opts.force_detach)
- 			die(_("git checkout: --detach does not take a path argument"));
-=20
- 		if (1 < !!opts.writeout_stage + !!opts.force + !!opts.merge)
--			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
-patible when\nchecking out of the index."));
--
--		return checkout_paths(&opts);
-+			die(_("git checkout: --ours/--theirs, --force and --merge are incom=
-patible when\n"
-+			      "checking out of the index."));
- 	}
-=20
--	if (opts.patch_mode)
--		return interactive_checkout(new.name, NULL);
--
- 	if (opts.new_branch) {
- 		struct strbuf buf =3D STRBUF_INIT;
-=20
--		opts.branch_exists =3D validate_new_branchname(opts.new_branch, &buf=
-,
--							     !!opts.new_branch_force,
--							     !!opts.new_branch_force);
-+		opts.branch_exists =3D
-+			validate_new_branchname(opts.new_branch, &buf,
-+						!!opts.new_branch_force,
-+						!!opts.new_branch_force);
-=20
- 		strbuf_release(&buf);
- 	}
-=20
--	if (new.name && !new.commit) {
--		die(_("Cannot switch branch to a non-commit."));
--	}
--	if (opts.writeout_stage)
--		die(_("--ours/--theirs is incompatible with switching branches."));
--
--	if (!new.commit && opts.new_branch) {
--		unsigned char rev[20];
--		int flag;
--
--		if (!read_ref_full("HEAD", rev, 0, &flag) &&
--		    (flag & REF_ISSYMREF) && is_null_sha1(rev))
--			return switch_unborn_to_new_branch(&opts);
--	}
--	return switch_branches(&opts, &new);
-+	if (opts.patch_mode || opts.pathspec)
-+		return checkout_paths(&opts, new.name);
-+	else
-+		return checkout_branch(&opts, &new);
+ 	unsigned i = pq->nr - 1;
+ 	while (i > 0) {
+ 		int parent = (i-1)/2;
+ 
+-		if (pq->cmp(pq->items[i], pq->items[parent]) <= 0)
++		if (queue_cmp(pq, i, parent) <= 0)
+ 			return;
+ 
+ 		queue_swap(pq, i, parent);
+@@ -25,7 +35,9 @@ void queue_insert(struct queue *pq, void *item)
+ void queue_insert(struct queue *pq, void *item)
+ {
+ 	ALLOC_GROW(pq->items, pq->nr + 1, pq->alloc);
+-	pq->items[pq->nr++] = item;
++	pq->items[pq->nr].item = item;
++	pq->items[pq->nr].counter = pq->counter++;
++	pq->nr++;
+ 	queue_heapify_up(pq);
  }
---=20
-1.7.12.rc2.18.g61b472e
+ 
+@@ -35,11 +47,9 @@ static void queue_heapify_down(struct queue *pq)
+ 	while (1) {
+ 		int largest = i, left = 2*i + 1, right = 2*i + 2;
+ 
+-		if (left < pq->nr &&
+-		    pq->cmp(pq->items[left], pq->items[largest]) > 0)
++		if (left < pq->nr && queue_cmp(pq, left, largest) > 0)
+ 			largest = left;
+-		if (right < pq->nr &&
+-		    pq->cmp(pq->items[right], pq->items[largest]) > 0)
++		if (right < pq->nr && queue_cmp(pq, right, largest) > 0)
+ 			largest = right;
+ 
+ 		if (largest == i)
+@@ -52,7 +62,7 @@ void *queue_peek(struct queue *pq)
+ 
+ void *queue_peek(struct queue *pq)
+ {
+-	return pq->nr ? pq->items[0] : NULL;
++	return pq->nr ? pq->items[0].item : NULL;
+ }
+ 
+ void *queue_pop(struct queue *pq)
+@@ -61,7 +71,7 @@ void *queue_pop(struct queue *pq)
+ 
+ 	if (!pq->nr)
+ 		return NULL;
+-	ret = pq->items[0];
++	ret = pq->items[0].item;
+ 
+ 	pq->items[0] = pq->items[--pq->nr];
+ 	queue_heapify_down(pq);
+diff --git a/queue.h b/queue.h
+index cc471b5..a70f7d7 100644
+--- a/queue.h
++++ b/queue.h
+@@ -3,11 +3,17 @@ struct queue {
+ 
+ typedef int (*queue_comparison_func_t)(const void *, const void *);
+ 
++struct queue_item {
++	void *item;
++	unsigned counter;
++};
++
+ struct queue {
+ 	queue_comparison_func_t cmp;
+-	void **items;
++	struct queue_item *items;
+ 	unsigned nr;
+ 	unsigned alloc;
++	unsigned counter;
+ };
+ 
+ void queue_insert(struct queue *pq, void *item);
