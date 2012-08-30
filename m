@@ -1,91 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] commit: use a priority queue in merge base functions
-Date: Thu, 30 Aug 2012 09:03:27 -0400
-Message-ID: <20120830130327.GB5687@sigill.intra.peff.net>
-References: <20120829110812.GA14069@sigill.intra.peff.net>
- <20120829111147.GB14734@sigill.intra.peff.net>
- <7vtxvlwt7o.fsf@alter.siamese.dyndns.org>
- <20120829205332.GA16064@sigill.intra.peff.net>
- <20120829205525.GA28696@sigill.intra.peff.net>
- <20120829210032.GA29179@sigill.intra.peff.net>
- <20120829210540.GA31756@sigill.intra.peff.net>
- <20120830125421.GA5687@sigill.intra.peff.net>
+From: Orgad and Raizel Shaneh <orgads@gmail.com>
+Subject: Re: relative objects/info/alternates doesn't work on remote SMB repo
+Date: Thu, 30 Aug 2012 16:12:04 +0300
+Message-ID: <CAGHpTB+TbrQLw7E+RpP8y0euYrLNOC6-sic-4x3pbxcAborFLQ@mail.gmail.com>
+References: <CAGHpTBKNurqd0xcz9A9bC8MQU8yHfef0ozJ2Khr9uQvwHoyP2g@mail.gmail.com>
+	<CACsJy8BSpX7UxAEhZTqNnazAtSMp7oZtyxiBdnVoCXefWpTDEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 30 15:03:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 15:12:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T74PJ-00067r-PE
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 15:03:38 +0200
+	id 1T74Xe-00012c-1z
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 15:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781Ab2H3NDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Aug 2012 09:03:31 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48128 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751327Ab2H3NDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 09:03:30 -0400
-Received: (qmail 9038 invoked by uid 107); 30 Aug 2012 13:03:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 30 Aug 2012 09:03:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2012 09:03:27 -0400
-Content-Disposition: inline
-In-Reply-To: <20120830125421.GA5687@sigill.intra.peff.net>
+	id S1751965Ab2H3NMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 09:12:06 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:42314 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab2H3NMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 09:12:05 -0400
+Received: by qaas11 with SMTP id s11so127819qaa.19
+        for <git@vger.kernel.org>; Thu, 30 Aug 2012 06:12:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=l5lisPgw1W2WL5gbGVpUY5jGjrez6KTqwrUgTFGr+TQ=;
+        b=eGJ1B6oaRQ3rCYMqD6ikrxGI/fDtbiWMlSetpdd7fCrL5U5ogjbhjdL8WKGtf53oDA
+         l1fEYKpS2C651l/p/H0Rvtn280v30WRNhXaYeohPJPfSxfrSvyXuzhOg164y40vaLJrW
+         ihG/e9Kr/Mp1MpsLpCDCdbBbFn3shLi0EmsOMU8+QH7uK1UayR7kvbE06e5iDibGHyrm
+         39kg8JPvRLNfkqsVNJ8Pba345owXJv1QwrwuXPnlxe6H9PGnmtDDZjvc4VSKpeg8dCER
+         JMIFFVMkhkn57xdf4c35p+VE0X+LI4XdFr4BiMo36zf/qqIxjML7nN25+DvlZMSkDhKf
+         hvMQ==
+Received: by 10.224.213.198 with SMTP id gx6mr11171634qab.9.1346332324352;
+ Thu, 30 Aug 2012 06:12:04 -0700 (PDT)
+Received: by 10.49.131.8 with HTTP; Thu, 30 Aug 2012 06:12:04 -0700 (PDT)
+In-Reply-To: <CACsJy8BSpX7UxAEhZTqNnazAtSMp7oZtyxiBdnVoCXefWpTDEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204536>
 
-On Thu, Aug 30, 2012 at 08:54:21AM -0400, Jeff King wrote:
+On Thu, Aug 30, 2012 at 3:51 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>
+> On Wed, Aug 29, 2012 at 1:43 PM, Orgad and Raizel Shaneh
+> <orgads@gmail.com> wrote:
+> > Hi,
+> >
+> > I have a repo accessed through //server/share/foo/repo (Using msysgit).
+> >
+> > .git/objects/info/alternates contains '../../../bare/objects'
+> >
+> > Running 'git status' (or almost any other action) gives the following
+> > output:
+> > error: object directory /server/share/foo/bare/objects does not exist;
+> > check .git/objects/info/alternates.
+> >
+> > Note that it tries to access /server instead of //server.
+>
+> Could be path normalization. What does "git rev-parse --git-dir" say?
+> Try to run it at top working directory and a subdirectory as well.
+>
+> If you set GIT_OBJECT_DIRECTORY environment variable to
+> //server/share/foo/repo/.git/objects, does it work?
+> --
+> Duy
 
-> On Wed, Aug 29, 2012 at 05:05:40PM -0400, Jeff King wrote:
-> 
-> > You would want this on top:
-> > [...]
-> > but t6024 still fails (it clearly is finding a different merge base than
-> > the test expects).  I'll trace through it, but it will have to be later
-> > tonight.
-> 
-> The problem in t6024 is caused by the fact that the commit timestamps
-> for every commit are identical.
+git rev-parse --git-dir in a subdirectory has //server
 
-So I was able to have my queue behave just like commit_list by fixing
-the stability issue. But I still have no clue what is going on in t6024.
-It does this for each commit it makes:
+setting GIT_OBJECT_DIRECTORY prints "fatal: bad object HEAD" on git status.
 
-  [...]
-  GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
-  [...]
-  GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
-  [...]
-
-which is just bizarre. At first I thought it was buggy, and that it
-really wanted to be setting COMMITTER_DATE (in which case it should
-really just be using test_tick, anyway). But if you do that, the test
-fails (even using a regular commit_list)!
-
-So is the test buggy? Or are the identical commit timestamps part of the
-intended effect? I can't see how that would be, since:
-
-  1. You would need to set COMMITTER_DATE for that anyway, as you are
-     otherwise creating a race condition.
-
-  2. Why would you set AUTHOR_DATE? It's not used by the merge code at
-     all.
-
-The script originally comes from here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/33566/focus=33852
-
-and the discussion implies that the AUTHOR_DATEs were added to avoid a
-race condition with the timestamps. But why would that ever have worked?
-
-Confused...
-
--Peff
+- Orgad
