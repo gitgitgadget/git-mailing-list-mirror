@@ -1,108 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git archive --format zip utf-8 issues
-Date: Thu, 30 Aug 2012 18:26:03 -0400
-Message-ID: <20120830222603.GA20289@sigill.intra.peff.net>
-References: <502583F4.8030308@tu-clausthal.de>
- <7vtxwagy9f.fsf@alter.siamese.dyndns.org>
- <5026C649.2090700@lsrfire.ath.cx>
- <5026D081.2040906@tu-clausthal.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Fri Aug 31 00:26:15 2012
+From: Ammon Riley <ammon.riley@gmail.com>
+Subject: [PATCH] Make git-svn branch patterns match complete URL
+Date: Thu, 30 Aug 2012 15:53:57 -0700
+Message-ID: <1346367237-28242-1-git-send-email-ammon.riley@gmail.com>
+Cc: Ammon Riley <ammon.riley@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 31 00:54:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7DBm-0003jR-1f
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 00:26:14 +0200
+	id 1T7Dcv-00073Z-Jl
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 00:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab2H3W0H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Aug 2012 18:26:07 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:48406 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751865Ab2H3W0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Aug 2012 18:26:05 -0400
-Received: (qmail 13975 invoked by uid 107); 30 Aug 2012 22:26:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 30 Aug 2012 18:26:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2012 18:26:03 -0400
-Content-Disposition: inline
-In-Reply-To: <5026D081.2040906@tu-clausthal.de>
+	id S1752782Ab2H3WyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 18:54:11 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:61623 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752524Ab2H3WyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 18:54:09 -0400
+Received: by pbbrr13 with SMTP id rr13so3896852pbb.19
+        for <git@vger.kernel.org>; Thu, 30 Aug 2012 15:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=7ntHw4Uh3R6mW5mGjJiI4OnJYzEZk8HQWDJRaNvt6ZE=;
+        b=1ItsIPmmPbZGA2ZlZcnWaUAfqxgY141EYHX1/xc+Z6iO6mUNx60dEWaPmRHHvYXlgF
+         mWR+s+pqYdrRRjdN/58chO69xSbZtUQXZiJ7exQYMboQCKMmyX0bc5cC2tuLSWL4gcjk
+         a55nuGR9c18JmoXQkjHS58Ql8MuVswJnMgHrJg0QqDY27TcZj0qR3MHV7iz44Q6UwQKR
+         DJn5NKEurhm0mpz675s7f7Wbbb9TahVrJlLZPSTHRWpO4O22+Ex49t062bIWSGhGuEiI
+         rkyY/+5xpi8MdMHnzK0eTvRJQpN3NAXG1NV1y477IbT9ZATR396DCx2p+9j2DOneoSWC
+         WUHQ==
+Received: by 10.68.129.164 with SMTP id nx4mr13858644pbb.28.1346367249021;
+        Thu, 30 Aug 2012 15:54:09 -0700 (PDT)
+Received: from igloo.hlit.local ([12.108.21.226])
+        by mx.google.com with ESMTPS id b4sm2304115pbw.28.2012.08.30.15.54.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 30 Aug 2012 15:54:08 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204572>
 
-On Sat, Aug 11, 2012 at 11:37:05PM +0200, Sven Strickroth wrote:
+When using the {word,[...]} style of configuration for tags and branches,
+it appears the intent is to only match whole path parts, since the words
+in the {} pattern are meta-character quoted.
 
-> Am 11.08.2012 22:53 schrieb Ren=C3=A9 Scharfe:
-> > The standard says we need to convert to CP437, or to UTF-8, or prov=
-ide=20
-> > both versions. A more interesting question is: What's supported by =
-which=20
-> > programs?
-> >=20
-> > The ZIP functionality built into Windows 7 doesn't seem to work wit=
-h=20
-> > UTF-8 encoded filenames (except for those that only use the ASCII=20
-> > subset), and to ignore the UTF-8 part if both are given.
->=20
-> I played a bit with the git source code and found out, that
->=20
-> diff --git a/archive-zip.c b/archive-zip.c
-> index f5af81f..e0ccb4f 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -257,7 +257,7 @@ static int write_zip_entry(struct archiver_args *=
-args,
->  	copy_le16(dirent.creator_version,
->  		S_ISLNK(mode) || (S_ISREG(mode) && (mode & 0111)) ? 0x0317 : 0);
->  	copy_le16(dirent.version, 10);
-> -	copy_le16(dirent.flags, flags);
-> +	copy_le16(dirent.flags, flags+2048);
->  	copy_le16(dirent.compression_method, method);
->  	copy_le16(dirent.mtime, zip_time);
->  	copy_le16(dirent.mdate, zip_date);
-> --
-> works with 7-zip, however, not with Windows 7 build-in zip.
->=20
-> If I create a zip file with 7-zip which contains umlauts and other
-> unicode chars like (=E5=9C=8B=E7=AB=8B1-=D0=BA=D0=BA=D0=BA=D0=BA.txt)=
- the Windows 7 build-in zip displays
-> them correctly, too.
+When the pattern word appears in the beginning or middle of the url,
+it's matched completely, since the left side, pattern, and (non-empty)
+right side are joined together with path separators.
 
-Ping on this stalled discussion.
+However, when the pattern word appears at the end of the URL, the
+right side is an empty pattern, and the resulting regex matches
+more than just the specified pattern.
 
-It seems like there are two separate issues here:
+For example, if you specify something along the lines of
 
-  1. Knowing the encoding of pathnames in the repository.
+    branches = branches/project/{release_1,release_2}
 
-  2. Setting the right flags in zip output.
+and your repository also contains "branches/project/release_1_2", you
+will also get the release_1_2 branch.  By restricting the match regex
+with anchors, this is avoided.
 
-A full solution would handle both parts, but let's ignore (1) for a
-moment, and assume we have utf-8 (or can massage into utf-8 from an
-encoding specified by the user).
+Signed-off-by: Ammon Riley <ammon.riley@gmail.com>
+---
+Tested with Subversion 1.6; applies against maint, and master.
 
-It seems like just setting the magic utf-8 flag would be the only thing
-we need to do, according to the standard. But according to discussions
-referenced elsewhere in this thread, that flag was invented only in
-2007, so we may be dealing with older implementations (I have no idea
-how common they would be; that may be the problem with Windows 7's zip
-you are seeing). We could re-encode to cp437, which the standard
-specifies, but apparently some implementations do not respect that
-(and use a local code page instead). And it cannot represent all utf-8
-characters, anyway.
+ perl/Git/SVN/GlobSpec.pm      | 4 +++-
+ t/t9154-git-svn-fancy-glob.sh | 9 +++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-It sounds like 7-zip has figured out a more portable solution. Can you
-show us a sample of 7-zip's output with utf-8 characters to compare to
-what git generates? I wonder if it is using a combination of methods.
-
--Peff
+diff --git a/perl/Git/SVN/GlobSpec.pm b/perl/Git/SVN/GlobSpec.pm
+index 96cfd98..c95f5d7 100644
+--- a/perl/Git/SVN/GlobSpec.pm
++++ b/perl/Git/SVN/GlobSpec.pm
+@@ -44,7 +44,9 @@ sub new {
+ 	my $right = join('/', @right);
+ 	$re = join('/', @patterns);
+ 	$re = join('\/',
+-		   grep(length, quotemeta($left), "($re)", quotemeta($right)));
++		   grep(length, quotemeta($left),
++                                "($re)(?=/|\$)",
++                                quotemeta($right)));
+ 	my $left_re = qr/^\/\Q$left\E(\/|$)/;
+ 	bless { left => $left, right => $right, left_regex => $left_re,
+ 	        regex => qr/$re/, glob => $glob, depth => $depth }, $class;
+diff --git a/t/t9154-git-svn-fancy-glob.sh b/t/t9154-git-svn-fancy-glob.sh
+index a6a56a6..b780e0e 100755
+--- a/t/t9154-git-svn-fancy-glob.sh
++++ b/t/t9154-git-svn-fancy-glob.sh
+@@ -21,6 +21,15 @@ test_expect_success 'add red branch' "
+ 	test_must_fail git rev-parse refs/remotes/blue
+ 	"
+ 
++test_expect_success 'add gre branch' "
++	GIT_CONFIG=.git/svn/.metadata git config --unset svn-remote.svn.branches-maxRev &&
++	git config svn-remote.svn.branches 'branches/{red,gre}:refs/remotes/*' &&
++	git svn fetch &&
++	git rev-parse refs/remotes/red &&
++	test_must_fail git rev-parse refs/remotes/green &&
++	test_must_fail git rev-parse refs/remotes/blue
++	"
++
+ test_expect_success 'add green branch' "
+ 	GIT_CONFIG=.git/svn/.metadata git config --unset svn-remote.svn.branches-maxRev &&
+ 	git config svn-remote.svn.branches 'branches/{red,green}:refs/remotes/*' &&
+-- 
+1.7.11.3
