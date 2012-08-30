@@ -1,112 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/3] Improve branch UI for setting upstream information
-Date: Thu, 30 Aug 2012 13:12:48 -0700
-Message-ID: <7vipc0qgu7.fsf@alter.siamese.dyndns.org>
-References: <1346347393-8425-1-git-send-email-cmn@elego.de>
- <7v1uios2ma.fsf@alter.siamese.dyndns.org> <87fw745hsb.fsf@centaur.cmartin.tk>
+Subject: Re: [PATCH v2 2/3] demonstrate broken 'git cherry-pick three one
+ two'
+Date: Thu, 30 Aug 2012 14:02:05 -0700
+Message-ID: <7vehmoqek2.fsf@alter.siamese.dyndns.org>
+References: <50289e50.8458320a.7d31.3c46SMTPIN_ADDED@gmr-mx.google.com>
+ <1346220956-25034-1-git-send-email-martinvonz@gmail.com>
+ <1346220956-25034-3-git-send-email-martinvonz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: carlos@cmartin.tk (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
-X-From: git-owner@vger.kernel.org Thu Aug 30 22:13:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 30 23:02:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7B6o-0003N0-Ab
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 22:12:58 +0200
+	id 1T7BsX-0001uX-Ky
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Aug 2012 23:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842Ab2H3UMw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Aug 2012 16:12:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50263 "EHLO
+	id S1751949Ab2H3VCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Aug 2012 17:02:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43152 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751121Ab2H3UMv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Aug 2012 16:12:51 -0400
+	id S1751530Ab2H3VCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Aug 2012 17:02:09 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE84D94EF;
-	Thu, 30 Aug 2012 16:12:50 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D5C686AC;
+	Thu, 30 Aug 2012 17:02:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Mhnet052whPx
-	uY1QxiRHraz07aM=; b=tK+gSrzfC9ofV9COJN9PZ7SukdawSwTAJa7YF9xMGX2S
-	eh2Cf1p8CGvBjVNg+gxfraHDG7WlcjvR4FkvW7hiw11vvfstyt72lnqxIX63a17B
-	5unRMjT+DuZ6z+cFyceRWjqxGS1hVAWy9mu/cU2mlc42X8bY3ZCtOFJYnHj51t0=
+	:content-type; s=sasl; bh=Lf3oNEI52cNny1jcSmx6ojATxE8=; b=ibvDJk
+	E6665CAp5KHb72Wc0hKJaSeFd2Vx2jl1WMORFF4UVRuVf1EdZvvDnvcFXk9/FkqB
+	rhNQ1+S7x3Pr6TWVNlPMk4OQPG84aibQjJdhWUni3GsBPwoiSNRCIWahS/vKMq5S
+	gV4DryiNhhDLWS8OOtgYB/SdNUWrxTtbmhS7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ij32Rg
-	zHVZeWezU84/RCIJhm8ZH0amg4tA+5o0UPCfcveJvzhSwRD/E0/rESJ0zNf7+Q8t
-	gm8QuuGl8/7uAc9PGASCbfiskR5DqWoh0pP7vtFvrPfHITKLNZ7LA0vDNkDdloRN
-	iNO9w6bIy+J3PxSX4sRCnhE7UP/tlDV07BPCA=
+	:content-type; q=dns; s=sasl; b=DsKNZhwwXZ3ULeyUNObbRVo+jRpSMBs+
+	4oBxogPNr6asrC0tk/UCNcNvAtddp/aI3VfAFXLbJWPCHPIHKJvtOTSPSaJrfoXZ
+	yTvgY5lC4oh4oF3u5RrjitfnQdzvIHGYZ9lRTa96PHbncGhA/UV+8XspkvFZTEWD
+	p+6wuyBOcaU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC8A294EE;
-	Thu, 30 Aug 2012 16:12:50 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B94386AB;
+	Thu, 30 Aug 2012 17:02:08 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19E6C94EC; Thu, 30 Aug 2012
- 16:12:50 -0400 (EDT)
-In-Reply-To: <87fw745hsb.fsf@centaur.cmartin.tk> ("Carlos =?utf-8?Q?Mart?=
- =?utf-8?Q?=C3=ADn?= Nieto"'s message of "Thu, 30 Aug 2012 20:57:56 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFEB286A9; Thu, 30 Aug 2012
+ 17:02:07 -0400 (EDT)
+In-Reply-To: <1346220956-25034-3-git-send-email-martinvonz@gmail.com> (Martin
+ von Zweigbergk's message of "Tue, 28 Aug 2012 23:15:55 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1293ECD0-F2DF-11E1-916D-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F57E15C4-F2E5-11E1-800E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204565>
 
-carlos@cmartin.tk (Carlos Mart=C3=ADn Nieto) writes:
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Cherry-picking commits out of order (w.r.t. commit time stamp) doesn't
+> currently work. Add a test case to demonstrate it.
 >
->> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->>
->>> As a result of making --unset-upstream fail if the given branch
->>> doesn't exist, I discovered a copy-paste error in on the the tests =
-in
->>> the patch after it, so I'm resending the whole thing.
->>>
->>> The changes from the last reroll are the tightening of the situatio=
-ns
->>> where git will show an error message (not it's just if the branch i=
-s
->>> new and exists as remote-tracking) which I already sent as a reply =
-in
->>> the other thread; and making --unset-upstream error out on bad inpu=
-t,
->>> which I already mentioned above.
->>
->> Thanks.
->>
->> In addition to "--unset-upstream must fail on i-dont-exist branch"
->> in [2/3], I am wondering if we would want to also make sure the
->> command fails when the upstream information is not set for the
->> branch, i.e. something like the following on top.
->>
->> What do you think?
->>
->>  t/t3200-branch.sh | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git i/t/t3200-branch.sh w/t/t3200-branch.sh
->> index 1018e8b..a0aaedd 100755
->> --- i/t/t3200-branch.sh
->> +++ w/t/t3200-branch.sh
->> @@ -393,7 +393,9 @@ test_expect_success 'test --unset-upstream on HE=
-AD' \
->>       git branch --set-upstream-to my14 &&
->>       git branch --unset-upstream &&
->>       test_must_fail git config branch.master.remote &&
->> -     test_must_fail git config branch.master.merge'
->> +     test_must_fail git config branch.master.merge &&
->> +     test_must_fail git branch --unset-upstream
->> +'
+> Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+> ---
+>  t/t3508-cherry-pick-many-commits.sh | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 >
-> Yeah, this looks good, makes sure that it will still behave correctly
-> even if the code path for these two situations diverges.
+> diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
+> index 75f7ff4..fff20c3 100755
+> --- a/t/t3508-cherry-pick-many-commits.sh
+> +++ b/t/t3508-cherry-pick-many-commits.sh
+> @@ -44,6 +44,21 @@ test_expect_success 'cherry-pick first..fourth works' '
+>  	check_head_differs_from fourth
+>  '
+>  
+> +test_expect_failure 'cherry-pick three one two works' '
+> +	git checkout -f first &&
+> +	test_commit one &&
+> +	test_commit two &&
+> +	test_commit three &&
+> +	git checkout -f master &&
+> +	git reset --hard first &&
+> +	git cherry-pick three one two &&
+> +	git diff --quiet three &&
+> +	git diff --quiet HEAD three &&
+> +	test "$(git log --reverse --format=%s first..)" == "three
+> +one
+> +two"
+> +'
 
-Alright; will squash.
+"test $A == $B" is not POSIX.  I'll drop '=' when queuing, so no
+need to resend.
 
 Thanks.
+
+> +
+>  test_expect_success 'output to keep user entertained during multi-pick' '
+>  	cat <<-\EOF >expected &&
+>  	[master OBJID] second
