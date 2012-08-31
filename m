@@ -1,72 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GC of alternate object store
-Date: Fri, 31 Aug 2012 12:45:29 -0700
-Message-ID: <7vr4qmn8va.fsf@alter.siamese.dyndns.org>
-References: <7vmx2a3pif.fsf@alter.siamese.dyndns.org>
- <loom.20120827T233125-780@post.gmane.org> <hbf.20120828vnfp@bombur.uio.no>
- <20120829074249.GA14408@ugly.local> <7v3935y9tw.fsf@alter.siamese.dyndns.org>
- <20120830095314.GA29038@troll08.europe.nokia.com>
- <7vbohstlih.fsf@alter.siamese.dyndns.org>
- <20120831162629.GA18215@troll08.europe.nokia.com>
- <CAPBPrnvrQx2SeyNM_nxnn7bB=Sakj6X=dbH2va+O-TnspY=Bpw@mail.gmail.com>
+Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
+Date: Fri, 31 Aug 2012 13:01:41 -0700
+Message-ID: <7vk3wen84a.fsf@alter.siamese.dyndns.org>
+References: <5040C59A.6090303@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Oswald Buddenhagen <ossi@kde.org>, git@vger.kernel.org
-To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 21:45:48 2012
+Cc: git@vger.kernel.org
+To: Marco Stornelli <marco.stornelli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 31 22:02:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7X9v-0003Oy-L6
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 21:45:40 +0200
+	id 1T7XPo-0006kA-J4
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 22:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793Ab2HaTpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Aug 2012 15:45:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56864 "EHLO
+	id S1755038Ab2HaUB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Aug 2012 16:01:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64587 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754791Ab2HaTpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2012 15:45:32 -0400
+	id S1755009Ab2HaUBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2012 16:01:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F092296B6;
-	Fri, 31 Aug 2012 15:45:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36E1C9BA6;
+	Fri, 31 Aug 2012 16:01:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YSdFsvHjqB5J73i7r9eEv2SysUo=; b=LEQ13U
-	ffM7mfH4L+UuQ8UERa+MRJvw5tXGCMNjiHSb8QvSf4xGwktE4zje6AYlgY7AkGfw
-	18jqzV9lgPfDsd4tmQgs5BpnaPYMVxeMZbQb1Gy/qooVqpV5rEUVNdmeZJF+2nyb
-	+7jeRbng43meaO/iXu5Sezq2yYZTAxdLKuK1s=
+	:content-type; s=sasl; bh=n3LCjm8ZT1yLvXtKbdb4qAUCLpA=; b=MDIQLu
+	+E6OL3OSFiPu+7NJzkvlLDocI5kb5tu1FF/6BVU8AMFbNhMfqcXcMt0FnOMMJ4e9
+	qFM8n7qRdgt8/pOJrgPHRr1bmfeK7lH+mAMhcLDhxFUbl+sFoGepyl5Xwpbvb3mS
+	zKCcTtAuSfLc75/VOx6HAuONcXUTLFakLByA8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LYN29kPF8bKFGcNwSO2ia3tnGq84iJzx
-	T5ytuzlk8b2qitIL2NhBFtjsY2wCJXHIRQD0xovMiwH+lySczi7rrLD6ZNzSHb+6
-	Jo7/dAlvRUDzK4IK8N/mj/MuE/7/REdcCY3zUiUxuDNvFmYnfDr+Hw5j7rD86gDg
-	hnvMgtI04F4=
+	:content-type; q=dns; s=sasl; b=tK5d9H23GXf2NtEY2UgkT2RflXEIfl1c
+	dbrbM/8Gr0tsBCWU0AaDQL38IgLhpf5pwtfffUEjoE4d3pBojOBNAn5m3QTs3Av0
+	m9WHTBel987w1N2JdqhVANvkHl0/F9uLf8x+m4O+YENcLawfiATFatFyX3OndzIL
+	DqRzwQSZNgc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAC8696B5;
-	Fri, 31 Aug 2012 15:45:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24D479BA5;
+	Fri, 31 Aug 2012 16:01:45 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BED496B3; Fri, 31 Aug 2012
- 15:45:31 -0400 (EDT)
-In-Reply-To: <CAPBPrnvrQx2SeyNM_nxnn7bB=Sakj6X=dbH2va+O-TnspY=Bpw@mail.gmail.com> (Dan
- Johnson's message of "Fri, 31 Aug 2012 15:18:03 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96E1A9BA4; Fri, 31 Aug 2012
+ 16:01:44 -0400 (EDT)
+In-Reply-To: <5040C59A.6090303@gmail.com> (Marco Stornelli's message of "Fri,
+ 31 Aug 2012 16:09:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C3B5F96-F3A4-11E1-921B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B0544592-F3A6-11E1-970F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204607>
 
-Dan Johnson <computerdruid@gmail.com> writes:
+Marco Stornelli <marco.stornelli@gmail.com> writes:
 
-> I believe that is bad interaction with "--all" (probably a bug). If I
-> am remembering correctly, --no-tags is internally a per-remote
-> setting, so I'm guessing it's not getting set on all remotes here.
->
-> I'll look into this more a bit later tonight. Does fetch --no-tags
-> work when you specify a remote?
+> +PATCHTMP="${PATCH}.tmp"
+> +
+> +echo $MAILHEADER > $PATCHTMP
+> +
+> +export PATCHTMP
+> +CCS=`perl -e 'local $/=undef; open FILE, $ENV{'PATCHTMP'}; $text=<FILE>;
+> +close FILE; $addr = $1 if $text =~ /Cc: (.*?(,\n .*?)*)\n/s; $addr =~ s/\n//g;
+> +print $addr;'`
+> +
+> +TO=`perl -e 'local $/=undef; open FILE, $ENV{'PATCHTMP'}; $text=<FILE>;
+> +close FILE; $addr = $1 if $text =~ /To: (.*?(,\n .*?)*)\n/s; $addr =~ s/\n//g;
+> +print $addr;'`
+>  
+> -CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+> -	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
+> +rm -rf $PATCHTMP
 
-Thanks.
+One thing I forgot to say.  Make sure you quote your variables (when
+in doubt, quote).  Also make it a habit not to say "rm -r" when you
+know you are removing a regular file you created.  I.e.
+
+	rm -f "$PATCHTMP"
