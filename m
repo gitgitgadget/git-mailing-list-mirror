@@ -1,82 +1,120 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2] test: set the realpath of CWD as TRASH_DIRECTORY
-Date: Fri, 31 Aug 2012 09:49:22 +0200
-Message-ID: <50406C82.2070005@alum.mit.edu>
-References: <5030F0BF.2090500@alum.mit.edu> <f58965733e604a9fe6ed72384d0307062403b478.1346043214.git.worldhello.net@gmail.com> <7vk3wktiph.fsf@alter.siamese.dyndns.org> <503D973D.8040402@alum.mit.edu> <7vmx1exmde.fsf@alter.siamese.dyndns.org> <503DCFAE.6060307@alum.mit.edu> <7vy5kxwtdo.fsf@alter.siamese.dyndns.org> <503EEDF3.2080202@alum.mit.edu> <7vzk5dt0g5.fsf@alter.siamese.dyndns.org>
+From: Marco Stornelli <marco.stornelli@gmail.com>
+Subject: [PATCH v3] Thunderbird: fix appp.sh format problems
+Date: Fri, 31 Aug 2012 09:59:22 +0200
+Message-ID: <50406EDA.2050505@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Lea Wiemann <lewiemann@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 31 09:56:36 2012
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 31 10:06:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7M5j-0000Dx-KI
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 09:56:35 +0200
+	id 1T7MFa-00040E-9n
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 10:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275Ab2HaH42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Aug 2012 03:56:28 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:45790 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750765Ab2HaH41 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Aug 2012 03:56:27 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Aug 2012 03:56:27 EDT
-X-AuditID: 1207440d-b7f236d000000943-be-50406c855576
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 61.49.02371.58C60405; Fri, 31 Aug 2012 03:49:25 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q7V7nMwv004037
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 31 Aug 2012 03:49:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <7vzk5dt0g5.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqNua4xBgcOa9vEXXlW4mi4beK8wW
-	R09ZWKx/d5XZgcVj56y77B4XLyl7fN4kF8AcxW2TlFhSFpyZnqdvl8Cd8ftFfMFL9oovM9Qb
-	GDezdTFyckgImEhc+raDFcIWk7hwbz1QnItDSOAyo8TB/s/MEM5xJom9W7aDVfEKaEusnz0H
-	rJtFQFWiceNhdhCbTUBXYlFPMxOILSoQIrHm2xRGiHpBiZMzn7CA2CICahIT2w6B2cwCJRLf
-	304Fmyks4CHx98A6JohlbcwS1/a3gS3gFDCTeHGkjRmiQUfiXd8DKFteYvvbOcwTGAVmIdkx
-	C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGunlZpbopaaUbmKEhDDvDsb/62QO
-	MQpwMCrx8F5ZZx8gxJpYVlyZe4hRkoNJSZS3P8shQIgvKT+lMiOxOCO+qDQntfgQowQHs5II
-	L5sVUI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMFrkw3UKFiUmp5a
-	kZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K1PhiYKyCpHiA9jqCtPMWFyTmAkUhWk8x6nJ8
-	fnryLqMQS15+XqqUOG8XyOECIEUZpXlwK2AJ6xWjONDHwrzTQUbxAJMd3KRXQEuYgJbIadiD
-	LClJREhJNTBqrU8QiHfLLtf2mzgxbu4uxq2nGrb/XL1tos1+0fiXV/m9rDliLHeWf2YQXLDy
-	vlxd6Z7Gz4q3GmMYtx5hFl2RFiLZ+ndmdvted547a2ITjkw+tPztpsMnHf79dQ1o 
+	id S1751107Ab2HaIGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Aug 2012 04:06:07 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:52353 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042Ab2HaIF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2012 04:05:59 -0400
+Received: by bkwj10 with SMTP id j10so1143413bkw.19
+        for <git@vger.kernel.org>; Fri, 31 Aug 2012 01:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=FUiLlSnUM0GfnPtvUdhAqwZXtXIudWc9+zA9LfTdmCs=;
+        b=dI95FzUPLcy3ygMrJg2Fn1cH3VTfcDaOhSOE6AeeJeBCP8eif0WYOX/SFYmEG4pXjl
+         8vaw6ABEf24sl5rlLcDlHRZlJZ1wg5DiBQEMGZ9M5GBAkpjsQNZfyaMJwvAKAuFjQdSl
+         c1yRpp0ADJ/oAdIWu5O37GcVwCtFZTzzpZ7jIs667nOVsMA7XrfJQkZ7ErtHQI5pnrnF
+         PxlEe8hVZBlXZ7QpcyK2TouyeBCsDycdIUNBIqhOaNTiBqpiTzUjzbnYjsAA/IuJqpYm
+         aLuxNMLz2BkxXhNZdssBuZUInY4l60UYQp/XA+0pTRLLDSzxh2pPcN9W1rsSZxLhkmA/
+         qWDg==
+Received: by 10.205.117.141 with SMTP id fm13mr3787325bkc.125.1346400358503;
+        Fri, 31 Aug 2012 01:05:58 -0700 (PDT)
+Received: from [82.49.192.78] (host78-192-dynamic.49-82-r.retail.telecomitalia.it. [82.49.192.78])
+        by mx.google.com with ESMTPS id 25sm2781483bkx.9.2012.08.31.01.05.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 31 Aug 2012 01:05:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120601 Thunderbird/13.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204582>
 
-On 08/30/2012 07:26 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> By the way, is the use of realpath(3) permissible in git code?
->> GIT_CEILING_DIRECTORIES handling could be fixed relatively easily by
->> using this function to canonicalize pathnames before comparison.
-> 
-> As long as we can add a compat/realpath.c (perhaps lift one from
-> glibc before they went GPLv3) for platforms that matter, I do not
-> see it as a huge problem.  How close is abspath.c::real_path() to
-> what you need?
+The current script has got the following problems:
 
-Cool, I didn't know about that function.  It's approximately what is
-needed, except that it dies if fed an invalid path (unacceptable when
-processing GIT_CEILING_DIRECTORIES) and it's buggy (try "test-path-utils
-real_path ''" or "test-path-utils real_path '/foo'").  However, I'm
-working on fixing it and splitting off a variant that returns NULL on
-errors.
+1) It doesn't work if the language used by Thunderbird is not English;
+2) The field To: filled by format-patch is not evaluated;
+3) The field Cc: is loaded from Cc used in the commit message
+instead of using the Cc field filled by format-patch in the email
+header.
 
-Michael
+Added comments for point 1), added parsing of To: for point 2) and
+added parsing of Cc: in the email header for point 3), removing the
+Cc: parsing from commit message.
 
+Signed-off-by: Marco Stornelli <marco.stornelli@gmail.com>
+---
+
+v3: parse only To: and Cc: in the email header, fix some comments
+v2: changed the commit message to reflect better the script implementation
+v1: first draft
+
+ contrib/thunderbird-patch-inline/appp.sh |   21 +++++++++++++++++----
+ 1 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
+index 5eb4a51..9325366 100755
+--- a/contrib/thunderbird-patch-inline/appp.sh
++++ b/contrib/thunderbird-patch-inline/appp.sh
+@@ -6,6 +6,9 @@
+ 
+ # ExternalEditor can be downloaded at http://globs.org/articles.php?lng=en&pg=2
+ 
++# NOTE: You must change some words in this script according to the language
++# used by Mozilla Thunderbird, as <Subject>, <To>, <Don't remove this line>.
++
+ CONFFILE=~/.appprc
+ 
+ SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
+@@ -26,17 +29,27 @@ fi
+ cd - > /dev/null
+ 
+ SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
+-HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
+ BODY=`sed -e "1,/${SEP}/d" $1`
+ CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
+ DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
++MAILHEADER=`sed '/^$/q' "${PATCH}"`
++
++export MAILHEADER
++CCS=`perl -e 'local $/=undef; $text=$ENV{'MAILHEADER'};
++$cc = $1 if $text =~ /Cc: (.*?(,\n .*?)*)\n/s; $cc =~ s/\n//g;
++print $cc;'`
+ 
+-CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+-	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
++TO=`perl -e 'local $/=undef; $text=$ENV{'MAILHEADER'};
++$to = $1 if $text =~ /To: (.*?(,\n .*?)*)\n/s; $to =~ s/\n//g;
++print $to;'`
+ 
++# Change Subject: before next line according to Thunderbird language
++# for example to translate in Italian:
++# SUBJECT=`echo $SUBJECT | sed -e 's/Subject/Oggetto/g'`
+ echo "$SUBJECT" > $1
++# Change To: according to Thunderbird language
++echo "To: $TO" >> $1
+ echo "Cc: $CCS" >> $1
+-echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
+ echo "$SEP" >> $1
+ 
+ echo "$CMT_MSG" >> $1
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.3.4
