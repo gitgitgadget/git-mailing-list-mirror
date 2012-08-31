@@ -1,120 +1,148 @@
-From: Marco Stornelli <marco.stornelli@gmail.com>
-Subject: [PATCH v3] Thunderbird: fix appp.sh format problems
-Date: Fri, 31 Aug 2012 09:59:22 +0200
-Message-ID: <50406EDA.2050505@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] i18n: mark more index-pack strings for translation
+Date: Fri, 31 Aug 2012 19:13:04 +0700
+Message-ID: <1346415184-25685-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 31 10:06:46 2012
+X-From: git-owner@vger.kernel.org Fri Aug 31 14:20:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7MFa-00040E-9n
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 10:06:46 +0200
+	id 1T7QDF-00043H-VW
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 14:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107Ab2HaIGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Aug 2012 04:06:07 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:52353 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042Ab2HaIF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Aug 2012 04:05:59 -0400
-Received: by bkwj10 with SMTP id j10so1143413bkw.19
-        for <git@vger.kernel.org>; Fri, 31 Aug 2012 01:05:58 -0700 (PDT)
+	id S1752608Ab2HaMTm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Aug 2012 08:19:42 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:54326 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752364Ab2HaMTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2012 08:19:41 -0400
+Received: by pbbrr13 with SMTP id rr13so4755034pbb.19
+        for <git@vger.kernel.org>; Fri, 31 Aug 2012 05:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=FUiLlSnUM0GfnPtvUdhAqwZXtXIudWc9+zA9LfTdmCs=;
-        b=dI95FzUPLcy3ygMrJg2Fn1cH3VTfcDaOhSOE6AeeJeBCP8eif0WYOX/SFYmEG4pXjl
-         8vaw6ABEf24sl5rlLcDlHRZlJZ1wg5DiBQEMGZ9M5GBAkpjsQNZfyaMJwvAKAuFjQdSl
-         c1yRpp0ADJ/oAdIWu5O37GcVwCtFZTzzpZ7jIs667nOVsMA7XrfJQkZ7ErtHQI5pnrnF
-         PxlEe8hVZBlXZ7QpcyK2TouyeBCsDycdIUNBIqhOaNTiBqpiTzUjzbnYjsAA/IuJqpYm
-         aLuxNMLz2BkxXhNZdssBuZUInY4l60UYQp/XA+0pTRLLDSzxh2pPcN9W1rsSZxLhkmA/
-         qWDg==
-Received: by 10.205.117.141 with SMTP id fm13mr3787325bkc.125.1346400358503;
-        Fri, 31 Aug 2012 01:05:58 -0700 (PDT)
-Received: from [82.49.192.78] (host78-192-dynamic.49-82-r.retail.telecomitalia.it. [82.49.192.78])
-        by mx.google.com with ESMTPS id 25sm2781483bkx.9.2012.08.31.01.05.56
+        bh=ebLUZX1m72LH7kEeY33GqUX47pyvDEcicaoPEn3IkPo=;
+        b=ibo1QFmzcrxIYQOYsOZOBkgFkTy+pn+J+9ONAYZ4zvSxznWVJbDAiZrY/QmRt5Nlmp
+         DN8DaixV0uQyckv5j+CbPfB6vQusWCRA3Qe6zJOhPVWleCSo52PI/+yWcRT+UCfBQ+xs
+         e0JJL31rtm0RzW+nNNcY0vZrgqFA9zIzZuqz17miMatWHy90FGrV4b93rv6yaVR9BkqU
+         FMcpMhqyZV3hsQ11XW/PLmaHnqLko9YkK7MSXlXho1CHhq4L7C7L4mIfwMNlcpxUvAQO
+         LhPz7Km7qghjPW6Dx6PybjYQ1aClYeV1EQVbXcLvQSEAeLDVujcKNgGdob4+vwDpkK48
+         8SdA==
+Received: by 10.68.221.42 with SMTP id qb10mr17007107pbc.155.1346415580947;
+        Fri, 31 Aug 2012 05:19:40 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.49.176])
+        by mx.google.com with ESMTPS id os1sm3339348pbc.31.2012.08.31.05.19.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 31 Aug 2012 01:05:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120601 Thunderbird/13.0
+        Fri, 31 Aug 2012 05:19:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 31 Aug 2012 19:13:06 +0700
+X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204583>
 
-The current script has got the following problems:
 
-1) It doesn't work if the language used by Thunderbird is not English;
-2) The field To: filled by format-patch is not evaluated;
-3) The field Cc: is loaded from Cc used in the commit message
-instead of using the Cc field filled by format-patch in the email
-header.
-
-Added comments for point 1), added parsing of To: for point 2) and
-added parsing of Cc: in the email header for point 3), removing the
-Cc: parsing from commit message.
-
-Signed-off-by: Marco Stornelli <marco.stornelli@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
+ The main string I'm after is "completed with %d local objects", which
+ is part of typical UI. The rest is just "while at there..."
 
-v3: parse only To: and Cc: in the email header, fix some comments
-v2: changed the commit message to reflect better the script implementation
-v1: first draft
+ To my surprise, (GNU) gettext does seem to know how to deal with
+ PRIu32 macro in the middle of the string.
 
- contrib/thunderbird-patch-inline/appp.sh |   21 +++++++++++++++++----
- 1 files changed, 17 insertions(+), 4 deletions(-)
+ builtin/index-pack.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
-index 5eb4a51..9325366 100755
---- a/contrib/thunderbird-patch-inline/appp.sh
-+++ b/contrib/thunderbird-patch-inline/appp.sh
-@@ -6,6 +6,9 @@
- 
- # ExternalEditor can be downloaded at http://globs.org/articles.php?lng=en&pg=2
- 
-+# NOTE: You must change some words in this script according to the language
-+# used by Mozilla Thunderbird, as <Subject>, <To>, <Don't remove this line>.
-+
- CONFFILE=~/.appprc
- 
- SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
-@@ -26,17 +29,27 @@ fi
- cd - > /dev/null
- 
- SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
--HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
- BODY=`sed -e "1,/${SEP}/d" $1`
- CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
- DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
-+MAILHEADER=`sed '/^$/q' "${PATCH}"`
-+
-+export MAILHEADER
-+CCS=`perl -e 'local $/=undef; $text=$ENV{'MAILHEADER'};
-+$cc = $1 if $text =~ /Cc: (.*?(,\n .*?)*)\n/s; $cc =~ s/\n//g;
-+print $cc;'`
- 
--CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
--	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
-+TO=`perl -e 'local $/=undef; $text=$ENV{'MAILHEADER'};
-+$to = $1 if $text =~ /To: (.*?(,\n .*?)*)\n/s; $to =~ s/\n//g;
-+print $to;'`
- 
-+# Change Subject: before next line according to Thunderbird language
-+# for example to translate in Italian:
-+# SUBJECT=`echo $SUBJECT | sed -e 's/Subject/Oggetto/g'`
- echo "$SUBJECT" > $1
-+# Change To: according to Thunderbird language
-+echo "To: $TO" >> $1
- echo "Cc: $CCS" >> $1
--echo "$HEADERS" | sed -e '/^Subject: /d' -e '/^Cc: /d' >> $1
- echo "$SEP" >> $1
- 
- echo "$CMT_MSG" >> $1
--- 
-1.7.3.4
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 953dd30..43d364b 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -291,7 +291,7 @@ static void parse_pack_header(void)
+ 	if (hdr->hdr_signature !=3D htonl(PACK_SIGNATURE))
+ 		die(_("pack signature mismatch"));
+ 	if (!pack_version_ok(hdr->hdr_version))
+-		die("pack version %"PRIu32" unsupported",
++		die(_("pack version %"PRIu32" unsupported"),
+ 			ntohl(hdr->hdr_version));
+=20
+ 	nr_objects =3D ntohl(hdr->hdr_entries);
+@@ -1061,7 +1061,8 @@ static void resolve_deltas(void)
+ 			int ret =3D pthread_create(&thread_data[i].thread, NULL,
+ 						 threaded_second_pass, thread_data + i);
+ 			if (ret)
+-				die("unable to create thread: %s", strerror(ret));
++				die(_("unable to create thread: %s"),
++				    strerror(ret));
+ 		}
+ 		for (i =3D 0; i < nr_threads; i++)
+ 			pthread_join(thread_data[i].thread, NULL);
+@@ -1108,7 +1109,7 @@ static void conclude_pack(int fix_thin_pack, cons=
+t char *curr_pack, unsigned cha
+ 				   * sizeof(*objects));
+ 		f =3D sha1fd(output_fd, curr_pack);
+ 		fix_unresolved_deltas(f, nr_unresolved);
+-		sprintf(msg, "completed with %d local objects",
++		sprintf(msg, _("completed with %d local objects"),
+ 			nr_objects - nr_objects_initial);
+ 		stop_progress_msg(&progress, msg);
+ 		sha1close(f, tail_sha1, 0);
+@@ -1117,8 +1118,8 @@ static void conclude_pack(int fix_thin_pack, cons=
+t char *curr_pack, unsigned cha
+ 					 curr_pack, nr_objects,
+ 					 read_sha1, consumed_bytes-20);
+ 		if (hashcmp(read_sha1, tail_sha1) !=3D 0)
+-			die("Unexpected tail checksum for %s "
+-			    "(disk corruption?)", curr_pack);
++			die(_("Unexpected tail checksum for %s "
++			      "(disk corruption?)"), curr_pack);
+ 	}
+ 	if (nr_deltas !=3D nr_resolved_deltas)
+ 		die(Q_("pack has %d unresolved delta",
+@@ -1327,17 +1328,17 @@ static int git_index_pack_config(const char *k,=
+ const char *v, void *cb)
+ 	if (!strcmp(k, "pack.indexversion")) {
+ 		opts->version =3D git_config_int(k, v);
+ 		if (opts->version > 2)
+-			die("bad pack.indexversion=3D%"PRIu32, opts->version);
++			die(_("bad pack.indexversion=3D%"PRIu32), opts->version);
+ 		return 0;
+ 	}
+ 	if (!strcmp(k, "pack.threads")) {
+ 		nr_threads =3D git_config_int(k, v);
+ 		if (nr_threads < 0)
+-			die("invalid number of threads specified (%d)",
++			die(_("invalid number of threads specified (%d)"),
+ 			    nr_threads);
+ #ifdef NO_PTHREADS
+ 		if (nr_threads !=3D 1)
+-			warning("no threads support, ignoring %s", k);
++			warning(_("no threads support, ignoring %s"), k);
+ 		nr_threads =3D 1;
+ #endif
+ 		return 0;
+@@ -1510,8 +1511,8 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+ 					usage(index_pack_usage);
+ #ifdef NO_PTHREADS
+ 				if (nr_threads !=3D 1)
+-					warning("no threads support, "
+-						"ignoring %s", arg);
++					warning(_("no threads support, "
++						  "ignoring %s"), arg);
+ 				nr_threads =3D 1;
+ #endif
+ 			} else if (!prefixcmp(arg, "--pack_header=3D")) {
+--=20
+1.7.12.rc2.18.g61b472e
