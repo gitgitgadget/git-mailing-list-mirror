@@ -1,108 +1,230 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH tip/core/rcu 0/5] Documentation and rcutorture changes
-Date: Thu, 30 Aug 2012 16:22:16 -0700
-Message-ID: <20120830232216.GC11928@jtriplet-mobl1>
-References: <20120830184448.GA31753@linux.vnet.ibm.com>
- <20120830185608.GA6749@jtriplet-mobl1>
- <20120830214603.GJ30381@linux.vnet.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, mingo@elte.hu,
-	laijs@cn.fujitsu.com, dipankar@in.ibm.com,
-	akpm@linux-foundation.org, mathieu.desnoyers@efficios.com,
-	niv@us.ibm.com, tglx@linutronix.de, peterz@infradead.org,
-	rostedt@goodmis.org, Valdis.Kletnieks@vt.edu, dhowells@redhat.com,
-	eric.dumazet@gmail.com, darren@dvhart.com, fweisbec@gmail.com,
-	sbw@mit.edu, patches@linaro.org
-To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-X-From: linux-kernel-owner@vger.kernel.org Fri Aug 31 01:23:44 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+From: Robert Luberda <robert@debian.org>
+Subject: [PATCH] t9164: More style fixes
+Date: Fri, 31 Aug 2012 08:29:39 +0200
+Message-ID: <1346394580-12083-1-git-send-email-robert@debian.org>
+References: <20120826003430.GA32346@dcvr.yhbt.net>
+Cc: Robert Luberda <robert@debian.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 31 08:31:27 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1T7E5O-0003i6-5X
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 31 Aug 2012 01:23:42 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1T7KlJ-0001uM-TF
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Aug 2012 08:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438Ab2H3XXQ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 30 Aug 2012 19:23:16 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:46249 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167Ab2H3XWZ (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 30 Aug 2012 19:22:25 -0400
-X-Originating-IP: 217.70.178.133
-Received: from mfilter3-d.gandi.net (mfilter3-d.gandi.net [217.70.178.133])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 056D6A8070;
-	Fri, 31 Aug 2012 01:22:24 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter3-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter3-d.gandi.net (mfilter3-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id mVsZYrJFvr6b; Fri, 31 Aug 2012 01:22:22 +0200 (CEST)
-X-Originating-IP: 173.246.103.110
-Received: from jtriplet-mobl1 (joshtriplett.org [173.246.103.110])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 5AFADA807C;
-	Fri, 31 Aug 2012 01:22:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20120830214603.GJ30381@linux.vnet.ibm.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751418Ab2HaGbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Aug 2012 02:31:05 -0400
+Received: from master.debian.org ([70.103.162.29]:38439 "EHLO
+	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336Ab2HaGbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Aug 2012 02:31:03 -0400
+Received: from localhost ([127.0.0.1] helo=vox.robbo.home)
+	by master.debian.org with esmtp (Exim 4.72)
+	(envelope-from <robert@debian.org>)
+	id 1T7Kkd-0008DR-7E; Fri, 31 Aug 2012 06:30:43 +0000
+Received: by vox.robbo.home (Postfix, from userid 1000)
+	id 33741E3CD8; Fri, 31 Aug 2012 08:29:57 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <20120826003430.GA32346@dcvr.yhbt.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204578>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204579>
 
-On Thu, Aug 30, 2012 at 02:46:03PM -0700, Paul E. McKenney wrote:
-> On Thu, Aug 30, 2012 at 11:56:09AM -0700, Josh Triplett wrote:
-> > On Thu, Aug 30, 2012 at 11:44:48AM -0700, Paul E. McKenney wrote:
-> > > Hello!
-> > > 
-> > > This series covers changes to rcutorture and documentation updates.
-> > > The individual patches in this series are as follows:
-> > > 
-> > > 1.	Update rcutorture default values so that casual rcutorture
-> > > 	users will do more aggressive testing.
-> > > 2.	Make rcutorture track CPU-hotplug latency statistics.
-> > > 3.	Document SRCU's new-found ability to be used by offline and
-> > > 	idle CPUs, and also emphasize SRCU's limitations.
-> > > 4.	Use the new pr_*() interfaces in rcutorture.
-> > > 5.	Prevent kthread-initialization races in rcutorture.
-> > > 
-> > > 							Thanx, Paul
-> > > 
-> > > ------------------------------------------------------------------------
-> > > 
-> > >  b/Documentation/RCU/checklist.txt |    6 +
-> > >  b/Documentation/RCU/whatisRCU.txt |    9 +-
-> > >  b/kernel/rcutorture.c             |    4 -
-> > >  kernel/rcutorture.c               |  152 +++++++++++++++++++++++---------------
-> > >  4 files changed, 108 insertions(+), 63 deletions(-)
-> > 
-> > Something seems wrong with this diffstat; how'd the b/ prefixes get
-> > there, and why does it list kernel/rcutorture.c twice, once with and
-> > once without?
-> 
-> Hmmm...  It seems quite reproducible.  I did the usual git-format-patch
-> and ran the resulting set of patches through diffstat.  I seem to have a
-> broken diffstat...
-> 
-> However, git diff --stat v3.6-rc1..hotplug.2012.08.28a generates the
-> following:
-> 
->  kernel/rcutree.c       |   93 +++++++++++-------------------------------------
->  kernel/rcutree.h       |    3 --
->  kernel/rcutree_trace.c |    4 +-
->  kernel/sched/core.c    |   41 ++++++++++-----------
->  4 files changed, 43 insertions(+), 98 deletions(-)
-> 
-> Which does look much better.
+Make sure t9164 conforms with the coding guidelines:
+ - remove spaces after redirection operators;
+ - insert spaces between function names and parentheses;
+ - split `if ...; then' lines;
+ - use `test' instead of `['.
 
-You might try generating your cover letter template via git format-patch
---cover-letter, which will automatically give you a list of patches and
-a git-produced diffstat; much easier than trying to format a cover
-letter by hand.  Meanwhile, you might consider sending your patches as a
-bug report to diffstat upstream: Thomas E. Dickey
-<dickey@invisible-island.net>.
+Signed-off-by: Robert Luberda <robert@debian.org>
+---
+ t/t9164-git-svn-dcommit-concurrent.sh |   69 ++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 36 deletions(-)
 
-- Josh Triplett
+diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommit-concurrent.sh
+index d8464d4..d75ebdc 100755
+--- a/t/t9164-git-svn-dcommit-concurrent.sh
++++ b/t/t9164-git-svn-dcommit-concurrent.sh
+@@ -12,16 +12,15 @@ test_expect_success 'setup svn repository' '
+ 	svn_cmd checkout "$svnrepo" work.svn &&
+ 	(
+ 		cd work.svn &&
+-		echo >file && echo > auto_updated_file
++		echo >file && echo >auto_updated_file
+ 		svn_cmd add file auto_updated_file &&
+ 		svn_cmd commit -m "initial commit"
+ 	) &&
+ 	svn_cmd checkout "$svnrepo" work-auto-commits.svn
+ '
+ N=0
+-next_N()
+-{
+-	N=$(( $N + 1 ))
++next_N () {
++	N=$(($N + 1))
+ }
+ 
+ # Setup SVN repository hooks to emulate SVN failures or concurrent commits
+@@ -35,39 +34,39 @@ next_N()
+ # the hook should be applied for (each time the hook is run, the given
+ # number is decreased by one until it gets 0, in which case the hook
+ # will execute its real action)
+-setup_hook()
+-{
++setup_hook () {
+ 	hook_type="$1"  # "pre-commit" or "post-commit"
+ 	skip_revs="$2"
+-	[ "$hook_type" = "pre-commit" ] ||
+-		[ "$hook_type" = "post-commit" ] ||
++	test "$hook_type" = "pre-commit"  ||
++		test "$hook_type" = "post-commit"  ||
+ 		{ echo "ERROR: invalid argument ($hook_type)" \
+ 			"passed to setup_hook" >&2 ; return 1; }
+-	echo "cnt=$skip_revs" > "$hook_type-counter"
++	echo "cnt=$skip_revs" >"$hook_type-counter"
+ 	rm -f "$rawsvnrepo/hooks/"*-commit # drop previous hooks
+ 	hook="$rawsvnrepo/hooks/$hook_type"
+-	cat > "$hook" <<- 'EOF1'
++	cat >"$hook" <<-'EOF1'
+ 		#!/bin/sh
+ 		set -e
+ 		cd "$1/.."  # "$1" is repository location
+-		exec >> svn-hook.log 2>&1
++		exec >>svn-hook.log 2>&1
+ 		hook="$(basename "$0")"
+ 		echo "*** Executing $hook $@"
+ 		set -x
+-		. ./$hook-counter
++		. "./$hook-counter"
+ 		cnt="$(($cnt - 1))"
+-		echo "cnt=$cnt" > ./$hook-counter
+-		[ "$cnt" = "0" ] || exit 0
++		echo "cnt=$cnt" >"./$hook-counter"
++		test "$cnt" = "0" || exit 0
+ EOF1
+-	if [ "$hook_type" = "pre-commit" ]; then
++	if test "$hook_type" = "pre-commit"
++	then
+ 		echo "echo 'commit disallowed' >&2; exit 1" >>"$hook"
+ 	else
+ 		echo "PATH=\"$PATH\"; export PATH" >>"$hook"
+ 		echo "svnconf=\"$svnconf\"" >>"$hook"
+-		cat >>"$hook" <<- 'EOF2'
++		cat >>"$hook" <<-'EOF2'
+ 			cd work-auto-commits.svn
+ 			svn up --config-dir "$svnconf"
+-			echo "$$" >> auto_updated_file
++			echo "$$" >>auto_updated_file
+ 			svn commit --config-dir "$svnconf" \
+ 				-m "auto-committing concurrent change"
+ 			exit 0
+@@ -76,8 +75,7 @@ EOF2
+ 	chmod 755 "$hook"
+ }
+ 
+-check_contents()
+-{
++check_contents () {
+ 	gitdir="$1"
+ 	(cd ../work.svn && svn_cmd up) &&
+ 	test_cmp file ../work.svn/file &&
+@@ -89,7 +87,7 @@ test_expect_success 'check if post-commit hook creates a concurrent commit' '
+ 	(
+ 		cd work.svn &&
+ 		cp auto_updated_file au_file_saved &&
+-		echo 1 >> file &&
++		echo 1 >>file &&
+ 		svn_cmd commit -m "changing file" &&
+ 		svn_cmd up &&
+ 		test_must_fail test_cmp auto_updated_file au_file_saved
+@@ -100,9 +98,9 @@ test_expect_success 'check if pre-commit hook fails' '
+ 	setup_hook pre-commit 2 &&
+ 	(
+ 		cd work.svn &&
+-		echo 2 >> file &&
++		echo 2 >>file &&
+ 		svn_cmd commit -m "changing file once again" &&
+-		echo 3 >> file &&
++		echo 3 >>file &&
+ 		test_must_fail svn_cmd commit -m "this commit should fail" &&
+ 		svn_cmd revert file
+ 	)
+@@ -113,9 +111,9 @@ test_expect_success 'dcommit error handling' '
+ 	next_N && git svn clone "$svnrepo" work$N.git &&
+ 	(
+ 		cd work$N.git &&
+-		echo 1 >> file && git commit -am "commit change $N.1" &&
+-		echo 2 >> file && git commit -am "commit change $N.2" &&
+-		echo 3 >> file && git commit -am "commit change $N.3" &&
++		echo 1 >>file && git commit -am "commit change $N.1" &&
++		echo 2 >>file && git commit -am "commit change $N.2" &&
++		echo 3 >>file && git commit -am "commit change $N.3" &&
+ 		# should fail to dcommit 2nd and 3rd change
+ 		# but still should leave the repository in reasonable state
+ 		test_must_fail git svn dcommit &&
+@@ -131,9 +129,9 @@ test_expect_success 'dcommit concurrent change in non-changed file' '
+ 	next_N && git svn clone "$svnrepo" work$N.git &&
+ 	(
+ 		cd work$N.git &&
+-		echo 1 >> file && git commit -am "commit change $N.1" &&
+-		echo 2 >> file && git commit -am "commit change $N.2" &&
+-		echo 3 >> file && git commit -am "commit change $N.3" &&
++		echo 1 >>file && git commit -am "commit change $N.1" &&
++		echo 2 >>file && git commit -am "commit change $N.2" &&
++		echo 3 >>file && git commit -am "commit change $N.3" &&
+ 		# should rebase and leave the repository in reasonable state
+ 		git svn dcommit &&
+ 		git update-index --refresh &&
+@@ -146,10 +144,9 @@ test_expect_success 'dcommit concurrent change in non-changed file' '
+ '
+ 
+ # An utility function used in the following test
+-delete_first_line()
+-{
++delete_first_line () {
+ 	file="$1" &&
+-	sed 1d < "$file" > "${file}.tmp" &&
++	sed 1d <"$file" >"${file}.tmp" &&
+ 	rm "$file" &&
+ 	mv "${file}.tmp" "$file"
+ }
+@@ -159,7 +156,7 @@ test_expect_success 'dcommit concurrent non-conflicting change' '
+ 	next_N && git svn clone "$svnrepo" work$N.git &&
+ 	(
+ 		cd work$N.git &&
+-		cat file >> auto_updated_file &&
++		cat file >>auto_updated_file &&
+ 			git commit -am "commit change $N.1" &&
+ 		delete_first_line auto_updated_file &&
+ 			git commit -am "commit change $N.2" &&
+@@ -181,7 +178,7 @@ test_expect_success 'dcommit --no-rebase concurrent non-conflicting change' '
+ 	next_N && git svn clone "$svnrepo" work$N.git &&
+ 	(
+ 		cd work$N.git &&
+-		cat file >> auto_updated_file &&
++		cat file >>auto_updated_file &&
+ 			git commit -am "commit change $N.1" &&
+ 		delete_first_line auto_updated_file &&
+ 			git commit -am "commit change $N.2" &&
+@@ -202,11 +199,11 @@ test_expect_success 'dcommit fails on concurrent conflicting change' '
+ 	next_N && git svn clone "$svnrepo" work$N.git &&
+ 	(
+ 		cd work$N.git &&
+-		echo a >> file &&
++		echo a >>file &&
+ 			git commit -am "commit change $N.1" &&
+-		echo b >> auto_updated_file &&
++		echo b >>auto_updated_file &&
+ 			git commit -am "commit change $N.2" &&
+-		echo c >> auto_updated_file &&
++		echo c >>auto_updated_file &&
+ 			git commit -am "commit change $N.3" &&
+ 		test_must_fail git svn dcommit && # rebase should fail
+ 		test_must_fail git update-index --refresh
+-- 
+1.7.10.4
