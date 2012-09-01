@@ -1,61 +1,115 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Should GIT_AUTHOR_{NAME,EMAIL} set the tagger name/email?
-Date: Sat, 01 Sep 2012 18:12:13 +0200
-Message-ID: <m2a9x9wwma.fsf@igel.home>
-References: <CACBZZX7Ud8Xx225ss6SYqZFXyW0FG2XJimBWdvW_NuMqn8yOnA@mail.gmail.com>
-	<m2ehmlwxb2.fsf@igel.home>
-	<CACBZZX4Egrx_vrKNV68pL8DL4xkLd5j8o-1t4+fA7+Ai758-9g@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: Test failures in t4034
+Date: Sat, 01 Sep 2012 18:43:41 +0100
+Message-ID: <5042494D.9040401@ramsay1.demon.co.uk>
+References: <80B6C6EE-130C-48C3-BBBB-5FCD1E7EFDEF@gernhardtsoftware.com> <5030FD49.6060704@ramsay1.demon.co.uk> <7vboi6nzym.fsf@alter.siamese.dyndns.org> <5033D573.9030103@ramsay1.demon.co.uk> <7v1uizdhi7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 01 18:12:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 01 20:28:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7qJA-0008Nv-1H
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 18:12:28 +0200
+	id 1T7sQP-00041g-QE
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 20:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264Ab2IAQMT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Sep 2012 12:12:19 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:58995 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752721Ab2IAQMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2012 12:12:18 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3X8MsB0w5fz3hhdS;
-	Sat,  1 Sep 2012 18:12:14 +0200 (CEST)
-X-Auth-Info: l0bLkCbBLad6eDEflOrBT6eDsbSSb9bur68kTgpIGwI=
-Received: from igel.home (ppp-88-217-112-52.dynamic.mnet-online.de [88.217.112.52])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3X8MsB0cDXzbbh6;
-	Sat,  1 Sep 2012 18:12:14 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id C3785CA2A5; Sat,  1 Sep 2012 18:12:13 +0200 (CEST)
-X-Yow: As a FAD follower, my BEVERAGE choices are rich and fulfilling!
-In-Reply-To: <CACBZZX4Egrx_vrKNV68pL8DL4xkLd5j8o-1t4+fA7+Ai758-9g@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 1 Sep
- 2012 18:06:47
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753016Ab2IAS1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Sep 2012 14:27:50 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:44472 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751854Ab2IAS1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2012 14:27:50 -0400
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 0B60D128076;
+	Sat,  1 Sep 2012 19:27:48 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])	by mdfmta009.tch.inty.net (Postfix) with ESMTP id F41E6128075;	Sat,  1 Sep 2012 19:27:46 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tch.inty.net (Postfix) with ESMTP;	Sat,  1 Sep 2012 19:27:45 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <7v1uizdhi7.fsf@alter.siamese.dyndns.org>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204639>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
 
-> I don't get what you mean, what committer info?
+[snip]
 
-GIT_COMMITTER_{NAME,EMAIL}.  A tagger isn't really an author.
+>> diff --git a/test-regex.c b/test-regex.c
+>> new file mode 100644
+>> index 0000000..9259985
+>> --- /dev/null
+>> +++ b/test-regex.c
+>> @@ -0,0 +1,35 @@
+>> +#include <stdlib.h>
+>> +#include <stdio.h>
+>> +#include <stdarg.h>
+>> +#include <sys/types.h>
+>> +#include <regex.h>
+>> +
+>> +static void die(const char *fmt, ...)
+>> +{
+>> +	va_list p;
+>> +
+>> +	va_start(p, fmt);
+>> +	vfprintf(stderr, fmt, p);
+>> +	va_end(p);
+>> +	fputc('\n', stderr);
+>> +	exit(128);
+>> +}
+> 
+> Looks like a bit of overkill for only two call sites, whose output
+> we would never see because it is behind the test, but OK.
 
-Andreas.
+Yes, there was a net increase in the line count when I introduced
+die(), but the main program flow was less cluttered by error handling.
+The net result looked much better, so I thought it was worth it.
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+What may not be too obvious, however, is that test-regex.c was written
+to be independent of git. You should be able to compile the (single) file
+on any POSIX system to determine if the system regex routines suffer this
+problem. (It was also supposed to be quiet, unless it die()-ed, and
+provide the result via the exit code).
+
+Given that I'm now building it as part of git, I should have simply
+#included <git-compat-util.h> and used the die() routine from libgit.a
+(since I'm now *relying* on test-regex being linked with libgit.a).
+
+>> +int main(int argc, char **argv)
+>> +{
+>> +	char *pat = "[^={} \t]+";
+>> +	char *str = "={}\nfred";
+>> +	regex_t r;
+>> +	regmatch_t m[1];
+>> +
+>> +	if (regcomp(&r, pat, REG_EXTENDED | REG_NEWLINE))
+>> +		die("failed regcomp() for pattern '%s'", pat);
+>> +	if (regexec(&r, str, 1, m, 0))
+>> +		die("no match of pattern '%s' to string '%s'", pat, str);
+>> +
+>> +	/* http://sourceware.org/bugzilla/show_bug.cgi?id=3957  */
+>> +	if (m[0].rm_so == 3) /* matches '\n' when it should not */
+>> +		exit(1);
+> 
+> This could be the third call site of die() that tells the user to
+> build with NO_REGEX=1.  Then "cd t && sh t0070-fundamental.sh -i -v" would
+> give that message directly to the user.
+
+Hmm, even without "-i -v", it's *very* clear what is going on, but sure
+it wouldn't hurt either. (Also, I wanted to be able to distinguish an exit
+via die() from a "test failed" error return).
+
+So, new (tested) version of the patch comming.
+
+ATB,
+Ramsay Jones
