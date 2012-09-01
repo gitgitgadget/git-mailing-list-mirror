@@ -1,188 +1,100 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] submodule: use argv_array instead of hand-building arrays
-Date: Sat, 01 Sep 2012 17:27:06 +0200
-Message-ID: <5042294A.7020507@web.de>
-References: <20120901112251.GA11445@sigill.intra.peff.net> <20120901112735.GB19163@sigill.intra.peff.net> <50421CF8.60703@web.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Should GIT_AUTHOR_{NAME,EMAIL} set the tagger name/email?
+Date: Sat, 1 Sep 2012 17:34:12 +0200
+Message-ID: <CACBZZX7Ud8Xx225ss6SYqZFXyW0FG2XJimBWdvW_NuMqn8yOnA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Dan Johnson <computerdruid@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Oswald Buddenhagen <ossi@kde.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 01 17:27:47 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 01 17:35:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7pbu-0003jY-CQ
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 17:27:46 +0200
+	id 1T7pjJ-0004jH-Jc
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 17:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab2IAP12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Sep 2012 11:27:28 -0400
-Received: from mout.web.de ([212.227.17.12]:52902 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755535Ab2IAP1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2012 11:27:16 -0400
-Received: from [192.168.178.41] ([91.3.157.191]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Maamb-1SslYR3Zij-00JyKD; Sat, 01 Sep 2012 17:27:08
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <50421CF8.60703@web.de>
-X-Provags-ID: V02:K0:QbK2cC23H3nUZAjQuTyPqbuIKczWEZts2SrH9DymxyL
- 6MrfWJod13HiYtvK67yImuUfBW7T0B60lJfynpvNIfKz54tztQ
- bTxxcaL5F7YQs5aHAH7W9bMr459fIbCVFhznOkoB8Ra9itQy2j
- 52YN0Axr67mfoLcQ76pGwTFdT3R9O5V89lPoIwrgwNe1qbH+rn
- DWa4UfCg+O6RfaHjMnOVQ==
+	id S1752621Ab2IAPee convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Sep 2012 11:34:34 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:53837 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854Ab2IAPed convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Sep 2012 11:34:33 -0400
+Received: by obbuo13 with SMTP id uo13so7198872obb.19
+        for <git@vger.kernel.org>; Sat, 01 Sep 2012 08:34:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=StyoGrHUlNLpfOPUZRAa1b99cQnoxNm5jkVi1GYheFQ=;
+        b=olhN/lf5rcoPJatqMSLb7Bgi1moLsDnyF9Gj0Rhxt53xOB3mrTDBsGbbpII+HnN7Oq
+         pGWvNb81wxdloA5r3YcGgUlmLAZYarmm4jsq1BjktyLJjuWb6Wq0WoZMkMQxtCrKoPRI
+         izckggT9d5NVl9vn8n08c+PfwGoAXXp1fAuPtwZD2yZ2gryLmJa+VJ9WJkoXnYDEMEdL
+         Fl+xsnkKNDS3pRmMGreDuoBwytksN/7oJE3cBm01benAVQugC/0CJAHcdk8YOU4SL+BQ
+         ORfI0yYPJpXD+WVO/0HiAT6n9FyAZSJNKDfQvKISxomsRrSa9OvksZRlINSyW2U7cjaK
+         piow==
+Received: by 10.60.27.41 with SMTP id q9mr10307339oeg.80.1346513672675; Sat,
+ 01 Sep 2012 08:34:32 -0700 (PDT)
+Received: by 10.182.48.34 with HTTP; Sat, 1 Sep 2012 08:34:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204635>
 
-fetch_populated_submodules() allocates the full argv array it uses to
-recurse into the submodules from the number of given options plus the six
-argv values it is going to add. It then initializes it with those values
-which won't change during the iteration and copies the given options into
-it. Inside the loop the two argv values different for each submodule get
-replaced with those currently valid.
+Maybe this is documented in some place I didn't spot, but I expected
+that when I set GIT_AUTHOR_{NAME,EMAIL} it would affect the operation
+of git-tag, but it doesn't seem to. When I create tags it seems to
+completely ignore those variables.
 
-However, this technique is brittle and error-prone (as the comment to
-explain the magic number 6 indicates), so let's replace it with an
-argv_array. Instead of replacing the argv values, push them to the
-argv_array just before the run_command() call (including the option
-separating them) and pop them from the argv_array right after that.
+Should it be doing that? Here's a test script demonstrating the issue:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+    #!/bin/sh -e
+    # Set defaults
+    git config --global user.name "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on"
+    git config --global user.email "avarab@gmail.com"
 
+    rm -rf /tmp/test-git
+    git init /tmp/test-git
+    cd /tmp/test-git
 
-Am 01.09.2012 16:34, schrieb Jens Lehmann:
-> Am 01.09.2012 13:27, schrieb Jeff King:
->> It may be that fetch_populated_submodules would also benefit from
->> conversion (here I just pass in the argc and argv separately), but I
->> didn't look.
-> 
-> Yes, it does some similar brittle stuff and should be changed to use
-> the argv-array too. I'll look into that.
+    make_commit() {
+        file=3D$1
+        content=3D$2
+        echo $content >$file
+        git add $file
+        git commit -m"$file: $content" $file
+        git --no-pager log -1 HEAD | grep ^Author
+    }
 
-Maybe something like this on top of your two patches?
+    make_commit README "testing content"
+    git config user.name "Test User"
+    git config user.email "test@example.com"
+    make_commit README "testing content again"
+    git tag -a -m"annotated tag" tag-name-1
+    git --no-pager show tag-name-1 | grep ^Author
 
-I thought about adding an argv_array_cat() function to replace the
-for() loop copying the option values into the argv-array built inside
-fetch_populated_submodules(), but I suspect saving one line from the
-code is not worth it. Yet I didn't check if others would benefit from
-such a function too.
+    GIT_AUTHOR_NAME=3D"Tag Test User"
+GIT_AUTHOR_EMAIL=3D"tagtest@example.com" git tag -a -m"another annotate=
+d
+tag" tag-name-2
+    git --no-pager show tag-name-2 | grep ^Author
 
+Which outputs:
 
- builtin/fetch.c |  2 +-
- submodule.c     | 31 ++++++++++++++++---------------
- submodule.h     |  3 ++-
- 3 files changed, 19 insertions(+), 17 deletions(-)
+    $ sh /tmp/test-tag.sh
+    Initialized empty Git repository in /tmp/test-git/.git/
+    [master (root-commit) 9816756] README: testing content
+     1 file changed, 1 insertion(+)
+     create mode 100644 README
+    Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+    [master 304b71e] README: testing content again
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    Author: Test User <test@example.com>
+    Author: Test User <test@example.com>
+    Author: Test User <test@example.com>
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b6a8be0..aaba61e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1012,7 +1012,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		struct argv_array options = ARGV_ARRAY_INIT;
-
- 		add_options_to_argv(&options);
--		result = fetch_populated_submodules(options.argc, options.argv,
-+		result = fetch_populated_submodules(&options,
- 						    submodule_prefix,
- 						    recurse_submodules,
- 						    verbosity < 0);
-diff --git a/submodule.c b/submodule.c
-index 19dc6a6..51d48c2 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -588,13 +588,13 @@ static void calculate_changed_submodule_paths(void)
- 	initialized_fetch_ref_tips = 0;
- }
-
--int fetch_populated_submodules(int num_options, const char **options,
-+int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
- 			       int quiet)
- {
--	int i, result = 0, argc = 0, default_argc;
-+	int i, result = 0;
- 	struct child_process cp;
--	const char **argv;
-+	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list_item *name_for_path;
- 	const char *work_tree = get_git_work_tree();
- 	if (!work_tree)
-@@ -604,17 +604,13 @@ int fetch_populated_submodules(int num_options, const char **options,
- 		if (read_cache() < 0)
- 			die("index file corrupt");
-
--	/* 6: "fetch" (options) --recurse-submodules-default default "--submodule-prefix" prefix NULL */
--	argv = xcalloc(num_options + 6, sizeof(const char *));
--	argv[argc++] = "fetch";
--	for (i = 0; i < num_options; i++)
--		argv[argc++] = options[i];
--	argv[argc++] = "--recurse-submodules-default";
--	default_argc = argc++;
--	argv[argc++] = "--submodule-prefix";
-+	argv_array_push(&argv, "fetch");
-+	for (i = 0; i < options->argc; i++)
-+		argv_array_push(&argv, options->argv[i]);
-+	argv_array_push(&argv, "--recurse-submodules-default");
-+	/* default value, "--submodule-prefix" and its value are added later */
-
- 	memset(&cp, 0, sizeof(cp));
--	cp.argv = argv;
- 	cp.env = local_repo_env;
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
-@@ -674,16 +670,21 @@ int fetch_populated_submodules(int num_options, const char **options,
- 			if (!quiet)
- 				printf("Fetching submodule %s%s\n", prefix, ce->name);
- 			cp.dir = submodule_path.buf;
--			argv[default_argc] = default_argv;
--			argv[argc] = submodule_prefix.buf;
-+			argv_array_push(&argv, default_argv);
-+			argv_array_push(&argv, "--submodule-prefix");
-+			argv_array_push(&argv, submodule_prefix.buf);
-+			cp.argv = argv.argv;
- 			if (run_command(&cp))
- 				result = 1;
-+			argv_array_pop(&argv);
-+			argv_array_pop(&argv);
-+			argv_array_pop(&argv);
- 		}
- 		strbuf_release(&submodule_path);
- 		strbuf_release(&submodule_git_dir);
- 		strbuf_release(&submodule_prefix);
- 	}
--	free(argv);
-+	argv_array_clear(&argv);
- out:
- 	string_list_clear(&changed_submodule_paths, 1);
- 	return result;
-diff --git a/submodule.h b/submodule.h
-index e105b0e..594b50d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -2,6 +2,7 @@
- #define SUBMODULE_H
-
- struct diff_options;
-+struct argv_array;
-
- enum {
- 	RECURSE_SUBMODULES_ON_DEMAND = -1,
-@@ -23,7 +24,7 @@ void show_submodule_summary(FILE *f, const char *path,
- 		const char *del, const char *add, const char *reset);
- void set_config_fetch_recurse_submodules(int value);
- void check_for_new_submodule_commits(unsigned char new_sha1[20]);
--int fetch_populated_submodules(int num_options, const char **options,
-+int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
- 			       int quiet);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
--- 
-1.7.12.149.g47e61ec
+I'd expect references to "Tag Test User <tagtest@example.com>" for the
+second tag I created.
