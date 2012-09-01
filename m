@@ -1,74 +1,103 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fetch --all: pass --tags/--no-tags through to each remote
-Date: Sat, 1 Sep 2012 07:22:52 -0400
-Message-ID: <20120901112251.GA11445@sigill.intra.peff.net>
-References: <7vr4qmn8va.fsf@alter.siamese.dyndns.org>
- <1346473533-24175-1-git-send-email-ComputerDruid@gmail.com>
+Subject: [PATCH 1/2] argv-array: add pop function
+Date: Sat, 1 Sep 2012 07:25:27 -0400
+Message-ID: <20120901112527.GA19163@sigill.intra.peff.net>
+References: <20120901112251.GA11445@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Oswald Buddenhagen <ossi@kde.org>
 To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 01 13:23:53 2012
+X-From: git-owner@vger.kernel.org Sat Sep 01 13:25:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7lnm-0002Zi-Lj
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 13:23:46 +0200
+	id 1T7lpY-0004gF-UF
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Sep 2012 13:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753721Ab2IALW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Sep 2012 07:22:58 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50809 "EHLO
+	id S1755430Ab2IALZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Sep 2012 07:25:30 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50816 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753504Ab2IALW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2012 07:22:57 -0400
-Received: (qmail 27021 invoked by uid 107); 1 Sep 2012 11:23:14 -0000
+	id S1753926Ab2IALZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2012 07:25:30 -0400
+Received: (qmail 27080 invoked by uid 107); 1 Sep 2012 11:25:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Sep 2012 07:23:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Sep 2012 07:22:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Sep 2012 07:25:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Sep 2012 07:25:27 -0400
 Content-Disposition: inline
-In-Reply-To: <1346473533-24175-1-git-send-email-ComputerDruid@gmail.com>
+In-Reply-To: <20120901112251.GA11445@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204625>
 
-On Sat, Sep 01, 2012 at 12:25:33AM -0400, Dan Johnson wrote:
+Sometimes we build a set of similar command lines, differing
+only in the final arguments (e.g., "fetch --multiple"). To
+use argv_array for this, you have to either push the same
+set of elements repeatedly, or break the abstraction by
+manually manipulating the array's internal members.
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index bb9a074..c6bcbdc 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -857,6 +857,10 @@ static void add_options_to_argv(int *argc, const char **argv)
->  		argv[(*argc)++] = "--recurse-submodules";
->  	else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
->  		argv[(*argc)++] = "--recurse-submodules=on-demand";
-> +	if (tags == TAGS_SET)
-> +		argv[(*argc)++] = "--tags";
-> +	else if (tags == TAGS_UNSET)
-> +		argv[(*argc)++] = "--no-tags";
->  	if (verbosity >= 2)
->  		argv[(*argc)++] = "-v";
->  	if (verbosity >= 1)
+Instead, let's provide a sanctioned "pop" function to remove
+elements from the end.
 
-Hmm. We allocate argv in fetch_multiple like this:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/technical/api-argv-array.txt | 4 ++++
+ argv-array.c                               | 9 +++++++++
+ argv-array.h                               | 1 +
+ 3 files changed, 14 insertions(+)
 
-  const char *argv[12] = { "fetch", "--append" };
-
-and then add a bunch of options to it, along with the name of the
-remote. By my count, the current code can hit exactly 12 (including the
-terminating NULL) if all options are set. Your patch would make it
-possible to overflow. Of course, I may be miscounting since it is
-extremely error-prone to figure out the right number by tracing each
-possible conditional.
-
-Maybe we should switch it to a dynamic argv_array? Like this:
-
-  [1/2]: argv-array: add pop function
-  [2/2]: fetch: use argv_array instead of hand-building arrays
-
--Peff
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
+index 1b7d8f1..1a79781 100644
+--- a/Documentation/technical/api-argv-array.txt
++++ b/Documentation/technical/api-argv-array.txt
+@@ -46,6 +46,10 @@ Functions
+ 	Format a string and push it onto the end of the array. This is a
+ 	convenience wrapper combining `strbuf_addf` and `argv_array_push`.
+ 
++`argv_array_pop`::
++	Remove the final element from the array. If there are no
++	elements in the array, do nothing.
++
+ `argv_array_clear`::
+ 	Free all memory associated with the array and return it to the
+ 	initial, empty state.
+diff --git a/argv-array.c b/argv-array.c
+index 0b5f889..55e8443 100644
+--- a/argv-array.c
++++ b/argv-array.c
+@@ -49,6 +49,15 @@ void argv_array_pushl(struct argv_array *array, ...)
+ 	va_end(ap);
+ }
+ 
++void argv_array_pop(struct argv_array *array)
++{
++	if (!array->argc)
++		return;
++	free((char *)array->argv[array->argc - 1]);
++	array->argv[array->argc - 1] = NULL;
++	array->argc--;
++}
++
+ void argv_array_clear(struct argv_array *array)
+ {
+ 	if (array->argv != empty_argv) {
+diff --git a/argv-array.h b/argv-array.h
+index b93a69c..f4b9866 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -16,6 +16,7 @@ void argv_array_pushl(struct argv_array *, ...);
+ __attribute__((format (printf,2,3)))
+ void argv_array_pushf(struct argv_array *, const char *fmt, ...);
+ void argv_array_pushl(struct argv_array *, ...);
++void argv_array_pop(struct argv_array *);
+ void argv_array_clear(struct argv_array *);
+ 
+ #endif /* ARGV_ARRAY_H */
+-- 
+1.7.12.rc3.8.g89db099
