@@ -1,83 +1,69 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: diff/merge tool that ignores whitespace changes
-Date: Sun, 02 Sep 2012 23:07:34 +0200 (CEST)
-Message-ID: <4eab55d2-b504-4c66-84be-c1ffe4edf94c@zcs>
-References: <504272F0.3070701@web.de>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 6/9] For each exclude pattern, store information about where it came from
+Date: Sun, 2 Sep 2012 23:36:59 +0100
+Organization: OPDS
+Message-ID: <A05E4811A66D499DA6AC932AC49F1E8F@PhilipOakley>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org> <1346544731-938-7-git-send-email-git@adamspiers.org> <997D30474124498FBFBA89C2E20F7773@PhilipOakley> <7vipbwgnnv.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Sep 02 23:08:23 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Adam Spiers" <git@adamspiers.org>,
+	"git list" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
+	=?iso-8859-1?Q?Nguy=3Fn_Th=E1i_Ng=3Fc_Duy?= <pclouds@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 00:38:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8HP5-0000rP-7q
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Sep 2012 23:08:23 +0200
+	id 1T8Inn-0002nK-DG
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 00:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893Ab2IBVHg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Sep 2012 17:07:36 -0400
-Received: from zcs.vnc.biz ([83.144.240.118]:7909 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754780Ab2IBVHg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2012 17:07:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 86A274608F4;
-	Sun,  2 Sep 2012 23:07:34 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xS9Q2QaVRXkx; Sun,  2 Sep 2012 23:07:34 +0200 (CEST)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 2954D460426;
-	Sun,  2 Sep 2012 23:07:34 +0200 (CEST)
-In-Reply-To: <504272F0.3070701@web.de>
-X-Originating-IP: [91.43.180.222]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Linux)/7.1.3_GA_3346)
+	id S1755251Ab2IBWhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Sep 2012 18:37:03 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:46881 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755240Ab2IBWhC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Sep 2012 18:37:02 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AnMSABTEQ1BZ8rU+/2dsb2JhbAA7CotErlkBAQEBgQCBCIIbBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwGIALoUiw0QLWZpGxkHgQqCcmADiBuFQ5gVgmQ
+X-IronPort-AV: E=Sophos;i="4.80,356,1344207600"; 
+   d="scan'208";a="549529902"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 02 Sep 2012 23:37:00 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204678>
 
-Hi,
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Sunday, September 02, 2012 8:02 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> Is there a way to identify the config core.excludesfile if present?
+>> i.e. that it is from that config variable, rather than directory
+>> traversal.
+>
+> If the code handles $GIT_DIR/info/exclude then that configuration
+> would also be handled the same way, no?
 
-> Would that help ?
-> git help diff
-> [snip]
->      --ignore-space-at-eol
->            Ignore changes in whitespace at EOL.
->=20
->        -b, --ignore-space-change
->            Ignore changes in amount of whitespace. This ignores
->            whitespace at
->            line end, and considers all other sequences of one or more
->            whitespace characters to be equivalent.
->=20
->        -w, --ignore-all-space
->            Ignore whitespace when comparing lines. This ignores
->            differences
->            even if one line has whitespace where the other line has
->            none.
+Probably not. The $GIT_DIR/info/exclude is directly a path, while the 
+core.excludesfile could point anywhere. This assumes the path to the 
+relevant ignore file is shown.
 
-That might be it :)
-Now I yet need to find out how to configure tig for it.
+Given the suggested report format in the Documentation, this path could 
+be reported as 'coreexclude', not just an 'exclude'.
 
-By the way: anything similar for merge/rebase ?
-
-
-thx
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
-
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+If I've understood the regular code correctly, the core.excludesfile is 
+always at one end of the exclude struct so should be easy to check at 
+that position. 
