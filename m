@@ -1,60 +1,107 @@
-From: Aleksandr Dubinsky <adubinsky@almson.net>
-Subject: Suggested behavior when pulling .gitattributes
-Date: Sun, 2 Sep 2012 02:21:51 +0300
-Message-ID: <CAEbpm93Pr8sU9mBx8V5VMmi5aXos-KBQpmEN7NPrdR07rYV5EQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 02 01:23:01 2012
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH 3/9] Rename cryptic 'which' variable to more consistent name
+Date: Sun,  2 Sep 2012 01:12:05 +0100
+Message-ID: <1346544731-938-4-git-send-email-git@adamspiers.org>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 02 02:19:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T7x1o-0008Nj-Gh
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Sep 2012 01:23:00 +0200
+	id 1T7xuv-00016s-SE
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Sep 2012 02:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801Ab2IAXWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Sep 2012 19:22:13 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:54243 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755789Ab2IAXWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Sep 2012 19:22:12 -0400
-Received: by vcbfk26 with SMTP id fk26so4452116vcb.19
-        for <git@vger.kernel.org>; Sat, 01 Sep 2012 16:22:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:from:date:message-id:subject:to
-         :content-type:x-gm-message-state;
-        bh=RWIFd8M3nKqVg+tKcTEoDjZgJ3jFr2n64oPVpqOAZ9g=;
-        b=pVSXhfbD1y9G+M3pFOOu6wT0BOy8kwiMwj1fAb2vLnD5HZaudek65PdOIBkgh2eNJD
-         zTk5CdPurukFryxQaNtOArvuypzXDIQg7esmSN5T05TcqGylOX/XavKLR81sNRye9SvW
-         pSTKmHm5HeZWtjpRrgcKbPJkYi+5hoT/lXecwLXn04jywOoIdT8UtRzuEdyswKK6BiBz
-         0cbhng3tr6E+r+zIwDKNTEmmRMs89GF2rfjMWoVarG2XsyWixsLB2YTCPgOcaoZbGeKr
-         v4F7n07xZV+U5AY63A0XJGQ9C19Yp9OmCIKbGeR5zB21TiEpQ7WI/orcuCRn0XLomkvs
-         GTig==
-Received: by 10.58.0.82 with SMTP id 18mr9196194vec.0.1346541731979; Sat, 01
- Sep 2012 16:22:11 -0700 (PDT)
-Received: by 10.58.66.230 with HTTP; Sat, 1 Sep 2012 16:21:51 -0700 (PDT)
-X-Originating-IP: [46.211.18.226]
-X-Gm-Message-State: ALoCoQm5ZnsMPw+9CkJYDt0+Z3IJRYgNmHTPxPhD0wCjwEDhc/rwrRauNSfhzH0fZ5rrzBsFNe3P
+	id S1751906Ab2IBAS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Sep 2012 20:18:57 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:55518 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751624Ab2IBAS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Sep 2012 20:18:56 -0400
+Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 6CB812E5E7;
+	Sun,  2 Sep 2012 01:12:15 +0100 (BST)
+X-Mailer: git-send-email 1.7.12.155.ge5750d5.dirty
+In-Reply-To: <1346544731-938-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204653>
 
-Hi,
+'el' is only *slightly* less cryptic, but is already used as the
+variable name for a struct exclude_list pointer in numerous other
+places, so this reduces the number of cryptic variable names in use by
+one :-)
 
-I ran into a problem with line endings that .gitattributes is supposed
-to fix. However, I ran into a headache with this not giving the
-desired result. This headache could have easily been avoided if:
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ dir.c | 10 +++++-----
+ dir.h |  4 ++--
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-When pulling .gitattributes, git should parse the file and anything
-new in it should be acted upon. Specifically, if a file already exists
-with modified endings and .gitattributes now says it should be treated
-as binary, then please automatically re-checkout the file with the
-correct, un-modified line endings.
-
-Possibly this suggestion also applies to pushing/committing but that
-wasn't the problem I ran into just now.
+diff --git a/dir.c b/dir.c
+index c9f341a..57a5d11 100644
+--- a/dir.c
++++ b/dir.c
+@@ -311,7 +311,7 @@ static int no_wildcard(const char *string)
+ }
+ 
+ void add_exclude(const char *string, const char *base,
+-		 int baselen, struct exclude_list *which)
++		 int baselen, struct exclude_list *el)
+ {
+ 	struct exclude *x;
+ 	size_t len;
+@@ -346,8 +346,8 @@ void add_exclude(const char *string, const char *base,
+ 	x->nowildcardlen = simple_length(string);
+ 	if (*string == '*' && no_wildcard(string+1))
+ 		x->flags |= EXC_FLAG_ENDSWITH;
+-	ALLOC_GROW(which->excludes, which->nr + 1, which->alloc);
+-	which->excludes[which->nr++] = x;
++	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
++	el->excludes[el->nr++] = x;
+ }
+ 
+ static void *read_skip_worktree_file_from_index(const char *path, size_t *size)
+@@ -389,7 +389,7 @@ int add_excludes_from_file_to_list(const char *fname,
+ 				   const char *base,
+ 				   int baselen,
+ 				   char **buf_p,
+-				   struct exclude_list *which,
++				   struct exclude_list *el,
+ 				   int check_index)
+ {
+ 	struct stat st;
+@@ -436,7 +436,7 @@ int add_excludes_from_file_to_list(const char *fname,
+ 		if (buf[i] == '\n') {
+ 			if (entry != buf + i && entry[0] != '#') {
+ 				buf[i - (i && buf[i-1] == '\r')] = 0;
+-				add_exclude(entry, base, baselen, which);
++				add_exclude(entry, base, baselen, el);
+ 			}
+ 			entry = buf + i + 1;
+ 		}
+diff --git a/dir.h b/dir.h
+index a226fbc..549a187 100644
+--- a/dir.h
++++ b/dir.h
+@@ -117,10 +117,10 @@ extern int path_excluded(struct path_exclude_check *, const char *, int namelen,
+ 
+ 
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+-					  char **buf_p, struct exclude_list *which, int check_index);
++					  char **buf_p, struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+ extern void add_exclude(const char *string, const char *base,
+-			int baselen, struct exclude_list *which);
++			int baselen, struct exclude_list *el);
+ extern void free_excludes(struct exclude_list *el);
+ extern int file_exists(const char *);
+ 
+-- 
+1.7.12.155.ge5750d5.dirty
