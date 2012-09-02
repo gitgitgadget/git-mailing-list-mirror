@@ -1,142 +1,148 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Sun, 02 Sep 2012 13:43:43 -0700
-Message-ID: <7vpq64f935.fsf@alter.siamese.dyndns.org>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de>
- <7vr4qqzsbe.fsf@alter.siamese.dyndns.org>
- <002201cd86ce$285841b0$7908c510$@schmitz-digital.de>
- <7vfw74s3oy.fsf@alter.siamese.dyndns.org>
- <003d01cd8827$34e90180$9ebb0480$@schmitz-digital.de>
+Subject: Re: [PATCH 9/9] Add git-check-ignores
+Date: Sun, 02 Sep 2012 13:38:41 -0700
+Message-ID: <7v1uikgnnp.fsf@alter.siamese.dyndns.org>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org>
+ <1346544731-938-10-git-send-email-git@adamspiers.org>
+ <CACsJy8CLzTddPOCzGhNkOGYjTvEtgWFoD+6DLhAew4Rf1aw5WA@mail.gmail.com>
+ <CAOkDyE9wPUOwJpeKQ5wSCoufqyqE9zwRuBuNvDGEZ-z8452DwA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Adam Spiers <git@adamspiers.org>
 X-From: git-owner@vger.kernel.org Sun Sep 02 22:44:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8H2P-00008J-8Z
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Sep 2012 22:44:57 +0200
+	id 1T8H2O-00008J-7R
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Sep 2012 22:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974Ab2IBUou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Sep 2012 16:44:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35686 "EHLO
+	id S1754925Ab2IBUoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Sep 2012 16:44:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35586 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754900Ab2IBUot (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Sep 2012 16:44:49 -0400
+	id S1754900Ab2IBUop (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Sep 2012 16:44:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07A33833C;
-	Sun,  2 Sep 2012 16:44:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACB598332;
+	Sun,  2 Sep 2012 16:44:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=fjCLQKBNGwp+84h+N4KCzGVMQ+c=; b=xAl7UFZMg+CyVwPmZf03
-	pZ1Wv+L/aoIdBqeas1T3m0DSyUQCKUxtfrZivUhVzkiN+6JPKLKFAFyfh1BaO8pT
-	iDsKKGvUY+cHT2s+LnlNWsVu8alKzw/LoJ32IChLv3XrnkTWfzIfkv77FBlXYRzC
-	TTxPWxK8vDtNWpOIu/zTNfE=
+	 s=sasl; bh=7BXBOTqBVBocKa8zHskOB/OzBYI=; b=SvZf2ZxudGl+c67MIOap
+	/TC5Ew3VgctO6RHNAgrICWI6zy7e/mp71L4nSIcOmC9XOORFFnAEzv15/EdQHYX+
+	Cr7wEo/0U2Q8nBXDo09SB0ai682h631RIykjvQohCkMKOOk8DZzkmML5K31orkM3
+	qm6mSvSxLk6ya5HwST4Bpmo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=dO3XB6c6XpstPf5zP4EWHZGchiRJS63LQyn1xkQgeO1uzK
-	fC57Syppu77u2TGbJcvASCvHCYa0n2vmNFY6pmbHxyauUX6lFDcJV/P3NdiRAWOf
-	UmKlbtuCcRdFV3wmdRUsCldE8WF/eTZuJiqxmvyWWS+SoTA9Lpi1hHPjyHR4Q=
+	 q=dns; s=sasl; b=VoiIKRimyvySy7LrNP8xXWLpy+eGqkhR8t8iUAl/OAsQWR
+	VDrymD8QDWQjFe4eM16VHlhnpf9LXahp/0qow/eFxRW+ETN5VWsZSH48Q2F49BTu
+	5Uj7EnQ0aFDV8uT2wD3vfCBaJaXmofpg6wHcK6gsssvqDFdz27fnBuoCxj8+U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA16D833B;
-	Sun,  2 Sep 2012 16:44:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 974468331;
+	Sun,  2 Sep 2012 16:44:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37D638339; Sun,  2 Sep 2012
- 16:44:48 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C894C8330; Sun,  2 Sep 2012
+ 16:44:43 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 091B6824-F53F-11E1-80F5-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 067AF2D8-F53F-11E1-8424-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204672>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+Adam Spiers <git@adamspiers.org> writes:
 
->> > > Should we leave tv_usec untouched then? That was we round up on
->> > > the next (and subsequent?) round(s). Or just set to ENOTSUP in
->> > > setitimer if ovalue is !NULL?
->> >
->> > I was alluding to the latter.
->> 
->> OK, will do that then.
+>>> +SYNOPSIS
+>>> +--------
+>>> +[verse]
+>>> +'git check-ignore' pathname...
+>>> +'git check-ignore' --stdin [-z] < <list-of-paths>
+>>
+>> Also --quiet option, where check-ignore returns 0 if the given path is
+>> ignored, 1 otherwise?
 
-Thanks.
+I agree that multiple paths are problematic.
 
->> Unless I screwed up the operator precedence?
+We could error out if multiple paths are given with --quiet until we
+figure out what the useful result would be in such a case, and still
+give a useful answer to callers that feed a single path, though.
 
-I think you did, but not in the version we see below.
+That may encourage suboptimal coding to casual Porcelain writers,
+i.e. it would allow
 
-> int git_setitimer(int which, const struct itimerval *value,
-> 				struct itimerval *ovalue)
-> {
-> 	int ret = 0;
+	for path in $paths
+        do
+		if git check-ignore -q "$path"
+                then
+			do something to "$path"
+		fi
+	done
+
+even though we would rather want to encourage
+
+	git check-ignore --name-only $paths |
+        while read path
+        do
+		do something to "$path"
+	done
+
+But from lay-scriptors' point of view, being able to easily write a
+script (even though it may be inefficient) to do the job at hand is
+far better than having to give up writing one because the tool does
+not allow easy-and-stupid scripting, so it is not exactly a huge
+downside.
+
+>>  - If many paths are given, then perhaps we could print ignored paths
+>> (no extra info).
 >
-> 	if (!value ) {
+> How is this different to git ls-files -i -o ?
 
-Style: space before ')'?
+I personally think the parts of ls-files that deal with paths not in
+the index outlived its usefulness ;-) and users deserve to be given
+a better UI.
 
-> 		errno = EFAULT;
-> 		return -1;
-
-EFAULT is good ;-)
-
-The emulation in mingw.c 6072fc3 (Windows: Implement setitimer() and
-sigaction()., 2007-11-13) may want to be tightened in a similar way.
-
-> 	}
+>>  - Going to the next level, we could print path and the the location
+>> of the final exclude/include rule (file and line number).
 >
-> 	if ( value->it_value.tv_sec < 0
+> That's the current behaviour, and I believe it covers the most common
+> use case.
 
-Style: space after ')'?
+Yes; I have a reservation on your output format, though.
 
-> 	    || value->it_value.tv_usec > 1000000
-> 	    || value->it_value.tv_usec < 0) {
-> 		errno = EINVAL;
-> 		return -1;
-> 	}
->
-> 	if ((ovalue) && (git_getitimer(which, ovalue) == -1))
-> 		return -1; /* errno set in git_getitimer() */
+>>  - For debugging, given one path, we print all the rules that are
+>> applied to it, which may help understand how/why it goes wrong.
 
-As nobody passes non-NULL ovalue to setitimer(), I think we should
-instead get rid of git_getitmier() implemenation, and change this to
+I do not think that would be terribly useful.  Maybe for people who
+are learning how dir.c internally works, but not for people who are
+trying to improve the set of .gitignore files in their project.
 
-	if (ovalue) {
-        	errno = ENOTSUP;
-                return -1;
-	}
+> I thought about that, but in the end I decided it probably didn't make
+> sense, because none of the exclude matching routines match against the
+> index - they all match against the working tree and core.excludesfile.
+> This would also require changing the matching logic to honor the index,
+> but I didn't see the benefit in doing that, since all operations which
+> involve excludes (add, status, etc.) relate to a work tree.
 
-which is how I understood what "the latter" in the paragraph I
-quoted from you above meant.
+The mechanism primarily is to see if a path in the working tree is a
+cruft or a valuable still to be added; I am OK with NEED_WORK_TREE;
+when we have a useful case to run this in a bare repository, we can
+lift it.
 
-> 	switch (which) {
-> 	case ITIMER_REAL:
-> 		 /* If tv_usec is > 0, round up to next full sec */
-> 		alarm(value->it_value.tv_sec + (value->it_value.tv_usec > 0));
+As with the "what to do with multiple paths and -q", it is better to
+start with feature set to cover only the known or easily anticipated
+use cases, rejecting the cases for which good semantics are not
+thought out.
 
-OK.
-
-> 		ret = 0; /* if alarm() fails, we get a SIGLIMIT */
-> 		break;
-> 	case ITIMER_VIRTUAL:
-> 		case ITIMER_PROF:
-> 		errno = ENOTSUP;
-> 		ret = -1;
-> 		break;
-> 	default:
-> 		errno = EINVAL;
-> 		ret = -1;
-> 		break;
-> 	}
->
-> 	return ret;
-> }
-
-Other than that, looks good.
-
-Thanks.
+An alternative would be a code that operates sanely only for known
+or anticipated cases and do random things with irrational semantics
+in other cases, and people start relying on the irrational behaviour
+without realizing their input and the behaviour they are seeing are
+not something that the feature is designed to for, but whatever the
+code with loose precondition checking happens to do.  We do not want
+to repeat that kind of mistake, which is hard to fix in future
+versions.
