@@ -1,115 +1,117 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Mon, 3 Sep 2012 22:05:06 +0200
-Message-ID: <003601cd8a0f$6a792840$3f6b78c0$@schmitz-digital.de>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de> <7vr4qqzsbe.fsf@alter.siamese.dyndns.org> <002201cd86ce$285841b0$7908c510$@schmitz-digital.de> <7vfw74s3oy.fsf@alter.siamese.dyndns.org> <003d01cd8827$34e90180$9ebb0480$@schmitz-digital.de> <7vpq64f935.fsf@alter.siamese.dyndns.org> <000d01cd89b6$d5ba6c30$812f4490$@schmitz-digital.de> <7v1uijexor.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
+Date: Mon, 03 Sep 2012 13:16:52 -0700
+Message-ID: <7voblmeua3.fsf@alter.siamese.dyndns.org>
+References: <5040C59A.6090303@gmail.com> <50412E2D.7070503@kdbg.org>
+ <5041BC94.7000304@gmail.com> <504214AA.9080706@kdbg.org>
+ <50425F8B.5020406@gmail.com> <7voblognny.fsf@alter.siamese.dyndns.org>
+ <5044D162.1010608@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Johannes Sixt'" <j6t@kdbg.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 22:05:29 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Marco Stornelli <marco.stornelli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 22:17:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8ctd-0004dn-7T
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:05:21 +0200
+	id 1T8d4z-0003yF-5d
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:17:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756519Ab2ICUFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Sep 2012 16:05:12 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:57154 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756395Ab2ICUFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2012 16:05:11 -0400
-Received: from DualCore (dsdf-4db54a60.pool.mediaWays.net [77.181.74.96])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MNQCL-1TExTw2AnZ-006cpX; Mon, 03 Sep 2012 22:05:09 +0200
-In-Reply-To: <7v1uijexor.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIhsC26HFNXVNf5LMacgAbi0X2P9gIuBdH5AgQ1j9EAzDU6SAHd2fuOAzRbc6QCZvCE2AIPCL7WllyFsqA=
-Content-Language: de
-X-Provags-ID: V02:K0:x7ouT8sr8EUcfim3/yzWFTaRNrai+UrAKhIiD5jGlUM
- Ox5PLQOx2z6PUakCJttOFVBXSuSyoHDU9t6HBXaEWk+z7dVLCX
- YIUEHysXSGVSbJLgnh4bqgrilQye20baLxYwkxCDWd43Dbs0eo
- Dnf7fuyg8QzJpRMPNnhlUSNTLuoEdgfDUbt7FpR9EfgnTNwL1K
- We6/jCB2RY1EtSInRC/dLybEwT5DMcWFxYMVn+MsPwQz0Wkidd
- 56kUeZjAJvCzI2ljqx6tBaUBPGPVCMlhhIWoYJBRPQO2KdcZD0
- jUKistN8jXJkTmxbH9S4C/bKvxbmsq/dFpY4Yia0ST6eta26HL
- ImvihRcy8l75WbvMTKaIni7KKMRF2N0uYRQtu36m3CmgDogEO0
- SY6UixrFTqKKA==
+	id S1756584Ab2ICUQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Sep 2012 16:16:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34849 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756371Ab2ICUQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2012 16:16:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4BD9BED;
+	Mon,  3 Sep 2012 16:16:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GfJQnuZphjzDIfvBeLoikVl9t5A=; b=CI7nPb
+	2glMNmvIu1I07ULf2HRNlWGpJxD3Ldg7v6n6/vL5LCVMuvMbuOnqWdH7JQ0vZrdd
+	6aBez/8PgmnPZWvssd56yU8P7BBA364nAm3UqhEqL72/92DpnrOHoEXol+jcLCyy
+	uFo5uviU+YkmZsIr3I5d6zgE4qREDeyrKZ2e4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ayM76EXN9IZZhNprLhzJiCY+6y19wG7z
+	16IQaYSnEaQydNcR8ARBvbR6MYjltyxBNbVMV9vRFj7x2Y30rAEFNsuqnS8GBL97
+	ffG4gpxj/mC4Dsk8fwdnb0Ayv+0gSygdE/NRs7F9Ohy2GkVdhx0wBjJYIsyXT1FR
+	tmjd2sT2z40=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB5EF9BEB;
+	Mon,  3 Sep 2012 16:16:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E7239BE9; Mon,  3 Sep 2012
+ 16:16:54 -0400 (EDT)
+In-Reply-To: <5044D162.1010608@gmail.com> (Marco Stornelli's message of "Mon,
+ 03 Sep 2012 17:48:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DAD3614-F604-11E1-8C17-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204710>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Monday, September 03, 2012 9:03 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org; 'Johannes Sixt'
-> Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> >> > 	if (!value ) {
-> >>
-> >> Style: space before ')'?
-> >
-> > Will fix.
-> >
-> >> > 		errno = EFAULT;
-> >> > 		return -1;
-> >>
-> >> EFAULT is good ;-)
-> >
-> > That's what 'man setitimer()' on Linux says to happen if invalid value is found.
-> >
-> >> The emulation in mingw.c 6072fc3 (Windows: Implement setitimer() and
-> >> sigaction()., 2007-11-13) may want to be tightened in a similar way.
-> >
-> 
-> > Hmm, I see that there the errors are handled differently, like this:
-> >
-> >         if (ovalue != NULL)
-> >                 return errno = EINVAL,
-> >                         error("setitimer param 3 != NULL not implemented");
-> >
-> > Should this be done in my setitimer() too? Or rather be left to the caller?
-> > I tend to the later.
-> 
-> I don't care too deeply either way.  The above was not a comment
-> meant for you, but was to point out the error checking when the
-> newvalue is NULL---it is missing in mingw.c and I think the
-> condition should be checked.
+Marco Stornelli <marco.stornelli@gmail.com> writes:
 
- Ah, OK. Guess Johannes and I misunderstood ;-)
+> I tried the Johannes's script, but it seems it doesn't work well with
+> the pattern of format-patch (To: <mail1>,\n   <mail2>,\n
+> <mailN>). The multilines are not well managed.
 
-> > On top here SA_RESTART is used, which is not available in HP
-> > NonStop (so I have a "-DSA_RESTART=0" in COMPAT_CFLAGS).
-> 
-> If you cannot re-trigger the timer, then you will see "20%" shown
-> after one second, silence for 4 seconds and then "done", for an
-> operation that takes 5 seconds.  Which is not the end of the world,
-> though.  It does not affect correctness.
+I am guessing that the reason why Jonahhes's "copy our headers out
+with continuation lines intact" approach does not work is because
+Thunderbird does not want to see its own header part (i.e. that
+which comes before that $SEP) contain RFC-2822 style continuation
+lines.
 
-That does seem to work, if I do e.g. a "git clone" on git itself (being a fairly large repository), I see it updating the % values
-about once per second.
+Can you grab a typical input (i.e. the contents of what is passed as
+$1 to the appp.sh script) and show us how it looks like here so that
+we can take a look?  It would be fine to paste the contents, but we
+might want to protect it from MUA by doing an attachment or a
+pastebin URL.
 
-> The other use of itimer in our codebase is the early-output timer,
-> but that also is about perceived latency, and not about correctness,
-> so it is possible that you do not have to support anything (i.e. not
-> even setting an alarm) at all.
+It appears that the original script tries very hard to keep the
+Subject: line at the beginning, but I am not sure if that is because
+Thunderbird wants to read its "$1" that way, or it is just that
+original appp.sh script happened to be written that way without real
+reason.  If I were updating this script, what I would do would be
+more like:
 
-OK, I'll go for that one-liner in git-compat-utils.h then
+    0. Open a temporary output file $OUT, input filehandle $IN from
+       ${PATCH}, and another input filehandle $TEMPLATE from "$1"
 
-#ifdef NO_SETITIMER /* poor man's setitimer() */
-#define setitimer(w,v,o) alarm((v)->it_value.tv_sec+((v)->it_value.tv_usec>0))
-#endif
+    1. Read from $IN starting from the second line (i.e. skip the
+       first line "From [0-9a-f] Mon Sep 17 00:00:00 2001" magic
+       marker) upto the empty line, coalescing the RFC-2822 style
+       continuation lines into one long line each.
 
-It certainly seems to work just fine for me.
-Could as well be #ifdef __TANDEM, I won't mind.
+    2. Output the above into $OUT, while applying your "header field
+       name translation" (e.g. "Oggetto") and remembering what
+       header you wrote out.
 
-Bye, Jojo
+    3. Read from $TEMPLATE up to a line that matches the following
+       pattern:
+
+	/^-=-=-=-=-=-=-=-=-=#.*#=-=-=-=-=-=-=-=-=-$/
+
+       reject headers that step 2. already emitted, and emit other
+       headers to $OUT.  Also emit that line that matched the above
+       SEP pattern to $OUT (by doing so, you do not have to care how
+       "Don't remove this line" is spelled in the user's language).
+
+    4. Resume reading from $IN and copy to $OUT, including the patch
+       separator "---", and stop copying.
+
+    5. Read the remainder of $TEMPLATE and copy to $OUT.
+
+    6. Read the remainder of $IN and copy to $OUT.
+
+    7. Rename the temporary file that was connected to $OUT to "$1".
+
+
+       
