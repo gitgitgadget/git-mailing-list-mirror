@@ -1,110 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch: align new ref summary printout in UTF-8 locales
-Date: Mon, 03 Sep 2012 13:30:28 -0700
-Message-ID: <7vk3waetnf.fsf@alter.siamese.dyndns.org>
-References: <1346670609-19986-1-git-send-email-pclouds@gmail.com>
- <7vwr0aewlf.fsf@alter.siamese.dyndns.org> <50450C8D.7010301@kdbg.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: diff/merge tool that ignores whitespace changes
+Date: Mon, 3 Sep 2012 16:40:22 -0400
+Message-ID: <CAFuPQ1LrousHH9uK7zSeVvNrYwBBBpZwbM-fwgM_iDwWuqTMXg@mail.gmail.com>
+References: <504272F0.3070701@web.de> <4eab55d2-b504-4c66-84be-c1ffe4edf94c@zcs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
 	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Sep 03 22:30:40 2012
+To: Enrico Weigelt <enrico.weigelt@vnc.biz>
+X-From: git-owner@vger.kernel.org Mon Sep 03 22:41:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8dI7-0003iz-85
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:30:39 +0200
+	id 1T8dS5-0001d0-P6
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098Ab2ICUac convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Sep 2012 16:30:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39766 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751578Ab2ICUab convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2012 16:30:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B88949E93;
-	Mon,  3 Sep 2012 16:30:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=O5ldte2Le+Vo
-	/nQUDhVrHiUvmWs=; b=gOLJubtE+NnUFTvtZS1oWE8Vkaa3fPrIxZG7U1YdMowx
-	My1FVjsn/AHdvN5ifbOTGCaZtrn143xA+jfAwjwhXOlZpz8e+uMLnBmswmI9Oflo
-	FZwpSyGag2KkrJK2JM4ipGLav+lsI0O2erlNEpFH3p7Fi7MjvrtAC4uTz9a4NDM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LMbin9
-	/uUhOYeXqYED7aXN5tSU4XDeZVUiA6P9gHLLZkY3L4/oLFeP02vFPUU8GE3kqFVq
-	QWJwCCTk1tQdMyityDMLITnaG282NyxRxyFE4VL+Pz6ojnB/QTDXc9+B7bqSEl+2
-	bzaqX4uakjCdLajFtzVKT0rw0Fsx9GcVxo7zg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A71819E92;
-	Mon,  3 Sep 2012 16:30:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01F729E91; Mon,  3 Sep 2012
- 16:30:29 -0400 (EDT)
-In-Reply-To: <50450C8D.7010301@kdbg.org> (Johannes Sixt's message of "Mon, 03
- Sep 2012 22:01:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 33FB369C-F606-11E1-95FF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752921Ab2ICUkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Sep 2012 16:40:45 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:47159 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210Ab2ICUko (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2012 16:40:44 -0400
+Received: by qcro28 with SMTP id o28so3589784qcr.19
+        for <git@vger.kernel.org>; Mon, 03 Sep 2012 13:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=eyv5aiCvmdmeqwyhnc7mm+vr5Zecb73K4ex8XiSb3l4=;
+        b=TqsjZM5dWdEuqULLpeAMABcFAXrGdYj4JJ/hq0urnTqtJpMd8dyArJKt2muEvSYPlm
+         7UfRKVDzKgRkNHZPjZ3Cj9WYlU/MoUsTAL8E7FquxFEwDGPYmpuZbKtb+KrByMCOSQPn
+         /DGSKnAy5aIQIMfIld1VFRp84aIeEjCEvpa06XuW3x9bSaDziM5Loj5cgy9FzqX735Lx
+         dcnGlzwLSzoFktnx83xMd4mL4PkY1B6+3siLrBl2pceHve5QEuaMHL3SSMex7mAzHLSx
+         a+FaKfk0EQLzZ99vEw7JcxZnCpxOkmnpSQEc8uqO4Z7GCZFM8ijOjPBFf6Dhv1VCDocJ
+         HRjg==
+Received: by 10.229.136.74 with SMTP id q10mr10063460qct.148.1346704843550;
+ Mon, 03 Sep 2012 13:40:43 -0700 (PDT)
+Received: by 10.49.82.75 with HTTP; Mon, 3 Sep 2012 13:40:22 -0700 (PDT)
+In-Reply-To: <4eab55d2-b504-4c66-84be-c1ffe4edf94c@zcs>
+X-Google-Sender-Auth: y18UvrfUG9A5LxXWeEleSElW8f0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204712>
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> Am 03.09.2012 21:26, schrieb Junio C Hamano:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
-s:
->>=20
->>> fetch does printf("%-*s", width, "foo") where "foo" can be an utf-8
->>> string, but width is bytes, not letters. This results in misaligned
->>> ref summary table.
->>=20
->> "but width is bytes, not letters" is a misleading statement.
->>=20
->> Be careful about three different quantities when talking about
->> aligning on terminal output with monospaced fonts:
->>=20
->>  - How many bytes does the string occupy in memory?
->>  - How many unicode codepoints are in the string?
->>  - How many display columns does the string occupy on terminal?
->>=20
->> Note that some "letters" (e.g. Han) occupy two display columns, and
->> you want to measure the "width" and compensate that for "bytes".
->> Letter count do not come into the picture for the purpose of alignin=
-g
->> the terminal output.
+On Sun, Sep 2, 2012 at 5:07 PM, Enrico Weigelt <enrico.weigelt@vnc.biz> wrote:
+> Hi,
 >
-> If I'm reading POSIX correctly, printf measures the width in %*s in b=
-ytes.
+>> Would that help ?
+>> git help diff
+>> [snip]
+>>      --ignore-space-at-eol
+>>            Ignore changes in whitespace at EOL.
+>>
+>>        -b, --ignore-space-change
+>>            Ignore changes in amount of whitespace. This ignores
+>>            whitespace at
+>>            line end, and considers all other sequences of one or more
+>>            whitespace characters to be equivalent.
+>>
+>>        -w, --ignore-all-space
+>>            Ignore whitespace when comparing lines. This ignores
+>>            differences
+>>            even if one line has whitespace where the other line has
+>>            none.
+>
+> Now I yet need to find out how to configure tig for it.
 
-Yes, that is the problem.
+Try: echo "set ignore-space = all" >> ~/.tigrc
+And use 'W' to toggle between the different modes.
 
-When we give allocated_width columns to display str, and call
-
-        printf("%.*s", allocated_width, str)
-
-we end up getting (allocated_width - strlen(str)) SPs as filler.  If
-the str occupies less than strlen(str) columns (and it often is the
-case for a string with non-ascii characters), insufficient number of
-filler SPs will be given, and an item on the same line that comes
-after this printf() will appear too close to str.  By measuring the
-required number of columns to display str, you can compensate. i.e.
-
-        printf("%.*s", allocated_width +
-                (strlen(str) - display_width(str)), str)
-
-to give it enough filler.
-
-I think the patch uses utf8_strwidth() which measures the display
-columns needed for the string, not number of unicode codepoints in
-the string.  I was merely pointing out that the wording of the
-proposed log message "bytes, not letters" and the function name
-"foo_length" was misleading, when we mean "width".
+-- 
+Jonas Fonseca
