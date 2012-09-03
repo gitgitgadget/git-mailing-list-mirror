@@ -1,117 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
-Date: Mon, 03 Sep 2012 13:16:52 -0700
-Message-ID: <7voblmeua3.fsf@alter.siamese.dyndns.org>
-References: <5040C59A.6090303@gmail.com> <50412E2D.7070503@kdbg.org>
- <5041BC94.7000304@gmail.com> <504214AA.9080706@kdbg.org>
- <50425F8B.5020406@gmail.com> <7voblognny.fsf@alter.siamese.dyndns.org>
- <5044D162.1010608@gmail.com>
+Subject: Re: [PATCH] fetch: align new ref summary printout in UTF-8 locales
+Date: Mon, 03 Sep 2012 13:30:28 -0700
+Message-ID: <7vk3waetnf.fsf@alter.siamese.dyndns.org>
+References: <1346670609-19986-1-git-send-email-pclouds@gmail.com>
+ <7vwr0aewlf.fsf@alter.siamese.dyndns.org> <50450C8D.7010301@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Marco Stornelli <marco.stornelli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 22:17:05 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Sep 03 22:30:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8d4z-0003yF-5d
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:17:05 +0200
+	id 1T8dI7-0003iz-85
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 22:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756584Ab2ICUQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Sep 2012 16:16:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34849 "EHLO
+	id S1753098Ab2ICUac convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Sep 2012 16:30:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39766 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756371Ab2ICUQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2012 16:16:57 -0400
+	id S1751578Ab2ICUab convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2012 16:30:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4BD9BED;
-	Mon,  3 Sep 2012 16:16:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B88949E93;
+	Mon,  3 Sep 2012 16:30:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GfJQnuZphjzDIfvBeLoikVl9t5A=; b=CI7nPb
-	2glMNmvIu1I07ULf2HRNlWGpJxD3Ldg7v6n6/vL5LCVMuvMbuOnqWdH7JQ0vZrdd
-	6aBez/8PgmnPZWvssd56yU8P7BBA364nAm3UqhEqL72/92DpnrOHoEXol+jcLCyy
-	uFo5uviU+YkmZsIr3I5d6zgE4qREDeyrKZ2e4=
+	:content-type:content-transfer-encoding; s=sasl; bh=O5ldte2Le+Vo
+	/nQUDhVrHiUvmWs=; b=gOLJubtE+NnUFTvtZS1oWE8Vkaa3fPrIxZG7U1YdMowx
+	My1FVjsn/AHdvN5ifbOTGCaZtrn143xA+jfAwjwhXOlZpz8e+uMLnBmswmI9Oflo
+	FZwpSyGag2KkrJK2JM4ipGLav+lsI0O2erlNEpFH3p7Fi7MjvrtAC4uTz9a4NDM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ayM76EXN9IZZhNprLhzJiCY+6y19wG7z
-	16IQaYSnEaQydNcR8ARBvbR6MYjltyxBNbVMV9vRFj7x2Y30rAEFNsuqnS8GBL97
-	ffG4gpxj/mC4Dsk8fwdnb0Ayv+0gSygdE/NRs7F9Ohy2GkVdhx0wBjJYIsyXT1FR
-	tmjd2sT2z40=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LMbin9
+	/uUhOYeXqYED7aXN5tSU4XDeZVUiA6P9gHLLZkY3L4/oLFeP02vFPUU8GE3kqFVq
+	QWJwCCTk1tQdMyityDMLITnaG282NyxRxyFE4VL+Pz6ojnB/QTDXc9+B7bqSEl+2
+	bzaqX4uakjCdLajFtzVKT0rw0Fsx9GcVxo7zg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB5EF9BEB;
-	Mon,  3 Sep 2012 16:16:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A71819E92;
+	Mon,  3 Sep 2012 16:30:30 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E7239BE9; Mon,  3 Sep 2012
- 16:16:54 -0400 (EDT)
-In-Reply-To: <5044D162.1010608@gmail.com> (Marco Stornelli's message of "Mon,
- 03 Sep 2012 17:48:50 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01F729E91; Mon,  3 Sep 2012
+ 16:30:29 -0400 (EDT)
+In-Reply-To: <50450C8D.7010301@kdbg.org> (Johannes Sixt's message of "Mon, 03
+ Sep 2012 22:01:17 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4DAD3614-F604-11E1-8C17-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 33FB369C-F606-11E1-95FF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204711>
 
-Marco Stornelli <marco.stornelli@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> I tried the Johannes's script, but it seems it doesn't work well with
-> the pattern of format-patch (To: <mail1>,\n   <mail2>,\n
-> <mailN>). The multilines are not well managed.
+> Am 03.09.2012 21:26, schrieb Junio C Hamano:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>>=20
+>>> fetch does printf("%-*s", width, "foo") where "foo" can be an utf-8
+>>> string, but width is bytes, not letters. This results in misaligned
+>>> ref summary table.
+>>=20
+>> "but width is bytes, not letters" is a misleading statement.
+>>=20
+>> Be careful about three different quantities when talking about
+>> aligning on terminal output with monospaced fonts:
+>>=20
+>>  - How many bytes does the string occupy in memory?
+>>  - How many unicode codepoints are in the string?
+>>  - How many display columns does the string occupy on terminal?
+>>=20
+>> Note that some "letters" (e.g. Han) occupy two display columns, and
+>> you want to measure the "width" and compensate that for "bytes".
+>> Letter count do not come into the picture for the purpose of alignin=
+g
+>> the terminal output.
+>
+> If I'm reading POSIX correctly, printf measures the width in %*s in b=
+ytes.
 
-I am guessing that the reason why Jonahhes's "copy our headers out
-with continuation lines intact" approach does not work is because
-Thunderbird does not want to see its own header part (i.e. that
-which comes before that $SEP) contain RFC-2822 style continuation
-lines.
+Yes, that is the problem.
 
-Can you grab a typical input (i.e. the contents of what is passed as
-$1 to the appp.sh script) and show us how it looks like here so that
-we can take a look?  It would be fine to paste the contents, but we
-might want to protect it from MUA by doing an attachment or a
-pastebin URL.
+When we give allocated_width columns to display str, and call
 
-It appears that the original script tries very hard to keep the
-Subject: line at the beginning, but I am not sure if that is because
-Thunderbird wants to read its "$1" that way, or it is just that
-original appp.sh script happened to be written that way without real
-reason.  If I were updating this script, what I would do would be
-more like:
+        printf("%.*s", allocated_width, str)
 
-    0. Open a temporary output file $OUT, input filehandle $IN from
-       ${PATCH}, and another input filehandle $TEMPLATE from "$1"
+we end up getting (allocated_width - strlen(str)) SPs as filler.  If
+the str occupies less than strlen(str) columns (and it often is the
+case for a string with non-ascii characters), insufficient number of
+filler SPs will be given, and an item on the same line that comes
+after this printf() will appear too close to str.  By measuring the
+required number of columns to display str, you can compensate. i.e.
 
-    1. Read from $IN starting from the second line (i.e. skip the
-       first line "From [0-9a-f] Mon Sep 17 00:00:00 2001" magic
-       marker) upto the empty line, coalescing the RFC-2822 style
-       continuation lines into one long line each.
+        printf("%.*s", allocated_width +
+                (strlen(str) - display_width(str)), str)
 
-    2. Output the above into $OUT, while applying your "header field
-       name translation" (e.g. "Oggetto") and remembering what
-       header you wrote out.
+to give it enough filler.
 
-    3. Read from $TEMPLATE up to a line that matches the following
-       pattern:
-
-	/^-=-=-=-=-=-=-=-=-=#.*#=-=-=-=-=-=-=-=-=-$/
-
-       reject headers that step 2. already emitted, and emit other
-       headers to $OUT.  Also emit that line that matched the above
-       SEP pattern to $OUT (by doing so, you do not have to care how
-       "Don't remove this line" is spelled in the user's language).
-
-    4. Resume reading from $IN and copy to $OUT, including the patch
-       separator "---", and stop copying.
-
-    5. Read the remainder of $TEMPLATE and copy to $OUT.
-
-    6. Read the remainder of $IN and copy to $OUT.
-
-    7. Rename the temporary file that was connected to $OUT to "$1".
-
-
-       
+I think the patch uses utf8_strwidth() which measures the display
+columns needed for the string, not number of unicode codepoints in
+the string.  I was merely pointing out that the wording of the
+proposed log message "bytes, not letters" and the function name
+"foo_length" was misleading, when we mean "width".
