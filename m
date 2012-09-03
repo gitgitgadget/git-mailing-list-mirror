@@ -1,69 +1,89 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: checkout extra files
-Date: Mon, 3 Sep 2012 20:59:21 +0700
-Message-ID: <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
-References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Clone to an SSH destination
+Date: Mon, 3 Sep 2012 18:08:32 +0400
+Message-ID: <20120903180832.f6e9fc03a450011ea2b22737@domain007.com>
+References: <alpine.LFD.2.01.1209031059480.4753@sys880.ldn.framestore.com>
+	<CACBZZX7Pe5gsfpFTihE33a1Exia_4dbMQ9p_Xc_z4Ry=Et9KLA@mail.gmail.com>
+	<alpine.LFD.2.01.1209031351200.5945@sys880.ldn.framestore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 03 16:00:01 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+	<avarab@gmail.com>, git@vger.kernel.org
+To: Mark Hills <Mark.Hills@framestore.com>
+X-From: git-owner@vger.kernel.org Mon Sep 03 16:09:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8XC4-0006Ku-Fk
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 16:00:00 +0200
+	id 1T8XKp-0004gf-BZ
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Sep 2012 16:09:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103Ab2ICN7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Sep 2012 09:59:53 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:44911 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756439Ab2ICN7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2012 09:59:52 -0400
-Received: by ieje11 with SMTP id e11so3587765iej.19
-        for <git@vger.kernel.org>; Mon, 03 Sep 2012 06:59:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+/AD2PXO2biChlR4N0zWAw2sONAAEKkiRjnqJbLaxQU=;
-        b=MnSj6C+SJmYXajRr8EpkXnok5/RHJ8Umqz5lemXBKzDoJAxBuJmSDJjQDD8c4Z8Kr7
-         fJ/oz4N08l9XduQwXDlQt2SPTmYV49Q7CQapp6XJFMURxCktgkZA4oj8jP4DTad5+ZD1
-         iaIZwwnjz0A4SZf7geFcFRsrONlVuY+9ruhK064DaPvJqHnt/Fx77yeaHq51HMLrBz6c
-         mVQkPPbQnn9zg9eOpYfe3WxoUauW+17TCIwqqv98vH4xp3wJYBz3mcO21iPPdR2xk+ju
-         jlvhQw09kebYekIPV2HVWONpUfGrYIGjqJGS8Zp9LVupo9m+bF3xQmI38g8jn569QGP1
-         seEw==
-Received: by 10.50.184.135 with SMTP id eu7mr10885705igc.15.1346680791729;
- Mon, 03 Sep 2012 06:59:51 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Mon, 3 Sep 2012 06:59:21 -0700 (PDT)
-In-Reply-To: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+	id S932113Ab2ICOI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Sep 2012 10:08:56 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:39260 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753479Ab2ICOI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2012 10:08:56 -0400
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q83E8XPh005146;
+	Mon, 3 Sep 2012 18:08:35 +0400
+In-Reply-To: <alpine.LFD.2.01.1209031351200.5945@sys880.ldn.framestore.com>
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204696>
 
-On Mon, Sep 3, 2012 at 8:42 PM, Angelo Borsotti
-<angelo.borsotti@gmail.com> wrote:
-> $ git checkout 94d8 -- *
-> $ ls
-> f1
->
-> Note that the work directory is empty when the checkout is done, and
-> that the checkout restores f1
-> in it, a file that is not denoted by the * pathspec.
+On Mon, 3 Sep 2012 14:07:48 +0100 (BST)
+Mark Hills <Mark.Hills@framestore.com> wrote:
 
-I think in this case '*' remains unexpanded by the shell. Which means
-it is still a pathspec to checkout (iow equivalent to "git checkout
-94d8 -- '*'"). Checkout in turns matches the pathspec '*' against the
-tree and decides to restore 'fl'.
+[...]
+> > But I'm actually more curious about why you need this in the first
+> > place, there's a bunch of devs where I work as well, but they never
+> > have the need to create new repos on some NFS drive in this manner.
+> 
+> Without a command-line onto the filesystem (either local or NFS), how
+> do you create a new repository for a new project?
+> 
+> We have a fairly large team on a diverse set of projects. Projects
+> come and go, so it's a burden if the administrator is needed just to
+> create repos.
+> 
+> Likewise, it's a step backwards for the developer to need to login 
+> themselves over SSH -- whereas 'git clone' is so easy to NFS.
+> 
+> > What are your devs doing when they do clone their current working 
+> > directory to some NFS location, maybe there's a better way to do it.
+> 
+> Most projects start as a small test at some point; eg.
+> 
+>   mkdir xx
+>   cd xx
+>   git init
+>   <write some code>
+>   git commit
+>   ...
+> 
+> When a project becomes more official, the developer clones to a
+> central location; eg.
+> 
+>   git clone --bare . /net/git/xx.git
+> 
+> This is the step that is inconvenient if only SSH access is available.
 
-It's confusing but I don't think there's much we can do about it.
+Well, then it looks you want something like github.
+In this case look at some more integrated solution such as Gitlab [1]
+-- I did not try it, but it looks like you import your users there and
+then they can log in, add their SSH keys and create their projects.
 
-> I guess that this is the intended behaviour, and that the man page
-> should be updated to tell exactly
-> what files git restores.
--- 
-Duy
+I also think gitolite has some way to actually use regular SSH users
+(or even users coming from a web server which is a front-end for Smart
+HTTP Git transport, doing its own authentication).  This is explained
+in [2], and I hope Sitaram could provide more insight on setting things
+up this way, if needed  (I did not use this feature).
+
+1. http://gitlabhq.com/
+2. http://sitaramc.github.com/gitolite/g2/auth.html
