@@ -1,120 +1,97 @@
-From: Robin Stocker <robin@nibor.org>
-Subject: [PATCH] cherry-pick: Append -x line on separate paragraph
-Date: Tue, 4 Sep 2012 19:16:46 +0200 (CEST)
-Message-ID: <1244407605.1231.1346779006295.JavaMail.root@bazinga.schuettel.ch>
-References: <739367481.1229.1346778500787.JavaMail.root@bazinga.schuettel.ch>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH 1/2] Support for setitimer() on platforms lacking it
+Date: Tue, 4 Sep 2012 19:23:55 +0200
+Message-ID: <002801cd8ac2$10937480$31ba5d80$@schmitz-digital.de>
+References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de> <7vr4qqzsbe.fsf@alter.siamese.dyndns.org> <002201cd86ce$285841b0$7908c510$@schmitz-digital.de> <7vfw74s3oy.fsf@alter.siamese.dyndns.org> <003d01cd8827$34e90180$9ebb0480$@schmitz-digital.de> <7vpq64f935.fsf@alter.siamese.dyndns.org> <000d01cd89b6$d5ba6c30$812f4490$@schmitz-digital.de> <7v1uijexor.fsf@alter.siamese.dyndns.org> <003601cd8a0f$6a792840$3f6b78c0$@schmitz-digital.de> <7vzk55bu8s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:23:24 2012
+Cc: <git@vger.kernel.org>, "'Johannes Sixt'" <j6t@kdbg.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:24:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8wqQ-00007q-DA
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:23:22 +0200
+	id 1T8wrD-0000nw-Ri
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757462Ab2IDRXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 13:23:14 -0400
-Received: from cust.static.212-90-207-187.cybernet.ch ([212.90.207.187]:46529
-	"EHLO bazinga.schuettel.ch" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757458Ab2IDRXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 13:23:12 -0400
-X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Sep 2012 13:23:12 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by bazinga.schuettel.ch (Postfix) with ESMTP id 00DD91C0436
-	for <git@vger.kernel.org>; Tue,  4 Sep 2012 19:16:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at schuettel.ch
-Received: from bazinga.schuettel.ch ([127.0.0.1])
-	by localhost (bazinga.schuettel.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TAJZG-gBdlLT for <git@vger.kernel.org>;
-	Tue,  4 Sep 2012 19:16:46 +0200 (CEST)
-Received: from bazinga.schuettel.ch (cust.static.212-90-207-187.cybernet.ch [212.90.207.187])
-	by bazinga.schuettel.ch (Postfix) with ESMTP id 9912E1C03AD
-	for <git@vger.kernel.org>; Tue,  4 Sep 2012 19:16:46 +0200 (CEST)
-In-Reply-To: <739367481.1229.1346778500787.JavaMail.root@bazinga.schuettel.ch>
-X-Originating-IP: [87.239.215.2]
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - FF3.0 (Linux)/6.0.10_GA_2692)
+	id S1757379Ab2IDRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 13:24:04 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:59078 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512Ab2IDRYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 13:24:02 -0400
+Received: from DualCore (dsdf-4d0a1636.pool.mediaWays.net [77.10.22.54])
+	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
+	id 0Lxqdc-1Tco200gDc-015Lr3; Tue, 04 Sep 2012 19:24:00 +0200
+In-Reply-To: <7vzk55bu8s.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQIhsC26HFNXVNf5LMacgAbi0X2P9gIuBdH5AgQ1j9EAzDU6SAHd2fuOAzRbc6QCZvCE2AIPCL7WANNwrfABx6z0HpZJE2tA
+Content-Language: de
+X-Provags-ID: V02:K0:LXVNQCGq6WRoz81JHbBcq/VcSwCeontwT750Tf6GCTp
+ kx4nzvqqwxFWS4gwabCz9A9Dzpoy26547UWxaEXSMgIpb86jQb
+ +78JjVAdXV/I/0hfpsWw9WEJEP1sT3MjcEKVvjFWMlVZ3hxnCH
+ qLZCYoscInhMNbrBQHebO9yjJGTfGTdN1jzwouG9Gk7U5yJLxB
+ Om7e20KmPVFrA5cdEUu9zX53MDVLArD7eyAze7WoXM04me3QPC
+ rtRQYQdDceOXjO/6ixFyxGU8R4ySkmW7sNpSawcwctAM0kAnvn
+ K8E6X1gDTtOIidGjvNynWzJUMhmevqtkNAtmnELL2dep62GfZr
+ bJOa5I+s7clwG6PnoSEG5mxptPbBiSA17Zy+LQTJGqQ11y3I6Z
+ VpALt4NYNv9oA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204756>
 
-Before this, git cherry-pick -x resulted in messages like this:
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Tuesday, September 04, 2012 6:58 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org; 'Johannes Sixt'
+> Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> >> If you cannot re-trigger the timer, then you will see "20%" shown
+> >> after one second, silence for 4 seconds and then "done", for an
+> >> operation that takes 5 seconds.  Which is not the end of the world,
+> >> though.  It does not affect correctness.
+> >
+> > That does seem to work, if I do e.g. a "git clone" on git itself
+> > (being a fairly large repository), I see it updating the % values
+> > about once per second.
+> 
+> Ehh, so somebody is re-arming the alarm().  I am not sure where,
+> though.
+> 
+>  ... thinks for a while, then a lightbulb slowly starts to glow ...
+> 
+> Where are you cloning from, and does the other side of the clone
+> (i.e. upload-pack) also run on your tandem port?  If you are cloning
+> from one of my public distribution points (e.g. k.org, repo.or.cz,
+> or github.com), then I think the progress indicator you are seeing
+> is coming from the other side, not generated by your local timer.
 
-    Message of cherry-picked commit
-    (cherry picked from commit 871e293c9acbeaacce59dcd98fab6028f552f5be)
+I used GutHub
+The cloning from NonStop doesn't work at all, different story, but looks like poll isn#t working.
+Not poll's fault tough, but on out plaftom ssh (non-interactive) give a pipe rather than a socket and recv(...MSG_PEEK) then fails
+with ENOTSOCK
 
-Which is not the recommended way to write commit messages. When the
-commit message ends with a Signed-off-by, it's less bad. But having it
-on a line apart from the others also doesn't hurt there.
+> Only with the observation of "clone", I cannot tell if your timer is
+> working.  You can try repacking the test repository you created by
+> your earlier "git clone" with "git repack -a -d -f" and see what
+> happens.
 
-Now, care is taken that the line is appended as a separate paragraph:
+It does update the counter too.
 
-    Message of cherry-picked commit
+> > OK, I'll go for that one-liner in git-compat-utils.h then
+> >
+> > #ifdef NO_SETITIMER /* poor man's setitimer() */
+> > #define setitimer(w,v,o) alarm((v)->it_value.tv_sec+((v)->it_value.tv_usec>0))
+> > #endif
+> >
+> > It certainly seems to work just fine for me.
 
-    (cherry picked from commit 871e293c9acbeaacce59dcd98fab6028f552f5be)
-
-Because some Git implementations (JGit) don't always terminate the
-commit message with a newline, this change also inserts a second newline
-if necessary.
-
-Signed-off-by: Robin Stocker <robin@nibor.org>
----
- sequencer.c                    |    4 ++++
- t/t3511-cherry-pick-message.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 0 deletions(-)
- create mode 100755 t/t3511-cherry-pick-message.sh
-
-diff --git a/sequencer.c b/sequencer.c
-index bf078f2..41852e6 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -484,6 +484,10 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		}
- 
- 		if (opts->record_origin) {
-+			/* Some implementations don't terminate message with final \n, so add it */
-+			if (msg.message[strlen(msg.message)-1] != '\n')
-+				strbuf_addch(&msgbuf, '\n');
-+			strbuf_addch(&msgbuf, '\n');
- 			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
- 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
- 			strbuf_addstr(&msgbuf, ")\n");
-diff --git a/t/t3511-cherry-pick-message.sh b/t/t3511-cherry-pick-message.sh
-new file mode 100755
-index 0000000..6aba8b2
---- /dev/null
-+++ b/t/t3511-cherry-pick-message.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description='Test cherry-pick commit message with -x'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	git config advice.detachedhead false &&
-+	test_commit initial foo a &&
-+	test_commit base foo b &&
-+	git checkout initial
-+'
-+
-+test_expect_success 'cherry-pick -x appends message on separate line' '
-+	git cherry-pick -x base &&
-+	cat >expect <<-\EOF &&
-+	base
-+
-+	(cherry picked from commit 462a97d89aa55720c97984a3ce09665989193981)
-+
-+	EOF
-+	git log --format=%B -n 1 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-1.7.7.6
+Bye, Jojo
