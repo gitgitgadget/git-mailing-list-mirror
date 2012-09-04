@@ -1,112 +1,75 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: respect -q for add/update
-Date: Tue, 04 Sep 2012 17:28:24 +0200
-Message-ID: <50461E18.6020400@web.de>
-References: <1346743880-11379-1-git-send-email-orgads@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: checkout extra files
+Date: Tue, 04 Sep 2012 08:31:59 -0700
+Message-ID: <7vharddcsw.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CACsJy8C36eghwEOYqbnd2z5C5KnynWsvwMDa4e2hns3uW243EQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Orgad Shaneh <orgads@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:28:42 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 17:32:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8v3R-0006kK-8F
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 17:28:41 +0200
+	id 1T8v6s-0000tY-8B
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 17:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756931Ab2IDP2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 11:28:32 -0400
-Received: from mout.web.de ([212.227.15.3]:51940 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756909Ab2IDP2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 11:28:31 -0400
-Received: from [192.168.178.41] ([91.3.176.45]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0MT8fq-1SyZD81liA-00SDt2; Tue, 04 Sep 2012 17:28:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <1346743880-11379-1-git-send-email-orgads@gmail.com>
-X-Provags-ID: V02:K0:t+XLSPJyNjLUXmJDhpZUFviSyjlyaV7zQXuozgA3Mvd
- /9iCBuojthvxO89DScN+kCzG65+8hMPFDW2P7AlKgJC0T+mB9j
- ZvPFNW5O3/KhwoSod8zFnxCjXXuc5nusV/216/li5VFkbFRDxh
- RbZOk+wfk0oxnD4TZoZztcENARXdwOr8WV8idflWj5eoLWPinZ
- QwtMx1kP6kqEnQ+xGpVJQ==
+	id S932159Ab2IDPcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 11:32:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37020 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753204Ab2IDPcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 11:32:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 849E58101;
+	Tue,  4 Sep 2012 11:32:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KN6u7FZ5usmDYh/SrzGXBs/MRLw=; b=LhAyHr
+	RHnGcNGaivpSHeVdgi0BzPZmO7zSBm4TutohgsXC1JC3eBRqc7/RF0HyVeoxuVs4
+	vomMTsr4c2N5ceJldJHb3dCgxqAbSuFbHLU7tpKay+jnMymUVHRQbxPF7LG7WKll
+	kqHC5sKAlGzmb6VPApvumqdRZvAN5ZdaSRPhQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=blMsh353SM31BCMBDU/AM0YqyPTdm1zS
+	z7ZqswSNwGtz5Vp2BJkickQgODuoL9Ip98rn9XW/MZxBzuyaQdXFtPC6nXgkzAO5
+	ir/VDPF4nKqjOdSGMtv/aqB+eJg0t+2gL69TWdRrns+zRMhKlWV3NkSaTD7zGRyx
+	nxyhRmosv/E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 711988100;
+	Tue,  4 Sep 2012 11:32:03 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 942C980FF; Tue,  4 Sep 2012
+ 11:32:01 -0400 (EDT)
+In-Reply-To: <CACsJy8C36eghwEOYqbnd2z5C5KnynWsvwMDa4e2hns3uW243EQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 4 Sep 2012 17:14:28 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC27AF48-F6A5-11E1-8F5F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204748>
 
-Am 04.09.2012 09:31, schrieb Orgad Shaneh:
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Before the "Signed-off-by" is the place where you should have
-explained why this would be a worthwhile change ;-)
+> On Tue, Sep 4, 2012 at 9:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Perhaps like this?
+>
+> Looks good. I was going to complain that this patch applied to
+> git-checkout.txt only but I just saw git-add.txt also mentions about
+> quoting wildcards. So I'm good.
 
-To me this looks like you make the default noisier and require an
-explicit "-q" to make it quiet again. There is a reason you don't
-normally get bothered with the output of the checkout command run
-under the hood of git submodule add/update, so I don't think this
-change makes things better.
+Ok, with a log message like this:
 
-But you might want to think about adding a "-v/--verbose" flag to
-make the submodule add/update checkouts more verbose, in case you
-care about the output of the checkout command. That would be a
-sane thing to do, so what about changing your patch into this
-direction?
-
-> ---
->  git-submodule.sh |   17 ++++++++++++++---
->  1 file changed, 14 insertions(+), 3 deletions(-)
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index aac575e..dd57abb 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -266,6 +266,11 @@ cmd_add()
->  
->  	repo=$1
->  	sm_path=$2
-> +	quiet=
-> +	if test -n "$GIT_QUIET"
-> +	then
-> +		quiet=-q
-> +	fi
->  
->  	if test -z "$sm_path"; then
->  		sm_path=$(echo "$repo" |
-> @@ -332,8 +337,8 @@ Use -f if you really want to add it." >&2
->  			cd "$sm_path" &&
->  			# ash fails to wordsplit ${branch:+-b "$branch"...}
->  			case "$branch" in
-> -			'') git checkout -f -q ;;
-> -			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
-> +			'') git checkout -f $quiet ;;
-> +			?*) git checkout -f $quiet -B "$branch" "origin/$branch" ;;
->  			esac
->  		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
->  	fi
-> @@ -527,6 +532,12 @@ cmd_update()
->  		shift
->  	done
->  
-> +	quiet=
-> +	if test -n "$GIT_QUIET"
-> +	then
-> +		quiet=-q
-> +	fi
-> +
->  	if test -n "$init"
->  	then
->  		cmd_init "--" "$@" || return
-> @@ -619,7 +630,7 @@ Maybe you want to use 'update --init'?")"
->  				must_die_on_failure=yes
->  				;;
->  			*)
-> -				command="git checkout $subforce -q"
-> +				command="git checkout $subforce $quiet"
->  				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$sm_path'")"
->  				say_msg="$(eval_gettext "Submodule path '\$sm_path': checked out '\$sha1'")"
->  				;;
-> 
+    Document file-glob for "git checkout -- '*.c'"
+    
+    Just like we give a similar example in "git add" documentation.
