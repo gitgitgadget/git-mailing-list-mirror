@@ -1,78 +1,81 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: cmn@elego.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto)
 Subject: Re: checkout extra files
-Date: Tue, 4 Sep 2012 08:49:10 +0700
-Message-ID: <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+Date: Tue, 04 Sep 2012 03:57:23 +0200
+Message-ID: <87txvev9bw.fsf@centaur.cmartin.tk>
 References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
- <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com> <7vsjayew50.fsf@alter.siamese.dyndns.org>
+	<87sjazw6qq.fsf@centaur.cmartin.tk>
+	<CAB9Jk9AkFW-fAqOZuhCMgMBdEZwDpe5ZG9Dkse=Wz_x9LvJEPw@mail.gmail.com>
+	<87harfw4bp.fsf@centaur.cmartin.tk>
+	<CAB9Jk9BjO+HdxhaGxEyaDoXgGisi0QpuVvsx3dZUnJV1VoKN1g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 03:50:42 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 03:58:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8iHm-0007e6-8u
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 03:50:38 +0200
+	id 1T8iP4-0003N7-7A
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 03:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451Ab2IDBtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Sep 2012 21:49:42 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:38999 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754318Ab2IDBtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Sep 2012 21:49:41 -0400
-Received: by ieje11 with SMTP id e11so4175562iej.19
-        for <git@vger.kernel.org>; Mon, 03 Sep 2012 18:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=u7/1YYK+99jwG7XLYVcA2+dKGoW7anSM6qo+8PPgTZo=;
-        b=TLB2kUie0vay8+puM+HZUiCAxt11VGjf5Tin8JXdyIL/efP6l2UrlRvOepVEK9yIdo
-         etNdmwrlYSZXpyR59VdU/yBRcMCR9R9LWRfrwqtJm71tOYnvyJy1ZI1PCW4S0kbcXW4x
-         Vo4uDPdFFyzU+zrDAnZUxrsuTgeHSZ5HrxsmZFGgaiTIbChDAMLe2o/sZto4bghYQL3K
-         wAvfX3lknrMxshv6Il0hxb+DsBR73EyHLHoE5UMEh4/qSElf7gYqg5wWI1M/Yu98/lgr
-         eILLJLXguZkBDivzN2BMyh5W0QiBxr7aBFXKIry6CuSNRa4rrrn4x+s8Qx5w7hKhLuNp
-         x52g==
-Received: by 10.50.178.97 with SMTP id cx1mr12288390igc.48.1346723381385; Mon,
- 03 Sep 2012 18:49:41 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Mon, 3 Sep 2012 18:49:10 -0700 (PDT)
-In-Reply-To: <7vsjayew50.fsf@alter.siamese.dyndns.org>
+	id S1756530Ab2IDB5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Sep 2012 21:57:23 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:35510 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754318Ab2IDB5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2012 21:57:22 -0400
+Received: from cmartin.tk (p4FC5D726.dip.t-dialin.net [79.197.215.38])
+	by hessy.dwim.me (Postfix) with ESMTPA id 3DA9481C5D;
+	Tue,  4 Sep 2012 03:57:18 +0200 (CEST)
+Received: (nullmailer pid 15848 invoked by uid 1000);
+	Tue, 04 Sep 2012 01:57:23 -0000
+In-Reply-To: <CAB9Jk9BjO+HdxhaGxEyaDoXgGisi0QpuVvsx3dZUnJV1VoKN1g@mail.gmail.com>
+	(Angelo Borsotti's message of "Mon, 3 Sep 2012 17:10:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204716>
 
-On Tue, Sep 4, 2012 at 2:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> It's confusing but I don't think there's much we can do about it.
->
-> The user can, by telling the shell to expand '*' that does not match
-> to nothing, though.
 
-It works 99% the time, I don't think any users would bother setting
-that or studying the shell at that detail, until they are surprised.
+Keep it in the list.
 
-> Is there anything that is confusing in our documentation?  I am not
-> looking for a change to the documentation that protects it from
-> getting misunderstood by deliberately twisted interpretations (such
-> a change would make the resulting text would harder to read), but I
-> do want to make sure it is not prone to confusion even to a casual
-> and careless reader.
->
-> For this particular scenario, I do not see anything offhand that is
-> unclear about the behaviour of Git in the documentation, even though
-> as you pointed out, if the user is unaware that the shell passes
-> globs unmodified when they do not match, it may lead to a confusion
-> like this.  I certainly do not want to do a full "introduction to
-> shell" in our documentation, but if adding a short sentence or two
-> helps to avoid confusion like this, I do not strongly object to it.
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-Yeah, one or two sentences about two level expansion might help new
-users. I'll check that. Maybe in the pathspec definition, then split
-that part of out glossary-content.txt to be included in pathspec-using
-commands as a separate pathspec section. Too much?
--- 
-Duy
+> Hi Carlos,
+>>
+>> That grouping is not what it's saying. It doesn't update the files that
+>> exist in the working tree matching some glob. It updates the files in
+>> the working tree from either the index or a treeish. The pathspec
+>> refers, as always, to the data source, and '*' matches all files.
+>>
+>> It puts the named paths on to the working tree. Is that clearer?
+>>
+> This was mi first understanding, until one day I had in the working directory
+> a file that matched the <path> (the path was '*') and that was NOT in the
+> index or a treeish. The git checkout command tried to copy it and
+> complained that there was no such file to restore.
+
+So you're saying that you ran
+
+    git checkout <tree-ish> -- *
+
+and git complained that there was no such file? This is because the
+shell expanded the glob and gave git a list of files.
+
+> Then I thought that it visited the working directory and tried to restore
+> each file it matched and at the end restored also the ones that were not
+> there.
+
+I can't quite parse this. Git will restore whichever files you tell it
+to. If you use an asterisk, then your shell will usually expand it. In
+the case you posted to the list there were no files, so there was
+nothing to expand it to. Some shells complain in this case by default,
+some don't and just pass the asterisk to the program and let it figure
+out what to do with it. This was the case in your example. You told git
+to expand all the files it found in that tree-ish.
+
+   cmn
