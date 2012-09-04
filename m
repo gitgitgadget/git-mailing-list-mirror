@@ -1,104 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature request: short cuts for git add /diff etc
-Date: Tue, 04 Sep 2012 11:03:38 -0700
-Message-ID: <7vehmhbr7p.fsf@alter.siamese.dyndns.org>
-References: <6110218480.20120904152542@reg.ru>
+Subject: Re: [PATCH 0/7] Fix some bugs in abspath.c
+Date: Tue, 04 Sep 2012 11:08:47 -0700
+Message-ID: <7va9x5bqz4.fsf@alter.siamese.dyndns.org>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: =?iso-2022-jp?B?GyRCJywnYCdfJ24nXCdgJ1MbKEIgGyRCJyYnUydUJ1YnXydaGyhC?=
-	 =?iso-2022-jp?B?GyRCJ1sbKEI=?= <kes@reg.ru>
-X-From: git-owner@vger.kernel.org Tue Sep 04 20:03:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Sep 04 20:08:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8xTa-0004hh-9N
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 20:03:50 +0200
+	id 1T8xYX-0008Vr-T1
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 20:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932439Ab2IDSDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 14:03:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47008 "EHLO
+	id S932450Ab2IDSIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 14:08:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50197 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757423Ab2IDSDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 14:03:42 -0400
+	id S1757487Ab2IDSIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 14:08:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D08D8C21;
-	Tue,  4 Sep 2012 14:03:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A71CD8D83;
+	Tue,  4 Sep 2012 14:08:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2M8jJOoniyLTBLc+vyElgWIGzI8=; b=ozR16U
-	B4RG/JmpnP85n/Q5gPSuGBYwFw7PqZdXI3auvCtL/KOwUy0cJLKw/t0IZEsS/CbY
-	F8dEfx3HEluejxHnpfq6vwTsZEUg72a0/uK5IWKX2HF4VQh9zflv6iJWFDlGDAyS
-	9KinNfdy+6xaCbsvGeTbXwvbkmoyUurjDP3VY=
+	:content-type; s=sasl; bh=8DK4M5JPLRoGFJ5nSAjdLg+tqQM=; b=ZveuBW
+	Mh3nBIyHpSVliOrCsW5Ay7MT1DwoQDE+01Hz8QrzRnXkLXnEzP4Z+UCE9MBnz1lm
+	NmOKNdBeZl2+d9MdLA9O6t3FPRDwZsv+KcS+9uWVzNJAP5YaO6vNLzZ0gHtPh11L
+	QE7p70xDwcj/nEI4V0e5TcksVRAlihqQ0HOek=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sixebeIjsBXMyvdXwdEA5rY+ReLuIdW+
-	dZ0zF/2ZKVYQtqyez1SHsOyqh8L0fXzFHm2kIYRksha7et327Ss5NilZUV1D2tEt
-	BBchHgfgTEYatau9avmcwedFkHDT1afRNyyrKLZ+q9VJ7y7lvJ+YcuPivC/daR30
-	g6UUdNEcv0w=
+	:content-type; q=dns; s=sasl; b=lUWvU64rBsdUMHHErID+hnm6liTYi3YA
+	Ix4ZMTnGPa3M1BbpFmD/drTZPOk0H7057SvpCchMj9vD+sbyIiRsaWYE1xWOki7c
+	2xKItmc+/gMrK/+II5M5H9DOQt0WW2RYq7Ygvez0S3dw/ndryMaVNBX+m6ENwI6w
+	jBZZ1s/PtQQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A1CB8C20;
-	Tue,  4 Sep 2012 14:03:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 942DA8D82;
+	Tue,  4 Sep 2012 14:08:49 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72CC28C1E; Tue,  4 Sep 2012
- 14:03:40 -0400 (EDT)
-In-Reply-To: <6110218480.20120904152542@reg.ru> (=?iso-2022-jp?B?Ig==?=
- =?iso-2022-jp?B?GyRCJywnYCdfJ24nXCdgJ1MbKEIJGyRCJyYnUydUJ1YnXydaJ1sbKEIi?=
- =?iso-2022-jp?B?J3M=?= message of "Tue, 4 Sep 2012 15:25:42 +0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E619F8D80; Tue,  4 Sep 2012
+ 14:08:48 -0400 (EDT)
+In-Reply-To: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Tue, 4 Sep 2012 10:14:23 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DB800CF8-F6BA-11E1-B5A9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 935D3C88-F6BB-11E1-976C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204759>
 
-Коньков Евгений <kes@reg.ru> writes:
+mhagger@alum.mit.edu writes:
 
-> # git status
-> # On branch yandex_mail_new_api
-> # Your branch is ahead of 'origin/yandex_mail_new_api' by 2 commits.
-> #
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       modified(1):   a1.txt
-> #       modified(2):   a2.txt
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #   (3)    new.txt
+> From: Michael Haggerty <mhagger@alum.mit.edu>
 >
->
-> sot this allow:
-> git diff 1       same as        git diff a1.txt
-> git diff 2       same as        git diff a2.txt
->
-> git add 1        same as        git add a1.txt
-> in case there are may be files with such names I may appply option -s,for example
-> git add [ -s | --stage ] 1 . This will force to add file from list of
-> 'git status' and do not use '1' as file name.
->
-> git add 3        same as         git add new.txt
->
-> This very handy and will keep developer from useless typing =)
+> I really just wanted to tidy up filter_refs(), but I've been sucked
+> into a cascade of recursive yak shaving.  This is my first attempt to
+> pop the yak stack.
 
-When I know I want to add a1.txt, I can say "git add a1.txt", but
-with your version of Git, I now have to say "git status" to first
-find out what file number a1.txt corresponds to so that I can say
-"git add 1"?  Worse yet, after saying "git diff 1" to check the
-progress of a1.txt, which may be long and scroll the output from
-"git status" off the top of my screen, I need to run "git status"
-again to see what file number a2.txt corresponds to?
+Thanks.
 
-That does not make any sense even as a typesaver.  Besides, what if
-I have a file whose name is "1" that I would want to add?
+> Please note that both absolute_path("") and real_path("") used to
+> return the current directory followed by a slash.  I believe that this
+> was a bug, and that it is more appropriate for both functions to
+> reject the empty string.  The evidence is as follows:
+>
+> * If this were intended behavior, presumably the return value would
+>   *not* have a trailing slash.
 
-You may be looking for either "git gui", or "git add -i" (if you do
-not like a windowed environment), both of which would let you choose
-pathnames with fewer keystrokes.
+That is weak.  The only thing you can infer from that observation is
+that the presense or absense of trailing '/' would not make any
+difference to the caller who wanted a path to the cwd (and is more
+convenient if the call is made so that a path relative to the cwd is
+tucked after it).
+
+> * I couldn't find any callers that appeared to depend on the old
+>   behavior.
+
+That is a very good argument (especially if the audit were
+thorough).
+
+I would be tempted to say that we should die() on "" for now, cook
+the result outside "master" for a few weeks while auditing the
+callchains, and see if any of them complains.
