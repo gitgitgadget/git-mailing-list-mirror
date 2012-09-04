@@ -1,76 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] Add git-check-ignores
-Date: Tue, 04 Sep 2012 10:26:32 -0700
-Message-ID: <7vmx15bsxj.fsf@alter.siamese.dyndns.org>
-References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <1346544731-938-10-git-send-email-git@adamspiers.org>
- <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com>
+Subject: Re: Feature request: short cuts for git add /diff etc
+Date: Tue, 04 Sep 2012 11:03:38 -0700
+Message-ID: <7vehmhbr7p.fsf@alter.siamese.dyndns.org>
+References: <6110218480.20120904152542@reg.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:26:47 2012
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: =?iso-2022-jp?B?GyRCJywnYCdfJ24nXCdgJ1MbKEIgGyRCJyYnUydUJ1YnXydaGyhC?=
+	 =?iso-2022-jp?B?GyRCJ1sbKEI=?= <kes@reg.ru>
+X-From: git-owner@vger.kernel.org Tue Sep 04 20:03:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8wtg-0002n7-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:26:44 +0200
+	id 1T8xTa-0004hh-9N
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 20:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932586Ab2IDR0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 13:26:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60216 "EHLO
+	id S932439Ab2IDSDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 14:03:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47008 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757403Ab2IDR0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 13:26:35 -0400
+	id S1757423Ab2IDSDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 14:03:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B8BB81CC;
-	Tue,  4 Sep 2012 13:26:35 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D08D8C21;
+	Tue,  4 Sep 2012 14:03:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R3oAIfPRXY/VfQGpocNs//Wgsm8=; b=noVHbV
-	S7pDveqijqrsHMXYm6fPAFoPZ2T01JmqcwqeoFsI5jHI+lDXOS5nWCBCvcs/PT/J
-	HlppilZGjczchR209Bz9YbKhceREw43zDQpI+MQAHxcV+YKqt0c+Gg2JPlJCvw4L
-	5yuc+22nDhERL737dHEvdrBWZtItArL9TpLlI=
+	:content-type; s=sasl; bh=2M8jJOoniyLTBLc+vyElgWIGzI8=; b=ozR16U
+	B4RG/JmpnP85n/Q5gPSuGBYwFw7PqZdXI3auvCtL/KOwUy0cJLKw/t0IZEsS/CbY
+	F8dEfx3HEluejxHnpfq6vwTsZEUg72a0/uK5IWKX2HF4VQh9zflv6iJWFDlGDAyS
+	9KinNfdy+6xaCbsvGeTbXwvbkmoyUurjDP3VY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bdjjfXR6no1LThBgvWEyNJaM2ouMg5mx
-	u2gYFq0FLbxSLfjDZH4IT4AdYb4LQ4FiKIaB99kfxTd/gQVeLvUJIZWqWdMzczsm
-	Ha7HhvyyTW9PkBUgQett4Mxv6QAQvovZ3qCh8A0VR9fpeIFIPdA4US28UMOBDRpG
-	ICxl3lmgqhw=
+	:content-type; q=dns; s=sasl; b=sixebeIjsBXMyvdXwdEA5rY+ReLuIdW+
+	dZ0zF/2ZKVYQtqyez1SHsOyqh8L0fXzFHm2kIYRksha7et327Ss5NilZUV1D2tEt
+	BBchHgfgTEYatau9avmcwedFkHDT1afRNyyrKLZ+q9VJ7y7lvJ+YcuPivC/daR30
+	g6UUdNEcv0w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291DB81CB;
-	Tue,  4 Sep 2012 13:26:35 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A1CB8C20;
+	Tue,  4 Sep 2012 14:03:41 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9F8081C0; Tue,  4 Sep 2012
- 13:26:33 -0400 (EDT)
-In-Reply-To: <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 4 Sep 2012 20:06:12 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72CC28C1E; Tue,  4 Sep 2012
+ 14:03:40 -0400 (EDT)
+In-Reply-To: <6110218480.20120904152542@reg.ru> (=?iso-2022-jp?B?Ig==?=
+ =?iso-2022-jp?B?GyRCJywnYCdfJ24nXCdgJ1MbKEIJGyRCJyYnUydUJ1YnXydaJ1sbKEIi?=
+ =?iso-2022-jp?B?J3M=?= message of "Tue, 4 Sep 2012 15:25:42 +0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC3D55AE-F6B5-11E1-A600-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DB800CF8-F6BA-11E1-B5A9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204758>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Коньков Евгений <kes@reg.ru> writes:
 
->> +static void output_exclude(const char *path, struct exclude *exclude)
->> +{
->> +       char *type = exclude->to_exclude ? "excluded" : "included";
->> +       char *bang = exclude->to_exclude ? "" : "!";
->> +       char *dir  = (exclude->flags & EXC_FLAG_MUSTBEDIR) ? "/" : "";
->> +       printf(_("%s: %s %s%s%s "), path, type, bang, exclude->pattern, dir);
+> # git status
+> # On branch yandex_mail_new_api
+> # Your branch is ahead of 'origin/yandex_mail_new_api' by 2 commits.
+> #
+> # Changes not staged for commit:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working directory)
+> #
+> #       modified(1):   a1.txt
+> #       modified(2):   a2.txt
+> #
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> #   (3)    new.txt
 >
-> These English words "excluded" and "included" make the translator me
-> want to translate them. But they could be the markers for scripts, so
-> they may not be translated. How about using non alphanumeric letters
-> instead?
+>
+> sot this allow:
+> git diff 1       same as        git diff a1.txt
+> git diff 2       same as        git diff a2.txt
+>
+> git add 1        same as        git add a1.txt
+> in case there are may be files with such names I may appply option -s,for example
+> git add [ -s | --stage ] 1 . This will force to add file from list of
+> 'git status' and do not use '1' as file name.
+>
+> git add 3        same as         git add new.txt
+>
+> This very handy and will keep developer from useless typing =)
 
-I agree they should not be translated, but it is a disease to think
-unintelligible mnemonic is a better input format for scripts than
-the spelled out words.  "excluded/included" pair is just fine.
+When I know I want to add a1.txt, I can say "git add a1.txt", but
+with your version of Git, I now have to say "git status" to first
+find out what file number a1.txt corresponds to so that I can say
+"git add 1"?  Worse yet, after saying "git diff 1" to check the
+progress of a1.txt, which may be long and scroll the output from
+"git status" off the top of my screen, I need to run "git status"
+again to see what file number a2.txt corresponds to?
+
+That does not make any sense even as a typesaver.  Besides, what if
+I have a file whose name is "1" that I would want to add?
+
+You may be looking for either "git gui", or "git add -i" (if you do
+not like a windowed environment), both of which would let you choose
+pathnames with fewer keystrokes.
