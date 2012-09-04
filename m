@@ -1,92 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
-Date: Tue, 04 Sep 2012 08:49:05 -0700
-Message-ID: <7vd321dc0e.fsf@alter.siamese.dyndns.org>
-References: <5040C59A.6090303@gmail.com> <50412E2D.7070503@kdbg.org>
- <5041BC94.7000304@gmail.com> <504214AA.9080706@kdbg.org>
- <50425F8B.5020406@gmail.com> <7voblognny.fsf@alter.siamese.dyndns.org>
- <5044D162.1010608@gmail.com> <7voblmeua3.fsf@alter.siamese.dyndns.org>
- <CANGUGtBk7DME4pkhJhcYoaM-q_S+i9_6u_Ku-9N6D41Mx50ghg@mail.gmail.com>
- <7v4nneduvj.fsf@alter.siamese.dyndns.org>
- <CANGUGtChELcXe08JtrJW=rt48xOSSeEd9tCgcJvtHiKaX5GCMQ@mail.gmail.com>
+Subject: Re: checkout extra files
+Date: Tue, 04 Sep 2012 09:15:05 -0700
+Message-ID: <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+ <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Marco Stornelli <marco.stornelli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 17:49:18 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 18:15:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8vNN-0005HO-75
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 17:49:17 +0200
+	id 1T8vmb-0000am-1L
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 18:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756163Ab2IDPtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 11:49:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45656 "EHLO
+	id S1757440Ab2IDQPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 12:15:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58943 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753099Ab2IDPtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 11:49:08 -0400
+	id S1757223Ab2IDQPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 12:15:09 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEEA18634;
-	Tue,  4 Sep 2012 11:49:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFBFF8DCD;
+	Tue,  4 Sep 2012 12:15:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IRNSWPaD0ULXk8nI9jWOKullcgU=; b=KPO8h4
-	vpF6Q++cJ7GBezWMhvHfjY+Z0/9JMUcGWwxYZuqFVNWx8du0fmLIXFGxQY0cDbl+
-	4dt+u5++dphUmBIk06/+jFZpYtFhVPgpMzTmAodnEUaalrOc+gYEfqHR91lgt3EL
-	LRd9ZmGuspGiTiFG3OmDrLNFipho/h7BZnq/Q=
+	:content-type; s=sasl; bh=7JMeaho4Qjj/3kD0JSdD12uSsFc=; b=RRg2ID
+	NEaOwei5wCAWBFecg/zRIMLhIy5AtNB7ia7rFAfiSZwKaYjdoj10JJ8FPcIdjWDK
+	P1H/zj3HR4bHCgBumef3Kz5FcR4i3EAYCu4uayK9lopRxvGlKygVItfnBbVVzqtD
+	HjQyEGCQgic7np/qQZo4izxh941fSkrT0JT2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N1Nk0Ix/EBt45LrYCjHDggnaFxIy/1Ai
-	cVrgJMx9vKKA7lZXHgE2IVhrHQe3qUletz4Hax0QFkfLar6gTqFXs/H8ZrfL461o
-	V9cnonHS+Y0J471PxSyhqJwzmS+iOE/03/oqf4fGo/JneNWyCv3tk1JFvm7Sp//n
-	AqvTLap7vUA=
+	:content-type; q=dns; s=sasl; b=onswBvuybve0SNamEQd7Cw5JjuX+mo+E
+	oZpEWvI5ZjUpogPNYohyDcLmlYl7yTyHsksslHCeOg32a600zKrxYpVIDyOIwHHM
+	5CfaldDN40h9AgkccAUagL3p4bS52VytYTWjlKM09H2W/QtV1qjulnp1GwXEPd2U
+	Kc+qV74fAiI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC27E8633;
-	Tue,  4 Sep 2012 11:49:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7FA58DCB;
+	Tue,  4 Sep 2012 12:15:08 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23E7E8630; Tue,  4 Sep 2012
- 11:49:07 -0400 (EDT)
-In-Reply-To: <CANGUGtChELcXe08JtrJW=rt48xOSSeEd9tCgcJvtHiKaX5GCMQ@mail.gmail.com> (Marco
- Stornelli's message of "Tue, 4 Sep 2012 13:22:18 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12A928DCA; Tue,  4 Sep 2012
+ 12:15:06 -0400 (EDT)
+In-Reply-To: <7vpq61dfn9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 04 Sep 2012 07:30:34 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F6CBEAC-F6A8-11E1-A2BB-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B1371568-F6AB-11E1-8341-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204750>
 
-Marco Stornelli <marco.stornelli@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> 2012/9/4 Junio C Hamano <gitster@pobox.com>:
+> Now we have f1 and f2 in the working tree.
 >
->> I would expect, at least when you are responding to an existing
->> message, some of them are filled already (and if so, I think appp.sh
->> wants to know exactly how, for example, has RFC2047 quoting already
->> applied, or are we supposed to write in UTF-8 and let Thunderbird
->> massage the contents when we give the file back to it?), and also
->> there would appear In-Reply-To: field already filled (possibly there
->> may be References: as well).
+>> $ git checkout e6f9 -- *
 >
-> Message reply is out of scope of my patch. The goal here is send a
-> patch, so the execution flow is to open a new message,
-> clik on external editor (configured properly), select patch file and
-> send. It was the scope of the old script and it is the scope of my
-> patch.
+> That is the same as "git checkout e6f935e -- f1 f2", as the shell
+> expanded "*" into "f1" and "f2".
+>
+>> error: pathspec 'f2' did not match any file(s) known to git.
+>>
+>> Note the error.
+>
+> Yes?
+>
+>> It is clear that the set of file names that git checkout is taking is
+>> the union of the ones that
+>> match the specified path ('*') in the work directory (gittest) with
+>> the ones that match the
+>> path in the specified commit (e6f9).
+>
+> The command tells git to check out "f1" and "f2" out of the tree of
+> e6f935e, and git found "f1" but did not find "f2" and reported an
+> error.  I do not see a room or need for "union" to come into the
+> picture to explain what we see in the above transcript.
 
-I certainly can understand that you updated the script for that use
-case and that use case only, but given that the original tries very
-hard to preserve:
+Actually, I "kind of sort of" can see where that "union" is coming
+from, if I squint my eyes hard enough.
 
- - what was in $HEADERS (by only replacing Subject);
- - the recipients CC'ed in $HEADERS (by grabbing them into $CCS); and
- - the body of the message in $BODY (i.e. what came after $SEP),
+Yes, it makes it look like the path affected has some relationship
+between two sets of paths:
 
-I find it hard to believe that it was meant to work on a freshly
-created empty message and nothing else.  If people were depending on
-the recipients listed on Cc that are taken from $1 to be preserved,
-your patch will introduce a regression for them, no?
+ - set W, which consists of f1 and f2, that is the result of
+   matching '*' against working tree files; and
+
+ - set T, which consists of f1 (but not f2), that is the result of
+   matching '*' against the tree contained in e6f935e
+
+and the intersection of W and T (i.e. f1) is what is checked out.
+
+But that is not what is happening at all.  What goes on is far
+simpler than that.
+
+ - the shell sees '*', matches it against working tree files, to
+   obtain "f1" and "f2";
+
+ - the shell tells "git" to "checkout e6f935e -- f1 f2";
+
+ - "git" looks into the tree of e6f935e to find paths that match
+   "f1" and "f2".
+
+When "git" is run by the shell in the last step, it has _no_ clue
+that the end user typed "*" from the shell.  It only sees "f1" and
+"f2" on the command line.  There is no "set T" to be intersected
+with "set W", so stop thinking in those terms, and you will be fine.
+
+Now the question is, _you_ will be fine, but can the documentation 
+be updated in such a way so that it will help _others_ to also stop
+thinking about "intersection between set W and set T"?  I do not
+have a good answer to that.
