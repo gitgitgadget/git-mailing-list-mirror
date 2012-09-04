@@ -1,122 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: checkout extra files
-Date: Tue, 04 Sep 2012 09:15:05 -0700
-Message-ID: <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
+Date: Tue, 04 Sep 2012 09:49:03 -0700
+Message-ID: <7v4nndd98g.fsf@alter.siamese.dyndns.org>
 References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
  <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
  <7vsjayew50.fsf@alter.siamese.dyndns.org>
  <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
  <7vd322ebsz.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
- <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
+ <CACsJy8C36eghwEOYqbnd2z5C5KnynWsvwMDa4e2hns3uW243EQ@mail.gmail.com>
+ <CAB9Jk9CNYr6LfWvyVqXvHjh7dzhUAuzkufqO9YMeOXg08D2cJw@mail.gmail.com>
+ <CACsJy8AUYigHVKjzE-0NT0hnOrQWdufN+COmkk=2Q8L1Rimytw@mail.gmail.com>
+ <CAB9Jk9D0DHBJEpVq=Z=12TV=+Av0oFVZ0yO1svLh1wyuP+9r1Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 18:15:24 2012
+X-From: git-owner@vger.kernel.org Tue Sep 04 18:49:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8vmb-0000am-1L
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 18:15:21 +0200
+	id 1T8wJR-0000dZ-0h
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 18:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757440Ab2IDQPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 12:15:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58943 "EHLO
+	id S932449Ab2IDQtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 12:49:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42089 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757223Ab2IDQPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 12:15:09 -0400
+	id S932389Ab2IDQtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 12:49:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFBFF8DCD;
-	Tue,  4 Sep 2012 12:15:08 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BEE94973B;
+	Tue,  4 Sep 2012 12:49:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7JMeaho4Qjj/3kD0JSdD12uSsFc=; b=RRg2ID
-	NEaOwei5wCAWBFecg/zRIMLhIy5AtNB7ia7rFAfiSZwKaYjdoj10JJ8FPcIdjWDK
-	P1H/zj3HR4bHCgBumef3Kz5FcR4i3EAYCu4uayK9lopRxvGlKygVItfnBbVVzqtD
-	HjQyEGCQgic7np/qQZo4izxh941fSkrT0JT2k=
+	:content-type; s=sasl; bh=Y9S5QtSCI/UdkrfEhyzuAspxAz0=; b=hjfgCQ
+	3gkNtojR5vXKyuVBbiXQrcUB6WcPqnyg55QvWDYwGsVPGgWv2VNBIRSoQAoTMXvq
+	MsT1waNGNi6Z4gkm1LS3ihJZvEGaKREY29GWMsTVLZ23n+t0a4XHTYrLpgkRB8X1
+	Ap8q6oXxfYU+sITTEQLUhUxVIFgMgVtemwRQk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=onswBvuybve0SNamEQd7Cw5JjuX+mo+E
-	oZpEWvI5ZjUpogPNYohyDcLmlYl7yTyHsksslHCeOg32a600zKrxYpVIDyOIwHHM
-	5CfaldDN40h9AgkccAUagL3p4bS52VytYTWjlKM09H2W/QtV1qjulnp1GwXEPd2U
-	Kc+qV74fAiI=
+	:content-type; q=dns; s=sasl; b=xPzcFdbouVBiCAZ/2y56h7FBfVTEdI6l
+	/uv1O2a0dZkCGP1dVBAhEcX8SBsiYkI8vcf0Sbo4x/pGN9N58pNW+u2cl9bSt5Bc
+	0wy/odpEXCMOKL5jMh/1arNEzcasnIsFPxfROPiUbHcB62CqL7L2xGgtp/Lmj9vY
+	70x7ixqZdIM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7FA58DCB;
-	Tue,  4 Sep 2012 12:15:08 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC4CB973A;
+	Tue,  4 Sep 2012 12:49:05 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12A928DCA; Tue,  4 Sep 2012
- 12:15:06 -0400 (EDT)
-In-Reply-To: <7vpq61dfn9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 04 Sep 2012 07:30:34 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F12E19739; Tue,  4 Sep 2012
+ 12:49:04 -0400 (EDT)
+In-Reply-To: <CAB9Jk9D0DHBJEpVq=Z=12TV=+Av0oFVZ0yO1svLh1wyuP+9r1Q@mail.gmail.com> (Angelo
+ Borsotti's message of "Tue, 4 Sep 2012 15:24:28 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1371568-F6AB-11E1-8341-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6FE7A5E6-F6B0-11E1-B5A9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204751>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-> Now we have f1 and f2 in the working tree.
->
->> $ git checkout e6f9 -- *
->
-> That is the same as "git checkout e6f935e -- f1 f2", as the shell
-> expanded "*" into "f1" and "f2".
->
->> error: pathspec 'f2' did not match any file(s) known to git.
->>
->> Note the error.
->
-> Yes?
->
->> It is clear that the set of file names that git checkout is taking is
->> the union of the ones that
->> match the specified path ('*') in the work directory (gittest) with
->> the ones that match the
->> path in the specified commit (e6f9).
->
-> The command tells git to check out "f1" and "f2" out of the tree of
-> e6f935e, and git found "f1" but did not find "f2" and reported an
-> error.  I do not see a room or need for "union" to come into the
-> picture to explain what we see in the above transcript.
+> That of "git checkout -- *" is the problem when the directory is empty.
+> Note that this happens with the shell that is shipped with git (in the
+> windows distro). A note in the documentation could help the user
+> to understand this.
 
-Actually, I "kind of sort of" can see where that "union" is coming
-from, if I squint my eyes hard enough.
+Passing unmatched glob intact to the program has always been the
+standard behaviour of shells for decades, and is not specific to
+"the shell that is shipped with msysgit", no?
 
-Yes, it makes it look like the path affected has some relationship
-between two sets of paths:
-
- - set W, which consists of f1 and f2, that is the result of
-   matching '*' against working tree files; and
-
- - set T, which consists of f1 (but not f2), that is the result of
-   matching '*' against the tree contained in e6f935e
-
-and the intersection of W and T (i.e. f1) is what is checked out.
-
-But that is not what is happening at all.  What goes on is far
-simpler than that.
-
- - the shell sees '*', matches it against working tree files, to
-   obtain "f1" and "f2";
-
- - the shell tells "git" to "checkout e6f935e -- f1 f2";
-
- - "git" looks into the tree of e6f935e to find paths that match
-   "f1" and "f2".
-
-When "git" is run by the shell in the last step, it has _no_ clue
-that the end user typed "*" from the shell.  It only sees "f1" and
-"f2" on the command line.  There is no "set T" to be intersected
-with "set W", so stop thinking in those terms, and you will be fine.
-
-Now the question is, _you_ will be fine, but can the documentation 
-be updated in such a way so that it will help _others_ to also stop
-thinking about "intersection between set W and set T"?  I do not
-have a good answer to that.
+I would imagine that msysgit could be shipped with man pages for
+bash, but I doubt anybody would consult it when hitting this "I
+typed * in an empty directory" situation.  In any case, what to
+include in the package is something msysgit folks to decide.
