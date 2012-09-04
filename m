@@ -1,133 +1,101 @@
-From: =?windows-1251?B?yu7t/Oru4iDF4uPl7ejp?= <kes@reg.ru>
-Subject: Feature request: short cuts for git add /diff etc
-Date: Tue, 4 Sep 2012 15:25:42 +0400
-Organization: =?windows-1251?B?0OXj6PHy8ODy7vAgxO7s5e3t+/UgyOy47Q==?=
-Message-ID: <6110218480.20120904152542@reg.ru>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
+Date: Tue, 4 Sep 2012 13:49:16 +0200
+Message-ID: <002701cd8a93$50773e30$f165ba90$@schmitz-digital.de>
+References: <004001cd81f9$21e68e10$65b3aa30$@schmitz-digital.de> <7vsjbc1dg1.fsf@alter.siamese.dyndns.org> <005401cd822a$67687a30$36396e90$@schmitz-digital.de> <7vboi0yswz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 04 13:26:01 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 13:49:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8rGW-0005Ws-0b
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 13:25:56 +0200
+	id 1T8rdS-0004f3-0q
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 13:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756810Ab2IDLZt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Sep 2012 07:25:49 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:41064 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756778Ab2IDLZs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 07:25:48 -0400
-Received: by eekc1 with SMTP id c1so2375353eek.19
-        for <git@vger.kernel.org>; Tue, 04 Sep 2012 04:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reg.ru; s=google;
-        h=date:from:x-mailer:organization:x-priority:message-id:to:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=DQrtWEs/MtJpPAtHRwIncHnUMtw7cIvK45vEnJI+YIs=;
-        b=m/IH3SrDzqMPfk4wfjGc7MZdCTkOGEWAHsE2ArpUxOHwoQISEmNubjFqfANgtOI3aj
-         UkaalXiYg0dWnTbnBF0TcS/uju4VPExeRN9qYIntvr+UpqTuES80v49ivZtVn3skfas4
-         f0avSegUfA2QB0WzipCoplXQdpdFFcBRkYSII=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:x-mailer:organization:x-priority:message-id:to:subject
-         :mime-version:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=DQrtWEs/MtJpPAtHRwIncHnUMtw7cIvK45vEnJI+YIs=;
-        b=nRHVMgeDuaOGr2cRUaukEohob/WUgw++yZbYEOvJg67/cvdYzm8cKV3ALWgsEcUIpP
-         rjfFac86WBToAOlxBa+BvgzjhSL5qey7cT7h0cuA8X0s8dn72665G2gOPpf8R458/jU5
-         7tTQVlFb+1TrSBYxS5gNKF+k4R5h782DKDyCWrwwV0Vb7aSjqmFaJlmHJT4gfHEEYDrT
-         ccsl689pbKOo/V5ggKQKnuCUAgh+Mdd98ewmf8G22uQ9ogPL/fk6gM93zS/wYDl1xSCW
-         fErkpIOm4xvpUsxx9uyRqdw4j6ZaGMicj0p9LefSabR2LndyKUEVGyTNm8JtQKR79OtY
-         d7Gg==
-Received: by 10.14.5.78 with SMTP id 54mr25923987eek.1.1346757946958;
-        Tue, 04 Sep 2012 04:25:46 -0700 (PDT)
-Received: from KES-PC ([77.93.52.13])
-        by mx.google.com with ESMTPS id r45sm44623717eem.6.2012.09.04.04.25.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Sep 2012 04:25:45 -0700 (PDT)
-X-Mailer: The Bat! (v4.0.24) Professional
-X-Priority: 3 (Normal)
-X-Gm-Message-State: ALoCoQmu8ZYLMHEb0sw1bXAQ7jymxUD5hPbmpkNl9IDpXn5C8fmAuHQDsVjbj/oZMXva7HXEGYF+
+	id S1756861Ab2IDLt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 07:49:28 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:63896 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756773Ab2IDLt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 07:49:26 -0400
+Received: from DualCore (dsdf-4d0a1636.pool.mediaWays.net [77.10.22.54])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0Lx0hB-1TfM651yXJ-016iKG; Tue, 04 Sep 2012 13:49:20 +0200
+In-Reply-To: <7vboi0yswz.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQD+UJbyfpuh0NvtD/0Nf09ZKJpnFgHbe408Ab1TybwB2sw8/Zjs19TA
+Content-Language: de
+X-Provags-ID: V02:K0:RNivVwURXgslBXX0y0cxkM1iKOzZO7MkOX2i8QxhXR0
+ qxFHYV5TQpeQTTYbBbWPjc2eb8+NSccMYeXkbfNelFItaKpGs5
+ y0L97LBMhwaVda4HhmQFmOfxQltIvMdYTl61r0UXYnnb9EKQaJ
+ NWiMxeH1Yt8ylUzGQmU9lPJNfpu9P2e1t5EqnleyiGMA43/SxR
+ pK+DMB1+m0/eOpPOqBEGDmW7GZ0cegd9lcVVG0TkxxoAlViXOQ
+ t5Ppm05syq7YRQ87ef811rulTCWwOqpsQbabrt59Arhy/YItE4
+ ReWLN7F4SBmVclSAUxUrfSIC7DC4XFfUXZs2sjTlckmwpc5GNy
+ qZa4OPCDBi/wjXjODIDT4FPVelVGf5FRKnOPqBfY7cMWph7Ti6
+ oSgRWqnRx/FEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204738>
 
-Hi, Git
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Friday, August 24, 2012 9:47 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org; 'Erik Faye-Lund'
+> Subject: Re: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> > Different, but related question: would poll.[ch] be allowed to #include "git-compat-util.h"?
+> 
+> Seeing other existing generic wrappers directly under compat/,
+> e.g. fopen.c, mkdtemp.c, doing so, I would say why not.
+> 
+> Windows folks (I see Erik is already CC'ed, which is good ;-),
+> please work with Joachim to make sure such a move won't break your
+> builds.  I believe that it should just be the matter of updating a
+> couple of paths in the top-level Makefile.
 
-Change this:
-# git status
-# On branch yandex_mail_new_api
-# Your branch is ahead of 'origin/yandex_mail_new_api' by 2 commits.
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
-#
-#       modified:   a1.txt
-#       modified:   a2.txt
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       new.txt
+Haven't heard anything from the Windows folks yet.
 
-to this:
+I'd prefer to move compat/win32/poll.[ch] into compat/poll.
+Then adjust a few paths in Makefile and that would be the 1st patch
 
-# git status
-# On branch yandex_mail_new_api
-# Your branch is ahead of 'origin/yandex_mail_new_api' by 2 commits.
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
-#
-#       modified(1):   a1.txt
-#       modified(2):   a2.txt
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#   (3)    new.txt
+A 2nd patch would be my already proposed ones that make this usable for others (me in this case ;-)), namely wrapping 2 #inludes.
 
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index 403eaa7..49541f1 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -24,7 +24,9 @@
+ # pragma GCC diagnostic ignored "-Wtype-limits"
+ #endif
 
-sot this allow:
-git diff 1       same as        git diff a1.txt
-git diff 2       same as        git diff a2.txt
+-#include <malloc.h>
++#if defined(WIN32)
++# include <malloc.h>
++#endif
 
-git add 1        same as        git add a1.txt
-in case there are may be files with such names I may appply option -s,f=
-or example
-git add [ -s | --stage ] 1 . This will force to add file from list of
-'git status' and do not use '1' as file name.
+ #include <sys/types.h>
 
-git add 3        same as         git add new.txt
+@@ -48,7 +50,9 @@
+ #else
+ # include <sys/time.h>
+ # include <sys/socket.h>
+-# include <sys/select.h>
++# ifndef NO_SYS_SELECT_H
++#  include <sys/select.h>
++# endif
+ # include <unistd.h>
+ #endif
 
-
-This very handy and will keep developer from useless typing =3D)
-
---=20
- =D1 =F3=E2=E0=E6=E5=ED=E8=E5=EC,
- =CA=EE=ED=FC=EA=EE=E2 =C5=E2=E3=E5=ED=E8=E9
- =CF=F0=EE=E3=F0=E0=EC=EC=E8=F1=F2
- =D0=E5=E3=E8=F1=F2=F0=E0=F2=EE=F0 =E4=EE=EC=E5=ED=ED=FB=F5 =E8=EC=E5=ED=
- REG.RU
- =D2=E5=EB=E5=F4=EE=ED: +38 (097) 7654-676
- www.reg.ru
- ___________________
- Sincerely yours,
- Konkov Eugen
- Developer
- Accredited domain Registrar REG.RU, LLC.
- Phone: +38 (097) 7654-676
- www.reg.ru/en/
-
-mailto:kes@reg.ru
+--
+1.7.12
