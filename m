@@ -1,114 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Fix some bugs in abspath.c
-Date: Tue, 04 Sep 2012 12:03:51 -0700
-Message-ID: <7vehmha9uw.fsf@alter.siamese.dyndns.org>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
- <7va9x5bqz4.fsf@alter.siamese.dyndns.org>
+From: Marco Stornelli <marco.stornelli@gmail.com>
+Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
+Date: Tue, 04 Sep 2012 20:59:52 +0200
+Message-ID: <50464FA8.3020104@gmail.com>
+References: <5040C59A.6090303@gmail.com> <50412E2D.7070503@kdbg.org> <5041BC94.7000304@gmail.com> <504214AA.9080706@kdbg.org> <50425F8B.5020406@gmail.com> <7voblognny.fsf@alter.siamese.dyndns.org> <5044D162.1010608@gmail.com> <7voblmeua3.fsf@alter.siamese.dyndns.org> <CANGUGtBk7DME4pkhJhcYoaM-q_S+i9_6u_Ku-9N6D41Mx50ghg@mail.gmail.com> <7v4nneduvj.fsf@alter.siamese.dyndns.org> <CANGUGtChELcXe08JtrJW=rt48xOSSeEd9tCgcJvtHiKaX5GCMQ@mail.gmail.com> <7vd321dc0e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Sep 04 21:04:06 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 21:06:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8yPq-0007Uf-My
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 21:04:03 +0200
+	id 1T8ySM-00019G-Ry
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 21:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576Ab2IDTDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 15:03:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45565 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757530Ab2IDTDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 15:03:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 896039D06;
-	Tue,  4 Sep 2012 15:03:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gWXi0Bc9gJY08QPqcIFY9SNL3rw=; b=QxeoYA
-	5+f3AYgHKlSAztOrD+nydSXfnc1pD9Px2iQRz4GQ14cU3cM4l40THo0hzJjQQDhO
-	b7FLtgRCHPCkESxDogaGImR6LsEIqXvPJnI5jRxHczm4lLbaMcDKK84HZL5T9mLU
-	9lBg1rQEJvvRMlxXX0waSCk8NBAMf/Xo0OOH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NjpROVACqKe0Xz9+/qcbISjoNjLBVJEG
-	x+zelb6A3D3vQw1KM914jX1u/WNpqpC3vWDn82bD4wAcVTKlWjX/CcEdU9PnmjT0
-	ocTpAK4sp8K4tjvJ2OJAI7caGus+rgxGSAHZcWPOuOHZ2yKOun5lvM5zguARkB++
-	ad49s2YPVgg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 768399D05;
-	Tue,  4 Sep 2012 15:03:53 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C54379D03; Tue,  4 Sep 2012
- 15:03:52 -0400 (EDT)
-In-Reply-To: <7va9x5bqz4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 04 Sep 2012 11:08:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 449F23A6-F6C3-11E1-8D86-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932574Ab2IDTGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 15:06:32 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:64477 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932540Ab2IDTGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 15:06:31 -0400
+Received: by bkwj10 with SMTP id j10so2813418bkw.19
+        for <git@vger.kernel.org>; Tue, 04 Sep 2012 12:06:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=6xBJMYGkTN9W91eAurR6sFOwOc8/m4FU/7T2rz+saws=;
+        b=y1idXlaS7Q8R2FcHq/SytLpbpPJkBylpCfEPdHTRE7/bXGvi4tOpPlx4dzJtTr2lNG
+         etlr5WHGLW/MofcMf6aMYuVSw3kFQt/Tfo0Hh4d7WjdK0J2Lyu4udaSz5kGc+fXDudv7
+         OZb8cXeOG3jdaeYJVPN9MI9efxHk0JRNwILVAF+R+NlEdSAwXZ1k0VxlU5swSRR/hm67
+         kgUxXRnXicOUR+NqlZDetHxwiRn5B/G7Vvla/av8O2gmqmTfdmBJsZKx8zV4zrtJ4Eyg
+         MsLN725puFOOoreNxccRIsW+FrvN3/INuyzdDnGsOW6LDF4mpDdFReOEhzNKc8phtQwX
+         Zp6w==
+Received: by 10.205.117.141 with SMTP id fm13mr8747266bkc.125.1346785589924;
+        Tue, 04 Sep 2012 12:06:29 -0700 (PDT)
+Received: from [95.251.12.204] (host204-12-dynamic.251-95-r.retail.telecomitalia.it. [95.251.12.204])
+        by mx.google.com with ESMTPS id g6sm11251966bkg.2.2012.09.04.12.06.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 04 Sep 2012 12:06:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:13.0) Gecko/20120601 Thunderbird/13.0
+In-Reply-To: <7vd321dc0e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204766>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> mhagger@alum.mit.edu writes:
+Il 04/09/2012 17:49, Junio C Hamano ha scritto:
+> Marco Stornelli <marco.stornelli@gmail.com> writes:
 >
->> Please note that both absolute_path("") and real_path("") used to
->> return the current directory followed by a slash.  I believe that this
->> was a bug, and that it is more appropriate for both functions to
->> reject the empty string.  The evidence is as follows:
+>> 2012/9/4 Junio C Hamano <gitster@pobox.com>:
 >>
->> * If this were intended behavior, presumably the return value would
->>   *not* have a trailing slash.
+>>> I would expect, at least when you are responding to an existing
+>>> message, some of them are filled already (and if so, I think appp.sh
+>>> wants to know exactly how, for example, has RFC2047 quoting already
+>>> applied, or are we supposed to write in UTF-8 and let Thunderbird
+>>> massage the contents when we give the file back to it?), and also
+>>> there would appear In-Reply-To: field already filled (possibly there
+>>> may be References: as well).
+>>
+>> Message reply is out of scope of my patch. The goal here is send a
+>> patch, so the execution flow is to open a new message,
+>> clik on external editor (configured properly), select patch file and
+>> send. It was the scope of the old script and it is the scope of my
+>> patch.
 >
-> That is weak.  The only thing you can infer from that observation is
-> that the presense or absense of trailing '/' would not make any
-> difference to the caller who wanted a path to the cwd (and is more
-> convenient if the call is made so that a path relative to the cwd is
-> tucked after it).
-
-I still wonder why you want to reject "" as an input, as it could be
-argued that it is a valid way to say the current directory.
-
-What does realpath(3) do?
-
-    ... goes and looks ...
-
-The realpath(3) wants an existing path, and "" naturally gives NOENT,
-so we cannot really draw parallel from it.
-
-Ok, let's do this again.
-
-    $ ./test-path-utils absolute_path ""
-    /srv/git/git.git/
-    $ ./test-path-utils absolute_path "foo"
-    /srv/git/git.git/foo
-
-so a caller has to be prepared to see the returned path sometimes
-terminated with slash and sometimes without, to form an absolute
-path to the file "bar" in the directory it gives to these functions
-(i.e. "/srv/git/git.git/bar" vs "/srv/git/git.git/foo/bar").
-
-That is a reasonably good sign that either nobody calls these
-functions with "" or existing callers are buggy and would not handle
-that case well and need to be fixed anyway.
-
-So I am fine with die() in your patch.
-
-Thanks.
-
->> * I couldn't find any callers that appeared to depend on the old
->>   behavior.
+> I certainly can understand that you updated the script for that use
+> case and that use case only, but given that the original tries very
+> hard to preserve:
 >
-> That is a very good argument (especially if the audit were
-> thorough).
+>   - what was in $HEADERS (by only replacing Subject);
+>   - the recipients CC'ed in $HEADERS (by grabbing them into $CCS); and
+>   - the body of the message in $BODY (i.e. what came after $SEP),
 >
-> I would be tempted to say that we should die() on "" for now, cook
-> the result outside "master" for a few weeks while auditing the
-> callchains, and see if any of them complains.
+> I find it hard to believe that it was meant to work on a freshly
+> created empty message and nothing else.  If people were depending on
+> the recipients listed on Cc that are taken from $1 to be preserved,
+> your patch will introduce a regression for them, no?
+>
+
+I think all the process is different. Current script rely on the user to 
+fill Cc: and To: in message composition window, it does a union of what 
+found in commit message as signed-off-by (adding own address in cc?!) 
+and Cc (usually not filled in the commit message and we should even 
+count acked-by, tested-by and so on). My vision of things: the user can 
+create a patch *already* with all information using --to and --cc. If 
+you want to add optional addresses, you can of course add them in the 
+composition window. In addition, with this approach is really easy to 
+use external script as get_maintainer.pl of linux kernel, load the patch 
+and send, really easy. So I don't think it's a regression, it's only a 
+change in the work flow.
+
+Marco
