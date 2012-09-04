@@ -1,95 +1,108 @@
-From: Marco Stornelli <marco.stornelli@gmail.com>
-Subject: Re: [PATCH v4] Thunderbird: fix appp.sh format problems
-Date: Tue, 4 Sep 2012 08:37:55 +0200
-Message-ID: <CANGUGtBk7DME4pkhJhcYoaM-q_S+i9_6u_Ku-9N6D41Mx50ghg@mail.gmail.com>
-References: <5040C59A.6090303@gmail.com>
-	<50412E2D.7070503@kdbg.org>
-	<5041BC94.7000304@gmail.com>
-	<504214AA.9080706@kdbg.org>
-	<50425F8B.5020406@gmail.com>
-	<7voblognny.fsf@alter.siamese.dyndns.org>
-	<5044D162.1010608@gmail.com>
-	<7voblmeua3.fsf@alter.siamese.dyndns.org>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: checkout extra files
+Date: Tue, 4 Sep 2012 09:15:42 +0200
+Message-ID: <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+	<CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+	<7vsjayew50.fsf@alter.siamese.dyndns.org>
+	<CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+	<7vd322ebsz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 08:38:09 2012
+X-From: git-owner@vger.kernel.org Tue Sep 04 09:15:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8mlx-00064s-81
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 08:38:05 +0200
+	id 1T8nMU-0004AT-W2
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 09:15:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125Ab2IDGh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 02:37:57 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:56258 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172Ab2IDGh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 02:37:56 -0400
-Received: by eaac11 with SMTP id c11so1810590eaa.19
-        for <git@vger.kernel.org>; Mon, 03 Sep 2012 23:37:55 -0700 (PDT)
+	id S1753908Ab2IDHPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 03:15:44 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:41921 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004Ab2IDHPn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 03:15:43 -0400
+Received: by vcbfk26 with SMTP id fk26so6267653vcb.19
+        for <git@vger.kernel.org>; Tue, 04 Sep 2012 00:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=osN4te74CjR9Pi95VaOP44ZjX6kb/VsHHwaDwx/M3y4=;
-        b=DxKioE8/l9CxAnxsbcw/4xP6207YZ3Cl0fBa1f19ZbcNGCj1AgqfSntSaUqYifJ+34
-         SEr3KUUzAmHeA00v2jFq0KJXuGRSeKHU1dTW8jdgBJsQrmjro/RtqVhH5N1iDCrjJFfm
-         zkHjiPgyWuMqrPx5PvhdIeO2u7HmbWp4IpMEEgKfA5zKh2xaQ3hhG/5fnx+gKnZVFsm2
-         s5kz988fdpDE/zrOKgBuh3wUshP78YfmybtlGCyDPfwfYoMOYFRvkNSBakB8oLNTftFM
-         U0thgTazeGtGMEo+x/pBfoFB+aZO0XU47jehODcJ61PEIm4Sw8Va3rDzpAbEngTQ18XP
-         8FDA==
-Received: by 10.14.203.73 with SMTP id e49mr24734839eeo.27.1346740675322; Mon,
- 03 Sep 2012 23:37:55 -0700 (PDT)
-Received: by 10.14.68.129 with HTTP; Mon, 3 Sep 2012 23:37:55 -0700 (PDT)
-In-Reply-To: <7voblmeua3.fsf@alter.siamese.dyndns.org>
+        bh=yu8q3sPrfTcwteof3A71/rfPGhTQ/oPR9G9qQJ1zZxA=;
+        b=IpqFSWlaAcLfAbV3W1EQe3qpGWZck2neeQY8yWiE84xBPwUraxlPZTvfutUVSa7TlD
+         VNsWieYTLhWgT9y5IMDTe+AWF0ew2zQ8ujZF1ee1BRJiDdKZK65gTfSNU1BPdev69AAu
+         n4yWBJNCYxnFUa7B/C90xxi5rTrxbw6ZCVXTEp2BjY3WNWs+LVVTBjIEZZ8dFLQ84h4D
+         fIB1KWBPw0Tz83rf231M2uUuT4epoghMglYenAQemMrK0VGASqB7DDht3V2rtogHzCTR
+         LQWEmCVinrGvdt+jm/3yhF0pNUk0aJXlXLNo4TZzSGf2o8K58Q+xvYfgDc3EnU2PtuMj
+         qpAg==
+Received: by 10.220.218.144 with SMTP id hq16mr14267163vcb.61.1346742942798;
+ Tue, 04 Sep 2012 00:15:42 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Tue, 4 Sep 2012 00:15:42 -0700 (PDT)
+In-Reply-To: <7vd322ebsz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204719>
 
-2012/9/3 Junio C Hamano <gitster@pobox.com>:
-> Marco Stornelli <marco.stornelli@gmail.com> writes:
->
->> I tried the Johannes's script, but it seems it doesn't work well with
->> the pattern of format-patch (To: <mail1>,\n   <mail2>,\n
->> <mailN>). The multilines are not well managed.
->
-> I am guessing that the reason why Jonahhes's "copy our headers out
-> with continuation lines intact" approach does not work is because
-> Thunderbird does not want to see its own header part (i.e. that
-> which comes before that $SEP) contain RFC-2822 style continuation
-> lines.
->
-> Can you grab a typical input (i.e. the contents of what is passed as
-> $1 to the appp.sh script) and show us how it looks like here so that
-> we can take a look?  It would be fine to paste the contents, but we
-> might want to protect it from MUA by doing an attachment or a
-> pastebin URL.
+Hi all,
 
-I don't have thunderbird now but actually it's really simple:
+consider this example:
 
-Subject:
-To:
-Cc:
-$SEP
+$ mkdir gittest
+$ cd gittest
+$ git init
+Initialized empty Git repository in d:/gittest/.git/
+$ touch f1
+$ git add f1
+$ git commit commit -m "first commit"
+[master (root-commit) e6f935e] first commit
+ 0 files changed
+ create mode 100644 f1
+$ touch f2
+$ git checkout e6f9 -- *
+error: pathspec 'f2' did not match any file(s) known to git.
 
-Each data must be in a signle line, for example "Cc: <mail1>,.....,<mailN>"
+Note the error.
+It is clear that the set of file names that git checkout is taking is
+the union of the ones that
+match the specified path ('*') in the work directory (gittest) with
+the ones that match the
+path in the specified commit (e6f9).
+I am not questioning this behavior, but the documentation, which does
+not describe it:
 
->
-> It appears that the original script tries very hard to keep the
-> Subject: line at the beginning, but I am not sure if that is because
-> Thunderbird wants to read its "$1" that way, or it is just that
-> original appp.sh script happened to be written that way without real
-> reason.  If I were updating this script, what I would do would be
-> more like:
+   "It updates the named paths in the working tree from the index file or
+   from a named <tree-ish> ..."
 
-Ok, good coding then.
+There are two ways to read this sentence:
 
-Regards,
+    1.  "named paths" referred to working tree, i.e. the files whose
+names match the
+          paths among all the ones present in the working tree
+    2.  "named paths" referred to the index or tree-ish, i.e. the
+files whose names match
+          paths among oll the ones present in the index or tree-ish
 
-Marco
+In both cases, nothing tells the user that the matching of the paths
+is done over the union
+of the set of file names of the working tree + ndex or tree-ish.
+Indeed, the first time I have seen the error above I got quite
+confused because I thought
+that the checkout would restore the working directory as it was at the
+time I made the commit,
+without bothering about extra files that the directory contained at
+the moment (and note that
+f2 is not even a tracked one).
+This behavior is a bit strange, but if it is a hundred percent clearly
+documented I can live
+with it.
+
+I think that knowing precisely what files are involved in this command
+is essential for the user.
+
+-Angelo
