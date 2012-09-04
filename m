@@ -1,98 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Tue, 04 Sep 2012 09:58:11 -0700
-Message-ID: <7vzk55bu8s.fsf@alter.siamese.dyndns.org>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de>
- <7vr4qqzsbe.fsf@alter.siamese.dyndns.org>
- <002201cd86ce$285841b0$7908c510$@schmitz-digital.de>
- <7vfw74s3oy.fsf@alter.siamese.dyndns.org>
- <003d01cd8827$34e90180$9ebb0480$@schmitz-digital.de>
- <7vpq64f935.fsf@alter.siamese.dyndns.org>
- <000d01cd89b6$d5ba6c30$812f4490$@schmitz-digital.de>
- <7v1uijexor.fsf@alter.siamese.dyndns.org>
- <003601cd8a0f$6a792840$3f6b78c0$@schmitz-digital.de>
+Subject: Re: [RFC] i18n.pathencoding
+Date: Tue, 04 Sep 2012 10:19:51 -0700
+Message-ID: <7vvcftbt8o.fsf@alter.siamese.dyndns.org>
+References: <201209010811.33994.tboegi@web.de>
+ <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, "'Johannes Sixt'" <j6t@kdbg.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Tue Sep 04 18:58:22 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:20:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8wSD-0007LL-RR
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 18:58:22 +0200
+	id 1T8wnB-000638-UN
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757396Ab2IDQ6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 12:58:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46285 "EHLO
+	id S932467Ab2IDRTz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Sep 2012 13:19:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57044 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753443Ab2IDQ6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 12:58:13 -0400
+	id S1751178Ab2IDRTy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 13:19:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 382EC99CB;
-	Tue,  4 Sep 2012 12:58:13 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CBF19FED;
+	Tue,  4 Sep 2012 13:19:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bjsbRAVNa/ufom4iTbMuzYqAscw=; b=tH2Zxb
-	Uwjckn304JP5QgwNS/8EX+14EbGeaTXomyYYVbuBGeesIlGg/juSv3cItQuhmd57
-	EUA3l5JobP6qE2v8C8yRJm/oEBzr/eyDYyIAvCdqSPw8H5zSJh3ylV3w9ITEgtHL
-	iwM2gJmrsbTJxGW23MEJFXc1/oIjypksRf5SU=
+	:content-type:content-transfer-encoding; s=sasl; bh=1OqJuV+1g9ur
+	MrjTSwepL27gSAQ=; b=yQifhfkSIfbAw85P+GVCrKcEUYhjZjm/H9+up0R6QhfQ
+	ME+scnrxffHQ+yFQLZuLJ4N1E/pe2JHH755nyLvrS/2SABQ4h0X9Wr18ZELfYO0C
+	ZDi54NOd6tXoh3UZggK1UKJHkiGZeLxjGb4wDwIyREz8VzqnJ3fO+El87CDQEG8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HkGru/vHDC3AGYAq1i0QGmxgrbkZOyks
-	7nXQ0J9Y+LVpw7La9U16y4OVuUl3zzNpddqxvNvzbd/gcgUXAdfbr4VNIe4bSHAE
-	5Hxhx6UF6LzdKW2rCzkTiGcWGPQIQeo1jjFssjWsPnp9wRS0xiR8C+e8fJiEURA7
-	8Boej1kkXYU=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xuqXzi
+	O16THeB/YG9rRbU2L5ybBBLnXo+4DfFvOPhSTlBYYByOPF9GgQBd1pCrJ9kV3CX9
+	NWR7ltH/Cgn+XT5jGhNEFozXzBoDOzW4O5ywkWnVWxKQto6DGMVsPV2uGq4XOVUz
+	HNFCKw0ByoyNM/Kgnhn7WQvHrVBUgxyJ+fl4s=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 246F899CA;
-	Tue,  4 Sep 2012 12:58:13 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39D669FEC;
+	Tue,  4 Sep 2012 13:19:53 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C32999C8; Tue,  4 Sep 2012
- 12:58:12 -0400 (EDT)
-In-Reply-To: <003601cd8a0f$6a792840$3f6b78c0$@schmitz-digital.de> (Joachim
- Schmitz's message of "Mon, 3 Sep 2012 22:05:06 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9CDA9FEB; Tue,  4 Sep 2012
+ 13:19:52 -0400 (EDT)
+In-Reply-To: <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 4 Sep 2012 19:23:35 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B640AB68-F6B1-11E1-B1E0-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BD39999A-F6B4-11E1-9378-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204753>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
->> If you cannot re-trigger the timer, then you will see "20%" shown
->> after one second, silence for 4 seconds and then "done", for an
->> operation that takes 5 seconds.  Which is not the end of the world,
->> though.  It does not affect correctness.
+> On Sat, Sep 1, 2012 at 1:11 PM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+>> diff --git a/parse-options.c b/parse-options.c
+>> index c1c66bd..5840c18 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -476,7 +476,7 @@ int parse_options(int argc, const char **argv, c=
+onst char *prefix,
+>>                 usage_with_options(usagestr, options);
+>>         }
+>>
+>> -       precompose_argv(argc, argv);
+>> +       reencode_argv(argc, argv);
+>>         return parse_options_end(&ctx);
+>>  }
 >
-> That does seem to work, if I do e.g. a "git clone" on git itself
-> (being a fairly large repository), I see it updating the % values
-> about once per second.
+> If you have to re-encode command line arguments, what about paths
+> coming --stdin or a file?
 
-Ehh, so somebody is re-arming the alarm().  I am not sure where,
-though.
-
- ... thinks for a while, then a lightbulb slowly starts to glow ...
-
-Where are you cloning from, and does the other side of the clone
-(i.e. upload-pack) also run on your tandem port?  If you are cloning
-from one of my public distribution points (e.g. k.org, repo.or.cz,
-or github.com), then I think the progress indicator you are seeing
-is coming from the other side, not generated by your local timer.
-
-Only with the observation of "clone", I cannot tell if your timer is
-working.  You can try repacking the test repository you created by
-your earlier "git clone" with "git repack -a -d -f" and see what
-happens.
-
-> OK, I'll go for that one-liner in git-compat-utils.h then
->
-> #ifdef NO_SETITIMER /* poor man's setitimer() */
-> #define setitimer(w,v,o) alarm((v)->it_value.tv_sec+((v)->it_value.tv_usec>0))
-> #endif
->
-> It certainly seems to work just fine for me.
+That problem is inherited from the MacOS precompose topic this one
+builds on.  Not that it is unimportant to fix, though.
