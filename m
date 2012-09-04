@@ -1,97 +1,76 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH 1/2] Support for setitimer() on platforms lacking it
-Date: Tue, 4 Sep 2012 19:23:55 +0200
-Message-ID: <002801cd8ac2$10937480$31ba5d80$@schmitz-digital.de>
-References: <003301cd81e4$cd68daa0$683a8fe0$@schmitz-digital.de> <7vr4qqzsbe.fsf@alter.siamese.dyndns.org> <002201cd86ce$285841b0$7908c510$@schmitz-digital.de> <7vfw74s3oy.fsf@alter.siamese.dyndns.org> <003d01cd8827$34e90180$9ebb0480$@schmitz-digital.de> <7vpq64f935.fsf@alter.siamese.dyndns.org> <000d01cd89b6$d5ba6c30$812f4490$@schmitz-digital.de> <7v1uijexor.fsf@alter.siamese.dyndns.org> <003601cd8a0f$6a792840$3f6b78c0$@schmitz-digital.de> <7vzk55bu8s.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] Add git-check-ignores
+Date: Tue, 04 Sep 2012 10:26:32 -0700
+Message-ID: <7vmx15bsxj.fsf@alter.siamese.dyndns.org>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org>
+ <1346544731-938-10-git-send-email-git@adamspiers.org>
+ <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Johannes Sixt'" <j6t@kdbg.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 19:24:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 19:26:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8wrD-0000nw-Ri
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:24:12 +0200
+	id 1T8wtg-0002n7-IF
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 19:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757379Ab2IDRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 13:24:04 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:59078 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512Ab2IDRYC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 13:24:02 -0400
-Received: from DualCore (dsdf-4d0a1636.pool.mediaWays.net [77.10.22.54])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0Lxqdc-1Tco200gDc-015Lr3; Tue, 04 Sep 2012 19:24:00 +0200
-In-Reply-To: <7vzk55bu8s.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIhsC26HFNXVNf5LMacgAbi0X2P9gIuBdH5AgQ1j9EAzDU6SAHd2fuOAzRbc6QCZvCE2AIPCL7WANNwrfABx6z0HpZJE2tA
-Content-Language: de
-X-Provags-ID: V02:K0:LXVNQCGq6WRoz81JHbBcq/VcSwCeontwT750Tf6GCTp
- kx4nzvqqwxFWS4gwabCz9A9Dzpoy26547UWxaEXSMgIpb86jQb
- +78JjVAdXV/I/0hfpsWw9WEJEP1sT3MjcEKVvjFWMlVZ3hxnCH
- qLZCYoscInhMNbrBQHebO9yjJGTfGTdN1jzwouG9Gk7U5yJLxB
- Om7e20KmPVFrA5cdEUu9zX53MDVLArD7eyAze7WoXM04me3QPC
- rtRQYQdDceOXjO/6ixFyxGU8R4ySkmW7sNpSawcwctAM0kAnvn
- K8E6X1gDTtOIidGjvNynWzJUMhmevqtkNAtmnELL2dep62GfZr
- bJOa5I+s7clwG6PnoSEG5mxptPbBiSA17Zy+LQTJGqQ11y3I6Z
- VpALt4NYNv9oA==
+	id S932586Ab2IDR0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 13:26:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60216 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757403Ab2IDR0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 13:26:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B8BB81CC;
+	Tue,  4 Sep 2012 13:26:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=R3oAIfPRXY/VfQGpocNs//Wgsm8=; b=noVHbV
+	S7pDveqijqrsHMXYm6fPAFoPZ2T01JmqcwqeoFsI5jHI+lDXOS5nWCBCvcs/PT/J
+	HlppilZGjczchR209Bz9YbKhceREw43zDQpI+MQAHxcV+YKqt0c+Gg2JPlJCvw4L
+	5yuc+22nDhERL737dHEvdrBWZtItArL9TpLlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bdjjfXR6no1LThBgvWEyNJaM2ouMg5mx
+	u2gYFq0FLbxSLfjDZH4IT4AdYb4LQ4FiKIaB99kfxTd/gQVeLvUJIZWqWdMzczsm
+	Ha7HhvyyTW9PkBUgQett4Mxv6QAQvovZ3qCh8A0VR9fpeIFIPdA4US28UMOBDRpG
+	ICxl3lmgqhw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291DB81CB;
+	Tue,  4 Sep 2012 13:26:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9F8081C0; Tue,  4 Sep 2012
+ 13:26:33 -0400 (EDT)
+In-Reply-To: <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 4 Sep 2012 20:06:12 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC3D55AE-F6B5-11E1-A600-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204757>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Tuesday, September 04, 2012 6:58 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org; 'Johannes Sixt'
-> Subject: Re: [PATCH 1/2] Support for setitimer() on platforms lacking it
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> >> If you cannot re-trigger the timer, then you will see "20%" shown
-> >> after one second, silence for 4 seconds and then "done", for an
-> >> operation that takes 5 seconds.  Which is not the end of the world,
-> >> though.  It does not affect correctness.
-> >
-> > That does seem to work, if I do e.g. a "git clone" on git itself
-> > (being a fairly large repository), I see it updating the % values
-> > about once per second.
-> 
-> Ehh, so somebody is re-arming the alarm().  I am not sure where,
-> though.
-> 
->  ... thinks for a while, then a lightbulb slowly starts to glow ...
-> 
-> Where are you cloning from, and does the other side of the clone
-> (i.e. upload-pack) also run on your tandem port?  If you are cloning
-> from one of my public distribution points (e.g. k.org, repo.or.cz,
-> or github.com), then I think the progress indicator you are seeing
-> is coming from the other side, not generated by your local timer.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I used GutHub
-The cloning from NonStop doesn't work at all, different story, but looks like poll isn#t working.
-Not poll's fault tough, but on out plaftom ssh (non-interactive) give a pipe rather than a socket and recv(...MSG_PEEK) then fails
-with ENOTSOCK
+>> +static void output_exclude(const char *path, struct exclude *exclude)
+>> +{
+>> +       char *type = exclude->to_exclude ? "excluded" : "included";
+>> +       char *bang = exclude->to_exclude ? "" : "!";
+>> +       char *dir  = (exclude->flags & EXC_FLAG_MUSTBEDIR) ? "/" : "";
+>> +       printf(_("%s: %s %s%s%s "), path, type, bang, exclude->pattern, dir);
+>
+> These English words "excluded" and "included" make the translator me
+> want to translate them. But they could be the markers for scripts, so
+> they may not be translated. How about using non alphanumeric letters
+> instead?
 
-> Only with the observation of "clone", I cannot tell if your timer is
-> working.  You can try repacking the test repository you created by
-> your earlier "git clone" with "git repack -a -d -f" and see what
-> happens.
-
-It does update the counter too.
-
-> > OK, I'll go for that one-liner in git-compat-utils.h then
-> >
-> > #ifdef NO_SETITIMER /* poor man's setitimer() */
-> > #define setitimer(w,v,o) alarm((v)->it_value.tv_sec+((v)->it_value.tv_usec>0))
-> > #endif
-> >
-> > It certainly seems to work just fine for me.
-
-Bye, Jojo
+I agree they should not be translated, but it is a disease to think
+unintelligible mnemonic is a better input format for scripts than
+the spelled out words.  "excluded/included" pair is just fine.
