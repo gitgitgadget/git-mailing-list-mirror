@@ -1,89 +1,72 @@
-From: mhagger@alum.mit.edu
-Subject: [PATCH 5/7] t0000: verify that real_path() works correctly with absolute paths
-Date: Tue,  4 Sep 2012 10:14:28 +0200
-Message-ID: <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 10:22:59 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: checkout extra files
+Date: Tue, 04 Sep 2012 01:53:34 -0700
+Message-ID: <7v8vcqdv8x.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 04 10:54:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8oPL-0003jr-CQ
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 10:22:51 +0200
+	id 1T8otY-0007ji-8d
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 10:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175Ab2IDIWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 04:22:37 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:46159 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752352Ab2IDIWg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 04:22:36 -0400
-X-AuditID: 12074411-b7fa36d0000008cc-58-5045b89a9b4a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id E9.5F.02252.A98B5405; Tue,  4 Sep 2012 04:15:22 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q848EtSZ025047
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 4 Sep 2012 04:15:21 -0400
-X-Mailer: git-send-email 1.7.11.3
-In-Reply-To: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFIsWRmVeSWpSXmKPExsUixO6iqDtrh2uAQfcza4uuK91MFg29V5gt
-	nsy9y2xxe8V8ZgcWj7/vPzB5PHzVxe5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGTPfehYc
-	56p4876BuYHxAUcXIyeHhICJxIQt91kgbDGJC/fWs4HYQgKXGSWePHbvYuQCsk8zSfxbsIgZ
-	JMEmICXxsrGHHcQWEVCTmNh2CKyZWSBd4sSCdjBbWCBc4vHSJ0wgNouAqkTX5rVgcV4BF4mV
-	n/6wQSxTlPjxfQ3YTE4BV4lXH14DxTmAlrlIfHzgPIGRdwEjwypGucSc0lzd3MTMnOLUZN3i
-	5MS8vNQiXVO93MwSvdSU0k2MkNAR3ME446TcIUYBDkYlHt7KTy4BQqyJZcWVuYcYJTmYlER5
-	7Ta7BgjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b29GijHm5JYWZValA+TkuZgURLn5Vui7ick
-	kJ5YkpqdmlqQWgSTleHgUJLg3bcdqFGwKDU9tSItM6cEIc3EwQkiuEA28ABtyAIp5C0uSMwt
-	zkyHKDrFqCglzrsCJCEAksgozYMbAIvyV4ziQP8I864HqeIBJgi47ldAg5mABru+dwEZXJKI
-	kJJqYMy5dLH0paX6P94L7/MPiCi1HJMMVb6lIBVXasC5Mur45Mdv09Y21t1reFEjnRk3WSm4
-	l3ubkGDCatM4dvMLdofKb213PBmVO/HVQ9fE3Z/m9m09dPZsREVi4DzlQzL/Pnz5e+AKt+Bj
-	Ntb0Ru2WqS7Wb6Z9W7rkdsqSRVq8038bd+ppqZX/E1diKc5INNRiLipOBABmigjo 
+	id S1756554Ab2IDIxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 04:53:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754577Ab2IDIxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 04:53:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0999B7FA4;
+	Tue,  4 Sep 2012 04:53:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=drcz4lq5a9FroxT3/WFW6B0LsSM=; b=xDF89R
+	Us0CaQ7dNOB7CmLSLsXn47wuc1l3cXO+fzGI3OTyozj3/8ovrfjERjSfAxATCA6u
+	fSd3gIHS9Ok2mCLcx+tExTWfAAQCZ2ML6J+FeuYWCVu+HN5+pmoOJYPPFvWWYPdm
+	tw+YBXMZCZmlJF8MW3E/BiFXLg5kaSoDIvnv4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m6zBl+iLP19VTVAu9t02wJsd14IE9tvH
+	HtPWOqR96yOqkgHvC70rCdrFgD9Y0hT7EfSkuSbpbZ+//wE2mR/KwaAZVi4RVz4A
+	bJrfih7+iC5dwc9p5N0EnEaoDMu53t3V0BOJNt9hBvkQ0XfBq/k617poWOU6D/DV
+	3cGx9Xv6ALc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E70B37FA3;
+	Tue,  4 Sep 2012 04:53:36 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61B297FA2; Tue,  4 Sep 2012
+ 04:53:36 -0400 (EDT)
+In-Reply-To: <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com> (Angelo
+ Borsotti's message of "Tue, 4 Sep 2012 09:15:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 038AA1EC-F66E-11E1-BAAD-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204729>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-There is currently a bug: if passed an absolute top-level path that
-doesn't exist (e.g., "/foo") it incorrectly interprets the path as a
-relative path (e.g., returns "$(pwd)/foo").  So mark the test as
-failing.
+>    "It updates the named paths in the working tree from the index file or
+>    from a named <tree-ish> ..."
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t0000-basic.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 1a51634..ad002ee 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -458,7 +458,17 @@ test_expect_success 'real path rejects the empty string' '
- 	test_must_fail test-path-utils real_path ""
- '
- 
--test_expect_success SYMLINKS 'real path works as expected' '
-+test_expect_failure 'real path works on absolute paths' '
-+	nopath="hopefully-absent-path" &&
-+	test "/" = "$(test-path-utils real_path "/")" &&
-+	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
-+	# Find an existing top-level directory for the remaining tests:
-+	d=$(pwd -P | sed -e "s|^\(/[^/]*\)/.*|\1|") &&
-+	test "$d" = "$(test-path-utils real_path "$d")" &&
-+	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
-+'
-+
-+test_expect_success SYMLINKS 'real path works on symlinks' '
- 	mkdir first &&
- 	ln -s ../.git first/.git &&
- 	mkdir second &&
--- 
-1.7.11.3
+It checks out the contents of the named paths out of either the
+index or out of the tree-ish and stores that to a file in the
+working tree.  The working tree is not consulted by Git to tell what
+paths the user wants to affect at all, but if you pass fileglob,
+your shell may consult the working tree to expand it to concrete
+pathnames it gives to Git.
