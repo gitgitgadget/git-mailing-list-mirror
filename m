@@ -1,83 +1,86 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC] i18n.pathencoding
-Date: Tue, 04 Sep 2012 21:51:24 +0200
-Message-ID: <50465BBC.30203@web.de>
-References: <201209010811.33994.tboegi@web.de> <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com> <7vvcftbt8o.fsf@alter.siamese.dyndns.org>
+Date: Tue, 04 Sep 2012 13:12:50 -0700
+Message-ID: <7vy5kp8s3h.fsf@alter.siamese.dyndns.org>
+References: <201209010811.33994.tboegi@web.de>
+ <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com>
+ <7vvcftbt8o.fsf@alter.siamese.dyndns.org> <50465BBC.30203@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZQ==?= =?UTF-8?B?cnNoYXVzZW4=?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 21:51:44 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 04 22:13:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8z9s-0001BQ-5O
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 21:51:36 +0200
+	id 1T8zUd-000068-BX
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 22:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757745Ab2IDTv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Sep 2012 15:51:29 -0400
-Received: from mout.web.de ([212.227.15.4]:62585 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757689Ab2IDTv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 15:51:28 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LyDph-1Td2z20job-015OhP; Tue, 04 Sep 2012 21:51:25 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <7vvcftbt8o.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:q0GQcOqZ2wlCAroO89BuJLMhrJ3a02byIigm32jdaTv
- zRT90mcE4r9bH1Tk/6bguUL+3TZ787vD177tklr5E71PMqFPIe
- UTLXU5Z1fLyauRmBfTrAey9eF3cLLpdRdGfx5hYO7qFR/eKPRf
- XgKHV8LbEQPH+NJ8r81RKTRTvRlJLid0W4e5U6ZAM6y3AliKlE
- IZXmVfeDZhSHiXTKG1LYA==
+	id S932469Ab2IDUM4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Sep 2012 16:12:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49124 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932356Ab2IDUMz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 16:12:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFBEA90BF;
+	Tue,  4 Sep 2012 16:12:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=mb3lUKRK0xTE
+	YYBZDfwUwTt/CXk=; b=tJUBd0Oy2mYAjsvxOAO/Gs9umWwnTiXg/LOuJ+vGoG5w
+	2RpAEJr3DDjiFOHfHoJxijuC0mUBv3nl9TPtmJggsEI6jMts5ONZJ38qVLaOTMVV
+	nCIEd+wSCA6OxJpM645AxeNZf2BRogAP+TYMEYSKy7zjGDr1CdJXRMEUmsC0xtQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=SysUdV
+	/2FOp3rDYuO4ZqqEH8thjgWi5VP/e2CFuwyJqdzLTyZbkcSnudk3YTz3d4Hh/7zh
+	rLJiSOKylsuB4WiYGpfBzHzZMdqMLUscY3AOqDc+csHDDD9f1DmMnJ5HXgDGzAcW
+	h9Hm+rMNSgVhEWLQsohNdXha4hdjwENvW48LM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADD5490BE;
+	Tue,  4 Sep 2012 16:12:52 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89D0190BA; Tue,  4 Sep 2012
+ 16:12:51 -0400 (EDT)
+In-Reply-To: <50465BBC.30203@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ =?utf-8?Q?=22's?= message of "Tue, 04 Sep 2012 21:51:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E7833D42-F6CC-11E1-A7B8-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204781>
 
-On 04.09.12 19:19, Junio C Hamano wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->=20
->> On Sat, Sep 1, 2012 at 1:11 PM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->>> diff --git a/parse-options.c b/parse-options.c
->>> index c1c66bd..5840c18 100644
->>> --- a/parse-options.c
->>> +++ b/parse-options.c
->>> @@ -476,7 +476,7 @@ int parse_options(int argc, const char **argv, =
-const char *prefix,
->>>                 usage_with_options(usagestr, options);
->>>         }
->>>
->>> -       precompose_argv(argc, argv);
->>> +       reencode_argv(argc, argv);
->>>         return parse_options_end(&ctx);
->>>  }
->>
->> If you have to re-encode command line arguments, what about paths
->> coming --stdin or a file?
->=20
-> That problem is inherited from the MacOS precompose topic this one
-> builds on.  Not that it is unimportant to fix, though.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Thanks for the comments,=20
-(actually the precompose feature started as "fully" reencode,
-and was downsized to only do the readdir() and argv[] conversion)
+> This leads to 2 questions:
+> a) Do we want the reencode feature in git, so that I continue to work=
+ on it?
+>    From a performance point of view that would probably OK:
+>    The "git status" on a linux tree was slightly slower on my PC when=
+ measured with time.
+>    From the user experience there was not a difference.
 
-This leads to 2 questions:
-a) Do we want the reencode feature in git, so that I continue to work o=
-n it?
-   From a performance point of view that would probably OK:
-   The "git status" on a linux tree was slightly slower on my PC when m=
-easured with time.
-   From the user experience there was not a difference.
-b) If yes,
-   I have to admit that I don't use paths from --stdin or file so much,
-   except "git am" or "git format-patch"
-   Which commands are affected?
-  =20
+I am not fundamentally opposed to such a change, as long as the
+change does not affect performance at all when the feature is not
+used, and the resulting code does not become too ugly.
+
+Use of the "reencode" feature may have to make things slow, but you
+have to spend some cycle to do what the feature has to do anyway,
+so...
+
+> b) If yes,
+>    I have to admit that I don't use paths from --stdin or file so muc=
+h,
+>    except "git am" or "git format-patch"
+>    Which commands are affected?
+
+$ git grep -l -e '--stdin' Documentation/git*
+
+may be a good starting point.
