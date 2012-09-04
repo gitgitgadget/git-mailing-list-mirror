@@ -1,90 +1,90 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: New git.pot generated with 2 new l10n messages
-Date: Wed, 5 Sep 2012 06:46:45 +0800
-Message-ID: <CANYiYbFWbNAndox+NS-m=-NZZECG4647mMDzMxAoKjkqTnk5Sw@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: checkout extra files
+Date: Tue, 4 Sep 2012 23:53:47 +0100
+Organization: OPDS
+Message-ID: <53AE674D81CD4B9CB013C1DE846240B2@PhilipOakley>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com> <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com> <7vsjayew50.fsf@alter.siamese.dyndns.org> <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com> <7vd322ebsz.fsf@alter.siamese.dyndns.org> <CACsJy8C36eghwEOYqbnd2z5C5KnynWsvwMDa4e2hns3uW243EQ@mail.gmail.com> <CAB9Jk9CNYr6LfWvyVqXvHjh7dzhUAuzkufqO9YMeOXg08D2cJw@mail.gmail.com> <CACsJy8AUYigHVKjzE-0NT0hnOrQWdufN+COmkk=2Q8L1Rimytw@mail.gmail.com> <CAB9Jk9D0DHBJEpVq=Z=12TV=+Av0oFVZ0yO1svLh1wyuP+9r1Q@mail.gmail.com> <7v4nndd98g.fsf@alter.siamese.dyndns.org> <CAB9Jk9DVcG14mS3HaGE4JEY0AwExvjqrnQqzTEZxHLjEQ6UObg@mail.gmail.com> <7vobll8qn2.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?ISO-8859-1?Q?Jan_Kr?= =?ISO-8859-1?Q?=FCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Riku <lu.riku@gmail.com>,
-	Zhuang Ya <zhuangya@me.com>,
-	Lian Cheng <rhythm.mail@gmail.com>,
-	Yichao Yu <yyc1992@gmail.com>,
-	ws3389 <willsmith3389@gmail.com>, Thynson <lanxingcan@gmail.com>
-To: Byrial Jensen <byrial@vip.cybercity.dk>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Vincent van Ravesteijn <vfr@lyx.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 00:46:59 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Angelo Borsotti" <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 00:53:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T91tW-0003Gc-Di
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 00:46:54 +0200
+	id 1T9203-0007vj-CU
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 00:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932854Ab2IDWqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 18:46:47 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:64554 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757824Ab2IDWqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 18:46:46 -0400
-Received: by ieje11 with SMTP id e11so6298072iej.19
-        for <git@vger.kernel.org>; Tue, 04 Sep 2012 15:46:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=zuIG6pjbxO5mDPtiPDtgo8y2KydeWLJu08P08Rfj9Xk=;
-        b=RVCiixKhs1PiZrtVR31NkJB14iiplLH6ldZoj4uxBdwLxDtLYu7O8rEkzlWLNDO9hY
-         KS1mBzwnxDamXwiKawRSoMaEspKgxlx69DzD4ELGyjkZk8zm5zFxg1irZactH/JDKrEB
-         UcyGG2ZjhZxMtA2IsT+5ezJEBBPw+cwlxXUTY4SDPOgpY+34JeYO6luPvI+n3eTAEEJi
-         e0caWrYzHYBT3vKJn484tksFx5qTQ4HjgIUPB4N8awypA/cFdBes28pnKWbBe8NjVIsN
-         p1c/B6nxzTlUKR6s5v5sOgTkFwz4v6LHR5ksuEUmGTEzN93NZGbSqq/XsKy5ynppIQ+a
-         k/5Q==
-Received: by 10.50.89.169 with SMTP id bp9mr16004921igb.59.1346798805535; Tue,
- 04 Sep 2012 15:46:45 -0700 (PDT)
-Received: by 10.50.17.104 with HTTP; Tue, 4 Sep 2012 15:46:45 -0700 (PDT)
+	id S1757896Ab2IDWxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 18:53:32 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:57793 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752880Ab2IDWxb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Sep 2012 18:53:31 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ar4OADGFRlBZ8rU+/2dsb2JhbABFi0SuWgEBgQOBCIIbBQEBBQgBAS4eAQEhCwIDBQIBAxUBCyUUAQQIEgYHCQENBgESCAIBAgMBh20DELE5DYlSiiZjghgeGgWBEIJtYAOIG4VDhieMZoUIgmQ
+X-IronPort-AV: E=Sophos;i="4.80,369,1344207600"; 
+   d="scan'208";a="402832537"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 04 Sep 2012 23:53:29 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204791>
 
-Dear l10n team members,
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Tuesday, September 04, 2012 9:44 PM
+> Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+>
+>> The issue here is that the paths must denote filenames that are
+>> present in the index
+>> or tree-ish, so, wildcards are misleading since they would instead be
+>> interpreted
+>> with respect to the working directory.
+>
+> When you are talking to a shell (and you almost never directly talk
+> to Git), wildcards are always interpreted with respect to the
+> working directory by the shell.  And that is not specific to Git.
+>
+>> A possible way to make this clear is to warn the user to quote paths
+>> that contain
+>> wildcards. Something like, e.g.:
+>>
+>>   "Note that <paths> that contain wildcards must be quoted in order 
+>> to
+>> denote files that
+>>    belong to the index or <tree-ish>. Otherwise, they are interpreted
+>> by the shell with
+>>    respect to the current directory, with a result that may depend on
+>> the shell."
+>
+> Perhaps, if you drop ", with a result..." from that sentence.
+>
+> Even though that description is a bit too much on the side of "shell
+> primer" than "git documentation" for my taste, I could see it may
+> help some people, so I wouldn't reject such a phrasing out of hand.
+>
+> Let's see what others feel.
+>
 
-New "git.pot" is generated from v1.7.12-146-g16d26 in the master branch.
+A comment about the need to quote wild cards would certainly be of 
+advantage to many Windows users who won't have used a shell in that way 
+before.
 
-    l10n: Update git.pot (2 new, 4 removed messages)
-
-    Generate po/git.pot from v1.7.12-146-g16d26, and there are 2 new,
-    4 removed l10n messages.
-
-     * 2 new messages are added at lines:
-
-       4151, 4172
-
-     * 4 old messages are deleted from the previous version at lines:
-
-       350, 354, 2069, 4166
-
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-
-It's time for a new round of translation.
-
- * Fetch new commits from git://github.com/git-l10n/git-po
- * Update your "XX.po" according to the new "git.pot" file.
- * Start your translation and review your commits inside your l10n team.
- * Send a pull request to git-l10n/git-po on GitHub.
-
---
-Jiang Xin
+Plus I suspect that a large fraction of basic unix/linux users will have 
+never really considered the difference between shell expansion and git 
+expansion in this case where there are two diifferent 'file systems', as 
+demonstrated by the initial query. 
