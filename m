@@ -1,75 +1,78 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] fetch: align new ref summary printout in UTF-8 locales
-Date: Tue, 4 Sep 2012 08:31:03 +0700
-Message-ID: <CACsJy8B_aUfg6Cs_23UyjoVwQGrkBtMUoqOBQLTSM2cC=KfR3g@mail.gmail.com>
-References: <1346670609-19986-1-git-send-email-pclouds@gmail.com> <7vwr0aewlf.fsf@alter.siamese.dyndns.org>
+Subject: Re: checkout extra files
+Date: Tue, 4 Sep 2012 08:49:10 +0700
+Message-ID: <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com> <7vsjayew50.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 04 03:32:15 2012
+X-From: git-owner@vger.kernel.org Tue Sep 04 03:50:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T8hzx-0006G9-1a
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 03:32:13 +0200
+	id 1T8iHm-0007e6-8u
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Sep 2012 03:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756596Ab2IDBb6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Sep 2012 21:31:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55197 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756177Ab2IDBbe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Sep 2012 21:31:34 -0400
-Received: by iahk25 with SMTP id k25so4724121iah.19
-        for <git@vger.kernel.org>; Mon, 03 Sep 2012 18:31:34 -0700 (PDT)
+	id S1754451Ab2IDBtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Sep 2012 21:49:42 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:38999 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754318Ab2IDBtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Sep 2012 21:49:41 -0400
+Received: by ieje11 with SMTP id e11so4175562iej.19
+        for <git@vger.kernel.org>; Mon, 03 Sep 2012 18:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7XrAO5XMr0YY5LCtSAY9YXjJyiv+TU9FepTm3eQpb84=;
-        b=d9xeQdQlyR910rOd5AivWIHpx36SNCYqqvN73nUGogmgK4sYepmzafylzHwg/KhPmH
-         fEOicb/zGz4WNH0GOfPhdakT5iwVSU/oGvcvnQqu39kIV0qL0PKRzRt9k3BRuQn8Kd7S
-         n3sPSwbgxiZHVxuFy7W/5ynjGcYTLCCz0cy3jhj2uUzmavNTTa1Bn7C61GAu68EhgPC9
-         tahSxHK0p34qaxgc3cd0dZunLI04EcKWz3dOKqCG1Dhv/Tr5ccJXVu1E8P/9L6JkfDxE
-         ITPtdWmJTwSWQzkMafckEqiaZGr3Mdj7Wpb9tSArOZtd6VHEnuj0xIqJPRJzoHTR4xv2
-         dEeQ==
-Received: by 10.43.45.200 with SMTP id ul8mr16487868icb.36.1346722293986; Mon,
- 03 Sep 2012 18:31:33 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Mon, 3 Sep 2012 18:31:03 -0700 (PDT)
-In-Reply-To: <7vwr0aewlf.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        bh=u7/1YYK+99jwG7XLYVcA2+dKGoW7anSM6qo+8PPgTZo=;
+        b=TLB2kUie0vay8+puM+HZUiCAxt11VGjf5Tin8JXdyIL/efP6l2UrlRvOepVEK9yIdo
+         etNdmwrlYSZXpyR59VdU/yBRcMCR9R9LWRfrwqtJm71tOYnvyJy1ZI1PCW4S0kbcXW4x
+         Vo4uDPdFFyzU+zrDAnZUxrsuTgeHSZ5HrxsmZFGgaiTIbChDAMLe2o/sZto4bghYQL3K
+         wAvfX3lknrMxshv6Il0hxb+DsBR73EyHLHoE5UMEh4/qSElf7gYqg5wWI1M/Yu98/lgr
+         eILLJLXguZkBDivzN2BMyh5W0QiBxr7aBFXKIry6CuSNRa4rrrn4x+s8Qx5w7hKhLuNp
+         x52g==
+Received: by 10.50.178.97 with SMTP id cx1mr12288390igc.48.1346723381385; Mon,
+ 03 Sep 2012 18:49:41 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Mon, 3 Sep 2012 18:49:10 -0700 (PDT)
+In-Reply-To: <7vsjayew50.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204715>
 
-On Tue, Sep 4, 2012 at 2:26 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Tue, Sep 4, 2012 at 2:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> It's confusing but I don't think there's much we can do about it.
 >
->> fetch does printf("%-*s", width, "foo") where "foo" can be an utf-8
->> string, but width is bytes, not letters. This results in misaligned
->> ref summary table.
->
-> "but width is bytes, not letters" is a misleading statement.
->
-> Be careful about three different quantities when talking about
-> aligning on terminal output with monospaced fonts:
->
->  - How many bytes does the string occupy in memory?
->  - How many unicode codepoints are in the string?
->  - How many display columns does the string occupy on terminal?
->
-> Note that some "letters" (e.g. Han) occupy two display columns, and
-> you want to measure the "width" and compensate that for "bytes".
-> Letter count do not come into the picture for the purpose of aligning
-> the terminal output.
+> The user can, by telling the shell to expand '*' that does not match
+> to nothing, though.
 
-Hmm.. I did test with zh_CN.UTF-8 and it seemed to work. I'll check thi=
-s again.
---=20
+It works 99% the time, I don't think any users would bother setting
+that or studying the shell at that detail, until they are surprised.
+
+> Is there anything that is confusing in our documentation?  I am not
+> looking for a change to the documentation that protects it from
+> getting misunderstood by deliberately twisted interpretations (such
+> a change would make the resulting text would harder to read), but I
+> do want to make sure it is not prone to confusion even to a casual
+> and careless reader.
+>
+> For this particular scenario, I do not see anything offhand that is
+> unclear about the behaviour of Git in the documentation, even though
+> as you pointed out, if the user is unaware that the shell passes
+> globs unmodified when they do not match, it may lead to a confusion
+> like this.  I certainly do not want to do a full "introduction to
+> shell" in our documentation, but if adding a short sentence or two
+> helps to avoid confusion like this, I do not strongly object to it.
+
+Yeah, one or two sentences about two level expansion might help new
+users. I'll check that. Maybe in the pathspec definition, then split
+that part of out glossary-content.txt to be included in pathspec-using
+commands as a separate pathspec section. Too much?
+-- 
 Duy
