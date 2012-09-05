@@ -1,83 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: checkout extra files
-Date: Tue, 04 Sep 2012 16:31:09 -0700
-Message-ID: <7vwr0974ci.fsf@alter.siamese.dyndns.org>
-References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
- <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
- <7vsjayew50.fsf@alter.siamese.dyndns.org>
- <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
- <7vd322ebsz.fsf@alter.siamese.dyndns.org>
- <CACsJy8C36eghwEOYqbnd2z5C5KnynWsvwMDa4e2hns3uW243EQ@mail.gmail.com>
- <CAB9Jk9CNYr6LfWvyVqXvHjh7dzhUAuzkufqO9YMeOXg08D2cJw@mail.gmail.com>
- <CACsJy8AUYigHVKjzE-0NT0hnOrQWdufN+COmkk=2Q8L1Rimytw@mail.gmail.com>
- <CAB9Jk9D0DHBJEpVq=Z=12TV=+Av0oFVZ0yO1svLh1wyuP+9r1Q@mail.gmail.com>
- <7v4nndd98g.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9DVcG14mS3HaGE4JEY0AwExvjqrnQqzTEZxHLjEQ6UObg@mail.gmail.com>
- <7vobll8qn2.fsf@alter.siamese.dyndns.org>
- <53AE674D81CD4B9CB013C1DE846240B2@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Angelo Borsotti" <angelo.borsotti@gmail.com>,
-	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Sep 05 01:31:25 2012
+From: Ken Dreyer <ktdreyer@ktdreyer.com>
+Subject: [PATCH] cvsimport: strip question marks from tags
+Date: Tue,  4 Sep 2012 20:53:38 -0600
+Message-ID: <1346813618-20279-1-git-send-email-ktdreyer@ktdreyer.com>
+Cc: gitster@pobox.com, Ken Dreyer <ktdreyer@ktdreyer.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 05 04:54:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T92aW-0008KW-8f
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 01:31:20 +0200
+	id 1T95ko-0001du-K8
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 04:54:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885Ab2IDXbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Sep 2012 19:31:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59282 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752445Ab2IDXbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Sep 2012 19:31:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AA398ACC;
-	Tue,  4 Sep 2012 19:31:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PMe7w8yXNOTVXyZoaYBKf5gnfAY=; b=teUXjI
-	Xg0t+E7i1dsAyDunvIY0AN/wER8tSLRrtPT1XjmKc7LfpNNqAT9xLbCdwwDleBBj
-	cJjpKWupnLgEkeh7tVW8lFCNwAkxmBPDgewXLWztzzWAHJZrN98w537lDTX6yhJA
-	RdnxPFDCUysgCdkR1njlg1ZiErqgXWJDWaA9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WM5JneVIUPcgSZU6va0p6UeI/7xNx1WV
-	vTeFssIv9NGnFaEPIbi35He4qTGqMdGWtJJfhYLsEpp99R8v8jTVuucjzdteV2Hq
-	ws2a6Plbt2ZyOGYeG674Yse9d3OFR1zRCN0l48WiPh9zY+b3GEjm5C1f1vHaCvZu
-	Atp4PmjmboE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDABF8AC8;
-	Tue,  4 Sep 2012 19:31:11 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 585CA8AC6; Tue,  4 Sep 2012
- 19:31:11 -0400 (EDT)
-In-Reply-To: <53AE674D81CD4B9CB013C1DE846240B2@PhilipOakley> (Philip Oakley's
- message of "Tue, 4 Sep 2012 23:53:47 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9C582F46-F6E8-11E1-ABB6-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753038Ab2IECxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Sep 2012 22:53:48 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:52848 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751844Ab2IECxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Sep 2012 22:53:47 -0400
+Received: by ieje11 with SMTP id e11so70814iej.19
+        for <git@vger.kernel.org>; Tue, 04 Sep 2012 19:53:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=ChLqzx5DfpPLm6lGLbhVKIcFW8rOLJULE01fCUmq8Lo=;
+        b=KXmRMCma6UEofsu/WedwUz5tqciScnHYw8goASy1Wwmka32pFYcbG8ViWTwmmuGv9w
+         Zp5hZn+XtcZTaN9pfIphYHlNciW8ahpAD1lbXY28/tIWuCYueq/V+ePISxSyfRNcyO6z
+         X7m2IcXKhyF7Y7oOuvZrP7Dp31OFZkgABqc6UqDN8iaocVE/PfMyzA01ukP8zNpMA+xy
+         qtxXdNgWzZSGcgWlgLE3pjVFiQCSzJ9qWIq1dAC6PXXhamiIVkXdCpa9R38qOgO1+gXR
+         xFQl2+1wTlopeim0ZR1kcBfbv3netmKsDdE9g/D7mn82ignXs6oBDPMqGiy/1hpJFFzo
+         CkHA==
+Received: by 10.42.155.200 with SMTP id v8mr19501255icw.12.1346813627023;
+        Tue, 04 Sep 2012 19:53:47 -0700 (PDT)
+Received: from phos.ktdreyer.com (c-67-190-20-168.hsd1.co.comcast.net. [67.190.20.168])
+        by mx.google.com with ESMTPS id ho1sm6350598igc.3.2012.09.04.19.53.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 04 Sep 2012 19:53:46 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.4
+X-Gm-Message-State: ALoCoQkRZTdwbx8ln93iOD2X13KcLGW9zNeEWMdtb13clAN3xuXJPlfxb8DasekkGnEKOafzSMft
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204795>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+The "?" character can be present in a CVS tag name, but git's
+bad_ref_char does not allow question marks in git tags. If
+git-cvsimport encounters a CVS tag with a question mark, it will error
+and refuse to continue the import beyond that point.
 
-> A comment about the need to quote wild cards would certainly be of
-> advantage to many Windows users who won't have used a shell in that
-> way before.
->
-> Plus I suspect that a large fraction of basic unix/linux users will
-> have never really considered the difference between shell expansion
-> and git expansion in this case where there are two diifferent 'file
-> systems', as demonstrated by the initial query. 
+When importing CVS tags, strip "?" characters from the tag names as we
+translate them to git tag names.
 
-OK, anybody wants to do a patch on top of 5635be1 (on 'pu') or on
-caae319 (which is 5635be1^2), which adds an example of quoted
-fileglob to git-checkout documentation?
+Signed-off-by: Ken Dreyer <ktdreyer@ktdreyer.com>
+---
+ git-cvsimport.perl | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8d41610..36f59fe 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -890,6 +890,7 @@ sub commit {
+ 		$xtag =~ tr/_/\./ if ( $opt_u );
+ 		$xtag =~ s/[\/]/$opt_s/g;
+ 		$xtag =~ s/\[//g;
++		$xtag =~ s/\?//g;
+ 
+ 		system('git' , 'tag', '-f', $xtag, $cid) == 0
+ 			or die "Cannot create tag $xtag: $!\n";
+-- 
+1.7.11.4
