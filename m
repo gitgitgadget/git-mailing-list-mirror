@@ -1,107 +1,88 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 7/7] t0000: verify that real_path() removes extra slashes
-Date: Wed, 5 Sep 2012 17:52:10 +0700
-Message-ID: <CACsJy8DAbp1uDsNFFk1g9tuEV1qMnM2DZtxOwp5H9_VE7VwO1g@mail.gmail.com>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
- <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu> <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC] i18n.pathencoding
+Date: Wed, 5 Sep 2012 18:11:12 +0700
+Message-ID: <CACsJy8ARmPwELFhdvu_Y2kZNbYNgTzoqLzriH2oB7WtxM8D7hg@mail.gmail.com>
+References: <201209010811.33994.tboegi@web.de> <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com>
+ <7vvcftbt8o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: mhagger@alum.mit.edu, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Orgad and Raizel Shaneh <orgads@gmail.com>,
-	msysGit <msysgit@googlegroups.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 12:52:52 2012
+X-From: git-owner@vger.kernel.org Wed Sep 05 13:11:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9DE1-00027T-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 12:52:50 +0200
+	id 1T9DWW-00047G-Ix
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 13:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054Ab2IEKwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 06:52:42 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:33307 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751842Ab2IEKwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 06:52:41 -0400
-Received: by ieje11 with SMTP id e11so811381iej.19
-        for <git@vger.kernel.org>; Wed, 05 Sep 2012 03:52:40 -0700 (PDT)
+	id S1752819Ab2IELLo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Sep 2012 07:11:44 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43444 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403Ab2IELLn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2012 07:11:43 -0400
+Received: by iahk25 with SMTP id k25so611834iah.19
+        for <git@vger.kernel.org>; Wed, 05 Sep 2012 04:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=aLwJZI9gpt0EeC7IA10RkKwKF41xD7CnrT2Q619vTrE=;
-        b=vV/k5uTWk1FIMWJWKw9mf6CbtxrTHqDJ4KdAjVKMvCapF4KSi41FrD1KG0+3qSsT2l
-         17GujsCMXW22O6X5720FIWTmH0ryX1GZ9D83+PKCczb6jYLdUnUkcY+q9U90pt2+0iH0
-         KGtrQ9h0huMJQmIUvkKx30shd7fXvxcs55JuTlEfeO6HYVJJPoJ2oufF7aulgBM2z0zG
-         +6E7oksEbjT4SJZbVkBRR+HX2wC5tdSet9epZ3GlFJHEHJeuX9SKGX7y6NfJl3oU6xp1
-         +CL02jzeYOLpFgA7VCnk8VU4LGGRdKzUUvmgX9VjOJgvlNrqNy4Z6j1vm6AzNpQEXnEJ
-         eGEA==
-Received: by 10.50.159.130 with SMTP id xc2mr17420501igb.15.1346842360616;
- Wed, 05 Sep 2012 03:52:40 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Wed, 5 Sep 2012 03:52:10 -0700 (PDT)
-In-Reply-To: <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=8mDiWlGW0WNyg+4mGP+Ea8mo46PBbCFvCctnLqHBYOE=;
+        b=bW7N645kv11ydnlijTr7mDhjFGT1gO9KGgRQl033jQFoNFiA3eT2147RLeqkQEwyc6
+         7gk5jTfba7VKatFf7v1H9JGrZV57u1O6JcdzZ0snP9YIsV7ZaF4aNwjhorZaTbEpRLdr
+         d84EFbIu0LlOEZ1+EcRPcx09+DYMitCGwrrGY4f3moKZWCLVfICbJBuj07YGB3jZrtGG
+         WrPpisTuto8xQ31onVZuZbX5niHH+7aMSRVU9SxxBNpkgEMfroN5s9pasalTbDN6taiU
+         lcTwKTuHVxt6r0nVMxX2je0UYQz2ajNpFeRjow6qpwfnBHDvdNmQm+ASUPP4FlgkQKlN
+         G1ZA==
+Received: by 10.50.85.134 with SMTP id h6mr9590226igz.2.1346843502655; Wed, 05
+ Sep 2012 04:11:42 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Wed, 5 Sep 2012 04:11:12 -0700 (PDT)
+In-Reply-To: <7vvcftbt8o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204811>
 
-On Wed, Sep 5, 2012 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> mhagger@alum.mit.edu writes:
->
->> From: Michael Haggerty <mhagger@alum.mit.edu>
+On Wed, Sep 5, 2012 at 12:19 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>> On Sat, Sep 1, 2012 at 1:11 PM, Torsten B=C3=B6gershausen <tboegi@we=
+b.de> wrote:
+>>> @@ -476,7 +476,7 @@ int parse_options(int argc, const char **argv, =
+const char *prefix,
+>>>                 usage_with_options(usagestr, options);
+>>>         }
+>>>
+>>> -       precompose_argv(argc, argv);
+>>> +       reencode_argv(argc, argv);
+>>>         return parse_options_end(&ctx);
+>>>  }
 >>
->> These tests already pass, but make sure they don't break in the
->> future.
->>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>
->> It would be great if somebody would check whether these tests pass on
->> Windows, and if not, give me a tip about how to fix them.
+>> If you have to re-encode command line arguments, what about paths
+>> coming --stdin or a file?
 >
-> I think this (perhaps unwarranted) removal of the double leading
-> slashes is the root cause of
->
->     http://thread.gmane.org/gmane.comp.version-control.git/204469
->
-> (people involved in that thread Cc'ed).
+> That problem is inherited from the MacOS precompose topic this one
+> builds on.  Not that it is unimportant to fix, though.
 
-I gave up on that thread because I did not have a proper environment
-to further troubleshoot. Thanks Mike for giving me the clue about
-real_path(). I traced link_alt_odb_entry() and it does this:
+On fixing that. 76759c7 describes the change as:
 
-	if (!is_absolute_path(entry) && relative_base) {
-		strbuf_addstr(&pathbuf, real_path(relative_base));
-		strbuf_addch(&pathbuf, '/');
-	}
-	strbuf_add(&pathbuf, entry, len);
-	normalize_path_copy(pathbuf.buf, pathbuf.buf);
+    The argv[] conversion allows to use the TAB filename completion don=
+e
+    by the shell on command line.  It tolerates other tools which use
+    readdir() to feed decomposed file names into git.
 
-The culprit might be normalize_path_copy (I don't have Windows to test
-whether real_path() strips the leading slash in //server/somewhere). I
-tested normalize_path_copy() separately and it does strip leading
-slashes, so it needs to be fixed. Something like maybe:
+How come git's internal conversion helps TAB filename completion,
+which is done before git is executed? If it's the pathname output from
+git that helps tab completion, then perhaps we should convert at
+output time rather than input, by piping all the output through a
+converter when we know the output is textual. That keeps all paths in
+the same encoding internally (I hope).
 
-diff --git a/path.c b/path.c
-index 66acd24..ad2881c 100644
---- a/path.c
-+++ b/path.c
-@@ -503,6 +503,10 @@ int normalize_path_copy(char *dst, const char *src)
-                *dst++ = *src++;
-                *dst++ = *src++;
-        }
-+#ifdef WIN32
-+       else if (src[0] == '/' && src[1] == '/')
-+               *dst++ = *src++;
-+#endif
-        dst0 = dst;
-
-        if (is_dir_sep(*src)) {
-
-I'm not suitable for following this up as I don't have environment to
-test it. Maybe some msysgit guy want to step in?
--- 
+Just two cents. And I'm not against i18n.pathencoding or anything.
+--=20
 Duy
