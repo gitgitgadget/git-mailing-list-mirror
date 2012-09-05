@@ -1,90 +1,91 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 7/7] t0000: verify that real_path() removes extra slashes
-Date: Wed, 05 Sep 2012 10:40:35 +0200
-Message-ID: <50471003.9010207@viscovery.net>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu> <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu>
+Subject: Re: [PATCH 5/7] t0000: verify that real_path() works correctly with
+ absolute paths
+Date: Wed, 05 Sep 2012 10:40:27 +0200
+Message-ID: <50470FFB.2070204@viscovery.net>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu> <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Sep 05 10:40:56 2012
+X-From: git-owner@vger.kernel.org Wed Sep 05 10:40:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9BAO-0005RZ-1r
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 10:40:56 +0200
+	id 1T9BAN-0005RZ-Ip
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 10:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619Ab2IEIkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 04:40:39 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:60336 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750914Ab2IEIkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 04:40:37 -0400
+	id S1751059Ab2IEIkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 04:40:36 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:60252 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914Ab2IEIke (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 04:40:34 -0400
 Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1T9BA4-00047v-4Q; Wed, 05 Sep 2012 10:40:36 +0200
+	id 1T9B9w-0002QZ-Cj; Wed, 05 Sep 2012 10:40:28 +0200
 Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id DEB131660F;
-	Wed,  5 Sep 2012 10:40:35 +0200 (CEST)
+	by theia.linz.viscovery (Postfix) with ESMTP id 066351660F;
+	Wed,  5 Sep 2012 10:40:27 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu>
+In-Reply-To: <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu>
 X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204803>
 
 Am 9/4/2012 10:14, schrieb mhagger@alum.mit.edu:
 > From: Michael Haggerty <mhagger@alum.mit.edu>
 > 
-> These tests already pass, but make sure they don't break in the
-> future.
+> There is currently a bug: if passed an absolute top-level path that
+> doesn't exist (e.g., "/foo") it incorrectly interprets the path as a
+> relative path (e.g., returns "$(pwd)/foo").  So mark the test as
+> failing.
 > 
 > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
-> 
-> It would be great if somebody would check whether these tests pass on
-> Windows, and if not, give me a tip about how to fix them.
-> 
->  t/t0000-basic.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>  t/t0000-basic.sh | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 > 
 > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index d929578..3c75e97 100755
+> index 1a51634..ad002ee 100755
 > --- a/t/t0000-basic.sh
 > +++ b/t/t0000-basic.sh
-> @@ -468,6 +468,17 @@ test_expect_success 'real path works on absolute paths' '
->  	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
+> @@ -458,7 +458,17 @@ test_expect_success 'real path rejects the empty string' '
+>  	test_must_fail test-path-utils real_path ""
 >  '
 >  
-> +test_expect_success 'real path removes extra slashes' '
+
+These tests should really be in t0060-path-utils.sh.
+
+> -test_expect_success SYMLINKS 'real path works as expected' '
+> +test_expect_failure 'real path works on absolute paths' '
 > +	nopath="hopefully-absent-path" &&
-> +	test "/" = "$(test-path-utils real_path "///")" &&
-> +	test "/$nopath" = "$(test-path-utils real_path "///$nopath")" &&
+> +	test "/" = "$(test-path-utils real_path "/")" &&
+> +	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
 
-Same here: test-path-utils operates on a DOS-style absolute path.
-Furthermore, as Junio pointed out elsewhere, it is desirable that slashes
-(dir-separators) at the beginning are not collapsed if there are exactly
-two of them. Three or more can be collapsed to a single slash.
+These tests fail on Windows because test-path-utils operates on a
+DOS-style absolute path even if a POSIX style absolute path is passed as
+argument. The best thing would be to move this to a separate test that is
+protected by a POSIX prerequisite (which is set in t0060).
 
-> +	# We need an existing top-level directory to use in the
-> +	# remaining tests.  Use the top-level ancestor of $(pwd):
+> +	# Find an existing top-level directory for the remaining tests:
 > +	d=$(pwd -P | sed -e "s|^\(/[^/]*\)/.*|\1|") &&
 
-Same here: Account for the drive letter-colon.
+pwd -P actually expands to pwd -W on Windows, and produces a DOS-style
+path. I suggest to insert [^/]* to skip drive letter-colon like so:
 
-> +	test "$d" = "$(test-path-utils real_path "//$d///")" &&
-> +	test "$d/$nopath" = "$(test-path-utils real_path "//$d///$nopath")"
+	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
 
-Since $d is a DOS-style path on Windows, //$d means something entirely
-different than $d. You should split the test in two: One test checks that
-slashes at the end or before $nopath are collapsed (this must work on
-Windows as well), and another test protected by POSIX prerequisite to
-check that slashes at the beginning are collapsed.
+> +	test "$d" = "$(test-path-utils real_path "$d")" &&
+> +	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
+
+Then these tests pass.
 
 -- Hannes
