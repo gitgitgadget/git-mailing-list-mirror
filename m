@@ -1,98 +1,82 @@
-From: Ken Dreyer <ktdreyer@ktdreyer.com>
-Subject: [PATCH] cvsimport: strip all inappropriate tag strings
-Date: Wed,  5 Sep 2012 15:39:54 -0600
-Message-ID: <1346881194-19076-1-git-send-email-ktdreyer@ktdreyer.com>
-References: <1346827469.1137.22.camel@umgah.localdomain>
-Cc: gitster@pobox.com, Ken Dreyer <ktdreyer@ktdreyer.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 05 23:40:23 2012
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 0/2] Add --expand to 'git notes get-ref'
+Date: Thu, 6 Sep 2012 00:44:06 +0200
+Message-ID: <CALKQrgc-NZJrxvm_gJcWYCpsOprF=Rzf8=jGuARoit53T8KVkw@mail.gmail.com>
+References: <cover.1346848834.git.wking@tremily.us>
+	<CALKQrgdRqd59pfLtpROwxtrFjvO5oYgKKN3KCp1NA4aMEEcj1w@mail.gmail.com>
+	<20120905175344.GA8619@odin.tremily.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Sep 06 00:44:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9NKg-00018J-Pb
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 23:40:23 +0200
+	id 1T9OKa-0003tx-3D
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 00:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759573Ab2IEVkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 17:40:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50964 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759549Ab2IEVkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 17:40:10 -0400
-Received: by iahk25 with SMTP id k25so1317189iah.19
-        for <git@vger.kernel.org>; Wed, 05 Sep 2012 14:40:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :x-gm-message-state;
-        bh=zTlbxCdhu+hDI+hyq2iQANBRI9gkW+gOz8e7LQe8R7U=;
-        b=V7pLcnqooqKgeP/0Vn/ekvkCUyiw/V22Wc6lwP4eeYPtVakL2OI/J1p5aQuKe78cON
-         6P95cQP1mpTWSHwotKLexTCyzV7ZzS+BamHHAvJ9RHPNYXFWnCKBoEPYDaALD+1LORRv
-         AX2p6du3pihvdFwR6FliACsmxCNcN1wOZf+n79PDIiL5SPFJneCw5BBUtzBzuA19jX+1
-         HdO8nJNeJJXQispZxStkh1hmodLhmk3+mOoH3++fyOwyxVHIfuX9tx+EL44xIYMCw7el
-         UJMkpkojeUo6JdX6DVc5GYcxLgfrzPwRclTpTDcWxqB/NAUKgLWCeIxHCqAea+q+MatS
-         arkw==
-Received: by 10.42.151.71 with SMTP id d7mr22257339icw.18.1346881209218;
-        Wed, 05 Sep 2012 14:40:09 -0700 (PDT)
-Received: from phos.ktdreyer.com (c-67-190-20-168.hsd1.co.comcast.net. [67.190.20.168])
-        by mx.google.com with ESMTPS id cu10sm349907igc.9.2012.09.05.14.40.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Sep 2012 14:40:08 -0700 (PDT)
-X-Mailer: git-send-email 1.7.11.4
-In-Reply-To: <1346827469.1137.22.camel@umgah.localdomain>
-X-Gm-Message-State: ALoCoQkn8Ul3h8/W7zGgYWp/kJp93W2cOYvJ79TLYkpfieXsKRfGwdHr+AdeTCYrSo+XBtTdWQam
+	id S1759752Ab2IEWoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 18:44:12 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:64480 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759738Ab2IEWoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 18:44:11 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1T9OKP-000J0o-Il
+	for git@vger.kernel.org; Thu, 06 Sep 2012 00:44:09 +0200
+Received: by obbuo13 with SMTP id uo13so1339309obb.19
+        for <git@vger.kernel.org>; Wed, 05 Sep 2012 15:44:06 -0700 (PDT)
+Received: by 10.182.131.37 with SMTP id oj5mr50864obb.54.1346885046176; Wed,
+ 05 Sep 2012 15:44:06 -0700 (PDT)
+Received: by 10.76.128.204 with HTTP; Wed, 5 Sep 2012 15:44:06 -0700 (PDT)
+In-Reply-To: <20120905175344.GA8619@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204850>
 
-Certain characters such as "?" can be present in a CVS tag name, but
-git does not allow these characters in tags. If git-cvsimport
-encounters a CVS tag that git cannot handle, cvsimport will error and
-refuse to continue the import beyond that point.
+On Wed, Sep 5, 2012 at 7:53 PM, W. Trevor King <wking@tremily.us> wrote:
+> On Wed, Sep 05, 2012 at 05:58:37PM +0200, Johan Herland wrote:
+>> On Wed, Sep 5, 2012 at 2:48 PM, W. Trevor King <wking@tremily.us> wrote:
+>> > If I'm missing a good reason to keep everything under
+>> > 'refs/notes/', feel free to ignore the second patch.
+>>
+>> This has been discussed a couple of times on this list, but it never
+>> resulted in any actual changes. Read up on this thread to get some
+>> context:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/160503
+>
+> Thanks for the pointer, it looks like there are a bunch of good ideas.
+> I assume the lack of changes was due to nobody having the
+> time/inclination to implement
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/160655
 
-When importing CVS tags, strip all the inappropriate strings from the
-tag names as we translate them to git tag names.
+Yes, I think time/inclination probably has a lot to do with it. Also,
+I forgot to link to the largest mailing list thread that discusses
+these changes in _much_ more detail:
 
-Signed-off-by: Ken Dreyer <ktdreyer@ktdreyer.com>
----
+http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=165885
 
-Thanks Junio and Alex for your review and comments. I've implemented
-both of your suggestions in this patch.
+As you can see, the discussion quickly balloons into something much
+larger than a simple discussion of where remote notes should be
+located...
 
- git-cvsimport.perl | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+That said, your patch 2/2 might be an acceptable stopgap measure for
+the time being, and then we can reevaluate it if/when we implement a
+larger ref restructuring.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 8d41610..dda8a6d 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -889,7 +889,23 @@ sub commit {
- 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
- 		$xtag =~ tr/_/\./ if ( $opt_u );
- 		$xtag =~ s/[\/]/$opt_s/g;
--		$xtag =~ s/\[//g;
-+
-+		# See ref.c for these rules.
-+		# Tag cannot contain bad chars. See bad_ref_char in ref.c.
-+		$xtag =~ s/[ ~\^:\\\*\?\[]//g;
-+		# Other bad strings for tags:
-+		1 while $xtag =~ s/
-+			(?: \.\.        # Tag cannot contain '..'.
-+			|   \@{         # Tag cannot contain '@{'.
-+			| ^ -           # Tag cannot begin with '-'.
-+			|   \.lock $    # Tag cannot end with '.lock'.
-+			| ^ \.          # Tag cannot begin...
-+			|   \. $        # ...or end with '.'
-+			)//xg;
-+		# Tag cannot be empty.
-+		if ($xtag eq '') {
-+			return;
-+		}
- 
- 		system('git' , 'tag', '-f', $xtag, $cid) == 0
- 			or die "Cannot create tag $xtag: $!\n";
+
+...Johan
+
 -- 
-1.7.11.4
+Johan Herland, <johan@herland.net>
+www.herland.net
