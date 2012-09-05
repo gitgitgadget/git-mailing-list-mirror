@@ -1,121 +1,78 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: poll() emulation in git
-Date: Wed, 5 Sep 2012 13:24:25 +0200
-Message-ID: <00c001cd8b59$028e41c0$07aac540$@schmitz-digital.de>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>,
-	<bug-gnulib@gnu.org>, "'Paolo Bonzini'" <bonzini@gnu.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 13:24:51 2012
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] Fix path normalization for SMB shares
+Date: Wed,  5 Sep 2012 14:28:27 +0300
+Message-ID: <1346844507-22998-1-git-send-email-orgads@gmail.com>
+Cc: Orgad Shaneh <orgads@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 05 13:28:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9Dj0-0008Gt-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 13:24:51 +0200
+	id 1T9Dmz-0003vJ-HN
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 13:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758628Ab2IELYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 07:24:41 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:55129 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758588Ab2IELYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 07:24:38 -0400
-Received: from DualCore (dsdf-4db50426.pool.mediaWays.net [77.181.4.38])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MOpRC-1TBwkL1E3i-0063x3; Wed, 05 Sep 2012 13:24:32 +0200
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2LUuyJjvLsUfp2S9ecYSmnLauuHw==
-Content-Language: de
-X-Provags-ID: V02:K0:s9+AosE+ApRlcAMJFkbulbCfbKaV9JrYdphzbnQGFt8
- YB5UHkO3WIZtv0ytUlkotI7P2HxKABoypJBIUPas0RVpd74623
- P/4jFUyHo7c4naHo2efwJp7jsT5h68cOCW4EVO32pMUk1cNubC
- j1w5A0PrIPOokWrnvRDN5afHUKC6beOhaWGNClB3IDeVyWUZcE
- wwGj3WsKDFxHdVAmXLbBLNQAiqLS4tZ+DPyrGlyCOto3IYayvu
- 3fKCrvuO2qfkSfHZ+4lYM5wx3US2PapwZ65VksuNoHAoDrT2ju
- aX5eKBqyusy9RBnF8MygdSFPDgtdmhm+OBRPbQNL38tKyDhYkH
- CE0J0IjhF+qGZHCbNRuPeNFKqzHUpLe39W7cvOt2GgkqVa67kD
- /7Z5ZVA9A2XmQ==
+	id S1751896Ab2IEL2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 07:28:50 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:37965 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750826Ab2IEL2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 07:28:49 -0400
+Received: by wibhq12 with SMTP id hq12so4207305wib.1
+        for <git@vger.kernel.org>; Wed, 05 Sep 2012 04:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=bnHmACK/QOoiHyd3GHcD/uq6fixpvpsCoLmhcbu3Axw=;
+        b=FSdZYUq9ys350Ku6eFg/FF1BFC1+y3tNHM/QKEMDEfzaO0ShbN3QB2XEFyEPPwuhmC
+         2xYn0zHGERENQfjVt9pFwL5r6gBnBajLnTLIL2SnOJ0P+TDbfbA5RK8SPia6i7d0i4WC
+         rEBk2oQJIOY4yazt3tiNbmEO4OHqRcrEHzzpiIximWXYtHZrorFRR9oNt/oMB6oBXdM1
+         qB2WjHRfWuCI4t2COYR8JstfMkUcAp8f+RfpTAsUEFuw+3Otwc/xIisia92/9IbD3Zm0
+         2Hx7mAzWHIkIHNqjPs7n7pModMcjlujZqTquPzxTdS3SZm/oE0VqPEqh06DmIlb/PelS
+         x4QA==
+Received: by 10.180.20.11 with SMTP id j11mr37568994wie.12.1346844528512;
+        Wed, 05 Sep 2012 04:28:48 -0700 (PDT)
+Received: from localhost.localdomain (IGLD-84-229-111-212.inter.net.il. [84.229.111.212])
+        by mx.google.com with ESMTPS id dw6sm63772wib.5.2012.09.05.04.28.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Sep 2012 04:28:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204815>
 
-> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
-> Sent: Tuesday, September 04, 2012 1:49 PM
-> To: 'Junio C Hamano'
-> Cc: 'git@vger.kernel.org'; 'Erik Faye-Lund'
-> Subject: RE: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
-> 
-> > From: Junio C Hamano [mailto:gitster@pobox.com]
-> > Sent: Friday, August 24, 2012 9:47 PM
-> > To: Joachim Schmitz
-> > Cc: git@vger.kernel.org; 'Erik Faye-Lund'
-> > Subject: Re: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
-> >
-> > "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> >
-> > > Different, but related question: would poll.[ch] be allowed to #include "git-compat-util.h"?
-> >
-> > Seeing other existing generic wrappers directly under compat/,
-> > e.g. fopen.c, mkdtemp.c, doing so, I would say why not.
-> >
-> > Windows folks (I see Erik is already CC'ed, which is good ;-),
-> > please work with Joachim to make sure such a move won't break your
-> > builds.  I believe that it should just be the matter of updating a
-> > couple of paths in the top-level Makefile.
-> 
-> Haven't heard anything from the Windows folks yet.
-> 
-> I'd prefer to move compat/win32/poll.[ch] into compat/poll.
-> Then adjust a few paths in Makefile and that would be the 1st patch
-> 
-> A 2nd patch would be my already proposed ones that make this usable for others (me in this case ;-)), namely wrapping 2 #inludes.
-> 
-> diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-> index 403eaa7..49541f1 100644
-> --- a/compat/poll/poll.c
-> +++ b/compat/poll/poll.c
-> @@ -24,7 +24,9 @@
->  # pragma GCC diagnostic ignored "-Wtype-limits"
->  #endif
-> 
-> -#include <malloc.h>
-> +#if defined(WIN32)
-> +# include <malloc.h>
-> +#endif
-> 
->  #include <sys/types.h>
-> 
-> @@ -48,7 +50,9 @@
->  #else
->  # include <sys/time.h>
->  # include <sys/socket.h>
-> -# include <sys/select.h>
-> +# ifndef NO_SYS_SELECT_H
-> +#  include <sys/select.h>
-> +# endif
->  # include <unistd.h>
->  #endif
-> 
-> --
-> 1.7.12
+SMB shared are accessed using //server/share/directory...
+notation.
 
-However: this poll implementation, while compiling OK, doesn't work properly.
-Because it uses recv(...,MSG_PEEK), it works on sockets only (returns ENOTSOCK on anything else), while the real poll() works on all
-kind if file descriptors, at least that is my understanding.
+normalize_path_copy used to leave only a single slash, which
+invalidated the path.
 
-Here on HP NonStop, when being connected via an non-interactive SSH, we get a set of pipes (stdin, stdout, stderr) instead of a
-socket to talk to, so the poll() just hangs/loops.
+Fix suggested by Nguyen Thai Ngoc Duy
 
-As git's implementation is based on ('stolen' from?) gnulib's and still pretty similar, CC to the gnulib list and Paolo
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+ path.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Any idea how this could get solved? I.e. how to implement a poll() that works on non-sockets too?
-There is some code that pertains to a seemingly similar problem in Mac OS X, but my problem is not identical, as that fix doesn't
-help.
-
-Bye, Jojo
+diff --git a/path.c b/path.c
+index 66acd24..6cd9c0b 100644
+--- a/path.c
++++ b/path.c
+@@ -503,6 +503,12 @@ int normalize_path_copy(char *dst, const char *src)
+ 		*dst++ = *src++;
+ 		*dst++ = *src++;
+ 	}
++#ifdef WIN32
++	else if (is_dir_sep(src[0]) && is_dir_sep(src[1])) {
++		*dst++ = '/';
++		src++;
++	}
++#endif
+ 	dst0 = dst;
+ 
+ 	if (is_dir_sep(*src)) {
+-- 
+1.7.10.4
