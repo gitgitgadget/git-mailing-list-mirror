@@ -1,74 +1,77 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 9/9] Add git-check-ignores
-Date: Wed, 5 Sep 2012 17:25:25 +0700
-Message-ID: <CACsJy8CPaJKGU0Lyjr93s9JEc_VBuLrHNH=nRa42K8Ohj3OWFA@mail.gmail.com>
+Subject: Re: [PATCH 5/9] Refactor excluded and path_excluded
+Date: Wed, 5 Sep 2012 17:28:39 +0700
+Message-ID: <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com>
 References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <1346544731-938-10-git-send-email-git@adamspiers.org> <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com>
- <7vmx15bsxj.fsf@alter.siamese.dyndns.org>
+ <1346544731-938-6-git-send-email-git@adamspiers.org> <CACsJy8A-P0RziZt1_PajFrzqmq9ZbkyaxwUCeDAO3XteQ0gAag@mail.gmail.com>
+ <7vr4qhbt3d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 12:26:08 2012
+X-From: git-owner@vger.kernel.org Wed Sep 05 12:29:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9Co8-0000wT-RD
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 12:26:05 +0200
+	id 1T9CrG-00047b-Ng
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 12:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076Ab2IEKZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 06:25:57 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:52937 "EHLO
+	id S1752554Ab2IEK3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 06:29:12 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:60565 "EHLO
 	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298Ab2IEKZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 06:25:56 -0400
-Received: by ieje11 with SMTP id e11so767332iej.19
-        for <git@vger.kernel.org>; Wed, 05 Sep 2012 03:25:56 -0700 (PDT)
+	with ESMTP id S1751298Ab2IEK3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 06:29:10 -0400
+Received: by ieje11 with SMTP id e11so772942iej.19
+        for <git@vger.kernel.org>; Wed, 05 Sep 2012 03:29:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=+J/HTGNrltQdv3v9RO9oC1Sb/erSGX5AgbtQq85jfmo=;
-        b=uF560xC20uKdSchUB39w/Z6IdUYHZ7Hwn26kUl3nSUE7OK8/IJ8qOzcTnraIgjBdwY
-         3um522qyqiTYR6ktoSaCwRiuFhwEPXkbqa+TUn18zEYluYP+mkYJd1RFJvQOU8HSuy8z
-         L7Q6FU/PGX1p53/lhbrq7S4FFzmH4JW27FY1VI+9+BtHbzGr+59iLu0eqpF6oSO1cjcm
-         NFWca47PKcMm+cNgS0WkTzBT1bclIkrXb39KqTEaCNAFUxaZTLHkdyC8HQOdGTGg+okS
-         QNDEEjpSeZA3zWenypUMwoTzIB9eOyPAWAJRVm5oacpwtsSma7ayAsyGL3lImh26sEoW
-         P9EQ==
-Received: by 10.50.237.38 with SMTP id uz6mr17178458igc.2.1346840756251; Wed,
- 05 Sep 2012 03:25:56 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Wed, 5 Sep 2012 03:25:25 -0700 (PDT)
-In-Reply-To: <7vmx15bsxj.fsf@alter.siamese.dyndns.org>
+        bh=aOVzVgmhOIlXwoAZzT/GWAtRGx1tpGnfMENzODuiscU=;
+        b=pevIt2d5NG5Pxb9eYf4dN4KCGnk1wX+NJGJueLkMSVLm/5XizXBXcru5EB9Rskg6LJ
+         u5rCGwIvna73BladrW53NnX6MYX9r9iIdN/ifWO2wNMsBlomg0/+1kuSieUREaJAqg8l
+         01gedqQDUgAcBfhwnWmm59gnwsZRwIN3zXDb5AZL4NouOMWJTIcAT9uZqkLVMo0pMPC2
+         CFSPMBM88nkewSoutJTTTe5BiJ25mNAOBjWw0pnHwtHYJrus/oN/OqGu+Mfe75OI4sqP
+         kr3941wViQWWFsZyjIBm6Sfm3aayt7GwxCjn3N87r5JrRqXv7hpi9Ajg7rP0nX9zv9ch
+         enMg==
+Received: by 10.50.220.194 with SMTP id py2mr17387460igc.15.1346840950086;
+ Wed, 05 Sep 2012 03:29:10 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Wed, 5 Sep 2012 03:28:39 -0700 (PDT)
+In-Reply-To: <7vr4qhbt3d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204809>
 
-On Wed, Sep 5, 2012 at 12:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Sep 5, 2012 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
->>> +static void output_exclude(const char *path, struct exclude *exclude)
->>> +{
->>> +       char *type = exclude->to_exclude ? "excluded" : "included";
->>> +       char *bang = exclude->to_exclude ? "" : "!";
->>> +       char *dir  = (exclude->flags & EXC_FLAG_MUSTBEDIR) ? "/" : "";
->>> +       printf(_("%s: %s %s%s%s "), path, type, bang, exclude->pattern, dir);
+>> On Sun, Sep 2, 2012 at 7:12 AM, Adam Spiers <git@adamspiers.org> wrote:
+>>>  extern void path_exclude_check_init(struct path_exclude_check *, struct dir_struct *);
+>>>  extern void path_exclude_check_clear(struct path_exclude_check *);
+>>> +extern struct exclude *path_excluded_1(struct path_exclude_check *, const char *,
+>>> +                                      int namelen, int *dtype);
+>>>  extern int path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
 >>
->> These English words "excluded" and "included" make the translator me
->> want to translate them. But they could be the markers for scripts, so
->> they may not be translated. How about using non alphanumeric letters
->> instead?
+>> Exported functions should have nicer names than *_1. No idea what are
+>> better names though, maybe exclude_path?
 >
-> I agree they should not be translated, but it is a disease to think
-> unintelligible mnemonic is a better input format for scripts than
-> the spelled out words.  "excluded/included" pair is just fine.
+> Which part is better?
+>
+> Just like between path_excluded_1() and path_excluded() nobody can
+> tell how they differ (except perhaps the former smells more special
+> purpose thanks to its funny name) and wouldn't be able to tell which
+> one to call without looking at their sources, it is hard to tell
+> path_excluded() and exclude_path() apart.  In a sense, that pair is
+> even worse as there is no hint to suggest which one is more exotic
+> between them in their names.
 
-Not all mnemonic is unintelligible though. "+" and "-" may fit well in
-this case. I'm just trying to make sure we have checked the mnemonic
-pool before ending up with excluded/included.
+We could introduce exclude_path() and kill path_excluded() then. There
+are just about 5-6 call sites to replace.
 -- 
 Duy
