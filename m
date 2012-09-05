@@ -1,97 +1,121 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
 Subject: Re: [RFC] i18n.pathencoding
-Date: Wed, 05 Sep 2012 21:49:59 +0200
-Message-ID: <5047ACE7.3050000@web.de>
-References: <201209010811.33994.tboegi@web.de> <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com> <7vvcftbt8o.fsf@alter.siamese.dyndns.org> <CACsJy8ARmPwELFhdvu_Y2kZNbYNgTzoqLzriH2oB7WtxM8D7hg@mail.gmail.com>
+Date: Wed, 05 Sep 2012 21:52:42 +0200
+Message-ID: <5047AD8A.3020203@web.de>
+References: <201209010811.33994.tboegi@web.de> <CACsJy8A1GnhTeMzwXwA1C96pp0ERskxZC=SO+QE2__pfwmChow@mail.gmail.com> <7vvcftbt8o.fsf@alter.siamese.dyndns.org> <50465BBC.30203@web.de> <7vy5kp8s3h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 21:50:33 2012
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 21:52:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9LcO-0007I9-JH
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 21:50:32 +0200
+	id 1T9Lef-0001NO-86
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 21:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759269Ab2IETuY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Sep 2012 15:50:24 -0400
-Received: from mout.web.de ([212.227.17.12]:57624 "EHLO mout.web.de"
+	id S1759255Ab2IETwq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Sep 2012 15:52:46 -0400
+Received: from mout.web.de ([212.227.17.11]:65462 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759255Ab2IETuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 15:50:04 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0LpfFO-1TlAjh1OHW-00feqp; Wed, 05 Sep 2012 21:50:00 +0200
+	id S1754515Ab2IETwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 15:52:46 -0400
+X-Greylist: delayed 1919 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Sep 2012 15:52:45 EDT
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0ML8F7-1T94XK0ctN-000Yr7; Wed, 05 Sep 2012 21:52:44 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <CACsJy8ARmPwELFhdvu_Y2kZNbYNgTzoqLzriH2oB7WtxM8D7hg@mail.gmail.com>
-X-Provags-ID: V02:K0:FkPyfrcWLyoZlHRMP9r7uAdIk1RhU0DZLkBeo9BMrrl
- znNmmkK+0DAjqmMI9OpSiwTgjqYj6GGLejcc2Cp/+P9Dm32wPu
- dz8TrFOHi6Ez1E2+y03AmjN0XndsqqkJqNqi82DcdJ9bXgrf9i
- TF8N7ZrzkaBAvxpg/pnfhto3VRuZA/I6fbZ7c5i3YSaWZuZw+X
- fPb4454wQLjE9vAlUM3Fg==
+In-Reply-To: <7vy5kp8s3h.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:XZpJanCgOimhAvHuz+I82K2fYCMm8Lfv2DFaO0UzIeI
+ ZeWZWgjirvm0HI8OxlfMFNBciZOAMI/PIGGb4FVfw7fPjWzK1H
+ u56tYdlagMYCvA8RtZUD7o7wEjqDZMiyxvbGEmEqMJN/ArZuDr
+ xtg0e1f9EAUFSJKOigCchtPzLaPxYvIv6qzcGT2SRUJ1PHA1uq
+ 0k9nWaPh/au8PkW3sTv7Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204844>
 
-On 05.09.12 13:11, Nguyen Thai Ngoc Duy wrote:
-> On Wed, Sep 5, 2012 at 12:19 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>> On Sat, Sep 1, 2012 at 1:11 PM, Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
->>>> @@ -476,7 +476,7 @@ int parse_options(int argc, const char **argv,=
- const char *prefix,
->>>>                 usage_with_options(usagestr, options);
->>>>         }
->>>>
->>>> -       precompose_argv(argc, argv);
->>>> +       reencode_argv(argc, argv);
->>>>         return parse_options_end(&ctx);
->>>>  }
->>>
->>> If you have to re-encode command line arguments, what about paths
->>> coming --stdin or a file?
->>
->> That problem is inherited from the MacOS precompose topic this one
->> builds on.  Not that it is unimportant to fix, though.
+On 04.09.12 22:12, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 >=20
-> On fixing that. 76759c7 describes the change as:
+>> This leads to 2 questions:
+>> a) Do we want the reencode feature in git, so that I continue to wor=
+k on it?
+>>    From a performance point of view that would probably OK:
+>>    The "git status" on a linux tree was slightly slower on my PC whe=
+n measured with time.
+>>    From the user experience there was not a difference.
 >=20
->     The argv[] conversion allows to use the TAB filename completion d=
-one
->     by the shell on command line.  It tolerates other tools which use
->     readdir() to feed decomposed file names into git.
+> I am not fundamentally opposed to such a change, as long as the
+> change does not affect performance at all when the feature is not
+> used, and the resulting code does not become too ugly.
 >=20
-> How come git's internal conversion helps TAB filename completion,
-> which is done before git is executed?
+> Use of the "reencode" feature may have to make things slow, but you
+> have to spend some cycle to do what the feature has to do anyway,
+> so...
+>=20
+>> b) If yes,
+>>    I have to admit that I don't use paths from --stdin or file so mu=
+ch,
+>>    except "git am" or "git format-patch"
+>>    Which commands are affected?
+>=20
+> $ git grep -l -e '--stdin' Documentation/git*
+>=20
+> may be a good starting point.
 
-Because the shell use readdir() itself when <TAB> is pressed
 
-$echo B=C3=B6 > B=C3=B6
-$echo Ba > Ba
-$ls=20
-Bo =CC=88
-Ba
+------------------------------
+I'll have a look into the --stdin stuff later, thanks Junio
+-------------------------------
 
-# The terminal program of Mac OS shows the decomposed "=C3=B6" correctl=
-y,
-"B=C3=B6" is shown as "B=C3=B6", while xterm shows "B=C3=B6" as "Bo =CC=
-=88",
-that is "o" followod by a "combining diaresis".
+And here some benchmarks on my PC,
+first run is using git v1.7.12,
+second run with i18n.pathencoding applied=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ for f in 1 2 3 4 5; do time git status  ; done 2>&1 | egrep "^user|^re=
+al|^sys"
+real    0m0.492s
+user    0m0.300s
+sys     0m0.200s
+real    0m0.448s
+user    0m0.260s
+sys     0m0.190s
+real    0m0.443s
+user    0m0.250s
+sys     0m0.200s
+real    0m0.451s
+user    0m0.260s
+sys     0m0.190s
+real    0m0.429s
+user    0m0.230s
+sys     0m0.200s
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+for f in 1 2 3 4 5; do time ~/projects/git/tb.localfname/git status  ; =
+done 2>&1 | egrep "^user|^real|^sys"
+real    0m0.580s
+user    0m0.320s
+sys     0m0.230s
+real    0m0.461s
+user    0m0.260s
+sys     0m0.200s
+real    0m0.463s
+user    0m0.250s
+sys     0m0.220s
+real    0m0.445s
+user    0m0.290s
+sys     0m0.160s
+real    0m0.443s
+user    0m0.240s
+sys     0m0.210s
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-The shell seems to do the same:
-to add B=C3=B6 to git,
-
-$git add Bo<TAB>
-
-needs to be used.
-And as a result, the sheel will pass the "o" in decomposed unicode to g=
-it,
-which is corrected in precompose_argv().
+It seems that we have a little penalty on performance.
+I'll have a look at the readdir() function.
