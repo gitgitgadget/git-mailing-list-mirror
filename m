@@ -1,63 +1,90 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Renaming a remote is 'rename', but removing is 'rm'
-Date: Wed, 05 Sep 2012 07:59:21 +0000
-Message-ID: <1346831961-ner-2892@calvin>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 7/7] t0000: verify that real_path() removes extra slashes
+Date: Wed, 05 Sep 2012 10:40:35 +0200
+Message-ID: <50471003.9010207@viscovery.net>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu> <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 05 10:00:28 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Wed Sep 05 10:40:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9AXB-0007HV-2M
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 10:00:25 +0200
+	id 1T9BAO-0005RZ-1r
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 10:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449Ab2IEIAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 04:00:15 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:46984 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219Ab2IEIAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 04:00:14 -0400
-Received: by mail-we0-f174.google.com with SMTP id x8so195371wey.19
-        for <git@vger.kernel.org>; Wed, 05 Sep 2012 01:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:cc:mime-version:date:message-id:content-type;
-        bh=geWo4dftWflgBiah3KUH1XUZTv/1FkzqGm5e/Fu/6NY=;
-        b=kap/YjNk4XlYlFrvYdcbmfb0WXJMCKJGjYRn0fyj6gJ17lzUo/XWFsS052zOIILRe3
-         xhU3FGCSDWB18xronXgKkd19K/p7Uadojjmw7pFIaSch7spxiVO0r/fOTg4LoCDrGwRy
-         m8+PuIlhAvpM9U9R7r/OolSexKXNhXbF/nGIYSicqaFxUyone6eZOlsypNKtEL81re06
-         0n3bipKou8uicrjPiJ6j+l0kpSGl84qghddwmXQ9Llx3m+w9trk7Ve08VBy6qJNGJULN
-         bYJDca/oVVAWv30kCmkGjM3uA5qT6R7E629UAyWnGlEHb7VDRL/EA+hsH2bbjk/llaiI
-         X9RA==
-Received: by 10.180.105.130 with SMTP id gm2mr36212568wib.6.1346832013553;
-        Wed, 05 Sep 2012 01:00:13 -0700 (PDT)
-Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
-        by mx.google.com with ESMTPS id cl8sm27889642wib.10.2012.09.05.01.00.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 05 Sep 2012 01:00:12 -0700 (PDT)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id B11AB588B84; Wed,  5 Sep 2012 07:59:21 +0000 (UTC)
+	id S1751619Ab2IEIkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 04:40:39 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:60336 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750914Ab2IEIkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 04:40:37 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1T9BA4-00047v-4Q; Wed, 05 Sep 2012 10:40:36 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id DEB131660F;
+	Wed,  5 Sep 2012 10:40:35 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120824 Thunderbird/15.0
+In-Reply-To: <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204802>
 
-A fella on IRC was confused by $subject. And it did bother me sometimes as
-well. If you don't use `git remote` often, it is confusing that the commands
-are named inconsistently.
+Am 9/4/2012 10:14, schrieb mhagger@alum.mit.edu:
+> From: Michael Haggerty <mhagger@alum.mit.edu>
+> 
+> These tests already pass, but make sure they don't break in the
+> future.
+> 
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> 
+> It would be great if somebody would check whether these tests pass on
+> Windows, and if not, give me a tip about how to fix them.
+> 
+>  t/t0000-basic.sh | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index d929578..3c75e97 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -468,6 +468,17 @@ test_expect_success 'real path works on absolute paths' '
+>  	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
+>  '
+>  
+> +test_expect_success 'real path removes extra slashes' '
+> +	nopath="hopefully-absent-path" &&
+> +	test "/" = "$(test-path-utils real_path "///")" &&
+> +	test "/$nopath" = "$(test-path-utils real_path "///$nopath")" &&
 
-If I know that there is `git remote rm` then I kindof expect `git remote mv`
-to exist. Because I am used to rm/mv and git rm/git mv as the standard unix
-commands for renaming and removing something. On the other hand, if I know
-that there is `git remote rename`, with the verb fully written out, I expect
-`git remote delete/remove` to exist (or something similar, with the verb fully
-written out).
+Same here: test-path-utils operates on a DOS-style absolute path.
+Furthermore, as Junio pointed out elsewhere, it is desirable that slashes
+(dir-separators) at the beginning are not collapsed if there are exactly
+two of them. Three or more can be collapsed to a single slash.
 
-Would there be any desire to make the subcommands more consistent in that
-regard?
+> +	# We need an existing top-level directory to use in the
+> +	# remaining tests.  Use the top-level ancestor of $(pwd):
+> +	d=$(pwd -P | sed -e "s|^\(/[^/]*\)/.*|\1|") &&
 
-tom
+Same here: Account for the drive letter-colon.
+
+> +	test "$d" = "$(test-path-utils real_path "//$d///")" &&
+> +	test "$d/$nopath" = "$(test-path-utils real_path "//$d///$nopath")"
+
+Since $d is a DOS-style path on Windows, //$d means something entirely
+different than $d. You should split the test in two: One test checks that
+slashes at the end or before $nopath are collapsed (this must work on
+Windows as well), and another test protected by POSIX prerequisite to
+check that slashes at the beginning are collapsed.
+
+-- Hannes
