@@ -1,75 +1,140 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: respect -q for add/update
-Date: Wed, 05 Sep 2012 22:33:39 +0200
-Message-ID: <5047B723.4050201@web.de>
-References: <1346743880-11379-1-git-send-email-orgads@gmail.com> <50461E18.6020400@web.de> <CAGHpTBJ6hWJKaQvN4oByrest_FB1fGDKa=ge4fM1HWmSWZ1tkw@mail.gmail.com>
+From: Robin Stocker <robin@nibor.org>
+Subject: Re: [PATCH] cherry-pick: Append -x line on separate paragraph
+Date: Wed, 5 Sep 2012 22:36:07 +0200 (CEST)
+Message-ID: <1410595949.1269.1346877367487.JavaMail.root@bazinga.schuettel.ch>
+References: <7vsjaxaasv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Orgad and Raizel Shaneh <orgads@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 22:33:55 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 05 22:36:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9MIM-0002O5-Qw
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 22:33:55 +0200
+	id 1T9MKj-0005AD-C1
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 22:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759389Ab2IEUdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 16:33:46 -0400
-Received: from mout.web.de ([212.227.17.12]:56666 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759373Ab2IEUdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 16:33:44 -0400
-Received: from [192.168.178.41] ([91.3.176.88]) by smtp.web.de (mrweb003) with
- ESMTPA (Nemesis) id 0LrJxk-1Tal6B0cQ8-013ybi; Wed, 05 Sep 2012 22:33:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <CAGHpTBJ6hWJKaQvN4oByrest_FB1fGDKa=ge4fM1HWmSWZ1tkw@mail.gmail.com>
-X-Provags-ID: V02:K0:Ow7NaSkP67kNDw6lLRvOsEYclN3WSOPRqeF3TxeuoqA
- dwJRml0gjreWW/eiwINgLMvluVe4Gp8BQrkIzRySqiAJTqS+8B
- LaKp62KPRbmhWcFKQxvk1XppYy092AzAUQaB3tGvfQhwqJMJqj
- /V/vXsK8S3HxwToLU2hR0ioEAtEpOpmZ21mFdHSZAf85h0obx2
- BGE8gW9JdMdKwOk70pEhg==
+	id S1759189Ab2IEUgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 16:36:14 -0400
+Received: from cust.static.212-90-207-187.cybernet.ch ([212.90.207.187]:48363
+	"EHLO bazinga.schuettel.ch" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754946Ab2IEUgN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2012 16:36:13 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by bazinga.schuettel.ch (Postfix) with ESMTP id 1AE0E1C0474;
+	Wed,  5 Sep 2012 22:36:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at schuettel.ch
+Received: from bazinga.schuettel.ch ([127.0.0.1])
+	by localhost (bazinga.schuettel.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fONcHeBg2aNm; Wed,  5 Sep 2012 22:36:07 +0200 (CEST)
+Received: from bazinga.schuettel.ch (cust.static.212-90-207-187.cybernet.ch [212.90.207.187])
+	by bazinga.schuettel.ch (Postfix) with ESMTP id AAEB41C0061;
+	Wed,  5 Sep 2012 22:36:07 +0200 (CEST)
+In-Reply-To: <7vsjaxaasv.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [77.58.214.140]
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - FF3.0 (Linux)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204846>
 
-Am 05.09.2012 13:42, schrieb Orgad and Raizel Shaneh:
-> On Tue, Sep 4, 2012 at 6:28 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->>
->> Am 04.09.2012 09:31, schrieb Orgad Shaneh:
->>> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
->>
->> Before the "Signed-off-by" is the place where you should have
->> explained why this would be a worthwhile change ;-)
->>
->> To me this looks like you make the default noisier and require an
->> explicit "-q" to make it quiet again. There is a reason you don't
->> normally get bothered with the output of the checkout command run
->> under the hood of git submodule add/update, so I don't think this
->> change makes things better.
->>
->> But you might want to think about adding a "-v/--verbose" flag to
->> make the submodule add/update checkouts more verbose, in case you
->> care about the output of the checkout command. That would be a
->> sane thing to do, so what about changing your patch into this
->> direction?
->>
+Junio C Hamano writes:
+> Robin Stocker <robin@nibor.org> writes:
 > 
-> I don't agree the default should be quiet. That's what the (submodule)
-> -q flag is there for.
+> >  		if (opts->record_origin) {
+> > + /* Some implementations don't terminate message with final \n, so
+> > add it */
+> > + if (msg.message[strlen(msg.message)-1] != '\n')
+> > + strbuf_addch(&msgbuf, '\n');
+> 
+> I can agree that this is a good change.
+> 
+> > + strbuf_addch(&msgbuf, '\n');
+> 
+> But this is somewhat dubious. Even if what we are adding is merely
+> an extra LF, that changes the mechanically generated output format
+> and can break existing hooks that read from these generated commit
+> log template.
 
-Nope, the -q flag is to silence *all* output except errors. And it
-makes perfect sense for high level commands to hide the output of
-the commands run under the hood like we do here.
+Hm, for a script to break because of an extra LF it would have to be
+very badly written. If it looks for "\n(cherry picked ...", it would
+still work. But I see the point.
 
-> When I run 'git submodule update' I don't expect to be in the dark
-> until the submodule/s finishes checkout, this sometimes can take a
-> significant amount of time and feedback is expected.
+> Is there a reason better than "having an empty line there look
+> better to _me_" to justify this change?
 
-As I said, add a verbose flag so you can see in detail what is going
-on.
+Yes:
+
+* If the original commit message consisted just of a summary line,
+  the commit message after -x would then not have a blank second
+  line, which is bad style, e.g.:
+
+The title of the original commit
+(cherry picked ...)
+
+* If the original message did not have any trailers, the appended
+  text would stick to the last paragraph, even though it is a
+  separate thing.
+
+These don't apply to the git project itself, as its commit message
+always have at least a Signed-off-by. But there are projects where
+this is not the case and the above reasons apply.
+
+Maybe the solution is to detect if the original commit message
+ends with a trailer and in that case keep the existing behavior
+of not inserting a blank line?
+
+> >  			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
+> >  			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
+> >  			strbuf_addstr(&msgbuf, ")\n");
+> 
+> Having said that, I've seen proposals to update this message to
+> format more like the other trailers, so that we would see this:
+> 
+> The title of the original commit
+> 
+> The log message taken from the original
+> commit comes here.
+> 
+> Signed-off-by: First person who signed off the original
+> Signed-off-by: Another person who signed off the original
+> Cherry-picked-from: a9bbc121ea850e49d52ba3cb5a6b7f8077d195d2
+> 
+> in the editor, to allow you to add your own Sign-off at the end to
+> make it look like this:
+> 
+> The title of the original commit
+> 
+> The log message taken from the original
+> commit comes here.
+> 
+> Signed-off-by: First person who signed off the original
+> Signed-off-by: Another person who signed off the original
+> Cherry-picked-from: a9bbc121ea850e49d52ba3cb5a6b7f8077d195d2
+> Signed-off-by: Me who did the cherry-pick
+> 
+> I think that might be a worthwhile thing to do perhaps as an
+> optional behaviour (e.g. perhaps triggered with a new option
+> "--trailer", or with the same "-x" but only when "cherry-pick.origin
+> = trailer" configuration is set, or something). At that point, the
+> output will look vastly different to existing hooks and those who
+> care how this field looks like are forced to be updated, but as long
+> as it is an opt-in feature, it may be worth it.
+
+Oh, I like that proposal. I'd lean towards a new --trailer option I
+think.
+
+It would have the same problem of having to append it on a separate
+paragraph if the original commit message does not already have a
+trailer though.
+
+But I still think that adding the "(cherry picked ..." on a separate
+paragraph would be a good thing until "Cherry-picked-from" can be
+used.
+
+Regards,
+  Robin Stocker
