@@ -1,60 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Renaming a remote is 'rename', but removing is 'rm'
-Date: Wed, 05 Sep 2012 13:13:47 +0200
-Message-ID: <vpqr4qg2044.fsf@bauges.imag.fr>
-References: <1346831961-ner-2892@calvin>
-	<CACsJy8Bi=b1Fuht8q5XcnGE3rFAVojj+MAXvKZAnrqseYnDy+g@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 7/7] t0000: verify that real_path() removes
+ extra slashes
+Date: Wed, 5 Sep 2012 18:13:56 +0700
+Message-ID: <CACsJy8BmK64FB61LOH6gn-sW1dnq9CV0SoLXAUdcBCY=5z5aGQ@mail.gmail.com>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
+ <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu> <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DAbp1uDsNFFk1g9tuEV1qMnM2DZtxOwp5H9_VE7VwO1g@mail.gmail.com> <CAGHpTB+LipLt3CgVt5O0s9xj5HHf9Y5z9QWEy+FKYH8s4O7Q2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 13:14:09 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Orgad and Raizel Shaneh <orgads@gmail.com>
+X-From: msysgit+bncCLWW9eeFGBCT6JyCBRoEJpDHfg@googlegroups.com Wed Sep 05 13:14:32 2012
+Return-path: <msysgit+bncCLWW9eeFGBCT6JyCBRoEJpDHfg@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ie0-f186.google.com ([209.85.223.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9DYY-0006LO-Jb
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 13:14:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758598Ab2IELN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 07:13:56 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43476 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753039Ab2IELNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 07:13:55 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q85B9goM014894
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Sep 2012 13:09:42 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1T9DYK-0001Y5-FC; Wed, 05 Sep 2012 13:13:48 +0200
-In-Reply-To: <CACsJy8Bi=b1Fuht8q5XcnGE3rFAVojj+MAXvKZAnrqseYnDy+g@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Wed, 5 Sep 2012 15:49:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 05 Sep 2012 13:09:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q85B9goM014894
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1347448183.93283@1KxDYKKAA1uX/7e3NBUClQ
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204812>
+	(envelope-from <msysgit+bncCLWW9eeFGBCT6JyCBRoEJpDHfg@googlegroups.com>)
+	id 1T9DZ1-0006mg-SJ
+	for gcvm-msysgit@m.gmane.org; Wed, 05 Sep 2012 13:14:32 +0200
+Received: by ieak13 with SMTP id k13sf254858iea.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 05 Sep 2012 04:14:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:from
+         :date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=EKG6TuecE61J0nJET+ROC7Rcy8l00OrUOZnaFX07A/A=;
+        b=KWSzPswP5qroc3PDnJR5aWz2xJ9S/VtOMs6hWrUjXN2ZI8SX0Dj70hLxtfJnfQbiqL
+         cPZP+b4o8pcgOWvZFJQWPOPZGTiYoS52GDOCj/UH1MrZQ1YhschqgK8UWHr22+t0eKqY
+         dR9bJJe83/l2p0bp7QtZ8DYHo18RS+yceuost1YYRil2YT7ip2cFsgZYSGYPqO2AOkLt
+         uAtfYxzJke7AyWSAue1L2vDpC/d98XOb/ck98TiWYBWNl+abhPoq4Bp3UYukx9y1fwEu
+         bHgMJbxKCB0rxYC2R7hEHA2Pv/OJysp+nkxm0AVyt3YoVyfPZhRB30WJlOkUALE+FAV6
+         cIIw==
+Received: by 10.50.46.131 with SMTP id v3mr6655190igm.1.1346843668444;
+        Wed, 05 Sep 2012 04:14:28 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.231.2.13 with SMTP id 13ls570932ibh.1.gmail; Wed, 05 Sep 2012
+ 04:14:27 -0700 (PDT)
+Received: by 10.42.19.199 with SMTP id d7mr11027517icb.11.1346843667558;
+        Wed, 05 Sep 2012 04:14:27 -0700 (PDT)
+Received: by 10.42.19.199 with SMTP id d7mr11027515icb.11.1346843667548;
+        Wed, 05 Sep 2012 04:14:27 -0700 (PDT)
+Received: from mail-ie0-f176.google.com (mail-ie0-f176.google.com [209.85.223.176])
+        by gmr-mx.google.com with ESMTPS id ar7si2052666igc.0.2012.09.05.04.14.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Sep 2012 04:14:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 209.85.223.176 as permitted sender) client-ip=209.85.223.176;
+Received: by iecs9 with SMTP id s9so243521iec.21
+        for <msysgit@googlegroups.com>; Wed, 05 Sep 2012 04:14:27 -0700 (PDT)
+Received: by 10.50.193.201 with SMTP id hq9mr17202371igc.48.1346843667387;
+ Wed, 05 Sep 2012 04:14:27 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Wed, 5 Sep 2012 04:13:56 -0700 (PDT)
+In-Reply-To: <CAGHpTB+LipLt3CgVt5O0s9xj5HHf9Y5z9QWEy+FKYH8s4O7Q2w@mail.gmail.com>
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of pclouds@gmail.com designates 209.85.223.176 as permitted sender)
+ smtp.mail=pclouds@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204813>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Wed, Sep 5, 2012 at 6:05 PM, Orgad and Raizel Shaneh
+<orgads@gmail.com> wrote:
+> This seems to fix it. Just change src[x] == '/' to is_dir_sep(src[x]).
 
-> Looking at the remote command list, "rm" is the only abbreviation. I
-> guess we should add "delete" (or "remove") as an alias for "rm".
-
-I'd vote for "remove", to make it clear that "rm" is the abbreviation.
+So you are able to test the changes. Would you mind submitting a patch
+so other users benefit it as well?
+-- 
+Duy
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
