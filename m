@@ -1,138 +1,96 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: poll() emulation in git
-Date: Wed, 5 Sep 2012 14:04:06 +0200
-Message-ID: <00c601cd8b5e$8d22fec0$a768fc40$@schmitz-digital.de>
-References: <00c001cd8b59$028e41c0$07aac540$@schmitz-digital.de> <CAE2SPAZnq1y7SuCAsS0YJ8wv6=L-QJiay03BerSZvgyqXyPX8w@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: poll() emulation in git
+Date: Wed, 05 Sep 2012 14:05:21 +0200
+Message-ID: <50474001.5030407@gnu.org>
+References: <00c001cd8b59$028e41c0$07aac540$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Paolo Bonzini'" <bonzini@gnu.org>, <bug-gnulib@gnu.org>,
-	<git@vger.kernel.org>, "'Erik Faye-Lund'" <kusmabite@gmail.com>
-To: "'Bastien ROUCARIES'" <roucaries.bastien@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 05 14:04:28 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: bug-gnulib@gnu.org, git@vger.kernel.org,
+	'Junio C Hamano' <gitster@pobox.com>,
+	'Erik Faye-Lund' <kusmabite@gmail.com>
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org Wed Sep 05 14:05:44 2012
+Return-path: <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>
+Envelope-to: gnu-bug-gnulib@m.gmane.org
+Received: from lists.gnu.org ([208.118.235.17])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9ELK-00063x-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Sep 2012 14:04:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314Ab2IEMEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 08:04:16 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:64373 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671Ab2IEMEP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2012 08:04:15 -0400
-Received: from DualCore (dsdf-4db50426.pool.mediaWays.net [77.181.4.38])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MZ9ey-1Ssmsp2iVg-00L5ZS; Wed, 05 Sep 2012 14:04:12 +0200
-In-Reply-To: <CAE2SPAZnq1y7SuCAsS0YJ8wv6=L-QJiay03BerSZvgyqXyPX8w@mail.gmail.com>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIgUOmy4ZEsU7RI7VRx80YFphUkTAKiEWRqlsEJqiA=
-Content-Language: de
-X-Provags-ID: V02:K0:2angUKrKlmXjtbM/DgH7nORCYuoU1i5hNqsU0053DTk
- ViBHfj4ed+wl+n9JINPt98XH35tiGbd5TbI3Tuv6Y6hn8hI+Cf
- d73ecZJKSskSZLm45C+KmWneIMdA741ONWUxd95Kq5SJbbfuqO
- VN298/UJgxlodGXag0x98UICaWonav3KOfJqls5TgxDUzUVPM1
- AwsnAcgQotdzUp4IZz5PSvZ8TXDy4tqiSjgTWHR3rSfPhjOE+r
- Jlg+v6XNS9KAQTi/hhJplPcDnuCKYU58CI/5XR5JY1jEM48m/o
- yibEL31NUBPxv5L18uiXYA0JFJUbgm7/enPmtv3tYL77a0mRFd
- 0lvaq5zgtuknPCY5glDFqk2ikJm7FsiFewzQfNC/DiTxK58Y9S
- RzF5mGA6mv0Ig==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204820>
+	(envelope-from <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>)
+	id 1T9EMZ-0007L1-2v
+	for gnu-bug-gnulib@m.gmane.org; Wed, 05 Sep 2012 14:05:43 +0200
+Received: from localhost ([::1]:44438 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>)
+	id 1T9EMW-0003uv-6J
+	for gnu-bug-gnulib@m.gmane.org; Wed, 05 Sep 2012 08:05:40 -0400
+Received: from eggs.gnu.org ([208.118.235.92]:43583)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <paolo.bonzini@gmail.com>) id 1T9EMS-0003uY-6S
+	for bug-gnulib@gnu.org; Wed, 05 Sep 2012 08:05:37 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <paolo.bonzini@gmail.com>) id 1T9EML-0006fM-Ji
+	for bug-gnulib@gnu.org; Wed, 05 Sep 2012 08:05:36 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:33300)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <paolo.bonzini@gmail.com>) id 1T9EML-0006dO-E7
+	for bug-gnulib@gnu.org; Wed, 05 Sep 2012 08:05:29 -0400
+Received: by pbbro12 with SMTP id ro12so920597pbb.0
+	for <bug-gnulib@gnu.org>; Wed, 05 Sep 2012 05:05:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20120113;
+	h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+	:references:in-reply-to:content-type:content-transfer-encoding;
+	bh=EIjaFKCkmID++OWPzChlBvMsVgk9OQ8qXnWH5X4k03Y=;
+	b=U30sHYmgt8Ixd/6IT2HEG+Oxrok3Oid2DSnGzLyLLbTvYJIlGoW/+Pj5mCjE+RLQth
+	xHeaznIYHgv6+BBdElHpirXFv4tDJn7+imlBC5ClBx4TIhK1bXFHqJ01OGgCfj/Smn4+
+	AsBqC43J2jASswa6KADfhDhwQxLOXW9q/jWb7vOtCmvbOv3vkoPVgi9GecUzi2692IpE
+	8YozGwoagsZJhJsxiVQpWf4Bcw8Ik7NQj4S2Fw33CoP7t/qV1ono64GkHcopcD8vafpC
+	yknHWCSOoy/RCcCbd80LX1CF83D1CclQpZkj7L/EV8MsMb0LtU8YifrI35UNdCstI8Dh
+	iIag==
+Received: by 10.66.74.3 with SMTP id p3mr48529296pav.49.1346846728016;
+	Wed, 05 Sep 2012 05:05:28 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (93-34-169-1.ip50.fastwebnet.it.
+	[93.34.169.1])
+	by mx.google.com with ESMTPS id y11sm1284324pbv.66.2012.09.05.05.05.24
+	(version=TLSv1/SSLv3 cipher=OTHER);
+	Wed, 05 Sep 2012 05:05:26 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64;
+	rv:14.0) Gecko/20120717 Thunderbird/14.0
+In-Reply-To: <00c001cd8b59$028e41c0$07aac540$@schmitz-digital.de>
+X-detected-operating-system: by eggs.gnu.org: Genre and OS details not
+	recognized.
+X-Received-From: 209.85.160.41
+X-BeenThere: bug-gnulib@gnu.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: Gnulib discussion list <bug-gnulib.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/archive/html/bug-gnulib>
+List-Post: <mailto:bug-gnulib@gnu.org>
+List-Help: <mailto:bug-gnulib-request@gnu.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=subscribe>
+Errors-To: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Sender: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204821>
 
-> From: Bastien ROUCARIES [mailto:roucaries.bastien@gmail.com]
-> Sent: Wednesday, September 05, 2012 1:55 PM
-> To: Joachim Schmitz
-> Cc: Junio C Hamano; Paolo Bonzini; bug-gnulib@gnu.org; git@vger.kernel.org; Erik Faye-Lund
-> Subject: Re: poll() emulation in git
+Il 05/09/2012 13:24, Joachim Schmitz ha scritto:
+> However: this poll implementation, while compiling OK, doesn't work properly.
+> Because it uses recv(...,MSG_PEEK), it works on sockets only (returns ENOTSOCK on anything else), while the real poll() works on all
+> kind if file descriptors, at least that is my understanding.
+
+Actually recv(...,MSG_PEEK) on most Unix variants works on non-sockets
+too.  The trick is taken from GNU Pth in turn.
+
+> Here on HP NonStop, when being connected via an non-interactive SSH, we get a set of pipes (stdin, stdout, stderr) instead of a
+> socket to talk to, so the poll() just hangs/loops.
+
+Does your system have a working FIONREAD ioctl for pipes?
+
+> As git's implementation is based on ('stolen' from?) gnulib's and still pretty similar, CC to the gnulib list and Paolo
 > 
-> On Wed, Sep 5, 2012 at 1:24 PM, Joachim Schmitz <jojo@schmitz-digital.de> wrote:
-> >> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
-> >> Sent: Tuesday, September 04, 2012 1:49 PM
-> >> To: 'Junio C Hamano'
-> >> Cc: 'git@vger.kernel.org'; 'Erik Faye-Lund'
-> >> Subject: RE: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
-> >>
-> >> > From: Junio C Hamano [mailto:gitster@pobox.com]
-> >> > Sent: Friday, August 24, 2012 9:47 PM
-> >> > To: Joachim Schmitz
-> >> > Cc: git@vger.kernel.org; 'Erik Faye-Lund'
-> >> > Subject: Re: [PATCH v2] Support non-WIN32 system lacking poll() while keeping the WIN32 part intact
-> >> >
-> >> > "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> >> >
-> >> > > Different, but related question: would poll.[ch] be allowed to #include "git-compat-util.h"?
-> >> >
-> >> > Seeing other existing generic wrappers directly under compat/,
-> >> > e.g. fopen.c, mkdtemp.c, doing so, I would say why not.
-> >> >
-> >> > Windows folks (I see Erik is already CC'ed, which is good ;-),
-> >> > please work with Joachim to make sure such a move won't break your
-> >> > builds.  I believe that it should just be the matter of updating a
-> >> > couple of paths in the top-level Makefile.
-> >>
-> >> Haven't heard anything from the Windows folks yet.
-> >>
-> >> I'd prefer to move compat/win32/poll.[ch] into compat/poll.
-> >> Then adjust a few paths in Makefile and that would be the 1st patch
-> >>
-> >> A 2nd patch would be my already proposed ones that make this usable for others (me in this case ;-)), namely wrapping 2 #inludes.
-> >>
-> >> diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-> >> index 403eaa7..49541f1 100644
-> >> --- a/compat/poll/poll.c
-> >> +++ b/compat/poll/poll.c
-> >> @@ -24,7 +24,9 @@
-> >>  # pragma GCC diagnostic ignored "-Wtype-limits"
-> >>  #endif
-> >>
-> >> -#include <malloc.h>
-> >> +#if defined(WIN32)
-> >> +# include <malloc.h>
-> >> +#endif
-> >>
-> >>  #include <sys/types.h>
-> >>
-> >> @@ -48,7 +50,9 @@
-> >>  #else
-> >>  # include <sys/time.h>
-> >>  # include <sys/socket.h>
-> >> -# include <sys/select.h>
-> >> +# ifndef NO_SYS_SELECT_H
-> >> +#  include <sys/select.h>
-> >> +# endif
-> >>  # include <unistd.h>
-> >>  #endif
-> >>
-> >> --
-> >> 1.7.12
-> >
-> > However: this poll implementation, while compiling OK, doesn't work properly.
-> > Because it uses recv(...,MSG_PEEK), it works on sockets only (returns ENOTSOCK on anything else), while the real poll() works on all
-> > kind if file descriptors, at least that is my understanding.
-> >
-> > Here on HP NonStop, when being connected via an non-interactive SSH, we get a set of pipes (stdin, stdout, stderr) instead of a
-> > socket to talk to, so the poll() just hangs/loops.
-> >
-> > As git's implementation is based on ('stolen' from?) gnulib's and still pretty similar, CC to the gnulib list and Paolo
-> >
-> > Any idea how this could get solved? I.e. how to implement a poll() that works on non-sockets too?
-> > There is some code that pertains to a seemingly similar problem in Mac OS X, but my problem is not identical, as that fix doesn't
-> > help.
-> 
-> Could you give more context ? Are you speaking about win32 or about HP non stop?
+> Any idea how this could get solved? I.e. how to implement a poll() that works on non-sockets too?
+> There is some code that pertains to a seemingly similar problem in Mac OS X, but my problem is not identical, as that fix doesn't
+> help.
 
-HP NonStop
-
-> If so pipe are broken and unfixable under windows see
-> http://www.mail-archive.com/bug-gnulib@gnu.org/msg23365.html
-
-Bye, Jojo
+Paolo
