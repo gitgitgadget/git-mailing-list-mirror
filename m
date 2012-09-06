@@ -1,112 +1,110 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 5/7] t0000: verify that real_path() works correctly with
- absolute paths
-Date: Thu, 06 Sep 2012 23:11:53 +0200
-Message-ID: <50491199.8090306@alum.mit.edu>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu> <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu> <50470FFB.2070204@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] send-email: initial_to and initial_reply_to are both
+ optional
+Date: Thu, 06 Sep 2012 14:21:00 -0700
+Message-ID: <7vr4qe26gz.fsf_-_@alter.siamese.dyndns.org>
+References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
+ <1344983132-22578-1-git-send-email-gitster@pobox.com>
+ <CALaEz9WVCj0gu-CbUJgydik1bC7z7JCcveKTdyxgrTWokXq5JA@mail.gmail.com>
+ <7vsjav6d85.fsf@alter.siamese.dyndns.org>
+ <CALaEz9W_RR70KEzxk7GxjOu1_yv4UudckcsKAP2C_39Nc2yLbw@mail.gmail.com>
+ <7vipbq3omb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Sep 06 23:12:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 23:21:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9jNA-0006PC-8S
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 23:12:24 +0200
+	id 1T9jVg-0007ry-Sj
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 23:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933225Ab2IFVMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 17:12:00 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:50912 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933189Ab2IFVL5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 17:11:57 -0400
-X-AuditID: 1207440f-b7fde6d00000095c-03-5049119c4fa1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 56.19.02396.C9119405; Thu,  6 Sep 2012 17:11:56 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q86LBsDq021447
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 6 Sep 2012 17:11:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <50470FFB.2070204@viscovery.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqDtH0DPAoH+fsUXXlW4mi4beK8wW
-	K3/WODB7XLyk7PF5k5zH3f87mQKYo7htkhJLyoIz0/P07RK4M9580Cq4KFAxa4F5A+NR3i5G
-	Tg4JAROJ/z/6WCBsMYkL99azdTFycQgJXGaUePPvEBOEc4xJYv2HHewgVbwC2hJXXp1iBrFZ
-	BFQlWmfcAYuzCehKLOppZgKxRQVCJGZcnswMUS8ocXLmE7ANIgIaErtP94LVMwtYS6x4fRis
-	XlggVuLS+dWsEMvmMUpMnrASLMEJNHTX7ymMEA26Ej+aVrJB2PIS29/OYZ7AKDALyY5ZSMpm
-	ISlbwMi8ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXRC83s0QvNaV0EyMkcPl3MHatlznEKMDB
-	qMTDa3TWI0CINbGsuDL3EKMkB5OSKK8Yt2eAEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeib+A
-	ynlTEiurUovyYVLSHCxK4rzqS9T9hATSE0tSs1NTC1KLYLIyHBxKErxHBYCGChalpqdWpGXm
-	lCCkmTg4QYZzSYkUp+alpBYllpZkxIMiNb4YGKsgKR6gvY9A2nmLCxJzgaIQracYdTnuflxx
-	n1GIJS8/L1VKnHcVSJEASFFGaR7cCliaesUoDvSxMO9kkCoeYIqDm/QKaAkT0BKRZyDPFZck
-	IqSkGhhTxLZ2XpB+8J5xho59rcyjZ1f1935hct5x5UrBHumTh7K7DErLJm2w7EtdXX0pP+3V
-	pzr1sk13Mt4Evjy7cu5fg72nLZ3/rk7oes4wI+9CRrHa9YwkzY33m6ZoT91w/LHP 
+	id S933160Ab2IFVVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 17:21:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40057 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759866Ab2IFVVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 17:21:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79952972C;
+	Thu,  6 Sep 2012 17:21:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NJDsNUHiiVpUqt8DGkB2EY+Rrec=; b=wFLQdO
+	lH/STS+QA1IeOgCbpGGkzDz2C2OWKhwofkH4i2ybn7+onTb0gCZoY97HtUDMlF5v
+	TSvGrqj4uAGR0+0L/sOq1nb6lXHXrFJy3qoD44vcY6dhmwBAk9wm8SSKbRIFmkZr
+	xKi1P6fYIXzpQVQkJROEsz8uARF5dVIoE1Qtc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xx1UTxsRzThdGYtXe9EFz7rCMVDnXrpR
+	1qd9r/Uy42nmjJHJk4+xqJoBO4OAE6dVf3eDK/PD728+Y0dhBggd6L2tnWHd2FeM
+	bnQZTaDZSx5IhNaT0CV4PV/LqnYfl65FPGZ3hVaCbS8T7xTcITT1seA3Gxo0QZsY
+	BdO+bDPRpws=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66643972A;
+	Thu,  6 Sep 2012 17:21:02 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF0A19729; Thu,  6 Sep 2012
+ 17:21:01 -0400 (EDT)
+In-Reply-To: <7vipbq3omb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 06 Sep 2012 13:03:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C24CF4D0-F868-11E1-8754-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204926>
 
-On 09/05/2012 10:40 AM, Johannes Sixt wrote:
-> Am 9/4/2012 10:14, schrieb mhagger@alum.mit.edu:
->> From: Michael Haggerty <mhagger@alum.mit.edu>
->>
->> There is currently a bug: if passed an absolute top-level path that
->> doesn't exist (e.g., "/foo") it incorrectly interprets the path as a
->> relative path (e.g., returns "$(pwd)/foo").  So mark the test as
->> failing.
->>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  t/t0000-basic.sh | 12 +++++++++++-
->>  1 file changed, 11 insertions(+), 1 deletion(-)
->>
->> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
->> index 1a51634..ad002ee 100755
->> --- a/t/t0000-basic.sh
->> +++ b/t/t0000-basic.sh
->> @@ -458,7 +458,17 @@ test_expect_success 'real path rejects the empty string' '
->>  	test_must_fail test-path-utils real_path ""
->>  '
->>  
-> 
-> These tests should really be in t0060-path-utils.sh.
-> 
->> -test_expect_success SYMLINKS 'real path works as expected' '
->> +test_expect_failure 'real path works on absolute paths' '
->> +	nopath="hopefully-absent-path" &&
->> +	test "/" = "$(test-path-utils real_path "/")" &&
->> +	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
-> 
-> These tests fail on Windows because test-path-utils operates on a
-> DOS-style absolute path even if a POSIX style absolute path is passed as
-> argument. The best thing would be to move this to a separate test that is
-> protected by a POSIX prerequisite (which is set in t0060).
-> 
->> +	# Find an existing top-level directory for the remaining tests:
->> +	d=$(pwd -P | sed -e "s|^\(/[^/]*\)/.*|\1|") &&
-> 
-> pwd -P actually expands to pwd -W on Windows, and produces a DOS-style
-> path. I suggest to insert [^/]* to skip drive letter-colon like so:
-> 
-> 	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
-> 
->> +	test "$d" = "$(test-path-utils real_path "$d")" &&
->> +	test "$d/$nopath" = "$(test-path-utils real_path "$d/$nopath")"
-> 
-> Then these tests pass.
+We may pick up additional recipients from the format-patch output
+files we are sending, in which case it is perfectly valid to leave
+the @initial_to empty when the prompt asks.  We may want to start
+a new discussion thread without replying to anything, and it is
+valid to leave $initial_reply_to empty.
 
-Thanks for the help.  They will be incorporated in v2.
+An earlier update to avoid y@example.com stuffed in address fields
+did not take these two cases into account.
 
-Michael
+Noticed and fix suggested by Stephen Boyd.
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * I am tempted to queue this, after asking you to eyeball it, and
+   then update the author to pass the blame to you before merging it
+   to 'next'.
+
+ git-send-email.perl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index e89729b..b1fb7e6 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -759,7 +759,8 @@ sub file_declares_8bit_cte {
+ }
+ 
+ if (!@initial_to && !defined $to_cmd) {
+-	my $to = ask("Who should the emails be sent to? ",
++	my $to = ask("Who should the emails be sent to (if any)? ",
++		     default => "",
+ 		     valid_re => qr/\@.*\./, confirm_only => 1);
+ 	push @initial_to, parse_address_line($to) if defined $to; # sanitized/validated later
+ 	$prompting++;
+@@ -786,7 +787,8 @@ sub expand_one_alias {
+ 
+ if ($thread && !defined $initial_reply_to && $prompting) {
+ 	$initial_reply_to = ask(
+-		"Message-ID to be used as In-Reply-To for the first email? ",
++		"Message-ID to be used as In-Reply-To for the first email (if any)? ",
++		default => "",
+ 		valid_re => qr/\@.*\./, confirm_only => 1);
+ }
+ if (defined $initial_reply_to) {
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.12.321.g60f00e5
