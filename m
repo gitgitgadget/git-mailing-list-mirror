@@ -1,119 +1,76 @@
-From: Mark Plomer <mark.plomer@boerse-go.de>
-Subject: Re: GIT-SVN: Corrupted commits when using --preserve-empty-dirs
-Date: Thu, 6 Sep 2012 23:02:08 +0200
-Message-ID: <50490F50.3020208@boerse-go.de>
-References: <2086BD14B0971B4492C5AA17E9604CB02173C9C1@AMSPRD0610MB350.eurprd06.prod.outlook.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/9] Refactor excluded and path_excluded
+Date: Thu, 06 Sep 2012 14:07:26 -0700
+Message-ID: <7vvcfq273l.fsf@alter.siamese.dyndns.org>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org>
+ <1346544731-938-6-git-send-email-git@adamspiers.org>
+ <CACsJy8A-P0RziZt1_PajFrzqmq9ZbkyaxwUCeDAO3XteQ0gAag@mail.gmail.com>
+ <7vr4qhbt3d.fsf@alter.siamese.dyndns.org>
+ <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com>
+ <7v627r7s5c.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Aq7Sodm1_k2kAmfajHG4wP76xHCshDGPfiLYfzuNwWaA@mail.gmail.com>
+ <CACnwZYe19r9mefDmAQtuE5NU4jw033fc_i4JvMZUgtMUkNgEOw@mail.gmail.com>
+ <CACsJy8CoBvxg9SWFFXbuDJM7Lu74Jw6LVc=7cNwu24h7pijeXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 23:03:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thiago Farina <tfransosi@gmail.com>,
+	Adam Spiers <git@adamspiers.org>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 23:07:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9jEf-00053B-7i
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 23:03:37 +0200
+	id 1T9jIY-0001EL-Ik
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 23:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933144Ab2IFVDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 17:03:30 -0400
-Received: from [216.32.180.187] ([216.32.180.187]:25943 "EHLO
-	co1outboundpool.messaging.microsoft.com" rhost-flags-FAIL-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S933123Ab2IFVD2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 17:03:28 -0400
-Received: from mail38-co1-R.bigfish.com (10.243.78.254) by
- CO1EHSOBE015.bigfish.com (10.243.66.78) with Microsoft SMTP Server id
- 14.1.225.23; Thu, 6 Sep 2012 21:02:17 +0000
-Received: from mail38-co1 (localhost [127.0.0.1])	by mail38-co1-R.bigfish.com
- (Postfix) with ESMTP id B3D42A0015A	for <git@vger.kernel.org>; Thu,  6 Sep
- 2012 21:02:17 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:157.56.252.53;KIP:(null);UIP:(null);IPV:NLI;H:DB3PRD0610HT002.eurprd06.prod.outlook.com;RD:none;EFVD:NLI
-X-SpamScore: -1
-X-BigFish: PS-1(zz1432Izz1202hzzz31h2a8h668h839hd25he5bhf0ah107ah1155h)
-Received-SPF: softfail (mail38-co1: transitioning domain of boerse-go.de does not designate 157.56.252.53 as permitted sender) client-ip=157.56.252.53; envelope-from=mark.plomer@boerse-go.de; helo=DB3PRD0610HT002.eurprd06.prod.outlook.com ;.outlook.com ;
-Received: from mail38-co1 (localhost.localdomain [127.0.0.1]) by mail38-co1
- (MessageSwitch) id 1346965335303447_22389; Thu,  6 Sep 2012 21:02:15 +0000
- (UTC)
-Received: from CO1EHSMHS002.bigfish.com (unknown [10.243.78.238])	by
- mail38-co1.bigfish.com (Postfix) with ESMTP id 46AEC48004C	for
- <git@vger.kernel.org>; Thu,  6 Sep 2012 21:02:15 +0000 (UTC)
-Received: from DB3PRD0610HT002.eurprd06.prod.outlook.com (157.56.252.53) by
- CO1EHSMHS002.bigfish.com (10.243.66.12) with Microsoft SMTP Server (TLS) id
- 14.1.225.23; Thu, 6 Sep 2012 21:02:13 +0000
-Received: from [192.168.1.30] (94.216.92.117) by pod51016.outlook.com
- (10.255.47.37) with Microsoft SMTP Server (TLS) id 14.16.190.9; Thu, 6 Sep
- 2012 21:02:12 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <2086BD14B0971B4492C5AA17E9604CB02173C9C1@AMSPRD0610MB350.eurprd06.prod.outlook.com>
-X-Originating-IP: [94.216.92.117]
-X-OriginatorOrg: boerse-go.de
+	id S933151Ab2IFVHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 17:07:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65285 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933128Ab2IFVHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 17:07:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 978059333;
+	Thu,  6 Sep 2012 17:07:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=A1FU3IUuRHcqtYaw9ot5tPs+gj4=; b=L7Xlhp
+	GxY9fRZKw0LZuqw3DedG+XRGyYDR87AeY+x48XZblaSqaWI8VNYWOfEP609bYTZ3
+	g9UdfnSYd/TtSkXBF8Ix0uNs2fRzcbpc8DTi5Kc2yNi0e0KJg03TNFf+SKqIBdCq
+	wY/rSYlT38XdzwnZ+TCAJUwC5imBzj67poZHs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CCPqDj9Hf9OnyDkJ5T7/qLubxXsFnR7j
+	NM7FsJYuwrtwlKgPi5Ba1lpmaRWCzVyP9Ts5nMsW9+j0rdopXBgdCs/NX0TIw4XZ
+	YK+VUMxkSc7yp6wr6Dmp73+p+4WMwz/SkkqxDUGW6JD+3kEMKkqW0U4ac1P36x6s
+	vlhiquQm8ik=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 842049332;
+	Thu,  6 Sep 2012 17:07:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 011E29331; Thu,  6 Sep 2012
+ 17:07:28 -0400 (EDT)
+In-Reply-To: <CACsJy8CoBvxg9SWFFXbuDJM7Lu74Jw6LVc=7cNwu24h7pijeXQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 6 Sep 2012 22:05:45 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DDD87834-F866-11E1-B792-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204924>
 
-There is a strange workaround for SVN-repos, containing directories that 
-were replaced by symlinks in the past, properly cloned into GIT (with 
-empty dirs):
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-You have to import it part-by-part ... i.e. fetch revision 1-3 and then 
-fetch 4-5:
+>>> I'm not great at naming. And path_excluded() cannot be reused to avoid
+>>> problems with other ongoing series if any. So path_is_excluded()?
+>>
+>> is_path_excluded()?
+>
+> Good too.
 
-git svn clone -r 1:3 --preserve-empty-dirs file://`pwd`/test-svn-repo 
-test-git
-cd test-git
-git svn fetch
-# This works fine for the example below
-
-The disadvantage is, that you have to figure out those critical 
-revisions manually. Otherwise you may have an inconsistent clone.
-
-Am 04.09.2012 15:11, schrieb Mark Plomer:
-> Hi,
-> if I clone a SVN repository with --preserve-empty-dirs it terminates at some point with i.e. following error:
-> folder/subfolder was not found in commit 2dcb008c220f5f6fe33700c9e7deb0c8fa2b8607 (r4)
->
-> I tracked things down to the following problem:
-> - r1: Create a directory with subdirectory with a file
-> - r2: Remove the file (so it generates a virtual .gitignore)
-> - r3: Rename subdirectory
-> - r4: Add a symlink named like the old subdirectory
->
-> -> In GIT the symlink is actually not a symlink but a folder with the ".gitignore" file ... which break things later when changing symlink
->
->
-> # Simple reproduce script:
-> svnadmin create test-svn-repo
-> svn co file://`pwd`/test-svn-repo test-svn-wc
->
-> mkdir -p test-svn-wc/folder/subfolder
-> touch test-svn-wc/folder/subfolder/file.txt
-> svn add test-svn-wc/*
-> svn ci -m 'Initial commit' test-svn-wc
->
-> svn rm test-svn-wc/folder/subfolder/file.txt
-> svn ci -m 'Removed file.txt' test-svn-wc
->
-> svn up test-svn-wc
-> svn mv test-svn-wc/folder/subfolder test-svn-wc/folder/subfolder2
-> svn ci -m 'Renamed subfolder' test-svn-wc
->
-> svn up test-svn-wc
-> ln -s subfolder2 test-svn-wc/folder/subfolder
-> svn add test-svn-wc/folder/subfolder
-> svn ci -m 'Added subfolder symlink' test-svn-wc
->
-> rm -f test-svn-wc/folder/subfolder
-> ln -s changedlink test-svn-wc/folder/subfolder
-> svn ci -m 'Changed symlink' test-svn-wc
->
->
-> git svn clone --preserve-empty-dirs file://`pwd`/test-svn-repo test-git
-> # this throws error: folder/subfolder was not found in commit 2dcb008c220f5f6fe33700c9e7deb0c8fa2b8607 (r4)
->
->
-> Tested with git 1.7.12, svn 1.6.12 (debian)
->
-> Greets Mark
+Sure, either would work.
