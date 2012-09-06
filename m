@@ -1,77 +1,68 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 5/9] Refactor excluded and path_excluded
-Date: Thu, 6 Sep 2012 22:05:45 +0700
-Message-ID: <CACsJy8CoBvxg9SWFFXbuDJM7Lu74Jw6LVc=7cNwu24h7pijeXQ@mail.gmail.com>
-References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <1346544731-938-6-git-send-email-git@adamspiers.org> <CACsJy8A-P0RziZt1_PajFrzqmq9ZbkyaxwUCeDAO3XteQ0gAag@mail.gmail.com>
- <7vr4qhbt3d.fsf@alter.siamese.dyndns.org> <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com>
- <7v627r7s5c.fsf@alter.siamese.dyndns.org> <CACsJy8Aq7Sodm1_k2kAmfajHG4wP76xHCshDGPfiLYfzuNwWaA@mail.gmail.com>
- <CACnwZYe19r9mefDmAQtuE5NU4jw033fc_i4JvMZUgtMUkNgEOw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Prefix shell test output messages with test id
+Date: Thu, 6 Sep 2012 11:10:08 -0400
+Message-ID: <20120906151008.GA7407@sigill.intra.peff.net>
+References: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
+ <20120906123400.GA25467@tommy-fedora.scientificnet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Adam Spiers <git@adamspiers.org>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 17:06:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+To: Jan-Marek Glogowski <glogow@fbihome.de>
+X-From: git-owner@vger.kernel.org Thu Sep 06 17:10:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9dey-0002sO-Sz
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 17:06:25 +0200
+	id 1T9dim-0007fC-I9
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 17:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756752Ab2IFPGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 11:06:17 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44446 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756295Ab2IFPGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 11:06:17 -0400
-Received: by iahk25 with SMTP id k25so2143535iah.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 08:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DrbnO03LYNiHXWkvrthiiez4pVrakTKjR3IBKUbzXOs=;
-        b=TH313LvDj40e4fDbSAEwNTimbPkwnsH2yTcGEMVK5wyTC+v4+Z0rD+HUKaQz1quTiH
-         nNYferZEnW2kfcKhCg7FnVjKTzKLVVWivTo+JgTogq8GmjEF1Adj+vfUx8IdYagtl3y3
-         v4VxILHBZTrq1ijSFN/H+/IM5KLq1KHU4DDL0l0JMjHfrYiEJDOS5YZKzzucIMLcvsvJ
-         IVeVOwxaxvMGTjVD+Z0FITrHSzV6MRpBhuaoKMzKBTMGLWj7McOxarDjEJc7d/4iJT/6
-         esCyvNn33bJnkEuI+yfnHidwsYkFSZ/FYC7U+c+sdAI/LGq5Qk7wgCzNfW90QdxO+IBn
-         ChVg==
-Received: by 10.50.85.134 with SMTP id h6mr15295383igz.2.1346943976327; Thu,
- 06 Sep 2012 08:06:16 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Thu, 6 Sep 2012 08:05:45 -0700 (PDT)
-In-Reply-To: <CACnwZYe19r9mefDmAQtuE5NU4jw033fc_i4JvMZUgtMUkNgEOw@mail.gmail.com>
+	id S1756883Ab2IFPKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 11:10:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59870 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756813Ab2IFPKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 11:10:11 -0400
+Received: (qmail 22086 invoked by uid 107); 6 Sep 2012 15:10:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Sep 2012 11:10:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2012 11:10:08 -0400
+Content-Disposition: inline
+In-Reply-To: <20120906123400.GA25467@tommy-fedora.scientificnet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204895>
 
-On Thu, Sep 6, 2012 at 9:59 PM, Thiago Farina <tfransosi@gmail.com> wrote:
-> On Thu, Sep 6, 2012 at 9:13 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->> On Thu, Sep 6, 2012 at 10:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>>
->>>> We could introduce exclude_path() and kill path_excluded() then. There
->>>> are just about 5-6 call sites to replace.
->>>
->>> The name path_excluded(... path ...) sounds like it is asking a
->>> yes/no question "is this path excluded?", which actually is what is
->>> going on.
->>>
->>> The name exclude_path(... path ...) sounds as if you are requesting
->>> somebody to exclude the path.  Does that meaning match the semantics
->>> of the function?
->>
->> I'm not great at naming. And path_excluded() cannot be reused to avoid
->> problems with other ongoing series if any. So path_is_excluded()?
->
-> is_path_excluded()?
+On Thu, Sep 06, 2012 at 02:34:00PM +0200, Thomas Gummerer wrote:
 
-Good too.
--- 
-Duy
+> On 09/06, Jan-Marek Glogowski wrote:
+> > This adds the test ID (tXXXX) prefix to the test result message of
+> > all shell tests.  This is especially useful when doing a parallel
+> > check run, where it's currently quite hard to identify the actual
+> > failing test case.
+> > 
+> > Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
+> 
+> This breaks the TAP output format of the tests, which is needed to run
+> them with prove.  To identify the failing tests more easily when running
+> the tests in parallel, you may want to add GIT_TEST_TARGET = prove to
+> your config.mak.
+
+Yeah, I would second the suggestion to just use "prove". However, if for
+some reason that isn't an option, note that the stock harness stores
+results in test-results/. You can just grep it like this:
+
+  grep 'failed [^0]' test-results/*
+
+to find out which scripts had failures, which is usually sufficient (if
+you're running the tests in parallel, you won't have any sensible output
+anyway, so your first step is going to be to rerun the failed script
+with "-v" anyway).
+
+But really, "prove" is much nicer, and I recommend it unless you don't
+have perl on your system.
+
+-Peff
