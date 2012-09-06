@@ -1,199 +1,264 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] remote: prefer subcommand name 'remove' to 'rm'
-Date: Thu,  6 Sep 2012 19:25:23 +0700
-Message-ID: <1346934323-15938-1-git-send-email-pclouds@gmail.com>
-References: <7vehmf6c3x.fsf@alter.siamese.dyndns.org>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] Prefix shell test output messages with test id
+Date: Thu, 6 Sep 2012 14:34:00 +0200
+Message-ID: <20120906123400.GA25467@tommy-fedora.scientificnet.net>
+References: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tomas Carnecky <tomas.carnecky@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 14:32:38 2012
+Cc: git@vger.kernel.org
+To: Jan-Marek Glogowski <glogow@fbihome.de>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:34:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9bG6-0002yr-Pa
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:32:35 +0200
+	id 1T9bHi-00053c-U3
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167Ab2IFMc2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Sep 2012 08:32:28 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39573 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208Ab2IFMc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 08:32:26 -0400
-Received: by pbbrr13 with SMTP id rr13so2440896pbb.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 05:32:26 -0700 (PDT)
+	id S1752178Ab2IFMeH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Sep 2012 08:34:07 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:64137 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751208Ab2IFMeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 08:34:05 -0400
+Received: by weyx8 with SMTP id x8so1070711wey.19
+        for <git@vger.kernel.org>; Thu, 06 Sep 2012 05:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=uaGAA0Q0m006xgcopiHqKqMeRiclRb0jmAVpa94/6bs=;
-        b=i+sWPN0KKvmyyFlo3x4X0aNl7bwVtKUwgNRhfmM7siYTWKRCOizbHowT9LNFbJbrYW
-         8JKvQMegWUeX3hua2KA6+FqJML0qlhAyZM/KVNnIWuKsW1kSHYA7aTgY38r4fFIZDWmi
-         OAp7+LyAg2sryNEOXssw+zLQWDQccRSHMhPUN96Wz3wIFd23LIh8Wxq2OnjiiKdKCSaS
-         B7zPauxHhV1XgCXTBPJ8yn/z+U+AteAAEyN6e30f3Y6tiOWddjve8T85kCVabn/VtBfe
-         forbyzSewxw1IyoQcMYL4u8DeZMrr0oTaURfjVt13hdH9s2oHGIW5cJxssnhQkPXuEZh
-         Uckg==
-Received: by 10.66.74.100 with SMTP id s4mr3343450pav.27.1346934746476;
-        Thu, 06 Sep 2012 05:32:26 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.40.250])
-        by mx.google.com with ESMTPS id ho7sm1281753pbc.3.2012.09.06.05.32.19
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ySueTad83nAvmaw1RnyXOfP/wid7Hit57nAjNxptcIs=;
+        b=q0aN5fuFI2rcR38G7j8I+EwO2Lu0hHzl8cUVCRe7OVk4/R6ZyOpSmLQZsPqDhgjG8d
+         Ir4Md++FnvAgp4smXsYyjWniV46/vGtdTS8SvIJw6y7aBWZioViIwtXv8PbuY2cuILb7
+         uKHzyDI4MbO0bKVKG5ouyxd/axbFLi2uMJGImCGWrjEBM2DNk9pZOuHx0+0oTh1NlvzG
+         yVrT1uidrl129BRrKVpJ86RzXJBoo+exECtX5Hl1kF0P7YwfXMOWouh9nos2OwcHvtpY
+         gZ77n6SWUXrfUhKb/jtImSofLhrqVgwDWZHNGPZNfQWAMAJ0Q5jzPQRC+6Sy0P5psbEE
+         bL4A==
+Received: by 10.216.181.67 with SMTP id k45mr1111283wem.17.1346934843253;
+        Thu, 06 Sep 2012 05:34:03 -0700 (PDT)
+Received: from localhost ([46.18.27.15])
+        by mx.google.com with ESMTPS id o2sm5518056wiz.11.2012.09.06.05.34.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Sep 2012 05:32:25 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 06 Sep 2012 19:25:47 +0700
-X-Mailer: git-send-email 1.7.12.rc2.18.g61b472e
-In-Reply-To: <7vehmf6c3x.fsf@alter.siamese.dyndns.org>
+        Thu, 06 Sep 2012 05:34:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204880>
 
-All remote subcommands are spelled out words except 'rm'. 'rm', being a
-popular UNIX command name, may mislead users that there are also 'ls' o=
-r
-'mv'. Use 'remove' to fit with the rest of subcommands.
+On 09/06, Jan-Marek Glogowski wrote:
+> This adds the test ID (tXXXX) prefix to the test result message of
+> all shell tests.  This is especially useful when doing a parallel
+> check run, where it's currently quite hard to identify the actual
+> failing test case.
+>=20
+> Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
 
-'rm' is still supported and used in the test suite. It's just not
-widely advertised.
+This breaks the TAP output format of the tests, which is needed to run
+them with prove.  To identify the failing tests more easily when runnin=
+g
+the tests in parallel, you may want to add GIT_TEST_TARGET =3D prove to
+your config.mak.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-remote.txt           | 3 ++-
- builtin/remote.c                       | 6 +++---
- contrib/completion/git-completion.bash | 4 ++--
- t/t5505-remote.sh                      | 4 ++--
- t/t5540-http-push.sh                   | 2 +-
- 5 files changed, 10 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
-t
-index a308f4c..e8c396b 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git remote' [-v | --verbose]
- 'git remote add' [-t <branch>] [-m <master>] [-f] [--tags|--no-tags] [=
---mirror=3D<fetch|push>] <name> <url>
- 'git remote rename' <old> <new>
--'git remote rm' <name>
-+'git remote remove' <name>
- 'git remote set-head' <name> (-a | -d | <branch>)
- 'git remote set-branches' [--add] <name> <branch>...
- 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
-@@ -85,6 +85,7 @@ In case <old> and <new> are the same, and <old> is a =
-file under
- `$GIT_DIR/remotes` or `$GIT_DIR/branches`, the remote is converted to
- the configuration file format.
-=20
-+'remove'::
- 'rm'::
-=20
- Remove the remote named <name>. All remote-tracking branches and
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 920262d..357d59d 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -11,7 +11,7 @@ static const char * const builtin_remote_usage[] =3D =
-{
- 	"git remote [-v | --verbose]",
- 	"git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags] [=
---mirror=3D<fetch|push>] <name> <url>",
- 	"git remote rename <old> <new>",
--	"git remote rm <name>",
-+	"git remote remove <name>",
- 	"git remote set-head <name> (-a | -d | <branch>)",
- 	"git remote [-v | --verbose] show [-n] <name>",
- 	"git remote prune [-n | --dry-run] <name>",
-@@ -34,7 +34,7 @@ static const char * const builtin_remote_rename_usage=
-[] =3D {
- };
-=20
- static const char * const builtin_remote_rm_usage[] =3D {
--	"git remote rm <name>",
-+	"git remote remove <name>",
- 	NULL
- };
-=20
-@@ -1580,7 +1580,7 @@ int cmd_remote(int argc, const char **argv, const=
- char *prefix)
- 		result =3D add(argc, argv);
- 	else if (!strcmp(argv[0], "rename"))
- 		result =3D mv(argc, argv);
--	else if (!strcmp(argv[0], "rm"))
-+	else if (!strcmp(argv[0], "rm") || !strcmp(argv[0], "remove"))
- 		result =3D rm(argc, argv);
- 	else if (!strcmp(argv[0], "set-head"))
- 		result =3D set_head(argc, argv);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 222b804..0492db9 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2032,7 +2032,7 @@ _git_config ()
-=20
- _git_remote ()
- {
--	local subcommands=3D"add rename rm set-head set-branches set-url show=
- prune update"
-+	local subcommands=3D"add rename remove set-head set-branches set-url =
-show prune update"
- 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -2040,7 +2040,7 @@ _git_remote ()
- 	fi
-=20
- 	case "$subcommand" in
--	rename|rm|set-url|show|prune)
-+	rename|remove|set-url|show|prune)
- 		__gitcomp_nl "$(__git_remotes)"
- 		;;
- 	set-head|set-branches)
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e8af615..c03ffdd 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -125,7 +125,7 @@ EOF
- 	} &&
- 	git tag footag &&
- 	git config --add remote.oops.fetch "+refs/*:refs/*" &&
--	git remote rm oops 2>actual1 &&
-+	git remote remove oops 2>actual1 &&
- 	git branch foobranch &&
- 	git config --add remote.oops.fetch "+refs/*:refs/*" &&
- 	git remote rm oops 2>actual2 &&
-@@ -672,7 +672,7 @@ test_expect_success 'migrate a remote from named fi=
-le in $GIT_DIR/remotes' '
- 	git clone one five &&
- 	origin_url=3D$(pwd)/one &&
- 	(cd five &&
--	 git remote rm origin &&
-+	 git remote remove origin &&
- 	 mkdir -p .git/remotes &&
- 	 cat ../remotes_origin > .git/remotes/origin &&
- 	 git remote rename origin origin &&
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 1eea647..7c14bc4 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -117,7 +117,7 @@ test_expect_success 'http-push fetches packed objec=
-ts' '
- 	# By reset, we force git to retrieve the packed object
- 	(cd "$ROOT_PATH"/test_repo_clone_packed &&
- 	 git reset --hard HEAD^ &&
--	 git remote rm origin &&
-+	 git remote remove origin &&
- 	 git reflog expire --expire=3D0 --all &&
- 	 git prune &&
- 	 git push -f -v $HTTPD_URL/dumb/test_repo_packed.git master)
---=20
-1.7.12.rc2.18.g61b472e
+If this change is really needed, I think you should add the test-id aft=
+er
+the message.
+> ---
+>  t/t0000-basic.sh        | 28 ++++++++++++++--------------
+>  t/test-lib-functions.sh | 11 +++++++----
+>  t/test-lib.sh           | 10 ++++++----
+>  3 Dateien ge=E4ndert, 27 Zeilen hinzugef=FCgt(+), 22 Zeilen entfernt=
+(-)
+>=20
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index ccb5435..1bbf5b8 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -58,7 +58,7 @@ test_expect_failure 'pretend we have a known breaka=
+ge' '
+>  test_expect_success 'pretend we have fixed a known breakage (run in =
+sub test-lib)' "
+>  	mkdir passing-todo &&
+>  	(cd passing-todo &&
+> -	cat >passing-todo.sh <<-EOF &&
+> +	cat >0000t05-passing-todo.sh <<-EOF &&
+>  	#!$SHELL_PATH
+> =20
+>  	test_description=3D'A passing TODO test
+> @@ -77,14 +77,14 @@ test_expect_success 'pretend we have fixed a know=
+n breakage (run in sub test-lib
+> =20
+>  	test_done
+>  	EOF
+> -	chmod +x passing-todo.sh &&
+> -	./passing-todo.sh >out 2>err &&
+> +	chmod +x 0000t05-passing-todo.sh &&
+> +	./0000t05-passing-todo.sh >out 2>err &&
+>  	! test -s err &&
+>  	sed -e 's/^> //' >expect <<-\\EOF &&
+> -	> ok 1 - pretend we have fixed a known breakage # TODO known breaka=
+ge
+> -	> # fixed 1 known breakage(s)
+> -	> # passed all 1 test(s)
+> -	> 1..1
+> +	> 0000t05: ok 1 - pretend we have fixed a known breakage # TODO kno=
+wn breakage
+> +	> 0000t05: # fixed 1 known breakage(s)
+> +	> 0000t05: # passed all 1 test(s)
+> +	> 0000t05: 1..1
+>  	EOF
+>  	test_cmp expect out)
+>  "
+> @@ -141,7 +141,7 @@ test_expect_success 'tests clean up even on failu=
+res' "
+>  	(
+>  	cd failing-cleanup &&
+> =20
+> -	cat >failing-cleanup.sh <<-EOF &&
+> +	cat >0000t12-failing-cleanup.sh <<-EOF &&
+>  	#!$SHELL_PATH
+> =20
+>  	test_description=3D'Failing tests with cleanup commands'
+> @@ -162,23 +162,23 @@ test_expect_success 'tests clean up even on fai=
+lures' "
+> =20
+>  	EOF
+> =20
+> -	chmod +x failing-cleanup.sh &&
+> -	test_must_fail ./failing-cleanup.sh >out 2>err &&
+> +	chmod +x 0000t12-failing-cleanup.sh &&
+> +	test_must_fail ./0000t12-failing-cleanup.sh >out 2>err &&
+>  	! test -s err &&
+>  	! test -f \"trash directory.failing-cleanup/clean-after-failure\" &=
+&
+>  	sed -e 's/Z$//' -e 's/^> //' >expect <<-\\EOF &&
+> -	> not ok - 1 tests clean up even after a failure
+> +	> 0000t12: not ok 1 - tests clean up even after a failure
+>  	> #	Z
+>  	> #	touch clean-after-failure &&
+>  	> #	test_when_finished rm clean-after-failure &&
+>  	> #	(exit 1)
+>  	> #	Z
+> -	> not ok - 2 failure to clean up causes the test to fail
+> +	> 0000t12: not ok 2 - failure to clean up causes the test to fail
+>  	> #	Z
+>  	> #	test_when_finished \"(exit 2)\"
+>  	> #	Z
+> -	> # failed 2 among 2 test(s)
+> -	> 1..2
+> +	> 0000t12: # failed 2 among 2 test(s)
+> +	> 0000t12: 1..2
+>  	EOF
+>  	test_cmp expect out
+>  	)
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 9bc57d2..c81ad7f 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -24,6 +24,9 @@
+>  #
+>  # In particular, quoting isn't enough, as the path may contain the s=
+ame quote
+>  # that we're using.
+> +
+> +TID=3D$(basename ${0%%-*})
+> +
+>  test_set_editor () {
+>  	FAKE_EDITOR=3D"$1"
+>  	export FAKE_EDITOR
+> @@ -434,7 +437,7 @@ test_external_without_stderr () {
+>  test_path_is_file () {
+>  	if ! [ -f "$1" ]
+>  	then
+> -		echo "File $1 doesn't exist. $*"
+> +		echo "$TID: File $1 doesn't exist. $*"
+>  		false
+>  	fi
+>  }
+> @@ -442,7 +445,7 @@ test_path_is_file () {
+>  test_path_is_dir () {
+>  	if ! [ -d "$1" ]
+>  	then
+> -		echo "Directory $1 doesn't exist. $*"
+> +		echo "$TID: Directory $1 doesn't exist. $*"
+>  		false
+>  	fi
+>  }
+> @@ -450,7 +453,7 @@ test_path_is_dir () {
+>  test_path_is_missing () {
+>  	if [ -e "$1" ]
+>  	then
+> -		echo "Path exists:"
+> +		echo "$TID: Path exists:"
+>  		ls -ld "$1"
+>  		if [ $# -ge 1 ]; then
+>  			echo "$*"
+> @@ -476,7 +479,7 @@ test_line_count () {
+>  		error "bug in the test script: not 3 parameters to test_line_count=
+"
+>  	elif ! test $(wc -l <"$3") "$1" "$2"
+>  	then
+> -		echo "test_line_count: line count for $3 !$1 $2"
+> +		echo "$TID: test_line_count: line count for $3 !$1 $2"
+>  		cat "$3"
+>  		return 1
+>  	fi
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 78c4286..6fccbe9 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -31,6 +31,8 @@ done,*)
+>  	;;
+>  esac
+> =20
+> +TID=3D$(basename ${0%%-*})
+> +
+>  # Keep the original TERM for say_color
+>  ORIGINAL_TERM=3D$TERM
+> =20
+> @@ -185,7 +187,7 @@ if test -n "$color"; then
+>  			*) test -n "$quiet" && return;;
+>  		esac
+>  		shift
+> -		printf "%s" "$*"
+> +		printf "$TID: %s" "$*"
+>  		tput sgr0
+>  		echo
+>  		)
+> @@ -194,12 +196,12 @@ else
+>  	say_color() {
+>  		test -z "$1" && test -n "$quiet" && return
+>  		shift
+> -		echo "$*"
+> +		echo "$TID: $*"
+>  	}
+>  fi
+> =20
+>  error () {
+> -	say_color error "error: $*"
+> +	say_color error "$TID: error: $*"
+>  	GIT_EXIT_OK=3Dt
+>  	exit 1
+>  }
+> @@ -262,7 +264,7 @@ test_ok_ () {
+> =20
+>  test_failure_ () {
+>  	test_failure=3D$(($test_failure + 1))
+> -	say_color error "not ok - $test_count $1"
+> +	say_color error "not ok $test_count - $1"
+>  	shift
+>  	echo "$@" | sed -e 's/^/#	/'
+>  	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
+> --=20
+> 1.7.11.5
+>=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
