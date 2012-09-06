@@ -1,73 +1,97 @@
-From: Stefan Naewe <stefan.naewe@gmail.com>
-Subject: [PATCH] ls-remote: document the '--get-url' option
-Date: Thu,  6 Sep 2012 19:27:21 +0200
-Message-ID: <1346952441-20666-1-git-send-email-stefan.naewe@gmail.com>
-Cc: gitster@pobox.com, Stefan Naewe <stefan.naewe@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 19:27:45 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] t0000: verify that real_path() removes extra slashes
+Date: Thu, 06 Sep 2012 10:34:52 -0700
+Message-ID: <7vharb3vib.fsf@alter.siamese.dyndns.org>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
+ <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu>
+ <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DAbp1uDsNFFk1g9tuEV1qMnM2DZtxOwp5H9_VE7VwO1g@mail.gmail.com>
+ <7v1uif7s1d.fsf@alter.siamese.dyndns.org>
+ <20120906054407.GA25981@duynguyen-vnpc.dek-tpc.internal>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: mhagger@alum.mit.edu, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Orgad and Raizel Shaneh <orgads@gmail.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 19:35:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9frj-0001Zk-38
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 19:27:43 +0200
+	id 1T9fyq-0001rz-OV
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 19:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932475Ab2IFR1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 13:27:35 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:47356 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932173Ab2IFR1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 13:27:34 -0400
-Received: by bkwj10 with SMTP id j10so964746bkw.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 10:27:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=Kl/2iFED7E29HJVsgpBxldnjinTJLKctebP+5Hb04Zg=;
-        b=zQuriSS7QZzUnztGMuPdkpHQrhqqJKTbRDdS3IypUX2Shgz8P1tuQthsTbIY4b053h
-         4i5P5Me53MV6sE1O/unP+Puvk0w8Uz7JhSDoW/Dq3TbjzhtmgNzIPSscLZjfYFvdoEif
-         5h4LYmmCx95UIdGV2SkG/3Vv60Cs+OwH3/2C0fbdHAT2zw902wDj9el91CM4IBRPM+PQ
-         sjLfu8awSHFBmQcVBDcdrF/WK0uBHihHGkrP2W5lNknZT0U6mqQWVPUcQ78WUmprarA2
-         tBpIgd3/pK5BgRaJ/LbU//vlaxN/RG2YyIZnlWVHGWEBjXfBfq9B7e6VuTjvVAMup0xh
-         5l0Q==
-Received: by 10.204.133.193 with SMTP id g1mr1518772bkt.2.1346952453110;
-        Thu, 06 Sep 2012 10:27:33 -0700 (PDT)
-Received: from darkstar.home (dslc-082-083-206-112.pools.arcor-ip.net. [82.83.206.112])
-        by mx.google.com with ESMTPS id hs2sm1886926bkc.1.2012.09.06.10.27.28
-        (version=SSLv3 cipher=OTHER);
-        Thu, 06 Sep 2012 10:27:28 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12
+	id S932521Ab2IFRe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 13:34:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41927 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932075Ab2IFRe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 13:34:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7812A8EB0;
+	Thu,  6 Sep 2012 13:34:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Fl0Hxaae5qgEmYRLDPmUILKkh24=; b=cMpG/B
+	w/iogw9Kt3V3hbzf5SIW3Ham2V+oUYy1gj1DN7ul6l+/x94TeTWeOFYFUkxzjoKf
+	Qas3O7RlsYbkk+P07VXVGXwHCOw3bUfixbzDHGReuSsVh07smqJj/SrNDVOu/ukf
+	85lhjwC2Ihfnd8O+aeB2BOD6d5puBCAKIGe8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hbfvb3wKqQoLkLZYs1NTa8pm9CP9mxoY
+	vWl+5WasiH49Cc2VvR6Ior3wgXhgppbXho6YzIzbU3t9U0ggnffwF5XCL1K2QFVm
+	66m95+lMCNg4sDHWc8XSKGXrIpYTHM26SZxZ5iL7SsYZdRGJfzJDY97iy8z4K1Mw
+	LVCwtSI6bCo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 669FF8EAF;
+	Thu,  6 Sep 2012 13:34:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F2768EAC; Thu,  6 Sep 2012
+ 13:34:54 -0400 (EDT)
+In-Reply-To: <20120906054407.GA25981@duynguyen-vnpc.dek-tpc.internal> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 6 Sep 2012 12:44:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B70878A-F849-11E1-8857-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204906>
 
-While looking for a way to expand the URL of a remote
-that uses a 'url.<name>.insteadOf' config option I stumbled
-over the undocumented '--get-url' option of 'git ls-remote'.
-This adds some minimum documentation for that option.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
----
- Documentation/git-ls-remote.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+> Just an idea. We could unify "[a-z]:" and "//host" into "dos root"
+> concept. That would teach other code paths about UNC paths too.
+> ...
+> diff --git a/path.c b/path.c
+> index 66acd24..0e4e2d7 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -498,11 +498,12 @@ const char *relative_path(const char *abs, const char *base)
+>  int normalize_path_copy(char *dst, const char *src)
+>  {
+>  	char *dst0;
+> +	int i, len;
+>  
+> -	if (has_dos_drive_prefix(src)) {
+> +	len = offset_1st_component(src, 1);
+> +	for (i = 0; i < len; i++)
+>  		*dst++ = *src++;
+> -		*dst++ = *src++;
+> -	}
+> +
+>  	dst0 = dst;
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 7a9b86a..5819ead 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -42,6 +42,10 @@ OPTIONS
- 	it successfully talked with the remote repository, whether it
- 	found any matching refs.
- 
-+--get-url::
-+	Expand the URL of the given remote repository taking into account any 
-+	"url.<base>.insteadOf" config setting (See linkgit:git-config[1]).
-+
- <repository>::
- 	Location of the repository.  The shorthand defined in
- 	$GIT_DIR/branches/ can be used. Use "." (dot) to list references in
--- 
-1.7.12
+Modulo that I suspect you could get rid of offset_1st_component()
+altogether and has_dos_drive_prefix() return the length of the "d:"
+or "//d" part (which needs to be copied literally regardless of the
+"normalization"), what you suggest feels like the right approach.
+Why do you need the "keep_root" parameter and do things differently
+depending on the setting by the way?  Wouldn't "skip the root level
+when computing the offset of the first path component" something the
+caller can easily decide to do or not to do, and wouldn't it make
+the semantics of the function cleaner and simpler by making it do
+only one thing and one thing well?
