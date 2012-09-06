@@ -1,114 +1,132 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] send-email: validate & reconfirm interactive responses
-Date: Thu, 6 Sep 2012 11:31:11 -0700
-Message-ID: <CALaEz9W_RR70KEzxk7GxjOu1_yv4UudckcsKAP2C_39Nc2yLbw@mail.gmail.com>
-References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
- <1344983132-22578-1-git-send-email-gitster@pobox.com> <CALaEz9WVCj0gu-CbUJgydik1bC7z7JCcveKTdyxgrTWokXq5JA@mail.gmail.com>
- <7vsjav6d85.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] pre-merge-hook
+Date: Thu, 06 Sep 2012 11:34:01 -0700
+Message-ID: <7vwr072e7a.fsf@alter.siamese.dyndns.org>
+References: <cover.1346851863.git.git@drmicha.warpmail.net>
+ <7v8vcn68o9.fsf@alter.siamese.dyndns.org>
+ <50485BCB.20607@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 20:31:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:34:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9grX-0003RT-Lc
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 20:31:35 +0200
+	id 1T9gu7-0006Xc-AZ
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 20:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932966Ab2IFSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 14:31:28 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:61509 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932373Ab2IFSb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 14:31:27 -0400
-Received: by iahk25 with SMTP id k25so2368915iah.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 11:31:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=I8u7dxRkmDB+MyFyM3GnSFx9ZZkxhGRTEL6kSvqVrfc=;
-        b=IW9EEwFL0mT4/UHli+OjELJaL3yrM3sfdfcpq1IkyH97CtZPGAEhKI4ihpC0jKrjbe
-         IOX2ZU1nFo+J+FPPZFl8OEg7smwT6XY1w82+J5UYOuVSxLvDsBilwKu0Pc0Fqg7U1XAd
-         oTavRttoOdkLwBbWK73PUMtI+XygkbDpj2pRjPKd9Fs+JpaZ92sGVE1ans8nxE6AGI/j
-         bzTBRUOYSiEVN9KK+5h/SP6ouKHRnbE1Cwo7imMwr6dVRq1mra5LGXcBr74NW+HeWK6Q
-         /7pWWLPQ1+7KsU3XKDRyXCwsz6Gfy8r6fUx7u95PtTrn19wFA4DRgg02gnJUusbHv8yv
-         ySKg==
-Received: by 10.50.169.70 with SMTP id ac6mr4434812igc.12.1346956286691; Thu,
- 06 Sep 2012 11:31:26 -0700 (PDT)
-Received: by 10.64.64.33 with HTTP; Thu, 6 Sep 2012 11:31:11 -0700 (PDT)
-In-Reply-To: <7vsjav6d85.fsf@alter.siamese.dyndns.org>
+	id S932990Ab2IFSeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 14:34:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42949 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932373Ab2IFSeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 14:34:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB8CB8197;
+	Thu,  6 Sep 2012 14:34:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=E6GYIGWDSwSwlGfQrM7ptEyCVCI=; b=UWdhaL
+	fVAf0pKqjYbpb6Q/8KY7ElNn/GnfgQhp/lOEp8tYTXS3/jsL22Z63pjkJ105Nv7+
+	hthIrouyQpFzSwyn7C7Y9f4SjCO1OXIDoyqNCKlDSyLZXy7i7qWJ9E388UkHKNUW
+	yB8/x2/T6J8Onyuz2rqaVJ2f1hgzTa1G75hfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dZreRWbW/3T+paMxdTEgmNoqgCYb5OEH
+	uqNkbVMdTKFBYlRGtQwUT7nVkgwQmZKMKgzMKBwAVOmuHgE7i00XkG2g3ccpBqEv
+	F3PUePIH38gA6nadcJCzppHaePvOkTNHGI1SX+Kip2AqEqSx2375GhAz0KFjHSvp
+	f434DyAmH6s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C97EC8196;
+	Thu,  6 Sep 2012 14:34:04 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B1028194; Thu,  6 Sep 2012
+ 14:34:03 -0400 (EDT)
+In-Reply-To: <50485BCB.20607@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Thu, 06 Sep 2012 10:16:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F385314-F851-11E1-9C9D-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204914>
 
-(Sorry sending this from web interface)
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-On Wed, Sep 5, 2012 at 8:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stephen Boyd <bebarino@gmail.com> writes:
->> This is now bugging me if I just hit enter and don't want to specify
->> anything for
->> these headers (I want the defaults or what's in the files already).
->> Can we allow
->> the empty string to be valid as well so I don't have to go through
->> these prompts?
+> Junio C Hamano venit, vidit, dixit 06.09.2012 07:07:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> 
+>>> The pre-commit hook is often used to ensure certain properties of each
+>>> comitted tree like formatting or coding standards, validity (lint/make)
+>>> or code quality (make test). But merges introduce new commits unless
+>>> they are fast forwards, and therefore they can break these properties
+>>> because the pre-commit hook is not run by "git merge".
+>>>
+>>> Introduce a pre-merge hook which works for (non ff, automatic) merges
+>>> like pre-commit does for commits. Typically this will just call the
+>>> pre-commit hook (like in the sample hook), but it does not need to.
+>> 
+>> When your merge asks for a help from you to resolve conflict, you
+>> conclude with "git commit", and at that point, pre-commit hook will
+>> have a chance to reject it, presumably.  That means for any project
+>> that wants to audit a merge via hook, their pre-commit hook MUST be
+>> prepared to look at and judge a merge.  Given that, is a separate
+>> hook that "can just call the pre-commit but does not need to" really
+>> needed and useful?
+>> 
+>> I admit that I haven't thought things through, but adding a boolean
+>> "merge.usePreCommitHook" smells like a more appropriate approach to
+>> me.
+>> 
+>> I dunno.
 >
-> That indeed was the intention, and if it is not behaving, you found
-> a bug.
->
-> The relevant code in "sub ask" does this:
->
->                 ...
->                 $resp = $term->readline($prompt);
->                 if (!defined $resp) { # EOF
->                         print "\n";
->                         return defined $default ? $default : undef;
->                 }
->                 if ($resp eq '' and defined $default) {
->                         return $default;
->                 }
->                 if (!defined $valid_re or $resp =~ /$valid_re/) {
->                         return $resp;
->                 }
->
-> I am scratching my head wondering why your "just hit enter" does not
-> trigger the "if response is empty and we have default, just return it"
-> codepath we can see above.  It shouldn't even trigger the regexp
-> based validation codepath in the first place.
->
+> That would be an option ;)
 
-It works fine for "Who should the emails appear to be from?" but
-beyond that we have "Who should the emails be sent to?" and
-"Message-ID to be used as In-Reply-To for the first email?" which I
-typically just hit enter to. It seems that they have no "default"
-argument so that second if fails. I suppose we can add a default => ""
-to these two asks?
+I said "I dunno" as others may have opinions on the best direction
+to go.
 
-----8<-----
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 607137b..13d813e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -760,6 +760,7 @@ if (!defined $sender) {
+> Either works for me, and if we don't change the current behaviour
+> (pre-commit-hook resp. no hook for non-automatic merges resp. automatic
+> merges) the config option is probably less confusing.
 
- if (!@initial_to && !defined $to_cmd) {
-        my $to = ask("Who should the emails be sent to? ",
-+                    default => "",
-                     valid_re => qr/\@.*\./, confirm_only => 1);
-        push @initial_to, parse_address_line($to) if defined $to; #
-sanitized/validated later
-        $prompting++;
-@@ -787,6 +788,7 @@ sub expand_one_alias {
- if ($thread && !defined $initial_reply_to && $prompting) {
-        $initial_reply_to = ask(
-                "Message-ID to be used as In-Reply-To for the first email? ",
-+               default => "",
-                valid_re => qr/\@.*\./, confirm_only => 1);
- }
- if (defined $initial_reply_to) {
+If we were to go in the "pre-commit has to be prepared to vet a
+merge already, so let it handle the automerge case" direction, I
+have another suggestion.
+
+Because you need to support "merge --no-verify" to override the hook
+anyway, I think it makes sense to introduce "merge --verify" to
+force it trigger the hook (and it needs to percolate up to "pull").
+
+People who want it always on may want a boolean merge.verify, but
+that should come in a separate step.  The patch that implements it
+must make sure all our internal uses of "merge" is updated to pass
+"--no-verify", unless there is a very good reason.
+
+Another direction to go would be to deprecate the "commit is the way
+to conclude a merge that stopped in the middle due to a conflict
+asking for your help" and introduce "merge --continue" [*1*].  That
+would open a way to a separate "pre/post-merge" hook much cleanly.
+At that point it would be clear that "pre-commit" won't be involved
+in "merge" (i.e. the user never will use "git commit" when merging).
+
+I am fairly negative on the current mess imposed on "git commit"
+that has to know who called it and behave differently (look for
+"whence" in builtin/commit.c), and would rather not to see it made
+worse by piling "call pre-merge if exists and in a merge, or call
+pre-commit" kind of hack on top of it.
+
+
+
+[Footnote]
+
+*1* This has been brought up a few times during discussion on
+sequencer and mergy operations, and I think it makes sense in the
+longer term.  "am" and "rebase" were first to use "--continue",
+instead of having the user to use "commit" to conclude, and later
+"cherry-pick" and "revert" have been updated to follow suit, so
+"merge" may be the only oddball remaining now.
