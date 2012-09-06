@@ -1,58 +1,57 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] cvsimport: strip all inappropriate tag strings
-Date: Thu, 06 Sep 2012 11:02:30 +0200
-Message-ID: <m2y5knjzh5.fsf@igel.home>
-References: <7vipbr6c4q.fsf@alter.siamese.dyndns.org>
-	<1346910178-13902-1-git-send-email-ktdreyer@ktdreyer.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git blame --follow
+Date: Thu, 6 Sep 2012 05:58:04 -0400
+Message-ID: <20120906095804.GA15277@sigill.intra.peff.net>
+References: <k29hpo$3av$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ken Dreyer <ktdreyer@ktdreyer.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 11:06:12 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "norbert.nemec" <norbert.nemec@native-instruments.de>
+X-From: git-owner@vger.kernel.org Thu Sep 06 11:58:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9Y2N-00018J-0f
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 11:06:11 +0200
+	id 1T9Yqp-0004fw-0a
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 11:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756509Ab2IFJGC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 05:06:02 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:60543 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755256Ab2IFJGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 05:06:01 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XCG8s1KcQz4KKDF;
-	Thu,  6 Sep 2012 11:05:48 +0200 (CEST)
-X-Auth-Info: 8m/N7gLcfysugTGuHd/E3q6WLRXRke0eIOqBrgomhZU=
-Received: from igel.home (ppp-93-104-154-231.dynamic.mnet-online.de [93.104.154.231])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XCG541JjfzbblR;
-	Thu,  6 Sep 2012 11:02:32 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 825CFCA2A2; Thu,  6 Sep 2012 11:02:31 +0200 (CEST)
-X-Yow: ..  I'm IMAGINING a sensuous GIRAFFE, CAVORTING in the BACK ROOM
- of a KOSHER DELI --
-In-Reply-To: <1346910178-13902-1-git-send-email-ktdreyer@ktdreyer.com> (Ken
-	Dreyer's message of "Wed, 5 Sep 2012 23:42:58 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753358Ab2IFJ6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 05:58:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59624 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751398Ab2IFJ6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 05:58:10 -0400
+Received: (qmail 19349 invoked by uid 107); 6 Sep 2012 09:58:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Sep 2012 05:58:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2012 05:58:04 -0400
+Content-Disposition: inline
+In-Reply-To: <k29hpo$3av$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204872>
 
-Ken Dreyer <ktdreyer@ktdreyer.com> writes:
+On Thu, Sep 06, 2012 at 09:02:17AM +0200, norbert.nemec wrote:
 
-> +		# See ref.c for these rules.
-> +		# Tag cannot contain bad chars. See bad_ref_char in ref.c.
+> 'git blame --follow' seems to be undocumented. The exact behavior is
+> not clear to me. Perhaps an alias for some combination of '-C' and
+> '-M'? It seems not be be fully consistent with 'git log --follow'.
+> 
+> Could someone clarify? Did I miss something?
 
-s/ref.c/refs.c/
+I don't think it was ever intended to do anything; the only reason it is
+not rejected outright is that "blame" piggy-backs on the regular
+revision option parser used by "log" and others.
 
-Andreas.
+What would you expect it to do?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+I can't think of a sane behavior for "blame --follow". The follow code
+is about tweaking path-limiting during traversal, but blame does not use
+pathspecs. It tracks content, and the "-C" option already instructs it to
+look across file boundaries.
+
+-Peff
