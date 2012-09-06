@@ -1,66 +1,73 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: splitted directory objects
-Date: Thu, 06 Sep 2012 04:25:00 +0200 (CEST)
-Message-ID: <3b47cf67-0c93-494a-8607-9cdc24a88f54@zcs>
-References: <9580e7f9-666a-44db-91cb-45b3465f5f9a@zcs>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/9] Refactor excluded and path_excluded
+Date: Wed, 05 Sep 2012 20:21:35 -0700
+Message-ID: <7v627r7s5c.fsf@alter.siamese.dyndns.org>
+References: <1346544731-938-1-git-send-email-git@adamspiers.org>
+ <1346544731-938-6-git-send-email-git@adamspiers.org>
+ <CACsJy8A-P0RziZt1_PajFrzqmq9ZbkyaxwUCeDAO3XteQ0gAag@mail.gmail.com>
+ <7vr4qhbt3d.fsf@alter.siamese.dyndns.org>
+ <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 04:25:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 05:22:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9RmK-0002gE-P0
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 04:25:13 +0200
+	id 1T9SfU-0006Hi-U1
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 05:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743Ab2IFCZD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Sep 2012 22:25:03 -0400
-Received: from zcs.vnc.biz ([83.144.240.118]:9309 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751700Ab2IFCZC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Sep 2012 22:25:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id DAEBD62225B
-	for <git@vger.kernel.org>; Thu,  6 Sep 2012 04:25:00 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TO8hX8-EG1hx for <git@vger.kernel.org>;
-	Thu,  6 Sep 2012 04:25:00 +0200 (CEST)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 8548062203A
-	for <git@vger.kernel.org>; Thu,  6 Sep 2012 04:25:00 +0200 (CEST)
-In-Reply-To: <9580e7f9-666a-44db-91cb-45b3465f5f9a@zcs>
-X-Originating-IP: [91.43.204.13]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Linux)/7.1.3_GA_3346)
+	id S1751331Ab2IFDVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 23:21:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64663 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750979Ab2IFDVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 23:21:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E21918E40;
+	Wed,  5 Sep 2012 23:21:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=K5dARnOe36jRH30atu1OtPWRtP8=; b=Q30ocd
+	FCya+TEb4Uo2xDYcr9u1THJOnkxdsjOi4qc5KKGLIOi0AhHTYYjD7xUreuWyhSM6
+	LIhTO2KgPFlxxdgKtuRK5XlRkv4BlBrV9+bHuS8znKYJyG2sezxh796e0JfdefH9
+	6GDIal8g3CQwWD0cYJzlabYOET0WP9N1OSTHs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xH6KXnPWxbcZD/XPdCJQu89+U9dubLiz
+	2bGLX/HEJMn9DtiBcSNcfddoPXuoAHZfSYdGEF9gp4L8FlgzGL25q3u7MkOgNVS/
+	fpZHU/4mDBvHfKwyVDDMpF0Q8F62h6dLlBEJr5lgqmgA7dEaiGf+f33i01n3CDUd
+	w6k2KspwfZY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF93C8E3F;
+	Wed,  5 Sep 2012 23:21:37 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51F678E3E; Wed,  5 Sep 2012
+ 23:21:37 -0400 (EDT)
+In-Reply-To: <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 5 Sep 2012 17:28:39 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F7AE3306-F7D1-11E1-B9F1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204854>
 
-Hi folks,
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
+> We could introduce exclude_path() and kill path_excluded() then. There
+> are just about 5-6 call sites to replace.
 
-IIRC some people were working on splitted directory objects
-(eg. for putting subdirs into their own objects), some time ago.
+The name path_excluded(... path ...) sounds like it is asking a
+yes/no question "is this path excluded?", which actually is what is
+going on.
 
-What's the current status of this ?
-
-
-cu
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
-
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+The name exclude_path(... path ...) sounds as if you are requesting
+somebody to exclude the path.  Does that meaning match the semantics
+of the function?
