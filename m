@@ -1,264 +1,130 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH] Prefix shell test output messages with test id
-Date: Thu, 6 Sep 2012 14:34:00 +0200
-Message-ID: <20120906123400.GA25467@tommy-fedora.scientificnet.net>
-References: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
+Subject: Re: [PATCH 0/3] v5 index branch breakage on cygwin
+Date: Thu, 6 Sep 2012 14:46:36 +0200
+Message-ID: <20120906124636.GB25467@tommy-fedora.scientificnet.net>
+References: <50464C13.6060307@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jan-Marek Glogowski <glogow@fbihome.de>
-X-From: git-owner@vger.kernel.org Thu Sep 06 14:34:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:46:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9bHi-00053c-U3
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:34:15 +0200
+	id 1T9bTv-0003mx-Jz
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178Ab2IFMeH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Sep 2012 08:34:07 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:64137 "EHLO
+	id S1752803Ab2IFMqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 08:46:42 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:37456 "EHLO
 	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208Ab2IFMeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 08:34:05 -0400
-Received: by weyx8 with SMTP id x8so1070711wey.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 05:34:03 -0700 (PDT)
+	with ESMTP id S1752645Ab2IFMql (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 08:46:41 -0400
+Received: by weyx8 with SMTP id x8so1077254wey.19
+        for <git@vger.kernel.org>; Thu, 06 Sep 2012 05:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ySueTad83nAvmaw1RnyXOfP/wid7Hit57nAjNxptcIs=;
-        b=q0aN5fuFI2rcR38G7j8I+EwO2Lu0hHzl8cUVCRe7OVk4/R6ZyOpSmLQZsPqDhgjG8d
-         Ir4Md++FnvAgp4smXsYyjWniV46/vGtdTS8SvIJw6y7aBWZioViIwtXv8PbuY2cuILb7
-         uKHzyDI4MbO0bKVKG5ouyxd/axbFLi2uMJGImCGWrjEBM2DNk9pZOuHx0+0oTh1NlvzG
-         yVrT1uidrl129BRrKVpJ86RzXJBoo+exECtX5Hl1kF0P7YwfXMOWouh9nos2OwcHvtpY
-         gZ77n6SWUXrfUhKb/jtImSofLhrqVgwDWZHNGPZNfQWAMAJ0Q5jzPQRC+6Sy0P5psbEE
-         bL4A==
-Received: by 10.216.181.67 with SMTP id k45mr1111283wem.17.1346934843253;
-        Thu, 06 Sep 2012 05:34:03 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=FSTfZ0n3I7MkHWcZbWrjfn2a0dCN3RBdwi1X4FzwqZg=;
+        b=k0AHYqu7KTc3DGdFc6vTwfysyzhkUo5C0mfZ1jkLZdPvNZtslmRzub+ai5bGVw2Aw8
+         whZpcCG8vln9q1Z2GFtjVi2H0B8p1rOvw/xnpEAYexXCxOrZLLVWdB3Xgm+5w7k1tdNj
+         8fXmnWAiC4g8XK8GEmfEpHT+stTX3GwV6DIJ76UgFphEIyOlJpRuLAlgBRx0c5vrgJnl
+         JfRem1L2aQsDFAY/y/yVFVaQ5sA0Lxp7bPHFb35nF89auDFfzT7l5OOwE1vvQyUKUVNN
+         xfA93iiAaF/QuBbxJdLi/oRmlG0waAWiFuUc+sTz99Hza7XHkxWXoDJZgsuBjAGe+oG6
+         GrCQ==
+Received: by 10.180.20.11 with SMTP id j11mr4668375wie.12.1346935600345;
+        Thu, 06 Sep 2012 05:46:40 -0700 (PDT)
 Received: from localhost ([46.18.27.15])
-        by mx.google.com with ESMTPS id o2sm5518056wiz.11.2012.09.06.05.34.02
+        by mx.google.com with ESMTPS id cl8sm3980196wib.10.2012.09.06.05.46.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Sep 2012 05:34:02 -0700 (PDT)
+        Thu, 06 Sep 2012 05:46:37 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
+In-Reply-To: <50464C13.6060307@ramsay1.demon.co.uk>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204881>
 
-On 09/06, Jan-Marek Glogowski wrote:
-> This adds the test ID (tXXXX) prefix to the test result message of
-> all shell tests.  This is especially useful when doing a parallel
-> check run, where it's currently quite hard to identify the actual
-> failing test case.
->=20
-> Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
+On 09/04, Ramsay Jones wrote:
+> 
+> Hi Thomas,
+> 
+> The current pu branch is *very* broken on cygwin; practically every
+> test fails. A git-bisect session points to:
+> 
+>     $ git bisect good
+>     a4f6670277d5dc0b082139efe162100c6d7a91b8 is the first bad commit
+>     commit a4f6670277d5dc0b082139efe162100c6d7a91b8
+>     Author: Thomas Gummerer <t.gummerer@gmail.com>
+>     Date:   Thu Aug 16 11:58:38 2012 +0200
+> 
+>         read-cache.c: Re-read index if index file changed
+> 
+>         Add the possibility of re-reading the index file, if it changed
+>         while reading.
+> 
+>         The index file might change during the read, causing outdated
+>         information to be displayed. We check if the index file changed
+>         by using its stat data as heuristic.
+> 
+>         Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+>         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+>     :100644 100644 6a8b4b1e6859b7a8df2624e80b9da47df6cd1648 cdd8480cc7c3ab373dab1ca9
+>     4d77a3154f7d0fbd M      read-cache.c
+>     $
+> 
+> Since this appears to be a cygwin specific problem, I wasn't too surprised
+> to see that the code added in this commit involves the stat functions. (Yes,
+> this is another example of problems caused by the "schizophrenic stat()
+> functions").
+> 
+> A little debugging shows that the index_changed() function was always returning
+> true, so that the loop was executed 50 times and git then die()s.
+> 
+> We note that fstat() is a "cygwin native" function, whereas lstat() is executing
+> the "WIN32 optimised" function. The problematic 'struct stat' fields are st_uid,
+> st_gid and st_ino, which fstat() fills with "appropriate" values (st_uid=1005,
+> st_gid=513, st_ino=<non-zero value>), whereas the the WIN32 version of lstat()
+> always returns zero in these fields.
+> 
+> I have no wish to spread the insanity, but nonetheless I implemented a "WIN32
+> optimised" version of fstat(). This was a great improvement, but there were
+> still a few failing tests. git-stash, in particular, seemed to be problematic.
+> A git-bisect session pointed at exactly the same commit as above! *ahem*
+> 
+> A spot of debugging shows that index_changed() was always returning true ...
+> Here, the new fstat() function was returning zero in those fields, whereas the
+> lstat() function was returning "appropriate values" ...
+> 
+> The difference here is caused by git-stash calling git with an GIT_INDEX_FILE
+> set to an _absolute_ path, such as:
+> 
+>     /home/ramsay/git/t/trash directory.t3903-stash/.git/index.stash.2440
+> 
+> This has the effect of disabling the "optimisation" and calling the "cygwin
+> native" lstat() function. *ho hum*
+> 
+> So, the only sensible fix is to not include those fields in the index_changed
+> predicate on cygwin; which is what the first patch does. The testsuite now
+> runs just fine (well as fine as before, anyway!).
 
-This breaks the TAP output format of the tests, which is needed to run
-them with prove.  To identify the failing tests more easily when runnin=
-g
-the tests in parallel, you may want to add GIT_TEST_TARGET =3D prove to
-your config.mak.
+Thanks for noticing that problem, and sending the patch to fix this.
 
-If this change is really needed, I think you should add the test-id aft=
-er
-the message.
-> ---
->  t/t0000-basic.sh        | 28 ++++++++++++++--------------
->  t/test-lib-functions.sh | 11 +++++++----
->  t/test-lib.sh           | 10 ++++++----
->  3 Dateien ge=E4ndert, 27 Zeilen hinzugef=FCgt(+), 22 Zeilen entfernt=
-(-)
->=20
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index ccb5435..1bbf5b8 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -58,7 +58,7 @@ test_expect_failure 'pretend we have a known breaka=
-ge' '
->  test_expect_success 'pretend we have fixed a known breakage (run in =
-sub test-lib)' "
->  	mkdir passing-todo &&
->  	(cd passing-todo &&
-> -	cat >passing-todo.sh <<-EOF &&
-> +	cat >0000t05-passing-todo.sh <<-EOF &&
->  	#!$SHELL_PATH
-> =20
->  	test_description=3D'A passing TODO test
-> @@ -77,14 +77,14 @@ test_expect_success 'pretend we have fixed a know=
-n breakage (run in sub test-lib
-> =20
->  	test_done
->  	EOF
-> -	chmod +x passing-todo.sh &&
-> -	./passing-todo.sh >out 2>err &&
-> +	chmod +x 0000t05-passing-todo.sh &&
-> +	./0000t05-passing-todo.sh >out 2>err &&
->  	! test -s err &&
->  	sed -e 's/^> //' >expect <<-\\EOF &&
-> -	> ok 1 - pretend we have fixed a known breakage # TODO known breaka=
-ge
-> -	> # fixed 1 known breakage(s)
-> -	> # passed all 1 test(s)
-> -	> 1..1
-> +	> 0000t05: ok 1 - pretend we have fixed a known breakage # TODO kno=
-wn breakage
-> +	> 0000t05: # fixed 1 known breakage(s)
-> +	> 0000t05: # passed all 1 test(s)
-> +	> 0000t05: 1..1
->  	EOF
->  	test_cmp expect out)
->  "
-> @@ -141,7 +141,7 @@ test_expect_success 'tests clean up even on failu=
-res' "
->  	(
->  	cd failing-cleanup &&
-> =20
-> -	cat >failing-cleanup.sh <<-EOF &&
-> +	cat >0000t12-failing-cleanup.sh <<-EOF &&
->  	#!$SHELL_PATH
-> =20
->  	test_description=3D'Failing tests with cleanup commands'
-> @@ -162,23 +162,23 @@ test_expect_success 'tests clean up even on fai=
-lures' "
-> =20
->  	EOF
-> =20
-> -	chmod +x failing-cleanup.sh &&
-> -	test_must_fail ./failing-cleanup.sh >out 2>err &&
-> +	chmod +x 0000t12-failing-cleanup.sh &&
-> +	test_must_fail ./0000t12-failing-cleanup.sh >out 2>err &&
->  	! test -s err &&
->  	! test -f \"trash directory.failing-cleanup/clean-after-failure\" &=
-&
->  	sed -e 's/Z$//' -e 's/^> //' >expect <<-\\EOF &&
-> -	> not ok - 1 tests clean up even after a failure
-> +	> 0000t12: not ok 1 - tests clean up even after a failure
->  	> #	Z
->  	> #	touch clean-after-failure &&
->  	> #	test_when_finished rm clean-after-failure &&
->  	> #	(exit 1)
->  	> #	Z
-> -	> not ok - 2 failure to clean up causes the test to fail
-> +	> 0000t12: not ok 2 - failure to clean up causes the test to fail
->  	> #	Z
->  	> #	test_when_finished \"(exit 2)\"
->  	> #	Z
-> -	> # failed 2 among 2 test(s)
-> -	> 1..2
-> +	> 0000t12: # failed 2 among 2 test(s)
-> +	> 0000t12: 1..2
->  	EOF
->  	test_cmp expect out
->  	)
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 9bc57d2..c81ad7f 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -24,6 +24,9 @@
->  #
->  # In particular, quoting isn't enough, as the path may contain the s=
-ame quote
->  # that we're using.
-> +
-> +TID=3D$(basename ${0%%-*})
-> +
->  test_set_editor () {
->  	FAKE_EDITOR=3D"$1"
->  	export FAKE_EDITOR
-> @@ -434,7 +437,7 @@ test_external_without_stderr () {
->  test_path_is_file () {
->  	if ! [ -f "$1" ]
->  	then
-> -		echo "File $1 doesn't exist. $*"
-> +		echo "$TID: File $1 doesn't exist. $*"
->  		false
->  	fi
->  }
-> @@ -442,7 +445,7 @@ test_path_is_file () {
->  test_path_is_dir () {
->  	if ! [ -d "$1" ]
->  	then
-> -		echo "Directory $1 doesn't exist. $*"
-> +		echo "$TID: Directory $1 doesn't exist. $*"
->  		false
->  	fi
->  }
-> @@ -450,7 +453,7 @@ test_path_is_dir () {
->  test_path_is_missing () {
->  	if [ -e "$1" ]
->  	then
-> -		echo "Path exists:"
-> +		echo "$TID: Path exists:"
->  		ls -ld "$1"
->  		if [ $# -ge 1 ]; then
->  			echo "$*"
-> @@ -476,7 +479,7 @@ test_line_count () {
->  		error "bug in the test script: not 3 parameters to test_line_count=
-"
->  	elif ! test $(wc -l <"$3") "$1" "$2"
->  	then
-> -		echo "test_line_count: line count for $3 !$1 $2"
-> +		echo "$TID: test_line_count: line count for $3 !$1 $2"
->  		cat "$3"
->  		return 1
->  	fi
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 78c4286..6fccbe9 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -31,6 +31,8 @@ done,*)
->  	;;
->  esac
-> =20
-> +TID=3D$(basename ${0%%-*})
-> +
->  # Keep the original TERM for say_color
->  ORIGINAL_TERM=3D$TERM
-> =20
-> @@ -185,7 +187,7 @@ if test -n "$color"; then
->  			*) test -n "$quiet" && return;;
->  		esac
->  		shift
-> -		printf "%s" "$*"
-> +		printf "$TID: %s" "$*"
->  		tput sgr0
->  		echo
->  		)
-> @@ -194,12 +196,12 @@ else
->  	say_color() {
->  		test -z "$1" && test -n "$quiet" && return
->  		shift
-> -		echo "$*"
-> +		echo "$TID: $*"
->  	}
->  fi
-> =20
->  error () {
-> -	say_color error "error: $*"
-> +	say_color error "$TID: error: $*"
->  	GIT_EXIT_OK=3Dt
->  	exit 1
->  }
-> @@ -262,7 +264,7 @@ test_ok_ () {
-> =20
->  test_failure_ () {
->  	test_failure=3D$(($test_failure + 1))
-> -	say_color error "not ok - $test_count $1"
-> +	say_color error "not ok $test_count - $1"
->  	shift
->  	echo "$@" | sed -e 's/^/#	/'
->  	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
-> --=20
-> 1.7.11.5
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> The other two patches don't affect the correctness of the code, so please
+> feel free to ignore them if you like.
+
+Thanks for those patches, they make sense to me.  I'm just not sure what
+to do with the series at the moment, because of the lack of comments for
+the rest of the series, and Junios comment in the latest What's cooking
+in git.git:
+
+> A GSoC project.  Was waiting for comments from mentors and
+> stakeholders, but nothing seems to be happening, other than breakage
+> fixes on Cygwin.  May discard.
