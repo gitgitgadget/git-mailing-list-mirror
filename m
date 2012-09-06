@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 0/4] pre-commit hook for merges
-Date: Thu,  6 Sep 2012 16:25:54 +0200
-Message-ID: <cover.1346939542.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 1/4] merge: document prepare-commit-msg hook usage
+Date: Thu,  6 Sep 2012 16:25:55 +0200
+Message-ID: <f64d15fe61f1e9d755a7afbe015d1b0dbf5f706d.1346939542.git.git@drmicha.warpmail.net>
 References: <50487F8A.4050803@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
@@ -12,70 +12,76 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9d24-0001zj-B0
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 16:26:12 +0200
+	id 1T9d24-0001zj-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 16:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756040Ab2IFO0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 10:26:01 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52003 "EHLO
+	id S1756051Ab2IFO0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 10:26:03 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55385 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752645Ab2IFO0A (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 10:26:00 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id E80BE20BB8;
-	Thu,  6 Sep 2012 10:25:59 -0400 (EDT)
-Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 06 Sep 2012 10:25:59 -0400
+	by vger.kernel.org with ESMTP id S1752645Ab2IFO0B (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 10:26:01 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8BDB520B8C;
+	Thu,  6 Sep 2012 10:26:01 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute5.internal (MEProxy); Thu, 06 Sep 2012 10:26:01 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=DW4BZT8EBU18GGUp5SPxXlPn8
-	/4=; b=rG0BkJNLThBrHgtXyMpUtWkxSsF+W/kJP4l08CNSuAD3Wfmw9SZ68PH5H
-	SFwDgHovyc4j9IIXOXKZ8+VelpF+OH8p2hZdA+w9H7SIQSDFJnD60ySgT66kotIy
-	t2+qeVQtgzXtm0Nx0O4W2mDDqppsIq+AiJxfZ7azw759nV80Yw=
-X-Sasl-enc: Agrwm3zLpQluL6ZanymgsIK8iwP9dU3Q+Ffvwo2yRDh2 1346941559
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=uk
+	wfwniCup2VUlIo9dL1vackn/Y=; b=n0bp0PRUhYOkceP0bKNM8V5b6ic4AOVYGM
+	YpJ4YTaNfKOK3VjhekKglUpCb2DcRw1IUSJx+IMHKwbTxC0kAtnRqJ8kv/cC/pYB
+	j/E6HQnSBxrkNuQuVLJxzQSdJTrCGRdeMbmecoqWFMeNYXCZtOZrSPtxPloUYOLj
+	cSecb1+ZU=
+X-Sasl-enc: yrCQ396xt+nmBrl5tqVJA2iGI43BGqsxcN0Czyq5cm0b 1346941561
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7CFB28E03D0;
-	Thu,  6 Sep 2012 10:25:59 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 25AFD4825F2;
+	Thu,  6 Sep 2012 10:26:01 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.406.gafd3f81
 In-Reply-To: <50487F8A.4050803@alum.mit.edu>
+In-Reply-To: <cover.1346939542.git.git@drmicha.warpmail.net>
+References: <cover.1346939542.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204886>
 
-In this second iteration I implement Junio's suggestion: 'git merge' invokes
-the pre-commit hook when merge.usePreCommitHook is set to true.
 
-1/4 documents that 'git merge' invokes the prepare-commit-msg hook
-unconditionally already.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-merge.txt | 5 +++++
+ Documentation/githooks.txt  | 2 ++
+ 2 files changed, 7 insertions(+)
 
-2-4 are v2 of the previous 1-3.
-
-This leaves aside the issue of commit-msg and post-commit hooks. If we can live
-with a bit of incompatibility I would rename the config to merge.useCommitHooks
-and call all of them based on that.  This would change the way prepare-commit-msg is
-treated now.
-
-We could also introduce 4 config variables, 3 defaulting to false, 1 to true,
-of course...
-
-[I had messed up my alias file when adding mhagger, and it seems that tripped up
-vger; resending, sorry.]
-
-Michael J Gruber (4):
-  merge: document prepare-commit-msg hook usage
-  git-merge: Honor pre-commit hook based on config
-  merge: --no-verify to bypass pre-commit hook
-  t7503: add tests for pre-commit hook (merge)
-
- Documentation/git-merge.txt     |  7 ++++-
- Documentation/githooks.txt      |  6 ++++
- Documentation/merge-config.txt  |  5 ++++
- Documentation/merge-options.txt |  4 +++
- builtin/merge.c                 | 19 ++++++++++++-
- t/t7503-pre-commit-hook.sh      | 62 +++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 101 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 20f9228..b3ba8a8 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -308,6 +308,11 @@ branch.<name>.mergeoptions::
+ 	supported options are the same as those of 'git merge', but option
+ 	values containing whitespace characters are currently not supported.
+ 
++HOOKS
++-----
++This command can run the `prepare-commit-msg` hook.
++See linkgit:githooks[5] for more information.
++
+ SEE ALSO
+ --------
+ linkgit:git-fmt-merge-msg[1], linkgit:git-pull[1],
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b9003fe..b32134c 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -108,6 +108,8 @@ it is not suppressed by the `--no-verify` option.  A non-zero exit
+ means a failure of the hook and aborts the commit.  It should not
+ be used as replacement for pre-commit hook.
+ 
++This hook is also called by 'git merge' when it creates a new commit.
++
+ The sample `prepare-commit-msg` hook that comes with git comments
+ out the `Conflicts:` part of a merge's commit message.
+ 
 -- 
 1.7.12.406.gafd3f81
