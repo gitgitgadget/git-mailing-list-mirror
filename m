@@ -1,128 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] fetch: align new ref summary printout in UTF-8
- locales
-Date: Thu, 06 Sep 2012 11:08:12 -0700
-Message-ID: <7v1uif3tyr.fsf@alter.siamese.dyndns.org>
-References: <1346670609-19986-1-git-send-email-pclouds@gmail.com>
- <1346755175-31468-1-git-send-email-pclouds@gmail.com>
- <504796A5.4070700@gmail.com> <5047A602.1020802@web.de>
- <CACsJy8D3VyFk+0PTeeXTN-Js9x7p+a+2vW+trry8-6q+9=m2xg@mail.gmail.com>
- <B268CEF3-88A6-49B0-8AE7-7C06EDAE7CEF@web.de>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] send-email: validate & reconfirm interactive responses
+Date: Thu, 6 Sep 2012 11:31:11 -0700
+Message-ID: <CALaEz9W_RR70KEzxk7GxjOu1_yv4UudckcsKAP2C_39Nc2yLbw@mail.gmail.com>
+References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
+ <1344983132-22578-1-git-send-email-gitster@pobox.com> <CALaEz9WVCj0gu-CbUJgydik1bC7z7JCcveKTdyxgrTWokXq5JA@mail.gmail.com>
+ <7vsjav6d85.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Sep 06 20:08:27 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 20:31:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9gV6-00009s-5q
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 20:08:24 +0200
+	id 1T9grX-0003RT-Lc
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 20:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932931Ab2IFSIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Sep 2012 14:08:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60554 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932853Ab2IFSIP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 14:08:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F916991C;
-	Thu,  6 Sep 2012 14:08:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qYOAXU2q6VlZ
-	E8bvxFilr/WmA+w=; b=RqKYXcQSfPVQvZpb6dIkdGAbNKq473ZIbkFrwN6+vjit
-	fkIhRuMk1YAoFEYXuV7tOHIrwQSdAX3iOprW14RjOP/eC2B8YO6rU/eU5D1qRpRe
-	xlUwOjBxGpWQVwR2cjH9DtWGk8iyoaEr+wWNwmMSGwKmBV8FSpt4EwEVpYBk4vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lczOst
-	FSD33bwm1/R1eklqHlObIhSec9VeYwsKmIi9QqKPXp6bpBPGsNy/IQffEDs/AkbE
-	kpBOP0bTAl5b+ksHeMhJbrSDXTy4OEKKbxWN/2t4loolAEjWjvkXIbJ4K6slRKyp
-	uiflLFxyGfjDt8AO8jWD/2yWq1Ul4/fkgr60s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 266E2991B;
-	Thu,  6 Sep 2012 14:08:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 775779915; Thu,  6 Sep 2012
- 14:08:13 -0400 (EDT)
-In-Reply-To: <B268CEF3-88A6-49B0-8AE7-7C06EDAE7CEF@web.de> ("Torsten
- =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Thu, 6 Sep 2012 18:21:18
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D30F0CBA-F84D-11E1-8B15-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932966Ab2IFSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 14:31:28 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61509 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932373Ab2IFSb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 14:31:27 -0400
+Received: by iahk25 with SMTP id k25so2368915iah.19
+        for <git@vger.kernel.org>; Thu, 06 Sep 2012 11:31:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=I8u7dxRkmDB+MyFyM3GnSFx9ZZkxhGRTEL6kSvqVrfc=;
+        b=IW9EEwFL0mT4/UHli+OjELJaL3yrM3sfdfcpq1IkyH97CtZPGAEhKI4ihpC0jKrjbe
+         IOX2ZU1nFo+J+FPPZFl8OEg7smwT6XY1w82+J5UYOuVSxLvDsBilwKu0Pc0Fqg7U1XAd
+         oTavRttoOdkLwBbWK73PUMtI+XygkbDpj2pRjPKd9Fs+JpaZ92sGVE1ans8nxE6AGI/j
+         bzTBRUOYSiEVN9KK+5h/SP6ouKHRnbE1Cwo7imMwr6dVRq1mra5LGXcBr74NW+HeWK6Q
+         /7pWWLPQ1+7KsU3XKDRyXCwsz6Gfy8r6fUx7u95PtTrn19wFA4DRgg02gnJUusbHv8yv
+         ySKg==
+Received: by 10.50.169.70 with SMTP id ac6mr4434812igc.12.1346956286691; Thu,
+ 06 Sep 2012 11:31:26 -0700 (PDT)
+Received: by 10.64.64.33 with HTTP; Thu, 6 Sep 2012 11:31:11 -0700 (PDT)
+In-Reply-To: <7vsjav6d85.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204913>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+(Sorry sending this from web interface)
 
-> I try to re-phrase my question:
+On Wed, Sep 5, 2012 at 8:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+>> This is now bugging me if I just hit enter and don't want to specify
+>> anything for
+>> these headers (I want the defaults or what's in the files already).
+>> Can we allow
+>> the empty string to be valid as well so I don't have to go through
+>> these prompts?
 >
-> Do installations still exist which use e.g. BIG5 or any other
-> multi byte encoding which is not UTF-8?
+> That indeed was the intention, and if it is not behaving, you found
+> a bug.
+>
+> The relevant code in "sub ask" does this:
+>
+>                 ...
+>                 $resp = $term->readline($prompt);
+>                 if (!defined $resp) { # EOF
+>                         print "\n";
+>                         return defined $default ? $default : undef;
+>                 }
+>                 if ($resp eq '' and defined $default) {
+>                         return $default;
+>                 }
+>                 if (!defined $valid_re or $resp =~ /$valid_re/) {
+>                         return $resp;
+>                 }
+>
+> I am scratching my head wondering why your "just hit enter" does not
+> trigger the "if response is empty and we have default, just return it"
+> codepath we can see above.  It shouldn't even trigger the regexp
+> based validation codepath in the first place.
+>
 
-Yes.
+It works fine for "Who should the emails appear to be from?" but
+beyond that we have "Who should the emails be sent to?" and
+"Message-ID to be used as In-Reply-To for the first email?" which I
+typically just hit enter to. It seems that they have no "default"
+argument so that second if fails. I suppose we can add a default => ""
+to these two asks?
 
-> Do we want to support other encodings than ASCII or UTF-8?
-> (Because then the screen width needs to be calculate different, I thi=
-nk)
+----8<-----
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 607137b..13d813e 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -760,6 +760,7 @@ if (!defined $sender) {
 
-That depends on who "we" are and what timeframe you have in mind.
-
-Do our developers care about these encodings so much that we would
-reject "ASCCI/UTF-8 only" patch and wait until we enhance it to do
-the right thing for other encodings that we do not use ourselves?
-No.  That does not make any sense, especially when we know we will
-not have a good test coverage on the additional parts that we will
-not be using ourselves.
-
-"This change only helps people with ASCII or UTF-8 and does not help
-others" alone is never a valid reason to reject a change, but we
-still try to be nicer to "others" that may come after we leave this
-topic behind by doing a few things:
-
- - If the change will make things worse than it currently is for
-   "others", we would try to minimize the regression for them.
-
- - If the change will make the code harder to update later to
-   enhance with additional change to support "others", we would try
-   to anticipate what kind of changes are needed on top, and
-   structure the code in such a way that future changes can be made
-   cleanly.
-
-=46or the first point, for multi-byte encodings (e.g. ISO-2022), the
-display columns and byte length do not match and in general byte
-length is longer than the display columns in the current code.  With
-the current code that measures the required columns across elements
-by taking the maximum of byte length, they will see wrong number of
-filler, so they are already getting a wrong alignment.  With the
-"UTF-8 only" change, the required columns and the filler will be
-calculated by assuming that the string is in UTF-8, which may make
-the computation off in a different way, and if we underestimate the
-display columns for a string, they may see the strings truncated,
-which is bad.
-
-So as long as gettext_width() punts and returns strlen() for a
-malformed UTF-8, it would be OK [*1*].
-
-=46or the second point, I think the API "here is a string, give me the
-number of display columns it will occupy, as I am interested in
-aligning them" is a good abstraction that can be later enhanced to
-other encodings fairly easily, so I do not see a problem in the
-patch that goes in that direction.
-
-
-
-[Footnote]
-
-*1* If the patch used utf_strwidth() (which I didn't bother to go
-back and check, though), it should be OK.  The underlying
-utf8_width() will reject a malformed UTF-8 sequence and the code
-falls back to strlen().
+ if (!@initial_to && !defined $to_cmd) {
+        my $to = ask("Who should the emails be sent to? ",
++                    default => "",
+                     valid_re => qr/\@.*\./, confirm_only => 1);
+        push @initial_to, parse_address_line($to) if defined $to; #
+sanitized/validated later
+        $prompting++;
+@@ -787,6 +788,7 @@ sub expand_one_alias {
+ if ($thread && !defined $initial_reply_to && $prompting) {
+        $initial_reply_to = ask(
+                "Message-ID to be used as In-Reply-To for the first email? ",
++               default => "",
+                valid_re => qr/\@.*\./, confirm_only => 1);
+ }
+ if (defined $initial_reply_to) {
