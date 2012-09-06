@@ -1,151 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cherry-pick: Append -x line on separate paragraph
-Date: Wed, 05 Sep 2012 20:47:43 -0700
-Message-ID: <7vmx136cdc.fsf@alter.siamese.dyndns.org>
-References: <1410595949.1269.1346877367487.JavaMail.root@bazinga.schuettel.ch>
+Subject: Re: [PATCH] cvsimport: strip all inappropriate tag strings
+Date: Wed, 05 Sep 2012 20:52:53 -0700
+Message-ID: <7vipbr6c4q.fsf@alter.siamese.dyndns.org>
+References: <1346827469.1137.22.camel@umgah.localdomain>
+ <1346881194-19076-1-git-send-email-ktdreyer@ktdreyer.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Robin Stocker <robin@nibor.org>
-X-From: git-owner@vger.kernel.org Thu Sep 06 05:47:58 2012
+To: Ken Dreyer <ktdreyer@ktdreyer.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 05:53:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9T4O-0005kb-RQ
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 05:47:57 +0200
+	id 1T9T9M-00028W-5H
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 05:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732Ab2IFDrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Sep 2012 23:47:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43633 "EHLO
+	id S1752294Ab2IFDw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Sep 2012 23:52:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45788 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752313Ab2IFDrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Sep 2012 23:47:46 -0400
+	id S1751883Ab2IFDw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Sep 2012 23:52:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 170C29350;
-	Wed,  5 Sep 2012 23:47:46 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F1C99414;
+	Wed,  5 Sep 2012 23:52:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JHal4+zPjNaYyX2hGX6ysQM2Hao=; b=uovc7x
-	DrDYkhTh5xyaT3qvm5Osttcb453ZitndDPbjQsx+L8WPi06BD58O8L85cDYsBIJN
-	rhpBGv204Zsrz5wshIIiDooP+Yk87gEe30yWkhi0RzqM+APFopaD48OAkx8WJ0D6
-	N5U9gUMPo4Ysf2fEbdtQHr7kD7rwxVGIPlOKY=
+	:content-type; s=sasl; bh=loiE8RYZBqQ47vJ15ewnR2v2CSI=; b=BD3TZc
+	JOTn+udwsdOP4CKG6K1gNDWJLZ5MysNhMZTo/IwsIwT74yuu2cGIQFrVFt2RdvJz
+	8hLGV04jB8GRhFnRQ9S3fZ44iBtXVgZSPVBcYqV0qEbnVUGtYRYJtLFwTYFY8JlS
+	oRpdSezQK8l15fnyufflZWoE3mdHCEWDgWQ2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wfeh7kcXooXgGoPZKfWMb8vDJs0GsXG3
-	6aaSGILiz1GlWlfKVSlUfZd84FU/dzzKoz3kRl/2c3fu1Ci47GfaH11FktWPA+EM
-	o0RA+QvjFMBwT2Y0+YUEJ3Hz4u8kLH3cHXm9/NWJIfUaGuJThVVXMXfTcWmnS6SS
-	xLIAzC5hu+Q=
+	:content-type; q=dns; s=sasl; b=fGjrVMgFIrlDCEcEz12S6gUK9CGtTxds
+	Zm+ODc2seMK6/6nWHiZwoAEhGM5LA3txDD1kT7tj1zzMRpLiBJzrWlsmxxkAR4Hw
+	Qn1HqscCRkaZ4gccGT+ZN0KBoSgJvYeEfkOYc7tYvEL1xESZd1Z6wPbkzVIoRV69
+	ooWYLeFRNo0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0129D934F;
-	Wed,  5 Sep 2012 23:47:46 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CC419413;
+	Wed,  5 Sep 2012 23:52:55 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49767934E; Wed,  5 Sep 2012
- 23:47:45 -0400 (EDT)
-In-Reply-To: <1410595949.1269.1346877367487.JavaMail.root@bazinga.schuettel.ch> (Robin
- Stocker's message of "Wed, 5 Sep 2012 22:36:07 +0200 (CEST)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D4469412; Wed,  5 Sep 2012
+ 23:52:54 -0400 (EDT)
+In-Reply-To: <1346881194-19076-1-git-send-email-ktdreyer@ktdreyer.com> (Ken
+ Dreyer's message of "Wed, 5 Sep 2012 15:39:54 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E428C32-F7D5-11E1-9FE5-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 569A85F0-F7D6-11E1-B4DF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204859>
 
-Robin Stocker <robin@nibor.org> writes:
+Ken Dreyer <ktdreyer@ktdreyer.com> writes:
 
-> Junio C Hamano writes:
->> Robin Stocker <robin@nibor.org> writes:
->> 
->> >  		if (opts->record_origin) {
->> > + /* Some implementations don't terminate message with final \n, so
->> > add it */
->> > + if (msg.message[strlen(msg.message)-1] != '\n')
->> > + strbuf_addch(&msgbuf, '\n');
->> 
->> I can agree that this is a good change.
->> 
->> > + strbuf_addch(&msgbuf, '\n');
->> 
->> But this is somewhat dubious. Even if what we are adding is merely
->> an extra LF, that changes the mechanically generated output format
->> and can break existing hooks that read from these generated commit
->> log template.
+> Certain characters such as "?" can be present in a CVS tag name, but
+> git does not allow these characters in tags. If git-cvsimport
+> encounters a CVS tag that git cannot handle, cvsimport will error and
+> refuse to continue the import beyond that point.
 >
-> Hm, for a script to break because of an extra LF it would have to be
-> very badly written. If it looks for "\n(cherry picked ...", it would
-> still work. But I see the point.
-
-If you approach this change from the "information left by -x is
-somehow useful" point of view, it wouldn't make any difference.
-Scripts can match "(cherry picked from ..." and glean useful
-information out of it, with or without an empty line around it.
-
-But if you look at it from the other perspective [*1*], it makes a
-big difference.  A script that wants to excise these lines used to
-be able to just delete such a line.  With the proposed change, it
-also has to be aware of an empty line next to it.
-
->> Is there a reason better than "having an empty line there look
->> better to _me_" to justify this change?
+> When importing CVS tags, strip all the inappropriate strings from the
+> tag names as we translate them to git tag names.
 >
-> Yes:
-
-Then please have them in the proposed commit log message to justify
-the change.  I think the following analysis I quoted from your
-message summarizes the motivation well.
-
-> * If the original commit message consisted just of a summary line,
->   the commit message after -x would then not have a blank second
->   line, which is bad style, e.g.:
+> Signed-off-by: Ken Dreyer <ktdreyer@ktdreyer.com>
+> ---
 >
-> The title of the original commit
-> (cherry picked ...)
+> Thanks Junio and Alex for your review and comments. I've implemented
+> both of your suggestions in this patch.
 
-This is very true.  So we at least want an empty line added when the
-original is one-liner.
+Thanks.
 
-> * If the original message did not have any trailers, the appended
->   text would stick to the last paragraph, even though it is a
->   separate thing.
+Do we want to give a warning instead of silently dropping a tag on
+the floor, or is the output verbose enough that such a warning will
+be drowned in the noise?
 
-The other side of this argument is if there are trailers, we would
-not want an extra blank line.  We need to look at the last paragraph
-of the log message and if it does not end with a trailer, we want an
-additional empty line.
-
-> Maybe the solution is to detect if the original commit message
-> ends with a trailer and in that case keep the existing behavior
-> of not inserting a blank line?
-
-Yeah, that sounds like a good change from "this makes the result
-look better" point of view.
-
-> Oh, I like that proposal. I'd lean towards a new --trailer option I
-> think.
+>  git-cvsimport.perl | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
 >
-> It would have the same problem of having to append it on a separate
-> paragraph if the original commit message does not already have a
-> trailer though.
+> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+> index 8d41610..dda8a6d 100755
+> --- a/git-cvsimport.perl
+> +++ b/git-cvsimport.perl
+> @@ -889,7 +889,23 @@ sub commit {
+>  		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
+>  		$xtag =~ tr/_/\./ if ( $opt_u );
+>  		$xtag =~ s/[\/]/$opt_s/g;
+> -		$xtag =~ s/\[//g;
+> +
+> +		# See ref.c for these rules.
+> +		# Tag cannot contain bad chars. See bad_ref_char in ref.c.
+> +		$xtag =~ s/[ ~\^:\\\*\?\[]//g;
+> +		# Other bad strings for tags:
+> +		1 while $xtag =~ s/
+> +			(?: \.\.        # Tag cannot contain '..'.
+> +			|   \@{         # Tag cannot contain '@{'.
+> +			| ^ -           # Tag cannot begin with '-'.
+> +			|   \.lock $    # Tag cannot end with '.lock'.
+> +			| ^ \.          # Tag cannot begin...
+> +			|   \. $        # ...or end with '.'
+> +			)//xg;
+> +		# Tag cannot be empty.
+> +		if ($xtag eq '') {
 
-Yes.  The logic would be the same.  First terminate the incomplete
-last line, if any, and then look at the last paragraph of the commit
-log message (one liner is a natural degenerate case of this; its
-single-line title is the last paragraph) and if and only if it does
-not end with a trailer, add a blank line before adding the marker.
+That is, adding something like:
 
-The only difference between the two would be how the "cherry-picked
-from" line is formatted.
+	print STDERR "warning: ignoring tag '$tag' with invalid tagname";
 
+here.
 
-[Footnote]
+> +			return;
+> +		}
+>  
+>  		system('git' , 'tag', '-f', $xtag, $cid) == 0
+>  			or die "Cannot create tag $xtag: $!\n";
 
-*1* Originally, we added "(cherry picked from ..." by default, and
-had a switch to disable it; later we made it off by default and made
-it optional (and discouraged) with "-x" and this was for a reason.
-Unless the original commit object is also available to the reader of
-the history, the line is a useless noise, and many people are found
-to cherry-pick from their private branches; by definition, the line
-is useless in the resulting commit of such a cherry-pick.
+It also may be worthwhile to show the original tagname ($tag)
+somewhere in this message to help diagnosis.
