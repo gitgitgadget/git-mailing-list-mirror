@@ -1,70 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Encrypted repositories
-Date: Wed, 05 Sep 2012 22:37:24 -0700
-Message-ID: <7vvcfr4sq3.fsf@alter.siamese.dyndns.org>
-References: <fcbea7c0-b433-414b-abd3-b0e205a96fc5@zcs>
- <f6682453-92bc-4f3b-9bf3-1910ca6fb307@zcs>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Enrico Weigelt <enrico.weigelt@vnc.biz>
-X-From: git-owner@vger.kernel.org Thu Sep 06 07:37:36 2012
+From: Ken Dreyer <ktdreyer@ktdreyer.com>
+Subject: [PATCH] cvsimport: strip all inappropriate tag strings
+Date: Wed,  5 Sep 2012 23:42:58 -0600
+Message-ID: <1346910178-13902-1-git-send-email-ktdreyer@ktdreyer.com>
+References: <7vipbr6c4q.fsf@alter.siamese.dyndns.org>
+Cc: gitster@pobox.com, Ken Dreyer <ktdreyer@ktdreyer.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 06 07:43:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9UmU-0003n7-Nd
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 07:37:35 +0200
+	id 1T9Us0-00019f-NJ
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 07:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab2IFFh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 01:37:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56654 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751301Ab2IFFh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 01:37:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 434A145A5;
-	Thu,  6 Sep 2012 01:37:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=34Q4u6zvqJ1j7REh511rwGbtcSE=; b=dFdqK7
-	v3UE0o84IjoeGPgc5qplSvA6Vpwk6ZRx9VeCyvqSdIsACd4ohFzGCn76rMqTwWIw
-	WYuA6JYWuGRvhU2b8jyktTVRDdQ+VWxdMTHFdPYFubA6tfW1cqn1AUM8e0Uz6vpC
-	MY+lDxGQGKCwJzUDZOFJAIatvVhXThhj/uwso=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZBxO+9b6zdJl/I5IttS9TRtKXUHxvy6d
-	RxaBssC/2wk87VhHrmYHpCJm/5WuOv6LABJwhDAI1VDnyUBuruaFBWa0K8lUIzdN
-	jWTMrcD324We7FdBW7Q+woYgoQUTgahXv0U0rQr94aP7Je/iuFWnLSPWub9cuU+/
-	7KC2TB/OlUw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30D4E45A4;
-	Thu,  6 Sep 2012 01:37:26 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A516B459A; Thu,  6 Sep 2012
- 01:37:25 -0400 (EDT)
-In-Reply-To: <f6682453-92bc-4f3b-9bf3-1910ca6fb307@zcs> (Enrico Weigelt's
- message of "Thu, 06 Sep 2012 04:23:32 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F0782CC8-F7E4-11E1-BB33-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751743Ab2IFFnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 01:43:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58225 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004Ab2IFFnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 01:43:06 -0400
+Received: by iahk25 with SMTP id k25so1678763iah.19
+        for <git@vger.kernel.org>; Wed, 05 Sep 2012 22:43:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-gm-message-state;
+        bh=9ZnaFFzXKgMMi5DgLIimaaQIkJ/tsa354hUzH++n84Y=;
+        b=F49BObLEqAvOOpfp5qlsIFaiiDHo0Tg23cvWj2FUGKS65QmvbfZfValG1nlTbwG/Af
+         Tly0j1D9v+9cYRd21JfgFdB91k9cR3bya3OzXuVistyRzkV1n+DfbfAwC0K4IvZ2w6mw
+         7ibQId9gQSB2BTDqx927EI3S1RWy312xZ5InoMPfadu8u6g4Y8Nq2qpJ0cUqKHqtJ/y6
+         opNfwd0Kup4ftEAhAYE29OAE15mZTpD2JdouQa2te95o194Ern5a6jZqfwBMTPmmeM0h
+         Hwxm5Oy3c6zd6qWEWEhBDuH2umVChn4Rp5L0K8V7QcYxSIKdHohM3r7FBqJjDdtc7GTE
+         D0Sw==
+Received: by 10.42.180.201 with SMTP id bv9mr708681icb.43.1346910185984;
+        Wed, 05 Sep 2012 22:43:05 -0700 (PDT)
+Received: from phos.ktdreyer.com (c-67-190-20-168.hsd1.co.comcast.net. [67.190.20.168])
+        by mx.google.com with ESMTPS id wm7sm3032718igb.6.2012.09.05.22.43.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 05 Sep 2012 22:43:05 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.4
+In-Reply-To: <7vipbr6c4q.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQlzrjosRBX8kAHYv8Lsxch/RundCgMGs7CLcZPJUBuQvIAVNvNRctO/JGIYRVw+BWAHsBmL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204865>
 
-Enrico Weigelt <enrico.weigelt@vnc.biz> writes:
+Certain characters such as "?" can be present in a CVS tag name, but
+git does not allow these characters in tags. If git-cvsimport
+encounters a CVS tag that git cannot handle, cvsimport will error and
+refuse to continue the import beyond that point.
 
-> * blobs are encrypted with their (original) content hash as
->   encryption keys
+When importing CVS tags, strip all the inappropriate strings from the
+tag names as we translate them to git tag names.
 
-What does this even mean?
+Provide more debugging information to the user if we've altered the
+tag and the "git tag" command still fails. Also, warn the user if we
+end up skipping an (unusable) tag altogether.
 
-Is it expected that anybody who has access to the repository can
-learn names of objects (e.g. by running "ls .git/objects/??/")? If
-so, from whom are you protecting your repository?
+Signed-off-by: Ken Dreyer <ktdreyer@ktdreyer.com>
+---
 
-How does this encryption interact with delta compression employed in
-pack generation?
+Thanks Junio for your suggestion about diagnosis messages. I've
+implemented your suggestion by adding a warning statement if we skip a
+tag altogether, and I also added some output if we've translated a tag
+and the system() call still fails.
+
+ git-cvsimport.perl | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8d41610..3a30754 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -889,10 +889,36 @@ sub commit {
+ 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
+ 		$xtag =~ tr/_/\./ if ( $opt_u );
+ 		$xtag =~ s/[\/]/$opt_s/g;
+-		$xtag =~ s/\[//g;
+ 
+-		system('git' , 'tag', '-f', $xtag, $cid) == 0
+-			or die "Cannot create tag $xtag: $!\n";
++		# See ref.c for these rules.
++		# Tag cannot contain bad chars. See bad_ref_char in ref.c.
++		$xtag =~ s/[ ~\^:\\\*\?\[]//g;
++		# Other bad strings for tags:
++		1 while $xtag =~ s/
++			(?: \.\.        # Tag cannot contain '..'.
++			|   \@{         # Tag cannot contain '@{'.
++			| ^ -           # Tag cannot begin with '-'.
++			|   \.lock $    # Tag cannot end with '.lock'.
++			| ^ \.          # Tag cannot begin...
++			|   \. $        # ...or end with '.'
++			)//xg;
++		# Tag cannot be empty.
++		if ($xtag eq '') {
++			warn("warning: ignoring tag '$tag'",
++			" with invalid tagname\n");
++			return;
++		}
++
++		if (system('git' , 'tag', '-f', $xtag, $cid) != 0) {
++			# We did our best to sanitize the tag, but still failed
++			# for whatever reason. Bail out, and give the user
++			# enough information to understand if/how we should
++			# improve the translation in the future.
++			if ($tag ne $xtag) {
++				print "Translated '$tag' tag to '$xtag'\n";
++			}
++			die "Cannot create tag $xtag: $!\n";
++		}
+ 
+ 		print "Created tag '$xtag' on '$branch'\n" if $opt_v;
+ 	}
+-- 
+1.7.11.4
