@@ -1,141 +1,238 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/3] git-merge: Honor pre-merge hook
-Date: Thu, 06 Sep 2012 12:48:42 +0200
-Message-ID: <50487F8A.4050803@alum.mit.edu>
-References: <cover.1346851863.git.git@drmicha.warpmail.net> <dc8ebcd7f7b80ff930c04b5a407361ba8f2f077f.1346851863.git.git@drmicha.warpmail.net> <50476FFE.5070602@alum.mit.edu> <50485BD3.5020802@drmicha.warpmail.net>
+From: Jan-Marek Glogowski <glogow@fbihome.de>
+Subject: =?UTF-8?q?=5BPATCH=5D=20Prefix=20shell=20test=20output=20messages=20with=20test=20id?=
+Date: Thu,  6 Sep 2012 13:45:21 +0200
+Message-ID: <1346931921-5901-1-git-send-email-glogow@fbihome.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 06 12:48:57 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan-Marek Glogowski <glogow@fbihome.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 06 13:51:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9Zdm-0004Yb-2M
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 12:48:54 +0200
+	id 1T9acj-0003Mq-5d
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 13:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757637Ab2IFKsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 06:48:46 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:50171 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757399Ab2IFKsp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 06:48:45 -0400
-X-AuditID: 1207440c-b7f616d00000270b-b1-50487f8c15bc
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id F8.6D.09995.C8F78405; Thu,  6 Sep 2012 06:48:44 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q86AmgFb022687
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 6 Sep 2012 06:48:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:14.0) Gecko/20120714 Thunderbird/14.0
-In-Reply-To: <50485BD3.5020802@drmicha.warpmail.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHKsWRmVeSWpSXmKPExsUixO6iqNtT7xFgsGGLocWaF6eZLbqudDNZ
-	NPReYXZg9midPInZ4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDM2HzvPWLBcrmLShpVMDYwz
-	JboYOTkkBEwk/k3awQRhi0lcuLeerYuRi0NI4DKjxOYZ55kgnGNMEs8+TgKr4hXQljgycysr
-	iM0ioCqx4MtHRhCbTUBXYlFPM1iNqECIxJpvUxgh6gUlTs58wgJiiwjoS1w79wSsl1nAWmJ3
-	H0RcWMBC4u2Z9VDLrjFK3Fz+DizBCXTelHPvGSEadCTe9T1ghrDlJba/ncM8gVFgFpIds5CU
-	zUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqFebmaJXmpK6SZGSPjy7GD8tk7mEKMA
-	B6MSD++vfPcAIdbEsuLK3EOMkhxMSqK8x2s9AoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8NZX
-	A+V4UxIrq1KL8mFS0hwsSuK8qkvU/YQE0hNLUrNTUwtSi2CyMhwcShK8H+qAGgWLUtNTK9Iy
-	c0oQ0kwcnCDDuaREilPzUlKLEktLMuJB0RpfDIxXkBQP0N6TIO28xQWJuUBRiNZTjLocdz+u
-	uM8oxJKXn5cqJc7LDEw3QgIgRRmleXArYMnqFaM40MfCvPdARvEAEx3cpFdAS5iAlgSngC0p
-	SURISTUwtoZorYz7zrS/LPdAzty/JU9Zd/e/6npSyua1e+bNrm1bhJzja9fcrIr4PdHNmeGx
-	yn7piHvT9/xqadWqebgkTE1+Ypy94ttDt0PWVjXZGW0O/v3ZSm1S0/GZS3KEpjz/ 
+	id S1750998Ab2IFLvq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Sep 2012 07:51:46 -0400
+Received: from ironman.h-da.de ([141.100.10.250]:35460 "EHLO ironman.h-da.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750792Ab2IFLvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 07:51:44 -0400
+X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Sep 2012 07:51:44 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EALeLSFCNZChB/2dsb2JhbAA7CoYGtRiBB4JKDwEUMjUCJgJyiBEHp2CDb48SgSGKAIUjgRIDpXOCZQ
+Received: from mail.fbihome.de ([141.100.40.65])
+  by ironman.h-da.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 06 Sep 2012 13:45:40 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by mail.fbihome.de (Postfix) with ESMTP id E6995932BD;
+	Thu,  6 Sep 2012 13:45:40 +0200 (CEST)
+Received: from mail.fbihome.de ([127.0.0.1])
+	by localhost (stud1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 17841-16; Thu, 6 Sep 2012 13:45:40 +0200 (CEST)
+Received: from kvm-sbuild.tvc.muenchen.de (unknown [194.113.41.246])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.fbihome.de (Postfix) with ESMTP id 9E081932BC;
+	Thu,  6 Sep 2012 13:45:40 +0200 (CEST)
+X-Mailer: git-send-email 1.7.11.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204875>
 
-On 09/06/2012 10:16 AM, Michael J Gruber wrote:
-> Michael Haggerty venit, vidit, dixit 05.09.2012 17:30:
->> On 09/05/2012 03:39 PM, Michael J Gruber wrote:
->>> git-merge does not honor the pre-commit hook when doing automatic merge
->>> commits, and for compatibility reasons this is going to stay.
->>>
->>> Introduce a pre-merge hook which is called for an automatic merge commit
->>> just like pre-commit is called for a non-automatic merge commit (or any
->>> other commit).
->>
->> What exactly is an "automatic merge commit"?  Is it any merge that
->> doesn't have a conflict?  A merge that doesn't invoke the editor?  A
->> merge done as part of another operation (e.g., pull)?  I don't see the
->> term mentioned in the git-merge or githooks man pages.
->>
->> I think it would be good if you would define this term in the
->> documentation files that your patch touched, and perhaps in the githooks
->> section about "pre-commit" as well.
-> 
-> "git merge" can go three ways:
-> 
-> F: fast forward: no commit is created, only a ref is changed
-> A: automatic: true merge (non-ff) without conflicts (i.e. chosen
-> strategy can perform the merge); a new commit is created
-> C: merge with conflicts: no commit is created but the index is prepared
-> (partially) for a merge commit
-> 
-> In case F, no commit hook is run (talking only about pre-commit/pre-merge).
-> 
-> In case A, no commit is run so far but my patch proposes pre-merge to be
-> run.
-> 
-> In case C, pre-commit (!) is run so far and after my patch.
+This adds the test ID (tXXXX) prefix to the test result message of
+all shell tests.  This is especially useful when doing a parallel
+check run, where it's currently quite hard to identify the actual
+failing test case.
 
-Thanks for the explanation.  I hope you will explain this briefly in the
-patch to the docs.
+Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
+---
+ t/t0000-basic.sh        | 28 ++++++++++++++--------------
+ t/test-lib-functions.sh | 11 +++++++----
+ t/test-lib.sh           | 10 ++++++----
+ 3 Dateien ge=C3=A4ndert, 27 Zeilen hinzugef=C3=BCgt(+), 22 Zeilen entf=
+ernt(-)
 
->> Secondly, though it is impossible (for backwards compatibility reasons)
->> for the pre-commit hook to be invoked for automatic merges, no such
->> considerations prohibit the pre-merge commit from being invoked for
->> non-automatic merges.  In other words, both hooks, pre-commit *and*
->> pre-merge, could be invoked for non-automatic merges.  Would this be
->> preferable?
->>
->> It depends on what pre-merge scripts are likely to be used for.  If they
->> will tend to be used for merge-specific actions, then it might be more
->> convenient for *all* merges to be vetted by them.  On the other hand, if
->> they tend to do the same actions as pre-commit hooks, then having
->> non-automatic merge commits go through both hooks would tend to be more
->> annoying than helpful.  Specifically, one of the scripts would probably
->> have to check whether the merge is a non-automatic merge, and if so do
->> nothing (i.e., letting the other script take care of it).  This would
->> also require an easy way for a script to determine whether a commit is a
->> non-automatic merge commit.
->>
->> Have you considered this?
-> 
-> Your second paragraph explains why I did it the way I did. One can
-> easily have pre-merge call pre-commit, or have them be different. One
-> can not easily have only pre-merge called for a non-automatic merge
-> commit, but that is because of backward compatibility. The way *I* would
-> like it is:
-> 
-> - call pre-merge for any non-ff merge commit (automatic or not)
-> - call pre-commit for any non-merge commit (#parents <=1)
-> 
-> But that would break compatibility.
-> 
-> So I hope my patch is the best approximation to the above which keeps
-> compatibility and is simple to handle in most situations.
-
-I can understand your reasoning and won't object.  But before I shut up,
-I will point out a third alternative that is arguably closer to your
-"ideal":
-
-- For non-merge commits, call pre-commit
-- For automatic merge commits, call pre-merge
-- For non-automatic merge commits:
-  if pre-merge exists, call pre-merge (only)
-  else if pre-commit exists, call pre-commit (for backwards comptibility)
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index ccb5435..1bbf5b8 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -58,7 +58,7 @@ test_expect_failure 'pretend we have a known breakage=
+' '
+ test_expect_success 'pretend we have fixed a known breakage (run in su=
+b test-lib)' "
+ 	mkdir passing-todo &&
+ 	(cd passing-todo &&
+-	cat >passing-todo.sh <<-EOF &&
++	cat >0000t05-passing-todo.sh <<-EOF &&
+ 	#!$SHELL_PATH
+=20
+ 	test_description=3D'A passing TODO test
+@@ -77,14 +77,14 @@ test_expect_success 'pretend we have fixed a known =
+breakage (run in sub test-lib
+=20
+ 	test_done
+ 	EOF
+-	chmod +x passing-todo.sh &&
+-	./passing-todo.sh >out 2>err &&
++	chmod +x 0000t05-passing-todo.sh &&
++	./0000t05-passing-todo.sh >out 2>err &&
+ 	! test -s err &&
+ 	sed -e 's/^> //' >expect <<-\\EOF &&
+-	> ok 1 - pretend we have fixed a known breakage # TODO known breakage
+-	> # fixed 1 known breakage(s)
+-	> # passed all 1 test(s)
+-	> 1..1
++	> 0000t05: ok 1 - pretend we have fixed a known breakage # TODO known=
+ breakage
++	> 0000t05: # fixed 1 known breakage(s)
++	> 0000t05: # passed all 1 test(s)
++	> 0000t05: 1..1
+ 	EOF
+ 	test_cmp expect out)
+ "
+@@ -141,7 +141,7 @@ test_expect_success 'tests clean up even on failure=
+s' "
+ 	(
+ 	cd failing-cleanup &&
+=20
+-	cat >failing-cleanup.sh <<-EOF &&
++	cat >0000t12-failing-cleanup.sh <<-EOF &&
+ 	#!$SHELL_PATH
+=20
+ 	test_description=3D'Failing tests with cleanup commands'
+@@ -162,23 +162,23 @@ test_expect_success 'tests clean up even on failu=
+res' "
+=20
+ 	EOF
+=20
+-	chmod +x failing-cleanup.sh &&
+-	test_must_fail ./failing-cleanup.sh >out 2>err &&
++	chmod +x 0000t12-failing-cleanup.sh &&
++	test_must_fail ./0000t12-failing-cleanup.sh >out 2>err &&
+ 	! test -s err &&
+ 	! test -f \"trash directory.failing-cleanup/clean-after-failure\" &&
+ 	sed -e 's/Z$//' -e 's/^> //' >expect <<-\\EOF &&
+-	> not ok - 1 tests clean up even after a failure
++	> 0000t12: not ok 1 - tests clean up even after a failure
+ 	> #	Z
+ 	> #	touch clean-after-failure &&
+ 	> #	test_when_finished rm clean-after-failure &&
+ 	> #	(exit 1)
+ 	> #	Z
+-	> not ok - 2 failure to clean up causes the test to fail
++	> 0000t12: not ok 2 - failure to clean up causes the test to fail
+ 	> #	Z
+ 	> #	test_when_finished \"(exit 2)\"
+ 	> #	Z
+-	> # failed 2 among 2 test(s)
+-	> 1..2
++	> 0000t12: # failed 2 among 2 test(s)
++	> 0000t12: 1..2
+ 	EOF
+ 	test_cmp expect out
+ 	)
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 9bc57d2..c81ad7f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -24,6 +24,9 @@
+ #
+ # In particular, quoting isn't enough, as the path may contain the sam=
+e quote
+ # that we're using.
++
++TID=3D$(basename ${0%%-*})
++
+ test_set_editor () {
+ 	FAKE_EDITOR=3D"$1"
+ 	export FAKE_EDITOR
+@@ -434,7 +437,7 @@ test_external_without_stderr () {
+ test_path_is_file () {
+ 	if ! [ -f "$1" ]
+ 	then
+-		echo "File $1 doesn't exist. $*"
++		echo "$TID: File $1 doesn't exist. $*"
+ 		false
+ 	fi
+ }
+@@ -442,7 +445,7 @@ test_path_is_file () {
+ test_path_is_dir () {
+ 	if ! [ -d "$1" ]
+ 	then
+-		echo "Directory $1 doesn't exist. $*"
++		echo "$TID: Directory $1 doesn't exist. $*"
+ 		false
+ 	fi
+ }
+@@ -450,7 +453,7 @@ test_path_is_dir () {
+ test_path_is_missing () {
+ 	if [ -e "$1" ]
+ 	then
+-		echo "Path exists:"
++		echo "$TID: Path exists:"
+ 		ls -ld "$1"
+ 		if [ $# -ge 1 ]; then
+ 			echo "$*"
+@@ -476,7 +479,7 @@ test_line_count () {
+ 		error "bug in the test script: not 3 parameters to test_line_count"
+ 	elif ! test $(wc -l <"$3") "$1" "$2"
+ 	then
+-		echo "test_line_count: line count for $3 !$1 $2"
++		echo "$TID: test_line_count: line count for $3 !$1 $2"
+ 		cat "$3"
+ 		return 1
+ 	fi
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 78c4286..6fccbe9 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -31,6 +31,8 @@ done,*)
+ 	;;
+ esac
+=20
++TID=3D$(basename ${0%%-*})
++
+ # Keep the original TERM for say_color
+ ORIGINAL_TERM=3D$TERM
+=20
+@@ -185,7 +187,7 @@ if test -n "$color"; then
+ 			*) test -n "$quiet" && return;;
+ 		esac
+ 		shift
+-		printf "%s" "$*"
++		printf "$TID: %s" "$*"
+ 		tput sgr0
+ 		echo
+ 		)
+@@ -194,12 +196,12 @@ else
+ 	say_color() {
+ 		test -z "$1" && test -n "$quiet" && return
+ 		shift
+-		echo "$*"
++		echo "$TID: $*"
+ 	}
+ fi
+=20
+ error () {
+-	say_color error "error: $*"
++	say_color error "$TID: error: $*"
+ 	GIT_EXIT_OK=3Dt
+ 	exit 1
+ }
+@@ -262,7 +264,7 @@ test_ok_ () {
+=20
+ test_failure_ () {
+ 	test_failure=3D$(($test_failure + 1))
+-	say_color error "not ok - $test_count $1"
++	say_color error "not ok $test_count - $1"
+ 	shift
+ 	echo "$@" | sed -e 's/^/#	/'
+ 	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
+--=20
+1.7.11.5
