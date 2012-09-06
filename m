@@ -1,106 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: validate & reconfirm interactive responses
-Date: Thu, 06 Sep 2012 13:03:40 -0700
-Message-ID: <7vipbq3omb.fsf@alter.siamese.dyndns.org>
-References: <CAOeW2eGZm7PLRaktjQQdDJm2BqAihS0pzsY2GUNFUO83s8qBPQ@mail.gmail.com>
- <1344983132-22578-1-git-send-email-gitster@pobox.com>
- <CALaEz9WVCj0gu-CbUJgydik1bC7z7JCcveKTdyxgrTWokXq5JA@mail.gmail.com>
- <7vsjav6d85.fsf@alter.siamese.dyndns.org>
- <CALaEz9W_RR70KEzxk7GxjOu1_yv4UudckcsKAP2C_39Nc2yLbw@mail.gmail.com>
+From: Jan-Marek Glogowski <glogow@fbihome.de>
+Subject: Re: [PATCH] Prefix shell test output messages with test id
+Date: Thu, 06 Sep 2012 22:29:38 +0200
+Message-ID: <504907B2.7060704@fbihome.de>
+References: <1346931921-5901-1-git-send-email-glogow@fbihome.de> <20120906123400.GA25467@tommy-fedora.scientificnet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 22:03:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 22:29:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9iIq-00038K-37
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 22:03:52 +0200
+	id 1T9ii3-0008Kc-St
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 22:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759663Ab2IFUDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 16:03:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62541 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758131Ab2IFUDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 16:03:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A90369EDC;
-	Thu,  6 Sep 2012 16:03:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bmm2V93fx39L8C2hg1onWoPLd4w=; b=WhiMyD
-	kFRFE+OM/pu31rzrHXnvMVSMkohiq+o0tJ/5Q+URJiSMUqp2J0PwwEGlxzZRUpiD
-	JMWaHuIh7kDAUXzyt2rP3XChCVmQbtmZ5PSnEgTrLv8JiMVm29hi3Jiv2pVBxxsk
-	Fsa1cqWvvUh/HRv5hoTH4AZU0qnQdtEaYIdPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MKQo9uAO65oyb1FDNz2QcDchxB6j8D/6
-	csisRGb9T5CRGT9vQghySCG9d07i1nCC/ZucUEKBS+CMtJsRaxSsjZafWs1TjlMv
-	8tFd2CQ0CEaFHylYMre+aan/EgZaxmgIRRTcaPTd4QBaZ62vg1coK/Tn5E4UiQZ1
-	8GrZ7x55yp0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 962869EDA;
-	Thu,  6 Sep 2012 16:03:42 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6E529ED8; Thu,  6 Sep 2012
- 16:03:41 -0400 (EDT)
-In-Reply-To: <CALaEz9W_RR70KEzxk7GxjOu1_yv4UudckcsKAP2C_39Nc2yLbw@mail.gmail.com> (Stephen
- Boyd's message of "Thu, 6 Sep 2012 11:31:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F4BD867E-F85D-11E1-B1E3-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759810Ab2IFU3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 16:29:48 -0400
+Received: from ironman.h-da.de ([141.100.10.250]:31944 "EHLO ironman.h-da.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759739Ab2IFU3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 16:29:47 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av4EAMoGSVCNZChB/2dsb2JhbAA7CrtMgQeCIAEBBXgBEAsOCgkWDwkDAgECAUUGDQYCAQGIELtbixEQhjUDmzmKPYJl
+Received: from mail.fbihome.de ([141.100.40.65])
+  by ironman.h-da.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 06 Sep 2012 22:29:46 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by mail.fbihome.de (Postfix) with ESMTP id 71633932FC;
+	Thu,  6 Sep 2012 22:29:48 +0200 (CEST)
+Received: from mail.fbihome.de ([127.0.0.1])
+	by localhost (stud1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 03817-13; Thu, 6 Sep 2012 22:29:48 +0200 (CEST)
+Received: from [172.16.2.194] (unknown [194.113.41.246])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.fbihome.de (Postfix) with ESMTP id 427CD932FA;
+	Thu,  6 Sep 2012 22:29:48 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.26) Gecko/20120131 Lightning/1.0b2 Thunderbird/3.1.18
+In-Reply-To: <20120906123400.GA25467@tommy-fedora.scientificnet.net>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204919>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+Am 06.09.2012 14:34, schrieb Thomas Gummerer:
+> On 09/06, Jan-Marek Glogowski wrote:
+>> This adds the test ID (tXXXX) prefix to the test result message of
+>> all shell tests.  This is especially useful when doing a parallel
+>> check run, where it's currently quite hard to identify the actual
+>> failing test case.
+>>
+>> Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
+> 
+> This breaks the TAP output format of the tests, which is needed to run
+> them with prove.  To identify the failing tests more easily when running
+> the tests in parallel, you may want to add GIT_TEST_TARGET = prove to
+> your config.mak.
+> 
+> If this change is really needed, I think you should add the test-id after
+> the message.
 
-> It works fine for "Who should the emails appear to be from?" but
-> beyond that we have "Who should the emails be sent to?" and
-> "Message-ID to be used as In-Reply-To for the first email?" which I
-> typically just hit enter to. It seems that they have no "default"
-> argument so that second if fails. I suppose we can add a default => ""
-> to these two asks?
+While grep'ing for prove I found t/README...
 
-For $initial_reply_to, I think "empty" means "I do not want to make
-this message reply to anything", so I think it is OK to either give
-a default "", or extendign valid_re to also catch an empty string.
-In either case, the prompt message may want to clarify what happens
-when you give an empty input (e.g. "leave this empty to start a new
-thread", or something).
+>From my point of view the patch can be dropped. I can set GIT_PROVE_OPTS
+to run prove with multiple CPUS. Is there a known (easy) way to
+propagate MAKEFLAGS -j to prove?
 
-If you let $to to go empty with the first hunk of your patch, where
-does the mail eventually go?  Does anybody later in the code decide
-to add some recipient?  If there is a reason why an empty input is a
-valid here, I think there is a stronger need (that is, stronger than
-the above ase for $initial_reply_to) to explain when the user wants
-to leave this empty.
+And I would like to propose a symlink from Documentation/testing =>
+../t/README.
 
-> ----8<-----
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 607137b..13d813e 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -760,6 +760,7 @@ if (!defined $sender) {
->
->  if (!@initial_to && !defined $to_cmd) {
->         my $to = ask("Who should the emails be sent to? ",
-> +                    default => "",
->                      valid_re => qr/\@.*\./, confirm_only => 1);
->         push @initial_to, parse_address_line($to) if defined $to; #
-> sanitized/validated later
->         $prompting++;
-> @@ -787,6 +788,7 @@ sub expand_one_alias {
->  if ($thread && !defined $initial_reply_to && $prompting) {
->         $initial_reply_to = ask(
->                 "Message-ID to be used as In-Reply-To for the first email? ",
-> +               default => "",
->                 valid_re => qr/\@.*\./, confirm_only => 1);
->  }
->  if (defined $initial_reply_to) {
+Thanks for the quick review.
