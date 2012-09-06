@@ -1,76 +1,91 @@
-From: Jan-Marek Glogowski <glogow@fbihome.de>
-Subject: Re: [PATCH] Prefix shell test output messages with test id
-Date: Thu, 06 Sep 2012 22:29:38 +0200
-Message-ID: <504907B2.7060704@fbihome.de>
-References: <1346931921-5901-1-git-send-email-glogow@fbihome.de> <20120906123400.GA25467@tommy-fedora.scientificnet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: approxidate parsing for bad time units
+Date: Thu, 06 Sep 2012 13:36:06 -0700
+Message-ID: <7vehme3n49.fsf@alter.siamese.dyndns.org>
+References: <CAFE6XRFgQa10vTWXfxRG53W6K4U=VGqpK5sQwH7xp9GfKd=2Uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 22:29:56 2012
+To: Jeffrey Middleton <jefromi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 22:36:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9ii3-0008Kc-St
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 22:29:56 +0200
+	id 1T9ioF-0007Ib-Uy
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 22:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759810Ab2IFU3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 16:29:48 -0400
-Received: from ironman.h-da.de ([141.100.10.250]:31944 "EHLO ironman.h-da.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759739Ab2IFU3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 16:29:47 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av4EAMoGSVCNZChB/2dsb2JhbAA7CrtMgQeCIAEBBXgBEAsOCgkWDwkDAgECAUUGDQYCAQGIELtbixEQhjUDmzmKPYJl
-Received: from mail.fbihome.de ([141.100.40.65])
-  by ironman.h-da.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 06 Sep 2012 22:29:46 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by mail.fbihome.de (Postfix) with ESMTP id 71633932FC;
-	Thu,  6 Sep 2012 22:29:48 +0200 (CEST)
-Received: from mail.fbihome.de ([127.0.0.1])
-	by localhost (stud1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 03817-13; Thu, 6 Sep 2012 22:29:48 +0200 (CEST)
-Received: from [172.16.2.194] (unknown [194.113.41.246])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.fbihome.de (Postfix) with ESMTP id 427CD932FA;
-	Thu,  6 Sep 2012 22:29:48 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.26) Gecko/20120131 Lightning/1.0b2 Thunderbird/3.1.18
-In-Reply-To: <20120906123400.GA25467@tommy-fedora.scientificnet.net>
-X-Enigmail-Version: 1.1.2
+	id S1759894Ab2IFUgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 16:36:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48015 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751759Ab2IFUgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 16:36:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A46B589E7;
+	Thu,  6 Sep 2012 16:36:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7AWMFjLvamBXXPBeHP+YcjtY0m0=; b=rQRe3P
+	DIUcvSXsR6i8GzO8YPwD+68NZWt5RTds75bFcLdPsfWEzTBzTrw3KTZSTqLpglMS
+	aC+MhPFGjel9doNqvn2Q3Z3Bjt8IVqAWcVNyKmObH8UDcBrol665h4jYxUu1mG17
+	Vd+53Nm+z4GrhrCBCpXR4YdOXd7u3BuW773hw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=v+snc26/rYIGu7m4vsmRSA+WLPWWbokM
+	Sv2eLqxoPfMY5KbwlM0FX65oP+bI0vrw3Y7wXOC/yMpZ2s/00cJ9stNu77xUYnRI
+	gS2C8QFeMv7KRneC9DtU5rdwqkQjmAN7qY0EqZriq/Tr7HNwVQ3VJ9dqVTXtCzKJ
+	Pw513ng+dpc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9040F89E6;
+	Thu,  6 Sep 2012 16:36:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EADBF89E5; Thu,  6 Sep 2012
+ 16:36:07 -0400 (EDT)
+In-Reply-To: <CAFE6XRFgQa10vTWXfxRG53W6K4U=VGqpK5sQwH7xp9GfKd=2Uw@mail.gmail.com> (Jeffrey
+ Middleton's message of "Thu, 6 Sep 2012 09:24:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7CA800BA-F862-11E1-926C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204920>
 
-Am 06.09.2012 14:34, schrieb Thomas Gummerer:
-> On 09/06, Jan-Marek Glogowski wrote:
->> This adds the test ID (tXXXX) prefix to the test result message of
->> all shell tests.  This is especially useful when doing a parallel
->> check run, where it's currently quite hard to identify the actual
->> failing test case.
->>
->> Signed-off-by: Jan-Marek Glogowski <glogow@fbihome.de>
-> 
-> This breaks the TAP output format of the tests, which is needed to run
-> them with prove.  To identify the failing tests more easily when running
-> the tests in parallel, you may want to add GIT_TEST_TARGET = prove to
-> your config.mak.
-> 
-> If this change is really needed, I think you should add the test-id after
-> the message.
+Jeffrey Middleton <jefromi@gmail.com> writes:
 
-While grep'ing for prove I found t/README...
+> In telling someone what date formats git accepts, and how to verify it
+> understands, I noticed this weirdness:
+>
+> $ export TEST_DATE_NOW=`date -u +%s --date='September 10'`;
+> ./test-date approxidate now; for i in `seq 1 10`; do ./test-date
+> approxidate "$i frobbles ago"; done
+> now -> 2012-09-10 00:00:00 +0000
+> 1 frobbles ago -> 2012-09-02 00:00:00 +0000
+> ...
+> 10 frobbles ago -> 2012-09-11 00:00:00 +0000
+>
+> Which gets more concerning once you realize the same thing happens no
+> matter what fake unit of time you use... including things like "yaers"
+> and "moths". Perhaps approxidate could be a little stricter?
 
->From my point of view the patch can be dropped. I can set GIT_PROVE_OPTS
-to run prove with multiple CPUS. Is there a known (easy) way to
-propagate MAKEFLAGS -j to prove?
+"Could be stricter", perhaps.
 
-And I would like to propose a symlink from Documentation/testing =>
-../t/README.
+Do we care deeply?  I doubt it, and for a good reason.  The fuzzy
+parsing is primarily [*1*] for humans getting interactive results
+who are expected to be able to notice when the fuzziness went far
+off.
 
-Thanks for the quick review.
+As long as we have ways for scripts and humans to feed its input in
+a more strict and unambiguous way [*2*], it does not hurt anybody if
+the fuzzy parser ignored crufts that it does not understand.
+
+
+[Footnotes]
+
+*1* ... and of course some coding fun and easter egg values. Think
+of it as our own Eliza or Zork parser ;-).
+
+*2* And of course we do.
