@@ -1,89 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ls-remote: document the '--get-url' option
-Date: Thu, 06 Sep 2012 13:49:03 -0700
-Message-ID: <7v7gs63mio.fsf@alter.siamese.dyndns.org>
-References: <1346952441-20666-1-git-send-email-stefan.naewe@gmail.com>
+From: Jeffrey Middleton <jefromi@gmail.com>
+Subject: Re: approxidate parsing for bad time units
+Date: Thu, 6 Sep 2012 14:01:30 -0700
+Message-ID: <CAFE6XREG5-gwjzvyP9r_hfyY3bWSV2=Bjv9ZbXkejXQRoqYERA@mail.gmail.com>
+References: <CAFE6XRFgQa10vTWXfxRG53W6K4U=VGqpK5sQwH7xp9GfKd=2Uw@mail.gmail.com>
+ <7vehme3n49.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-To: Stefan Naewe <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 22:49:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 06 23:02:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9j0t-0005EV-2z
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 22:49:23 +0200
+	id 1T9jD5-0003Ao-7e
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 23:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759967Ab2IFUtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 16:49:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55504 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759865Ab2IFUtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 16:49:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 012F78E37;
-	Thu,  6 Sep 2012 16:49:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7WOijLxdAxC7Fj5g7/Hpg5TI/WI=; b=M3IvtE
-	3ATmiSYr8t3ROgTcEICsgfEVp5KqfAgYlAWUlx3ngS15h0DPcAn7nbczB3fM8ffW
-	9pqnYAKihpTJFIdVMRC7/y+G2XXWeWPa0a3hnC0CDeHy+utKECTVJ+qgPX/WI868
-	dJEAz+Iqaq49/YsQbHVQXq2pwo2l+8TZibJ20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VON02YepNGC5FChazKWeAYzVfU68jzA6
-	hrA/1NlS+DEm9AUZro8AOHK2Hgm+IWfDz48v52G4GxZZncKkbXP5mbgTTwr8gdaY
-	mlmv2jWEtF+D2Z+4afQ0LvD/1Ev3n+FzIE9rQ8ubzTsTvdBP40icJMHDQLDeL+sO
-	uqX411tD3xo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFA3F8E36;
-	Thu,  6 Sep 2012 16:49:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2205D8E32; Thu,  6 Sep 2012
- 16:49:05 -0400 (EDT)
-In-Reply-To: <1346952441-20666-1-git-send-email-stefan.naewe@gmail.com>
- (Stefan Naewe's message of "Thu, 6 Sep 2012 19:27:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BE3E4F6-F864-11E1-BF74-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S933111Ab2IFVBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 17:01:52 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35934 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933096Ab2IFVBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 17:01:51 -0400
+Received: by ieje11 with SMTP id e11so3839880iej.19
+        for <git@vger.kernel.org>; Thu, 06 Sep 2012 14:01:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bnAiJgSsndBNYj0NXTIEMfvXmxWpOI8ePe55fHaTrt8=;
+        b=pJh5vgT8cyCncW4tL3ZKn7ScQ8XBB3TsnLSjpQum9Dq33X9qLoLk1ld+L4cvsPB8uT
+         yBTloW92YxiF7c6xqnpmPZ194WJ8XU9NNzoqZUigwIaQFNADlNNlEYKvjFQno4X5dfTV
+         dbWPT+rt1ty2XuFxu8Mkdq2zHgQNcoAO+oziCH2gl77LEb3SoTiu7zV4hnx9Pea94Cr3
+         CthpRh0BicxzOSgLrKbTnHtOn67H/hhRHMvAEtgZG13bVXeobrIf40+PLzSiLROAx7rZ
+         824j9ceEk6CXnUcy5NX+cFqzKLOM406CY9059SIO12cN5LCuvhIDj91mbtAACRZlbQ0W
+         mtZw==
+Received: by 10.43.46.194 with SMTP id up2mr4170174icb.22.1346965310691; Thu,
+ 06 Sep 2012 14:01:50 -0700 (PDT)
+Received: by 10.50.30.36 with HTTP; Thu, 6 Sep 2012 14:01:30 -0700 (PDT)
+In-Reply-To: <7vehme3n49.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204922>
 
-Stefan Naewe <stefan.naewe@gmail.com> writes:
+I'm generally very happy with the fuzzy parsing. It's a great feature
+that is designed to and in general does save users a lot of time and
+thought. In this case I don't think it does. The problems are:
+(1) It's not ignoring things it can't understand, it's silently
+interpreting them in a useless way. I'm pretty sure that "n units ago"
+is equivalent to "the same time of day on the last day of the previous
+month, plus n days."
+(2) Though in some cases it's really obvious, in others it's quite
+possible not to notice, e.g. if `git rev-list --since=5.dyas.ago` is
+silently the same as `git rev-list --since=4.days.ago`.
 
-> While looking for a way to expand the URL of a remote
-> that uses a 'url.<name>.insteadOf' config option I stumbled
-> over the undocumented '--get-url' option of 'git ls-remote'.
-> This adds some minimum documentation for that option.
+So I do think it's worth improving. (Yes, I know, send patches; I'll
+think about it.)
+
+
+On Thu, Sep 6, 2012 at 1:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeffrey Middleton <jefromi@gmail.com> writes:
 >
-> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
-> ---
->  Documentation/git-ls-remote.txt | 4 ++++
->  1 file changed, 4 insertions(+)
+>> In telling someone what date formats git accepts, and how to verify it
+>> understands, I noticed this weirdness:
+>>
+>> $ export TEST_DATE_NOW=`date -u +%s --date='September 10'`;
+>> ./test-date approxidate now; for i in `seq 1 10`; do ./test-date
+>> approxidate "$i frobbles ago"; done
+>> now -> 2012-09-10 00:00:00 +0000
+>> 1 frobbles ago -> 2012-09-02 00:00:00 +0000
+>> ...
+>> 10 frobbles ago -> 2012-09-11 00:00:00 +0000
+>>
+>> Which gets more concerning once you realize the same thing happens no
+>> matter what fake unit of time you use... including things like "yaers"
+>> and "moths". Perhaps approxidate could be a little stricter?
 >
-> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-> index 7a9b86a..5819ead 100644
-> --- a/Documentation/git-ls-remote.txt
-> +++ b/Documentation/git-ls-remote.txt
-> @@ -42,6 +42,10 @@ OPTIONS
->  	it successfully talked with the remote repository, whether it
->  	found any matching refs.
->  
-> +--get-url::
-> +	Expand the URL of the given remote repository taking into account any 
-> +	"url.<base>.insteadOf" config setting (See linkgit:git-config[1]).
-> +
->  <repository>::
->  	Location of the repository.  The shorthand defined in
->  	$GIT_DIR/branches/ can be used. Use "." (dot) to list references in
-
-OK.  Do we want to also add this to the "git ls-remote -h" output,
-or is it used so infrequently that it is not worth cluttering the
-help text there?
+> "Could be stricter", perhaps.
+>
+> Do we care deeply?  I doubt it, and for a good reason.  The fuzzy
+> parsing is primarily [*1*] for humans getting interactive results
+> who are expected to be able to notice when the fuzziness went far
+> off.
+>
+> As long as we have ways for scripts and humans to feed its input in
+> a more strict and unambiguous way [*2*], it does not hurt anybody if
+> the fuzzy parser ignored crufts that it does not understand.
+>
+>
+> [Footnotes]
+>
+> *1* ... and of course some coding fun and easter egg values. Think
+> of it as our own Eliza or Zork parser ;-).
+>
+> *2* And of course we do.
