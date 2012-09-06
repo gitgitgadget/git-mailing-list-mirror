@@ -1,69 +1,56 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 5/9] Refactor excluded and path_excluded
-Date: Thu, 6 Sep 2012 19:13:37 +0700
-Message-ID: <CACsJy8Aq7Sodm1_k2kAmfajHG4wP76xHCshDGPfiLYfzuNwWaA@mail.gmail.com>
-References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <1346544731-938-6-git-send-email-git@adamspiers.org> <CACsJy8A-P0RziZt1_PajFrzqmq9ZbkyaxwUCeDAO3XteQ0gAag@mail.gmail.com>
- <7vr4qhbt3d.fsf@alter.siamese.dyndns.org> <CACsJy8D23tDa3SJO6yegHFs2hT+bTr6mLTn16ZU3kiT1dtj4vw@mail.gmail.com>
- <7v627r7s5c.fsf@alter.siamese.dyndns.org>
+From: Spencer Rathbun <SRathbun@riverainc.com>
+Subject: Git-svn not receiving post commit hook text from svn server
+Date: Thu, 6 Sep 2012 08:17:26 -0400
+Message-ID: <208E6718-B61F-4E76-B0C8-D28767561383@riverainc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 06 14:14:25 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 06 14:22:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9ayS-0005bT-7N
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:14:20 +0200
+	id 1T9b6c-0007X4-JQ
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 14:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754524Ab2IFMOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 08:14:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60463 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753626Ab2IFMOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 08:14:08 -0400
-Received: by iahk25 with SMTP id k25so1959731iah.19
-        for <git@vger.kernel.org>; Thu, 06 Sep 2012 05:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=inVJ2yldoaqhYq8PeZ+LhkaPZ7t7Hwyy4OJIWTvMJEA=;
-        b=Ly/kLZUKLWioNgUqKr+0AYJacaPvkw+K2BxLAgtZxlFd243ZTE+GKOUG98i54HOuTM
-         AmuRg1viSRJHt8k5TbjywS8NzjlYAVUB4qyj5VN6y2M0vhl62V6klme3YnxgBkb5vfI3
-         DwZD4lXngcH5xqWGOgzxeusPbLX1GPFKjA4hQ+PGXdvivSFCWrKQfH1rH3hNTXaZfUXi
-         ckh+LH0SZwJaCf75GZK8KNa0HJyW+0ABAd5FyGf9rhhum1K9C3sQRjgZucd+kanuNHif
-         fyJWZXrECNFwcw7IetnDfU9nZ0wkQymqQoJFkA8ynwSqVD1jxLBAA7i0xwbsor6Utn3y
-         cV7Q==
-Received: by 10.50.13.200 with SMTP id j8mr2505092igc.48.1346933647822; Thu,
- 06 Sep 2012 05:14:07 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Thu, 6 Sep 2012 05:13:37 -0700 (PDT)
-In-Reply-To: <7v627r7s5c.fsf@alter.siamese.dyndns.org>
+	id S1751343Ab2IFMWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 08:22:39 -0400
+Received: from remote.riverainc.com ([74.142.1.242]:10948 "EHLO
+	Remote.RiveraInc.Com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742Ab2IFMWi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 08:22:38 -0400
+X-Greylist: delayed 324 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Sep 2012 08:22:38 EDT
+Received: from RCGXCH01.RCG.local (192.168.5.20) by Remote.riverainc.com
+ (192.168.1.10) with Microsoft SMTP Server id 8.3.245.1; Thu, 6 Sep 2012
+ 08:17:06 -0400
+Received: from RCGXCH01.RCG.local ([192.168.5.20]) by RCGXCH01.RCG.local
+ ([192.168.5.20]) with mapi; Thu, 6 Sep 2012 08:17:06 -0400
+Thread-Topic: Git-svn not receiving post commit hook text from svn server 
+Thread-Index: Ac2MKYcTBXllUX6BQNSspjR3I3FoRg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204878>
 
-On Thu, Sep 6, 2012 at 10:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> We could introduce exclude_path() and kill path_excluded() then. There
->> are just about 5-6 call sites to replace.
->
-> The name path_excluded(... path ...) sounds like it is asking a
-> yes/no question "is this path excluded?", which actually is what is
-> going on.
->
-> The name exclude_path(... path ...) sounds as if you are requesting
-> somebody to exclude the path.  Does that meaning match the semantics
-> of the function?
+Hello everyone,
 
-I'm not great at naming. And path_excluded() cannot be reused to avoid
-problems with other ongoing series if any. So path_is_excluded()?
--- 
-Duy
+I've run into a minor bug in the git svn integration. When I run git svn dcommit with git 1.7.12, it successfully sends the commit to the svn server and rebases if necessary. However, the svn server has a post commit hook which runs, and is supposed to return some text to the client.
+
+Git does not display this text, though the hook runs server side, and git says the commit succeeded on the server.  According to the response I got from my question on SO:
+
+http://stackoverflow.com/q/12264108/724357
+
+The problem is caused by git svn using get_commit_editor() instead of get_commit_editor2(). Hacking a fix together is way down my priority list at the moment, so I just wanted to give you a quick bug report.
+
+Regards,
+Spencer Rathbun
+
+This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the system manager. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately by e-mail if you have received this e-mail by mistake and delete this e-mail from your system. If you are not the intended recipient you are notified that disclosing, copying, distributing or taking any action in reliance on the contents of this information is strictly prohibited.
