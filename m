@@ -1,42 +1,42 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 3/4] merge: --no-verify to bypass pre-commit hook
-Date: Thu,  6 Sep 2012 16:25:57 +0200
-Message-ID: <526ce72df2e65572cbbbc72d3f93b4a917562ead.1346939542.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 4/4] t7503: add tests for pre-commit hook (merge)
+Date: Thu,  6 Sep 2012 16:25:58 +0200
+Message-ID: <084ade976d944576da58c8334ffec5e47b209421.1346939542.git.git@drmicha.warpmail.net>
 References: <50487F8A.4050803@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 06 16:26:27 2012
+X-From: git-owner@vger.kernel.org Thu Sep 06 16:26:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9d2G-0002Lq-Tv
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 16:26:25 +0200
+	id 1T9d2H-0002Lq-TS
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Sep 2012 16:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756089Ab2IFO0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 10:26:08 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59856 "EHLO
+	id S1756094Ab2IFO0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 10:26:14 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33333 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756046Ab2IFO0G (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 10:26:06 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C3FB420A2D;
-	Thu,  6 Sep 2012 10:26:05 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute6.internal (MEProxy); Thu, 06 Sep 2012 10:26:05 -0400
+	by vger.kernel.org with ESMTP id S1756083Ab2IFO0H (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Sep 2012 10:26:07 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5C06620B35;
+	Thu,  6 Sep 2012 10:26:07 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 06 Sep 2012 10:26:07 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=8i
-	o93HNBML1WWgNQLDRQmzZ+Dxk=; b=p8Tsn6QlFZPZZSYTVqz9Kd3wDy9/X/btvX
-	UPsmyKG/M+hzwSW3g/odqv83RxjH75cYrfgBD8EUqD4JrDl7tveahQibYjxFNZ1I
-	gz/XCiG8yI/RW9TwpGuXiVwle6mwbzoojGDu01A2hJ1BaIer8qMc7UnBjaNz3iOt
-	jMeSl13gI=
-X-Sasl-enc: n3wwD1KyNuUHLDin1iN/VTPcTKguPzVyzBUxQ958Nm8G 1346941565
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Bg
+	qPPC5ml/V0VcsdS1D9FX/uIgs=; b=FaWWy35i8OeaXlp/U60uA2gNJUhs3xzSQ+
+	aeNyhx02KeKM8NHXww339d/4hrkNIJKO34Utdv4I6KsZL+QXEdrTlvt8i83r1sZN
+	FNnLFJGrwejk84fnvRVV94H2U6YFq+qen2484MKvt47oOzAoovHpurbtYMhijzVV
+	CGMRnAbjk=
+X-Sasl-enc: y2fPM2+XIrthkfl4Wv9y07xgEPsxERvGGPhhZ16Z94iz 1346941566
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 5EAD64825F2;
-	Thu,  6 Sep 2012 10:26:05 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id EC47B8E0217;
+	Thu,  6 Sep 2012 10:26:06 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.406.gafd3f81
 In-Reply-To: <50487F8A.4050803@alum.mit.edu>
 In-Reply-To: <cover.1346939542.git.git@drmicha.warpmail.net>
@@ -45,88 +45,132 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204889>
 
-Analogous to commit, introduce a '--no-verify' option which bypasses the
-pre-commit hook. The shorthand '-n' is taken by the (non-existing)
-'--no-stat' already.
+Add tests which make sure that the pre-commit hook is called by 'git
+merge' when merge.usePreCommitHook is set, allows/disallows merge
+commits depending on its return value and is suppressed by
+"--no-verify".
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-merge.txt     | 2 +-
- Documentation/githooks.txt      | 1 +
- Documentation/merge-options.txt | 4 ++++
- builtin/merge.c                 | 4 +++-
- 4 files changed, 9 insertions(+), 2 deletions(-)
+ t/t7503-pre-commit-hook.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 3501ae2..363fbea 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
--	[-s <strategy>] [-X <strategy-option>]
-+	[--no-verify] [-s <strategy>] [-X <strategy-option>]
- 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
- 'git merge' <msg> HEAD <commit>...
- 'git merge' --abort
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index d62e02d..c734e2c 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -88,6 +88,7 @@ to modify the commit message.
+diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+index 984889b..e4d324d 100755
+--- a/t/t7503-pre-commit-hook.sh
++++ b/t/t7503-pre-commit-hook.sh
+@@ -4,6 +4,19 @@ test_description='pre-commit hook'
  
- If the configuration option `merge.usePreCommitHook` is set to `true`
- then 'git merge' invokes this hook whenever it creates a new commit.
-+It can be bypassed with the `\--no-verify` option. 
+ . ./test-lib.sh
  
- prepare-commit-msg
- ~~~~~~~~~~~~~~~~~~
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 0bcbe0a..5695fc6 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -70,6 +70,10 @@ merge.
- With --no-squash perform the merge and commit the result. This
- option can be used to override --squash.
- 
-+--no-verify::
-+	This option bypasses the pre-commit hook.
-+	See also linkgit:githooks[5].
++test_expect_success 'root commit' '
 +
- -s <strategy>::
- --strategy=<strategy>::
- 	Use the given merge strategy; can be supplied more than
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a2590a9..58a848f 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -60,6 +60,7 @@ static const char *branch;
- static char *branch_mergeoptions;
- static int option_renormalize;
- static int verbosity;
-+static int no_verify;
- static int allow_rerere_auto;
- static int abort_current_merge;
- static int show_progress = -1;
-@@ -199,6 +200,7 @@ static struct option builtin_merge_options[] = {
- 		N_("allow fast-forward (default)")),
- 	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
- 		N_("abort if fast-forward is not possible")),
-+	OPT_BOOLEAN(0, "no-verify", &no_verify, "bypass pre-merge hook"),
- 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 	OPT_CALLBACK('s', "strategy", &use_strategies, N_("strategy"),
- 		N_("merge strategy to use"), option_parse_strategy),
-@@ -904,7 +906,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	const char *comment = _(merge_editor_comment);
- 	const char *index_file = get_index_file();
++	echo "root" > file &&
++	git add file &&
++	git commit -m "zeroth" &&
++	git checkout -b side &&
++	echo "foo" > foo &&
++	git add foo &&
++	git commit -m "make it non-ff" &&
++	git checkout master
++
++'
++
+ test_expect_success 'with no hook' '
  
--	if (use_pre_commit_hook && run_hook(index_file, "pre-commit", NULL))
-+	if (use_pre_commit_hook && !no_verify && run_hook(index_file, "pre-commit", NULL))
- 		abort_commit(remoteheads, NULL);
- 	/*
- 	 * Re-read the index as pre-commit hook could have updated it,
+ 	echo "foo" > file &&
+@@ -12,6 +25,14 @@ test_expect_success 'with no hook' '
+ 
+ '
+ 
++test_expect_success 'with no hook (merge)' '
++
++	git checkout side &&
++	git merge -m "merge master" master &&
++	git checkout master
++
++'
++
+ test_expect_success '--no-verify with no hook' '
+ 
+ 	echo "bar" > file &&
+@@ -20,6 +41,14 @@ test_expect_success '--no-verify with no hook' '
+ 
+ '
+ 
++test_expect_success '--no-verify with no hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ # now install hook that always succeeds
+ HOOKDIR="$(git rev-parse --git-dir)/hooks"
+ HOOK="$HOOKDIR/pre-commit"
+@@ -29,6 +58,7 @@ cat > "$HOOK" <<EOF
+ exit 0
+ EOF
+ chmod +x "$HOOK"
++git config merge.usePreCommitHook true
+ 
+ test_expect_success 'with succeeding hook' '
+ 
+@@ -38,6 +68,14 @@ test_expect_success 'with succeeding hook' '
+ 
+ '
+ 
++test_expect_success 'with succeeding hook (merge)' '
++
++	git checkout side &&
++	git merge -m "merge master" master &&
++	git checkout master
++
++'
++
+ test_expect_success '--no-verify with succeeding hook' '
+ 
+ 	echo "even more" >> file &&
+@@ -46,6 +84,14 @@ test_expect_success '--no-verify with succeeding hook' '
+ 
+ '
+ 
++test_expect_success '--no-verify with succeeding hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ # now a hook that fails
+ cat > "$HOOK" <<EOF
+ #!/bin/sh
+@@ -68,6 +114,22 @@ test_expect_success '--no-verify with failing hook' '
+ 
+ '
+ 
++test_expect_success 'with failing hook (merge)' '
++
++	git checkout side &&
++	test_must_fail git merge -m "merge master" master &&
++	git checkout master
++
++'
++
++test_expect_success '--no-verify with failing hook (merge)' '
++
++	git checkout side &&
++	git merge --no-verify -m "merge master" master &&
++	git checkout master
++
++'
++
+ chmod -x "$HOOK"
+ test_expect_success POSIXPERM 'with non-executable hook' '
+ 
 -- 
 1.7.12.406.gafd3f81
