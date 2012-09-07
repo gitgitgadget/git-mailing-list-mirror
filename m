@@ -1,72 +1,83 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-1.0
-Date: Fri, 7 Sep 2012 14:48:23 -0400
-Message-ID: <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
-References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=200/2=5D=20multiline=20prefixes=20on=20messages?=
+Date: Fri,  7 Sep 2012 21:05:03 +0200
+Message-ID: <1347044705-17268-1-git-send-email-ralf.thielow@gmail.com>
+References: <7vhar9ybgk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jean-Baptiste Quenot <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 20:48:56 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, worldhello.net@gmail.com, pclouds@gmail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 07 21:05:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TA3bo-0002mW-E7
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 20:48:52 +0200
+	id 1TA3rn-0005fn-H0
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 21:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444Ab2IGSsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 14:48:45 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:40288 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342Ab2IGSso (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 14:48:44 -0400
-Received: by qaas11 with SMTP id s11so59316qaa.19
-        for <git@vger.kernel.org>; Fri, 07 Sep 2012 11:48:43 -0700 (PDT)
+	id S1754583Ab2IGTFP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Sep 2012 15:05:15 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:51926 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378Ab2IGTFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2012 15:05:13 -0400
+Received: by wgbdr13 with SMTP id dr13so2852461wgb.1
+        for <git@vger.kernel.org>; Fri, 07 Sep 2012 12:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=YWMeNO5HHkcG1+JL5B5Xz0DpwoVflYW1Hngj2FFT7/k=;
-        b=UJ+0Weq7qdQQqxcVhK/Fmm9ZOQRZwMrJn3a4ibhNsjq2S3ZZ4cIA3kPpNWmvK2HdR6
-         O5fm1KdQxDGamN7X73JCYghfGTO8XAx2tMlOeSwhGZQOpuZr9y6IwjTjbtXGR57yA2G6
-         mx4Uc12M4ncyNv2Vcm3dmETLF2r/BrZZAtbWkE8Qx+nP/0TIt2vnptYdL6is90952eyE
-         kgFv2Wzt2JWCU/B5fkS1iRlC7Rv3PAjAufxZCxbQ1l3Mf7eRXjJ+U8Y2sDxMSqAwBNfs
-         BWB4u6iFS4W3sAA3GY4whVYVdKgzlTNeY9iFX1Kz+KCQy6BYUAPEMMYNrGcnlSmN38eF
-         /nCw==
-Received: by 10.229.134.205 with SMTP id k13mr2071133qct.153.1347043723702;
- Fri, 07 Sep 2012 11:48:43 -0700 (PDT)
-Received: by 10.49.82.75 with HTTP; Fri, 7 Sep 2012 11:48:23 -0700 (PDT)
-In-Reply-To: <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
-X-Google-Sender-Auth: Z0HjfpkrE_8BHf5bqG9QQoQph3Q
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=cuRqOOUp/FRYUkXJMG2fOwQ51lcnaI78lv6uPdRg9Ik=;
+        b=xpumB1nTLm7alrnDsHA8WmRCAmlxEOJ2RVIS4XOgJaVMeXNL+sIgSJ4J8KM6wchagJ
+         6WP4x+Xbf/u0zelM4+EyM0M+CBHanrO6L8v5SohgW1mKObpGyDniw7o8aZu2xgZSg9T3
+         COJBYXR+5sOfLaQnUw8hJ99qs5VIqYvgCQ/PWLhYaoega4gQIXYVTQ33OSPisie12s8u
+         m04QrKx+0RJJPj84ivKIx6jv8RhpKZdv6wN4uct+A5tCrUPCTi7Y/qS+dBPMX5uoMQkd
+         40fHAUvBwYMUV1V+rbK0ev/DzGarc3kx9C74irygeIRfo7S2kLXgUM+dKr0y7A3NM3lZ
+         NA2A==
+Received: by 10.180.80.134 with SMTP id r6mr308318wix.1.1347044711992;
+        Fri, 07 Sep 2012 12:05:11 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-222-138-170.pools.arcor-ip.net. [94.222.138.170])
+        by mx.google.com with ESMTPS id cl8sm208337wib.10.2012.09.07.12.05.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 07 Sep 2012 12:05:11 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.176.g3fc0e4c.dirty
+In-Reply-To: <7vhar9ybgk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204988>
 
-On Fri, Sep 7, 2012 at 9:41 AM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
-> Hi Jonas,
+This is a short implementation of an idea i have, based
+on Junio's comment. It might not follows the coding style,
+the comments can be adverse and so on...
+Just want to know if it's the right direction.
 
-Hello Jean-Baptiste
+This series introduces a function that allows to add
+a prefix to multilined messages. The function itself
+is an extraction of the code of "advice.c::advice()".
+Extract this as a separate function has the advantage
+that we can mark these prefixes for translation and
+can produce a nicer output.
 
-> With tig 1.0 how to feed specific revisions to the main view?
->
-> The following hack worked until tig 0.17:
->
-> [alias]
->         tignowalk-helper = !git rev-list --pretty=raw --no-walk --stdin<
->
-> TIG_MAIN_CMD="git tignowalk-helper $tmp" tig </dev/tty
+Junio said that we should probably avoid memory
+allocation on "die()" codepaths, but "warning"
+messages are acceptable, I think. If the series is
+basically acceptable, the "usage:" messages are also a
+cancidate for migration to this.
 
-The possibility to specify commands was removed in favor of improving
-options given on the command line. In this spirit, I suggest to
-support something like the following:
+Ralf Thielow (2):
+  advice: extract function to print messages with prefix
+  i18n: mark prefix "warning:" for translation
 
-    tig --no-walk --stdin < tmp-file
+ advice.c | 14 ++++++++++----
+ advice.h |  1 +
+ usage.c  |  2 +-
+ 3 Dateien ge=C3=A4ndert, 12 Zeilen hinzugef=C3=BCgt(+), 5 Zeilen entfe=
+rnt(-)
 
-Would that cover your use case?
-
--- 
-Jonas Fonseca
+--=20
+1.7.12.176.g3fc0e4c.dirty
