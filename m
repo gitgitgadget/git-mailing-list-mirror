@@ -1,78 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] advice: extract function to print messages with
- prefix
-Date: Fri, 07 Sep 2012 14:20:38 -0700
-Message-ID: <7v7gs5wmvt.fsf@alter.siamese.dyndns.org>
-References: <7vhar9ybgk.fsf@alter.siamese.dyndns.org>
- <1347044705-17268-1-git-send-email-ralf.thielow@gmail.com>
- <1347044705-17268-2-git-send-email-ralf.thielow@gmail.com>
- <7v1uidy6ga.fsf@alter.siamese.dyndns.org>
- <CAN0XMOK5QnNn8471RF4y7u_X0rfda=-J-KrCtyMsgCGHXNrwVw@mail.gmail.com>
- <7vfw6two6o.fsf@alter.siamese.dyndns.org>
- <CAN0XMO+jbZeO=2NHisPizHfNwR62ebkC06KVZ8xOhgmRoAT4nw@mail.gmail.com>
- <7vbohhwn20.fsf@alter.siamese.dyndns.org>
+Subject: Re: Binary file-friendly merge -Xours or -Xtheirs?
+Date: Fri, 07 Sep 2012 14:47:09 -0700
+Message-ID: <7v392twlnm.fsf@alter.siamese.dyndns.org>
+References: <1799969825.275125.1347028392272.JavaMail.root@genarts.com>
+ <1265473388.275309.1347029328407.JavaMail.root@genarts.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, worldhello.net@gmail.com, pclouds@gmail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 23:20:54 2012
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 23:47:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TA5yr-0004ZF-8X
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 23:20:49 +0200
+	id 1TA6OW-0001mN-22
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 23:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757177Ab2IGVUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 17:20:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46175 "EHLO
+	id S1755107Ab2IGVrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Sep 2012 17:47:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58350 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756662Ab2IGVUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 17:20:40 -0400
+	id S1751101Ab2IGVrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2012 17:47:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 441308672;
-	Fri,  7 Sep 2012 17:20:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44DA98E54;
+	Fri,  7 Sep 2012 17:47:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DRL4iwML1PXpjq+rPhpRi4IOXpA=; b=iLkUbP
-	ZktsgqNRsIH9TbIzwGlXg8UaXad2DezoVO71erxGuBZh/ZzU9/ibVKpA/B9js6bF
-	ydGoBm/+jYRKH05q0f9unWABf/uQApfWonve2nyzCLf6oCab/Dv2jzme5z7EPmeM
-	8QSM3YIjxPB4DIEjktma5cKu9DgGtuLPYzeh0=
+	:content-type; s=sasl; bh=3NlqahcOs5RvQUpR9PwZqc7iWFE=; b=Q/Sod1
+	71vjEKkb1j5wYDBsgbVYHd6JJOUgkGlXaGZf+OygMIhQQt0FqnC9/m5drjYqx5Cu
+	ibUiraZiHIiF4K8J4hcErsYMyQO6ogMRPlIkWpDze50Q2huHK98dnfM43WTjpLiD
+	xjW4OwOaYJbD2meGiKU6qSelF1j+IT8bqizKk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xp7BQAUX41uWgYzO0mue3Ha1Ft2k3ssx
-	l/XAhP3mzokIZ4yNKwHQzrRfUHLccKplxJ/H/A8h4EuDRKSNkd6dSiyU6oSgDxGa
-	uSBmEb91YIMBNzIC4W7dSGgl99KuqO6zEwsgiyraw0gH9gFZ9Uqop4NGdiSglDaj
-	pjId+mRBcOE=
+	:content-type; q=dns; s=sasl; b=juRad68qZBmMsQyj3kBh/5TNmopSae2G
+	JeoRYWWYmghAOH7FQ/+X8wycl7qRlvdFXpdHdVuXZcSGvbtxce5PTJgYDfjF5K+B
+	kFe1hN5aKFWxSGv+BYfIzUPdwCcrJ733HXtmYU90oR+pdZqJaYGeGXFf9YCnIq8r
+	sAbeDOw4T8M=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 304E98670;
-	Fri,  7 Sep 2012 17:20:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 309478E52;
+	Fri,  7 Sep 2012 17:47:11 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1EC3866E; Fri,  7 Sep 2012
- 17:20:39 -0400 (EDT)
-In-Reply-To: <7vbohhwn20.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 07 Sep 2012 14:16:55 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 83E148E4F; Fri,  7 Sep 2012
+ 17:47:10 -0400 (EDT)
+In-Reply-To: <1265473388.275309.1347029328407.JavaMail.root@genarts.com>
+ (Stephen Bash's message of "Fri, 7 Sep 2012 10:48:48 -0400 (EDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DF86F0FE-F931-11E1-ADD1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 93C3A910-F935-11E1-8BE3-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205002>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stephen Bash <bash@genarts.com> writes:
 
-> experience in such a language, I know I was talked into doing it
-> this way when we did 23cb5bf (i18n of multi-line advice messages,
-> 2011-12-22).  Could you dig around the list archive to see?
+> From reading the docs it's obvious the current -Xours and -Xtheirs
+> expect to work on hunks, so I (mostly) understand the current
+> behavior, but as a user it feels like "I'm telling you how to
+> resolve conflicts, please do the same thing for binary files".
 
-Heh, don't bother.  Instead, start reading from here:
+Even though merge-recursive accepts -Xours/-Xtheirs, I do not think
+the low-level merge machinery for anything but the text merge is
+aware of the option.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/187592/focus=187601
+It may be just the matter of something like this, though (completely
+untested).
 
-and learn what happened to the topic by going forward, or why it was
-done that way by going backwards.
 
-Thanks.
+
+ ll-merge.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
+
+diff --git i/ll-merge.c w/ll-merge.c
+index f3f7692..fee578f 100644
+--- i/ll-merge.c
++++ w/ll-merge.c
+@@ -46,16 +46,31 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	assert(opts);
+ 
+ 	/*
+-	 * The tentative merge result is "ours" for the final round,
+-	 * or common ancestor for an internal merge.  Still return
+-	 * "conflicted merge" status.
++	 * The tentative merge result is the or common ancestor for an internal merge.
+ 	 */
+-	stolen = opts->virtual_ancestor ? orig : src1;
++	if (opts->virtual_ancestor) {
++		stolen = orig;
++	} else {
++		switch (opts->variant) {
++		default:
++		case XDL_MERGE_FAVOR_OURS:
++			stolen = src1;
++			break;
++		case XDL_MERGE_FAVOR_THEIRS:
++			stolen = src2;
++			break;
++		}
++	}
+ 
+ 	result->ptr = stolen->ptr;
+ 	result->size = stolen->size;
+ 	stolen->ptr = NULL;
+-	return 1;
++
++	/*
++	 * With -Xtheirs or -Xours, we have cleanly merged;
++	 * otherwise we got a conflict.
++	 */
++	return (opts->variant ? 0 : 1);
+ }
+ 
+ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
