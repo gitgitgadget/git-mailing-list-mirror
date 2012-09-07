@@ -1,95 +1,61 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: poll() emulation in git
-Date: Fri, 7 Sep 2012 09:39:15 +0200
-Message-ID: <000e01cd8ccb$e20301b0$a6090510$@schmitz-digital.de>
-References: <00c001cd8b59$028e41c0$07aac540$@schmitz-digital.de> <50474001.5030407@gnu.org> <00d801cd8b6b$844bbcd0$8ce33670$@schmitz-digital.de> <50476EFD.2000500@gnu.org> <010301cd8c38$4256bb90$c70432b0$@schmitz-digital.de> <5048B3D0.2070809@gnu.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] ls-remote: document the '--get-url' option
+Date: Fri, 07 Sep 2012 10:28:17 +0200
+Message-ID: <m2pq5yxmn2.fsf@igel.home>
+References: <7v7gs63mio.fsf@alter.siamese.dyndns.org>
+	<1347000079-7945-1-git-send-email-stefan.naewe@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Erik Faye-Lund'" <kusmabite@gmail.com>, <bug-gnulib@gnu.org>,
-	<rsbecker@nexbridge.com>
-To: "'Paolo Bonzini'" <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Sep 07 09:39:59 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Stefan Naewe <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 10:28:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9tAT-0000jE-JU
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 09:39:57 +0200
+	id 1T9tvW-0007Hi-Rr
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 10:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758618Ab2IGHjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 03:39:49 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:49298 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758519Ab2IGHjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 03:39:48 -0400
-Received: from DualCore (dsdf-4d0a1723.pool.mediaWays.net [77.10.23.35])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0MLOsc-1TAROD0Rpy-000Zrj; Fri, 07 Sep 2012 09:39:23 +0200
-In-Reply-To: <5048B3D0.2070809@gnu.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQIgUOmy4ZEsU7RI7VRx80YFphUkTAI89tULAgLpIAgCxd+aWgIK9t7YAl1Rw+2WfYGAsA==
-Content-Language: de
-X-Provags-ID: V02:K0:D2PVqVq7RFV03kvzLZWTwUlVNfQPWVWJ3HHg9DEYL1U
- qtnFYJC+jx+71NCabbS3WIufi+uWlvoW6DAHtcZmCeLx0Gvydf
- B5vlgzIkWWDUEhmGJcxMn5YLn2PuYlhW7mcGBvGxmzFBBKoMoE
- h6WP3P4oEA+SoQlDilAMbNhWiyYdYGUg9HITLuwtqSPCqHNkFB
- OdxmV2zwiKCkUNufj8J8aGUibCcmIfp9x50FmdWRuBzVFx43vu
- 6IyUpbKLMRSta+GI6USzuxB8zb3/iTCauV45OadsxhUqqxpx1J
- IcetnfQZ4cdAcjMAVHWIEohQhKb04FiI2AN5kY8z4QroesS3DO
- 9K9h4rObWKgNyyF0DYcng6KkhAg5TubOcirSZSUDsg8USFDIZZ
- ylMqrl+vQDXbQ==
+	id S1757263Ab2IGI21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Sep 2012 04:28:27 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:57107 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751736Ab2IGI2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2012 04:28:24 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XCsH60D1Wz3hhf6;
+	Fri,  7 Sep 2012 10:28:18 +0200 (CEST)
+X-Auth-Info: 4mocxYbOBRz0TupFn44QskUwO9AwHxb4xxtzg1gvlGQ=
+Received: from igel.home (ppp-88-217-117-28.dynamic.mnet-online.de [88.217.117.28])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XCsH56ts4zbbhp;
+	Fri,  7 Sep 2012 10:28:17 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 9A85FCA2A4; Fri,  7 Sep 2012 10:28:17 +0200 (CEST)
+X-Yow: World War Three can be averted by adherence to a strictly enforced
+ dress code!
+In-Reply-To: <1347000079-7945-1-git-send-email-stefan.naewe@gmail.com> (Stefan
+	Naewe's message of "Fri, 7 Sep 2012 08:41:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204951>
 
-> From: Paolo Bonzini [mailto:paolo.bonzini@gmail.com] On Behalf Of Paolo Bonzini
-> Sent: Thursday, September 06, 2012 4:32 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org; 'Junio C Hamano'; 'Erik Faye-Lund'; bug-gnulib@gnu.org; rsbecker@nexbridge.com
-> Subject: Re: poll() emulation in git
-> 
-> Il 06/09/2012 16:02, Joachim Schmitz ha scritto:
-> > ...
-> > # else
-> >       char data[64];
-> >       r = recv (fd, data, sizeof (data), MSG_PEEK);
-> >       socket_errno = (r < 0) ? errno : 0;
-> > # endif
-> >       if (r == 0)
-> >         happened |= POLLHUP;
-> >
-> >       /* If the event happened on an unconnected server socket,
-> >          that's fine. */
-> >       else if (r > 0 || ( /* (r == -1) && */ socket_errno == ENOTCONN))
-> >         happened |= (POLLIN | POLLRDNORM) & sought;
-> >
-> >       /* Distinguish hung-up sockets from other errors.  */
-> >       else if (socket_errno == ESHUTDOWN || socket_errno == ECONNRESET
-> >                || socket_errno == ECONNABORTED || socket_errno == ENETRESET)
-> >         happened |= POLLHUP;
-> >
-> > #ifdef __TANDEM /* as we can't recv(...,MSG_PEEK) on a non-socket */
-> >       else if (socket_errno == ENOTSOCK)
-> >         happened |= (POLLIN | POLLRDNORM) & sought;
-> > #endif
-> >       else
-> >         happened |= POLLERR;
-> >     }
-> > ...
-> >
-> > We won't detect POLLHUP that way I think. However it seems to work, we've been able to clone, push, pull, branch that way with
-> > NonStop being the (ssh-)server, something that didn't work at all without that hack (and yes, I believe it is just that).
-> > Someone in for a cleaner way of managing this?
-> 
-> I suppose it works to always handle ENOTSOCK that way, even on
-> non-__TANDEM systems.
+Stefan Naewe <stefan.naewe@gmail.com> writes:
 
-Will you be fixing this in gnulib? How?
+> +--get-url::
+> +	Expand the URL of the given remote repository taking into account any
+> +	"url.<base>.insteadOf" config setting (See linkgit:git-config[1]).
 
-Bye, Jojo
+This should probably also mention that it suppresses the normal output.
+
+(I wonder why this isn't a subcommand of git remote.)
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
