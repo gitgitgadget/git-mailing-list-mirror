@@ -1,109 +1,109 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Re: [PATCH 7/7] t0000: verify that real_path() removes
- extra slashes
-Date: Fri, 7 Sep 2012 08:18:39 +0700
-Message-ID: <CACsJy8AqMGo5+jPS9RHEjSwA-VrmO+WCM3Y2hPN9U8FRie4U-A@mail.gmail.com>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
- <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu> <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
- <CACsJy8DAbp1uDsNFFk1g9tuEV1qMnM2DZtxOwp5H9_VE7VwO1g@mail.gmail.com>
- <7v1uif7s1d.fsf@alter.siamese.dyndns.org> <20120906054407.GA25981@duynguyen-vnpc.dek-tpc.internal>
- <7vharb3vib.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Prevent git-config from storing section keys that are
+ too long
+Date: Thu, 06 Sep 2012 18:33:20 -0700
+Message-ID: <7vpq5yzkf3.fsf@alter.siamese.dyndns.org>
+References: <1346978829-4486-1-git-send-email-bwalton@artsci.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: mhagger@alum.mit.edu, Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, 
-	Orgad and Raizel Shaneh <orgads@gmail.com>, msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com Fri Sep 07 03:19:15 2012
-Return-path: <msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f58.google.com ([209.85.216.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Sep 07 03:34:03 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com>)
-	id 1T9nE2-0004DY-Ac
-	for gcvm-msysgit@m.gmane.org; Fri, 07 Sep 2012 03:19:14 +0200
-Received: by qaec1 with SMTP id c1sf1908596qae.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 06 Sep 2012 18:19:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:from
-         :date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=jRAnU94/vRAlLsRmISPFBb1qD877Z2WCW8XljW0qqWk=;
-        b=IjG0UtgkQnPe4BzhgVUHUYdfxW6u6/m5rI6PTAILfM8WxSKZayCxmAJlXy0fSb+7wK
-         eAxGTSb8k96HvkK20ZoFl+lZLlGcjwG14bjXSL/Yex3vXwubTz14p8jF4sIyXez37RLP
-         4y9ulN48ZnkaFClmkj9EgyB+rqw/kE4pJX0UPuIO2Q1sLsk9OvCC0iVH1xlZQ/tZQ2rx
-         yghB6tPU0X2CSTWIuOeei+hQNyG5I94CnAwM2xTIvfnyPRePEN2XXauZ3ivnE+z+rYwp
-         00fPhxdkfkD1CLOOtkm+lJPhDtcf6OFedoHRasBxCEBTXgQldcmray5i6h15ra1yQatI
-         FMVw==
-Received: by 10.50.196.131 with SMTP id im3mr2317000igc.6.1346980750611;
-        Thu, 06 Sep 2012 18:19:10 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.37.197 with SMTP id a5ls117372igk.4.gmail; Thu, 06 Sep 2012
- 18:19:09 -0700 (PDT)
-Received: by 10.42.90.4 with SMTP id i4mr1905762icm.19.1346980749911;
-        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
-Received: by 10.42.90.4 with SMTP id i4mr1905761icm.19.1346980749901;
-        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
-Received: from mail-ie0-f177.google.com (mail-ie0-f177.google.com [209.85.223.177])
-        by gmr-mx.google.com with ESMTPS id u5si1379960igw.3.2012.09.06.18.19.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 209.85.223.177 as permitted sender) client-ip=209.85.223.177;
-Received: by ieje10 with SMTP id e10so5400444iej.22
-        for <msysgit@googlegroups.com>; Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
-Received: by 10.50.193.201 with SMTP id hq9mr5644119igc.48.1346980749782; Thu,
- 06 Sep 2012 18:19:09 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Thu, 6 Sep 2012 18:18:39 -0700 (PDT)
-In-Reply-To: <7vharb3vib.fsf@alter.siamese.dyndns.org>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of pclouds@gmail.com designates 209.85.223.177 as permitted sender)
- smtp.mail=pclouds@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204942>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1T9nSM-0004bx-CM
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 03:34:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756814Ab2IGBd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 21:33:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38137 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752576Ab2IGBdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 21:33:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B03909EF6;
+	Thu,  6 Sep 2012 21:33:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JTp5DHhToDKHIRP/62Adca0ooLk=; b=PHBPdz
+	WiCZyIiBrSQvNN7dTw55wWLOAiSNzJqNwFyRSZtI2EA9TCaEgv1QbwF0Udo6n+bh
+	ZcFhKnwB/Nq4bEzTlPcZpbFrjPBA9o1IqKRR+hWk61rv1gDRAvFupE6DCmJp1zxt
+	rptAigYQ6LCb4qBVlQxmAHu1fqcK7mb+1VwcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J2WMwlpfiezULzoDKLxL5O86mwNeAgQT
+	MHaAY0XO2Hqi8KOBFSShZqTatO1cihXvlL7dIAQr0e+saTqwPewjv5GFRVUw0FX+
+	b56n2E5CAFpxFQDmMMKG3fC5cem0os4cDE3wmk5aGXuAJuZhj/25+8MhPh/jx4MF
+	M1YVcsRrtro=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E4589EF5;
+	Thu,  6 Sep 2012 21:33:22 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04AF49EF3; Thu,  6 Sep 2012
+ 21:33:21 -0400 (EDT)
+In-Reply-To: <1346978829-4486-1-git-send-email-bwalton@artsci.utoronto.ca>
+ (Ben Walton's message of "Thu, 6 Sep 2012 20:47:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 029531F6-F88C-11E1-B16F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204943>
 
-On Fri, Sep 7, 2012 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Modulo that I suspect you could get rid of offset_1st_component()
-> altogether and has_dos_drive_prefix() return the length of the "d:"
-> or "//d" part (which needs to be copied literally regardless of the
-> "normalization"), what you suggest feels like the right approach.
-> Why do you need the "keep_root" parameter and do things differently
-> depending on the setting by the way?
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-That's how offset_1st_component() originally works, root slash if
-present is counted.
+> Key names have a length limit defined by MAXNAME in config.c.  When
+> reading the config file, we reserve half of this limit for the section
+> identifier and the other half for the key name within that section.
+>
+> For example, if setting a key named url.foo.insteadOf, url.foo may use
+> at most half of MANXNAME.
+>
+> The parser will throw an error if this condition is violated.
+>
+> This patch ensures that git-config enforces the same restriction
+> during the creation of a section identifier so that it doesn't allow
+> the generate a configuration file that cannot be re-read later.
+>
+> This patch also adds a test to t1303-wacky-config to catch any future
+> issues with this check.
+>
+> Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+> ---
+>
+> Hi All,
+>
+> I happened to notice this while running the test suite in a deeply
+> nested directory...
+>
+> The check for baselen exceeding half of MAXNAME could be done earlier
+> in the function but doing it late allowed the error message to be
+> clearer without extra hassle.
+>
+> I also wonder if MAXNAME should be increased somewhat.  Section
+> identifiers generated from keys like:
+>
+> url./some/really/long/path.insteadOf
+>
+> could overrun the current limit.  It's not a common case, of course,
+> or this issue would have been found sooner.  Would doubling the
+> current limit be out of the question?
 
-> Wouldn't "skip the root level
-> when computing the offset of the first path component" something the
-> caller can easily decide to do or not to do, and wouldn't it make
-> the semantics of the function cleaner and simpler by making it do
-> only one thing and one thing well?
+Is there a reason to have _any_ limitation?  It is not like we store
+configuration data by allocating one file per item (in which case we
+may be limited by the filesystem limit for direntry size), so if it
+is not too much trouble, I think the right thing to do is to lift
+the limitation altogether, possibly using strbuf instead of a
+statically sized array of characters.
 
-Yeah. I'll have a closer look later and see if we can simplify the function.
--- 
-Duy
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Of course, once you write a very long entry using a newer version of
+Git, the resulting configuration file may end up unusable by older
+version of Git, so a patch to implement such a change may need to be
+based on older maintenance release (say maint-1.7.9) and then merged
+upwards, but otherwise I do not offhand see a compatibility downside
+of such a change.
