@@ -1,108 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] new git check-ignore sub-command
-Date: Fri, 07 Sep 2012 09:45:32 -0700
-Message-ID: <7v627pzsr7.fsf@alter.siamese.dyndns.org>
-References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <7v7gscgnnr.fsf@alter.siamese.dyndns.org>
- <CAOkDyE8mEQ5XkH5TBsrVkAZOqoT+DVoggeGawH=cqU6E6=hv=g@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH/RFC] l10n: de.po: translate 2 new messages
+Date: Fri, 7 Sep 2012 19:05:12 +0200
+Message-ID: <CAN0XMOL9cxy8noicF-P-cjLkw76Zf3Uyu4C2RqbcTYrug5+w8Q@mail.gmail.com>
+References: <1346865100-10908-1-git-send-email-ralf.thielow@gmail.com>
+	<CANYiYbFBoK7D+9oZ2YGsrHYafOETLRUWUmHzfnAyA7RRhqgEkA@mail.gmail.com>
+	<CAN0XMOL+2RV3wxp0nCAJzBBVF2vRNsK6H=MFYEqvKTw+nkcuXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Fri Sep 07 18:45:49 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>, trast@student.ethz.ch,
+	jk@jk.gs, stimming@tuhh.de, git@vger.kernel.org
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 19:05:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TA1ge-0005lr-LA
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 18:45:44 +0200
+	id 1TA1ze-0004eR-Po
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 19:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639Ab2IGQpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 12:45:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54923 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751173Ab2IGQpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 12:45:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2174D725C;
-	Fri,  7 Sep 2012 12:45:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HoRDAan+NA3yU/7M6KgTvFvymf4=; b=D1j96A
-	cob7EzPjg6s0YteEuWyTttqt5nxAV60BKKWwvFf6TxGEGzlKV4CVr3+GAzmw7UL0
-	5EWZv5/fC9Wy9RbBhTTUaK22cDlTql5hayd4za3NreAXn586oJ5VnssJbopGtYuN
-	hn6NsO6i5uZhxSP9Drl3tOSNi4+ULcSlGkCIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ceFFTC8aXtON28CrpDvcFvoCRW7hxYXL
-	Pa53YLgaeMcWfxN96hUMJAUftP5TnaeR6FEZcJDsvHNcRJM1r7PVjRzT098FobNN
-	BZpyom8G2Lx44UzQrMyZ9RqaO/bwINmxbV9wM9mGo3Z50VmVhT3gxYda+Cdio6eQ
-	kv9RaoSYSKc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F49D725B;
-	Fri,  7 Sep 2012 12:45:35 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A628725A; Fri,  7 Sep 2012
- 12:45:34 -0400 (EDT)
-In-Reply-To: <CAOkDyE8mEQ5XkH5TBsrVkAZOqoT+DVoggeGawH=cqU6E6=hv=g@mail.gmail.com> (Adam
- Spiers's message of "Fri, 7 Sep 2012 11:03:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 71A54A98-F90B-11E1-B8F6-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751385Ab2IGRFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Sep 2012 13:05:15 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:44029 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751217Ab2IGRFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2012 13:05:13 -0400
+Received: by weyx8 with SMTP id x8so1905535wey.19
+        for <git@vger.kernel.org>; Fri, 07 Sep 2012 10:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=6HCKxkI4ALDqvrTNfncvaje8CqB6jyraHvHPperXO/c=;
+        b=kWCRiah07eUU0E6Iy1f69GXo877hbTawyLvlaoGK4FWLifygSERh2PfR3lsu+LzaM8
+         02r+yYBpJUE9BNo9Mo0LKNmaY8xbHpUvnSkxqb7UHDx9ug67HzXwGddAPuPZQAqTKzlP
+         GOcky5ZUHLIQjNACXOGDcuhxIcofnyuDLVCKtyaR4KV0ig5rkdZm3E5LX/SWFeSawWin
+         UIpVOt90Kac11jp94bBbfIJ9jNrfRSfirbMVmxl1pOz1cd7+DE66gNvCKwfjIlAOi5Qp
+         pHaUfPwCFVYuE9YCzSUpAST73BNJKcCLqN5zBLeEs7Yq5c4DrB6zjcsILPnQt62RZ77e
+         Ru0Q==
+Received: by 10.180.85.167 with SMTP id i7mr13565424wiz.8.1347037512313; Fri,
+ 07 Sep 2012 10:05:12 -0700 (PDT)
+Received: by 10.194.23.201 with HTTP; Fri, 7 Sep 2012 10:05:12 -0700 (PDT)
+In-Reply-To: <CAN0XMOL+2RV3wxp0nCAJzBBVF2vRNsK6H=MFYEqvKTw+nkcuXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204976>
 
-Adam Spiers <git@adamspiers.org> writes:
-
-> On Sun, Sep 2, 2012 at 9:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>  * avoid unnnecessary braces {} around single statement blocks, e.g.
+On Fri, Sep 7, 2012 at 6:36 PM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
+> On Fri, Sep 7, 2012 at 12:31 PM, Jiang Xin <worldhello.net@gmail.com> wrote:
+>> I just notice that the 1st line of the orignal message below has
+>> only 56  characters, much shorter than other lines. It is because
+>> this is a warning message, and would add a prefix: "warning: ".
 >>
->>     -if (exclude) {
->>     +if (exclude)
->>         return exclude;
->>     -}
+>> #: builtin/push.c:151
+>> msgid ""
+>> "push.default is unset; its implicit value is changing in\n"
+>> "Git 2.0 from 'matching' to 'simple'. To squelch this message\n"
+>> "and maintain the current behavior after the default changes, use:\n"
+>> "\n"
+>> "  git config --global push.default matching\n"
 >>
->>  * else should follow close brace '}' of if clause, e.g.
+>> For this reason, translations as follows are not well-formed.
+>> So I rewind git-po, and your commits may need a bit amend.
 >>
->>      if (...) {
->>          ...
->>     -}
->>     -else {
->>     +} else {
->>          ...
 >
-> What about when the if clause requires braces but the else clause
-> doesn't?  Should it be
->
-> 	if (...) {
-> 		...;
-> 		...;
-> 	} else
-> 		...;
->
-> or
->
-> 	if (...) {
-> 		...;
-> 		...;
-> 	}
-> 	else
-> 		...;
->
-> ?
+> I admit that I don't really understand what you mean. I can't
+> see a big difference in line lengths. It's not more than others
 
-Neither.  We try to do (but often fail ;-)
-
-	if (...) {
-        	...;
-        	...;
-	} else {
-        	...;
-	}
-
-following the kernel style, unless there is good reason not to.
+I got it. This "warning: " is added automatically.
+Sorry
