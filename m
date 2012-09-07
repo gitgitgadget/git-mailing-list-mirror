@@ -1,115 +1,109 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] Prevent git-config from storing section keys that are too long
-Date: Thu,  6 Sep 2012 20:47:09 -0400
-Message-ID: <1346978829-4486-1-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 07 02:47:52 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Re: [PATCH 7/7] t0000: verify that real_path() removes
+ extra slashes
+Date: Fri, 7 Sep 2012 08:18:39 +0700
+Message-ID: <CACsJy8AqMGo5+jPS9RHEjSwA-VrmO+WCM3Y2hPN9U8FRie4U-A@mail.gmail.com>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
+ <1346746470-23127-8-git-send-email-mhagger@alum.mit.edu> <7v1uihbqhf.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DAbp1uDsNFFk1g9tuEV1qMnM2DZtxOwp5H9_VE7VwO1g@mail.gmail.com>
+ <7v1uif7s1d.fsf@alter.siamese.dyndns.org> <20120906054407.GA25981@duynguyen-vnpc.dek-tpc.internal>
+ <7vharb3vib.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: mhagger@alum.mit.edu, Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, 
+	Orgad and Raizel Shaneh <orgads@gmail.com>, msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com Fri Sep 07 03:19:15 2012
+Return-path: <msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f58.google.com ([209.85.216.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9mjf-00018L-Uu
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 02:47:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757250Ab2IGArf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 20:47:35 -0400
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:44753 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757213Ab2IGArQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 20:47:16 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:51383 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1T9mj3-00023B-Gh; Thu, 06 Sep 2012 20:47:13 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1T9mj3-0001At-Fh; Thu, 06 Sep 2012 20:47:13 -0400
-X-Mailer: git-send-email 1.7.4.1
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204941>
+	(envelope-from <msysgit+bncCLWW9eeFGBCOl6WCBRoEzD9rOQ@googlegroups.com>)
+	id 1T9nE2-0004DY-Ac
+	for gcvm-msysgit@m.gmane.org; Fri, 07 Sep 2012 03:19:14 +0200
+Received: by qaec1 with SMTP id c1sf1908596qae.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 06 Sep 2012 18:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:from
+         :date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=jRAnU94/vRAlLsRmISPFBb1qD877Z2WCW8XljW0qqWk=;
+        b=IjG0UtgkQnPe4BzhgVUHUYdfxW6u6/m5rI6PTAILfM8WxSKZayCxmAJlXy0fSb+7wK
+         eAxGTSb8k96HvkK20ZoFl+lZLlGcjwG14bjXSL/Yex3vXwubTz14p8jF4sIyXez37RLP
+         4y9ulN48ZnkaFClmkj9EgyB+rqw/kE4pJX0UPuIO2Q1sLsk9OvCC0iVH1xlZQ/tZQ2rx
+         yghB6tPU0X2CSTWIuOeei+hQNyG5I94CnAwM2xTIvfnyPRePEN2XXauZ3ivnE+z+rYwp
+         00fPhxdkfkD1CLOOtkm+lJPhDtcf6OFedoHRasBxCEBTXgQldcmray5i6h15ra1yQatI
+         FMVw==
+Received: by 10.50.196.131 with SMTP id im3mr2317000igc.6.1346980750611;
+        Thu, 06 Sep 2012 18:19:10 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.37.197 with SMTP id a5ls117372igk.4.gmail; Thu, 06 Sep 2012
+ 18:19:09 -0700 (PDT)
+Received: by 10.42.90.4 with SMTP id i4mr1905762icm.19.1346980749911;
+        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
+Received: by 10.42.90.4 with SMTP id i4mr1905761icm.19.1346980749901;
+        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
+Received: from mail-ie0-f177.google.com (mail-ie0-f177.google.com [209.85.223.177])
+        by gmr-mx.google.com with ESMTPS id u5si1379960igw.3.2012.09.06.18.19.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 209.85.223.177 as permitted sender) client-ip=209.85.223.177;
+Received: by ieje10 with SMTP id e10so5400444iej.22
+        for <msysgit@googlegroups.com>; Thu, 06 Sep 2012 18:19:09 -0700 (PDT)
+Received: by 10.50.193.201 with SMTP id hq9mr5644119igc.48.1346980749782; Thu,
+ 06 Sep 2012 18:19:09 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Thu, 6 Sep 2012 18:18:39 -0700 (PDT)
+In-Reply-To: <7vharb3vib.fsf@alter.siamese.dyndns.org>
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of pclouds@gmail.com designates 209.85.223.177 as permitted sender)
+ smtp.mail=pclouds@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204942>
 
-Key names have a length limit defined by MAXNAME in config.c.  When
-reading the config file, we reserve half of this limit for the section
-identifier and the other half for the key name within that section.
+On Fri, Sep 7, 2012 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Modulo that I suspect you could get rid of offset_1st_component()
+> altogether and has_dos_drive_prefix() return the length of the "d:"
+> or "//d" part (which needs to be copied literally regardless of the
+> "normalization"), what you suggest feels like the right approach.
+> Why do you need the "keep_root" parameter and do things differently
+> depending on the setting by the way?
 
-For example, if setting a key named url.foo.insteadOf, url.foo may use
-at most half of MANXNAME.
+That's how offset_1st_component() originally works, root slash if
+present is counted.
 
-The parser will throw an error if this condition is violated.
+> Wouldn't "skip the root level
+> when computing the offset of the first path component" something the
+> caller can easily decide to do or not to do, and wouldn't it make
+> the semantics of the function cleaner and simpler by making it do
+> only one thing and one thing well?
 
-This patch ensures that git-config enforces the same restriction
-during the creation of a section identifier so that it doesn't allow
-the generate a configuration file that cannot be re-read later.
-
-This patch also adds a test to t1303-wacky-config to catch any future
-issues with this check.
-
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
-
-Hi All,
-
-I happened to notice this while running the test suite in a deeply
-nested directory...
-
-The check for baselen exceeding half of MAXNAME could be done earlier
-in the function but doing it late allowed the error message to be
-clearer without extra hassle.
-
-I also wonder if MAXNAME should be increased somewhat.  Section
-identifiers generated from keys like:
-
-url./some/really/long/path.insteadOf
-
-could overrun the current limit.  It's not a common case, of course,
-or this issue would have been found sooner.  Would doubling the
-current limit be out of the question?
-
-Thanks
--Ben
-
-
-
- config.c                |    8 ++++++++
- t/t1303-wacky-config.sh |    4 ++++
- 2 files changed, 12 insertions(+)
-
-diff --git a/config.c b/config.c
-index 2b706ea..d3f4854 100644
---- a/config.c
-+++ b/config.c
-@@ -1276,6 +1276,14 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 	}
- 	(*store_key)[i] = 0;
- 
-+	if (baselen > MAXNAME / 2) {
-+		/* ok to destroy this value now since it will be freed */
-+		(*store_key)[baselen] = '\0';
-+		error("section identifier for key is too long (> %d): %s",
-+		      MAXNAME / 2, *store_key);
-+		goto out_free_ret_1;
-+	}
-+
- 	return 0;
- 
- out_free_ret_1:
-diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
-index 46103a1..12f0850 100755
---- a/t/t1303-wacky-config.sh
-+++ b/t/t1303-wacky-config.sh
-@@ -47,4 +47,8 @@ test_expect_success 'do not crash on special long config line' '
- 	check section.key "$LONG_VALUE"
- '
- 
-+test_expect_success 'do not accept long section identifiers for key names' '
-+	test_must_fail git config some.REALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlong.key value
-+'
-+
- test_done
+Yeah. I'll have a closer look later and see if we can simplify the function.
 -- 
-1.7.9.5
+Duy
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
