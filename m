@@ -1,100 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/8] absolute_path(): reject the empty string
-Date: Thu, 06 Sep 2012 16:09:09 -0700
-Message-ID: <7vy5kmzr3e.fsf@alter.siamese.dyndns.org>
-References: <1346971264-23744-1-git-send-email-mhagger@alum.mit.edu>
- <1346971264-23744-4-git-send-email-mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Orgad and Raizel Shaneh <orgads@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 07 01:09:23 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Prevent git-config from storing section keys that are too long
+Date: Thu,  6 Sep 2012 20:47:09 -0400
+Message-ID: <1346978829-4486-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 07 02:47:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1T9lCK-0004tG-9l
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 01:09:20 +0200
+	id 1T9mjf-00018L-Uu
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 02:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594Ab2IFXJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Sep 2012 19:09:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33844 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753557Ab2IFXJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Sep 2012 19:09:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC9179898;
-	Thu,  6 Sep 2012 19:09:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Wt3cN9YoYdKFeJBcc0TXsWKqCfE=; b=XdZ7g+DJzrgMQObcBwy7
-	gsVHY+IYqbIOteAkWWE0J/zpEll8M7eJu9gNMJ678UkOLPos0JPTvvRtmFfQjpxo
-	HL44iX1+LqAEwZZzUVtcPTTGujEadD0MWTcmNhb0qKJYbYB7n8zGh3aMlBS/HdnN
-	QO7Ex0KFuLKoA4oGfSRMlKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=L2bvI44pRZkyP72s3Oj2s/nYQPOTCxjup+yEpV6oKsSJvf
-	4V8ryK3IMUMqfdADL6fWRAMs6YaQAxj8V1rgiYacLSV5Ag8dXCGOiPjaSj84mGzv
-	YwU15vnzsO640QNjudwceaHih1XLqk+HiCtTBuWvrxLvGHAVsVL5IHqzc+uGA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA1C99897;
-	Thu,  6 Sep 2012 19:09:11 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41BB59896; Thu,  6 Sep 2012
- 19:09:11 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DE559236-F877-11E1-88EA-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757250Ab2IGArf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Sep 2012 20:47:35 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:44753 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757213Ab2IGArQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Sep 2012 20:47:16 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:51383 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1T9mj3-00023B-Gh; Thu, 06 Sep 2012 20:47:13 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1T9mj3-0001At-Fh; Thu, 06 Sep 2012 20:47:13 -0400
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204941>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Key names have a length limit defined by MAXNAME in config.c.  When
+reading the config file, we reserve half of this limit for the section
+identifier and the other half for the key name within that section.
 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
+For example, if setting a key named url.foo.insteadOf, url.foo may use
+at most half of MANXNAME.
 
-I think I asked why this matters (iow, why it is the right thing to
-do to reject an empty string, instead of treating it as "the current
-directory") in the previous round.  I would have expected to find
-the answer be above the S-o-b line here.
+The parser will throw an error if this condition is violated.
 
-The same comment applies to the other patch for real_path().
+This patch ensures that git-config enforces the same restriction
+during the creation of a section identifier so that it doesn't allow
+the generate a configuration file that cannot be re-read later.
 
->  abspath.c             | 4 +++-
->  t/t0060-path-utils.sh | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/abspath.c b/abspath.c
-> index f04ac18..5d62430 100644
-> --- a/abspath.c
-> +++ b/abspath.c
-> @@ -123,7 +123,9 @@ const char *absolute_path(const char *path)
->  {
->  	static char buf[PATH_MAX + 1];
->  
-> -	if (is_absolute_path(path)) {
-> +	if (!*path) {
-> +		die("The empty string is not a valid path");
-> +	} else if (is_absolute_path(path)) {
+This patch also adds a test to t1303-wacky-config to catch any future
+issues with this check.
 
->  		if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
->  			die("Too long path: %.*s", 60, path);
->  	} else {
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index d91e516..924aa60 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -140,7 +140,7 @@ test_expect_success 'strip_path_suffix' '
->  		c:/msysgit/libexec//git-core libexec/git-core)
->  '
->  
-> -test_expect_failure 'absolute path rejects the empty string' '
-> +test_expect_success 'absolute path rejects the empty string' '
->  	test_must_fail test-path-utils absolute_path ""
->  '
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+
+Hi All,
+
+I happened to notice this while running the test suite in a deeply
+nested directory...
+
+The check for baselen exceeding half of MAXNAME could be done earlier
+in the function but doing it late allowed the error message to be
+clearer without extra hassle.
+
+I also wonder if MAXNAME should be increased somewhat.  Section
+identifiers generated from keys like:
+
+url./some/really/long/path.insteadOf
+
+could overrun the current limit.  It's not a common case, of course,
+or this issue would have been found sooner.  Would doubling the
+current limit be out of the question?
+
+Thanks
+-Ben
+
+
+
+ config.c                |    8 ++++++++
+ t/t1303-wacky-config.sh |    4 ++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/config.c b/config.c
+index 2b706ea..d3f4854 100644
+--- a/config.c
++++ b/config.c
+@@ -1276,6 +1276,14 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
+ 	}
+ 	(*store_key)[i] = 0;
+ 
++	if (baselen > MAXNAME / 2) {
++		/* ok to destroy this value now since it will be freed */
++		(*store_key)[baselen] = '\0';
++		error("section identifier for key is too long (> %d): %s",
++		      MAXNAME / 2, *store_key);
++		goto out_free_ret_1;
++	}
++
+ 	return 0;
+ 
+ out_free_ret_1:
+diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
+index 46103a1..12f0850 100755
+--- a/t/t1303-wacky-config.sh
++++ b/t/t1303-wacky-config.sh
+@@ -47,4 +47,8 @@ test_expect_success 'do not crash on special long config line' '
+ 	check section.key "$LONG_VALUE"
+ '
+ 
++test_expect_success 'do not accept long section identifiers for key names' '
++	test_must_fail git config some.REALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlongREALLYlong.key value
++'
++
+ test_done
+-- 
+1.7.9.5
