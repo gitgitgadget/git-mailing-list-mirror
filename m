@@ -1,86 +1,78 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/2] advice: extract function to print messages with prefix
-Date: Fri, 7 Sep 2012 23:09:58 +0200
-Message-ID: <CAN0XMO+jbZeO=2NHisPizHfNwR62ebkC06KVZ8xOhgmRoAT4nw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] advice: extract function to print messages with
+ prefix
+Date: Fri, 07 Sep 2012 14:20:38 -0700
+Message-ID: <7v7gs5wmvt.fsf@alter.siamese.dyndns.org>
 References: <7vhar9ybgk.fsf@alter.siamese.dyndns.org>
-	<1347044705-17268-1-git-send-email-ralf.thielow@gmail.com>
-	<1347044705-17268-2-git-send-email-ralf.thielow@gmail.com>
-	<7v1uidy6ga.fsf@alter.siamese.dyndns.org>
-	<CAN0XMOK5QnNn8471RF4y7u_X0rfda=-J-KrCtyMsgCGHXNrwVw@mail.gmail.com>
-	<7vfw6two6o.fsf@alter.siamese.dyndns.org>
+ <1347044705-17268-1-git-send-email-ralf.thielow@gmail.com>
+ <1347044705-17268-2-git-send-email-ralf.thielow@gmail.com>
+ <7v1uidy6ga.fsf@alter.siamese.dyndns.org>
+ <CAN0XMOK5QnNn8471RF4y7u_X0rfda=-J-KrCtyMsgCGHXNrwVw@mail.gmail.com>
+ <7vfw6two6o.fsf@alter.siamese.dyndns.org>
+ <CAN0XMO+jbZeO=2NHisPizHfNwR62ebkC06KVZ8xOhgmRoAT4nw@mail.gmail.com>
+ <7vbohhwn20.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, worldhello.net@gmail.com, pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 07 23:10:25 2012
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 07 23:20:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TA5ok-0000yS-Pl
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 23:10:23 +0200
+	id 1TA5yr-0004ZF-8X
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Sep 2012 23:20:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757028Ab2IGVKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 17:10:00 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63510 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755534Ab2IGVKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 17:10:00 -0400
-Received: by weyx8 with SMTP id x8so14524wey.19
-        for <git@vger.kernel.org>; Fri, 07 Sep 2012 14:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=uzh36gOcvP2Q98S6hoFo8zp4yttQZ2SDg56+D4bPxxg=;
-        b=hYWnC250XCBMRTnCeBOiJJU34tvyjvSWz/3etCD8Q3i+/8MMiFuVtmFexE1Sv66h9A
-         B64oLtVwOC9ZnVrTudbPraHtMkS9domSeicuHgZDSklnYC7Gq4K3c/Nu/qVnYqxT98bv
-         45fPMLO3te87QSMAirTcQ09Ih1zwcOn8UAF6MutPyM19h9qYLpuBlmICHbDkw5z4wI3g
-         fieMmx5LS1lONSCjf2mmGz7U7jmSFBCVJYc8UaI5rag6Aoz+D+a0Gzgi5lp1aKy0vfPo
-         GYSR2SmraHillVcZ01cfmQwFYoUn+HT3sECJ/pN1SZKc1/dMNaWKf0Tp7+0AcPW9fGbg
-         GZwg==
-Received: by 10.216.255.146 with SMTP id j18mr3659672wes.163.1347052198871;
- Fri, 07 Sep 2012 14:09:58 -0700 (PDT)
-Received: by 10.194.23.201 with HTTP; Fri, 7 Sep 2012 14:09:58 -0700 (PDT)
-In-Reply-To: <7vfw6two6o.fsf@alter.siamese.dyndns.org>
+	id S1757177Ab2IGVUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Sep 2012 17:20:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46175 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756662Ab2IGVUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Sep 2012 17:20:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 441308672;
+	Fri,  7 Sep 2012 17:20:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DRL4iwML1PXpjq+rPhpRi4IOXpA=; b=iLkUbP
+	ZktsgqNRsIH9TbIzwGlXg8UaXad2DezoVO71erxGuBZh/ZzU9/ibVKpA/B9js6bF
+	ydGoBm/+jYRKH05q0f9unWABf/uQApfWonve2nyzCLf6oCab/Dv2jzme5z7EPmeM
+	8QSM3YIjxPB4DIEjktma5cKu9DgGtuLPYzeh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xp7BQAUX41uWgYzO0mue3Ha1Ft2k3ssx
+	l/XAhP3mzokIZ4yNKwHQzrRfUHLccKplxJ/H/A8h4EuDRKSNkd6dSiyU6oSgDxGa
+	uSBmEb91YIMBNzIC4W7dSGgl99KuqO6zEwsgiyraw0gH9gFZ9Uqop4NGdiSglDaj
+	pjId+mRBcOE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 304E98670;
+	Fri,  7 Sep 2012 17:20:40 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1EC3866E; Fri,  7 Sep 2012
+ 17:20:39 -0400 (EDT)
+In-Reply-To: <7vbohhwn20.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 07 Sep 2012 14:16:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DF86F0FE-F931-11E1-ADD1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/204999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205001>
 
-On Fri, Sep 7, 2012 at 10:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->> On Fri, Sep 7, 2012 at 9:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>>> -             fprintf(stderr, _("hint: %.*s\n"), (int)(np - cp), cp);
->>>> +             fprintf(stderr,  "%s %.*s\n", prefix, (int)(np - cp), cp);
->>>
->>> Hrm, naively, printf("%s: %.*s\n", _("hint"), ...) might look more
->>> natural, but I vaguely recall that the current code places _()
->>> around the entire "hint: %.*s\n" on purpose.  IIRC, it was to allow
->>> translations that flow from RTL e.g. ".siht od t'nod :tnih".
->>>
->>> Doesn't this patch break it?
->>
->> Sorry but I don't know what you mean with "translations that flow
->> from RTL e.g. ".siht od t'nod :tnih"." so I can't check this.
->> As far as I can see the callers only put a simple message in it,
->> e.g. advise(_("Commit your changes or stash them to proceed."));
->> So I don't think that this patch would break anything.
->
-> Your patch would not allow target languages that want to put the
-> _("hint") at the *tail* end of each line of the message.  With the
-> original, with something like this:
->
->         msgid "hint: %.*s\n"
->         msgstr "%.*s :tnih\n"
->
-> you could do that if you wanted to.
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-Is there a need actually?
-It's easy to add a "_(...)" around this string, but then we'll have a
-msgid in "git.pot" without ever having a sensible translation. Not?
+> experience in such a language, I know I was talked into doing it
+> this way when we did 23cb5bf (i18n of multi-line advice messages,
+> 2011-12-22).  Could you dig around the list archive to see?
+
+Heh, don't bother.  Instead, start reading from here:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/187592/focus=187601
+
+and learn what happened to the topic by going forward, or why it was
+done that way by going backwards.
+
+Thanks.
