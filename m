@@ -1,85 +1,68 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] gitk: Teach "Reread references" to reload tags
-Date: Sat,  8 Sep 2012 12:03:13 -0700
-Message-ID: <1347130993-69863-1-git-send-email-davvid@gmail.com>
-References: <7vligmz9zc.fsf@alter.siamese.dyndns.org>
-Cc: Tim McCormack <cortex@brainonfire.net>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 21:03:24 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] daemon: restore getpeername(0,...) use
+Date: Sat, 08 Sep 2012 12:03:39 -0700
+Message-ID: <7vwr04tjzo.fsf@alter.siamese.dyndns.org>
+References: <1347124173-14460-1-git-send-email-jengelh@inai.de>
+ <1347124173-14460-2-git-send-email-jengelh@inai.de>
+ <k2g0up$28h$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Sat Sep 08 21:03:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAQJP-0001fu-9q
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 21:03:23 +0200
+	id 1TAQJp-00020v-U9
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 21:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740Ab2IHTDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 15:03:16 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:54220 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754530Ab2IHTDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 15:03:15 -0400
-Received: by dady13 with SMTP id y13so507166dad.19
-        for <git@vger.kernel.org>; Sat, 08 Sep 2012 12:03:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=7qYGMbf7GidYUS9wdyd/B0sh6qEwrqMDEdvX8Gnu64E=;
-        b=FfKc3/cam69lI9DiKewnX8l84xjNEI5QN10lylx09Mbko+tx9vReO9KC9bBKBotCjl
-         tHi2fj4B+NWRJ+SVR0YqTmgQeYj6afv/XqYuTFMa9TB3D3dEAy2PLn8wuhsZYiLzjmhw
-         WN02lyznrENiwBDF/eWAeJrjeH7SX28pZKHsoGjpsxMC1gNklpIUdqbMDVPQP8bozLHJ
-         IRciDmu4reN1vTNsCLwIHTEkQmJOuNdRWZIoWmYtIp0BZfRV/TilRovoF2z27Pae44hz
-         bk6ZmTDTt8VgkrY083w4qjsp7+XLwast4oBgThBfum/Jk8fWqDAv9Wdg+jX+9sDJWViv
-         3uTQ==
-Received: by 10.68.231.130 with SMTP id tg2mr17019134pbc.70.1347130994817;
-        Sat, 08 Sep 2012 12:03:14 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id to6sm5765513pbc.12.2012.09.08.12.03.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Sep 2012 12:03:13 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.2.448.gee6df
-In-Reply-To: <7vligmz9zc.fsf@alter.siamese.dyndns.org>
+	id S1754760Ab2IHTDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 15:03:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52391 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754530Ab2IHTDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2012 15:03:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B7507366;
+	Sat,  8 Sep 2012 15:03:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Quuy/kp1LyDrkkXETeCqi7TLRKs=; b=Ny0GCs
+	kHF6hg2R/sMw9H1KHJwZx9ibrkSAmeh4vj86xwcRo9dpN2FCts80IvXeQPpI/Uq5
+	uglJ1kBLez9VrENEn+BL5VRgoT9t3ZeNbvZlKJVK6Su3/gKQQg5/L3+3iN/hhLI2
+	xudOmLtmDkPIw8oVVOiqCprEril156y1WVjqA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hb3R1lwAFXQ3DixTWw/xN6biFQgmH8KI
+	JcH90hcp1tc7mKjjCYrrAsL3++Z1lSzXSFK0lgHTwROgp0/Oltqg6U+QK6txLF5u
+	9QXVyZyPW1Aqd4hrcMFPzDaA7YjqrJkSmKk6jU34+GMVxBVopd6GY/xw71Gz5I36
+	seeQLt1USQ4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A8AE7365;
+	Sat,  8 Sep 2012 15:03:41 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BB2A7364; Sat,  8 Sep 2012
+ 15:03:40 -0400 (EDT)
+In-Reply-To: <k2g0up$28h$1@ger.gmane.org> (Joachim Schmitz's message of "Sat,
+ 8 Sep 2012 19:57:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E7050D78-F9E7-11E1-87F2-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205028>
 
-Tag contents, once read, are forever cached in memory.
-This makes gitk unable to notice when tag contents change.
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-Allow users to cause a reload of the tag contents by using
-the "File->Reread references" action.
+>> + setenv("REMOTE_PORT", portbuf, true);
+>
+> setenv() is not a function available on all plattfomrs.
 
-Reported-by: Tim McCormack <cortex@brainonfire.net>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- gitk |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/gitk b/gitk
-index 9bba9aa..a124822 100755
---- a/gitk
-+++ b/gitk
-@@ -10599,7 +10599,7 @@ proc movedhead {hid head} {
- }
- 
- proc changedrefs {} {
--    global cached_dheads cached_dtags cached_atags
-+    global cached_dheads cached_dtags cached_atags tagcontents
-     global arctags archeads arcnos arcout idheads idtags
- 
-     foreach id [concat [array names idheads] [array names idtags]] {
-@@ -10611,6 +10611,7 @@ proc changedrefs {} {
- 	    }
- 	}
-     }
-+    catch {unset tagcontents}
-     catch {unset cached_dtags}
-     catch {unset cached_atags}
-     catch {unset cached_dheads}
--- 
-1.7.7.2.448.gee6df
+Please do some homework before adding irrelevant noise.  At the
+minimum, run "git grep" to see if we already use it in other places,
+and investigate why we can use it safely across platforms we already
+support.
