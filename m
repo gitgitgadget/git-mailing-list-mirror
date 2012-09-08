@@ -1,115 +1,132 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] gitk: Rename 'tagcontents' to 'cached_tagcontent'
-Date: Sat,  8 Sep 2012 12:53:16 -0700
-Message-ID: <1347133996-70908-1-git-send-email-davvid@gmail.com>
-References: <1347130993-69863-1-git-send-email-davvid@gmail.com>
-Cc: Tim McCormack <cortex@brainonfire.net>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 21:53:28 2012
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: checkout extra files
+Date: Sat, 8 Sep 2012 21:40:20 +0100
+Organization: OPDS
+Message-ID: <3DA7C9D97E19414C81F8D73CB66171DA@PhilipOakley>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com> <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com> <7vsjayew50.fsf@alter.siamese.dyndns.org> <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com> <7vd322ebsz.fsf@alter.siamese.dyndns.org> <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com> <7vpq61dfn9.fsf@alter.siamese.dyndns.org> <7v8vcpdat2.fsf@alter.siamese.dyndns.org> <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Angelo Borsotti" <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 22:40:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAR5q-00068j-8d
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 21:53:26 +0200
+	id 1TARpF-0000Lb-JX
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 22:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574Ab2IHTxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 15:53:18 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:56174 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752228Ab2IHTxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 15:53:17 -0400
-Received: by pbbrr13 with SMTP id rr13so1149716pbb.19
-        for <git@vger.kernel.org>; Sat, 08 Sep 2012 12:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=TVzt/PwmAugHQlsBaQCNGQC6kcG6gyWw2MUv8BnQNEM=;
-        b=MWyKFnTI1h1uzOI0t+GoMudD3M0X3LNPPqfYn4etiFNRg8zx/CXtd79PIQt/iA79yQ
-         HGjWkV8X2jlXmzoVXIUr1kVha+drhotNb9EniLPnUtmtx87ckS+4SoBcICovt/5hFoRR
-         V5EQ9RcAoXNh0AZqQWDvl8Ays6y7IbSj3rXZhr2/aUvM0icg4ejTBv1TgnZ6/PTW2neZ
-         aeGlp7az705h2EEj2Wm1q5IyrpkYmUQz3rAN9DCfry7K5AVWmV44xYdM6tMglmDumO9I
-         Lf1Gxy0oYAeC3muri1m1st5XXA/jqNmFk+svRQ9+FFLhPM4WytZIgyxXOUhairTgKCjk
-         JLCw==
-Received: by 10.68.141.46 with SMTP id rl14mr17233320pbb.2.1347133997392;
-        Sat, 08 Sep 2012 12:53:17 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id gh7sm5831336pbc.29.2012.09.08.12.53.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Sep 2012 12:53:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.7.2.448.gee6df
-In-Reply-To: <1347130993-69863-1-git-send-email-davvid@gmail.com>
+	id S1754838Ab2IHUkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 16:40:13 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:20089 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754741Ab2IHUkL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2012 16:40:11 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuAKACisS1BZ8rU+/2dsb2JhbABFi0avAwKBB4EIghsFAQEFCAEBLh4BASELAgMFAgEDFQELJRQBBBoGBxcGARIIAgECAwGIA7olixOBWIN+YAOIHoVDmBmCZw
+X-IronPort-AV: E=Sophos;i="4.80,392,1344207600"; 
+   d="scan'208";a="398071632"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 08 Sep 2012 21:40:08 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MIMEOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205033>
 
-Name the 'tagcontents' variable similarly to the rest of the
-variables cleared in the changedrefs() function.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Friday, September 07, 2012 9:49 PM
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> But that is not what is happening at all.  What goes on is far
+>> simpler than that.
+>>
+>>  - the shell sees '*', matches it against working tree files, to
+>>    obtain "f1" and "f2";
+>>
+>>  - the shell tells "git" to "checkout e6f935e -- f1 f2";
+>>
+>>  - "git" looks into the tree of e6f935e to find paths that match
+>>    "f1" and "f2".
+>>
+>> When "git" is run by the shell in the last step, it has _no_ clue
+>> that the end user typed "*" from the shell.  It only sees "f1" and
+>> "f2" on the command line.  There is no "set T" to be intersected
+>> with "set W", so stop thinking in those terms, and you will be fine.
+>>
+>> Now the question is, _you_ will be fine, but can the documentation
+>> be updated in such a way so that it will help _others_ to also stop
+>> thinking about "intersection between set W and set T"?  I do not
+>> have a good answer to that.
+>
+> Let's do this.  I do not want a shell tutorial in "git checkout"
+> documentation, but this would fit better in the documentation for
+> the CLI convention.
 
-This makes the naming consistent and provides a hint that it
-should be cleared when reloading gitk's cache.
+The difficulty with putting it in gitcli is that it is referenced from 
+almost nowhere, so won't provide help to the user.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+Having said that, it would therefore be better to point folk at gitcli 
+in a few more places, not just the 'see also' line at the very end of 
+the general 'git' page, and buried within rev-parse.
 
-Follow-up to 'gitk: Teach "Reread references" to reload tags'
-
- gitk |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/gitk b/gitk
-index a124822..6f24f53 100755
---- a/gitk
-+++ b/gitk
-@@ -10599,7 +10599,7 @@ proc movedhead {hid head} {
- }
- 
- proc changedrefs {} {
--    global cached_dheads cached_dtags cached_atags tagcontents
-+    global cached_dheads cached_dtags cached_atags cached_tagcontent
-     global arctags archeads arcnos arcout idheads idtags
- 
-     foreach id [concat [array names idheads] [array names idtags]] {
-@@ -10611,7 +10611,7 @@ proc changedrefs {} {
- 	    }
- 	}
-     }
--    catch {unset tagcontents}
-+    catch {unset cached_tagcontent}
-     catch {unset cached_dtags}
-     catch {unset cached_atags}
-     catch {unset cached_dheads}
-@@ -10664,7 +10664,7 @@ proc listrefs {id} {
- }
- 
- proc showtag {tag isnew} {
--    global ctext tagcontents tagids linknum tagobjid
-+    global ctext cached_tagcontent tagids linknum tagobjid
- 
-     if {$isnew} {
- 	addtohistory [list showtag $tag 0] savectextpos
-@@ -10673,13 +10673,13 @@ proc showtag {tag isnew} {
-     clear_ctext
-     settabs 0
-     set linknum 0
--    if {![info exists tagcontents($tag)]} {
-+    if {![info exists cached_tagcontent($tag)]} {
- 	catch {
--           set tagcontents($tag) [exec git cat-file tag $tag]
-+           set cached_tagcontent($tag) [exec git cat-file tag $tag]
- 	}
-     }
--    if {[info exists tagcontents($tag)]} {
--	set text $tagcontents($tag)
-+    if {[info exists cached_tagcontent($tag)]} {
-+	set text $cached_tagcontent($tag)
-     } else {
- 	set text "[mc "Tag"]: $tag\n[mc "Id"]:  $tagids($tag)"
-     }
--- 
-1.7.7.2.448.gee6df
+>
+> -- >8 --
+> gitcli: contrast wildcard given to shell and to git
+>
+> People who are not used to working with shell may intellectually
+> understand how the command line argument is massaged by the shell
+> but still have a hard time visualizing the difference between
+> letting the shell expand fileglobs and having Git see the fileglob
+> to use as a pathspec.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> Documentation/gitcli.txt | 16 ++++++++++++++++
+> 1 file changed, 16 insertions(+)
+>
+> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
+> index ea17f7a..220621b 100644
+> --- c/Documentation/gitcli.txt
+> +++ w/Documentation/gitcli.txt
+> @@ -38,6 +38,22 @@ arguments.  Here are the rules:
+>    you have to say either `git diff HEAD --` or `git diff -- HEAD` to
+>    disambiguate.
+>
+> + * Many commands allow wildcards in paths, but you need to protect
+> +them from getting globbed by the shell.  These two mean different 
+> things:
+> ++
+> +--------------------------------
+> +$ git checkout -- *.c
+> +$ git checkout -- \*.c
+> +--------------------------------
+> ++
+> +The former lets your shell expand the fileglob, and you are asking
+> +the dot-C files in your working tree to be overwritten with the 
+> version
+> +in the index.  The latter passes the `*.c` to Git, and you are asking
+> +the paths in the index that match the pattern to be checked out to 
+> your
+> +working tree.  After running `git add hello.c; rm hello.c`, you will 
+> _not_
+> +see `hello.c` in your working tree with the former, but with the 
+> latter
+> +you will.
+> +
+> When writing a script that is expected to handle random user-input, it 
+> is
+> a good practice to make it explicit which arguments are which by 
+> placing
+> disambiguating `--` at appropriate places.
