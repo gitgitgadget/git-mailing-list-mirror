@@ -1,152 +1,125 @@
-From: Robin Stocker <robin@nibor.org>
-Subject: Re: [PATCH] cherry-pick: Append -x line on separate paragraph
-Date: Sat, 8 Sep 2012 16:10:59 +0200 (CEST)
-Message-ID: <1498324622.1357.1347113459304.JavaMail.root@bazinga.schuettel.ch>
-References: <7vmx136cdc.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] Document MKDIR_WO_TRAILING_SLASH in Makefile
+Date: Sat, 8 Sep 2012 17:23:00 +0200
+Message-ID: <001c01cd8dd5$d58eabe0$80ac03a0$@schmitz-digital.de>
+References: <003301cd8cf1$d26258c0$77270a40$@schmitz-digital.de> <7vliglyc5g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 16:11:16 2012
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 17:23:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TALkf-0000Tc-Sw
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 16:11:14 +0200
+	id 1TAMsS-0007zf-Bs
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 17:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752717Ab2IHOLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 10:11:06 -0400
-Received: from cust.static.212-90-207-187.cybernet.ch ([212.90.207.187]:33741
-	"EHLO bazinga.schuettel.ch" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751855Ab2IHOLE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Sep 2012 10:11:04 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by bazinga.schuettel.ch (Postfix) with ESMTP id 20C1D1C00A4;
-	Sat,  8 Sep 2012 16:11:02 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at schuettel.ch
-Received: from bazinga.schuettel.ch ([127.0.0.1])
-	by localhost (bazinga.schuettel.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id o8IEy8cANvEF; Sat,  8 Sep 2012 16:10:59 +0200 (CEST)
-Received: from bazinga.schuettel.ch (cust.static.212-90-207-187.cybernet.ch [212.90.207.187])
-	by bazinga.schuettel.ch (Postfix) with ESMTP id 81EFB1C0053;
-	Sat,  8 Sep 2012 16:10:59 +0200 (CEST)
-In-Reply-To: <7vmx136cdc.fsf@alter.siamese.dyndns.org>
-X-Originating-IP: [213.188.53.99]
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Linux)/6.0.10_GA_2692)
+	id S1755070Ab2IHPXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 11:23:12 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:52242 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754904Ab2IHPXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2012 11:23:11 -0400
+Received: from DualCore (dsdf-4db5dae6.pool.mediaWays.net [77.181.218.230])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0LodXq-1TlNNU1Kos-00g1PM; Sat, 08 Sep 2012 17:23:10 +0200
+In-Reply-To: 
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJbvPTxgq9VY0aKseKOSN8udhBM+AE55ebmllkDwTCAAV2yoA==
+Content-Language: de
+X-Provags-ID: V02:K0:n8CS1syX3TWPhaGsKL1yfNkTLdwm//XVI+kMhfx7lO4
+ JK6S0KZ1uPJr2Vy8wjamwR1IM9LHJ7+cf6wj1T5ovglcCnzxbj
+ 8rS/05GKknixRvAtUF3f1zcRBHP2RM7FmfPzhEOILyF9Zal0Ef
+ 1wFWgSJHqWjNWPDfY6k2ugZA/GbOYxDZg2brZA0m3SewO2KrQn
+ 2DY9JSaz8YfcHMaBofUL8y+AcAekHXj5nnlS6oA3a5aw4AdBii
+ qhdJEiuxGRfpixCSC1YkHmiuvA7WyxnUzvlgbTGT9m4DDFo32K
+ UYTg9ABOCxNsHwoOQm+86TAQ+X9+UlL/3RH77gSEh9ziYKSch1
+ evz59VFfXFkeQjS9kwMiOjU3jIOQ2EISn4ltoCVBAzZPSnmqFb
+ fkCvzewzxeRAQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205014>
 
-Junio C Hamano writes:
-> Robin Stocker <robin@nibor.org> writes:
+> From: Joachim Schmitz [mailto:jojo@schmitz-digital.de]
+> Sent: Friday, September 07, 2012 8:28 PM
+> To: 'Junio C Hamano'
+> Cc: 'git@vger.kernel.org'
+> Subject: RE: [PATCH] Document MKDIR_WO_TRAILING_SLASH in Makefile
 > 
-> > Junio C Hamano writes:
-> >> Robin Stocker <robin@nibor.org> writes:
-> >>
-> >> >  		if (opts->record_origin) {
-> >> > + /* Some implementations don't terminate message with final \n,
-> >> > so
-> >> > add it */
-> >> > + if (msg.message[strlen(msg.message)-1] != '\n')
-> >> > + strbuf_addch(&msgbuf, '\n');
-> >>
-> >> I can agree that this is a good change.
-> >>
-> >> > + strbuf_addch(&msgbuf, '\n');
-> >>
-> >> But this is somewhat dubious. Even if what we are adding is merely
-> >> an extra LF, that changes the mechanically generated output format
-> >> and can break existing hooks that read from these generated commit
-> >> log template.
+> 
+> 
+> > -----Original Message-----
+> > From: Junio C Hamano [mailto:gitster@pobox.com]
+> > Sent: Friday, September 07, 2012 7:30 PM
+> > To: Joachim Schmitz
+> > Cc: git@vger.kernel.org
+> > Subject: Re: [PATCH] Document MKDIR_WO_TRAILING_SLASH in Makefile
 > >
-> > Hm, for a script to break because of an extra LF it would have to be
-> > very badly written. If it looks for "\n(cherry picked ...", it would
-> > still work. But I see the point.
-> 
-> If you approach this change from the "information left by -x is
-> somehow useful" point of view, it wouldn't make any difference.
-> Scripts can match "(cherry picked from ..." and glean useful
-> information out of it, with or without an empty line around it.
-> 
-> But if you look at it from the other perspective [*1*], it makes a
-> big difference. A script that wants to excise these lines used to
-> be able to just delete such a line. With the proposed change, it
-> also has to be aware of an empty line next to it.
-
-Ok, didn't think that a script would want to remove such a line. It
-makes sense when considering that it used to always add the line.
-Thanks for explaining.
-
-> >> Is there a reason better than "having an empty line there look
-> >> better to _me_" to justify this change?
+> > "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 > >
-> > Yes:
-> 
-> Then please have them in the proposed commit log message to justify
-> the change. I think the following analysis I quoted from your
-> message summarizes the motivation well.
-> 
-> > * If the original commit message consisted just of a summary line,
-> >   the commit message after -x would then not have a blank second
-> >   line, which is bad style, e.g.:
+> > > Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> > > ---
+> > >  Makefile | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > >
+> > > diff --git a/Makefile b/Makefile
+> > > index ac49320..03e245a 100644
+> > > --- a/Makefile
+> > > +++ b/Makefile
+> > > @@ -90,6 +90,8 @@ all::
+> > >  #
+> > >  # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
+> > >  #
+> > > +# Define MKDIR_WO_TRAILING_SLASH if your mkdir() can't deal with trailing slash.
+> > > +#
+> > >  # Define NO_MKSTEMPS if you don't have mkstemps in the C library.
+> > >  #
+> > >  # Define NO_STRTOK_R if you don't have strtok_r in the C library.
 > >
-> > The title of the original commit
-> > (cherry picked ...)
-> 
-> This is very true. So we at least want an empty line added when the
-> original is one-liner.
-> 
-> > * If the original message did not have any trailers, the appended
-> >   text would stick to the last paragraph, even though it is a
-> >   separate thing.
-> 
-> The other side of this argument is if there are trailers, we would
-> not want an extra blank line. We need to look at the last paragraph
-> of the log message and if it does not end with a trailer, we want an
-> additional empty line.
-> 
-> > Maybe the solution is to detect if the original commit message
-> > ends with a trailer and in that case keep the existing behavior
-> > of not inserting a blank line?
-> 
-> Yeah, that sounds like a good change from "this makes the result
-> look better" point of view.
-
-How do you think we could best detect a tailer? Check if all
-lines of the last paragraph start with /[\w-]+: /?
-
-> > Oh, I like that proposal. I'd lean towards a new --trailer option I
-> > think.
+> > Not really.  "make MKDIR_WO_TRAILING_SLASH=YesPlease" won't do
+> > anything.
 > >
-> > It would have the same problem of having to append it on a separate
-> > paragraph if the original commit message does not already have a
-> > trailer though.
+> > You would need at least something like this, no?
+> >
 > 
-> Yes. The logic would be the same. First terminate the incomplete
-> last line, if any, and then look at the last paragraph of the commit
-> log message (one liner is a natural degenerate case of this; its
-> single-line title is the last paragraph) and if and only if it does
-> not end with a trailer, add a blank line before adding the marker.
+> Yes, that is better, thanks
+
+There's something missing though, to make it fully usable, see below
 > 
-> The only difference between the two would be how the "cherry-picked
-> from" line is formatted.
+> >  Makefile | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git c/Makefile w/Makefile
+> > index 66e8216..21b4816 100644
+> > --- c/Makefile
+> > +++ w/Makefile
+> > @@ -90,6 +90,8 @@ all::
+> >  #
+> >  # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
+> >  #
+> > +# Define MKDIR_WO_TRAILING_SLASH if your mkdir() can't deal with trailing slash.
+> > +#
+> >  # Define NO_MKSTEMPS if you don't have mkstemps in the C library.
+> >  #
+> >  # Define NO_STRTOK_R if you don't have strtok_r in the C library.
+> > @@ -1639,6 +1641,9 @@ ifdef NO_MKDTEMP
+> >  	COMPAT_CFLAGS += -DNO_MKDTEMP
+> >  	COMPAT_OBJS += compat/mkdtemp.o
+> >  endif
+> > +ifdef MKDIR_WO_TRAILING_SLASH
+> > +	COMPAT_CFLAGS += -DMKDIR_WO_TRAILING_SLASH
 
-Right.
++	COMPAT_OBJS += compat/mkdir.o
 
-I'm going to work on this and submit a new version of the patch. The
-"Cherry-picked-from" change could then be made later on top of that.
+> > +endif
+> >  ifdef NO_MKSTEMPS
+> >  	COMPAT_CFLAGS += -DNO_MKSTEMPS
+> >  endif
 
-> [Footnote]
-> 
-> *1* Originally, we added "(cherry picked from ..." by default, and
-> had a switch to disable it; later we made it off by default and made
-> it optional (and discouraged) with "-x" and this was for a reason.
-> Unless the original commit object is also available to the reader of
-> the history, the line is a useless noise, and many people are found
-> to cherry-pick from their private branches; by definition, the line
-> is useless in the resulting commit of such a cherry-pick.
+Bye, Jojo
