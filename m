@@ -1,88 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2012, #01; Tue, 4)
-Date: Fri, 07 Sep 2012 17:38:43 -0700
-Message-ID: <7vhar9uz58.fsf@alter.siamese.dyndns.org>
-References: <7v1uih8jck.fsf@alter.siamese.dyndns.org>
- <20120907130813.GC25467@tommy-fedora.scientificnet.net>
+From: Enrico Weigelt <enrico.weigelt@vnc.biz>
+Subject: Re: Encrypted repositories
+Date: Sat, 08 Sep 2012 05:34:48 +0200 (CEST)
+Message-ID: <0666bd29-b156-4c3d-b859-ab140d2f849e@zcs>
+References: <7vmx132aph.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch,
-	ramsay@ramsay1.demon.co.uk, pclouds@gmail.com,
-	robin.rosenberg@dewire.com
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 02:39:41 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 05:35:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TA95H-0001mD-Rn
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 02:39:40 +0200
+	id 1TABpa-0003nX-RI
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 05:35:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755605Ab2IHAir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Sep 2012 20:38:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36160 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751953Ab2IHAiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Sep 2012 20:38:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2423A978A;
-	Fri,  7 Sep 2012 20:38:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=DJIzcEJ3mZTIPzq127UBVG8I5Jk=; b=M0JIR5RZbYgOWFMKqdZj
-	mRLxhFyF2Q8w6jRmMliNXZONAhoDUeKi5clwNkt/Chjx+Nh8Xae+/C7EvsCCM9vR
-	ezHUhIeuuO+6svhls1wF10zhN1fJfC7Ve/tOtHE7dbZ+lO1WuI1lJgckUAG+FgSl
-	jjgXvyyuxGvffYVbr6n/wqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=X+usm2IC3ldkJZCHW/JzWMTCM3In2a85Qte5CfLo9r/3ZX
-	bsBEwZvKzApyRwaa9CK+V9iGSNRzmzl1C1QALHz0qCvXSZDBQV4siedEpoVmzOhW
-	ldWxte+oomY5z/A4WzF2e5MwWJ/+7N6WEBFdP51X5useUHkdN3myKZicVdIFw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 117669789;
-	Fri,  7 Sep 2012 20:38:46 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FF079773; Fri,  7 Sep 2012
- 20:38:45 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C073C88-F94D-11E1-A054-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759077Ab2IHDfW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Sep 2012 23:35:22 -0400
+Received: from zcs.vnc.biz ([83.144.240.118]:57580 "EHLO zcs.vnc.biz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752287Ab2IHDeu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Sep 2012 23:34:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zcs.vnc.biz (Postfix) with ESMTP id EEF6D6228CB;
+	Sat,  8 Sep 2012 05:34:48 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at vnc.biz
+Received: from zcs.vnc.biz ([127.0.0.1])
+	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Euphtyq5wnE1; Sat,  8 Sep 2012 05:34:48 +0200 (CEST)
+Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
+	by zcs.vnc.biz (Postfix) with ESMTP id 9213B62225F;
+	Sat,  8 Sep 2012 05:34:48 +0200 (CEST)
+In-Reply-To: <7vmx132aph.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [91.43.202.136]
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Linux)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205006>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> On 09/04, Junio C Hamano wrote:
->> * tg/index-v5 (2012-08-17) 13 commits
->> ...
->> A GSoC project.  Was waiting for comments from mentors and
->> stakeholders, but nothing seems to be happening, other than breakage
->> fixes on Cygwin.  May discard.
->
-> I was planning on continuing to work on this topic as part of my Bachelor
-> Thesis.  I had a brief discussion with Thomas Rast on IRC about this
-> today.  Because I am planning to implement an api for partial loading
-> we decided it's probably best to hold off until that's implemented,
-> because parts of this series may change and it's going to take me a while
-> to implement the api.
+> > Well, everybody can access the objects, but they're encrypted,
+> > so you need the repo key (which, of course isn't contained in
+> > the repo itself ;-p) to decrypt them.
+>=20
+> So, in short, blobs are not encrypted with the hash of their
+> contents as encryption keys at all.
 
-Sounds good.
+No, the blobs are encrypted with their content hash as key, and the
+encrypted blob will be stored with it's content hash as object id.
 
-> As for the actual look of the api, I think something along the lines of
-> what was discussed at [1] would fit well.
->
-> The commands would then learn to use this api. (First the commands that
-> just read the index and later the commands that read and write the index,
-> but for that the api will have to support writing the index)
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/198283/focus=198739 
+> > For the usecases I have in mind (backups, filesharing, etc) this
+> > wouldn't hurt so much, if the objects are compressed before
+> > encryption.
+>=20
+> For that kind of usage pattern, you are better off looking at
+> encrypted tarballs or zip archives.
 
-Yeah, I think that one, even though it was a small set, would be a
-good starting point. Looking forward to seeing this moving forward;
-no need to rush.
+No, that doesn't give us anything like history, incremental
+synchronization, etc, etc.
 
-Thanks.
+What I finnaly wanna has is a usual git, just with encryption,
+but I can live with loosing differential compression.
+
+
+cu
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
+
+Enrico Weigelt=20
+VNC - Virtual Network Consult GmbH=20
+Head Of Development=20
+
+Pariser Platz 4a, D-10117 Berlin
+Tel.: +49 (30) 3464615-20
+=46ax: +49 (30) 3464615-59
+
+enrico.weigelt@vnc.biz; www.vnc.de=20
