@@ -1,88 +1,69 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [RFC] i18n.pathencoding
-Date: Sat, 08 Sep 2012 12:09:14 +0200
-Message-ID: <504B194A.6050009@web.de>
-References: <201209010811.33994.tboegi@web.de> <5043E4B4.9050801@dewire.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v4 4/4] make poll() work on platforms that can't recv() on
+ a non-socket
+Date: Sat, 8 Sep 2012 13:31:47 +0200
+Message-ID: <CABPQNSY1+3X3LE19mSm2398Kr9EvOxbmsoRLzo4fFTytiA3B+Q@mail.gmail.com>
+References: <004201cd8d0f$8e9ad4f0$abd07ed0$@schmitz-digital.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 12:10:46 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Sat Sep 08 13:32:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAHzu-0004hV-1m
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 12:10:42 +0200
+	id 1TAJHB-0005oY-Kh
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 13:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753473Ab2IHKKQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Sep 2012 06:10:16 -0400
-Received: from mout.web.de ([212.227.17.11]:60443 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753444Ab2IHKJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 06:09:17 -0400
-Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0LfiuU-1Tu5KK2iba-00pGf3; Sat, 08 Sep 2012 12:09:15 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:15.0) Gecko/20120824 Thunderbird/15.0
-In-Reply-To: <5043E4B4.9050801@dewire.com>
-X-Provags-ID: V02:K0:YFP78lrK3r/uR2fBLtszM6YhOTX/Y3sDP5hXzGmAx8J
- 0weoxStZBQuZtl8Ma/z5H1irDLNoSIHDSnXYMvXDVEqfdyWuh3
- LQAgFiyVR66xIP8Y8hYS5qV5j9GoSB9t6K6C09+al4gSBHQWUP
- PmccJUBgQYW2oF44quYFBTx8szy/NmIO/vNix+J/O2OHiqH3jB
- IAoMOMZzHPK/Jpk0R9DSA==
+	id S1754015Ab2IHLca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 07:32:30 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:48779 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753584Ab2IHLc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2012 07:32:29 -0400
+Received: by vbbff1 with SMTP id ff1so576592vbb.19
+        for <git@vger.kernel.org>; Sat, 08 Sep 2012 04:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=mUdmxkTnBtNU0Kq2ijmrhkxi94gP6seTmoQsSXkpKIE=;
+        b=h8ZjQsfLyEk7OMznE3MBLo+4rurIHihzOofRlIW68dD1zgUDlnziM1dAPd2eKk/Tih
+         WzCGczBPj0Y0dCNFhc7WHXQskQqlrqZkLUpd5IL2QLDfFnz2asqRgKw2yydd+udbDWuK
+         QIbxvqbKD+/adV20TqCzig+dZWt1bXM+VC/9NqY18038yC3t8PwKdEY/Orc3FWU9d13y
+         /hlD1guARwz/MAWRq8M/mOC1DpTCoY7HWCXSP8jEmyyQhAe6X2MkdSvMBoEKsTTN/d4T
+         zaxyFcA13JNLQKSKT6yEzdJnZH+cf8BuGshsz3HcoOTbJUSOGGYAZ/cIPpIIjsrPeUAv
+         Ff6g==
+Received: by 10.221.0.138 with SMTP id nm10mr10880708vcb.38.1347103949129;
+ Sat, 08 Sep 2012 04:32:29 -0700 (PDT)
+Received: by 10.58.196.232 with HTTP; Sat, 8 Sep 2012 04:31:47 -0700 (PDT)
+In-Reply-To: <004201cd8d0f$8e9ad4f0$abd07ed0$@schmitz-digital.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205011>
 
-On 03.09.12 00:59, Robin Rosenberg wrote:
-> Torsten B=C3=B6gershausen skrev 2012-09-01 08.11:> Allow path names t=
-o be encoded in UTF-8 in the repository
->> and checkout out as e.g. ISO-8859-1 in the working tree.
->=20
-> Ack for attempting this.
->=20
-> Did it myself if 2007, but times weren't ripe then, I guess.
->=20
->> +i18n.pathEncoding::
->> +    This option is only used by some implementations of git.
->> +    When "git init" sets core.supportspathencoding to true,
->> +    i18n.pathEncoding can be set to re-encode path names when
->> +    a working tree is checked out.
->> +    Path names may be e.g. encoded in ISO-8859-1 and are stored as
->> +    UTF-8 encoded in the repository.
->> +    When not set, the encoding of path names is the same in working=
- tree
->> +    and the repository.
->=20
-> "If set, then core.precomposeunicode is ignored on Mac OS X."
+On Fri, Sep 7, 2012 at 5:43 PM, Joachim Schmitz <jojo@schmitz-digital.de> wrote:
+> This way it gets added to gnulib too.
+>
+> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
+> ---
+>  compat/poll/poll.c | 5 +++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+> index e4b8319..10a204e 100644
+> --- a/compat/poll/poll.c
+> +++ b/compat/poll/poll.c
+> @@ -306,6 +306,10 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
+>                || socket_errno == ECONNABORTED || socket_errno == ENETRESET)
+>         happened |= POLLHUP;
+>
+> +      /* some systems can't use recv() on non-socket, including HP NonStop */
+> +      else if (/* (r == -1) && */ socket_errno == ENOTSOCK)
 
-Thanks for comments,=20
-I will integrate them (but don't expect that too soon ;-).
-
-Before that I want to find & fix the performance issues, and the
-t1450 breakage asks for my attention again.
-
-However, the combination of i18n.pathEncoding and core.precomposeunicod=
-e under Mac OS X=20
-needs to be clarified.
-Mac OS X only allows unicode (an "=C3=84" encoded in ISO-8859-1 gives a=
- single byte),
-and the HFS+ filesystem will list it as %C4.
-
-So the i18.pathencoding does not make sence under Mac OS X, and should =
-be ignored.
-It is not ignored today, since the characters use in t3911 are choosen =
-to be both valid UTF-8
-and ISO-8859-1 code points/characters, so that the feature can be teste=
-d on Mac OS X.
-
-
-
-
-
- =20
+Why add commented-out code ("(r == -1) && ")?
