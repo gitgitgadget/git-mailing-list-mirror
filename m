@@ -1,76 +1,69 @@
-From: Jan Engelhardt <jengelh@inai.de>
-Subject: Re: Restore hostname logging in inetd mode
-Date: Sat, 8 Sep 2012 21:18:56 +0200 (CEST)
-Message-ID: <alpine.LNX.2.01.1209082112040.18369@frira.zrqbmnf.qr>
-References: <1347124173-14460-1-git-send-email-jengelh@inai.de> <7v627ouyun.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] daemon: restore getpeername(0,...) use
+Date: Sat, 8 Sep 2012 21:20:11 +0200
+Message-ID: <002101cd8df6$f7cab2a0$e76017e0$@schmitz-digital.de>
+References: <1347124173-14460-1-git-send-email-jengelh@inai.de> <1347124173-14460-2-git-send-email-jengelh@inai.de> <k2g0up$28h$1@ger.gmane.org> <7vwr04tjzo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 08 21:19:53 2012
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 21:20:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAQZM-0000Zt-UD
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 21:19:53 +0200
+	id 1TAQa7-0001PO-9I
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 21:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754694Ab2IHTS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 15:18:59 -0400
-Received: from seven.inai.de ([5.9.24.206]:40942 "EHLO seven.medozas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754174Ab2IHTS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 15:18:59 -0400
-Received: by seven.medozas.de (Postfix, from userid 25121)
-	id DA10F96A11C6; Sat,  8 Sep 2012 21:18:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by seven.medozas.de (Postfix) with ESMTP id A35AD96A1084;
-	Sat,  8 Sep 2012 21:18:56 +0200 (CEST)
-In-Reply-To: <7v627ouyun.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1754738Ab2IHTUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 15:20:32 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:59551 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754174Ab2IHTUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2012 15:20:31 -0400
+Received: from DualCore (dsdf-4db5dae6.pool.mediaWays.net [77.181.218.230])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LnG25-1TmUcC2nev-00hH9f; Sat, 08 Sep 2012 21:20:21 +0200
+In-Reply-To: <7vwr04tjzo.fsf@alter.siamese.dyndns.org>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQKQODjfGir0QdY292QjkJfxRd4QjQGLm4FOAtJ5aowBOL55HJXOxjJg
+Content-Language: de
+X-Provags-ID: V02:K0:+LsSzK7moa0fvyqqnA+kxSh4Wagn50uHT8aqFTpb0Gl
+ mryi7fgyrg0MWzkIzXDI+dBiHnkOJQmibfNgPkG+yPv7Atbt37
+ oEZXhCsJr61wphcuIwbQ5H1Eh7NZdEZz0cLcFsN5t3Vs3JIoPA
+ ZJKEZymCLwiq9VFKiBjYm7XafwiBpe6O3YdQJq8g+kgJuQfWaL
+ VRHUh4W9i3+1XtB9hBJiE9fjIY8L6OV2bfhuDjlFmPibIVsfOZ
+ mjrjd2fD41V5L3u+Zh4mqzpaf/La713tyaxscMj/qX7op1YX6S
+ uVYXQdvU/vsIHv9JzQicmYS5MC9FXwXFbGAWGrYcVvZhswa0TG
+ VQAxJFUfw6RrA7y5hzvN/e04/VSUzsVXJpi98+rhi2HfneN38o
+ s2D5KOBCWF2cQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205030>
 
-On Saturday 2012-09-08 20:57, Junio C Hamano wrote:
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Saturday, September 08, 2012 9:04 PM
+> To: Joachim Schmitz
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH] daemon: restore getpeername(0,...) use
+> 
+> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+> 
+> >> + setenv("REMOTE_PORT", portbuf, true);
+> >
+> > setenv() is not a function available on all plattfomrs.
+> 
+> Please do some homework before adding irrelevant noise.  At the
+> minimum, run "git grep" to see if we already use it in other places,
+> and investigate why we can use it safely across platforms we already
+> support.
 
->Please don't throw a pull request for a patch whose worth hasn't
->been justified in a discussion on the list.  Thanks.
+Hmm, guess I missed the indirect inclusion of git-compat-util.h
+And didn't know about 'git grep', so thanks for the hint
 
-Let me postulate that people like to get cover letters with the
-git:// URL so they can fetch+look at it, a diffstat and shortlog.
-
-And 'lo, that is exactly what git-request-pull thankfully generates.
-
-In my defense: Just because the command is called "request-pull",
-does not mean you absolutely have to merge/pull it. In fact, it does
-not even mention merge/pull at all.
-
-"
-The following changes since commit [SHA]:
-  [Commit Message]
-are available in the git repository at:
-  git://[...]
-for you to fetch changes up to [SHA]:
-  [Commit Message]
-[diffstat,shortlog]
-"
-
-In contrast to many a LKML postings which explicitly state the pull
-intent:
-
-"
-Hi [Maintainer],
-
-Please pull from the git repository at
-  [URL]
-to receive [...]
-  [SHA]
-  [Commit Message]
-on top of commit [SHA]
-  [Commit Message]
-[diffstat,shortlog]
-"
+Will look closer next time ;-)
