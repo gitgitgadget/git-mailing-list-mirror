@@ -1,63 +1,86 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: [BUG] 'git show' gives duplicate errors for ambiguous args
-Date: Sat, 08 Sep 2012 21:43:03 +0300
-Message-ID: <504B91B7.1000406@avtalion.name>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: checkout extra files
+Date: Sat, 08 Sep 2012 11:54:34 -0700
+Message-ID: <7va9x0uyz9.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+ <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
+ <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
+ <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BtZzgi32kxVTbGC7eAjFG41bdae=MaK==sKq=9ohf8_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 08 20:43:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 08 20:54:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAQ07-0008KZ-3S
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 20:43:27 +0200
+	id 1TAQB5-0001oV-8v
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Sep 2012 20:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268Ab2IHSnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 14:43:19 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:40188 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139Ab2IHSnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 14:43:19 -0400
-Received: by wibhi8 with SMTP id hi8so657926wib.1
-        for <git@vger.kernel.org>; Sat, 08 Sep 2012 11:43:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=ZCluocfNT4nk1oa1hhpfvh868vVdyrRCpGJp7sZ3bIY=;
-        b=fQzpl3ILdcZjy9pasCGp8if+TGEw6n/PEVxDe/VyXWqbGMFgVpL3o25tdO4lQCE6pE
-         540rY9AsoVh+giQOPco+KQHdqTlwG42zsqMF26oZklsmT8NN3wvQMwLVF5UfZqvz8NJv
-         uF4uE8s0XncQuILsvIxX6rZCCMm8dxhsrkJ0/DexUDV5SuPGky8Ll6kZ1XrimZvgofOc
-         TRideuV8l1gWf2bi8W/E5yoAyNfhOgxOt5EPXHVu85cOi81ATxZNfsgfenpscs+KJ/Vc
-         l07KZ6UXfglJOCAVgNIJSlF8gjGxQK4JAeEi5ezvZlUKX09K0+Jy25hkmZ7sx92q/QHf
-         PX7A==
-Received: by 10.180.96.3 with SMTP id do3mr6069781wib.5.1347129797824;
-        Sat, 08 Sep 2012 11:43:17 -0700 (PDT)
-Received: from [192.168.1.55] (bzq-79-181-162-188.red.bezeqint.net. [79.181.162.188])
-        by mx.google.com with ESMTPS id q4sm6529119wix.9.2012.09.08.11.43.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Sep 2012 11:43:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+	id S1754244Ab2IHSyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Sep 2012 14:54:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49049 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752228Ab2IHSyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Sep 2012 14:54:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73F257136;
+	Sat,  8 Sep 2012 14:54:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mk6CNVrpaLIdmdSWnN1m+ErsnA8=; b=GDKrFz
+	GDaLiKjt+fbtmDEsHWzgAMK2TQLJRhXytFyC3m8b4BfVlRGN8/+wvUDWw7B3lmBk
+	f0x9Puw/9YZ2bjdE5mzhpmsWv7zsgzllgN5F8kSVUoHno8RBwjgJmuShJVPsmQuf
+	lv9H338FpnDeSAxk17ALN7wsvG7ZxFu09lwq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=naOzAdlQ6B40NwEWPuN71ZvKqRmHBPz8
+	/E9koogA7XCCFgAyrn5sgAEYGds2tnPqR6WIJ28lzujurptIkze+3JjhGfcLIs1F
+	EBeDmkEswmjTUq/RyXIn1wrt0YgEW2EpmyI0+udHeqAw6Hbavvc7GHMvZd5ArP4D
+	P40vdSQFwCc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 627627135;
+	Sat,  8 Sep 2012 14:54:36 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C4F5A7133; Sat,  8 Sep 2012
+ 14:54:35 -0400 (EDT)
+In-Reply-To: <CAB9Jk9BtZzgi32kxVTbGC7eAjFG41bdae=MaK==sKq=9ohf8_w@mail.gmail.com> (Angelo
+ Borsotti's message of "Sat, 8 Sep 2012 16:55:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A2468B7C-F9E6-11E1-8054-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205024>
 
-With the git.git repository:
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-  $ git show abcd
-  error: short SHA1 abcd is ambiguous.
-  error: short SHA1 abcd is ambiguous.
-  fatal: ambiguous argument 'abcd': unknown revision or path not in the
-working tree.
-  Use '--' to separate paths from revisions
+> It makes quite clear that the command accepts wildcards
+> (not expanded by the shell), which was is not clear in the current
+> man page (although one could imagine that <path> could also be a
+> wildcard).
+>
+> P.S. In the man page there is also a <pathspec>
+>
+>     "*git checkout* [-p|--patch] [<tree-ish>] [--] <pathspec>...
+>
+> that should perhaps be a <path>
 
-The "is ambiguous" message shouldn't be shown twice.
+That's backwards.  Saying <path> as if it means a plain vanilla
+pathname is a cause of confusion.  The command takes pathspec, which
+is a pattern (see "git help glossary"). The places in the text that
+say <path> may need to be fixed.
 
-The first error is printed by revision.c:1796 (a call to
-handle_revision_arg), and the second by revision.c:1808 (a call to
-verify_filename). I don't see an easy way to suppress it.
+It just happens that you do not realize that you are using pathspec
+when you say "git checkout hello.c", as the pattern "hello.c" only
+matches the one pathname "hello.c".
