@@ -1,106 +1,79 @@
-From: David Gould <david@optimisefitness.com>
-Subject: Probable bug in file run-command.c function clear_child_for_cleanup
-Date: Sun, 09 Sep 2012 15:44:54 +0100
-Message-ID: <504CAB66.1050003@optimisefitness.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 9/8] t0060: split absolute path test in two to exercise some
+ of it on Windows
+Date: Sun, 09 Sep 2012 17:42:20 +0200
+Message-ID: <504CB8DC.90202@kdbg.org>
+References: <1346971264-23744-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 09 17:02:24 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Orgad and Raizel Shaneh <orgads@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Sep 09 17:42:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAj1j-0001qN-09
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 17:02:23 +0200
+	id 1TAjeb-0001cn-9B
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 17:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab2IIPCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 11:02:15 -0400
-Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:57996
-	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753255Ab2IIPCO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 11:02:14 -0400
-X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Sep 2012 11:02:14 EDT
-X-Trace: 612719653/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$ON_NET_AUTH_ACCEPTED/pipex-temporary-group/88.108.247.46/None/david@optimisefitness.com
-X-SBRS: None
-X-RemoteIP: 88.108.247.46
-X-IP-MAIL-FROM: david@optimisefitness.com
-X-SMTP-AUTH: 
-X-Originating-Country: GB/UNITED KINGDOM
-X-MUA: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAIqrTFBYbPcu/2dsb2JhbABFu1GBCIJOERENIhkkFhgDAgECAScxCAEBFYd7B5k2oBqOKoMfA5spE4NUhmqCZw
-X-IronPort-AV: E=Sophos;i="4.80,394,1344207600"; 
-   d="scan'208";a="612719653"
-X-IP-Direction: IN
-Received: from 88-108-247-46.dynamic.dsl.as9105.com (HELO ephebe) ([88.108.247.46])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 09 Sep 2012 15:52:38 +0100
-Received: from [192.168.100.9] (pseudopolis [192.168.100.9])
-	by ephebe (Postfix) with ESMTPS id 6467F8017C
-	for <git@vger.kernel.org>; Sun,  9 Sep 2012 15:44:55 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
+	id S1753964Ab2IIPmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 11:42:25 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:13989 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753255Ab2IIPmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Sep 2012 11:42:24 -0400
+Received: from [192.168.0.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3CEEBCDF87;
+	Sun,  9 Sep 2012 17:42:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko/20120327 Thunderbird/11.0.1
+In-Reply-To: <1346971264-23744-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205083>
 
-Hi,
+Only the first half of the test works only on POSIX, the second half
+passes on Windows as well.
 
-This is probably the wrong way to do this, and I'm sorry if I end up 
-wasting someone's time. That said, here goes....
+A later test "real path removes other extra slashes" looks very similar,
+but it does not make sense to split it in the same way: When two slashes
+are prepended in front of an absolute DOS-style path on Windows, the
+meaning of the path is changed (//server/share style), so that the test
+cannot pass on Windows.
 
-While idly browsing through the git source (as you do on a sunny Sunday 
-afternoon), I spotted the following code (that appears to be wrong) in 
-the file  https://github.com/git/git/blob/master/run-command.c It's the 
-same in branches maint, next and pu. The branch todo gives me a 404.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ The series passes for me as is, but one test needs POSIX only in
+ the first half. This patch splits it in two.
 
-(line 53 is here)
-static void clear_child_for_cleanup(pid_t pid)
-{
-	struct child_to_clean **last, *p;
+ t/t0060-path-utils.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-	last = &children_to_clean;
-	for (p = children_to_clean; p; p = p->next) {
-		if (p->pid == pid) {
-			*last = p->next;
-			free(p);
-			return;
-		}
-	}
-}
-(line 67 is here)
-
-It appears that last is intended to point to the next field that's being 
-updated, but fails to "follow" the p pointer along the chain. The result 
-is that children_to_clean will end up pointing to the entry after the 
-deleted one, and all the entries before it will be lost. It'll only be 
-fine in the case that the pid is that of the first entry in the chain.
-
-You want something like:
-
-for (... {
-	if (... {
-		...
-	}
-	last = &p->next;
-}
-
-or (probably clearer, but I haven't read your coding style guide, if 
-there is one, and some people don't like this approach)
-
-for (p = children_to_clean; p; last = &p->next, p = p->next) {
-	...
-
-Cheers,
-David
-
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index e40f764..4ef2345 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -148,10 +148,14 @@ test_expect_success 'real path rejects the empty string' '
+ 	test_must_fail test-path-utils real_path ""
+ '
+ 
+-test_expect_success POSIX 'real path works on absolute paths' '
++test_expect_success POSIX 'real path works on absolute paths 1' '
+ 	nopath="hopefully-absent-path" &&
+ 	test "/" = "$(test-path-utils real_path "/")" &&
+-	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
++	test "/$nopath" = "$(test-path-utils real_path "/$nopath")"
++'
++
++test_expect_success 'real path works on absolute paths 2' '
++	nopath="hopefully-absent-path" &&
+ 	# Find an existing top-level directory for the remaining tests:
+ 	d=$(pwd -P | sed -e "s|^\([^/]*/[^/]*\)/.*|\1|") &&
+ 	test "$d" = "$(test-path-utils real_path "$d")" &&
 -- 
-David Gould, Personal Trainer
-	Register of Kettlebell Professionals
-	INWA Nordic Walking Instructor
-Optimise Fitness Ltd -- fit for life
-01264 720709
-www.optimisefitness.com
+1.7.12.1493.g247bc0e
