@@ -1,94 +1,88 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 13/14] cmd_fetch_pack(): simplify computation of return value
-Date: Sun,  9 Sep 2012 08:19:48 +0200
-Message-ID: <1347171589-13327-14-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 12/14] fetch-pack: report missing refs even if no existing refs were received
+Date: Sun,  9 Sep 2012 08:19:47 +0200
+Message-ID: <1347171589-13327-13-git-send-email-mhagger@alum.mit.edu>
 References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:34 2012
+X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAatg-0002rp-Le
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:32 +0200
+	id 1TAatq-00032a-G7
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753078Ab2IIGVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753067Ab2IIGVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 9 Sep 2012 02:21:25 -0400
 Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:43233 "EHLO
 	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752516Ab2IIGUx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:53 -0400
-X-AuditID: 12074412-b7f216d0000008e3-e5-504c354582e7
+	by vger.kernel.org with ESMTP id S1752514Ab2IIGUv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:51 -0400
+X-AuditID: 12074412-b7f216d0000008e3-e2-504c3543260b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 42.9B.02275.5453C405; Sun,  9 Sep 2012 02:20:53 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id D1.9B.02275.3453C405; Sun,  9 Sep 2012 02:20:51 -0400 (EDT)
 Received: from michael.fritz.box (p57A25CBD.dip.t-dialin.net [87.162.92.189])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIlq029164
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIlp029164
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Sep 2012 02:20:51 -0400
+	Sun, 9 Sep 2012 02:20:49 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqOtq6hNg0NXOa9F1pZvJoqH3CrPF
-	7RXzmS1+tPQwW3ROlXVg9fj7/gOTx/Kl6xg9nvXuYfS4eEnZ4/MmuQDWKG6bpMSSsuDM9Dx9
-	uwTujMd7HjEW3OGqmP8jsYFxO0cXIyeHhICJxO+WGSwQtpjEhXvr2boYuTiEBC4zSlyb+IMF
-	wjnDJHF160F2kCo2AV2JRT3NTCC2iICaxMS2Q2BFzAJdjBLL1/1iA0kICwRITL3fzwxiswio
-	Smx7+p8VxOYVcJU4/n47I8Q6RYkf39eA1XACxV/N3A0WFxJwkdi08xrrBEbeBYwMqxjlEnNK
-	c3VzEzNzilOTdYuTE/PyUot0zfRyM0v0UlNKNzFCQkpoB+P6k3KHGAU4GJV4eFnueAcIsSaW
-	FVfmHmKU5GBSEuXVMPEJEOJLyk+pzEgszogvKs1JLT7EKMHBrCTCe5UdKMebklhZlVqUD5OS
-	5mBREuf9uVjdT0ggPbEkNTs1tSC1CCYrw8GhJMFrDDJUsCg1PbUiLTOnBCHNxMEJMpxLSqQ4
-	NS8ltSixtCQjHhQb8cXA6ABJ8QDtDQZp5y0uSMwFikK0nmLU5Zh9c8V9RiGWvPy8VClx3jKQ
-	IgGQoozSPLgVsATyilEc6GNhXmeQKh5g8oGb9ApoCRPQEpFnHiBLShIRUlINjGmdBYn3H1lt
-	ypiS7LA/K4U5bMqHI9P6Njw9ldR2zyEkWPbBabW1H1e/TXWcJSPep7FL3WPRysvcW58lVOyv
-	fX16dwGjpXKN4r1Pjmlsra8y/LWrv5/YU3i99qFcIq+6C6vrzOkXXLQ6j0s0z7qr 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqOts6hNgcHI/i0XXlW4mi4beK8wW
+	t1fMZ7b40dLDbNE5VdaB1ePv+w9MHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
+	7RK4M55c8Cx4y1Hx4lUHUwPjFPYuRg4OCQETicuvfLoYOYFMMYkL99azdTFycQgJXGaUmPj1
+	LSuEc4ZJYsL7P2wgVWwCuhKLepqZQGwRATWJiW2HWECKmAW6GCWWr/sFViQskCBxuX8xI4jN
+	IqAq8fTNTrAGXgFXiRdP3rFDrFOU+PF9DTOIzQkUfzVzN1i9kICLxKad11gnMPIuYGRYxSiX
+	mFOaq5ubmJlTnJqsW5ycmJeXWqRrppebWaKXmlK6iRESUEI7GNeflDvEKMDBqMTDy3LHO0CI
+	NbGsuDL3EKMkB5OSKK+GiU+AEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeq+xAOd6UxMqq1KJ8
+	mJQ0B4uSOO/Pxep+QgLpiSWp2ampBalFMFkZDg4lCV5jkKGCRanpqRVpmTklCGkmDk4QwQWy
+	gQdoQzBIIW9xQWJucWY6RNEpRkUpcd4ykIQASCKjNA9uACz2XzGKA/0jzOsMUsUDTBtw3a+A
+	BjMBDRZ55gEyuCQRISXVwHhYWnGutpSSC4sV63u3Lg3OOd7PM0wXHbp0RefqUbWXLjFW8w8l
+	XA1OsWw7sdph/swX0xfef/iPP+WW88TSY3OdhW+bvFipp/FHa8YVC6Z+3hdrVPYzSHsUrO1k
+	uKh+3uXT8tsXJrru+ZQVkPTtxhql2wxPp2mbaDzOXOlse1182uydvg/Ewm8psRRn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205057>
 
-Set the final value at initialization rather than initializing it then
-sometimes changing it.
+This fixes a test in t5500.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fetch-pack.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ builtin/fetch-pack.c  | 2 +-
+ t/t5500-fetch-pack.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 3d388b5..42078e5 100644
+index fb2a423..3d388b5 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
-@@ -1020,17 +1020,16 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	if (finish_connect(conn))
+@@ -1021,7 +1021,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
  		return 1;
  
--	ret = !ref;
--	if (sought.nr) {
--		/* If the heads to pull were given, we should have
--		 * consumed all of them by matching the remote.
--		 * Otherwise, 'git fetch remote no-such-ref' would
--		 * silently succeed without issuing an error.
--		 */
--		for (i = 0; i < sought.nr; i++)
--			error("no such remote ref %s", sought.items[i].string);
--		ret = 1;
--	}
-+	ret = !ref || sought.nr;
-+
-+	/*
-+	 * If the heads to pull were given, we should have consumed
-+	 * all of them by matching the remote.  Otherwise, 'git fetch
-+	 * remote no-such-ref' would silently succeed without issuing
-+	 * an error.
-+	 */
-+	for (i = 0; i < sought.nr; i++)
-+		error("no such remote ref %s", sought.items[i].string);
- 	while (ref) {
- 		printf("%s %s\n",
- 		       sha1_to_hex(ref->old_sha1), ref->name);
+ 	ret = !ref;
+-	if (ref && sought.nr) {
++	if (sought.nr) {
+ 		/* If the heads to pull were given, we should have
+ 		 * consumed all of them by matching the remote.
+ 		 * Otherwise, 'git fetch remote no-such-ref' would
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index acd41e8..894d945 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -403,7 +403,7 @@ test_expect_success 'set up tests of missing reference' '
+ 	EOF
+ '
+ 
+-test_expect_failure 'test lonely missing ref' '
++test_expect_success 'test lonely missing ref' '
+ 	(
+ 		cd client &&
+ 		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy
 -- 
 1.7.11.3
