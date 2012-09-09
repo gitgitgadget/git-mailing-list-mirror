@@ -1,106 +1,88 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 01/14] t5500: add tests of error output for missing refs
-Date: Sun,  9 Sep 2012 08:19:36 +0200
-Message-ID: <1347171589-13327-2-git-send-email-mhagger@alum.mit.edu>
-References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 00/14] Clean up how fetch_pack() handles the heads list
+Date: Sun,  9 Sep 2012 08:19:35 +0200
+Message-ID: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:20 2012
+X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAatT-0002cs-Nm
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:20 +0200
+	id 1TAatT-0002cs-8H
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281Ab2IIGUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 02:20:38 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:47922 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751867Ab2IIGU1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:27 -0400
-X-AuditID: 1207440d-b7f236d000000943-d5-504c352a1719
+	id S1751725Ab2IIGUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 02:20:25 -0400
+Received: from ALUM-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.20]:63089 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751290Ab2IIGUY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:24 -0400
+X-AuditID: 12074414-b7f846d0000008b8-94-504c3527043a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id DC.F1.02371.A253C405; Sun,  9 Sep 2012 02:20:26 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id CE.84.02232.7253C405; Sun,  9 Sep 2012 02:20:23 -0400 (EDT)
 Received: from michael.fritz.box (p57A25CBD.dip.t-dialin.net [87.162.92.189])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIle029164
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIld029164
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Sep 2012 02:20:25 -0400
+	Sun, 9 Sep 2012 02:20:21 -0400
 X-Mailer: git-send-email 1.7.11.3
-In-Reply-To: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqKtl6hNgMHu+rEXXlW4mi4beK8wW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPIsWRmVeSWpSXmKPExsUixO6iqKtu6hNgcPSqrkXXlW4mi4beK8wW
 	t1fMZ7b40dLDbNE5VdaB1ePv+w9MHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M1p6rjMW/OOuOPd2LUsD4zPOLkYODgkBE4n3DXVdjJxAppjEhXvr2boYuTiEBC4zShye
-	d58FwjnDJHGvfQETSBWbgK7Eop5mMFtEQE1iYtshsCJmgS5GieXrfrGBJIQFvCX+/3nJAmKz
-	CKhK/P6zmhnE5hVwkdi7/DYbxDpFiR/f14DFOQVcJV7N3M0IYgsB1WzaeY11AiPvAkaGVYxy
-	iTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghIcW7g/H/OplDjAIcjEo8vMx3vAOE
-	WBPLiitzDzFKcjApifJqmPgECPEl5adUZiQWZ8QXleakFh9ilOBgVhLhvcoOlONNSaysSi3K
-	h0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfAagwwVLEpNT61Iy8wpQUgzcXCCCC6Q
-	DTxAG4JBCnmLCxJzizPTIYpOMSpKifOWgSQEQBIZpXlwA2DR/4pRHOgfYd5akCoeYOKA634F
-	NJgJaLDIMw+QwSWJCCmpBsburaafl+c7Nm4yenhEa7LI6TwnKfv9/sFJ6ydxCc07xve7xcfE
-	UO6m08Y9G1I3tEcsm+5gkaggf3XFYdXw2gPmblOetH0QCOUOeJ2w+Nx1Z7ElKVraCgKbLH7/
-	2Nd59eDLeJm2qskrbq2pef9nVpj3DqfK+T+udF2cdXlu08cbBo0bmJ9VyiYpsRRn 
+	7RK4M47s72IteMNT8f/4WqYGxjlcXYycHBICJhKr979jg7DFJC7cWw9kc3EICVxmlHj64wIz
+	hHOGSeLTjiWMIFVsAroSi3qamUBsEQE1iYlth1hAipgFuhgllq/7BTZKWMBLYsvi9cwgNouA
+	qsTb9X3sIDavgItE24+PrBDrFCV+fF/DPIGRewEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQi
+	XQu93MwSvdSU0k2MkCAR2cF45KTcIUYBDkYlHl6mO94BQqyJZcWVuYcYJTmYlER5NUx8AoT4
+	kvJTKjMSizPii0pzUosPMUpwMCuJ8F5lB8rxpiRWVqUW5cOkpDlYlMR5vy1W9xMSSE8sSc1O
+	TS1ILYLJynBwKEnwfjAGahQsSk1PrUjLzClBSDNxcIIILpANPEAbgkG28xYXJOYWZ6ZDFJ1i
+	VJQS55UCSQiAJDJK8+AGwOL5FaM40D/CvCwgVTzAVADX/QpoMBPQYJFnHiCDSxIRUlINjNMa
+	NYpne0vNX3JGamPOTEFFZkfn9X7RezrOK+tavXhiI9/UsS3x0vZG5bfbP58qmVS5XFYj4pVH
+	3ZvO3+JFnZXp6ldPL1FaUWgbIDJPxvq2ZuniY2LrxW1f+iyOOrl//yy/+ULHHOKCma8Elr7k
+	9vv66/aDo3lZz6f+vprq3NRa2uKj5iTOpsRSnJFoqMVcVJwIAFz9luXCAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205052>
 
-If "git fetch-pack" is called with reference names that do not exist
-on the remote, then it should emit an error message
+This patch series depends on the "Add some string_list-related
+functions" series that I just submitted.
 
-    error: no such remote ref refs/heads/xyzzy
+This series is a significant rewrite of v2 based on the realization
+that the <nr_heads,heads> pair that is passed around in these
+functions is better expressed as a string_list.  I hope you will find
+that this version is shorter and clearer than its predecessors, even
+though its basic logic is mostly the same.
 
-This is currently broken if *only* missing references are passed to
-"git fetch-pack".
+Sorry for the false starts in v1 and v2 and the extra reviewing work
+that this will cost.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t5500-fetch-pack.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Michael Haggerty (14):
+  t5500: add tests of error output for missing refs
+  t5500: add tests of fetch-pack --all --depth=N $URL $REF
+  Rename static function fetch_pack() to http_fetch_pack()
+  fetch_pack(): reindent function decl and defn
+  Change fetch_pack() and friends to take string_list arguments
+  filter_refs(): do not check the same sought_pos twice
+  fetch_pack(): update sought->nr to reflect number of unique entries
+  filter_refs(): delete matched refs from sought list
+  filter_refs(): build refs list as we go
+  filter_refs(): simplify logic
+  cmd_fetch_pack(): return early if finish_connect() fails
+  fetch-pack: report missing refs even if no existing refs were
+    received
+  cmd_fetch_pack(): simplify computation of return value
+  fetch-pack: eliminate spurious error messages
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index e80a2af..6fa1cef 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -397,4 +397,34 @@ test_expect_success 'test duplicate refs from stdin' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'set up tests of missing reference' '
-+	cat >expect-error <<-\EOF
-+	error: no such remote ref refs/heads/xyzzy
-+	EOF
-+'
-+
-+test_expect_failure 'test lonely missing ref' '
-+	(
-+		cd client &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy
-+	) >/dev/null 2>error-m &&
-+	test_cmp expect-error error-m
-+'
-+
-+test_expect_success 'test missing ref after existing' '
-+	(
-+		cd client &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/A refs/heads/xyzzy
-+	) >/dev/null 2>error-em &&
-+	test_cmp expect-error error-em
-+'
-+
-+test_expect_success 'test missing ref before existing' '
-+	(
-+		cd client &&
-+		test_must_fail git fetch-pack --no-progress .. refs/heads/xyzzy refs/heads/A
-+	) >/dev/null 2>error-me &&
-+	test_cmp expect-error error-me
-+'
-+
- test_done
+ builtin/fetch-pack.c  | 169 +++++++++++++++++++-------------------------------
+ fetch-pack.h          |  20 ++++--
+ http-walker.c         |   4 +-
+ t/t5500-fetch-pack.sh |  47 +++++++++++++-
+ transport.c           |  12 ++--
+ 5 files changed, 130 insertions(+), 122 deletions(-)
+
 -- 
 1.7.11.3
