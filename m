@@ -1,140 +1,233 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] Add a new function, string_list_remove_duplicates()
-Date: Sun, 09 Sep 2012 02:45:23 -0700
-Message-ID: <7vfw6rsf64.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 4/4] Add a function string_list_longest_prefix()
+Date: Sun, 09 Sep 2012 02:54:23 -0700
+Message-ID: <7vbohfser4.fsf@alter.siamese.dyndns.org>
 References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
- <1347169990-9279-4-git-send-email-mhagger@alum.mit.edu>
+ <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Sep 09 11:46:17 2012
+X-From: git-owner@vger.kernel.org Sun Sep 09 11:55:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAe5o-0004SJ-Mj
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 11:46:17 +0200
+	id 1TAeEc-00045M-NR
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 11:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281Ab2IIJp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 05:45:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36043 "EHLO
+	id S1752870Ab2IIJy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 05:54:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39249 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127Ab2IIJpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Sep 2012 05:45:25 -0400
+	id S1752148Ab2IIJy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Sep 2012 05:54:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D02B7751;
-	Sun,  9 Sep 2012 05:45:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D5C878D8;
+	Sun,  9 Sep 2012 05:54:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fLSd9GZh2k6Rgfmdxu5HdMMh80s=; b=TDutdF
-	nJPtUlHOAu2daa13k17EUA4OLXkggFH9YZbnn2KNTJqhK6IxGmtt8YX53RcJk9Y0
-	x07vJqT8NFptITPAuqS3gW3ZT2+GiWGWMBuRK8lhcaoXFaGhljjXr6i+hpkZJF6c
-	xjQhDZpH6esq/Qjw6YBSFe9uTnjnxGwuR+byc=
+	:content-type; s=sasl; bh=xheYkvuBZQlcb8eoDR6PxYMxJcs=; b=fNG0oy
+	iBOp5b3gqXHmwXMRt+M8bpVrFiyV5OXylU6o2mA4AtIPZww5YDIGy3hWo2EThakM
+	9Y2r0S3GPcb06PcI8UHAztzCCvrgLztO//xnskls3Yu5m2Nw409HD5Pffa4+VTRj
+	ptFi++JNHDWfS8f7c/rtByTP10rHL+34x841U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yTBLG7lxTXz7IRRbXeg61QJsK/kOPDo/
-	yzCWeLtNmPvaoeLFJt3a8j0uzp7xnqDc5kJiw29U940BCV5r9a7dpsO6AK7hh7GM
-	7Wwl70LLAXUbyQWIU0L9v5sNzrW53uy2J9AjmoEpfCWosw8Rf7EqnC1HMN1hShYz
-	x2pD708MgcA=
+	:content-type; q=dns; s=sasl; b=nLZv6lZ6pO6fJMPuyJyc9XodkymPRNiY
+	ATVrBLApgfwyYyv0xb1+KAXP43C/NnK67BuSsdiJYQjgk5ZuBGfPHeYnJ1qDeTl8
+	e7UAuf+DNMpliCQE/QWH7VjShHHeWLvL2Plo7Ej6tUO6EGnBLmn5q5qLFzvEYizl
+	8GT96HKkmfw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73BB47750;
-	Sun,  9 Sep 2012 05:45:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BB6678D7;
+	Sun,  9 Sep 2012 05:54:26 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A2F1774F; Sun,  9 Sep 2012
- 05:45:24 -0400 (EDT)
-In-Reply-To: <1347169990-9279-4-git-send-email-mhagger@alum.mit.edu> (Michael
- Haggerty's message of "Sun, 9 Sep 2012 07:53:09 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1917F78D6; Sun,  9 Sep 2012
+ 05:54:25 -0400 (EDT)
+In-Reply-To: <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu> (Michael
+ Haggerty's message of "Sun, 9 Sep 2012 07:53:10 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1441ECC2-FA63-11E1-AA9D-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 56672A3A-FA64-11E1-9E4E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205073>
 
 Michael Haggerty <mhagger@alum.mit.edu> writes:
 
 > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
->  Documentation/technical/api-string-list.txt |  4 ++++
->  string-list.c                               | 17 +++++++++++++++++
->  string-list.h                               |  5 +++++
->  3 files changed, 26 insertions(+)
+>  Documentation/technical/api-string-list.txt |  8 ++++++++
+>  string-list.c                               | 20 +++++++++++++++++++
+>  string-list.h                               |  8 ++++++++
+>  t/t0063-string-list.sh                      | 30 +++++++++++++++++++++++++++++
+>  test-string-list.c                          | 22 +++++++++++++++++++++
+>  5 files changed, 88 insertions(+)
 >
 > diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-> index 15b8072..9206f8f 100644
+> index 9206f8f..291ac4c 100644
 > --- a/Documentation/technical/api-string-list.txt
 > +++ b/Documentation/technical/api-string-list.txt
-> @@ -104,6 +104,10 @@ write `string_list_insert(...)->util = ...;`.
->  	Look up a given string in the string_list, returning the containing
->  	string_list_item. If the string is not found, NULL is returned.
+> @@ -68,6 +68,14 @@ Functions
+>  	to be deleted.  Preserve the order of the items that are
+>  	retained.
 >  
-> +`string_list_remove_duplicates`::
+> +`string_list_longest_prefix`::
 > +
-> +	Remove all but the first entry that has a given string value.
+> +	Return the longest string within a string_list that is a
+> +	prefix (in the sense of prefixcmp()) of the specified string,
+> +	or NULL if no such prefix exists.  This function does not
+> +	require the string_list to be sorted (it does a linear
+> +	search).
+> +
+>  `print_string_list`::
 
-Unlike the previous patch, free_util is not documented?
+This may feel like outside the scope of this series, but since this
+series will be the main culprit for adding many new functions to
+this API in the recent history...
 
-It is kind of shame that the string list must be sorted for this
-function to work, but I guess you do not have a need for a version
-that works on both sorted and unsorted (yet).  We can introduce a
-variant with "unsorted_" prefix later when it becomes necessary, so
-OK.
+ - We may want to name things a bit more consistently so that people
+   can tell which ones can be called on any string list, which ones
+   are sorted list only, and which ones are unsorted one only.
 
->  * Functions for unsorted lists only
->  
->  `string_list_append`::
+   In addition, the last category _may_ need a bit more thought.
+   Calling unsorted_string_list_lookup() on an already sorted list
+   is not a crime---it is just a stupid thing to do.
+
+ - Why are these new functions described at the top, not appended at
+   the bottom?  I would have expected either an alphabetical, or a
+   more generic ones first (i.e. print and clear are a lot "easier"
+   ones compared to filter and prefix that are very much more
+   specialized).
+
 > diff --git a/string-list.c b/string-list.c
-> index 72610ce..bfef6cf 100644
+> index bfef6cf..043f6c4 100644
 > --- a/string-list.c
 > +++ b/string-list.c
-> @@ -92,6 +92,23 @@ struct string_list_item *string_list_lookup(struct string_list *list, const char
->  	return list->items + i;
+> @@ -136,6 +136,26 @@ void filter_string_list(struct string_list *list, int free_util,
+>  	list->nr = dst;
 >  }
 >  
-> +void string_list_remove_duplicates(struct string_list *list, int free_util)
+> +char *string_list_longest_prefix(const struct string_list *prefixes,
+> +				 const char *string)
 > +{
-> +	if (list->nr > 1) {
-> +		int src, dst;
-> +		for (src = dst = 1; src < list->nr; src++) {
-> +			if (!strcmp(list->items[dst - 1].string, list->items[src].string)) {
-> +				if (list->strdup_strings)
-> +					free(list->items[src].string);
-> +				if (free_util)
-> +					free(list->items[src].util);
-> +			} else
-> +				list->items[dst++] = list->items[src];
+> +	int i, max_len = -1;
+> +	char *retval = NULL;
+> +
+> +	for (i = 0; i < prefixes->nr; i++) {
+> +		char *prefix = prefixes->items[i].string;
+> +		if (!prefixcmp(string, prefix)) {
+> +			int len = strlen(prefix);
+> +			if (len > max_len) {
+> +				retval = prefix;
+> +				max_len = len;
+> +			}
 > +		}
-> +		list->nr = dst;
 > +	}
+> +
+> +	return retval;
 > +}
 > +
->  int for_each_string_list(struct string_list *list,
->  			 string_list_each_func_t fn, void *cb_data)
+>  void string_list_clear(struct string_list *list, int free_util)
 >  {
+>  	if (list->items) {
 > diff --git a/string-list.h b/string-list.h
-> index 84996aa..c4dc659 100644
+> index c4dc659..680916c 100644
 > --- a/string-list.h
 > +++ b/string-list.h
-> @@ -38,6 +38,7 @@ int for_each_string_list(struct string_list *list,
+> @@ -38,6 +38,14 @@ int for_each_string_list(struct string_list *list,
 >  void filter_string_list(struct string_list *list, int free_util,
 >  			string_list_each_func_t fn, void *cb_data);
 >  
+> +/*
+> + * Return the longest string in prefixes that is a prefix (in the
+> + * sense of prefixcmp()) of string, or NULL if no such prefix exists.
+> + * This function does not require the string_list to be sorted (it
+> + * does a linear search).
+> + */
+> +char *string_list_longest_prefix(const struct string_list *prefixes, const char *string);
 > +
+>  
 >  /* Use these functions only on sorted lists: */
 >  int string_list_has_string(const struct string_list *list, const char *string);
->  int string_list_find_insert_index(const struct string_list *list, const char *string,
-> @@ -47,6 +48,10 @@ struct string_list_item *string_list_insert_at_index(struct string_list *list,
->  						     int insert_at, const char *string);
->  struct string_list_item *string_list_lookup(struct string_list *list, const char *string);
+> diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
+> index 0eede83..fa96eba 100755
+> --- a/t/t0063-string-list.sh
+> +++ b/t/t0063-string-list.sh
+> @@ -15,6 +15,14 @@ string_list_split_in_place() {
+>  	"
+>  }
 >  
-> +/* Remove all but the first entry that has a given string value. */
-> +void string_list_remove_duplicates(struct string_list *list, int free_util);
+> +longest_prefix() {
+> +	test "$(test-string-list longest_prefix "$1" "$2")" = "$3"
+> +}
 > +
+> +no_longest_prefix() {
+> +	test_must_fail test-string-list longest_prefix "$1" "$2"
+> +}
 > +
->  /* Use these functions only on unsorted lists: */
->  struct string_list_item *string_list_append(struct string_list *list, const char *string);
->  void sort_string_list(struct string_list *list);
+>  string_list_split_in_place "foo:bar:baz" ":" "-1" <<EOF
+>  3
+>  [0]: "foo"
+> @@ -60,4 +68,26 @@ string_list_split_in_place ":" ":" "-1" <<EOF
+>  [1]: ""
+>  EOF
+>  
+> +test_expect_success "test longest_prefix" '
+> +	no_longest_prefix - '' &&
+> +	no_longest_prefix - x &&
+> +	longest_prefix "" x "" &&
+> +	longest_prefix x x x &&
+> +	longest_prefix "" foo "" &&
+> +	longest_prefix : foo "" &&
+> +	longest_prefix f foo f &&
+> +	longest_prefix foo foobar foo &&
+> +	longest_prefix foo foo foo &&
+> +	no_longest_prefix bar foo &&
+> +	no_longest_prefix bar:bar foo &&
+> +	no_longest_prefix foobar foo &&
+> +	longest_prefix foo:bar foo foo &&
+> +	longest_prefix foo:bar bar bar &&
+> +	longest_prefix foo::bar foo foo &&
+> +	longest_prefix foo:foobar foo foo &&
+> +	longest_prefix foobar:foo foo foo &&
+> +	longest_prefix foo: bar "" &&
+> +	longest_prefix :foo bar ""
+> +'
+> +
+>  test_done
+> diff --git a/test-string-list.c b/test-string-list.c
+> index f08d3cc..c7e71f2 100644
+> --- a/test-string-list.c
+> +++ b/test-string-list.c
+> @@ -19,6 +19,28 @@ int main(int argc, char **argv)
+>  		return 0;
+>  	}
+>  
+> +	if (argc == 4 && !strcmp(argv[1], "longest_prefix")) {
+> +		/* arguments: <colon-separated-prefixes>|- <string> */
+> +		struct string_list prefixes = STRING_LIST_INIT_NODUP;
+> +		int retval;
+> +		char *prefix_string = xstrdup(argv[2]);
+> +		char *string = argv[3];
+> +		char *match;
+> +
+> +		if (strcmp(prefix_string, "-"))
+> +			string_list_split_in_place(&prefixes, prefix_string, ':', -1);
+> +		match = string_list_longest_prefix(&prefixes, string);
+> +		if (match) {
+> +			printf("%s\n", match);
+> +			retval = 0;
+> +		}
+> +		else
+> +			retval = 1;
+> +		string_list_clear(&prefixes, 0);
+> +		free(prefix_string);
+> +		return retval;
+> +	}
+> +
+>  	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+>  		argv[1] ? argv[1] : "(there was none)");
+>  	return 1;
