@@ -1,72 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/7] t0000: verify that real_path() works correctly with
- absolute paths
-Date: Sat, 08 Sep 2012 22:27:42 -0700
-Message-ID: <7vvcfnsr3l.fsf@alter.siamese.dyndns.org>
-References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu>
- <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu>
- <7v627q21hl.fsf@alter.siamese.dyndns.org> <504C1B8A.3000406@alum.mit.edu>
- <7vfw6ru7de.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Sep 09 07:28:41 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/4] Add some string_list-related functions
+Date: Sun,  9 Sep 2012 07:53:06 +0200
+Message-ID: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 09 07:54:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAa4T-0003GY-RY
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 07:28:38 +0200
+	id 1TAaTc-0003iy-NC
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 07:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819Ab2IIF1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 01:27:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53973 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751521Ab2IIF1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Sep 2012 01:27:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA8BC445D;
-	Sun,  9 Sep 2012 01:27:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KE/mp7dgxUjDmijh7nzMjAm8ztk=; b=YnP3bz
-	Ky9TFf06TJ1FsT/FSSmFndmOOgO9tNogKfJqf3XsGtqhQCgu0d7IhDLnQcZNZWXL
-	S7McPinoNDWLtHL3KbJIxl6V/dd5xeplOa9+jig1SNMk/Na89+hdXqWNf6yNIkHk
-	dfgoQrXFLO87rZTlKC1DL96Y1pkvWvuO1k08I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z+AJRF8R9+2ryZi4TeXfHgLgWfNpuWwv
-	UiKekBwAFh9TABx0me/q4+SNUVH6D7ejoVIH5jwSQFShKucTxqqLIoNqL4fkIYgu
-	ZRc1r4czFv4qikN4mcNEOwxhOVqcolXgSeWWPooeHKxDUxqPl74nRLxHG7lk6LTw
-	Nov4rMbdFRU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B81C3445C;
-	Sun,  9 Sep 2012 01:27:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36345445B; Sun,  9 Sep 2012
- 01:27:44 -0400 (EDT)
-In-Reply-To: <7vfw6ru7de.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 08 Sep 2012 21:50:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1522A614-FA3F-11E1-A921-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751917Ab2IIFxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 01:53:43 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:49230 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751521Ab2IIFxn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 01:53:43 -0400
+X-AuditID: 1207440d-b7f236d000000943-97-504c2ee640f4
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id AC.D1.02371.6EE2C405; Sun,  9 Sep 2012 01:53:42 -0400 (EDT)
+Received: from michael.fritz.box (p57A25CBD.dip.t-dialin.net [87.162.92.189])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q895raZ9028212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 9 Sep 2012 01:53:40 -0400
+X-Mailer: git-send-email 1.7.11.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqPtMzyfA4OR9TouuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5YsLmDsWALZ8X/S5fYGxgv
+	sXUxcnJICJhIHHg7gxXCFpO4cG89UJyLQ0jgMqPEjteTmCCcM0wSuyauYgSpYhPQlVjU08wE
+	YosIqElMbDvEAmIzCzhIbP7cCFYjLGAt8WHRPaCpHBwsAqoSV+9WgYR5BZwldm1cB7VYUeLH
+	9zXMExi5FzAyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdLLzSzRS00p3cQI8T3vDsb/62QO
+	MQpwMCrx8DLf8Q4QYk0sK67MPcQoycGkJMprru0TIMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE
+	9yo7UI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMErCAxxIcGi1PTU
+	irTMnBKENBMHJ4jgAtnAA7TBGKSQt7ggMbc4Mx2i6BSjopQ4Ly9IQgAkkVGaBzcAFqWvGMWB
+	/hHmVQOp4gFGOFz3K6DBTECDRZ55gAwuSURISTUwVjCcsvZo5svTN2s5vLJZb+XjlusHzwn5
+	GMv0/l9Z0+oYkTz1V+/Rqnlq0w8aKbxnrvjF5ha4TJSpf9bcsw9UG/y9nzYui++alCX0NGFv
+	mPPcdpEbGu19qT2yK9cWbonp2fLhimaOoP200q1V3hL2RxlVD7ww+PnNZJsH56E1Edcs7esY
+	9J8osRRnJBpqMRcVJwIAz4KcKq0CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205046>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This patch series adds a few functions to the string_list API.  They
+will be used in two upcoming patch series.  Unfortunately, both of the
+series (which are otherwise logically independent) need the same
+function; therefore, I am submitting these string-list enhancements as
+a separate series on which the other two can depend.
 
-> (4) if it only runs once at the very beginning of the test and sets
-> a variable that is named prominently clear what it means and lives
-> throughout the test, then we do not even have to say "hopefully" and
-> appear lazy and loose to the readers of the test who wonders what
-> happens when the path does exist; doing so will help reducing the
-> noise on the mailing list in the future.
+This patch series applies to current master.
 
-Having said that, I really do not deeply care either way.  If you
-are rerollilng the series for other changes, I wouldn't shed tears
-even if I do not see any change to this part.
+Michael Haggerty (4):
+  Add a new function, string_list_split_in_place()
+  Add a new function, filter_string_list()
+  Add a new function, string_list_remove_duplicates()
+  Add a function string_list_longest_prefix()
+
+ .gitignore                                  |  1 +
+ Documentation/technical/api-string-list.txt | 32 ++++++++++
+ Makefile                                    |  1 +
+ string-list.c                               | 77 ++++++++++++++++++++++++
+ string-list.h                               | 41 +++++++++++++
+ t/t0063-string-list.sh                      | 93 +++++++++++++++++++++++++++++
+ test-string-list.c                          | 47 +++++++++++++++
+ 7 files changed, 292 insertions(+)
+ create mode 100755 t/t0063-string-list.sh
+ create mode 100644 test-string-list.c
+
+-- 
+1.7.11.3
