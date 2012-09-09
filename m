@@ -1,74 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: checkout extra files
-Date: Sat, 08 Sep 2012 20:31:49 -0700
-Message-ID: <7voblfub16.fsf@alter.siamese.dyndns.org>
-References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
- <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
- <7vsjayew50.fsf@alter.siamese.dyndns.org>
- <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
- <7vd322ebsz.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
- <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
- <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
- <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
- <3DA7C9D97E19414C81F8D73CB66171DA@PhilipOakley>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 5/7] t0000: verify that real_path() works correctly with
+ absolute paths
+Date: Sun, 09 Sep 2012 06:31:06 +0200
+Message-ID: <504C1B8A.3000406@alum.mit.edu>
+References: <1346746470-23127-1-git-send-email-mhagger@alum.mit.edu> <1346746470-23127-6-git-send-email-mhagger@alum.mit.edu> <7v627q21hl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Angelo Borsotti" <angelo.borsotti@gmail.com>,
-	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sun Sep 09 05:32:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 09 06:32:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAYGR-00049U-8o
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 05:32:51 +0200
+	id 1TAZBm-0004tK-DF
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 06:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411Ab2IIDbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Sep 2012 23:31:55 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49598 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752223Ab2IIDby (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Sep 2012 23:31:54 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F5AA95A1;
-	Sat,  8 Sep 2012 23:31:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HJJOAP5mB+0md70galbT9sj6wSE=; b=Gnijnl
-	Fp+1BJQ8GGKe2//Zu0gUiBSWfZ5PGep3R2Bsz++Ej4YKi/3ATQIrdPN6E5uUbwIV
-	W9rNc+OwTrUrsCXQERZxv0qb0H9b1EKlMr26xwUgOzhbzvD69xJ4fVaNOVmfkRYk
-	3o5T0dDchHJ7wfSKw/bIQ5ehlSIZ5M9zUU+W8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wyrbELuru//qSf5f9tBkSSjmuRbWeOAj
-	Bn4GvNFaoYL+y3EPBIy2k/6ggviWJCsC9ER07asPl0nxM/F4DvgP7kXiu9b2Ea2o
-	bgppuasM3rooDBhQrN6rLz8La6kRFtyNmNpGPs+hJKM8YCLECI1FY/Od8x1iPMHl
-	Wwei6BkzK8s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A2A295A0;
-	Sat,  8 Sep 2012 23:31:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08A66959F; Sat,  8 Sep 2012
- 23:31:50 -0400 (EDT)
-In-Reply-To: <3DA7C9D97E19414C81F8D73CB66171DA@PhilipOakley> (Philip Oakley's
- message of "Sat, 8 Sep 2012 21:40:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4B69720-FA2E-11E1-B874-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751206Ab2IIEbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 00:31:15 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:47940 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750888Ab2IIEbO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 00:31:14 -0400
+X-AuditID: 1207440c-b7f616d00000270b-a4-504c1b91473c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 62.D8.09995.19B1C405; Sun,  9 Sep 2012 00:31:13 -0400 (EDT)
+Received: from [192.168.69.140] (p57A25CBD.dip.t-dialin.net [87.162.92.189])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q894V9FY025316
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 9 Sep 2012 00:31:11 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7v627q21hl.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHKsWRmVeSWpSXmKPExsUixO6iqDtR2ifAYPlfcYuuK91MFg29V5gt
+	nsy9y+zA7PHwVRe7x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGf8ermEveA2f0XfrveMDYzn
+	eboYOTkkBEwkHizczQRhi0lcuLeerYuRi0NI4DKjxIsN/1ghnNNMEptvHQSr4hXQljhy/wcj
+	iM0ioCox7cs7dhCbTUBXYlFPM1iNqECIxIzLk5kh6gUlTs58wgJiiwioSUxsOwRmMwuYStx6
+	OJMNxBYWiJW4dH411LLljBI/etaANXMKmEksmvGEFaJBR+Jd3wNmCFteYvvbOcwTGAVmIdkx
+	C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEhC/PDsZv62QO
+	MQpwMCrx8DLf8Q4QYk0sK67MPcQoycGkJMqrJekTIMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE
+	9yo7UI43JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMHbIwXUKFiUmp5a
+	kZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K1vhiYLyCpHiA9paBtPMWFyTmAkUhWk8x6nLc
+	/bjiPqMQS15+XqqUOG80SJEASFFGaR7cCliyesUoDvSxMO98kCoeYKKDm/QKaAkT0BKRZx4g
+	S0oSEVJSDYy+XTuSPJjXO8yM01P/4Djzo2+R+Zz7rvNS66S0bp3pM/7OKSihZVPO9EXjeuqW
+	wkreXRMXLf7LlRqmcVpANjJT6ZHjHgbZc397dviGPmxr2qfKN4N9no7Szqt/uD7X 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205036>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On 09/07/2012 01:08 AM, Junio C Hamano wrote:
+> mhagger@alum.mit.edu writes:
+> 
+>> From: Michael Haggerty <mhagger@alum.mit.edu>
+>>
+>> There is currently a bug: if passed an absolute top-level path that
+>> doesn't exist (e.g., "/foo") it incorrectly interprets the path as a
+>> relative path (e.g., returns "$(pwd)/foo").  So mark the test as
+>> failing.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  t/t0000-basic.sh | 12 +++++++++++-
+>>  1 file changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+>> index 1a51634..ad002ee 100755
+>> --- a/t/t0000-basic.sh
+>> +++ b/t/t0000-basic.sh
+>> @@ -458,7 +458,17 @@ test_expect_success 'real path rejects the empty string' '
+>>  	test_must_fail test-path-utils real_path ""
+>>  '
+>>  
+>> -test_expect_success SYMLINKS 'real path works as expected' '
+>> +test_expect_failure 'real path works on absolute paths' '
+>> +	nopath="hopefully-absent-path" &&
+>> +	test "/" = "$(test-path-utils real_path "/")" &&
+>> +	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
+> 
+> You could perhaps do
+> 
+> 	sfx=0 &&
+>         while test -e "/$nopath$sfx"
+>         do
+> 		sfx=$(( $sfx + 1 ))
+> 	done && nopath=$nopath$sfx &&
+> 	test "/$nopath" = "$(test-path-utils real_path "/$nopath")" &&
+> 
+> if you really cared.
 
-> Having said that, it would therefore be better to point folk at gitcli
-> in a few more places, not just the 'see also' line at the very end of
-> the general 'git' page, and buried within rev-parse.
+The possibility is obvious.  Are you advocating it?
 
-Didn't we update the very early part of git(1) for exactly for that
-reason recently?
+I considered that approach, but came to the opinion that it would be
+overkill that would only complicate the code for no real advantage,
+given that (1) I picked a name that is pretty implausible for an
+existing file, (2) the test suite only reads the file, never writes it
+(so there is no risk that a copy from a previous run gets left behind),
+(3) it's only test suite code, and any failures would have minor
+consequences.
+
+Please let me know if you assess the situation differently.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
