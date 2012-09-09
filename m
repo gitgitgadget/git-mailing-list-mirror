@@ -1,95 +1,83 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 02/14] t5500: add tests of fetch-pack --all --depth=N $URL $REF
-Date: Sun,  9 Sep 2012 08:19:37 +0200
-Message-ID: <1347171589-13327-3-git-send-email-mhagger@alum.mit.edu>
-References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 08:22:05 2012
+From: David Chanters <david.chanters@googlemail.com>
+Subject: Keeping two repos in sync
+Date: Sun, 9 Sep 2012 09:12:32 +0100
+Message-ID: <CACffvTqt9UHw1wLVDZ=PDqJuktcD8M7uUfnnuDZ5cf9gwxsSqA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 09 10:13:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAauC-0003OI-LY
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:22:04 +0200
+	id 1TAceD-00087k-Gv
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 10:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698Ab2IIGVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 02:21:13 -0400
-Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:50480 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751949Ab2IIGU3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:29 -0400
-X-AuditID: 1207440f-b7fde6d00000095c-95-504c352c2efa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id B8.8A.02396.C253C405; Sun,  9 Sep 2012 02:20:29 -0400 (EDT)
-Received: from michael.fritz.box (p57A25CBD.dip.t-dialin.net [87.162.92.189])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIlf029164
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Sep 2012 02:20:27 -0400
-X-Mailer: git-send-email 1.7.11.3
-In-Reply-To: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqKtr6hNgsG4fo0XXlW4mi4beK8wW
-	t1fMZ7b40dLDbNE5VdaB1ePv+w9MHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M+79XM1csJirovuLUAPjdo4uRk4OCQETiVvL3rFB2GISF+6tB7OFBC4zSrRsiuxi5AKy
-	zzBJbP08lREkwSagK7Gop5kJxBYRUJOY2HaIBaSIWaCLUWL5ul9g3cICQRK9O08xg9gsAqoS
-	53Z0gNm8Ai4Scy7sYofYpijx4/sasDingKvEq5m7GSE2u0hs2nmNdQIj7wJGhlWMcok5pbm6
-	uYmZOcWpybrFyYl5ealFuiZ6uZkleqkppZsYIQHFv4Oxa73MIUYBDkYlHt6VN70DhFgTy4or
-	cw8xSnIwKYnyapj4BAjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b3KDpTjTUmsrEotyodJSXOw
-	KInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwfjAGahQsSk1PrUjLzClBSDNxcIIILpANPEAb
-	roMU8hYXJOYWZ6ZDFJ1iVJQS55UCOUsAJJFRmgc3ABb7rxjFgf4R5mUBqeIBpg247ldAg5mA
-	Bos88wAZXJKIkJJqYIwr5pIJ/bfgZrba0c43/twPez6f3v5htq/f1x0/fv5xXmFwQypiWd2S
-	TVMvSpX01EwUzrvdxmdha60Ye5D9uo/htDPPmWTUv38R/ddVtjH7Zp58/TVNxjvTSgM6DT97
-	CkwLm38j/BXHZblZji/PuZpt6Eibsib64J8VVxWENp2eZxmodnHyUkYlluKMREMt 
+	id S1752134Ab2IIIMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 04:12:35 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:59213 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751374Ab2IIIMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Sep 2012 04:12:33 -0400
+Received: by obbuo13 with SMTP id uo13so1487668obb.19
+        for <git@vger.kernel.org>; Sun, 09 Sep 2012 01:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=pu7phxOG3te2Am79IxaWvulkeVJNPdn2/nIqEtGX4Yg=;
+        b=irZy+T4aTJajH17o8JHFMI3GO9LKv+hWAz/ffodI45y+DMHiDZEdQE6ISouhfHmpGR
+         aV/Z6kS8eV9lBiRnOfSaWol+UhifQ3m6IRFq/LDNR1hWeSLKgRlqVfuX7SFHmkpKLJne
+         rZjD3JvsmpGmkzAKDpBc9EOLAEM75w2k0QD3W7uylLynRA8uQphBkyLKUQU6WLo/E47+
+         TAqE9WZG9T15bo36VbULUbktZ6qdNseMbUJtj18mr/EA8tqHCNlbdNop6a7FCMhgveIo
+         Xgl5KHKK7VokGRxSGN2xenLEo9s8q6oLVQ4HhOGt3GeKOMXiMSVE0OezfoK2jPKg37z8
+         RiHQ==
+Received: by 10.182.174.68 with SMTP id bq4mr10645205obc.53.1347178352491;
+ Sun, 09 Sep 2012 01:12:32 -0700 (PDT)
+Received: by 10.76.85.170 with HTTP; Sun, 9 Sep 2012 01:12:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205066>
 
-Document some bugs in "git fetch-pack":
+Hi all,
 
-1. If "git fetch-pack" is called with "--all", "--depth", and an
-explicit existing non-tag reference to fetch, then it falsely reports
-that the reference was not found, even though it was fetched
-correctly.
+I'm wondering how best to go about this problem.  I've got two
+separate git repositories -- one is a portable version which I'll call
+"portable", the other is part of a BSD project, which I'll call "bsd".
+ Both repositories have the same set of *conceptual* files in them,
+it's just that the portable repository has additional files which are
+not found in the bsd repository.  It should be noted that the bsd
+repository is an automatically managed cvsexport clone of a CVS
+repository -- but I don't think this matters here, as we're just
+talking about two git repositories.
 
-2. If "git fetch-pack" is called with "--all", "--depth", and an
-explicit existing tag reference to fetch, then it segfaults in
-filter_refs() because return_refs is used without having been
-initialized.
+The "workflow" if you can call it that, is commits happen in the bsd
+repository and are then put in the portable repo.  At the moment, I am
+using git grafts to do this.  The important point to remember here is
+the two repositories DO NOT have any common history to them -- it's
+just that where the files are the same in both the bsd and portable
+repository I can see and hence tell git, where to graft the two master
+branches from each repository and for me to merge bsd:master ->
+portable:master.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t5500-fetch-pack.sh | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+However, I am wondering how best to handle this situation.  It's
+pretty convoluted -- not to mention the fact that git grafts are never
+permanent.  What I'd like is for some "safe" way of setting up an
+initial git graft which tied the two master branches between bsd and
+portable to reflect changes on bsd:master not on portable:master and
+then for me to treat those two branches as though they shared common
+history so that I can merge one to the other.  Unfortunately, what I'm
+doing at the moment is each time changes happen to bsd:master, I'm
+having to reset the git graft each time; and since that operation is a
+local one, it makes things rather awkward in a shared repository
+situation as I am the sole person who can perform these merges.
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 6fa1cef..15d277f 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -427,4 +427,19 @@ test_expect_success 'test missing ref before existing' '
- 	test_cmp expect-error error-me
- '
- 
-+test_expect_failure 'test --all, --depth, and explicit head' '
-+	(
-+		cd client &&
-+		git fetch-pack --no-progress --all --depth=1 .. refs/heads/A
-+	) >out-adh 2>error-adh
-+'
-+
-+test_expect_failure 'test --all, --depth, and explicit tag' '
-+	git tag OLDTAG refs/heads/B~5 &&
-+	(
-+		cd client &&
-+		git fetch-pack --no-progress --all --depth=1 .. refs/tags/OLDTAG
-+	) >out-adt 2>error-adt
-+'
-+
- test_done
--- 
-1.7.11.3
+I'm guessing I could rebase at some point and push those changes out?
+I'm just wondering how other people handle this situation or if it's
+just unique to me?
+
+Kindly,
+
+David
