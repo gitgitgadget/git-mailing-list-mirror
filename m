@@ -1,84 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/14] Clean up how fetch_pack() handles the heads
- list
-Date: Sun, 09 Sep 2012 11:15:04 -0700
-Message-ID: <7vhar7qd07.fsf@alter.siamese.dyndns.org>
-References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
- <7v7gs3sdjx.fsf@alter.siamese.dyndns.org>
- <20120909130532.GA27754@sigill.intra.peff.net>
+Subject: Re: checkout extra files
+Date: Sun, 09 Sep 2012 11:23:22 -0700
+Message-ID: <7vd31vqcmd.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+ <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
+ <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
+ <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
+ <3DA7C9D97E19414C81F8D73CB66171DA@PhilipOakley>
+ <7voblfub16.fsf@alter.siamese.dyndns.org> <vpq627ntii0.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 09 20:15:19 2012
+Cc: "Philip Oakley" <philipoakley@iee.org>,
+	"Angelo Borsotti" <angelo.borsotti@gmail.com>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Sep 09 20:24:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAm2Q-000250-NO
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 20:15:19 +0200
+	id 1TAmBC-0001Ko-B8
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 20:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754240Ab2IISPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 14:15:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55595 "EHLO
+	id S1754351Ab2IISXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 14:23:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58971 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754050Ab2IISPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Sep 2012 14:15:07 -0400
+	id S1754173Ab2IISXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Sep 2012 14:23:24 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE1F0963D;
-	Sun,  9 Sep 2012 14:15:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19DC59860;
+	Sun,  9 Sep 2012 14:23:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pnnxdCmlZKbLXufbvXtd5lxLJ24=; b=gsbhzB
-	29i9ibtWFTwb63IaGBpU8Aaq/5mYYzdNDRlJNFMCaOhJN++3Y5R/UKanEaRSRYOy
-	KZg3M4tBsA1uPDZKYaklcPNYrkytkzvqAGVBqtnIPXGGtrZ9W42hFd4V3YN2djuf
-	s2KBTw5tE6S4TysR9j6+rT+1iK0pJlbqZHTAw=
+	:content-type; s=sasl; bh=Lxzr77xeQvXZmqR2Xp3ttoum5Y8=; b=yRWQEp
+	qL1XHZ9TaHoy4hw/L8Z+PRKG8w8gQJteCUjkVZmNp3pVqRemHoKTTJ5Tz6szHRD6
+	Y25bxLK8JaGq+Si2b0BWfmnSX5slfauL+Wzci4YZMtJCeUqUDFSWW2OyIrulBC7c
+	LQQBrD1QXeNbhEoVQqx1Apq62DQqCnqKpf2gI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Rq2G+ehg5sAW8qzEh58Mm6+gB8s8ycJa
-	NRbSsY1u4NMoRX1ABVnMaOZ6+FHBqPeZVHYueyDnzDXrSyg9L75i+kTi4S/70i9N
-	CQ2S0aAyjn/et5I5mCmi4Lmt1Kep5dWxKwK6mOTxII+l0eiLP14Mryrl0KX2kBKT
-	Vi23PWT3nmc=
+	:content-type; q=dns; s=sasl; b=thclr76eTD30dYIW2VkGVDQHw3/jK9B4
+	Pd7hqf3K0wAO47GWfwhkpXPbkBabEpB5YcVtvu2QqbOZ1qYIr3l8+vhGhOeeFlTW
+	B6kQ81bYw7uu0V5TIA5CqBHR3A+NWH0TZhFJaHk4xMIcn/KOl3pT/NrJi8NMxiXF
+	an1t+ru5vAE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9F42963C;
-	Sun,  9 Sep 2012 14:15:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07263985F;
+	Sun,  9 Sep 2012 14:23:24 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 373B3963A; Sun,  9 Sep 2012
- 14:15:06 -0400 (EDT)
-In-Reply-To: <20120909130532.GA27754@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 9 Sep 2012 09:05:33 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C6FE985B; Sun,  9 Sep 2012
+ 14:23:23 -0400 (EDT)
+In-Reply-To: <vpq627ntii0.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sun, 09 Sep 2012 15:48:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 484EE2B2-FAAA-11E1-9E52-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 70B93BDE-FAAB-11E1-BCF9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205086>
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Sun, Sep 09, 2012 at 03:20:18AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> 
->> > This patch series depends on the "Add some string_list-related
->> > functions" series that I just submitted.
->> 
->> Makes sense.  The only worry (without reading the series first) I
->> have is that the use of string list may make the responsiblity of
->> sorting the list fuzzier. I am guessing that we never sorted the
->> refs we asked to fetch (so that FETCH_HEAD comes out in an expected
->> order), so use of unsorted string list would be perfectly fine.
+>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>
+>>> Having said that, it would therefore be better to point folk at gitcli
+>>> in a few more places, not just the 'see also' line at the very end of
+>>> the general 'git' page, and buried within rev-parse.
+>>
+>> Didn't we update the very early part of git(1) for exactly for that
+>> reason recently?
 >
-> I haven't read the series yet, but both the list of heads from the user
-> and the list of heads from the remote should have been sorted by 4435968
-> and 9e8e704f, respectively.
+> I don't think many people read git(1) directly, as there are many other
+> starting points to learn Git (official tutorial, user-manual, and tens
+> of very good tutorial on the web).
 
-OK.  As long as the sort order matches the order string-list
-internally uses for its bisection search, it won't be a problem,
-then.
+Many of which is outside what patches made against to my tree would
+be able to fix.  I wonder if we can have some mechanism to easily
+notify and help the owners of these material to keep them up to
+date.
 
-Thanks.
+> On the other hand, reading git-<command> is probably much more
+> common, as it is the only place to find exhaustive documentation
+> about a particular command.
+
+That "people diving into 'git --help <subcmd>', assuming everything
+can be learned there" is a problem within the scope of what we could
+control.  For obvious reasons, including "glossary-contents" and
+"gitcli" at the beginning of documentation for each and every
+subcommand is not a useful solution, and referring the prerequisite
+reading for them in git(1) was done as the first step to solve that
+issue, and you are essentially saying that it is not enough.
+
+So what is the right second step?
