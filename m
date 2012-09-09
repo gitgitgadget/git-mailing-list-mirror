@@ -1,134 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] blame: respect "core.ignorecase"
-Date: Sun, 09 Sep 2012 12:45:02 -0700
-Message-ID: <7v1uibq8u9.fsf@alter.siamese.dyndns.org>
-References: <1347210113-27435-1-git-send-email-ralf.thielow@gmail.com>
- <7v7gs3q9rp.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 21:45:20 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCHv2 00/12] git p4: submit conflict handling
+Date: Sun,  9 Sep 2012 16:16:01 -0400
+Message-ID: <1347221773-12773-1-git-send-email-pw@padd.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Luke Diamand <luke@diamand.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 09 22:16:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAnRX-0005rU-Tt
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 21:45:20 +0200
+	id 1TAnve-0003Vk-B9
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 22:16:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754602Ab2IITpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 15:45:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57569 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754548Ab2IITpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Sep 2012 15:45:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B224C8B1D;
-	Sun,  9 Sep 2012 15:45:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IrstiLo594TicU7mZtFbVLW6/w4=; b=SuSOFX
-	QoayPJe6DCVpMQ5huuWxpgReO68z2U9j46fpCPkOMO/5iwQEWuS0d2yeFKd+VvOO
-	AyUm6DuoNu1ptRvnCM7vagZuJPkPh6qjcDM9OhublkZlbVPc56NLh9nmzNqShdoS
-	natfYX1y4c71Qs+Gu4PUeBfTkifY5wJEq7naA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nmpImg3Jy2CBRdZw7iDVW6knGKrQCeYq
-	VKLz13nqfyCFq1qeqSXil4UB4yj+cIvYgQOir/IpmLkHJ8rJitI5axO3AG1XY+b6
-	WkiwHFv6+2cVeJaoiOc6TGHtb5QenNUR1iduoVPbUdyQM4u/i8qcC9zT3hoTQiTl
-	yx68KuYh9hs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F6888B1C;
-	Sun,  9 Sep 2012 15:45:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB3D68B1A; Sun,  9 Sep 2012
- 15:45:03 -0400 (EDT)
-In-Reply-To: <7v7gs3q9rp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 09 Sep 2012 12:24:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D99C34C0-FAB6-11E1-BA12-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754636Ab2IIUQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 16:16:18 -0400
+Received: from honk.padd.com ([74.3.171.149]:35549 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752358Ab2IIUQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Sep 2012 16:16:17 -0400
+Received: from arf.padd.com (unknown [50.55.149.165])
+	by honk.padd.com (Postfix) with ESMTPSA id A26C65AF2;
+	Sun,  9 Sep 2012 13:16:16 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id B9D5432112; Sun,  9 Sep 2012 16:16:13 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.176.gc22bed1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205090>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Changes from v1, due to review from Luke and Hannes:
 
-> If we were to do anything, I would think the most sane thing to do
-> is a smaller patch to fix fake_working_tree_commit() where it calls
-> lstat() and _should_ die with "Cannot lstat MakeFILE" on a sane
-> filesystem.  It does not currently make sure the path exists in the
-> HEAD exactly as given by the user (i.e. without core.ignorecase
-> matching), and die when it is not found.
->
-> And that can be done regardless of core.ignorecase.  Currently on a
-> case sensitive filesystem without core.ignorecase, this will give a
-> useless result:
->
->     $ git rm Nakefile || :;
->     $ git commit --allow-empty -m 'Made sure there is no Nakefile'
->     $ >Nakefile
->     $ git blame -- Nakefile
->     00000000 (Not Committed Yet 2012-09-09 12:21:42 -0700 1) 
->
-> and such a change to verify that the path exists in HEAD will give
-> us "No such path Nakefile in HEAD" in such a case.
->
-> It is a behaviour change, but I think it is a good change,
-> regardless of the "What I have is Makefile, but my filesystem lies
-> to us saying yes when I ask if MAKEFILE exists" issue.
+    * Drop the patch to suppress of p4d log messages, it is
+      sometimes useful to watch.
 
-Perhaps like this (again, totally untested).
+    * Fix extra line before shebang in t9815.  (Thanks Hannes.)
 
-A few points to note:
+    * Use "skip", not "continue" in the prompt about what to
+      do next, just like before this series.
 
- - If the "Nakefile" is a "new file" with substantial contents, the
-   result I labelled as "useless" in the previous message _might_
-   have been seen as useful by some user; it might be a regression
-   in that sense, but then there is fundamentally no way to give
-   sensible behaviour to core.ignorecase users.
+    * Automate the interactive prompt when a submit conflict
+      is detected, with "git p4 submit --conflict=skip" or
+      config variable git-p4.conflict.
 
- - We used to say get_sha1("HEAD"), but that is not a very good
-   practice; even though we know DWIM will find the .git/HEAD, make
-   it clear that we are not DWIMming by calling resolve_ref().
+    This does not try to fix the rebase path.  It adds the
+    auto-skip during the submit phase, but changes are needed
+    in rebase to understand that skips happened.  One approach
+    is to skip the rebase, and just reset HEAD.
 
- builtin/blame.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+    Luke:  You have a patch for git-p4.skipConflictingChanges
+    that I think might work with --conflict=skip or git-p4.skip.
+    With this series, logging already happens in submit, so you
+    might just quietly say "git rebase --skip".  Let me know
+    if you think this is a good approach, so that this series
+    can go in, and you can handle the rebase part.
 
-diff --git i/builtin/blame.c w/builtin/blame.c
-index 0e102bf..395dfbc 100644
---- i/builtin/blame.c
-+++ w/builtin/blame.c
-@@ -2069,6 +2069,19 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
-+static void verify_working_tree_path(unsigned char *head_sha1, const char *path)
-+{
-+	unsigned char blob_sha1[20];
-+	unsigned mode;
-+
-+	if (!resolve_ref_unsafe("HEAD", head_sha1, 1, NULL))
-+		die("no such ref: HEAD");
-+	if (get_tree_entry(head_sha1, path, blob_sha1, &mode))
-+		die("no such path '%s' in HEAD", path);
-+	if (sha1_object_info(blob_sha1, NULL) != OBJ_BLOB)
-+		die("path '%s' in HEAD is not a blob", path);
-+}
-+
- /*
-  * Prepare a dummy commit that represents the work tree (or staged) item.
-  * Note that annotating work tree item never works in the reverse.
-@@ -2087,8 +2100,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	struct cache_entry *ce;
- 	unsigned mode;
- 
--	if (get_sha1("HEAD", head_sha1))
--		die("No such ref: HEAD");
-+	verify_working_tree_path(head_sha1, path);
- 
- 	time(&now);
- 	commit = xcalloc(1, sizeof(*commit));
+    Version 1 of this series:
+
+	http://thread.gmane.org/gmane.comp.version-control.git/203570
+
+    Blurb (edited) from v1 follows.
+
+These patches rework how git p4 deals with conflicts that
+arise during a "git p4 submit".  These may arise due to
+changes that happened in p4 since the last "git p4 sync".
+
+The part that needs the most attention is the interaction
+loop that happens when a commit failed.  Currently, three
+options are offered:
+
+    [s]kip this commit, but continue to apply others
+    [a]pply the commit forcefully, generating .rej files
+    [w]rite the commit to a patch.txt file
+    and the implicit <ctrl-c> to stop
+
+After this series, it offers two:
+
+    [s]kip this commit but apply the rest
+    [q]uit to stop
+
+Other observable changes are new command-line options:
+
+Alias -v for --verbose, similar to other git commands.
+
+The --dry-run option addresses Luke's concern in
+
+    http://thread.gmane.org/gmane.comp.version-control.git/201004/focus=201022
+
+when I removed an unused "self.interactive" variable
+that did a similar thing if you edited the code.  It prints
+commits that would be applied to p4.
+
+Option --prepare-p4-only is similar to --dry-run, in that
+it does not submit anything to p4, but it does prepare the
+p4 workspace, then prints long instructions about how to submit
+everything properly.  It also serves, perhaps, as a replacement for
+the [a]pply option in the submit-conflict loop.
+
+Option --conflict=skip (new in v2) automates the prompt
+handling when conflicts happen.
+
+
+Pete Wyckoff (12):
+  git p4 test: remove bash-ism of combined export/assignment
+  git p4: gracefully fail if some commits could not be applied
+  git p4: remove submit failure options [a]pply and [w]rite
+  git p4: move conflict prompt into run, add [q]uit input
+  git p4: standardize submit cancel due to unchanged template
+  git p4: test clean-up after failed submit, fix added files
+  git p4: rearrange submit template construction
+  git p4: revert deleted files after submit cancel
+  git p4: accept -v for --verbose
+  git p4: add submit --dry-run option
+  git p4: add submit --prepare-p4-only option
+  git-p4: add submit --conflict option and config varaiable
+
+ Documentation/git-p4.txt           |  24 ++-
+ git-p4.py                          | 239 ++++++++++++++++-----
+ t/lib-git-p4.sh                    |   7 +-
+ t/t9805-git-p4-skip-submit-edit.sh |   2 +-
+ t/t9807-git-p4-submit.sh           |  65 ++++++
+ t/t9810-git-p4-rcs.sh              |  50 +----
+ t/t9815-git-p4-submit-fail.sh      | 429 +++++++++++++++++++++++++++++++++++++
+ 7 files changed, 709 insertions(+), 107 deletions(-)
+ create mode 100755 t/t9815-git-p4-submit-fail.sh
+
+-- 
+1.7.12.rc2.111.g96f7c73
