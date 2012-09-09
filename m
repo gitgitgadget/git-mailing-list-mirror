@@ -1,124 +1,102 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 10/14] filter_refs(): simplify logic
-Date: Sun,  9 Sep 2012 08:19:45 +0200
-Message-ID: <1347171589-13327-11-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 04/14] fetch_pack(): reindent function decl and defn
+Date: Sun,  9 Sep 2012 08:19:39 +0200
+Message-ID: <1347171589-13327-5-git-send-email-mhagger@alum.mit.edu>
 References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:45 2012
+X-From: git-owner@vger.kernel.org Sun Sep 09 08:21:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TAatr-00032a-Fc
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:43 +0200
+	id 1TAau4-0003F9-8i
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Sep 2012 08:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026Ab2IIGVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Sep 2012 02:21:23 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:53102 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752499Ab2IIGUr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:47 -0400
-X-AuditID: 1207440c-b7f616d00000270b-be-504c353ed19c
+	id S1752821Ab2IIGVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Sep 2012 02:21:16 -0400
+Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:60998 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752095Ab2IIGUe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Sep 2012 02:20:34 -0400
+X-AuditID: 1207440d-b7f236d000000943-db-504c35311b80
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 56.89.09995.E353C405; Sun,  9 Sep 2012 02:20:46 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 3D.F1.02371.1353C405; Sun,  9 Sep 2012 02:20:33 -0400 (EDT)
 Received: from michael.fritz.box (p57A25CBD.dip.t-dialin.net [87.162.92.189])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIln029164
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q896KIlh029164
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 9 Sep 2012 02:20:45 -0400
+	Sun, 9 Sep 2012 02:20:32 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqGtn6hNg8GWdpkXXlW4mi4beK8wW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsUixO6iqGto6hNgsP6rtEXXlW4mi4beK8wW
 	t1fMZ7b40dLDbNE5VdaB1ePv+w9MHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
-	7RK4M070RBfcE6j4PXs1awPjLp4uRk4OCQETiaM7PjND2GISF+6tZ+ti5OIQErjMKHH43R8o
-	5wyTxPONK9lAqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQt0MUosX/cLrEhYwFzi4bOjYEUsAqoS
-	Fw7PZQSxeQVcJY4v38kKsU5R4sf3NWCrOYHir2buBqsREnCR2LTzGusERt4FjAyrGOUSc0pz
-	dXMTM3OKU5N1i5MT8/JSi3QN9XIzS/RSU0o3MUJCimcH47d1MocYBTgYlXh4me94BwixJpYV
-	V+YeYpTkYFIS5W3W8wkQ4kvKT6nMSCzOiC8qzUktPsQowcGsJMJ7lR0ox5uSWFmVWpQPk5Lm
-	YFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS4P1gDNQoWJSanlqRlplTgpBm4uAEEVwgG3iA
-	NlwHKeQtLkjMLc5Mhyg6xagoJc77ECQhAJLIKM2DGwCL/leM4kD/CPOeAaniASYOuO5XQIOZ
-	gAaLPPMAGVySiJCSamBkPHzQvOj1ur7+rfa3Ne/87zovv1Ru1qOCCanKBq/TH+jpK707fdpz
-	8eI1i26LiihNOqT/nmvNVqaSNsE7j9wUHm8O1y/oqozYavM7SVq/YoaqcuLiZzmLZ2Rs5Viy
-	fukekZtOVVlJz8IDXlxKLnjHwWvBkMR5VeBex8vOojkK2nc+KF1f2rpIiaU4I9FQ 
+	7RK4M/79es9c8IerYta+JawNjLM5uhg5OSQETCRuX/jBBmGLSVy4tx7MFhK4zCjRv8qti5EL
+	yD7DJNEz8yY7SIJNQFdiUU8zE4gtIqAmMbHtEAtIEbNAF6PE8nW/gLo5OIQF3CX2TooEqWER
+	UJU41/CGGcTmFXCRWHjlGyPEMkWJH9/XgMU5BVwlXs3czQix2EVi085rrBMYeRcwMqxilEvM
+	Kc3VzU3MzClOTdYtTk7My0st0jXSy80s0UtNKd3ECAko3h2M/9fJHGIU4GBU4uFlvuMdIMSa
+	WFZcmXuIUZKDSUmUV8PEJ0CILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO9VdqAcb0piZVVqUT5M
+	SpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mC1xhkqGBRanpqRVpmTglCmomDE0RwgWzg
+	AdoQDFLIW1yQmFucmQ5RdIpRUUqctwwkIQCSyCjNgxsAi/1XjOJA/wjz1oJU8QDTBlz3K6DB
+	TECDRZ55gAwuSURISTUwcipUTAqr1fvDfjwgnP8hWwVP+AEWe1WTpAtrmBfpf4/gjFzN4RV0
+	4s47pUebmwVnbS269u3lt/w972oSXWp1k37kB8R8KVjZ+97grsJuh5ZaXxYWtVbDljc11+w2
+	NUUU5Iv+tpS6t09st628c9n/q73tcyZEeZYW8td9kOLhSn8ZdPSs12QlluKMREMt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205061>
 
-Simplify flow within loop: first decide whether to keep the reference,
-then keep/free it.  This makes it clearer that each ref has exactly
-two possible destinies, and removes duplication of the code for
-appending the reference to the linked list.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fetch-pack.c | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
+ builtin/fetch-pack.c |  8 ++++----
+ fetch-pack.h         | 12 ++++++------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 4e94aa4..056ccb8 100644
+index fdda36f..30990c0 100644
 --- a/builtin/fetch-pack.c
 +++ b/builtin/fetch-pack.c
-@@ -544,37 +544,36 @@ static void filter_refs(struct ref **refs, struct string_list *sought)
+@@ -1082,10 +1082,10 @@ static int compare_heads(const void *a, const void *b)
+ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 		       int fd[], struct child_process *conn,
+ 		       const struct ref *ref,
+-		const char *dest,
+-		int nr_heads,
+-		char **heads,
+-		char **pack_lockfile)
++		       const char *dest,
++		       int nr_heads,
++		       char **heads,
++		       char **pack_lockfile)
+ {
+ 	struct stat st;
+ 	struct ref *ref_cpy;
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 7c2069c..1dbe90f 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -18,11 +18,11 @@ struct fetch_pack_args {
+ };
  
- 	sought_pos = 0;
- 	for (ref = *refs; ref; ref = next) {
-+		int keep = 0;
- 		next = ref->next;
- 		if (!memcmp(ref->name, "refs/", 5) &&
- 		    check_refname_format(ref->name + 5, 0))
- 			; /* trash */
- 		else if (args.fetch_all &&
--			 (!args.depth || prefixcmp(ref->name, "refs/tags/") )) {
--			*newtail = ref;
--			ref->next = NULL;
--			newtail = &ref->next;
--			continue;
--		}
-+			 (!args.depth || prefixcmp(ref->name, "refs/tags/")))
-+			keep = 1;
- 		else {
--			int cmp = -1;
- 			while (sought_pos < sought->nr) {
--				cmp = strcmp(ref->name, sought->items[sought_pos].string);
--				if (cmp < 0) /* definitely do not have it */
--					break;
--				else if (cmp == 0) { /* definitely have it */
-+				int cmp = strcmp(ref->name, sought->items[sought_pos].string);
-+				if (cmp < 0)
-+					break; /* definitely do not have it */
-+				else if (cmp == 0) {
-+					keep = 1; /* definitely have it */
- 					sought->items[sought_pos++].util = "matched";
--					*newtail = ref;
--					ref->next = NULL;
--					newtail = &ref->next;
- 					break;
- 				}
--				else /* might have it; keep looking */
--					sought_pos++;
-+				else
-+					sought_pos++; /* might have it; keep looking */
- 			}
--			if (!cmp)
--				continue; /* we will link it later */
- 		}
--		free(ref);
-+
-+		if (keep) {
-+			*newtail = ref;
-+			ref->next = NULL;
-+			newtail = &ref->next;
-+		} else {
-+			free(ref);
-+		}
- 	}
+ struct ref *fetch_pack(struct fetch_pack_args *args,
+-		int fd[], struct child_process *conn,
+-		const struct ref *ref,
+-		const char *dest,
+-		int nr_heads,
+-		char **heads,
+-		char **pack_lockfile);
++		       int fd[], struct child_process *conn,
++		       const struct ref *ref,
++		       const char *dest,
++		       int nr_heads,
++		       char **heads,
++		       char **pack_lockfile);
  
- 	if (!args.fetch_all)
+ #endif
 -- 
 1.7.11.3
