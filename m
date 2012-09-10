@@ -1,155 +1,150 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 3/4] Add a new function, string_list_remove_duplicates()
-Date: Mon, 10 Sep 2012 11:15:06 +0200
-Message-ID: <504DAF9A.4030202@alum.mit.edu>
-References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu> <1347169990-9279-4-git-send-email-mhagger@alum.mit.edu> <7vfw6rsf64.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 4/4] Add a function string_list_longest_prefix()
+Date: Mon, 10 Sep 2012 12:01:06 +0200
+Message-ID: <504DBA62.3080001@alum.mit.edu>
+References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu> <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu> <7vbohfser4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 10 11:15:19 2012
+X-From: git-owner@vger.kernel.org Mon Sep 10 12:01:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB05O-0003LB-Hg
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 11:15:19 +0200
+	id 1TB0nv-0005Ov-LQ
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 12:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755163Ab2IJJPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 05:15:09 -0400
-Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:47952 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752758Ab2IJJPI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 05:15:08 -0400
-X-AuditID: 1207440c-b7f616d00000270b-d7-504daf9b3a72
+	id S1753917Ab2IJKBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 06:01:11 -0400
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:60445 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752299Ab2IJKBK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 06:01:10 -0400
+X-AuditID: 12074413-b7f786d0000008bb-86-504dba65b7f4
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 69.7F.09995.B9FAD405; Mon, 10 Sep 2012 05:15:07 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 79.15.02235.56ABD405; Mon, 10 Sep 2012 06:01:10 -0400 (EDT)
 Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8A9F6Wr021198
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8AA16Mf022818
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 10 Sep 2012 05:15:07 -0400
+	Mon, 10 Sep 2012 06:01:07 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7vfw6rsf64.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqDt7vW+AwcfPZhZdV7qZLBp6rzA7
-	MHlcvKTs8XmTXABTFLdNUmJJWXBmep6+XQJ3xrorRQUbFSsenf/J1MD4WaqLkZNDQsBEov/e
-	NxYIW0ziwr31bF2MXBxCApcZJVb9PscMkhASOM4kceqcCojNK6Atcft5PyOIzSKgKjFxww+w
-	ZjYBXYlFPc1MILaoQIjEjMuTmSHqBSVOznwCViMioCYxse0QkM3BwSwgLtH/DywsLOAjcWbZ
-	Z6i9SxklXq7oBpvDKWAm8fDJYXYQm1lAR+Jd3wNmCFteYvvbOcwTGAVmIVkxC0nZLCRlCxiZ
-	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEBCnPDsZv62QOMQpwMCrx8Dbp
-	+gYIsSaWFVfmHmKU5GBSEuXVXwcU4kvKT6nMSCzOiC8qzUktPsQowcGsJMIr0geU401JrKxK
-	LcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2CycpwcChJ8GqBDBUsSk1PrUjLzClBSDNxcIIM
-	55ISKU7NS0ktSiwtyYgHxWl8MTBSQVI8QHs9Qdp5iwsSc4GiEK2nGHU57n5ccZ9RiCUvPy9V
-	SpzXBaRIAKQoozQPbgUsJb1iFAf6WJhXAaSKB5jO4Ca9AlrCBLTE18MHZElJIkJKqoGxXWh2
-	T2jE+ph/ipsyfBs3+CyWqrioz1NyKDT758XgyBk7+gWW6fCqPJa9eK5Xw2vLk6NaH32Y10+s
-	erL1qx37jeiPzNoP+NPLt4bOta7u+PJuaW97rUGEt82ehE8GBrO2Bqx4vI0j7kDr 
+In-Reply-To: <7vbohfser4.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsUixO6iqJu2yzfAYFa6RdeVbiaLht4rzA5M
+	HhcvKXt83iQXwBTFbZOUWFIWnJmep2+XwJ0x6WB4wQv5il9fxRsYT0p2MXJySAiYSJz+/4kV
+	whaTuHBvPVsXIxeHkMBlRokJG56xQDjHmSSurLoHVsUroC1xddpUFhCbRUBVonPNPjCbTUBX
+	YlFPMxOILSoQIjHj8mRmiHpBiZMzn4DViAioSUxsOwRkc3AwC4hL9P8DCwsLuEhsPNrPBLFr
+	KaPEhof/wGo4Bcwkfq7gBKlhFtCReNf3gBnClpfY/nYO8wRGgVlINsxCUjYLSdkCRuZVjHKJ
+	OaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCEBKryDcddJuUOMAhyMSjy8zbq+AUKs
+	iWXFlbmHGCU5mJREeTdsBQrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4RXpA8rxpiRWVqUW5cOk
+	pDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4N+8EahQsSk1PrUjLzClBSDNxcIIM55IS
+	KU7NS0ktSiwtyYgHRWl8MTBOQVI8QHtPg7TzFhck5gJFIVpPMRpzzL654j4jx92PQFKIJS8/
+	L1VKnLcLpFQApDSjNA9uESw1vWIUB/pbmHcFSBUPMK3BzXsFtIoJaJWvhw/IqpJEhJRUA2Pm
+	H3n/GcVVpi0aU2bcndm+vTAvOHCZqv4SneOum/ctOZVblej69u3tKdU1Czo5Lacf/NXuY7/D
+	LK+vzCJ8o5vmL60pe7+cULfMuhTLv+v0vJnH7kh/utz/OfD6c5ZIDQX/ZR/f+1yI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205115>
 
-On 09/09/2012 11:45 AM, Junio C Hamano wrote:
+On 09/09/2012 11:54 AM, Junio C Hamano wrote:
 > Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  Documentation/technical/api-string-list.txt |  4 ++++
->>  string-list.c                               | 17 +++++++++++++++++
->>  string-list.h                               |  5 +++++
->>  3 files changed, 26 insertions(+)
->>
+>> [...]
 >> diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
->> index 15b8072..9206f8f 100644
+>> index 9206f8f..291ac4c 100644
 >> --- a/Documentation/technical/api-string-list.txt
 >> +++ b/Documentation/technical/api-string-list.txt
->> @@ -104,6 +104,10 @@ write `string_list_insert(...)->util = ...;`.
->>  	Look up a given string in the string_list, returning the containing
->>  	string_list_item. If the string is not found, NULL is returned.
+>> @@ -68,6 +68,14 @@ Functions
+>>  	to be deleted.  Preserve the order of the items that are
+>>  	retained.
 >>  
->> +`string_list_remove_duplicates`::
+>> +`string_list_longest_prefix`::
 >> +
->> +	Remove all but the first entry that has a given string value.
+>> +	Return the longest string within a string_list that is a
+>> +	prefix (in the sense of prefixcmp()) of the specified string,
+>> +	or NULL if no such prefix exists.  This function does not
+>> +	require the string_list to be sorted (it does a linear
+>> +	search).
+>> +
+>>  `print_string_list`::
 > 
-> Unlike the previous patch, free_util is not documented?
+> This may feel like outside the scope of this series, but since this
+> series will be the main culprit for adding many new functions to
+> this API in the recent history...
+> 
+>  - We may want to name things a bit more consistently so that people
+>    can tell which ones can be called on any string list, which ones
+>    are sorted list only, and which ones are unsorted one only.
+> 
+>    In addition, the last category _may_ need a bit more thought.
+>    Calling unsorted_string_list_lookup() on an already sorted list
+>    is not a crime---it is just a stupid thing to do.
 
-Fixed.
+Yes, this could be clearer.  Though I'm skeptical that a naming
+convention can capture all of the variation without being too cumbersome.
 
-> It is kind of shame that the string list must be sorted for this
-> function to work, but I guess you do not have a need for a version
-> that works on both sorted and unsorted (yet).  We can introduce a
-> variant with "unsorted_" prefix later when it becomes necessary, so
-> OK.
+Another idea: in string-list.h, one could name parameters "sorted_list"
+when they must be sorted as a precondition of the function.
 
-Not only that; for an unsorted list it is not quite as obvious what a
-caller would want.  Often lists are used as a poor man's set, in which
-case the caller would probably not mind sorting the list anyway.  There
-are two operations that one might conceive of for unsorted lists: (1)
-remove duplicates while preserving the order of the remaining entries,
-or (2) remove duplicates while not worrying about the order of the
-remaining entries.  (Admittedly the first is not much more expensive
-than the second.)  These are more complicated to program, require
-temporary space, and are of less obvious utility than removing
-duplicates from a sorted list.
+But before getting too hung up on finery, the effort might be better
+invested adding documentation for functions that are totally lacking it,
+like
 
->>  * Functions for unsorted lists only
->>  
->>  `string_list_append`::
->> diff --git a/string-list.c b/string-list.c
->> index 72610ce..bfef6cf 100644
->> --- a/string-list.c
->> +++ b/string-list.c
->> @@ -92,6 +92,23 @@ struct string_list_item *string_list_lookup(struct string_list *list, const char
->>  	return list->items + i;
->>  }
->>  
->> +void string_list_remove_duplicates(struct string_list *list, int free_util)
->> +{
->> +	if (list->nr > 1) {
->> +		int src, dst;
->> +		for (src = dst = 1; src < list->nr; src++) {
->> +			if (!strcmp(list->items[dst - 1].string, list->items[src].string)) {
->> +				if (list->strdup_strings)
->> +					free(list->items[src].string);
->> +				if (free_util)
->> +					free(list->items[src].util);
->> +			} else
->> +				list->items[dst++] = list->items[src];
->> +		}
->> +		list->nr = dst;
->> +	}
->> +}
->> +
->>  int for_each_string_list(struct string_list *list,
->>  			 string_list_each_func_t fn, void *cb_data)
->>  {
->> diff --git a/string-list.h b/string-list.h
->> index 84996aa..c4dc659 100644
->> --- a/string-list.h
->> +++ b/string-list.h
->> @@ -38,6 +38,7 @@ int for_each_string_list(struct string_list *list,
->>  void filter_string_list(struct string_list *list, int free_util,
->>  			string_list_each_func_t fn, void *cb_data);
->>  
->> +
->>  /* Use these functions only on sorted lists: */
->>  int string_list_has_string(const struct string_list *list, const char *string);
->>  int string_list_find_insert_index(const struct string_list *list, const char *string,
->> @@ -47,6 +48,10 @@ struct string_list_item *string_list_insert_at_index(struct string_list *list,
->>  						     int insert_at, const char *string);
->>  struct string_list_item *string_list_lookup(struct string_list *list, const char *string);
->>  
->> +/* Remove all but the first entry that has a given string value. */
->> +void string_list_remove_duplicates(struct string_list *list, int free_util);
->> +
->> +
->>  /* Use these functions only on unsorted lists: */
->>  struct string_list_item *string_list_append(struct string_list *list, const char *string);
->>  void sort_string_list(struct string_list *list);
+    string_list_clear_func()
+    for_each_string_list()
+    for_each_string_list_item()
+    string_list_find_insert_index()
+    string_list_insert_at_index()
 
+While we're on the subject, it seems to me that documenting APIs like
+these in separate files under Documentation/technical rather than in the
+header files themselves
+
+- makes the documentation for a particular function harder to find,
+
+- makes it easier for the documentation to get out of sync with the
+actual collection of functions (e.g., the 5 undocumented functions
+listed above).
+
+- makes it awkward for the documentation to refer to particular function
+parameters by name.
+
+While it is nice to have a high-level prose description of an API, I am
+often frustrated by the lack of "docstrings" in the header file where a
+function is declared.  The high-level description of an API could be put
+at the top of the header file.
+
+Also, better documentation in header files could enable the automatic
+generation of API docs (e.g., via doxygen).
+
+Is there some reason for the current documentation policy or is it
+historical and just needs somebody to put in the work to change it?
+
+>  - Why are these new functions described at the top, not appended at
+>    the bottom?  I would have expected either an alphabetical, or a
+>    more generic ones first (i.e. print and clear are a lot "easier"
+>    ones compared to filter and prefix that are very much more
+>    specialized).
+
+The order seemed logical to me at the time (given the constraint that
+functions are grouped by sorted/unsorted/don't-care):
+print_string_list() is only useful for debugging, so it seemed to belong
+below the "production" functions.  string_list_clear() was already below
+print_string_list() (which I guessed was because it is logically used
+last in the life of a string_list) so I left it at the end of its
+section.  My preference would probably have been to move
+print_string_list() below string_list_clear(), but somebody else made
+the opposite choice so I decided to respect it.
+
+That being said, I don't have anything against a different order.
+
+Michael
 
 -- 
 Michael Haggerty
