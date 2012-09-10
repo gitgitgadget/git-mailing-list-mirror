@@ -1,113 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 05/14] Change fetch_pack() and friends to take
- string_list arguments
-Date: Mon, 10 Sep 2012 13:56:29 -0700
-Message-ID: <7vipblmwaq.fsf@alter.siamese.dyndns.org>
-References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
- <1347171589-13327-6-git-send-email-mhagger@alum.mit.edu>
+From: Jeffrey Middleton <jefromi@gmail.com>
+Subject: Re: approxidate parsing for bad time units
+Date: Mon, 10 Sep 2012 14:07:02 -0700
+Message-ID: <CAFE6XRHmX6TjGu7Jte_KW82nYX7ZUw6imO1ktbUcYpNbc6ZBsA@mail.gmail.com>
+References: <CAFE6XRFgQa10vTWXfxRG53W6K4U=VGqpK5sQwH7xp9GfKd=2Uw@mail.gmail.com>
+ <7vehme3n49.fsf@alter.siamese.dyndns.org> <CAFE6XREG5-gwjzvyP9r_hfyY3bWSV2=Bjv9ZbXkejXQRoqYERA@mail.gmail.com>
+ <20120907135452.GA1290@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 10 22:56:41 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 10 23:13:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBB28-0001x3-Ec
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 22:56:40 +0200
+	id 1TBBIq-0005LO-6Y
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 23:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753847Ab2IJU4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 16:56:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48595 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753648Ab2IJU4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 16:56:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 617C393D0;
-	Mon, 10 Sep 2012 16:56:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aeGqmwbsbBH4hwCEXY01utB63Xc=; b=L788nV
-	4nZn/kfiB8F/A7M1fDRdkIeu2x1kAM3bOeQf/ixWnssvZsRA63W7qIrOFXSRBe4F
-	0LQfc0xxAdRFFdab5/rgJOozNXAh+7ejxcX8W7jVx0si65XVVrXmDsX2WJFhAdLX
-	QBk94mrfhpZxUhNiCNEGLOclMoMGta1Q6r78M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kC7buAbck9+LKGeuXeLO0CDYFISGq5al
-	oZkxuWTm/YXd7ewS8p2tXAjjqkb8hQ3pvgUxZOYG8zWHAiWw7VeparpAbc5xIIO0
-	D1cW3ABJqFB5Yw7vjvndoC7rUNPSfa0n74D2c0YhsvUMNIs6pf689zp5j8tUlKB9
-	YYqoeSwLZJw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EB5593CF;
-	Mon, 10 Sep 2012 16:56:31 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8C5793CE; Mon, 10 Sep 2012
- 16:56:30 -0400 (EDT)
-In-Reply-To: <1347171589-13327-6-git-send-email-mhagger@alum.mit.edu>
- (Michael Haggerty's message of "Sun, 9 Sep 2012 08:19:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF1CAD1E-FB89-11E1-AD6E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752100Ab2IJVNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 17:13:48 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:50294 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272Ab2IJVNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 17:13:47 -0400
+Received: by vcbfy27 with SMTP id fy27so2024999vcb.19
+        for <git@vger.kernel.org>; Mon, 10 Sep 2012 14:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gPT0w02sDtOzbuj5FrAtoXewhsz30Asw7yPZOJM3g90=;
+        b=e5fGLxJFuUzMs9yN/5uO3UWnH1ecAdb1nwlYl0pQWga8B5T9w5RGG7Hh8AH9/t++dG
+         mPH+49onyt3EJgLHc4OpHUleZebeE626l7S49RdoeG1YlbHpxA4/sXGPd6USkBndLrQ/
+         5OnDPzIGgQFw6tKcwfQ23JtACDmUadO5IBPqs5jMppjgRXdwfXXq5HYU09epTlBP9ZpX
+         jperWf2WjBv2pO72RuofnbcdWuNDk1nBviMxH1V7aBTl+e+dImtDX7VkxXx60bJuK2U6
+         X5B8EwcW6XB4eAOdFbUKzKpns/psZhk9UGdQTFCIvfP4r8dExqqFdbzphgGZLjiDmJFG
+         ifjw==
+Received: by 10.220.239.209 with SMTP id kx17mr22005349vcb.41.1347311242224;
+ Mon, 10 Sep 2012 14:07:22 -0700 (PDT)
+Received: by 10.220.26.3 with HTTP; Mon, 10 Sep 2012 14:07:02 -0700 (PDT)
+In-Reply-To: <20120907135452.GA1290@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205181>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+As you mentioned, parsing "n ... [month]", and even "...n..." (e.g.
+"the 3rd") as the nth day of a month is great, but in this case, I
+think "n ... ago" is a pretty strong sign that that's not the intended
+behavior.
 
-> Instead of juggling <nr_heads,heads> (sometimes called
-> <nr_match,match>), pass around the list of references to be sought in
-> a single string_list variable called "sought".  Future commits will
-> make more use of string_list functionality.
+My first thought was just to make it an error if the string ends in
+"ago" but the date is parsed as a day of the month. You don't actually
+have to come up with any typos to blacklist, just keep the "ago" from
+being silently ignored. I suspect "n units ago" is by far the most
+common use of the approxidate parsing in the wild, since it's
+documented and has been popularized online. So throwing an error just
+in that case would save essentially everyone. I hadn't even realized
+it worked without "ago" until I looked at the code.
+
+If that doesn't sound like a good plan, then yes, I agree, it'd be
+tricky to catch it in the general case without breaking things.
+(Levenshtein distance to the target strings instead of exact matching,
+I guess, so that it could say "did you mean..." like for misspelled
+commands.)
+
+On Fri, Sep 7, 2012 at 6:54 AM, Jeff King <peff@peff.net> wrote:
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-
-The earlier bikeshedding-fest on variable names seems to have
-produced a winner ;-) I think "sought" captures what it is about
-very well.
-
-> diff --git a/fetch-pack.h b/fetch-pack.h
-> index 1dbe90f..a6a8a73 100644
-> --- a/fetch-pack.h
-> +++ b/fetch-pack.h
-> @@ -1,6 +1,8 @@
->  #ifndef FETCH_PACK_H
->  #define FETCH_PACK_H
->  
-> +#include "string-list.h"
-> +
->  struct fetch_pack_args {
->  	const char *uploadpack;
->  	int unpacklimit;
-> @@ -21,8 +23,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
->  		       int fd[], struct child_process *conn,
->  		       const struct ref *ref,
->  		       const char *dest,
-> -		       int nr_heads,
-> -		       char **heads,
-> +		       struct string_list *sought,
->  		       char **pack_lockfile);
-
-This is a tangent, but I _think_ our header files ignore the dogma
-some other projects follow that insists on each header file to be
-self sufficient, i.e.
-
-	gcc fetch-pack.h
-
-should pass.  Instead, our *.c files that include fetch-pack.h are
-responsible for including everything the headers they include need.
-So even though fetch-pack.h does not include run-command.h, it
-declares a function that takes "struct child_process *" in its
-arguments.  The new "struct string_list *" falls into the same camp.
-
-Given that, I'd prefer to see the scope of this patch series shrunk
-and have the caller include string-list.h, not here.
-
-Updating the headers and sources so that each to be self sufficient
-is a different topic, and I do not think there is a consensus yet if
-we want to go that route.
+> On Thu, Sep 06, 2012 at 02:01:30PM -0700, Jeffrey Middleton wrote:
+>
+> > I'm generally very happy with the fuzzy parsing. It's a great feature
+> > that is designed to and in general does save users a lot of time and
+> > thought. In this case I don't think it does. The problems are:
+> > (1) It's not ignoring things it can't understand, it's silently
+> > interpreting them in a useless way.
+>
+> Right, but we would then need to come up with a list of things it _does_
+> understand. So right now I can say "6 June" or "6th of June" or even "6
+> de June", and it works because we just ignore the cruft in the middle.
+>
+> So I think you'd need to either whitelist what everybody is typing, or
+> blacklist some common typos (or convince people to be stricter in what
+> they type).
+>
+> > So I do think it's worth improving. (Yes, I know, send patches; I'll
+> > think about it.)
+>
+> You read my mind. :)
+>
+> -Peff
