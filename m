@@ -1,116 +1,90 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Using doxygen (or something similar) to generate API docs [was [PATCH
- 4/4] Add a function string_list_longest_prefix()]
-Date: Mon, 10 Sep 2012 21:21:12 +0200
-Message-ID: <504E3DA8.7040906@alum.mit.edu>
-References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu> <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu> <7vbohfser4.fsf@alter.siamese.dyndns.org> <504DBA62.3080001@alum.mit.edu> <7v1ui9q21a.fsf@alter.siamese.dyndns.org> <20120910163310.GE9435@sigill.intra.peff.net> <504E27D7.8010505@op5.se>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH] rebase -i: Teach "--edit" action
+Date: Mon, 10 Sep 2012 15:33:19 -0400
+Message-ID: <CADgNjamB9wG_Vbt1Zwu8Tmt3vQ8XpYys6ngjQeQb2DgnqKeHJg@mail.gmail.com>
+References: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
+	<1347293683-27996-2-git-send-email-andrew.kw.w@gmail.com>
+	<vpqk3w1j15v.fsf@bauges.imag.fr>
+	<CADgNja=z7EDTV8_2CU9Uc7w=Dmtp90GrPkDUFSPbucfyrEsBaQ@mail.gmail.com>
+	<20120910165457.GB14201@sigill.intra.peff.net>
+	<504E333B.2010602@kdbg.org>
+	<20120910184625.GA32237@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Sep 10 21:21:40 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 10 21:33:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB9Y8-0001gq-Ks
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 21:21:37 +0200
+	id 1TB9jf-0001sO-EY
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 21:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758251Ab2IJTVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 15:21:18 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:55544 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758097Ab2IJTVR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 15:21:17 -0400
-X-AuditID: 12074412-b7f216d0000008e3-2d-504e3dacab8f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A0.6B.02275.CAD3E405; Mon, 10 Sep 2012 15:21:16 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25B0C.dip.t-dialin.net [87.162.91.12])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8AJLDFm014652
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 10 Sep 2012 15:21:14 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <504E27D7.8010505@op5.se>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsUixO6iqLvG1i/A4NEfdYvWNTcYLbqudDNZ
-	NPReYbb40dLD7MDisW3zPSaPZ717GD0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE7Y9Lz/4wF
-	F0UqTvdxNzAeEOhi5OSQEDCRODbrEBOELSZx4d56ti5GLg4hgcuMElvmzmGHcE4zSSy6+pkR
-	pIpXQFvi/qJtYB0sAqoS827fBIuzCehKLOppBouLCoRIzLg8mRmiXlDi5MwnLCC2iICCxLGz
-	91hBbGaBeIkZjR9YQRYICzQxSszd9BFq23Ymibm73oJ1cAqoSey/2MQC0aEr8aNpJRuELS+x
-	/e0c5gmMArOQLJmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9HIzS/RSU0o3
-	MUJCWmgH4/qTcocYBTgYlXh4NXj8AoRYE8uKK3MPMUpyMCmJ8uraAIX4kvJTKjMSizPii0pz
-	UosPMUpwMCuJ8MZrAuV4UxIrq1KL8mFS0hwsSuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4
-	V4AMFSxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAdFa3wxMF5BUjxAez9ag+wtLkjM
-	BYpCtJ5iNOaYfXPFfUaOux+BpBBLXn5eqpQ47zsroFIBkNKM0jy4RbBk9opRHOhvYd5ZIPfw
-	ABMh3LxXQKuYgFb5eviArCpJREhJNTBOm2R1acPlY29q5znMqpPL3rjue9HykG+bjoouef6l
-	fV7H3Amft0ydmMAhK3w8jslshqHm7RV7HW525wQuWb9xs5+pi3jx5Q9XNgReWvXK 
+	id S1758388Ab2IJTdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 15:33:21 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:52501 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758355Ab2IJTdU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 15:33:20 -0400
+Received: by lagy9 with SMTP id y9so1374372lag.19
+        for <git@vger.kernel.org>; Mon, 10 Sep 2012 12:33:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wIDdMgIK/kpnFjpq2OQyRvRfEqbJ3A4DZJLZI27PBKw=;
+        b=0FCffE8r9s0anmOWQR890OT3z8ign7WRdxgg0+PpYYZRi1CTouFE7fdLWQFww+09JS
+         TiqVa7CQ901QDIGV/xh2okfBrD6GGoZ4Zno1N0w5imsV2wwIOvbBU4fMbL5Vd1xexcAx
+         GdSPmBvwo2LqleiWojOpxie/cITjeFJlJyH9muj2YtBtOoc82g2quFH+DY3PFX4J0aRP
+         APZWceBJB+XAl0WCjmXOk0O4yCLTHtUhFWcbo0FUipBGzFwoSHu7AWs87mLCiIkACn4J
+         p0PED3GGXGmLWDyQeCqXEM3IEUHDEalkmUUysQPG2B7zMDbg/e5r90N9Xsi36h6he5/o
+         Pcmg==
+Received: by 10.152.162.10 with SMTP id xw10mr13417235lab.12.1347305599422;
+ Mon, 10 Sep 2012 12:33:19 -0700 (PDT)
+Received: by 10.112.28.129 with HTTP; Mon, 10 Sep 2012 12:33:19 -0700 (PDT)
+In-Reply-To: <20120910184625.GA32237@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205163>
 
-I'm renaming this thread so that the bikeshedding can get over ASAP.
-
-On 09/10/2012 07:48 PM, Andreas Ericsson wrote:
-> On 09/10/2012 06:33 PM, Jeff King wrote:
->> On Mon, Sep 10, 2012 at 09:24:17AM -0700, Junio C Hamano wrote:
->>> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>>> Also, better documentation in header files could enable the automatic
->>>> generation of API docs (e.g., via doxygen).
->>>
->>> Yeah, perhaps you may want to look into doing an automated
->>> generation of Documentation/technical/api-*.txt files out of the
->>> headers.
+On Mon, Sep 10, 2012 at 2:46 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Sep 10, 2012 at 08:36:43PM +0200, Johannes Sixt wrote:
+>
+>> > [1] It does preclude using "--edit" to make a note about a later commit
+>> >     while you are in the middle of resolving a conflict or something.
+>> >     You'd have to do it at the end. I don't know if anybody actually
+>> >     cares about that.
 >>
->> I was just documenting something in technical/api-* the other day, and
->> had the same feeling. I'd be very happy if we moved to some kind of
->> literate-programming system. I have no idea which ones are good or bad,
->> though. I have used doxygen, but all I remember is it being painfully
->> baroque. I'd much rather have something simple and lightweight, with an
->> easy markup format. For example, this:
->>
->>    http://tomdoc.org/
->>
->> Looks much nicer to me than most doxygen I've seen. But again, it's been
->> a while, so maybe doxygen is nicer than I remember.
+>> Yes, I do care. At times I tend to have a very short attention span. Or
+>> it is Windows's slowness that expires my short-term memory more often
+>> than not. ;)
+>
+> OK, then I withdraw my proposal. :)
+>
+> It sounds like it would be safe to do:
+>
+>   git rebase --edit-todo
+>   hack hack hack
+>   git rebase --continue
 
-I don't have a personal preference for what system is used.  I mentioned
-doxygen only because it seems to be a well-known example.
+Johannes took the words right out of my mouth.  Also, "edit and _not_
+continue" also gives the user a chance to second guess while editing
+the todo.
 
->From a glance at the URL you mentioned, it looks like TomDoc is only
-applicable to Ruby code.
+That got me thinking... Currently, the todo list has this line at the bottome:
+    # However, if you remove everything, the rebase will be aborted.
 
-> Doxygen has a the very nifty feature of being able to generate
-> callgraphs though. We use it extensively at $dayjob, so if you need a
-> hand building something sensible out of git's headers, I'd be happy
-> to help.
+We'd probably want to remove that line, since "remove everything" no
+longer aborts the rebase. It'll just finish the rebase.  It'll be ugly
+to sed it out.  Maybe one way to do this is to remove all the comments
+and append new ones.
 
-My plate is full.  If you are able to work on this, it would be awesome.
- As far as I'm concerned, you are the new literate documentation czar :-)
-
-Most importantly, having a convenient system of converting header
-comments into documentation would hopefully motivate other people to add
-better header comments in the first place, and motivate reviewers to
-insist on them.  It's shocking (to me) how few functions are documented,
-and how often I have to read masses of C code to figure out what a
-function is for, its pre- and post-conditions, its memory policy, etc.
-Often I find myself having to read functions three layers down the call
-tree to figure out the behavior of the top-layer function.  I try to
-document things as I go, but it's only a drop in the bucket.
-
-> libgit2 uses doxygen btw, and has done since the start. If we ever
-> merge the two, it would be neat to use the same.
-
-That would be a nice bonus.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+It might also be nice to add a note to remind the user that they're
+editing a todo file in a stopped rebase state. i.e. not a fresh
+interactive rebase
