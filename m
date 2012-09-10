@@ -1,99 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] daemon: restore getpeername(0,...) use
-Date: Mon, 10 Sep 2012 11:50:06 -0400
-Message-ID: <20120910155006.GA8737@sigill.intra.peff.net>
-References: <1347124173-14460-1-git-send-email-jengelh@inai.de>
- <1347124173-14460-2-git-send-email-jengelh@inai.de>
- <7v1uicuyqi.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.01.1209082119320.18369@frira.zrqbmnf.qr>
- <20120910142100.GB7906@sigill.intra.peff.net>
- <k2ku26$jld$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] Add a new function, string_list_split_in_place()
+Date: Mon, 10 Sep 2012 09:09:12 -0700
+Message-ID: <7vd31tq2qf.fsf@alter.siamese.dyndns.org>
+References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
+ <1347169990-9279-2-git-send-email-mhagger@alum.mit.edu>
+ <7voblfsfmd.fsf@alter.siamese.dyndns.org> <504D7082.9020903@alum.mit.edu>
+ <7vhar6pgxs.fsf@alter.siamese.dyndns.org> <504DD3A5.8000201@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jan Engelhardt <jengelh@inai.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Joachim Schmitz <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Mon Sep 10 17:50:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:09:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6Fe-0002dV-U2
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 17:50:19 +0200
+	id 1TB6YC-0000Kc-6N
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757855Ab2IJPuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 11:50:10 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39674 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757716Ab2IJPuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 11:50:09 -0400
-Received: (qmail 28664 invoked by uid 107); 10 Sep 2012 15:50:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 11:50:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 11:50:06 -0400
-Content-Disposition: inline
-In-Reply-To: <k2ku26$jld$1@ger.gmane.org>
+	id S1758003Ab2IJQJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:09:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34698 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753801Ab2IJQJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:09:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9A149BA6;
+	Mon, 10 Sep 2012 12:09:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MMQ9EuBxm9hj3HdtoRHoahRlrm0=; b=b804XP
+	BorDHsZcT+CAP+MkKv384U/TGGdDtqCuy/IO3qoqjTLkejm8mMwpJOhcd53SlBJz
+	+kJGBZRf4K+2d8QsSknXEMCacooUq3HyVqhEmavTtJBOussZG06b7xxEoMSDuHtx
+	GBhMONWoiA1okHukb6KsZCfx3kHVbKVl375i4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ldNsj07XoJAqVi8p3xaJoEB4A7cr044W
+	wa5i+h7EOIeSRbYMhevbrcDFpuJSONv0vzXxiWt8jXF6BNekwoBS6iJXP06kQPpM
+	Lyw7AksvJCz2IWYT+herW25KuYl1xb3tyzYat6DB9BJtdWmdyYuog9TN4z32LlJA
+	n5PGy8MDU4I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B69F09BA5;
+	Mon, 10 Sep 2012 12:09:18 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 269CB9BA0; Mon, 10 Sep 2012
+ 12:09:18 -0400 (EDT)
+In-Reply-To: <504DD3A5.8000201@alum.mit.edu> (Michael Haggerty's message of
+ "Mon, 10 Sep 2012 13:48:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DFB8E38E-FB61-11E1-9AD8-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205131>
 
-On Mon, Sep 10, 2012 at 04:38:58PM +0200, Joachim Schmitz wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> >More importantly, though, is it actually portable? I thought it was
-> >added in C99, and we try to stick to C89 to support older compilers
-> >and systems. My copy of C99 is vague (it says only that the "bool"
-> >macro was added via stdbool.h in C99, but nothing about the "true"
-> >and "false" macros), and I don't have a copy of C89 handy.  Wikipedia
-> >does claim the header wasn't standardized at all until C99:
-> >
-> > https://en.wikipedia.org/wiki/C_standard_library
-> 
-> Indeed stdbool is not part of C89, but inline isn't either and used
-> extensively in git (could possible be defined away),
-
-You can define INLINE in the Makefile to disable it (or set it to
-something more appropriate for your system).
-
-> as are non-const array intializers, e.g.:
-> 
->                const char *args[] = { editor, path, NULL };
->                                               ^
-> ".../git/editor.c", line 39: error(122): expression must have a
-> constant value
+> OK, so the bottom line would be to have two versions of the function.
+> One takes a (const char *) and *requires* strdup_strings to be set on
+> its input list:
 >
-> So git source is not plain C89 code (anymore?)
+> int string_list_split(struct string_list *list, const char *string,
+> 		      int delim, int maxsplit)
+> {
+> 	assert(list->strdup_strings);
+> 	...
+> }
+>
+> The other takes a (char *) and modifies it in-place, and maybe even
+> requires strdup_strings to be false on its input list:
+>
+> int string_list_split_in_place(struct string_list *list, char *string,
+> 			       int delim, int maxsplit)
+> {
+> 	/* not an error per se but a strong suggestion of one: */
+> 	assert(!list->strdup_strings);
+> 	...
+> }
+>
+> (The latter (modulo assert) is the one that I have implemented, but it
+> might not be needed immediately.)  Do you agree?
 
-I remember we excised a whole bunch of non-constant initializers at some
-point because somebody's compiler was complaining. But I suppose this
-one has slipped back in, because non-constant initializers are so damn
-useful. And nobody has complained, which I imagine means nobody has
-bothered building lately on those older systems that complained.
+OK; I do not offhand know which one you immediately needed, but I
+think that is a sensible way to structure the API.
 
-My "we stick to C89" is a little bit of a lie. We do not care about
-specific standards. We do care about running everywhere on reasonable
-systems. So something that is C99 might be OK if realistically everybody
-has it. And something that is POSIX is not automatically OK if there are
-many real-world systems that do not have it.
+> [1] A case I can think of would be parsing a format like
+>
+>     NUMPARENTS [PARENT...] SUMMARY
+>
+> where "string_list_split(list, rest_of_line, ' ', numparents)" does the
+> right thing even if numparents==0.
 
-Since there is no written standard, there tends to be an organic ebb and
-flow in which features we use. Somebody will use a feature that is not
-portable because it's useful to them, and then somebody whose system
-will no longer build git will complain, and then we'll fix it and move
-on. As reviewers, we try to anticipate those breakages and stop them
-early (especially if they are ones we have seen before and know are a
-problem), but we do not always get it right. And sometimes it is even
-time to revisit old decisions (the line you mentioned is 2 years old,
-and nobody has complained; maybe all of the old systems have become
-obsolete, and we no longer need to care about constant initializers).
-
-Getting back to the patch at hand, it may be that stdbool is practically
-available everywhere. Or that we could trivially emulate it by defining
-a "true" macro in this case. But it is also important to consider
-whether that complexity is worth it. This would be the first and only
-spot in git to use "true". Why bother?
-
--Peff
+OK.
