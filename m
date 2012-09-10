@@ -1,95 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] Add git-check-ignores
-Date: Mon, 10 Sep 2012 09:30:59 -0700
-Message-ID: <7vwr01on5o.fsf@alter.siamese.dyndns.org>
-References: <1346544731-938-1-git-send-email-git@adamspiers.org>
- <1346544731-938-10-git-send-email-git@adamspiers.org>
- <CACsJy8A2-C9xSz2LXt9Ptjxhe++i2vcBSMY-cxJLWUiutajZUQ@mail.gmail.com>
- <20120910110928.GA12974@atlantic.linksys.moosehall>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] Add a function string_list_longest_prefix()
+Date: Mon, 10 Sep 2012 12:33:10 -0400
+Message-ID: <20120910163310.GE9435@sigill.intra.peff.net>
+References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
+ <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu>
+ <7vbohfser4.fsf@alter.siamese.dyndns.org>
+ <504DBA62.3080001@alum.mit.edu>
+ <7v1ui9q21a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:31:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:33:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6tF-0001AL-JK
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:31:13 +0200
+	id 1TB6vJ-0002yh-5x
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751721Ab2IJQbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:31:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46967 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751639Ab2IJQbC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:31:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF0E482A6;
-	Mon, 10 Sep 2012 12:31:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fek9RCXjLH0ek/oEyIHDQIMVI3E=; b=ycGeW1
-	Dxl4CcgPrQx3Jc/ZLWWyGO213H1K5sMSY3VuWmXsyiSGdPfW5CzMcqq15Ae8rG0Q
-	/KYgw57GCpX9/C8Q2Btd3CzblzRqX7eI4LEgXLdpeVQgJt9nqG8WEWD/IJewfK+o
-	rMZbuWAOQvBTO0Sv6P1iqjOt6vvlvtSzWSgZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Cu6y2Q2aChGzolTU/Xpp1DT4OhZKv2uL
-	K3DgTR58YQkhh7XRs/dVGFP4a4EUpg3Yd4LUpA8ANuuMJLsehUm6bGdSeYXuIzrZ
-	R3fPuh7Ri852QHPDwnuhjvxFKVfy9OLIaQwczeJvVR+eQy3JdgQxp8+Y5B7RuAKX
-	DzEyFwfmNyc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABACD82A5;
-	Mon, 10 Sep 2012 12:31:01 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0969B82A4; Mon, 10 Sep 2012
- 12:31:00 -0400 (EDT)
-In-Reply-To: <20120910110928.GA12974@atlantic.linksys.moosehall> (Adam
- Spiers's message of "Mon, 10 Sep 2012 12:09:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E84CB34C-FB64-11E1-9DFE-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751863Ab2IJQdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:33:14 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39749 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750957Ab2IJQdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:33:13 -0400
+Received: (qmail 29483 invoked by uid 107); 10 Sep 2012 16:33:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 12:33:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 12:33:10 -0400
+Content-Disposition: inline
+In-Reply-To: <7v1ui9q21a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205143>
 
-Adam Spiers <git@adamspiers.org> writes:
+On Mon, Sep 10, 2012 at 09:24:17AM -0700, Junio C Hamano wrote:
 
-Administrivia.  Please never deflect direct responses to you with
-"Mail-Followup-To" header.  I told my mailer to "follow-up" so that I
-could give you advice in response, while adding others in the
-discussion to Cc so that they do not have to repeat what I said, but
-your "Mail-follow-up-to" forced my advice to go to Nguyen, who does
-not need one.
+> > While we're on the subject, it seems to me that documenting APIs like
+> > these in separate files under Documentation/technical rather than in the
+> > header files themselves
+> >
+> > - makes the documentation for a particular function harder to find,
+> >
+> > - makes it easier for the documentation to get out of sync with the
+> > actual collection of functions (e.g., the 5 undocumented functions
+> > listed above).
+> >
+> > - makes it awkward for the documentation to refer to particular function
+> > parameters by name.
+> >
+> > While it is nice to have a high-level prose description of an API, I am
+> > often frustrated by the lack of "docstrings" in the header file where a
+> > function is declared.  The high-level description of an API could be put
+> > at the top of the header file.
+> >
+> > Also, better documentation in header files could enable the automatic
+> > generation of API docs (e.g., via doxygen).
+> 
+> Yeah, perhaps you may want to look into doing an automated
+> generation of Documentation/technical/api-*.txt files out of the
+> headers.
 
-> On Tue, Sep 04, 2012 at 08:06:12PM +0700, Nguyen Thai Ngoc Duy wrote:
->> On Sun, Sep 2, 2012 at 7:12 AM, Adam Spiers <git@adamspiers.org> wrote:
->> > --- a/builtin/add.c
->> > +++ b/builtin/add.c
->> > @@ -273,7 +273,7 @@ static int add_files(struct dir_struct *dir, int flags)
->> >                 fprintf(stderr, _(ignore_error));
->> >                 for (i = 0; i < dir->ignored_nr; i++)
->> >                         fprintf(stderr, "%s\n", dir->ignored[i]->name);
->> > -               fprintf(stderr, _("Use -f if you really want to add them.\n"));
->> > +               fprintf(stderr, _("Use -f if you really want to add them, or git check-ignore to see\nwhy they're ignored.\n"));
->> >                 die(_("no files added"));
->> >         }
->> 
->> String too long (> 80 chars).
->
-> You mean the line of code is too long, or the argument to _(), or
-> both?
+I was just documenting something in technical/api-* the other day, and
+had the same feeling. I'd be very happy if we moved to some kind of
+literate-programming system. I have no idea which ones are good or bad,
+though. I have used doxygen, but all I remember is it being painfully
+baroque. I'd much rather have something simple and lightweight, with an
+easy markup format. For example, this:
 
-Both.
+  http://tomdoc.org/
 
-               fprintf(stderr, _("Use -f if you really want to add them, or\n"
-				 "run git check-ignore to see\nwhy they're ignored.\n"));
+Looks much nicer to me than most doxygen I've seen. But again, it's been
+a while, so maybe doxygen is nicer than I remember.
 
-But in this particular case, I tend to think the additional noise
-does not add much value and something the user wouldn't want to see
-over and over again (in other words, it belongs to "an advice").
+-Peff
