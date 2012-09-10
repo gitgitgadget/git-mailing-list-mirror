@@ -1,97 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] Add a new function, string_list_split_in_place()
-Date: Mon, 10 Sep 2012 09:09:12 -0700
-Message-ID: <7vd31tq2qf.fsf@alter.siamese.dyndns.org>
-References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
- <1347169990-9279-2-git-send-email-mhagger@alum.mit.edu>
- <7voblfsfmd.fsf@alter.siamese.dyndns.org> <504D7082.9020903@alum.mit.edu>
- <7vhar6pgxs.fsf@alter.siamese.dyndns.org> <504DD3A5.8000201@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] blame: respect "core.ignorecase"
+Date: Mon, 10 Sep 2012 12:13:25 -0400
+Message-ID: <20120910161325.GB9435@sigill.intra.peff.net>
+References: <1347210113-27435-1-git-send-email-ralf.thielow@gmail.com>
+ <7v7gs3q9rp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:09:31 2012
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:13:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6YC-0000Kc-6N
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:09:28 +0200
+	id 1TB6cE-0003hc-GY
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758003Ab2IJQJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:09:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34698 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753801Ab2IJQJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:09:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9A149BA6;
-	Mon, 10 Sep 2012 12:09:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MMQ9EuBxm9hj3HdtoRHoahRlrm0=; b=b804XP
-	BorDHsZcT+CAP+MkKv384U/TGGdDtqCuy/IO3qoqjTLkejm8mMwpJOhcd53SlBJz
-	+kJGBZRf4K+2d8QsSknXEMCacooUq3HyVqhEmavTtJBOussZG06b7xxEoMSDuHtx
-	GBhMONWoiA1okHukb6KsZCfx3kHVbKVl375i4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ldNsj07XoJAqVi8p3xaJoEB4A7cr044W
-	wa5i+h7EOIeSRbYMhevbrcDFpuJSONv0vzXxiWt8jXF6BNekwoBS6iJXP06kQPpM
-	Lyw7AksvJCz2IWYT+herW25KuYl1xb3tyzYat6DB9BJtdWmdyYuog9TN4z32LlJA
-	n5PGy8MDU4I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B69F09BA5;
-	Mon, 10 Sep 2012 12:09:18 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 269CB9BA0; Mon, 10 Sep 2012
- 12:09:18 -0400 (EDT)
-In-Reply-To: <504DD3A5.8000201@alum.mit.edu> (Michael Haggerty's message of
- "Mon, 10 Sep 2012 13:48:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DFB8E38E-FB61-11E1-9AD8-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932137Ab2IJQNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:13:30 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39706 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757984Ab2IJQN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:13:28 -0400
+Received: (qmail 29038 invoked by uid 107); 10 Sep 2012 16:13:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 12:13:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 12:13:25 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gs3q9rp.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205132>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Sun, Sep 09, 2012 at 12:24:58PM -0700, Junio C Hamano wrote:
 
-> OK, so the bottom line would be to have two versions of the function.
-> One takes a (const char *) and *requires* strdup_strings to be set on
-> its input list:
->
-> int string_list_split(struct string_list *list, const char *string,
-> 		      int delim, int maxsplit)
-> {
-> 	assert(list->strdup_strings);
-> 	...
-> }
->
-> The other takes a (char *) and modifies it in-place, and maybe even
-> requires strdup_strings to be false on its input list:
->
-> int string_list_split_in_place(struct string_list *list, char *string,
-> 			       int delim, int maxsplit)
-> {
-> 	/* not an error per se but a strong suggestion of one: */
-> 	assert(!list->strdup_strings);
-> 	...
-> }
->
-> (The latter (modulo assert) is the one that I have implemented, but it
-> might not be needed immediately.)  Do you agree?
+> Having said all that, I am not sure if the "fixing" is really the
+> right approach to begin with.  Contrast these two:
+> 
+>     $ git blame MakeFILE
+>     $ git blame HEAD -- MakeFILE
+> 
+> The latter, regardless of core.ignorecase, should fail, with "No
+> such path MakeFILE in HEAD".  The former is merely an extension to
+> the latter, in the sense that the main traversal is exactly the same
+> as the latter, but on top, local modifications are blamed to the
+> working tree.
+> 
+> If we were to do anything, I would think the most sane thing to do
+> is a smaller patch to fix fake_working_tree_commit() where it calls
+> lstat() and _should_ die with "Cannot lstat MakeFILE" on a sane
+> filesystem.  It does not currently make sure the path exists in the
+> HEAD exactly as given by the user (i.e. without core.ignorecase
+> matching), and die when it is not found.
 
-OK; I do not offhand know which one you immediately needed, but I
-think that is a sensible way to structure the API.
+Yes, I think that is the only sensible thing here. The rest of this
+email is me essentially me agreeing with you and telling you things you
+already know, but I had a slightly different line of reasoning, so I
+thought I would share.
 
-> [1] A case I can think of would be parsing a format like
->
->     NUMPARENTS [PARENT...] SUMMARY
->
-> where "string_list_split(list, rest_of_line, ' ', numparents)" does the
-> right thing even if numparents==0.
+As far as the original patch, if you are going to change blame, then it
+is only logical to change the whole revision parser so that "git log --
+MAKEFILE" works. And I do not think that is a direction we want to go.
 
-OK.
+core.ignorecase has never been about "make git case-insensitive". Git
+represents a case-sensitive tree, and will always do so because of the
+sha1 we compute over the tree objects. core.ignorecase is really "make
+case-sensitive git work around your case-insensitive filesystem"[1].
+
+If the proposal were instead to add a certain type of pathspec that is
+case-insensitive[2], that would make much more sense to me. It is not
+violating git's case-sensitivity because it is purely a _query_ issue.
+And it is a feature you might use whether or not your filesystem is case
+sensitive.
+
+-Peff
+
+[1] I was going to submit a patch to Documentation/config.txt to make
+    this more clear, but IMHO the current text is already pretty clear.
+
+[2] I did not keep up with Duy's work on pathspec magic-prefixes (and I
+    could not find anything relevant in the code or documentation), but
+    it seems like this would be a logical feature to support there.
