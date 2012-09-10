@@ -1,99 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] Add a function string_list_longest_prefix()
-Date: Mon, 10 Sep 2012 09:24:17 -0700
-Message-ID: <7v1ui9q21a.fsf@alter.siamese.dyndns.org>
-References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
- <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu>
- <7vbohfser4.fsf@alter.siamese.dyndns.org> <504DBA62.3080001@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] rebase -i: Teach "--edit" action
+Date: Mon, 10 Sep 2012 18:25:00 +0200
+Message-ID: <vpqk3w1j15v.fsf@bauges.imag.fr>
+References: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
+	<1347293683-27996-2-git-send-email-andrew.kw.w@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:24:32 2012
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:25:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6mi-0004CG-6n
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:24:28 +0200
+	id 1TB6nT-0004ob-4k
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421Ab2IJQYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:24:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42589 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750805Ab2IJQYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:24:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8FF89FF1;
-	Mon, 10 Sep 2012 12:24:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jMH0gXQV00Ogj2fMby++/TmxuVE=; b=tatb3V
-	BcyRNn+s2DJqvXsTk8/IW2HwRiT7Tu3IuihIevN7qUY+wyYDV9sVUA/wwhpMh9KO
-	/KCM1toUirj5cBqAFC0w1ztT/Ciz5+JRmdeSiGrZhRCYTDlciJjfW4Tx77F+ZJna
-	FbtVJd3+0r1OGuQ/lS6Nl3qcz72tqaOiQRxqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kCQqMmj67BtV8s3kEu2X7ytqBGa9yTko
-	2AUUF3xULu8kVZufGd+qpJ2BTt2OMlnREVjJ1s52d+4S9ZsCzscTj8phFwZu2NCq
-	sFf6GpglrfLVOHBbvdNreUkEJ3PxZT1feaMAfIB89EfKt3eciuNHSKp0oZ+cyukb
-	gdea/k0dJTg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 969E69FF0;
-	Mon, 10 Sep 2012 12:24:19 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF1529FEE; Mon, 10 Sep 2012
- 12:24:18 -0400 (EDT)
-In-Reply-To: <504DBA62.3080001@alum.mit.edu> (Michael Haggerty's message of
- "Mon, 10 Sep 2012 12:01:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F8A72458-FB63-11E1-8BB8-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751443Ab2IJQZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:25:07 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56847 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750805Ab2IJQZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:25:05 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8AGKcb3008690
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 10 Sep 2012 18:20:38 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TB6nE-0001T2-Mo; Mon, 10 Sep 2012 18:25:00 +0200
+In-Reply-To: <1347293683-27996-2-git-send-email-andrew.kw.w@gmail.com> (Andrew
+	Wong's message of "Mon, 10 Sep 2012 12:14:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Sep 2012 18:20:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8AGKcb3008690
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1347898840.31761@VG8X5ClGXPbaar01apZmXA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205139>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-> Another idea: in string-list.h, one could name parameters "sorted_list"
-> when they must be sorted as a precondition of the function.
+> This allows users to edit the todo list while they're in the middle of
+> an interactive rebase.
 
-That sounds like a very sensible thing to do.
+I like the idea.
 
-> But before getting too hung up on finery, the effort might be better
-> invested adding documentation for functions that are totally lacking it,
-> like
->
->     string_list_clear_func()
->     for_each_string_list()
->     for_each_string_list_item()
->     string_list_find_insert_index()
->     string_list_insert_at_index()
->
-> While we're on the subject, it seems to me that documenting APIs like
-> these in separate files under Documentation/technical rather than in the
-> header files themselves
->
-> - makes the documentation for a particular function harder to find,
->
-> - makes it easier for the documentation to get out of sync with the
-> actual collection of functions (e.g., the 5 undocumented functions
-> listed above).
->
-> - makes it awkward for the documentation to refer to particular function
-> parameters by name.
->
-> While it is nice to have a high-level prose description of an API, I am
-> often frustrated by the lack of "docstrings" in the header file where a
-> function is declared.  The high-level description of an API could be put
-> at the top of the header file.
->
-> Also, better documentation in header files could enable the automatic
-> generation of API docs (e.g., via doxygen).
+> +edit)
+> +  git_sequence_editor "$todo" ||
+> +    die_abort "Could not execute editor"
+> +
+> +  exit
+> +  ;;
 
-Yeah, perhaps you may want to look into doing an automated
-generation of Documentation/technical/api-*.txt files out of the
-headers.
+Indent with space. Please, use tabs (same below).
+
+> index 15da926..c394b8d 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -38,6 +38,7 @@ C=!                passed to 'git apply'
+>  continue!          continue
+>  abort!             abort and check out the original branch
+>  skip!              skip current patch and continue
+> +edit!              edit the todo list during interactive rebase
+
+Just "edit" may be a bit misleading, as we already have the "edit"
+action inside the todolist. I'd call this --edit-list to avoid
+ambiguity.
+
+This lacks tests, IMHO, as there are many corner-cases (e.g. should we
+be allowed to --edit-list while the worktree is in conflict?) that would
+deserve to be at least discussed, and as much as possible automatically
+tested.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
