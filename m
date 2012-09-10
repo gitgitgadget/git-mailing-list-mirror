@@ -1,90 +1,83 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 00/14] Clean up how fetch_pack() handles the heads
- list
-Date: Mon, 10 Sep 2012 23:59:59 +0200
-Message-ID: <504E62DF.5030408@alum.mit.edu>
-References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu> <7v7gs3sdjx.fsf@alter.siamese.dyndns.org> <20120909130532.GA27754@sigill.intra.peff.net> <7vhar7qd07.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/6] string_list: add two new functions for splitting
+ strings
+Date: Mon, 10 Sep 2012 15:00:36 -0700
+Message-ID: <7vlighlerf.fsf@alter.siamese.dyndns.org>
+References: <1347311926-5207-1-git-send-email-mhagger@alum.mit.edu>
+ <1347311926-5207-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 11 00:00:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 11 00:00:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBC1g-0002dT-5Z
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 00:00:16 +0200
+	id 1TBC2B-00030U-F9
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 00:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489Ab2IJWAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 18:00:07 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:61823 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750886Ab2IJWAF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 18:00:05 -0400
-X-AuditID: 1207440e-b7f036d0000008b5-d2-504e62e31eca
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 05.22.02229.3E26E405; Mon, 10 Sep 2012 18:00:03 -0400 (EDT)
-Received: from [192.168.69.140] (p57A25B0C.dip.t-dialin.net [87.162.91.12])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8ALxx15021927
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 10 Sep 2012 18:00:02 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7vhar7qd07.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqPs4yS/A4EODlUXXlW4mi4beK8wW
-	P1p6mC06p8o6sHgsX7qO0eNZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M5oX7aCsWAb
-	V8XeB2tYGhg3cXQxcnJICJhITD22jgnCFpO4cG89WxcjF4eQwGVGiWdn9jBDOKeZJBr/nmEF
-	qeIV0JZYtHwqC4jNIqAqcavhPCOIzSagK7GopxlskqhAiMSMy5OZIeoFJU7OfAJWLyKgJjGx
-	7RCYzSyQKPFv0WOwmcICARKn1/dDLTvOKDHx5GOwZk4BM4kpl7YzQzToSLzrewBly0tsfzuH
-	eQKjwCwkO2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1jvdzMEr3UlNJNjJCA
-	5tvB2L5e5hCjAAejEg+vBo9fgBBrYllxZe4hRkkOJiVR3p3RQCG+pPyUyozE4oz4otKc1OJD
-	jBIczEoivPGaQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgSvODBy
-	hQSLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJB0RpfDIxXkBQP0F5vkHbe4oLEXKAo
-	ROspRl2Oux9X3GcUYsnLz0uVEud1AikSACnKKM2DWwFLX68YxYE+FuY1BqniAaY+uEmvgJYw
-	AS3x9fABWVKSiJCSamDs8o3iuhd0/ZfJjYRnEq9i5vYF7XyXJx/r39/WwrGuqS1+ovr+/Z8P
-	zxFLCZv77kqAwJUM3gqunzEmElLMiWyiloePrjF9+SNx9rl9nzkUjiwM3G1kra3/ 
+	id S1755800Ab2IJWAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 18:00:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47100 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752001Ab2IJWAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 18:00:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26AC58793;
+	Mon, 10 Sep 2012 18:00:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sknb+b+XbUn6+uAcu8HoTbEhVJY=; b=sl/+kh
+	vnEZ1Fb50CCVQWUGtftkKUO1mYrgmQI2kwTN+8UtKrm7bNrDYSDT4Xhzr/KjGWsv
+	+mvswq5KIt6EpSWN3EpoZRleVD48bsYBNNuzZdpUjCbFkiLEbKGbslKhVfnE/IjG
+	D8BU72aqASIbA4p3YWigRhIfv2qQQrOMM+fB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ThlT9qvvnW2trzjLwdcLMllQ7ZRR96S6
+	b0rudDiUCsVZj6T7jdZRhnLciM3i4nvktslUufiX6foUj9LbD/V/wAOACZjXgOtL
+	uSzJ+UVGF1wqZ5xE8cpcOnYU2j7iI9NLdHYC+xzOJ6XnHGytme/cgHuGHfch8ikf
+	YJRPpLUuhys=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 152BD8792;
+	Mon, 10 Sep 2012 18:00:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 731F28791; Mon, 10 Sep 2012
+ 18:00:37 -0400 (EDT)
+In-Reply-To: <1347311926-5207-3-git-send-email-mhagger@alum.mit.edu> (Michael
+ Haggerty's message of "Mon, 10 Sep 2012 23:18:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F3F8D5EE-FB92-11E1-BE32-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205200>
 
-On 09/09/2012 08:15 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Sun, Sep 09, 2012 at 03:20:18AM -0700, Junio C Hamano wrote:
->>
->>> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>>
->>>> This patch series depends on the "Add some string_list-related
->>>> functions" series that I just submitted.
->>>
->>> Makes sense.  The only worry (without reading the series first) I
->>> have is that the use of string list may make the responsiblity of
->>> sorting the list fuzzier. I am guessing that we never sorted the
->>> refs we asked to fetch (so that FETCH_HEAD comes out in an expected
->>> order), so use of unsorted string list would be perfectly fine.
->>
->> I haven't read the series yet, but both the list of heads from the user
->> and the list of heads from the remote should have been sorted by 4435968
->> and 9e8e704f, respectively.
-> 
-> OK.  As long as the sort order matches the order string-list
-> internally uses for its bisection search, it won't be a problem,
-> then.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-The sorting is crucial but there is no bisection involved.  The sorted
-linked-list of references available from the remote and the sorted
-string_list of requested references are iterated through in parallel.
+> diff --git a/string-list.c b/string-list.c
+> index 5594b7d..f9051ec 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -204,3 +204,52 @@ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_
+>  	list->items[i] = list->items[list->nr-1];
+>  	list->nr--;
+>  }
+> +
+> +int string_list_split(struct string_list *list, const char *string,
+> +		      int delim, int maxsplit)
+> +{
+> +	int count = 0;
+> +	const char *p = string, *end;
+> +
+> +	assert(list->strdup_strings);
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+This may be a taste thing, but I'd prefer to see assert() only for
+verification of pre-condition by internal callers to catch stupid
+programming errors.  For a library-ish function like sl_split() that
+expects to be called from anybody outside the string-list API, a
+violation of this pre-condition is a usage error of the API, and
+should trigger a runtime error (even without NDEBUG), no?
