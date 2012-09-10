@@ -1,122 +1,98 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH] rebase -i: Teach "--edit" action
-Date: Mon, 10 Sep 2012 12:14:43 -0400
-Message-ID: <1347293683-27996-2-git-send-email-andrew.kw.w@gmail.com>
-References: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:15:36 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: checkout extra files
+Date: Mon, 10 Sep 2012 12:19:04 -0400
+Message-ID: <20120910161904.GC9435@sigill.intra.peff.net>
+References: <CAB9Jk9BvQmFfTq3a+e-7t-66s06jLK4fWuZB+MJHrAtbznBvHw@mail.gmail.com>
+ <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
+ <7vsjayew50.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
+ <7vd322ebsz.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
+ <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
+ <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
+ <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:19:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6e0-00058E-My
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:15:29 +0200
+	id 1TB6hh-00084Q-Cg
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758094Ab2IJQPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:15:17 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:62772 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754372Ab2IJQPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:15:14 -0400
-Received: by iahk25 with SMTP id k25so1902061iah.19
-        for <git@vger.kernel.org>; Mon, 10 Sep 2012 09:15:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=fcNdc6AjoxGHPPCbUMwVo1vpdIuLv8H10AjK314igs0=;
-        b=SkYrcvL0JZh2+tJJVk40/PHJpJkWdKQObjLmd22mUnXDAlOb+/SfsGFFigcLKcno3X
-         5ypZ50afbtajvge2A3ax53xbgok3hAPfEtUbeISrn24LipuxkDAtE/QGn6D6XMiGHwyb
-         xPzlZzN3LwnHvhPlL2Hd46fAy5RL4GtkzO20C4AcM37cbxKpcA5Nc74ebppdmCFnVuJz
-         Q7yL9M1yckIByl1G8w93pxrmJm/5WMEvvp6xdwW1dnvW2MIbN2Oj97V17d+ecyckKZyL
-         n6pd1+b4Ky/d9BO38pPaML9Lg6gGn42I/fIv2qEQzxxSxtKgCnSIeQZKyM+BqcRalcCV
-         1Irw==
-Received: by 10.50.104.201 with SMTP id gg9mr11731484igb.67.1347293713436;
-        Mon, 10 Sep 2012 09:15:13 -0700 (PDT)
-Received: from nigel.sohovfx.com ([66.207.196.114])
-        by mx.google.com with ESMTPS id ho1sm12253218igc.3.2012.09.10.09.15.12
-        (version=SSLv3 cipher=OTHER);
-        Mon, 10 Sep 2012 09:15:12 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.289.g0ce9864.dirty
-In-Reply-To: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1757716Ab2IJQTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:19:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39715 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752416Ab2IJQTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:19:08 -0400
+Received: (qmail 29143 invoked by uid 107); 10 Sep 2012 16:19:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 12:19:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 12:19:04 -0400
+Content-Disposition: inline
+In-Reply-To: <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205135>
 
-This allows users to edit the todo list while they're in the middle of
-an interactive rebase.
+On Fri, Sep 07, 2012 at 01:49:15PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
----
- git-rebase--interactive.sh |  6 ++++++
- git-rebase.sh              | 14 ++++++++++++++
- 2 files changed, 20 insertions(+)
+> -- >8 --
+> gitcli: contrast wildcard given to shell and to git
+> 
+> People who are not used to working with shell may intellectually
+> understand how the command line argument is massaged by the shell
+> but still have a hard time visualizing the difference between
+> letting the shell expand fileglobs and having Git see the fileglob
+> to use as a pathspec.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a09e842..e9dbcf3 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -775,6 +775,12 @@ skip)
- 
- 	do_rest
- 	;;
-+edit)
-+  git_sequence_editor "$todo" ||
-+    die_abort "Could not execute editor"
-+
-+  exit
-+  ;;
- esac
- 
- git var GIT_COMMITTER_IDENT >/dev/null ||
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 15da926..c394b8d 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -38,6 +38,7 @@ C=!                passed to 'git apply'
- continue!          continue
- abort!             abort and check out the original branch
- skip!              skip current patch and continue
-+edit!              edit the todo list during interactive rebase
- "
- . git-sh-setup
- . git-sh-i18n
-@@ -194,6 +195,10 @@ do
- 		test $total_argc -eq 2 || usage
- 		action=${1##--}
- 		;;
-+	--edit)
-+		test $total_argc -eq 2 || usage
-+		action=${1##--}
-+		;;
- 	--onto)
- 		test 2 -le "$#" || usage
- 		onto="$2"
-@@ -306,6 +311,12 @@ then
- 	fi
- fi
- 
-+if test "$action" = "edit" &&
-+  test "$type" != "interactive"
-+then
-+  die "$(gettext "The --edit action can only be used during interactive rebase.")"
-+fi
-+
- case "$action" in
- continue)
- 	# Sanity check
-@@ -338,6 +349,9 @@ abort)
- 	rm -r "$state_dir"
- 	exit
- 	;;
-+edit)
-+	run_specific_rebase
-+  ;;
- esac
- 
- # Make sure no rebase is in progress
--- 
-1.7.12.289.g0ce9864.dirty
+I think this is an improvement, but...
+
+> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
+> index ea17f7a..220621b 100644
+> --- c/Documentation/gitcli.txt
+> +++ w/Documentation/gitcli.txt
+> @@ -38,6 +38,22 @@ arguments.  Here are the rules:
+>     you have to say either `git diff HEAD --` or `git diff -- HEAD` to
+>     disambiguate.
+>  
+> + * Many commands allow wildcards in paths, but you need to protect
+> +them from getting globbed by the shell.  These two mean different things:
+> ++
+> +--------------------------------
+> +$ git checkout -- *.c
+> +$ git checkout -- \*.c
+> +--------------------------------
+> ++
+> +The former lets your shell expand the fileglob, and you are asking
+> +the dot-C files in your working tree to be overwritten with the version
+> +in the index.  The latter passes the `*.c` to Git, and you are asking
+> +the paths in the index that match the pattern to be checked out to your
+> +working tree.  After running `git add hello.c; rm hello.c`, you will _not_
+> +see `hello.c` in your working tree with the former, but with the latter
+> +you will.
+> +
+>  When writing a script that is expected to handle random user-input, it is
+>  a good practice to make it explicit which arguments are which by placing
+>  disambiguating `--` at appropriate places.
+
+Look at the paragraph below your addition. It is typographically outside
+of the bulleted list you are adding to, but it really makes sense
+directly after the prior two bullet points, which are explicitly about
+disambiguation between revisions and paths. Your addition splits them
+apart.
+
+Does it make sense to join that final paragraph into what is now the
+third bullet, and then add your new text (the fourth bullet) after?
+
+-Peff
