@@ -1,88 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] blame: respect "core.ignorecase"
-Date: Mon, 10 Sep 2012 12:13:25 -0400
-Message-ID: <20120910161325.GB9435@sigill.intra.peff.net>
-References: <1347210113-27435-1-git-send-email-ralf.thielow@gmail.com>
- <7v7gs3q9rp.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:13:41 2012
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [RFC] Add "edit" action for interactive rebase?
+Date: Mon, 10 Sep 2012 12:14:42 -0400
+Message-ID: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:15:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6cE-0003hc-GY
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:13:38 +0200
+	id 1TB6dt-0004y2-L2
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932137Ab2IJQNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:13:30 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39706 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757984Ab2IJQN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:13:28 -0400
-Received: (qmail 29038 invoked by uid 107); 10 Sep 2012 16:13:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 12:13:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 12:13:25 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7gs3q9rp.fsf@alter.siamese.dyndns.org>
+	id S1758089Ab2IJQPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 12:15:08 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:55134 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754372Ab2IJQPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:15:05 -0400
+Received: by ieje11 with SMTP id e11so3477495iej.19
+        for <git@vger.kernel.org>; Mon, 10 Sep 2012 09:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Vrscw74EiDQitsRjrfFNzGkCXhwzA29BgATrrqAC1VQ=;
+        b=x0pXgJeob1/hyOmgvDAzjltdFTibFUJ8wwDYz97FOT6PrigkNCTLxczLmAmBY4PXxR
+         CLMukcEDfp0x8mVENwgtcHvVE+hc48fY13f8s7a0RSCkpvACNMU7r/G7MuOwOKIXpL5D
+         /SRHp5tH6AYSpuuZwDxE1lSO3+NsFkPb51zQ0TFG1qEnmthAgrazwGBcIjwGe5negYa9
+         WAIyGZ2csef+0dv2S0a32H6iZafj9qLpKGtl9jc0iH06bBO0E/Hvpsoq34D1xRdenFZt
+         80XFSNSv00AGrh5lWhdP7ZsTP+xMQW6TRBRkK/zSfi4d0e1y3NupHIVQTkJNZTQZ/CTh
+         MzPQ==
+Received: by 10.50.160.202 with SMTP id xm10mr11341155igb.10.1347293704540;
+        Mon, 10 Sep 2012 09:15:04 -0700 (PDT)
+Received: from nigel.sohovfx.com ([66.207.196.114])
+        by mx.google.com with ESMTPS id ho1sm12253218igc.3.2012.09.10.09.15.02
+        (version=SSLv3 cipher=OTHER);
+        Mon, 10 Sep 2012 09:15:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.289.g0ce9864.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205133>
 
-On Sun, Sep 09, 2012 at 12:24:58PM -0700, Junio C Hamano wrote:
+Occasionally, while I'm in the middle of an interactive rebase, I'd change my
+mind about the todo list and want to modify it.  This means manually digging
+out the todo file from the rebase directory, and invoking the editor.  So I
+thought it might be convenient to have an "edit" action that simply invokes the
+editor on the todo file but do nothing else.
 
-> Having said all that, I am not sure if the "fixing" is really the
-> right approach to begin with.  Contrast these two:
-> 
->     $ git blame MakeFILE
->     $ git blame HEAD -- MakeFILE
-> 
-> The latter, regardless of core.ignorecase, should fail, with "No
-> such path MakeFILE in HEAD".  The former is merely an extension to
-> the latter, in the sense that the main traversal is exactly the same
-> as the latter, but on top, local modifications are blamed to the
-> working tree.
-> 
-> If we were to do anything, I would think the most sane thing to do
-> is a smaller patch to fix fake_working_tree_commit() where it calls
-> lstat() and _should_ die with "Cannot lstat MakeFILE" on a sane
-> filesystem.  It does not currently make sure the path exists in the
-> HEAD exactly as given by the user (i.e. without core.ignorecase
-> matching), and die when it is not found.
+This should be safe to do in the middle of a rebase, since we don't preprocess
+the todo file and generate any state from it.  I've also been manually editing
+the todo file a while now, and I never ran into any issues.
 
-Yes, I think that is the only sensible thing here. The rest of this
-email is me essentially me agreeing with you and telling you things you
-already know, but I had a slightly different line of reasoning, so I
-thought I would share.
+I wonder if any others have ever ran into this situation, and would this be
+a useful feature to have in interactive rebase? Comments?
 
-As far as the original patch, if you are going to change blame, then it
-is only logical to change the whole revision parser so that "git log --
-MAKEFILE" works. And I do not think that is a direction we want to go.
+This patch doesn't have any documentations yet. I'll add some documentations in
+another patch if we decide to include this.
 
-core.ignorecase has never been about "make git case-insensitive". Git
-represents a case-sensitive tree, and will always do so because of the
-sha1 we compute over the tree objects. core.ignorecase is really "make
-case-sensitive git work around your case-insensitive filesystem"[1].
+Andrew Wong (1):
+  rebase -i: Teach "--edit" action
 
-If the proposal were instead to add a certain type of pathspec that is
-case-insensitive[2], that would make much more sense to me. It is not
-violating git's case-sensitivity because it is purely a _query_ issue.
-And it is a feature you might use whether or not your filesystem is case
-sensitive.
+ git-rebase--interactive.sh |  6 ++++++
+ git-rebase.sh              | 14 ++++++++++++++
+ 2 files changed, 20 insertions(+)
 
--Peff
-
-[1] I was going to submit a patch to Documentation/config.txt to make
-    this more clear, but IMHO the current text is already pretty clear.
-
-[2] I did not keep up with Duy's work on pathspec magic-prefixes (and I
-    could not find anything relevant in the code or documentation), but
-    it seems like this would be a logical feature to support there.
+-- 
+1.7.12.289.g0ce9864.dirty
