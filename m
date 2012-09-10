@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 4/6] string_list: add a new function, string_list_remove_duplicates()
-Date: Mon, 10 Sep 2012 23:18:44 +0200
-Message-ID: <1347311926-5207-5-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 3/6] string_list: add a new function, filter_string_list()
+Date: Mon, 10 Sep 2012 23:18:43 +0200
+Message-ID: <1347311926-5207-4-git-send-email-mhagger@alum.mit.edu>
 References: <1347311926-5207-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
@@ -12,168 +12,219 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBBO9-0000gI-Ns
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 23:19:26 +0200
+	id 1TBBO9-0000gI-6x
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 23:19:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849Ab2IJVTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 17:19:18 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:50340 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753704Ab2IJVTP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 17:19:15 -0400
-X-AuditID: 12074413-b7f786d0000008bb-e8-504e5951d91d
+	id S1753764Ab2IJVTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 17:19:15 -0400
+Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:57931 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753622Ab2IJVTM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Sep 2012 17:19:12 -0400
+X-AuditID: 12074411-b7fa36d0000008cc-5f-504e594faef8
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id F2.67.02235.1595E405; Mon, 10 Sep 2012 17:19:13 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 69.B2.02252.F495E405; Mon, 10 Sep 2012 17:19:11 -0400 (EDT)
 Received: from michael.fritz.box (p57A25B0C.dip.t-dialin.net [87.162.91.12])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8ALIwqP020122
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8ALIwqO020122
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 10 Sep 2012 17:19:12 -0400
+	Mon, 10 Sep 2012 17:19:10 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1347311926-5207-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLIsWRmVeSWpSXmKPExsUixO6iqBsY6RdgMG2moUXXlW4mi4beK8wW
-	t1fMZ7b40dLD7MDi8ff9ByaPZ717GD0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE7Y37TGeaC
-	ZvWKEw83sDcwXpHvYuTkkBAwkfi15SwjhC0mceHeerYuRi4OIYHLjBLbV9xihHDOMEnsfNLD
-	DlLFJqArsainmQnEFhFQk5jYdogFxGYWSJHoeN4NNklYIEJiXf8KMJtFQFXi/eUtYDavgLPE
-	1MUrobYpSvz4voYZxOYUcJHY3b8VbL4QUM33Ff9YJjDyLmBkWMUol5hTmqubm5iZU5yarFuc
-	nJiXl1qka66Xm1mil5pSuokREkDCOxh3nZQ7xCjAwajEw6vB4xcgxJpYVlyZe4hRkoNJSZTX
-	MAQoxJeUn1KZkVicEV9UmpNafIhRgoNZSYQ3XhMox5uSWFmVWpQPk5LmYFES51Vbou4nJJCe
-	WJKanZpakFoEk5Xh4FCS4F0fAdQoWJSanlqRlplTgpBm4uAEEVwgG3iANqwAKeQtLkjMLc5M
-	hyg6xagoJc47CyQhAJLIKM2DGwCL9VeM4kD/CPN2gVTxANMEXPcroMFMQIN9PXxABpckIqSk
-	Ghjl2JQXGu3/aLJtrfgDrxV8D9RfrGu5u6e72cape0JFqM3iAz8nOPimG1+Zmvor7m7y1Bid
-	Vc/Obl+5QK36e/G8tFsqi/MtF204fia/+tA+u3V+3e2TSs+6R9X+5tG458h1h581fpVNrqJ0
-	0oeJ553efpT8sGbuP59FVpe+ty96e+ucxPNvx/sllFiKMxINtZiLihMBAmdfA9AC 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsUixO6iqOsf6Rdg8GavjEXXlW4mi4beK8wW
+	t1fMZ7b40dLD7MDi8ff9ByaPZ717GD0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE749V24YIG
+	/Yqe45uZGxj3qHYxcnJICJhInP8wgQ3CFpO4cG89kM3FISRwmVHiw8l+VgjnDJPE9W0vmECq
+	2AR0JRb1NIPZIgJqEhPbDrGA2MwCKRIdz7sZQWxhAV+JKx8vgk1lEVCVeHB8DlgNr4CzxINF
+	l1kgtilK/Pi+hhnE5hRwkdjdv5UdxBYCqvm+4h/LBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuT
+	E/PyUot0TfVyM0v0UlNKNzFCwkdwB+OMk3KHGAU4GJV4eDV4/AKEWBPLiitzDzFKcjApifIa
+	hgCF+JLyUyozEosz4otKc1KLDzFKcDArifDGawLleFMSK6tSi/JhUtIcLErivHxL1P2EBNIT
+	S1KzU1MLUotgsjIcHEoSvHYRQI2CRanpqRVpmTklCGkmDk4QwQWygQdoQy5IIW9xQWJucWY6
+	RNEpRkUpcV4DkIQASCKjNA9uACzSXzGKA/0jzOsLUsUDTBJw3a+ABjMBDfb18AEZXJKIkJJq
+	YGQwFupZ/PF0y+c15Rfv3k3/kXQlImMPw5v78Q8ub1Obsepoyx+389Zvb8jv1vyxq6eY6Uy2
+	mnr6qqVvpte8dvgfm+PY5X55xrMrX9csk7yz7WprAMPhvsSlwh/sdewvxghmPQ3e1HXlx42m
+	xktXcvruCdptMFibuEAouHXmIhsD+6LrR/k3r9ylxFKckWioxVxUnAgA6TwWMs8C 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205188>
 
-Add a function that deletes duplicate entries from a sorted
-string_list.
+This function allows entries that don't match a specified criterion to
+be discarded from a string_list while preserving the order of the
+remaining entries.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/technical/api-string-list.txt |  9 +++++++++
- string-list.c                               | 17 +++++++++++++++++
- string-list.h                               |  7 +++++++
- t/t0063-string-list.sh                      | 17 +++++++++++++++++
- test-string-list.c                          | 10 ++++++++++
- 5 files changed, 60 insertions(+)
+ Documentation/technical/api-string-list.txt | 11 +++++++
+ string-list.c                               | 17 ++++++++++
+ string-list.h                               |  9 ++++++
+ t/t0063-string-list.sh                      | 11 +++++++
+ test-string-list.c                          | 48 +++++++++++++++++++++++++++++
+ 5 files changed, 96 insertions(+)
 
 diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-index ea65818..dd9aa3d 100644
+index 670217c..ea65818 100644
 --- a/Documentation/technical/api-string-list.txt
 +++ b/Documentation/technical/api-string-list.txt
-@@ -30,6 +30,9 @@ member (you need this if you add things later) and you should set the
- 
- . Can sort an unsorted list using `sort_string_list`.
- 
-+. Can remove duplicate items from a sorted list using
-+  `string_list_remove_duplicates`.
-+
+@@ -33,6 +33,9 @@ member (you need this if you add things later) and you should set the
  . Can remove individual items of an unsorted list using
    `unsorted_string_list_delete_item`.
  
-@@ -108,6 +111,12 @@ write `string_list_insert(...)->util = ...;`.
- 	Look up a given string in the string_list, returning the containing
- 	string_list_item. If the string is not found, NULL is returned.
- 
-+`string_list_remove_duplicates`::
++. Can remove items not matching a criterion from a sorted or unsorted
++  list using `filter_string_list`.
 +
-+	Remove all but the first of consecutive entries that have the
-+	same string value.  If free_util is true, call free() on the
-+	util members of any items that have to be deleted.
-+
- * Functions for unsorted lists only
+ . Finally it should free the list using `string_list_clear`.
  
- `string_list_append`::
+ Example:
+@@ -61,6 +64,14 @@ Functions
+ 
+ * General ones (works with sorted and unsorted lists as well)
+ 
++`filter_string_list`::
++
++	Apply a function to each item in a list, retaining only the
++	items for which the function returns true.  If free_util is
++	true, call free() on the util members of any items that have
++	to be deleted.  Preserve the order of the items that are
++	retained.
++
+ `print_string_list`::
+ 
+ 	Dump a string_list to stdout, useful mainly for debugging purposes. It
 diff --git a/string-list.c b/string-list.c
-index e0806fb..e9b7fd8 100644
+index f9051ec..e0806fb 100644
 --- a/string-list.c
 +++ b/string-list.c
-@@ -92,6 +92,23 @@ struct string_list_item *string_list_lookup(struct string_list *list, const char
- 	return list->items + i;
+@@ -102,6 +102,23 @@ int for_each_string_list(struct string_list *list,
+ 	return ret;
  }
  
-+void string_list_remove_duplicates(struct string_list *list, int free_util)
++void filter_string_list(struct string_list *list, int free_util,
++			string_list_each_func_t want, void *cb_data)
 +{
-+	if (list->nr > 1) {
-+		int src, dst;
-+		for (src = dst = 1; src < list->nr; src++) {
-+			if (!strcmp(list->items[dst - 1].string, list->items[src].string)) {
-+				if (list->strdup_strings)
-+					free(list->items[src].string);
-+				if (free_util)
-+					free(list->items[src].util);
-+			} else
-+				list->items[dst++] = list->items[src];
++	int src, dst = 0;
++	for (src = 0; src < list->nr; src++) {
++		if (want(&list->items[src], cb_data)) {
++			list->items[dst++] = list->items[src];
++		} else {
++			if (list->strdup_strings)
++				free(list->items[src].string);
++			if (free_util)
++				free(list->items[src].util);
 +		}
-+		list->nr = dst;
 +	}
++	list->nr = dst;
 +}
 +
- int for_each_string_list(struct string_list *list,
- 			 string_list_each_func_t fn, void *cb_data)
+ void string_list_clear(struct string_list *list, int free_util)
  {
+ 	if (list->items) {
 diff --git a/string-list.h b/string-list.h
-index 7d18e62..3a6a6dc 100644
+index dc5fbc8..7d18e62 100644
 --- a/string-list.h
 +++ b/string-list.h
-@@ -48,6 +48,13 @@ struct string_list_item *string_list_insert_at_index(struct string_list *list,
- 						     int insert_at, const char *string);
- struct string_list_item *string_list_lookup(struct string_list *list, const char *string);
+@@ -29,6 +29,15 @@ int for_each_string_list(struct string_list *list,
+ #define for_each_string_list_item(item,list) \
+ 	for (item = (list)->items; item < (list)->items + (list)->nr; ++item)
  
 +/*
-+ * Remove all but the first of consecutive entries with the same
-+ * string value.  If free_util is true, call free() on the util
-+ * members of any items that have to be deleted.
++ * Apply want to each item in list, retaining only the ones for which
++ * the function returns true.  If free_util is true, call free() on
++ * the util members of any items that have to be deleted.  Preserve
++ * the order of the items that are retained.
 + */
-+void string_list_remove_duplicates(struct string_list *sorted_list, int free_util);
++void filter_string_list(struct string_list *list, int free_util,
++			string_list_each_func_t want, void *cb_data);
 +
  
- /* Use these functions only on unsorted lists: */
- 
+ /* Use these functions only on sorted lists: */
+ int string_list_has_string(const struct string_list *list, const char *string);
 diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-index a5f05cd..dbfc05e 100755
+index fb85430..a5f05cd 100755
 --- a/t/t0063-string-list.sh
 +++ b/t/t0063-string-list.sh
-@@ -71,4 +71,21 @@ test_expect_success "test filter_string_list" '
- 	test "x-" = "x$(test-string-list filter x1:x2 y)"
- '
+@@ -60,4 +60,15 @@ test_split ":" ":" "-1" <<EOF
+ [1]: ""
+ EOF
  
-+test_expect_success "test remove_duplicates" '
-+	test "x-" = "x$(test-string-list remove_duplicates -)" &&
-+	test "x" = "x$(test-string-list remove_duplicates "")" &&
-+	test a = "$(test-string-list remove_duplicates a)" &&
-+	test a = "$(test-string-list remove_duplicates a:a)" &&
-+	test a = "$(test-string-list remove_duplicates a:a:a:a:a)" &&
-+	test a:b = "$(test-string-list remove_duplicates a:b)" &&
-+	test a:b = "$(test-string-list remove_duplicates a:a:b)" &&
-+	test a:b = "$(test-string-list remove_duplicates a:b:b)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:b:c)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:a:b:c)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:b:b:c)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:b:c:c)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:a:b:b:c:c)" &&
-+	test a:b:c = "$(test-string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
++test_expect_success "test filter_string_list" '
++	test "x-" = "x$(test-string-list filter - y)" &&
++	test "x-" = "x$(test-string-list filter no y)" &&
++	test yes = "$(test-string-list filter yes y)" &&
++	test yes = "$(test-string-list filter no:yes y)" &&
++	test yes = "$(test-string-list filter yes:no y)" &&
++	test y1:y2 = "$(test-string-list filter y1:y2 y)" &&
++	test y2:y1 = "$(test-string-list filter y2:y1 y)" &&
++	test "x-" = "x$(test-string-list filter x1:x2 y)"
 +'
 +
  test_done
 diff --git a/test-string-list.c b/test-string-list.c
-index 702276c..2d6eda7 100644
+index cdc3cf3..702276c 100644
 --- a/test-string-list.c
 +++ b/test-string-list.c
-@@ -87,6 +87,16 @@ int main(int argc, char **argv)
+@@ -1,6 +1,20 @@
+ #include "cache.h"
+ #include "string-list.h"
+ 
++/*
++ * Parse an argument into a string list.  arg should either be a
++ * ':'-separated list of strings, or "-" to indicate an empty string
++ * list (as opposed to "", which indicates a string list containing a
++ * single empty string).  list->strdup_strings must be set.
++ */
++void parse_string_list(struct string_list *list, const char *arg)
++{
++	if (!strcmp(arg, "-"))
++		return;
++
++	(void)string_list_split(list, arg, ':', -1);
++}
++
+ void write_list(const struct string_list *list)
+ {
+ 	int i;
+@@ -8,6 +22,25 @@ void write_list(const struct string_list *list)
+ 		printf("[%d]: \"%s\"\n", i, list->items[i].string);
+ }
+ 
++void write_list_compact(const struct string_list *list)
++{
++	int i;
++	if (!list->nr)
++		printf("-\n");
++	else {
++		printf("%s", list->items[0].string);
++		for (i = 1; i < list->nr; i++)
++			printf(":%s", list->items[i].string);
++		printf("\n");
++	}
++}
++
++int prefix_cb(struct string_list_item *item, void *cb_data)
++{
++	const char *prefix = (const char *)cb_data;
++	return !prefixcmp(item->string, prefix);
++}
++
+ int main(int argc, char **argv)
+ {
+ 	if (argc == 5 && !strcmp(argv[1], "split")) {
+@@ -39,6 +72,21 @@ int main(int argc, char **argv)
  		return 0;
  	}
  
-+	if (argc == 3 && !strcmp(argv[1], "remove_duplicates")) {
++	if (argc == 4 && !strcmp(argv[1], "filter")) {
++		/*
++		 * Retain only the items that have the specified prefix.
++		 * Arguments: list|- prefix
++		 */
 +		struct string_list list = STRING_LIST_INIT_DUP;
++		const char *prefix = argv[3];
 +
 +		parse_string_list(&list, argv[2]);
-+		string_list_remove_duplicates(&list, 0);
++		filter_string_list(&list, 0, prefix_cb, (void *)prefix);
 +		write_list_compact(&list);
 +		string_list_clear(&list, 0);
 +		return 0;
