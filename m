@@ -1,81 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] Add a function string_list_longest_prefix()
-Date: Mon, 10 Sep 2012 12:33:10 -0400
-Message-ID: <20120910163310.GE9435@sigill.intra.peff.net>
-References: <1347169990-9279-1-git-send-email-mhagger@alum.mit.edu>
- <1347169990-9279-5-git-send-email-mhagger@alum.mit.edu>
- <7vbohfser4.fsf@alter.siamese.dyndns.org>
- <504DBA62.3080001@alum.mit.edu>
- <7v1ui9q21a.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH/RFC] grep: optionally show only the match
+Date: Mon, 10 Sep 2012 18:43:32 +0200
+Message-ID: <504E18B4.5050000@lsrfire.ath.cx>
+References: <1347227905-2398-1-git-send-email-mk@acc.umu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 10 18:33:26 2012
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Marcus Karlsson <mk@acc.umu.se>
+X-From: git-owner@vger.kernel.org Mon Sep 10 18:43:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB6vJ-0002yh-5x
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:33:21 +0200
+	id 1TB75U-0002zy-Mi
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 18:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863Ab2IJQdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 12:33:14 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39749 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750957Ab2IJQdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 12:33:13 -0400
-Received: (qmail 29483 invoked by uid 107); 10 Sep 2012 16:33:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 12:33:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 12:33:10 -0400
-Content-Disposition: inline
-In-Reply-To: <7v1ui9q21a.fsf@alter.siamese.dyndns.org>
+	id S1754683Ab2IJQno convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Sep 2012 12:43:44 -0400
+Received: from india601.server4you.de ([85.25.151.105]:42358 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753292Ab2IJQnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 12:43:41 -0400
+Received: from [192.168.2.105] (p4FFD9777.dip.t-dialin.net [79.253.151.119])
+	by india601.server4you.de (Postfix) with ESMTPSA id D129513E;
+	Mon, 10 Sep 2012 18:43:38 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120824 Thunderbird/15.0
+In-Reply-To: <1347227905-2398-1-git-send-email-mk@acc.umu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205144>
 
-On Mon, Sep 10, 2012 at 09:24:17AM -0700, Junio C Hamano wrote:
+Am 09.09.2012 23:58, schrieb Marcus Karlsson:
+> Make git-grep optionally omit the parts of the line before and after =
+the
+> match.
+>
+> Signed-off-by: Marcus Karlsson <mk@acc.umu.se>
+> ---
+>   Documentation/git-grep.txt | 8 +++++++-
+>   builtin/grep.c             | 2 ++
+>   grep.c                     | 7 +++++--
+>   grep.h                     | 1 +
+>   4 files changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index cfecf84..6ef22cb 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -20,7 +20,8 @@ SYNOPSIS
+>   	   [-c | --count] [--all-match] [-q | --quiet]
+>   	   [--max-depth <depth>]
+>   	   [--color[=3D<when>] | --no-color]
+> -	   [--break] [--heading] [-p | --show-function]
+> +	   [--break] [--heading] [-o | --only-matching]
+> +	   [-p | --show-function]
+>   	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+>   	   [-W | --function-context]
+>   	   [-f <file>] [-e] <pattern>
+> @@ -183,6 +184,11 @@ OPTIONS
+>   	Show the filename above the matches in that file instead of
+>   	at the start of each shown line.
+>
+> +-o::
+> +--only-matching::
+> +	Show only the part of the matching line that matched the
+> +	pattern.
+> +
+>   -p::
+>   --show-function::
+>   	Show the preceding line that contains the function name of
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 09ca4c9..56aba7b 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -782,6 +782,8 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
+>   			N_("print empty line between matches from different files")),
+>   		OPT_BOOLEAN(0, "heading", &opt.heading,
+>   			N_("show filename only once above matches from same file")),
+> +		OPT_BOOLEAN('o', "only-matching", &opt.only_matching,
+> +			N_("show only the matching part of a matched line")),
+>   		OPT_GROUP(""),
+>   		OPT_CALLBACK('C', "context", &opt, N_("n"),
+>   			N_("show <n> context lines before and after matches"),
+> diff --git a/grep.c b/grep.c
+> index 04e3ec6..9fc888e 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -827,7 +827,9 @@ static void show_line(struct grep_opt *opt, char =
+*bol, char *eol,
+>   			if (match.rm_so =3D=3D match.rm_eo)
+>   				break;
+>
+> -			output_color(opt, bol, match.rm_so, line_color);
+> +			if (opt->only_matching =3D=3D 0)
+> +				output_color(opt, bol, match.rm_so,
+> +					     line_color);
+>   			output_color(opt, bol + match.rm_so,
+>   				     match.rm_eo - match.rm_so,
+>   				     opt->color_match);
+> @@ -837,7 +839,8 @@ static void show_line(struct grep_opt *opt, char =
+*bol, char *eol,
+>   		}
+>   		*eol =3D ch;
+>   	}
+> -	output_color(opt, bol, rest, line_color);
+> +	if (opt->only_matching =3D=3D 0)
+> +		output_color(opt, bol, rest, line_color);
+>   	opt->output(opt, "\n", 1);
+>   }
 
-> > While we're on the subject, it seems to me that documenting APIs like
-> > these in separate files under Documentation/technical rather than in the
-> > header files themselves
-> >
-> > - makes the documentation for a particular function harder to find,
-> >
-> > - makes it easier for the documentation to get out of sync with the
-> > actual collection of functions (e.g., the 5 undocumented functions
-> > listed above).
-> >
-> > - makes it awkward for the documentation to refer to particular function
-> > parameters by name.
-> >
-> > While it is nice to have a high-level prose description of an API, I am
-> > often frustrated by the lack of "docstrings" in the header file where a
-> > function is declared.  The high-level description of an API could be put
-> > at the top of the header file.
-> >
-> > Also, better documentation in header files could enable the automatic
-> > generation of API docs (e.g., via doxygen).
-> 
-> Yeah, perhaps you may want to look into doing an automated
-> generation of Documentation/technical/api-*.txt files out of the
-> headers.
+The implementation keeps only the coloured parts.  However, they are no=
+t=20
+necessarily the same as the matching parts.  This is more complicated=20
+with git grep than with regular grep because the former has the=20
+additional options --and and --not.  Consider this:
 
-I was just documenting something in technical/api-* the other day, and
-had the same feeling. I'd be very happy if we moved to some kind of
-literate-programming system. I have no idea which ones are good or bad,
-though. I have used doxygen, but all I remember is it being painfully
-baroque. I'd much rather have something simple and lightweight, with an
-easy markup format. For example, this:
+	$ git grep --not -e bla --or --not -e blub
 
-  http://tomdoc.org/
+Lines with only either "bla" or "blub" (or none of them) will be shown,=
+=20
+lines with both not.  Both "bla" and "blub" will be highlighted.  The=20
+matching part is always the whole shown line.
 
-Looks much nicer to me than most doxygen I've seen. But again, it's been
-a while, so maybe doxygen is nicer than I remember.
-
--Peff
+Ren=E9
