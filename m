@@ -1,151 +1,118 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: checkout extra files
-Date: Mon, 10 Sep 2012 13:19:55 -0400
-Message-ID: <20120910171954.GA15583@sigill.intra.peff.net>
-References: <CACsJy8A6-Ok34QDqgSVavFDBE81UdcK4rLzkHe7P7UO=fXptGw@mail.gmail.com>
- <7vsjayew50.fsf@alter.siamese.dyndns.org>
- <CACsJy8BDtV95QmWmJ8CEh06FUePOB7KY6nKPR1KCZ7DkMN_MNQ@mail.gmail.com>
- <7vd322ebsz.fsf@alter.siamese.dyndns.org>
- <CAB9Jk9BbOJgVNepFittD5fVkFLY24Tf10PVg3MD6E1M3hMyNsQ@mail.gmail.com>
- <7vpq61dfn9.fsf@alter.siamese.dyndns.org>
- <7v8vcpdat2.fsf@alter.siamese.dyndns.org>
- <7vk3w5woc4.fsf@alter.siamese.dyndns.org>
- <20120910161904.GC9435@sigill.intra.peff.net>
- <7vpq5told4.fsf@alter.siamese.dyndns.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH] daemon: restore getpeername(0,...) use
+Date: Mon, 10 Sep 2012 19:26:26 +0200
+Message-ID: <k2l7s5$gl9$1@ger.gmane.org>
+References: <1347124173-14460-1-git-send-email-jengelh@inai.de> <1347124173-14460-2-git-send-email-jengelh@inai.de> <7v1uicuyqi.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.01.1209082119320.18369@frira.zrqbmnf.qr> <20120910142100.GB7906@sigill.intra.peff.net> <k2ku26$jld$1@ger.gmane.org> <20120910155006.GA8737@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 10 19:20:08 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 10 19:26:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TB7eZ-0005yw-EX
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 19:20:07 +0200
+	id 1TB7l4-0002OC-TL
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 19:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245Ab2IJRT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 13:19:59 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39801 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752549Ab2IJRT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 13:19:58 -0400
-Received: (qmail 30272 invoked by uid 107); 10 Sep 2012 17:20:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Sep 2012 13:20:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2012 13:19:55 -0400
-Content-Disposition: inline
-In-Reply-To: <7vpq5told4.fsf@alter.siamese.dyndns.org>
+	id S1753876Ab2IJR0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 13:26:43 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46687 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752056Ab2IJR0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 13:26:42 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TB7kx-0002IJ-D9
+	for git@vger.kernel.org; Mon, 10 Sep 2012 19:26:43 +0200
+Received: from dsdf-4db54003.pool.mediaways.net ([77.181.64.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Sep 2012 19:26:43 +0200
+Received: from jojo by dsdf-4db54003.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Sep 2012 19:26:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4db54003.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205152>
 
-On Mon, Sep 10, 2012 at 10:09:43AM -0700, Junio C Hamano wrote:
+Jeff King wrote:
+> On Mon, Sep 10, 2012 at 04:38:58PM +0200, Joachim Schmitz wrote:
+>
+>>> More importantly, though, is it actually portable? I thought it was
+>>> added in C99, and we try to stick to C89 to support older compilers
+>>> and systems. My copy of C99 is vague (it says only that the "bool"
+>>> macro was added via stdbool.h in C99, but nothing about the "true"
+>>> and "false" macros), and I don't have a copy of C89 handy.
+>>> Wikipedia does claim the header wasn't standardized at all until
+>>> C99:
+>>>
+>>> https://en.wikipedia.org/wiki/C_standard_library
+>>
+>> Indeed stdbool is not part of C89, but inline isn't either and used
+>> extensively in git (could possible be defined away),
+>
+> You can define INLINE in the Makefile to disable it (or set it to
+> something more appropriate for your system).
 
-> > Does it make sense to join that final paragraph into what is now the
-> > third bullet, and then add your new text (the fourth bullet) after?
-> 
-> I am not sure.  After re-reading it, I do not think the fileglob
-> discussion belongs to the existing "Here are the rules" list in the
-> first place.
+That's what I meant.
 
-I had a vague feeling that it did not quite belong, too, but I was not
-sure where it should go.
+>> as are non-const array intializers, e.g.:
+>>
+>>                const char *args[] = { editor, path, NULL };
+>>                                               ^
+>> ".../git/editor.c", line 39: error(122): expression must have a
+>> constant value
+>>
+>> So git source is not plain C89 code (anymore?)
+>
+> I remember we excised a whole bunch of non-constant initializers at
+> some point because somebody's compiler was complaining. But I suppose
+> this one has slipped back in, because non-constant initializers are
+> so damn useful. And nobody has complained, which I imagine means
+> nobody has bothered building lately on those older systems that
+> complained.
 
-> It should probably be the extended description for the
-> first point (revisions then paths) to explain what kind of "paths"
-> we accept there.
+OK, record my complaint then ;-)
+At least some older release of HP NonStop only have C89 and are still in use
 
-I do not think so. That point is about the order of revisions and paths,
-and has nothing to do with the syntax of paths. Really, every element of
-that list is about handling revisions versus paths. I think this content
-does not necessarily go in such a list.
+And tying to compile in plain C89 mode revealed several other problems too 
+(e.g. size_t seems not to be typedef'd?)
 
-> I generally consider follow-up paragraphs after bulleted list to be
-> enhancements on any of the points in the list, not necessarily
-> applying to all of them.
-
-I would argue the opposite; if it is about a specific point, then put it
-with the point. Otherwise, you are asking the reader to remember back to
-an earlier point (that they may not even have read; in reference
-documentation, the point of a list is often to let readers skip from
-bullet to bullet easily).
-
-If it is a synthesis of multiple elements in the list, then that makes
-more sense. And I think that is what you are implying here:
-
-> The existing structure is:
-> 
->     * point A (revisions and paths)
->     * point B (-- can be used to disambiguate)
->     * point C (ambiguation leads to an error)
-> 
->     Note that point B and point C taken together imply corollary BC.
-
-Which is fine by me. But inserting a point D that is not related to B,
-C, or BC, only makes it harder to read.
-
-> So perhaps something like this squashed in on top of the patch in
-> question?
-> 
->  Documentation/gitcli.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-> index c70cd81..4413489 100644
-> --- c/Documentation/gitcli.txt
-> +++ w/Documentation/gitcli.txt
-> @@ -38,9 +38,9 @@ arguments.  Here are the rules:
->     you have to say either `git diff HEAD --` or `git diff -- HEAD` to
->     disambiguate.
->  
-> - * Many commands allow wildcards in paths, but you need to protect
-> -   them from getting globbed by the shell.  These two mean different
-> -   things:
-> +Many commands allow wildcards in paths (see pathspec in
-> +linkgit:gitglossary[7]), but you need to protect them
-> +from getting globbed by the shell.  These two mean different things:
->  +
->  --------------------------------
->  $ git checkout -- *.c
-
-I don't think that makes it any better. You went from:
-
-  * A
-  * B
-  * C
-  * D
-
-  By the way, B and C imply BC.
-
-to:
-
-  * A
-  * B
-  * C
-
-  By the way, D.
-
-  Also, B and C imply BC.
-
-I think it would make more sense to do:
-
-  * A
-  * B
-  * C
-
-  By the way, B and C imply BC.
-
-  Also, D.
-
-(where obviously my "connecting" phrases do not need to be part of the
-text, but are meant to illustrate how I am thinking about the
-structure).
-
--Peff
+> My "we stick to C89" is a little bit of a lie. We do not care about
+> specific standards. We do care about running everywhere on reasonable
+> systems. So something that is C99 might be OK if realistically
+> everybody has it. And something that is POSIX is not automatically OK
+> if there are many real-world systems that do not have it.
+>
+> Since there is no written standard, there tends to be an organic ebb
+> and flow in which features we use. Somebody will use a feature that
+> is not portable because it's useful to them, and then somebody whose
+> system will no longer build git will complain, and then we'll fix it
+> and move on. As reviewers, we try to anticipate those breakages and
+> stop them early (especially if they are ones we have seen before and
+> know are a problem), but we do not always get it right. And sometimes
+> it is even time to revisit old decisions (the line you mentioned is 2
+> years old, and nobody has complained; maybe all of the old systems
+> have become obsolete, and we no longer need to care about constant
+> initializers).
+>
+> Getting back to the patch at hand, it may be that stdbool is
+> practically available everywhere. Or that we could trivially emulate
+> it by defining a "true" macro in this case. But it is also important
+> to consider whether that complexity is worth it. This would be the
+> first and only spot in git to use "true". Why bother?
+>
+> -Peff 
