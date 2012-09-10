@@ -1,78 +1,65 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: [PATCH] rebase -i: Teach "--edit" action
-Date: Mon, 10 Sep 2012 17:17:45 -0400
-Message-ID: <CADgNjambUXj+WEFg=OWvtDQ1EKFhavwbjMbTVaP69rhh5DrphA@mail.gmail.com>
-References: <1347293683-27996-1-git-send-email-andrew.kw.w@gmail.com>
-	<1347293683-27996-2-git-send-email-andrew.kw.w@gmail.com>
-	<vpqk3w1j15v.fsf@bauges.imag.fr>
-	<CADgNja=z7EDTV8_2CU9Uc7w=Dmtp90GrPkDUFSPbucfyrEsBaQ@mail.gmail.com>
-	<20120910165457.GB14201@sigill.intra.peff.net>
-	<504E333B.2010602@kdbg.org>
-	<20120910184625.GA32237@sigill.intra.peff.net>
-	<CADgNjamB9wG_Vbt1Zwu8Tmt3vQ8XpYys6ngjQeQb2DgnqKeHJg@mail.gmail.com>
-	<7vd31todkq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 09/14] filter_refs(): build refs list as we go
+Date: Mon, 10 Sep 2012 14:18:52 -0700
+Message-ID: <7v392pmv9f.fsf@alter.siamese.dyndns.org>
+References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
+ <1347171589-13327-10-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 10 23:17:57 2012
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 10 23:19:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBBMi-00085O-4u
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 23:17:56 +0200
+	id 1TBBNn-0000T2-LS
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Sep 2012 23:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434Ab2IJVRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Sep 2012 17:17:47 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:35285 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752177Ab2IJVRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Sep 2012 17:17:46 -0400
-Received: by lbbgj3 with SMTP id gj3so1523223lbb.19
-        for <git@vger.kernel.org>; Mon, 10 Sep 2012 14:17:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zlhskZbC6PjH28YGdBzZUQ2mj4JM4sVPyvg0ctwnvho=;
-        b=0z016i3pUd5B5lP1Jhjf9tJNhD2Ilpa1mjQimR632KICc6UnWl30hM9Ou44vxsv0aw
-         YutWK37zh6iBIyFc33TBgj65nw6/L+C62rNp4Pp9dxUSa/FJZ5TIinE2NQ360MntR0XV
-         miqv9DAxBN29HyCeAcQbZRZHT+K7Rr6RHPnauIJzI7lQuSIJszb8XnGH8Uak1EBCaG86
-         2rbJ0a34WYz/n6rTEl707hgatzH8r3yWmCCktocTy9QNf3v3pgY9bHOi22RzqJE/nZGd
-         RBs6rUHEDcfUfjAZhI28f+WF6ieXgD7B02ZCpHqL24MEeFOp07aP7EMPOXZR78EnRg5S
-         cqfg==
-Received: by 10.112.43.137 with SMTP id w9mr5366116lbl.134.1347311865176; Mon,
- 10 Sep 2012 14:17:45 -0700 (PDT)
-Received: by 10.112.28.129 with HTTP; Mon, 10 Sep 2012 14:17:45 -0700 (PDT)
-In-Reply-To: <7vd31todkq.fsf@alter.siamese.dyndns.org>
+	id S1752843Ab2IJVS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Sep 2012 17:18:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60392 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751272Ab2IJVSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Sep 2012 17:18:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F00C9B58;
+	Mon, 10 Sep 2012 17:18:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=wPhEj7bEqcPRRZnTwBz/rdRY4Wc=; b=XohFUVPhbGFByQk8wyWe
+	+/4bKeFBDHteAJOur4CMxcdmWUH+CLPG3Ps7obIK1HtHEgpIXssMOvE5G9Dgq85g
+	y6a+Ws+Xx0yY0HDfR8WJ4DTumhNUQCniK0BybdTfYGZTuG5TUYkvK2c5M3n7KJMy
+	XwbLoWccLOU7LVUpk7G7gBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=YYfQ0XdDb90Co1BLt/VoN8P3LEhj0JtDQLsi2q44HWAuO8
+	Vn9osXNnvvqKgN9wJ/6aFih/m2AV9KEPUWxp3VDvrrokaaqNktwfrTM2xnQ1jVJt
+	FQZovdvXxE9PMxUyxXr05XJh8RXuPa2PvN++6hOuB6tNlRpFkJSnHB/iThjYU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C2019B57;
+	Mon, 10 Sep 2012 17:18:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF4029B55; Mon, 10 Sep 2012
+ 17:18:53 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1FBC4C52-FB8D-11E1-A0EC-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205183>
 
-On Mon, Sep 10, 2012 at 3:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Hrm...  They see the contents of the todo file immediately after
-> they say "rebase --edit-todo" and the sole reason they said that
-> command is because they wanted to edit the todo file.  Is it likely
-> they need a reminder?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Yes, it's not very likely, but sometimes the todo file takes a bit of
-time to finalize.  So there's a good chance that the user can get
-interrupted, context switched, or went to do some double checking. And
-when the user returns to the editor, it's difficult to tell whether
-he's in a fresh rebase or a stopped rebase, unless he remembers.  It's
-an unlikely scenario, but if it does happen, I think a short reminder
-could avoid some user panic.
+> Instead of temporarily storing matched refs to temporary array
+> "return_refs", simply append them to newlist as we go.  This changes
+> the order of references in newlist to strictly sorted if "--all" and
+> "--depth" and named references are all specified, but that usage is
+> broken anyway (see the last two tests in t5500).
 
-I don't plan to change how the todo file looks for a fresh rebase.
-I'll probably just add something like this for the stopped rebase
-case:
-     # You are editing the todo of an ongoing rebase. To continue
-rebase after editing, run: "git rebase --continue"
-
-That will also remind the user to run "--continue" afterwards.
+Removes two warts (the temporary array in general, and the
+fastarray[] special case) with one patch.  Nicely done.
