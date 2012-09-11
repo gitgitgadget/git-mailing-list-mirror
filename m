@@ -1,71 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git an case-insensitive Mac OS X filesystem
-Date: Tue, 11 Sep 2012 08:44:13 -0700
-Message-ID: <7va9wwk1iq.fsf@alter.siamese.dyndns.org>
-References: <CAPLaKK71O3RzavOqY2uVC1tUsbs+W6WxJRWuLBDFUvTwojAN-g@mail.gmail.com>
- <1347355466-ner-6656@calvin>
- <CAPLaKK4Xm8KzQ8HcM_TbbuDr1hcLjhjSOWSyJS3jFX0toFBjsA@mail.gmail.com>
- <CAPabhsKrnFq3z6wTcZny+Jh1PF-7arx_r8WyNRHmgQUu=U4sig@mail.gmail.com>
- <CAPLaKK6R=BNjgY8wc8nZzyPy53ppeO4bKN=Cum_+b6Kwb5F=SA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tomas Carnecky <tomas.carnecky@gmail.com>, git@vger.kernel.org
-To: Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@entel.upc.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 11 17:44:26 2012
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: [PATCH 1/2] build: improve GIT_CONF_SUBST signature
+Date: Tue, 11 Sep 2012 17:45:29 +0200
+Message-ID: <1be62f9a7bbe728e6422e668d982ddf313d016eb.1347378209.git.stefano.lattarini@gmail.com>
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 11 17:45:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBSdU-0003oJ-Vd
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 17:44:25 +0200
+	id 1TBSex-0005HT-18
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 17:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756750Ab2IKPoQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Sep 2012 11:44:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33817 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756086Ab2IKPoP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 11:44:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A8456465;
-	Tue, 11 Sep 2012 11:44:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Q+M3eJVjZDMO
-	D2nl1BFAOZk4Jjs=; b=d7vBR1HRTqTSQiKTrvPwfNytY2rrWYNZq1udB0Bi7NHI
-	Y9a7ZWP8ZOL149QCj8Zw53edFNX+9JeOL0S7htC7YLTNdXHA7kRrM4/5Sem1zuMa
-	Z3ho824Fy1FArn3T3DR+qI478ylGoqIE2u896KkeCJf1lsYaXT44L5iH9g/3yWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=E/7K1d
-	b89ybGS0tDoTlhnAQYBKbjkQlaw7ZN1ZWomi07eS+VI27zLaZ9JV/LQ4fTdixwld
-	05GMEgODRoUIQZPm6Zmf37MWUeIP8OHsv2W1X0B8iEf5ZvHS3aUoP0xRyY9TgWTd
-	HigwduxGozy5lruiVVpb8qtXDMC566tSCIBTU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7828B6464;
-	Tue, 11 Sep 2012 11:44:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC70D6463; Tue, 11 Sep 2012
- 11:44:14 -0400 (EDT)
-In-Reply-To: <CAPLaKK6R=BNjgY8wc8nZzyPy53ppeO4bKN=Cum_+b6Kwb5F=SA@mail.gmail.com> ("Roger
- Pau =?utf-8?Q?Monn=C3=A9=22's?= message of "Tue, 11 Sep 2012 10:44:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A29F554-FC27-11E1-8AE9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757408Ab2IKPpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 11:45:47 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:39468 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756821Ab2IKPpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 11:45:47 -0400
+Received: by eaac11 with SMTP id c11so344653eaa.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2012 08:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=8YwdoVGK9/+HJdsjoEu8EjjDTSpWHVQu2Sbwm26SfX4=;
+        b=wieaN7e/LwvrmhZua/E1PMEI+RSNAWvbDENrggorBERPn7brM88tWFKdL3X6E5BC5y
+         IAuX/zL6aTL/TYH6/IaE37RPtQREjgHzycJAggLRRodl+k6UXVaCdJH1fS3+j96sRZCm
+         oFxoachLWm3rf+hTPHJleFMuHE5P3mNnUIV3X+a++RTkmQFcgAf2F3g8GXeZAFaX7dIY
+         Zy2E1yVrhN/4kdUkmPfN9xArylbQjLldORuib9iWtVKL7m/jiQ7mHIs0phhFs5e3bNV2
+         Cz2TdMRFsKIQEbMp2PJug5Bx8s8zAbrmN2511h4+UXEzAlQLYdUvTetd9x4f7P/tKid+
+         tmtg==
+Received: by 10.205.134.133 with SMTP id ic5mr5151370bkc.15.1347378345625;
+        Tue, 11 Sep 2012 08:45:45 -0700 (PDT)
+Received: from localhost.localdomain (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
+        by mx.google.com with ESMTPS id hg13sm10046535bkc.7.2012.09.11.08.45.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 11 Sep 2012 08:45:43 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.317.g1c54b74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205240>
 
-Roger Pau Monn=C3=A9 <roger.pau@entel.upc.edu> writes:
+Now, in configure.ac, a call like:
 
-> I understood this, it's just that I would prefer to avoid doing this
-> kind if things, I would prefer to be able to work natively on my
-> filesystem, but it seems like there's no other option.
+    GIT_CONF_SUBST([FOO])
 
-If you are unwilling to keep both lowercase and uppercase separately
-on your end, and if the other side (the project you are interacting
-with) wants you to have both, then I do not think there is any way
-to resolve such conflict between you and your project.
+will be considered equivalent to:
+
+    GIT_CONF_SUBST([FOO], [$FOO])
+
+This is mostly a preparatory refactoring in view of future changes.
+No semantic change to the generated configure or config.mak.auto is
+intended.
+
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
+ configure.ac | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index df7e376..450bbe7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -7,8 +7,9 @@
+ # ------------------------
+ # Cause the line "VAR=VAL" to be eventually appended to ${config_file}.
+ AC_DEFUN([GIT_CONF_SUBST],
+-   [AC_REQUIRE([GIT_CONF_SUBST_INIT])
+-   config_appended_defs="$config_appended_defs${newline}$1=$2"])
++[AC_REQUIRE([GIT_CONF_SUBST_INIT])
++config_appended_defs="$config_appended_defs${newline}dnl
++$1=m4_if([$#],[1],[${$1}],[$2])"])
+ 
+ # GIT_CONF_SUBST_INIT
+ # -------------------
+@@ -179,7 +180,7 @@ AC_ARG_WITH([lib],
+   else
+ 	lib=$withval
+ 	AC_MSG_NOTICE([Setting lib to '$lib'])
+-	GIT_CONF_SUBST([lib], [$withval])
++	GIT_CONF_SUBST([lib])
+   fi])
+ 
+ if test -z "$lib"; then
+@@ -215,7 +216,7 @@ AC_ARG_ENABLE([jsmin],
+ [
+   JSMIN=$enableval;
+   AC_MSG_NOTICE([Setting JSMIN to '$JSMIN' to enable JavaScript minifying])
+-  GIT_CONF_SUBST([JSMIN], [$enableval])
++  GIT_CONF_SUBST([JSMIN])
+ ])
+ 
+ # Define option to enable CSS minification
+@@ -225,7 +226,7 @@ AC_ARG_ENABLE([cssmin],
+ [
+   CSSMIN=$enableval;
+   AC_MSG_NOTICE([Setting CSSMIN to '$CSSMIN' to enable CSS minifying])
+-  GIT_CONF_SUBST([CSSMIN], [$enableval])
++  GIT_CONF_SUBST([CSSMIN])
+ ])
+ 
+ ## Site configuration (override autodetection)
+@@ -265,8 +266,8 @@ AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and hea
+     else
+ 	USE_LIBPCRE=YesPlease
+ 	LIBPCREDIR=$withval
+-	AC_MSG_NOTICE([Setting LIBPCREDIR to $withval])
+-	GIT_CONF_SUBST([LIBPCREDIR], [$withval])
++	AC_MSG_NOTICE([Setting LIBPCREDIR to $LIBPCREDIR])
++	GIT_CONF_SUBST([LIBPCREDIR])
+     fi)
+ #
+ # Define NO_CURL if you do not have curl installed.  git-http-pull and
+-- 
+1.7.12.317.g1c54b74
