@@ -1,131 +1,89 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: How to update a cloned git repository
-Date: Tue, 11 Sep 2012 13:17:09 +0200
-Message-ID: <006f01cd900e$fce59a60$f6b0cf20$@schmitz-digital.de>
-References: <k2n4v2$88t$1@ger.gmane.org> <vpq7gs0es4f.fsf@bauges.imag.fr>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Git an case-insensitive Mac OS X filesystem
+Date: Tue, 11 Sep 2012 13:18:29 +0200
+Message-ID: <CABPQNSZznFvjCLR7A7sACf9NcESek7DmOeJcSSHFY1cGHwD2Jg@mail.gmail.com>
+References: <CAPLaKK71O3RzavOqY2uVC1tUsbs+W6WxJRWuLBDFUvTwojAN-g@mail.gmail.com>
+ <CABPQNSYv1hd8RFHfcQ1XTB94nu6xo+tjj4CvWur29152z2dk6A@mail.gmail.com> <vpq392og8fg.fsf@bauges.imag.fr>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Matthieu Moy'" <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Sep 11 13:17:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Roger_Pau_Monn=E9?= <roger.pau@entel.upc.edu>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 11 13:19:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBOT7-0003xM-G0
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 13:17:25 +0200
+	id 1TBOUx-0005YP-5j
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 13:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757954Ab2IKLRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 07:17:17 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:57174 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757317Ab2IKLRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Sep 2012 07:17:16 -0400
-Received: from DualCore (dsdf-4db532aa.pool.mediaWays.net [77.181.50.170])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0LhifF-1TxfVC1DlZ-00maQk; Tue, 11 Sep 2012 13:17:15 +0200
-In-Reply-To: <vpq7gs0es4f.fsf@bauges.imag.fr>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQKMBvoOU6gFyfWBzbsL0abxuS38eAGIfo3NlfvJ6DA=
-Content-Language: de
-X-Provags-ID: V02:K0:LtgxZoVNTO5O6YUw0xM/020vrI7pufwJXV7GRwU7XcV
- EjufCFZ4E8qnmBt3b4ZI7fDHdO3qYoUsIVR/61lDYN7nBNN7iU
- vpjU4gqNq4JH8fRityBIW1957Oz1x7XrwC10XbC6N3EhP3Jn6U
- SZeajAneuNChsVi/dcS2KRAJCvIWC2KktekqJPxDqsFa0Ia2mI
- TQbCzyu1DGGMO6x8EjFv8LQhPkrtOxkKdv4Jz8h+tSVgl+OtMb
- F40hLslCLpSMvHc2OXzuJHB3yIwMmvDeZJmnxv1VQqeFTDoM09
- 078y9tcrUXA2OY6bD4oV0ppQSvBmy3OGfYnNGPYglWdA0FEY+e
- OgO0RgHUI7VcqbkP91FrLWVeiE76Gf5hyJ9MxBkdn1y0GpDk2r
- vazqYYxZhQXgQ==
+	id S1758755Ab2IKLTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 07:19:11 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:54366 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757317Ab2IKLTK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 07:19:10 -0400
+Received: by vcbfy27 with SMTP id fy27so412769vcb.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2012 04:19:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=RVBK6F2fpEcbIO7AAmSl5bqYSJkw6XEZtD/pJDY1khw=;
+        b=gfrzz6Pt9EneFnUJ1nKQ/dJREz0XMD8h+abyCbB1XRDSw3r0l1vH85ll9I9iZKo/GP
+         XMCajWiiw0rNclKMiVBjFxDtdAnv5iFd7rgxLRsGfheb4gh+mfo0m9p181qo6oRorIP7
+         K2wI1WQvkWhbJ69rOiNhyX9tbYTz53imdKFqgiG3PN1igJd8hejFGKWE1ovOZ9pFQ1br
+         r4uDVvPlDwXSoQ/xl7dmWrewaI8/iGoDWuSHDw6tSd70wEu3ZhTcytL+Esk5wkFPyShw
+         hlJe2tm0CrWi/dEnO2v/i1a9mAzggREmoJvCMMfCwxSyXafVUd2Vil6sc/BgO4oClejp
+         I6kw==
+Received: by 10.52.67.175 with SMTP id o15mr7633304vdt.71.1347362349845; Tue,
+ 11 Sep 2012 04:19:09 -0700 (PDT)
+Received: by 10.58.196.232 with HTTP; Tue, 11 Sep 2012 04:18:29 -0700 (PDT)
+In-Reply-To: <vpq392og8fg.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205219>
 
-> From: Matthieu Moy [mailto:Matthieu.Moy@grenoble-inp.fr]
-> Sent: Tuesday, September 11, 2012 1:06 PM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: How to update a cloned git repository
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> > Hi folks
-> >
-> > Probably a beginner's question...
-> >
-> > If I did a
-> >    git clone git://guthub.com/git/git.git
-> > and worked on some own branches of pu
-> >    git checkout pu;git checkout -p mybranch;
-> 
-> I guess you meant "git checkout -b mybranch" (not -p).
+On Tue, Sep 11, 2012 at 12:28 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> I have stumbled upon a similar issue on Windows (which also has a
+>> case-preserving filesystem), and I seem to remember the solution being
+>> something to do with packed refs.
+>
+> Packed-refs use a format like this:
+>
+> $ tail -3 .git/packed-refs
+> e94214ce4b8acefce06d4ea37b76ac0de11ecb2d refs/tags/v1.7.9.5
+> bf68fe0313c833fa62755176f6e24988ef7cf80f refs/tags/v1.7.9.6
+> 3996bb24c84013ec9ce9fa0980ce61f9ef97be4d refs/tags/v1.7.9.7
+>
+> so the ref name is stored within the file, not as the file name. So,
+> yes, packing refs (done by "git pack-refs", called by "git gc" among
+> other things) should solve case-insensitive issues.
+>
+> However, creating or updating refs after a pack will still create
+> unpacked refs, so this solves the issue only if one of the colliding
+> branches is not updated anymore.
+>
 
-Yes, of course...
+Of course. In my case, the colliding refs weren't fetched from the
+same source IIRC.
 
-> > hack;hack;...;git commit -a -s
-> >
-> > how to update my repository once the the one on github changed? A
-> > plain git pull or git fetch;git merge keeps failing on my with lots of
-> > conflicts, none of which relate to any of the changes I did (and hence
-> > wouldn't know how to resolve)
-> 
-> Short answer: don't work on pu. Work on master unless you have a good
-> reason not to.
+>> Perhaps we could change Git to detect name-collisions and
+>> automatically pack the refs in such cases?
+>
+> That's a bit harder than it seems, as the idea is to avoid re-writting
+> the packed-refs file for each ref update. Repacking after each colliding
+> ref update could be costly in terms of performance.
 
-There are some changes in pu, that I need as the basis, namely my setitimer patch and my 2nd mkdir patch, which haven't yet made it
-into the master branch (and in the setitimer case not out of pu)
+Yes, but being costly in terms of performance is IMO a lot better than
+corrupting refs, which is what we currently do.
 
-> Longer answer: the pu branch in git.git is often re-written, hence the
-> commit on which you started hacking once existed in git.git's pu, but it
-> probably no longer is.
-> 
-> You cloned this:
-> 
-> --A---B---C <-- origin/pu
-> 
-> Hacked to this
-> 
->          origin/pu
->           |
->           v
-> --A---B---C---D---E <-- mybranch
-> 
-> and the next fetch resulted in something like this:
-> 
->     B'---C'---D'---F <-- origin/pu
->    /
-> --A---B---C---D---E <-- mybranch
-> 
-> while you could have expected that if origin/pu had just been
-> fast-forwarded with a new commit F:
-> 
->             F <-- origin/pu
->            /
-> --A---B---C---D---E <-- mybranch
-> 
-> As a result, "git merge" computes a common ancestor very far backward in
-> history. Instead of merging only your changes with new pu content, it
-> merges the old history of pu (plus your changes) with the new history of
-> pu, and you get spurious conflicts.
-> 
-> The solution is to rebase your changes (and only yours). My advice is to
-> rebase them on master, like this (replace 42 by the number of commits
-> you want to rebase in HEAD~42):
-> 
->   git rebase HEAD~42 --onto origin/master
-
-For pu this would be similar?
-
-> Once you did this, you can start using "git pull" (or "git pull
-> --rebase") as usual.
-
-
-Like this?
-git pull --rebase HEAD~42
-
-So far I create patches, wiped out the entire repository, cloned, forked and applied the changes, pretty painful.
+And it should really only be costly in the case where there's actually
+such a cost, on a file system where such a collision can happen.
