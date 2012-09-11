@@ -1,78 +1,171 @@
-From: Jean-Baptiste Quenot <jbq@caraldi.com>
-Subject: Re: [ANNOUNCE] tig-1.0
-Date: Tue, 11 Sep 2012 21:24:12 +0200
-Message-ID: <CAK6bCawaqEvKFf43wzv+Yz5eem5W-qi9p1i+-9+jiMFs=tZ8xA@mail.gmail.com>
-References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
- <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Teach rm to remove submodules unless they contain a
+ git directory
+Date: Tue, 11 Sep 2012 12:41:53 -0700
+Message-ID: <7vhar4gxdq.fsf@alter.siamese.dyndns.org>
+References: <7vpq5tjuw3.fsf@alter.siamese.dyndns.org>
+ <504F8427.1020507@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Tue Sep 11 21:25:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 11 21:42:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBW51-0007AI-Ao
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 21:25:03 +0200
+	id 1TBWLd-0005Kt-Tb
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 21:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759995Ab2IKTYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 15:24:55 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34290 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759990Ab2IKTYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Sep 2012 15:24:54 -0400
-Received: by ieje11 with SMTP id e11so1530222iej.19
-        for <git@vger.kernel.org>; Tue, 11 Sep 2012 12:24:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=EEvbusdd1zKXDa0UyL1HxwA6r/ymyiHaj3kQtkCmLfA=;
-        b=tdYv2oMtNNrUQS/d8CkQaOcRWTuWNBlowAvGNebzcs3h3Jg9+KJIFTf44qgits87kC
-         oHPv9tV7n8Go+h9ODrNTpuP/B37Zm7KdZi8Kr+WeLvtmEttvTw9tq+6jir/iL1WEcchx
-         ykxEEk5Ds8fwEXaIUHpoHDbyGL6DMyFEn8cmK12DV2BzYV9O9Nw5TAVioBBKXe5fWOK5
-         lueYxBs2zX0govSd+WKhlAeisFKXGnsgz0fXMd8LSDqpqx3JQnRwVZQgDsaBOHMPUlGM
-         KgyB39D4o+yzdk9wWfU3n+NtNJse6UMafzbBChS05p+bkUS77Cuzo2Moanyn1KRgx7ZH
-         WTLA==
-Received: by 10.50.180.129 with SMTP id do1mr18249730igc.28.1347391493181;
- Tue, 11 Sep 2012 12:24:53 -0700 (PDT)
-Received: by 10.43.103.4 with HTTP; Tue, 11 Sep 2012 12:24:12 -0700 (PDT)
-In-Reply-To: <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
-X-Google-Sender-Auth: 6B-hBZqVDWRaIu2k7J1_Rk_QbhI
+	id S1760041Ab2IKTmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 15:42:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57398 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759174Ab2IKTl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 15:41:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE0D48B01;
+	Tue, 11 Sep 2012 15:41:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2ACx4/ifZb5QHQRaKXrQflHUNPc=; b=WiRr1U
+	CtdMJbI/jrOGI9hjqcE0kEhVo+IdU+AiysBniQD9yTSnGYfYyR/Pa2KeWPL85rHZ
+	Xh+ufd1y7BnaMTyLyJUSNGiyodoccwO26X27sx3O+Dsjr2dMg7AO+cwv7YUi49rc
+	YyP0eOHFkQJ7mjAh7gXZ1hfnK9LDzmzwct+Qc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sJSkHXm2bWTBBE8e0VnMCQw1p42cfYpK
+	mTEEhjykKhUxFvilQgKlfxB8zlNvkGZJm+daLEUDGNuymgCyeZE+SxPpha8wdfL5
+	xHTSCoa57x6GyUxPJmmawIR9X7+LW/0bcvO06naNyXRo4g334xRBKLF2VZyjuFft
+	TZ6vP8amd0o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA0A38B00;
+	Tue, 11 Sep 2012 15:41:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04AC68AFF; Tue, 11 Sep 2012
+ 15:41:54 -0400 (EDT)
+In-Reply-To: <504F8427.1020507@web.de> (Jens Lehmann's message of "Tue, 11
+ Sep 2012 20:34:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BDD15200-FC48-11E1-A7FF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205260>
 
-2012/9/7 Jonas Fonseca <fonseca@diku.dk>:
-> On Fri, Sep 7, 2012 at 9:41 AM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
->> Hi Jonas,
->
-> Hello Jean-Baptiste
->
->> With tig 1.0 how to feed specific revisions to the main view?
->>
->> The following hack worked until tig 0.17:
->>
->> [alias]
->>         tignowalk-helper = !git rev-list --pretty=raw --no-walk --stdin<
->>
->> TIG_MAIN_CMD="git tignowalk-helper $tmp" tig </dev/tty
->
-> The possibility to specify commands was removed in favor of improving
-> options given on the command line. In this spirit, I suggest to
-> support something like the following:
->
->     tig --no-walk --stdin < tmp-file
->
-> Would that cover your use case?
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-That would be great!  I would then feed tig with all commits I want to
-see in the main view.
+>> * jl/submodule-rm (2012-08-27) 1 commit
+>>  - Teach rm to remove submodules unless they contain a git directory
+>> 
+>> "git rm submodule" cannot blindly remove a submodule directory as
+>> its working tree may have local changes, and worse yet, it may even
+>> have its repository embedded in it.  Teach it some special cases
+>> where it is safe to remove a submodule, specifically, when there is
+>> no local changes in the submodule working tree, and its repository
+>> is not embedded in its working tree but is elsewhere and uses the
+>> gitfile mechanism to point at it.
+>> 
+>> I lost track; what is the doneness of the discussion on this patch?
+>
+> The review of v2 revealed that in case of submodule merge conflicts
+> the necessary checks weren't done. This (and the minor issues raised
+> in http://permalink.gmane.org/gmane.comp.version-control.git/204370)
+> is fixed in this version.
 
-Cheers,
--- 
-Jean-Baptiste Quenot
+Thanks.  I wish all others paid attention to "What's cooking" like
+you did here.
+
+And if it is hard to do so for whatever reason, suggest a better way
+for me to publish "What's cooking" or an equivalent (I am interested
+in finding the least bureaucratic way to help people and keep the
+balls rolling).
+
+> +static int check_submodules_use_gitfiles(void)
+> +{
+> +	int i;
+> +	int errs = 0;
+> +
+> +	for (i = 0; i < list.nr; i++) {
+> +		const char *name = list.entry[i].name;
+> +		int pos;
+> +		struct cache_entry *ce;
+> +		struct stat st;
+> +
+> +		pos = cache_name_pos(name, strlen(name));
+> +		if (pos < 0)
+> +			pos = -pos-1;
+> +		ce = active_cache[pos];
+> +
+> +		if (!S_ISGITLINK(ce->ce_mode) ||
+> +		    (lstat(ce->name, &st) < 0) ||
+> +		    is_empty_dir(name))
+> +			continue;
+
+If the name doesn't exist in the index (i.e. "list" has names that
+do not exist in the index for whatever reason), a negative pos is
+returned to tell you where it _would_ be inserted if you said "git
+add" the path.  But these names in the "list" are guaranteed to
+exist in the index in _some_ form, so for a negative pos, (-pos-1)
+will have the conflicted entry at the lowest stage (typically the
+common ancestor's version).  I am not sure checking only that one is
+sufficient, though.  Wouldn't you want to at least check stage #2
+(ours, which should most resemble the working tree)?  If this were
+"common ancestor had it as a submodule, our side removed it and
+created something else, their side updated the submodule" conflict,
+the stage #2 would not be a gitlink (it would be a blob if that
+something else is a file, or may be missing if the submodule was
+replaced with a directory), and the path ce->name would definitely
+not be a submodule.
+
+> +		if (!submodule_uses_gitfile(name))
+> +			errs = error(_("submodule '%s' (or one of its nested "
+> +				     "submodules) uses a .git directory\n"
+> +				     "(use 'rm -rf' if you really want to remove "
+> +				     "it including all of its history)"), name);
+> +	}
+> +
+> +	return errs;
+> +}
+> +
+>  static int check_local_mod(unsigned char *head, int index_only)
+>  {
+>  	/*
+> @@ -37,15 +72,23 @@ static int check_local_mod(unsigned char *head, int index_only)
+>  		struct stat st;
+>  		int pos;
+>  		struct cache_entry *ce;
+> -		const char *name = list.name[i];
+> +		const char *name = list.entry[i].name;
+>  		unsigned char sha1[20];
+>  		unsigned mode;
+>  		int local_changes = 0;
+>  		int staged_changes = 0;
+>
+>  		pos = cache_name_pos(name, strlen(name));
+> -		if (pos < 0)
+> -			continue; /* removing unmerged entry */
+> +		if (pos < 0) {
+> +			/*
+> +			 * Skip unmerged entries except for populated submodules
+> +			 * that could loose history when removed.
+
+s/loose/lose/
+
+> +			 */
+> +			pos = -pos-1;
+> +			if (!S_ISGITLINK(active_cache[pos]->ce_mode) ||
+> +			    is_empty_dir(name))
+> +				continue;
+> +		}
+
+Lilewise.  It may make sense to introduce a helper function to tell
+if it is a submodule on our side by checking only the stage #2 entry
+when you see a nagetive pos returned from cache_name_pos() and call
+it "is_ours_submodule?()" or something.
