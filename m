@@ -1,95 +1,65 @@
-From: David Gould <david@optimisefitness.com>
-Subject: Re: Probable bug in file run-command.c function clear_child_for_cleanup
-Date: Tue, 11 Sep 2012 09:40:51 +0100
-Message-ID: <504EF913.2050202@optimisefitness.com>
-References: <504CAB66.1050003@optimisefitness.com> <20120910134406.GA7496@sigill.intra.peff.net> <CABPQNSaufY9vUAFp9VL2i=6bNmO5_2+anzX6+omfq+UgP03kXg@mail.gmail.com> <20120910141027.GA8284@sigill.intra.peff.net> <7v8vchodgc.fsf@alter.siamese.dyndns.org> <20120910200110.GA32437@sigill.intra.peff.net> <7v4nn5ocvv.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@entel.upc.edu>
+Subject: Git an case-insensitive Mac OS X filesystem
+Date: Tue, 11 Sep 2012 10:21:16 +0100
+Message-ID: <CAPLaKK71O3RzavOqY2uVC1tUsbs+W6WxJRWuLBDFUvTwojAN-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 11 10:41:08 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 11 11:21:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBM1r-0006fO-FA
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 10:41:07 +0200
+	id 1TBMes-0007i8-QQ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 11:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238Ab2IKIk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 04:40:57 -0400
-Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:10053
-	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750898Ab2IKIkz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 04:40:55 -0400
-X-Trace: 613150833/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$ON_NET_AUTH_ACCEPTED/pipex-temporary-group/88.108.247.46/None/david@optimisefitness.com
-X-SBRS: None
-X-RemoteIP: 88.108.247.46
-X-IP-MAIL-FROM: david@optimisefitness.com
-X-SMTP-AUTH: 
-X-Originating-Country: GB/UNITED KINGDOM
-X-MUA: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAE/4TlBYbPcu/2dsb2JhbABFu06BCIIgAQEFOBENIgEQCAMYCRYPCQMCAQIBJx4GDQEFAgEBFYd7vBqLEIYmA5spE4NUhmqCZw
-X-IronPort-AV: E=Sophos;i="4.80,403,1344207600"; 
-   d="scan'208";a="613150833"
-X-IP-Direction: IN
-Received: from 88-108-247-46.dynamic.dsl.as9105.com (HELO ephebe) ([88.108.247.46])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 11 Sep 2012 09:40:52 +0100
-Received: from [192.168.100.9] (pseudopolis [192.168.100.9])
-	by ephebe (Postfix) with ESMTPS id 64B4D800EC;
-	Tue, 11 Sep 2012 09:40:52 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7v4nn5ocvv.fsf@alter.siamese.dyndns.org>
+	id S1756963Ab2IKJVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 05:21:19 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:63669 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755158Ab2IKJVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 05:21:18 -0400
+Received: by lbbgj3 with SMTP id gj3so215658lbb.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2012 02:21:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=AVnLDMQxZ4SH9d5hZU1sCAQ25/gkm1qjhk0nriWK6hQ=;
+        b=u8CoEazPTX/bAMgBpZBgHzPD5+gkz1vS4ZCoNTIw/erd5Mxqytm7lXA66KbwLscdy0
+         Mfco4Ee17NSMYidSqvH1UOw6Cg2Z0/e7eashZmmjhNdLwHzBg9/2IfAdn9hR3X8CgW+9
+         7Atl9wt7xA6TH5EAUO5IMpTNKOpdxNvM4SesqKBeOSmOw4+I03dzQrYOlZhe0j5Zz5EU
+         9QTQlDtWKOfaqFEzosqTqBtw3nOG/ooL7c9IZAzpV4azHnokPAo81+jHrRALSVS9pDeQ
+         hyRSEiPTNQF9zejIdVNcYr0geZGCQrs9UazDW42KaBVUxgWON48lenv2RLxamJHtwOY9
+         9/tA==
+Received: by 10.152.131.68 with SMTP id ok4mr15199561lab.47.1347355276677;
+ Tue, 11 Sep 2012 02:21:16 -0700 (PDT)
+Received: by 10.114.0.20 with HTTP; Tue, 11 Sep 2012 02:21:16 -0700 (PDT)
+X-Google-Sender-Auth: qLk7vf3rZ4Wfickfs714ozk1tUk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205210>
 
-Hi guys,
+Hello,
 
-Sorry for the delayed reply - what passes for my real life intruded 
-somewhat.
+I'm using git for all my projects, and I usually work under Mac OS X
+with the default filesystem (that's case-insensitive, but
+case-preserving). I'm currently working on a project that has several
+branches, and two of them are called origin/DHCPCD and origin/dhcpcd
+respectively, that's unfortunate, but I cannot do anything about it.
+This completely breaks the git repository, because
+.git/refs/remotes/origin/DHCPD and .git/refs/remotes/origin/dhcpd are
+actually the same file, so when I try to update my repository
+performing a git pull I get the following error:
 
-I'll get on to it today, but please be aware this will be my first-ever 
-patch for ANY project, so am likely to foul up the process.
+error: Ref refs/remotes/origin/dhcpcd is at
+6b371783de2def2d6e3ec2680ba731f7086067ee but expected
+79f701ce599a27043eed8343f76406014963278a
 
-I am reading the How To Submit Patches document even now....
+So I was wondering if anyone has stumbled upon this issue, and what's
+the best approach to fix it.
 
-Cheers,
-David
-
-On 10/09/12 21:12, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->
->> On Mon, Sep 10, 2012 at 01:00:35PM -0700, Junio C Hamano wrote:
->>
->>>>> And to conclude my bikeshedding for the day: Shouldn't "last" ideally
->>>>> be called something like "prev" instead? It's the previously visited
->>>>> element, not the last element in the list.
->>>>
->>>> It is the "last" element visited (just as "last week" is not the end of
->>>> the world), but yes, it is ambiguous, and "prev" is not. Either is fine
->>>> by me.
->>>
->>> OK, so who's gonna do the honors?
->>
->> I was hoping to give David a chance to submit his first-ever patch to
->> git.
->
-> OK. David, is it OK for us to expect a patch from you sometime not
-> in distant future (it is an old bug we survived for a long time and
-> nothing ultra-urgent)?
->
-
--- 
-David Gould, Personal Trainer
-	Register of Kettlebell Professionals
-	INWA Nordic Walking Instructor
-Optimise Fitness Ltd -- fit for life
-01264 720709
-www.optimisefitness.com
+Thanks, Roger.
