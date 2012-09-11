@@ -1,90 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: git branch --set-upstream-to=
-Date: Tue, 11 Sep 2012 10:46:11 -0700
-Message-ID: <7vliggh2qk.fsf@alter.siamese.dyndns.org>
-References: <bd9d638e84e7e142e94b71213bed2126ea1f1951.1347364675.git.git@drmicha.warpmail.net> <7v627kiitq.fsf@alter.siamese.dyndns.org>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH 2/2] build: don't duplicate substitution of make variables
+Date: Tue, 11 Sep 2012 20:26:23 +0200
+Message-ID: <504F824F.3050903@gmail.com>
+References: <1be62f9a7bbe728e6422e668d982ddf313d016eb.1347378209.git.stefano.lattarini@gmail.com> <1c54b744c0ec6987f7987a41853ab0ae00513d03.1347378210.git.stefano.lattarini@gmail.com> <7vtxv4h3lh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 11 19:46:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 11 20:26:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBUXb-00058P-40
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 19:46:27 +0200
+	id 1TBVAR-00079y-Qy
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 20:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002Ab2IKRqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 13:46:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35528 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751872Ab2IKRqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Sep 2012 13:46:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E1578C59;
-	Tue, 11 Sep 2012 13:46:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LE1lRJ9ENKCAT/qBVIuN5q+LIXU=; b=Mug8My
-	JMinr2XFOXAEFwzSLYbgKpWeJFmnoxzc5kjfQItl3Ss/YWVvdOGLxC+nDq7ufCGP
-	OaUOJEfPsAZbuPdNmccPbr8uYuICFieFZ+dELa575FbfapBZnANx3EKXvOXEe1D4
-	RG9RcYnynTeG10T/Qz9o9hJrLVXp5qaREKM08=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eAtVqCqE8I0009CzoOKoz25sQ7n54dbX
-	PFauYos81Veg4oAxqmIpqaZWi3m0Wh3YxHlyjUMBaOjwJZjSxNbrbRfDzsmq535R
-	f9QkpeUGK8Yd4wg4HVktMbALaj6kUiXxGZ0o/IrucZc/Ev2cFIJRonf8PwaNEh5n
-	PYaWmA3/k6M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF9B48C58;
-	Tue, 11 Sep 2012 13:46:13 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51D058C56; Tue, 11 Sep 2012
- 13:46:13 -0400 (EDT)
-In-Reply-To: <7v627kiitq.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 11 Sep 2012 10:13:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 94403376-FC38-11E1-A7B2-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751400Ab2IKS02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 14:26:28 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:56584 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736Ab2IKS01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 14:26:27 -0400
+Received: by eekc1 with SMTP id c1so673568eek.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2012 11:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=GZ13DRkJSXnPIiJlzhRCDyQ6eBu4+m8gNJS33gsJqLM=;
+        b=yK2rKnQLU4TMfHLxr//mcjcq1Kl5wNWslf4oioNyAI6Uqv1VpmGSZZGTItCyJ3Wet3
+         B7UvixvXXJ4qj9rpM/DauJPgkSEsnXDXgLfIMHXPnUVPL0aINZH7Q8o4D1F5dDI67M4u
+         UQIPYnyzKbVlIoMMF8vLLNN1jlgalPOtsVXVbPcPrhMGE9t/sMBWBZGz7C+HugD/ZYZB
+         GgW0vW1Xfm9Pfv4yFLB5irtGUIAusNZbS/bqXIaOHAE4mof28iq2+DCS4xnIxoTRDyoK
+         A0MpGeNh26zChmkVyJZJJRB9zulZLYbyU9fgAScSnh4TRUIIm5qC4qc+MERM51Dbflx5
+         zEjQ==
+Received: by 10.204.154.141 with SMTP id o13mr5100107bkw.72.1347387985887;
+        Tue, 11 Sep 2012 11:26:25 -0700 (PDT)
+Received: from [192.168.178.21] (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
+        by mx.google.com with ESMTPS id m9sm10438557bkm.10.2012.09.11.11.26.24
+        (version=SSLv3 cipher=OTHER);
+        Tue, 11 Sep 2012 11:26:24 -0700 (PDT)
+In-Reply-To: <7vtxv4h3lh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205257>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 09/11/2012 07:27 PM, Junio C Hamano wrote:
+> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+> 
+>> Thanks to our 'GIT_CONF_SUBST' layer in configure.ac, a make variable 'VAR'
+>> can be defined to a value 'VAL' at ./configure runtime in our build system
+>> simply by using "GIT_CONF_SUBST([VAR], [VAL])" in configure.ac, rather than
+>> having both to call "AC_SUBST([VAR], [VAL])" in configure.ac and adding the
+>> 'VAR = @VAR@' definition in config.mak.in.  Less duplication, less margin
+>> for error, less possibility of confusion.
+>>
+>> While at it, fix some formatting issues in configure.ac that unnecessarily
+>> obscured the code flow.
+>>
+>> Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+>> ---
+>>  config.mak.in |  49 --------------------
+>>  configure.ac  | 144 +++++++++++++++++++++++++++++++---------------------------
+>>  2 files changed, 76 insertions(+), 117 deletions(-)
+> 
+> Whoa ;-).
+>
+Well, I could have converted one variable at the time, but that seemed
+an overkill :-)
 
-> Thanks; I picked up $gmane/204633 but forgot to queue.
+>> diff --git a/configure.ac b/configure.ac
+>> index 450bbe7..da1f41f 100644
+>> --- a/configure.ac
+>> +++ b/configure.ac
+>> @@ -267,6 +267,8 @@ AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and hea
+>>  	USE_LIBPCRE=YesPlease
+>>  	LIBPCREDIR=$withval
+>>  	AC_MSG_NOTICE([Setting LIBPCREDIR to $LIBPCREDIR])
+>> +        dnl USE_LIBPCRE can still be modified below, so don't substitute
+>> +        dnl it yet.
+>>  	GIT_CONF_SUBST([LIBPCREDIR])
+>>      fi)
+>>  #
+>> ...
+>>  AC_CHECK_FUNC([hstrerror],
+>> -	[],
+>> +    [],
+> 
+> Is there some consistent policy regarding SP vs HT in the
+> indentation you are using in this patch?
+>
+Basically I'm trying to follow the style of the surrounding code, while
+keeping in mind that in the Git codebase tabs seem to be preferred to spaces.
+In this case, the indentation of the following text (that was the "meat" of
+the expression) seemed to favour 4 spaces for indentation, so I followed
+suit.
 
-... so this has been reduced to:
+> These two hunks suggest
+> that you may be favoring spaces, but other places you seem to use
+> tabs, so...
+>
+I can convert the new tabs to spaces if you prefer (that would have been
+my preference too, but thought trying to follow the "Git preferences"
+was more important).  No big deal either way for me.
 
--- >8 --
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Date: Tue, 11 Sep 2012 13:58:30 +0200
-Subject: [PATCH] completion: complete branch name for "branch --set-upstream-to="
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4a4d30a..e48cf80 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -875,6 +875,9 @@ _git_branch ()
- 	done
- 
- 	case "$cur" in
-+	--set-upstream-to=*)
-+		__gitcomp "$(__git_refs)" "" "${cur##--set-upstream-to=}"
-+		;;
- 	--*)
- 		__gitcomp "
- 			--color --no-color --verbose --abbrev= --no-abbrev
--- 
-1.7.12
+Thanks,
+  Stefano
