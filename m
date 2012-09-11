@@ -1,71 +1,96 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Should GIT_AUTHOR_{NAME,EMAIL} set the tagger name/email?
-Date: Tue, 11 Sep 2012 16:56:27 +0200
-Message-ID: <CACBZZX61pfus=coO4bh8LwKb578nrnL-gQqa_xQH__uqSe9fJA@mail.gmail.com>
-References: <CACBZZX7Ud8Xx225ss6SYqZFXyW0FG2XJimBWdvW_NuMqn8yOnA@mail.gmail.com>
- <m2ehmlwxb2.fsf@igel.home> <CACBZZX4Egrx_vrKNV68pL8DL4xkLd5j8o-1t4+fA7+Ai758-9g@mail.gmail.com>
- <m2a9x9wwma.fsf@igel.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] clear_child_for_cleanup must correctly manage
+ children_to_clean
+Date: Tue, 11 Sep 2012 11:20:41 -0400
+Message-ID: <20120911152041.GA11994@sigill.intra.peff.net>
+References: <62cd8d4a1853cb6fe8fda9f534cc269c8b2e0f6c>
+ <1347373967-29248-1-git-send-email-david@optimisefitness.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Sep 11 16:57:03 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, kusmabite@gmail.com
+To: David Gould <david@optimisefitness.com>
+X-From: git-owner@vger.kernel.org Tue Sep 11 17:20:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBRtZ-00017f-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 16:56:57 +0200
+	id 1TBSGo-00074g-2H
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 17:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758653Ab2IKO4t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Sep 2012 10:56:49 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:58714 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756166Ab2IKO4s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 10:56:48 -0400
-Received: by obbuo13 with SMTP id uo13so867013obb.19
-        for <git@vger.kernel.org>; Tue, 11 Sep 2012 07:56:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NIy4uMTKPQ6NiGaSvmyRfbwOH+zc+Hp/FTWXuijBw68=;
-        b=f5sSMdhXyAN9+UwNu6BTs0D3ffzoy1LnSvhpIBhjiNktt+aV6jRtZXvG/9oorJG5fP
-         lnNKSPNZ53snf9sZKrlZT+m0zhf4V4jL0hsK7BAob1J482MRdrR5Bfr4a0ZMnhdgeNMx
-         717caNMclwmnDMxZbgWR984fjJv7FrXRgnaYE4nezq7YJ/Ba8PSZcKEbJzK0n2WMjDd5
-         XQTEfZanwKZO5VMeNlyO+ASuRTy7Op7ZOeRAXyBx/BYFxjW+iK8b0b4QH1p++Xpp8Shn
-         DIBoy/+rN2wTu8xByKnBMd45Nc8QlzTpFljvaBc97ZHSCgIaJMua1cMBa20HMwG3b5JM
-         La+Q==
-Received: by 10.60.29.134 with SMTP id k6mr18183514oeh.5.1347375407510; Tue,
- 11 Sep 2012 07:56:47 -0700 (PDT)
-Received: by 10.60.16.34 with HTTP; Tue, 11 Sep 2012 07:56:27 -0700 (PDT)
-In-Reply-To: <m2a9x9wwma.fsf@igel.home>
+	id S1759556Ab2IKPUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 11:20:49 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41127 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759157Ab2IKPUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Sep 2012 11:20:48 -0400
+Received: (qmail 11130 invoked by uid 107); 11 Sep 2012 15:21:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Sep 2012 11:21:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Sep 2012 11:20:41 -0400
+Content-Disposition: inline
+In-Reply-To: <1347373967-29248-1-git-send-email-david@optimisefitness.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205235>
 
-On Sat, Sep 1, 2012 at 6:12 PM, Andreas Schwab <schwab@linux-m68k.org> =
-wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> I don't get what you mean, what committer info?
->
-> GIT_COMMITTER_{NAME,EMAIL}.  A tagger isn't really an author.
+On Tue, Sep 11, 2012 at 03:32:47PM +0100, David Gould wrote:
 
-Ah, am I the only one that finds that a bit counterintuitive to the
-point of wanting to submit a patch to change it?
+> Subject: Re: [PATCH] clear_child_for_cleanup must correctly manage
+>   children_to_clean
 
-If you've created a tag you're the *author* of that tag, the
-author/committer distinction for commit objects is there for e.g.
-rebases and applying commits via e.g. git-am.
+Thanks for the patch. Overall it looks good, but let me nit-pick your
+commit message a little (not because it is that horrible, but because
+you are so close to perfect that I want to fix the minor things and then
+encourage you to submit more patches :) ).
 
-We don't have a similar facility for tags (you have to push them
-around directly), but we *could* and in that case having a
-Tag-Committer as well well as a Tagger would make sense.
+Your subject is a bit vague, and it is not clear if it is not correct
+now, and this is a bugfix, or if it is a feature enhancement. I would
+have said something like:
 
-Junio, what do you think?
+  Subject: fix broken list iteration in clear_child_for_cleanup
+
+which is _also_ vague about what exactly the breakage is, but is clear
+that this is a bugfix. So then you can go on to describe the actual
+problem:
+
+  We iterate through the list of children to cleanup, but do not keep
+  our "last" pointer up to date. As a result, we may end up cutting off
+  part of the list instead of removing a single element.
+
+And then describe your fix:
+
+> Iterate through children_to_clean using 'next' fields but with an
+> extra level of indirection. This allows us to update the chain when
+> we remove a child and saves us managing several variables around
+> the loop mechanism.
+
+which I think is good.
+
+> -	last = &children_to_clean;
+> -	for (p = children_to_clean; p; p = p->next) {
+> -		if (p->pid == pid) {
+> -			*last = p->next;
+> -			free(p);
+> +	for (pp = &children_to_clean; *pp; pp = &(*pp)->next) {
+> +		if ((*pp)->pid == pid) {
+> +			struct child_to_clean *clean_me = *pp;
+> +			*pp = clean_me->next;
+> +			free(clean_me);
+>  			return;
+>  		}
+
+I think using the indirect pointer is a nice compromise; it makes it
+clear from just the for loop that this is not an ordinary for-each
+traversal. You could hoist the extra pointer out of the conditional and
+save one set of parentheses in the "if" statement, but I don't think it
+is a big deal either way.
+
+Acked-by: Jeff King <peff@peff.net>
+
+Thanks for the bug report and the patch.
+
+-Peff
