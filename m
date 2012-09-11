@@ -1,112 +1,61 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/2] describe: document and test --first-parent
-Date: Tue, 11 Sep 2012 15:51:52 +0200
-Message-ID: <a0f0cf4e9cf41577d01d728007250f78e18a9ac0.1347370970.git.git@drmicha.warpmail.net>
-References: <cover.1347370970.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 11 15:52:07 2012
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: How to update a cloned git repository
+Date: Tue, 11 Sep 2012 19:39:21 +0530
+Message-ID: <CAMK1S_jXA0WfC-de=mD7-+2oJiep_A2rKSZdSsqn7CcNJPsq5A@mail.gmail.com>
+References: <k2n4v2$88t$1@ger.gmane.org>
+	<vpq7gs0es4f.fsf@bauges.imag.fr>
+	<006f01cd900e$fce59a60$f6b0cf20$@schmitz-digital.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Tue Sep 11 16:09:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBQso-0001KM-IQ
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 15:52:06 +0200
+	id 1TBR9f-0007x5-K1
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 16:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792Ab2IKNv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 09:51:59 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51230 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757733Ab2IKNv5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 09:51:57 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5D8A821935
-	for <git@vger.kernel.org>; Tue, 11 Sep 2012 09:51:57 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 11 Sep 2012 09:51:57 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=2Qq8w6Oh6jQwh7cYERsNf6Dji
-	OI=; b=uCQADVQTyPhYwGgY5ZJ2kpYN2JIQb3QelxawSRKtOwOYf7BLW8rccuHpy
-	N0PW8Zy9PfYZUYwfRby4wd8rWseEtMVScZpnZoWGjEKRTM6Gm/YGK5soLQ0KH1Q7
-	JHBotlQ/mHlpZXyTK4l9bunzbl6JAst+BjbAn0FPLqtbZyYK/g=
-X-Sasl-enc: SGMmuIOCV6OvrS9p0TZDiVpYboV9nCA90R+sRvUWpYY7 1347371517
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 00F084825C3;
-	Tue, 11 Sep 2012 09:51:56 -0400 (EDT)
-X-Mailer: git-send-email 1.7.12.463.gbd9d638
-In-Reply-To: <cover.1347370970.git.git@drmicha.warpmail.net>
+	id S1755584Ab2IKOJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Sep 2012 10:09:23 -0400
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:47721 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753790Ab2IKOJX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 10:09:23 -0400
+Received: by lagy9 with SMTP id y9so341464lag.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2012 07:09:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=srmadO1BWsC0ilTvF7otLdKo00kyWurxBAufrqxNVBc=;
+        b=lb3mhuAtTKcqYjutQE1WExULnLi+prfKQYRI2RPpt5oHAOt5z9l1MP1HvnxchWVo1I
+         xEZ8ohzLPwgZkPMoSXz333inEG/TX3NS8PwQrSezGd1AGRSdj9TwZAD58ilShuNPJAIS
+         P4fT2/sUdusEs5Gt2uGFtqDd9lgt41oPM8hGG4GuRCEHOVATg+s4SaO2Hj5A6bWUV/tP
+         Gg2TUEmwWvh5X2LIEg36N/RASBXu+7lTeKOmgR8PLVP4YTqrr7o+0GHePqQcsZlSrMAk
+         +MH9LLh5AylWLwbTDyJQ21RCHq24V0V/azeOS1+HiX88iDkTpGFScNR0S/Qe+/HSt9WP
+         StzQ==
+Received: by 10.152.162.10 with SMTP id xw10mr15787176lab.12.1347372561649;
+ Tue, 11 Sep 2012 07:09:21 -0700 (PDT)
+Received: by 10.112.129.227 with HTTP; Tue, 11 Sep 2012 07:09:21 -0700 (PDT)
+In-Reply-To: <006f01cd900e$fce59a60$f6b0cf20$@schmitz-digital.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205231>
 
+On Tue, Sep 11, 2012 at 4:47 PM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-describe.txt | 16 +++++++++++++++-
- t/t6120-describe.sh            |  7 +++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+> Like this?
+> git pull --rebase HEAD~42
+>
+> So far I create patches, wiped out the entire repository, cloned, forked and applied the changes, pretty painful.
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 72d6bb6..9fb5c84 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -84,6 +84,10 @@ OPTIONS
- 	Only consider tags matching the given pattern (can be used to avoid
- 	leaking private tags made from the repository).
- 
-+--first-parent::
-+	Only consider tags which can be reached from '<committish>' by a first
-+	parent walk, i.e. only those which are not on side branches.
-+
- --always::
- 	Show uniquely abbreviated commit object as fallback.
- 
-@@ -129,6 +133,14 @@ closest tagname without any suffix:
- 	[torvalds@g5 git]$ git describe --abbrev=0 v1.0.5^2
- 	tags/v1.0.0
- 
-+With --first-parent, tags on side branches are not considered:
-+
-+	$ git describe v1.1.0^
-+	v1.0.7-44-ge77f489
-+
-+	$ git describe --first-parent v1.1.0^
-+	v1.0.0-41-ge77f489
-+
- Note that the suffix you get if you type these commands today may be
- longer than what Linus saw above when he ran these commands, as your
- git repository may have new commits whose object names begin with
-@@ -148,7 +160,9 @@ is found, its name will be output and searching will stop.
- If an exact match was not found, 'git describe' will walk back
- through the commit history to locate an ancestor commit which
- has been tagged.  The ancestor's tag will be output along with an
--abbreviation of the input committish's SHA1.
-+abbreviation of the input committish's SHA1.  With '--first-parent',
-+'git describe' will walk the history only along the first parent
-+of each commit.
- 
- If multiple tags were found during the walk then the tag which
- has the fewest commits different from the input committish will be
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index f67aa6f..2524236 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -103,6 +103,13 @@ check_describe c-* --tags HEAD^^2
- check_describe B --tags HEAD^^2^
- check_describe e --tags HEAD^^^
- 
-+check_describe R-* --first-parent HEAD
-+check_describe R-* --first-parent HEAD^
-+check_describe R-* --first-parent HEAD^^
-+check_describe B-* --first-parent HEAD^^2
-+check_describe B --first-parent HEAD^^2^
-+check_describe R-* --first-parent HEAD^^^
-+
- check_describe heads/master --all HEAD
- check_describe tags/c-* --all HEAD^
- check_describe tags/e --all HEAD^^^
--- 
-1.7.12.463.gbd9d638
+I think a 'git pull --rebase' should usually work even for 'pu'.
+
+But sometimes pu may have changes that take away the basis for your
+patch (i.e, not just a restructure) then you'd get conflicts.
