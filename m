@@ -1,105 +1,256 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] build: don't duplicate substitution of make
- variables
-Date: Tue, 11 Sep 2012 12:52:27 -0700
-Message-ID: <7vd31sgww4.fsf@alter.siamese.dyndns.org>
-References: <1be62f9a7bbe728e6422e668d982ddf313d016eb.1347378209.git.stefano.lattarini@gmail.com> <1c54b744c0ec6987f7987a41853ab0ae00513d03.1347378210.git.stefano.lattarini@gmail.com> <7vtxv4h3lh.fsf@alter.siamese.dyndns.org> <504F824F.3050903@gmail.com>
+Subject: [ANNOUNCE] Git v1.7.11.6
+Date: Tue, 11 Sep 2012 12:54:02 -0700
+Message-ID: <7v8vcggwth.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 11 21:52:39 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Tue Sep 11 21:54:23 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBWVi-0005SZ-FV
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Sep 2012 21:52:38 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1TBWXO-0006ov-6P
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 11 Sep 2012 21:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754828Ab2IKTwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 15:52:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63120 "EHLO
+	id S1759473Ab2IKTyJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 11 Sep 2012 15:54:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63753 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751329Ab2IKTw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Sep 2012 15:52:29 -0400
+	id S1758675Ab2IKTyF convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 11 Sep 2012 15:54:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5900F8E08;
-	Tue, 11 Sep 2012 15:52:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F29C8E48;
+	Tue, 11 Sep 2012 15:54:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kyln8Fc53JIAwKsXKLSYxNt36mk=; b=bB9Rnx
-	XnRYClcfBoPvsOuCzlwJ480QBjo8zPIyLaV0R2uk0n0ZvzHirCcwjGAx57hk9gpJ
-	zaASwHCXMBkOOaQDVjP2NGCzLN1R4KDYyltl2Wx37UWvmFeKXWptZYn0HfSkFvU+
-	bzVfnZ/nT06/6exnPV1bIyFDp3aBEy06oJ70Q=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=7bmYhIgmOJ39QIg5Hgj6Or968
+	FU=; b=goxrbj9FpYD2M9X8XnGxVZjWNp3mS1/MObRNFqknz33DLebwrebLpsjWd
+	OK+3d3o6SRVJDs5j5i1N6UL4KHmcKkOeNgiF/F5cX6QijNeBrtgjZW3hplBYalgw
+	jsDEqbgJjn2EwLfcvf8iicMOhLuyGlKqlPdEIybCircef5GTls=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=euvRszz3ITRi7EwLGuxxcbQbn9LEzXoH
-	OKtQExURql2gFBLmxcc4Ian95OBqIIm3fNabeidJbaEK/KPmphoVImPp9izvgAFY
-	9tTazsTfoOZJZ9Q1d5ONvx1ZBKLl7npdpA74+9jG+yfxep3YAnW1b1gkorQMhHH8
-	o8n8aLf+mxU=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=Aa3/NDOVOGTOuZZv4eL
+	kZqjggvNOinwwezVPyruH53dvgQ9GHx0j74xaZBiLNuY/9XjFhSrwfWNpk0whxTq
+	BGg0h5RpjFfVSl0efEBeBlY7jMKuqigrttQ0Apeu4ZLwjADZrYIpfYpgNjRuwzNU
+	WUSs62jfDL1nVtVAOgNOAEOw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44CCE8E07;
-	Tue, 11 Sep 2012 15:52:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDDA08E47;
+	Tue, 11 Sep 2012 15:54:04 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 977438E06; Tue, 11 Sep 2012
- 15:52:28 -0400 (EDT)
-In-Reply-To: <504F824F.3050903@gmail.com> (Stefano Lattarini's message of
- "Tue, 11 Sep 2012 20:26:23 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BDBEF8E45; Tue, 11 Sep 2012
+ 15:54:03 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3778DF78-FC4A-11E1-B2A9-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 7030B2C8-FC4A-11E1-A341-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205261>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205262>
 
-Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+A maintenance release Git v1.7.11.6 is now available at the
+usual places.
 
-> On 09/11/2012 07:27 PM, Junio C Hamano wrote:
->> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
->> 
->>> Thanks to our 'GIT_CONF_SUBST' layer in configure.ac, a make variable 'VAR'
->>> can be defined to a value 'VAL' at ./configure runtime in our build system
->>> simply by using "GIT_CONF_SUBST([VAR], [VAL])" in configure.ac, rather than
->>> having both to call "AC_SUBST([VAR], [VAL])" in configure.ac and adding the
->>> 'VAR = @VAR@' definition in config.mak.in.  Less duplication, less margin
->>> for error, less possibility of confusion.
->>>
->>> While at it, fix some formatting issues in configure.ac that unnecessarily
->>> obscured the code flow.
->>>
->>> Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
->>> ---
->>>  config.mak.in |  49 --------------------
->>>  configure.ac  | 144 +++++++++++++++++++++++++++++++---------------------------
->>>  2 files changed, 76 insertions(+), 117 deletions(-)
->> 
->> Whoa ;-).
->>
-> Well, I could have converted one variable at the time, but that seemed
-> an overkill :-)
+The release tarballs are found at:
 
-No, I was happy to see many lines go ;-)
->> These two hunks suggest
->> that you may be favoring spaces, but other places you seem to use
->> tabs, so...
->>
-> I can convert the new tabs to spaces if you prefer (that would have been
-> my preference too, but thought trying to follow the "Git preferences"
-> was more important).  No big deal either way for me.
+    http://code.google.com/p/git-core/downloads/list
 
-If this were other parts of the system, my preference would be to
-use tabs, but because I do not help very much in the autoconf part
-myself, I do not have a particular preference.  If it is more common
-to indent the configure.ac script with spaces, that would be more
-familiar to the folks who work on it, and I do not have much against
-choosing and sticking to space indented configure.ac file if that is
-the policy.
+and their SHA-1 checksums are:
 
-But if this patch is not about cleaning up the style to make it
-conform to a policy (whichever it is), I would have preferred to see
-a clean-up patch as a separate step, not mixed together with this.
+f678531535643806733e8c7e87db77386c48738b  git-1.7.11.6.tar.gz
+e6ccf6cffa3b69dc5d658f43bb8a10ed70b176f2  git-htmldocs-1.7.11.6.tar.gz
+7bbb12429e65184d9462dfc01b104a4780bc67a8  git-manpages-1.7.11.6.tar.gz
 
-That's all; either way, no big deal.
+Also the following public repositories all have a copy of the v1.7.11.6
+tag and the maint-1.7.11 branch that the tag points at:
+
+  ;; url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
+
+[repo seems to be having a problem right now]
+
+Git v1.7.11.6 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+
+=46ixes since v1.7.11.5
+---------------------
+
+ * "ciabot" script (in contrib/) has been updated with extensive
+   documentation.
+
+ * "git foo" errored out with "Not a directory" when the user had a
+   non-directory on $PATH, and worse yet it masked an alias "foo" from
+   running.
+
+ * When the user exports a non-default IFS without HT, scripts that
+   rely on being able to parse "ls-files -s | while read a b c..."
+   started to fail.  Protect them from such a misconfiguration.
+
+ * When the user gives an argument that can be taken as both a
+   revision name and a pathname without disambiguating with "--", we
+   used to give a help message "Use '--' to separate".  The message
+   has been clarified to show where that '--' goes on the command
+   line.
+
+ * Documentation for the configuration file format had a confusing
+   example.
+
+ * Older parts of the documentation described as if having a regular
+   file in .git/refs/ hierarchy were the only way to have branches and
+   tags, which is not true for quite some time.
+
+ * It was generally understood that "--long-option"s to many of our
+   subcommands can be abbreviated to the unique prefix, but it was not
+   easy to find it described for new readers of the documentation set.
+
+ * The "--topo-order", "--date-order" (and the lack of either means
+   the default order) options to "rev-list" and "log" family of
+   commands were poorly described in the documentation.
+
+ * "git commit --amend" let the user edit the log message and then
+   died when the human-readable committer name was given
+   insufficiently by getpwent(3).
+
+ * The exit status code from "git config" was way overspecified while
+   being incorrect.  The implementation has been updated to give the
+   documented status for a case that was documented, and introduce a
+   new code for "all other errors".
+
+ * The output from "git diff -B" for a file that ends with an
+   incomplete line did not put "\ No newline..." on a line of its own.
+
+ * "git diff" had a confusion between taking data from a path in the
+   working tree and taking data from an object that happens to have
+   name 0{40} recorded in a tree.
+
+ * The "--rebase" option to "git pull" can be abbreviated to "-r",
+   but we didn't document it.
+
+ * When "git push" triggered the automatic gc on the receiving end, a
+   message from "git prune" that said it was removing cruft leaked to
+   the standard output, breaking the communication protocol.
+
+ * The reflog entries left by "git rebase" and "git rebase -i" were
+   inconsistent (the interactive one gave an abbreviated object name).
+
+ * "git send-email" did not unquote encoded words that appear on the
+   header correctly, and lost "_" from strings.
+
+ * "git stash apply/pop" did not trigger "rerere" upon conflicts
+   unlike other mergy operations.
+
+ * "git submodule <cmd> path" did not error out when the path to the
+   submodule was misspelt.
+
+ * "git submodule update -f" did not update paths in the working tree
+   that has local changes.
+   (merge 01d4721 sz/submodule-force-update later to maint).
+
+ * "gitweb" when used with PATH_INFO failed to notice directories with
+   SP (and other characters that need URL-style quoting) in them.
+
+ * Fallback 'getpass' implementation made unportable use of stdio API.
+
+ * A utility shell function test_seq has been added as a replacement
+   for the 'seq' utility found on some platforms.
+
+----------------------------------------------------------------
+
+Changes since v1.7.11.5 are as follows:
+
+Adam Butcher (1):
+      Fix '\ No newline...' annotation in rewrite diffs
+
+Ben Walton (1):
+      Enable HAVE_DEV_TTY for Solaris
+
+Brandon Casey (1):
+      t/t5400: demonstrate breakage caused by informational message fro=
+m prune
+
+Eric S. Raymond (3):
+      contrib/ciabot: Get ciabot configuration from git variables
+      Improved documentation for the ciabot scripts.
+      Make the ciabot scripts completely self-configuring in the normal=
+ case.
+
+Heiko Voigt (2):
+      Let submodule command exit with error status if path does not exi=
+st
+      Documentation/CodingGuidelines: spell out more shell guidelines
+
+Jay Soffian (1):
+      gitweb: URL-decode $my_url/$my_uri when stripping PATH_INFO
+
+Jeff King (6):
+      commit: check committer identity more strictly
+      diff: do not use null sha1 as a sentinel value
+      do not write null sha1s to on-disk index
+      fsck: detect null sha1 in tree entries
+      terminal: seek when switching between reading and writing
+      docs: monospace listings in docbook output
+
+Junio C Hamano (13):
+      config: "git config baa" should exit with status 1
+      t7406: fix misleading "rev-parse --max-count=3D1 HEAD"
+      sane_execvp(): ignore non-directory on $PATH
+      Documentation: do not mention .git/refs/* directories
+      receive-pack: do not leak output from auto-gc to standard output
+      sh-setup: protect from exported IFS
+      rev-list docs: clarify --topo-order description
+      gitcli: describe abbreviation of long options
+      git-config doc: unconfuse an example
+      mergetool: style fixes
+      Prepare for 1.7.11.6
+      Almost 1.7.11.6
+      Git 1.7.11.6
+
+Luka Perkov (1):
+      builtin.h: remove unused cmd_<foo> declarations
+
+Martin von Zweigbergk (1):
+      add tests for 'git rebase --keep-empty'
+
+Matthieu Moy (1):
+      setup: clarify error messages for file/revisions ambiguity
+
+Michael Haggerty (1):
+      git-config.txt: fix example
+
+Michael J Gruber (1):
+      rebase -i: use full onto sha1 in reflog
+
+Micha=C5=82 Kiedrowicz (1):
+      tests: Introduce test_seq
+
+Miklos Vajna (1):
+      man: git pull -r is a short for --rebase
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+      read_index_from: remove bogus errno assignments
+
+Paul Gortmaker (1):
+      apply: delete unused deflate_origlen from patch struct
+
+Phil Hord (2):
+      test: git-stash conflict sets up rerere
+      stash: invoke rerere in case of conflict
+
+Stefan Zager (1):
+      Make 'git submodule update --force' always check out submodules.
+
+Thomas Rast (3):
+      send-email: improve RFC2047 quote parsing
+      diff_setup_done(): return void
+      merge-recursive: eliminate flush_buffer() in favor of write_in_fu=
+ll()
