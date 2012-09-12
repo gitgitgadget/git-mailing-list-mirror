@@ -1,91 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 0/2] Mixing English and a local language
-Date: Wed, 12 Sep 2012 11:18:06 -0700
-Message-ID: <7vligfcdgh.fsf@alter.siamese.dyndns.org>
-References: <1345922816-20616-1-git-send-email-pclouds@gmail.com>
- <CACsJy8CG72PzvndV7C4a9hspxhprKn2tcb49HxeZ14pmEDycGQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] sha1: update pointer and remaining length after
+ subfunction call
+Date: Wed, 12 Sep 2012 11:35:56 -0700
+Message-ID: <7vhar3ccmr.fsf@alter.siamese.dyndns.org>
+References: <cover.1347442430.git.ydroneaud@opteya.com>
+ <e6f0051409811fc57385ae712d3256772044bf09.1347442430.git.ydroneaud@opteya.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 20:18:21 2012
+To: Yann Droneaud <ydroneaud@opteya.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 20:36:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBrW0-0000OF-FH
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:18:20 +0200
+	id 1TBrnI-0003Y0-R1
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:36:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760977Ab2ILSSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 14:18:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49153 "EHLO
+	id S1753610Ab2ILSgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 14:36:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58213 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760968Ab2ILSSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 14:18:10 -0400
+	id S1752042Ab2ILSgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 14:36:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02E689523;
-	Wed, 12 Sep 2012 14:18:09 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54F269A2A;
+	Wed, 12 Sep 2012 14:36:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v0Mq3hcJ3OyjVwJWJWv0PJMS+Wg=; b=ZxEJXE
-	/IPEfePLWsOImimXtSJiqckZw2NBCPehG9H/fWxtJ+Rd3sjDzz+eB+kSlAzpN5N1
-	8o/48kc8KL3dzwW7kEsq67YvSPh1nvDLcCu6HXbN6ANkdRh+KuuKJHihRP8Pg2Wn
-	C/62ZZglnX+HTb2ZpRVQFZ9hO5ysRrvYIO3OI=
+	:content-type; s=sasl; bh=51HJ9tOXmIf5Zx8m711MYkej15M=; b=EuRwbz
+	K4dwhodgyEO0LcHYbmn05cvdweE5QbGdtOz4x7pPkENny3dVPJ9orMnimx5a99lG
+	P+VEt/VYEfEwsajfIon/kPCrpJcyy0DcSXWHgY060OMedIog5ecQLTFaWdHopv7U
+	IF9qp8Oi6wxTbRPXncjSIbHVjPVr8+RKP3/ZQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F+KsOzLQiVUqM424j3wLLJxsKSgfIBzB
-	zsjV6KvRHPhGSNMME3pNS9nFxVXpjtoIuXD72zdgYgCM6ziZPNVkN1a6cx/0MUnx
-	OpLn3I93kgtd1wenVD4Gr3t6LXyZWLMkeVG95pkiJr5XZuuWeHJED9VQatPLPgYm
-	WfX9ywy1Npg=
+	:content-type; q=dns; s=sasl; b=eh0fn+A0EJ0gu3XU5Z2vF4QpwW0ZHYqf
+	dzLy2fTVBdGPw67BIEvcMwVgEniQGv/wNWxiiihylHSg8RMOM4rWs6gMdi23M14z
+	1PxDyQd0nLDgDOJ0UP2rRzd8kQfIMXcTiwWIC/1bzq2lrh1AiMvBF4X8Lav6TKN/
+	3TjkO1UCMTg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5BFC9522;
-	Wed, 12 Sep 2012 14:18:08 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40D6E9A29;
+	Wed, 12 Sep 2012 14:36:01 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42AA99521; Wed, 12 Sep 2012
- 14:18:08 -0400 (EDT)
-In-Reply-To: <CACsJy8CG72PzvndV7C4a9hspxhprKn2tcb49HxeZ14pmEDycGQ@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 12 Sep 2012 21:05:33 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE2719A25; Wed, 12 Sep 2012
+ 14:35:58 -0400 (EDT)
+In-Reply-To: <e6f0051409811fc57385ae712d3256772044bf09.1347442430.git.ydroneaud@opteya.com> (Yann Droneaud's message of "Wed, 12 Sep 2012 12:01:25 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 340E405A-FD06-11E1-8EDA-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B23E98A6-FD08-11E1-AB7F-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205321>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Yann Droneaud <ydroneaud@opteya.com> writes:
 
-> Should I interpret the silence as "I don't care, if you want it, go
-> for it" or "not acceptable, but no reasons given"?
+> There's no need to update the pointer and remaining length before
+> leaving or calling the SHA1 sub function.
+>
+> Additionnaly, the partial block code could be looking more like
+> the full block handling branch.
+>
+> Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
+> ---
+>  block-sha1/sha1.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+> index a8d4bf9..c1af112 100644
+> --- a/block-sha1/sha1.c
+> +++ b/block-sha1/sha1.c
+> @@ -248,11 +248,11 @@ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
+>  			left = len;
+>  		memcpy(lenW + (char *)ctx->W, data, left);
+>  		lenW = (lenW + left) & 63;
+> -		len -= left;
+> -		data = ((const char *)data + left);
+>  		if (lenW)
+>  			return;
+>  		blk_SHA1_Block(ctx, ctx->W);
+> +		data = ((const char *)data + left);
+> +		len -= left;
+>  	}
+>  	while (len >= 64) {
+>  		blk_SHA1_Block(ctx, data);
 
-I do not speak for the others, but the reason I didn't respond is
-none of the above. It is somewhere between "Meh" and "Anything that
-says 'local language' and 'English' cannot be worth looking at."
-
-I _think_ the patch was inspired by $gmane/204979, where I said:
-
-    Or "LC_ALL=C LANG=C git format-patch ...".
-
-    It does not bother me (even though I do not read Vietnamese), but
-    this has been brought up a few times, and we may want to revert the
-    i18n of the diffstat summary.  It does not seem to add much value to
-    the system but annoys people.  After all, the "upstream" diffstat
-    does not localizes this string (I just checked diffstat-1.55 with
-    Jan 2012 timestamp).
-
-and I have been waiting to see what others think.  I am so far
-taking the silence in the thread to mean they do not mind seeing the
-diffstat summary untranslated and they do not mind seeing it in
-Klingon, as long as the three numbers are there with (+) and (-)
-markings.
-
-It is bad enough having to decide where the boundary between 'local
-language' and 'C locale' should be drawn in the mixture.  I am not
-enthused by an attempt to make the boundary tweakable, and worse
-yet, to do so per command.
-
-IMHO, we should just decide where to draw the line and be done with
-it.  The users already know or can be trained to know to choose the
-greatest common denominator when interacting with others.
+It is not wrong per-se, but doesn't the compiler optimize it out if
+this is worth doing?  Just being curious.
