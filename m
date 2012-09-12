@@ -1,152 +1,70 @@
-From: Peter Jones <pjones@redhat.com>
-Subject: Re: [PATCH] Handle "git show" output correctly.
-Date: Wed, 12 Sep 2012 14:00:23 -0400
-Organization: Red Hat, Inc.
-Message-ID: <1347472823.12986.3.camel@eddie.install.bos.redhat.com>
-References: <1347463571-16831-1-git-send-email-pjones@redhat.com>
-	 <vpqpq5rz1ua.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] fetch: align new ref summary printout in UTF-8
+ locales
+Date: Wed, 12 Sep 2012 11:02:13 -0700
+Message-ID: <7vpq5rce6y.fsf@alter.siamese.dyndns.org>
+References: <1346670609-19986-1-git-send-email-pclouds@gmail.com>
+ <1346755175-31468-1-git-send-email-pclouds@gmail.com>
+ <CACsJy8APtTU-7ZfTdcjg0nKoBSboNpP+7Va=akXcvn95Sd166A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-qiGqjCliycktW0JLd64I"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 12 20:00:37 2012
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 20:02:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBrEq-0006So-Ta
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:00:37 +0200
+	id 1TBrGa-0008LY-Q8
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758837Ab2ILSA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 14:00:29 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:15109 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752763Ab2ILSA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 14:00:28 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q8CI0Qof006028
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 12 Sep 2012 14:00:26 -0400
-Received: from [10.3.112.24] (ovpn-112-24.phx2.redhat.com [10.3.112.24])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q8CI0NVd003564;
-	Wed, 12 Sep 2012 14:00:24 -0400
-In-Reply-To: <vpqpq5rz1ua.fsf@bauges.imag.fr>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1760933Ab2ILSCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 14:02:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40525 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752804Ab2ILSCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 14:02:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D2929031;
+	Wed, 12 Sep 2012 14:02:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rD07lyYjkmNNx7dkXrFIEvgG9Pc=; b=Vktzv8
+	LH0k4riOkeYxYNK28RFDe2cThJafTiieQ9AurMWTcs7KR+vBGTS0QKZUuAXgSMwl
+	bHuTXqfl7cUaJZhVYnMp2yB5QkmV7aog7kn6j/KJcm1iwPE//7eekzpOFf8DKSa5
+	0R3fTBwtBBy+RCYok9Lhk8cczPht42VQhnMP8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YbUCamvcyoBLlSI096zZQCBJ+QZGMmrt
+	H/TGst99uDFtI/7xYkxZYr3epDGdx8VMg/7fZuZOq/lIhyHLImTkF4N+XelGSNca
+	TMWkm/BOWpOm8VwMfKpYXhrPGI3K9VnNTddpnzpFgc/c2OnyuPhRTMQPsMYc7//e
+	nfSAaSZXVmk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49EA09030;
+	Wed, 12 Sep 2012 14:02:15 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1379902F; Wed, 12 Sep 2012
+ 14:02:14 -0400 (EDT)
+In-Reply-To: <CACsJy8APtTU-7ZfTdcjg0nKoBSboNpP+7Va=akXcvn95Sd166A@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 12 Sep 2012 21:02:44 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FBBC6C88-FD03-11E1-B9DF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205317>
 
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
---=-qiGqjCliycktW0JLd64I
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+> Ping.. what happens to this patch? Do you want to support other
+> encodings as well via iconv()? I can't test that though.
 
-On Wed, 2012-09-12 at 17:40 +0200, Matthieu Moy wrote:
-> 
-> How does this react to multi-line subject, e.g
-> 
-> This should be the
-> subject line.
-> 
-> And this is the body.
-> 
-> ?
-> 
-> git format-patch will merge the lines in a single Subject: header, and
-> your version seems to take only the first line.
-> 
-> A test showing this would be welcome. 
-
-An updated patch to fix this will be my next mail.  It's not as succinct
-as it once was, but such is life.
-
-The two attached commits to this message can be used as a test case.
-Basically, do (in any repo)
-
-git am 0001* 0002*
-git show > foo.patch
-git reset HEAD^ --hard
-git am foo.patch
-git show # check the output here
-git format-patch -1
-# check 0001-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.patch
-# here.
-
-It winds up merging the subject lines before the rest of git-am does - I
-couldn't get it to work if I preserved the newline; for some reason I
-always get a second newline and that's /more/ wrong.
-
--- 
-  Peter
-
---=-qiGqjCliycktW0JLd64I
-Content-Disposition: attachment;
-	filename*0=0001-this-is-an-example-with-a-very-long-subject-line-whi.pat;
-	filename*1=ch
-Content-Type: text/x-patch;
-	name="0001-this-is-an-example-with-a-very-long-subject-line-whi.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
->From f7521f88731f9fc696dcd8e32de58cc9d98ed892 Mon Sep 17 00:00:00 2001
-From: Peter Jones <pjones@redhat.com>
-Date: Wed, 12 Sep 2012 13:17:11 -0400
-Subject: [PATCH 1/2] this is an example with a very long subject line which
- is completely unreasonable and nevertheless a thing.
-
-It also has other stuff here.
----
- foo | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 foo
-
-diff --git a/foo b/foo
-new file mode 100644
-index 0000000..fa5ef85
---- /dev/null
-+++ b/foo
-@@ -0,0 +1 @@
-+    za za za
--- 
-1.7.11.4
-
-
---=-qiGqjCliycktW0JLd64I
-Content-Disposition: attachment;
-	filename*0=0002-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.pat;
-	filename*1=ch
-Content-Type: text/x-patch;
-	name="0002-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
->From bc471f2b89ada6e6ddf35b5ec2538242b5639836 Mon Sep 17 00:00:00 2001
-From: Peter Jones <pjones@redhat.com>
-Date: Wed, 12 Sep 2012 13:39:56 -0400
-Subject: [PATCH 2/2] bar bar bar this is a very very long line I am tired of
- this game and it is quite annoying.
-
-this is really annoying.  I hate perl.
-    zonk.
-
-yes.
-    no.
----
- foo | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/foo b/foo
-index fa5ef85..3b572f4 100644
---- a/foo
-+++ b/foo
-@@ -1 +1,2 @@
-     za za za
-+    bar bar bar
--- 
-1.7.11.4
-
-
---=-qiGqjCliycktW0JLd64I--
+I thought I refuted a potential blocker, which was an implied
+objection from Torsten, in $gmane/204912 already.  As long as we
+make it clear that your patch helps only "ASCII/UTF-8 only" audience
+but we still "try to be nicer to 'others'" by doing two things I
+said in the message, I think we should proceed without iconv() to
+keep things simple.
