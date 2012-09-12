@@ -1,87 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] sha1: use char type for temporary work buffer
-Date: Wed, 12 Sep 2012 11:42:36 -0700
-Message-ID: <7v8vcfccbn.fsf@alter.siamese.dyndns.org>
-References: <cover.1347442430.git.ydroneaud@opteya.com>
- <a8c30a998cad6a7b38bd983e7689a628567a8176.1347442430.git.ydroneaud@opteya.com>
+Subject: Re: [PATCH] [git-am] Handle "git show" output correctly
+Date: Wed, 12 Sep 2012 12:07:23 -0700
+Message-ID: <7v1ui7cb6c.fsf@alter.siamese.dyndns.org>
+References: <vpqligfz1sa.fsf@bauges.imag.fr>
+ <1347464989-17421-1-git-send-email-pjones@redhat.com>
+ <vpqbohbz11h.fsf@bauges.imag.fr> <7v392ndu59.fsf@alter.siamese.dyndns.org>
+ <1347473108.12986.6.camel@eddie.install.bos.redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yann Droneaud <ydroneaud@opteya.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 20:42:48 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Peter Jones <pjones@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 21:07:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBrtf-0002Al-3Z
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:42:47 +0200
+	id 1TBsHh-0003Tg-ID
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 21:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755985Ab2ILSmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 14:42:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61853 "EHLO
+	id S1750901Ab2ILTH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 15:07:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42231 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755322Ab2ILSmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 14:42:38 -0400
+	id S1750708Ab2ILTH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 15:07:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 380CF9CE4;
-	Wed, 12 Sep 2012 14:42:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD68D852E;
+	Wed, 12 Sep 2012 15:07:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u6Cre+UkVf0oVUVfDmyKemlbCck=; b=BlvEKj
-	5gfP0odiH/kqMevlyU7GE1erOoPfXoxLollzOShQzOcx2BEVpxJHWFR+vMCEBhXz
-	eFWm1DIsIObetNCHHujXLa/WPOjk00bD67lGc19o6yyFKvgmiITCCTWeSsXe9rAk
-	6L/oU61OHQ2wGBbR0Cj8nsIBtclAKwyOLLXQQ=
+	:content-type; s=sasl; bh=tCd5srWsD4gw+UxIzxIO/ugbSdQ=; b=nckSBc
+	0KG1LmHY2PXsqXukOd6KxC+gzpkWROOJu2V9YwFffLBpCT6qoHHNrJ/3mFI/TPQb
+	nUm2LszUtJTdJT7+pSpYuK301BlMqIHlobnTSrf0EHfzFRliWoJ0n55MA7EHAuPu
+	pzV/ufLvq6ihYS6Og8uG/jtlWcdcuUJHrjBrw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UbYtioCQVmDWdOmf2HDS4Nicm558rpaj
-	8O+DDl9Es31yElz22JuCnAQVyT+ATGDOTpw9qkob4/kRiVC3VAxlIQasUZSLCC8D
-	I9AuZdvNaaeqCIFHtcAXgiqD1C4Zokmu9z/uCTDsqDnO+frN6CYkrzNnsFqlWhfQ
-	GBnfHlf9MTg=
+	:content-type; q=dns; s=sasl; b=gLOQ03meqWJE6rjS4dpSzY0qaaDfvLE9
+	hl6qPahzQibQ2TzTT7RlP4S7m7C3K8GpyaeH7/beZwsOFn4QcUdKMZJkpT8xX4o8
+	xgDXQTBjLQ3gqyCgoOeDBaNgV8wkMqEpWmZp39PgN4gOwD60XYHQ+tJG1B3Xmg2d
+	/0CnO6Hze78=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 269B59CE3;
-	Wed, 12 Sep 2012 14:42:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAC3D852D;
+	Wed, 12 Sep 2012 15:07:25 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 835579CE1; Wed, 12 Sep 2012
- 14:42:37 -0400 (EDT)
-In-Reply-To: <a8c30a998cad6a7b38bd983e7689a628567a8176.1347442430.git.ydroneaud@opteya.com> (Yann Droneaud's message of "Wed, 12 Sep 2012 12:30:45 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 235C2852C; Wed, 12 Sep 2012
+ 15:07:25 -0400 (EDT)
+In-Reply-To: <1347473108.12986.6.camel@eddie.install.bos.redhat.com> (Peter
+ Jones's message of "Wed, 12 Sep 2012 14:05:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9FCE63F8-FD09-11E1-AC9A-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 167D2978-FD0D-11E1-B933-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205325>
 
-Yann Droneaud <ydroneaud@opteya.com> writes:
+Peter Jones <pjones@redhat.com> writes:
 
-> The SHA context is holding a temporary buffer for partial block.
->
-> This block must 64 bytes long. It is currently described as
-> an array of 16 integers.
->
-> Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
-> ---
+> Let me put it a different way - if you won't accept git-am handling "git
+> show" output because "git show" has output that wasn't designed to be
+> parsed ever, would you be opposed to a patch that switches the "git
+> show" output to be something usable?
 
-As we do not work with 16-bit integers anyway, 16 integers occupy 64
-bytes anyway.
-
-What problem does this series fix?
-
->  block-sha1/sha1.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-> index b864df6..d29ff6a 100644
-> --- a/block-sha1/sha1.h
-> +++ b/block-sha1/sha1.h
-> @@ -9,7 +9,7 @@
->  typedef struct {
->  	unsigned long long size;
->  	unsigned int H[5];
-> -	unsigned int W[16];
-> +	unsigned char W[64];
->  } blk_SHA_CTX;
->  
->  void blk_SHA1_Init(blk_SHA_CTX *ctx);
+The output from the command is optimized for humans, but you could
+invoke "git show --pretty=email" if you want to, so I do not think
+you need any patch to do that.
