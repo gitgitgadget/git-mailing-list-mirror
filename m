@@ -1,139 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Ambiguous date handling
-Date: Wed, 12 Sep 2012 09:58:20 -0700
-Message-ID: <7vligfdvpv.fsf@alter.siamese.dyndns.org>
-References: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
- <7v4nn3fu6s.fsf@alter.siamese.dyndns.org> <50505F61.8040100@gmail.com>
+From: Andrew Wong <andrew.w-lists@sohovfx.com>
+Subject: Re: Interactive rebase with pre-built script?
+Date: Wed, 12 Sep 2012 12:38:40 -0400
+Message-ID: <5050BA90.2010105@sohovfx.com>
+References: <alpine.DEB.2.00.1209110725130.8398@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 18:59:13 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Wed Sep 12 19:01:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBqHM-0004QF-2E
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 18:59:08 +0200
+	id 1TBqJB-0006Nz-1O
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760571Ab2ILQ6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 12:58:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760558Ab2ILQ6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 12:58:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63A579BD0;
-	Wed, 12 Sep 2012 12:58:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A6VNHA9bbX6gVcn4I3udowS1kBk=; b=Xw7S18
-	yNkyHR8P/kAZ3hyvlO/Ztv0oeK1u3blPvuTMAG1x74JN/mgZu16oB6rH+0MYwPJ+
-	U+l/wfm+Tn+a4ueH+cso8bsnKyTBl/OxyhYVbAzRUNyvSktap4EZf0DgPikVIPy6
-	7tzb5/gk/PtjiwbLQwPo1tzccArLg1mAJWyyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G5bUNoFqaKF3ctgzW/e8PJeHPhXT0FBt
-	02IMnMUcqOFrjFZzwCQe2lCKNueVBCw62lZVbOBDn0qyjJJRqpESZ4FERg+Ty2KK
-	pShrFqLwLTyxl/5vHQevU0NQdXWEUmVibbezKgZ/gL0Jf/tZIWnebxW+Uz/rm1tz
-	Iv7w3gO3kLU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 503F79BCF;
-	Wed, 12 Sep 2012 12:58:22 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8AA3E9BCE; Wed, 12 Sep 2012
- 12:58:21 -0400 (EDT)
-In-Reply-To: <50505F61.8040100@gmail.com> (Chris Packham's message of "Wed,
- 12 Sep 2012 22:09:37 +1200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0EF51362-FCFB-11E1-A615-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760573Ab2ILRAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 13:00:25 -0400
+Received: from smtp03.beanfield.com ([76.9.193.172]:55509 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760501Ab2ILRAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 13:00:21 -0400
+X-Greylist: delayed 1291 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Sep 2012 13:00:21 EDT
+X-Spam-Status: No
+X-beanfield-mta03-MailScanner-From: andrew.w-lists@sohovfx.com
+X-beanfield-mta03-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta03-MailScanner: Found to be clean
+X-beanfield-mta03-MailScanner-ID: 1TBpxZ-000DZd-1L
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta03.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <andrew.w-lists@sohovfx.com>)
+	id 1TBpxZ-000DZd-1L; Wed, 12 Sep 2012 12:38:41 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <alpine.DEB.2.00.1209110725130.8398@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205308>
 
-Chris Packham <judge.packham@gmail.com> writes:
+On 09/11/2012 02:32 AM, Peter Krefting wrote:
+> Now, to my question. Is there an easy way to run interactive rebase on 
+> the upstream branch with this recipe? The best we have come up with so 
+> far is
+>
+>   git checkout master # the upstream branch
+>   git rebase -i HEAD~
+>
+> and then just append everything from the generated recipe.
+Instead of rebasing to "HEAD~", you should be able to do:
+     git rebase -i HEAD
+The default recipe should then just be "noop", and you can replace the 
+whole default recipe with your recipe. This should also work even if the 
+last commit was a merge.
 
-> Consistent as long as you save as the default .txt. Some people have
-> trained themselves to use the save as .eml option which uses RFC822
-> style output.
+Instead of appending your own recipe, you could also abuse the EDITOR 
+environment variable.
+Say your recipe is stored in a file called "my_recipe". Then, you could 
+do this:
+     env EDITOR="cp my_recipe" git rebase -i HEAD
 
-Yuck.
-
-> Could this be done in a applypatch-msg
-> hook?
-
-Isn't the hook about fixing up the log message?  Also I do not think
-the name of the original file is given to the hook, so there is no
-sufficient information to allow it to switch between two behaviours
-based on .txt or .eml.
-
-But if you are massaging the _input_ to "git am", then you can
-certainly do the massaging even _before_ you feed it to "git am", no?
-
-We could think about adding a new hook to "git am", though.  It
-cannot just be an option to "git am" (or "git mailinfo") that says
-"if the input is .txt, assume European date order for \d+/\d+/\d+
-dates, and otherwise assume US style", as that is too specific to
-your particular set-up and will not match general needs.  If we were
-to add such a hook, $GIT_DIR/hooks/am-input-filter might look
-something like this (it is left as an exercise to enhance it to
-avoid munging a payload outside the header that happens to begin
-with "Date: "):
-
-	#!/bin/sh
-        case "$#" in
-	0)
-		cat
-        	;;
-	*)
-        	for i
-                do
-                	case "$i" in
-		        *.txt)
-				sed -e 's/^\(Date: \)(\d+/)(\d+/)(\d+)/\1\3\2\4/' "$i"
-				;;
-			*)
-                        	cat "$i"
-				;;
-			esac
-		done
-                ;;
-	esac
-
-and then teach "am" to use the hook, perhaps like the attached.
-
-But at that point, wouldn't it be far simpler and cleaner if you did
-
-	$ my-mbox-munge mail.txt | git am
-
-in the first place?
-
- git-am.sh | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git i/git-am.sh w/git-am.sh
-index c682d34..42654a0 100755
---- i/git-am.sh
-+++ w/git-am.sh
-@@ -265,7 +265,16 @@ split_patches () {
- 		else
- 		    keep_cr=
- 		fi
--		git mailsplit -d"$prec" -o"$dotest" -b $keep_cr -- "$@" > "$dotest/last" ||
-+
-+		if test -x "$GIT_DIR"/hooks/am-input-filter
-+		then
-+			mif="$GIT_DIR"/hooks/am-input-filter
-+		else
-+			mif=cat
-+		fi
-+
-+		"$mif" "$@" |
-+		git mailsplit -d"$prec" -o"$dotest" -b $keep_cr >"$dotest/last" ||
- 		clean_abort
- 		;;
- 	stgit-series)
+But this could potentially be dangerous because if "rebase" fires up a 
+editor for any other reason (e.g. having a "reword" or "squash" in your 
+recipe), then the commit message will be messed up. So you need to make 
+sure your recipe won't trigger any editor except for the recipe.
