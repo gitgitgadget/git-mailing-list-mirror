@@ -1,189 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-list/log: document logic with several limiting
- options
-Date: Wed, 12 Sep 2012 10:26:57 -0700
-Message-ID: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
-References: <b23f3c547358b79731c7a25d9ac496138e6ab74d.1347374615.git.git@drmicha.warpmail.net> <7vsjaoil6d.fsf@alter.siamese.dyndns.org> <50509171.9060604@drmicha.warpmail.net> <7vbohbdufz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] [git-am] Handle "git show" output correctly
+Date: Wed, 12 Sep 2012 10:32:18 -0700
+Message-ID: <7v392ndu59.fsf@alter.siamese.dyndns.org>
+References: <vpqligfz1sa.fsf@bauges.imag.fr>
+ <1347464989-17421-1-git-send-email-pjones@redhat.com>
+ <vpqbohbz11h.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 12 19:27:18 2012
+Cc: Peter Jones <pjones@redhat.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 12 19:32:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBqiU-0002cq-Dr
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:27:10 +0200
+	id 1TBqne-0000Ao-7I
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:32:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760760Ab2ILR1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 13:27:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54791 "EHLO
+	id S1760642Ab2ILRcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 13:32:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57815 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752734Ab2ILR1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 13:27:00 -0400
+	id S1754954Ab2ILRcV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 13:32:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CE1684E9;
-	Wed, 12 Sep 2012 13:27:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14EDC8708;
+	Wed, 12 Sep 2012 13:32:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I8B3MsQIdjjdHtnML3TRvhJKB2Q=; b=lv2VYd
-	07CMpIXfjwM7kPBD9NCWEoS96SbmkMzwpnlSWujqo4r9fILnHJKVPUF+AJoCodrz
-	RnDI2NR5Sg7gt5tB/33BcX/mFDwbk6Twh6FjK9CkcWwkeSRPJOBaqVqI2PX7k4Ps
-	PNLuWjToFYxmf35wmzah+k3xvtkDEQY9aK5rY=
+	:content-type; s=sasl; bh=ZLaC0kakoY1/d+R+JPlgISERlfg=; b=qeC6ke
+	JMPxy9WMDxw66cBSep7s4bVNtHpbUJ/wUGe770FSPKBoG7l517hTL0CaXQfvy1x1
+	ry0g4f4vSAJ1Idovm5QaZi5hJjY8nq+6V0+RAHbfqJ7XHb3tjnLKhXeRHX5QXAe0
+	7DJv15Qcq5f6BqrB/v1KI9PWVrkJH3WB7h5zY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UyyVLKdrdElZny41UR10u7iECcRDYN7+
-	9RP3L7+XrAJJAI96ssPkavO6aZKxw5OCUxmkBtXlfmmEfxVTnvCMYjGvb7oOnJcs
-	3jpMAXOeFiABXaW+0TtRU9BBHIq8PKWxCL2GE+NyRc+lJUfeTbHNO9CLRTROBf/n
-	3DCQ6u1lvFo=
+	:content-type; q=dns; s=sasl; b=LMSourYdbb3K8IdtYTY6K0lIXFgtI369
+	ujRVJ27vfgraz8ZerR9PtXtzboW0AVNY7vRMqMDHDnUCdQ7novS0nfB7dAsEkdYa
+	3ljAV2A7GBYszBZaX/Ma+rttPgaVtiqU06ewhX1VMEcDsdO4GVZwphto3y6T4nQ+
+	rPt7p3CuKOs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A22084E8;
-	Wed, 12 Sep 2012 13:27:00 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0228E8705;
+	Wed, 12 Sep 2012 13:32:20 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E10984E6; Wed, 12 Sep 2012
- 13:26:59 -0400 (EDT)
-In-Reply-To: <7vbohbdufz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 12 Sep 2012 10:25:52 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60BF88703; Wed, 12 Sep 2012
+ 13:32:19 -0400 (EDT)
+In-Reply-To: <vpqbohbz11h.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 12 Sep 2012 17:57:46 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0EBD2C1E-FCFF-11E1-B82C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CD98E740-FCFF-11E1-BDE1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205312>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> This is what I used to use when adding these generalized grep
-> boolean expressions.
+> Peter Jones <pjones@redhat.com> writes:
 >
-> With this applied,...
+>> Subject: [PATCH] [git-am] Handle "git show" output correctly
+>
+> The convention in Git is "<subsystem>: <summary of change>" (i.e. no
+> brackets around git-am, just am: and no capital for Handle).
+>
+> My other concerns (name of stgit, multi-lines subject lines and lack of
+> documentation) still hold.
 
-And this is the "this" X-<.
+We do not want to apply "git show" output that munges the log
+message, period.
 
- grep.c | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 89 insertions(+), 1 deletion(-)
+If you want to give patches to somebody (or to yourself) via e-mail
+or via sneaker-net, "git format-patch" is there for you.  Do not
+butcher "am" to accept a format that is not meant for patch
+transport in the first place.
 
-diff --git a/grep.c b/grep.c
-index 04e3ec6..566c4cc 100644
---- a/grep.c
-+++ b/grep.c
-@@ -332,6 +332,87 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
- 	return compile_pattern_or(list);
- }
- 
-+static void indent(int in)
-+{
-+	while (in-- > 0)
-+		fputc(' ', stderr);
-+}
-+
-+static void dump_grep_pat(struct grep_pat *p)
-+{
-+	switch (p->token) {
-+	case GREP_AND: fprintf(stderr, "*and*"); break;
-+	case GREP_OPEN_PAREN: fprintf(stderr, "*(*"); break;
-+	case GREP_CLOSE_PAREN: fprintf(stderr, "*)*"); break;
-+	case GREP_NOT: fprintf(stderr, "*not*"); break;
-+	case GREP_OR: fprintf(stderr, "*or*"); break;
-+
-+	case GREP_PATTERN: fprintf(stderr, "pattern"); break;
-+	case GREP_PATTERN_HEAD: fprintf(stderr, "pattern_head"); break;
-+	case GREP_PATTERN_BODY: fprintf(stderr, "pattern_body"); break;
-+	}
-+
-+	switch (p->token) {
-+	default: break;
-+	case GREP_PATTERN_HEAD:
-+		fprintf(stderr, "<head %d>", p->field); break;
-+	case GREP_PATTERN_BODY:
-+		fprintf(stderr, "<body>"); break;
-+	}
-+	switch (p->token) {
-+	default: break;
-+	case GREP_PATTERN_HEAD:
-+	case GREP_PATTERN_BODY:
-+	case GREP_PATTERN:
-+		fprintf(stderr, "%.*s", (int)p->patternlen, p->pattern);
-+		break;
-+	}
-+	fputc('\n', stderr);
-+}
-+
-+static void dump_grep_expression_1(struct grep_expr *x, int in)
-+{
-+	indent(in);
-+	switch (x->node) {
-+	case GREP_NODE_TRUE:
-+		fprintf(stderr, "true\n");
-+		break;
-+	case GREP_NODE_ATOM:
-+		dump_grep_pat(x->u.atom);
-+		break;
-+	case GREP_NODE_NOT:
-+		fprintf(stderr, "(not\n");
-+		dump_grep_expression_1(x->u.unary, in+1);
-+		indent(in);
-+		fprintf(stderr, ")\n");
-+		break;
-+	case GREP_NODE_AND:
-+		fprintf(stderr, "(and\n");
-+		dump_grep_expression_1(x->u.binary.left, in+1);
-+		dump_grep_expression_1(x->u.binary.right, in+1);
-+		indent(in);
-+		fprintf(stderr, ")\n");
-+		break;
-+	case GREP_NODE_OR:
-+		fprintf(stderr, "(or\n");
-+		dump_grep_expression_1(x->u.binary.left, in+1);
-+		dump_grep_expression_1(x->u.binary.right, in+1);
-+		indent(in);
-+		fprintf(stderr, ")\n");
-+		break;
-+	}
-+}
-+
-+void dump_grep_expression(struct grep_opt *opt)
-+{
-+	struct grep_expr *x = opt->pattern_expression;
-+
-+	if (opt->all_match)
-+		fprintf(stderr, "[all-match]\n");
-+	dump_grep_expression_1(x, 0);
-+	fflush(NULL);
-+}
-+
- static struct grep_expr *grep_true_expr(void)
- {
- 	struct grep_expr *z = xcalloc(1, sizeof(*z));
-@@ -395,7 +476,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
- 	return header_expr;
- }
- 
--void compile_grep_patterns(struct grep_opt *opt)
-+static void compile_grep_patterns_real(struct grep_opt *opt)
- {
- 	struct grep_pat *p;
- 	struct grep_expr *header_expr = prep_header_patterns(opt);
-@@ -432,9 +513,16 @@ void compile_grep_patterns(struct grep_opt *opt)
- 	else
- 		opt->pattern_expression = grep_or_expr(opt->pattern_expression,
- 						       header_expr);
-+
- 	opt->all_match = 1;
- }
- 
-+void compile_grep_patterns(struct grep_opt *opt)
-+{
-+	compile_grep_patterns_real(opt);
-+	dump_grep_expression(opt);
-+}
-+
- static void free_pattern_expr(struct grep_expr *x)
- {
- 	switch (x->node) {
--- 
-1.7.12.414.g1a62b7a
+If you want to screw something in to your shelf, you would use a
+screw and a screwdriver.  You do not try to hammer a nail using your
+screwdriver, find that the screwdriver is not very useful as a
+hammer and modify the screwdriver to hit your nail.
