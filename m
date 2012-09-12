@@ -1,75 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Ambiguous date handling
-Date: Wed, 12 Sep 2012 02:48:27 -0700
-Message-ID: <7v4nn3fu6s.fsf@alter.siamese.dyndns.org>
-References: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 11:48:39 2012
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: [PATCH 0/3] Janitor minor fixes on SHA1
+Date: Wed, 12 Sep 2012 12:01:24 +0200
+Message-ID: <cover.1347442430.git.ydroneaud@opteya.com>
+Cc: Yann Droneaud <ydroneaud@opteya.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 12:02:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBjYk-00017y-J6
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 11:48:38 +0200
+	id 1TBjlk-0004Uy-5R
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 12:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485Ab2ILJsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 05:48:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64096 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753778Ab2ILJsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 05:48:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C28868491;
-	Wed, 12 Sep 2012 05:48:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UPO1rXkKmtE8UqZmqjO/8ulftPA=; b=wxiBA+
-	poP7iClzcU1oW43GZ11a+4Wt2dMArsdIv2YkdRLPuBS+ZCMQ5X42GdJIyoU6f2Zd
-	73TbHWMZWtQOiUmlveuJ7/EQQYJAxVtkoYNiF5Dv0UynkOuRL84unpZR8VIEsC6a
-	uxHGZZS060jvXkhoWIqEmGZHVqeVb666yyw+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QcmLE3M3Jlh+sf5LNVtASpVpyOE0yI14
-	e0H390Rd1HKZG/uLvQ+TVwzsBnAJmtT2fBp5UF79OByw7CcnYPS3PPIJatQeMeJO
-	xomZ7yGFN0U7nF1EH+aAnHDgoCYROniRFtoYgpxVfVxw3bWtKsjT64Ziw/dVILa5
-	Z1mRbwK/9V0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEABE8490;
-	Wed, 12 Sep 2012 05:48:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ACFF848F; Wed, 12 Sep 2012
- 05:48:29 -0400 (EDT)
-In-Reply-To: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
- (Chris Packham's message of "Wed, 12 Sep 2012 21:35:50 +1200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 017E336C-FCBF-11E1-B9EF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755224Ab2ILKBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 06:01:55 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:59124 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753445Ab2ILKBy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 06:01:54 -0400
+Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:21d0:2ede:8970:5205])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id A5B2A9401A9;
+	Wed, 12 Sep 2012 12:01:45 +0200 (CEST)
+Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
+	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id q8CA1iiC028822;
+	Wed, 12 Sep 2012 12:01:44 +0200
+Received: (from ydroneaud@localhost)
+	by test.quest-ce.net (8.14.5/8.14.5/Submit) id q8CA1hhw028821;
+	Wed, 12 Sep 2012 12:01:43 +0200
+X-Mailer: git-send-email 1.7.11.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205276>
 
-Chris Packham <judge.packham@gmail.com> writes:
+While looking to use the git SHA1 code, I've found some small oddities.
+Please find little cosmetics fixes for them.
 
-> Our default MUA has an annoying habit of using a non RFC822 date format when
-> saving an email as plaintext. This means the first 12 days of every month we
-> run into the ambiguous date problem (our date convention is dd/mm/yy).
->
-> I see code in date.c for refusing a date in the future which would have caught
-> this...
+The patches are against 'next' and can be merged in one single patch
+if needed.
 
-The most sane thing to do when you know that your MUA *consistently*
-does dd/mm/yy (even though it may annoy you) is to massage its
-output before feeding it to Git.  And it should be a very simple
-matter of a one-liner filter, no?
+Yann Droneaud (3):
+  sha1: update pointer and remaining length after subfunction call
+  sha1: clean pointer arithmetic
+  sha1: use char type for temporary work buffer
 
-Regardless of the correctness of that "we reject timestamps way into
-the future" logic, it should be taken as the last resort.  If you
-are on September 1st, both 9/12 and 12/9 will look like into the
-future for more than ten days (which is the cut-off, I think).  If
-you are on December 28th, both look like sufficiently in the past.
+ block-sha1/sha1.c | 6 +++---
+ block-sha1/sha1.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+-- 
+1.7.11.4
