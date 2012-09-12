@@ -1,93 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Rename 'tagcontents' to 'cached_tagcontent'
-Date: Wed, 12 Sep 2012 02:25:28 -0700
-Message-ID: <7v8vcffv93.fsf@alter.siamese.dyndns.org>
-References: <1347130993-69863-1-git-send-email-davvid@gmail.com>
- <1347133996-70908-1-git-send-email-davvid@gmail.com>
- <7v392ru6ex.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Tim McCormack <cortex@brainonfire.net>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Sep 12 11:25:42 2012
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Ambiguous date handling
+Date: Wed, 12 Sep 2012 21:35:50 +1200
+Message-ID: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 12 11:35:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBjCV-0006yc-7R
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 11:25:39 +0200
+	id 1TBjM5-0006s1-EJ
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 11:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753782Ab2ILJZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 05:25:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55029 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751463Ab2ILJZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 05:25:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57D3D8070;
-	Wed, 12 Sep 2012 05:25:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wstQ2jDmJawDlYODucwghu4Q1NU=; b=G6idtB
-	eHXoIlIRunk+vkEblGInbLtluhN2jU1kY97xdywLlM5sBlPDKdHnv/WcrBDnUpla
-	Uj2O11UrajhAPLtcNqgnIOdj+LzKy9BCgjzPR7PkTCriKsOvWMugvtNYv6k1VtnO
-	HQ6Ugakc4UDyGWtnAFwZbESWmOZExNNEkCeGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uH5fWzyrRMEfOHZVmqNTwDPlG0Up0QAU
-	RXQ0Ftb3PYMSwwHYJq+ZIViQWtgSSI8nK0EWmmTrIQjYTsmIr3GLuUmhpWmSPGA9
-	LvXe92k6189AX5xx4uPkGaBNUpcXyqNB3oTZbsLmeg2uUlsUd7ale15BGX9xT9a4
-	HzZ/fnH/hS4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 458D7806F;
-	Wed, 12 Sep 2012 05:25:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B69E806E; Wed, 12 Sep 2012
- 05:25:29 -0400 (EDT)
-In-Reply-To: <7v392ru6ex.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 08 Sep 2012 22:11:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB3983C2-FCBB-11E1-AA08-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755067Ab2ILJfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 05:35:25 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59780 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754496Ab2ILJfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 05:35:24 -0400
+Received: by oago6 with SMTP id o6so843053oag.19
+        for <git@vger.kernel.org>; Wed, 12 Sep 2012 02:35:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:x-mailer;
+        bh=DZ9i6z+iBbYt4pv7U9FrvV05loz/BtRIKSLKDAB0bJg=;
+        b=W02qtjfQw8CaZ+lu+YmhwsqiOPmQGFGzUJbSExgVgSen74bkAHolX3mpuS3nYb9bwz
+         RkblFN2f1MQlFYY9DmvnxQYNNM+ACFO+68xTtdHVEz004v0ylbDnUPnnHcBAhEPaNWPk
+         wS/k8JmaPFAOwMFz/qLbjvC52zyMCw3eizKRHzvSGCGTiiAPHvTQ1RiU1lCLBMCp0PFh
+         6y75ykVpFRpzAq6+yzkmTCrI6+pmMvAwy1HoOULzSIuHDcQ+cs4HKHd3X8cIUkXuk8Tp
+         Xk+vOvSHt3w3oPFooXYvRGkctmCo1r6qckPPRN4WBZCkdat+i9610fUx5hE51CZln19U
+         vo3A==
+Received: by 10.182.78.161 with SMTP id c1mr21294495obx.88.1347442523440;
+        Wed, 12 Sep 2012 02:35:23 -0700 (PDT)
+Received: from localhost.localdomain (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPS id j10sm15693057oej.10.2012.09.12.02.35.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Sep 2012 02:35:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205273>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> I've applied these two, on top of Paul's master branch at
->
->     git://ozlabs.org/~paulus/gitk.git
->
-> and tentatively queued in 'pu', but I would prefer to see it
-> eyeballed by and queued in his tree first.
->
-> Thanks.
+I think this has come up before [1],[2] but we ran into this at $dayjob today.
+Our default MUA has an annoying habit of using a non RFC822 date format when
+saving an email as plaintext. This means the first 12 days of every month we
+run into the ambiguous date problem (our date convention is dd/mm/yy).
 
-Pinging Paul...
+I see code in date.c for refusing a date in the future which would have caught
+this but it doesn't appear to be working for us.
 
-The following changes since commit a135f214e371311f13807da637d492fd9642a2e3:
+Following this is a patch adding a testcase for this. With the following
+results:
 
-  gitk: Avoid Meta1-F5 (2012-04-25 13:44:31 +1000)
+  ok 1 - apply patch with ambiguous date
+  not ok 2 - check ambiguous date # TODO known breakage
+  ok 3 - apply patch with european date separator
+  ok 4 - check european date
+  # still have 1 known breakage(s)
+  # passed all remaining 3 test(s)
+  1..4
 
-are available in the git repository at:
+Thanks,
+Chris
 
-  git://github.com/gitster/git da/gitk-reload-tag-contents
-
-for you to fetch changes up to 587277fea3bf3bfc4302480178bd88a277a69f05:
-
-  gitk: Rename 'tagcontents' to 'cached_tagcontent' (2012-09-08 20:25:09 -0700)
-
-----------------------------------------------------------------
-David Aguilar (2):
-      gitk: Teach "Reread references" to reload tags
-      gitk: Rename 'tagcontents' to 'cached_tagcontent'
-
- gitk | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-Thanks.
+--
+[1] - http://thread.gmane.org/gmane.comp.version-control.git/18412/focus=18417
+[2] - http://thread.gmane.org/gmane.comp.version-control.git/84512/focus=85735
