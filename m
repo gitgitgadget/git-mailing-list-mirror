@@ -1,108 +1,142 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: How to update a cloned git repository
-Date: Wed, 12 Sep 2012 10:52:37 +0200
-Message-ID: <vpqtxv34o8a.fsf@bauges.imag.fr>
-References: <k2n4v2$88t$1@ger.gmane.org> <vpq7gs0es4f.fsf@bauges.imag.fr>
-	<006f01cd900e$fce59a60$f6b0cf20$@schmitz-digital.de>
-	<vpqy5kgdctm.fsf@bauges.imag.fr>
-	<007001cd9016$8f980f80$aec82e80$@schmitz-digital.de>
-	<vpq4nn4d968.fsf@bauges.imag.fr>
-	<7v1ui8k0in.fsf@alter.siamese.dyndns.org>
-	<007401cd903c$f425fc20$dc71f460$@schmitz-digital.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] attr: "binary" attribute should choose built-in
+ "binary" merge driver
+Date: Wed, 12 Sep 2012 01:55:53 -0700
+Message-ID: <7vk3vzfwme.fsf@alter.siamese.dyndns.org>
+References: <7v392twlnm.fsf@alter.siamese.dyndns.org>
+ <1347165639-12149-1-git-send-email-gitster@pobox.com>
+ <1347165639-12149-3-git-send-email-gitster@pobox.com>
+ <20120910140317.GA7906@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'git'" <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Wed Sep 12 10:53:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephen Bash <bash@genarts.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 12 10:56:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBihC-00040d-1z
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 10:53:18 +0200
+	id 1TBijx-0006Wm-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 10:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751888Ab2ILIxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 04:53:08 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36086 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751607Ab2ILIxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 04:53:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8C8mBGd013676
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 12 Sep 2012 10:48:11 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TBigX-0007V7-TR; Wed, 12 Sep 2012 10:52:37 +0200
-In-Reply-To: <007401cd903c$f425fc20$dc71f460$@schmitz-digital.de> (Joachim
-	Schmitz's message of "Tue, 11 Sep 2012 18:46:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Sep 2012 10:48:11 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q8C8mBGd013676
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1348044491.47333@fz1RuMGDgvc4fTkwtC4EkQ
+	id S1751908Ab2ILIz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 04:55:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43735 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751295Ab2ILIz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 04:55:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E4279EB;
+	Wed, 12 Sep 2012 04:55:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wt/iXcZ0jHeONO3Bj/cqMULSTQI=; b=tGgsi+
+	w4YE84i6pRjqo3FttcE4IOZ/zUD81Q4RzRks+ZS4khKvrQWCp/7V6girQz4hZ9Vd
+	OebKDNZuK1lckVVsH1Zx+i6UXtKxpkVTi4hXIiOdpIu6ejI1QhBOzFjvOOZdjcIF
+	cUi+kUSiUVvn+7zq66Nb9NL11/zQliK88QG1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HUhUsnW7HLKIU7u89wDC4tVQiPms9Jrj
+	FQqyxlEMYJ9bWrsvUwwXKb+Rt0czIiLsW8WOGqQg4QtcY3qnFq/ordmEjfsyYRZh
+	hzhRbmjwdF4GvaN1hFvIXZE/QQFjsJsCePTWOUwih4U/wCm494Xgz+9GB9hr/wEB
+	92Nogw0cEuI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A223B79EA;
+	Wed, 12 Sep 2012 04:55:55 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD0D379E8; Wed, 12 Sep 2012
+ 04:55:54 -0400 (EDT)
+In-Reply-To: <20120910140317.GA7906@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 10 Sep 2012 10:03:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A96710A6-FCB7-11E1-B499-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205270>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> I think it is the-merge-commit^2; contrib/git-resurrect.sh might be
->> of interest, too.
+> On Sat, Sep 08, 2012 at 09:40:39PM -0700, Junio C Hamano wrote:
 >
-> Sorry you lost me, this is greek to me...
+>> The built-in "binary" attribute macro expands to "-diff -text", so
+>> that textual diff is not produced, and the contents will not go
+>> through any CR/LF conversion ever.  During a merge, it should also
+>> choose the "binary" low-level merge driver, but it didn't.
+>> 
+>> Make it expand to "-diff -merge -text".
+>
+> Yeah, that seems like the obviously correct thing to do. In practice,
+> most files would end up in the first few lines of ll_xdl_merge checking
+> buffer_is_binary anyway, so I think this would really only make a
+> difference when our "is it binary?" heuristic guesses wrong.
 
-A commit is an object that contain pointers to its parents. The root
-commit has no parent. For ordinary commits, there is one parent which is
-the commit on top of which it was created. For merge commits, there are
-N commits, the first is the one on top of which the merge was created,
-and the N-1 next ones are the commits being merged.
+You made me look at that part again and then made me notice
+something unrelated.
 
-commit^ => first parent of commit
-commit^1 => same
-commit^2 => second parent, i.e. the one merged in commit.
+	if (buffer_is_binary(orig->ptr, orig->size) ||
+	    buffer_is_binary(src1->ptr, src1->size) ||
+	    buffer_is_binary(src2->ptr, src2->size)) {
+		warning("Cannot merge binary files: %s (%s vs. %s)",
+			path, name1, name2);
+		return ll_binary_merge(drv_unused, result,
+				       path,
+				       orig, orig_name,
+				       src1, name1,
+				       src2, name2,
+				       opts, marker_size);
+	}
 
-See in git.git:
+Given that we now may know how to merge these things, the
+unconditional warning feels very wrong.
 
-$ git show cb10ae9433126ef <---------------------------- one commit to study
-commit cb10ae9433126efbc4dcc46779d7ef2fe6b1f597
-Merge: 13b608a 9aeaab6   <------------------------------- list of parents
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Tue Sep 11 15:57:04 2012 -0700
+Perhaps something like this makes it better.
 
-    Merge branch 'jc/maint-blame-no-such-path' into pu
-    
-    * jc/maint-blame-no-such-path:
-      blame: allow "blame file" in the middle of a conflicted merge
+A path that is explicitly marked as binary did not get any such
+warning, but it will start to get warned just like a path that was
+auto-detected to be a binary.
 
-$ git show cb10ae9433126ef^1 <-------------------- "previous commit" in origin/pu
-commit 13b608a063ce861929322e6bb3862b5364f3fbcf
-Merge: fa17a26 bdee397
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Tue Sep 11 11:50:44 2012 -0700
+It is a behaviour change, but I think it is a good one that makes
+two cases more consistent.
 
-    Merge branch 'dg/run-command-child-cleanup' into pu
-    
-    * dg/run-command-child-cleanup:
-      run-command.c: fix broken list iteration in clear_child_for_cleanup
+And we won't see the warning when -Xtheirs/-Xours large sledgehammer
+is in use, which tells us how to resolve these things "cleanly".
 
-$ git show cb10ae9433126ef^2 <----------------- commit being merged by cb10ae9433126ef
-commit 9aeaab6811dce596b4f6141d76f5300359bfd009
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Tue Sep 11 14:30:03 2012 -0700
+ ll-merge.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-    blame: allow "blame file" in the middle of a conflicted merge
-[...]
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git i/ll-merge.c w/ll-merge.c
+index 8535e2d..307315b 100644
+--- i/ll-merge.c
++++ w/ll-merge.c
+@@ -35,7 +35,7 @@ struct ll_merge_driver {
+  */
+ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   mmbuffer_t *result,
+-			   const char *path_unused,
++			   const char *path,
+ 			   mmfile_t *orig, const char *orig_name,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+@@ -53,6 +53,9 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	} else {
+ 		switch (opts->variant) {
+ 		default:
++			warning("Cannot merge binary files: %s (%s vs. %s)\n",
++				path, name1, name2);
++			/* fallthru */
+ 		case XDL_MERGE_FAVOR_OURS:
+ 			stolen = src1;
+ 			break;
+@@ -88,8 +91,6 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	if (buffer_is_binary(orig->ptr, orig->size) ||
+ 	    buffer_is_binary(src1->ptr, src1->size) ||
+ 	    buffer_is_binary(src2->ptr, src2->size)) {
+-		warning("Cannot merge binary files: %s (%s vs. %s)\n",
+-			path, name1, name2);
+ 		return ll_binary_merge(drv_unused, result,
+ 				       path,
+ 				       orig, orig_name,
