@@ -1,70 +1,92 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: Rename 'tagcontents' to 'cached_tagcontent'
-Date: Wed, 12 Sep 2012 22:37:56 +1000
-Message-ID: <20120912123756.GA26593@bloggs.ozlabs.ibm.com>
-References: <1347130993-69863-1-git-send-email-davvid@gmail.com>
- <1347133996-70908-1-git-send-email-davvid@gmail.com>
- <7v392ru6ex.fsf@alter.siamese.dyndns.org>
- <7v8vcffv93.fsf@alter.siamese.dyndns.org>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: [PATCH 2/2] attr: "binary" attribute should choose built-in
+ "binary" merge driver
+Date: Wed, 12 Sep 2012 08:58:01 -0400 (EDT)
+Message-ID: <1734879571.321704.1347454681726.JavaMail.root@genarts.com>
+References: <7vk3vzfwme.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Tim McCormack <cortex@brainonfire.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 14:37:56 2012
+X-From: git-owner@vger.kernel.org Wed Sep 12 14:58:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBmCU-0007bD-K5
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 14:37:50 +0200
+	id 1TBmWM-0003CD-6Q
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 14:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757722Ab2ILMhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 08:37:36 -0400
-Received: from ozlabs.org ([203.10.76.45]:42377 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754776Ab2ILMhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 08:37:33 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 75CFC2C0092; Wed, 12 Sep 2012 22:37:32 +1000 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v8vcffv93.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758559Ab2ILM6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 08:58:12 -0400
+Received: from hq.genarts.com ([173.9.65.1]:12436 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758410Ab2ILM6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 08:58:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id AD58CBE12E8;
+	Wed, 12 Sep 2012 08:58:07 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hBqYTbOoGRBm; Wed, 12 Sep 2012 08:58:01 -0400 (EDT)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id BFF4DBE12E0;
+	Wed, 12 Sep 2012 08:58:01 -0400 (EDT)
+In-Reply-To: <7vk3vzfwme.fsf@alter.siamese.dyndns.org>
+X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC21 (Mac)/7.2.0_GA_2669)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205284>
 
-On Wed, Sep 12, 2012 at 02:25:28AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+----- Original Message -----
+> From: "Junio C Hamano" <gitster@pobox.com>
+> Sent: Wednesday, September 12, 2012 4:55:53 AM
+> Subject: Re: [PATCH 2/2] attr: "binary" attribute should choose built-in "binary" merge driver
 > 
-> > I've applied these two, on top of Paul's master branch at
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Sat, Sep 08, 2012 at 09:40:39PM -0700, Junio C Hamano wrote:
 > >
-> >     git://ozlabs.org/~paulus/gitk.git
+> >> The built-in "binary" attribute macro expands to "-diff -text", so
+> >> that textual diff is not produced, and the contents will not go
+> >> through any CR/LF conversion ever.  During a merge, it should also
+> >> choose the "binary" low-level merge driver, but it didn't.
+> >> 
+> >> Make it expand to "-diff -merge -text".
 > >
-> > and tentatively queued in 'pu', but I would prefer to see it
-> > eyeballed by and queued in his tree first.
-> >
-> > Thanks.
+> > Yeah, that seems like the obviously correct thing to do. In
+> > practice,
+> > most files would end up in the first few lines of ll_xdl_merge
+> > checking
+> > buffer_is_binary anyway, so I think this would really only make a
+> > difference when our "is it binary?" heuristic guesses wrong.
 > 
-> Pinging Paul...
+> You made me look at that part again and then made me notice
+> something unrelated.
 > 
-> The following changes since commit a135f214e371311f13807da637d492fd9642a2e3:
+> 	if (buffer_is_binary(orig->ptr, orig->size) ||
+> 	    buffer_is_binary(src1->ptr, src1->size) ||
+> 	    buffer_is_binary(src2->ptr, src2->size)) {
+> 		warning("Cannot merge binary files: %s (%s vs. %s)",
+> 			path, name1, name2);
+> 		return ll_binary_merge(drv_unused, result,
+> 				       path,
+> 				       orig, orig_name,
+> 				       src1, name1,
+> 				       src2, name2,
+> 				       opts, marker_size);
+> 	}
 > 
->   gitk: Avoid Meta1-F5 (2012-04-25 13:44:31 +1000)
+> Given that we now may know how to merge these things, the
+> unconditional warning feels very wrong.
 > 
-> are available in the git repository at:
-> 
->   git://github.com/gitster/git da/gitk-reload-tag-contents
-> 
-> for you to fetch changes up to 587277fea3bf3bfc4302480178bd88a277a69f05:
-> 
->   gitk: Rename 'tagcontents' to 'cached_tagcontent' (2012-09-08 20:25:09 -0700)
+> Perhaps something like this makes it better.
 
-Thanks, pulled and pushed out.  I had one other commit queued up, so
-if you pull from git://ozlabs.org/~paulus/gitk.git you will get that
-plus a merge.
+Patch didn't apply on top of the previous two for me, but after making the edits manually does what it claims to do (and makes the merge output much nicer to read, thanks!).  The only remaining question for me is should -Xtheirs resolve "deleted by them" conflicts?
 
-Paul.
+Thanks,
+Stephen
