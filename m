@@ -1,78 +1,110 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 6/6] api-string-list.txt: initialize the string_list the easy way
-Date: Wed, 12 Sep 2012 16:04:47 +0200
-Message-ID: <1347458687-31092-7-git-send-email-mhagger@alum.mit.edu>
-References: <1347458687-31092-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 16:05:53 2012
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH RFC 0/2] Mixing English and a local language
+Date: Wed, 12 Sep 2012 21:05:33 +0700
+Message-ID: <CACsJy8CG72PzvndV7C4a9hspxhprKn2tcb49HxeZ14pmEDycGQ@mail.gmail.com>
+References: <1345922816-20616-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 12 16:06:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBnZc-0005AY-VX
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 16:05:49 +0200
+	id 1TBna7-0005lZ-AG
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 16:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758921Ab2ILOFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 10:05:38 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:46843 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753169Ab2ILOF1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Sep 2012 10:05:27 -0400
-X-AuditID: 12074413-b7f786d0000008bb-3f-505096a67333
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0C.92.02235.6A690505; Wed, 12 Sep 2012 10:05:26 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8CE51QY021888
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 12 Sep 2012 10:05:25 -0400
-X-Mailer: git-send-email 1.7.11.3
-In-Reply-To: <1347458687-31092-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPIsWRmVeSWpSXmKPExsUixO6iqLtsWkCAwdzpIhZdV7qZLBp6rzBb
-	3F4xn9niR0sPswOLx9/3H5g8nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujFMbj7EW
-	/GGr6JizgLGB8RtrFyMnh4SAicTBE9+ZIGwxiQv31rN1MXJxCAlcZpRo+nuKEcI5wyTxfukl
-	ZpAqNgFdiUU9zWAdIgJqEhPbDrGA2MwCKRIdz7sZQWxhgRCJay93gG1gEVCV+LfxAlgvr4CL
-	xPT5k6A2K0r8+L4GLM4p4CqxZOYfNhBbCKhmbfNMpgmMvAsYGVYxyiXmlObq5iZm5hSnJusW
-	Jyfm5aUW6Zrr5WaW6KWmlG5ihASQ8A7GXSflDjEKcDAq8fAyJPgHCLEmlhVX5h5ilORgUhLl
-	/Tw5IECILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO8GXaAcb0piZVVqUT5MSpqDRUmcV22Jup+Q
-	QHpiSWp2ampBahFMVoaDQ0mC9+0UoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4
-	UGzEFwOjAyTFA7S3HKSdt7ggMRcoCtF6ilGXY/bNFfcZhVjy8vNSpcR5z0wCKhIAKcoozYNb
-	AUsXrxjFgT4W5hWcClTFA0w1cJNeAS1hAloyYa0/yJKSRISUVANj24+GWZbNPzdU1bIlRBap
-	yBwwc3Ux+Lh2690Uj+qve7eKTzz/6PxOLsm0OZd3njz/4C3fu4fTsutqTou37Di1/d39M35n
-	wzhMBa9LuL1mWaCfZLN3htBnB9vfLLKR3/7LMgVaMiWzb+DZdpKf/+b17q+TvCwa 
+	id S932154Ab2ILOGK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Sep 2012 10:06:10 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:55664 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932150Ab2ILOGF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Sep 2012 10:06:05 -0400
+Received: by ieje11 with SMTP id e11so2945868iej.19
+        for <git@vger.kernel.org>; Wed, 12 Sep 2012 07:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=H/cwAi/BLDB5DTiL3x8aXiy6oPGDUsh1/ys678hWMts=;
+        b=qQJz6noepiHzinjOUX3dyNnchZm9k7cKuQHwFKNgTIGP1gzU6VdkxgIMkl50WJSsw4
+         0NtCwVqtawH62BcOBamhbKtNg9m3KWE9R5nnKv35y9iwvgXKnKug8c3XnFO2Rl4RxePS
+         ikHwBg7IbEWppfmur1/TCtl840B88ieJe8qSer2cWkfq8LtJc1TiPew5txx9YfDMq4NJ
+         JcyGt9guMBdO0W2jWTxhN1hTsRN8qiPcja3IvAe2vN58MeKg30aEGyyUev29J1EwiZjh
+         8mxdO9pT2OWS/VFK3aOatB7hmmnjhRH2esRFr7GS3m6Y+O0/HsZpzKaoka7dKGF18hb4
+         DI4g==
+Received: by 10.43.134.70 with SMTP id ib6mr5669557icc.37.1347458764736; Wed,
+ 12 Sep 2012 07:06:04 -0700 (PDT)
+Received: by 10.64.64.72 with HTTP; Wed, 12 Sep 2012 07:05:33 -0700 (PDT)
+In-Reply-To: <1345922816-20616-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205297>
 
-In the demo code blurb, show how to initialize the string_list using
-STRING_LIST_INIT_NODUP rather than memset().
+Should I interpret the silence as "I don't care, if you want it, go
+for it" or "not acceptable, but no reasons given"? I'd like some form
+of it in. Reverting the i18n diffstat patch is the last resort that I
+really don't want to do.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/technical/api-string-list.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Sun, Aug 26, 2012 at 2:26 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> The l10n effort leads to a situation where a contributor can submit a
+> patch with some auto-generated information in his language, which may
+> not be the team's language. We need to make sure exchange medium like
+> patch is always in a common language that the team understands.
+>
+> Now this team language may not necessarily be English. However there
+> are technical difficulties involved in switching between two
+> languages. The only way I can think of, on top of gettext, is provide
+> git translations in multiple domains. Say diff machinery uses
+> "git-diff" domain while the rest is in "git". We can drive gettext to
+> use language X for diff machinery, and Y for the rest. For that, we
+> replace gettext() with dgettext().
+>
+> It's cumbersome. And there has not been any sign that there will be
+> a real user for it. So I assume that the "team language" will always
+> be English. It's simpler and should cover 90% of the user base. If
+> someday people ask for that, supporting it is simply a matter of
+> rewriting C_() and CQ_() macros in the first patch to use dgettext()
+> instead.
+>
+> Switching between a language and English is easier. We just need an
+> if/else to decide whether to call gettext(). Which is what the first
+> patch does, just for certain parts of diff machinery. Error messages
+> will alway be in native language.
+>
+> The second patch puts format-patch output in English unconditionally.
+> Again I'm partly lazy and not so sure that there will be needs for
+> format-patch to produce in native language. If someone needs it, we
+> can introduce a new config key that flip no_l10n flag back to 0.
+>
+> More commands may follow format-patch. I think that 'apply' should al=
+so
+> use English for non-tty output, unless users request it to be in loca=
+l
+> language. IOW local language is treated pretty much like coloring.
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+>   Allow to print diffstat in English regardless current locale
+>   format-patch: always print diffstat in English
+>
+>  builtin/apply.c |  2 +-
+>  builtin/log.c   |  1 +
+>  diff.c          | 19 ++++++++++++-------
+>  diff.h          |  3 ++-
+>  4 files changed, 16 insertions(+), 9 deletions(-)
+>
+> --
+> 1.7.12.rc1.27.g6d3049b.dirty
+>
 
-diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-index 32b35d9..155ac8c 100644
---- a/Documentation/technical/api-string-list.txt
-+++ b/Documentation/technical/api-string-list.txt
-@@ -44,10 +44,9 @@ member (you need this if you add things later) and you should set the
- Example:
- 
- ----
--struct string_list list;
-+struct string_list list = STRING_LIST_INIT_NODUP;
- int i;
- 
--memset(&list, 0, sizeof(struct string_list));
- string_list_append(&list, "foo");
- string_list_append(&list, "bar");
- for (i = 0; i < list.nr; i++)
--- 
-1.7.11.3
+
+
+--=20
+Duy
