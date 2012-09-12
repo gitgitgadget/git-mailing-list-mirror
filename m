@@ -1,63 +1,98 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: [PATCH 2/3] sha1: clean pointer arithmetic
-Date: Wed, 12 Sep 2012 12:21:13 +0200
-Message-ID: <20dce012a57900b61e51c0e0d8dfb5573693010e.1347442430.git.ydroneaud@opteya.com>
-References: <cover.1347442430.git.ydroneaud@opteya.com>
-Cc: Yann Droneaud <ydroneaud@opteya.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 13:16:47 2012
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test suite for detecting heap corruption
+Date: Wed, 12 Sep 2012 05:17:28 -0700
+Message-ID: <1347452248-12222-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 12 14:17:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBkw3-0003CT-3N
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 13:16:47 +0200
+	id 1TBlt4-0003mB-8c
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 14:17:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165Ab2ILLQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 07:16:28 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:48728 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751995Ab2ILLQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 07:16:26 -0400
-Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:21d0:2ede:8970:5205])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 4BD549400BC;
-	Wed, 12 Sep 2012 13:16:16 +0200 (CEST)
-Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
-	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id q8CBGF7D030220;
-	Wed, 12 Sep 2012 13:16:15 +0200
-Received: (from ydroneaud@localhost)
-	by test.quest-ce.net (8.14.5/8.14.5/Submit) id q8CAUUKj029511;
-	Wed, 12 Sep 2012 12:30:30 +0200
-X-Mailer: git-send-email 1.7.11.4
-In-Reply-To: <cover.1347442430.git.ydroneaud@opteya.com>
+	id S1751534Ab2ILMRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 08:17:38 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42157 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224Ab2ILMRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 08:17:36 -0400
+Received: by pbbrr13 with SMTP id rr13so2187955pbb.19
+        for <git@vger.kernel.org>; Wed, 12 Sep 2012 05:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=AkD3ZynQssSqK9QHqS7mxPvRqoGD9sMtVb+zZcAdyy8=;
+        b=RSs0+uAQCGqV/mnrsBunX9niEzSCG++dG+aGUuqtjHtVdaBraRnxuwizhRLRKarUgC
+         fvzqNA+w0Rk/WB3u63WBPWBDapwAQneciWfNerUkLrLRmugQXNw19gpxxP4Hhp92v7cN
+         haT1FgzK8fBca/2301HV4EaKTOG5CJy8NsWEkwP+zLw6EOP78zvwL+1+u9mkjDPoK/hY
+         gJTqp2HDwd7E+BNAIBXWsvSGAfOrCpbTZ5PczKORGvF+pe2w/HwMfnLS+jH39/QctrPb
+         7qXEs88ba++Zp8DCNDO3qiRCmAQu++9R3xrBfb3BJrPAskMq0DEOjviI+BXMsWeVQUMF
+         tR4Q==
+Received: by 10.66.79.166 with SMTP id k6mr31757923pax.44.1347452256172;
+        Wed, 12 Sep 2012 05:17:36 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (141.195.207.67.nephoscale.net. [67.207.195.141])
+        by mx.google.com with ESMTPS id tw5sm5149381pbc.48.2012.09.12.05.17.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 12 Sep 2012 05:17:34 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205282>
 
-One memcpy() argument is computed from a pointer added to an integer:
-eg. int + pointer. It's unusal.
-Let's write it in the correct order: pointer + offset.
+Recent versions of Linux libc (later than 5.4.23) and glibc (2.x)
+include a malloc() implementation which is tunable via environment
+variables. When MALLOC_CHECK_ is set, a special (less efficient)
+implementation is used which is designed to be tolerant against
+simple errors, such as double calls of free() with the same argument,
+or overruns of a single byte (off-by-one bugs). When MALLOC_CHECK_
+is set to 3, a diagnostic message is printed on stderr
+and the program is aborted.
 
-Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
+Setting the MALLOC_PERTURB_ environment variable causes the malloc
+functions in libc to return memory which has been wiped and clear
+memory when it is returned.
+Of course this does not affect calloc which always does clear the memory.
+
+The reason for this exercise is, of course, to find code which uses
+memory returned by malloc without initializing it and code which uses
+code after it is freed. valgrind can do this but it's costly to run.
+The MALLOC_PERTURB_ exchanges the ability to detect problems in 100%
+of the cases with speed.
+
+The byte value used to initialize values returned by malloc is the byte
+value of the environment value. The value used to clear memory is the
+bitwise inverse. Setting MALLOC_PERTURB_ to zero disables the feature.
+
+This technique can find hard to detect bugs.
+It is therefore suggested to always use this flag (at least temporarily)
+when testing out code or a new distribution.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- block-sha1/sha1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/test-lib.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index c1af112..a7c4470 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -246,7 +246,7 @@ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
- 		unsigned int left = 64 - lenW;
- 		if (len < left)
- 			left = len;
--		memcpy(lenW + (char *)ctx->W, data, left);
-+		memcpy((char *)ctx->W + lenW, data, left);
- 		lenW = (lenW + left) & 63;
- 		if (lenW)
- 			return;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 78c4286..98c90b0 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -93,6 +93,12 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ 
++# Add libc malloc_check and MALLOC_PERTURB test 
++export MALLOC_CHECK_=3
++export MALLOC_PERTURB_="$( expr \( $$ % 255 \) + 1)"
++#
++
++
+ # Protect ourselves from common misconfiguration to export
+ # CDPATH into the environment
+ unset CDPATH
 -- 
-1.7.11.4
+1.7.11.rc1
