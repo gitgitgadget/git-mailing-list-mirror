@@ -1,73 +1,79 @@
-From: Dan Johnson <computerdruid@gmail.com>
-Subject: Re: [PATCH] git-am: Handle "git show" output correctly
-Date: Wed, 12 Sep 2012 17:26:39 -0400
-Message-ID: <CAPBPrntHOpDaH3cSNiKKxVJDbZTpPrLc99TgPM_GdoXecUvs9w@mail.gmail.com>
-References: <1347472823.12986.3.camel@eddie.install.bos.redhat.com>
-	<1347473304-21418-1-git-send-email-pjones@redhat.com>
-	<7vtxv3atvu.fsf@alter.siamese.dyndns.org>
-	<1347482918.21933.5.camel@eddie.install.bos.redhat.com>
-	<7vpq5raqiq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suggestions for "What's cooking"
+Date: Wed, 12 Sep 2012 14:49:30 -0700
+Message-ID: <7vligec3o5.fsf@alter.siamese.dyndns.org>
+References: <7vpq5tjuw3.fsf@alter.siamese.dyndns.org>
+ <504F8427.1020507@web.de> <7vhar4gxdq.fsf@alter.siamese.dyndns.org>
+ <5050E0CA.7080907@web.de>
+ <CAPBPrnu9adK0mPLyVfimAzBEo7ZH+6HhqtLBRFWAvEA9mEGFfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Peter Jones <pjones@redhat.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 23:26:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Dan Johnson <computerdruid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 23:49:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBuSP-0008P2-CB
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 23:26:49 +0200
+	id 1TBuoc-0007ho-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 23:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770Ab2ILV0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 17:26:41 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:52638 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752946Ab2ILV0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 17:26:40 -0400
-Received: by eaac11 with SMTP id c11so1047896eaa.19
-        for <git@vger.kernel.org>; Wed, 12 Sep 2012 14:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jcIHAS75KINH8ta25XZujqzS1FYWT/XsQ4ZU799qUW0=;
-        b=QbOzQSYNzpGN5Nzva4HPFkx7FdVRvj/7ADYwk6j1huL1oj6KEdeFqN0D1pGZRTqklu
-         GoFXhRWGluhEMlVRLxOVI7sFzgA7EnBF33H4A7LkVZdvXm5lmBPQmvQtjQDzxHKMk1nS
-         1NVdIAVKDGvED+j5WIIOtYevIEqXxeGOBtnsOdOobQ5mZCJyWlApD/vDF3MpcMIdoU2w
-         QOSSDUd7YbdHAoOeNhzIBhN96EUj9UuGbwBTks4wRVQdNe6kjFoUv2yTsDmtbeUGl9lU
-         GaJDk5eXBezNQ/F85ZzKuX4TQbPQfCQUx13SvTvSssNxFlpWrLH2iNFgxBbhWAXKyVzy
-         Mbwg==
-Received: by 10.14.223.9 with SMTP id u9mr33080188eep.10.1347485199727; Wed,
- 12 Sep 2012 14:26:39 -0700 (PDT)
-Received: by 10.14.119.199 with HTTP; Wed, 12 Sep 2012 14:26:39 -0700 (PDT)
-In-Reply-To: <7vpq5raqiq.fsf@alter.siamese.dyndns.org>
+	id S1753690Ab2ILVte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 17:49:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64057 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752946Ab2ILVte (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 17:49:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17A4C9C7D;
+	Wed, 12 Sep 2012 17:49:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s134xYdpzK+Wi6EGqfBLHhS9u6M=; b=nD8g8G
+	jGO82TVq99cSaMM2WDRuU9tEvf8fug4Yp0N/X6Kp+l6rVGlP68kZz0jNmxhuv1Qv
+	eSPa2QfoboNeP/1Y1M2DukfLTWN4qmYTm3GvNccpgxYw8j5mDmUsxyKChEJYeMEc
+	ctuwf5s9jEUg8MmI8zElptoV1OyM3hXYSn9PI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VirxbG4ucoNgO4ly+y9GRQjVhxIpP0lg
+	qlzjI6FOmpPwgznsySvluNWCLTa+OmXwv64Xve05uLKXbJZLXRwVya8cpPx71/lB
+	Gf/h2qsHDN4rB22Q9jTq2GMO2QIp1hj7ziSqdbTehBerNf7pnYMNFrPAgHaP9WVI
+	knyq765jGf8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 058DA9C7C;
+	Wed, 12 Sep 2012 17:49:33 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65C1A9C7B; Wed, 12 Sep 2012
+ 17:49:32 -0400 (EDT)
+In-Reply-To: <CAPBPrnu9adK0mPLyVfimAzBEo7ZH+6HhqtLBRFWAvEA9mEGFfg@mail.gmail.com> (Dan
+ Johnson's message of "Wed, 12 Sep 2012 16:08:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BC64F97C-FD23-11E1-B6D4-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205343>
 
-On Wed, Sep 12, 2012 at 5:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Peter Jones <pjones@redhat.com> writes:
->
->> Well, if that happens, maybe we could regexp match on
->> "[[:alnum:]_-]+: /someexprthatlookslikeanemailaddress/" ?
->
-> I doubt that would be even reliably done.
->
->> But we could
->> also just wait to cross that bridge until we get to it?
->
-> Not really.  If we start encouraging people to use "git show" output
-> as a kosher input to "am", we would have to support such use
-> forever, and we end up painting ourselves in a corner we cannot get
-> out of easily.
+Dan Johnson <computerdruid@gmail.com> writes:
 
-If git am emitted a warning when accepting "git show" output, it seems
-like it would support Peter's use-case without encouraging bad
-behavior?
+> I was thinking about this earlier. I wondered if it might even be
+> worth it just to CC the authors of all topics whose status has changed
+> since the last what's cooking, to make sure that they see updates
+> pertinent to them. I know that I at least have filters which catch
+> emails which CC me and promote them to my inbox, so I would see them
+> more readily.
 
--- 
--Dan
+I've done that a few times per release cycle, usually before we go
+into the pre-release freeze, but doing so manually is very time
+consuming.  It's the kind of bureaucratic overhead I'd rather avoid.
+If somebody volunteers to write a script that takes something like
+
+    git diff whats-cooking.txt
+
+in a checkout of the 'todo' branch and figure out whom to Cc, and do
+so reliably, it may be an option.
+
+Thanks.
