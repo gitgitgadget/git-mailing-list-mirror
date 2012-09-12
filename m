@@ -1,84 +1,56 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Ambiguous date handling
-Date: Wed, 12 Sep 2012 22:09:37 +1200
-Message-ID: <50505F61.8040100@gmail.com>
-References: <1347442551-7105-1-git-send-email-judge.packham@gmail.com> <7v4nn3fu6s.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] completion: git branch --set-upstream-to=
+Date: Wed, 12 Sep 2012 12:44:34 +0200
+Message-ID: <50506792.4070906@drmicha.warpmail.net>
+References: <bd9d638e84e7e142e94b71213bed2126ea1f1951.1347364675.git.git@drmicha.warpmail.net> <7v627kiitq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 12:09:06 2012
+X-From: git-owner@vger.kernel.org Wed Sep 12 12:44:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBjsX-0001gl-SE
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 12:09:06 +0200
+	id 1TBkRB-00081f-WE
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 12:44:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755633Ab2ILKI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 06:08:58 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:64498 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316Ab2ILKI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 06:08:56 -0400
-Received: by oago6 with SMTP id o6so857461oag.19
-        for <git@vger.kernel.org>; Wed, 12 Sep 2012 03:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=tVCLS5J0fL+LTu3RZvoTuqo+xVd7VHbAwU8jrm8MhgI=;
-        b=rOQn3WJL3TXwEv3PPpEyZrlrT5lmHxHJLVoU53I0uaFAtVN5Ba/p0gHl+I9glECtdw
-         j1m2IhV4NNOTFMXfUHFuKNBNzS5P5ektVM3wYYSXVHA5lP4IjvAPy9Viklnd1ERRT6MQ
-         EOhz554M4OZbLWrsA/LcrsNCnMaN+Lt2zSRU2EsZdHqDzC7ZotnllP5B9tTunnF+OXlv
-         zW7bQIlYlNLFFRTc1p4ezYsklwL5VSLFkJFcMAPMDbCSkYQoM05LXl9vLPqj6p8tXBSo
-         O4snrpV+IQu913WgM4VACvjotI/ant7RuAVMnMM2nLnKf7GSczkZ4J8mggQSiTEIuXXU
-         zU8w==
-Received: by 10.60.27.9 with SMTP id p9mr21334052oeg.69.1347444536348;
-        Wed, 12 Sep 2012 03:08:56 -0700 (PDT)
-Received: from [192.168.1.66] (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id kc5sm19627562obb.21.2012.09.12.03.08.53
-        (version=SSLv3 cipher=OTHER);
-        Wed, 12 Sep 2012 03:08:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <7v4nn3fu6s.fsf@alter.siamese.dyndns.org>
+	id S1757447Ab2ILKoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 06:44:44 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37942 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756941Ab2ILKoh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Sep 2012 06:44:37 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 1D7F421E74;
+	Wed, 12 Sep 2012 06:44:36 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 12 Sep 2012 06:44:36 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=nwsx0qJ3GdLjEDmJGQuPHB
+	Tw6dU=; b=ay2KT9I19q8BU/OER5mga4eQg/yJDoWlx4MEaFW/bl2MUfOTHI2Qf/
+	gc/P1/lsFBYyvW9N0ph5gSvQKzQZeBy8XgvyDpdFSzvSlGtM2WGWgUozW319mJ+W
+	z98mH5B636y4ql0iV7yWSt5Rx4ab2GA7uiKUTwQg5+Xx09y1pH3bg=
+X-Sasl-enc: 6nCMlGgcASguxkXGs6XuC8WgZJ6YzEGpK3GhJOrz4RRM 1347446675
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7D3714836ED;
+	Wed, 12 Sep 2012 06:44:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7v627kiitq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205279>
 
-On 09/12/2012 09:48 PM, Junio C Hamano wrote:
-> Chris Packham <judge.packham@gmail.com> writes:
-> 
->> Our default MUA has an annoying habit of using a non RFC822 date format when
->> saving an email as plaintext. This means the first 12 days of every month we
->> run into the ambiguous date problem (our date convention is dd/mm/yy).
->>
->> I see code in date.c for refusing a date in the future which would have caught
->> this...
-> 
-> The most sane thing to do when you know that your MUA *consistently*
-> does dd/mm/yy (even though it may annoy you) is to massage its
-> output before feeding it to Git.  And it should be a very simple
-> matter of a one-liner filter, no?
+Junio C Hamano venit, vidit, dixit 11.09.2012 19:13:
+> Thanks; I picked up $gmane/204633 but forgot to queue.
 
-Consistent as long as you save as the default .txt. Some people have
-trained themselves to use the save as .eml option which uses RFC822
-style output. sed 's|Date: (\d+)/(\d+)/(\d+)|\1.\2.\3|' should correct
-the former and ignore the latter. Could this be done in a applypatch-msg
-hook?
+I missed that one, thanks for reducing appropriately.
 
-> 
-> Regardless of the correctness of that "we reject timestamps way into
-> the future" logic, it should be taken as the last resort.  If you
-> are on September 1st, both 9/12 and 12/9 will look like into the
-> future for more than ten days (which is the cut-off, I think).  If
-> you are on December 28th, both look like sufficiently in the past.
-> 
-
-Duly noted. And I'm implying that the reject timestamps in future isn't
-actually working. I've just started looking at t0006-date.sh so see if I
-can prove it.
+Michael
