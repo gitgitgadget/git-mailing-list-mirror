@@ -1,97 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/6] string_list: add two new functions for splitting
- strings
-Date: Wed, 12 Sep 2012 10:55:25 -0700
-Message-ID: <7vtxv3ceia.fsf@alter.siamese.dyndns.org>
-References: <1347311926-5207-1-git-send-email-mhagger@alum.mit.edu>
- <1347311926-5207-3-git-send-email-mhagger@alum.mit.edu>
- <7v8vchld82.fsf@alter.siamese.dyndns.org> <50508A44.1020008@alum.mit.edu>
+From: Peter Jones <pjones@redhat.com>
+Subject: Re: [PATCH] Handle "git show" output correctly.
+Date: Wed, 12 Sep 2012 14:00:23 -0400
+Organization: Red Hat, Inc.
+Message-ID: <1347472823.12986.3.camel@eddie.install.bos.redhat.com>
+References: <1347463571-16831-1-git-send-email-pjones@redhat.com>
+	 <vpqpq5rz1ua.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 12 19:55:40 2012
+Content-Type: multipart/mixed; boundary="=-qiGqjCliycktW0JLd64I"
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 12 20:00:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBrA2-00013P-I1
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:55:38 +0200
+	id 1TBrEq-0006So-Ta
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 20:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760744Ab2ILRza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 13:55:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37223 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754114Ab2ILRz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 13:55:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3358C8E7B;
-	Wed, 12 Sep 2012 13:55:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YK8tVASwUFQPMfJkexqX6y/IQr8=; b=aTPXHp
-	0qgkOP3I34P752rki3D5l23oQht3YUhMW1HhidVVGJqEueRNvdLrDnyTAGjEVrjU
-	ndk5ce5XyV8S2VcYyp+EvOTb0Yj4BGAXZqsMAPd1bl6n/9nBUkOa8IYkkyjuJmK0
-	DpcRQ/mm6Z7krFJP2ddNwGx4+7MTWUYIhjsaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ki0ReKr4zGUFSpui4t8/xUHfDednmTRx
-	zaJe+6pfkL15QICOWjkhQZx73IsracVbQlfch7A/QeFRbr/VVTms53QU7uqD3xyr
-	FaNCU9co4ZWeY6GA97EKBJr2GYveUjf5SRQX6MfxoVbNK7bFIuOONYKcD6vj1xZh
-	GAEYahnat3s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21FD88E7A;
-	Wed, 12 Sep 2012 13:55:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E2708E79; Wed, 12 Sep 2012
- 13:55:28 -0400 (EDT)
-In-Reply-To: <50508A44.1020008@alum.mit.edu> (Michael Haggerty's message of
- "Wed, 12 Sep 2012 15:12:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0989E21A-FD03-11E1-9EFD-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758837Ab2ILSA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 14:00:29 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:15109 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752763Ab2ILSA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 14:00:28 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q8CI0Qof006028
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 12 Sep 2012 14:00:26 -0400
+Received: from [10.3.112.24] (ovpn-112-24.phx2.redhat.com [10.3.112.24])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q8CI0NVd003564;
+	Wed, 12 Sep 2012 14:00:24 -0400
+In-Reply-To: <vpqpq5rz1ua.fsf@bauges.imag.fr>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205316>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On 09/11/2012 12:33 AM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> 
->>> +`string_list_split`, `string_list_split_in_place`::
->>> +
->>> +	Split a string into substrings on a delimiter character and
->>> +	append the substrings to a `string_list`.  If `maxsplit` is
->>> +	non-negative, then split at most `maxsplit` times.  Return the
->>> +	number of substrings appended to the list.
->> 
->> 
->> I recall that we favor
->> 
->> `A`::
->> `B`::
->> 
->> 	Description for A and B
->> 
->> for some reason but do not remember exactly why.
->
-> Will change.  Thanks.
+--=-qiGqjCliycktW0JLd64I
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Thanks.  It comes from this one:
+On Wed, 2012-09-12 at 17:40 +0200, Matthieu Moy wrote:
+> 
+> How does this react to multi-line subject, e.g
+> 
+> This should be the
+> subject line.
+> 
+> And this is the body.
+> 
+> ?
+> 
+> git format-patch will merge the lines in a single Subject: header, and
+> your version seems to take only the first line.
+> 
+> A test showing this would be welcome. 
 
-commit bf474e2402e51843e8230c064da6ccfdf3a8ff54
-Author: Markus Heidelberg <markus.heidelberg@web.de>
-Date:   Fri Jan 16 22:42:33 2009 +0100
+An updated patch to fix this will be my next mail.  It's not as succinct
+as it once was, but such is life.
 
-    Documentation: let asciidoc align related options
-    
-    Command line options can share the same paragraph of description, if
-    they are related or synonymous. In these cases they should be
-    written among each other, so that asciidoc can format them itself.
-    
-    Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The two attached commits to this message can be used as a test case.
+Basically, do (in any repo)
+
+git am 0001* 0002*
+git show > foo.patch
+git reset HEAD^ --hard
+git am foo.patch
+git show # check the output here
+git format-patch -1
+# check 0001-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.patch
+# here.
+
+It winds up merging the subject lines before the rest of git-am does - I
+couldn't get it to work if I preserved the newline; for some reason I
+always get a second newline and that's /more/ wrong.
+
+-- 
+  Peter
+
+--=-qiGqjCliycktW0JLd64I
+Content-Disposition: attachment;
+	filename*0=0001-this-is-an-example-with-a-very-long-subject-line-whi.pat;
+	filename*1=ch
+Content-Type: text/x-patch;
+	name="0001-this-is-an-example-with-a-very-long-subject-line-whi.patch";
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+>From f7521f88731f9fc696dcd8e32de58cc9d98ed892 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Wed, 12 Sep 2012 13:17:11 -0400
+Subject: [PATCH 1/2] this is an example with a very long subject line which
+ is completely unreasonable and nevertheless a thing.
+
+It also has other stuff here.
+---
+ foo | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foo
+
+diff --git a/foo b/foo
+new file mode 100644
+index 0000000..fa5ef85
+--- /dev/null
++++ b/foo
+@@ -0,0 +1 @@
++    za za za
+-- 
+1.7.11.4
+
+
+--=-qiGqjCliycktW0JLd64I
+Content-Disposition: attachment;
+	filename*0=0002-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.pat;
+	filename*1=ch
+Content-Type: text/x-patch;
+	name="0002-bar-bar-bar-this-is-a-very-very-long-line-I-am-tired.patch";
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+>From bc471f2b89ada6e6ddf35b5ec2538242b5639836 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Wed, 12 Sep 2012 13:39:56 -0400
+Subject: [PATCH 2/2] bar bar bar this is a very very long line I am tired of
+ this game and it is quite annoying.
+
+this is really annoying.  I hate perl.
+    zonk.
+
+yes.
+    no.
+---
+ foo | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/foo b/foo
+index fa5ef85..3b572f4 100644
+--- a/foo
++++ b/foo
+@@ -1 +1,2 @@
+     za za za
++    bar bar bar
+-- 
+1.7.11.4
+
+
+--=-qiGqjCliycktW0JLd64I--
