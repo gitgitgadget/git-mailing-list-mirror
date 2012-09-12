@@ -1,107 +1,189 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] rev-list/log: document logic with several limiting
  options
-Date: Wed, 12 Sep 2012 10:25:52 -0700
-Message-ID: <7vbohbdufz.fsf@alter.siamese.dyndns.org>
-References: <b23f3c547358b79731c7a25d9ac496138e6ab74d.1347374615.git.git@drmicha.warpmail.net> <7vsjaoil6d.fsf@alter.siamese.dyndns.org> <50509171.9060604@drmicha.warpmail.net>
+Date: Wed, 12 Sep 2012 10:26:57 -0700
+Message-ID: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
+References: <b23f3c547358b79731c7a25d9ac496138e6ab74d.1347374615.git.git@drmicha.warpmail.net> <7vsjaoil6d.fsf@alter.siamese.dyndns.org> <50509171.9060604@drmicha.warpmail.net> <7vbohbdufz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 12 19:26:05 2012
+X-From: git-owner@vger.kernel.org Wed Sep 12 19:27:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBqhQ-0001HH-D0
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:26:04 +0200
+	id 1TBqiU-0002cq-Dr
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 19:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988Ab2ILRZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 13:25:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54362 "EHLO
+	id S1760760Ab2ILR1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 13:27:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54791 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751280Ab2ILRZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 13:25:54 -0400
+	id S1752734Ab2ILR1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 13:27:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 420B58487;
-	Wed, 12 Sep 2012 13:25:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CE1684E9;
+	Wed, 12 Sep 2012 13:27:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GJmad6GMkOJ0kORk3PH9IrG+oFo=; b=waxbLv
-	ebGfQG86Otc9a/F9nGufECpbR99MBYfvK2aPutjxN1tzDqc+Ym98nU5qdt5Cs7i8
-	L90/HhrNmEGSIkAwfyrQ8/9RYWoyepN+PNd1APwSC5RLXRyRDus630r6PhDmKQXc
-	kccSShmBBraeDiSavHH5i8AEjm3dFVLAO3ZNc=
+	:content-type; s=sasl; bh=I8B3MsQIdjjdHtnML3TRvhJKB2Q=; b=lv2VYd
+	07CMpIXfjwM7kPBD9NCWEoS96SbmkMzwpnlSWujqo4r9fILnHJKVPUF+AJoCodrz
+	RnDI2NR5Sg7gt5tB/33BcX/mFDwbk6Twh6FjK9CkcWwkeSRPJOBaqVqI2PX7k4Ps
+	PNLuWjToFYxmf35wmzah+k3xvtkDEQY9aK5rY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cOwjUnPR+LqAZD40t0D2PqDEg19IJFB5
-	J67QEWrBFOI4CgYexbb4s9BWO8DxH8cv12jIsQBmCu4Xy6M0oJed9DwsCs/ceuB2
-	j2u599Ra8CRwDrXrZaHoU8ZxsEtL93Q2d4VwO/XR5iA75MPn4+0uOpIyT6v4Obsd
-	slRZtrTDUzw=
+	:content-type; q=dns; s=sasl; b=UyyVLKdrdElZny41UR10u7iECcRDYN7+
+	9RP3L7+XrAJJAI96ssPkavO6aZKxw5OCUxmkBtXlfmmEfxVTnvCMYjGvb7oOnJcs
+	3jpMAXOeFiABXaW+0TtRU9BBHIq8PKWxCL2GE+NyRc+lJUfeTbHNO9CLRTROBf/n
+	3DCQ6u1lvFo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3041A8486;
-	Wed, 12 Sep 2012 13:25:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A22084E8;
+	Wed, 12 Sep 2012 13:27:00 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B5B78485; Wed, 12 Sep 2012
- 13:25:53 -0400 (EDT)
-In-Reply-To: <50509171.9060604@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed, 12 Sep 2012 15:43:13 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E10984E6; Wed, 12 Sep 2012
+ 13:26:59 -0400 (EDT)
+In-Reply-To: <7vbohbdufz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 12 Sep 2012 10:25:52 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7A093A0-FCFE-11E1-AD60-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0EBD2C1E-FCFF-11E1-B82C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205311>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It was introduced in 0ab7befa with a clear meaning (AND everything),
-> then the general logic (without --all-match) was modified in 80235ba7
-> (to take headermatch AND (all greps ORed)), and 5aaeb733 finally made
-> multiple authors resp. committers get ORed among each other. All of this
-> in an attempt to make the standard usage most useful, of course. As a
-> consequence, --all-match does not influence multiple --author options at
-> all (contrary to the doc), e.g.
+> This is what I used to use when adding these generalized grep
+> boolean expressions.
 >
-> I don't see any of this reflected in the doc, though. I noticed only by
-> reading t/t7810-grep.sh. Before that, I had only gone by my own testing
-> which didn't reveal the multiple author multiple special casing effect.
->
-> I guess I'll have to wrap my head around the current implementation a
-> few more times before trying to describe the status quo in the
-> documentation...
+> With this applied,...
 
-This is what I used to use when adding these generalized grep
-boolean expressions.
+And this is the "this" X-<.
 
-With this applied, you can try things like these:
+ grep.c | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 89 insertions(+), 1 deletion(-)
 
-    $ git log --grep=regexp --grep=nosuch --all-match >/dev/null
-    $ git log --grep=regexp --grep=nosuch --author=Michael >/dev/null
-
-For example, "--all-match --grep=regexp --author=Michael --author=Linus" turns
-into
-
-    [all-match]
-    (or
-     pattern_body<body>regexp
-     (or
-      (or
-       pattern_head<head 0>Linus
-       pattern_head<head 0>Michael
-      )
-      true
-     )
-    )
-
-that says "body must have 'regexp' in it, and authored by either
-Linus or Michael".
-
-The semantics of "--all-match" is different from "--and" (which,
-together with "--or", ")", and "(", is not availble to rev-list
-command line parser primarily because "--not" is not available).
-After applying all the "or"-ed terms, it checks the top-level nodes
-that are "or"-ed and makes sure all of them fired (possibly and
-usually on different lines).
+diff --git a/grep.c b/grep.c
+index 04e3ec6..566c4cc 100644
+--- a/grep.c
++++ b/grep.c
+@@ -332,6 +332,87 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
+ 	return compile_pattern_or(list);
+ }
+ 
++static void indent(int in)
++{
++	while (in-- > 0)
++		fputc(' ', stderr);
++}
++
++static void dump_grep_pat(struct grep_pat *p)
++{
++	switch (p->token) {
++	case GREP_AND: fprintf(stderr, "*and*"); break;
++	case GREP_OPEN_PAREN: fprintf(stderr, "*(*"); break;
++	case GREP_CLOSE_PAREN: fprintf(stderr, "*)*"); break;
++	case GREP_NOT: fprintf(stderr, "*not*"); break;
++	case GREP_OR: fprintf(stderr, "*or*"); break;
++
++	case GREP_PATTERN: fprintf(stderr, "pattern"); break;
++	case GREP_PATTERN_HEAD: fprintf(stderr, "pattern_head"); break;
++	case GREP_PATTERN_BODY: fprintf(stderr, "pattern_body"); break;
++	}
++
++	switch (p->token) {
++	default: break;
++	case GREP_PATTERN_HEAD:
++		fprintf(stderr, "<head %d>", p->field); break;
++	case GREP_PATTERN_BODY:
++		fprintf(stderr, "<body>"); break;
++	}
++	switch (p->token) {
++	default: break;
++	case GREP_PATTERN_HEAD:
++	case GREP_PATTERN_BODY:
++	case GREP_PATTERN:
++		fprintf(stderr, "%.*s", (int)p->patternlen, p->pattern);
++		break;
++	}
++	fputc('\n', stderr);
++}
++
++static void dump_grep_expression_1(struct grep_expr *x, int in)
++{
++	indent(in);
++	switch (x->node) {
++	case GREP_NODE_TRUE:
++		fprintf(stderr, "true\n");
++		break;
++	case GREP_NODE_ATOM:
++		dump_grep_pat(x->u.atom);
++		break;
++	case GREP_NODE_NOT:
++		fprintf(stderr, "(not\n");
++		dump_grep_expression_1(x->u.unary, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	case GREP_NODE_AND:
++		fprintf(stderr, "(and\n");
++		dump_grep_expression_1(x->u.binary.left, in+1);
++		dump_grep_expression_1(x->u.binary.right, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	case GREP_NODE_OR:
++		fprintf(stderr, "(or\n");
++		dump_grep_expression_1(x->u.binary.left, in+1);
++		dump_grep_expression_1(x->u.binary.right, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	}
++}
++
++void dump_grep_expression(struct grep_opt *opt)
++{
++	struct grep_expr *x = opt->pattern_expression;
++
++	if (opt->all_match)
++		fprintf(stderr, "[all-match]\n");
++	dump_grep_expression_1(x, 0);
++	fflush(NULL);
++}
++
+ static struct grep_expr *grep_true_expr(void)
+ {
+ 	struct grep_expr *z = xcalloc(1, sizeof(*z));
+@@ -395,7 +476,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ 	return header_expr;
+ }
+ 
+-void compile_grep_patterns(struct grep_opt *opt)
++static void compile_grep_patterns_real(struct grep_opt *opt)
+ {
+ 	struct grep_pat *p;
+ 	struct grep_expr *header_expr = prep_header_patterns(opt);
+@@ -432,9 +513,16 @@ void compile_grep_patterns(struct grep_opt *opt)
+ 	else
+ 		opt->pattern_expression = grep_or_expr(opt->pattern_expression,
+ 						       header_expr);
++
+ 	opt->all_match = 1;
+ }
+ 
++void compile_grep_patterns(struct grep_opt *opt)
++{
++	compile_grep_patterns_real(opt);
++	dump_grep_expression(opt);
++}
++
+ static void free_pattern_expr(struct grep_expr *x)
+ {
+ 	switch (x->node) {
+-- 
+1.7.12.414.g1a62b7a
