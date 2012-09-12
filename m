@@ -1,150 +1,75 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [PATCH] Add test for ambiguous patch dates
-Date: Wed, 12 Sep 2012 21:35:51 +1200
-Message-ID: <1347442551-7105-2-git-send-email-judge.packham@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Ambiguous date handling
+Date: Wed, 12 Sep 2012 02:48:27 -0700
+Message-ID: <7v4nn3fu6s.fsf@alter.siamese.dyndns.org>
 References: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
-Cc: Chris Packham <judge.packham@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 12 11:35:49 2012
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 11:48:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBjMJ-000740-QG
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 11:35:48 +0200
+	id 1TBjYk-00017y-J6
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 11:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075Ab2ILJfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 05:35:40 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:42533 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754879Ab2ILJfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 05:35:38 -0400
-Received: by obbuo13 with SMTP id uo13so2297554obb.19
-        for <git@vger.kernel.org>; Wed, 12 Sep 2012 02:35:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jTeQRf9x7ft69GdlReh4dHBEtFGXNe3D8lArXalw5i4=;
-        b=J335NXhrrAOmDtYgeIG+Jn/Z+FYDjgovPU74k50kiYMvgpsM5fKcCWPGMQXloZL7K+
-         vR8qPazUNabufYw12oTlK/LRvUzHbPUjE8Yz2kjmVfGkcO42yVBkiN2BvxzGEDug9frz
-         QFWomzlwvj/YonGQM1sUM9+ClZ3C6r0qw6dIIYDqnn6ioYhZMYpjZyGUakNZD3VfzI4R
-         6HL6e0EFjINK8IKytpu3b4yuqmA9xHmbaCcLWH90jaBEJC5T7/s767jyyyfp8NoHHkA9
-         dh1cRbMkxEKQVGqOh+40Ymr+pC63WwbQ4N2DgBaoPuB7Te7woqGCxwasxwAo+fosT5ar
-         lI3g==
-Received: by 10.182.38.71 with SMTP id e7mr21316126obk.67.1347442536109;
-        Wed, 12 Sep 2012 02:35:36 -0700 (PDT)
-Received: from localhost.localdomain (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPS id j10sm15693057oej.10.2012.09.12.02.35.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 12 Sep 2012 02:35:32 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S1755485Ab2ILJsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 05:48:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64096 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753778Ab2ILJsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 05:48:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C28868491;
+	Wed, 12 Sep 2012 05:48:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UPO1rXkKmtE8UqZmqjO/8ulftPA=; b=wxiBA+
+	poP7iClzcU1oW43GZ11a+4Wt2dMArsdIv2YkdRLPuBS+ZCMQ5X42GdJIyoU6f2Zd
+	73TbHWMZWtQOiUmlveuJ7/EQQYJAxVtkoYNiF5Dv0UynkOuRL84unpZR8VIEsC6a
+	uxHGZZS060jvXkhoWIqEmGZHVqeVb666yyw+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QcmLE3M3Jlh+sf5LNVtASpVpyOE0yI14
+	e0H390Rd1HKZG/uLvQ+TVwzsBnAJmtT2fBp5UF79OByw7CcnYPS3PPIJatQeMeJO
+	xomZ7yGFN0U7nF1EH+aAnHDgoCYROniRFtoYgpxVfVxw3bWtKsjT64Ziw/dVILa5
+	Z1mRbwK/9V0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEABE8490;
+	Wed, 12 Sep 2012 05:48:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ACFF848F; Wed, 12 Sep 2012
+ 05:48:29 -0400 (EDT)
 In-Reply-To: <1347442551-7105-1-git-send-email-judge.packham@gmail.com>
+ (Chris Packham's message of "Wed, 12 Sep 2012 21:35:50 +1200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 017E336C-FCBF-11E1-B9EF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205275>
 
---
-This testcase is only good for the next couple of months. For a longer term
-test the current time would need to be set in the test setup.
+Chris Packham <judge.packham@gmail.com> writes:
 
----
- t/t4255-am-author-date.sh |   85 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
- create mode 100755 t/t4255-am-author-date.sh
+> Our default MUA has an annoying habit of using a non RFC822 date format when
+> saving an email as plaintext. This means the first 12 days of every month we
+> run into the ambiguous date problem (our date convention is dd/mm/yy).
+>
+> I see code in date.c for refusing a date in the future which would have caught
+> this...
 
-diff --git a/t/t4255-am-author-date.sh b/t/t4255-am-author-date.sh
-new file mode 100755
-index 0000000..62bceee
---- /dev/null
-+++ b/t/t4255-am-author-date.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
-+
-+test_description='git am with ambiguous date'
-+. ./test-lib.sh
-+
-+cat >patch.diff <<EOF
-+From:   A U Thor <au.thor@example.com>
-+To:     C O Mmitter <co.mmitter@example.com>
-+Date:   12/9/2012 12:00 AM
-+Subject:       [PATCH] add file.txt
-+---
-+ file.txt |    7 +++++++
-+ 1 file changed, 7 insertions(+)
-+ create mode 100644 file.txt
-+
-+diff --git a/file.txt b/file.txt
-+new file mode 100644
-+index 0000000..fe745d6
-+--- /dev/null
-++++ b/file.txt
-+@@ -0,0 +1,7 @@
-++Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pulvinar
-++tempus ligula vitae ornare. Vestibulum ante ipsum primis in faucibus orci
-++luctus et ultrices posuere cubilia Curae; Aenean dapibus mauris non quam
-++commodo a porta sapien suscipit. Mauris venenatis, dui nec malesuada mattis,
-++ante mauris ornare ipsum, ac tincidunt ipsum lectus aliquet tortor. Nulla ipsum
-++felis, egestas at condimentum quis, accumsan nec arcu. Phasellus fringilla
-++viverra tempus. Integer vel rhoncus odio.
-+EOF
-+
-+test_expect_success 'apply patch with ambiguous date' '
-+	git am patch.diff
-+'
-+
-+cat >expected <<EOF
-+Date:   Wed Sep 12 00:00:00 2012 +0000
-+EOF
-+
-+test_expect_failure 'check ambiguous date' '
-+	git show HEAD | grep Date >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >patch.diff <<EOF
-+From:   A N Other <an.other@example.com>
-+To:     C O Mmitter <co.mmitter@example.com>
-+Date:   12.9.2012 12:00 AM
-+Subject:       [PATCH] update file.txt
-+---
-+ file.txt |    9 +++++++++
-+ 1 file changed, 9 insertions(+)
-+
-+diff --git a/file.txt b/file.txt
-+index fe745d6..cd45361 100644
-+--- a/file.txt
-++++ b/file.txt
-+@@ -5,3 +5,12 @@ commodo a porta sapien suscipit. Mauris venenatis, dui nec malesuada mattis,
-+ ante mauris ornare ipsum, ac tincidunt ipsum lectus aliquet tortor. Nulla ipsum
-+ felis, egestas at condimentum quis, accumsan nec arcu. Phasellus fringilla
-+ viverra tempus. Integer vel rhoncus odio.
-++
-++Donec et ante eu mi aliquam sodales non ut massa. Nullam a luctus dui. Etiam ac
-++eros elit. Pellentesque habitant morbi tristique senectus et netus et malesuada
-++fames ac turpis egestas. Curabitur commodo ligula id leo iaculis vel lobortis
-++leo pulvinar. Aenean adipiscing cursus arcu quis consectetur. Morbi eget lectus
-++nec neque interdum lacinia. Nam quis metus eget ligula faucibus imperdiet in et
-++ligula. Aenean eu urna sit amet metus sagittis interdum non cursus orci.
-++Maecenas imperdiet feugiat tellus, non ultrices nulla dictum sed. Nulla vel
-++lorem ac massa euismod faucibus et ut leo.
-+EOF
-+
-+test_expect_success 'apply patch with european date separator' '
-+	git am patch.diff
-+'
-+
-+cat >expected <<EOF
-+Date:   Wed Sep 12 00:00:00 2012 +0000
-+EOF
-+
-+test_expect_success 'check european date' '
-+	git show HEAD | grep Date >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-1.7.10.4
+The most sane thing to do when you know that your MUA *consistently*
+does dd/mm/yy (even though it may annoy you) is to massage its
+output before feeding it to Git.  And it should be a very simple
+matter of a one-liner filter, no?
+
+Regardless of the correctness of that "we reject timestamps way into
+the future" logic, it should be taken as the last resort.  If you
+are on September 1st, both 9/12 and 12/9 will look like into the
+future for more than ten days (which is the cut-off, I think).  If
+you are on December 28th, both look like sufficiently in the past.
