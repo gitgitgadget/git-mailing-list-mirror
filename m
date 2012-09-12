@@ -1,100 +1,107 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git-am: Handle "git show" output correctly
-Date: Thu, 13 Sep 2012 00:41:00 +0200
-Message-ID: <50510F7C.4080700@op5.se>
-References: <1347472823.12986.3.camel@eddie.install.bos.redhat.com> <1347473304-21418-1-git-send-email-pjones@redhat.com> <7vtxv3atvu.fsf@alter.siamese.dyndns.org> <1347482918.21933.5.camel@eddie.install.bos.redhat.com> <7vpq5raqiq.fsf@alter.siamese.dyndns.org> <CAPBPrntHOpDaH3cSNiKKxVJDbZTpPrLc99TgPM_GdoXecUvs9w@mail.gmail.com> <7vhar2c29s.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cherry-pick: don't forget -s on failure
+Date: Wed, 12 Sep 2012 15:45:10 -0700
+Message-ID: <7v8vcec13d.fsf@alter.siamese.dyndns.org>
+References: <20120912195732.GB4722@suse.cz>
+ <7vd31qc1p3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Dan Johnson <computerdruid@gmail.com>,
-	Peter Jones <pjones@redhat.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 00:41:48 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Robin Stocker <robin@nibor.org>
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Sep 13 00:45:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBvcv-00046v-RW
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 00:41:46 +0200
+	id 1TBvgS-000826-3I
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 00:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443Ab2ILWlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 18:41:37 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:32781 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751055Ab2ILWlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Sep 2012 18:41:36 -0400
-Received: by lbbgj3 with SMTP id gj3so1534806lbb.19
-        for <git@vger.kernel.org>; Wed, 12 Sep 2012 15:41:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=Rx+rLXZdIYW1OKNLS5HwnBGB4uXRLthOTkkq0csT+wc=;
-        b=FMW6zNX22sAHyFGhmOXDU9osFAwJcQOqlfH9ZPIvbdk5tfUJCPBaR02V4a1wjILmdK
-         TRChvSZoYc2WeXXDM3sd63plalLevXAMvmhE+C2djR3RQHQtI5oY/7cHxhaSbVYOMzsL
-         TJ92ZaiAVTkdXOQh+wLM8lDn8O34ke78ONkOYN2mJ4x7mmbe6ZQsmaNd6zVgoWVt+5fG
-         kjfCNLWvUHap8FmrPDmIOKUpSq3RKztswsmWjIbwJsZfDwQYRVVMAVmyzzOXAYMuZlHP
-         JhtC95/iClneNOjvNWwkwCqwwUUJG+/5XL9zgT8QL7gz7syeHXgShKRZhsyyxLuPoAQe
-         /mcw==
-Received: by 10.112.83.8 with SMTP id m8mr168151lby.115.1347489694721;
-        Wed, 12 Sep 2012 15:41:34 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id bc2sm5570576lbb.3.2012.09.12.15.41.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 12 Sep 2012 15:41:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120828 Thunderbird/15.0
-In-Reply-To: <7vhar2c29s.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQkFbtkNpSyvU1dnMNtJFFD/84X8C4bX50OTQQHdl086UUFjE1V5liGvuLCOye6uT2OhNyjl
+	id S1751449Ab2ILWpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 18:45:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58563 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751055Ab2ILWpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 18:45:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 919BC8C83;
+	Wed, 12 Sep 2012 18:45:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=epZyn/KcAuNLiKcVYeIvfYTSKnw=; b=OjON8s
+	vvvFixMPRMTqvZVdEDWim8wRdl8iNYyVOPnZAEL22RGePsw3ijL6bMORLRn11tCC
+	MlOyM7TsCrhcFZgKDvoCYbdmkoTvSFV29wG7F2QA1hc1OLwdmJPiBc9u0sv6qRea
+	K+mqeZiRanS2PfM6bKDt8qLP85HuiL551ikFM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KUaFTHCCcNpqrfnw8eeL2zjqZteyk9C9
+	3eIQZa0bTX2THllAdtcIWL/eTKrjOMpqOtOgK5iwl0djaOOpwEqnr75xkO8vW3p4
+	8HfQkDyFWdmLKc4Vc0Kvr8sWMW5GSdEpW5dfEBpCvnL0Pd+PGurf5ykSdQfmxIB4
+	MB160z573C8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FE3D8C82;
+	Wed, 12 Sep 2012 18:45:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D34298C80; Wed, 12 Sep 2012
+ 18:45:11 -0400 (EDT)
+In-Reply-To: <7vd31qc1p3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 12 Sep 2012 15:32:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82DC60F2-FD2B-11E1-B193-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205349>
 
-On 09/13/2012 12:19 AM, Junio C Hamano wrote:
-> Dan Johnson <computerdruid@gmail.com> writes:
-> 
->>> Not really.  If we start encouraging people to use "git show" output
->>> as a kosher input to "am", we would have to support such use
->>> forever, and we end up painting ourselves in a corner we cannot get
->>> out of easily.
->>
->> If git am emitted a warning when accepting "git show" output, it seems
->> like it would support Peter's use-case without encouraging bad
->> behavior?
-> 
-> Are you seriously suggesting me to sell to our users a new feature
-> saying "this does not work reliably, we would not recommend using
-> it, no, really, don't trust it." from the day the feature is
-> introduced, especially when we know it will not be "the feature does
-> not work well yet, but it will, we promise" but is "and it may become
-> worse in the future"?
-> 
-> I do not see much point in doing that.
-> 
-> Besides, what bad behaviour do we avoid from encouraging with such
-> an approach?  As Peter said, the problem is not on the part of the
-> user who ended up with an output from "git show", when he really
-> wants output from "git format-patch".  Giving the warning to the
-> user of "git am" is too late.
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-It might be enough to either enable format-patch output or print a
-warning to stderr when stdout is not a tty. I believe that would at
-least mitigate the problem, and it might educate the user as well.
-We already modify output format when stdout is not a tty (removing
-colors), so we're not giving guarantees about its format when it's
-piped somewhere. I believe that would provide almost every scenario
-with the expected outcome (including 'git show | grep'), but there
-will be a handful of very surprised people as well.
+> I think we had a separate topic around cherry-pick that needs the
+> footer thing accessible from cherry-pick recently ($gmane/204755).
+>
+> I think the code movement in this patch is a good one.
+>
+> Thanks.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Having said that, the behaviour after this patch is applied is not
+quite right.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+A typical .git/MERGE_MSG that is left after "cherry-pick" gives the
+control back to you asking for help, with your patch that adds the
+sign-off at the end, would look like this:
+
+
+    cherry-pick: don't forget -s on failure
+
+    In case 'git cherry-pick -s <commit>' failed, the user had to use 'git
+    commit -s' (i.e. state the -s option again), which is easy to forget
+    about.  Instead, write the signed-off-by line early, so plain 'git
+    commit' will have the same result.
+
+    Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+    Conflicts:
+            builtin/commit.c
+
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+
+Notice two issues?
+
+ - The additional S-o-b should come immediately after the existing
+   block of footers.
+
+ - And the last entry in the existing footer block is already mine,
+   so there shouldn't have been a new and duplicated one added.
+
+
+I am not sure how reusable the moved function is without
+enhancements for your purpose.  The logic to identify the footer
+needs to be enhanced so that an "end" pointer to point at the byte
+before the caller added "Conflicts: " can be given, and pretend as
+if it is the end of the buffer, unlike in the fresh commit case
+where it can consider the real end of the buffer as such.
+
+Or something like that.
