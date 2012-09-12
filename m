@@ -1,56 +1,64 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] completion: git branch --set-upstream-to=
-Date: Wed, 12 Sep 2012 12:44:34 +0200
-Message-ID: <50506792.4070906@drmicha.warpmail.net>
-References: <bd9d638e84e7e142e94b71213bed2126ea1f1951.1347364675.git.git@drmicha.warpmail.net> <7v627kiitq.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 12 12:44:54 2012
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: [PATCH 3/3] sha1: use char type for temporary work buffer
+Date: Wed, 12 Sep 2012 12:30:45 +0200
+Message-ID: <a8c30a998cad6a7b38bd983e7689a628567a8176.1347442430.git.ydroneaud@opteya.com>
+References: <cover.1347442430.git.ydroneaud@opteya.com>
+Cc: Yann Droneaud <ydroneaud@opteya.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 12 13:16:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBkRB-00081f-WE
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 12:44:54 +0200
+	id 1TBkw2-0003CT-KX
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 13:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757447Ab2ILKoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Sep 2012 06:44:44 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37942 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756941Ab2ILKoh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Sep 2012 06:44:37 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 1D7F421E74;
-	Wed, 12 Sep 2012 06:44:36 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 12 Sep 2012 06:44:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=nwsx0qJ3GdLjEDmJGQuPHB
-	Tw6dU=; b=ay2KT9I19q8BU/OER5mga4eQg/yJDoWlx4MEaFW/bl2MUfOTHI2Qf/
-	gc/P1/lsFBYyvW9N0ph5gSvQKzQZeBy8XgvyDpdFSzvSlGtM2WGWgUozW319mJ+W
-	z98mH5B636y4ql0iV7yWSt5Rx4ab2GA7uiKUTwQg5+Xx09y1pH3bg=
-X-Sasl-enc: 6nCMlGgcASguxkXGs6XuC8WgZJ6YzEGpK3GhJOrz4RRM 1347446675
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7D3714836ED;
-	Wed, 12 Sep 2012 06:44:35 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7v627kiitq.fsf@alter.siamese.dyndns.org>
+	id S1752257Ab2ILLQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 07:16:28 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:48727 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752009Ab2ILLQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 07:16:26 -0400
+Received: from test.quest-ce.net (unknown [IPv6:2a01:e35:2e9f:6ac0:21d0:2ede:8970:5205])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 4C20694014E;
+	Wed, 12 Sep 2012 13:16:16 +0200 (CEST)
+Received: from test.quest-ce.net (localhost.localdomain [127.0.0.1])
+	by test.quest-ce.net (8.14.5/8.14.5) with ESMTP id q8CBGF7B030220;
+	Wed, 12 Sep 2012 13:16:15 +0200
+Received: (from ydroneaud@localhost)
+	by test.quest-ce.net (8.14.5/8.14.5/Submit) id q8CBCpbI030084;
+	Wed, 12 Sep 2012 13:12:51 +0200
+X-Mailer: git-send-email 1.7.11.4
+In-Reply-To: <cover.1347442430.git.ydroneaud@opteya.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205280>
 
-Junio C Hamano venit, vidit, dixit 11.09.2012 19:13:
-> Thanks; I picked up $gmane/204633 but forgot to queue.
+The SHA context is holding a temporary buffer for partial block.
 
-I missed that one, thanks for reducing appropriately.
+This block must 64 bytes long. It is currently described as
+an array of 16 integers.
 
-Michael
+Signed-off-by: Yann Droneaud <ydroneaud@opteya.com>
+---
+ block-sha1/sha1.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
+index b864df6..d29ff6a 100644
+--- a/block-sha1/sha1.h
++++ b/block-sha1/sha1.h
+@@ -9,7 +9,7 @@
+ typedef struct {
+ 	unsigned long long size;
+ 	unsigned int H[5];
+-	unsigned int W[16];
++	unsigned char W[64];
+ } blk_SHA_CTX;
+ 
+ void blk_SHA1_Init(blk_SHA_CTX *ctx);
+-- 
+1.7.11.4
