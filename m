@@ -1,64 +1,108 @@
-From: Antoniy Chonkov <antoniy@chonkov.net>
-Subject: Git server for Android
-Date: Wed, 12 Sep 2012 01:34:37 +0300
-Message-ID: <CAAKXCFfgv-4WzUHOUZtngzFgnoK-=O5pxTqqLSJzSqBvA=UnAA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: How to update a cloned git repository
+Date: Wed, 12 Sep 2012 10:52:37 +0200
+Message-ID: <vpqtxv34o8a.fsf@bauges.imag.fr>
+References: <k2n4v2$88t$1@ger.gmane.org> <vpq7gs0es4f.fsf@bauges.imag.fr>
+	<006f01cd900e$fce59a60$f6b0cf20$@schmitz-digital.de>
+	<vpqy5kgdctm.fsf@bauges.imag.fr>
+	<007001cd9016$8f980f80$aec82e80$@schmitz-digital.de>
+	<vpq4nn4d968.fsf@bauges.imag.fr>
+	<7v1ui8k0in.fsf@alter.siamese.dyndns.org>
+	<007401cd903c$f425fc20$dc71f460$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 12 00:34:51 2012
+Content-Type: text/plain
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'git'" <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Wed Sep 12 10:53:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TBZ2f-0000T5-3S
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 00:34:49 +0200
+	id 1TBihC-00040d-1z
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Sep 2012 10:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621Ab2IKWek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Sep 2012 18:34:40 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:60618 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751577Ab2IKWej (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Sep 2012 18:34:39 -0400
-Received: by lagy9 with SMTP id y9so682655lag.19
-        for <git@vger.kernel.org>; Tue, 11 Sep 2012 15:34:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=byX9MMRtIiyU8pWhPvS9cYuag9W+cg6T5Y7L5ss8YjE=;
-        b=0Of2QrtDlZBCwsWhMQdpCr89rf7CpCTDjsjwlS7GSh6wZt0uUVF41nPIZLMsEXpnpq
-         HgWWZkbm6mVRGq3YR1w5HmqkjqvvgZ0SiLCYYWkjxTpyQcmMjJD8qn79dSHS+V670cdu
-         Ga8IffZK7gcWlHYvIFEpqy1g3SKX3FY4UeVUVoVx+i6yoCxWy1ezaos2ZITy8HSsrnQV
-         dFYyMKaHLkXPlOMEpugIUtll/jshF1GECRq0/JTT7L8RjQTT9jSqKR28N2fsHWe1DwnW
-         ePScj1EahuyT8JBsYEcDaCMmKJhvHnSQlrWMnjHLhqaMZud6HV52VnzR1f7Ev0WI9G4N
-         8BHw==
-Received: by 10.112.44.167 with SMTP id f7mr6710492lbm.34.1347402877556; Tue,
- 11 Sep 2012 15:34:37 -0700 (PDT)
-Received: by 10.112.24.164 with HTTP; Tue, 11 Sep 2012 15:34:37 -0700 (PDT)
-X-Google-Sender-Auth: DubxL8RiJFNGCYNk01JQFn5jBPk
+	id S1751888Ab2ILIxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Sep 2012 04:53:08 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36086 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751607Ab2ILIxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Sep 2012 04:53:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8C8mBGd013676
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 12 Sep 2012 10:48:11 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TBigX-0007V7-TR; Wed, 12 Sep 2012 10:52:37 +0200
+In-Reply-To: <007401cd903c$f425fc20$dc71f460$@schmitz-digital.de> (Joachim
+	Schmitz's message of "Tue, 11 Sep 2012 18:46:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Sep 2012 10:48:11 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8C8mBGd013676
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1348044491.47333@fz1RuMGDgvc4fTkwtC4EkQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205269>
 
-Hi guys,
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-I'm looking for some feedback regarding an Android app I've released.
-It's a simple idea of mine for a tool that may be useful to developers
-when travelling or working on different locations.
+>> I think it is the-merge-commit^2; contrib/git-resurrect.sh might be
+>> of interest, too.
+>
+> Sorry you lost me, this is greek to me...
 
-So the idea was to combine the two (in my opinion) very complementary
-paradigms - mobility and distribution. In particular - the mobility of
-any Android device with the distribution that Git provides. The app is
-called Gidder and it's a Git server implementation for Android on top
-of a SSH server. It has user/repository management, dynamic DNS
-support and basically automatically handles upload-pack and
-receive-pack commands (so we may push and fetch/pull).
+A commit is an object that contain pointers to its parents. The root
+commit has no parent. For ordinary commits, there is one parent which is
+the commit on top of which it was created. For merge commits, there are
+N commits, the first is the one on top of which the merge was created,
+and the N-1 next ones are the commits being merged.
 
-The app can be found on Google Play Store and it's free:
-https://play.google.com/store/apps/details?id=net.antoniy.gidder.beta
+commit^ => first parent of commit
+commit^1 => same
+commit^2 => second parent, i.e. the one merged in commit.
 
-Cheers,
-Antoniy
+See in git.git:
+
+$ git show cb10ae9433126ef <---------------------------- one commit to study
+commit cb10ae9433126efbc4dcc46779d7ef2fe6b1f597
+Merge: 13b608a 9aeaab6   <------------------------------- list of parents
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Tue Sep 11 15:57:04 2012 -0700
+
+    Merge branch 'jc/maint-blame-no-such-path' into pu
+    
+    * jc/maint-blame-no-such-path:
+      blame: allow "blame file" in the middle of a conflicted merge
+
+$ git show cb10ae9433126ef^1 <-------------------- "previous commit" in origin/pu
+commit 13b608a063ce861929322e6bb3862b5364f3fbcf
+Merge: fa17a26 bdee397
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Tue Sep 11 11:50:44 2012 -0700
+
+    Merge branch 'dg/run-command-child-cleanup' into pu
+    
+    * dg/run-command-child-cleanup:
+      run-command.c: fix broken list iteration in clear_child_for_cleanup
+
+$ git show cb10ae9433126ef^2 <----------------- commit being merged by cb10ae9433126ef
+commit 9aeaab6811dce596b4f6141d76f5300359bfd009
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Tue Sep 11 14:30:03 2012 -0700
+
+    blame: allow "blame file" in the middle of a conflicted merge
+[...]
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
