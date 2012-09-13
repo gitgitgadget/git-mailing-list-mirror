@@ -1,101 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Suggestions for "What's cooking"
-Date: Thu, 13 Sep 2012 11:06:31 -0700
-Message-ID: <7vmx0t94rc.fsf@alter.siamese.dyndns.org>
-References: <7vpq5tjuw3.fsf@alter.siamese.dyndns.org>
- <504F8427.1020507@web.de> <7vhar4gxdq.fsf@alter.siamese.dyndns.org>
- <5050E0CA.7080907@web.de> <A7A1DB46082142E683753CFBC0A22A6B@PhilipOakley>
- <CAH5451kmwZehys4nL+NV8m8VGjDJtkSxru3o44_J_d3jD5ipxA@mail.gmail.com>
+From: Jens Bauer <jens-lists@gpio.dk>
+Subject: Re: CRLF, LF ... CR ?
+Date: Thu, 13 Sep 2012 20:17:20 +0200
+Message-ID: <20120913201720399747.156466ee@gpio.dk>
+References: <20120913170943725232.01d717ef@gpio.dk>
+ <1347550490.24469.54.camel@drew-northup.unet.maine.edu>
+ <20120913154309.GB726@sigill.intra.peff.net>
+ <20120913175300953765.9ccf790f@gpio.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 20:06:46 2012
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Drew Northup <drew.northup@maine.edu>,
+	git@vger.kernel.org
+To: Jens Bauer <jens-lists@gpio.dk>
+X-From: git-owner@vger.kernel.org Thu Sep 13 20:17:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCDoJ-0006bn-Vm
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 20:06:44 +0200
+	id 1TCDyp-0006kX-VV
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 20:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660Ab2IMSGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 14:06:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36572 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752959Ab2IMSGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 14:06:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F34E8CC2;
-	Thu, 13 Sep 2012 14:06:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2ePue0HatKfHiwXTvKTNIBmeqVQ=; b=Q3/OwZ
-	bJ7hlyC7xgfayKrnEbmgo9pQG1Dh4MbU8CMBcc8DlvouLxibZ9MsBC0+qA+EWBvM
-	awBGGqpjtzadImiyJpK8w198z8X1GHSWn/ecSugdv51o5eZAi5p40kBsBZAlc/CR
-	yP95ncVF1gNufyvE0pZ8ZFbhI+TfCEGiVJpUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HxsfWITvL1KnaVVWAOvm5AUtuPBGRpdM
-	wHQUG1j3SX3VhRSpoWFOQP6aZ5Uv9otRHWvpCUMv+TF6sT6EY4auTgCzz8EyMcEB
-	n3MlapFUOxAjcTUXduAP3Rz/YN4TiXA8xKzZMxMEgu29MPfWZwcqkvL1hEjWAOEr
-	25Uax1TwXY4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BC168CC1;
-	Thu, 13 Sep 2012 14:06:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD2AF8CBF; Thu, 13 Sep 2012
- 14:06:32 -0400 (EDT)
-In-Reply-To: <CAH5451kmwZehys4nL+NV8m8VGjDJtkSxru3o44_J_d3jD5ipxA@mail.gmail.com> (Andrew
- Ardill's message of "Thu, 13 Sep 2012 15:14:26 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFF57E22-FDCD-11E1-B7CB-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758747Ab2IMSRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 14:17:24 -0400
+Received: from [92.246.25.51] ([92.246.25.51]:62206 "EHLO mail.multitrading.dk"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750828Ab2IMSRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 14:17:23 -0400
+Received: (qmail 86460 invoked from network); 13 Sep 2012 18:17:20 -0000
+Received: from unknown (HELO ?10.0.2.26?) (jb@multitrading.dk@92.246.25.51)
+  by audiovideo.dk with ESMTPA; 13 Sep 2012 18:17:20 -0000
+In-Reply-To: <20120913175300953765.9ccf790f@gpio.dk>
+X-Mailer: GyazMail version 1.5.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205402>
 
-Andrew Ardill <andrew.ardill@gmail.com> writes:
+Hi Jeff and Drew.
 
-> Currently, the output for each branch looks something like:
-> * <branch-name> (<creation-date>) <number-of-commits>
->   (<merge-status>)
->  [list-of-commits]
->   (<branch-usage>)
-> <long-description>
-> <notes-and-memoranda>
-> <next-steps>
->
-> and these are grouped by current integration status (new, graduated,
-> stalled etc)
+I've been messing a little with clean/smudge filters; I think I understand them partly.
 
-Yes.  Thanks for a concise summary.
+Let's call the file I have on the server that have <cr> line endings, "mypcb.osm".
+If I clone the project, and do the following...
+$ cat mypcb.osm | tr '\r' '\n'
+I can read the file in the terminal window, otherwise it's just a "one-line-file".
 
-> A format that would make this information easier for me to parse would
-> be something like:
->
-> <short-branch-description>
->   <long-branch-description>
->   <notes>
->   <next-steps>
->   * <branch-name> (<creation-date>) <number-of-commits>
->     (<merge-status>)
->    [list-of-commits]
->     (<branch-usage>)
+So far, so good.
+In my home directory, I have a .gitconfig file, here's the interesting part:
+[core]
+        editor = nano
+        excludesfile = /Users/jens/.gitexcludes
+        attributesfile = /Users/jens/.gitattributes
 
-I do not see how it makes any sense to have the "This is where the
-section begins with, and its name is this" line in the middle of a
-block indented in such a way.  Care to explain?
-
-I can see some people may care more about the description than the
-list of commits [*1*], though.
+[filter "cr"]
+        clean = tr '\\r' '\\n'
+        smudge = tr '\\n' '\\r'
 
 
-[Footnote]
+In my home directory I added .gitattributes:
+*.osm   filter=cr
 
-*1* It however is an indication that the title of each commit needs
-to be improved to convey enough information so that I do not have to
-write the branch description myself for them.
+I've verified that .gitattributes is read; because if I add two spaces, like "*.osm filter = cr", I get an 'invalid filter name' error.
+I've also verified that the clean/smudge lines are read; if I only have '\n' for instance, I get an error.
+
+Now, when I clone the project, make a change and then issue this command...
+$ git diff mypcb.osm
+
+...I get a strange diff. On line 3, one of the files shows a lot of control-m (<cr>) lines.
+After that, I see <lf> lines, all prefixed with a '+', as if they were added.
+
+I think I might be nearly there, just missing some obvious detail somewhere.
+Any hints ?
+
+
+Love
+Jens
+
+On Thu, 13 Sep 2012 17:53:00 +0200, Jens Bauer wrote:
+> Hi Jeff and Drew.
+> 
+> Thank you for your quick replies! :)
+> 
+> The diffs look nasty yes; that's my main issue.
+> It can be worked around in many ways; eg a simple (but time consuming) way:
+> $ git diff mypcb.osm >mypcb.diff && nano mypcb.diff
+> 
+> -It'd be better to just pipe it into a regex, which changes CR to LF 
+> on the fly.
+> 
+> OsmondPCB is able to read files that has mixed LF and CR. (By mixed, 
+> I do not talk about CRLF)
+> 
+> The files do not need line-by-line diffing, but I think it would make 
+> it more readable.
+> Thank you very much for the hint on the clean/smudge filters. I'll 
+> have a look at it. =)
+> 
+> 
+> Love
+> Jens
+> 
+> On Thu, 13 Sep 2012 11:43:10 -0400, Jeff King wrote:
+>> On Thu, Sep 13, 2012 at 11:34:50AM -0400, Drew Northup wrote:
+>> 
+>>>> I've read that git supports two different line endings; either CRLF 
+>>>> or LF, but it does not support CR.
+>>>> Would it make sense to add support for CR (if so, I hereby request 
+>>>> it as a new feature) ?
+>>> 
+>>> Even if Git can't do CRLF/LF translation on a file it will still store
+>>> and track the content of it it just fine. In fact you probably want
+>>> translation completely disabled in this case. 
+>> 
+>> Yeah. If the files always should just have CR, then just don't ask git
+>> to do any translation (by not setting the "text" attribute, or even
+>> setting "-text" if you have something like autocrlf turned on globally),
+>> and it will preserve the bytes exactly. I suspect diffs will look nasty
+>> because we won't interpret CR as a line-ending, though.
+>> 
+>> Do the files actually need line-by-line diffing and merging? If not,
+>> then you are fine.
+>> 
+>> If so, then it would probably be nice to store them with a canonical LF
+>> in the repository, but convert to CR on checkout. Git can't do that
+>> internally, but you could define clean/smudge filters to do so (see the
+>> section in "git help attributes" on "Checking-out and checking-in";
+>> specifically the "filter" subsection).
+>> 
+>> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
