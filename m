@@ -1,80 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Revert diffstat back to English
-Date: Thu, 13 Sep 2012 14:10:41 -0700
-Message-ID: <7v627h7hny.fsf@alter.siamese.dyndns.org>
-References: <20120913132847.GD4287@sigill.intra.peff.net>
- <1347545786-936-1-git-send-email-pclouds@gmail.com>
- <7vzk4t960y.fsf@alter.siamese.dyndns.org>
- <7va9wt9377.fsf@alter.siamese.dyndns.org>
- <20120913210111.GA16956@sigill.intra.peff.net>
+Subject: Re: [PATCH v3] cherry-pick: don't forget -s on failure
+Date: Thu, 13 Sep 2012 14:13:46 -0700
+Message-ID: <7v1ui57hit.fsf@alter.siamese.dyndns.org>
+References: <20120912195732.GB4722@suse.cz>
+ <7vd31qc1p3.fsf@alter.siamese.dyndns.org>
+ <7v8vcec13d.fsf@alter.siamese.dyndns.org> <20120913073324.GA14383@suse.cz>
+ <7v8vcdalby.fsf@alter.siamese.dyndns.org> <20120913202714.GD14383@suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 13 23:11:01 2012
+Cc: git@vger.kernel.org, Robin Stocker <robin@nibor.org>
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Sep 13 23:14:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCGgY-0000bU-55
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 23:10:54 +0200
+	id 1TCGjW-00031T-Fz
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 23:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755834Ab2IMVKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 17:10:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65035 "EHLO
+	id S1750930Ab2IMVNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 17:13:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33659 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075Ab2IMVKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 17:10:44 -0400
+	id S1750708Ab2IMVNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 17:13:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 517D28313;
-	Thu, 13 Sep 2012 17:10:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9399F83B5;
+	Thu, 13 Sep 2012 17:13:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ah+wyfQH9OKhUBKqkqxtRBlvqmE=; b=mcIH5g
-	Hpg88g7/0t40lySsK6o0BwL4XGLVkTBdpsnASugASMC7OtC/EZOWPCO6vrVgs5CQ
-	gLsLuvVksOTJpQ8O4NVIWX90sOIVvKTSnGIVNZNowjC7flkG41gXEb5U7vcsMnb3
-	8a5cuLJgQsWoB41fZMX4ZlHgSWPcj4AXz87qE=
+	:content-type; s=sasl; bh=jupL7jAhpjqf8ys3BKhbn5wIIQA=; b=kowca8
+	n96I2dFYvTxX73jaCKfcZgG+jD8dH4Zj3gLiRBDZpiLkX0BnYDxQWaTdmpgbgtif
+	W/gOlxWU6PyPLLUCUAT/vlpniiYoIzH7Mrd2B0wSBToyQB6RUAJTbRpQ0dnJfLXF
+	4qWIcgLyZNMJg6bClJsJiUtKAEZ+/KvRwsrxw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X0Guiy+L00MVY+s6S7uu0ZdQD+WJgztY
-	J5u/HF4LJWQy3bwnhy30Ea6yYQfGpXjXdwed0nMYu3/P9h28sxWmx1DBoVhjl4bA
-	SuCHNFdG9U+8a2B3fwr7JVOHmOGR99FehNeOWEIXbW4RJw7Q4vmY0Tcu+FOmdGsf
-	VtSEsv+9gVE=
+	:content-type; q=dns; s=sasl; b=qKW82Km4TlP2Y8yAnDiMcBYNDzr/shs1
+	xvd7EKiba2LyveW6x08jsMnyfvlLX8cODuWlihz8s8UEiyvdiIzUuFDD9b2LJIZq
+	+M7WoGMEEicQ7Sw9+E9CcDo7zCukJI86tUvX/2tnIQDFfo7ETn08Din1/Z097Dqy
+	mhbhENkbTiQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CED78312;
-	Thu, 13 Sep 2012 17:10:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8080183B4;
+	Thu, 13 Sep 2012 17:13:48 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94564830F; Thu, 13 Sep 2012
- 17:10:42 -0400 (EDT)
-In-Reply-To: <20120913210111.GA16956@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 13 Sep 2012 17:01:11 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF78283B3; Thu, 13 Sep 2012
+ 17:13:47 -0400 (EDT)
+In-Reply-To: <20120913202714.GD14383@suse.cz> (Miklos Vajna's message of
+ "Thu, 13 Sep 2012 22:27:15 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7A222994-FDE7-11E1-A3D5-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E895FC16-FDE7-11E1-A5EF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205423>
 
-Jeff King <peff@peff.net> writes:
+Miklos Vajna <vmiklos@suse.cz> writes:
 
-> I suspect we will end up with people not setting i18n.projectlang, and
-> getting Klingon diffstats on the list.
+> +void append_signoff(struct strbuf *msgbuf, int ignore_footer)
+> +{
+> +	struct strbuf sob = STRBUF_INIT;
+> +	int i;
+> +
+> +	strbuf_addstr(&sob, sign_off_header);
+> +	strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
+> +				getenv("GIT_COMMITTER_EMAIL")));
+> +	strbuf_addch(&sob, '\n');
+> +	for (i = msgbuf->len - 1 - ignore_footer; i > 0 && msgbuf->buf[i - 1] != '\n'; i--)
+> +		; /* do nothing */
+> +	struct strbuf footer = STRBUF_INIT;
+> +	if (ignore_footer > 0) {
+> +		strbuf_addstr(&footer, msgbuf->buf + msgbuf->len - ignore_footer);
+> +		strbuf_setlen(msgbuf, msgbuf->len - ignore_footer);
+> +	}
 
-Yes, but when our starting point is that the diffstat summary is not
-meant for machine consumption, which I tend to agree, that is a
-logical consequence no matter how you cut it, no?  After all, they
-want to be careless when running format-patch meant for _this_
-project whose project language is C locale, but still want to be
-able to see output that is not meant for machine consumption in
-their native language, and these are incompatible goals.
+That's decl-after-stmt.
 
-Giving them a mechanism so that they do not have to remember setting
-LANG/LC_ALL every time they context switch into this project would
-be the best we can do, I am afraid.
-
-Unless somebody has a better design that does not involve three
-languages (always C, project language and Klingon), that is.
+I would have expected that you can just do strbuf_splice() to add
+the &sob into &msgbuf with the original code structure, without a
+substantial rewrite of the function like this.  Perhaps I am missing
+something?
