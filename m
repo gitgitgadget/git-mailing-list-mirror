@@ -1,417 +1,244 @@
-From: Miklos Vajna <vmiklos@suse.cz>
-Subject: [PATCH v3] cherry-pick: don't forget -s on failure
-Date: Thu, 13 Sep 2012 22:27:15 +0200
-Message-ID: <20120913202714.GD14383@suse.cz>
-References: <20120912195732.GB4722@suse.cz>
- <7vd31qc1p3.fsf@alter.siamese.dyndns.org>
- <7v8vcec13d.fsf@alter.siamese.dyndns.org>
- <20120913073324.GA14383@suse.cz>
- <7v8vcdalby.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 3/6] t7810-grep: test multiple --author with
+ --all-match
+Date: Thu, 13 Sep 2012 13:47:51 -0700
+Message-ID: <7vmx0t7iq0.fsf@alter.siamese.dyndns.org>
+References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
+ <cover.1347544259.git.git@drmicha.warpmail.net>
+ <8fd93bb87098298677426735dd354fa4f64abc17.1347544259.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Robin Stocker <robin@nibor.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 22:25:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Sep 13 22:48:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCFyn-0007pY-VN
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 22:25:42 +0200
+	id 1TCGKR-00082r-Qe
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 22:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125Ab2IMUZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 16:25:33 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:46921 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758103Ab2IMUZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 16:25:31 -0400
-Received: from relay2.suse.de (unknown [195.135.220.254])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 9E921A0FF6;
-	Thu, 13 Sep 2012 22:25:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v8vcdalby.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758821Ab2IMUrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 16:47:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53780 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752419Ab2IMUry (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 16:47:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B700A9CDF;
+	Thu, 13 Sep 2012 16:47:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GIyboAK0I/JsUweBEqaSEMIVzn4=; b=yEI5Iq
+	Mh6mSUVkI74ydyxBIHgYcCs7imZ9PcY1RUnn2EgDxbtBj67/CgldHv4aITmrkA3/
+	2nwOr+gmwgvF5j0V/3xBfCjpYdLeGp6O5H/QVYp+mw0dd8LgX2QQciOTpJdtUB5I
+	/sfhbsTbEETicHmthmjpgAOQboV0eh01tgeB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pXJuvCzr+2qKcq61loxvR6L/06HNBOMz
+	mOnjfomlJIQS2jS5LrYLmVVIiYeb+6Zl80By8z7JK9hpUELUNb9vkv9MqGpGFC0a
+	pfcLNDomzB2IwRZ/aa2epoTgmhveLb22UboxPl1MkjCKnPTBDwWPy6DbFsM61tY+
+	yZkOOeIFJoo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4D9F9CDE;
+	Thu, 13 Sep 2012 16:47:53 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A60FE9CDC; Thu, 13 Sep 2012
+ 16:47:52 -0400 (EDT)
+In-Reply-To: <8fd93bb87098298677426735dd354fa4f64abc17.1347544259.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 13 Sep 2012 16:04:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4997BAB2-FDE4-11E1-80DE-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205419>
 
-In case 'git cherry-pick -s <commit>' failed, the user had to use 'git
-commit -s' (i.e. state the -s option again), which is easy to forget
-about.  Instead, write the signed-off-by line early, so plain 'git
-commit' will have the same result.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Also update 'git commit -s', so that in case there is already a relevant
-Signed-off-by line before the Conflicts: line, it won't add one more at
-the end of the message. If there is no such line, then add it before the
-the Conflicts: line.
+> --all-match is ignored for author matching on purpose.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
 
-Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
----
+What the added test expects is correct, but I do not think the above
+description is correct.  "all-match" is implicitly turned on when
+you use header match.
 
-> This is somewhat iffy.  Shouldn't "test_commit --signoff --notick"
-> work?
+When you say
 
-Indeed, fixed now.
+	git log --grep=Linus --grep=Junio
 
-> Hrm, what is this thing trying to do?  It does start scanning from
-> the end (ignoring the "Conflicts:" thing) to see who the last person
-> that signed it off was, but once it decides that it needs to add a
-> new sign-off, it still adds it at the very end anyway.
+you will get
 
-Ah, I did not handle that, as the original git commit -s didn't do it 
-either -- and originally I just wanted to touch git cherry-pick. 
-Implemented now.
+    (or
+     pattern_body<body>Junio
+     pattern_body<body>Linus
+    )
 
- builtin/commit.c                |   79 +++++++++++---------------------------
- sequencer.c                     |   72 +++++++++++++++++++++++++++++++++++
- sequencer.h                     |    4 ++
- t/t3507-cherry-pick-conflict.sh |   32 ++++++++++++++++
- t/t3510-cherry-pick-sequence.sh |    6 +-
- t/test-lib-functions.sh         |   20 +++++++--
- 6 files changed, 149 insertions(+), 64 deletions(-)
+but when you say
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 778cf16..4d50484 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -28,6 +28,7 @@
- #include "submodule.h"
- #include "gpg-interface.h"
- #include "column.h"
-+#include "sequencer.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [options] [--] <filepattern>..."),
-@@ -466,8 +467,6 @@ static int is_a_merge(const struct commit *current_head)
- 	return !!(current_head->parents && current_head->parents->next);
- }
- 
--static const char sign_off_header[] = "Signed-off-by: ";
--
- static void export_one(const char *var, const char *s, const char *e, int hack)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -552,47 +551,6 @@ static void determine_author_info(struct strbuf *author_ident)
- 	}
- }
- 
--static int ends_rfc2822_footer(struct strbuf *sb)
--{
--	int ch;
--	int hit = 0;
--	int i, j, k;
--	int len = sb->len;
--	int first = 1;
--	const char *buf = sb->buf;
--
--	for (i = len - 1; i > 0; i--) {
--		if (hit && buf[i] == '\n')
--			break;
--		hit = (buf[i] == '\n');
--	}
--
--	while (i < len - 1 && buf[i] == '\n')
--		i++;
--
--	for (; i < len; i = k) {
--		for (k = i; k < len && buf[k] != '\n'; k++)
--			; /* do nothing */
--		k++;
--
--		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
--			continue;
--
--		first = 0;
--
--		for (j = 0; i + j < len; j++) {
--			ch = buf[i + j];
--			if (ch == ':')
--				break;
--			if (isalnum(ch) ||
--			    (ch == '-'))
--				continue;
--			return 0;
--		}
--	}
--	return 1;
--}
--
- static char *cut_ident_timestamp_part(char *string)
- {
- 	char *ket = strrchr(string, '>');
-@@ -717,21 +675,30 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		stripspace(&sb, 0);
- 
- 	if (signoff) {
--		struct strbuf sob = STRBUF_INIT;
--		int i;
-+		/*
-+		 * See if we have a Conflicts: block at the end. If yes, count
-+		 * its size, so we can ignore it.
-+		 */
-+		int ignore_footer = 0;
-+		int i, eol, previous = 0;
-+		const char *nl;
- 
--		strbuf_addstr(&sob, sign_off_header);
--		strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
--					     getenv("GIT_COMMITTER_EMAIL")));
--		strbuf_addch(&sob, '\n');
--		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
--			; /* do nothing */
--		if (prefixcmp(sb.buf + i, sob.buf)) {
--			if (!i || !ends_rfc2822_footer(&sb))
--				strbuf_addch(&sb, '\n');
--			strbuf_addbuf(&sb, &sob);
-+		for (i = 0; i < sb.len; i++) {
-+			nl = memchr(sb.buf + i, '\n', sb.len - i);
-+			if (nl)
-+				eol = nl - sb.buf;
-+			else
-+				eol = sb.len;
-+			if (!prefixcmp(sb.buf + previous, "\nConflicts:\n")) {
-+				ignore_footer = sb.len - previous;
-+				break;
-+			}
-+			while (i < eol)
-+				i++;
-+			previous = eol;
- 		}
--		strbuf_release(&sob);
-+
-+		append_signoff(&sb, ignore_footer);
- 	}
- 
- 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
-diff --git a/sequencer.c b/sequencer.c
-index f86f116..4420807 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -17,6 +17,8 @@
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-+const char sign_off_header[] = "Signed-off-by: ";
-+
- void remove_sequencer_state(void)
- {
- 	struct strbuf seq_dir = STRBUF_INIT;
-@@ -233,6 +235,9 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 		die(_("%s: Unable to write new index file"), action_name(opts));
- 	rollback_lock_file(&index_lock);
- 
-+	if (opts->signoff)
-+		append_signoff(msgbuf, 0);
-+
- 	if (!clean) {
- 		int i;
- 		strbuf_addstr(msgbuf, "\nConflicts:\n");
-@@ -1011,3 +1016,70 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	save_opts(opts);
- 	return pick_commits(todo_list, opts);
- }
-+
-+static int ends_rfc2822_footer(struct strbuf *sb)
-+{
-+	int ch;
-+	int hit = 0;
-+	int i, j, k;
-+	int len = sb->len;
-+	int first = 1;
-+	const char *buf = sb->buf;
-+
-+	for (i = len - 1; i > 0; i--) {
-+		if (hit && buf[i] == '\n')
-+			break;
-+		hit = (buf[i] == '\n');
-+	}
-+
-+	while (i < len - 1 && buf[i] == '\n')
-+		i++;
-+
-+	for (; i < len; i = k) {
-+		for (k = i; k < len && buf[k] != '\n'; k++)
-+			; /* do nothing */
-+		k++;
-+
-+		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
-+			continue;
-+
-+		first = 0;
-+
-+		for (j = 0; i + j < len; j++) {
-+			ch = buf[i + j];
-+			if (ch == ':')
-+				break;
-+			if (isalnum(ch) ||
-+			    (ch == '-'))
-+				continue;
-+			return 0;
-+		}
-+	}
-+	return 1;
-+}
-+
-+void append_signoff(struct strbuf *msgbuf, int ignore_footer)
-+{
-+	struct strbuf sob = STRBUF_INIT;
-+	int i;
-+
-+	strbuf_addstr(&sob, sign_off_header);
-+	strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
-+				getenv("GIT_COMMITTER_EMAIL")));
-+	strbuf_addch(&sob, '\n');
-+	for (i = msgbuf->len - 1 - ignore_footer; i > 0 && msgbuf->buf[i - 1] != '\n'; i--)
-+		; /* do nothing */
-+	struct strbuf footer = STRBUF_INIT;
-+	if (ignore_footer > 0) {
-+		strbuf_addstr(&footer, msgbuf->buf + msgbuf->len - ignore_footer);
-+		strbuf_setlen(msgbuf, msgbuf->len - ignore_footer);
-+	}
-+	if (prefixcmp(msgbuf->buf + i, sob.buf)) {
-+		if (!i || !ends_rfc2822_footer(msgbuf))
-+			strbuf_addch(msgbuf, '\n');
-+		strbuf_addbuf(msgbuf, &sob);
-+	}
-+	strbuf_release(&sob);
-+	strbuf_addbuf(msgbuf, &footer);
-+	strbuf_release(&footer);
-+}
-diff --git a/sequencer.h b/sequencer.h
-index d849420..60287b8 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -49,4 +49,8 @@ extern void remove_sequencer_state(void);
- 
- int sequencer_pick_revisions(struct replay_opts *opts);
- 
-+extern const char sign_off_header[];
-+
-+void append_signoff(struct strbuf *msgbuf, int ignore_footer);
-+
- #endif
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 0c81b3c..c82f721 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -30,6 +30,7 @@ test_expect_success setup '
- 	test_commit initial foo a &&
- 	test_commit base foo b &&
- 	test_commit picked foo c &&
-+	test_commit --signoff picked-signed foo d &&
- 	git config advice.detachedhead false
- 
- '
-@@ -340,4 +341,35 @@ test_expect_success 'revert conflict, diff3 -m style' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'failed cherry-pick does not forget -s' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -s picked &&
-+	test_i18ngrep -e "Signed-off-by" .git/MERGE_MSG
-+'
-+
-+test_expect_success 'commit after failed cherry-pick does not add duplicated -s' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick -s picked-signed &&
-+	git commit -a -s &&
-+	test $(git show -s |grep -c "Signed-off-by") = 1
-+'
-+
-+test_expect_success 'commit after failed cherry-pick adds -s at the right place' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick picked &&
-+	git commit -a -s &&
-+	pwd &&
-+	cat <<EOF > expected &&
-+picked
-+
-+Signed-off-by: C O Mitter <committer@example.com>
-+
-+Conflicts:
-+	foo
-+EOF
-+
-+	git show -s --pretty=format:%B > actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index f4e6450..b5fb527 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -410,7 +410,7 @@ test_expect_success '--continue respects -x in first commit in multi-pick' '
- 	grep "cherry picked from.*$picked" msg
- '
- 
--test_expect_success '--signoff is not automatically propagated to resolved conflict' '
-+test_expect_failure '--signoff is automatically propagated to resolved conflict' '
- 	pristine_detach initial &&
- 	test_expect_code 1 git cherry-pick --signoff base..anotherpick &&
- 	echo "c" >foo &&
-@@ -428,7 +428,7 @@ test_expect_success '--signoff is not automatically propagated to resolved confl
- 	grep "Signed-off-by:" anotherpick_msg
- '
- 
--test_expect_success '--signoff dropped for implicit commit of resolution, multi-pick case' '
-+test_expect_failure '--signoff dropped for implicit commit of resolution, multi-pick case' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick -s picked anotherpick &&
- 	echo c >foo &&
-@@ -441,7 +441,7 @@ test_expect_success '--signoff dropped for implicit commit of resolution, multi-
- 	! grep Signed-off-by: msg
- '
- 
--test_expect_success 'sign-off needs to be reaffirmed after conflict resolution, single-pick case' '
-+test_expect_failure 'sign-off needs to be reaffirmed after conflict resolution, single-pick case' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick -s picked &&
- 	echo c >foo &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 9bc57d2..0802da5 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -144,11 +144,21 @@ test_pause () {
- 
- test_commit () {
- 	notick= &&
--	if test "z$1" = "z--notick"
--	then
--		notick=yes
-+	signoff= &&
-+	while test $# != 0; do
-+		case "$1" in
-+		--notick)
-+			notick=yes
-+			;;
-+		--signoff)
-+			signoff="$1"
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
- 		shift
--	fi &&
-+	done &&
- 	file=${2:-"$1.t"} &&
- 	echo "${3-$1}" > "$file" &&
- 	git add "$file" &&
-@@ -156,7 +166,7 @@ test_commit () {
- 	then
- 		test_tick
- 	fi &&
--	git commit -m "$1" &&
-+	git commit $signoff -m "$1" &&
- 	git tag "$1"
- }
- 
--- 
-1.7.7
+	git log --author=Linus --author=Junio
+
+you will get
+
+    [all-match]
+    (or
+     (or
+      pattern_head<head 0>Linus
+      pattern_head<head 0>Junio
+     )
+     true
+    )
+
+instead.  Notice that there is one extra level of "OR" node, so that
+two OR nodes on the top-level backbone (think of these as cons cells
+with car and cdr) are "author is either Linus or junio" and "True".
+Because "all-match" is about rejecting a document as non-matching
+unless all the OR nodes on the top-level backbone have fired, this
+allows commit that is authored either by Linus or by Junio to match,
+and "on purpose" part in your message is correct.
+
+But
+
+	git log --author=Linus --author=Junio --grep=commit
+
+will be parsed to
+
+    [all-match]
+    (or
+     pattern_body<body>commit
+     (or
+      (or
+       pattern_head<head 0>Linus
+       pattern_head<head 0>Junio
+      )
+      true
+     )
+    )
+
+to have three OR nodes on the backbone: "the log message must have commit",
+"authored by either Linus or Junio", and "true".  All three must
+match somewhere in the "git cat-file commit" output for the commit
+to be considered a match (but obviously they do not have to match on
+the same line).
+
+So what is giving commits made by Linus, even though it is not
+authored by Junio, with "--author=Linus --author=Junio" is not the
+lack of --all-match.  In fact, --all-match is implicitly set for
+other things, so that the last example finds commits that mention
+"commit" authored by one of these two people.  Commits that do
+mention "commit" but are done by other people are excluded.  Commits
+that do not mention "commit" are excluded even if they were done by
+Linus or Junio.
+
+	git log --committer=Linus --author=Junio
+
+turns into
+
+    [all-match]
+    (or
+     pattern_head<head 1>Linus
+     (or
+      pattern_head<head 0>Junio
+      true
+     )
+    )
+
+which has "committed by Linus", "authored by Junio" on the top-level
+backbone, so both has to be true for a commit to match.
+
+Adding --grep=commit makes it
+
+    [all-match]
+    (or
+     pattern_body<body>commit
+     (or
+      pattern_head<head 1>Linus
+      (or
+       pattern_head<head 0>Junio
+       true
+      )
+     )
+    )
+
+which has "committed by Linus", "authored by Junio", "mentions
+commit" on the top-level, and all three has to be true.
+
+	git log --committer=Linus --author=Junio --grep=commit --grep=tag
+
+groups the "mentions commit" and "mentions tag" under a new
+top-level OR node, i.e.
+
+    [all-match]
+    (or
+     (or
+      pattern_body<body>commit
+      pattern_body<body>tag
+     )
+     (or
+      pattern_head<head 1>Linus
+      (or
+       pattern_head<head 0>Junio
+       true
+      )
+     )
+    )
+
+so the top-level backbone "all-match" works on becomes
+
+ - Mentions either commit or tag,
+ - Committed by Linus,
+ - Authored by Junio
+
+One possible improvement we can make is to parse the command line in
+the last example with "--all-match" to
+
+    [all-match]
+    (or
+     pattern_body<body>commit
+     (or
+      pattern_body<body>tag
+      (or
+       pattern_head<head 1>Linus
+       (or
+        pattern_head<head 0>Junio
+        true
+       )
+      )
+     )
+    )
+
+so that the backbone becomes
+
+ - Mentions commit,
+ - Mentions tag,
+ - Committed by Linus,
+ - Authored by Junio
+
+to require that both commit and tag are mentioned in the message.
+
+>  t/t7810-grep.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index 1db3dcb..9bc63a3 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -580,6 +580,14 @@ test_expect_success 'log with multiple --author uses union' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'log --all-match with multiple --author still uses union' '
+> +	git log --all-match --author="Thor" --author="Aster" --format=%s >actual &&
+> +	{
+> +	    echo third && echo second && echo initial
+> +	} >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'log with --grep and multiple --author uses all-match' '
+>  	git log --author="Thor" --author="Night" --grep=i --format=%s >actual &&
+>  	{
