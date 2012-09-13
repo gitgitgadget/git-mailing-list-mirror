@@ -1,96 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 0/2] Mixing English and a local language
-Date: Thu, 13 Sep 2012 10:30:52 -0700
-Message-ID: <7v4nn1akz7.fsf@alter.siamese.dyndns.org>
-References: <1345922816-20616-1-git-send-email-pclouds@gmail.com>
- <CACsJy8CG72PzvndV7C4a9hspxhprKn2tcb49HxeZ14pmEDycGQ@mail.gmail.com>
- <7vligfcdgh.fsf@alter.siamese.dyndns.org>
- <20120913132847.GD4287@sigill.intra.peff.net>
+Subject: Re: [PATCH] Revert diffstat back to English
+Date: Thu, 13 Sep 2012 10:39:09 -0700
+Message-ID: <7vzk4t960y.fsf@alter.siamese.dyndns.org>
+References: <20120913132847.GD4287@sigill.intra.peff.net>
+ <1347545786-936-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 13 19:31:08 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 13 19:39:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCDFn-00021X-Oj
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 19:31:04 +0200
+	id 1TCDNr-0000ap-62
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 19:39:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955Ab2IMRa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 13:30:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48330 "EHLO
+	id S1752704Ab2IMRjO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Sep 2012 13:39:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52475 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750799Ab2IMRay (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 13:30:54 -0400
+	id S1750974Ab2IMRjN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 13:39:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A2C7DDF;
-	Thu, 13 Sep 2012 13:30:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FC5580FE;
+	Thu, 13 Sep 2012 13:39:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rxDa+/FGEnjWTPGJVCGpNzL4q5A=; b=Iilk4N
-	9aSzpigvOQsv/8PFgR5PvcuNjGePDM6t9nIeYg7ChTpZde2P6tFNWqr3TB12VixW
-	+UgYwN9VMVaUWUh5NWRLIVt8flVH3Q9lXrRLXgd/5gexxlIw4zXvdMk3LlR44JgW
-	CmQ7kHrYPIrnJGX7487JvC1JCguZzzYKu43S4=
+	:content-type:content-transfer-encoding; s=sasl; bh=/zzzhbReFwkC
+	s2gc1T3K2aQm0xA=; b=k0H+sr398e9O1H9L1mIUu1JzdDJF2bSMPpOyYJSDjGvj
+	fJDPOMtpMeqqP00pymk0FEqbwEmIYhYegguYL9Lw/3s1wSJB8Pb3zUAtMpzWuFf2
+	3y5+cBwctWFBCP6+Icq+9h1ZExNHJRLkSR0T7FkpBiuniB6nqxFPj5gqeAjqLk0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TjoQ1oFN07W+PfPK9Y2sl3YnkdD55sUd
-	JpFx4FHDxrlqBG2jFkgLcsLyD/hbFFvsBe+FCHz+IGwfUAybYje+5ywTjw0sCt8B
-	sQA/O4vYt8Io5yT8HaEUvxz5PlAByk+7ZNzmaSuMn3MzSzcm3rNTbxW0GK0YeS+e
-	AYrPHa3PNwc=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=F3qjEb
+	b9k9UHh2UgeCTsBzsw8JHRL1id1GXmO5VkxA60dOTylT+5ihl3NykCf+B8iTbmzI
+	ETf+XwYd+2SLtLyql/D/SsEqDq2mAZop3OmykCwSdaEr3n/SMOjAqYYazYtJ2F/T
+	0yUx8iT3oSASlPMWoeDGtLPbX8rIZWdT7JaWY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52F767DDE;
-	Thu, 13 Sep 2012 13:30:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D3AD80FD;
+	Thu, 13 Sep 2012 13:39:12 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFBA57DDC; Thu, 13 Sep 2012
- 13:30:53 -0400 (EDT)
-In-Reply-To: <20120913132847.GD4287@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 13 Sep 2012 09:28:47 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D580980F9; Thu, 13 Sep 2012
+ 13:39:11 -0400 (EDT)
+In-Reply-To: <1347545786-936-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpCU5n4buNYw==?= Duy"'s message of "Thu, 13 Sep
+ 2012 21:16:26 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C4F17F48-FDC8-11E1-B27B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EDDDF124-FDC9-11E1-9C4A-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205396>
 
-Jeff King <peff@peff.net> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> I think I'd prefer:
->
->   1. Revert diffstat to always be in English/C locale for now. For all
->      commands. People too frequently end up showing the output of things
->      besides format-patch. It means they will have to read the English
->      when they are just running locally, but since format-patch is
->      generating it, it is something that they would need to
->      understand anyway.
->
->   2. If people on non-English projects find that too cumbersome, then we
->      can switch the "English/C" above for `i18n.projectlang` or
->      something.
+>  Git is still partly i18n-ized, turning a few strings back does not
+>  seem a big regression.
 
-That part I sort-of understand.
+More than one people explicitly said that they do not want to see
+this in Klingon.  Even if the system is fully internationalized,
+these "... (+), ... (-)" should never be localized, just like we
+will never localize "diff --git", "index f00f..abcd", etc.
 
->      But it should not be per-command, but per-message, and
->      should include all output that is not diagnostic and is not
->      machine-parseable (e.g., what I mentioned above, request-pull
->      output, etc). If it is the project's language, then the team
->      members will need to know it anyway, so it should not be too big a
->      burden to have a potentially different language there than in the
->      diagnostic messages.
+In other words, it is not a "regression" to begin with.  Turning
+this back to "C" is a bugfix.  We shouldn't have had marked it with
+_() in the first place.
 
-No matter what the project languages is, machine parseable part will
-not be localized but fixed to "C" anyway, so I do not think it comes
-into the picture.
+>  If you mean projectlang vs a local language, I looked into that and =
+I
+>  don't think we could support two non-C languages using standard
+>  gettext interface. So it's either "C vs another", or make use of
+>  unofficial gettext features, or roll your own.
 
-My take on this is, if there is the project language, it should
-apply to _everything_.  Please do not introduce any per-command,
-per-message, per-anything mess.  Just set LANG/LC_ALL up and be done
-with it.
-
-And I think you justified why that is the right thing to do very
-well in the second sentence in the above paragraph I quoted from
-you.
+Yeah, that is true, too.
