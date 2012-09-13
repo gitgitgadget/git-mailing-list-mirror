@@ -1,189 +1,111 @@
-From: Jeremy White <jwhite@codeweavers.com>
-Subject: [PATCH v3] Documentation: describe subject more precisely
-Date: Thu, 13 Sep 2012 17:27:09 -0500
-Message-ID: <50525DBD.8040802@codeweavers.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 6/6] rev-list/log: document logic with several limiting
+ options
+Date: Thu, 13 Sep 2012 15:29:45 -0700
+Message-ID: <7v7grx5zfq.fsf@alter.siamese.dyndns.org>
+References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
+ <cover.1347544259.git.git@drmicha.warpmail.net>
+ <49f89f65cd39306655a9b382a1244e34fb90fff1.1347544259.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 14 00:27:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 14 00:30:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCHsV-0008G5-H1
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 00:27:19 +0200
+	id 1TCHv5-0001vY-Jy
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 00:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758921Ab2IMW1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 18:27:11 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:49134 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754938Ab2IMW1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 18:27:10 -0400
-Received: from jwhite.mn.codeweavers.com ([10.69.137.101] ident=jwhite)
-	by mail.codeweavers.com with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <jwhite@codeweavers.com>)
-	id 1TCHsL-0002Vz-RC
-	for git@vger.kernel.org; Thu, 13 Sep 2012 17:27:09 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.4) Gecko/20120510 Icedove/10.0.4
-X-Enigmail-Version: 1.4.1
+	id S1750765Ab2IMW3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 18:29:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37317 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752419Ab2IMW3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 18:29:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CDFB97EC;
+	Thu, 13 Sep 2012 18:29:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HGLMuV55STdOGjrgsja8YLSnKu4=; b=JKv18M
+	etYas25flXKmNkVjBwkhDGjI/386BpeqhTvuezBr1ElZnFRkDYWQCWP0oTfmHuBR
+	/O934eDO7Pt5NaECw6WyfODkBnwSKucjMVUHUUNyauVr+JmSG4cTRPlzZ+StddbL
+	CAHu4a0IKWkgEmJUuFOOuJeW9Qh729aPvYNqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mnf4fdUDzf5qLOxFGHSd7HFdLeqsviUV
+	+xkWBpKsDNDATeDRkwBYK5qBMBc/KEbEYRvfCs+4A7wrgFVKP1zUMb8fraFbspVe
+	VJdpmPBmJkn7KI/8EQYC+86SRnrILnJoHBOfhezYaZ4gDA2n8s8GwNerkyO32XaB
+	xj51kEbkfeE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68C7797EB;
+	Thu, 13 Sep 2012 18:29:48 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCC1097E6; Thu, 13 Sep 2012
+ 18:29:46 -0400 (EDT)
+In-Reply-To: <49f89f65cd39306655a9b382a1244e34fb90fff1.1347544259.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 13 Sep 2012 16:04:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 85EA4760-FDF2-11E1-9186-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205439>
 
-The discussion of email subject throughout the documentation is
-misleading; it indicates that the first line will always become
-the subject.  In fact, the subject is generally all lines up until
-the first full blank line.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-This patch refines that, and makes more use of the concept of a
-commit title, with the title being all text up to the first blank line.
+> The current behavior is probably as useful as it is confusing. In any
+> case it is going to stay. So, document it.
+>
+> This does not take into account the issue of 'log --all-match
+> --author=me --grep=foo --grep=bar' not honoring '--all-match' because it
+> is hopefully a corner case (and, even more hopefully, fixed some time
+> soon).
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  Documentation/rev-list-options.txt | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 5436eba..b2dbfb5 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -6,6 +6,19 @@ special notations explained in the description, additional commit
+>  limiting may be applied. Note that they are applied before commit
+>  ordering and formatting options, such as '--reverse'.
+>  
+> +Different options are ANDed: '--author=bar --grep=foo'
+> +limits to commits which match both conditions.
+> +
+> +Several occurences of the '--grep' option are ORed: '--grep=foo --grep=bar'
+> +limits to commits matching any of these conditions.
+> +(If '--all-match' is given, the conditions are ANDed.)
+> +
+> +Several occurences of the '--author' and '--committer' options are ORed
+> +(because there can be only one each per commit).
 
-Signed-off-by: Jeremy White <jwhite@codeweavers.com>
----
- Documentation/git-commit.txt       |    6 ++++--
- Documentation/git-for-each-ref.txt |    7 ++++---
- Documentation/git-format-patch.txt |   11 +++++++----
- Documentation/git-shortlog.txt     |    3 +--
- Documentation/gitcore-tutorial.txt |    9 ++++-----
- Documentation/gittutorial.txt      |    8 +++++---
- Documentation/user-manual.txt      |    9 ++++++---
- 7 files changed, 31 insertions(+), 22 deletions(-)
+As I would really want to eventually see the revision command option
+parser understand the full power of grep expressions in the future,
+I would really want to avoid a misleading explanation that calls
+what "--all-match" does as "ANDed".
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 4622297..9594ac8 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -389,8 +389,10 @@ DISCUSSION
- Though not required, it's a good idea to begin the commit message
- with a single short (less than 50 character) line summarizing the
- change, followed by a blank line and then a more thorough description.
--Tools that turn commits into email, for example, use the first line
--on the Subject: line and the rest of the commit in the body.
-+The text up to the first blank line in a commit message is treated
-+as the commit title, and that title is used throughout git.
-+For example, linkgit:git-format-patch[1] turns a commit into email, and it uses
-+the title on the Subject line and the rest of the commit in the body.
- 
- include::i18n.txt[]
- 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index c872b88..db55a4e 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -102,9 +102,10 @@ Fields that have name-email-date tuple as its value (`author`,
- and `date` to extract the named component.
- 
- The complete message in a commit and tag object is `contents`.
--Its first line is `contents:subject`, the remaining lines
--are `contents:body` and the optional GPG signature
--is `contents:signature`.
-+Its first line is `contents:subject`, where subject is the concatenation
-+of all lines of the commit message up to the first blank line.  The next
-+line is 'contents:body', where body is all of the lines after the first
-+blank line.  Finally, the optional GPG signature is `contents:signature`.
- 
- For sorting purposes, fields with numeric values sort in numeric
- order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 04c7346..6d43f56 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -58,10 +58,13 @@ output, unless the `--stdout` option is specified.
- If `-o` is specified, output files are created in <dir>.  Otherwise
- they are created in the current working directory.
- 
--By default, the subject of a single patch is "[PATCH] First Line" and
--the subject when multiple patches are output is "[PATCH n/m] First
--Line". To force 1/1 to be added for a single patch, use `-n`.  To omit
--patch numbers from the subject, use `-N`.
-+By default, the subject of a single patch is "[PATCH] " followed by
-+the concatenation of lines from the commit message up to the first blank
-+line (see the DISCUSSION section of linkgit:git-commit[1]).
-+
-+When multiple patches are output, the subject prefix will instead be
-+"[PATCH n/m] ".  To force 1/1 to be added for a single patch, use `-n`.
-+To omit patch numbers from the subject, use `-N`.
- 
- If given `--thread`, `git-format-patch` will generate `In-Reply-To` and
- `References` headers to make the second and subsequent patch mails appear
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index 01d8417..afeb4cd 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -14,8 +14,7 @@ git log --pretty=short | 'git shortlog' [-h] [-n] [-s] [-e] [-w]
- DESCRIPTION
- -----------
- Summarizes 'git log' output in a format suitable for inclusion
--in release announcements. Each commit will be grouped by author and
--the first line of the commit message will be shown.
-+in release announcements. Each commit will be grouped by author and title.
- 
- Additionally, "[PATCH]" will be stripped from the commit description.
- 
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 9d89336..5325c5a 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -956,12 +956,11 @@ $ git show-branch --topo-order --more=1 master mybranch
- ------------------------------------------------
- 
- The first two lines indicate that it is showing the two branches
--and the first line of the commit log message from their
--top-of-the-tree commits, you are currently on `master` branch
--(notice the asterisk `*` character), and the first column for
--the later output lines is used to show commits contained in the
-+with the titles of their top-of-the-tree commits, you are currently on
-+`master` branch (notice the asterisk `*` character), and the first
-+column for the later output lines is used to show commits contained in the
- `master` branch, and the second column for the `mybranch`
--branch. Three commits are shown along with their log messages.
-+branch. Three commits are shown along with their titles.
- All of them have non blank characters in the first column (`*`
- shows an ordinary commit on the current branch, `-` is a merge commit), which
- means they are now part of the `master` branch. Only the "Some
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index dee0505..f1cb6f3 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -139,9 +139,11 @@ them to the index, and commit, all in one step.
- A note on commit messages: Though not required, it's a good idea to
- begin the commit message with a single short (less than 50 character)
- line summarizing the change, followed by a blank line and then a more
--thorough description.  Tools that turn commits into email, for
--example, use the first line on the Subject: line and the rest of the
--commit in the body.
-+thorough description. The text up to the first blank line in a commit
-+message is treated as the commit title, and that title is used
-+throughout git.  For example, linkgit:git-format-patch[1] turns a
-+commit into email, and it uses the title on the Subject line and the
-+rest of the commit in the body.
- 
- Git tracks content not files
- ----------------------------
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 03d95dc..4d29625 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1136,9 +1136,12 @@ Creating good commit messages
- Though not required, it's a good idea to begin the commit message
- with a single short (less than 50 character) line summarizing the
- change, followed by a blank line and then a more thorough
--description.  Tools that turn commits into email, for example, use
--the first line on the Subject line and the rest of the commit in the
--body.
-+description.  The text up to the first blank line in a commit
-+message is treated as the commit title, and that title is used
-+throughout git.  For example, linkgit:git-format-patch[1] turns a
-+commit into email, and it uses the title on the Subject line and the
-+rest of the commit in the body.
-+ 
- 
- [[ignoring-files]]
- Ignoring files
--- 
-1.7.10.4
+With such a change, we could say something like
+
+	git log --grep=commit --and --grep=count
+
+to require the log message to have both "commit" and "count" on the
+same line (in any order).  This obviously is different from
+
+	git log --grep="commit.*count"
+
+but more importantly, it is vastly different from
+
+	git log --all-match --grep=commit --grep=count
+
+that requires some line that has "commit", and some line (which may
+not be the same line) that has "count", in the log message.
