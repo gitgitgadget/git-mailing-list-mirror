@@ -1,75 +1,417 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/6] rev-list/log: document logic with several limiting
- options
-Date: Thu, 13 Sep 2012 13:18:39 -0700
-Message-ID: <7vr4q57k2o.fsf@alter.siamese.dyndns.org>
-References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
- <cover.1347544259.git.git@drmicha.warpmail.net>
+From: Miklos Vajna <vmiklos@suse.cz>
+Subject: [PATCH v3] cherry-pick: don't forget -s on failure
+Date: Thu, 13 Sep 2012 22:27:15 +0200
+Message-ID: <20120913202714.GD14383@suse.cz>
+References: <20120912195732.GB4722@suse.cz>
+ <7vd31qc1p3.fsf@alter.siamese.dyndns.org>
+ <7v8vcec13d.fsf@alter.siamese.dyndns.org>
+ <20120913073324.GA14383@suse.cz>
+ <7v8vcdalby.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 13 22:18:52 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Robin Stocker <robin@nibor.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 13 22:25:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCFsB-0002UZ-O6
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 22:18:52 +0200
+	id 1TCFyn-0007pY-VN
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 22:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757840Ab2IMUSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 16:18:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39876 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756091Ab2IMUSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 16:18:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A09BD94CD;
-	Thu, 13 Sep 2012 16:18:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/Z/SkjmRvi1FKuomoFEtwACYDFs=; b=kEpCBN
-	9nyNJTrLwYc4bpz3JRmtuaewDi0kporx62UNCv4HOJhrxWmPH5qdoMwryAUpLZv/
-	Pzy0s+dtq2SOu9kZMJYhlEzlrzAaFTylqaylCgJUum3FiGlVJ+lZfrP/hWI2R10I
-	c652rZsUsW5NUsJsu0Yl+BVZOVJP8tlq5a8Rc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vOR4g7RTIrgSy/KZfcVsUGj7LxKPFE9y
-	MYMl/5vHZR4RhN2QO3oh+pg3/6qb9AHAVhMz/yT8cyei/2SbK0OVkCyb10rVuVqk
-	7fXimLeSEDPSkAQ8R3ElEeLLokGK+9sH/1BnuGFJ7auPULAKASaKBw7oskM1z9vH
-	P+5dvKOmltI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D7FC94CC;
-	Thu, 13 Sep 2012 16:18:41 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CF1394CB; Thu, 13 Sep 2012
- 16:18:40 -0400 (EDT)
-In-Reply-To: <cover.1347544259.git.git@drmicha.warpmail.net> (Michael J.
- Gruber's message of "Thu, 13 Sep 2012 16:04:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 358A8D32-FDE0-11E1-BDEB-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932125Ab2IMUZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 16:25:33 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:46921 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758103Ab2IMUZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 16:25:31 -0400
+Received: from relay2.suse.de (unknown [195.135.220.254])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 9E921A0FF6;
+	Thu, 13 Sep 2012 22:25:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v8vcdalby.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205418>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+In case 'git cherry-pick -s <commit>' failed, the user had to use 'git
+commit -s' (i.e. state the -s option again), which is easy to forget
+about.  Instead, write the signed-off-by line early, so plain 'git
+commit' will have the same result.
 
-> So, this turned out to be a bit longer.
-> I decided not to implement "--debug" for "git log --grep" and such
-> because the current code does a lot of special casing, so that the
-> existing debug code happily outputs OR nodes in cases where the code
-> in grep.c effectively does AND (without changing the expression nodes).
+Also update 'git commit -s', so that in case there is already a relevant
+Signed-off-by line before the Conflicts: line, it won't add one more at
+the end of the message. If there is no such line, then add it before the
+the Conflicts: line.
 
-Is that something we (not necessarily you) would want to fix?  How
-many are they?
+Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
+---
 
-The reason I am asking is because I do not think of any.  The entire
-document is considered unmatched unless all of the OR nodes in the
-top-level backbone have triggered for some line in the document when
-"all-match" is in effect, but that is quite different from turning
-OR nodes into AND nodes (they both are about "does this line match
-the pattern?"), so...
+> This is somewhat iffy.  Shouldn't "test_commit --signoff --notick"
+> work?
+
+Indeed, fixed now.
+
+> Hrm, what is this thing trying to do?  It does start scanning from
+> the end (ignoring the "Conflicts:" thing) to see who the last person
+> that signed it off was, but once it decides that it needs to add a
+> new sign-off, it still adds it at the very end anyway.
+
+Ah, I did not handle that, as the original git commit -s didn't do it 
+either -- and originally I just wanted to touch git cherry-pick. 
+Implemented now.
+
+ builtin/commit.c                |   79 +++++++++++---------------------------
+ sequencer.c                     |   72 +++++++++++++++++++++++++++++++++++
+ sequencer.h                     |    4 ++
+ t/t3507-cherry-pick-conflict.sh |   32 ++++++++++++++++
+ t/t3510-cherry-pick-sequence.sh |    6 +-
+ t/test-lib-functions.sh         |   20 +++++++--
+ 6 files changed, 149 insertions(+), 64 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 778cf16..4d50484 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -28,6 +28,7 @@
+ #include "submodule.h"
+ #include "gpg-interface.h"
+ #include "column.h"
++#include "sequencer.h"
+ 
+ static const char * const builtin_commit_usage[] = {
+ 	N_("git commit [options] [--] <filepattern>..."),
+@@ -466,8 +467,6 @@ static int is_a_merge(const struct commit *current_head)
+ 	return !!(current_head->parents && current_head->parents->next);
+ }
+ 
+-static const char sign_off_header[] = "Signed-off-by: ";
+-
+ static void export_one(const char *var, const char *s, const char *e, int hack)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -552,47 +551,6 @@ static void determine_author_info(struct strbuf *author_ident)
+ 	}
+ }
+ 
+-static int ends_rfc2822_footer(struct strbuf *sb)
+-{
+-	int ch;
+-	int hit = 0;
+-	int i, j, k;
+-	int len = sb->len;
+-	int first = 1;
+-	const char *buf = sb->buf;
+-
+-	for (i = len - 1; i > 0; i--) {
+-		if (hit && buf[i] == '\n')
+-			break;
+-		hit = (buf[i] == '\n');
+-	}
+-
+-	while (i < len - 1 && buf[i] == '\n')
+-		i++;
+-
+-	for (; i < len; i = k) {
+-		for (k = i; k < len && buf[k] != '\n'; k++)
+-			; /* do nothing */
+-		k++;
+-
+-		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
+-			continue;
+-
+-		first = 0;
+-
+-		for (j = 0; i + j < len; j++) {
+-			ch = buf[i + j];
+-			if (ch == ':')
+-				break;
+-			if (isalnum(ch) ||
+-			    (ch == '-'))
+-				continue;
+-			return 0;
+-		}
+-	}
+-	return 1;
+-}
+-
+ static char *cut_ident_timestamp_part(char *string)
+ {
+ 	char *ket = strrchr(string, '>');
+@@ -717,21 +675,30 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		stripspace(&sb, 0);
+ 
+ 	if (signoff) {
+-		struct strbuf sob = STRBUF_INIT;
+-		int i;
++		/*
++		 * See if we have a Conflicts: block at the end. If yes, count
++		 * its size, so we can ignore it.
++		 */
++		int ignore_footer = 0;
++		int i, eol, previous = 0;
++		const char *nl;
+ 
+-		strbuf_addstr(&sob, sign_off_header);
+-		strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
+-					     getenv("GIT_COMMITTER_EMAIL")));
+-		strbuf_addch(&sob, '\n');
+-		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
+-			; /* do nothing */
+-		if (prefixcmp(sb.buf + i, sob.buf)) {
+-			if (!i || !ends_rfc2822_footer(&sb))
+-				strbuf_addch(&sb, '\n');
+-			strbuf_addbuf(&sb, &sob);
++		for (i = 0; i < sb.len; i++) {
++			nl = memchr(sb.buf + i, '\n', sb.len - i);
++			if (nl)
++				eol = nl - sb.buf;
++			else
++				eol = sb.len;
++			if (!prefixcmp(sb.buf + previous, "\nConflicts:\n")) {
++				ignore_footer = sb.len - previous;
++				break;
++			}
++			while (i < eol)
++				i++;
++			previous = eol;
+ 		}
+-		strbuf_release(&sob);
++
++		append_signoff(&sb, ignore_footer);
+ 	}
+ 
+ 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
+diff --git a/sequencer.c b/sequencer.c
+index f86f116..4420807 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -17,6 +17,8 @@
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
++const char sign_off_header[] = "Signed-off-by: ";
++
+ void remove_sequencer_state(void)
+ {
+ 	struct strbuf seq_dir = STRBUF_INIT;
+@@ -233,6 +235,9 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 		die(_("%s: Unable to write new index file"), action_name(opts));
+ 	rollback_lock_file(&index_lock);
+ 
++	if (opts->signoff)
++		append_signoff(msgbuf, 0);
++
+ 	if (!clean) {
+ 		int i;
+ 		strbuf_addstr(msgbuf, "\nConflicts:\n");
+@@ -1011,3 +1016,70 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 	save_opts(opts);
+ 	return pick_commits(todo_list, opts);
+ }
++
++static int ends_rfc2822_footer(struct strbuf *sb)
++{
++	int ch;
++	int hit = 0;
++	int i, j, k;
++	int len = sb->len;
++	int first = 1;
++	const char *buf = sb->buf;
++
++	for (i = len - 1; i > 0; i--) {
++		if (hit && buf[i] == '\n')
++			break;
++		hit = (buf[i] == '\n');
++	}
++
++	while (i < len - 1 && buf[i] == '\n')
++		i++;
++
++	for (; i < len; i = k) {
++		for (k = i; k < len && buf[k] != '\n'; k++)
++			; /* do nothing */
++		k++;
++
++		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
++			continue;
++
++		first = 0;
++
++		for (j = 0; i + j < len; j++) {
++			ch = buf[i + j];
++			if (ch == ':')
++				break;
++			if (isalnum(ch) ||
++			    (ch == '-'))
++				continue;
++			return 0;
++		}
++	}
++	return 1;
++}
++
++void append_signoff(struct strbuf *msgbuf, int ignore_footer)
++{
++	struct strbuf sob = STRBUF_INIT;
++	int i;
++
++	strbuf_addstr(&sob, sign_off_header);
++	strbuf_addstr(&sob, fmt_name(getenv("GIT_COMMITTER_NAME"),
++				getenv("GIT_COMMITTER_EMAIL")));
++	strbuf_addch(&sob, '\n');
++	for (i = msgbuf->len - 1 - ignore_footer; i > 0 && msgbuf->buf[i - 1] != '\n'; i--)
++		; /* do nothing */
++	struct strbuf footer = STRBUF_INIT;
++	if (ignore_footer > 0) {
++		strbuf_addstr(&footer, msgbuf->buf + msgbuf->len - ignore_footer);
++		strbuf_setlen(msgbuf, msgbuf->len - ignore_footer);
++	}
++	if (prefixcmp(msgbuf->buf + i, sob.buf)) {
++		if (!i || !ends_rfc2822_footer(msgbuf))
++			strbuf_addch(msgbuf, '\n');
++		strbuf_addbuf(msgbuf, &sob);
++	}
++	strbuf_release(&sob);
++	strbuf_addbuf(msgbuf, &footer);
++	strbuf_release(&footer);
++}
+diff --git a/sequencer.h b/sequencer.h
+index d849420..60287b8 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -49,4 +49,8 @@ extern void remove_sequencer_state(void);
+ 
+ int sequencer_pick_revisions(struct replay_opts *opts);
+ 
++extern const char sign_off_header[];
++
++void append_signoff(struct strbuf *msgbuf, int ignore_footer);
++
+ #endif
+diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+index 0c81b3c..c82f721 100755
+--- a/t/t3507-cherry-pick-conflict.sh
++++ b/t/t3507-cherry-pick-conflict.sh
+@@ -30,6 +30,7 @@ test_expect_success setup '
+ 	test_commit initial foo a &&
+ 	test_commit base foo b &&
+ 	test_commit picked foo c &&
++	test_commit --signoff picked-signed foo d &&
+ 	git config advice.detachedhead false
+ 
+ '
+@@ -340,4 +341,35 @@ test_expect_success 'revert conflict, diff3 -m style' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'failed cherry-pick does not forget -s' '
++	pristine_detach initial &&
++	test_must_fail git cherry-pick -s picked &&
++	test_i18ngrep -e "Signed-off-by" .git/MERGE_MSG
++'
++
++test_expect_success 'commit after failed cherry-pick does not add duplicated -s' '
++	pristine_detach initial &&
++	test_must_fail git cherry-pick -s picked-signed &&
++	git commit -a -s &&
++	test $(git show -s |grep -c "Signed-off-by") = 1
++'
++
++test_expect_success 'commit after failed cherry-pick adds -s at the right place' '
++	pristine_detach initial &&
++	test_must_fail git cherry-pick picked &&
++	git commit -a -s &&
++	pwd &&
++	cat <<EOF > expected &&
++picked
++
++Signed-off-by: C O Mitter <committer@example.com>
++
++Conflicts:
++	foo
++EOF
++
++	git show -s --pretty=format:%B > actual &&
++	test_cmp expected actual
++'
++
+ test_done
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index f4e6450..b5fb527 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -410,7 +410,7 @@ test_expect_success '--continue respects -x in first commit in multi-pick' '
+ 	grep "cherry picked from.*$picked" msg
+ '
+ 
+-test_expect_success '--signoff is not automatically propagated to resolved conflict' '
++test_expect_failure '--signoff is automatically propagated to resolved conflict' '
+ 	pristine_detach initial &&
+ 	test_expect_code 1 git cherry-pick --signoff base..anotherpick &&
+ 	echo "c" >foo &&
+@@ -428,7 +428,7 @@ test_expect_success '--signoff is not automatically propagated to resolved confl
+ 	grep "Signed-off-by:" anotherpick_msg
+ '
+ 
+-test_expect_success '--signoff dropped for implicit commit of resolution, multi-pick case' '
++test_expect_failure '--signoff dropped for implicit commit of resolution, multi-pick case' '
+ 	pristine_detach initial &&
+ 	test_must_fail git cherry-pick -s picked anotherpick &&
+ 	echo c >foo &&
+@@ -441,7 +441,7 @@ test_expect_success '--signoff dropped for implicit commit of resolution, multi-
+ 	! grep Signed-off-by: msg
+ '
+ 
+-test_expect_success 'sign-off needs to be reaffirmed after conflict resolution, single-pick case' '
++test_expect_failure 'sign-off needs to be reaffirmed after conflict resolution, single-pick case' '
+ 	pristine_detach initial &&
+ 	test_must_fail git cherry-pick -s picked &&
+ 	echo c >foo &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 9bc57d2..0802da5 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -144,11 +144,21 @@ test_pause () {
+ 
+ test_commit () {
+ 	notick= &&
+-	if test "z$1" = "z--notick"
+-	then
+-		notick=yes
++	signoff= &&
++	while test $# != 0; do
++		case "$1" in
++		--notick)
++			notick=yes
++			;;
++		--signoff)
++			signoff="$1"
++			;;
++		*)
++			break
++			;;
++		esac
+ 		shift
+-	fi &&
++	done &&
+ 	file=${2:-"$1.t"} &&
+ 	echo "${3-$1}" > "$file" &&
+ 	git add "$file" &&
+@@ -156,7 +166,7 @@ test_commit () {
+ 	then
+ 		test_tick
+ 	fi &&
+-	git commit -m "$1" &&
++	git commit $signoff -m "$1" &&
+ 	git tag "$1"
+ }
+ 
+-- 
+1.7.7
