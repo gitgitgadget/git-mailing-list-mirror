@@ -1,72 +1,75 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Interactive rebase with pre-built script?
-Date: Thu, 13 Sep 2012 14:33:46 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1209131431580.20765@ds9.cixit.se>
-References: <alpine.DEB.2.00.1209110725130.8398@ds9.cixit.se> <5050BA90.2010105@sohovfx.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andrew Wong <andrew.w-lists@sohovfx.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 15:34:08 2012
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 0/6] rev-list/log: document logic with several limiting options
+Date: Thu, 13 Sep 2012 16:04:38 +0200
+Message-ID: <cover.1347544259.git.git@drmicha.warpmail.net>
+References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 13 16:04:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TC9YP-0005SV-5m
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 15:34:01 +0200
+	id 1TCA2L-0006kX-4g
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 16:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190Ab2IMNdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 09:33:53 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:46292 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752593Ab2IMNdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 09:33:52 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q8DDXl6Z022858
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 13 Sep 2012 15:33:47 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q8DDXkhK022853;
-	Thu, 13 Sep 2012 15:33:47 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <5050BA90.2010105@sohovfx.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 13 Sep 2012 15:33:47 +0200 (CEST)
+	id S1754743Ab2IMOEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 10:04:47 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56519 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752228Ab2IMOEq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 10:04:46 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0F156208E9;
+	Thu, 13 Sep 2012 10:04:46 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Thu, 13 Sep 2012 10:04:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=II5c/DlOjPr6jHxoZ90wOfVY+
+	+o=; b=HcGEedOyZtpTXibcc0Kh0W7j2PKeG59z1gDs2RKlxEKTmvIUt5DAulj/B
+	XNRoHxC6HSDndL6WpGJsVnC2ZFbjvggqyTCITJD4v4x51u+C7Mp9MOTvrJ0RYgEY
+	KoxvEG+cPf8+SfTXfPdYUyu28KITyzl+k4HzJ27SKbo1P1t3rc=
+X-Sasl-enc: uVpthbojXaT/k8E2jd8F5VnML9q4HSPV1La72Gv5KgDM 1347545085
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A2D7B4825A8;
+	Thu, 13 Sep 2012 10:04:45 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.463.gbd9d638
+In-Reply-To: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205374>
 
-Andrew Wong:
+So, this turned out to be a bit longer.
+I decided not to implement "--debug" for "git log --grep" and such
+because the current code does a lot of special casing, so that the
+existing debug code happily outputs OR nodes in cases where the code
+in grep.c effectively does AND (without changing the expression nodes).
 
-> Instead of rebasing to "HEAD~", you should be able to do:
->    git rebase -i HEAD
+So, this series sets up a few more tests to prove to myself that I'm not
+completely off in my understanding of the limiting options, and to make
+me confident enough for the documentation patch 6/6 (v2 of the old 1/1).
 
-Would you look at that, that actually works. So much for not testing 
-that. Thanks, that makes it a lot easier.
+5/6 documents (by a test) an issue which I consider a (now) known failure:
+'git log --all-match --author=me --grep=foo --grep=bar' does not AND the
+greps (whereas it does without --author). I don't describe this corner
+case in the doc patch.
 
-> Instead of appending your own recipe, you could also abuse the EDITOR 
-> environment variable.
-> Say your recipe is stored in a file called "my_recipe". Then, you could do 
-> this:
->    env EDITOR="cp my_recipe" git rebase -i HEAD
->
-> But this could potentially be dangerous because if "rebase" fires up a editor 
-> for any other reason (e.g. having a "reword" or "squash" in your recipe), 
-> then the commit message will be messed up. So you need to make sure your 
-> recipe won't trigger any editor except for the recipe.
+Michael J Gruber (6):
+  t7810-grep: bring log --grep tests in common form
+  t7810-grep: test multiple --grep with and without --all-match
+  t7810-grep: test multiple --author with --all-match
+  t7810-grep: test interaction of multiple --grep and --author options
+  t7810-grep: test --all-match with multiple --grep and --author
+    options
+  rev-list/log: document logic with several limiting options
 
-Indeed, that's why I don't want to do that.
-
-Perhaps I should add some switch that would append the contents of a 
-specific file to the prebuild recipe, I guess that should be fairly 
-easy. The question is what to call the switch.
+ Documentation/rev-list-options.txt | 15 ++++++-
+ t/t7810-grep.sh                    | 90 ++++++++++++++++++++++++++++++++------
+ 2 files changed, 90 insertions(+), 15 deletions(-)
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.7.12.463.gbd9d638
