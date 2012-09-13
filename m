@@ -1,105 +1,110 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv2] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test suite for detecting heap corruption
-Date: Thu, 13 Sep 2012 09:59:19 -0700
-Message-ID: <1347555559-5341-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 13 19:00:23 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] cherry-pick: don't forget -s on failure
+Date: Thu, 13 Sep 2012 10:04:42 -0700
+Message-ID: <7vd31pam6t.fsf@alter.siamese.dyndns.org>
+References: <20120912195732.GB4722@suse.cz>
+ <7vd31qc1p3.fsf@alter.siamese.dyndns.org>
+ <7v8vcec13d.fsf@alter.siamese.dyndns.org> <20120913073324.GA14383@suse.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Robin Stocker <robin@nibor.org>
+To: Miklos Vajna <vmiklos@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Sep 13 19:05:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCCm7-0000hf-3m
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 19:00:23 +0200
+	id 1TCCqV-0004cR-1X
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 19:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758629Ab2IMRAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 13:00:11 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:49758 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758606Ab2IMQ7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 12:59:53 -0400
-Received: by pbbrr13 with SMTP id rr13so4251683pbb.19
-        for <git@vger.kernel.org>; Thu, 13 Sep 2012 09:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=3KJSrMwTPaKd3L57es5wXVmmb1X1oWh6BKnr/X+G3pI=;
-        b=ULhsnnN1ksQnuUFdIrZwKB6dGZZmkwLdOazYaWDixTqFpJlarLNJw287grwsStmf+V
-         iM0rLNhaIa5wxGYq/bDcl9s2IjMxSf+13Mhv4JIBtGZKDAU8Y6B5h47bnn5LjyVsleyV
-         HT0i0lDKXFYg5ABRSP9f8pnwYfCQt7XAykSbwgDXlsYrU5ksKT6GBcJeONO0qdbiS9KD
-         3rVBMM0Dv+4SU4irc5E59lKLFO9DJlOcBG+Dh40n2Dhz9XJ7382gPp2Nq+yH0J1oZQ1m
-         3Gys7oRTbidLgX9aq1X7Xa8bSXM1RRh4vlec9o5cRZMEgUsteXTl9LzTa3iO+jw5gk/B
-         sfjg==
-Received: by 10.68.195.163 with SMTP id if3mr454711pbc.36.1347555593194;
-        Thu, 13 Sep 2012 09:59:53 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (141.195.207.67.nephoscale.net. [67.207.195.141])
-        by mx.google.com with ESMTPS id vd4sm13353770pbc.41.2012.09.13.09.59.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Sep 2012 09:59:52 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S1758627Ab2IMREq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 13:04:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34996 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755167Ab2IMREp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 13:04:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF37D74EF;
+	Thu, 13 Sep 2012 13:04:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b1fLYfDuGK6xHqJItKNZvOp0yEg=; b=yBtV6f
+	wJDr6WzhF13JC3zSXotSYQ4tljsupkch6OE9xTBltIVZgE7XW/hZ7rXLwzWtTU6z
+	nAekQx4nLCSoOlUsdzHJDrqfzuxsU0Wfh8HPy4/FeIMwwzEQIegIYLxHaAmJmf6C
+	/gJpiXXgvFPP0frMf38SBVmwGw5J9wV5mta6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jveaeKZPxAScLeljgrHGYnNJU7rgT43b
+	0A9mfTLSkldnCf06NPZklLns/mXv97jpYqYS9WcoY9dlkAxVJO0JEogIYpk2eIHL
+	snzPROw3GoGSfIdyJa/zL3e8vgIfBjayZGdvTKXwp9MmEjsenrdtqOwnVJb/MSPB
+	JMwS0KLUrMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADB1974EE;
+	Thu, 13 Sep 2012 13:04:44 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 113D974ED; Thu, 13 Sep 2012
+ 13:04:43 -0400 (EDT)
+In-Reply-To: <20120913073324.GA14383@suse.cz> (Miklos Vajna's message of
+ "Thu, 13 Sep 2012 09:33:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D5C0D8C-FDC5-11E1-A1AF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205393>
 
-Recent versions of Linux libc (later than 5.4.23) and glibc (2.x)
-include a malloc() implementation which is tunable via environment
-variables. When MALLOC_CHECK_ is set, a special (less efficient)
-implementation is used which is designed to be tolerant against
-simple errors, such as double calls of free() with the same argument,
-or overruns of a single byte (off-by-one bugs). When MALLOC_CHECK_
-is set to 3, a diagnostic message is printed on stderr
-and the program is aborted.
+Miklos Vajna <vmiklos@suse.cz> writes:
 
-Setting the MALLOC_PERTURB_ environment variable causes the malloc
-functions in libc to return memory which has been wiped and clear
-memory when it is returned.
-Of course this does not affect calloc which always does clear the memory.
+> In case 'git cherry-pick -s <commit>' failed, the user had to use 'git
+> commit -s' (i.e. state the -s option again), which is easy to forget
+> about.  Instead, write the signed-off-by line early, so plain 'git
+> commit' will have the same result.
+>
+> Also update 'git commit -s', so that in case there is already a relevant
+> Signed-off-by line before the Conflicts: line, it won't add one more at
+> the end of the message.
+>
+> Signed-off-by: Miklos Vajna <vmiklos@suse.cz>
+> ---
+>
+> On Wed, Sep 12, 2012 at 03:45:10PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>>  - The additional S-o-b should come immediately after the existing
+>>    block of footers.
+>
+> This was trivial to fix.
 
-The reason for this exercise is, of course, to find code which uses
-memory returned by malloc without initializing it and code which uses
-code after it is freed. valgrind can do this but it's costly to run.
-The MALLOC_PERTURB_ exchanges the ability to detect problems in 100%
-of the cases with speed.
+Indeed.  Just inserting before starting to add "Oh, there were
+conflicts, and add the info on them" before doing it at the end is
+all it takes.  Simple and straightforward---I like it.
 
-The byte value used to initialize values returned by malloc is the byte
-value of the environment value. The value used to clear memory is the
-bitwise inverse. Setting MALLOC_PERTURB_ to zero disables the feature.
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -149,6 +149,12 @@ test_commit () {
+>  		notick=yes
+>  		shift
+>  	fi &&
+> +	signoff= &&
+> +	if test "z$1" = "z--signoff"
+> +	then
+> +		signoff="$1"
+> +		shift
+> +	fi &&
+>  	file=${2:-"$1.t"} &&
+>  	echo "${3-$1}" > "$file" &&
+>  	git add "$file" &&
 
-This technique can find hard to detect bugs.
-It is therefore suggested to always use this flag (at least temporarily)
-when testing out code or a new distribution.
+This is somewhat iffy.  Shouldn't "test_commit --signoff --notick" work?
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This the second reroll of the original patch.
+> @@ -156,7 +162,7 @@ test_commit () {
+>  	then
+>  		test_tick
+>  	fi &&
+> -	git commit -m "$1" &&
+> +	git commit $signoff -m "$1" &&
+>  	git tag "$1"
+>  }
 
-I redid the patch correcting the export command in a more portable
-way thanks to the Junio observation.
-
- t/test-lib.sh |    8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 78c4286..6317ffc 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -93,6 +93,14 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export EDITOR
- 
-+# Add libc malloc_check and MALLOC_PERTURB test 
-+MALLOC_CHECK_=3
-+export MALLOC_CHECK_
-+MALLOC_PERTURB_="$( expr \( $$ % 255 \) + 1)"
-+export MALLOC_PERTURB_
-+#
-+
-+
- # Protect ourselves from common misconfiguration to export
- # CDPATH into the environment
- unset CDPATH
--- 
-1.7.10.4
+Thanks.
