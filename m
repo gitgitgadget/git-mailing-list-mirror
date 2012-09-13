@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 0/6] rev-list/log: document logic with several limiting options
-Date: Thu, 13 Sep 2012 16:04:38 +0200
-Message-ID: <cover.1347544259.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 1/6] t7810-grep: bring log --grep tests in common form
+Date: Thu, 13 Sep 2012 16:04:39 +0200
+Message-ID: <cbc677f1acfc4d2f29d69e7f6d4b1b780f6e40dd.1347544259.git.git@drmicha.warpmail.net>
 References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,65 +11,111 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCA2L-0006kX-4g
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 16:04:57 +0200
+	id 1TCA2L-0006kX-Mo
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 16:04:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754743Ab2IMOEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 10:04:47 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56519 "EHLO
+	id S1755231Ab2IMOEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 10:04:49 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:36686 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752228Ab2IMOEq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 10:04:46 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 0F156208E9;
-	Thu, 13 Sep 2012 10:04:46 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute6.internal (MEProxy); Thu, 13 Sep 2012 10:04:46 -0400
+	by vger.kernel.org with ESMTP id S1755164Ab2IMOEs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 10:04:48 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id A433A208EC;
+	Thu, 13 Sep 2012 10:04:47 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 13 Sep 2012 10:04:47 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=II5c/DlOjPr6jHxoZ90wOfVY+
-	+o=; b=HcGEedOyZtpTXibcc0Kh0W7j2PKeG59z1gDs2RKlxEKTmvIUt5DAulj/B
-	XNRoHxC6HSDndL6WpGJsVnC2ZFbjvggqyTCITJD4v4x51u+C7Mp9MOTvrJ0RYgEY
-	KoxvEG+cPf8+SfTXfPdYUyu28KITyzl+k4HzJ27SKbo1P1t3rc=
-X-Sasl-enc: uVpthbojXaT/k8E2jd8F5VnML9q4HSPV1La72Gv5KgDM 1347545085
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=zR
+	O6LyzV0ato/mIMBHnuOxxusIE=; b=AaW6B/ZPvSr4plh6VsE6w0ZbQ6Iv/yd0w3
+	dBUt70nEHvptIYkT4lDqgH70nn6wQug7fhcuaS/tCUqakjznJSEDwTdGQfZedq/R
+	YIDc+RyIBG87TdchkqAkJjGQP5psJfPDDxrAQM52xFWbYhiE4D9NyxCU89YXpxrI
+	djLqVaCZ4=
+X-Sasl-enc: qOj39OUaxGNPPQQgRBghJWED8s550S9vGLnxX+b3CgeA 1347545087
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A2D7B4825A8;
-	Thu, 13 Sep 2012 10:04:45 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 3E4028E01C8;
+	Thu, 13 Sep 2012 10:04:47 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.463.gbd9d638
 In-Reply-To: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <cover.1347544259.git.git@drmicha.warpmail.net>
+References: <cover.1347544259.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205375>
 
-So, this turned out to be a bit longer.
-I decided not to implement "--debug" for "git log --grep" and such
-because the current code does a lot of special casing, so that the
-existing debug code happily outputs OR nodes in cases where the code
-in grep.c effectively does AND (without changing the expression nodes).
+The log --grep tests generate the expected out in different ways.
+Make them all use command blocks so that subshells are avoided and the
+expected output is easier to grasp visually.
 
-So, this series sets up a few more tests to prove to myself that I'm not
-completely off in my understanding of the limiting options, and to make
-me confident enough for the documentation patch 6/6 (v2 of the old 1/1).
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t7810-grep.sh | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-5/6 documents (by a test) an issue which I consider a (now) known failure:
-'git log --all-match --author=me --grep=foo --grep=bar' does not AND the
-greps (whereas it does without --author). I don't describe this corner
-case in the doc patch.
-
-Michael J Gruber (6):
-  t7810-grep: bring log --grep tests in common form
-  t7810-grep: test multiple --grep with and without --all-match
-  t7810-grep: test multiple --author with --all-match
-  t7810-grep: test interaction of multiple --grep and --author options
-  t7810-grep: test --all-match with multiple --grep and --author
-    options
-  rev-list/log: document logic with several limiting options
-
- Documentation/rev-list-options.txt | 15 ++++++-
- t/t7810-grep.sh                    | 90 ++++++++++++++++++++++++++++++++------
- 2 files changed, 90 insertions(+), 15 deletions(-)
-
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 35d357d..9b683ac 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -502,31 +502,41 @@ test_expect_success 'log grep setup' '
+ 
+ test_expect_success 'log grep (1)' '
+ 	git log --author=author --pretty=tformat:%s >actual &&
+-	( echo third ; echo initial ) >expect &&
++	{
++		echo third && echo initial
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'log grep (2)' '
+ 	git log --author=" * " -F --pretty=tformat:%s >actual &&
+-	( echo second ) >expect &&
++	{
++		echo second
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'log grep (3)' '
+ 	git log --author="^A U" --pretty=tformat:%s >actual &&
+-	( echo third ; echo initial ) >expect &&
++	{
++		echo third && echo initial
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'log grep (4)' '
+ 	git log --author="frotz\.com>$" --pretty=tformat:%s >actual &&
+-	( echo second ) >expect &&
++	{
++		echo second
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'log grep (5)' '
+ 	git log --author=Thor -F --pretty=tformat:%s >actual &&
+-	( echo third ; echo initial ) >expect &&
++	{
++		echo third && echo initial
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -540,7 +550,9 @@ test_expect_success 'log --grep --author implicitly uses all-match' '
+ 	# grep matches initial and second but not third
+ 	# author matches only initial and third
+ 	git log --author="A U Thor" --grep=s --grep=l --format=%s >actual &&
+-	echo initial >expect &&
++	{
++		echo initial
++	} >expect &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 1.7.12.463.gbd9d638
