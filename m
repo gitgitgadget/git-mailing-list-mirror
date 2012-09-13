@@ -1,111 +1,166 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 6/6] rev-list/log: document logic with several limiting
- options
-Date: Thu, 13 Sep 2012 15:29:45 -0700
-Message-ID: <7v7grx5zfq.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCHv2 3/6] t7810-grep: test multiple --author with
+ --all-match
+Date: Thu, 13 Sep 2012 16:26:01 -0700
+Message-ID: <7vwqzx4i9i.fsf@alter.siamese.dyndns.org>
 References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
  <cover.1347544259.git.git@drmicha.warpmail.net>
- <49f89f65cd39306655a9b382a1244e34fb90fff1.1347544259.git.git@drmicha.warpmail.net>
+ <8fd93bb87098298677426735dd354fa4f64abc17.1347544259.git.git@drmicha.warpmail.net> <7vmx0t7iq0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 14 00:30:04 2012
+X-From: git-owner@vger.kernel.org Fri Sep 14 01:26:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCHv5-0001vY-Jy
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 00:29:59 +0200
+	id 1TCInZ-0000a6-0O
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 01:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750765Ab2IMW3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 18:29:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37317 "EHLO
+	id S1758446Ab2IMX0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 19:26:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65431 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752419Ab2IMW3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 18:29:49 -0400
+	id S1756032Ab2IMX0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 19:26:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CDFB97EC;
-	Thu, 13 Sep 2012 18:29:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7800386EF;
+	Thu, 13 Sep 2012 19:26:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HGLMuV55STdOGjrgsja8YLSnKu4=; b=JKv18M
-	etYas25flXKmNkVjBwkhDGjI/386BpeqhTvuezBr1ElZnFRkDYWQCWP0oTfmHuBR
-	/O934eDO7Pt5NaECw6WyfODkBnwSKucjMVUHUUNyauVr+JmSG4cTRPlzZ+StddbL
-	CAHu4a0IKWkgEmJUuFOOuJeW9Qh729aPvYNqc=
+	:content-type; s=sasl; bh=bQloq7YyLoorAMzUw4NFqrmjaDc=; b=JO80i0
+	Y4uwjffnbnU0vixCafforOlrjZ9D/5duawTKmtmSgmI2NEPWI4b9zuvxn+BiGrFx
+	leOOcZ432QzBwXbtBm8G5MxaJKuLv26HWbXosL04vLD8Tl30WA0fXEM/Kwtg+OE9
+	b1rUmgX84+E1tf38OJZww7wYgLyRq6UxcWJBA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mnf4fdUDzf5qLOxFGHSd7HFdLeqsviUV
-	+xkWBpKsDNDATeDRkwBYK5qBMBc/KEbEYRvfCs+4A7wrgFVKP1zUMb8fraFbspVe
-	VJdpmPBmJkn7KI/8EQYC+86SRnrILnJoHBOfhezYaZ4gDA2n8s8GwNerkyO32XaB
-	xj51kEbkfeE=
+	:content-type; q=dns; s=sasl; b=Jef1VySiq5kaGcpnfW5MpvChuClTWwDA
+	N0UGrpzwmag2OOQsZfOg3a144zpXV56N1sLc7Vnabw2oNykKhPrEd1wEJmx08gpN
+	qUlz4yLuTh0/1KvU40Z6UHQVLTvMMBtajGNWoD8vfZ6Oir9cm/NOPg2S/KFZ2MmA
+	BKLN5DeQFvQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68C7797EB;
-	Thu, 13 Sep 2012 18:29:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C3F986EE;
+	Thu, 13 Sep 2012 19:26:04 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCC1097E6; Thu, 13 Sep 2012
- 18:29:46 -0400 (EDT)
-In-Reply-To: <49f89f65cd39306655a9b382a1244e34fb90fff1.1347544259.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 13 Sep 2012 16:04:44 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FC2486EC; Thu, 13 Sep 2012
+ 19:26:02 -0400 (EDT)
+In-Reply-To: <7vmx0t7iq0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 13 Sep 2012 13:47:51 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 85EA4760-FDF2-11E1-9186-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6204E7F8-FDFA-11E1-9373-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205440>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The current behavior is probably as useful as it is confusing. In any
-> case it is going to stay. So, document it.
+> One possible improvement we can make is to parse the command line in
+> the last example with "--all-match" to
 >
-> This does not take into account the issue of 'log --all-match
-> --author=me --grep=foo --grep=bar' not honoring '--all-match' because it
-> is hopefully a corner case (and, even more hopefully, fixed some time
-> soon).
+>     [all-match]
+>     (or
+>      pattern_body<body>commit
+>      (or
+>       pattern_body<body>tag
+>       (or
+>        pattern_head<head 1>Linus
+>        (or
+>         pattern_head<head 0>Junio
+>         true
+>        )
+>       )
+>      )
+>     )
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  Documentation/rev-list-options.txt | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
+> so that the backbone becomes
 >
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index 5436eba..b2dbfb5 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -6,6 +6,19 @@ special notations explained in the description, additional commit
->  limiting may be applied. Note that they are applied before commit
->  ordering and formatting options, such as '--reverse'.
->  
-> +Different options are ANDed: '--author=bar --grep=foo'
-> +limits to commits which match both conditions.
-> +
-> +Several occurences of the '--grep' option are ORed: '--grep=foo --grep=bar'
-> +limits to commits matching any of these conditions.
-> +(If '--all-match' is given, the conditions are ANDed.)
-> +
-> +Several occurences of the '--author' and '--committer' options are ORed
-> +(because there can be only one each per commit).
+>  - Mentions commit,
+>  - Mentions tag,
+>  - Committed by Linus,
+>  - Authored by Junio
+>
+> to require that both commit and tag are mentioned in the message.
 
-As I would really want to eventually see the revision command option
-parser understand the full power of grep expressions in the future,
-I would really want to avoid a misleading explanation that calls
-what "--all-match" does as "ANDed".
+And this is an attempt to do exactly that.  Earlier, when we have
+both header expression (which by the way has to be an OR node by
+construction) and pattern expression (which could be anything), we
+created a top-level OR node (again, look at this as if you are
+reading LISP),
 
-With such a change, we could say something like
+           OR
+        /        \
+       /          \
+   pattern            OR
+     / \           /     \
+    .....    committer    OR
+                         /   \ 
+                     author   TRUE
 
-	git log --grep=commit --and --grep=count
+in other words, the three elements on the top-level backbone are
+"pattern", "committer" and "author"; when there are more than one
+elements in the "pattern", the top-level node of it is OR, so that
+node is inspected by "all-match", hence the result ends up ignoring
+the "--all-match" given from the command line.
 
-to require the log message to have both "commit" and "count" on the
-same line (in any order).  This obviously is different from
+This patch turns it into
 
-	git log --grep="commit.*count"
+	     OR
+          /      \
+         /         \
+        /              OR
+    committer        /    \
+                 author    \
+                           pattern
 
-but more importantly, it is vastly different from
+when "--all-match" was given from the command line, so that the
+"committer", "author" and elements on the top-level backbone in
+"pattern" form the top-level backbone of the resulting expression to
+be inspected by the "all-match" logic.
 
-	git log --all-match --grep=commit --grep=count
+Does this pass the expect-failure test in your [PATCH 5/6]?
 
-that requires some line that has "commit", and some line (which may
-not be the same line) that has "count", in the log message.
+ grep.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git c/grep.c w/grep.c
+index be15c47..925aa92 100644
+--- c/grep.c
++++ w/grep.c
+@@ -476,6 +476,22 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ 	return header_expr;
+ }
+ 
++static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y)
++{
++	struct grep_expr *z = x;
++
++	while (x) {
++		assert(x->node == GREP_NODE_OR);
++		if (x->u.binary.right &&
++		    x->u.binary.right->node == GREP_NODE_TRUE) {
++			x->u.binary.right = y;
++			break;
++		}
++		x = x->u.binary.right;
++	}
++	return z;
++}
++
+ static void compile_grep_patterns_real(struct grep_opt *opt)
+ {
+ 	struct grep_pat *p;
+@@ -510,6 +526,9 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
+ 
+ 	if (!opt->pattern_expression)
+ 		opt->pattern_expression = header_expr;
++	else if (opt->all_match)
++		opt->pattern_expression = grep_splice_or(header_expr,
++							 opt->pattern_expression);
+ 	else
+ 		opt->pattern_expression = grep_or_expr(opt->pattern_expression,
+ 						       header_expr);
