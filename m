@@ -1,185 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Use 'First Paragraph' instead of 'First
- Line'.
-Date: Thu, 13 Sep 2012 11:25:47 -0700
-Message-ID: <7vehm593v8.fsf@alter.siamese.dyndns.org>
-References: <5051D4A0.4060608@codeweavers.com>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: Interactive rebase with pre-built script?
+Date: Thu, 13 Sep 2012 14:08:31 -0400
+Message-ID: <5052211F.6060000@sohovfx.com>
+References: <alpine.DEB.2.00.1209110725130.8398@ds9.cixit.se> <5050BA90.2010105@sohovfx.com> <alpine.DEB.2.00.1209131431580.20765@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeremy White <jwhite@codeweavers.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 20:26:10 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Sep 13 20:31:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCE6y-0005JS-4a
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 20:26:00 +0200
+	id 1TCEBj-0000x0-L2
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 20:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981Ab2IMSZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 14:25:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46851 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752387Ab2IMSZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 14:25:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A2869240;
-	Thu, 13 Sep 2012 14:25:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8IWTbE878H0EEq5MrUiWjluS1BQ=; b=JXJFT8
-	A7lrHjV53kNFc/vwiTQ3OR+pFI68eNfItmj9OoyZchdOqbxbzQq3tVwkOuBoq2Pi
-	Kz7aWmMQBJ1VAeB797MJHZUOaMWvNp6tBOplj2DiQQhoE1FzIJAgvCRLlsxERnJP
-	yThHx4BJ0vEgScTpK3ghLVAsnUb6iX14hX63s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R2maaVn5efkec/27e+dVKt9r99OUJSrc
-	l3BCfH/S/WPN9btGIZFOgRTV5IhY7RNSUwPSsxzaQKlpdocC6Do80ul0o09/lMMP
-	H8evNROVuaSKVsa0Ru86RXi4WKPdlDqwN7b8c5+CJyz9xQW2GLz7yqZ6hezp2vL9
-	7/veLAfG8c8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55820923F;
-	Thu, 13 Sep 2012 14:25:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88E94923E; Thu, 13 Sep 2012
- 14:25:48 -0400 (EDT)
-In-Reply-To: <5051D4A0.4060608@codeweavers.com> (Jeremy White's message of
- "Thu, 13 Sep 2012 07:42:08 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 70D249E4-FDD0-11E1-BBCB-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752089Ab2IMSar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 14:30:47 -0400
+Received: from smtp03.beanfield.com ([76.9.193.172]:50251 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab2IMSaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 14:30:46 -0400
+X-Greylist: delayed 1323 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Sep 2012 14:30:46 EDT
+X-Spam-Status: No
+X-beanfield-mta03-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta03-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta03-MailScanner: Found to be clean
+X-beanfield-mta03-MailScanner-ID: 1TCDq5-0009Xx-L7
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta03.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1TCDq5-0009Xx-L7; Thu, 13 Sep 2012 14:08:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
+In-Reply-To: <alpine.DEB.2.00.1209131431580.20765@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205405>
 
-Jeremy White <jwhite@codeweavers.com> writes:
+On 09/13/2012 09:33 AM, Peter Krefting wrote:
+>> But this could potentially be dangerous because if "rebase" fires up 
+>> a editor for any other reason (e.g. having a "reword" or "squash" in 
+>> your recipe), then the commit message will be messed up. So you need 
+>> to make sure your recipe won't trigger any editor except for the recipe.
+> Indeed, that's why I don't want to do that. 
+Are you expecting to have "reword" or "squash" in your recipe? If not, I 
+think you should be safe.
+If there's a conflict, then rebase will stop, and next time you run "git 
+rebase --continue", your normal editor will be back.
+ From your original description, it sounded like you are only doing "pick".
 
-> The discussion of email subject throughout the documentation is
-> misleading; it indicates that the first line will become the subject.
-> In fact, the first and second and third lines will become the subject,
-> up until the first full blank line.  Describing it as the first paragraph
-> is more accurate.
->
-> Signed-off-by: Jeremy White <jwhite@codeweavers.com>
-> ---
->  Documentation/git-commit.txt       |    2 +-
->  Documentation/git-for-each-ref.txt |    2 +-
->  Documentation/git-format-patch.txt |    8 +++++---
->  Documentation/git-shortlog.txt     |    2 +-
->  Documentation/gitcore-tutorial.txt |    2 +-
->  Documentation/gittutorial.txt      |    2 +-
->  Documentation/user-manual.txt      |    2 +-
->  7 files changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index e99bb14..a61bca9 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -349,7 +349,7 @@ DISCUSSION
->  Though not required, it's a good idea to begin the commit message
->  with a single short (less than 50 character) line summarizing the
->  change, followed by a blank line and then a more thorough description.
-> -Tools that turn commits into email, for example, use the first line
-> +Tools that turn commits into email, for example, use the first paragraph
->  on the Subject: line and the rest of the commit in the body.
+On 09/13/2012 09:33 AM, Peter Krefting wrote:
+> Perhaps I should add some switch that would append the contents of a 
+> specific file to the prebuild recipe, I guess that should be fairly 
+> easy. The question is what to call the switch.
+How about calling the switch "--todo"? i.e. "rebase -i --todo my_recipe"
+Can we also get some inputs from others on whether adding this switch to 
+"rebase -i" is desirable?
 
-This is a good change, as the previous sentence says the norm for
-the first paragraph is a single line.
-
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 7e83288..499c26a 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -100,7 +100,7 @@ Fields that have name-email-date tuple as its value (`author`,
->  `committer`, and `tagger`) can be suffixed with `name`, `email`,
->  and `date` to extract the named component.
->  
-> -The first line of the message in a commit and tag object is
-> +The first paragraph of the message in a commit and tag object is
->  `subject`, the remaining lines are `body`.  The whole message
->  is `contents`.
-
-This may need a bit more explanation.  Just saying "First Paragraph"
-without saying that for all commits in a sane project it is the same
-as "First Line" will make the reader wonder "What happens to the
-second and subsequent lines?" (the answer is that the first paragraph 
-is made into a single looooooong line).
-
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index 9674f9d..e6f6d0e 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -57,10 +57,12 @@ output, unless the `--stdout` option is specified.
->  If `-o` is specified, output files are created in <dir>.  Otherwise
->  they are created in the current working directory.
->  
-> -By default, the subject of a single patch is "[PATCH] First Line" and
-> +By default, the subject of a single patch is "[PATCH] First Paragraph" and
->  the subject when multiple patches are output is "[PATCH n/m] First
-> +Paragraph". Note that "First Paragraph" consists of text in the commit message
-> +prior to the first completely blank line (see the DISCUSSION section
-> +in linkgit:git-commit[1]).  To force 1/1 to be added for a single patch,
-> +use `-n`.  To omit patch numbers from the subject, use `-N`.
-
-Ditto.
-
-> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-> index dfd4d0c..9464932 100644
-> --- a/Documentation/git-shortlog.txt
-> +++ b/Documentation/git-shortlog.txt
-> @@ -15,7 +15,7 @@ DESCRIPTION
->  -----------
->  Summarizes 'git log' output in a format suitable for inclusion
->  in release announcements. Each commit will be grouped by author and
-> -the first line of the commit message will be shown.
-> +the first paragraph of the commit message will be shown.
-
-Ditto.
-
-> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-> index f7815e9..92f97e6 100644
-> --- a/Documentation/gitcore-tutorial.txt
-> +++ b/Documentation/gitcore-tutorial.txt
-> @@ -956,7 +956,7 @@ $ git show-branch --topo-order --more=1 master mybranch
->  ------------------------------------------------
->  
->  The first two lines indicate that it is showing the two branches
-> -and the first line of the commit log message from their
-> +and the first paragraph of the commit log message from their
->  top-of-the-tree commits, you are currently on `master` branch
->  (notice the asterisk `\*` character), and the first column for
->  the later output lines is used to show commits contained in the
-
-Ditto.
-
-> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-> index 1c16066..a1bc56c 100644
-> --- a/Documentation/gittutorial.txt
-> +++ b/Documentation/gittutorial.txt
-> @@ -139,7 +139,7 @@ A note on commit messages: Though not required, it's a good idea to
->  begin the commit message with a single short (less than 50 character)
->  line summarizing the change, followed by a blank line and then a more
->  thorough description.  Tools that turn commits into email, for
-> -example, use the first line on the Subject: line and the rest of the
-> +example, use the first paragraph on the Subject: line and the rest of the
->  commit in the body.
-
-This is a good change, as it is clear that you are expected to write
-a single line in the first paragraph in the previous sentence.
-
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index fe6fb72..dd2f985 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -1126,7 +1126,7 @@ Though not required, it's a good idea to begin the commit message
->  with a single short (less than 50 character) line summarizing the
->  change, followed by a blank line and then a more thorough
->  description.  Tools that turn commits into email, for example, use
-> -the first line on the Subject line and the rest of the commit in the
-> +the first paragraph on the Subject line and the rest of the commit in the
->  body.
-
-Ditto.
+On 09/11/2012 11:35 AM, Junio C Hamano wrote:
+> Using "git cherry-pick $(git rev-list --reverse .....)" ought to work.
+And I assume what Junio suggested doesn't help with your problem? 
+Because of the time skewed behavior?
