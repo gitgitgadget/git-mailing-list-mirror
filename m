@@ -1,142 +1,134 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Suggestions for "What's cooking"
-Date: Thu, 13 Sep 2012 15:14:26 +1000
-Message-ID: <CAH5451kmwZehys4nL+NV8m8VGjDJtkSxru3o44_J_d3jD5ipxA@mail.gmail.com>
-References: <7vpq5tjuw3.fsf@alter.siamese.dyndns.org> <504F8427.1020507@web.de>
- <7vhar4gxdq.fsf@alter.siamese.dyndns.org> <5050E0CA.7080907@web.de> <A7A1DB46082142E683753CFBC0A22A6B@PhilipOakley>
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: Re: [PATCH 3/3] sha1: use char type for temporary work buffer
+Date: Thu, 13 Sep 2012 08:11:02 +0200
+Organization: OPTEYA
+Message-ID: <1347516662.1961.23.camel@test.quest-ce.net>
+References: <cover.1347442430.git.ydroneaud@opteya.com>
+	 <a8c30a998cad6a7b38bd983e7689a628567a8176.1347442430.git.ydroneaud@opteya.com>
+	 <20120912183833.GA20795@sigill.intra.peff.net>
+	 <1347482230.1961.4.camel@test.quest-ce.net>
+	 <20120912210455.GA30679@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Sep 13 07:15:00 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 13 08:11:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TC1lR-0000q1-Or
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 07:14:58 +0200
+	id 1TC2e1-0002l9-3z
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 08:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab2IMFOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 01:14:48 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:50960 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751766Ab2IMFOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 01:14:47 -0400
-Received: by qaas11 with SMTP id s11so2836715qaa.19
-        for <git@vger.kernel.org>; Wed, 12 Sep 2012 22:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=at5Rms10oejNcyp/NBgx0RV1tHVxnzHu/nr3d+c77SI=;
-        b=qIGOPgsZ2kmEC5uqLNtJjNQ2PA7akBdNMyZTHYua5t8eh0QBrjMgNn0JDzS8CK2TOn
-         PxbzMBqvTMxY2i3WPDuU0SUN1z80bPFoUgoxDzkKHWEqD3iT4zeXQ3H5db/PNQDuoveU
-         jNbKXA9Nck20WmY+p1tXMjMqToVEvdcmSrEsOPhukGmX4Zy4z1UXalP35vEpTh8VyBM7
-         FYNVdKpavAfODnRn4wSu1pA8F/yHdXGOFIC7sEhyDbSfOoF+Y17eZ6ccjkuxqOjbidNE
-         1qbVyu/8mM7J+q2t3NxFDZ5gsN4ZbhIoSKRtIu2c7Jqx+i/u8NyIPZYUGfK2pGN2k4nX
-         1c7g==
-Received: by 10.224.98.2 with SMTP id o2mr3078142qan.57.1347513286579; Wed, 12
- Sep 2012 22:14:46 -0700 (PDT)
-Received: by 10.49.95.135 with HTTP; Wed, 12 Sep 2012 22:14:26 -0700 (PDT)
-In-Reply-To: <A7A1DB46082142E683753CFBC0A22A6B@PhilipOakley>
+	id S1752149Ab2IMGLM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Sep 2012 02:11:12 -0400
+Received: from mx-out.ocsa-data.net ([194.36.166.37]:53284 "EHLO
+	mx-out.ocsa-data.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146Ab2IMGLL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 02:11:11 -0400
+Received: from [127.0.0.1] (helo=localhost)
+	by mx-out.ocsa-data.net with esmtp (Exim - FreeBSD Rulez)
+	id 1TC2dl-000FcI-Bo; Thu, 13 Sep 2012 08:11:05 +0200
+Received: from mx-out.ocsa-data.net ([127.0.0.1])
+	by localhost (node2-3.ouvaton.local [127.0.0.1]) (amavisd-new, port 10028)
+	with ESMTP id JaYB65fGRuol; Thu, 13 Sep 2012 08:11:05 +0200 (CEST)
+Received: from [82.233.246.172] (helo=[192.168.0.25])
+	by mx-out.ocsa-data.net with esmtpsa (Exim - FreeBSD Rulez)
+	id 1TC2dl-000Fc1-9z; Thu, 13 Sep 2012 08:11:05 +0200
+In-Reply-To: <20120912210455.GA30679@sigill.intra.peff.net>
+X-Mailer: Evolution 3.4.4 (3.4.4-1.fc17) 
+X-Spam-Score: -1.44
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.44 tagged_above=-20 required=2
+	tests=[ALL_TRUSTED=-1.44]
+X-abuse-contact: abuse@ocsa-data.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205354>
 
-(sorry about double replying - html sub-part creeped in!)
-On 13 September 2012 08:49, Philip Oakley <philipoakley@iee.org> wrote:
->
-> From: "Jens Lehmann" <Jens.Lehmann@web.de>
-> Sent: Wednesday, September 12, 2012 8:21 PM
->
->> Am 11.09.2012 21:41, schrieb Junio C Hamano:
->>>
->>> Thanks.  I wish all others paid attention to "What's cooking" like
->>> you did here.
->>>
->>> And if it is hard to do so for whatever reason, suggest a better way
->>> for me to publish "What's cooking" or an equivalent (I am interested
->>> in finding the least bureaucratic way to help people and keep the
->>> balls rolling).
->>
->>
->> I think "What's cooking" makes lots of sense in its current form
->> as one gets a very good overview over current development tracks.
->>
->> Maybe in addition it would be nice to email the author(s) of a
->> series when the state changes or new comments are added (and to
->> only include the relevant part from "What's cooking" there). For
->> me it's not a big problem as I just have to grep for "submodule"
->> to get the bits I care about, but I suspect others might have to
->> invest much more time to check the current state of their series
->> and may appreciate being mailed directly when something happens.
->> Opinions?
->
->
-> My comment, as a simple reader, is that I misread the order of the items, in that I miss-associate the description paragraph with the * title _below_. That is, I see the description first and then read on...
->
-> Thinking about it, if the description paragraph was indented by one space then the * title  would create that obvious content indent that (I am) would be expected.
->
-> Obviously only a useful suggestion if it's easy to implement...
+Le mercredi 12 septembre 2012 =C3=A0 17:04 -0400, Jeff King a =C3=A9cri=
+t :
 
+> > > Wouldn't this break all of the code that is planning to index "W"=
+ by
+> > > 32-bit words (see the definitions of setW in block-sha1/sha1.c)?
+> > >=20
+> > That's not the same "W" ... This part of the code is indeed unclear=
+=2E
+>=20
+> Sorry, you're right, that's a different work array (though it has the
+> identical issue, no?).
 
-I can attest to the fact that the format can be at times difficult to
-parse, and I often find myself rereading sections to make sure I
-understood what each was referring to.
+No, this one is really accessed as int. But would probably benefit bein=
+g
+declared as uint32_t.
 
-As a casual reader, interested in the development that is going on,
-the things I am interested in for each branch/topic are like:
- - Branch/Topic description
- - Current integration status
- - Next steps required
- - Notes and memoranda
+> But the point still stands.  Did you audit the
+> block-sha1 code to make sure nobody is ever indexing the W array?=20
 
-I understand that references to where the branch is found (it's name)
-and what it includes (commit list) are important too, but these are
-less important for me.
+Yes. It was the first thing to do before changing its definition
+(for alignment purpose especially).
 
-Currently, the output for each branch looks something like:
-* <branch-name> (<creation-date>) <number-of-commits>
-  (<merge-status>)
- [list-of-commits]
-  (<branch-usage>)
-<long-description>
-<notes-and-memoranda>
-<next-steps>
+> If you didn't, then your change is not safe. If you did, then you sho=
+uld really
+> mention that in the commit message.
+>=20
 
-and these are grouped by current integration status (new, graduated,
-stalled etc)
+Sorry about this.
+I thought having the test suite OK was enough to prove this.
 
-A format that would make this information easier for me to parse would
-be something like:
+> > > If that is indeed the problem, wouldn't the simplest fix be using
+> > > uint32_t instead of "unsigned int"?
+> >=20
+> > It's another way to fix this oddity, but not simpler.
+>=20
+> It is simpler in the sense that it does not have any side effects (li=
+ke
+> changing how every user of the data structure needs to index it).
+>=20
 
-<short-branch-description>
-  <long-branch-description>
-  <notes>
-  <next-steps>
-  * <branch-name> (<creation-date>) <number-of-commits>
-    (<merge-status>)
-   [list-of-commits]
-    (<branch-usage>)
+There's no other user than blk_SHA1_Update()
 
-Essentially, shifting the details of the branch to the bottom, and
-adding a short description for the entire branch. Indent everything
-after the short description to make it clear that they belong
-together.
+> > > Moreover, would that be sufficient to run on such a platform? At =
+the
+> > > very least, "H" above would want the same treatment. And I would =
+not be
+> > > surprised if some of the actual code in block-sha1/sha1.c needed
+> > > updating, as well.
+> >=20
+> > ctx->H is actually used as an array of integer, so it would benefit=
+s of
+> > being declared uint32_t for an ILP64 system. This fix would also be
+> > required for blk_SHA1_Block() function.
+>=20
+> So...if we are not ready to run on an ILP system after this change, t=
+hen
+> what is the purpose?
+>=20
 
-The only real 'new' information required is the short description, but
-that could be replaced with the topic name if short description is not
-available (or the topic name is self explanatory).
+Readility: in blk_SHA1_Block(), the ctx->W array is used a 64 bytes len
+array, so, AFAIK, there's no point of having it defined as a 16 int len=
+=2E
+It's disturbing while reading the code.
 
-Most of the parsing benefit would come from the indentation, but
-having the 'summary' information near the top would let me skip things
-I am not interested in without having to scan the list of commits and
-other details.
+This could allows us to change the memcpy() call further:
 
-Regards,
+@@ -246,7 +246,7 @@ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void
+*data, unsigned long len)
+                unsigned int left =3D 64 - lenW;
+                if (len < left)
+                        left =3D len;
+-               memcpy((char *)ctx->W + lenW, data, left);
++               memcpy(ctx->W + lenW, data, left);
+                lenW =3D (lenW + left) & 63;
+                if (lenW)
 
-Andrew Ardill
+Regards.
+
+--=20
+Yann Droneaud
+OPTEYA
