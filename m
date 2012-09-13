@@ -1,85 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Revert diffstat back to English
-Date: Thu, 13 Sep 2012 10:57:09 -0400
-Message-ID: <20120913145708.GA32523@sigill.intra.peff.net>
-References: <20120913132847.GD4287@sigill.intra.peff.net>
- <1347545786-936-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Suggestions for "What's cooking"
+Date: Thu, 13 Sep 2012 08:09:10 -0700
+Message-ID: <7vlige9cyx.fsf@alter.siamese.dyndns.org>
+References: <7vpq5tjuw3.fsf@alter.siamese.dyndns.org>
+ <504F8427.1020507@web.de> <7vhar4gxdq.fsf@alter.siamese.dyndns.org>
+ <5050E0CA.7080907@web.de> <A7A1DB46082142E683753CFBC0A22A6B@PhilipOakley>
+ <90925598F9104F7FAC680544FABE0A79@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 13 16:57:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jens Lehmann" <Jens.Lehmann@web.de>, <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Sep 13 17:09:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCAr3-0002wA-86
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 16:57:21 +0200
+	id 1TCB2o-0005dt-Cm
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 17:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755865Ab2IMO5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 10:57:13 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43505 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752598Ab2IMO5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 10:57:11 -0400
-Received: (qmail 3759 invoked by uid 107); 13 Sep 2012 14:57:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Sep 2012 10:57:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Sep 2012 10:57:09 -0400
-Content-Disposition: inline
-In-Reply-To: <1347545786-936-1-git-send-email-pclouds@gmail.com>
+	id S1758149Ab2IMPJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 11:09:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40433 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753473Ab2IMPJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 11:09:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE2BF8DC5;
+	Thu, 13 Sep 2012 11:09:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=07KAOVCvgmBZt6egWj8cEJDKu9w=; b=HUG/5S
+	1QDVHjBl2y7ql0jeoYYw8n69qB9PmoAiPH0g4LkVeoz8Uuq6zYvkIrxJF90nAy6U
+	WT7dtM3pW6WODT5NsOtkCSeguX9KN8mUsYpWrA3oIK68p8Fy1/ok4KPxvVVET+AZ
+	Sdm3Mw+6ZxdFJ0ZIpjYtRWFEzvCRSNjfYyPwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BRvA9pkQS9nLxqgaZDFrGZQKPivdDbVs
+	/fvVNMXICCyEVTQMZgBfgn0purYp7+TpcW7gaGtpCj1SUk9enQvz+29fW/FIJc1l
+	4zkzXt5A/7mjW8bhaxJndO6gzlg/vO7Xw0OUYyjcT1WzkIsHLMZvVa6UoQ+b3+7D
+	m7EkviGTAxA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2E748DC1;
+	Thu, 13 Sep 2012 11:09:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BE0E8DBE; Thu, 13 Sep 2012
+ 11:09:12 -0400 (EDT)
+In-Reply-To: <90925598F9104F7FAC680544FABE0A79@PhilipOakley> (Philip Oakley's
+ message of "Thu, 13 Sep 2012 08:21:45 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F9B575EA-FDB4-11E1-A82B-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205383>
 
-On Thu, Sep 13, 2012 at 09:16:26PM +0700, Nguyen Thai Ngoc Duy wrote:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> This reverts the i18n part of 7f81463 (Use correct grammar in diffstat
-> summary line - 2012-02-01) but still keeps the grammar correctness for
-> English. It also reverts b354f11 (Fix tests under GETTEXT_POISON on
-> diffstat - 2012-08-27). The result is diffstat always in English
-> for all commands.
-> 
-> This helps stop users from accidentally sending localized
-> format-patch'd patches.
+>> Thinking about it, if the description paragraph was indented by one
+>> space then the * title  would create that obvious content indent
+>> that (I am) would be expected.
+>>
+>> Obviously only a useful suggestion if it's easy to implement...
+>>
+>> Philip
+> Thinking overnight. One very simple option is to just add a double
+> line spacing between items to give a clearer break.
 
-Yeah, this is exactly what I had in mind for now. Thanks.
+I've played with both and have prepared patches to Reintegrate and
+cook (both in the 'todo' branch).  Will play with the changes a bit
+more and then decide.
 
->  The "for now" sounds reasonable. Minimum annoyance is always good
->  especially in a (largely?) volunteer-driven development environment
->  like git. So I revert the i18n effect. Note that I don't optimize the
->  changes for English only. The i18n might come back some day if we
->  find a good way to do it.
-> 
->  Git is still partly i18n-ized, turning a few strings back does not
->  seem a big regression.
-
-I wonder if it would ever be fully so. Diffs will always have "diff" in
-them.  Git-checkout will always be called "checkout". It seems like
-learning a little bit of the original language is always necessary for
-command-line tools and machine-readable formats.
-
->  >   2. If people on non-English projects find that too cumbersome, then we
->  >      can switch the "English/C" above for `i18n.projectlang` or
->  >      something. But it should not be per-command, but per-message, and
->  >      should include all output that is not diagnostic and is not
->  >      machine-parseable (e.g., what I mentioned above, request-pull
->  >      output, etc). If it is the project's language, then the team
->  >      members will need to know it anyway, so it should not be too big a
->  >      burden to have a potentially different language there than in the
->  >      diagnostic messages.
-> 
->  If you mean projectlang vs a local language, I looked into that and I
->  don't think we could support two non-C languages using standard
->  gettext interface. So it's either "C vs another", or make use of
->  unofficial gettext features, or roll your own.
-
-Yeah, I saw in your original message that it gets hairy. My statement
-was more about what we would want if there were no implementation
-obstacles. I'd leave it to later to decide the details.
-
--Peff
+Thanks.
