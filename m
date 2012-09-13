@@ -1,85 +1,74 @@
-From: Jens Bauer <jens-lists@gpio.dk>
-Subject: Re: CRLF, LF ... CR ?
-Date: Thu, 13 Sep 2012 17:53:00 +0200
-Message-ID: <20120913175300953765.9ccf790f@gpio.dk>
-References: <20120913170943725232.01d717ef@gpio.dk>
- <1347550490.24469.54.camel@drew-northup.unet.maine.edu>
- <20120913154309.GB726@sigill.intra.peff.net>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the
+ test suite for detecting heap corruption
+Date: Thu, 13 Sep 2012 18:36:53 +0200
+Message-ID: <CA+EOSBmjwUA_Sogo5ZixnAE5_6C97wjEOzO6PnDgjw_BYzVz-w@mail.gmail.com>
+References: <1347452248-12222-1-git-send-email-gitter.spiros@gmail.com>
+	<7vy5kfceod.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 13 17:53:21 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 13 18:37:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCBjC-0001TS-Dz
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 17:53:18 +0200
+	id 1TCCPg-0006Fb-SG
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 18:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758404Ab2IMPxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 11:53:08 -0400
-Received: from [92.246.25.51] ([92.246.25.51]:62131 "EHLO mail.multitrading.dk"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1758445Ab2IMPxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 11:53:07 -0400
-Received: (qmail 83903 invoked from network); 13 Sep 2012 15:53:01 -0000
-Received: from unknown (HELO ?10.0.2.26?) (jb@multitrading.dk@92.246.25.51)
-  by audiovideo.dk with ESMTPA; 13 Sep 2012 15:53:01 -0000
-In-Reply-To: <20120913154309.GB726@sigill.intra.peff.net>
-X-Mailer: GyazMail version 1.5.12
+	id S932112Ab2IMQgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 12:36:55 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:49286 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758253Ab2IMQgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 12:36:54 -0400
+Received: by ieje11 with SMTP id e11so5239439iej.19
+        for <git@vger.kernel.org>; Thu, 13 Sep 2012 09:36:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=edcdwBQTW5zlTJBkisujIdJMT7XnjVwNdzb/jW+mbSM=;
+        b=E+nUHOFgXBuDptT9ARStuHL0NOwuHlVyp2lMZiTRIYcHrOVPPKniKN5lJi2Qw7Uf2X
+         ESdxoJixSl2v9AT7Z7V1fvuM0by5C9LcHoOJSDr2BBs5QfnLFhSJfCw7WzVKBNQUO5PZ
+         Q/qvhN4KpbMnwxZl/0kVheJ0dFLwxTHtikwQOROC2NUWPGzvRoUSkliKwvLLEHMMZP9Q
+         iJFf6U4oKRRnSECrR1pFJmPullHiKepDseLOlc1oRTOE5GaK3ufUpqvrIBIrqOfRmLXY
+         rmF5C+6ztsRH0S2FMZI2S2OQEtZbYp+hLDfbx2bK02QGgWRzBTnvoWa3RRa/aetzXH36
+         wxGw==
+Received: by 10.50.159.133 with SMTP id xc5mr25004966igb.34.1347554213910;
+ Thu, 13 Sep 2012 09:36:53 -0700 (PDT)
+Received: by 10.64.82.194 with HTTP; Thu, 13 Sep 2012 09:36:53 -0700 (PDT)
+In-Reply-To: <7vy5kfceod.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205391>
 
-Hi Jeff and Drew.
+2012/9/12 Junio C Hamano <gitster@pobox.com>:
+>
+> Interesting, but it bothers me to make it enabled unconditionally.
+> At least, this shouldn't be enabled under GIT_TEST_OPTS=--valgrind, no?
+Sorry for the late response and thanks.
 
-Thank you for your quick replies! :)
+No, setting MALLOC_CHECK don't require
+valgrind and it considered a best QA to have the test suite with it
+defined always. If the test suite fail with MALLOC_CHECK, well, there
+is some problem, no ?
+Some distro do it already in building packages (fedora for example)
+http://emacs.1067599.n5.nabble.com/please-set-both-MALLOC-PERTURB-and-MALLOC-CHECK-envvars-td150144.html
 
-The diffs look nasty yes; that's my main issue.
-It can be worked around in many ways; eg a simple (but time consuming) way:
-$ git diff mypcb.osm >mypcb.diff && nano mypcb.diff
+At @rpm5.org we do the same for popt, for example, from years
 
--It'd be better to just pipe it into a regex, which changes CR to LF on the fly.
+http://rpm5.org/community/rpm-devel/4156.html
+>
+> By the way, "export VAR=VAL" all on the same line, even though it is
+> in POSIX.1, is reported to be unsupported by some shells people care
+> about, and needs to be corrected to "VAR=VAL" and "export VAR" as
+> separate commands.  I think we saw a patch to fix an instance or two
+> that snuck in recently.
+Yes, right, my bad. I will reroll.
 
-OsmondPCB is able to read files that has mixed LF and CR. (By mixed, I do not talk about CRLF)
-
-The files do not need line-by-line diffing, but I think it would make it more readable.
-Thank you very much for the hint on the clean/smudge filters. I'll have a look at it. =)
-
-
-Love
-Jens
-
-On Thu, 13 Sep 2012 11:43:10 -0400, Jeff King wrote:
-> On Thu, Sep 13, 2012 at 11:34:50AM -0400, Drew Northup wrote:
-> 
->>> I've read that git supports two different line endings; either CRLF 
->>> or LF, but it does not support CR.
->>> Would it make sense to add support for CR (if so, I hereby request 
->>> it as a new feature) ?
->> 
->> Even if Git can't do CRLF/LF translation on a file it will still store
->> and track the content of it it just fine. In fact you probably want
->> translation completely disabled in this case. 
-> 
-> Yeah. If the files always should just have CR, then just don't ask git
-> to do any translation (by not setting the "text" attribute, or even
-> setting "-text" if you have something like autocrlf turned on globally),
-> and it will preserve the bytes exactly. I suspect diffs will look nasty
-> because we won't interpret CR as a line-ending, though.
-> 
-> Do the files actually need line-by-line diffing and merging? If not,
-> then you are fine.
-> 
-> If so, then it would probably be nice to store them with a canonical LF
-> in the repository, but convert to CR on checkout. Git can't do that
-> internally, but you could define clean/smudge filters to do so (see the
-> section in "git help attributes" on "Checking-out and checking-in";
-> specifically the "filter" subsection).
-> 
-> -Peff
+Thank you
