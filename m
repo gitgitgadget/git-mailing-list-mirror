@@ -1,78 +1,72 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Failing svn imports from apache.org
-Date: Thu, 13 Sep 2012 15:32:07 +0200 (CEST)
-Message-ID: <d5b32995-59c6-4669-bf4d-2532a1d58d2a@zcs>
-References: <7c3575e3-dab1-4cd2-a0e0-74778316c8b4@zcs>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Interactive rebase with pre-built script?
+Date: Thu, 13 Sep 2012 14:33:46 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1209131431580.20765@ds9.cixit.se>
+References: <alpine.DEB.2.00.1209110725130.8398@ds9.cixit.se> <5050BA90.2010105@sohovfx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 13 15:32:20 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andrew Wong <andrew.w-lists@sohovfx.com>
+X-From: git-owner@vger.kernel.org Thu Sep 13 15:34:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TC9Wm-00040S-3b
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 15:32:20 +0200
+	id 1TC9YP-0005SV-5m
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Sep 2012 15:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754513Ab2IMNcL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Sep 2012 09:32:11 -0400
-Received: from zcs.vnc.biz ([83.144.240.118]:54691 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754347Ab2IMNcJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Sep 2012 09:32:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id 14B616228C2
-	for <git@vger.kernel.org>; Thu, 13 Sep 2012 15:32:08 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wxRnYafpwTtp for <git@vger.kernel.org>;
-	Thu, 13 Sep 2012 15:32:07 +0200 (CEST)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 9F056622271
-	for <git@vger.kernel.org>; Thu, 13 Sep 2012 15:32:07 +0200 (CEST)
-In-Reply-To: <7c3575e3-dab1-4cd2-a0e0-74778316c8b4@zcs>
-X-Originating-IP: [92.206.203.224]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Linux)/7.1.3_GA_3346)
+	id S1753190Ab2IMNdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 09:33:53 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:46292 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752593Ab2IMNdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 09:33:52 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q8DDXl6Z022858
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 13 Sep 2012 15:33:47 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q8DDXkhK022853;
+	Thu, 13 Sep 2012 15:33:47 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <5050BA90.2010105@sohovfx.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 13 Sep 2012 15:33:47 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205372>
 
-Hi folks,
+Andrew Wong:
 
-I'm currently trying to import apache.org svn server, without success.
-See:
+> Instead of rebasing to "HEAD~", you should be able to do:
+>    git rebase -i HEAD
 
-git@moonshine:~/projects/common/libs$ git svn clone --stdlayout http://=
-svn.apache.org/repos/asf/commons/proper/discovery/
-Initialized empty Git repository in /home/git/projects/common/libs/disc=
-overy/.git/
-W: Ignoring error from SVN, path probably does not exist: (160013): Fil=
-esystem has no item: '/repos/asf/!svn/bc/100/commons/proper/discovery' =
-path not found
-W: Do not be alarmed at the above message git-svn is just searching agg=
-ressively for old history.
-This may take a while on large repositories
-mkdir .git: No such file or directory at /usr/lib/git-core/git-svn line=
- 3669
+Would you look at that, that actually works. So much for not testing 
+that. Thanks, that makes it a lot easier.
 
-Does anyone have an idea, what might be wrong here / how to fix it ?
+> Instead of appending your own recipe, you could also abuse the EDITOR 
+> environment variable.
+> Say your recipe is stored in a file called "my_recipe". Then, you could do 
+> this:
+>    env EDITOR="cp my_recipe" git rebase -i HEAD
+>
+> But this could potentially be dangerous because if "rebase" fires up a editor 
+> for any other reason (e.g. having a "reword" or "squash" in your recipe), 
+> then the commit message will be messed up. So you need to make sure your 
+> recipe won't trigger any editor except for the recipe.
 
+Indeed, that's why I don't want to do that.
 
-thx
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
+Perhaps I should add some switch that would append the contents of a 
+specific file to the prebuild recipe, I guess that should be fairly 
+easy. The question is what to call the switch.
 
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+-- 
+\\// Peter - http://www.softwolves.pp.se/
