@@ -1,77 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's the point of saying "HEAD is now at ..."?
-Date: Thu, 13 Sep 2012 22:14:29 -0700
-Message-ID: <7vvcfh6v9m.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] clone: fix refspec on "--single-branch" option
+Date: Thu, 13 Sep 2012 22:35:37 -0700
+Message-ID: <7vr4q56uae.fsf@alter.siamese.dyndns.org>
+References: <CAN0XMOKszADpeaCG7VhL-AZ3m7_hSWV3NhEmPuH6FETzs=eDNg@mail.gmail.com>
+ <1347599357-15533-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 14 07:14:42 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 07:36:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCOEi-0004ue-Og
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 07:14:41 +0200
+	id 1TCOZs-0004PE-52
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 07:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255Ab2INFOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 01:14:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57487 "EHLO
+	id S1752993Ab2INFgH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Sep 2012 01:36:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33474 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750907Ab2INFOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 01:14:32 -0400
+	id S1752901Ab2INFfk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 01:35:40 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50F5998EE;
-	Fri, 14 Sep 2012 01:14:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=D
-	A81jTiu98/rHsBGXgrKQomuG1A=; b=Ee1IxldElb13SgPAnkQiEeQXk+4quo9ee
-	XzKe0k56EzoBecf5nAVCfhyt2ZE2dT7McpNOM+dfEssQt9hWP3SkJhwwEkv3Xoxs
-	6pnswjhVomwPMYiIDFzGJDqhS7QeEHglDHmhqCY3s1I2B4VvFLHyKuA2UZI7CnOh
-	0Qg8O6/atA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=JIK
-	pOsoK6CQ/mbZ1bEXyifYpTzNKdtStX4aceExsPZa+zclDg5H4/3l97G/jRR4LbW8
-	7kP72jEvYXl7K7kQsLzQDs0oBwU5XXiEragJSsHSbY4R7MTXZp+dmerMJvUgBNt1
-	IoKK2BFy1wJBMAFZ36TK+J1IuO3dZfZF1Hg9ok2c=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D69079DFD;
+	Fri, 14 Sep 2012 01:35:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=EotO5QgZwhHt
+	P3pmBIi6vqDifqc=; b=qY5HUyGPO4rC/w2uZ9jS7Bx3K2L/lgOYuwyT0SjEJQCO
+	YiFkZfURUgLaltwkUUitUjgdHsuJJIl4S8u60P/SULYdw2Vvw0QdYjEbi48IqWgA
+	Zal9y6Yrctm8qGYW+OEL1QLrgm8aCiFWzBvhyamHeMymvVUmiIT+jQQ3YeaGLFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o1beap
+	LFDVXqoN2isKpKDTTh1Z70bRWq25a5ZB/Y1McbdSENWJnp4ZIKBaFgxOsYR3uHlC
+	Fvoy0QL/juMfW1RkdNbnmkIwwqwzsdbiUW5/yLkBs2GjEauNlmkxbo4sIz0KcCq8
+	VlcPFI7n9ZkuGQ+loQTcGHUzltiMsGHvlMSr8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F62098ED;
-	Fri, 14 Sep 2012 01:14:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C35AE9DFC;
+	Fri, 14 Sep 2012 01:35:39 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A89DD98EB; Fri, 14 Sep 2012
- 01:14:30 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21EA69DFB; Fri, 14 Sep 2012
+ 01:35:39 -0400 (EDT)
+In-Reply-To: <1347599357-15533-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+ Thielow's message of "Fri, 14 Sep 2012 07:09:17 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1037F402-FE2B-11E1-95FF-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0445F2B8-FE2E-11E1-8F6A-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205455>
 
-I sometimes wonder what value the message is giving us.
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-For example, while reviewing a patch in my Emacs session, I may say
+> After using "git clone" with the "--single-branch"
+> option, the configured refspec for this repo was
+> "+refs/heads/*:refs/remotes/origin/*".
+> After fetching changes from this repo again, it'll
+> receive all refs instead of the single ref which
+> was used in "--single-branch". Fixing the refspec
+> that it just contains the ref of the branch which
+> was cloned.
+>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  builtin/clone.c | 5 ++++-
+>  1 Datei ge=C3=A4ndert, 4 Zeilen hinzugef=C3=BCgt(+), 1 Zeile entfern=
+t(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 5e8f3ba..3e74d55 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -754,7 +754,10 @@ int cmd_clone(int argc, const char **argv, const=
+ char *prefix)
+>  		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
+>  	}
+> =20
+> -	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+> +	if (option_single_branch)
+> +		strbuf_addf(&value, "+%s%s:%s%s", src_ref_prefix, option_branch, b=
+ranch_top.buf, option_branch);
+> +	else
+> +		strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
 
-    | git am -s3c <RETURN>
+Who guarantees at this point in the codepath that option_branch is
+set when option_single_branch is non-zero?  Until we talk with the
+remote, "clone --single-branch" without an explicit "--branch" will
+not learn which branch at the remote we are going to fetch (it will
+be their HEAD).
 
-which runs the command on the contents of the e-mail I am reading,
-to apply the patch.  After that, I would go to a separate terminal
-and do things like "git show -U20", etc.  Once I am done, I reset
-the temporary commit away, and get this:
+I wonder if this should be more like this:
 
-    $ git reset --hard HEAD^
-    HEAD is now at ce5cf6f Merge git://github.com/git-l10n/git-po
+	if (option_single_branch) {
+		if (option_branch)
+			Your patch "+refs/heads/foo:refs/remotes/origin/foo";
+		else
+			"HEAD";
+        } else {
+        	Original "+refs/heads/*:refs/remotes/origin/*";
+	}
 
-or often it is
-
-    $ git reset --hard ko/master
-    HEAD is now at ce5cf6f Merge git://github.com/git-l10n/git-po
-
-In either case, I know where I am resetting to, so "HEAD is now at"
-is a less than useful noise.  If it contained "HEAD was at ...", it
-may let me realize that I was still going to use the contents in
-some other way and quickly go back to it with another reset, with
-cut and paste or with HEAD@{1}.  In either case, showing the tip of
-what I just discarded seems to be a lot more useful information than
-what we are currently giving the users.
+That is, "clone --single-branch" will continue fetching from and
+integrating with their HEAD without storing any remote tracking
+branch.
