@@ -1,151 +1,71 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
 Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 18:58:34 +0200
-Message-ID: <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com> <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+Date: Fri, 14 Sep 2012 19:08:00 +0200
+Message-ID: <CA+EOSBm4cSu8cxPc-3Eqm0J7deeht6FMMUGBKP6vx8VDcVrGPQ@mail.gmail.com>
+References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
+	<CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
+	<CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBDR53PPJ7YHRBY6EZWBAKGQEETWEECQ@googlegroups.com Fri Sep 14 18:59:20 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBY6EZWBAKGQEETWEECQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f186.google.com ([209.85.214.186])
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Sep 14 19:08:13 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBY6EZWBAKGQEETWEECQ@googlegroups.com>)
-	id 1TCZEd-0004lc-Tf
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 18:59:20 +0200
-Received: by obbta17 with SMTP id ta17sf3304798obb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 09:59:15 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCZNE-000225-PE
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 19:08:13 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754751Ab2INRID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 13:08:03 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35715 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004Ab2INRIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 13:08:01 -0400
+Received: by ieje11 with SMTP id e11so7201000iej.19
+        for <git@vger.kernel.org>; Fri, 14 Sep 2012 10:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=6CPP+9CJ9780sZaH+kbMb1TqzFxdxxwDgiSXIfQfHm0=;
-        b=y3fjbHAg+AWGKKpKROsdz2lcfH4H1AlZSnwY5k80cSdIQhWhnWv/PoATxYhckZRGOF
-         jxyU7F32JtiS8rjol3+67KniV0IbZ4slNe2FgGgc8Ui4TFGUEOZWppxD+U02X/qnjABF
-         uIpmVqunKUi5YCoBuZgk5ps0/UsWaFYo3jMtWMzli5O7ThBGraRfWQWkwGed5N/kkdFM
-         duKE288DjppkCgvunCiz6Rt/cybm+7g5NjgCoYrA9oLDybwtHflNza+/NYSpZUkeYEwQ
-         1VZCykIN8PlTHt5NSIbOKhHXxdxwSsgneBbUblvd+xBjI7S8fonXoZOWw9rNRpsH1uzT
-         mgOA==
-Received: by 10.236.173.202 with SMTP id v50mr683047yhl.19.1347641955465;
-        Fri, 14 Sep 2012 09:59:15 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.148.143 with SMTP id p15ls3628222vcv.9.gmail; Fri, 14 Sep
- 2012 09:59:14 -0700 (PDT)
-Received: by 10.58.92.9 with SMTP id ci9mr491891veb.40.1347641954880;
-        Fri, 14 Sep 2012 09:59:14 -0700 (PDT)
-Received: by 10.58.92.9 with SMTP id ci9mr491890veb.40.1347641954872;
-        Fri, 14 Sep 2012 09:59:14 -0700 (PDT)
-Received: from mail-vc0-f170.google.com (mail-vc0-f170.google.com [209.85.220.170])
-        by gmr-mx.google.com with ESMTPS id s13si30858vde.2.2012.09.14.09.59.14
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 09:59:14 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.170 as permitted sender) client-ip=209.85.220.170;
-Received: by mail-vc0-f170.google.com with SMTP id fk26so4565165vcb.15
-        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 09:59:14 -0700 (PDT)
-Received: by 10.220.247.137 with SMTP id mc9mr2804850vcb.52.1347641954677;
- Fri, 14 Sep 2012 09:59:14 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 09:58:34 -0700 (PDT)
-In-Reply-To: <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.170 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205503>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gkfgJK6TEW2izJ1izEW9zef86UQ95gFAt+unF3YHAhQ=;
+        b=Jbt62l7mxdH783z32L83LO7xhuQ7L1mUVYF54C07zgyLFVWqbYCerWlpdfenuJQ5Bu
+         1k+g6CHURY2zQeKf7r8ixwZgRJcCebliyFa3npW6Hj0BkejVFc3MBL9Ofi2vg1XUULfY
+         4iRi5ABQF+mi9Wuyh9KemBLuQpXxpStKEi8NcyOYAekHCiaaTPaZ0qY5fZ8BbhYh+BTh
+         cRrCO7uWCwE/MFm0X4Y1IhWkuhC1Q9gHYLY1Lmcev8VyDVVHQgUPZf9P1mqDgpZkYSDn
+         g/kyDNQDIhEXjrTXOfV/z8EqJANfxLn9C36aZ8ssWE4ogewY9RmFOe3HnB28l125WZqD
+         rp7Q==
+Received: by 10.50.154.168 with SMTP id vp8mr3843835igb.3.1347642480595; Fri,
+ 14 Sep 2012 10:08:00 -0700 (PDT)
+Received: by 10.64.82.194 with HTTP; Fri, 14 Sep 2012 10:08:00 -0700 (PDT)
+In-Reply-To: <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205504>
 
-On Fri, Sep 14, 2012 at 6:54 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Fri, Sep 14, 2012 at 6:41 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 78c4286..7d1b34b 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
->>  # This test checks if command xyzzy does the right thing...
->>  # '
->>  # . ./test-lib.sh
->> +
->> +if ! which tput > /dev/null ; then
->> +       tput () {
->> +               case "$1" in
->> +               bold)
->> +                       echo -ne "\033[1m" ;;
->> +               setaf)
->> +                       echo -ne "\033[0;3$2m" ;;
->> +               sgr0)
->> +                       echo -ne "\033(\033[m" ;;
->
-> I should of course have checked this earlier, but I find now that
-> "echo -ne" isn't portable. So perhaps this on top?
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 7d1b34b..91a1d7b 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -134,11 +134,11 @@ if ! which tput > /dev/null ; then
->         tput () {
->                 case "$1" in
->                 bold)
-> -                       echo -ne "\033[1m" ;;
-> +                       printf "%b" "\033[1m" ;;
->                 setaf)
-> -                       echo -ne "\033[0;3$2m" ;;
-> +                       printf "%b" "\033[0;3$2m" ;;
->                 sgr0)
-> -                       echo -ne "\033(\033[m" ;;
-> +                       printf "%b" "\033(\033[m" ;;
->                 esac
->         }
->  fi
+2012/9/14 Erik Faye-Lund <kusmabite@gmail.com>:
+> On Fri, Sep 14, 2012 at 6:54 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> On Fri, Sep 14, 2012 at 6:41 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>>> index 78c4286..7d1b34b 100644
+>>> --- a/t/test-lib.sh
+>>> +++ b/t/test-lib.sh
+>>> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
+>>>  # This test checks if command xyzzy does the right thing...
+>>>  # '
+>>>  # . ./test-lib.sh
+>>> +
+Nice. But this setting should be check that we have a terminal first isn't ?
+Some test like this before
 
-And again, I'm stupid for not reading documentation properly; octal
-escaped strings in the format string should work (and does on my
-systems), so this is sufficient:
+test "X$$TERM" != Xdumb \
+&&  test -t 1 2>/dev/null  \
+&& ....
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 7d1b34b..2a6149e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -134,11 +134,11 @@ if ! which tput > /dev/null ; then
- 	tput () {
- 		case "$1" in
- 		bold)
--			echo -ne "\033[1m" ;;
-+			printf "\033[1m" ;;
- 		setaf)
--			echo -ne "\033[0;3$2m" ;;
-+			printf "\033[0;3$2m" ;;
- 		sgr0)
--			echo -ne "\033(\033[m" ;;
-+			printf "\033(\033[m" ;;
- 		esac
- 	}
- fi
+or the inverse logic. This is what automake  and popt autogen.sh does.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Best Regards
