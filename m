@@ -1,146 +1,137 @@
-From: "Mestnik, Michael J - Eagan, MN - Contractor" 
-	<Michael.J.Mestnik@usps.gov>
-Subject: RE: Using Format/export-subst Howto.
-Date: Fri, 14 Sep 2012 11:05:03 -0500
-Message-ID: <84EA18831601B6429E578236AE239B01A54807F3BE@EAGNMNSXMB07.usa.dce.usps.gov>
-References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov>
- <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net>
- <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov>
- <50534FC6.2040207@viscovery.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] test-lib: add support for colors without tput
+Date: Fri, 14 Sep 2012 18:41:45 +0200
+Message-ID: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Sep 14 18:20:24 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: msysgit+bncBDR53PPJ7YHRB3N4ZWBAKGQEOSNEIFA@googlegroups.com Fri Sep 14 18:42:26 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRB3N4ZWBAKGQEOSNEIFA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ey0-f186.google.com ([209.85.215.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCYcx-0004aV-U3
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 18:20:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875Ab2INQUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 12:20:13 -0400
-Received: from mailwest2.usps.gov ([56.0.84.22]:47883 "EHLO
-	gk-w2-email.srvs.usps.gov" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752607Ab2INQUK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 12:20:10 -0400
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Sep 2012 12:20:10 EDT
-DKIM-Signature: v=1; a=rsa-sha256; d=usps.gov; s=uspsgov0913; c=relaxed/simple;
-	q=dns/txt; i=@usps.gov; t=1347638709; x=1351526709;
-	h=From:Sender:Reply-To:Subject:Date:Message-ID:To:CC:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Z56zEP1RU+Eism8OvJ98XFjGXhF+UrY1XWG4+POeZOY=;
-	b=IKzh0nk+dZfERXRBnLJD5bXOC6g9FLUr82Z1yaoCl2Yp/92zrwjEGxrRkbngvcai
-	XLaKFKkloG0mDFF06EW75iaXDI0rZOlr96+0bCUnBoj+wpmF9eEdM5FCopd7VrOp
-	+ap+ZUM2Xms0EJ4tbSG50UCN8FP8WDHnfud0g4VwAP4=;
-Received: from mailrelay-w3i.usps.gov (Unknown_Domain [56.224.66.58])
-	by gk-w2-email.srvs.usps.gov (Sendmail 8.14.3) with SMTP id 77.23.05889.4B553505; Fri, 14 Sep 2012 11:05:08 -0500 (CDT)
-X-AuditID: 38005411-b7f806d000001701-59-505355b4360f
-Received: from EAGNMNSXMHC07.usa.dce.usps.gov (EAGNMNSXMHC07.usa.dce.usps.gov [56.207.244.217])
-	by mailrelay-w3i.usps.gov (Symantec Messaging Gateway) with SMTP id 0A.C5.03288.7E553505; Fri, 14 Sep 2012 09:05:59 -0700 (PDT)
-Received: from EAGNMNSXMB07.usa.dce.usps.gov ([169.254.1.98]) by
- EAGNMNSXMHC07.usa.dce.usps.gov ([56.207.244.217]) with mapi; Fri, 14 Sep 2012
- 11:05:05 -0500
-Thread-Topic: Using Format/export-subst Howto.
-Thread-Index: Ac2Sj17bQxSODWC4QX2j+q+W4oIAMwAAvcPQ
-In-Reply-To: <50534FC6.2040207@viscovery.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFIsWRmVeSWpSXmKPExsViwRCirbslNDjA4NAfNYs1L04zW3Rd6Way
-	WPmzxoHZo3XyJGaPz5vkPO7+38kUwBzFbZOUWFIWnJmep2+XwJ2xa/8bxoJ2gYoT3YfYGhjv
-	83QxcnJICJhIzJhynBHCFpO4cG89G4gtJLCfUWLSfn6YmtOXJ7F0MXIBxR8ySlxYfp8ZwlkI
-	5Ez4zwpSxSYQJLHm0z6wbhEBDYndp3vZuxg5OJgF4iSmHRUFMVkEVCUeT0wBqRAW0JXobfzM
-	BFGtJ3F/+w1WkBIRASOJbWejQcK8AmESE95fhdo0kUni2LKVzCAJTqDeeXvugd3MCHTz91Nr
-	wOYwC4hL3HoynwniZgGJJXvOM0PYohIvH/9jhagXlbjTvp4Rol5HYsHuT2wQtrbEsoWvmSEW
-	C0qcnPkE7F8JgftsEqdm9zLDAujDkm1MExilZiHZNwvJrFlIZs1CMmsBI8sqRsn0bN1yI93U
-	3MTMHL3iorJivdLigmK99PyyTYyQyBXcwdh/VfcQowAHoxIPb8C/wAAh1sSy4srcQ4wSHMxK
-	Iry22kEBQrwpiZVVqUX58UWlOanFhxilOViUxHnLnwFVC6QnlqRmp6YWpBbBZJk4OEEEl1QD
-	o53uv+ZHXjMmrjoel8R4t/vEsl/7indKxOkfY4pdc+K0ztJjc7jVkz57bZVbN8vuNnvU9piS
-	GzXTeu8dsS107JZiE/As2srrVPrw5sNJXke+X71j9kSkcNrO94oh7TGMKwVblVeaX/9SaHnu
-	0y7NIrbn8Wm+om+yFu1TZpTf+cv+7grrpc+M3iixFGckGmoxFxUnAgDhv3n43QIA 
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAIsWRmVeSWpSXmKPExsVicf7LTd3nocEBBmf/qluseXGa2aLrSjeT
-	xcqfNQ7MHq2TJzF7fN4k53H3/06mAOYoLpuU1JzMstQifbsEroxd+98wFrQLVJzoPsTWwHif
-	p4uRk0NCwETi9OVJLBC2mMSFe+vZuhi5OIQEHjJKXFh+nxnCWQjkTPjPClLFJhAksebTPjYQ
-	W0RAQ2L36V72LkYODmaBOIlpR0VBTBYBVYnHE1NAKoQFdCV6Gz8zQVTrSdzffoMVpEREwEhi
-	29lokDCvQJjEhPdXoTZNZJI4tmwlM0iCE6h33p57jCA2I9Bt30+tAZvDLCAucevJfCaImwUk
-	luw5zwxhi0q8fPyPFaJeVOJO+3pGiHodiQW7P7FB2NoSyxa+ZoZYLChxcuYTlgmMYrOQjJ2F
-	pGUWkpZZSFoWMLKsYhTLTczMKUrNSazULTfO1CstLijWS88v28QIiqcHTkY7GG89ND/EKMDB
-	qMTDu4E9KECINbGsuDL3EKMEB7OSCK+tNlCINyWxsiq1KD++qDQntfgQozQHi5I4r5SfW4CQ
-	QHpiSWp2ampBahFMlomDU6qBkWU9xyUBBrZS85XHjVuPPSzNWxbjd4/DY88L278rPilGqT2f
-	xDzrF4/e9aUbDqyIEFz3VVOWa1GgdeHmq+dvFunv3dKcsVDrQavj3V+ZAjdVX52avTFb2dJm
-	lo567be1u0N7WY4tkNP/+OK+cfATy6qwbZ7Cls0TanvON3g/an+RILZ63tr3JUosxRmJhlrM
-	RcWJAHhFTlWjAgAA
-X-CFilter-Loop: DLP SM
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205498>
+	(envelope-from <msysgit+bncBDR53PPJ7YHRB3N4ZWBAKGQEOSNEIFA@googlegroups.com>)
+	id 1TCYyI-0001uY-KL
+	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 18:42:26 +0200
+Received: by mail-ey0-f186.google.com with SMTP id i13sf1509947eaa.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 09:42:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=/w79BKdBgBL4jkac+0h+zJb4wweujz1XQNnHcF6LiFI=;
+        b=NnEmHeb48gRVk5FrynT3tVIckD9Wdp8PHGZOu6ix8HzQBOpTFEOSrVeiApQwWG8YSk
+         YeKuUqL7hJ3+M5y1bkeTBWwsIKlLJmWqQKKvjaytzE1FFRdm1bKX7HsLd4UPVBMHcBrQ
+         1z0ArYn1e35OyjAkTX04YxKrQWQ+7le1AiCzXnbw1Umr5oCvG6HAVb2EIDdhQkg5HZYx
+         mQVgKdVbwZvpwrR6iHYkymtHbaFscg1cTP/uNUwM2aO8DPOxTbyubC5KrkAduQg8LQ5M
+         iE12AWYL41EpNHhIl0Z9hMjCWh2uLHCSUGkRwLNM++YZQYKcnW6K4x4NZVnpGeopc2rO
+         9niw==
+Received: by 10.205.117.17 with SMTP id fk17mr264095bkc.29.1347640942237;
+        Fri, 14 Sep 2012 09:42:22 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.204.4.74 with SMTP id 10ls4697471bkq.0.gmail; Fri, 14 Sep 2012
+ 09:42:21 -0700 (PDT)
+Received: by 10.204.15.209 with SMTP id l17mr487002bka.6.1347640940964;
+        Fri, 14 Sep 2012 09:42:20 -0700 (PDT)
+Received: by 10.204.15.209 with SMTP id l17mr487001bka.6.1347640940941;
+        Fri, 14 Sep 2012 09:42:20 -0700 (PDT)
+Received: from mail-lpp01m010-f45.google.com (mail-lpp01m010-f45.google.com [209.85.215.45])
+        by gmr-mx.google.com with ESMTPS id e23si177870bks.0.2012.09.14.09.42.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Sep 2012 09:42:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.45 as permitted sender) client-ip=209.85.215.45;
+Received: by lagz14 with SMTP id z14so3516827lag.18
+        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 09:42:20 -0700 (PDT)
+Received: by 10.152.112.37 with SMTP id in5mr2862622lab.44.1347640940605;
+        Fri, 14 Sep 2012 09:42:20 -0700 (PDT)
+Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
+        by mx.google.com with ESMTPS id fz8sm655998lbb.9.2012.09.14.09.42.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Sep 2012 09:42:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.msysgit.0.5.g0225efe.dirty
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.215.45 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205499>
 
+For platforms that does not have tput we can still perform coloring
+by manually emitting the ANSI control codes. If tput is missing from
+$PATH, install a replacement function.
 
-> -----Original Message-----
-> From: Johannes Sixt [mailto:j.sixt@viscovery.net] 
-> Sent: Friday, September 14, 2012 10:40 AM
-> To: Mestnik, Michael J - Eagan, MN - Contractor
-> Cc: Michael J Gruber; git@vger.kernel.org
-> Subject: Re: Using Format/export-subst Howto.
-> 
-> Am 9/14/2012 17:27, schrieb Mestnik, Michael J - Eagan, MN - 
-> Contractor:
-> > 
-> >> -----Original Message----- From: Johannes Sixt
-> >> If EOL conversion or a clean filter was applied during 'git add
-> >> file', is the version in the worktree suddenly wrong? Of course,
-> >> not.
-> >> 
-> >> I would place $Id$ treatment in the same ball park and 
-> declare it as
-> >> a mistake of the editor that it did not remove the now "wrong" SHA1
-> >> from $Id:$.
-> > 
-> > I think the difference here is that git does not *currently 
-> change the
-> > OS's LEF.  In this case each commit alters the Id and git is the one
-> > altering the Id.
-> 
-> Maybe you misunderstood $Id$? The value you get there is the 
-> blob's SHA1,
-> not the commit's. That is, it does not change on every 
-> commit, but only
-> when the file changes.
-> 
-> You are right that the value itself is something that is 
-> dictated by git's
-> database model, but the change logically happens when the 
-> editor modifies
-> the file.
-> 
-> (My contribution to this thread should be regarded as food 
-> for thought.
-> Personally, I don't mind whether or not and when $Id$ is updated.)
->
-Thank you for correcting me, I've always noticed this number doesn't seam to correlate to anything of use for me.  However it's been helpful when reading these reports to see what version generated it and that's why I wanted to further expand the information provided...  The date and time of the commit are specifically useful to me.
+The exact strings has been dumped from a machine that has tput, by
+piping the output of tput through 'od -c -An'.
 
-> -- Hannes
-> 
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
+I got slightly annoyed that we didn't get colored output from the
+tests on Windows, so I decided to fix it.
 
+Hopefully other platforms can benefit from this as well.
 
-Mike Mestnik, Michael J
-The ESM Tools
-Enterprise Systems Monitoring
-United States Postal Service
- O: (651) 406-2048
-Michael.J.Mestnik@usps.gov
-ITEnterpriseSystemsMonitoring@usps.gov
- 
+I'm not super happy with the condition to enable it. I considered
+an environment variable as well, but decided against it because
+"make -C t" from the root does not seem to pick up environment
+variables configured in the main Makefile.
+
+Thoughts?
+
+ t/test-lib.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 78c4286..7d1b34b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
+ # This test checks if command xyzzy does the right thing...
+ # '
+ # . ./test-lib.sh
++
++if ! which tput > /dev/null ; then
++	tput () {
++		case "$1" in
++		bold)
++			echo -ne "\033[1m" ;;
++		setaf)
++			echo -ne "\033[0;3$2m" ;;
++		sgr0)
++			echo -ne "\033(\033[m" ;;
++		esac
++	}
++fi
++
+ [ "x$ORIGINAL_TERM" != "xdumb" ] && (
+ 		TERM=$ORIGINAL_TERM &&
+ 		export TERM &&
+-- 
+1.7.11.msysgit.0.5.g0225efe.dirty
+
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
