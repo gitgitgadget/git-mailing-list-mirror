@@ -1,76 +1,239 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] rev-list/log: document logic with several limiting options
-Date: Fri, 14 Sep 2012 10:21:07 +0200
-Message-ID: <5052E8F3.2030305@drmicha.warpmail.net>
-References: <b23f3c547358b79731c7a25d9ac496138e6ab74d.1347374615.git.git@drmicha.warpmail.net> <7vsjaoil6d.fsf@alter.siamese.dyndns.org> <50509171.9060604@drmicha.warpmail.net> <7vbohbdufz.fsf@alter.siamese.dyndns.org> <50518B13.5010702@drmicha.warpmail.net> <7vvcfh62l3.fsf@alter.siamese.dyndns.org> <5052E0D8.3040500@drmicha.warpmail.net> <5052E1C2.1050008@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 10:21:27 2012
+Subject: [PATCHv3 01/11] grep: teach --debug option to dump the parse tree
+Date: Fri, 14 Sep 2012 11:46:33 +0200
+Message-ID: <eb5e7055691692e8a60adf8edbb3b8d2aab9d02b.1347615361.git.git@drmicha.warpmail.net>
+References: <7vfw6l9x7i.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 14 11:46:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCR9S-00087j-IH
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 10:21:26 +0200
+	id 1TCSUC-0006vD-N2
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 11:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756991Ab2INIVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 04:21:14 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39452 "EHLO
+	id S1753583Ab2INJqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 05:46:49 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:60804 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756751Ab2INIVJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 04:21:09 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id EB294202CF;
-	Fri, 14 Sep 2012 04:21:08 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute3.internal (MEProxy); Fri, 14 Sep 2012 04:21:08 -0400
+	by vger.kernel.org with ESMTP id S1753518Ab2INJqr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 05:46:47 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5B6D42087E;
+	Fri, 14 Sep 2012 05:46:47 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 14 Sep 2012 05:46:47 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=R7G34hUZkNipDNRW/ikCl3
-	X2D6s=; b=SyTYr6dY/nTCsA3NE3MPxYN0KySHulg+raaEwwOZYvgmk7uRG2/92/
-	MCGZfgZBBZfWrRpsyYM2wsL68HaF3R+KY4g/MtgbO59OPf5qmGrCWjO0yuwZbD0Y
-	N2hdd0HgS7ALeaOQ/Fx14/LUhWOllb6pTxKhzoru5DVMwgIvwOLr4=
-X-Sasl-enc: g0Dd2DYB5vX6df3aZgR/RQAjp6ZqNeS/ha9DBhIeq8C+ 1347610868
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 767DE4837F4;
-	Fri, 14 Sep 2012 04:21:08 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <5052E1C2.1050008@pobox.com>
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=Th
+	xFvodZFlTpF+zaM/D83xkeTTg=; b=guhKL0mKUgcDYYRGKJ9VJMWCkXtF/LmKmC
+	20FIzT42G3M1EcIuovDqvDEer/KBEWA2cbVmk7+R890TBV9U31ZXYE/Uk7eLxj4K
+	gFoewzsNNiRwLjTua1LRVIMQeA0ZgLu//2hn2KIZGHTiXeah7nNWHpG77h/ZyOcm
+	5WGO1nzlE=
+X-Sasl-enc: YY/ZpA2qoJR/GXENNzUdzabfWfzUjxwfFhMc0tBN4QNc 1347616006
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id CE8AB8E0175;
+	Fri, 14 Sep 2012 05:46:46 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.592.g41e7905
+In-Reply-To: <7vfw6l9x7i.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <cover.1347615361.git.git@drmicha.warpmail.net>
+References: <cover.1347615361.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205466>
 
-Oh, my gosh, it's not as early as this indicates, rather coffein
-depletion already:
+From: Junio C Hamano <gitster@pobox.com>
 
-> Message-ID: <5052E1C2.1050008@pobox.com>
-> Date: Fri, 14 Sep 2012 09:50:26 +0200
-> From: Junio C Hamano <gitster@pobox.com>
-> User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+Our "grep" allows complex boolean expressions to be formed to match
+each individual line with operators like --and, '(', ')' and --not.
+Introduce the "--debug" option to show the parse tree to help people
+who want to debug and enhance it.
 
-[no, that Thunderbird user isn't Junio]
+Also "log" learns "--debug-grep" option to do the same.  The command
+line parser to the log family is a lot more limited than the general
+"git grep" parser, but it has special handling for header matching
+(e.g. "--author"), and a parse tree is valuable when working on it.
 
-> MIME-Version: 1.0
-> To: Michael J Gruber <git@drmicha.warpmail.net>
-> CC: git@vger.kernel.org
-> Subject: Re: [PATCH] rev-list/log: document logic with several limiting options
+Note that "--all-match" is *not* any individual node in the parse
+tree.  It is an instruction to the evaluator to check all the nodes
+in the top-level backbone have matched and reject a document as
+non-matching otherwise.
 
-> Michael J Gruber venit, vidit, dixit 14.09.2012 09:46:
-> [snipped, just adding]
-> 
-> ...and maybe the meaning of "(or ...)" and "*or*" isn't what I think it
-> is either?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ builtin/grep.c |  3 ++
+ grep.c         | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ grep.h         |  1 +
+ revision.c     |  2 ++
+ 4 files changed, 96 insertions(+), 2 deletions(-)
 
-[and that confused persion isn't Junio either]
-
-I didn't mean to imposter Junio. Something went wrong with "virtual
-identity" choosing the From: address. Terribly sorry.
-
-Michael (really...)
+diff --git a/builtin/grep.c b/builtin/grep.c
+index fe1726f..8aea00c 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -772,6 +772,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			   "indicate hit with exit status without output"),
+ 		OPT_BOOLEAN(0, "all-match", &opt.all_match,
+ 			"show only matches from files that match all patterns"),
++		{ OPTION_SET_INT, 0, "debug", &opt.debug, NULL,
++		  "show parse tree for grep expression",
++		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1 },
+ 		OPT_GROUP(""),
+ 		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+ 			"pager", "show matching files in the pager",
+diff --git a/grep.c b/grep.c
+index 04e3ec6..be15c47 100644
+--- a/grep.c
++++ b/grep.c
+@@ -332,6 +332,87 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
+ 	return compile_pattern_or(list);
+ }
+ 
++static void indent(int in)
++{
++	while (in-- > 0)
++		fputc(' ', stderr);
++}
++
++static void dump_grep_pat(struct grep_pat *p)
++{
++	switch (p->token) {
++	case GREP_AND: fprintf(stderr, "*and*"); break;
++	case GREP_OPEN_PAREN: fprintf(stderr, "*(*"); break;
++	case GREP_CLOSE_PAREN: fprintf(stderr, "*)*"); break;
++	case GREP_NOT: fprintf(stderr, "*not*"); break;
++	case GREP_OR: fprintf(stderr, "*or*"); break;
++
++	case GREP_PATTERN: fprintf(stderr, "pattern"); break;
++	case GREP_PATTERN_HEAD: fprintf(stderr, "pattern_head"); break;
++	case GREP_PATTERN_BODY: fprintf(stderr, "pattern_body"); break;
++	}
++
++	switch (p->token) {
++	default: break;
++	case GREP_PATTERN_HEAD:
++		fprintf(stderr, "<head %d>", p->field); break;
++	case GREP_PATTERN_BODY:
++		fprintf(stderr, "<body>"); break;
++	}
++	switch (p->token) {
++	default: break;
++	case GREP_PATTERN_HEAD:
++	case GREP_PATTERN_BODY:
++	case GREP_PATTERN:
++		fprintf(stderr, "%.*s", (int)p->patternlen, p->pattern);
++		break;
++	}
++	fputc('\n', stderr);
++}
++
++static void dump_grep_expression_1(struct grep_expr *x, int in)
++{
++	indent(in);
++	switch (x->node) {
++	case GREP_NODE_TRUE:
++		fprintf(stderr, "true\n");
++		break;
++	case GREP_NODE_ATOM:
++		dump_grep_pat(x->u.atom);
++		break;
++	case GREP_NODE_NOT:
++		fprintf(stderr, "(not\n");
++		dump_grep_expression_1(x->u.unary, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	case GREP_NODE_AND:
++		fprintf(stderr, "(and\n");
++		dump_grep_expression_1(x->u.binary.left, in+1);
++		dump_grep_expression_1(x->u.binary.right, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	case GREP_NODE_OR:
++		fprintf(stderr, "(or\n");
++		dump_grep_expression_1(x->u.binary.left, in+1);
++		dump_grep_expression_1(x->u.binary.right, in+1);
++		indent(in);
++		fprintf(stderr, ")\n");
++		break;
++	}
++}
++
++void dump_grep_expression(struct grep_opt *opt)
++{
++	struct grep_expr *x = opt->pattern_expression;
++
++	if (opt->all_match)
++		fprintf(stderr, "[all-match]\n");
++	dump_grep_expression_1(x, 0);
++	fflush(NULL);
++}
++
+ static struct grep_expr *grep_true_expr(void)
+ {
+ 	struct grep_expr *z = xcalloc(1, sizeof(*z));
+@@ -395,7 +476,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ 	return header_expr;
+ }
+ 
+-void compile_grep_patterns(struct grep_opt *opt)
++static void compile_grep_patterns_real(struct grep_opt *opt)
+ {
+ 	struct grep_pat *p;
+ 	struct grep_expr *header_expr = prep_header_patterns(opt);
+@@ -415,7 +496,7 @@ void compile_grep_patterns(struct grep_opt *opt)
+ 
+ 	if (opt->all_match || header_expr)
+ 		opt->extended = 1;
+-	else if (!opt->extended)
++	else if (!opt->extended && !opt->debug)
+ 		return;
+ 
+ 	p = opt->pattern_list;
+@@ -435,6 +516,13 @@ void compile_grep_patterns(struct grep_opt *opt)
+ 	opt->all_match = 1;
+ }
+ 
++void compile_grep_patterns(struct grep_opt *opt)
++{
++	compile_grep_patterns_real(opt);
++	if (opt->debug)
++		dump_grep_expression(opt);
++}
++
+ static void free_pattern_expr(struct grep_expr *x)
+ {
+ 	switch (x->node) {
+diff --git a/grep.h b/grep.h
+index ed7de6b..bf5be5a 100644
+--- a/grep.h
++++ b/grep.h
+@@ -90,6 +90,7 @@ struct grep_opt {
+ 	int word_regexp;
+ 	int fixed;
+ 	int all_match;
++	int debug;
+ #define GREP_BINARY_DEFAULT	0
+ #define GREP_BINARY_NOMATCH	1
+ #define GREP_BINARY_TEXT	2
+diff --git a/revision.c b/revision.c
+index 9a0d9c7..90376e8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1578,6 +1578,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if ((argcount = parse_long_opt("grep", argv, &optarg))) {
+ 		add_message_grep(revs, optarg);
+ 		return argcount;
++	} else if (!strcmp(arg, "--grep-debug")) {
++		revs->grep_filter.debug = 1;
+ 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+ 		revs->grep_filter.regflags |= REG_EXTENDED;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+-- 
+1.7.12.592.g41e7905
