@@ -1,166 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 3/6] t7810-grep: test multiple --author with
- --all-match
-Date: Thu, 13 Sep 2012 16:26:01 -0700
-Message-ID: <7vwqzx4i9i.fsf@alter.siamese.dyndns.org>
-References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
- <cover.1347544259.git.git@drmicha.warpmail.net>
- <8fd93bb87098298677426735dd354fa4f64abc17.1347544259.git.git@drmicha.warpmail.net> <7vmx0t7iq0.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Revert diffstat back to English
+Date: Thu, 13 Sep 2012 20:11:17 -0400
+Message-ID: <20120914001117.GA31647@sigill.intra.peff.net>
+References: <20120913132847.GD4287@sigill.intra.peff.net>
+ <1347545786-936-1-git-send-email-pclouds@gmail.com>
+ <7vzk4t960y.fsf@alter.siamese.dyndns.org>
+ <7va9wt9377.fsf@alter.siamese.dyndns.org>
+ <20120913210111.GA16956@sigill.intra.peff.net>
+ <7v627h7hny.fsf@alter.siamese.dyndns.org>
+ <20120913212043.GB16968@sigill.intra.peff.net>
+ <7vr4q562cg.fsf@alter.siamese.dyndns.org>
+ <20120913213121.GA31426@sigill.intra.peff.net>
+ <7vehm561eq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 14 01:26:21 2012
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 02:11:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCInZ-0000a6-0O
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 01:26:17 +0200
+	id 1TCJVJ-0007BR-Nj
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 02:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758446Ab2IMX0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 19:26:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65431 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756032Ab2IMX0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 19:26:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7800386EF;
-	Thu, 13 Sep 2012 19:26:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bQloq7YyLoorAMzUw4NFqrmjaDc=; b=JO80i0
-	Y4uwjffnbnU0vixCafforOlrjZ9D/5duawTKmtmSgmI2NEPWI4b9zuvxn+BiGrFx
-	leOOcZ432QzBwXbtBm8G5MxaJKuLv26HWbXosL04vLD8Tl30WA0fXEM/Kwtg+OE9
-	b1rUmgX84+E1tf38OJZww7wYgLyRq6UxcWJBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jef1VySiq5kaGcpnfW5MpvChuClTWwDA
-	N0UGrpzwmag2OOQsZfOg3a144zpXV56N1sLc7Vnabw2oNykKhPrEd1wEJmx08gpN
-	qUlz4yLuTh0/1KvU40Z6UHQVLTvMMBtajGNWoD8vfZ6Oir9cm/NOPg2S/KFZ2MmA
-	BKLN5DeQFvQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C3F986EE;
-	Thu, 13 Sep 2012 19:26:04 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FC2486EC; Thu, 13 Sep 2012
- 19:26:02 -0400 (EDT)
-In-Reply-To: <7vmx0t7iq0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 13 Sep 2012 13:47:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6204E7F8-FDFA-11E1-9373-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759117Ab2INALV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 20:11:21 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43878 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751333Ab2INALU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 20:11:20 -0400
+Received: (qmail 9376 invoked by uid 107); 14 Sep 2012 00:11:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Sep 2012 20:11:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Sep 2012 20:11:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7vehm561eq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205441>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 13, 2012 at 02:47:09PM -0700, Junio C Hamano wrote:
 
-> One possible improvement we can make is to parse the command line in
-> the last example with "--all-match" to
->
->     [all-match]
->     (or
->      pattern_body<body>commit
->      (or
->       pattern_body<body>tag
->       (or
->        pattern_head<head 1>Linus
->        (or
->         pattern_head<head 0>Junio
->         true
->        )
->       )
->      )
->     )
->
-> so that the backbone becomes
->
->  - Mentions commit,
->  - Mentions tag,
->  - Committed by Linus,
->  - Authored by Junio
->
-> to require that both commit and tag are mentioned in the message.
+> > I agree that the line is not bright. I do not know if it is worthwhile
+> > or not. I think it will solve some practical problems, but it may also
+> > introduce others.  But basically having a per-repo LANG setting (which
+> > is what the projectlang you are talking about would do) also does not
+> > seem like a solution that people will use, because they will not get any
+> > localization benefit at all.
+> >
+> > So again, I'd rather err on the side of pushing those things that are
+> > near the line into the "do not translate" side, letting people use LANG
+> > to localize the rest, and accepting that occasionally people are going
+> > to accidentally show you output in a language you don't understand. But
+> > hopefully that keeps it to "occasionally" and not "every time you send
+> > out a patch".
+> 
+> I am confused asto what you really want.  In a Klingon-only project,
+> I think it is perfectly fine to localize the diffstat summary line
+> to Klingon.  It is not machine readble, and it is not personal, but
+> it is to be shared with project members, who all speak Klingon.
+> 
+> Pushing more things to "do not translate" side of the line means
+> robbing the benefit of i18n from people, no?
 
-And this is an attempt to do exactly that.  Earlier, when we have
-both header expression (which by the way has to be an OR node by
-construction) and pattern expression (which could be anything), we
-created a top-level OR node (again, look at this as if you are
-reading LISP),
+Yes. But you cannot please both sides without creating a third category,
+as you noted. If you do not translate diffstat, then Klingon-only projects are
+unhappy. If you do translate, then projects run in LANG=C will either
+get public Klingon, or the project members will turn off all translation
+and lose all benefit of i18n.
 
-           OR
-        /        \
-       /          \
-   pattern            OR
-     / \           /     \
-    .....    committer    OR
-                         /   \ 
-                     author   TRUE
+So for the time being, I would rather choose LANG=C as a lingua franca
+and err on the side of interoperability with other people and not
+translating. And then if and when somebody feels like putting the effort
+into doing i18n.projectlang by splitting out a third category, they are
+welcome to. I just do not see much point in doing i18n.projectlang any
+other way.
 
-in other words, the three elements on the top-level backbone are
-"pattern", "committer" and "author"; when there are more than one
-elements in the "pattern", the top-level node of it is OR, so that
-node is inspected by "all-match", hence the result ends up ignoring
-the "--all-match" given from the command line.
+But again, please don't take my input with too much force. I am
+personally perfectly happy to live in LANG=C the rest of my life. I
+really started on this topic just by responding to your "I guess nobody
+minds the Klingon..." statement. I do find it a little annoying, but I
+can learn to live with it if that is significantly easier.
 
-This patch turns it into
-
-	     OR
-          /      \
-         /         \
-        /              OR
-    committer        /    \
-                 author    \
-                           pattern
-
-when "--all-match" was given from the command line, so that the
-"committer", "author" and elements on the top-level backbone in
-"pattern" form the top-level backbone of the resulting expression to
-be inspected by the "all-match" logic.
-
-Does this pass the expect-failure test in your [PATCH 5/6]?
-
- grep.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git c/grep.c w/grep.c
-index be15c47..925aa92 100644
---- c/grep.c
-+++ w/grep.c
-@@ -476,6 +476,22 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
- 	return header_expr;
- }
- 
-+static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y)
-+{
-+	struct grep_expr *z = x;
-+
-+	while (x) {
-+		assert(x->node == GREP_NODE_OR);
-+		if (x->u.binary.right &&
-+		    x->u.binary.right->node == GREP_NODE_TRUE) {
-+			x->u.binary.right = y;
-+			break;
-+		}
-+		x = x->u.binary.right;
-+	}
-+	return z;
-+}
-+
- static void compile_grep_patterns_real(struct grep_opt *opt)
- {
- 	struct grep_pat *p;
-@@ -510,6 +526,9 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
- 
- 	if (!opt->pattern_expression)
- 		opt->pattern_expression = header_expr;
-+	else if (opt->all_match)
-+		opt->pattern_expression = grep_splice_or(header_expr,
-+							 opt->pattern_expression);
- 	else
- 		opt->pattern_expression = grep_or_expr(opt->pattern_expression,
- 						       header_expr);
+-Peff
