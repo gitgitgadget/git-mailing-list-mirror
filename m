@@ -1,98 +1,78 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Re: [PATCH/RFC] test-lib: add support for colors
- without tput
-Date: Fri, 14 Sep 2012 21:15:45 +0200
-Message-ID: <50538261.8060102@kdbg.org>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com> <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com> <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com> <50536943.4030300@kdbg.org> <CABPQNSZeuG-J8nVH15hpsX+bkM3CPcUGBNgNOUp6AtTipSdVbQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] clone: fix refspec on "--single-branch" option
+Date: Fri, 14 Sep 2012 12:22:29 -0700
+Message-ID: <7vd31o4dfu.fsf@alter.siamese.dyndns.org>
+References: <7vipbh6qxa.fsf@alter.siamese.dyndns.org>
+ <1347646267-25891-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: kusmabite@gmail.com
-X-From: msysgit+bncBCJYV6HBKQIOJBGOQICRUBCUESGU4@googlegroups.com Fri Sep 14 21:15:55 2012
-Return-path: <msysgit+bncBCJYV6HBKQIOJBGOQICRUBCUESGU4@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-bk0-f58.google.com ([209.85.214.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 21:22:42 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIOJBGOQICRUBCUESGU4@googlegroups.com>)
-	id 1TCbMn-0007aN-2p
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 21:15:53 +0200
-Received: by bkcjf3 with SMTP id jf3sf792293bkc.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 12:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:message-id:date:from:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=lR6GA6ID7AZWirbYeW9wrlhHagJLs71nAmLy8W0bh3M=;
-        b=Xkbjkk9+oyfPx09H5thGfXJbObTgbKHdFkXnldgkacrPbWFOj0LiWJsNOVeHVRdelB
-         x6pmqFIgjK3NKOY8mdcsfaG6+i4Qr7AAjywci5OX+gOkzxXrQpMDBxQIqE4iIzuKb/P0
-         3/KfhLdKmFeBQOCDnOQCazt4mR+PHsh9AwoYjyw7uRYETkZXCSW8TH4hzEhDHi0G380N
-         TbkfYJQuft0bu4/ktg5v2PohTHFz85PiAexyF1hgtMsg8KwtA4ehfJCbiBu1yo7qfbGB
-         EWhG4voRgI1Qul7sDnxVCkTda/Sl8/PvjUtcZdcKHMs4XCxdY6sjclJRCTv58gEqu89p
-         z3vg== 
-Received: by 10.152.113.99 with SMTP id ix3mr96324lab.0.1347650149117;
-        Fri, 14 Sep 2012 12:15:49 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.145.225 with SMTP id sx1ls697284lab.3.gmail; Fri, 14 Sep
- 2012 12:15:47 -0700 (PDT)
-Received: by 10.180.73.173 with SMTP id m13mr7479wiv.4.1347650147694;
-        Fri, 14 Sep 2012 12:15:47 -0700 (PDT)
-Received: by 10.180.73.173 with SMTP id m13mr7478wiv.4.1347650147686;
-        Fri, 14 Sep 2012 12:15:47 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp4.bon.at. [195.3.86.186])
-        by gmr-mx.google.com with ESMTPS id fb20si31447wid.3.2012.09.14.12.15.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 12:15:47 -0700 (PDT)
-Received-SPF: neutral (google.com: 195.3.86.186 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.186;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id D11162C4005;
-	Fri, 14 Sep 2012 21:15:46 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 21B7A19F377;
-	Fri, 14 Sep 2012 21:15:45 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <CABPQNSZeuG-J8nVH15hpsX+bkM3CPcUGBNgNOUp6AtTipSdVbQ@mail.gmail.com>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
- 195.3.86.186 is neither permitted nor denied by best guess record for domain
- of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205526>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCbTN-0003kQ-Fw
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 21:22:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759945Ab2INTWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 15:22:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33381 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759886Ab2INTWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 15:22:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 507EE9592;
+	Fri, 14 Sep 2012 15:22:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pIVA7LIOS8ucMZQqPdsjd74VFoU=; b=SQKGqO
+	lgjuznbrKcH300STA+XaQ+bEF9GdVbuRmT54ATFVduMKJjLg/uz2qvwp6XyQhWog
+	b2w9+sqT91Kc5bhVpRl87jgDYnFIP/JYtz5Pb7/jRbc2XSjV2CMWh6peSQ9sq2we
+	jR/17EQ/Hh96bvvyC9xkczWJTJi97xBzcVz5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LIFhh34IZlHMlS1rYrqjHMx2JHY//0nu
+	WQQPe3t6yQUnYwcZXDSBIS7nfO/EnEQ+1dw7ux1p/bNC9CI7bnC4PzH0JYTANor5
+	OMWiXW79YoH6P/5r+mT+8zc6aF+nAiB0GLwY1v38ilSvvKfeY/+TvAM5kGWrSGc+
+	Za29oWjZYVs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DE8E9591;
+	Fri, 14 Sep 2012 15:22:31 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABC259590; Fri, 14 Sep 2012
+ 15:22:30 -0400 (EDT)
+In-Reply-To: <1347646267-25891-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+ Thielow's message of "Fri, 14 Sep 2012 20:11:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8711D70C-FEA1-11E1-B2A4-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205527>
 
-Am 14.09.2012 20:11, schrieb Erik Faye-Lund:
-> On Fri, Sep 14, 2012 at 7:28 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->>                         printf '\033[0;3%sm' "$2" ;;
-> 
-> Is there a reason for %s rather than %d? It seem it only takes
-> integers,..
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-No reason. I just mechanically converted your original expression. But
-there is no reason for my conversion, either, if it can be more or less
-guaranteed that no arbitrary strings are passed in $2.
+> +			else if (remote_head_points_at)
+> +					strbuf_addf(&value, "+%s:%s%s", our_head_points_at->name,
+> +									branch_top.buf, prettify_refname(remote_head_points_at->name));
 
--- Hannes
+As refspec maps names that appear on the source side to names that
+appear on the destination side, and for fetch, the "soruce side"
+is the remote, using "our_head_points_at" on the source side makes
+it look very fishy (even though it may be a name derived from
+remote_head_points_at and has the correct and appropriate value).
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+"prettify" also is very questionable.  It is meant to strip commonly
+known prefix to make it easier to read by humans, and we can change
+its result based solely on aesthetics in the future.  It is not
+suitable for coming up with a value for configuration in the longer
+term.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Can we make the part you moved de-dented a bit, perhaps by making it
+into a small helper function or something?  It is extremely hard to
+read with overly looooooong lines.
