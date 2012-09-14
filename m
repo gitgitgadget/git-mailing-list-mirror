@@ -1,96 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] remote-helper: allow fetch to discover sha1 later
-Date: Thu, 13 Sep 2012 23:10:26 -0700
-Message-ID: <7vmx0t6sod.fsf@alter.siamese.dyndns.org>
-References: <1347531013-10371-1-git-send-email-djpohly@gmail.com>
+Subject: Re: [PATCH] clone: fix refspec on "--single-branch" option
+Date: Thu, 13 Sep 2012 23:48:17 -0700
+Message-ID: <7vipbh6qxa.fsf@alter.siamese.dyndns.org>
+References: <CAN0XMOKszADpeaCG7VhL-AZ3m7_hSWV3NhEmPuH6FETzs=eDNg@mail.gmail.com>
+ <1347599357-15533-1-git-send-email-ralf.thielow@gmail.com>
+ <7vr4q56uae.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Devin J. Pohly" <djpohly@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 08:10:39 2012
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 08:48:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCP6s-0002lW-Np
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 08:10:39 +0200
+	id 1TCPhW-0006Fw-1j
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 08:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753603Ab2INGKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 02:10:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48325 "EHLO
+	id S1753772Ab2INGsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 02:48:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64785 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751867Ab2INGK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 02:10:29 -0400
+	id S1751034Ab2INGsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 02:48:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B53906649;
-	Fri, 14 Sep 2012 02:10:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 328627062;
+	Fri, 14 Sep 2012 02:48:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c4bc3Z/Yfo4H0PAkuuZU5fcJV6w=; b=SykdGW
-	iUo5xgNj9r5oYUiTAxKp1fVA4t8OlW9lUY0HkyQ1b+eQyyQWtHzXgOrWP6eVj6Yx
-	YIAeCePDDlUjaVMi/7RsnEofeFBLrGqdGeQgy8q4szv+0Z9aoFiv9iBGnQJALacV
-	vW/6OYEQycg+D5KE4Kf0ISDIy7Ld2M2NCxMYM=
+	:content-type; s=sasl; bh=iqzVq+5PYF/SUtqkf5ZdoElVsvs=; b=ozBIb8
+	wJFxG40f9WIqjixMz+56n7DGYnGbkb9RTM8H2uc6Kk4qhq8+Bz73oyx8lOvYpCWk
+	saSM+dIQbYYB1AyefN1I9E6GfBdbl/7avXctrhLkALQ4QQh5aWtrAO9dPNtRHYJe
+	lqPuKH8eaoMMLFlzOrgcu/fP1AUWHGPLbk7vM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L7MfUjD70gbpo1UjcoVwub/4rQzeSJC0
-	J29DucV3hFdPzeqF9rBTNHBhIX6dLy9Ycbw9UF5kORCMg8smnxV/epC3LVfzFz9C
-	S/jbn9Ns3l+Dpy8TAJpWc1EQ5ubY4lBcww87jkV9SkfVINDC4tXRDQ2FRhUwTHPx
-	J7I7BjSaxYQ=
+	:content-type; q=dns; s=sasl; b=pZHXuJkhkF/DshFj+JxeuXyyCIF7qIce
+	8ONAMtFRbiSjsIg2ruagEq0yPKyUi9J/4gMUGXXYi5qvy1iEoHiobWAixzzu/n0S
+	CqG0q1+PeCEJngmqUm+wTm68q8KyWdCQ1W4pTrc6WdRfFjF/EVzAwGV9noTJiCJt
+	govsqSHPO34=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A17E06648;
-	Fri, 14 Sep 2012 02:10:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F2207061;
+	Fri, 14 Sep 2012 02:48:20 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E12176647; Fri, 14 Sep 2012
- 02:10:27 -0400 (EDT)
-In-Reply-To: <1347531013-10371-1-git-send-email-djpohly@gmail.com> (Devin J.
- Pohly's message of "Thu, 13 Sep 2012 06:10:13 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 70DDE7060; Fri, 14 Sep 2012
+ 02:48:19 -0400 (EDT)
+In-Reply-To: <7vr4q56uae.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 13 Sep 2012 22:35:37 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E148EF72-FE32-11E1-BBE2-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2B3A95AE-FE38-11E1-84E2-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205458>
 
-"Devin J. Pohly" <djpohly@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: "Devin J. Pohly" <djpohly@gmail.com>
+> Who guarantees at this point in the codepath that option_branch is
+> set when option_single_branch is non-zero?  Until we talk with the
+> remote, "clone --single-branch" without an explicit "--branch" will
+> not learn which branch at the remote we are going to fetch (it will
+> be their HEAD).
 >
-> Allow a fetch-style remote helper to issue the notification
->   ref <sha1> <name>
-> to specify a ref's value during the fetch operation.
+> I wonder if this should be more like this:
 >
-> Currently, a remote helper with the "fetch" capability cannot fetch a
-> ref unless its sha1 was known when the "list" command was executed.
-> This limitation is arbitrary, as the helper may eventually be able to
-> determine the correct sha1 as it fetches objects.
+> 	if (option_single_branch) {
+> 		if (option_branch)
+> 			Your patch "+refs/heads/foo:refs/remotes/origin/foo";
+> 		else
+> 			"HEAD";
+>         } else {
+>         	Original "+refs/heads/*:refs/remotes/origin/*";
+> 	}
+>
+> That is, "clone --single-branch" will continue fetching from and
+> integrating with their HEAD without storing any remote tracking
+> branch.
 
-While I am not fundamentally against supporting a remote helper that
-is not capable of saying what the object names of the tip of its
-histories are before doing a lot of work, I do not think it is a
-good idea to allow such a helper to claim that it supports "fetch"
-capability, for at least two reasons:
+Alternatively, if you can move the logic to set up this
+configuration further down so that it happens after we talked to the
+other side and figured out remote_head_points_at, you could instead
+set it up to keep a single remote tracking branch.
 
- * Being able to "list" is essential for "fetch" based helpers, I
-   think, far from "arbitrary".  When running a "git fetch" against
-   such a remote, we can first issue "list" to see what it has and
-   avoid asking for the refs that point at the histories we already
-   have (or the refs that are the same as the last time we fetched
-   from the remote).  I do not offhand know if we do this kind of
-   optimization, but if we don't, we should.
-
- * Existing versions of "git" that can drive remote helpers that
-   claim to have "fetch" capability are not prepared to accept an
-   unknown "refs" protocol message from the helper, so a helper
-   written for your new semantics of "fetch" capability will not
-   work with them.  The point of capability mechanism is to prevent
-   such a compatibility issue from breaking the system, and this
-   patch goes against that spirit.
-
-Such a remote helper should not advertise to support "fetch"
-capability, because it does not support it.  It can advertise that
-it supports "something else" and it is OK to make an updated Git
-that knows how to drive a remote helper that lack "fetch" but
-support that "something else" work with it.
+Even if you did so, guess_remote_head() may not find any branch when
+the other repository's HEAD is detached, so you would need to decide
+what to do in such a case, and "fetch and integrate their HEAD
+without using any remote tracking branch" may be a reasonable thing
+to do in such a case.
