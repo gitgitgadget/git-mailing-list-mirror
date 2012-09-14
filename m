@@ -1,65 +1,89 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Please pull git-l10n updates for git v1.7.12-146-g16d26
-Date: Fri, 14 Sep 2012 19:51:23 +0700
-Message-ID: <CACsJy8A-prPd=5R83LhcLO1rd-rBZRhfnvABvzvdDiC=hZ3ofQ@mail.gmail.com>
-References: <CANYiYbExJRAK0zvO4FSce2tOTyW1fLW1OLqZSm0KLjG1V4nTbg@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using Format/export-subst Howto.
+Date: Fri, 14 Sep 2012 15:03:49 +0200
+Message-ID: <50532B35.9050607@drmicha.warpmail.net>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 14:52:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Mestnik, Michael J - Eagan, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>
+X-From: git-owner@vger.kernel.org Fri Sep 14 15:04:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCVNO-0002aL-Kw
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 14:52:06 +0200
+	id 1TCVZ0-0002Sa-BW
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 15:04:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757212Ab2INMv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 08:51:58 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:56443 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756754Ab2INMvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 08:51:54 -0400
-Received: by ieje11 with SMTP id e11so6715295iej.19
-        for <git@vger.kernel.org>; Fri, 14 Sep 2012 05:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IWZiEEmo9+79Myw+ne9X9gi4pfSAtO56ca5GV1BB+vc=;
-        b=Kso1lMuFjvWba41a6/J+kRdqSAVAaDDZi8VJSLwEmoNlXpvs/uSqZsu5KI3n6aNJnq
-         f7Ns5taDatQpx9CIiU/jnu6QaOsLZjtHorRi+VVs8NMaGSqGy65Z5KNeT1LYvnIkzMR8
-         jr1fu3fzmh1mONO1XAkxnYxDEptHbvf2lB4JLyHKMM9yTp3NrNxsXeOR0jxGAe2vBeKa
-         uTEc+ebH+0J0Qcl7DRzefhshMJEW62XkURXxoayVZdO5Vo5gXJM7FMd8R/loH1uAwZE6
-         L/tGk0Z7384Ei9ZmY7pFsQzMfKJOhecraQHrOBfxbdSj+UJjhjjhGUTXKdjLdCQ1wrNU
-         QqSQ==
-Received: by 10.50.182.201 with SMTP id eg9mr9206512igc.15.1347627114120; Fri,
- 14 Sep 2012 05:51:54 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Fri, 14 Sep 2012 05:51:23 -0700 (PDT)
-In-Reply-To: <CANYiYbExJRAK0zvO4FSce2tOTyW1fLW1OLqZSm0KLjG1V4nTbg@mail.gmail.com>
+	id S1752624Ab2INNDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 09:03:53 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45249 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751008Ab2INNDv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 09:03:51 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 98D622072B;
+	Fri, 14 Sep 2012 09:03:50 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Fri, 14 Sep 2012 09:03:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=YDthgMWwz78Sx3GD6MUWAl
+	CSJ50=; b=TrjjJqSq7v3NN3tW107doJCjpv+2dkGVDYeVKw94EWHPaEXB455oqb
+	qClvAnwwAcUDrrSOo35YKDiHQ4tZyo0O/EiwtTCPGad5zPkZz9e71dk1SL/Q34dz
+	UfCLTqIWkKBR7/Ty6UtUApz4m93w2qoljMAdC3ZuhuWT9L4StzBNc=
+X-Sasl-enc: hDS0DQ/1VfQZPRLGokOIr1ICL6RkCbPwERR7QNVg4mVJ 1347627830
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1B21F483612;
+	Fri, 14 Sep 2012 09:03:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205487>
 
-(Dropping translators as they probably are not interested in this)
+Mestnik, Michael J - Eagan, MN - Contractor venit, vidit, dixit
+14.09.2012 14:20:
+> I must have missed something reading through the documentation for this.  git version 1.7.11.3
+> 
+> $ git check-attr -a -- autorepair.d/AR02_new_rttest.sh
+> autorepair.d/AR02_new_rttest.sh: ident: set
+> autorepair.d/AR02_new_rttest.sh: export-subst: set
+> 
+>   echo "0..$_expected_tests"
+>   diag 'Script Version: $Id: 1ca40f8395ea361cc07d2ec1a2961c3df749dc3c $'
+>   diag 'By: $Format:%cn$ $Format:%ce$'
+>   diag 'At: $Format:%cD$'
+> 
 
-I saw a gnu project does this (I don't remember what project). If we
-update .po* files with --no-location, we can avoid a lot of diff
-noises due to line number changes. A typical translator does not care
-about these lines anyway. Those who do can easily search the string in
-source files without them.
+'$Format:' is processed when creating an archive. It's mentioned with
+export-subst only under the heading "create archive". So, that is as
+described, I think.
 
-On Thu, Sep 13, 2012 at 5:41 AM, Jiang Xin <worldhello.net@gmail.com> wrote:
->  po/TEAMS    |    3 +-
->  po/de.po    |  712 ++++++++++++------------
->  po/git.pot  |  684 +++++++++++------------
->  po/sv.po    |  715 ++++++++++++------------
->  po/vi.po    | 1767 +++++++++++++++++++++++++++++++----------------------------
->  po/zh_CN.po |  712 ++++++++++++------------
->  6 files changed, 2394 insertions(+), 2199 deletions(-)
--- 
-Duy
+> I also believe that the documentation could try and better explain under what conditions "$Id" will be processed, it doesn't seam to happen on commit and even after a checkout this is not updated.  It does seam to update during a pull and that's basically all I need.
+
+"git replaces $Id$... upon checkout.  Any byte sequence that begins with
+$Id: and ends with $ in the worktree file is replaced with $Id$ upon
+check-in."
+
+Now, the there are two problems after you add $Id$ and check-in (commit):
+
+- commit does not check out, i.e. your work-tree copy is not updated
+with expanded $Id$
+- Not even "git checkout thatFile" updates your work-tree copy.
+
+The first one could be considered OK, but at least the second one seems
+to be a bug. Together they create the following problem: Say, you've
+corrected that problem (rm that file and checkout) and then update your
+file, add and commit. It will keeping having the old (now wrong) Id
+expansion.
+
+We should do something about this.
+
+Michael
