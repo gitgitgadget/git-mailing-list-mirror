@@ -1,80 +1,158 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git stash data loss
-Date: Fri, 14 Sep 2012 16:04:03 -0700
-Message-ID: <7vtxv01a1o.fsf@alter.siamese.dyndns.org>
-References: <55831343358368@web1e.yandex.ru>
- <20120727132953.GA8263@sigill.intra.peff.net>
- <20120727135051.GA10303@sigill.intra.peff.net>
- <7vy5lew5xz.fsf@alter.siamese.dyndns.org>
- <20120821065527.GC3238@sigill.intra.peff.net>
+Subject: Re: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the
+ test suite for detecting heap corruption
+Date: Fri, 14 Sep 2012 16:18:50 -0700
+Message-ID: <7vligc19d1.fsf@alter.siamese.dyndns.org>
+References: <1347641662-3596-1-git-send-email-gitter.spiros@gmail.com>
+ <7v392k5w7u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Aleksandr Pryimak <tramsmm-mirror@yandex.ru>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 15 01:04:27 2012
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 01:19:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCevu-0000WZ-AX
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 01:04:22 +0200
+	id 1TCfAq-0000bX-4g
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 01:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760130Ab2INXEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 19:04:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52454 "EHLO
+	id S1760286Ab2INXSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 19:18:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59430 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155Ab2INXEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 19:04:06 -0400
+	id S1754423Ab2INXSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 19:18:53 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 036108502;
-	Fri, 14 Sep 2012 19:04:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04D878958;
+	Fri, 14 Sep 2012 19:18:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P5pTF7moNokhA2mbXM8SHa+M58E=; b=EibHbY
-	2cYru52Y+2WiAo4EspRNzagYJvbYTr16HadJl7SSTkG5UGt8axPHYEk4wxoZVwzw
-	3gjSKK86IuM2vtpcjKbstlNK4fAa8slUQ2+BDeJMwUdTl2qtjMDrY7HgHOf34J8F
-	CLC3/HPlv8+zda4sf1K5uUtp8qaKEUOnY3mFA=
+	:content-type; s=sasl; bh=C0d4MBKqt1MFMbAhlm2pp8OmuTk=; b=d2bjW3
+	MTGN/hqxLglEVX9ZYRF3kEIYqr+0XDCCdqAXtMHuJM6yywgg3L51kFA+Iq9CpL+Y
+	U95s8eqm3CflA96t9tMwD3neI0UgPfRtE3oHpJ8q+HVFIm433wnCq4nvvYxQLRtk
+	WxZNi+U2Uabz3sNhsSj9Zcva5bxYxXkk6Q6II=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ir1H3y2X5I7uY8K6WDxImrwp4oBL6bEO
-	bUkhoPCLr6GCkPgbdv0ymeLf0mGr1YUoUGEharzUlXiL9p38IV/aDvwB7KXRncQ4
-	x7AGq/XkK3FrVCDUnDTjIyyTsQOj6eWuxXH6teGcVrzI3Xsr0LYKvkQVmJmbne4w
-	2bO3yN4uBpw=
+	:content-type; q=dns; s=sasl; b=wfdjSN9EUZtBuggr7adYzJKuulme1BXb
+	P7L8y049K2TW//UA9BMWvBxeiOzoJI1RTag4FyNl8kQRbmFtV+uP/br9D23inWPn
+	e6XXc+VMtyuxoREQ2siJ+vKu1WQ30vHWRZKDAxckfjJXICb17aX/XqdR1ntjl2Rb
+	+8/No/YTzbk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBC0284FF;
-	Fri, 14 Sep 2012 19:04:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5C1F8957;
+	Fri, 14 Sep 2012 19:18:52 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4434684FD; Fri, 14 Sep 2012
- 19:04:05 -0400 (EDT)
-In-Reply-To: <20120821065527.GC3238@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 21 Aug 2012 02:55:27 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 350F18956; Fri, 14 Sep 2012
+ 19:18:52 -0400 (EDT)
+In-Reply-To: <7v392k5w7u.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 14 Sep 2012 10:51:33 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7B412454-FEC0-11E1-A412-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8BE92782-FEC2-11E1-A4A2-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205541>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> > Hrm. The problem is that after creating the stash, we then run "git
->> > reset --hard" to drop the changes that we just stashed. But that is not
->> > always accurate. It will not usually touch untracked files, but it might
->> > if they have D/F conflicts with tracked files. So we need to replace
->> > that "git reset --hard" with some safer command that will notice we are
->> > about to overwrite untracked files. But I am not sure what that command
->> > would be.
->> 
->> Is this something we still want to keep track of?
+> Elia Pinto <gitter.spiros@gmail.com> writes:
 >
-> Yeah, I think it is worth fixing. It's a somewhat rare case, but data
-> loss is bad. I was hoping you would respond with "...and here is the
-> magical incantation of git commands to make the working directory look
-> like we want". I couldn't come up with one. We may need a new option to
-> reset or read-tree.
+>> Recent versions of Linux libc (later than 5.4.23) and glibc (2.x)
+>> include a malloc() implementation which is tunable via environment
+>> variables. When MALLOC_CHECK_ is set, a special (less efficient)
+>> implementation is used which is designed to be tolerant against
+>> simple errors, such as double calls of free() with the same argument,
+>> or overruns of a single byte (off-by-one bugs). When MALLOC_CHECK_
+>> is set to 3, a diagnostic message is printed on stderr
+>> and the program is aborted.
+>> ...
+>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>> ---
+>> This the third reroll of the original patch.
+>
+> Well written.  I have one suggestion and a question, though.
 
-ls-files has an ancient option to show the files "killed"; perhaps
-that is the closest thing to what you are looking for.
+After looking at it a bit more, there are a few more things I would
+suggest, in the form of an squashable patch on top.
+
+Points to note:
+
+ - When test-lib.sh is used from perf-lib, we would not want to be
+   affected with MALLOC_CHECK_; we would want to run as vanilla as
+   possible in that case.
+
+ - We are interested in checking "git" and whatever we test using
+   the test harness, i.e. what comes inside test_expect_success.
+   Setting MALLOC_CHECK_ at the beginning will cover a lot more than
+   what we want to test.
+
+ - That "165" thing I mentioned earlier.
+
+ - Update the "expr" expression to make sure the --valgrind we catch
+   is indeed an option, not a substring of something else.  Also
+   there is no need to capture the substring.
+
+ t/perf/perf-lib.sh |  1 +
+ t/test-lib.sh      | 26 ++++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 6 deletions(-)
+
+diff --git i/t/perf/perf-lib.sh w/t/perf/perf-lib.sh
+index a1361e5..1d0bb9d 100644
+--- i/t/perf/perf-lib.sh
++++ w/t/perf/perf-lib.sh
+@@ -42,6 +42,7 @@ else
+ fi
+ 
+ TEST_NO_CREATE_REPO=t
++TEST_NO_MALLOC_=t
+ 
+ . ../test-lib.sh
+ 
+diff --git i/t/test-lib.sh w/t/test-lib.sh
+index b0c0c84..aad4606 100644
+--- i/t/test-lib.sh
++++ w/t/test-lib.sh
+@@ -95,12 +95,24 @@ export EDITOR
+ 
+ # Add libc MALLOC and MALLOC_PERTURB test
+ # only if we are not executing the test with valgrind
+-expr "$GIT_TEST_OPTS" : ".*\(--valgrind\)" >/dev/null || {
+-	MALLOC_CHECK_=3
+-	export MALLOC_CHECK_
+-	MALLOC_PERTURB_="$( expr \( $$ % 255 \) + 1)"
+-	export MALLOC_PERTURB_
+-}
++if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
++   test -n "TEST_NO_MALLOC_"
++then
++	setup_malloc_check () {
++		: nothing
++	}
++	teardown_malloc_check () {
++		: nothing
++	}
++else
++	setup_malloc_check () {
++		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
++		export MALLOC_CHECK_ MALLOC_PERTURB_
++	}
++	teardown_malloc_check () {
++		unset MALLOC_CHECK_ MALLOC_PERTURB_
++	}
++fi
+ 
+ # Protect ourselves from common misconfiguration to export
+ # CDPATH into the environment
+@@ -311,7 +323,9 @@ test_run_ () {
+ 
+ 	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
+ 	then
++		setup_malloc_check
+ 		test_eval_ "$test_cleanup"
++		teardown_malloc_check
+ 	fi
+ 	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"
+ 	then
