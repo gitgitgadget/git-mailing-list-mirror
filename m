@@ -1,108 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 6/6] rev-list/log: document logic with several limiting
- options
-Date: Thu, 13 Sep 2012 18:19:03 -0700
-Message-ID: <7vsjal4d14.fsf@alter.siamese.dyndns.org>
-References: <7v7grzdue6.fsf@alter.siamese.dyndns.org>
- <cover.1347544259.git.git@drmicha.warpmail.net>
- <49f89f65cd39306655a9b382a1244e34fb90fff1.1347544259.git.git@drmicha.warpmail.net> <7v7grx5zfq.fsf@alter.siamese.dyndns.org>
+Subject: Re: {bug} warning: unable to access 'RelNotes/.gitattributes'
+Date: Thu, 13 Sep 2012 18:28:32 -0700
+Message-ID: <7vobl94clb.fsf@alter.siamese.dyndns.org>
+References: <7vpq5qa0w9.fsf@alter.siamese.dyndns.org>
+ <20120913123740.GB4287@sigill.intra.peff.net>
+ <7vy5kd7lu0.fsf@alter.siamese.dyndns.org>
+ <20120913211512.GA16968@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Sep 14 03:19:26 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 14 03:28:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCKYz-0004xx-1o
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 03:19:21 +0200
+	id 1TCKi4-00037W-Pg
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 03:28:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752361Ab2INBTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Sep 2012 21:19:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54496 "EHLO
+	id S1751329Ab2INB2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Sep 2012 21:28:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58834 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174Ab2INBTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Sep 2012 21:19:08 -0400
+	id S1751200Ab2INB2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Sep 2012 21:28:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A96B8441;
-	Thu, 13 Sep 2012 21:19:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63CFA86FF;
+	Thu, 13 Sep 2012 21:28:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=29BRrbE00xP5cXmAA+xpdR73QCY=; b=iriDAu
-	LqStyH7wF9TQKZjNo1rfaYkciDNJn9p+sKeExUYWqnLpv6Bk01bwhJzTlVTpW/Ti
-	EIf4JC2RObmot7mI5CpfQlaXlaJVBAxBrGxmNPINuQvc4udTrPTu/YwAStEPSdMW
-	QC5BNUL9HgwmgtrcmeuYkDZB5oFX6CGBXSFvs=
+	:content-type; s=sasl; bh=dnTVWWZVcb656xKptxgbEjGtiOQ=; b=i1YujZ
+	CGbuAdWSMKTsgQ3ItKrHP2doNzr1M2/IAvwDIOzmE2oZ1A6KmFwS5TzBqTawUiCW
+	SY9/vVJUjUcli0/U1wZUQAFTgB0exXes5tx9VDuoEkcS6gQCcjheqTCYFkAsqgTS
+	rHKZhBQGS98os5D0CLD6PV9aAxJ+hEc3HPb9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m3xeAVVQn8i699Wwn6rjse7rvB2SYLvV
-	Lb9Qi3NIHPtT5gnc4hZWbla0nwXoOFHRGvxE383K6mIP/WKV1PQ9BqjMwByE5C39
-	CQaSpCLNrADjFUsAc0vCUHyGer4sbANGQLrI+huE8tG5iBwJE7/f1FBKFUsv6zw5
-	rJayLPQjAbw=
+	:content-type; q=dns; s=sasl; b=SDhgfMjK+JVWZZ+gEaZ6e++II7wT+Ta8
+	je3idUA+pLVvwVuiB9WXcTBARTIKKCezO494l4o9XRdPVjEO8EWxcbxsaptZFu3n
+	1Xp+A62se4bOI93hUFFCvYvhCC3tHDD8uxXB/FILYlnCI+wHik+M2/X02MlBfxAq
+	IDLCXn9YEvs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 676438440;
-	Thu, 13 Sep 2012 21:19:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5143986FD;
+	Thu, 13 Sep 2012 21:28:35 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A559843F; Thu, 13 Sep 2012
- 21:19:05 -0400 (EDT)
-In-Reply-To: <7v7grx5zfq.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 13 Sep 2012 15:29:45 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 820F886FA; Thu, 13 Sep 2012
+ 21:28:34 -0400 (EDT)
+In-Reply-To: <20120913211512.GA16968@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 13 Sep 2012 17:15:12 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2CE90ED6-FE0A-11E1-B9E1-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 801E67BC-FE0B-11E1-B0AC-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205443>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
->> index 5436eba..b2dbfb5 100644
->> --- a/Documentation/rev-list-options.txt
->> +++ b/Documentation/rev-list-options.txt
->> @@ -6,6 +6,19 @@ special notations explained in the description, additional commit
->>  limiting may be applied. Note that they are applied before commit
->>  ordering and formatting options, such as '--reverse'.
->>  
->> +Different options are ANDed: '--author=bar --grep=foo'
->> +limits to commits which match both conditions.
->> +
->> +Several occurences of the '--grep' option are ORed: '--grep=foo --grep=bar'
->> +limits to commits matching any of these conditions.
->> +(If '--all-match' is given, the conditions are ANDed.)
->> +
->> +Several occurences of the '--author' and '--committer' options are ORed
->> +(because there can be only one each per commit).
+> On Thu, Sep 13, 2012 at 12:40:39PM -0700, Junio C Hamano wrote:
 >
-> As I would really want to eventually see the revision command option
-> parser understand the full power of grep expressions in the future,
-> I would really want to avoid a misleading explanation that calls
-> what "--all-match" does as "ANDed".
+>> > Interesting. I don't get any such warning on repack. And RelNotes points
+>> > to a file, so I'm not sure why stat() would make us think it was a dir.
+>> 
+>> Interesting.  The command in question is
+>> 
+>>  git-pack-objects --keep-true-parents --honor-pack-keep --non-empty \
+>>     --all --reflog --delta-base-offset </dev/null .junk-pack
+>
+> Weird. I don't see any problems with that command, either (I tried it
+> with the current 'next'). Thinking that maybe delta reuse was getting in
+> the way, I also tried it with --no-reuse-delta.
+>
+>>  - "rev-list --object --all" does not produce "Relnotes/1.7.4.txt"
+>>    (it does have "Documentation/RelNotes/1.7.4.txt", of course).
+>>    Somebody in this callchain is screwing the name up.
+>
+> Yeah, that sounds like a pretty huge bug. But since I can't reproduce,
+> you're on your own for tracking it down.
 
-Assuming that the patch I posted earlier actually works, I think the
-description can become vastly simpler, if you stop explaining author
-and committer in terms of "grep".  It is implementation detail that
-the same grep machinery is handling these two header fields and the
-end users do not have to even be aware of.
+I have a remote tracking branch refs/remotes/repo/html that has the
+path RelNotes/1.7.4.txt at the top ;-)  Depending on how traversal
+goes, if the tree that represents that RelNotes directory in the html
+tree is found before the tree that represents Documentation/RelNotes 
+directory in the main history at the corresponding commit, it is
+perfectly normal that we discover the blob as RelNotes/1.7.4.txt, so
+there is no bug.
 
-	You can use "--grep=foo" to limit the output to commits that
-	mention "foo" in their messages.  If you use more than one
-	of them, e.g. "--grep=foo" and "--grep=bar", by default, the
-	command shows commits that mention "foo" or "bar" (or
-	naturally, both) in their messages.  If you want to limit
-	the output to commits that mention both "foo" and "bar" in
-	their messages (note that they do not have to appear on the
-	same line), you can use "--all-match".
+So among the three points I raised, the first one was a false issue,
+the second one is real (we do look for attributes in the working
+tree for historical commit, or for a commit that does not belong to
+the same lineage as the one that is currently checked out, hence we
+must ignore ENOTDIR), and the third one is unrelated.
 
-	You can use "--author=Linus" to limit the output to commits
-	authored by Linus.  If you use more than one of them,
-	e.g. "--author=Linus" and "--author=Junio", the command
-	shows commits that are authored by either Linus or Junio.
-	As a commit cannot be authored by more than one person,
-	there is no option to choose commits that are authored by
-	Linus and Junio (and there is no need for such an option).
-	To limit the output with the committer information, use
-	"--committer=<person>" instead of "--author=<person>".
+> I think that this:
+>
+>> diff --git i/attr.c w/attr.c
+>> index f12c83f..056d702 100644
+>> --- i/attr.c
+>> +++ w/attr.c
+>> @@ -353,7 +353,7 @@ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
+>>  	int lineno = 0;
+>>  
+>>  	if (!fp) {
+>> -		if (errno != ENOENT)
+>> +		if (errno != ENOENT && errno != ENOTDIR)
+>>  			warn_on_inaccessible(path);
+>>  		return NULL;
+>>  	}
+>
+> is the right thing to do. It's cool that it uncovered a bug in this
+> case, but it is easy to construct a non-bug case that would exhibit the
+> same bogus warning (just convert a directory into a file).
+
+Yes.
