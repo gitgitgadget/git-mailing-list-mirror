@@ -1,68 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 10:30:31 -0700
-Message-ID: <7va9ws5x6w.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Re: [PATCH/RFC] test-lib: add support for colors
+ without tput
+Date: Fri, 14 Sep 2012 19:31:00 +0200
+Message-ID: <CABPQNSbKWb-tWqFBtBCenJNDE6oVLyCbspoK+vLYj9yD6ZraWQ@mail.gmail.com>
 References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
  <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
+ <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com> <50536943.4030300@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org,  msysgit@googlegroups.com
-To: kusmabite@gmail.com
-X-From: msysgit+bncBCG77UMM3EJRBOOTZWBAKGQEE466HCA@googlegroups.com Fri Sep 14 19:30:39 2012
-Return-path: <msysgit+bncBCG77UMM3EJRBOOTZWBAKGQEE466HCA@googlegroups.com>
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncBDR53PPJ7YHRB7OTZWBAKGQEN6NNURA@googlegroups.com Fri Sep 14 19:31:50 2012
+Return-path: <msysgit+bncBDR53PPJ7YHRB7OTZWBAKGQEN6NNURA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gh0-f186.google.com ([209.85.160.186])
+Received: from mail-qc0-f186.google.com ([209.85.216.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBOOTZWBAKGQEE466HCA@googlegroups.com>)
-	id 1TCZiw-0007g3-P9
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:30:39 +0200
-Received: by ghbf18 with SMTP id f18sf2432102ghb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:30:34 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRB7OTZWBAKGQEN6NNURA@googlegroups.com>)
+	id 1TCZk2-0008U7-5w
+	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:31:46 +0200
+Received: by qcsc2 with SMTP id c2sf3328528qcs.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:x-google-group-id:list-post:list-help
-         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
-        bh=C5Au8VR/eNi3McFl4s4O49Ubt01xId+d0YGrzZ6wyfQ=;
-        b=ARqxqSsHbAnxbGKVPpQM6v2cYQzYegC8CgArKHOArcuukL5WCBPcQQVmj2HIDcwRE0
-         vwmfeTF3fq4S9In43UyeWBwnGAzD31w/WzGqgMT6QOQgpj5/TF70JCavIgMpo5QBiGWW
-         4eXOtCXuCZggkVM+5jX4pSSOQtQAJuszjOIu0WGdaxy/34LKmxd2f4q6y6SDJqC+evtQ
-         eM5wcLLyNwCHU4PlZaGSp6LNmkYisDwq3JJGuwDzvymJESj0bo1TxSsXEK1KOkeMlpZi
-         uESyExMPKwGgGXHU4NDWR4v8U+HmO+8jEabBCLVona2gA29UdZMhDPGrBhHB0CarD8S 
-Received: by 10.224.209.133 with SMTP id gg5mr1061893qab.5.1347643834469;
-        Fri, 14 Sep 2012 10:30:34 -0700 (PDT)
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=lT3+ugV3UYaZowSUfr061Qz9GXFzJQURj4Rb1jRFffU=;
+        b=c4bKCstDVNNJE5EtW8lm4TJhZBWeVmnW6hYiwQ1xiq0Q/27N7EgKXQzXdRqL6NYa7Y
+         75RmHHFlERMVyFRiIGhXKWVj2GMXZrSrnGGriEr48uUpoNf6sgGwWbdT7Msf1utlvkHp
+         DNrRlp/MGjrbXUhPvnaESK6h1JiL6b3k0J7C/0/qanpW2O252xARGLlNEWtHK5eFpI/6
+         3WnJT0Vio5di1wj2p+WyK8A0ahPcFtVg42LCoA6VHsIc0uPqLWNQfrLBZuJBA0DoWLMJ
+         FOGtnZlC9Hi7cBbKdo3qYWPvDVE0iU978PlPvOqJF1R1iqJSDx7st0W2qWM3H+72DG94
+         BK/A==
+Received: by 10.236.142.211 with SMTP id i59mr717562yhj.1.1347643901904;
+        Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.224.216.6 with SMTP id hg6ls8166016qab.5.gmail; Fri, 14 Sep
- 2012 10:30:33 -0700 (PDT)
-Received: by 10.224.220.12 with SMTP id hw12mr2449179qab.8.1347643833778;
-        Fri, 14 Sep 2012 10:30:33 -0700 (PDT)
-Received: by 10.224.220.12 with SMTP id hw12mr2449178qab.8.1347643833767;
-        Fri, 14 Sep 2012 10:30:33 -0700 (PDT)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id g28si540275qcq.2.2012.09.14.10.30.33;
-        Fri, 14 Sep 2012 10:30:33 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of junio@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 281BC902B;
-	Fri, 14 Sep 2012 13:30:33 -0400 (EDT)
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14FE09029;
-	Fri, 14 Sep 2012 13:30:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 854359026; Fri, 14 Sep 2012
- 13:30:32 -0400 (EDT)
-In-Reply-To: <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com> (Erik
- Faye-Lund's message of "Fri, 14 Sep 2012 18:54:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E2BC6C80-FE91-11E1-946C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
+Received: by 10.220.149.129 with SMTP id t1ls3669078vcv.0.gmail; Fri, 14 Sep
+ 2012 10:31:41 -0700 (PDT)
+Received: by 10.58.132.238 with SMTP id ox14mr527241veb.15.1347643901450;
+        Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
+Received: by 10.58.132.238 with SMTP id ox14mr527239veb.15.1347643901442;
+        Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
+Received: from mail-vb0-f41.google.com (mail-vb0-f41.google.com [209.85.212.41])
+        by gmr-mx.google.com with ESMTPS id s13si35456vde.2.2012.09.14.10.31.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender) client-ip=209.85.212.41;
+Received: by vbkv13 with SMTP id v13so5028826vbk.28
+        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
+Received: by 10.220.247.137 with SMTP id mc9mr2910907vcb.52.1347643901302;
+ Fri, 14 Sep 2012 10:31:41 -0700 (PDT)
+Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 10:31:00 -0700 (PDT)
+In-Reply-To: <50536943.4030300@kdbg.org>
+X-Original-Sender: kusmabite@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- best guess record for domain of junio@b-sasl-quonix.pobox.com designates
- 208.72.237.35 as permitted sender) smtp.mail=junio@b-sasl-quonix.pobox.com;
- dkim=pass header.i=@pobox.com
+ domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -73,34 +69,36 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205514>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
-
-> On Fri, Sep 14, 2012 at 6:41 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 78c4286..7d1b34b 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
->>  # This test checks if command xyzzy does the right thing...
->>  # '
->>  # . ./test-lib.sh
->> +
->> +if ! which tput > /dev/null ; then
->> +       tput () {
->> +               case "$1" in
->> +               bold)
->> +                       echo -ne "\033[1m" ;;
->> +               setaf)
->> +                       echo -ne "\033[0;3$2m" ;;
->> +               sgr0)
->> +                       echo -ne "\033(\033[m" ;;
+On Fri, Sep 14, 2012 at 7:28 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 14.09.2012 18:58, schrieb Erik Faye-Lund:
+>>       tput () {
+>>               case "$1" in
+>>               bold)
+>> -                     echo -ne "\033[1m" ;;
+>> +                     printf "\033[1m" ;;
+>>               setaf)
+>> -                     echo -ne "\033[0;3$2m" ;;
+>> +                     printf "\033[0;3$2m" ;;
 >
-> I should of course have checked this earlier, but I find now that
-> "echo -ne" isn't portable.
+> This should be
+>                         printf '\033[0;3%sm' "$2" ;;
+>
 
-Neither is which, no?
+That's probably a good idea, yeah.
+
+>>               sgr0)
+>> -                     echo -ne "\033(\033[m" ;;
+>> +                     printf "\033(\033[m" ;;
+>>               esac
+>>       }
+>>  fi
+>
+> Did you test this only in rxvt or in CMD as well? (I hadn't time to
+> test, yet, so I'm asking :-)
+
+I don't have rxvt installed, but it works for me in CMD also.
 
 -- 
 *** Please reply-to-all at all times ***
