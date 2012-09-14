@@ -1,91 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: fix refspec on "--single-branch" option
-Date: Fri, 14 Sep 2012 09:02:48 -0700
-Message-ID: <7v7grw7ftj.fsf@alter.siamese.dyndns.org>
-References: <CAN0XMOKszADpeaCG7VhL-AZ3m7_hSWV3NhEmPuH6FETzs=eDNg@mail.gmail.com>
- <1347599357-15533-1-git-send-email-ralf.thielow@gmail.com>
- <7vr4q56uae.fsf@alter.siamese.dyndns.org>
- <7vipbh6qxa.fsf@alter.siamese.dyndns.org>
- <CACsJy8BLwd=XeHFqg5jb=yx3p6xdKuzvG+KvfotfLf0vfSZdRQ@mail.gmail.com>
+From: "Mestnik, Michael J - Eagan, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>
+Subject: RE: Using Format/export-subst Howto.
+Date: Fri, 14 Sep 2012 11:05:03 -0500
+Message-ID: <84EA18831601B6429E578236AE239B01A54807F3BE@EAGNMNSXMB07.usa.dce.usps.gov>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov>
+ <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net>
+ <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov>
+ <50534FC6.2040207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 18:03:02 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Sep 14 18:20:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCYM8-0001Cz-Ns
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 18:03:01 +0200
+	id 1TCYcx-0004aV-U3
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 18:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759056Ab2INQCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 12:02:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55293 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755996Ab2INQCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 12:02:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99FB771AA;
-	Fri, 14 Sep 2012 12:02:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S2Pwqh+f5MGh1t/39Ug8hCp1AVg=; b=ldu1L9
-	i768kjbna4AH+YmLl/mUcg0NzT9IgVNbqtAiGbIIWE85VgvVOOn1Ygtmi+Ta6phu
-	e+CVLNYYh8xGXFRamJwVeDWdy6RXkfzEYr3XozBSlxy7fJxCZiqHoKr2PoWRRrUl
-	jMTNJi9VnFO/EIafpysnQbVGvFYnCfvQjy2Dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=brRMdbxAhp/+nRDbvHhRintzMdE5YCah
-	hFXJ+F7Bssg9WS3vQPMG729WDAkvi/rzxkIsLr78jj1iw4dvsrK1NHmymYwmMXvx
-	mA8GHYzWGywjv3eDFsPzvn1mWG6fvRK2U9j6g8waNLwg81HyN+AbIwfG4NIITUod
-	gzTbePfq5pw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85E2F71A9;
-	Fri, 14 Sep 2012 12:02:50 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E09B371A8; Fri, 14 Sep 2012
- 12:02:49 -0400 (EDT)
-In-Reply-To: <CACsJy8BLwd=XeHFqg5jb=yx3p6xdKuzvG+KvfotfLf0vfSZdRQ@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Fri, 14 Sep 2012 20:10:16 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A1F77958-FE85-11E1-A687-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752875Ab2INQUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 12:20:13 -0400
+Received: from mailwest2.usps.gov ([56.0.84.22]:47883 "EHLO
+	gk-w2-email.srvs.usps.gov" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752607Ab2INQUK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 12:20:10 -0400
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Sep 2012 12:20:10 EDT
+DKIM-Signature: v=1; a=rsa-sha256; d=usps.gov; s=uspsgov0913; c=relaxed/simple;
+	q=dns/txt; i=@usps.gov; t=1347638709; x=1351526709;
+	h=From:Sender:Reply-To:Subject:Date:Message-ID:To:CC:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Z56zEP1RU+Eism8OvJ98XFjGXhF+UrY1XWG4+POeZOY=;
+	b=IKzh0nk+dZfERXRBnLJD5bXOC6g9FLUr82Z1yaoCl2Yp/92zrwjEGxrRkbngvcai
+	XLaKFKkloG0mDFF06EW75iaXDI0rZOlr96+0bCUnBoj+wpmF9eEdM5FCopd7VrOp
+	+ap+ZUM2Xms0EJ4tbSG50UCN8FP8WDHnfud0g4VwAP4=;
+Received: from mailrelay-w3i.usps.gov (Unknown_Domain [56.224.66.58])
+	by gk-w2-email.srvs.usps.gov (Sendmail 8.14.3) with SMTP id 77.23.05889.4B553505; Fri, 14 Sep 2012 11:05:08 -0500 (CDT)
+X-AuditID: 38005411-b7f806d000001701-59-505355b4360f
+Received: from EAGNMNSXMHC07.usa.dce.usps.gov (EAGNMNSXMHC07.usa.dce.usps.gov [56.207.244.217])
+	by mailrelay-w3i.usps.gov (Symantec Messaging Gateway) with SMTP id 0A.C5.03288.7E553505; Fri, 14 Sep 2012 09:05:59 -0700 (PDT)
+Received: from EAGNMNSXMB07.usa.dce.usps.gov ([169.254.1.98]) by
+ EAGNMNSXMHC07.usa.dce.usps.gov ([56.207.244.217]) with mapi; Fri, 14 Sep 2012
+ 11:05:05 -0500
+Thread-Topic: Using Format/export-subst Howto.
+Thread-Index: Ac2Sj17bQxSODWC4QX2j+q+W4oIAMwAAvcPQ
+In-Reply-To: <50534FC6.2040207@viscovery.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFIsWRmVeSWpSXmKPExsViwRCirbslNDjA4NAfNYs1L04zW3Rd6Way
+	WPmzxoHZo3XyJGaPz5vkPO7+38kUwBzFbZOUWFIWnJmep2+XwJ2xa/8bxoJ2gYoT3YfYGhjv
+	83QxcnJICJhIzJhynBHCFpO4cG89G4gtJLCfUWLSfn6YmtOXJ7F0MXIBxR8ySlxYfp8ZwlkI
+	5Ez4zwpSxSYQJLHm0z6wbhEBDYndp3vZuxg5OJgF4iSmHRUFMVkEVCUeT0wBqRAW0JXobfzM
+	BFGtJ3F/+w1WkBIRASOJbWejQcK8AmESE95fhdo0kUni2LKVzCAJTqDeeXvugd3MCHTz91Nr
+	wOYwC4hL3HoynwniZgGJJXvOM0PYohIvH/9jhagXlbjTvp4Rol5HYsHuT2wQtrbEsoWvmSEW
+	C0qcnPkE7F8JgftsEqdm9zLDAujDkm1MExilZiHZNwvJrFlIZs1CMmsBI8sqRsn0bN1yI93U
+	3MTMHL3iorJivdLigmK99PyyTYyQyBXcwdh/VfcQowAHoxIPb8C/wAAh1sSy4srcQ4wSHMxK
+	Iry22kEBQrwpiZVVqUX58UWlOanFhxilOViUxHnLnwFVC6QnlqRmp6YWpBbBZJk4OEEEl1QD
+	o53uv+ZHXjMmrjoel8R4t/vEsl/7indKxOkfY4pdc+K0ztJjc7jVkz57bZVbN8vuNnvU9piS
+	GzXTeu8dsS107JZiE/As2srrVPrw5sNJXke+X71j9kSkcNrO94oh7TGMKwVblVeaX/9SaHnu
+	0y7NIrbn8Wm+om+yFu1TZpTf+cv+7grrpc+M3iixFGckGmoxFxUnAgDhv3n43QIA 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAIsWRmVeSWpSXmKPExsVicf7LTd3nocEBBmf/qluseXGa2aLrSjeT
+	xcqfNQ7MHq2TJzF7fN4k53H3/06mAOYoLpuU1JzMstQifbsEroxd+98wFrQLVJzoPsTWwHif
+	p4uRk0NCwETi9OVJLBC2mMSFe+vZuhi5OIQEHjJKXFh+nxnCWQjkTPjPClLFJhAksebTPjYQ
+	W0RAQ2L36V72LkYODmaBOIlpR0VBTBYBVYnHE1NAKoQFdCV6Gz8zQVTrSdzffoMVpEREwEhi
+	29lokDCvQJjEhPdXoTZNZJI4tmwlM0iCE6h33p57jCA2I9Bt30+tAZvDLCAucevJfCaImwUk
+	luw5zwxhi0q8fPyPFaJeVOJO+3pGiHodiQW7P7FB2NoSyxa+ZoZYLChxcuYTlgmMYrOQjJ2F
+	pGUWkpZZSFoWMLKsYhTLTczMKUrNSazULTfO1CstLijWS88v28QIiqcHTkY7GG89ND/EKMDB
+	qMTDu4E9KECINbGsuDL3EKMEB7OSCK+tNlCINyWxsiq1KD++qDQntfgQozQHi5I4r5SfW4CQ
+	QHpiSWp2ampBahFMlomDU6qBkWU9xyUBBrZS85XHjVuPPSzNWxbjd4/DY88L278rPilGqT2f
+	xDzrF4/e9aUbDqyIEFz3VVOWa1GgdeHmq+dvFunv3dKcsVDrQavj3V+ZAjdVX52avTFb2dJm
+	lo567be1u0N7WY4tkNP/+OK+cfATy6qwbZ7Cls0TanvON3g/an+RILZ63tr3JUosxRmJhlrM
+	RcWJAHhFTlWjAgAA
+X-CFilter-Loop: DLP SM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205498>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> On Fri, Sep 14, 2012 at 1:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> -----Original Message-----
+> From: Johannes Sixt [mailto:j.sixt@viscovery.net] 
+> Sent: Friday, September 14, 2012 10:40 AM
+> To: Mestnik, Michael J - Eagan, MN - Contractor
+> Cc: Michael J Gruber; git@vger.kernel.org
+> Subject: Re: Using Format/export-subst Howto.
+> 
+> Am 9/14/2012 17:27, schrieb Mestnik, Michael J - Eagan, MN - 
+> Contractor:
+> > 
+> >> -----Original Message----- From: Johannes Sixt
+> >> If EOL conversion or a clean filter was applied during 'git add
+> >> file', is the version in the worktree suddenly wrong? Of course,
+> >> not.
+> >> 
+> >> I would place $Id$ treatment in the same ball park and 
+> declare it as
+> >> a mistake of the editor that it did not remove the now "wrong" SHA1
+> >> from $Id:$.
+> > 
+> > I think the difference here is that git does not *currently 
+> change the
+> > OS's LEF.  In this case each commit alters the Id and git is the one
+> > altering the Id.
+> 
+> Maybe you misunderstood $Id$? The value you get there is the 
+> blob's SHA1,
+> not the commit's. That is, it does not change on every 
+> commit, but only
+> when the file changes.
+> 
+> You are right that the value itself is something that is 
+> dictated by git's
+> database model, but the change logically happens when the 
+> editor modifies
+> the file.
+> 
+> (My contribution to this thread should be regarded as food 
+> for thought.
+> Personally, I don't mind whether or not and when $Id$ is updated.)
 >
->> Alternatively, if you can move the logic to set up this
->> configuration further down so that it happens after we talked to the
->> other side and figured out remote_head_points_at, you could instead
->> set it up to keep a single remote tracking branch.
->
-> That sounds reasonable. I have a question though, what should a user
-> do when he/she want to fetch all branches again? Messing up with
-> refspec in config file is not something I would like to do.
+Thank you for correcting me, I've always noticed this number doesn't seam to correlate to anything of use for me.  However it's been helpful when reading these reports to see what version generated it and that's why I wanted to further expand the information provided...  The date and time of the commit are specifically useful to me.
 
-You first have to think ;-).
+> -- Hannes
+> 
 
-I would say there are two kinds of users.
 
- - To the simplistic ones who fear the power of configuration, we
-   can simply tell "You don't. Use 'single' when you want to keep
-   working with the single branch. If you want full, reclone, and
-   migrate your work from the single one by fetching from it to the
-   full clone before discarding the single one".
 
- - To the ones who wants to take the full advantage of flexibility
-   of configuration, we can tell "remotes.$name.fetch configuration
-   is your friend. Do whatever you want to do with it, but here are
-   two hints".  The hints would cover the case to revert to the
-   default refspec, and the case to add another specific branch.
-
-These days, with "git config" and "git remote" wrappers, I do not
-particularly see a need to fear the power of configuration, though.
+Mike Mestnik, Michael J
+The ESM Tools
+Enterprise Systems Monitoring
+United States Postal Service
+ O: (651) 406-2048
+Michael.J.Mestnik@usps.gov
+ITEnterpriseSystemsMonitoring@usps.gov
+ 
