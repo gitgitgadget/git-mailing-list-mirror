@@ -1,114 +1,126 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 19:16:59 +0200
-Message-ID: <CABPQNSYu1mAxn_ZKqgM6xcsgJfegu=upv0QQpFryMVrEH+KAsw@mail.gmail.com>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
- <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
- <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com>
- <CA+EOSBm4cSu8cxPc-3Eqm0J7deeht6FMMUGBKP6vx8VDcVrGPQ@mail.gmail.com> <CA+EOSBki2syrwdfzFXzBPuJAhH2jfgAbL=W+yP7bx8WXMkYiMQ@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 06/11] fixup! log: document use of multiple commit
+ limiting options
+Date: Fri, 14 Sep 2012 10:23:28 -0700
+Message-ID: <7vipbg5xin.fsf@alter.siamese.dyndns.org>
+References: <7vfw6l9x7i.fsf@alter.siamese.dyndns.org>
+ <a22139a2cd54d1fa1b5bebc447540f7c54bf305a.1347615361.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: msysgit+bncBDR53PPJ7YHRBNGNZWBAKGQEWXKN63A@googlegroups.com Fri Sep 14 19:17:45 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBNGNZWBAKGQEWXKN63A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f186.google.com ([209.85.214.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 14 19:23:43 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBNGNZWBAKGQEWXKN63A@googlegroups.com>)
-	id 1TCZWT-0008Da-G5
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:17:45 +0200
-Received: by obbta17 with SMTP id ta17sf3314497obb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=56WeYq3jOu8ZWa0qJrDAxDKyuQRY6icOZb3tX2b95xI=;
-        b=posDZPvOnoCFuhvTGwh043u6T07LmzdQsby+xKzjGk1cAaFP8e0kIonniRcgwWWLpR
-         rVsRPJdmJ/ijf8H58NYaczB654xnkN6f8d3/NBhwFNoB9aZuL7MbVpDGzIqF+lrf9wJ6
-         +AzBiQ/gxUgb16mGvfC0ZL1VxREDtAVc9x+xtSX0lRlW1IadTZ6lj1gylfrKP3mJopuD
-         Ga2LUg0yhy7q4ceQCFLhD5WzI5PIJENI73SgOuiaVNTCqODTszZUShJHECenUTjPBZbV
-         StIwnSLF3qfE/KsndKOz1qUCcza1Ph7DXSYpdDMpcZxqEWxoAiE9d0ssZB2X1rEn0ezh
-         VQtg==
-Received: by 10.236.173.202 with SMTP id v50mr705801yhl.19.1347643061025;
-        Fri, 14 Sep 2012 10:17:41 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.149.129 with SMTP id t1ls3662253vcv.0.gmail; Fri, 14 Sep
- 2012 10:17:40 -0700 (PDT)
-Received: by 10.58.127.226 with SMTP id nj2mr475894veb.3.1347643060380;
-        Fri, 14 Sep 2012 10:17:40 -0700 (PDT)
-Received: by 10.58.127.226 with SMTP id nj2mr475891veb.3.1347643060357;
-        Fri, 14 Sep 2012 10:17:40 -0700 (PDT)
-Received: from mail-vc0-f175.google.com (mail-vc0-f175.google.com [209.85.220.175])
-        by gmr-mx.google.com with ESMTPS id r14si13619vdu.1.2012.09.14.10.17.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 10:17:40 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.175 as permitted sender) client-ip=209.85.220.175;
-Received: by mail-vc0-f175.google.com with SMTP id m8so5528025vcd.34
-        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 10:17:40 -0700 (PDT)
-Received: by 10.58.164.8 with SMTP id ym8mr3046530veb.39.1347643060096; Fri,
- 14 Sep 2012 10:17:40 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 10:16:59 -0700 (PDT)
-In-Reply-To: <CA+EOSBki2syrwdfzFXzBPuJAhH2jfgAbL=W+yP7bx8WXMkYiMQ@mail.gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.175 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205509>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCZcC-0003Ol-MV
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 19:23:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758037Ab2INRXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 13:23:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33230 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752642Ab2INRXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 13:23:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24C9D8DED;
+	Fri, 14 Sep 2012 13:23:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hs1+eeCyH/51J422CzE8JAeG1ME=; b=hcKKeJ
+	+ShSvMYdw5Nl3dDVfNR7p6LKGlzSo/A7JH4JnkRBqBDwgSmyUP2dF///tQWNuTUF
+	P9HLT4B6R0Otlq6Y0lu+AQFVmjUyvD9QBlH1a+3RIXT6um8RgMeQbyc04VGz4b6m
+	6dz5oBj5p5pZcPML3ohvr2NZW4dvIIDov6Pv8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TC9MlcBi5NiwkyCbiUNJjmX4obYhMbWb
+	vOzbwg60dAhaThoOB6GsAO7Fig24boLBSTvB6OyMyOwCHztgRQ4Vv/klZIN0ikZA
+	fpv/FwFihlKoN06/oOByt2RIGHa3+MpQW01CENb2V5btXu/+22343Vl0a4wsRinx
+	xeoc7VheaIU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 113D18DEC;
+	Fri, 14 Sep 2012 13:23:31 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E7C58DEA; Fri, 14 Sep 2012
+ 13:23:30 -0400 (EDT)
+In-Reply-To: <a22139a2cd54d1fa1b5bebc447540f7c54bf305a.1347615361.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 14 Sep 2012 11:46:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E711F166-FE90-11E1-B130-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205510>
 
-On Fri, Sep 14, 2012 at 7:12 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> 2012/9/14 Elia Pinto <gitter.spiros@gmail.com>:
->> 2012/9/14 Erik Faye-Lund <kusmabite@gmail.com>:
->>> On Fri, Sep 14, 2012 at 6:54 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>>> On Fri, Sep 14, 2012 at 6:41 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
->>>>> index 78c4286..7d1b34b 100644
->>>>> --- a/t/test-lib.sh
->>>>> +++ b/t/test-lib.sh
->>>>> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
->>>>>  # This test checks if command xyzzy does the right thing...
->>>>>  # '
->>>>>  # . ./test-lib.sh
->>>>> +
->> Nice. But this setting should be check that we have a terminal first isn't ?
->> Some test like this before
->>
->> test "X$$TERM" != Xdumb \
->> &&  test -t 1 2>/dev/null  \
->> && ....
-> and in reality this echo use is not portable.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Yeah; I posted a couple of follow-up mails earlier where I had noticed
-it and changed to printf instead. It seems the testsuite is already
-using it, so it's probably portable.
+> Here are a few typo fixes.
+>
+> There is a mix of single and back ticks already before this patch,
+> i.e. ` vs. ' -- I thought we had guidelines for this but don't find them
+> at the moment.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  Documentation/rev-list-options.txt | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
-Thanks a lot for the extra set of eyes :)
+Thanks, will squash in.
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+In general:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+ - we want to use `exactly this` when writing an item that the user
+   has to exactly spell as in the text, e.g. subcommand names.
+
+ - from the older days, we use <angle bracket as placeholder> in
+   synopsis section and in "git subcmd -h" output, and in the body
+   text, we tend to write like '<this>' to italicise in the
+   documentation.
+
+I personally find the <angle> somewhat ugly in the documentation,
+but we cannot just drop them as the "man -Tascii" would suffer if we
+did so.
+
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 57d6c90..c828408 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -6,12 +6,12 @@ special notations explained in the description, additional commit
+>  limiting may be applied.
+>  
+>  Using more options generally further limits the output (e.g.
+> -"--since=<date1>" limits to commits newer than <date1>, and using it
+> -with "--grep=<pattern>" further limits to commits whose log message
+> -has a line that match <pattern>), unless otherwise noted.
+> +`--since=<date1>` limits to commits newer than `<date1>`, and using it
+> +with `--grep=<pattern>` further limits to commits whose log message
+> +has a line that matches `<pattern>`), unless otherwise noted.
+>  
+>  Note that these are applied before commit
+> -ordering and formatting options, such as '--reverse'.
+> +ordering and formatting options, such as `--reverse`.
+>  
+>  --
+>  
+> @@ -47,7 +47,7 @@ endif::git-rev-list[]
+>  	Limit the commits output to ones with author/committer
+>  	header lines that match the specified pattern (regular
+>  	expression).  With more than one `--author=<pattern>`,
+> -	commits whose author match any of the given patterns are
+> +	commits whose author matches any of the given patterns are
+>  	chosen (similarly for multiple `--committer=<pattern>`).
+>  
+>  --grep=<pattern>::
+> @@ -55,7 +55,7 @@ endif::git-rev-list[]
+>  	Limit the commits output to ones with log message that
+>  	matches the specified pattern (regular expression).  With
+>  	more than one `--grep=<pattern>`, commits whose message
+> -	match any of the given patterns are chosen (but see
+> +	matches any of the given patterns are chosen (but see
+>  	`--all-match`).
+>  
+>  --all-match::
