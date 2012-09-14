@@ -1,145 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add diff.context option to specify default context
-Date: Fri, 14 Sep 2012 14:06:25 -0700
-Message-ID: <7vobl82u26.fsf@alter.siamese.dyndns.org>
-References: <A74D9034-E5BA-4CD5-B621-1C388EF4CE2B@mozilla.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using Format/export-subst Howto.
+Date: Fri, 14 Sep 2012 23:09:22 +0200
+Message-ID: <1347656962.3998.140661128069097.6D9BE3C4@webmail.messagingengine.com>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov>
+ <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net>
+ <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov>
+ <50534FC6.2040207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff Muizelaar <jmuizelaar@mozilla.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 23:06:44 2012
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	"Mestnik, Michael J - Eagan, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>
+X-From: git-owner@vger.kernel.org Fri Sep 14 23:09:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCd5z-00014k-R5
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 23:06:40 +0200
+	id 1TCd8m-000318-Pz
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 23:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939Ab2INVG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 17:06:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58327 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753789Ab2INVG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 17:06:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 959E89F51;
-	Fri, 14 Sep 2012 17:06:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CYJlzs7XLAfbtU6PMdm59HVmja4=; b=fRwwWQ
-	vSVRAh/DZbaYkKMJQ9u9620RzTrkyg2GLHapOdedbmPynEm3t9MVuasEhvUOfU2B
-	g6WEsz9BY1m3Aj4Su+pnMIxbpJB6kfQB7OfMw7tE7O88wLRd9p0ssefFAUPF6I+e
-	m04HtJnNdJnQQIBSguabfbCb3hVIMKC2TqVuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZMDlSBYHA8qmqaL8v1atcIYUqkGxSvAT
-	IdxGjN7Xi+ollsem0Ozfw1AYKSDuPE2Pdtq1OxXsn5kFqkAMovc1dgM2xFUGTNgx
-	qFs3ieTQTwU38L4YT/RPIWcOIujqpbIqFzhf+TuJFg84Eyqqqzgg9VlePzGDO50J
-	iPKdQZ+/qkY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83B9B9F50;
-	Fri, 14 Sep 2012 17:06:27 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C48C49F4F; Fri, 14 Sep 2012
- 17:06:26 -0400 (EDT)
-In-Reply-To: <A74D9034-E5BA-4CD5-B621-1C388EF4CE2B@mozilla.com> (Jeff
- Muizelaar's message of "Fri, 14 Sep 2012 14:16:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0C1381CC-FEB0-11E1-8F6E-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754254Ab2INVJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 17:09:24 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:49392 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753746Ab2INVJX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 17:09:23 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 94FC9206C0;
+	Fri, 14 Sep 2012 17:09:22 -0400 (EDT)
+Received: from web1.nyi.mail.srv.osa ([10.202.2.211])
+  by compute1.internal (MEProxy); Fri, 14 Sep 2012 17:09:22 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:from:to:cc:mime-version
+	:content-transfer-encoding:content-type:in-reply-to:references
+	:subject:date; s=smtpout; bh=oaC75Yj5V4aDId/yJrZ6c8E4keA=; b=acO
+	zRlKzm/KM7ajFnjEzAbv5DxOc4VMTkEzyAEe2CgSMZl22Au1Tsv8jjCXDYB/7NKz
+	a7MUn+/7wX/LXib0T30gBlWW/NpriD0g6qhGAiPP/fTMRdkDc2++XHcyCZp53m1B
+	JYt6YHKAt80n3fxa/R6jBsFTfieVQWWcVNyF8nJ0=
+Received: by web1.nyi.mail.srv.osa (Postfix, from userid 99)
+	id 5BA5DA00176; Fri, 14 Sep 2012 17:09:22 -0400 (EDT)
+X-Sasl-Enc: f8H8q0zsC0bZNgVgmLcgepc/7EOM3kyrGXwFn49EiijC 1347656962
+X-Mailer: MessagingEngine.com Webmail Interface
+In-Reply-To: <50534FC6.2040207@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205530>
-
-Jeff Muizelaar <jmuizelaar@mozilla.com> writes:
-
-> This adds a diff.context config option to allow specifying
-> the number of lines of context. This is similar to Mercurial's
-> 'unified' option.
-
-Random thoughts.
-
-* Please refer to Documentation/SubmittingPatches.  Saving your
-  message in a mbox and applying it would produce this crap:
-
-    commit ba4c972eacb91058f1317dbcd4ff77b471fa938e
-    Author: Jeff Muizelaar <jmuizelaar@mozilla.com>
-    Date:   Fri Sep 14 14:16:03 2012 -0400
-
-        Add diff.context option to specify default context
-
-        This adds a diff.context config option to allow specifying
-        the number of lines of context. This is similar to Mercurial's
-        'unified' option.
-
-        commit 1bd81c75de6824c39852bc8516acd0733737ed83
-        Author: Jeff Muizelaar <jmuizelaar@mozilla.com>
-        Date:   Fri Sep 14 13:55:02 2012 -0400
-
-            [PATCH] Add diff.context option to specify default context
-
-            This adds a diff.context config option to allow specifying
-            the number of lines of context. This is similar to
-            Mercurial's
-            'unified' option.
-
-  which is not acceptable.
-
-* Sign-off your patch.
-
-* Citing similaritly to options in other systems does not add much
-  value for people who read the proposed log message.  In this case,
-  I think the first sentence is written clearly enough that it is
-  sufficient without such clarification.  If anything, it should
-  instead say:
-
-	diff: diff.context configuration gives default to -U
-
-	Introduce a configuration variable diff.context that tells
-	Porcelain commands to use a non-default number of context
-	lines instead of 3 (the default).  With this variable, users
-	do not have to keep repeating "git log -U8" from the command
-	line; instead, it becomes sufficient to say "git config
-	diff.context 8" just once.
-
-  or something like that to make it clear that it is related to our
-  -U option.
-
-* That relationship with the -U option may worth mentioning in the
-  documentation, not just in the log message.
-
-* The configuration is read only in diff_ui_config and not in the
-  lower-level diff_config.  What the patch does is the right thing.
-
-  It however needs to be documented in the patch to diff-config.txt
-  that it affects only the Porcelain commands, and does not break
-  plumbing commands.
-
-* Tests?  Minimally, the cases you may want to check are:
-
-  - What happens with various values set to this variable, and does
-    the code properly diagnose errors?
-
-    [diff]
-	context ;# boolean?
-        context = no
-        context = 0
-        context = -1
-        context = 8
-
-  - What happens when the variable is set and the command line gives
-    a different value with -U?
-
-    git config diff.context 8
-    git log -U4 -1
-
-  - Does it really keep plumbing intact?
-
-    git config diff.context 8
-    git diff-files -p
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205531>
 
 
-Thanks.
+
+On Fri, Sep 14, 2012, at 05:39 PM, Johannes Sixt wrote:
+> Am 9/14/2012 17:27, schrieb Mestnik, Michael J - Eagan, MN - Contractor:
+> > 
+> >> -----Original Message----- From: Johannes Sixt
+> >> If EOL conversion or a clean filter was applied during 'git add
+> >> file', is the version in the worktree suddenly wrong? Of course,
+> >> not.
+> >> 
+> >> I would place $Id$ treatment in the same ball park and declare it as
+> >> a mistake of the editor that it did not remove the now "wrong" SHA1
+> >> from $Id:$.
+> > 
+> > I think the difference here is that git does not *currently change the
+> > OS's LEF.  In this case each commit alters the Id and git is the one
+> > altering the Id.
+> 
+> Maybe you misunderstood $Id$? The value you get there is the blob's SHA1,
+> not the commit's. That is, it does not change on every commit, but only
+> when the file changes.
+> 
+> You are right that the value itself is something that is dictated by
+> git's
+> database model, but the change logically happens when the editor modifies
+> the file.
+
+Exactly, but the problem is that neither $Id$ nor $Id: deadbeef$ in the
+work-tree copy of the file
+are updated with $Id: abacbeef$ after the file's content has changed and
+has been committed, i.e.
+after the blob's sha1 has changed. What's worse, even a "git checkout
+file" does not
+correct this (because git sees that there's no change to the file
+compared to the index),
+you need to "rm file && git checkout file"). If the user has to update
+$Id$ to match the current sha1
+(by remembering to do a more forceful checkout than checkout -f) then
+one half of that feature is useless. 
+
+> (My contribution to this thread should be regarded as food for thought.
+> Personally, I don't mind whether or not and when $Id$ is updated.)
+> 
+> -- Hannes
+
+I think at least we should do a commit.renormalize akin to
+merge.renormalize if we can't do
+more for hysterical raisins. But maybe the behavior even has changed
+during some
+stat/lstat related optimizations. I'll check next week if nobody beats
+me to it.
+
+Cheers,
+Michael
