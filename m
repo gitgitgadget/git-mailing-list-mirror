@@ -1,63 +1,63 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
 Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 19:11:34 +0200
-Message-ID: <CABPQNSZSQCvoD=n-iQPSHbUQ2S4c0P1VTZfiHkRcwpm=7dk5Vg@mail.gmail.com>
+Date: Fri, 14 Sep 2012 19:12:20 +0200
+Message-ID: <CA+EOSBki2syrwdfzFXzBPuJAhH2jfgAbL=W+yP7bx8WXMkYiMQ@mail.gmail.com>
 References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
- <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
- <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com> <CA+EOSBm4cSu8cxPc-3Eqm0J7deeht6FMMUGBKP6vx8VDcVrGPQ@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+	<CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
+	<CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com>
+	<CA+EOSBm4cSu8cxPc-3Eqm0J7deeht6FMMUGBKP6vx8VDcVrGPQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: msysgit+bncBDR53PPJ7YHRB36KZWBAKGQE57R74EY@googlegroups.com Fri Sep 14 19:12:23 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRB36KZWBAKGQE57R74EY@googlegroups.com>
+To: kusmabite@gmail.com
+X-From: msysgit+bncBD333LE6YYIRB5GKZWBAKGQECYROPLY@googlegroups.com Fri Sep 14 19:12:27 2012
+Return-path: <msysgit+bncBD333LE6YYIRB5GKZWBAKGQECYROPLY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f186.google.com ([209.85.220.186])
+Received: from mail-ob0-f186.google.com ([209.85.214.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB36KZWBAKGQE57R74EY@googlegroups.com>)
-	id 1TCZRH-0004g1-0Z
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:12:23 +0200
-Received: by vcbfy7 with SMTP id fy7sf3300527vcb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:12:18 -0700 (PDT)
+	(envelope-from <msysgit+bncBD333LE6YYIRB5GKZWBAKGQECYROPLY@googlegroups.com>)
+	id 1TCZRJ-0004kc-RX
+	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:12:26 +0200
+Received: by obbta17 with SMTP id ta17sf3313009obb.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :x-google-group-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe:content-type;
-        bh=20K0gQCXv0FunQtWybOq/M6F+5fbL4LCueYPTCvfd4E=;
-        b=m29A6OnliP4/sKGZ/ctVm3YsWEO6HT/NGp5r1rNb1/j585mJ+fao1RxtzC0L98hU26
-         tLcdERJIZ6NqJnIFSpAN0fbNdb8YlOZSkBTZxsgXkvS+JgLe/11L8DDRJ4In182FTCyu
-         SG8v7qyHKdweDcC9nsf/kb1zrTY3Fc6YKuLV/LS4Fjgswro+FVeM8m2gWtogyRh+mRTp
-         2u5Wk2sD4MOEiumCf10YdmrHH+kWPBtJlzaox7B+Mp8KdUGSczTRiZFWD2dnXaRcvgI1
-         A5mtaeq5YQkNZz6IpKko8ki1UKIh5LnsYrkqW70gbLUthKUwingjQmiTgDNfi7Fs4yId
-         GS6g==
-Received: by 10.236.152.5 with SMTP id c5mr706811yhk.10.1347642735625;
-        Fri, 14 Sep 2012 10:12:15 -0700 (PDT)
+        bh=+4iajMdmVgSFxsup2TOo5VxbPe0mnajPYpW9C25AGrs=;
+        b=vwL0mUAexOtyAgfXIvCqvxYP0PmhWChThTDuC8H9a42dMnuqDZ2TaVw8R5imLVbWD3
+         gjq5T1hR6Gb/IjTfzedb7CBgHTLBWoZIpet+3GB8ue+8dFTi+IJlk9WSj21xXiSTfZO7
+         V6sn2A9XBOaI10xgzxmag5zDnGwhJTHDvEgvgPbbSSdKznKKYPTX05ot/eYga7AqAW30
+         DlL2O29iv+hBxUCYICno15i+lv3xWYPfvV4Z35B5tQewyKzu9Lk1YuNNoGvY6uNQUi8c
+         yhEr4zxLlzZ1SYwA0rrTUtpayUlGlBkDk9WQBli+8tDqvZBxq+Z8AdbRMr9/pWiCoRdW
+         MVpg==
+Received: by 10.50.88.137 with SMTP id bg9mr1586989igb.0.1347642741388;
+        Fri, 14 Sep 2012 10:12:21 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.147.138 with SMTP id l10ls3679717vcv.7.gmail; Fri, 14 Sep
- 2012 10:12:14 -0700 (PDT)
-Received: by 10.59.7.234 with SMTP id df10mr482865ved.23.1347642734975;
-        Fri, 14 Sep 2012 10:12:14 -0700 (PDT)
-Received: by 10.59.7.234 with SMTP id df10mr482864ved.23.1347642734966;
-        Fri, 14 Sep 2012 10:12:14 -0700 (PDT)
-Received: from mail-vc0-f170.google.com (mail-vc0-f170.google.com [209.85.220.170])
-        by gmr-mx.google.com with ESMTPS id ef10si32493vdb.3.2012.09.14.10.12.14
+Received: by 10.231.62.200 with SMTP id y8ls9684583ibh.5.gmail; Fri, 14 Sep
+ 2012 10:12:20 -0700 (PDT)
+Received: by 10.50.149.228 with SMTP id ud4mr1556794igb.0.1347642740688;
+        Fri, 14 Sep 2012 10:12:20 -0700 (PDT)
+Received: by 10.50.149.228 with SMTP id ud4mr1556791igb.0.1347642740629;
+        Fri, 14 Sep 2012 10:12:20 -0700 (PDT)
+Received: from mail-iy0-f170.google.com (mail-iy0-f170.google.com [209.85.210.170])
+        by gmr-mx.google.com with ESMTPS id mb9si3303254igc.1.2012.09.14.10.12.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 10:12:14 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.170 as permitted sender) client-ip=209.85.220.170;
-Received: by mail-vc0-f170.google.com with SMTP id fk26so4579183vcb.15
-        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 10:12:14 -0700 (PDT)
-Received: by 10.58.32.234 with SMTP id m10mr2923115vei.60.1347642734770; Fri,
- 14 Sep 2012 10:12:14 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 10:11:34 -0700 (PDT)
+        Fri, 14 Sep 2012 10:12:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of gitter.spiros@gmail.com designates 209.85.210.170 as permitted sender) client-ip=209.85.210.170;
+Received: by mail-iy0-f170.google.com with SMTP id m10so2776082iam.15
+        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 10:12:20 -0700 (PDT)
+Received: by 10.50.173.71 with SMTP id bi7mr3837342igc.3.1347642740503; Fri,
+ 14 Sep 2012 10:12:20 -0700 (PDT)
+Received: by 10.64.82.194 with HTTP; Fri, 14 Sep 2012 10:12:20 -0700 (PDT)
 In-Reply-To: <CA+EOSBm4cSu8cxPc-3Eqm0J7deeht6FMMUGBKP6vx8VDcVrGPQ@mail.gmail.com>
-X-Original-Sender: kusmabite@gmail.com
+X-Original-Sender: gitter.spiros@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.170 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
+ domain of gitter.spiros@gmail.com designates 209.85.210.170 as permitted
+ sender) smtp.mail=gitter.spiros@gmail.com; dkim=pass header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -68,9 +68,9 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205508>
 
-On Fri, Sep 14, 2012 at 7:08 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
+2012/9/14 Elia Pinto <gitter.spiros@gmail.com>:
 > 2012/9/14 Erik Faye-Lund <kusmabite@gmail.com>:
 >> On Fri, Sep 14, 2012 at 6:54 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
 >>> On Fri, Sep 14, 2012 at 6:41 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
@@ -89,11 +89,37 @@ On Fri, Sep 14, 2012 at 7:08 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
 > test "X$$TERM" != Xdumb \
 > &&  test -t 1 2>/dev/null  \
 > && ....
+and in reality this echo use is not portable.
+http://ftp.gnu.org/old-gnu/Manuals/autoconf-2.53/html_node/Limitations-of-Builtins.html
+
+In popt 1_17 autogen.sh does
+
+red=; grn=; lgn=; blu=; std=;
+test "X$$TERM" != Xdumb \
+&&  test -t 1 2>/dev/null  \
+&& { \
+  red='^[[0;31m'; \
+  grn='^[[0;32m'; \
+  lgn='^[[1;32m'; \
+  blu='^[[1;34m'; \
+  std='^[[m'; \
+}
+
+and
+
+Die()    {
+        color="$red"
+        echo "${color}${_PROGNAME}: Error: $@${std}" >&2
+        exit 1
+}
+
+Die "message here"
+
+
 >
 > or the inverse logic. This is what automake  and popt autogen.sh does.
-
-There's already such a check a few lines further down, and tput isn't
-used in such cases.
+>
+> Best Regards
 
 -- 
 *** Please reply-to-all at all times ***
