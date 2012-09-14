@@ -1,130 +1,130 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH] Revert diffstat back to English
-Date: Fri, 14 Sep 2012 09:54:03 -0700
-Message-ID: <7vvcfg5yvo.fsf@alter.siamese.dyndns.org>
-References: <20120913132847.GD4287@sigill.intra.peff.net>
- <1347545786-936-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 14 18:54:26 2012
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test suite for detecting heap corruption
+Date: Fri, 14 Sep 2012 09:54:22 -0700
+Message-ID: <1347641662-3596-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 14 18:54:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCZ9r-0001Vc-7Y
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 18:54:23 +0200
+	id 1TCZAJ-0001qU-Jf
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 18:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757057Ab2INQyJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Sep 2012 12:54:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50081 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755468Ab2INQyH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Sep 2012 12:54:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82CD983A7;
-	Fri, 14 Sep 2012 12:54:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=j/8NgqBLIZ7y
-	byPzrfViv5/Oh5A=; b=f3dWe+B8Zuj1IQPf6XPJM/8H4wsxQqctdVQ/upyHstpx
-	7z2ShzEnNQr8KAqwZAabY2MD/sx//vkde9X1S+H5WQ3IYlItN+3WTYFxQiJkLdDb
-	h9zSos7wYR1qlnOZKf8r/yX5hiytH/ECVyZ/yxezHHY3oFt5z3fNraRajNgW8sQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TN5hYB
-	DkSjVS77SXC1OMhEjRpJ5ZBkB60lBtzcptL0JD08/HB8v6v3HKJ1u4HQVXpnZgvh
-	d7M1hC8yJyds8pSvFE+Dzc1M8nZDOt4NQPNzYi79olVhaVRjFUTG6yZcTpNJJNFt
-	qxuzTTGkyWYqrQ/EQed7Ib0BzEy4TkWv2tPDs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FC6383A6;
-	Fri, 14 Sep 2012 12:54:06 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8C9983A5; Fri, 14 Sep 2012
- 12:54:05 -0400 (EDT)
-In-Reply-To: Junio C. Hamano's message of "Fri\, 14 Sep 2012 09\:35\:37
- -0700"
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB58D772-FE8C-11E1-84EA-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757514Ab2INQyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 12:54:31 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:44227 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757325Ab2INQy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 12:54:27 -0400
+Received: by pbbrr13 with SMTP id rr13so5902199pbb.19
+        for <git@vger.kernel.org>; Fri, 14 Sep 2012 09:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=8/bjHxde7ucfrB/qJxN6RJXRK2vV2oiGkccgqqzUYkg=;
+        b=VyvQ5eXqeZUS7cmL83hfIH5GNpV1jNN7bBcaOM0kO+c9iF16D4StZzRkukHh2jFgeX
+         5RlIm5UKQFRIgILIpky561G8x6QFEdkRQzpaF0r7AXaTgY5w1+Wt9016bYtTdSrQwE1p
+         ++WmJlbxEupmJi2FGBNb5kvJ3VoI/bgPGrwBFTMDGG7KjVJKaydP0D+bgKpATsXa4BYq
+         K8OcrgIpy7hWRvpDc6PtYHLKYvY9vfK3zLsH6dqtsUDNAJNs3rlpAKcwVJO/ioq/4+k8
+         y6ARbEo218KtT21jTkr4QccQ/6ZQEQircnNZodBfg9419j7N4tGNBCkgelxVuNvgSdfQ
+         fC6Q==
+Received: by 10.68.222.170 with SMTP id qn10mr5734635pbc.114.1347641667262;
+        Fri, 14 Sep 2012 09:54:27 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (141.195.207.67.nephoscale.net. [67.207.195.141])
+        by mx.google.com with ESMTPS id hr1sm1259902pbc.23.2012.09.14.09.54.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Sep 2012 09:54:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205501>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Recent versions of Linux libc (later than 5.4.23) and glibc (2.x)
+include a malloc() implementation which is tunable via environment
+variables. When MALLOC_CHECK_ is set, a special (less efficient)
+implementation is used which is designed to be tolerant against
+simple errors, such as double calls of free() with the same argument,
+or overruns of a single byte (off-by-one bugs). When MALLOC_CHECK_
+is set to 3, a diagnostic message is printed on stderr
+and the program is aborted.
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> This reverts the i18n part of 7f81463 (Use correct grammar in diffst=
-at
->> summary line - 2012-02-01) but still keeps the grammar correctness f=
-or
->> English. It also reverts b354f11 (Fix tests under GETTEXT_POISON on
->> diffstat - 2012-08-27). The result is diffstat always in English
->> for all commands.
->>
->> This helps stop users from accidentally sending localized
->> format-patch'd patches.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
+Setting the MALLOC_PERTURB_ environment variable causes the malloc
+functions in libc to return memory which has been wiped and clear
+memory when it is returned.
+Of course this does not affect calloc which always does clear the memory.
 
-Why am I getting this from t3300?
+The reason for this exercise is, of course, to find code which uses
+memory returned by malloc without initializing it and code which uses
+code after it is freed. valgrind can do this but it's costly to run.
+The MALLOC_PERTURB_ exchanges the ability to detect problems in 100%
+of the cases with speed.
 
-    --- expected    2012-09-14 16:43:09.000000000 +0000
-    +++ current     2012-09-14 16:43:09.000000000 +0000
-    @@ -1,2 +1,2 @@
-      "tabs\t,\" (dq) and spaces"
-    - 1 file changed, 0 insertions(+), 0 deletions(-)
-    + 1 files changed, 0 insertion(+), 0 deletion(-)
+The byte value used to initialize values returned by malloc is the byte
+value of the environment value. The value used to clear memory is the
+bitwise inverse. Setting MALLOC_PERTURB_ to zero disables the feature.
 
-Ah, your rewrite of Q_() is wrong. Will squash the attached in
-before queueing this for maint.
+This technique can find hard to detect bugs.
+It is therefore suggested to always use this flag (at least temporarily)
+when testing out code or a new distribution.
 
-Thanks.
+But the test suite can use also valgrind(memcheck) via 'make valgrind'
+or 'make GIT_TEST_OPTS="--valgrind"'.
 
- diff.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Memcheck wraps client calls to malloc(), and puts a "red zone" on
+each end of each block in order to detect access overruns.
+Memcheck already detects double free() (up to the limit of the buffer
+which remembers pending free()). Thus memcheck subsumes all the
+documented coverage of MALLOC_CHECK_.
 
-diff --git c/diff.c w/diff.c
-index 3ddf0e6..1d9783c 100644
---- c/diff.c
-+++ w/diff.c
-@@ -1401,7 +1401,7 @@ int print_stat_summary(FILE *fp, int files, int i=
-nsertions, int deletions)
- 	}
-=20
- 	strbuf_addf(&sb,
--		    files ? " %d files changed" : " %d file changed",
-+		    (files =3D=3D 1) ? " %d file changed" : " %d files changed",
- 		    files);
-=20
- 	/*
-@@ -1418,7 +1418,7 @@ int print_stat_summary(FILE *fp, int files, int i=
-nsertions, int deletions)
- 		 * do not translate it.
- 		 */
- 		strbuf_addf(&sb,
--			    insertions ? ", %d insertions(+)" : ", %d insertion(+)",
-+			    (insertions =3D=3D 1) ? ", %d insertion(+)" : ", %d insertions(=
-+)",
- 			    insertions);
- 	}
-=20
-@@ -1428,7 +1428,7 @@ int print_stat_summary(FILE *fp, int files, int i=
-nsertions, int deletions)
- 		 * do not translate it.
- 		 */
- 		strbuf_addf(&sb,
--			    deletions ? ", %d deletions(-)" : ", %d deletion(-)",
-+			    (deletions =3D=3D 1) ? ", %d deletion(-)" : ", %d deletions(-)"=
-,
- 			    deletions);
- 	}
- 	strbuf_addch(&sb, '\n');
+If MALLOC_CHECK_ is set non-zero when running memcheck, then the
+overruns that might be detected by MALLOC_CHECK_ would be overruns
+on the wrapped blocks which include the red zones.  Thus MALLOC_CHECK_
+would be checking memcheck, and not the client.  This is not useful,
+and actually is wasteful.  The only possible [documented] advantage
+of using MALLOC_CHECK_ and memcheck together, would be if MALLOC_CHECK_
+detected duplicate free() in more cases than memcheck because memcheck's
+buffer is too small.
+
+Therefore we don't use MALLOC_CHECK_ and valgrind(memcheck) at the
+same time.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+This the third reroll of the original patch.
+
+I redid the patch correcting the export command in a more portable
+way thanks to the Junio observation and not setting MALLOC_CHECK_
+at the same time we are using valgrind. Added in the commit the reason,
+not so simple to find. Hope the better :=)
+
+
+ t/test-lib.sh |    9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 78c4286..f34b861 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -93,6 +93,15 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ 
++# Add libc MALLOC and MALLOC_PERTURB test 
++# only if we are not executing the test with valgrind
++expr "$GIT_TEST_OPTS" : ".*\(--valgrind\)" >/dev/null || {
++	MALLOC_CHECK_=3
++	export MALLOC_CHECK_
++	MALLOC_PERTURB_="$( expr \( $$ % 255 \) + 1)"
++	export MALLOC_PERTURB_
++}
++
+ # Protect ourselves from common misconfiguration to export
+ # CDPATH into the environment
+ unset CDPATH
+-- 
+1.7.10.4
