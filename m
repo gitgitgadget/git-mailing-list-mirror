@@ -1,104 +1,111 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Re: [PATCH/RFC] test-lib: add support for colors
- without tput
-Date: Fri, 14 Sep 2012 20:11:48 +0200
-Message-ID: <CABPQNSZeuG-J8nVH15hpsX+bkM3CPcUGBNgNOUp6AtTipSdVbQ@mail.gmail.com>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
- <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com>
- <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com> <50536943.4030300@kdbg.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: msysgit+bncBDR53PPJ7YHRBDPHZWBAKGQEEXZRPWQ@googlegroups.com Fri Sep 14 20:12:36 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBDPHZWBAKGQEEXZRPWQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gh0-f186.google.com ([209.85.160.186])
+From: Jeff Muizelaar <jmuizelaar@mozilla.com>
+Subject: [PATCH] Add diff.context option to specify default context
+Date: Fri, 14 Sep 2012 14:16:03 -0400
+Message-ID: <A74D9034-E5BA-4CD5-B621-1C388EF4CE2B@mozilla.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: multipart/mixed; boundary=Apple-Mail-4--27823757
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 14 20:25:55 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBDPHZWBAKGQEEXZRPWQ@googlegroups.com>)
-	id 1TCaNV-0000XY-LH
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 20:12:33 +0200
-Received: by mail-gh0-f186.google.com with SMTP id f18sf2457604ghb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=wcL4OIfwt+XGQ55acJpozSAiqPxJ7JOUCveJqymx77A=;
-        b=eDC1tO3nG6Na7UnCjmrUhhVWpLCp+jqZwsY3CFlz9GO87r7eBa1j0LWpQZMXiQx+LE
-         0CM5bor5rvN7cNjbqQwDP2PZZFlqUx8BtQdcSwpg+T+M2L8zlgq8Wi7hfjDNKpwpriLS
-         xUuZVqeq77KijE1nRxOgspnjL2QeINcfOVs4v+xcH3HgHbZJaAybnX8tmiHt1lfWY8BZ
-         LuIlHH0psXTCRQ/3jsSpkn/EcfTS6APl+QifRVWbIfh+VMdViuQZKd2H5tMbmxcFPSR8
-         HE6Z2Wqy6Pwy9lMfB2Y/BhPBS1ybJyhGqVT+F0NBXMZFEbKnCZMonGFgXSIXFKqEMwqw
-         OW4A==
-Received: by 10.236.192.164 with SMTP id i24mr742908yhn.14.1347646349723;
-        Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.154.77 with SMTP id n13ls3654451vcw.4.gmail; Fri, 14 Sep
- 2012 11:12:29 -0700 (PDT)
-Received: by 10.59.0.226 with SMTP id bb2mr489952ved.30.1347646349209;
-        Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-Received: by 10.59.0.226 with SMTP id bb2mr489951ved.30.1347646349201;
-        Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-Received: from mail-vc0-f182.google.com (mail-vc0-f182.google.com [209.85.220.182])
-        by gmr-mx.google.com with ESMTPS id r14si21547vdu.1.2012.09.14.11.12.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.182 as permitted sender) client-ip=209.85.220.182;
-Received: by mail-vc0-f182.google.com with SMTP id fw7so6729130vcb.13
-        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 11:12:29 -0700 (PDT)
-Received: by 10.220.150.15 with SMTP id w15mr3050313vcv.68.1347646349138; Fri,
- 14 Sep 2012 11:12:29 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 11:11:48 -0700 (PDT)
-In-Reply-To: <50536943.4030300@kdbg.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.182 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205523>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCaaL-0000f1-0k
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 20:25:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754673Ab2INSZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 14:25:40 -0400
+Received: from mx2.corp.phx1.mozilla.com ([63.245.216.70]:57180 "EHLO
+	smtp.mozilla.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752642Ab2INSZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 14:25:40 -0400
+X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Sep 2012 14:25:40 EDT
+Received: from [10.242.28.29] (unknown [66.207.208.98])
+	(Authenticated sender: jmuizelaar@mozilla.com)
+	by mx2.mail.corp.phx1.mozilla.com (Postfix) with ESMTPSA id DFD3EF260D
+	for <git@vger.kernel.org>; Fri, 14 Sep 2012 11:16:04 -0700 (PDT)
+X-Mailer: Apple Mail (2.1084)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205524>
 
-On Fri, Sep 14, 2012 at 7:28 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 14.09.2012 18:58, schrieb Erik Faye-Lund:
->>       tput () {
->>               case "$1" in
->>               bold)
->> -                     echo -ne "\033[1m" ;;
->> +                     printf "\033[1m" ;;
->>               setaf)
->> -                     echo -ne "\033[0;3$2m" ;;
->> +                     printf "\033[0;3$2m" ;;
->
-> This should be
->                         printf '\033[0;3%sm' "$2" ;;
 
-Is there a reason for %s rather than %d? It seem it only takes
-integers, and with %d at least we'd get an error message if someone
-started doing something else...
+--Apple-Mail-4--27823757
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+This adds a diff.context config option to allow specifying
+the number of lines of context. This is similar to Mercurial's
+'unified' option.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--Apple-Mail-4--27823757
+Content-Disposition: attachment;
+	filename=add-context-option
+Content-Type: application/octet-stream;
+	name="add-context-option"
+Content-Transfer-Encoding: 7bit
+
+commit 1bd81c75de6824c39852bc8516acd0733737ed83
+Author: Jeff Muizelaar <jmuizelaar@mozilla.com>
+Date:   Fri Sep 14 13:55:02 2012 -0400
+
+    [PATCH] Add diff.context option to specify default context
+    
+    This adds a diff.context config option to allow specifying
+    the number of lines of context. This is similar to Mercurial's
+    'unified' option.
+
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 67a90a8..028ff14 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -56,6 +56,10 @@ diff.statGraphWidth::
+ 	Limit the width of the graph part in --stat output. If set, applies
+ 	to all commands generating --stat output except format-patch.
+ 
++diff.context::
++	Generate diffs with <n> lines of context instead of the default of
++	3.
++
+ diff.external::
+ 	If this config variable is set, diff generation is not
+ 	performed using the internal diff machinery, but using the
+diff --git a/diff.c b/diff.c
+index e6846ca..b5cd8be 100644
+--- a/diff.c
++++ b/diff.c
+@@ -26,6 +26,7 @@ static int diff_detect_rename_default;
+ static int diff_rename_limit_default = 400;
+ static int diff_suppress_blank_empty;
+ int diff_use_color_default = -1;
++int diff_context_default = 3;
+ static const char *diff_word_regex_cfg;
+ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index = 1;
+@@ -141,6 +142,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		diff_use_color_default = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.context")) {
++		diff_context_default = git_config_int(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "diff.renames")) {
+ 		diff_detect_rename_default = git_config_rename(var, value);
+ 		return 0;
+@@ -3172,7 +3177,7 @@ void diff_setup(struct diff_options *options)
+ 	options->break_opt = -1;
+ 	options->rename_limit = -1;
+ 	options->dirstat_permille = diff_dirstat_permille_default;
+-	options->context = 3;
++	options->context = diff_context_default;
+ 	DIFF_OPT_SET(options, RENAME_EMPTY);
+ 
+ 	options->change = diff_change;
+
+--Apple-Mail-4--27823757--
