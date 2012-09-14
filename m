@@ -1,103 +1,91 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 19:52:53 +0200
-Message-ID: <CABPQNSYzSzMrmY4Jto+xig2BRL-P0xJDcUiBV8TtV3Ehd1DD_w@mail.gmail.com>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com> <20120914174439.GA16657@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 09/11] t7810-grep: test multiple --author with
+ --all-match
+Date: Fri, 14 Sep 2012 10:58:52 -0700
+Message-ID: <7vy5kc4hb7.fsf@alter.siamese.dyndns.org>
+References: <7vfw6l9x7i.fsf@alter.siamese.dyndns.org>
+ <cover.1347615361.git.git@drmicha.warpmail.net>
+ <830d4a80bb229835b6b4898c3c4b8b2e0e17b056.1347615361.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBDR53PPJ7YHRBHW6ZWBAKGQE3LQD7FA@googlegroups.com Fri Sep 14 19:53:40 2012
-Return-path: <msysgit+bncBDR53PPJ7YHRBHW6ZWBAKGQE3LQD7FA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 14 19:59:05 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBHW6ZWBAKGQE3LQD7FA@googlegroups.com>)
-	id 1TCa5D-00052P-3K
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:53:39 +0200
-Received: by qcsc2 with SMTP id c2sf3339623qcs.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=OS/75xNUHnQ4ZKLxw+30QE3XY7IeJciYTNxOkjWpHzc=;
-        b=kRcVQa7C8T0aBXnUe5aH1ra0H7LGCPtv1umfJcbFV8djGlqf3AfpUql+hNTWg8NDwU
-         RogOCVCA/lmfl1VvhCrhSN6t1aNlhJNm4Kh4/t7eCzqnWXo4NZlALLzAaz/S4jUDG+g2
-         tBLDCcgO1AQOqEGwWX7GAnuCeL28XbBDN9dJyyOeq6lkYPRaf695jMePI7yXmmKO52Rl
-         dd8F/Q3k35EShqye7K7DBcmD3pOQGJi/lpyUl6O+ulhgex9QwhX2ZBnFKTVTmfPvEHmA
-         JznQzudTz+Ak4azQ+od3uxDss4YprBWlzaJ4afA/kzMxmfMVW+awe6sJ2oMPXgcI9YaM
-         MpXg==
-Received: by 10.236.176.103 with SMTP id a67mr737766yhm.2.1347645214840;
-        Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.220.155.6 with SMTP id q6ls3683874vcw.3.gmail; Fri, 14 Sep
- 2012 10:53:34 -0700 (PDT)
-Received: by 10.59.1.102 with SMTP id bf6mr537423ved.21.1347645214355;
-        Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-Received: by 10.59.1.102 with SMTP id bf6mr537422ved.21.1347645214347;
-        Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-Received: from mail-vc0-f176.google.com (mail-vc0-f176.google.com [209.85.220.176])
-        by gmr-mx.google.com with ESMTPS id s13si38619vde.2.2012.09.14.10.53.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.220.176 as permitted sender) client-ip=209.85.220.176;
-Received: by vcbfl11 with SMTP id fl11so4823652vcb.7
-        for <msysgit@googlegroups.com>; Fri, 14 Sep 2012 10:53:34 -0700 (PDT)
-Received: by 10.220.155.3 with SMTP id q3mr3055255vcw.11.1347645214175; Fri,
- 14 Sep 2012 10:53:34 -0700 (PDT)
-Received: by 10.58.196.232 with HTTP; Fri, 14 Sep 2012 10:52:53 -0700 (PDT)
-In-Reply-To: <20120914174439.GA16657@sigill.intra.peff.net>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.220.176 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205518>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCaAS-0000Lv-OH
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 19:59:05 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753246Ab2INR64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 13:58:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53489 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751026Ab2INR6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 13:58:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8E4799F1;
+	Fri, 14 Sep 2012 13:58:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eeFWmLxUs6bSRDUvBDOlDM7QBMY=; b=sXozn8
+	YeVcclPY68Tchhaq1G2HXfpcysHcU734FxqN3D2ulCjRRWKJuTj25TTDt6mNJGA6
+	Kmt1xdHKKvLV91C6+gEZ1JUcxSqRlPnB0cB0bHN7cfemML7cPyHOhMXLcYsb6Llk
+	akr4YA8bRyCK0eTTlrADcsWmjWAeJcRcGJTHs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AzWAjDiK44+bMzgsMWXCisHzbX6OOo3t
+	0GAlYcOUSW6uDdPPBSCra+vYKiMK4jdyiIHts8ws1rD3yx3vV4+Bpdh1OTjyO5WP
+	I99Jh2LsLvi6AEgU5xZ15lwE1GValp31TthYLKBuLIgEr1t9qxrS0ohmpBzHYpO+
+	ocG6UGcMKgA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D63F899EF;
+	Fri, 14 Sep 2012 13:58:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5695F99EB; Fri, 14 Sep 2012
+ 13:58:54 -0400 (EDT)
+In-Reply-To: <830d4a80bb229835b6b4898c3c4b8b2e0e17b056.1347615361.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 14 Sep 2012 11:46:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D917C8F6-FE95-11E1-A227-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205519>
 
-On Fri, Sep 14, 2012 at 7:44 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Sep 14, 2012 at 06:41:45PM +0200, Erik Faye-Lund wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
+> --all-match is ignored for author matching on purpose.
 >
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 78c4286..7d1b34b 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
->>  # This test checks if command xyzzy does the right thing...
->>  # '
->>  # . ./test-lib.sh
->> +
->> +if ! which tput > /dev/null ; then
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+
+It is more like "--all-match is about --grep and does not interact
+with --author or --committer at all".  At least with the recent fix.
+
+
+>  t/t7810-grep.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
-> Testing the return value of "which" is not portable (I know, it's
-> insane; SunOS is the common offender). Use "type" instead.
-
-Junio already noticed it, and I suggested a fix that involved running
-it. However, I like your fix much better, thanks :)
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index b841909..be81d96 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -513,6 +513,14 @@ test_expect_success 'log with multiple --author uses union' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'log --all-match with multiple --author still uses union' '
+> +	git log --all-match --author="Thor" --author="Aster" --format=%s >actual &&
+> +	{
+> +	    echo third && echo second && echo initial
+> +	} >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'log with --grep and multiple --author uses all-match' '
+>  	git log --author="Thor" --author="Night" --grep=i --format=%s >actual &&
+>  	{
