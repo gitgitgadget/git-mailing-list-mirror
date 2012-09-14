@@ -1,100 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
-Date: Fri, 14 Sep 2012 13:44:39 -0400
-Message-ID: <20120914174439.GA16657@sigill.intra.peff.net>
-References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the
+ test suite for detecting heap corruption
+Date: Fri, 14 Sep 2012 10:51:33 -0700
+Message-ID: <7v392k5w7u.fsf@alter.siamese.dyndns.org>
+References: <1347641662-3596-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBBDO2ZWBAKGQE5OXDFQA@googlegroups.com Fri Sep 14 19:44:51 2012
-Return-path: <msysgit+bncBDO2DJFKTEFBBDO2ZWBAKGQE5OXDFQA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gg0-f186.google.com ([209.85.161.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 14 19:51:46 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBDO2ZWBAKGQE5OXDFQA@googlegroups.com>)
-	id 1TCZwh-00082Z-7z
-	for gcvm-msysgit@m.gmane.org; Fri, 14 Sep 2012 19:44:51 +0200
-Received: by ggnr1 with SMTP id r1sf3338598ggn.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 14 Sep 2012 10:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :references:mime-version:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type:content-disposition;
-        bh=YJmpqnzzppwNIABldbImrSgfTlmygEXzoEUHsrkrayI=;
-        b=t/1rpbujHlyhK988YT75tyi1D05M/EpIc4QTKNNDUTTyZvlk8UEohldl15+z/6HlB9
-         j4GjzsVJPGFGi4CkPjeQl3NafZT4xbUONhSLt70Z6htb7j9MlaRYLgjZStXR4d3uAkDc
-         0wPvIiew28NoR8jL6Mj0M8zn4eWj70uK75+c0LHKpRzZ7F9zDq5rlwiSLd7nposGi17k
-         U+SpcFEMrzryFI0x89uTru++pkgko4gDjnSummHOMpXSoury6ZY+o7M8P3xenLc2Vd8s
-         A1DfoSn89K1Ik9BfWFDGfWYGAwwdPesnXTupHoSOS0IHZ1i6k8AoO3ybfoNvqP6xeUVZ
-       
-Received: by 10.50.13.230 with SMTP id k6mr1737477igc.0.1347644685521;
-        Fri, 14 Sep 2012 10:44:45 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.160.202 with SMTP id xm10ls273290igb.3.gmail; Fri, 14 Sep
- 2012 10:44:44 -0700 (PDT)
-Received: by 10.42.167.196 with SMTP id t4mr1380014icy.27.1347644684853;
-        Fri, 14 Sep 2012 10:44:44 -0700 (PDT)
-Received: by 10.42.167.196 with SMTP id t4mr1380013icy.27.1347644684843;
-        Fri, 14 Sep 2012 10:44:44 -0700 (PDT)
-Received: from peff.net (75-15-5-89.uvs.iplsin.sbcglobal.net. [75.15.5.89])
-        by gmr-mx.google.com with ESMTPS id vb5si622048igb.0.2012.09.14.10.44.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 10:44:44 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 75.15.5.89 as permitted sender) client-ip=75.15.5.89;
-Received: (qmail 16465 invoked by uid 107); 14 Sep 2012 17:45:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Sep 2012 13:45:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Sep 2012 13:44:39 -0400
-In-Reply-To: <1347640905-1400-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of peff@peff.net designates 75.15.5.89 as permitted sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205516>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TCa3N-0003re-N9
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Sep 2012 19:51:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759710Ab2INRvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 13:51:37 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49375 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758624Ab2INRvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 13:51:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAE369763;
+	Fri, 14 Sep 2012 13:51:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZJVi/kp6mSNRf2YdJVKjiid0OJo=; b=wAd6eN
+	WrSAPMo/Hq6dsCv58MDEBMc94y2q2fFXv4uRq+VfadltDNskNHvaGfe5RIpQNjhv
+	eWcaV6pjehQ9UcFMvgRdepsk1p3xgR0Yiz0FsmXrsjRECK3PUvCHtveFG3qwbS6z
+	vq7s5qrsiicHGqcxW7X3Duo5qnFnGnnLA5JKs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DrPB3s7eRGFzlsTY7B05qxKDC4eL4vDq
+	eZXjODoZtZp6lQrsCEnYFVf6qJZcYgyl7JAd/5Ht/u1gRrbttMw7PGO/TwfHjiNf
+	QzetxZcp6R4+pPRwU3ym8502pwAGfyVqRJqTFBuNSeBGFFzxdG0mcXWvQjGZxVTA
+	wgeQ6trgsLA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A927A9762;
+	Fri, 14 Sep 2012 13:51:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 101669761; Fri, 14 Sep 2012
+ 13:51:34 -0400 (EDT)
+In-Reply-To: <1347641662-3596-1-git-send-email-gitter.spiros@gmail.com> (Elia
+ Pinto's message of "Fri, 14 Sep 2012 09:54:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D341A2FE-FE94-11E1-BB6C-BAB72E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205517>
 
-On Fri, Sep 14, 2012 at 06:41:45PM +0200, Erik Faye-Lund wrote:
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
+> Recent versions of Linux libc (later than 5.4.23) and glibc (2.x)
+> include a malloc() implementation which is tunable via environment
+> variables. When MALLOC_CHECK_ is set, a special (less efficient)
+> implementation is used which is designed to be tolerant against
+> simple errors, such as double calls of free() with the same argument,
+> or overruns of a single byte (off-by-one bugs). When MALLOC_CHECK_
+> is set to 3, a diagnostic message is printed on stderr
+> and the program is aborted.
+> ...
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+> This the third reroll of the original patch.
+
+Well written.  I have one suggestion and a question, though.
+
+>  t/test-lib.sh |    9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
 > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 78c4286..7d1b34b 100644
+> index 78c4286..f34b861 100644
 > --- a/t/test-lib.sh
 > +++ b/t/test-lib.sh
-> @@ -129,6 +129,20 @@ export _x05 _x40 _z40 LF
->  # This test checks if command xyzzy does the right thing...
->  # '
->  # . ./test-lib.sh
+> @@ -93,6 +93,15 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+>  export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+>  export EDITOR
+>  
+> +# Add libc MALLOC and MALLOC_PERTURB test 
+> +# only if we are not executing the test with valgrind
+> +expr "$GIT_TEST_OPTS" : ".*\(--valgrind\)" >/dev/null || {
+
+I would write this like
+
+	if ! expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null
+	then
+		...
+	fi
+
+> +	MALLOC_CHECK_=3
+> +	export MALLOC_CHECK_
+> +	MALLOC_PERTURB_="$( expr \( $$ % 255 \) + 1)"
+
+How was this expression chosen?  The only effect I can think of to
+use a randomly picked value here is to make it impossible to make
+the test repeatable and reproducible, so you must have had some
+benefit that outweighs the downside, but I cannot think of any.
+Wouldn't MALLOC_PERTURB_=165 (i.e. 0xA5, half of the bits in the
+byte is set, including the MSB, and is an odd number) be equally a
+good choice without repeatability downside, for example?
+
+Also, doesn't the above give 256 sometimes, which would not fit in a
+byte?
+
+> +	export MALLOC_PERTURB_
+> +}
 > +
-> +if ! which tput > /dev/null ; then
-
-Testing the return value of "which" is not portable (I know, it's
-insane; SunOS is the common offender). Use "type" instead.
-
--Peff
-
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+>  # Protect ourselves from common misconfiguration to export
+>  # CDPATH into the environment
+>  unset CDPATH
