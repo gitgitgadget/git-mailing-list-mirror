@@ -1,97 +1,88 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] git-gui: Fix semi-working shortcuts for unstage and revert
-Date: Sat, 15 Sep 2012 13:04:42 +0200
-Message-ID: <CAKPyHN0_GVwCzrmH1YJu-cgGrPSQ3eqgFM8Ad1JJP8ZpF7Dx9w@mail.gmail.com>
-References: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/5] Support matching "**" in .gitattributes and .gitignore
+Date: Sat, 15 Sep 2012 19:01:59 +0700
+Message-ID: <1347710524-15404-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, patthoyts@users.sourceforge.net
-To: vi0oss@gmail.com
-X-From: git-owner@vger.kernel.org Sat Sep 15 13:04:53 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 15 14:03:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCqBA-0006cl-FX
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 13:04:52 +0200
+	id 1TCr5Q-0003CG-ND
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 14:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab2IOLEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 07:04:43 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:51058 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752911Ab2IOLEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 07:04:42 -0400
-Received: by obbuo13 with SMTP id uo13so7375269obb.19
-        for <git@vger.kernel.org>; Sat, 15 Sep 2012 04:04:42 -0700 (PDT)
+	id S1753306Ab2IOMCF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Sep 2012 08:02:05 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57287 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224Ab2IOMCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 08:02:04 -0400
+Received: by pbbrr13 with SMTP id rr13so6891861pbb.19
+        for <git@vger.kernel.org>; Sat, 15 Sep 2012 05:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nzdHoluaR0WEwspdcRd42hE9iO8zbVRSfg2r0XBJgi0=;
-        b=BA8ZzCjpxdinAuib8/PGu0vN+9Pl6n3b3aP2HAhaD4h2D2Leq4/GXPxQyZgvXy2Sv0
-         KHrqFi3FI4ewLRQfDSdQwVPcU9DvTSu5BO1RQnbmzxnsCyR8OwFOOw1Ka8lbDSiq1g+R
-         Pt6nrNATgERxNjJxawgdPameE0iTBELG+gnTiloc5Aa9Nk85ZwHeaKONP8tOoqvg1Krj
-         BuMda5SmnmZHSJ91dG+P2R+XGILFXoEptRjkT+Fx6cLDeeZELgTdSm7xP7fxZq/ZGPmx
-         T+W9xleq0F7aBlxw6NHWpqmDkNx8WbgZu/gQ1JyoYv98+sqLgT/2Hkr+Dpt3J57owBDB
-         BwlQ==
-Received: by 10.60.8.39 with SMTP id o7mr6968432oea.122.1347707082079; Sat, 15
- Sep 2012 04:04:42 -0700 (PDT)
-Received: by 10.76.141.167 with HTTP; Sat, 15 Sep 2012 04:04:42 -0700 (PDT)
-In-Reply-To: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=tH27TIEKmZI4cBNl31cb/siQ0dQzhqUa3oT4TXXuga0=;
+        b=cw3prRw1EozEWeXkT7l9ZMWC8VuuD5Z6uPCqJjaW1ZwrhX6SBI3LyRSyLgEnd6kS87
+         vh2XV7BIYdoTNNb24zUFlJDHdc1GG85DM6i/IeaK08sRtuBCjFXh7A077Y8VEuX7Fer4
+         oo7VwLVYMzx3EjWnM1logAeqNSe1UGkeARc00pSRt428hvi8uwDCl4Ltq8DnaxFVBXv0
+         m2YXsuDbuxCj+VR7D3KGdIxY5t3TtJvPWSGlKxgZ2H4RXgWFgbDKH1/ewoWJYzTTk1yF
+         b3a8L0nwZrJhMVzoCJ5+bZw4ejFx/HspSIGmSNVlbVovlFdt2O5Fhx0VHABVDPKQx59L
+         oyPQ==
+Received: by 10.68.228.100 with SMTP id sh4mr10195894pbc.45.1347710523669;
+        Sat, 15 Sep 2012 05:02:03 -0700 (PDT)
+Received: from lanh ([115.74.56.159])
+        by mx.google.com with ESMTPS id qa4sm2838239pbb.70.2012.09.15.05.02.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 15 Sep 2012 05:02:02 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 15 Sep 2012 19:02:05 +0700
+X-Mailer: git-send-email 1.7.12.403.gce5cf6f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205551>
 
-On Sat, Sep 15, 2012 at 1:36 AM,  <vi0oss@gmail.com> wrote:
-> From: Vitaly _Vi Shukela <vi0oss@gmail.com>
->
-> Make Ctrl+U for unstaging and Ctrl+J for reverting selection behave
-> more like Ctrl+T for adding.
->
-> They were working only when one area was focused (diff or commit message),
-> now they should work everywhere.
->
-> Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
-> ---
-> Sending the patch the third time (haven't got any replies to previous two attempts).
+A while back I posted a proof of concept using wildmatch() from rsync.
+Back then the obstacle was case-insensitive matching support. I did not
+realize that there was iwildmatch() that does exactly that.
 
-For what its worth:
+So here again a series that is probably ready for consumption. Now
+patterns that contain slashes will always go through (i)wildmatch().
+fnmatch() is only used for basename matching.
 
-Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
+  Import wildmatch from rsync
+  compat/wildmatch: remove static variable force_lower_case
+  compat/wildmatch: fix case-insensitive matching
+  Integrate wildmatch to git
+  Support "**" in .gitignore and .gitattributes patterns using
+    wildmatch()
 
-But unless Pat reacts this is useless.
+ Documentation/gitignore.txt    |   3 +
+ Makefile                       |   6 +
+ attr.c                         |   4 +-
+ compat/wildmatch.c             | 373 +++++++++++++++++++++++++++++++++=
+++++++++
+ compat/wildmatch.h             |   6 +
+ dir.c                          |   5 +-
+ t/t3070-wildmatch.sh           |  27 +++
+ t/t3070-wildmatch/wildtest.txt | 165 ++++++++++++++++++
+ test-wildmatch.c               | 228 +++++++++++++++++++++++++
+ 9 files changed, 815 insertions(+), 2 deletions(-)
+ create mode 100644 compat/wildmatch.c
+ create mode 100644 compat/wildmatch.h
+ create mode 100755 t/t3070-wildmatch.sh
+ create mode 100644 t/t3070-wildmatch/wildtest.txt
+ create mode 100644 test-wildmatch.c
 
-Bert
-
->
->  git-gui/git-gui.sh |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
->
-> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-> index ba4e5c1..6618016 100755
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -3710,6 +3710,8 @@ bind $ui_diff <$M1B-Key-v> {break}
->  bind $ui_diff <$M1B-Key-V> {break}
->  bind $ui_diff <$M1B-Key-a> {%W tag add sel 0.0 end;break}
->  bind $ui_diff <$M1B-Key-A> {%W tag add sel 0.0 end;break}
-> +bind $ui_diff <$M1B-Key-j> {do_revert_selection;break}
-> +bind $ui_diff <$M1B-Key-J> {do_revert_selection;break}
->  bind $ui_diff <Key-Up>     {catch {%W yview scroll -1 units};break}
->  bind $ui_diff <Key-Down>   {catch {%W yview scroll  1 units};break}
->  bind $ui_diff <Key-Left>   {catch {%W xview scroll -1 units};break}
-> @@ -3742,6 +3744,8 @@ bind .   <$M1B-Key-s> do_signoff
->  bind .   <$M1B-Key-S> do_signoff
->  bind .   <$M1B-Key-t> do_add_selection
->  bind .   <$M1B-Key-T> do_add_selection
-> +bind .   <$M1B-Key-u> do_unstage_selection
-> +bind .   <$M1B-Key-U> do_unstage_selection
->  bind .   <$M1B-Key-j> do_revert_selection
->  bind .   <$M1B-Key-J> do_revert_selection
->  bind .   <$M1B-Key-i> do_add_all
-> --
-> 1.7.8.5
->
+--=20
+1.7.12.403.gce5cf6f.dirty
