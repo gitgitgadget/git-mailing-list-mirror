@@ -1,75 +1,62 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: How to create the " [PATCH 0/5]" first email?
-Date: Sat, 15 Sep 2012 15:27:02 +0100
-Organization: OPDS
-Message-ID: <F93DBBE1DDAA44A28C9020F9A58FD825@PhilipOakley>
-References: <1347710524-15404-1-git-send-email-pclouds@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "Yi, EungJun" <semtlenori@gmail.com>
+Subject: Re: How do I pronounce "blob"?
+Date: Sun, 16 Sep 2012 02:00:42 +0900
+Message-ID: <CAFT+Tg8MQYffsKqMm-SKmuP=tYjV89vPdy-RVuwprQDc+w+wug@mail.gmail.com>
+References: <CAFT+Tg_TVfQgOrH4jhHofyfZJ+nd3oUxsxhWQUPU9uJuswGoag@mail.gmail.com>
+	<alpine.LNX.2.01.1209151524450.27596@nerf07.vanv.qr>
+Reply-To: semtlenori@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 15 16:27:49 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jan Engelhardt <jengelh@inai.de>
+X-From: git-owner@vger.kernel.org Sat Sep 15 19:01:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCtLY-0003KU-Jt
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 16:27:48 +0200
+	id 1TCvk8-0001sa-Ch
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 19:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935Ab2IOO0w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Sep 2012 10:26:52 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:60251 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751357Ab2IOO0w (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Sep 2012 10:26:52 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuMKAG2PVFBZ8rU+/2dsb2JhbABFhgeFP69GAnyBCIIbBgEFCAEBGQQLAQUeAQEcEAIDBQIBHQIFIQICFAEEGgYHFwYbAgECAwGIAKgtklCBIYoZAYFOg24yYAONZZgdgmeBYg
-X-IronPort-AV: E=Sophos;i="4.80,426,1344207600"; 
-   d="scan'208";a="403818525"
-Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 15 Sep 2012 15:26:50 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752593Ab2IORAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 13:00:44 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:53543 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234Ab2IORAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 13:00:43 -0400
+Received: by obbuo13 with SMTP id uo13so7575678obb.19
+        for <git@vger.kernel.org>; Sat, 15 Sep 2012 10:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=uPtigGNfmYJd3stZk0KtRaatpxxJvxNVJxjyUX/xDxY=;
+        b=pUeDSPAWv+UKwH/c9n8LtOIQhu3Z9Rql4thkzN64zF8/dahRbbmxo4cG7jaa4+SMJl
+         0CBxpFM3jzzLGm1UtJkC/OvR5zc59Coib2auKRelTv4kJetvqB9bKHxkz9IpHF0OpdGN
+         58kzi1rTnRcwRRDg0a6J6p/FZDaLvCuWKSxVnI5RBNzpHddm8cmRBRxLwc/gnPd+/XbS
+         1Z4jiRZfmmnfKuTivcugdMYLBMp8PvYnykdXran28RsOM26RqwpyxLD3x52w4HBhmfAx
+         ah8IKzUfeKGtVqOq6ZRNbRAiaygiOTS4VHIj040cBrn7Z/fOWLldCXOi+apHbjkDPUs2
+         6fug==
+Received: by 10.60.171.109 with SMTP id at13mr7926883oec.79.1347728442628;
+ Sat, 15 Sep 2012 10:00:42 -0700 (PDT)
+Received: by 10.182.41.97 with HTTP; Sat, 15 Sep 2012 10:00:42 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.01.1209151524450.27596@nerf07.vanv.qr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205561>
 
-The git format-patch allows numbered patches to be created, however I'm
-not sure how folk generate the initial "0/n" patch. Which of the variou=
-s
-options should I be using?
+Thanks for your help, Jan!
 
-Also, being on windows, the various 'mbox' and 'MUA' discussions are ne=
-w
-to me, so the format-patch step where :-
-
-"Typically it will be placed in a MUA=E2=80=99s drafts folder, edited t=
-o add
-timely commentary that should not go in the changelog after the three
-dashes, and then sent as a message whose body, in our example, starts
-with "arch/arm config files were=E2=80=A6". On the receiving end, reade=
-rs can
-save interesting patches in a UNIX mailbox and apply them with
-git-am(1)."
-
-hides a multitude of implicit knowledge steps. Is there an extended
-description of what that would mean from a platform independent
-viewpoint? e.g. if the patches are separte files and an mbox is one
-consolidated file, how to get from one to the other so that 'it' can be
-sent by 'git send-mail'.
-
-I'm also missing an understanding of the preparation stage where one
-tries to tidy up the various commit messages becaue they weren't
-explicit, specfic nor concise enough, so I suspect that there is an
-implicit `git format-patch` <-> `git am` loop of sharpening the mbox
-patches before submission to the list that I'm missing. Has this=20
-described somewhere?
-
-Philip Oakley
+On Sat, Sep 15, 2012 at 10:26 PM, Jan Engelhardt <jengelh@inai.de> wrote:
+> On Saturday 2012-09-15 15:24, Yi, EungJun wrote:
+>
+>>"bee-lob" or "bla:b"?
+>
+> http://en.wiktionary.org/wiki/blob
+>
+> BLOB as a Binary Large OBject reeks of a retronym.
+>
+>>I guess "bee-lob" is correct if it means binary large object. But I'm
+>>not sure because gitglossary does not tell me about that.
