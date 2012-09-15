@@ -1,7 +1,7 @@
 From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH 2/3] rebase -i: Teach "--edit-todo" action
-Date: Sat, 15 Sep 2012 16:08:28 -0400
-Message-ID: <1347739709-15289-3-git-send-email-andrew.kw.w@gmail.com>
+Subject: [PATCH 3/3] rebase -i: Add tests for "--edit-todo"
+Date: Sat, 15 Sep 2012 16:08:29 -0400
+Message-ID: <1347739709-15289-4-git-send-email-andrew.kw.w@gmail.com>
 References: <CADgNjambUXj+WEFg=OWvtDQ1EKFhavwbjMbTVaP69rhh5DrphA@mail.gmail.com>
  <1347739709-15289-1-git-send-email-andrew.kw.w@gmail.com>
 Cc: Andrew Wong <andrew.kw.w@gmail.com>
@@ -12,148 +12,70 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCzdf-0004gH-3s
+	id 1TCzdf-0004gH-J5
 	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 23:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803Ab2IOVKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 17:10:45 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35063 "EHLO
+	id S1752169Ab2IOVKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 17:10:48 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:32836 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080Ab2IOVJr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 17:09:47 -0400
-Received: by iahk25 with SMTP id k25so4417650iah.19
-        for <git@vger.kernel.org>; Sat, 15 Sep 2012 14:09:47 -0700 (PDT)
+	with ESMTP id S1751542Ab2IOVJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 17:09:49 -0400
+Received: by mail-iy0-f174.google.com with SMTP id k25so4417635iah.19
+        for <git@vger.kernel.org>; Sat, 15 Sep 2012 14:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5LydeyKoSrfcVwomshG3b9zSxbPSpI4YLJEcJU04lak=;
-        b=vJ5VdGV878tzRhFZWx1dezPNiITlaSX2OqxFJl3fAXp31svVKelUPtEJU8Wy5CW5j2
-         os4B35rU3NapMS7O8jtt8rlAyJXWg08RShyRC8zG0JEVT5vt7mHwR7gCvh0pPihEORLs
-         8jRaxJQMe6jYnZ4UvxQHfr2X5F8qgPnWWy+EDic5CPjbizuct25oqToWMxfpSQ2VnjJP
-         NIKQ5ArwjqLCz9glE8r/nEtjHMssLb6m8aqTRYI5PtXn+wPu8JY1yKJkrG/fvueHLayh
-         h8PYBIrzehfT8FjBXuizeW+fnm05v0KvAg+aMj7JaiITTFSdJqhlGis1+R0FfTpmau5x
-         XCgQ==
-Received: by 10.43.13.195 with SMTP id pn3mr5609474icb.47.1347743387318;
-        Sat, 15 Sep 2012 14:09:47 -0700 (PDT)
+        bh=0elH4VFI33P+YNoEjIyU+XRC/GPmVj6Q2l8/fcaWb0g=;
+        b=E6/X3augkX9uyDGXLd+fvWlQWiDQ+tSDhhoNfZGvb4pbSwZkFVLmcUoZDT21INEb88
+         imVeWd21qgJ1odB2amf+q1Sx8TMxVdHgO4PP3WkB7jML2Z+7QoDDvNgrd+W2ahaM3zjP
+         jcf6Tbwf+qHiQn2LD8rebT+uhHi2Y0KrD+eEJhq7Gl02Y/MwK79H4gZEnh2wUt2fr1CN
+         zDq+4Ijg41vo8BsBiLHBhksj4k5B1oyupM05gmqZGseVdy58YPJWawJs9qWXpTKe5LI8
+         061x0ArEtzYdPycdFR+0ouvGPG5sD1j+8Wm9YElBh4DwlWEUt+alMeHSw9eY0K5OharE
+         u3IA==
+Received: by 10.42.66.207 with SMTP id q15mr5625192ici.34.1347743389212;
+        Sat, 15 Sep 2012 14:09:49 -0700 (PDT)
 Received: from localhost.localdomain ([69.165.255.59])
-        by mx.google.com with ESMTPS id d19sm2172495igp.6.2012.09.15.14.09.45
+        by mx.google.com with ESMTPS id d19sm2172495igp.6.2012.09.15.14.09.47
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 15 Sep 2012 14:09:46 -0700 (PDT)
+        Sat, 15 Sep 2012 14:09:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.12.318.g08bf5ad.dirty
 In-Reply-To: <1347739709-15289-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205572>
-
-This allows users to edit the todo file while they're stopped in the
-middle of an interactive rebase. When this action is executed, all
-comments from the original todo file are stripped, and new help messages
-are appended to the end.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205573>
 
 Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
 ---
- Documentation/git-rebase.txt |  5 ++++-
- git-rebase--interactive.sh   | 16 ++++++++++++++++
- git-rebase.sh                | 14 ++++++++++++++
- 3 files changed, 34 insertions(+), 1 deletion(-)
+ t/t3404-rebase-interactive.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index fd535b0..da067ec 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 	[<upstream>] [<branch>]
- 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
- 	--root [<branch>]
--'git rebase' --continue | --skip | --abort
-+'git rebase' --continue | --skip | --abort | --edit-todo
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 7304b66..a194c97 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -911,4 +911,20 @@ test_expect_success 'rebase -i --root fixup root commit' '
+ 	test 0 = $(git cat-file commit HEAD | grep -c ^parent\ )
+ '
  
- DESCRIPTION
- -----------
-@@ -245,6 +245,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- --skip::
- 	Restart the rebasing process by skipping the current patch.
- 
-+--edit-todo::
-+	Edit the todo list during an interactive rebase.
++test_expect_success 'rebase --edit-todo does not works on non-interactive rebase' '
++	git checkout conflict-branch &&
++	test_must_fail git rebase --onto HEAD~2 HEAD~ &&
++	test_must_fail git rebase --edit-todo &&
++	git rebase --abort
++'
 +
- -m::
- --merge::
- 	Use merging strategies to rebase.  When the recursive (default) merge
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 4d57e50..ca55fac 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -792,6 +792,22 @@ skip)
- 
- 	do_rest
- 	;;
-+edit-todo)
-+	sed -i '/^#/d' "$todo"
-+	append_todo_help
-+	cat >> "$todo" << EOF
-+#
-+# You are editing the todo file of an ongoing interactive rebase.
-+# To continue rebase after editing, run:
-+#     git rebase --continue
-+#
-+EOF
++test_expect_success 'rebase --edit-todo can be used to modify todo' '
++	git checkout no-conflict-branch^0 &&
++	FAKE_LINES="edit 1 2 3" git rebase -i HEAD~3 &&
++	FAKE_LINES="2 1" git rebase --edit-todo &&
++	git rebase --continue
++	test M = $(git cat-file commit HEAD^ | sed -ne \$p) &&
++	test L = $(git cat-file commit HEAD | sed -ne \$p)
++'
 +
-+	git_sequence_editor "$todo" ||
-+	die_abort "Could not execute editor"
-+
-+	exit
-+	;;
- esac
- 
- git var GIT_COMMITTER_IDENT >/dev/null ||
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 15da926..e660203 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -38,6 +38,7 @@ C=!                passed to 'git apply'
- continue!          continue
- abort!             abort and check out the original branch
- skip!              skip current patch and continue
-+edit-todo!         edit the todo list during an interactive rebase
- "
- . git-sh-setup
- . git-sh-i18n
-@@ -194,6 +195,10 @@ do
- 		test $total_argc -eq 2 || usage
- 		action=${1##--}
- 		;;
-+	--edit-todo)
-+		test $total_argc -eq 2 || usage
-+		action=${1##--}
-+		;;
- 	--onto)
- 		test 2 -le "$#" || usage
- 		onto="$2"
-@@ -306,6 +311,12 @@ then
- 	fi
- fi
- 
-+if test "$action" = "edit-todo" &&
-+	test "$type" != "interactive"
-+then
-+	die "$(gettext "The --edit-todo action can only be used during interactive rebase.")"
-+fi
-+
- case "$action" in
- continue)
- 	# Sanity check
-@@ -338,6 +349,9 @@ abort)
- 	rm -r "$state_dir"
- 	exit
- 	;;
-+edit-todo)
-+	run_specific_rebase
-+	;;
- esac
- 
- # Make sure no rebase is in progress
+ test_done
 -- 
 1.7.12.318.g08bf5ad.dirty
