@@ -1,82 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Using git-replace in place of grafts -- and publishing
- .git/refs/replace between repos?
-Date: Sat, 15 Sep 2012 10:21:38 -0700
-Message-ID: <7vvcffyzfh.fsf@alter.siamese.dyndns.org>
-References: <CACffvTp4qnHc3RHKDotEfvshVDqGtTX6eh6Fr-bmJSMUvTFN6g@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] test-generation.c: Fix a compiler warning
+Date: Sat, 15 Sep 2012 17:12:57 +0100
+Message-ID: <5054A909.1070104@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Chanters <david.chanters@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 15 19:21:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 19:23:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCw3x-0005wA-CT
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 19:21:49 +0200
+	id 1TCw5f-0006yu-Ek
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 19:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829Ab2IORVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 13:21:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64063 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754360Ab2IORVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 13:21:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 271028EA6;
-	Sat, 15 Sep 2012 13:21:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jWXLTTH9e8UAGQif9xHLRtxDPpc=; b=N52hee
-	5Yx9MIxsyeftb4h7ykXhpFUDeKnux6WUVOiOEEzrmOktTXy4Zv2obJhUMG8Bpf1v
-	FElPAQL62Ju8A0ON14Pyxk6JykjKhPAaIESEHN8rVivp0ErPgtF3xHX2RgJBCc7+
-	nH+KcH8YriPanDZoom2TzLXqHMSOsIfP91tg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QD2ZNsEEL7HiOgRfkl7P8xuC6ZnWduak
-	ujknEq+HbAs/yGz3K/61MUaXxM7vm7MOEMJke2L9fRv57Dx6Gli/3ZU6Jazko/qh
-	NKxkTVPN1T+ZYyWwF0FsnkO+0o56D3/k0XG5aH5It/p7v2UBmR7G6yavb32TmDbe
-	ywIEBHp7R1Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13D0D8EA5;
-	Sat, 15 Sep 2012 13:21:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87A1E8EA4; Sat, 15 Sep 2012
- 13:21:39 -0400 (EDT)
-In-Reply-To: <CACffvTp4qnHc3RHKDotEfvshVDqGtTX6eh6Fr-bmJSMUvTFN6g@mail.gmail.com> (David
- Chanters's message of "Sat, 15 Sep 2012 13:02:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CF763BC4-FF59-11E1-936C-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754644Ab2IORX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 13:23:26 -0400
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:44324 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754263Ab2IORX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 13:23:26 -0400
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 5BA1AA640C1;
+	Sat, 15 Sep 2012 18:23:24 +0100 (BST)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id BD84CA640BB;	Sat, 15 Sep 2012 18:23:23 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;	Sat, 15 Sep 2012 18:23:22 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205567>
 
-David Chanters <david.chanters@googlemail.com> writes:
 
-> 1.  I thought the replace data in .git/refs/replace was published when
-> I did "git push" so that others could use this information as a
-> base-point, yet it seems not to be the case.  How do I publish this?
+gcc complains as follows:
 
-If you don't tell it what to push, the command will just update the
-branches.  You can tell "git push" what you want to push explicitly,
-e.g. 
+        CC test-generation.o
+    test-generation.c: In function `main':
+    test-generation.c:105: warning: control reaches end of \
+        non-void function
 
-    $ git replace -l ;# to learn what replacement I want to send
-    77d5ba8477eb90509e79dbcf63814a3dfdefb906
-    $ git push origin refs/replace/77d5ba8477eb90509e79dbcf63814a3dfdefb906
+In order to suppress the warning, we simply add a suitable
+return statement to main().
 
-> 2.  If I do publish it, are there any caveats with that?  i.e.,
-> because the replace data will likely point to a repo which in my
-> working checkout I added with "git-remote", is that going to be a
-> problem?
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-That is between you and other project participants.  They may not
-want to see replacement in their project in the first place.
+Hi Junio,
 
-Assuming that they do, pushing the replacement ref makes the
-replacing object available in the pushed-into repository, so
-they will *not* rely on your repository.
+Could you please squash this into commit 1784d096 ("test-generation:
+compute generation numbers and clock skews", 04-09-2012).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ test-generation.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/test-generation.c b/test-generation.c
+index 4df5a0d..de87f2b 100644
+--- a/test-generation.c
++++ b/test-generation.c
+@@ -102,4 +102,5 @@ int main(int ac, const char **av)
+ 
+ 		show_commit(commit, gd);
+ 	}
++	return 0;
+ }
+-- 
+1.7.12
