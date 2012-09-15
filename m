@@ -1,86 +1,71 @@
-From: vi0oss@gmail.com
-Subject: [PATCH] git-gui: Fix semi-working shortcuts for unstage and revert
-Date: Sat, 15 Sep 2012 02:36:41 +0300
-Message-ID: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
-Cc: vi0oss@gmail.com, patthoyts@users.sourceforge.net,
-	bert.wesarg@googlemail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 01:38:04 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Please pull git-l10n updates for git v1.7.12-146-g16d26
+Date: Sat, 15 Sep 2012 09:34:39 +0800
+Message-ID: <CANYiYbGJP3rpd+t-gVSc0EpbHg9e_8_z24S6v0g2bT72+faj2Q@mail.gmail.com>
+References: <CANYiYbExJRAK0zvO4FSce2tOTyW1fLW1OLqZSm0KLjG1V4nTbg@mail.gmail.com>
+	<CACsJy8A-prPd=5R83LhcLO1rd-rBZRhfnvABvzvdDiC=hZ3ofQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 15 03:35:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCfSV-0002bc-Ti
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 01:38:04 +0200
+	id 1TChIL-0008Bq-K2
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 03:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760295Ab2INXhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Sep 2012 19:37:06 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:36508 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751730Ab2INXhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Sep 2012 19:37:05 -0400
-Received: by wibhi8 with SMTP id hi8so398304wib.1
-        for <git@vger.kernel.org>; Fri, 14 Sep 2012 16:37:03 -0700 (PDT)
+	id S1752897Ab2IOBel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Sep 2012 21:34:41 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61670 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859Ab2IOBek (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Sep 2012 21:34:40 -0400
+Received: by iahk25 with SMTP id k25so3933414iah.19
+        for <git@vger.kernel.org>; Fri, 14 Sep 2012 18:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=I+wAYeeZ/wcn0PdaMIpcyMQzbx3dIEjF4gs8RGafcUU=;
-        b=wWZXu/LSa5oMrpQYmgZuaQM5k+bQnX75wlCBixROL0tcTDljFmUtvg9TSrChuUjd5M
-         fT/WTu0kGwAlEo/doe4Dt7BP+9wjGGvkPHF5C5Jj+fCg06lAkRfirvcUIiVP1q5sHUJm
-         vTBrUczAv9p+5JlgtT0JFAxb+c9rwgnX9V8AGi23CFvZaUK36yQCHHFhK1CIBYNS88Zx
-         qp496umZJnA25BeL5x4RHFlMJFXHNPROJVZI82E8azD0IvFn9rKxyb1PT4ChtUes4CTi
-         PGP/sDvNplHdx/IBLWjW5VzcBHR3EenIIqv/lAxo6cQy1hXLIbiy729M+/ZVtPRpvdsr
-         CC0w==
-Received: by 10.216.133.148 with SMTP id q20mr2078346wei.201.1347665823778;
-        Fri, 14 Sep 2012 16:37:03 -0700 (PDT)
-Received: from localhost.localdomain ([87.252.227.84])
-        by mx.google.com with ESMTPS id hv8sm5697497wib.0.2012.09.14.16.37.02
-        (version=SSLv3 cipher=OTHER);
-        Fri, 14 Sep 2012 16:37:02 -0700 (PDT)
-X-Mailer: git-send-email 1.7.8.5
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=naraIay5zXqMCuEoXvXlwVJD0pYyo1o0lNcrXLIJkDU=;
+        b=wZXULu8EuI+3VVLbVVShiEKEGgoFvqzZV6F97WUFe3vTewD2VASFAnfxsOpZABnBWR
+         +6BWcZlrUX/M9VTJAqJ68ZSdLKHeSnjCAuTl3sXfsN5rdmzh9YKTRqTSCfG85pQYt25j
+         wb4lQlxfQ1LTlN8RHo5FhO0ZX+xnjct914IhNxafm/LgpT3Zk+KbAqWea5KIE63pful6
+         e+sn8ITZHg9x/GRGN8lcAjThbeIi1PerwniKaN5D6pgLe9CXdpa3d98ocHsRp9btBmS3
+         hFLpSTvnqEYpbB4UDAy9dI96bqUhM0cbHm/fw8ppFXdmUxaq/oCZ6udV4GZUykR2cfBH
+         PnYA==
+Received: by 10.50.219.229 with SMTP id pr5mr253725igc.59.1347672879357; Fri,
+ 14 Sep 2012 18:34:39 -0700 (PDT)
+Received: by 10.50.42.230 with HTTP; Fri, 14 Sep 2012 18:34:39 -0700 (PDT)
+In-Reply-To: <CACsJy8A-prPd=5R83LhcLO1rd-rBZRhfnvABvzvdDiC=hZ3ofQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205543>
 
-From: Vitaly _Vi Shukela <vi0oss@gmail.com>
+2012/9/14 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> (Dropping translators as they probably are not interested in this)
+>
+> I saw a gnu project does this (I don't remember what project). If we
+> update .po* files with --no-location, we can avoid a lot of diff
+> noises due to line number changes. A typical translator does not care
+> about these lines anyway. Those who do can easily search the string in
+> source files without them.
 
-Make Ctrl+U for unstaging and Ctrl+J for reverting selection behave
-more like Ctrl+T for adding.
+I believe some translators need these location infomation to find the
+context. In order to squelch noise, users can:
 
-They were working only when one area was focused (diff or commit message),
-now they should work everywhere.
+1. Define a new diff driver, such as:
 
-Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
----
-Sending the patch the third time (haven't got any replies to previous two attempts).
+    $ git config --global diff.podiff.textconv "sed -e '/^#/ d'"
 
- git-gui/git-gui.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+2. Add two lines in .git/info/attributes to use this driver for po/pot files:
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index ba4e5c1..6618016 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3710,6 +3710,8 @@ bind $ui_diff <$M1B-Key-v> {break}
- bind $ui_diff <$M1B-Key-V> {break}
- bind $ui_diff <$M1B-Key-a> {%W tag add sel 0.0 end;break}
- bind $ui_diff <$M1B-Key-A> {%W tag add sel 0.0 end;break}
-+bind $ui_diff <$M1B-Key-j> {do_revert_selection;break}
-+bind $ui_diff <$M1B-Key-J> {do_revert_selection;break}
- bind $ui_diff <Key-Up>     {catch {%W yview scroll -1 units};break}
- bind $ui_diff <Key-Down>   {catch {%W yview scroll  1 units};break}
- bind $ui_diff <Key-Left>   {catch {%W xview scroll -1 units};break}
-@@ -3742,6 +3744,8 @@ bind .   <$M1B-Key-s> do_signoff
- bind .   <$M1B-Key-S> do_signoff
- bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
-+bind .   <$M1B-Key-u> do_unstage_selection
-+bind .   <$M1B-Key-U> do_unstage_selection
- bind .   <$M1B-Key-j> do_revert_selection
- bind .   <$M1B-Key-J> do_revert_selection
- bind .   <$M1B-Key-i> do_add_all
--- 
-1.7.8.5
+    *.po diff=podiff
+    *.pot diff=podiff
+
+--
+Jiang Xin
