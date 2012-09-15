@@ -1,81 +1,112 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH 3/3] rebase -i: Add tests for "--edit-todo"
-Date: Sat, 15 Sep 2012 16:08:29 -0400
-Message-ID: <1347739709-15289-4-git-send-email-andrew.kw.w@gmail.com>
-References: <CADgNjambUXj+WEFg=OWvtDQ1EKFhavwbjMbTVaP69rhh5DrphA@mail.gmail.com>
- <1347739709-15289-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/7] builtin/notes.c: mark file-scope functions as static
+Date: Sat, 15 Sep 2012 14:10:46 -0700
+Message-ID: <1347743452-2487-1-git-send-email-gitster@pobox.com>
+References: <5054AA62.2040603@ramsay1.demon.co.uk>
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 23:10:59 2012
+X-From: git-owner@vger.kernel.org Sat Sep 15 23:11:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCzdf-0004gH-J5
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 23:10:55 +0200
+	id 1TCzdr-0004pG-Nr
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 23:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169Ab2IOVKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 17:10:48 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:32836 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542Ab2IOVJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 17:09:49 -0400
-Received: by mail-iy0-f174.google.com with SMTP id k25so4417635iah.19
-        for <git@vger.kernel.org>; Sat, 15 Sep 2012 14:09:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=0elH4VFI33P+YNoEjIyU+XRC/GPmVj6Q2l8/fcaWb0g=;
-        b=E6/X3augkX9uyDGXLd+fvWlQWiDQ+tSDhhoNfZGvb4pbSwZkFVLmcUoZDT21INEb88
-         imVeWd21qgJ1odB2amf+q1Sx8TMxVdHgO4PP3WkB7jML2Z+7QoDDvNgrd+W2ahaM3zjP
-         jcf6Tbwf+qHiQn2LD8rebT+uhHi2Y0KrD+eEJhq7Gl02Y/MwK79H4gZEnh2wUt2fr1CN
-         zDq+4Ijg41vo8BsBiLHBhksj4k5B1oyupM05gmqZGseVdy58YPJWawJs9qWXpTKe5LI8
-         061x0ArEtzYdPycdFR+0ouvGPG5sD1j+8Wm9YElBh4DwlWEUt+alMeHSw9eY0K5OharE
-         u3IA==
-Received: by 10.42.66.207 with SMTP id q15mr5625192ici.34.1347743389212;
-        Sat, 15 Sep 2012 14:09:49 -0700 (PDT)
-Received: from localhost.localdomain ([69.165.255.59])
-        by mx.google.com with ESMTPS id d19sm2172495igp.6.2012.09.15.14.09.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 15 Sep 2012 14:09:48 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.318.g08bf5ad.dirty
-In-Reply-To: <1347739709-15289-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1752370Ab2IOVK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 17:10:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61750 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751542Ab2IOVKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 17:10:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89D858551;
+	Sat, 15 Sep 2012 17:10:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=FerU
+	yjPGrZk1vntr/+S3+arxxAI=; b=wm97d2FGPeUUyVeXAszUWfF59pK/vfXw8aBq
+	WucpSh0iDNtzg3X/icgLga7dpI/XKouYibYKsVMJnsKorEBS5AECmSa2vmlOn+mu
+	bNph84j6mbqHwnuSWBGbPTABcxVBW55ruvYlWSs5l2w9tfvh2Qn+nqA5f8JwHQGi
+	BrlKnN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	KHJAvKJIAY18EKIM8LLBIGxFUn575aW4f+vcsVplzJl/kM4DJXLmrUZMsrmllh8c
+	XQLC4nR+6Xe7n6aRFir5Pt52+9GdTg4jbbbKsoEf3SbgS9dPVnC289nplBK+OUj8
+	Y0JFBEoRgClhpvNmzYupZwpWFz0+ZE7ueFy29kDOKkM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76D0C8550;
+	Sat, 15 Sep 2012 17:10:54 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB2C48545; Sat, 15 Sep 2012
+ 17:10:53 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.508.g4d78187
+In-Reply-To: <5054AA62.2040603@ramsay1.demon.co.uk>
+X-Pobox-Relay-ID: D5A64492-FF79-11E1-AF63-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205574>
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t3404-rebase-interactive.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ builtin.h       | 2 --
+ builtin/notes.c | 7 +++++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 7304b66..a194c97 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -911,4 +911,20 @@ test_expect_success 'rebase -i --root fixup root commit' '
- 	test 0 = $(git cat-file commit HEAD | grep -c ^parent\ )
- '
+diff --git a/builtin.h b/builtin.h
+index 8e37752..95116b8 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -21,7 +21,6 @@ struct fmt_merge_msg_opts {
  
-+test_expect_success 'rebase --edit-todo does not works on non-interactive rebase' '
-+	git checkout conflict-branch &&
-+	test_must_fail git rebase --onto HEAD~2 HEAD~ &&
-+	test_must_fail git rebase --edit-todo &&
-+	git rebase --abort
-+'
+ extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 			 struct fmt_merge_msg_opts *);
+-extern void commit_notes(struct notes_tree *t, const char *msg);
+ 
+ struct notes_rewrite_cfg {
+ 	struct notes_tree **trees;
+@@ -33,7 +32,6 @@ struct notes_rewrite_cfg {
+ 	int mode_from_env;
+ };
+ 
+-combine_notes_fn parse_combine_notes_fn(const char *v);
+ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
+ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
+ 			  const unsigned char *from_obj, const unsigned char *to_obj);
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 554c801..453457a 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -19,6 +19,9 @@
+ #include "string-list.h"
+ #include "notes-merge.h"
+ 
++static void commit_notes(struct notes_tree *t, const char *msg);
++static combine_notes_fn parse_combine_notes_fn(const char *v);
 +
-+test_expect_success 'rebase --edit-todo can be used to modify todo' '
-+	git checkout no-conflict-branch^0 &&
-+	FAKE_LINES="edit 1 2 3" git rebase -i HEAD~3 &&
-+	FAKE_LINES="2 1" git rebase --edit-todo &&
-+	git rebase --continue
-+	test M = $(git cat-file commit HEAD^ | sed -ne \$p) &&
-+	test L = $(git cat-file commit HEAD | sed -ne \$p)
-+'
-+
- test_done
+ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes_ref>] [list [<object>]]"),
+ 	N_("git notes [--ref <notes_ref>] add [-f] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+@@ -288,7 +291,7 @@ static int parse_reedit_arg(const struct option *opt, const char *arg, int unset
+ 	return parse_reuse_arg(opt, arg, unset);
+ }
+ 
+-void commit_notes(struct notes_tree *t, const char *msg)
++static void commit_notes(struct notes_tree *t, const char *msg)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	unsigned char commit_sha1[20];
+@@ -312,7 +315,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
+ 	strbuf_release(&buf);
+ }
+ 
+-combine_notes_fn parse_combine_notes_fn(const char *v)
++static combine_notes_fn parse_combine_notes_fn(const char *v)
+ {
+ 	if (!strcasecmp(v, "overwrite"))
+ 		return combine_notes_overwrite;
 -- 
-1.7.12.318.g08bf5ad.dirty
+1.7.12.508.g4d78187
