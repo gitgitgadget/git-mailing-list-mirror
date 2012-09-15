@@ -1,68 +1,120 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Please pull git-l10n updates for git v1.7.12-146-g16d26
-Date: Sat, 15 Sep 2012 11:31:00 +0700
-Message-ID: <CACsJy8B8EtMWnJdPqNQ6J-NA+qpv2HXjo-rC5YkFQ9-GqkV1Mg@mail.gmail.com>
-References: <CANYiYbExJRAK0zvO4FSce2tOTyW1fLW1OLqZSm0KLjG1V4nTbg@mail.gmail.com>
- <CACsJy8A-prPd=5R83LhcLO1rd-rBZRhfnvABvzvdDiC=hZ3ofQ@mail.gmail.com> <CANYiYbGJP3rpd+t-gVSc0EpbHg9e_8_z24S6v0g2bT72+faj2Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.7.11.7
+Date: Fri, 14 Sep 2012 23:12:10 -0700
+Message-ID: <7v8vcb24sl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 15 06:32:11 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sat Sep 15 08:13:37 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCk37-0001t9-Me
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 06:32:10 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1TCldF-0008Jk-3I
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 15 Sep 2012 08:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926Ab2IOEbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 00:31:32 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:63831 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720Ab2IOEbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 00:31:31 -0400
-Received: by ieje11 with SMTP id e11so7328634iej.19
-        for <git@vger.kernel.org>; Fri, 14 Sep 2012 21:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=A/t9Uaee7p0DrC7y/w2iJkV52HJrnvjNlEln4hYOvGo=;
-        b=Xi+T+TytmXtwyiPxtn7YMyyVxvqykuD/aUpSyWtuvAkbJK1Tm4iZW+pLJr2+Z95DhB
-         Qq7A1qx50XRxHwA6OiC3cnAl3muXAjq6SImrUo7Zlar8KCNaK5ncK6FstLcBLaNkzcvu
-         sSoDKEoUVqjz7dpxungJs9vmXoJ91jgcfScpqCTKDcKKygUPWi1r9/yWLipULzGO+miA
-         DGjixSNSOdE2GHR5R3yrTfzn1pVth5nHtaoufT8oTKMUTfRfDxdDnRHif27zL/0k3Q8l
-         6detNXBSa7cpdA4CIFU08O4X21wQXKqKuAyceqo7cAzJoMTv4jlH5JD8fi9qlIaiiFjI
-         s+Nw==
-Received: by 10.50.85.134 with SMTP id h6mr457132igz.2.1347683490349; Fri, 14
- Sep 2012 21:31:30 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Fri, 14 Sep 2012 21:31:00 -0700 (PDT)
-In-Reply-To: <CANYiYbGJP3rpd+t-gVSc0EpbHg9e_8_z24S6v0g2bT72+faj2Q@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1751640Ab2IOGMR (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sat, 15 Sep 2012 02:12:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34353 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751223Ab2IOGMP (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sat, 15 Sep 2012 02:12:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99CF79EC3;
+	Sat, 15 Sep 2012 02:12:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
+	wgOugaLKGQho0OcEDObJpY8Ojg=; b=LKmjLvNa/4plQ3xYp6f+ESgx1lv5J/eZI
+	fjUZYTAWXy4rESzRsXr7Z5hxvdtWGYZZi8ZZ4iWhXBn3E4ufStBr0YIn5gWyJQ30
+	Xuw9ua2X0H6vEyR7udGit+v2XgByiZLwxYV4xvHwPsPjAHlOc2laPSE6ViCpL5A5
+	ga0RI+oHCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=AOb7RTdUbpZtdRlzzsUnpZMwdE5nF/v+tN9JfnnCJ+Enco4e/o2QldRn
+	GCLBlJKX2VvQ6IHJGduNEtfi1+9/a+3qUzDWCsq3QDz8H664PzWsnansjv2pDF+T
+	cmZBJWw9NIeDN7RyVZ5JZdXhha6Fn3+OYEEoDbbQe2e/HfEYrQY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 872109EC2;
+	Sat, 15 Sep 2012 02:12:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAA799EC1; Sat, 15 Sep 2012
+ 02:12:11 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 49ABC82C-FEFC-11E1-8267-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205546>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205547>
 
-On Sat, Sep 15, 2012 at 8:34 AM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> 2012/9/14 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
->> (Dropping translators as they probably are not interested in this)
->>
->> I saw a gnu project does this (I don't remember what project). If we
->> update .po* files with --no-location, we can avoid a lot of diff
->> noises due to line number changes. A typical translator does not care
->> about these lines anyway. Those who do can easily search the string in
->> source files without them.
->
-> I believe some translators need these location infomation to find the
-> context.
+A maintenance release Git v1.7.11.7 is now available at the
+usual places.
 
-Unless you are also a git developer, I doubt if sha1_file.c makes
-sense to any translators. In my 8 years of being translator/programmer
-to open source world, I rarely look at those lines (though I admit I
-do). A slightly modified suggestion is just drop line number, not the
-file name, but xgettext does not support that, unfortunately.
--- 
-Duy
+The release tarballs are found at:
+
+    http://code.google.com/p/git-core/downloads/list
+
+and their SHA-1 checksums are:
+
+30c7aafaa31002ca52bc45dbd0908e63b00015dd  git-1.7.11.7.tar.gz
+bdcd5009498bc961757915dae30f5fefd6435c59  git-htmldocs-1.7.11.7.tar.gz
+9fb4bb051822168e41424524a4a325207f308507  git-manpages-1.7.11.7.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.11.7
+tag and the maint-1.7.11 branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+Git v1.7.11.7 Release Notes
+===========================
+
+Fixes since v1.7.11.6
+---------------------
+
+ * The synopsis said "checkout [-B branch]" to make it clear the
+   branch name is a parameter to the option, but the heading for the
+   option description was "-B::", not "-B branch::", making the
+   documentation misleading.
+
+ * Git ships with a fall-back regexp implementation for platforms with
+   buggy regexp library, but it was easy for people to keep using their
+   platform regexp.  A new test has been added to check this.
+
+ * "git apply -p0" did not parse pathnames on "diff --git" line
+   correctly.  This caused patches that had pathnames in no other
+   places to be mistakenly rejected (most notably, binary patch that
+   does not rename nor change mode).  Textual patches, renames or mode
+   changes have preimage and postimage pathnames in different places
+   in a form that can be parsed unambiguously and did not suffer from
+   this problem.
+
+ * After "gitk" showed the contents of a tag, neither "Reread
+   references" nor "Reload" did not update what is shown as the
+   contents of it, when the user overwrote the tag with "git tag -f".
+
+ * "git for-each-ref" did not currectly support more than one --sort
+   option.
+
+ * "git log .." errored out saying it is both rev range and a path
+   when there is no disambiguating "--" is on the command line.
+   Update the command line parser to interpret ".." as a path in such
+   a case.
+
+ * Pushing to smart HTTP server with recent Git fails without having
+   the username in the URL to force authentication, if the server is
+   configured to allow GET anonymously, while requiring authentication
+   for POST.
+
+ * "git show --format='%ci'" did not give timestamp correctly for
+   commits created without human readable name on "committer" line.
+   (merge e27ddb6 jc/maint-ident-missing-human-name later to maint).
+
+ * "git show --quiet" ought to be a synonym for "git show -s", but
+   wasn't.
