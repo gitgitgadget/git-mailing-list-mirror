@@ -1,63 +1,97 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: What's cooking in git.git (Sep 2012, #05; Fri, 14)
-Date: Sat, 15 Sep 2012 12:08:27 +0200
-Message-ID: <k31k35$pc$1@ger.gmane.org>
-References: <7vboh82t7p.fsf@alter.siamese.dyndns.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] git-gui: Fix semi-working shortcuts for unstage and revert
+Date: Sat, 15 Sep 2012 13:04:42 +0200
+Message-ID: <CAKPyHN0_GVwCzrmH1YJu-cgGrPSQ3eqgFM8Ad1JJP8ZpF7Dx9w@mail.gmail.com>
+References: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 12:09:00 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, patthoyts@users.sourceforge.net
+To: vi0oss@gmail.com
+X-From: git-owner@vger.kernel.org Sat Sep 15 13:04:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCpJ4-0002dd-1A
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 12:08:58 +0200
+	id 1TCqBA-0006cl-FX
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 13:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370Ab2IOKIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 06:08:50 -0400
-Received: from plane.gmane.org ([80.91.229.3]:50864 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234Ab2IOKIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 06:08:49 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TCpIw-0002a6-MQ
-	for git@vger.kernel.org; Sat, 15 Sep 2012 12:08:50 +0200
-Received: from dsdf-4db519b7.pool.mediaways.net ([77.181.25.183])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Sep 2012 12:08:50 +0200
-Received: from jojo by dsdf-4db519b7.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Sep 2012 12:08:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db519b7.pool.mediaways.net
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753447Ab2IOLEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 07:04:43 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:51058 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752911Ab2IOLEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 07:04:42 -0400
+Received: by obbuo13 with SMTP id uo13so7375269obb.19
+        for <git@vger.kernel.org>; Sat, 15 Sep 2012 04:04:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nzdHoluaR0WEwspdcRd42hE9iO8zbVRSfg2r0XBJgi0=;
+        b=BA8ZzCjpxdinAuib8/PGu0vN+9Pl6n3b3aP2HAhaD4h2D2Leq4/GXPxQyZgvXy2Sv0
+         KHrqFi3FI4ewLRQfDSdQwVPcU9DvTSu5BO1RQnbmzxnsCyR8OwFOOw1Ka8lbDSiq1g+R
+         Pt6nrNATgERxNjJxawgdPameE0iTBELG+gnTiloc5Aa9Nk85ZwHeaKONP8tOoqvg1Krj
+         BuMda5SmnmZHSJ91dG+P2R+XGILFXoEptRjkT+Fx6cLDeeZELgTdSm7xP7fxZq/ZGPmx
+         T+W9xleq0F7aBlxw6NHWpqmDkNx8WbgZu/gQ1JyoYv98+sqLgT/2Hkr+Dpt3J57owBDB
+         BwlQ==
+Received: by 10.60.8.39 with SMTP id o7mr6968432oea.122.1347707082079; Sat, 15
+ Sep 2012 04:04:42 -0700 (PDT)
+Received: by 10.76.141.167 with HTTP; Sat, 15 Sep 2012 04:04:42 -0700 (PDT)
+In-Reply-To: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205550>
 
-Junio C Hamano wrote:
-> I think we can start thinking about feature freeze once the topics
-> in 'next' that are scheduled to graduate to 'master' already are
-> fully cooked.  For any late-coming topic, there always is the next
-> cycle ;-)
+On Sat, Sep 15, 2012 at 1:36 AM,  <vi0oss@gmail.com> wrote:
+> From: Vitaly _Vi Shukela <vi0oss@gmail.com>
+>
+> Make Ctrl+U for unstaging and Ctrl+J for reverting selection behave
+> more like Ctrl+T for adding.
+>
+> They were working only when one area was focused (diff or commit message),
+> now they should work everywhere.
+>
+> Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
+> ---
+> Sending the patch the third time (haven't got any replies to previous two attempts).
 
-I've not hear anything about my poll patches and I'd really like them to 
-into 1.8.x.
-If and when they did, there's another small patch to fully support HP 
-NonStop (some adjustment to git-compat-util.h with #ifdef __TANDEM and a 
-NonStop section in Makefile, so nothing that should have any bad impact on 
-others), which I too would like to get in 1.8.x
+For what its worth:
 
-Bye, Jojo 
+Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
+
+But unless Pat reacts this is useless.
+
+Bert
+
+>
+>  git-gui/git-gui.sh |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+>
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index ba4e5c1..6618016 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -3710,6 +3710,8 @@ bind $ui_diff <$M1B-Key-v> {break}
+>  bind $ui_diff <$M1B-Key-V> {break}
+>  bind $ui_diff <$M1B-Key-a> {%W tag add sel 0.0 end;break}
+>  bind $ui_diff <$M1B-Key-A> {%W tag add sel 0.0 end;break}
+> +bind $ui_diff <$M1B-Key-j> {do_revert_selection;break}
+> +bind $ui_diff <$M1B-Key-J> {do_revert_selection;break}
+>  bind $ui_diff <Key-Up>     {catch {%W yview scroll -1 units};break}
+>  bind $ui_diff <Key-Down>   {catch {%W yview scroll  1 units};break}
+>  bind $ui_diff <Key-Left>   {catch {%W xview scroll -1 units};break}
+> @@ -3742,6 +3744,8 @@ bind .   <$M1B-Key-s> do_signoff
+>  bind .   <$M1B-Key-S> do_signoff
+>  bind .   <$M1B-Key-t> do_add_selection
+>  bind .   <$M1B-Key-T> do_add_selection
+> +bind .   <$M1B-Key-u> do_unstage_selection
+> +bind .   <$M1B-Key-U> do_unstage_selection
+>  bind .   <$M1B-Key-j> do_revert_selection
+>  bind .   <$M1B-Key-J> do_revert_selection
+>  bind .   <$M1B-Key-i> do_add_all
+> --
+> 1.7.8.5
+>
