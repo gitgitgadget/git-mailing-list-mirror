@@ -1,98 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/7] commit.c: mark file-scope functions as static
-Date: Sat, 15 Sep 2012 14:10:47 -0700
-Message-ID: <1347743452-2487-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 7/7] notes.c: mark private file-scope symbols as static
+Date: Sat, 15 Sep 2012 14:10:52 -0700
+Message-ID: <1347743452-2487-7-git-send-email-gitster@pobox.com>
 References: <5054AA62.2040603@ramsay1.demon.co.uk>
  <1347743452-2487-1-git-send-email-gitster@pobox.com>
 Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 15 23:11:10 2012
+X-From: git-owner@vger.kernel.org Sat Sep 15 23:11:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TCzds-0004pG-6t
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 23:11:08 +0200
+	id 1TCze3-0004wn-Jm
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Sep 2012 23:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab2IOVK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Sep 2012 17:10:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61774 "EHLO
+	id S1753386Ab2IOVLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Sep 2012 17:11:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61955 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751542Ab2IOVK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Sep 2012 17:10:56 -0400
+	id S1753096Ab2IOVLG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Sep 2012 17:11:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A6F28558;
-	Sat, 15 Sep 2012 17:10:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7459D8577;
+	Sat, 15 Sep 2012 17:11:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=oJkq
-	6XPLfEv6yFwYXYqUevh6YxQ=; b=ZT6E31CjLQ1q5/jaDjAZbnlGLpSeD7jLQeXX
-	p/5MqKzpmKSdObIpHbE/U6Ld/Q0c93hwY/p0pnMdzO9YEDRuXDnnTHQk74yDWiFX
-	DcVCTqLUklYgm1u07/pKs3PfyQqplGXUG0s/YJU81++EaPiVnq2R4QG2DLBL+P6g
-	HK5SRFc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zYD8
+	GOuyV9bZGiAweghM2yh/I88=; b=pzePbWZ91o6Zmky/D+lfJ0I5QAe2repbghRk
+	cqAm2jJ0gDhSc6FHt7MyBqX6WSWv1/ZYGMKLTii7jn5nWpP5CpUtRICZm8r7ZWFB
+	fPLDfRKmG1bobpcpn83jh1qYievBZeoyKRCIc7hD1mp0eKs83JGrthVNK1RkAYBL
+	hXowzt8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	Y8/2LoQ8fi4atUA3W6CYm05vsp7yOM3x2cBsDo/sNk3jqL5bAhcYvLxy55EV8WSe
-	kU8Wotreb6HHQPv/75reaSd7RVThuhCLkRLUpkUmDQPiPJEuhuBZ/k4nl9LpMGfP
-	xGMjBhEGZu1sGGDqXzVtntnSR9wrBKT+z8E4BS1L1N8=
+	A1jB8uigjrxpC+bZRSuH4tj8inQQUnTcRKfFRpeZuQ+mupogTsqNKcWfl45Cdcr2
+	ShysPUK0NMT1m/A1VQMAX2rRhPkBWbi2VzADgkCTz/gzGI8DPnnxY0ndVhnsfUBv
+	HTdap/p+fAsQUs4yjZ/gUpeo9eCeDUSIzB72MGvv+Ic=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66F988557;
-	Sat, 15 Sep 2012 17:10:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60EE38576;
+	Sat, 15 Sep 2012 17:11:06 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C17778556; Sat, 15 Sep 2012
- 17:10:55 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAF398574; Sat, 15 Sep 2012
+ 17:11:05 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.508.g4d78187
 In-Reply-To: <1347743452-2487-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D6D15348-FF79-11E1-B09F-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DCC32074-FF79-11E1-857B-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205576>
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- commit.c | 7 +++++--
- commit.h | 1 -
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ notes.c | 14 ++++++++++++--
+ notes.h | 14 --------------
+ 2 files changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 0ea441d..0246767 100644
---- a/commit.c
-+++ b/commit.c
-@@ -9,6 +9,8 @@
- #include "gpg-interface.h"
- #include "mergesort.h"
- 
-+static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
-+
- int save_commit_buffer = 1;
- 
- const char *commit_type = "commit";
-@@ -1073,8 +1075,9 @@ static int excluded_header_field(const char *field, size_t len, const char **exc
- 	return 0;
+diff --git a/notes.c b/notes.c
+index 93e9868..bc454e1 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1196,8 +1196,18 @@ void free_notes(struct notes_tree *t)
+ 	memset(t, 0, sizeof(struct notes_tree));
  }
  
--struct commit_extra_header *read_commit_extra_header_lines(const char *buffer, size_t size,
--							   const char **exclude)
-+static struct commit_extra_header *read_commit_extra_header_lines(
-+	const char *buffer, size_t size,
-+	const char **exclude)
+-void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+-		struct strbuf *sb, const char *output_encoding, int flags)
++/*
++ * Fill the given strbuf with the notes associated with the given object.
++ *
++ * If the given notes_tree structure is not initialized, it will be auto-
++ * initialized to the default value (see documentation for init_notes() above).
++ * If the given notes_tree is NULL, the internal/default notes_tree will be
++ * used instead.
++ *
++ * 'flags' is a bitwise combination of the flags for format_display_notes.
++ */
++static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
++			struct strbuf *sb, const char *output_encoding, int flags)
  {
- 	struct commit_extra_header *extra = NULL, **tail = &extra, *it = NULL;
- 	const char *line, *next, *eof, *eob;
-diff --git a/commit.h b/commit.h
-index 6edce87..9f21313 100644
---- a/commit.h
-+++ b/commit.h
-@@ -204,7 +204,6 @@ extern int commit_tree_extended(const struct strbuf *msg, unsigned char *tree,
- 				struct commit_extra_header *);
+ 	static const char utf8[] = "utf-8";
+ 	const unsigned char *sha1;
+diff --git a/notes.h b/notes.h
+index c716694..3592b19 100644
+--- a/notes.h
++++ b/notes.h
+@@ -241,20 +241,6 @@ void free_notes(struct notes_tree *t);
+ #define NOTES_SHOW_HEADER 1
+ #define NOTES_INDENT 2
  
- extern struct commit_extra_header *read_commit_extra_headers(struct commit *, const char **);
--extern struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+-/*
+- * Fill the given strbuf with the notes associated with the given object.
+- *
+- * If the given notes_tree structure is not initialized, it will be auto-
+- * initialized to the default value (see documentation for init_notes() above).
+- * If the given notes_tree is NULL, the internal/default notes_tree will be
+- * used instead.
+- *
+- * 'flags' is a bitwise combination of the above formatting flags.
+- */
+-void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+-		struct strbuf *sb, const char *output_encoding, int flags);
+-
+-
+ struct string_list;
  
- extern void free_commit_extra_headers(struct commit_extra_header *extra);
- 
+ struct display_notes_opt {
 -- 
 1.7.12.508.g4d78187
