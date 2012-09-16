@@ -1,66 +1,65 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Remove all files except a few files, using filter-branch
-Date: Sun, 16 Sep 2012 19:06:59 +0200
-Message-ID: <m24nmxkibw.fsf@igel.home>
-References: <CAFT+Tg_ipyPgNQxx8XsXySzmA3YM3mKe1gB5GyTNqN++gdphnQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: semtlenori@gmail.com
-X-From: git-owner@vger.kernel.org Sun Sep 16 19:07:24 2012
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: [PATCH] Documentation: indent-with-non-tab uses tabwidth setting, not just 8
+Date: Sun, 16 Sep 2012 11:12:28 -0600
+Message-ID: <1347815548-19305-1-git-send-email-wjl@icecavern.net>
+Cc: "Wesley J. Landaker" <wjl@icecavern.net>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 16 19:22:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDIJX-0007X8-FB
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 19:07:23 +0200
+	id 1TDIY9-0007jP-1L
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 19:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751747Ab2IPRHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2012 13:07:08 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:56506 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751118Ab2IPRHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2012 13:07:08 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XKcMT189Wz3hhfZ;
-	Sun, 16 Sep 2012 19:07:01 +0200 (CEST)
-X-Auth-Info: 6HN0iUq4iFSfCz+K9cnu1zFrQYldDNLQJwQdwUAwd9c=
-Received: from igel.home (ppp-88-217-122-238.dynamic.mnet-online.de [88.217.122.238])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XKcMT0G7rzbbp4;
-	Sun, 16 Sep 2012 19:07:01 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 3EEE3CA2A3; Sun, 16 Sep 2012 19:06:59 +0200 (CEST)
-X-Yow: NANCY!!  Why is everything RED?!
-In-Reply-To: <CAFT+Tg_ipyPgNQxx8XsXySzmA3YM3mKe1gB5GyTNqN++gdphnQ@mail.gmail.com>
-	(EungJun Yi's message of "Mon, 17 Sep 2012 01:28:31 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1751633Ab2IPRVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2012 13:21:36 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:43000 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751414Ab2IPRVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2012 13:21:36 -0400
+X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Sep 2012 13:21:35 EDT
+Received: from jenova.icecavern.net (c-76-113-27-84.hsd1.nm.comcast.net [76.113.27.84])
+	by icecavern.net (Postfix) with ESMTPSA id C36F4369BB;
+	Sun, 16 Sep 2012 11:12:35 -0600 (MDT)
+Received: from tonberry.icecavern.net (tonberry.icecavern.net [10.0.0.9])
+	by jenova.icecavern.net (Postfix) with ESMTP id 847A474C009;
+	Sun, 16 Sep 2012 11:12:34 -0600 (MDT)
+Received: by tonberry.icecavern.net (Postfix, from userid 1000)
+	id 70E731E6ECC; Sun, 16 Sep 2012 11:12:34 -0600 (MDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205634>
 
-"Yi, EungJun" <semtlenori@gmail.com> writes:
+From: "Wesley J. Landaker" <wjl@icecavern.net>
 
-> Hi, all.
->
-> I want to remove all files except a few files, in the history of my
-> git repository.
->
-> I tried to do that as follows:
->
->     git filter-branch --index-filter "git rm --cached --ignore-unmatch
-> $(git ls-files | grep -v '^filename$' | tr '\n' ' ')"
+Update the documentation of the core.whitespace option
+"indent-with-non-tab" to correctly reflect that it uses the currently
+set tab width, set by the "tabwidth" option, rather than a fixed number.
 
-Try instead first removing all files, then restoring the files you want
-to keep.
+Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
+---
+ Documentation/config.txt |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---index-filter "git rm --cached -qr -- . && git reset -q -- filename"
-
-Andreas.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6416cae..113a196 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -559,8 +559,8 @@ core.whitespace::
+ * `space-before-tab` treats a space character that appears immediately
+   before a tab character in the initial indent part of the line as an
+   error (enabled by default).
+-* `indent-with-non-tab` treats a line that is indented with 8 or more
+-  space characters as an error (not enabled by default).
++* `indent-with-non-tab` treats a line that is indented with `tabwidth` space
++  characters or more as an error (not enabled by default).
+ * `tab-in-indent` treats a tab character in the initial indent part of
+   the line as an error (not enabled by default).
+ * `blank-at-eof` treats blank lines added at the end of file as an error
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.7.10.4
