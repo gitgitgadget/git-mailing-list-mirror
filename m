@@ -1,59 +1,50 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 8/8] Doc branch: show -vv option and alternative
-Date: Sun, 16 Sep 2012 11:58:03 +0100
-Message-ID: <1347793083-4136-9-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 2/8] Doc: shallow clone deepens _to_ new depth
+Date: Sun, 16 Sep 2012 11:57:57 +0100
+Message-ID: <1347793083-4136-3-git-send-email-philipoakley@iee.org>
 To: gitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 16 14:29:45 2012
+X-From: git-owner@vger.kernel.org Sun Sep 16 14:30:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDDyq-00039h-KG
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 14:29:44 +0200
+	id 1TDDzr-0003h2-Pz
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 14:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506Ab2IPM3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2012 08:29:36 -0400
-Received: from smtp2go.com ([207.58.142.213]:59338 "EHLO smtp2go.com"
+	id S1752508Ab2IPMak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2012 08:30:40 -0400
+Received: from smtp2go.com ([207.58.142.213]:59449 "EHLO smtp2go.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752472Ab2IPM3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2012 08:29:36 -0400
+	id S1752439Ab2IPMaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2012 08:30:39 -0400
 X-Mailer: git-send-email 1.7.8.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205613>
 
-Indicate that the -v option can be given twice in the short options.
-Without it users pass over the option. Also indicate the alternate
-'git remote show' method.
+Clarify that 'depth=' specifies the new depth from the remote's
+branch tip. It does not add the depth to the existing shallow clone.
+(details from pack-protocol.txt).
+Clarify that tags are not fetched. (details from shallow.txt)
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
 
-the option to show where a branch's remote is located should not be buried
-within an option.
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 9c1d2f1..cc7f54c 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -130,12 +130,13 @@ This option is only applicable in non-verbose mode.
- 	Activate the list mode. `git branch <pattern>` would try to create a branch,
- 	use `git branch --list <pattern>` to list matching branches.
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 39d326a..b4d6476 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -10,7 +10,8 @@
+ --depth=<depth>::
+ 	Deepen the history of a 'shallow' repository created by
+ 	`git clone` with `--depth=<depth>` option (see linkgit:git-clone[1])
+-	by the specified number of commits.
++	to the specified number of commits from the tip of each remote
++	branch history. Tags for the deepened commits are not fetched.
  
---v::
-+-v, -vv::
- --verbose::
- 	When in list mode,
- 	show sha1 and commit subject line for each head, along with
- 	relationship to upstream branch (if any). If given twice, print
--	the name of the upstream branch, as well.
-+	the name of the upstream branch, as well (see also `git remote
-+	show <remote>`).
- 
- -q::
- --quiet::
+ ifndef::git-pull[]
+ --dry-run::
 -- 
 1.7.8.msysgit.0
