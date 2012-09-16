@@ -1,67 +1,77 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 7/8] Doc clean: add See Also links
-Date: Sun, 16 Sep 2012 20:21:03 +0100
-Message-ID: <5056269F.3070708@iee.org>
-References: <1347793083-4136-8-git-send-email-philipoakley@iee.org> <vpqsjaiyxth.fsf@grenoble-inp.fr>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Unable to clone GIT project
+Date: Sun, 16 Sep 2012 21:48:43 +0200
+Message-ID: <CABPQNSbPF=_a7-+JnojM2DQAkkj7ZLhSnO+n-Ab=LSrHge1dnQ@mail.gmail.com>
+References: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFDB65@NOIX10HMNOI01.AMER.DELL.COM>
+ <20120916104651.GF32381@localhost.localdomain>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitList <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 16 21:21:18 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ankush_Aggarwal@dell.com, git@vger.kernel.org
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Sep 16 21:49:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDKP7-0008Lj-Sx
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 21:21:18 +0200
+	id 1TDKqT-0007LM-Nb
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 21:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648Ab2IPTVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2012 15:21:07 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:38242 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751055Ab2IPTVG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Sep 2012 15:21:06 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApMBAFElVlBZ8rU+/2dsb2JhbAANOL85AQEBAQM4QAEQCxgJFg8JAwIBAgFFBg0BBQIBAa53kl6SCQOoag
-X-IronPort-AV: E=Sophos;i="4.80,431,1344207600"; 
-   d="scan'208";a="403502480"
-Received: from host-89-242-181-62.as13285.net (HELO [192.168.0.9]) ([89.242.181.62])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 16 Sep 2012 20:21:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <vpqsjaiyxth.fsf@grenoble-inp.fr>
+	id S1752200Ab2IPTtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2012 15:49:25 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:45690 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752068Ab2IPTtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2012 15:49:24 -0400
+Received: by vcbfo13 with SMTP id fo13so5554065vcb.19
+        for <git@vger.kernel.org>; Sun, 16 Sep 2012 12:49:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=CYxwevjTfVyH0lklX9Uy9SGw/HwCitiesm2i8fOuEck=;
+        b=mUHKcKtI1prmRtkscxHgbHTvgn4+4TVxzm7DZNLggCrBFSxv8MWiQwer+tSr3UHkmi
+         cVNukft5x2rtnapS2oUMJgqTKsTyn6XWsXL9t6M3kM6UZy3GC1k61GawtShc4tepLeD9
+         4hrICwMxSPqXiPWZploeYR4+IQ0n/IMwVQnKUT2Tszl+zCA0bxM5hw1ZzRXr7bTAacYc
+         BTtiwYE4jtSbbvZx7tRECuxM0IO/Wxm64Ts3ROAceS20rYAE4bB4UVhqJ07oOTyUE9Rm
+         BSf6k4Zvh63GogUKGu3uX5oAYyrFBpvVCj7TYyC5QgkmvStTyXbyhQOVAy4FgROR3OvZ
+         YAnA==
+Received: by 10.58.32.234 with SMTP id m10mr6372236vei.60.1347824964229; Sun,
+ 16 Sep 2012 12:49:24 -0700 (PDT)
+Received: by 10.58.196.232 with HTTP; Sun, 16 Sep 2012 12:48:43 -0700 (PDT)
+In-Reply-To: <20120916104651.GF32381@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205636>
 
-On 16/09/12 13:08, Matthieu Moy wrote:
-> Philip Oakley <philipoakley@iee.org> writes:
+On Sun, Sep 16, 2012 at 12:46 PM, Konstantin Khomoutov
+<flatworm@users.sourceforge.net> wrote:
+> On Sun, Sep 16, 2012 at 03:19:25AM +0000, Ankush_Aggarwal@DELL.com wrote:
 >
->> --- a/Documentation/git-clean.txt
->> +++ b/Documentation/git-clean.txt
->> @@ -63,6 +63,12 @@ OPTIONS
->>   	Remove only files ignored by git.  This may be useful to rebuild
->>   	everything from scratch, but keep manually created files.
->>   
->> +SEE ALSO
->> +--------
->> +linkgit:gitignore[5]
->> +linkgit:gitrepository-layout[5]
->> +The optional configuration variable `core.excludesfile` linkgit:git-config[1]
-> I think linkgit:gitignore[5] is enough. linkgit:gitrepository-layout[5]
-> is a very general documentation, it's not clear to the reader which part
-> is intended to be read in complement to git-clean, and indeed, the
-> relevant information is already in linkgit:gitignore[5]. Same for
-> core.excludesfile which is already documented in linkgit:gitignore[5].
+>> I have created a GIT repository on Linux 64 bit machine.
+>>
+>> When I tried to clone GIT repository on windows 7 machine then I am getting below error.
+>>
+>> Error:
+>> git-upload-pack: error while loading shared libraries: libiconv.so.2: cannot open shared object file: No such file or directory
+>> fatal: The remote end hung up unexpectedly
+>>
+>> anyone please help me resolve the issue.
+> See [1] and generally search google for msysgit+libiconv.so.2 as it
+> contains links to other approaches to working around this problem.
 >
-> Otherwise, I suspect we'll end-up having the transitive closure of SEE
-> ALSO in each manpage ...
-I'd added all three partly because of the git add link which went first 
-to the repository layout which didn't help me much without the extra link.
+> Note that questions about technical issues with Git for Windows are
+> better asked on the msysgit mailing list [2] or in the project bug
+> tracker [3] (after searching both places for the relevant information).
 
-In fact I've lost a patch (a mistaken rebase todo list possibly) to make 
-the three git ignore pattern types more obvious in the documentation, 
-which would probably cover your point.
+No. This is not a Git for Windows issue. The remote end is the one who
+isn't able to load libiconv, you can tell from the fact that it
+complains about "libiconv.so.2", not "libiconv-2.dll", and from the
+fact that the client informs us that the remote end hung up.
+
+Ankush: There's something wrong with the setup on your Linux machine;
+most likely something related to the library path set up. What
+protocol are you cloning over?
