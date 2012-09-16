@@ -1,50 +1,53 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH 2/8] Doc: shallow clone deepens _to_ new depth
-Date: Sun, 16 Sep 2012 11:57:57 +0100
-Message-ID: <1347793083-4136-3-git-send-email-philipoakley@iee.org>
+Subject: [PATCH 6/8] Doc add: link gitignore
+Date: Sun, 16 Sep 2012 11:58:01 +0100
+Message-ID: <1347793083-4136-7-git-send-email-philipoakley@iee.org>
 To: gitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 16 14:30:48 2012
+X-From: git-owner@vger.kernel.org Sun Sep 16 14:34:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDDzr-0003h2-Pz
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 14:30:48 +0200
+	id 1TDE3M-0005du-J9
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Sep 2012 14:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab2IPMak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2012 08:30:40 -0400
-Received: from smtp2go.com ([207.58.142.213]:59449 "EHLO smtp2go.com"
+	id S1752576Ab2IPMeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2012 08:34:17 -0400
+Received: from smtp2go.com ([207.58.142.213]:35647 "EHLO smtp2go.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752439Ab2IPMaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2012 08:30:39 -0400
+	id S1751301Ab2IPMeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2012 08:34:05 -0400
 X-Mailer: git-send-email 1.7.8.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205614>
 
-Clarify that 'depth=' specifies the new depth from the remote's
-branch tip. It does not add the depth to the existing shallow clone.
-(details from pack-protocol.txt).
-Clarify that tags are not fetched. (details from shallow.txt)
+Include the gitignore link with the paired gitrepository-
+layout link.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 39d326a..b4d6476 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -10,7 +10,8 @@
- --depth=<depth>::
- 	Deepen the history of a 'shallow' repository created by
- 	`git clone` with `--depth=<depth>` option (see linkgit:git-clone[1])
--	by the specified number of commits.
-+	to the specified number of commits from the tip of each remote
-+	branch history. Tags for the deepened commits are not fetched.
+without the gitignore link users are unlikely to realise the
+significance of the repository layout link, nor what to look for
+within it
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 9c1d395..311be9a 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -155,7 +155,8 @@ Configuration
+ The optional configuration variable `core.excludesfile` indicates a path to a
+ file containing patterns of file names to exclude from git-add, similar to
+ $GIT_DIR/info/exclude.  Patterns in the exclude file are used in addition to
+-those in info/exclude.  See linkgit:gitrepository-layout[5].
++those in info/exclude.  See linkgit:gitrepository-layout[5] and
++linkgit:gitignore[5].
  
- ifndef::git-pull[]
- --dry-run::
+ 
+ EXAMPLES
 -- 
 1.7.8.msysgit.0
