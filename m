@@ -1,71 +1,59 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Test failure: Test #3 in t1304-default-acl
-Date: Mon, 17 Sep 2012 07:18:51 -0700
-Message-ID: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: [PATCH] Documentation: indent-with-non-tab uses tabwidth setting, not just 8
+Date: Mon, 17 Sep 2012 08:20:28 -0600
+Organization: icecavern.net
+Message-ID: <201209170820.28489.wjl@icecavern.net>
+References: <1347815548-19305-1-git-send-email-wjl@icecavern.net> <7v392hxm94.fsf@alter.siamese.dyndns.org> <7v8vc9w5hq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 17 16:19:28 2012
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 16:20:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDcAU-0003fO-Gm
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 16:19:22 +0200
+	id 1TDcBr-0004Vi-8m
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 16:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436Ab2IQOTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 10:19:13 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:59162 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756320Ab2IQOTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 10:19:12 -0400
-Received: by qaas11 with SMTP id s11so1587723qaa.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 07:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=9mpQRQy0Sj0l1CzM3pL0FKHcCEH09/PXvRTw4Nb1E2w=;
-        b=d/+HtNj0J4tHUMfmsLPTrATy2drjP1IyydNDKiVbHLF+O3ASxv9dR0ykwrmGhFsx0K
-         Qzuw4uhM0a+sB1h0u3wwyIzwpA6xSw7xkkJRZl87b6gmEgbcQORSMBCvh/bRHzPPWCpz
-         QzpGpgtA3ISN5ZLmqtYOP3s5eS26UOQFoheq354n+iFwEEo5LLa4hdEYOIQVpUv0eyFr
-         lCvfyplLl5vuRPrhvjC7wk7jcHUZ0HMLE6YJirSR80hzTPMnuCf3aPeYEchi9+MK1K8k
-         9CKXt1WRlv7GJFCJlx858Z2q8oA88ZUQOyZSu/0IibjcjDXp4E/2xmI6NxSBPaF/gd9S
-         NH9A==
-Received: by 10.224.213.10 with SMTP id gu10mr26011161qab.10.1347891551788;
- Mon, 17 Sep 2012 07:19:11 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Mon, 17 Sep 2012 07:18:51 -0700 (PDT)
+	id S1756329Ab2IQOUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 10:20:38 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:51126 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754663Ab2IQOUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 10:20:37 -0400
+Received: from tonberry.icecavern.net (c-76-113-27-84.hsd1.nm.comcast.net [76.113.27.84])
+	by icecavern.net (Postfix) with ESMTPSA id 2A79935C24;
+	Mon, 17 Sep 2012 08:20:34 -0600 (MDT)
+User-Agent: KMail/1.13.7 (Linux/3.4-trunk-amd64; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <7v8vc9w5hq.fsf@alter.siamese.dyndns.org>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205691>
 
-Hi,
+On Monday, September 17, 2012 00:03:29 Junio C Hamano wrote:
+> An alternative would be to lose the "8" (or `tabwidth`) from that
+> description.  I've always thought that the description of `tabwidth`
+> is clear enough that "8" in the patch is not a hardcoded non-overridable
+> value but is merely a default, but after reading that section a few
+> more times, I no longer think that is the case.
+> 
+> I originally wrote "8 or more space" but that wasn't because I
+> thought it was important to stress "8 is the default", but because I
+> didn't think of a better way to say what I wanted to say, which was
+> "if you are filling the indentation with spaces when you could have
+> just typed a tab with a few spaces, this error triggers", in other
+> words "use of this is to encourage indenting with tabs".
 
-The following test in t1304-default-acl.sh fails for me on the latest master:
-
-test_expect_success SETFACL 'Objects creation does not break ACLs with
-restrictive umask' '
-	# SHA1 for empty blob
-	check_perms_and_acl .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-'
-
-It fails in the `grep -q "user:${LOGNAME}:rwx" actual` step, because
-"actual" contains:
-
-# file: .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-# owner: ramkum
-# group: domain^users
-user::r--
-user:root:rwx   #effective:r--
-user:kseygold:rwx       #effective:r--
-group::---
-mask::r--
-other::---
-
-I'm not sure who or what kseygold is.  I haven't dug any deeper.
-
-Thanks.
-
-Ram
+Okay, I'm going to generated a new patch that hopefully reads better!
