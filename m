@@ -1,86 +1,50 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 1/2] git-gui: Fix a loose/lose mistake
-Date: Mon, 17 Sep 2012 11:54:39 +0100
-Message-ID: <87d31kkjgw.fsf@fox.patthoyts.tk>
-References: <1345280851-6626-1-git-send-email-bbolli@ewanet.ch>
-	<7vsjbkrlsv.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Beat Bolli <bbolli@ewanet.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 13:11:17 2012
+From: Adam Spiers <git@adamspiers.org>
+Subject: [PATCH] Add missing -z to git check-attr usage text for consistency with man page
+Date: Mon, 17 Sep 2012 12:38:51 +0100
+Message-ID: <1347881931-9129-1-git-send-email-git@adamspiers.org>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 17 13:39:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDZEQ-0004mQ-Px
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 13:11:15 +0200
+	id 1TDZfJ-0001yI-BS
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 13:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687Ab2IQLLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 07:11:06 -0400
-Received: from queueout04-winn.ispmail.ntl.com ([81.103.221.58]:61262 "EHLO
-	queueout04-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755561Ab2IQLLE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 07:11:04 -0400
-X-Greylist: delayed 894 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Sep 2012 07:11:04 EDT
-Received: from know-smtpout-1.server.virginmedia.net ([62.254.123.4])
-          by mtaout04-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120917105609.XMNI18581.mtaout04-winn.ispmail.ntl.com@know-smtpout-1.server.virginmedia.net>;
-          Mon, 17 Sep 2012 11:56:09 +0100
-Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
-	by know-smtpout-1.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1TDYyS-0005R7-Ag; Mon, 17 Sep 2012 11:54:44 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id C093F22D8F; Mon, 17 Sep 2012 11:54:39 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <7vsjbkrlsv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 18 Aug 2012 13:24:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=AUhbpHVS+xhHrj9wLCYAQoYnFLYUZdbP8UM0GmH2jwk= c=1 sm=0 a=O9HYxzjLEG8A:10 a=OvGj5OTjUhgA:10 a=CtgcEeagiGAA:10 a=kj9zAlcOel0A:10 a=ybZZDoGAAAAA:8 a=Rf460ibiAAAA:8 a=y_OsNOXUAbvi5bOJlo8A:9 a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1756038Ab2IQLiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 07:38:54 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:42407 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755973Ab2IQLiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 07:38:54 -0400
+Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id C99312E5D5
+	for <git@vger.kernel.org>; Mon, 17 Sep 2012 12:38:52 +0100 (BST)
+X-Mailer: git-send-email 1.7.12.147.g6d168f4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205674>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ builtin/check-attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->Beat Bolli <bbolli@ewanet.ch> writes:
->
->> No po update needed, as this string is untranslated.
->>
->> Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
->> ---
->>  git-gui/lib/commit.tcl |    2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
->> index 0d81432..78c5eeb 100644
->> --- a/git-gui/lib/commit.tcl
->> +++ b/git-gui/lib/commit.tcl
->> @@ -268,7 +268,7 @@ proc commit_commitmsg {curHEAD msg_p} {
->>  	    && 	[is_config_true gui.warndetachedcommit]} {
->>  		set msg [mc "You are about to commit on a detached head.\
->>  This is a potentially dangerous thing to do because if you switch\
->> -to another branch you will loose your changes and it can be difficult\
->> +to another branch you will lose your changes and it can be difficult\
->>  to retrieve them later from the reflog. You should probably cancel this\
->>  commit and create a new branch to continue.\n\
->>  \n\
->
->Looks obviously correct; Pat?
->
-
-Yes. Applied.
-
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index e1ff575..075d01d 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -9,7 +9,7 @@ static int cached_attrs;
+ static int stdin_paths;
+ static const char * const check_attr_usage[] = {
+ N_("git check-attr [-a | --all | attr...] [--] pathname..."),
+-N_("git check-attr --stdin [-a | --all | attr...] < <list-of-paths>"),
++N_("git check-attr --stdin [-z] [-a | --all | attr...] < <list-of-paths>"),
+ NULL
+ };
+ 
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+1.7.12.147.g6d168f4
