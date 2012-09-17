@@ -1,59 +1,122 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: [PATCH] Documentation: indent-with-non-tab uses tabwidth setting, not just 8
-Date: Mon, 17 Sep 2012 08:20:28 -0600
-Organization: icecavern.net
-Message-ID: <201209170820.28489.wjl@icecavern.net>
-References: <1347815548-19305-1-git-send-email-wjl@icecavern.net> <7v392hxm94.fsf@alter.siamese.dyndns.org> <7v8vc9w5hq.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using Format/export-subst Howto.
+Date: Mon, 17 Sep 2012 16:21:02 +0200
+Message-ID: <505731CE.1090500@drmicha.warpmail.net>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov> <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net> <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov> <50534FC6.2040207@viscovery.net> <1347656962.3998.140661128069097.6D9BE3C4@webmail.messagingengine.com> <7vfw6k2t8w.fsf@alter.siamese.dyndns.org> <84EA18831601B6429E578236AE239B01A5498B52A3@EAGNMNSXMB07.usa.dce.usps.gov> <50572971.9020204@drmicha.warpmail.net> <84EA18831601B6429E578236AE239B01A5498B5390@EAGNMNSXMB07.usa.dce.usps.gov>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 16:20:47 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Mestnik, Michael J - Eagan, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>
+X-From: git-owner@vger.kernel.org Mon Sep 17 16:21:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDcBr-0004Vi-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 16:20:47 +0200
+	id 1TDcCJ-0004mx-Lt
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 16:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756329Ab2IQOUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 10:20:38 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:51126 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754663Ab2IQOUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 10:20:37 -0400
-Received: from tonberry.icecavern.net (c-76-113-27-84.hsd1.nm.comcast.net [76.113.27.84])
-	by icecavern.net (Postfix) with ESMTPSA id 2A79935C24;
-	Mon, 17 Sep 2012 08:20:34 -0600 (MDT)
-User-Agent: KMail/1.13.7 (Linux/3.4-trunk-amd64; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <7v8vc9w5hq.fsf@alter.siamese.dyndns.org>
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
- =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
- =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
- =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S1756437Ab2IQOVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 10:21:07 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:53477 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756335Ab2IQOVF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 10:21:05 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5976120913;
+	Mon, 17 Sep 2012 10:21:04 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Mon, 17 Sep 2012 10:21:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=dDb11bPtaosHqex0krn0tF
+	KEwno=; b=CwQJGL9Q4FJopXkQ7FNQxs1qBHYCtTmL51fSZw3LXbGm3o/dTfgjvV
+	F+q+gjp4XF5A2oSjYRhBRuqMuFRT0c3Bd5IfBmT4prgLPPGdGfuVwd2RNIdOUyoT
+	wHoyR3KOPQPQ8nB2+ySkx1HC1gYOY8ZxfKyvhrt367u8nIxRMCE9Q=
+X-Sasl-enc: Pgrek0jDCxxj1lL0KFUTY48N7g241+9B4salxBtRnPmE 1347891664
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 72E444835FB;
+	Mon, 17 Sep 2012 10:21:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <84EA18831601B6429E578236AE239B01A5498B5390@EAGNMNSXMB07.usa.dce.usps.gov>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205692>
 
-On Monday, September 17, 2012 00:03:29 Junio C Hamano wrote:
-> An alternative would be to lose the "8" (or `tabwidth`) from that
-> description.  I've always thought that the description of `tabwidth`
-> is clear enough that "8" in the patch is not a hardcoded non-overridable
-> value but is merely a default, but after reading that section a few
-> more times, I no longer think that is the case.
+Mestnik, Michael J - Eagan, MN - Contractor venit, vidit, dixit
+17.09.2012 16:08:
 > 
-> I originally wrote "8 or more space" but that wasn't because I
-> thought it was important to stress "8 is the default", but because I
-> didn't think of a better way to say what I wanted to say, which was
-> "if you are filling the indentation with spaces when you could have
-> just typed a tab with a few spaces, this error triggers", in other
-> words "use of this is to encourage indenting with tabs".
+>> -----Original Message-----
+>> From: Michael J Gruber [mailto:git@drmicha.warpmail.net] 
+>> Sent: Monday, September 17, 2012 8:45 AM
+>> To: Mestnik, Michael J - Eagan, MN - Contractor
+>> Cc: Junio C Hamano; Johannes Sixt; git@vger.kernel.org
+>> Subject: Re: Using Format/export-subst Howto.
+>>
+>> Mestnik, Michael J - Eagan, MN - Contractor venit, vidit, dixit
+>> 17.09.2012 14:12:
+>>>
+>>>> -----Original Message-----
+>>>> From: Junio C Hamano [mailto:gitster@pobox.com] 
+>>>> Sent: Friday, September 14, 2012 4:24 PM
+>>>> To: Michael J Gruber
+>>>> Cc: Johannes Sixt; Mestnik, Michael J - Eagan, MN - 
+>>>> Contractor; git@vger.kernel.org
+>>>> Subject: Re: Using Format/export-subst Howto.
+>>>>
+>>>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>>
+>>>>> you need to "rm file && git checkout file"). If the user 
+>>>> has to update
+>>>>> $Id$ to match the current sha1
+>>>>> (by remembering to do a more forceful checkout than 
+>>>> checkout -f) then
+>>>>> one half of that feature is useless. 
+>>>>
+>>>> As if there is any value in "$Id$" _feature_.  It's a 
+>> checkbox item,
+>>>> nothing more ;-).
+>>>>
+>>>
+>>> I agree here, $Id$ is much more useful in rcs/cvs.  That's 
+>> why I chose to dive into export-subst, because I wanted my 
+>> output to not only contain the uniq Id of the script but also 
+>> the time and user of the last edit.
+>>>
+>>> I'm going to read up on export today.  Just for context I'm 
+>> using git to manage daily cron scripts, run on about 1,000 
+>> hosts, located on NFS.  I've moved the editing of the scripts 
+>> into user's home directories as I'm a fan of not using 
+>> editors on live data.  The key point is that when sudoing to 
+>> the shared user who manages the files the commands run should 
+>> be minimal and "pushd; ln -s ... .git; git pull; rm .git; 
+>> popd;" works well.  If I can replace this with something that 
+>> would populate these fields that would be awesome.
+>>
+>> I'm not completely sure about the setup, but something like
+>>
+>> GIT_DIR=fromthisrepo git archive usethisbranchortag |
+>> git tar -xf- -C thereyougo
+>>
+> Yes, that's about what the man page says.  I though I could pass --keep-newer-files to tar and that would prevent files from being re-created, but a "git archive --format=tar HEAD | tar -tvv" indicates that every file has the current date/time and not, for example, the time of the last commit that modified that file.  Not only would pushing every file be undesirable it would also cause every server to pull every file and that's unacceptable.  Another down side, or perhaps this is the downside, to this method is that it lacks any form of merge capability and will destroy local changes.
 
-Okay, I'm going to generated a new patch that hopefully reads better!
+I thought it's only a few files and you don't care about merging (in
+sudo), only about deploying a checkout, since you're removing the git dir.
+
+> It looks like I'll be doing this in a hook.
+> 
+> BTW: I couldn't find "git tar", if it exists that might be the way for me...  Depending on what it would do.
+
+Oh yeah. Done too much git work lately. I know I keep using "git help
+foo" rather than "man foo", but this one is new :)
+
+I just meant tar.
+
+Michael
