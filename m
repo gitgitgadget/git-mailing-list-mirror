@@ -1,73 +1,70 @@
 From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: [PATCH v7 3/4] poll() exits too early with EFAULT if 1st arg is NULL
-Date: Mon, 17 Sep 2012 23:23:17 +0200
-Message-ID: <004d01cd951a$a8268f00$f873ad00$@schmitz-digital.de>
+Subject: [PATCH v7 4/4] make poll() work on platforms that can't recv() on a non-socket
+Date: Mon, 17 Sep 2012 23:24:42 +0200
+Message-ID: <004e01cd951a$daed3740$90c7a5c0$@schmitz-digital.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
 To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 23:23:46 2012
+X-From: git-owner@vger.kernel.org Mon Sep 17 23:25:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDin8-0005ey-BG
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 23:23:42 +0200
+	id 1TDioV-0006Ux-7M
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 23:25:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325Ab2IQVXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 17:23:34 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:57792 "EHLO
+	id S1753361Ab2IQVY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 17:24:59 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:56411 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179Ab2IQVXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 17:23:33 -0400
+	with ESMTP id S1752670Ab2IQVY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 17:24:58 -0400
 Received: from DualCore (dsdf-4db53772.pool.mediaWays.net [77.181.55.114])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0M5c8C-1TT2gE41rU-00y1MQ; Mon, 17 Sep 2012 23:23:31 +0200
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0MSCaM-1T6gba0f7K-00TGtE; Mon, 17 Sep 2012 23:24:56 +0200
 X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2VGiUfp3kBpjZhSZyaf6Xp5ganUQ==
+Thread-Index: Ac2VGr+4t9HezhgvQkSSa5lkNrvHfQ==
 Content-Language: de
-X-Provags-ID: V02:K0:YQAbXEd1TmRrWWKUzhB+Zu9RwJORQD4MH0l5euGQT/5
- tyYI0MUfT65hEmj1cAs5J2B26J94d62bVOFYGgi0GWxlkVKqbh
- z8a4fofBOVX+BIGvBkMoXuddUeOegMmWtKSP7wD/I6TJvejAtZ
- 7F8Tm788CZBGn6fCgVwrleKBhT8LXwaCnmm1WTBfYEIWuxHEVV
- j7EvPejfVUzUQZQeMiHPgkQB6tAjKEO5qeYl2CyTCq8swTMUN+
- 8/5Ij2vDsA1oJQZlwjXz/a2Cp8+rdOCh/iqGOnXwS8+hFZSweV
- eud4wZIQBkrMRm9xxgPlp+jTuH7fzw+R/szIi/Vn1QDQ6zib1b
- Sc1DS9dhPPg2FP+BHmCWTd3VBvF9P1riXhAFGnY37FBXljTbol
- vxzCuFcnTTLMg==
+X-Provags-ID: V02:K0:MB6J7Fl16WBXuCZeYGGYcS7HgEO+yNvYA58VQ39Be/3
+ 24D4a2XsKHhh6x/GKpcjEgYGOrkgmjDQah4qkss6tqTRc40Bfi
+ A1imSRXC2A6Ka7rjIokGktGL2bpz96F1aLMKeXYXFo9+ArBfan
+ FPw5zsqsYUkHqTOgBwGltiFVhg+KdikXZUf4qG6Y5QLwIn47A1
+ mPUbDVZ/E1x+evcV+FA0mbo5tpowwmyQYhTE7K8Gb11vYPdZLX
+ kKSYj9mNerW5xce+u4nNP48Cb9phUK8MEqYosyzpd/ENh7LmO5
+ +d96m/adRoHq/D3wDVuroPD/E8P7g/1BAd3ZNo8t3EnDH6EZcp
+ UsyqR19NoldMhC1ZMjYl/sCMiQtHpFBJB28/58ITUrXC2WnFPa
+ P3WtB5OJ9K81Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205754>
 
-If poll() is used as a milli-second sleep, like in help.c, by passing a NULL
-in the 1st and a 0 in the 2nd arg, it exits with EFAULT.
-
-As per Paolo Bonzini, the original author, this is a bug and to be fixed 
-Like in this commit, which is not to exit if the 2nd arg is 0. It got fixed
-In gnulib in the same manner the other day.
+This way it just got added to gnulib too the other day.
 
 Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
 ---
- compat/poll/poll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/poll/poll.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/compat/poll/poll.c b/compat/win32/poll.c
-index 403eaa7..9e7a25c 100644
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index e4b8319..10a204e 100644
 --- a/compat/poll/poll.c
 +++ b/compat/poll/poll.c
-@@ -357,7 +357,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+@@ -306,6 +306,10 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
+ 	       || socket_errno == ECONNABORTED || socket_errno == ENETRESET)
+ 	happened |= POLLHUP;
  
-   /* EFAULT is not necessary to implement, but let's do it in the
-      simplest case. */
--  if (!pfd)
-+  if (!pfd && nfd)
-     {
-       errno = EFAULT;
-       return -1;
++      /* some systems can't use recv() on non-socket, including HP NonStop */
++      else if (/* (r == -1) && */ socket_errno == ENOTSOCK)
++	happened |= (POLLIN | POLLRDNORM) & sought;
++
+       else
+ 	happened |= POLLERR;
+     }
 -- 
 1.7.12
