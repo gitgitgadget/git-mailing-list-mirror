@@ -1,60 +1,97 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 4/5] Integrate wildmatch to git
-Date: Mon, 17 Sep 2012 12:57:13 +0700
-Message-ID: <CACsJy8Bwf_Xm_dbo1YtV9nynBy=V0_tPnPHR8bskjuHe9hpLsQ@mail.gmail.com>
-References: <1347710524-15404-1-git-send-email-pclouds@gmail.com>
- <1347809265-2457-1-git-send-email-pclouds@gmail.com> <1347809265-2457-5-git-send-email-pclouds@gmail.com>
- <7vpq5lw6z8.fsf@alter.siamese.dyndns.org> <7vd31lw5vy.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: indent-with-non-tab uses tabwidth
+ setting, not just 8
+Date: Sun, 16 Sep 2012 23:03:29 -0700
+Message-ID: <7v8vc9w5hq.fsf@alter.siamese.dyndns.org>
+References: <1347815548-19305-1-git-send-email-wjl@icecavern.net>
+ <7v392hxm94.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 07:57:54 2012
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Mon Sep 17 08:03:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDULB-0008HS-2H
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 07:57:53 +0200
+	id 1TDUQp-0002Sa-Ce
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 08:03:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab2IQF5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 01:57:45 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:40446 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473Ab2IQF5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 01:57:44 -0400
-Received: by ieak13 with SMTP id k13so27910iea.19
-        for <git@vger.kernel.org>; Sun, 16 Sep 2012 22:57:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4YPLcwWP9t1V0pvEN+A34LTU5TCWzFfIUpu96R7q4c8=;
-        b=ohzTUE3sA18Hs+Is3+zdcPdr2zxt+JpAlYBR+0xKHvfGci7pIQ+8FuiyvFEVyScNZJ
-         zvggEN5ZMZ12dVVtnY7YdaCZ/Bt7s1I5Z+FQQCVPDCMJgDVQl66d1PaXuto0/gsVfpEA
-         INOfNSADHyuzXN5HpfhnMi1nkk3dsuU2I0WN2uxMgUTEoN73hiVmXkqXKBCaLyPRnwlt
-         3z13NBFNSwKp+spipGjnX37E/YqImbC+L/QHzFR4ccDmJOtgEyJlHAIAF9V6nr3pS544
-         bm6WlkIIRUzWFBnU0B36RXeuisnnxhHUWNg1YBvxqUDV+Gk43vhOAUsb//D6/W+TVTbq
-         wY7g==
-Received: by 10.50.40.132 with SMTP id x4mr5612397igk.48.1347861464132; Sun,
- 16 Sep 2012 22:57:44 -0700 (PDT)
-Received: by 10.64.64.72 with HTTP; Sun, 16 Sep 2012 22:57:13 -0700 (PDT)
-In-Reply-To: <7vd31lw5vy.fsf@alter.siamese.dyndns.org>
+	id S1753328Ab2IQGDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 02:03:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50973 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752686Ab2IQGDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 02:03:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 568C166A3;
+	Mon, 17 Sep 2012 02:03:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3yGH2mvax61WWSocUzV0ipC4Y5o=; b=CupKTx
+	5zms6+5yt/5x38+8kw6xVxsOCE/ww9vWS5RRXyvPStmxoLZpFpPwhpQ0z2Im5gmD
+	P9RO5sdigmwCJafw/zX18wbUZLtjUPRFOTNpMmpvgFLERfLXR/fvKsrb2N5DjrDy
+	aZPOPjL1PijnNXQOeJllJezfVKFjmV7YMdG8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NvKXWKU6Obk9YkSOEw1oZ2pNc2BsA/On
+	Ayx0IQkbnOaAhUIQTfhIOEkC0rqfImmKf9PNDo3V8U5Fy9N4HJQUktij+ZSilrrV
+	7mCYzVYaOqIs+H2hDAtEOYa78OZYydTAnqBLqYPjnxQ6tZjWr1KuziLM6jyrny58
+	WUPUU4lRcKY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 455E566A2;
+	Mon, 17 Sep 2012 02:03:32 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A071B66A1; Mon, 17 Sep 2012
+ 02:03:31 -0400 (EDT)
+In-Reply-To: <7v392hxm94.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 16 Sep 2012 22:16:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6869196C-008D-11E2-82B8-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205654>
 
-On Mon, Sep 17, 2012 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Yeah, popt.h it is.  It is a bit distasteful that we have a build
-> dependency only to build test-* helper on something that we do not
-> even have runtime dependency on.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yep. I don't know how popular libpopt is. But if it's undesired, we
-could rewrite test-wildmatch.c to use parse-options.c instead. We fork
-from rsync anyway due to license conflict so we don't have to keep it
-close to upstream any more.
--- 
-Duy
+>> @@ -559,8 +559,8 @@ core.whitespace::
+>>  * `space-before-tab` treats a space character that appears immediately
+>>    before a tab character in the initial indent part of the line as an
+>>    error (enabled by default).
+>> -* `indent-with-non-tab` treats a line that is indented with 8 or more
+>> -  space characters as an error (not enabled by default).
+>> +* `indent-with-non-tab` treats a line that is indented with `tabwidth` space
+>> +  characters or more as an error (not enabled by default).
+>
+> I would rather see this part left untouched.
+>
+> Your new text will force people who are not interested in using
+> non-standard tab width to read through the bulletted list, only to
+> find "The default tab width is 8".  I think that is a regression in
+> the documentation for more common readers.
+>
+> When somebody wants to use `indent-with-non-tab` and gets offended
+> by the seemingly hardcoded "8" in the description, the reader has
+> incentive to find out if there is a way to change that 8, and will
+> find `tabwidth=<n>` in the same bulletted list described, with the
+> effect it has on both `indent-with-non-tab` and `tab-in-indent`.
+>
+> I think that should be sufficient for people who do use non-standard
+> tab width using tabwidth=<n>.
+
+An alternative would be to lose the "8" (or `tabwidth`) from that
+description.  I've always thought that the description of `tabwidth`
+is clear enough that "8" in the patch is not a hardcoded non-overridable
+value but is merely a default, but after reading that section a few
+more times, I no longer think that is the case.
+
+I originally wrote "8 or more space" but that wasn't because I
+thought it was important to stress "8 is the default", but because I
+didn't think of a better way to say what I wanted to say, which was
+"if you are filling the indentation with spaces when you could have
+just typed a tab with a few spaces, this error triggers", in other
+words "use of this is to encourage indenting with tabs".
