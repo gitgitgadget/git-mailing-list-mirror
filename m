@@ -1,92 +1,78 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] string_list API: document what "sorted" means.
-Date: Mon, 17 Sep 2012 17:21:07 +0200
-Message-ID: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 17:21:40 2012
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Test failure: Test #3 in t1304-default-acl
+Date: Mon, 17 Sep 2012 17:23:27 +0200
+Message-ID: <vpqd31kr7v4.fsf@grenoble-inp.fr>
+References: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com>
+	<vpqy5k8raig.fsf@grenoble-inp.fr>
+	<CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 17:23:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDd8i-0005vQ-2P
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 17:21:36 +0200
+	id 1TDdAk-0007Bb-A7
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 17:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756725Ab2IQPV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 11:21:27 -0400
-Received: from ALUM-MAILSEC-SCANNER-2.MIT.EDU ([18.7.68.13]:59528 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755163Ab2IQPV0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 11:21:26 -0400
-X-AuditID: 1207440d-b7f236d000000943-2d-50573ff6082e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 8D.F6.02371.6FF37505; Mon, 17 Sep 2012 11:21:26 -0400 (EDT)
-Received: from michael.berlin.jpk.com (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8HFLGHG021884
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 17 Sep 2012 11:21:25 -0400
-X-Mailer: git-send-email 1.7.11.3
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqPvNPjzAYEUjj0XXlW4mi4beK8wW
-	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGcsnPCSvWAZb8XrC2/YGhjb
-	uLsYOTkkBEwkfryYwAZhi0lcuLceyObiEBK4zCixYPZRVgjnDJPEza57LCBVbAK6Eot6mplA
-	bBEBNYmJbYfA4swCDhKbPzcygtjCAvYSDV8+MIPYLAKqErdO72PvYuTg4BVwluh9owOxTFHi
-	x/c1zBMYuRcwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXSy80s0UtNKd3ECPE97w7G/+tk
-	DjEKcDAq8fAaTwoLEGJNLCuuzD3EKMnBpCTKe8s2PECILyk/pTIjsTgjvqg0J7X4EKMEB7OS
-	CO9tAaAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCVwAY4kKCRanp
-	qRVpmTklCGkmDk4QwQWygQdow1o7kA3FBYm5xZnpEEWnGBWlxHmVQSYIgCQySvPgBsCi9BWj
-	ONA/wrw6IFU8wAiH634FNJgJaHDFkzCQwSWJCCmpBsZZp6c9uh4tb2rYtXVNzIIYFf0vTvOF
-	9s++03VK4/liaSHjS7XrDmu01Tlnsaq8WPB8lcZzyaYDQvLhr9+kz326wIznmMnjRdwtwVOk
-	U25+vu+zfw1bq9WOu/Vf77xev6itcrviZ0nz91vVDmx3UjS98CqR+21a7ori61fM3udOnyP8
-	ZIJ53mUDJZbijERDLeai4kQAbllPWa0CAAA=
+	id S1756849Ab2IQPXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 11:23:33 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38730 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753405Ab2IQPXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 11:23:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q8HFI4X2006488
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 17 Sep 2012 17:18:04 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TDdAV-00052D-Gk; Mon, 17 Sep 2012 17:23:27 +0200
+In-Reply-To: <CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 17 Sep 2012 08:01:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 17 Sep 2012 17:18:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8HFI4X2006488
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1348499885.32226@hl+nLFUeiy5Hb177H4BWXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205699>
 
-Junio pointed out that the sort order currently used by string_list
-could be considered to be an implementation detail internal to
-string_list.  But the sort order is already visible to the outside
-world (e.g., via iteration or via print_string_list()), so it
-shouldn't be changed willy-nilly.  Therefore, document the current
-sort order as part of the API's contract.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-(If, at some future time, somebody wants a string_list that is sorted
-by a different criterion, then the order should be made specifiable
-via a callback function specified by the user.)
+> Hi Matthieu,
+>
+> Matthieu Moy wrote:
+>> Do you have any user with this login (finger kseygold)? I suspect you
+>> have two usernames with the same user ID.
+>
+> Login: kseygold                         Name: Seybold
+> Directory: /home/likewise-open/ANT/kseygold     Shell: /bin/zsh
+> Office:  Kelly
+> Last login Tue Aug 28 12:16 (IST) on tty2
+> No mail.
+> No Plan.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/technical/api-string-list.txt | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Does this user have the same UID as your usual user
+(id kseygold; id $LOGNAME)?
 
-diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-index 155ac8c..94d7a2b 100644
---- a/Documentation/technical/api-string-list.txt
-+++ b/Documentation/technical/api-string-list.txt
-@@ -1,8 +1,9 @@
- string-list API
- ===============
- 
--The string_list API offers a data structure and functions to handle sorted
--and unsorted string lists.
-+The string_list API offers a data structure and functions to handle
-+sorted and unsorted string lists.  A "sorted" list is one whose
-+entries are sorted by string value in `strcmp()` order.
- 
- The 'string_list' struct used to be called 'path_list', but was renamed
- because it is not specific to paths.
-@@ -143,7 +144,7 @@ write `string_list_insert(...)->util = ...;`.
- 
- `sort_string_list`::
- 
--	Make an unsorted list sorted.
-+	Sort the list's entries by string value in `strcmp()` order.
- 
- `unsorted_string_list_has_string`::
- 
+>> Which filesystem are you using in this directory?
+>
+> / is ext4.  What does that have to do with anything?
+
+Last time we had a failure in this test, it was a filesystem bug ...
+
 -- 
-1.7.11.3
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
