@@ -1,74 +1,107 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Test failure: Test #3 in t1304-default-acl
-Date: Mon, 17 Sep 2012 08:32:56 -0700
-Message-ID: <CALkWK0=cDW7BU6QofaeLbtETwzrnWBuuKcpgYNaM1x5tutisfA@mail.gmail.com>
+Date: Mon, 17 Sep 2012 17:49:40 +0200
+Message-ID: <vpqvcfcps2z.fsf@grenoble-inp.fr>
 References: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com>
- <vpqy5k8raig.fsf@grenoble-inp.fr> <CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
- <m2txuw1xcj.fsf@igel.home>
+	<vpqy5k8raig.fsf@grenoble-inp.fr>
+	<CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
+	<vpqd31kr7v4.fsf@grenoble-inp.fr>
+	<CALkWK0=ROz8fxXgnqt-+AthU-hgq_mzFg0GhBQCrAshH_mRBPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Sep 17 17:33:28 2012
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 17:49:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDdK9-0005BI-W5
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 17:33:26 +0200
+	id 1TDda8-0006v4-Fk
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 17:49:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132Ab2IQPdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 11:33:18 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:39208 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932073Ab2IQPdR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 11:33:17 -0400
-Received: by qcro28 with SMTP id o28so4560250qcr.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 08:33:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=oK3rY4fhe4icDsZ92j1D5zfVw4PcHeZkW2OyB1hDHbc=;
-        b=GogmyYEVLczZXbsKyLat11Sy8i59ZezQipFyVN1IuHkIeP3FZMZ3A22/ScZo/8ZsWM
-         bCMqVoNincZrc3bnNTctsXuq6Nh6nOafzOpEkzjCDCsrdqBkAx6HJahoj+cMeyH9yHZP
-         yPOfGsxY+KIyuxmXESGa4S1IsS20ZMKYDPq6QCKwXWtaOJQAgmtRl21Bie/pVjp71Od6
-         Y1iNMeEIy0bQMo7iVHmAsZ9CnPE6BBcKwA6ThgPznEbTCxzOfRQ73auRofKTOYRZ0l5y
-         livV2XieTN1nBrvhEHs1HkNImaehbYKQz6W8pe3PPTuNnDWjIIUXi0filboOKyouUpJA
-         QDvg==
-Received: by 10.224.58.147 with SMTP id g19mr28172127qah.77.1347895996410;
- Mon, 17 Sep 2012 08:33:16 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Mon, 17 Sep 2012 08:32:56 -0700 (PDT)
-In-Reply-To: <m2txuw1xcj.fsf@igel.home>
+	id S932145Ab2IQPts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 11:49:48 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43549 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932093Ab2IQPtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 11:49:47 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8HFivo4012389
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 17 Sep 2012 17:44:57 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TDdZs-0005ar-Ca; Mon, 17 Sep 2012 17:49:40 +0200
+In-Reply-To: <CALkWK0=ROz8fxXgnqt-+AthU-hgq_mzFg0GhBQCrAshH_mRBPQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Mon, 17 Sep 2012 08:25:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 17 Sep 2012 17:44:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8HFivo4012389
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1348501501.84989@4j8eiU4X6EdSMo3uC1Q8Kg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205703>
 
-Hi Andreas,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Andreas Schwab wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> Hi again,
 >
->> Hi Matthieu,
->>
->> Matthieu Moy wrote:
->>> Do you have any user with this login (finger kseygold)? I suspect you
->>> have two usernames with the same user ID.
->>
->> Login: kseygold                         Name: Seybold
+> Matthieu Moy wrote:
+>> Does this user have the same UID as your usual user
+>> (id kseygold; id $LOGNAME)?
 >
-> What about "id kseygold; id ramkum"?
+> Yes.  What do you propose we do about the test?
 
-Apart from the UIDs matching, what do you find interesting about the output?
+On a GNU system, something like this should do the trick:
 
-uid=1420023794(kseygold) gid=1419772417(domain^users)
-groups=1419772417(domain^users),1419841836(sw-xchat-irc-client),1419932703(gref-sp-visitors),1419997311(fs-dus2-training-public),1420238821(sw-amazon-cloud-uploader),1419880095(dfs-pcsoft),1419980124(cs-psc-users),1419988839(scmdmauthorizedusers^(amzn-mdm)),1420131555(fs-lej1-oe-extern),1420053059(wireless-corporatewifi-allow),1419965136(sw-ms-ie7),1419812553(opr-pcsoft),1419806474(mac-caspershare-access),1419852490(dcolnl-accessrequestor),1419852491(dcolnl-visitorpre-registrationrequestor)
-uid=1420023794(ramkum) gid=1419772417(domain^users)
-groups=1419772417(domain^users),4(adm),20(dialout),24(cdrom),46(plugdev),116(lpadmin),118(admin),125(sambashare),1419841836(sw-xchat-irc-client),1419932703(gref-sp-visitors),1419997311(fs-dus2-training-public),1420238821(sw-amazon-cloud-uploader),1419992049(fhrix-employees),1419880095(dfs-pcsoft),1419988839(scmdmauthorizedusers^(amzn-mdm)),1420131555(fs-lej1-oe-extern),1420053059(wireless-corporatewifi-allow),1419812553(opr-pcsoft),1419806474(mac-caspershare-access),1419852490(dcolnl-accessrequestor),1419852491(dcolnl-visitorpre-registrationrequestor)
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -31,9 +31,9 @@ fi
+ 
+ check_perms_and_acl () {
+        test -r "$1" &&
+-       getfacl "$1" > actual &&
++       getfacl --numeric "$1" > actual &&
+        grep -q "user:root:rwx" actual &&
+-       grep -q "user:${LOGNAME}:rwx" actual &&
++       grep -q "user:$(id -u):rwx" actual &&
+        egrep "mask::?r--" actual > /dev/null 2>&1 &&
+        grep -q "group::---" actual || false
+ }
 
-Ram
+but it seems FreeBSD's getfacl doesn't have --numeric
+(http://www.unix.com/man-page/FreeBSD/1/getfacl/), so to be portable, we
+need some more surgery, like this:
+
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -33,7 +33,10 @@ check_perms_and_acl () {
+        test -r "$1" &&
+        getfacl "$1" > actual &&
+        grep -q "user:root:rwx" actual &&
+-       grep -q "user:${LOGNAME}:rwx" actual &&
++       grep "user:.*:rwx" actual | grep -v 'user:root:' | \
++           cut -d : -f 2 | xargs id -u > acl-uid &&
++       id -u > actual-uid &&
++       test_cmp acl-uid actual-uid &&
+        egrep "mask::?r--" actual > /dev/null 2>&1 &&
+        grep -q "group::---" actual || false
+ }
+
+Can you check that this second patch fixes your problem?
+
+I'm a bit hesitant to submit it to git.git, as I find it a bit too
+hacky. What do other people think?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
