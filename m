@@ -1,85 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 5/5] Git::SVN: rename private path field
-Date: Mon, 17 Sep 2012 02:13:31 -0700
-Message-ID: <20120917091331.GF358@elie.Belkin>
-References: <1343419252-9447-1-git-send-email-schwern@pobox.com>
- <1343419252-9447-2-git-send-email-schwern@pobox.com>
- <20120917090435.GA358@elie.Belkin>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: Fix semi-working shortcuts for unstage and revert
+Date: Mon, 17 Sep 2012 11:47:01 +0100
+Message-ID: <87haqxj596.fsf@fox.patthoyts.tk>
+References: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, robbat2@gentoo.org,
-	bwalton@artsci.utoronto.ca,
-	"Michael G. Schwern" <schwern@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Sep 17 11:13:43 2012
+Cc: git@vger.kernel.org, bert.wesarg@googlemail.com
+To: vi0oss@gmail.com
+X-From: git-owner@vger.kernel.org Mon Sep 17 12:47:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDXOh-0006zb-HC
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 11:13:43 +0200
+	id 1TDYru-0000jm-99
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 12:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360Ab2IQJNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 05:13:36 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:64302 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755342Ab2IQJNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 05:13:35 -0400
-Received: by pbbrr13 with SMTP id rr13so8707480pbb.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 02:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=huSsaGJd3Q1f3/HD3q6rvxDvbv4fuxEZmq+q45US1kM=;
-        b=YhZWVKX5VDJ+wkw7EHuaBAy8FkozbpPFKmDOOXwUyqek5LDfJCsQ59anGa1R/jQOWB
-         oSEvMDf6ElaNRPXYdJniO0CecBrNEB44Uo9+AjZgtuPZrEpi2HACYkbFcPZJU/WhnpaC
-         lHCpziVqzfJpv8Ypil1Vm3RAOfGzNTciseHMwhMMT8BIKIJO/YWEA1e5WE6HNchfcgZL
-         zwOISNqVCUnGLxoXvAB/pcRrGf6pB/pBxrR0hFXInCDiBkTOhWmG76z7l4XxTfrdXTfC
-         fzmt6kbEsPb5r1C4wWDQFHjYgIliAWAUd4JEZw+7JL9kpEV5MhTnT1tHBqIrpzmnwFkE
-         Ny0Q==
-Received: by 10.66.83.234 with SMTP id t10mr19219359pay.39.1347873214847;
-        Mon, 17 Sep 2012 02:13:34 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id gv1sm6630809pbc.38.2012.09.17.02.13.33
-        (version=SSLv3 cipher=OTHER);
-        Mon, 17 Sep 2012 02:13:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120917090435.GA358@elie.Belkin>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1755065Ab2IQKrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 06:47:49 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:7806 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755048Ab2IQKrs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 06:47:48 -0400
+Received: from know-smtpout-1.server.virginmedia.net ([62.254.123.3])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120917104747.XNGT1732.mtaout02-winn.ispmail.ntl.com@know-smtpout-1.server.virginmedia.net>;
+          Mon, 17 Sep 2012 11:47:47 +0100
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-1.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1TDYr0-00035H-Cr; Mon, 17 Sep 2012 11:47:02 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 83C4722D8F; Mon, 17 Sep 2012 11:47:01 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <1347665801-22634-1-git-send-email-vi0oss@gmail.com>
+	(vi0oss@gmail.com's message of "Sat, 15 Sep 2012 02:36:41 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=GaEGOwq9FwezmTggA+b6yC6zDZF2HYaK6RN/tSqdnVA= c=1 sm=0 a=O9HYxzjLEG8A:10 a=U-3pZBPxRUYA:10 a=CtgcEeagiGAA:10 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8 a=Rf460ibiAAAA:8 a=Ja7G19IsQW6iLtDtJ-8A:9 a=CjuIK1q_8ugA:10 a=MSl-tDqOz04A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205671>
 
-All users of $gs->{path} should have been converted to use the
-accessor by now.  Check our work by renaming the underlying variable
-to break callers that try to use it directly.
+vi0oss@gmail.com writes:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- perl/Git/SVN.pm |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>From: Vitaly _Vi Shukela <vi0oss@gmail.com>
+>
+>Make Ctrl+U for unstaging and Ctrl+J for reverting selection behave
+>more like Ctrl+T for adding.
+>
+>They were working only when one area was focused (diff or commit message),
+>now they should work everywhere.
+>
+>Signed-off-by: Vitaly _Vi Shukela <vi0oss@gmail.com>
+>---
+>Sending the patch the third time (haven't got any replies to previous two attempts).
+>
+> git-gui/git-gui.sh |    4 ++++
+> 1 files changed, 4 insertions(+), 0 deletions(-)
+>
+>diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+>index ba4e5c1..6618016 100755
+>--- a/git-gui/git-gui.sh
+>+++ b/git-gui/git-gui.sh
+>@@ -3710,6 +3710,8 @@ bind $ui_diff <$M1B-Key-v> {break}
+> bind $ui_diff <$M1B-Key-V> {break}
+> bind $ui_diff <$M1B-Key-a> {%W tag add sel 0.0 end;break}
+> bind $ui_diff <$M1B-Key-A> {%W tag add sel 0.0 end;break}
+>+bind $ui_diff <$M1B-Key-j> {do_revert_selection;break}
+>+bind $ui_diff <$M1B-Key-J> {do_revert_selection;break}
+> bind $ui_diff <Key-Up>     {catch {%W yview scroll -1 units};break}
+> bind $ui_diff <Key-Down>   {catch {%W yview scroll  1 units};break}
+> bind $ui_diff <Key-Left>   {catch {%W xview scroll -1 units};break}
+>@@ -3742,6 +3744,8 @@ bind .   <$M1B-Key-s> do_signoff
+> bind .   <$M1B-Key-S> do_signoff
+> bind .   <$M1B-Key-t> do_add_selection
+> bind .   <$M1B-Key-T> do_add_selection
+>+bind .   <$M1B-Key-u> do_unstage_selection
+>+bind .   <$M1B-Key-U> do_unstage_selection
+> bind .   <$M1B-Key-j> do_revert_selection
+> bind .   <$M1B-Key-J> do_revert_selection
+> bind .   <$M1B-Key-i> do_add_all
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 3aa20109..33f15682 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -2293,11 +2293,11 @@ sub path {
- 
- 	if (@_) {
- 		my $path = shift;
--		$self->{path} = $path;
-+		$self->{_path} = $path;
- 		return;
- 	}
- 
--	return $self->{path};
-+	return $self->{_path};
- }
- 
- # for read-only access of old .rev_db formats
+Looks good to me. Applied.
+
+Thank you. 
+
 -- 
-1.7.10.4
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
