@@ -1,68 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How do I run tests under Valgrind?
-Date: Mon, 17 Sep 2012 13:35:31 -0400
-Message-ID: <20120917173531.GB1179@sigill.intra.peff.net>
-References: <CALkWK0m_9OsAfG_pF3hUDW+EKCyZCn9NiDKKEW6AEOMmAw=yuA@mail.gmail.com>
- <20120917172022.GA1179@sigill.intra.peff.net>
- <CALkWK0m378ApSwa1xiYUqEjMny5m0wt3KacqdDRU1qt=cw6k8g@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC] test-lib: add support for colors without tput
+Date: Mon, 17 Sep 2012 19:39:36 +0200
+Message-ID: <50576058.4020508@kdbg.org>
+References: <1347640905-1400-1-git-send-email-kusmabite@gmail.com> <CABPQNSa1hEG_rB9hd8izW+iL1TQVAKu5W1=GbG20ROv-+DMgVg@mail.gmail.com> <CABPQNSaArMz8hTiNZyD__K8bjntUuFUvk7Ojpu6NeXWLkJSUiA@mail.gmail.com> <50536943.4030300@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 19:35:50 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: kusmabite@gmail.com
+X-From: msysgit+bncBCJYV6HBKQINVQG5QICRUBDXYKQVK@googlegroups.com Mon Sep 17 19:39:49 2012
+Return-path: <msysgit+bncBCJYV6HBKQINVQG5QICRUBDXYKQVK@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lpp01m010-f58.google.com ([209.85.215.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDfEV-0003Ao-Ve
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 19:35:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756135Ab2IQRff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 13:35:35 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:46649 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755801Ab2IQRfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 13:35:34 -0400
-Received: (qmail 9299 invoked by uid 107); 17 Sep 2012 17:35:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Sep 2012 13:35:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Sep 2012 13:35:31 -0400
-Content-Disposition: inline
-In-Reply-To: <CALkWK0m378ApSwa1xiYUqEjMny5m0wt3KacqdDRU1qt=cw6k8g@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205719>
+	(envelope-from <msysgit+bncBCJYV6HBKQINVQG5QICRUBDXYKQVK@googlegroups.com>)
+	id 1TDfIO-0005gZ-Ev
+	for gcvm-msysgit@m.gmane.org; Mon, 17 Sep 2012 19:39:44 +0200
+Received: by lahd3 with SMTP id d3sf2420627lah.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 17 Sep 2012 10:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=OK+ttpnAlKNu7w1rMDpYLzU6LYkT9FnGxVoEUm8pcV8=;
+        b=jeilHtnnxYXPTBK5ITUMhl/mbslP8fRGfVyolXyH7evx7Fp6ZKKjVYNTUOBDNJNA+O
+         yodjHaemUYWXfGkeNtMXYSKmpWGUY8E4WncGbXhApxfL8nDe0xpX4f/6lSW3lT/nSXUm
+         fRt2d1+0BgqqJFCzc4VoU+l56UWVEuA2Og4OCzzAkYuBL9A5ikZZWaonhJ0MtURs6gui
+         vcRdnc0ZBzqhkvVMN77G9jEj3FdlVFu0tr3d4bWAft84UoRIbC2LPDBVrt4NgDxgHuF7
+         dUZgURAk8EQfQ5Lg4DtqYCMl2Mk0Yy/5etbMTPPEThaVTuaSKPKymkN3QrZLgcAuT3VE
+         fKHA== 
+Received: by 10.204.145.73 with SMTP id c9mr752800bkv.16.1347903579676;
+        Mon, 17 Sep 2012 10:39:39 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.204.7.203 with SMTP id e11ls6721565bke.8.gmail; Mon, 17 Sep
+ 2012 10:39:38 -0700 (PDT)
+Received: by 10.204.128.207 with SMTP id l15mr1373335bks.4.1347903578525;
+        Mon, 17 Sep 2012 10:39:38 -0700 (PDT)
+Received: by 10.204.128.207 with SMTP id l15mr1373334bks.4.1347903578508;
+        Mon, 17 Sep 2012 10:39:38 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp4.bon.at. [195.3.86.186])
+        by gmr-mx.google.com with ESMTPS id 23si895213bku.1.2012.09.17.10.39.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 17 Sep 2012 10:39:38 -0700 (PDT)
+Received-SPF: neutral (google.com: 195.3.86.186 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.186;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 901E62C4010;
+	Mon, 17 Sep 2012 19:39:37 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B706C19F3D7;
+	Mon, 17 Sep 2012 19:39:36 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <50536943.4030300@kdbg.org>
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
+ 195.3.86.186 is neither permitted nor denied by best guess record for domain
+ of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205720>
 
-On Mon, Sep 17, 2012 at 10:53:18PM +0530, Ramkumar Ramachandra wrote:
-
-> Hi Peff,
+Am 14.09.2012 19:28, schrieb Johannes Sixt:
+> Am 14.09.2012 18:58, schrieb Erik Faye-Lund:
+>>  	tput () {
+>>  		case "$1" in
+>>  		bold)
+>> -			echo -ne "\033[1m" ;;
+>> +			printf "\033[1m" ;;
+>>  		setaf)
+>> -			echo -ne "\033[0;3$2m" ;;
+>> +			printf "\033[0;3$2m" ;;
 > 
-> Jeff King wrote:
-> > No, that should work (and it does work here). I assume you can pass
-> > t0000 without --valgrind?
+> This should be
+> 			printf '\033[0;3%sm' "$2" ;;
 > 
-> Yes.  Here's the output from running it with --valgrind.  I'm digging
-> deeper to see what went wrong.
+>>  		sgr0)
+>> -			echo -ne "\033(\033[m" ;;
+>> +			printf "\033(\033[m" ;;
+>>  		esac
+>>  	}
+>>  fi
 > 
-> make_valgrind_symlink:6: permission denied:
-> /home/artagnon/src/git/t/../git-instaweb
-> ./test-lib.sh:487: no matches found:
-> /home/artagnon/svn/prefix/svn-trunk/bin:/home/artagnon/bin:/home/artagnon/bin/depot_tools:/home/artagnon/.ruby/bin:/home/artagnon/.python/bin:/home/artagnon/.cabal/bin:/home/artagnon/svn/prefix/svn-trunk/bin:/home/artagnon/bin:/home/artagnon/bin/depot_tools:/home/artagnon/.ruby/bin:/home/artagnon/.python/bin:/home/artagnon/.cabal/bin:/home/artagnon/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/home/artagnon/.ec2/bin:/home/artagnon/.ec2/bin/git-*
+> Did you test this only in rxvt or in CMD as well? (I hadn't time to
+> test, yet, so I'm asking :-)
 
-That's certainly odd. It sounds like the valgrind setup is broken for
-you. Can you run:
+I tested your patch with this fixup, and it works for me (in CMD).
 
-  sh -x t0000-basic.sh --valgrind
+-- Hannes
 
-and see what's happening near those weird errors?
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> test_cmp:1: command not found: diff -u
-
-Lack of diff is going to be a problem. What OS is this? Do you really
-not have diff? Or is there something funny going on with your PATH?
-
--Peff
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
