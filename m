@@ -1,89 +1,88 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: [PATCH] Documentation: indent-with-non-tab uses tabwidth setting,
- not just 8
-Date: Sun, 16 Sep 2012 23:41:58 -0600
-Message-ID: <5056B826.4030106@icecavern.net>
-References: <1347815548-19305-1-git-send-email-wjl@icecavern.net> <7v392hxm94.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] Doc: Improve shallow depth wording
+Date: Sun, 16 Sep 2012 22:46:24 -0700
+Message-ID: <7vlig9w6a7.fsf@alter.siamese.dyndns.org>
+References: <1347793083-4136-4-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 07:44:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Sep 17 07:46:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDU85-0002J5-Il
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 07:44:21 +0200
+	id 1TDUAF-0003PM-V8
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 07:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628Ab2IQFoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 01:44:09 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:39689 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751225Ab2IQFoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 01:44:07 -0400
-Received: from [10.0.0.14] (c-76-113-27-84.hsd1.nm.comcast.net [76.113.27.84])
-	by icecavern.net (Postfix) with ESMTPSA id F05C835CF1;
-	Sun, 16 Sep 2012 23:44:02 -0600 (MDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:11.0) Gecko/20120418 Icedove/11.0
-In-Reply-To: <7v392hxm94.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.4.1
+	id S1751736Ab2IQFq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 01:46:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45093 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750864Ab2IQFq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 01:46:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B58AC6374;
+	Mon, 17 Sep 2012 01:46:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CFbXStdcVTQy+UxqaZWzVjf39Ug=; b=YZTu7T
+	ZHe9e5uaKddmTePxcvBqo0XwN54tGYWU3MIfF+K7StKZTIm3DiLClkj48sqtbOsi
+	mH0n/goeO7tyHSi3BgLEHar/dE5ijNoo85LMi5sGtKSxYiIedPKyzNTGsP48Ym6r
+	zLOFyLEQYStxhOFvGUdGPUUpfhX57IRKcaRtQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wzEOM+qqNxSw6cB2Wzsx0bL3L3x0sNI6
+	K4TPQceqAQp7dBe6GWsCml67hfcX7O1DGdpGqMXiD4Qo93PH2nwBBPumm/L6/uOu
+	MhuvApYNCiprnKsKW2ScwFH9Ue9D2m0jobwMZ5LZrJSiA4PjLitbBDJxAI3QN6m6
+	cJzQFtrC5Sg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A24AF6373;
+	Mon, 17 Sep 2012 01:46:26 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F11CD6370; Mon, 17 Sep 2012
+ 01:46:25 -0400 (EDT)
+In-Reply-To: <1347793083-4136-4-git-send-email-philipoakley@iee.org> (Philip
+ Oakley's message of "Sun, 16 Sep 2012 11:57:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 05106E08-008B-11E2-A7A0-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205650>
 
-On 09/16/2012 11:16 PM, Junio C Hamano wrote:
-> I would rather see this part left untouched.
-> 
-> Your new text will force people who are not interested in using
-> non-standard tab width to read through the bulletted list, only to
-> find "The default tab width is 8".  I think that is a regression in
-> the documentation for more common readers.
-> 
-> When somebody wants to use `indent-with-non-tab` and gets offended
-> by the seemingly hardcoded "8" in the description, the reader has
-> incentive to find out if there is a way to change that 8, and will
-> find `tabwidth=<n>` in the same bulletted list described, with the
-> effect it has on both `indent-with-non-tab` and `tab-in-indent`.
-> 
-> I think that should be sufficient for people who do use non-standard
-> tab width using tabwidth=<n>.
+Philip Oakley <philipoakley@iee.org> writes:
 
-Well, I'm not going to push the issue further than this e-mail, but I
-very much disagree. Please think about this:
+> Avoid confusion in compound sentence about the start of the commit set
+> and the depth measure. Use two sentences.
 
-  * The whole whitespace section talks generically about "spaces" and
-"tab characters". All of the options talk about tab in a generic way,
-with the one single exception of "indent-with-non-tab".
+Dropping the first ',' after "positive depth" does not seem to make
+it any easier to read (I personally think it makes it a lot harder
+to read).  Splitting the tail-end of the sentence into a separate
+sentence does make it easier to read, though.
 
-  * I know all about the tabwidth setting (I have it set in my
-configuration), but when I went looking in the whitespace documentation
-to try to flag a certain error I wanted to avoid, I was confused because
-"indent-with-non-tab" didn't do what I wanted ... instead it apparently
-used a hard-coded length of 8 spaces. My first thought was, well, I'd
-better fix THAT bug!
-
-  * Of course, I did an experiment, and of course, it DOESN'T ACTUALLY
-DO WHAT THE DOCUMENTATION SAYS, instead it uses the tabwidth. This is
-good, I'm not complaining about how it works: this *is* what I want it
-to do. But the documentation is still wrong.
-
-  * So, as you say, "the reader has incentive to find out if there is a
-way to change that 8". I did get incentive to find that, but it took me
-a few minutes of wasted time experimenting around with it, and then
-motived me to write a patch so that no one else will ever get confused
-about it again.
-
-If I've perhaps convinced you that it would be beneficial to make the
-documentation for this option precisely correct, but you don't like how
-it's worded (it's the way it is because I tried to make a very minimal
-change) I'd be happy to revise the patch, perhaps by changing the order
-of presentation of the options (e.g. mentioning tab width earlier in the
-section, or in some other way that you or someone may want to suggest).
-
-In any case, please, let's find some way to make the documentation both
-easy to read and also absolutely correct! =)
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>
+> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+> index 49cdc57..fa4acab 100644
+> --- a/Documentation/technical/pack-protocol.txt
+> +++ b/Documentation/technical/pack-protocol.txt
+> @@ -258,9 +258,11 @@ a positive depth, this step is skipped.
+>    unshallow-line   =  PKT-LINE("unshallow" SP obj-id)
+>  ----
+>  
+> -If the client has requested a positive depth, the server will compute
+> -the set of commits which are no deeper than the desired depth, starting
+> -at the client's wants. The server writes 'shallow' lines for each
+> +If the client has requested a positive depth the server will compute
+> +the set of commits which are no deeper than the desired depth. The set
+> +of commits start at the client's wants.
+> +
+> +The server writes 'shallow' lines for each
+>  commit whose parents will not be sent as a result. The server writes
+>  an 'unshallow' line for each commit which the client has indicated is
+>  shallow, but is no longer shallow at the currently requested depth
