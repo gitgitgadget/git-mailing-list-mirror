@@ -1,79 +1,65 @@
-From: Paul Wise <pabs3@bonedaddy.net>
-Subject: Re: status of git interop with other VCS
-Date: Tue, 18 Sep 2012 00:33:21 +0800
-Message-ID: <1347899601.1992.60.camel@chianamo>
-References: <1347795904.22408.20.camel@chianamo>
+From: Tomas Cohen Arazi <tomascohen@gmail.com>
+Subject: Content-Type handling
+Date: Mon, 17 Sep 2012 13:34:13 -0300
+Message-ID: <CABZfb=UhKRREMG_XNJHDJHwbwroi5TKWwgQH-Ge1BDJETizG2Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Ywyw8Foxg1cDhhVWNHzx"
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 17 18:33:42 2012
+X-From: git-owner@vger.kernel.org Mon Sep 17 18:34:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDeGQ-0002rp-18
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 18:33:38 +0200
+	id 1TDeHd-0003ov-Mi
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 18:34:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750762Ab2IQQd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 12:33:29 -0400
-Received: from ns1.bonedaddy.net ([70.91.141.202]:44200 "EHLO
-	ns1.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844Ab2IQQd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 12:33:29 -0400
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by ns1.bonedaddy.net (8.14.5/8.14.4) with ESMTP id q8HGXPGh028552
-	for <git@vger.kernel.org>; Mon, 17 Sep 2012 12:33:27 -0400
-In-Reply-To: <1347795904.22408.20.camel@chianamo>
-X-Mailer: Evolution 3.4.3-1 
+	id S1752441Ab2IQQep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 12:34:45 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:59424 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752454Ab2IQQeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 12:34:44 -0400
+Received: by vcbfo13 with SMTP id fo13so6480506vcb.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 09:34:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=IAGEHbBCIb1yY+NMQVhUiT3u9tI0U7J7dxVByux1f2Y=;
+        b=jfM/m9QaUN97D0LjjyAOtIM7T7mt82HSOZAVKwvDpgRMuwUo2Qvy2JP6k1MbXOhUGf
+         rNrAa6Yq5xAAPDH9x6ysKqmqLN/d8/yaSnCJH9YmpYerX2CiSZaWa1ETtC0PzlUiY+sp
+         m/BI5E1Lw03u5kxnmDJssRGP0kRE9xKXyfKepprhxiUNGhqCMb0NOOyyBOe6kgfpu5sd
+         lgnx7819c6MymUClnLBk/HuphtG5lHZw1jYAZtHFwvB/Z/4KE39Jc3J/thdo6CSjiXc/
+         CDblxXfStn6hHyGxOzXWHNRcr9g4Htq5KIzYFOO2GYZcBXubdAhzjy57bBQ5IQOJ7M1I
+         uHOw==
+Received: by 10.220.209.3 with SMTP id ge3mr1039588vcb.43.1347899684065; Mon,
+ 17 Sep 2012 09:34:44 -0700 (PDT)
+Received: by 10.58.179.10 with HTTP; Mon, 17 Sep 2012 09:34:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205706>
 
+Hi, I'm not sure it is a bug, but we used:
 
---=-Ywyw8Foxg1cDhhVWNHzx
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+git config --global format.headers "Content-Type: text/plain; charset=\"utf-8\""
 
-On Sun, 2012-09-16 at 19:45 +0800, Paul Wise wrote:
+and recently (perhaps an Ubuntu default setup issue) the content-type
+is being automatically set, the result is that patches contain this:
 
-> bzr: git-remote-bzr is part of bzr-git but it is quite buggy,
-> hopefully this will improve over time though.
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
 
-I've now learned that the main upstream for bzr-git is slowly stepping
-down from his involvement in Bazaar and Bazaar packaging, so if there is
-anyone interested in git-remote-bzr, now is the time to get involved.
+This might not be the problem, but when I apply the patch I get this:
 
---=20
-bye,
-pabs
+fatal: cannot convert from UTF-8utf-8 to UTF-8
 
-http://bonedaddy.net/pabs3/
+which looks like a bug. Not sure it hasn't been reported before, but I
+think it should take one of the content-type specifications and not
+append both. I couldn't find a place to looks for previous bug reports
+to check, so forgive me if this is not the right place to report it.
 
---=-Ywyw8Foxg1cDhhVWNHzx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAABCgAGBQJQV1DRAAoJEDEWul6f+mmji84P/ijfDIC79oDhhHYDyBpnlJPP
-wBge2rr6vZLWMxq8AqyrahUudiKuotWGGnw5V4sUYaJP0UjhYia8bcjg6LLT+miN
-YIoXxXJzGAAt6cy8f/WeqUXEfFkhNAC84xL3eGFX+jq5ONQYsdVJwP2Vex2bA7Dt
-UvJnymZCiR6/bFcyoyn6Jlp9gm+AsxMCaE6DXT9nHm9wK7zO0A+ujCL5BMUJHMwe
-rlUJ8D184cQIwxppJpVoL9gwsdAOOMVSKtOvLQo7lzW50dT/i9RgKrz7E9+UFy3w
-w8pkr6flecwtb4GCXmBgb5diKyM0ojIXxb4LncuPtKXhwt+y3FtZzQRBxG9bmJli
-EHMGzRpQowHnEuZIdJvAU6jHzK9gf/8/TwyUUAdD8NHiOSST9ONw3VRKbvmzq/et
-9F3jH736BKfJ2cisYuBQbbkjo5EoFVgiLg+C7n0fST116uUOssAJVdunf2I/AF69
-hZg58wR1w/QtlXbecFLlC7l5Rz0YFLWd8miMDkMphOkgxT3zJLzp7wrYggp2Ye7P
-43M0lVp9QnAq19U3qns7IgjIKdLVtsZXUl1V3E17VA1thqPk7iI8Zo2f/L1AoFfZ
-UfmNc0NYg84lvOh5r4FuBlhJKovjPFFfTAiyHdEK1allNhfD9VUFAdGwt1KtH/ID
-ZOx8tpok939rVWkpunGW
-=FepS
------END PGP SIGNATURE-----
-
---=-Ywyw8Foxg1cDhhVWNHzx--
+Regards
+To+
