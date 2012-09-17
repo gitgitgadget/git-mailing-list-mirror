@@ -1,110 +1,130 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCHv4] clone --single: limit the fetch refspec to fetched branch
-Date: Mon, 17 Sep 2012 15:25:20 +0200
-Message-ID: <CAN0XMOJrFOWR4_Cdx5fJz2zKCf=mSKBKV16A0dy1f5DptdOMVA@mail.gmail.com>
-References: <7vy5kc1avx.fsf@alter.siamese.dyndns.org>
-	<1347783184-20045-1-git-send-email-ralf.thielow@gmail.com>
-	<CACsJy8Bsps_-RaXdBd9ipWPvJukjK7mRN_wG2ezEL5d4JLyx+g@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using Format/export-subst Howto.
+Date: Mon, 17 Sep 2012 15:17:17 +0200
+Message-ID: <505722DD.3000806@drmicha.warpmail.net>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov> <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net> <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov> <50534FC6.2040207@viscovery.net> <1347656962.3998.140661128069097.6D9BE3C4@webmail.messagingengine.com> <7vfw6k2t8w.fsf@alter.siamese.dyndns.org> <7v7grw2qcu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 15:25:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	"Mestnik\, Michael J - Eagan\, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 17 15:26:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDbKM-0005zQ-F1
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 15:25:30 +0200
+	id 1TDbLK-0006Zc-5D
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 15:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753336Ab2IQNZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 09:25:22 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:33272 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658Ab2IQNZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 09:25:22 -0400
-Received: by wibhr14 with SMTP id hr14so2526141wib.1
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 06:25:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=z6NNvkbkcnCLjiWpSGVgQ9e8VGZbRygXOeJ33AJVpHY=;
-        b=XCx56zgqCBaSTBCKwrvftu1mztu+Fz4lL6NWBkW63T90mugJkDKWy8txIzoqoEJZZq
-         j1b5iraF3+7F8vPhVwo7rkGLL0r5ZUxHoq8lWaWvC2V2KNa5TShcYjQbNrIdy0Q82qgv
-         eiN9b+8giLycEWjgDLMka12hVPrTL+OvInd/uS21HGarMTB2vzh+0oqfHSib/FoQe5lS
-         DNpWg/8jimApQbbTPya2rWNQb5POTr4sl2GKN5mK40/ZWaCwVu90IrO/XqjLJyAolz7t
-         X1E/wa6Dw1nbGh9dAHLesjzXuYBretU5sEc0gK+Cp+O9NMALExZWSVViQHUz69t6QIs5
-         eYKw==
-Received: by 10.180.104.200 with SMTP id gg8mr16174502wib.14.1347888320723;
- Mon, 17 Sep 2012 06:25:20 -0700 (PDT)
-Received: by 10.194.23.201 with HTTP; Mon, 17 Sep 2012 06:25:20 -0700 (PDT)
-In-Reply-To: <CACsJy8Bsps_-RaXdBd9ipWPvJukjK7mRN_wG2ezEL5d4JLyx+g@mail.gmail.com>
+	id S1753170Ab2IQN0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 09:26:21 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:51598 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752658Ab2IQN0U (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 09:26:20 -0400
+X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Sep 2012 09:26:20 EDT
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 7B7E0204BA;
+	Mon, 17 Sep 2012 09:17:19 -0400 (EDT)
+Received: from frontend1.nyi.mail.srv.osa ([10.202.2.160])
+  by compute4.internal (MEProxy); Mon, 17 Sep 2012 09:17:19 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=n68FDppzEIyoTsxhZ0Nqvd
+	qP2pc=; b=jQJrY4Ur+XHwGjqh7K4htKiBrpV24UrrOXiaB+JUOogZMg8SURPOQu
+	EgjJl3bJQfBJ3hRPPLQm5NUsCOI4wKF5ow0plALlUCfLnCNR0BEvuqVmg4j7d0av
+	Jr0dwCPV+9kChBQ9j1rP+oyCQvTB0cUZGVtS7MHpWIlvWpJDvksS4=
+X-Sasl-enc: gFaTJdYkiFQvcuD5yJ2giRhlcUK5b4yvaK09nDtoL4mF 1347887839
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C3EB08E01F4;
+	Mon, 17 Sep 2012 09:17:18 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7v7grw2qcu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205687>
 
-On Mon, Sep 17, 2012 at 2:06 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Sun, Sep 16, 2012 at 3:13 PM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
->> +       if (option_mirror || !option_bare) {
->> +               strbuf_reset(&value);
->
-> I think we should use a new strbuf local variable here to avoid
-> resetting this. At least reviewers don't have to check if this
-> statememt causes any effect later on because "value"'s value is gone.
->
+Junio C Hamano venit, vidit, dixit 14.09.2012 23:23:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> you need to "rm file && git checkout file"). If the user has to
+>> update $Id$ to match the current sha1 (by remembering to do a more
+>> forceful checkout than checkout -f) then one half of that feature
+>> is useless.
+> 
+> As if there is any value in "$Id$" _feature_.  It's a checkbox item, 
+> nothing more ;-).
 
-It seems that we don't need this reset here because it's already
-done earlier in this function. The variable "key" is also used multiple
-times so I wouldn't use a new variable.
+It's your favorite feature^Wcheckbox item, I know ;)
 
->> +               if (option_single_branch) {
->> +                       if (option_branch)
->> +                               strbuf_addf(&value, "+%s%s:%s%s",
->> +                                               src_ref_prefix, option_branch,
->> +                                               branch_top.buf, option_branch);
->> +                       else if (remote_head_points_at)
->> +                               strbuf_addf(&value, "+%s:%s%s",
->> +                                               remote_head_points_at->name, branch_top.buf,
->> +                                               skip_prefix(remote_head_points_at->name, "refs/heads/"));
->> +                       /*
->> +                        * otherwise, the next "git fetch" will
->> +                        * simply fetch from HEAD without updating
->> +                        * any remote tracking branch, which is what
->> +                        * we want.
->> +                        */
->
-> Maybe document updates too? Though if it's obvious that
-> --single-branch should prepare refspec so that only one branch is
-> fetched later on, then maybe not.
->
+I wouldn't mind dropping it or making it export-only, but the current
+state of that item is quite confusing. I seem to remember this has been
+brought up before.
 
-I think it's obvious.
+Junio C Hamano venit, vidit, dixit 15.09.2012 00:26:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> 
+>>> you need to "rm file && git checkout file"). If the user has to
+>>> update $Id$ to match the current sha1 (by remembering to do a
+>>> more forceful checkout than checkout -f) then one half of that
+>>> feature is useless.
+>> 
+>> As if there is any value in "$Id$" _feature_.  It's a checkbox
+>> item, nothing more ;-).
+> 
+> Having said that, I think you could do something along this line (I 
+> am thinking aloud, so there may be leaps in the logic below).
+> 
+> * Introduce a new on-disk flag in the index.  Call it X.  After 
+> entry.c:write_entry() writes it out to the working tree, this flag is
+> cleared.  And this codepath is the only place that clears this flag.
+> 
+> * When applying a clean filter (from here on, everything that breaks
+> byte-for-byte identity between the copy on the working tree and the
+> contents that is hashed and stored in the object store are considered
+> "clean filter", including CRLF->LF and ident), internally apply the
+> corresponding smudge filter to the cleaned result and compare it with
+> the original input we obtained from the working tree.  If they
+> differ, flip the X bit on for the path in the index.
+> 
+> * When "checkout" and any potential callers of write_entry() decide 
+> whether it is worth calling write_entry() [*1*], consider any path
+> with the X bit on as "dirty" and call write_entry().
+> 
+> You have to be very careful when designing the third point, though. 
+> There will now be two kinds of "the working tree file is different 
+> from the version registerd in the index" once you do the above. 
+> Different only because of "clean->smudge" roundtrip comparison, and 
+> different because it does have a real local modification.  The former
+> must be considered "no local modification" for the purpose of merges
+> and branch switching (otherwise you will get "cannot merge, you have
+> local modifications" error).
+> 
+> 
+> [Footnote]
+> 
+> *1* This currently is done primarily with ie_match_stat(), that 
+> essentially is "Does the result of applying 'clean' to the working 
+> tree contents match what is registered to the index?  Do not bother 
+> doing this check over and over again once you checked this until the
+> file in the working tree is modified again".
+> 
 
->> +               } else {
->> +                       strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
->> +               }
->
-> --mirror --single-branch combination does not look right. The "heads/"
-> part is missing..
->
-> $ git branch
->   master * wildmatch
-> $ LANG=C ./git clone --mirror --single-branch .git abc
-> Cloning into bare repository 'abc'...
-> done.
-> $ grep fetch abc/config
->         fetch = +refs/heads/wildmatch:refs/wildmatch
-> $ rm -rf abc
-> $ LANG=C ./git clone --mirror --single-branch --branch=master .git abc
-> Cloning into bare repository 'abc'...
-> done.
-> $ grep fetch abc/config
->         fetch = +refs/master:refs/master
-> --
-> Duy
+You've convinced me not to try this in-core...
 
-Thanks, I'll check this later and send a new version.
+Maybe a post-commit hook is enough for Id. It's just that we also have
+no in-core way of doing a forceful enough checkout on those files. But I
+wouldn't mind making Id export-only (export-subst). Really, most people
+who look at Id really want something like VERSION_GEN (without having to
+use a build script/make/...).
+
+Michael
