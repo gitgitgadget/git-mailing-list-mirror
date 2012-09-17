@@ -1,88 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test failure: Test #3 in t1304-default-acl
-Date: Mon, 17 Sep 2012 13:35:17 -0700
-Message-ID: <7vvcfctmka.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com>
- <vpqy5k8raig.fsf@grenoble-inp.fr>
- <CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
- <vpqd31kr7v4.fsf@grenoble-inp.fr>
- <CALkWK0=ROz8fxXgnqt-+AthU-hgq_mzFg0GhBQCrAshH_mRBPQ@mail.gmail.com>
- <vpqvcfcps2z.fsf@grenoble-inp.fr> <7v4nmwwqox.fsf@alter.siamese.dyndns.org>
- <vpqipbcpp69.fsf@grenoble-inp.fr>
+From: Ben Walton <bdwalton@gmail.com>
+Subject: Re: Unable to clone GIT project
+Date: Mon, 17 Sep 2012 16:36:19 -0400
+Message-ID: <CAP30j15=gz9w-ZU+b5Jm+fM1PmYgFrwBwAFxzAcPRsWgNcByOw@mail.gmail.com>
+References: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFDB65@NOIX10HMNOI01.AMER.DELL.COM>
+	<20120916104651.GF32381@localhost.localdomain>
+	<CABPQNSbPF=_a7-+JnojM2DQAkkj7ZLhSnO+n-Ab=LSrHge1dnQ@mail.gmail.com>
+	<20120917202124.GC24888@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 17 22:35:33 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Ankush_Aggarwal@dell.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 17 22:36:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDi2U-000297-2d
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 22:35:30 +0200
+	id 1TDi3W-0002iA-81
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 22:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490Ab2IQUfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 16:35:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56039 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751970Ab2IQUfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 16:35:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3058141;
-	Mon, 17 Sep 2012 16:35:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BdMnIXpR2AhsI3tNXhP1PNlVtEQ=; b=vcT99M
-	PfDQL+KwLhecfLmRLbGsiEr3md8UbE3kY6KAhLciGPPLje3fvMRHYLnqfh+ST36c
-	SZ7O1Q0Bi1PEQAj2O6HkkU+7vdujccxgYshV6uhoXW1vHS2ZsiyugL7QyMKXFPyd
-	9ym/b7b7g1lbuTk9MXoafO1V40JUK+M9d6pP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F6FF3ZEAkBKMXHDAaSKKLPZP3v8e/bTw
-	oIQzg1wrRumM1iWbUkW3lmZhRYstxGqhS3ywC99ZKKzuurF+JsUf/fapFE77APe3
-	pGgJ0zs6eloTsr58TvkNLJuqTlZBs4eOvoK5H6jzQJFYld+BM1lr8SFphgzlozVQ
-	AEcyDpIlfZQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 084138140;
-	Mon, 17 Sep 2012 16:35:20 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63F10813F; Mon, 17 Sep 2012
- 16:35:19 -0400 (EDT)
-In-Reply-To: <vpqipbcpp69.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Mon, 17 Sep 2012 18:52:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3242CE26-0107-11E2-BD70-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755616Ab2IQUgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 16:36:22 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:52256 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755368Ab2IQUgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 16:36:20 -0400
+Received: by wgbdr13 with SMTP id dr13so6162040wgb.1
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 13:36:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xO8FCEhjCokWB9IQ9lliAmGkf48wK4i48lHcDI6kbnI=;
+        b=AWlk7oQehxjw0bNDfPtmUowEad0KJBqfb5pkGdhiYzZpAq7dHYSk+l+p35LwanE8zd
+         CIP6txWRK+fjIHywjdntIqb6SXZb+Q7wJHBeucU4fAwUpH6hcbqdxNHQGb+CJkGZHmpZ
+         sAGzzcDycGe/tM9GiRNkECtqDIAb/DTkvkBaZsBko9+pi6HljYI0IKiTluFkiREgUWj9
+         IeSVmz2Ke/zgN+PdW7pnSh8KNmVpYp2i2q8TQDG0N0Y0ngP4s6aCmLPMSDO8C1KoUbb7
+         yc9yqBR8OuknyW2zKXc30FMrvalmIK6RGLBvDChrdfEeyIfVmJ4GbuIK83TINuOlGUxf
+         1i5A==
+Received: by 10.180.73.76 with SMTP id j12mr18365096wiv.11.1347914179137; Mon,
+ 17 Sep 2012 13:36:19 -0700 (PDT)
+Received: by 10.216.61.143 with HTTP; Mon, 17 Sep 2012 13:36:19 -0700 (PDT)
+In-Reply-To: <20120917202124.GC24888@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205741>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> If I had to guess, I'd say it was ssh, the library is installed in a
+> non-standard place (e.g., because he built them as a regular user and
+> put them in his home directory), and LD_LIBRARY_PATH does not get set
+> properly by ssh for the incoming ssh session.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I haven't been paying attention, but does that mean on that system,
->> a total stranger kseygold can write, modify, and remove whatever Ram
->> owns?  I am hoping that is not the case.
->
-> I can see two reasons for having the same UID for two login names:
->
-> 1) the sysadmin really messed up, and as you say, a total stranger has
-> complete ownership of your files. Ramkumar, you should check that this
-> is not your case.
->
-> 2) the sysadmin explicitely gave two login names to the same physical
-> person, as kinds of aliases for the same UID (e.g. the person got
-> married, changed her name and login, but expects ~oldlogin to continue
-> working). I'm not sure how common this is, and to which extend we want
-> to support this in our test scripts.
+This would be my guess as well.  If LD_LIBRARY_PATH is being relied
+upon though, a more stable solution would be to rebuild git with
+"-Wl,-rpath /path/containing/libiconv" in the LD_OPTIONS environment.
+That would remove the need for LD_LIBRARY_PATH at runtime.  Any other
+libraries linked in non-standard locations should also have a similar
+option if the path to the library differs.
 
-I've only been assuming (1), but (2) feels like a legitimate (if
-confusing) way to configure your system.
+HTH.
 
-It is a separate issue if it is worth bending backwards to support
-it in the test, though.
+Thanks
+-Ben
+-- 
+---------------------------------------------------------------------------------------------------------------------------
+Take the risk of thinking for yourself.  Much more happiness,
+truth, beauty and wisdom will come to you that way.
+
+-Christopher Hitchens
+---------------------------------------------------------------------------------------------------------------------------
