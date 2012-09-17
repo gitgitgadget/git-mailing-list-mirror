@@ -1,90 +1,78 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 6/8] Doc add: link gitignore
-Date: Mon, 17 Sep 2012 23:01:30 +0100
-Organization: OPDS
-Message-ID: <6AB419E032004F8A890B01EC04731CD2@PhilipOakley>
-References: <1347793083-4136-7-git-send-email-philipoakley@iee.org> <7vhaqxw635.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 05/14] Change fetch_pack() and friends to take
+ string_list arguments
+Date: Mon, 17 Sep 2012 15:10:07 -0700
+Message-ID: <7vd31ks3ls.fsf@alter.siamese.dyndns.org>
+References: <1347171589-13327-1-git-send-email-mhagger@alum.mit.edu>
+ <1347171589-13327-6-git-send-email-mhagger@alum.mit.edu>
+ <7vipblmwaq.fsf@alter.siamese.dyndns.org> <5057167A.6040403@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "gitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 00:01:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 18 00:10:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDjNi-0001U2-Cj
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 00:01:30 +0200
+	id 1TDjWP-0006Xk-26
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 00:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756609Ab2IQWBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 18:01:22 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:21459 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755997Ab2IQWBV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2012 18:01:21 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: At8KAECdV1BZ8rU+/2dsb2JhbABFi0avWgJ/gQiCGwUBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGHc7pQjQkdIoNhYAOIIYVEmB6CZw
-X-IronPort-AV: E=Sophos;i="4.80,438,1344207600"; 
-   d="scan'208";a="398913709"
-Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 17 Sep 2012 23:01:20 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1757361Ab2IQWKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 18:10:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64569 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757355Ab2IQWKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 18:10:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F36FC9AED;
+	Mon, 17 Sep 2012 18:10:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=maxZ6bxjeuE6g3gRpL5Z8dtOysc=; b=qPITkH
+	sC36Uu2FwMSON4US2yBzIVg10FjInOs0uWUz7r/fXjFjZtA9t2Spz7KJKJ4GCblO
+	vcPZZuZvp7bM0tloK8trXUOZgej1QwRZYxe91SDrHRKK58+/AETGAJBGv6ueupte
+	vo9bjGvr9oXMIaGBv8sqly0+R03xaVoHR1Mqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eALng5ENPJu1t3F5ZK+mxypBQ9sWm9ba
+	Hl0z4DY5csGsycr6nJqgoIjlC69J5BYLKQydqoHk0AM3t/UqELBQFEW2bJ6jzs47
+	HXonT+6cRdkSXOVgk5OlJFa33j3p/Jn7wEhIH3qfxPJubwziSZ9wxppXaKPj9t1l
+	1OgOymW2HBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E05939AEC;
+	Mon, 17 Sep 2012 18:10:10 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A8BA9AEA; Mon, 17 Sep 2012
+ 18:10:09 -0400 (EDT)
+In-Reply-To: <5057167A.6040403@alum.mit.edu> (Michael Haggerty's message of
+ "Mon, 17 Sep 2012 14:24:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 71BE2B9C-0114-11E2-997D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205760>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> Include the gitignore link with the paired gitrepository-
->> layout link.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>
->> without the gitignore link users are unlikely to realise the
->> significance of the repository layout link, nor what to look for
->> within it
->>
->> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
->> index 9c1d395..311be9a 100644
->> --- a/Documentation/git-add.txt
->> +++ b/Documentation/git-add.txt
->> @@ -155,7 +155,8 @@ Configuration
->>  The optional configuration variable `core.excludesfile` indicates a 
->> path to a
->>  file containing patterns of file names to exclude from git-add, 
->> similar to
->>  $GIT_DIR/info/exclude.  Patterns in the exclude file are used in 
->> addition to
->> -those in info/exclude.  See linkgit:gitrepository-layout[5].
->> +those in info/exclude.  See linkgit:gitrepository-layout[5] and
->> +linkgit:gitignore[5].
->
-> A reader of git-add shouldn't have to refer to gitrepository-layout[5]
-> in the first place when we talk about "add $pathspec" may ignore
-> paths that are configured to be ignored.  gitignore[5] should give
-> everything necessary to him.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-True. Now that 5/8 makes the details in gitignore clearer it should be 
-OK to change from linking repository layout to the gitignor page.
->
-> This section (even before the precontext we can see in the patch)
-> may need a bit larger rewrite so that it just refers to gitignore[5]
-> and leave the details of where the exclude information comes to that
-> manual page.
+> But how far should this policy be taken?  It seems to me that strict
+> adherence to the policy would dictate that *.h files should *never*
+> include other git project files.
 
-I'll see if I can do something on that as a separate patch.
+I wouldn't call that a "policy".  It's something we think about when
+adding a new "#include" to see if it is worth adding and/or if it is
+the right place to add it to reduce code churn.
 
-Philip 
+As I said, what policy to pick and stick to is open to discussion,
+and I wanted to leave it outside the scope of this series.  As it
+has been cooking in 'next', I do not think it is worth reverting the
+inclusion of "string-list.h" to delay this topic.  It is something
+that can and should be cleaned up when we decide to pick the
+inclusion policy and enforce it.  If we choose to go in the other
+direction, we would end up adding it back, so let's keep it as-is
+for now.
