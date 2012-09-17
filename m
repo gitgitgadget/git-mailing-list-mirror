@@ -1,102 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: status of git interop with other VCS
-Date: Mon, 17 Sep 2012 13:40:40 -0700
-Message-ID: <7vmx0otmbb.fsf@alter.siamese.dyndns.org>
-References: <1347795904.22408.20.camel@chianamo>
- <CALkWK0knJKGK=jD=_dBUn+idVSEs+KxwvQJWc7oS_BvzPR9jJw@mail.gmail.com>
+Subject: Re: [PATCH] Add missing -z to git check-attr usage text for
+ consistency with man page
+Date: Mon, 17 Sep 2012 13:45:23 -0700
+Message-ID: <7vipbctm3g.fsf@alter.siamese.dyndns.org>
+References: <1347881931-9129-1-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Wise <pabs3@bonedaddy.net>, git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 22:40:53 2012
+Cc: git list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Mon Sep 17 22:45:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDi7f-0005Ew-Fc
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 22:40:51 +0200
+	id 1TDiCF-0008BS-I7
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 22:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033Ab2IQUkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 16:40:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58275 "EHLO
+	id S1755594Ab2IQUp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 16:45:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60307 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755432Ab2IQUkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 16:40:42 -0400
+	id S1752443Ab2IQUpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 16:45:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2548E8301;
-	Mon, 17 Sep 2012 16:40:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B7578431;
+	Mon, 17 Sep 2012 16:45:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QJ6U+IBwcLiVxIRjs1lqdnlH0ak=; b=H6m6kf
-	jt4CdljMJgAzK4VdROpIqXPPN+koskyKAJDUMA1Nuac9Ff3MUFyIyiFuhETISP4W
-	Al7Gh2O+aKwycbFJR1XN9saIUV/roOzv2r9ZmvJKfhO+F3oLlLnfDTN8fwxwVeFF
-	l2hD6L98outWYNlpzSl5gzSVQ5V5YytRj6L0E=
+	:content-type; s=sasl; bh=1WEZbN0oLpgyQY4M1/Jqg4C5eas=; b=yOiBcI
+	aPfvImm7jTc36YQf71kYZGhHQa0gFZtVgq8YfJi97hQyXr7q8pcmmV8+1LuYQAa8
+	nnvYQfj8O2ks3ESPFOfT1hqe408aOumz9X6QwTijZ/J2UxFXk7p+dAKli8K63rps
+	NR28LbXKX6AA7Gv8VnWGhB0Vy5kfRhg6NPQUY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iIdbkA+GE+44wFlOwWe8B9HDRj/Ka9E4
-	VlXGGPybnt8Et4q5T+CefXKkaYGC1q9vDllNDhKUvF788btIgU2Jk95I+658dftc
-	QEWYRg8utLcq+oRlxy2UyWc/wFndA3tjXzLvi1mmka+9bbtPiLkJd0T8mEscyvIt
-	d5RxTi8Sap0=
+	:content-type; q=dns; s=sasl; b=AKnZZ8eVKkK+rejkUtfHhiRe1SvyzFD4
+	LTNzBWkLYaGj7kFbXBQAvdcWJA2JiAM0u4UCbKFYE4nl+legr91IZIHf6ou4jRbk
+	kBp1a8fpYlWvW/M6w9Bs13vnUulTEcUtDtKUwbsFHxFnG+kOAmCy2pmF1HjpLKmI
+	Ii7wBiOluBM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 134128300;
-	Mon, 17 Sep 2012 16:40:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A6D8430;
+	Mon, 17 Sep 2012 16:45:25 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B11482FF; Mon, 17 Sep 2012
- 16:40:41 -0400 (EDT)
-In-Reply-To: <CALkWK0knJKGK=jD=_dBUn+idVSEs+KxwvQJWc7oS_BvzPR9jJw@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Mon, 17 Sep 2012 22:21:38 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B38AC842B; Mon, 17 Sep 2012
+ 16:45:24 -0400 (EDT)
+In-Reply-To: <1347881931-9129-1-git-send-email-git@adamspiers.org> (Adam
+ Spiers's message of "Mon, 17 Sep 2012 12:38:51 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F2348508-0107-11E2-8711-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9B102268-0108-11E2-911F-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205744>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Adam Spiers <git@adamspiers.org> writes:
 
-> Hi Paul,
+> Signed-off-by: Adam Spiers <git@adamspiers.org>
+> ---
+>  builtin/check-attr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Paul Wise wrote:
->> svn: there was a gsoc project for this but it was never merged:
->>
->> http://git.wiki.kernel.org/index.php/SoC2011Projects#Remote_helper_for_Subversion_and_git-svn
->
-> I wouldn't give up on that yet. What is the status of fa/remote-helper?
+> diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+> index e1ff575..075d01d 100644
+> --- a/builtin/check-attr.c
+> +++ b/builtin/check-attr.c
+> @@ -9,7 +9,7 @@ static int cached_attrs;
+>  static int stdin_paths;
+>  static const char * const check_attr_usage[] = {
+>  N_("git check-attr [-a | --all | attr...] [--] pathname..."),
+> -N_("git check-attr --stdin [-a | --all | attr...] < <list-of-paths>"),
+> +N_("git check-attr --stdin [-z] [-a | --all | attr...] < <list-of-paths>"),
+>  NULL
+>  };
 
-An excerpt from recent "What's cooking":
+I think this deserves to go to 'maint' that does not yet
+have the i18n on this part, so I'll wiggle the patch to apply there
+and merge it up.
 
-    * fa/remote-svn (2012-08-28) 16 commits
-     - Add a test script for remote-svn
-     - remote-svn: add marks-file regeneration
-     - Add a svnrdump-simulator replaying a dump file for testing
-     - remote-svn: add incremental import
-     - remote-svn: Activate import/export-marks for fast-import
-     - Create a note for every imported commit containing svn metadata
-     - vcs-svn: add fast_export_note to create notes
-     - Allow reading svn dumps from files via file:// urls
-     - remote-svn, vcs-svn: Enable fetching to private refs
-     - When debug==1, start fast-import with "--stats" instead of "--quiet"
-     - Add documentation for the 'bidi-import' capability of remote-helpers
-     - Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability
-     - Add argv_array_detach and argv_array_free_detached
-     - Add svndump_init_fd to allow reading dumps from arbitrary FDs
-     - Add git-remote-testsvn to Makefile and .gitignore
-     - Implement a remote helper for svn in C
-     (this branch is used by fa/vcs-svn.)
-
-     A GSoC project.  Looked promising.
-     Waiting for comments from mentors and stakeholders.
-
-
-    * fa/vcs-svn (2012-08-28) 4 commits
-     - vcs-svn: remove repo_tree
-     - vcs-svn/svndump: rewrite handle_node(), begin|end_revision()
-     - vcs-svn/svndump: restructure node_ctx, rev_ctx handling
-     - svndump: move struct definitions to .h
-     (this branch uses fa/remote-svn.)
-
-     A GSoC project.  Looked promising.
-     Waiting for comments from mentors and stakeholders.
+Thanks.
