@@ -1,147 +1,82 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: [PATCH v7 1/4] make poll available for other platforms lacking it
-Date: Mon, 17 Sep 2012 23:16:39 +0200
-Message-ID: <004b01cd9519$ba991cd0$2fcb5670$@schmitz-digital.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] string_list API: document what "sorted" means.
+Date: Mon, 17 Sep 2012 14:17:09 -0700
+Message-ID: <7vy5k8s622.fsf@alter.siamese.dyndns.org>
+References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 23:17:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 17 23:17:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDigl-0001qx-O0
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 23:17:08 +0200
+	id 1TDigz-00022t-T4
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Sep 2012 23:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753308Ab2IQVQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 17:16:59 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:50958 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474Ab2IQVQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 17:16:58 -0400
-Received: from DualCore (dsdf-4db53772.pool.mediaWays.net [77.181.55.114])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0M2pyk-1TTbPO1mT8-00s36A; Mon, 17 Sep 2012 23:16:52 +0200
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac2VGa1dEekVBES9RImTFhc1x9nt4A==
-Content-Language: de
-X-Provags-ID: V02:K0:HpgM5UXVB9vFLCpJf3tARGNbdvgi9/QOxlpiAH9eXDz
- mgn2285fH9laQaGqYEcKUPJNjMtkia/ZYmPXpzSIPf65wAiAHX
- qjuUvkk1yf4B6VyFXEfp5t/NkkdDrVBOSOm075ygYu45VLvjBI
- gdte7RAk1w3MNRDzXfKwizJneJ8geg5+re7/+1s9HP91i1Oiy6
- GgjnqGEhuTZDqP24oiaCC7eTd+v5UK+ITgOt3lffRaEoLWNNpD
- x6KkZW1smznaUn1GQ65A8JFfGLIQewKeatbkYIQeOBm5eyLwx4
- JOCtSn3sZSibTX7WT434yNOGGw76vb5EkSI5mdrapg1d88hAPe
- kheYWFh2RjQva9IzsLvE6R9v0hzBEwIKVKqK7kBKBY4ApFC7Lp
- g1qzkQfUXb9Fg==
+	id S1753458Ab2IQVRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 17:17:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41732 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753348Ab2IQVRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 17:17:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA2538D15;
+	Mon, 17 Sep 2012 17:17:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wfc0FgkfLEI60mC1b3WAVUZASH4=; b=m+Jy5h
+	M/nw1KxZaSMMknfqTbFVSvz67DLWjUPrbX2qOpRzyhyejmO4WOlzKoL4vrTAi0Qd
+	hLCSxlwvwJZutFTDMDB5ou6S4UThrl6FX/xHS48P4fWS+ghNxOCbaC3uN28P+dQV
+	0t9hrIZttx/I5nZdE5mRY2HTnTH5ZzAd4w87s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rIuMP+jq8KMnv1tEjpizhREECGdwAbT+
+	HelSrz+7LOKCihl/Ff16DPnuGjJVWw7p7xUOSwTOflJoE8BL2lo8mhvHoTo6rlsr
+	zNj8ypE+lz6CIF8hZdejHFAWKMTlUMerIhPXlzlh0RFZnTVXPP5gDYfbqMW2F6aQ
+	/Fjc96TcHV4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7F888D14;
+	Mon, 17 Sep 2012 17:17:11 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DA5D8D13; Mon, 17 Sep 2012
+ 17:17:10 -0400 (EDT)
+In-Reply-To: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu> (Michael
+ Haggerty's message of "Mon, 17 Sep 2012 17:21:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B518EDC-010D-11E2-8EA2-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205751>
 
-move poll.[ch] out of compat/win32/ into compat/poll/ and adjust
-Makefile with the changed paths. Adding comments to Makefile about
-how/when to enable it and add logic for this
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
----
- Makefile                      | 20 +++++++++++++++-----
- compat/{win32 => poll}/poll.c |  0
- compat/{win32 => poll}/poll.h |  0
- 3 files changed, 15 insertions(+), 5 deletions(-)
- rename compat/{win32 => poll}/poll.c (100%)
- rename compat/{win32 => poll}/poll.h (100%)
+> Junio pointed out that the sort order currently used by string_list
+> could be considered to be an implementation detail internal to
+> string_list.  But the sort order is already visible to the outside
+> world (e.g., via iteration or via print_string_list()), so it
+> shouldn't be changed willy-nilly.  Therefore, document the current
+> sort order as part of the API's contract.
+>
+> (If, at some future time, somebody wants a string_list that is sorted
+> by a different criterion, then the order should be made specifiable
+> via a callback function specified by the user.)
 
-diff --git a/Makefile b/Makefile
-index ac49320..7893297 100644
---- a/Makefile
-+++ b/Makefile
-@@ -152,6 +152,11 @@ all::
- #
- # Define NO_MMAP if you want to avoid mmap.
- #
-+# Define NO_SYS_POLL_H if you don't have sys/poll.h.
-+#
-+# Define NO_POLL if you do not have or don't want to use poll().
-+# This also implies NO_SYS_POLL_H.
-+#
- # Define NO_PTHREADS if you do not have or do not want to use Pthreads.
- #
- # Define NO_PREAD if you have a problem with pread() system call (e.g.
-@@ -598,10 +603,10 @@ LIB_H += compat/bswap.h
- LIB_H += compat/cygwin.h
- LIB_H += compat/mingw.h
- LIB_H += compat/obstack.h
-+LIB_H += compat/poll/poll.h
- LIB_H += compat/precompose_utf8.h
- LIB_H += compat/terminal.h
- LIB_H += compat/win32/dirent.h
--LIB_H += compat/win32/poll.h
- LIB_H += compat/win32/pthread.h
- LIB_H += compat/win32/syslog.h
- LIB_H += connected.h
-@@ -1220,7 +1225,7 @@ ifeq ($(uname_S),Windows)
- 	NO_PREAD = YesPlease
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
--	NO_SYS_POLL_H = YesPlease
-+	NO_POLL_H = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NO_IPV6 = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
-@@ -1261,7 +1266,7 @@ ifeq ($(uname_S),Windows)
- 	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H
--D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
- 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
--		compat/win32/poll.o compat/win32/dirent.o
-+		compat/win32/dirent.o
- 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32
--DSTRIP_EXTENSION=\".exe\"
- 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
- 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
-@@ -1316,7 +1321,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_PREAD = YesPlease
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
--	NO_SYS_POLL_H = YesPlease
-+	NO_POLL_H = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
- 	NO_SETENV = YesPlease
-@@ -1351,7 +1356,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
--		compat/win32/poll.o compat/win32/dirent.o
-+		compat/win32/dirent.o
- 	EXTLIBS += -lws2_32
- 	PTHREAD_LIBS =
- 	X = .exe
-@@ -1605,6 +1610,11 @@ ifdef NO_GETTEXT
- 	BASIC_CFLAGS += -DNO_GETTEXT
- 	USE_GETTEXT_SCHEME ?= fallthrough
- endif
-+ifdef NO_POLL
-+	NO_SYS_POLL_H = YesPlease
-+	COMPAT_CFLAGS += -DNO_POLL -Icompat/poll
-+	COMPAT_OBJS += compat/poll/poll.o
-+endif
- ifdef NO_STRCASESTR
- 	COMPAT_CFLAGS += -DNO_STRCASESTR
- 	COMPAT_OBJS += compat/strcasestr.o
-diff --git a/compat/win32/poll.c b/compat/poll/poll.c
-similarity index 100%
-rename from compat/win32/poll.c
-rename to compat/poll/poll.c
-diff --git a/compat/win32/poll.h b/compat/poll/poll.h
-similarity index 100%
-rename from compat/win32/poll.h
-rename to compat/poll/poll.h
--- 
-1.7.12
+As I said in a separate message, we do not give any documented
+guarantee on the order the strings comes out of print_string_list(),
+other than "if you are using the unsorted list function to insert or
+append strings, we won't muck with the order of the items and you
+will get your strings back in the order you gave us".  Until we add
+a callback that the user can specify at the time of string list
+initialization, I do not think it is wise to cast it in stone and
+declare it as "shouldn't be changed willy-nilly", unnecessarily
+painting us into a corner that we need to expend extra effort to get
+out of.
+
+Besides, nobody calls print_string_list() in the first place. I have
+always considered it as a debugging aid.
