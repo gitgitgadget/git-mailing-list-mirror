@@ -1,119 +1,168 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/4] make poll available for other platforms lacking
- it
-Date: Mon, 17 Sep 2012 15:41:38 -0700
-Message-ID: <7vmx0oqner.fsf@alter.siamese.dyndns.org>
-References: <004b01cd9519$ba991cd0$2fcb5670$@schmitz-digital.de>
+Subject: [PATCH] mailinfo: do not concatenate charset= attribute values from
+ mime headers
+Date: Mon, 17 Sep 2012 15:28:11 -0700
+Message-ID: <7vsjagqnev.fsf@alter.siamese.dyndns.org>
+References: <CABZfb=UhKRREMG_XNJHDJHwbwroi5TKWwgQH-Ge1BDJETizG2Q@mail.gmail.com>
+ <7vy5k8va90.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Cc: Tomas Cohen Arazi <tomascohen@gmail.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Sep 18 00:45:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDk4Z-0001zO-Va
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 00:45:48 +0200
+	id 1TDk4Y-0001zO-UH
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 00:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757436Ab2IQWpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 18:45:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46150 "EHLO
+	id S1757396Ab2IQWpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 18:45:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46111 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755374Ab2IQWpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 18:45:19 -0400
+	id S1755374Ab2IQWpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 18:45:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50DFA8350;
-	Mon, 17 Sep 2012 18:45:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5473834B;
+	Mon, 17 Sep 2012 18:45:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 s=sasl; bh=k01JUg45sd6maggvIE+xRYxWCxQ=; b=QA5Yruugr7R0l/1aj5hB
-	u+2qGPmLzmfVuLYB9RQPAxn5DlYKzvBq8IKZJ/Kc7/zJqtbWVzcCumEOpH1Bwi8f
-	IccgyuL2PIhcrzUu0UufeJh5eXTeSClhR2cwO7jtvOZDeEetNVnRhQQIwOezFVLn
-	HBxNKSo/8+haS27DlqFC48Q=
+	 s=sasl; bh=w831beQtCpWz/k2C1JqAh3RVcJs=; b=t2kF/uIDPyhoTWFTlIY9
+	wzVrb3hGfdMocrHjUiiK9+qmbF39h8c7EFojq/7mVxtwJ1/MG7nR0GylaYGlwfNs
+	Gdlez9F4wjxx5rFz2BEB7zNkY+UUiHERku1/ekK2PKJLdnWaEA3jiqUMvXLoI7j0
+	KawRpHMAK4KvI6okiKefgv0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:references:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=KSlSUC4sn2Unbj7xnVz23VBHkedaYF9ToM11crnNKOT/kK
-	zokpeZggx2DkvxtX8X2T0AtxhJijS7dIJpJip0XO7Hd8v7LPD9MZ0IGvPaCVdh5f
-	e9aBLp0BRESGJjXri5nfla/ZjHpe4ieWzPB73w0JJz4J78k9wGhv2nEFXtDo8=
+	 q=dns; s=sasl; b=YG40SwJnYaD8f/lAtbfRj2HqC5ZWO9uh8mCG3lYQlq6uYu
+	OrezVA4rIJatTflEGJTsMHbBsQaJdbzAG43bTP7kvwQ9HYxNz+5CRpQNuTvT4vhr
+	goM+N02AwtXROBdfhzLWj9x8MOwmrBI6x2thDmns9wj12xw4V5sefGsUkd/BU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DC3F834E;
-	Mon, 17 Sep 2012 18:45:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3130834A;
+	Mon, 17 Sep 2012 18:45:15 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90075834D; Mon, 17 Sep 2012
- 18:45:17 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 212548349; Mon, 17 Sep 2012
+ 18:45:14 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A56AB00-0119-11E2-87C1-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 584788C0-0119-11E2-AAB2-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205765>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+"Content-type: text/plain; charset=UTF-8" header should not appear
+twice in the input, but it is always better to gracefully deal with
+such a case.  The current code concatenates the value to the values
+we have seen previously, producing nonsense such as "utf8UTF-8".
 
-> move poll.[ch] out of compat/win32/ into compat/poll/ and adjust
-> Makefile with the changed paths. Adding comments to Makefile about
-> how/when to enable it and add logic for this
->
-> Signed-off-by: Joachim Schmitz <jojo@schmitz-digital.de>
-> ---
->  Makefile                      | 20 +++++++++++++++-----
->  compat/{win32 => poll}/poll.c |  0
->  compat/{win32 => poll}/poll.h |  0
->  3 files changed, 15 insertions(+), 5 deletions(-)
->  rename compat/{win32 => poll}/poll.c (100%)
->  rename compat/{win32 => poll}/poll.h (100%)
->
-> diff --git a/Makefile b/Makefile
-> index ac49320..7893297 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -152,6 +152,11 @@ all::
->  #
->  # Define NO_MMAP if you want to avoid mmap.
->  #
-> +# Define NO_SYS_POLL_H if you don't have sys/poll.h.
-> +#
-> +# Define NO_POLL if you do not have or don't want to use poll().
-> +# This also implies NO_SYS_POLL_H.
+Instead of concatenating, forget the previous value and use the last
+value we see.
 
-Sensible.
+Reported-by: Tomas Cohen Arazi
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> @@ -1220,7 +1225,7 @@ ifeq ($(uname_S),Windows)
->  	NO_PREAD = YesPlease
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
->  	NO_LIBGEN_H = YesPlease
-> -	NO_SYS_POLL_H = YesPlease
-> +	NO_POLL_H = YesPlease
+ * I think this is the right thing to do after all.  Thanks for
+   bringing the issue up, Tomas.
 
-Should this be NO_POLL, not NO_POLL_H?
+ builtin/mailinfo.c  |  5 ++---
+ t/t5100-mailinfo.sh |  2 +-
+ t/t5100/info0017    |  5 +++++
+ t/t5100/msg0017     |  2 ++
+ t/t5100/patch0017   |  6 ++++++
+ t/t5100/sample.mbox | 16 ++++++++++++++++
+ 6 files changed, 32 insertions(+), 4 deletions(-)
+ create mode 100644 t/t5100/info0017
+ create mode 100644 t/t5100/msg0017
+ create mode 100644 t/t5100/patch0017
 
-> -DSTRIP_EXTENSION=\".exe\"
->  	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
->  	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
-> @@ -1316,7 +1321,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->  	NO_PREAD = YesPlease
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
->  	NO_LIBGEN_H = YesPlease
-> -	NO_SYS_POLL_H = YesPlease
-> +	NO_POLL_H = YesPlease
-
-Likewise.
-
-> @@ -1605,6 +1610,11 @@ ifdef NO_GETTEXT
->  	BASIC_CFLAGS += -DNO_GETTEXT
->  	USE_GETTEXT_SCHEME ?= fallthrough
->  endif
-> +ifdef NO_POLL
-> +	NO_SYS_POLL_H = YesPlease
-> +	COMPAT_CFLAGS += -DNO_POLL -Icompat/poll
-> +	COMPAT_OBJS += compat/poll/poll.o
-> +endif
-
-I think my guesses above are correct, so will queue with the trivial
-and obvious fixup.
-
-Thanks.
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index eaf9e15..dd8b67c 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -160,10 +160,9 @@ static int slurp_attr(const char *line, const char *name, struct strbuf *attr)
+ 	const char *ends, *ap = strcasestr(line, name);
+ 	size_t sz;
+ 
+-	if (!ap) {
+-		strbuf_setlen(attr, 0);
++	strbuf_setlen(attr, 0);
++	if (!ap)
+ 		return 0;
+-	}
+ 	ap += strlen(name);
+ 	if (*ap == '"') {
+ 		ap++;
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 81904d9..3e64a7a 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -11,7 +11,7 @@ test_expect_success 'split sample box' \
+ 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
+ 	last=`cat last` &&
+ 	echo total is $last &&
+-	test `cat last` = 16'
++	test `cat last` = 17'
+ 
+ check_mailinfo () {
+ 	mail=$1 opt=$2
+diff --git a/t/t5100/info0017 b/t/t5100/info0017
+new file mode 100644
+index 0000000..d2bc89f
+--- /dev/null
++++ b/t/t5100/info0017
+@@ -0,0 +1,5 @@
++Author: A U Thor
++Email: a.u.thor@example.com
++Subject: A E I O U
++Date: Mon, 17 Sep 2012 14:23:44 -0700
++
+diff --git a/t/t5100/msg0017 b/t/t5100/msg0017
+new file mode 100644
+index 0000000..2ee0900
+--- /dev/null
++++ b/t/t5100/msg0017
+@@ -0,0 +1,2 @@
++New content here
++
+diff --git a/t/t5100/patch0017 b/t/t5100/patch0017
+new file mode 100644
+index 0000000..35cf84c
+--- /dev/null
++++ b/t/t5100/patch0017
+@@ -0,0 +1,6 @@
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++New content
+diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
+index de10312..fcc0e0d 100644
+--- a/t/t5100/sample.mbox
++++ b/t/t5100/sample.mbox
+@@ -683,3 +683,19 @@ index e69de29..d95f3ad 100644
+ @@ -0,0 +1 @@
+ +content
+ 
++From nobody Mon Sep 17 00:00:00 2001
++From: A U Thor <a.u.thor@example.com>
++Subject: A E I O U
++Date: Mon, 17 Sep 2012 14:23:44 -0700
++MIME-Version: 1.0
++Content-Type: text/plain; charset="iso-2022-jp"
++Content-type: text/plain; charset="UTF-8"
++
++New content here
++
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++New content
+-- 
+1.7.12.556.gb90bb19
