@@ -1,100 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to create the " [PATCH 0/5]" first email?
-Date: Tue, 18 Sep 2012 15:16:53 -0400
-Message-ID: <20120918191653.GA21187@sigill.intra.peff.net>
-References: <1347710524-15404-1-git-send-email-pclouds@gmail.com>
- <F93DBBE1DDAA44A28C9020F9A58FD825@PhilipOakley>
- <7vzk4rz00y.fsf@alter.siamese.dyndns.org>
- <98180D4AA94C468887029389CC535D4F@PhilipOakley>
- <7vfw6gqkfg.fsf@alter.siamese.dyndns.org>
- <20120918001522.GA10283@sigill.intra.peff.net>
- <7v7grsqi98.fsf@alter.siamese.dyndns.org>
- <20120918185530.GB20498@sigill.intra.peff.net>
- <7vsjafm9hd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff across submodules
+Date: Tue, 18 Sep 2012 12:28:48 -0700
+Message-ID: <7vobl3m8pb.fsf@alter.siamese.dyndns.org>
+References: <1347937959.96154.YahooMailClassic@web39403.mail.mud.yahoo.com>
+ <5058C53B.5040401@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 21:17:13 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Kenny Simpson <theonetruekenny@yahoo.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 18 21:29:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE3I8-00074f-6v
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 21:17:04 +0200
+	id 1TE3Tg-0005nk-Nf
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 21:29:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754273Ab2IRTQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 15:16:56 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:47470 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754011Ab2IRTQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 15:16:55 -0400
-Received: (qmail 23581 invoked by uid 107); 18 Sep 2012 19:17:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Sep 2012 15:17:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2012 15:16:53 -0400
-Content-Disposition: inline
-In-Reply-To: <7vsjafm9hd.fsf@alter.siamese.dyndns.org>
+	id S1754481Ab2IRT2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 15:28:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37673 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754427Ab2IRT2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 15:28:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 995DA9916;
+	Tue, 18 Sep 2012 15:28:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9sjQy4Mm7Sj6U4emMEQOgYcH9RY=; b=NMSBQ/
+	VjX1nzOFl+aYOkVfAPWkRmIw0uq/tjKhCaMprjl1z7nn90RP244Kh7F1WSn+cH/s
+	LrPKWSUTGCZ+RmzT+cPgsgSsKLzVrz5Wno55YBSXwClmkX0O5oiBhSg8c0WoWjnX
+	RA/PJoXmEJfTg5VDxrYJmjfCzrxWXDQpWfZrs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TgMQER6Rg3KsMFd9s+OdL4JyXyoKrGQp
+	+2iND6qsE60h0vTGleLn5pHB8NfOlQZhfnJO280gtwSRUCyb7rU8dE67n/EDjmlu
+	QPZgwRRd4IXirUVE79/jZiT/HQ6Arr+vqZ7nR7DY3y0CbcVI0fuIPsc1KH/2qshy
+	Q8arIITHDK0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85DA09915;
+	Tue, 18 Sep 2012 15:28:50 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA4A79913; Tue, 18 Sep 2012
+ 15:28:49 -0400 (EDT)
+In-Reply-To: <5058C53B.5040401@web.de> (Jens Lehmann's message of "Tue, 18
+ Sep 2012 21:02:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 12BCF96C-01C7-11E2-857F-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205854>
 
-On Tue, Sep 18, 2012 at 12:11:58PM -0700, Junio C Hamano wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > But even without that, I still think format-patch is a reasonable time
-> > to do it. It is the time when I proof-read my commit message and patch
-> > in its final form, and think "do I really want to send this?".
-> 
-> But it is not like "I cannot sign off because I think it is still
-> iffy".
+> Am 18.09.2012 05:12, schrieb Kenny Simpson:
+>>   Is there any nice way to get a diff and/or diffstat of both a project and its submodules between two revisions of the main project?
+>> 
+>> Something like 'git diff --stat tag_a tag_b' but also including the diffstat on the submodule from the revision tied to in tag_a to the revision tied to tag_b.  A few shell backflips will do it, but this seems like I'm missing something.
+>
+> Unfortunately that isn't possible yet, "git diff" still has to learn the
+> --recurse-submodules option. And as far as I know, nobody is currently
+> working on that.
 
-No, that is not the particular reason in my case, but I think I
-explained other reasons why "format-patch -s" is not a wrong workflow.
+I do not think it is _that_ unfortunate, at least for two reasons.
 
-> >> But your point still stands; "commit -s" will not see through that
-> >> official trick either ;-).
-> >
-> > Yes. :)
-> 
-> Actually, no.  "commit -s" does not have any need to see through it.
-> 
-> 	... hack hack hack ...
->         $ git commit -a -s
->         ... editor opens, you see your Sign-off at the end, with
->         ... the cursor sitting on the first line
->         ... edit the title, move to the line below the Sign-off,
->         ... and do the "---\n\n * comment" thing.
-> 
-> And this survives "rebase -i" (but not "format-patch | am" for
-> obvious reasons).
+When I made something a submodule, not a plain vanilla directory, I
+did want it to be treated differently from a collection of files in
+random states (which is what a directory is), but as a logical unit.
+If I bind another project 'frotz' at my path 'lib/frotz' and ask for
+diff of two versions of my superproject, e.g.
 
-Yes, if your particular workflow is to signoff the very first time you
-commit. But it would not work for:
+    $ git diff v1.0 v1.1
 
- ... hack hack hack ...
- $ git commit -a
-   ... make a note after "---" ...
+I am more interested in finding out that we used to use v2.5 of
+'frotz' back when we were at v1.0 but in our v1.1 we downgraded it
+to v2.4, perhaps because we found a regression in the 'frotz'
+library, rather than the whole reverse differences between v2.4 and
+v2.5 of the frotz project.  That difference, when I want to, I can
+get by going to that submodule and grab it myself with
 
- ... hack hack hack ...
- ... OK, looks good, ready to signoff ...
- $ git commit --amend -s
+    $ cd lib/frotz &7 git diff v2.4 v2.5
 
-So it can work, but it is workflow dependent, and in general is a little
-flaky with the automagic signoff. You may want to signoff later for a
-variety of reasons, not the least of which is that you forgot to type
-"-s" the first time.
+I also suspect that you do not have to change "git diff" at all to
+show the patch recursively by using the attribute mechanism (look in
+Documentation/gitattributes.text for a string GIT_EXTERNAL_DIFF).
+It might be just as simple as doing this:
 
-> So I take it back.  The time you do the "git commit" for the very
-> first time for this change that may need to be rerolled number of
-> times is the right time to say "-s".
+	echo >.gitattributes "/lib/frotz diff=subrecurse" 
+	git config diff.subrecurse.command $HOME/bin/diff-subrecurse
+        cat >$HOME/bin/diff-subrecurse <<\-EOF
+	#!/bin/sh
+        path=$1 old_hex=$3 new_hex=$6
+        unset GIT_DIR
+        cd "$path" || exit 1
+        git diff "$old_hex" "$new_hex"        
+        EOF
+        chmod +x $HOME/bin/diff-subrecurse
 
-If you remember to type it. :)
-
--Peff
+The corner cases like "new submodule", "removed submodule" are left
+as an exercise to the reader ;-)
