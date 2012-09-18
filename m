@@ -1,84 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv6] clone --single: limit the fetch refspec to fetched
- branch
-Date: Tue, 18 Sep 2012 12:45:36 -0700
-Message-ID: <7vfw6fm7xb.fsf@alter.siamese.dyndns.org>
-References: <1347909706-22888-1-git-send-email-ralf.thielow@gmail.com>
- <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com>
+From: =?windows-1252?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/2] archive-zip: support UTF-8 paths
+Date: Tue, 18 Sep 2012 21:46:56 +0200
+Message-ID: <5058CFB0.6040506@lsrfire.ath.cx>
+References: <502583F4.8030308@tu-clausthal.de> <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx> <5026D081.2040906@tu-clausthal.de> <20120830222603.GA20289@sigill.intra.peff.net> <5046634A.4020608@lsrfire.ath.cx> <7vehmh8prt.fsf@alter.siamese.dyndns.org> <5047A9C0.9020200@lsrfire.ath.cx> <5058CE49.3070108@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 21:45:50 2012
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Sep 18 21:47:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE3jw-0006vd-Dp
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 21:45:48 +0200
+	id 1TE3lQ-0007lA-SM
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 21:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab2IRTpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 15:45:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45349 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754498Ab2IRTpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 15:45:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EED19DF3;
-	Tue, 18 Sep 2012 15:45:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6rW44QFKop3+BMXalzzQj+D9G2k=; b=PSKVIH
-	rXBGsRnJrnfceHcNuW/15b2FewlCiIRFl/vH6o+ZWorrYF1Bz6oTqbo/0gOYvhug
-	DSCZMAVSTD7FL62jo6V6sQaxrOr7u9erpan3yZ1UOWmNUUD/c3Vr74P4ltniw4eF
-	ZU3QKfzZ06WWoqtTNXIUoKuZGHJIGCRe6GPv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aQ+0SGC1fS+JYgWXdlls24CI2ik4AQ1T
-	UoUDzM1Wj8AyOsQpTkZt3/MqinEFU7tn/9dFLFIYDsMqmJ4lO0Z0CQ22D2+863W6
-	vBVDAIviSb49Mo7Gut0w+tozI1QqJxsDy1lCYByguIgwd994hNbuu3DqkY4wc/XQ
-	JQspkQD2XfA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DDAC9DF2;
-	Tue, 18 Sep 2012 15:45:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94DC99DF0; Tue, 18 Sep 2012
- 15:45:37 -0400 (EDT)
-In-Reply-To: <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com> (Ralf
- Thielow's message of "Tue, 18 Sep 2012 21:14:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B61E184-01C9-11E2-8572-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754684Ab2IRTrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 15:47:12 -0400
+Received: from india601.server4you.de ([85.25.151.105]:42877 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754551Ab2IRTrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 15:47:10 -0400
+Received: from [192.168.2.105] (p579BE98C.dip.t-dialin.net [87.155.233.140])
+	by india601.server4you.de (Postfix) with ESMTPSA id 8C188B1;
+	Tue, 18 Sep 2012 21:47:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <5058CE49.3070108@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205858>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Set general purpose flag 11 if we encounter a path that contains
+non-ASCII characters.  We assume that all paths are given as UTF-8; no
+conversion is done.
 
-> + ...
-> +	# explicit --single with tag
-> +	git clone --single-branch --branch two . dir_tag &&
-> +
-> +	# advance both "master" and "side" branches
-> +	git checkout side &&
-> +	echo five >file &&
-> +	git commit -a -m five &&
-> +	git checkout master &&
-> +	echo six >file &&
-> +	git commit -a -m six
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+Changes from previous version: Stop using has_non_ascii(), which does
+slightly too much for our purposes, and split off creator version
+change into a separate patch.
 
-Don't we also want to cover your "delivery" tag scenario by updating
-the tag "two" before letting the clones fetch in the following test?
+ archive-zip.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-> + ...
-> +test_expect_success '--single-branch with explicit --branch tag' '
-> +	(
-> +		cd dir_tag && git fetch &&
-> +		git for-each-ref refs/tags >../actual
-> +	) &&
-> +	git for-each-ref refs/tags >expect &&
-> +	test_cmp expect actual
-> +'
+diff --git a/archive-zip.c b/archive-zip.c
+index f5af81f..0f763e8 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -4,6 +4,7 @@
+ #include "cache.h"
+ #include "archive.h"
+ #include "streaming.h"
++#include "utf8.h"
+ 
+ static int zip_date;
+ static int zip_time;
+@@ -16,7 +17,8 @@ static unsigned int zip_dir_offset;
+ static unsigned int zip_dir_entries;
+ 
+ #define ZIP_DIRECTORY_MIN_SIZE	(1024 * 1024)
+-#define ZIP_STREAM (8)
++#define ZIP_STREAM	(1 <<  3)
++#define ZIP_UTF8	(1 << 11)
+ 
+ struct zip_local_header {
+ 	unsigned char magic[4];
+@@ -164,6 +166,17 @@ static void set_zip_header_data_desc(struct zip_local_header *header,
+ 	copy_le32(header->size, size);
+ }
+ 
++static int has_only_ascii(const char *s)
++{
++	for (;;) {
++		int c = *s++;
++		if (c == '\0')
++			return 1;
++		if (!isascii(c))
++			return 0;
++	}
++}
++
+ #define STREAM_BUFFER_SIZE (1024 * 16)
+ 
+ static int write_zip_entry(struct archiver_args *args,
+@@ -187,6 +200,13 @@ static int write_zip_entry(struct archiver_args *args,
+ 
+ 	crc = crc32(0, NULL, 0);
+ 
++	if (!has_only_ascii(path)) {
++		if (is_utf8(path))
++			flags |= ZIP_UTF8;
++		else
++			warning("Path is not valid UTF-8: %s", path);
++	}
++
+ 	if (pathlen > 0xffff) {
+ 		return error("path too long (%d chars, SHA1: %s): %s",
+ 				(int)pathlen, sha1_to_hex(sha1), path);
+-- 
+1.7.12
