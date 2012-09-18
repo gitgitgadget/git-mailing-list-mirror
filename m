@@ -1,86 +1,69 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: [PATCH] Documentation/git-filter-branch: Move note about effect of
- removing commits
-Date: Tue, 18 Sep 2012 17:55:08 +0200
-Message-ID: <m2627biaw3.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv5] clone --single: limit the fetch refspec to fetched
+ branch
+Date: Tue, 18 Sep 2012 09:57:38 -0700
+Message-ID: <7vipbbnu9p.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8BGBwNp-oDsnB1QObrVLU54rtDmGGBF=Muww8ZJjfZScA@mail.gmail.com>
+ <1347909706-22888-1-git-send-email-ralf.thielow@gmail.com>
+ <7v8vc8v1wd.fsf@alter.siamese.dyndns.org>
+ <CAN0XMOKCsjfG-DgV_rr99mYXHBSKryL1O46X+7r5ie+=2aKmmA@mail.gmail.com>
+ <7vlig8s50o.fsf@alter.siamese.dyndns.org>
+ <CAN0XMOKCZL+X1QNW7CPmu-wdpVN0HjK=3z-sTz5naSQ5RW3x4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 17:55:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 18:57:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE08u-00044W-MS
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 17:55:21 +0200
+	id 1TE17R-0000Wn-TZ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 18:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757332Ab2IRPzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 11:55:12 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:37286 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757258Ab2IRPzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 11:55:10 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XLpgd15CCz3hhh5
-	for <git@vger.kernel.org>; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
-X-Auth-Info: /34mgPHG+yeRhbJjOvmPGHvAkVmudFL/StF7ke4iVhQ=
-Received: from igel.home (ppp-93-104-159-39.dynamic.mnet-online.de [93.104.159.39])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XLpgc5NY7zbbjf
-	for <git@vger.kernel.org>; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 42CD8CA2A2; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
-X-Yow: I'm having a MID-WEEK CRISIS!
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752102Ab2IRQ5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 12:57:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63967 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751872Ab2IRQ5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 12:57:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE7C98E60;
+	Tue, 18 Sep 2012 12:57:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OHio4QsO3tpY0Cjj8z+L/vK4ULw=; b=uFOPWv
+	TLp6/2hacZvfbS+3UDCYJyTzFy2qmzzRjR0Wa7up4wU+uowp1spbWgomfBSM+GhX
+	j9AyZnzBzRebyDDMvGWBFlP0g9uCbmrIgNxX7oTs+9hf7JqtYYIJgzVCGwEV+mWE
+	e56A7yPOuWbhyu9R+rsAzZcx2raij3smlzVcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aTW5QiAMNLwae5cpeajqyEvkJ1gJVmzb
+	EqQRtOrNi2hU7anfArlZLDXLf8hZ7ftw+7DVjSOguNS+A4nWXY3QZ/McMeizX9vw
+	MpaRm26ifPakPY3+oLPjYibi3fg/d0w5ezJNipCUUkXhJ3g9IDQ4JQe4I8bokB1C
+	s5k2Nd/UAic=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AE628E5F;
+	Tue, 18 Sep 2012 12:57:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8AB988E5B; Tue, 18 Sep 2012
+ 12:57:40 -0400 (EDT)
+In-Reply-To: <CAN0XMOKCZL+X1QNW7CPmu-wdpVN0HjK=3z-sTz5naSQ5RW3x4w@mail.gmail.com> (Ralf
+ Thielow's message of "Tue, 18 Sep 2012 16:08:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F4FF83F0-01B1-11E2-B31D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205837>
 
-The note that explains that changes introduced by removed commits are
-preserved should be placed directly after the paragraph that describes
-such commits removal.  Otherwise the reference to "the commits" appears
-out of context.
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
----
- Documentation/git-filter-branch.txt | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+> IMO if a user uses "clone --single-branch --branch <tag>", then he/she
+> wants to have this tag only. Why should the next "git fetch" fetching
+> something different?
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 15e7ac8..6e2d9ea 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -304,6 +304,11 @@ committed a merge between P1 and P2, it will be propagated properly
- and all children of the merge will become merge commits with P1,P2
- as their parents instead of the merge commit.
- 
-+*NOTE* the changes introduced by the commits, and which are not reverted
-+by subsequent commits, will still be in the rewritten branch. If you want
-+to throw out _changes_ together with the commits, you should use the
-+interactive mode of 'git rebase'.
-+
- You can rewrite the commit log messages using `--msg-filter`.  For
- example, 'git svn-id' strings in a repository created by 'git svn' can
- be removed this way:
-@@ -329,11 +334,6 @@ git filter-branch --msg-filter '
- ' HEAD~10..HEAD
- --------------------------------------------------------
- 
--*NOTE* the changes introduced by the commits, and which are not reverted
--by subsequent commits, will still be in the rewritten branch. If you want
--to throw out _changes_ together with the commits, you should use the
--interactive mode of 'git rebase'.
--
- 
- Consider this history:
- 
--- 
-1.7.12
-
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+OK, I can buy that.
