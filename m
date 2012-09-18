@@ -1,94 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git installation fails in home directory on ubuntu 12.04
-Date: Tue, 18 Sep 2012 11:09:27 -0700
-Message-ID: <7v627bnqy0.fsf@alter.siamese.dyndns.org>
-References: <505859B4.2090205@web.de>
+Subject: Re: [PATCH/RFC] git-svn: use path accessor for Git::SVN objects
+Date: Tue, 18 Sep 2012 11:10:05 -0700
+Message-ID: <7v1uhznqwy.fsf@alter.siamese.dyndns.org>
+References: <20120918000931.GB17939@dcvr.yhbt.net>
+ <20120918142941.GA2925@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefbel@web.de>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 20:09:40 2012
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	"Michael G. Schwern" <schwern@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 20:10:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE2Et-0000WV-5X
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 20:09:39 +0200
+	id 1TE2FY-0000vQ-Oe
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 20:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab2IRSJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 14:09:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34340 "EHLO
+	id S1753237Ab2IRSKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 14:10:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34732 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751490Ab2IRSJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 14:09:30 -0400
+	id S1751732Ab2IRSKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 14:10:09 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E71D8374;
-	Tue, 18 Sep 2012 14:09:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA8BA83A2;
+	Tue, 18 Sep 2012 14:10:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PTWF3BXiX0RT98tDrhdwxQVzT3Y=; b=ydrRbO
-	knjfznElzOri/DCvhbWTWtknXlJVY23M4eZxK1s1Qjh8v8wH2LAbvFO8o2hoo+8v
-	rp2wa9eJTO7eCUlOMTIlYHlFAecq6Slf+SNiCVGgDoFYmhlNLm6Auwf7nfFKBd6X
-	FZM+vNVF8lZoXNw4jug6XA6H8eoPjwxANeJi0=
+	:content-type; s=sasl; bh=VUm2L01r78+0n0o26KI/eu0y+zo=; b=l6IowZ
+	E6j/g9VdDmtO8kYcsvBetTlDIQ8wann9UNiRgPSZu04flQptwfHnvPdgi9XRU833
+	Y2sgXhXTL5vENXIYwEpcSudiPT6mdJDPPAnVr92Hx/FNizGkLa2r7VlW0sewf/6f
+	X0f7+zpqmmyWFBYMKNTwTAdlbyWXeAMsJFCH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vb8D6W5HEY65RBekUAwLwExchKCWHyTm
-	uZzPTn8HD0wJ5oo5hqvUj16xb6CsC5ARsyqDlezAwIUH55IpI1ujFkwiCJU0AooP
-	d3wzrCgifKRPJLscCqKyVFT84NE3LCHSAQyXAnCUE+/9rUcK+gkMWrILuF9cH/MQ
-	EEMZb0dCEUU=
+	:content-type; q=dns; s=sasl; b=Tn6Z4400r/zii8PRMbt761erRetFPIty
+	L/l/plzL8ABo9dKHR0OtQoCaWa/q4BkVu2kFYVAyDVz2VQB2VpE5RzTgBaBqELtH
+	Dhpw110ZztCisufyWC6aXT49YRqAhmvguyYDibpP9JC5lsw0DK0fWHU9C0Zc9O1f
+	DPQDEtz/Alk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A5A28373;
-	Tue, 18 Sep 2012 14:09:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9562883A1;
+	Tue, 18 Sep 2012 14:10:08 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 675F78371; Tue, 18 Sep 2012
- 14:09:28 -0400 (EDT)
-In-Reply-To: <505859B4.2090205@web.de> (Stefan Beller's message of "Tue, 18
- Sep 2012 13:23:32 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E8D083A0; Tue, 18 Sep 2012
+ 14:10:06 -0400 (EDT)
+In-Reply-To: <20120918142941.GA2925@elie.Belkin> (Jonathan Nieder's message
+ of "Tue, 18 Sep 2012 07:29:42 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FCAE27D2-01BB-11E2-91BF-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 13B8EDC2-01BC-11E2-BA83-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205844>
 
-Stefan Beller <stefbel@web.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> So I did
-> git fetch
-> git rebase
-> git describe
-> v1.7.12-503-g5976753
+> Eric Wong wrote:
 >
-> ./configure --prefix=/home/sb
-> make
-> make install
->     GEN perl/PM.stamp
->     SUBDIR gitweb
->     SUBDIR ../
->     SUBDIR perl
-> make[1]: `perl.mak' is up to date.
-> ...
-> make[1]: Entering directory `/home/sb/OSS/git/perl'
-> make[2]: Entering directory `/home/sb/OSS/git/perl'
-> Appending installation info to /usr/local/lib/perl/5.14.2/perllocal.pod
-> mkdir /usr/local/lib/perl: Permission denied at
-> /usr/share/perl/5.14/ExtUtils/Command.pm line 288
+>> The accessors should improve maintainability and enforce
+>> consistent access to Git::SVN objects.
+>>
+>> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+>> ---
+>>   (RFC since I could've missed something)
+> [...]
+>>  git-svn.perl       | 2 +-
+>>  perl/Git/SVN/Ra.pm | 2 +-
+>>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> I think that's all of them, so for what it's worth,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I often do an equivalent of
-
-        make prefix=/home/gitster
-        make prefix=/home/gitster install
-
-and never saw this.  I do not use ./configure, and am not actively
-involved in maintaining that part of the system.
-
-Among the people who touched configure.ac and aclocal.m4 in the past
-18 months, Stefano seems to be the most clueful with that part of
-the system, and among those who touched perl/Makefile.PL during the
-same period, I suspect Jonathan may know a thing or two about
-MakeMaker, so let's see if we can get help from these directions...
+Thanks for helping to move things forward.
