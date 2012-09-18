@@ -1,70 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCHv4] clone --single: limit the fetch refspec to fetched branch
-Date: Tue, 18 Sep 2012 08:04:10 +0700
-Message-ID: <CACsJy8CUuPPvTMNmtX9P5ZHkvUHCVZkKmPj7Ghubxt_daPaKZg@mail.gmail.com>
-References: <7vy5kc1avx.fsf@alter.siamese.dyndns.org> <1347783184-20045-1-git-send-email-ralf.thielow@gmail.com>
- <CACsJy8Bsps_-RaXdBd9ipWPvJukjK7mRN_wG2ezEL5d4JLyx+g@mail.gmail.com>
- <CACsJy8BGBwNp-oDsnB1QObrVLU54rtDmGGBF=Muww8ZJjfZScA@mail.gmail.com> <7vd31kv2ba.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Sebastian_D=F6rner?= 
+	<sebastian@sebastian-doerner.de>
+Subject: Gitk commit order leads to unnecessarily long lines
+Date: Tue, 18 Sep 2012 02:41:18 +0100
+Message-ID: <CA+_kBjAWM1XHVsRa4WfDZXvtf8eJGweJhi3Rz7Sfhv390hA7WA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 03:04:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 18 03:41:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDmF7-00013C-Mq
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 03:04:50 +0200
+	id 1TDmoa-0003IJ-Lk
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 03:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119Ab2IRBEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 21:04:42 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:60943 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755901Ab2IRBEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 21:04:41 -0400
-Received: by ieak13 with SMTP id k13so1443725iea.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 18:04:40 -0700 (PDT)
+	id S1756425Ab2IRBlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 21:41:20 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:54374 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755744Ab2IRBlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 21:41:19 -0400
+Received: by oago6 with SMTP id o6so5481428oag.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 18:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5wJfm9tRsodqluSEtYNXL4bbT5+TIH2uAMF56ysT4pk=;
-        b=EbC6roig2NJEv4U5kwOfPTeQ+WsrEhSB3u1A67QBEmbxVAmwZya35RbMPGPQFq4+MY
-         1QsQOtYsD4maHnM8SwhTCwyai1KlYRqd35/tB/b4S3DyjybPRB3lqYTV7VXT3GUs+zMM
-         In9GqjFAICLqAsd38fMyip36Dm1ZtJ7v+yzIExbCWnsrLovNKdeJXhd6qfLO9OBwqTpP
-         +7fx44CF0/67W/2hhGS/zbswxkswlFwx+sDSrbGqm/Pn2vD4Q62e+g+fQc8sq7G4/ScV
-         ZW/W01YNC31EuQeTWcfNNXnL+fLuVQLATYYeN36fMDzUjjJsGd85nLf0mUQOHzbfJUov
-         SjmA==
-Received: by 10.42.109.194 with SMTP id m2mr10316515icp.48.1347930280829; Mon,
- 17 Sep 2012 18:04:40 -0700 (PDT)
-Received: by 10.64.167.139 with HTTP; Mon, 17 Sep 2012 18:04:10 -0700 (PDT)
-In-Reply-To: <7vd31kv2ba.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=8e8hfbEQl2W7Fnou4xIfoV7RvtwmgTipLrTFZA9HNa4=;
+        b=LurAs0DLL8JeoHk8FP6FljCM96rdmjxwejFvun0UTvyf25qJTrOr8rAQ9154S6mqaL
+         3JHBJeu0nWYc0BJCxBiGFedsQtB/j6+CbF+K2QcfDrU9i/aFPh07CrWbL26P4zXBi1aM
+         +B19mmLbv5iOzlH+VPvREUC6R9kUBcktRFMAES1XA0h0A3O6MR61njcIrfFRqMpt8p72
+         tP4X7MY/TmKbDYVhgJYHBtifqnYulP8F/inV5D1kvAch9IYiRh6O3K83XoQWoC00fSQO
+         f3vP3P7A7GAxNNjaA2zbTFSARrft2Ft78mZPYu3SvaUypRvesHqsiVBlE8fJlheKWH5E
+         EIPA==
+Received: by 10.60.20.165 with SMTP id o5mr13416868oee.135.1347932478626; Mon,
+ 17 Sep 2012 18:41:18 -0700 (PDT)
+Received: by 10.182.39.132 with HTTP; Mon, 17 Sep 2012 18:41:18 -0700 (PDT)
+X-Google-Sender-Auth: Sy9X0Y3E1uC7V7iEbtkEcMUa9kc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205778>
 
-On Tue, Sep 18, 2012 at 3:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> On Mon, Sep 17, 2012 at 7:06 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->>> --mirror --single-branch combination does not look right. The "heads/"
->>> part is missing..
->>
->> It also does not look right for cloning a tag:
->>
->> $ LANG=C ./git clone --single-branch --branch=v1.7.0 .git abc
->
-> What does it even _mean_ to clone a single branch and give a tag,
-> not a branch, to the --branch option?  Again, shouldn't it be
-> diagnosed as an error in the first place?
+Hi,
+It seems like the order gitk uses for the commits sometimes leads to
+overly long lines. My use case is this repository (note that this
+svn-conversion is still WIP):
+http://www.sebastian-doerner.de/kompare.tgz
 
-That could be misleading. The original purpose is to clone just one
-ref, be it a branch or a tag. You might want to work on top of a
-specific version and may not want to clone everything. For cloning a
-tag, we're put in detached head state immediately.
--- 
-Duy
+Looking at this with "gitk --all" looks partly like this:
+http://i.imgur.com/oewTq.png
+Almost all the commits are in one branch. Rendering the merges at the
+top much earlier would avoid this line chaos. Interestingly, if you
+just render the relevant commits, it looks fine:
+gitk 768493d381aceffc90f132b6accb1536af8a3cc3..0ef520d910208c4d53bdd915964107b5a98cdc08
+The problem for the current algorithm is probably the single non-merge
+commit before the merges.
+
+Another instance in the same repo (again gitk --all) is this part:
+http://i.imgur.com/0i2fF.png
+Both the pink and right orange line merge from trunk into that kde4
+branch. However, this is not obvious from the way it is drawn. I see
+this problem is a bit "softly expressed", but I hope you see what I
+mean. I think making the merge edges shorter would also make the
+actual structure more obvious.
+
+I have no good idea how to easily fix these problems, but I don't know
+that much about how it works currently. I see it might involve some
+more "intelligence" of the rendering algorithm (forward-looking of
+some sort). So never mind if you don't have a fast fix. But I still
+wanted to point out that the problem exists.
+
+This might be related to this issue:
+http://thread.gmane.org/gmane.comp.version-control.git/18097/focus=18103
+git version 1.7.12
+
+Thank you!
+
+Regards
+
+Sebastian
