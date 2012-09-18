@@ -1,105 +1,52 @@
-From: =?windows-1252?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 2/2] archive-zip: declare creator to be Unix for UTF-8 paths
-Date: Tue, 18 Sep 2012 21:53:32 +0200
-Message-ID: <5058D13C.8050203@lsrfire.ath.cx>
-References: <502583F4.8030308@tu-clausthal.de> <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx> <5026D081.2040906@tu-clausthal.de> <20120830222603.GA20289@sigill.intra.peff.net> <5046634A.4020608@lsrfire.ath.cx> <7vehmh8prt.fsf@alter.siamese.dyndns.org> <5047A9C0.9020200@lsrfire.ath.cx> <5058CE49.3070108@lsrfire.ath.cx>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to create the " [PATCH 0/5]" first email?
+Date: Tue, 18 Sep 2012 21:10:26 +0100
+Organization: OPDS
+Message-ID: <62292D2F2B354D74AC637CD1DCBBCC72@PhilipOakley>
+References: <1347710524-15404-1-git-send-email-pclouds@gmail.com> <F93DBBE1DDAA44A28C9020F9A58FD825@PhilipOakley> <7vzk4rz00y.fsf@alter.siamese.dyndns.org> <98180D4AA94C468887029389CC535D4F@PhilipOakley> <7vfw6gqkfg.fsf@alter.siamese.dyndns.org> <20120918001522.GA10283@sigill.intra.peff.net> <7v7grsqi98.fsf@alter.siamese.dyndns.org> <20120918185530.GB20498@sigill.intra.peff.net> <7vsjafm9hd.fsf@alter.siamese.dyndns.org> <20120918191653.GA21187@sigill.intra.peff.net> <7vboh3m7tz.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Sep 18 21:53:58 2012
+Cc: "Git List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 22:10:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE3rn-00031v-Rq
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 21:53:56 +0200
+	id 1TE47t-0003m9-Mu
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 22:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754442Ab2IRTxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 15:53:46 -0400
-Received: from india601.server4you.de ([85.25.151.105]:42882 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754295Ab2IRTxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 15:53:45 -0400
-Received: from [192.168.2.105] (p579BE98C.dip.t-dialin.net [87.155.233.140])
-	by india601.server4you.de (Postfix) with ESMTPSA id 8843EB1;
-	Tue, 18 Sep 2012 21:53:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <5058CE49.3070108@lsrfire.ath.cx>
+	id S1754771Ab2IRUK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 16:10:26 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:19768 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754763Ab2IRUKX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 16:10:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq0NANLUWFBZ8rU+/2dsb2JhbABFi0ivbQQBAQKBBIEJghsFAQEFCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYBEggCAQIDAYdzukOLXAclXigEEwSEAmADiCGFRJgfgmeBYg
+X-IronPort-AV: E=Sophos;i="4.80,445,1344207600"; 
+   d="scan'208";a="399016089"
+Received: from host-89-242-181-62.as13285.net (HELO PhilipOakley) ([89.242.181.62])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 18 Sep 2012 21:10:21 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205863>
 
-The UTF-8 flag seems to be ignored by unzip unless we also mark the
-archive entry as coming from a Unix system.  This is done by setting the
-field creator_version ("version made by" in the standard[1]) to 0x03NN.
+From: "Junio C Hamano" <gitster@pobox.com>
+> have anything to do with DCO in any case?
 
-The NN part represents the version of the standard supported by us, and
-this patch sets it to 3f (for version 6.3) for Unix paths.  We keep
-creator_version set to 0 (FAT filesystem, standard version 0) in the
-non-special cases, as before.
-
-But when we declare a file to have a Unix path, then we have to set the
-file mode as well, or unzip will extract the files with the permission
-set 0000, i.e. inaccessible by all.
-
-[1] http://www.pkware.com/documents/casestudies/APPNOTE.TXT
----
-No sign-off for this, yet.  Perhaps there is a better way to convince
-unzip to respect the flag?  And if not, do we need to offer umask
-settings for ZIP as well as we have for tar?  And perhaps declare all
-files as being from a Unix filesystem, for consistency?
-
- archive-zip.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/archive-zip.c b/archive-zip.c
-index 0f763e8..e9b3dc9 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -186,7 +186,8 @@ static int write_zip_entry(struct archiver_args *args,
- {
- 	struct zip_local_header header;
- 	struct zip_dir_header dirent;
--	unsigned long attr2;
-+	unsigned int creator_version = 0;
-+	unsigned long attr2 = 0;
- 	unsigned long compressed_size;
- 	unsigned long crc;
- 	unsigned long direntsize;
-@@ -224,10 +225,15 @@ static int write_zip_entry(struct archiver_args *args,
- 		enum object_type type = sha1_object_info(sha1, &size);
- 
- 		method = 0;
--		attr2 = S_ISLNK(mode) ? ((mode | 0777) << 16) :
--			(mode & 0111) ? ((mode) << 16) : 0;
- 		if (S_ISREG(mode) && args->compression_level != 0 && size > 0)
- 			method = 8;
-+		if (S_ISLNK(mode) || (mode & 0111) || (flags & ZIP_UTF8)) {
-+			creator_version = 0x033f;
-+			attr2 = mode;
-+			if (S_ISLNK(mode))
-+				attr2 |= 0777;
-+			attr2 <<= 16;
-+		}
- 		compressed_size = size;
- 
- 		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
-@@ -274,8 +280,7 @@ static int write_zip_entry(struct archiver_args *args,
- 	}
- 
- 	copy_le32(dirent.magic, 0x02014b50);
--	copy_le16(dirent.creator_version,
--		S_ISLNK(mode) || (S_ISREG(mode) && (mode & 0111)) ? 0x0317 : 0);
-+	copy_le16(dirent.creator_version, creator_version);
- 	copy_le16(dirent.version, 10);
- 	copy_le16(dirent.flags, flags);
- 	copy_le16(dirent.compression_method, method);
--- 
-1.7.12
+Junio,
+What's DCO an abbreviation of?
+Philip
