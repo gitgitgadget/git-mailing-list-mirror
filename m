@@ -1,88 +1,113 @@
-From: <Ankush_Aggarwal@DELL.com>
-Subject: RE: Unable to clone GIT project
-Date: Tue, 18 Sep 2012 08:53:21 +0000
-Message-ID: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFE5FB@NOIX10HMNOI01.AMER.DELL.COM>
-References: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFDB65@NOIX10HMNOI01.AMER.DELL.COM>
- <20120916104651.GF32381@localhost.localdomain>
- <CABPQNSbPF=_a7-+JnojM2DQAkkj7ZLhSnO+n-Ab=LSrHge1dnQ@mail.gmail.com>
- <20120917202124.GC24888@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] string_list API: document what "sorted" means.
+Date: Tue, 18 Sep 2012 10:55:56 +0200
+Message-ID: <5058371C.8060209@alum.mit.edu>
+References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu> <7vy5k8s622.fsf@alter.siamese.dyndns.org> <505829AB.8000506@alum.mit.edu> <7vmx0noi8s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: <flatworm@users.sourceforge.net>, <git@vger.kernel.org>
-To: <peff@peff.net>, <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 10:53:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 10:56:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDtYz-0007jb-G9
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 10:53:49 +0200
+	id 1TDtbI-0000ad-FB
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 10:56:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312Ab2IRIxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 04:53:36 -0400
-Received: from ausxippc101.us.dell.com ([143.166.85.207]:18084 "EHLO
-	ausxippc101.us.dell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757363Ab2IRIxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 04:53:32 -0400
-X-Loopcount0: from 10.175.216.249
-Thread-Topic: Unable to clone GIT project
-Thread-Index: Ac2TX33wYCaE3mC8TS6/mSjwtniZiQAWliLQAAALbhAAVgDBZgAaEZ9Q
-In-Reply-To: <20120917202124.GC24888@sigill.intra.peff.net>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [160.110.232.68]
+	id S1756145Ab2IRI4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 04:56:01 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:52214 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755929Ab2IRI4A (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 04:56:00 -0400
+X-AuditID: 12074412-b7f216d0000008e3-66-5058371f43e0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id E1.DE.02275.F1738505; Tue, 18 Sep 2012 04:55:59 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8I8tvg0000738
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 18 Sep 2012 04:55:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7vmx0noi8s.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsUixO6iqCtvHhFg8GGnuEXXlW4mi4beK8wO
+	TB4XLyl7fN4kF8AUxW2TlFhSFpyZnqdvl8CdcbpzPmvBP9GK81fOMTYwXhTsYuTkkBAwkVj8
+	dxMbhC0mceHeejBbSOAyo8StQ2pdjFxA9nEmidPTHrOAJHgFtCXe7tgPVMTBwSKgKnFwqSZI
+	mE1AV2JRTzMTiC0qECIx4/JkZohyQYmTM5+AtYoIqElMbDvEAtLKLCAu0f8PzBQWcJY4/TYW
+	YtN2Rokjr1+ClXMKmEn86f3ICmIzC+hIvOt7wAxhy0tsfzuHeQKjwCwkG2YhKZuFpGwBI/Mq
+	RrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0zvdzMEr3UlNJNjJAQFdrBuP6k3CFGAQ5GJR7eivTw
+	ACHWxLLiytxDjJIcTEqivCGmEQFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHh9pYFyvCmJlVWp
+	RfkwKWkOFiVx3p+L1f2EBNITS1KzU1MLUotgsjIcHEoSvGdBhgoWpaanVqRl5pQgpJk4OEGG
+	c0mJFKfmpaQWJZaWZMSDojS+GBinICkeoL35IO28xQWJuUBRiNZTjMYcs2+uuM/IcfcjkBRi
+	ycvPS5US57UAKRUAKc0ozYNbBEtOrxjFgf4W5t0BUsUDTGxw814BrWICWlXxJAxkVUkiQkqq
+	gdFXvHfhgqbvCmV3GY2NK+VZ7A7IHLOJ6hHVPdjDeXHTqzD9d3tbnvBXBVudaf3b3XtxQfGJ
+	+L8CltHu5U0fI634v7DrLOS6mjC5pDvMUv5j5n+pKaqZdqunGVQ4C121lH1e7my4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205815>
 
-QWxsLA0KDQpUaGFua3MgZm9yIHJlcGx5IGJ1dCBpdHMgbm90IHdvcmtpbmcgc3RpbGwuIFRoaW5n
-cyB3aGljaCBJIGhhdmUgZG9uZSB0aWxsIG5vdyBpcyANCg0KT24gTGludXggbWFjaGluZQ0KCUlu
-c3RhbGxlZCBsaWJpY29udi0xLjE0IHVuZGVkIC91c3IvbG9jYWwvbGliIHBhdGguDQoJCS1ydy1y
-LS1yLS0gMSByb290IHJvb3QgICAgIDkxMiBTZXAgMTUgMjA6NDAgbGliaWNvbnYubGENCgkJbHJ3
-eHJ3eHJ3eCAxIHJvb3Qgcm9vdCAgICAgIDE3IFNlcCAxNSAyMDo0MCBsaWJpY29udi5zbyAtPiBs
-aWJpY29udi5zby4yLjUuMQ0KCQlscnd4cnd4cnd4IDEgcm9vdCByb290ICAgICAgMTcgU2VwIDE1
-IDIwOjQwIGxpYmljb252LnNvLjIgLT4gbGliaWNvbnYuc28uMi41LjENCgkJLXJ3LXItLXItLSAx
-IHJvb3Qgcm9vdCAxMjYyMzQ5IFNlcCAxNSAyMDo0MCBsaWJpY29udi5zby4yLjUuMQ0KCWV4cG9y
-dCBMRF9MSUJSQVJZX1BBVEg9L3Vzci9sb2NhbC9saWI6JExEX0xJQlJBUllfUEFUSA0KDQpvbiBs
-b2NhbCBtYWNoaW5lIEkgaGF2ZSBpbnN0YWxsZWQgbXN5c2dpdCBhbmQgdHJ5aW5nIHRvIGNsb25l
-IA0KDQpDOlxBbmt1c2ggRGF0YVx3b3JrXFRlc3QtR0lUXHRyaWFsXzE+Z2l0IGNsb25lIHNzaDov
-L2JlYUA8SVA+Oi9ob21lL2Fua3VzaC9HSVQvc2FtcGxlX3Byb2plY3QNCkNsb25pbmcgaW50byAn
-c2FtcGxlX3Byb2plY3QnLi4uDQpiZWFAPElQPjoncyBwYXNzd29yZDoNCmdpdC11cGxvYWQtcGFj
-azogZXJyb3Igd2hpbGUgbG9hZGluZyBzaGFyZWQgbGlicmFyaWVzOiBsaWJpY29udi5zby4yOiBj
-YW5ub3Qgb3BlbiBzaGFyZWQgb2JqZWN0IGZpbGU6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkN
-CmZhdGFsOiBUaGUgcmVtb3RlIGVuZCBodW5nIHVwIHVuZXhwZWN0ZWRseQ0KDQoNCg0KLS0tLS1P
-cmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEplZmYgS2luZyBbbWFpbHRvOnBlZmZAcGVmZi5u
-ZXRdIA0KU2VudDogVHVlc2RheSwgU2VwdGVtYmVyIDE4LCAyMDEyIDE6NTEgQU0NClRvOiBFcmlr
-IEZheWUtTHVuZA0KQ2M6IEtvbnN0YW50aW4gS2hvbW91dG92OyBBZ2dhcndhbCwgQW5rdXNoOyBn
-aXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogVW5hYmxlIHRvIGNsb25lIEdJVCBwcm9q
-ZWN0DQoNCk9uIFN1biwgU2VwIDE2LCAyMDEyIGF0IDA5OjQ4OjQzUE0gKzAyMDAsIEVyaWsgRmF5
-ZS1MdW5kIHdyb3RlOg0KDQo+ID4+IGdpdC11cGxvYWQtcGFjazogZXJyb3Igd2hpbGUgbG9hZGlu
-ZyBzaGFyZWQgbGlicmFyaWVzOiANCj4gPj4gbGliaWNvbnYuc28uMjogY2Fubm90IG9wZW4gc2hh
-cmVkIG9iamVjdCBmaWxlOiBObyBzdWNoIGZpbGUgb3IgDQo+ID4+IGRpcmVjdG9yeQ0KPiA+PiBm
-YXRhbDogVGhlIHJlbW90ZSBlbmQgaHVuZyB1cCB1bmV4cGVjdGVkbHkNCj4NCj4gWy4uLl0NCj4N
-Cj4gTm8uIFRoaXMgaXMgbm90IGEgR2l0IGZvciBXaW5kb3dzIGlzc3VlLiBUaGUgcmVtb3RlIGVu
-ZCBpcyB0aGUgb25lIHdobyANCj4gaXNuJ3QgYWJsZSB0byBsb2FkIGxpYmljb252LCB5b3UgY2Fu
-IHRlbGwgZnJvbSB0aGUgZmFjdCB0aGF0IGl0IA0KPiBjb21wbGFpbnMgYWJvdXQgImxpYmljb252
-LnNvLjIiLCBub3QgImxpYmljb252LTIuZGxsIiwgYW5kIGZyb20gdGhlIA0KPiBmYWN0IHRoYXQg
-dGhlIGNsaWVudCBpbmZvcm1zIHVzIHRoYXQgdGhlIHJlbW90ZSBlbmQgaHVuZyB1cC4NCg0KWWVh
-aCwgaXQgaXMgZGVmaW5pdGVseSBhIHByb2JsZW0gb24gdGhlIHJlbW90ZSBzeXN0ZW0uDQoNCj4g
-QW5rdXNoOiBUaGVyZSdzIHNvbWV0aGluZyB3cm9uZyB3aXRoIHRoZSBzZXR1cCBvbiB5b3VyIExp
-bnV4IG1hY2hpbmU7IA0KPiBtb3N0IGxpa2VseSBzb21ldGhpbmcgcmVsYXRlZCB0byB0aGUgbGli
-cmFyeSBwYXRoIHNldCB1cC4gV2hhdCANCj4gcHJvdG9jb2wgYXJlIHlvdSBjbG9uaW5nIG92ZXI/
-DQoNCklmIEkgaGFkIHRvIGd1ZXNzLCBJJ2Qgc2F5IGl0IHdhcyBzc2gsIHRoZSBsaWJyYXJ5IGlz
-IGluc3RhbGxlZCBpbiBhIG5vbi1zdGFuZGFyZCBwbGFjZSAoZS5nLiwgYmVjYXVzZSBoZSBidWls
-dCB0aGVtIGFzIGEgcmVndWxhciB1c2VyIGFuZCBwdXQgdGhlbSBpbiBoaXMgaG9tZSBkaXJlY3Rv
-cnkpLCBhbmQgTERfTElCUkFSWV9QQVRIIGRvZXMgbm90IGdldCBzZXQgcHJvcGVybHkgYnkgc3No
-IGZvciB0aGUgaW5jb21pbmcgc3NoIHNlc3Npb24uDQoNCklmIHRoYXQgaXMgdGhlIGNhc2UsIHlv
-dSBjYW4gZml4IGl0IHdpdGggYW4gZW50cnkgaW4gfi8uc3NoL2Vudmlyb25tZW50LCBvciBieSB0
-ZWxsaW5nIGdpdCB0aGF0IHRoZSByZW1vdGUgc2lkZSBuZWVkcyB0byBkbyBtb3JlIHRoYW4ganVz
-dCBydW4gZ2l0LXVwbG9hZC1wYWNrLCBsaWtlOg0KDQogIGdpdCBjbG9uZSAtdSAnLiAkSE9NRS8u
-cHJvZmlsZSAmJiBnaXQtdXBsb2FkLXBhY2snIC4uLg0KDQpCdXQgSSBhbSBqdXN0IGd1ZXNzaW5n
-LiBXZSBuZWVkIG1vcmUgaW5mb3JtYXRpb24gb24gaG93IHRoZSByZW1vdGUgc3lzdGVtIGlzIHNl
-dCB1cCB0byByZWFsbHkga25vdy4NCg0KLVBlZmYNCg==
+On 09/18/2012 10:19 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> 1. Document that string_list sorts entries according to their strcmp()
+>> order, as proposed in this patch.  Then fetch can rely on this ordering.
+>>  If somebody wants a different ordering in the future, it is easy to
+>> make the sort order a parameter.
+>>
+>> 2. Leave string_list's "default" sort order unspecified, but already
+>> implement a way to let string_list users specify a particular sort
+>> order.  Change the fetch machinery to specify a strcmp()-based ordering
+>> explicitly.  This approach has the advantage of letting the default sort
+>> order of string_list to be changed, though I don't really see how this
+>> would be helpful.
+>>
+>> 3. Change fetch back to doing its own sorting again, rather than relying
+>> on sort_string_list().  This isn't a lot of work (inline the one line of
+>> sort_string_list(), then either make string-list.c:cmp_items() public or
+>> duplicate that function too).
+> 
+> I haven't looked at non-users of string-list API, but my gut feeling
+> has been that lack of 2. made the API less useful for current
+> non-users, possible callers that could benefit from something like
+> string-list that lets them specify their own sort order.
+> 
+> Also, I actually am more worried about us wanting to change the
+> order in which ref-list is sorted, rather than somebody randomly
+> deciding to change the default (and only) order string-list is
+> sorted on.  When that happens, we would have even less useful
+> string-list left behind, with a documented invariant that is not
+> helping anybody if we choose to do 1 now.
+
+If another sort order is needed, then we will either have to audit
+existing string_list users to make sure that they don't rely on strcmp()
+ordering, or we will have to implement strcmp() ordering *plus* the new
+ordering.  In that case the simplest approach would be to convert all
+existing users to explicit strcmp() ordering and only use the new
+ordering in places where there is a specific need for it.  This process
+would be no more difficult if we document strcmp() ordering now.
+When/if we reach that bridge, we can easily change the documentation from
+
+    A "sorted" list is one whose entries are sorted by string value in
+    `strcmp()` order.
+
+to
+
+    A "sorted" list is one whose entries are sorted according to the
+    configured `compare()` function.  The default `compare()` function
+    orders entries in the `strcmp()` order of their string values.
+
+It's not that I'm unwilling to implement 2; it's just that I still don't
+see any advantage to doing so before there is a demonstrated need for it.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
