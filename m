@@ -1,103 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git archive --format zip utf-8 issues
-Date: Tue, 18 Sep 2012 14:12:19 -0700
-Message-ID: <7v1uhzkpcc.fsf@alter.siamese.dyndns.org>
-References: <502583F4.8030308@tu-clausthal.de>
- <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx>
- <5026D081.2040906@tu-clausthal.de>
- <20120830222603.GA20289@sigill.intra.peff.net>
- <5046634A.4020608@lsrfire.ath.cx> <7vehmh8prt.fsf@alter.siamese.dyndns.org>
- <5047A9C0.9020200@lsrfire.ath.cx> <5058CE49.3070108@lsrfire.ath.cx>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH] Make test output coloring more intuitive
+Date: Tue, 18 Sep 2012 22:21:22 +0100
+Message-ID: <20120918212122.GA2567@atlantic.linksys.moosehall>
+References: <1347882637-21766-1-git-send-email-git@adamspiers.org>
+ <20120917201119.GB24888@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Sep 18 23:12:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 23:21:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE55s-0002hN-QG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 23:12:33 +0200
+	id 1TE5Ed-00073f-DQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 23:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100Ab2IRVMX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2012 17:12:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53749 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752185Ab2IRVMW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 17:12:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CC3E96E7;
-	Tue, 18 Sep 2012 17:12:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=PxTlXtI8NVbp
-	u/LKulHQzhcYfRY=; b=S0JZrhrqndZSkWW1s+qAl+7WQa46i2tlzObr36pWm7fW
-	KyljMiDnTIzlRZXU1aRx5D11uV218NjPzr5vEnD1Kfo8A/vNQ1zUnzhHMJCq++88
-	WiRRJWQtpShIGGdZpHviY9C5MbTDSy8S7tHWbpK5odvYt70CGjTxbq2AUUq1VA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NYyuF1
-	PjMw17KEVk4WjU1Fg6WU/N8G+eD/3K9VkQ7A0OLVY/CAURrX7nIuu9XYqKh2KQLc
-	XOncDRXExL12eI6BRs/LV258OKZUnuhiF/AKR6xdl94ryiP5vb9yLdCqCWso2MnX
-	pCUgXg1CnvIiHUuFMMLvRwsMQgP8P75F7vetc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A04996E6;
-	Tue, 18 Sep 2012 17:12:21 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C58C196E5; Tue, 18 Sep 2012
- 17:12:20 -0400 (EDT)
-In-Reply-To: <5058CE49.3070108@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 18 Sep 2012 21:40:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88BB4AA2-01D5-11E2-8697-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932105Ab2IRVV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 17:21:27 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:43956 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932104Ab2IRVVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 17:21:25 -0400
+Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 7D8452E5DB;
+	Tue, 18 Sep 2012 22:21:23 +0100 (BST)
+Mail-Followup-To: Jeff King <peff@peff.net>, git list <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20120917201119.GB24888@sigill.intra.peff.net>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205876>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Mon, Sep 17, 2012 at 04:11:19PM -0400, Jeff King wrote:
+> On Mon, Sep 17, 2012 at 12:50:37PM +0100, Adam Spiers wrote:
+> 
+> > The end result of these changes is that:
+> > 
+> >   - red is _only_ used for things which have gone unexpectedly wrong:
+> >     test failures, unexpected test passes, and failures with the
+> >     framework,
+> > 
+> >   - yellow is _only_ used for known breakages, and
+> > 
+> >   - green is _only_ used for things which have gone to plan and
+> >     require no further work to be done.
+> 
+> Sounds reasonable, and I think the new output looks nice. I notice that
+> skipped tests are still in green. I wonder if they should be in yellow,
+> too. They may or may not be a problem, but you are failing to run some
+> portion of the test suite.
 
->                                          Windows    Info-ZIP unzip
->                             7-Zip PeaZip builtin Linux msysgit Window=
-s
-> 7-Zip 9.20                      0      0      46    26      43      4=
-3
-> PeaZip 4.7.1 win64              0      0      46    26      42      4=
-2
-> Info-ZIP zip 3.0 Linux          0      0      72     0      43      4=
-3
-> Info-ZIP zip 3.0 Windows       45     45     n/a     0      43      4=
-3
-> ...
-> I wonder what 7-Zip and PeaZip do that gives them a slightly nicer
-> score with the Windows-internal unzipper.  Umlauts, Nordic characters
-> and accents are preserved by that combination.  It seems that unzip o=
-n
-> Linux fails to unpack exactly these names, so perhaps they employ a
-> dirty trick like using the local encoding in the ZIP file, which make=
-s
-> it unportable.
-> ...
+Fair point, I'll reroll the series and change skipped tests to yellow
+(non-bold, to distinguish from known breakages which are bold yellow).
 
-Thanks for this work.
+> > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> > index ae6a3f0..4e111b4 100755
+> > --- a/t/t0000-basic.sh
+> > +++ b/t/t0000-basic.sh
+> > @@ -81,9 +81,10 @@ test_expect_success 'pretend we have fixed a known breakage (run in sub test-lib
+> >  	./passing-todo.sh >out 2>err &&
+> >  	! test -s err &&
+> >  	sed -e 's/^> //' >expect <<-\\EOF &&
+> > -	> ok 1 - pretend we have fixed a known breakage # TODO known breakage
+> > -	> # fixed 1 known breakage(s)
+> > -	> # passed all 1 test(s)
+> > +	> ok 1 - pretend we have fixed a known breakage # TODO known breakage vanished
+> > +	> # fixed 1 known breakage(s); please update test(s)
+> > +	> # still have 1 known breakage(s)
+> > +	> # passed all remaining 0 test(s)
+> >  	> 1..1
+> >  	EOF
+> >  	test_cmp expect out)
+> 
+> This hunk is surprising after reading the commit message. It looks like
+> you are also breaking down expect_fail tests by fixed and not fixed.
 
-It is kind of surprising that "Windows builtin" has very poor score
-extracting from the output of Zip tools running on Windows (I am
-looking at 46, 46 and n/a over there).  If you tell it to create an
-archive from its disk and then extract from it, I wonder what would
-happen.
+Correct.
 
-Does this result mean that practically nobody uses Zip archive with
-exotic letters in paths on that platform?  I am not talking about
-developers and savvy people who know where to download third-party
-Zip archivers and how to install them.  I am imagining a grandma who
-received an archive full of photos of her grandchild in her Outlook
-Express or GMail inbox, clicked the attachment to download it, and
-is trying to view the photo inside.
+> I think that is probably an OK thing to do (although it might make more
+> sense in a separate patch), but are your numbers right?
+
+They are right (at least as I intended), but I agree it's a bit
+confusing.
+
+> It looks from that count as if there are 2 tests expecting failure
+> (one fixed and one still broken).
+
+It's actually one test which is both fixed *and* in some sense broken.
+The confusion arises from the ambiguity of the word "broken", which
+could mean either "failed as expected" or "expected to fail but
+didn't".  Previously it was just the former, but my patch changed it
+to encompass both cases.  The motivation behind this was to avoid the
+
+    # passed all $count test(s)
+
+summary message which is overly comforting when one or more tests were
+expected to fail but didn't.  However perhaps it's cleaner to keep the
+counter buckets separated.  I'll try to come up with a better
+solution.
