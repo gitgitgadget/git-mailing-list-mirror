@@ -1,92 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] string_list API: document what "sorted" means.
-Date: Tue, 18 Sep 2012 01:19:47 -0700
-Message-ID: <7vmx0noi8s.fsf@alter.siamese.dyndns.org>
-References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu>
- <7vy5k8s622.fsf@alter.siamese.dyndns.org> <505829AB.8000506@alum.mit.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Using Format/export-subst Howto.
+Date: Tue, 18 Sep 2012 10:24:24 +0200
+Message-ID: <50582FB8.7030809@drmicha.warpmail.net>
+References: <84EA18831601B6429E578236AE239B01A54807F242@EAGNMNSXMB07.usa.dce.usps.gov> <50532B35.9050607@drmicha.warpmail.net> <5053480E.2010002@viscovery.net> <84EA18831601B6429E578236AE239B01A54807F376@EAGNMNSXMB07.usa.dce.usps.gov> <50534FC6.2040207@viscovery.net> <1347656962.3998.140661128069097.6D9BE3C4@webmail.messagingengine.com> <7vfw6k2t8w.fsf@alter.siamese.dyndns.org> <7v7grw2qcu.fsf@alter.siamese.dyndns.org> <505722DD.3000806@drmicha.warpmail.net> <7v4nmwv1rr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 18 10:20:09 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	"Mestnik\, Michael J - Eagan\, MN - Contractor" 
+	<Michael.J.Mestnik@usps.gov>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 10:24:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDt2K-0006JA-5f
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 10:20:04 +0200
+	id 1TDt73-0000dt-3B
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 10:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753662Ab2IRITx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 04:19:53 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59735 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751177Ab2IRITu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 04:19:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 390C960F5;
-	Tue, 18 Sep 2012 04:19:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yT0K2EFUJZGGgVc+n3lNK0gdbjc=; b=tFmDN4
-	Ud+TOtYV1wRbt66i171l9V3/0tsqU3BsS2aLjIQLvSP00uEy11ZdDiQHm3jOK3Ci
-	EZm18bHclhaIFVIkkyW/TVf4MNuoW+XxR0XfoqMlGWjg3WrD2ZNTtlvEAvjOHorM
-	fMzNtfJ00IpGYtgn0jRPSbzFkharEpRCKZ4GQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tCktLe1/sWWyRoXxiA58b27b+Du5sGL9
-	0+y+py990i1F4AZsgdhOftno3abZVarQXqqpcUk01bFWfJQ/SLPJSVF1boJ4iZ2G
-	gKqMP2k/hXXee1Vp93Z6Fs1QvWetQxgd1kywRQEW6gv1137/7yr0J9wbXSC2htfU
-	ed4+vd6c12M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26BB560F4;
-	Tue, 18 Sep 2012 04:19:50 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 811ED60F3; Tue, 18 Sep 2012
- 04:19:49 -0400 (EDT)
-In-Reply-To: <505829AB.8000506@alum.mit.edu> (Michael Haggerty's message of
- "Tue, 18 Sep 2012 09:58:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D371E96-0169-11E2-AC17-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756677Ab2IRIYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 04:24:48 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39032 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757413Ab2IRIY1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 04:24:27 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 3BCC020AD7;
+	Tue, 18 Sep 2012 04:24:26 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Tue, 18 Sep 2012 04:24:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=5uk6Vy2bVTmlohnahNq3J3
+	5Qul0=; b=pETsxEd6NQWmZdwh5N3l9Ta1Z73DfTbwc+NWY6D87cq+yKclBxkkHU
+	MvJV/jrPL5CTbPWNYd3lPIYfrnFy0aK/VdduZlEqYpHERvgivFudKpfbBiv3Jk2Y
+	X35ayZUQ4TdQm5I684R8JMw08fV4U60S1o/zobsCwuYSA81Je5gHI=
+X-Sasl-enc: A3d77YXMhA/rWV0G6ufsQwnCy5sSbF9T+f7kpNWbUZRV 1347956665
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 72356483805;
+	Tue, 18 Sep 2012 04:24:25 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7v4nmwv1rr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205813>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Junio C Hamano venit, vidit, dixit 17.09.2012 22:21:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Junio C Hamano venit, vidit, dixit 15.09.2012 00:26:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>>
+>>>>> you need to "rm file && git checkout file"). If the user has to
+>>>>> update $Id$ to match the current sha1 (by remembering to do a
+>>>>> more forceful checkout than checkout -f) then one half of that
+>>>>> feature is useless.
+>>>>
+>>>> As if there is any value in "$Id$" _feature_.  It's a checkbox
+>>>> item, nothing more ;-).
+>>>
+>>> Having said that, I think you could do something along this line (I 
+>>> am thinking aloud, so there may be leaps in the logic below).
+>>> ...
+>>
+>> You've convinced me not to try this in-core...
+> 
+> Quite contrary, I think the approach outlined is a reasonable way
+> forward.  I do not care about a checkbox feature like $Id$ that is
+> incomatible with the fundamental concept in Git, but the approach
+> would help people who started their history with wrong CRLF
+> settings, tweak the attributes and then scratch their head trying to
+> repeatedly run "checkout", "reset --hard", etc. and still never
+> seeing the right thing to happen.
+> 
 
-> 1. Document that string_list sorts entries according to their strcmp()
-> order, as proposed in this patch.  Then fetch can rely on this ordering.
->  If somebody wants a different ordering in the future, it is easy to
-> make the sort order a parameter.
->
-> 2. Leave string_list's "default" sort order unspecified, but already
-> implement a way to let string_list users specify a particular sort
-> order.  Change the fetch machinery to specify a strcmp()-based ordering
-> explicitly.  This approach has the advantage of letting the default sort
-> order of string_list to be changed, though I don't really see how this
-> would be helpful.
->
-> 3. Change fetch back to doing its own sorting again, rather than relying
-> on sort_string_list().  This isn't a lot of work (inline the one line of
-> sort_string_list(), then either make string-list.c:cmp_items() public or
-> duplicate that function too).
+Maybe I should have said "...not to try this myself..." to make it
+clearer: The approach you outlined sounds not only reasonable but the
+perfect solution to this and other problems. But it's over my head and
+time limit (and it's not my itch either). It touches the inner core
+(index format and handling) and needs to be done diligently, too much
+for a quick patch on the side of my $DAYJOB. (Though, thinking about it:
+some colleagues use a similar hg feature to revision stamp their LaTeX
+preprints, and working Id could help win them over.)
 
-I haven't looked at non-users of string-list API, but my gut feeling
-has been that lack of 2. made the API less useful for current
-non-users, possible callers that could benefit from something like
-string-list that lets them specify their own sort order.
-
-Also, I actually am more worried about us wanting to change the
-order in which ref-list is sorted, rather than somebody randomly
-deciding to change the default (and only) order string-list is
-sorted on.  When that happens, we would have even less useful
-string-list left behind, with a documented invariant that is not
-helping anybody if we choose to do 1 now.
-
-So to me, if we really wanted to avoid doing 2 prematurely (which is
-a sensible concern, by the way), the more sensible option between 1
-and 3 would be 3.  That makes my preference 2, 3 and then 1 (but I
-do not care too deeply between 2 and 3).
+Michael
