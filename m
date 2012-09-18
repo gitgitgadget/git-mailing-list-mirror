@@ -1,70 +1,83 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH] Make test output coloring more intuitive
-Date: Tue, 18 Sep 2012 23:14:07 +0100
-Message-ID: <CAOkDyE_oMz9ZHuHTBH3_Q_75qvzqiNcfFnt6orcj1dJ5uDsWtA@mail.gmail.com>
-References: <1347882637-21766-1-git-send-email-git@adamspiers.org>
-	<7vboh4tluo.fsf@alter.siamese.dyndns.org>
-	<20120918213617.GB2567@atlantic.linksys.moosehall>
-	<20120918215929.GA30346@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Confused by git am error message.
+Date: Tue, 18 Sep 2012 15:51:37 -0700
+Message-ID: <7vr4pzj66e.fsf@alter.siamese.dyndns.org>
+References: <747F66C694C844EAA56F4BB62C405F78@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 00:14:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 00:51:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE63g-0006yV-03
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 00:14:20 +0200
+	id 1TE6e0-0007VB-DN
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 00:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755741Ab2IRWOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 18:14:11 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:59218 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755630Ab2IRWOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 18:14:08 -0400
-Received: by bkwj10 with SMTP id j10so185849bkw.19
-        for <git@vger.kernel.org>; Tue, 18 Sep 2012 15:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=8XIraa6BhKH3Q8Mi25UVaOcgCRROw427X2dUzX3bAkU=;
-        b=BjNHknSpAMOt+dhmetM+5ic5vtRatPUPJcJi8c2gfbQrKWXvvOoRW6gsNT7Jm7m6d3
-         o8AHd1zlfj8OGVnpYVPuB6fjhpCgAiMXAv6iQfw5jDmbGBE8TDYyKqh7KbSfEh2g6mXC
-         pHmS/Fp7v8cTlSMcR4NhEL+QuClSqLyiuBB9H5INWdci4BliB+5NWZL7UV0j1EYyc55N
-         GcDyPrR0rr316NrGM4dYTTkq8FEgg6lQ9XNF73p/kfzauB/4XiXhOBHnUHpzfYvBhlmN
-         tcbplJGI9VO2IXHdKPFv/CHhzwsTJYcJHg99gJOx8LzyoTd/TTcgTJhrPKMm0IybkaZR
-         Ifqg==
-Received: by 10.204.152.207 with SMTP id h15mr693280bkw.5.1348006447239; Tue,
- 18 Sep 2012 15:14:07 -0700 (PDT)
-Received: by 10.205.81.80 with HTTP; Tue, 18 Sep 2012 15:14:07 -0700 (PDT)
-In-Reply-To: <20120918215929.GA30346@sigill.intra.peff.net>
-X-Google-Sender-Auth: mrEohxLzjskT9QUT1OxZS1E0V4o
+	id S932188Ab2IRWvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 18:51:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36783 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755776Ab2IRWvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 18:51:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B71C99256;
+	Tue, 18 Sep 2012 18:51:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zJaNQKUKKgQEvmxpfuoF3uQQy1Q=; b=OgOxYq
+	ZfSWDtAUtt8Uie5u0H7RwhYaPw8ueN6SUG98YcWkWqF2dnok4uRAFOuU0RbOWIMn
+	FNo7jee1N7eg/HpB7NZE1m0C1GUv86rpza6WAvQOF0ug+ZrCIEWkYdLs9JH7pp37
+	Zmz2eDsHD+BreTdenwgqKwacEU1sP7vxu0DEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SDiQtNBF2MPrH1p5W/4MyklA5txYf8Sl
+	Og95aThvEkpOulb+ZmA1qND+47YTuGlPsZ7NR9e4GPLd0GGkXQLeYhMJNsGt+pz2
+	BiJg9Oc2P+OlqSftYbCJaaQT9YVSjzrvLL3T63CRdMmqlbHZbFWmxW/SmDbVI2Ch
+	iQmd/az/R7M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A43459254;
+	Tue, 18 Sep 2012 18:51:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 214159253; Tue, 18 Sep 2012
+ 18:51:39 -0400 (EDT)
+In-Reply-To: <747F66C694C844EAA56F4BB62C405F78@PhilipOakley> (Philip Oakley's
+ message of "Tue, 18 Sep 2012 22:51:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 682BB598-01E3-11E2-B12E-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205883>
 
-On Tue, Sep 18, 2012 at 10:59 PM, Jeff King <peff@peff.net> wrote:
-> TODO is a special token[1] respected by TAP harnesses like "prove". I'm
-> not sure what practical impact it has, but it should probably remain.
+"Philip Oakley" <philipoakley@iee.org> writes:
+
+> [a user confusion report]
+> I was updating my patch series manually aand made a mistake, so the
+> series didn't apply properly. However the error message confused me.
 >
-> -Peff
+>    ...
+>    Applying: Doc clean: add See Also links
+>    fatal: corrupt patch at line 17
+>    Patch failed at 0008 Doc clean: add See Also links
+>    When you have resolved this problem run "git am --resolved".
+>    ...
 >
-> [1] http://testanything.org/wiki/index.php/TAP_specification#TODO_tests
+> In my case I resolved the _patch_ error, and then expected that doing
+> the 'git am --resolved' would try to re-apply the patch and continue
+> happily - I had checked that the status was clean - but it didn't.
 
-Thanks, I didn't know that.  For reasons I just stated elsewhere in
-this thread, I don't _completely_ agree with the specification where
-it says:
+I recall we went back and forth before settling to the current
+wording.  The "have resolved this problem" in that sentence wants to
+say "The underlying 'apply --index' did not manage to update the
+working tree and the index to the state a perfect patch would have
+updated, so please help me by doing so yourself".
 
-    "Should a todo test point begin succeeding, the harness should
-    report it as a bonus.  This indicates that whatever you were
-    supposed to do has been done and you should promote this to a
-    normal test point."
-
-However those semantics are well-defined enough to warrant keeping the
-"TODO" as you suggest.
+When it did not apply (i.e. not "conflicted when run as 'am -3'"),
+an alternative is to edit $GIT_DIR/rebase-apply/patch to make it
+applicable, and say "git am" again _without_ "--resolved".  But that
+is not what the message is suggesting.
