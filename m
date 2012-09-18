@@ -1,90 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to create the " [PATCH 0/5]" first email?
-Date: Mon, 17 Sep 2012 16:49:39 -0700
-Message-ID: <7vfw6gqkfg.fsf@alter.siamese.dyndns.org>
-References: <1347710524-15404-1-git-send-email-pclouds@gmail.com>
- <F93DBBE1DDAA44A28C9020F9A58FD825@PhilipOakley>
- <7vzk4rz00y.fsf@alter.siamese.dyndns.org>
- <98180D4AA94C468887029389CC535D4F@PhilipOakley>
+Subject: Re: [PATCH/RFC 5/5] Git::SVN: rename private path field
+Date: Mon, 17 Sep 2012 17:00:55 -0700
+Message-ID: <7vboh4qjwo.fsf@alter.siamese.dyndns.org>
+References: <1343419252-9447-1-git-send-email-schwern@pobox.com>
+ <1343419252-9447-2-git-send-email-schwern@pobox.com>
+ <20120917090435.GA358@elie.Belkin> <20120917091331.GF358@elie.Belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git List" <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 01:49:56 2012
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
+	"Michael G. Schwern" <schwern@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 02:01:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDl4b-0003sj-TJ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 01:49:54 +0200
+	id 1TDlFT-0001L2-UB
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 02:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932599Ab2IQXtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 19:49:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40968 "EHLO
+	id S932624Ab2IRAA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 20:00:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45148 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932379Ab2IQXtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 19:49:45 -0400
+	id S932621Ab2IRAA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 20:00:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE63E93F6;
-	Mon, 17 Sep 2012 19:49:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AAAE9637;
+	Mon, 17 Sep 2012 20:00:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vgVUfl8T/ykxiQ7nZKwnt1zNWTg=; b=MqTVqg
-	VbDYHJxzj6CH7Qm2XV3KJ/LGat1i0rwK9PJXirgngo/MqGyZEBJHN0jjW8DMK5mx
-	WFgMYlVa0v5HoFUUIu3byY1z5DWMblDxYzkiSjm+/Gi+0tHssIGXsvLvMvUk3utz
-	kkkEvCd9q3UU8XvPEr8kfz9tkAtnXAElrALro=
+	:content-type; s=sasl; bh=n9I+7ZgSzEEwYnZINuo+GsHZdDw=; b=LC7dEh
+	z3lmhPWBaSfKOJYtvIZH/HCCj8We3skNg7Lv/tCMO04ykcNLKvWaBhRYm8RN3lpC
+	OSJ2IQ38+LZSTlDUeGulXSktbW+2WwoRS3Gf7HmOAvyZgHT7tgXgdEHj/oQIdP+G
+	bTnwwuPrOhpdL6yjdg6vbZu8nbYejxxglfavw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tUMdu1bcdpmjTciAYKvYArF9NqTp/iLV
-	ebA0LNxNPuWfqveotwo3hZC9Tt/d8tPCxgpkErAlaE3CluwRmCSq8jrHLkDmlbg1
-	c4TYuAcnRbfh/UteH/eEDcD+6fi+dycalg3toRLee1VO/8GRnQVT0g0rpXZiClDY
-	rrg1LfgFIg0=
+	:content-type; q=dns; s=sasl; b=tCWiqS3L+5Ul2btG7R7yaa58U8QqDyVh
+	tJK4SHYVXH30usKpAmJiigIXISrvSJ2BNen1xyeAETQiii64lBKb0X1IwcMmQmAY
+	cY6Gm5HrqyZWLm8/dSoRuoGAi3OwE8bUbP8jwpMuY5ZT+tCxKzSKFDD8ZMhjBi3+
+	fAN7I0q5IGQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC1BC93F5;
-	Mon, 17 Sep 2012 19:49:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 772F39636;
+	Mon, 17 Sep 2012 20:00:57 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 335C793F4; Mon, 17 Sep 2012
- 19:49:41 -0400 (EDT)
-In-Reply-To: <98180D4AA94C468887029389CC535D4F@PhilipOakley> (Philip Oakley's
- message of "Mon, 17 Sep 2012 23:55:58 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4A249634; Mon, 17 Sep 2012
+ 20:00:56 -0400 (EDT)
+In-Reply-To: <20120917091331.GF358@elie.Belkin> (Jonathan Nieder's message of
+ "Mon, 17 Sep 2012 02:13:31 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 593C55CC-0122-11E2-BF23-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EBF6439A-0123-11E2-A195-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205770>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I then applied it (using git am) to a temp branch to see what it
-> produced, and could repeat the cycle until the patches looked right.
+> All users of $gs->{path} should have been converted to use the
+> accessor by now.  Check our work by renaming the underlying variable
+> to break callers that try to use it directly.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
 
-That's another obvious and valid way to prepare your series.  It all
-depends on how comfortable you are to directly edit patches.  Some
-people fear it.  Some don't.  Some can do it with their eyes closed ;-).
+I like this ;-)  If we know we have good coverage, this would be a
+sensible way to catch remaining code that hasn't been converted.
 
-> However, when it came to creating the series, with comments, I
-> couldn't see a way of having my comments within my local commits, but
-> preparing a patch series that would properly include the '---'
-> separator.
-
-An unofficial trick that works is to write the
-
-    ---
-
-     * This is an additional comment
-
-
-yourself when running "git commit".  That will be propagated to the
-output from format-patch.  You will have another "---" in front of
-the diffstat, but nobody is hurt by that.
-
-But when doing a big series that deserves a cover letter [PATCH 0/n],
-you will use editor on the output from format-patch anyway, and I
-find it simpler to do the follow-on comments at that point myself.
-
-Personal preferences vary, so whatever makes you feel comfortable
-with and works well for you is good.
+>  perl/Git/SVN.pm |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+> index 3aa20109..33f15682 100644
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+> @@ -2293,11 +2293,11 @@ sub path {
+>  
+>  	if (@_) {
+>  		my $path = shift;
+> -		$self->{path} = $path;
+> +		$self->{_path} = $path;
+>  		return;
+>  	}
+>  
+> -	return $self->{path};
+> +	return $self->{_path};
+>  }
+>  
+>  # for read-only access of old .rev_db formats
