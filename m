@@ -1,116 +1,62 @@
-From: Stefan Haller <stefan@haller-berlin.de>
-Subject: [PATCH] gitk: Synchronize highlighting in file view when scrolling diff
-Date: Tue, 18 Sep 2012 07:57:54 +0200
-Message-ID: <1347947874-38597-1-git-send-email-stefan@haller-berlin.de>
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 08:07:22 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Test failure: Test #3 in t1304-default-acl
+Date: Tue, 18 Sep 2012 11:49:48 +0530
+Message-ID: <CALkWK0nndTDxoGXjFcp5PC1JUbuifbEJdcE2N8XCcOmOkj4OKg@mail.gmail.com>
+References: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com>
+ <vpqy5k8raig.fsf@grenoble-inp.fr> <CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com>
+ <vpqd31kr7v4.fsf@grenoble-inp.fr> <CALkWK0=ROz8fxXgnqt-+AthU-hgq_mzFg0GhBQCrAshH_mRBPQ@mail.gmail.com>
+ <vpqvcfcps2z.fsf@grenoble-inp.fr> <7v4nmwwqox.fsf@alter.siamese.dyndns.org> <vpqipbcpp69.fsf@grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 18 08:20:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDqxt-0006Aa-CO
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 08:07:21 +0200
+	id 1TDrAS-00051Q-Uz
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 08:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756682Ab2IRGHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 02:07:10 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:39140 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756422Ab2IRGHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 02:07:08 -0400
-X-Greylist: delayed 526 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Sep 2012 02:07:08 EDT
-Received: from macbook-stk.office.ableton.com (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 913D62C4054;
-	Tue, 18 Sep 2012 07:58:20 +0200 (CEST)
-X-Mailer: git-send-email 1.7.12.376.g8258bbd
+	id S1755261Ab2IRGUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 02:20:10 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:35227 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160Ab2IRGUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 02:20:09 -0400
+Received: by qaas11 with SMTP id s11so2237481qaa.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 23:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pDMXjBpLQPus4biNRuYI2WubNfF03OTQWG7gGU6GMuA=;
+        b=UW+WQwtsyQIVtjbLKkKvanvY830cVjVmgELtagdpctR8kD3V0W+T4/zWuk1AaaSavv
+         L6ulYLnMtCnJDXE6rAaZH6Xgwp4p1LmpBP/UQZkJDf3L/mh2f0TkCfnr2aN0PeKNxyC4
+         b3yHW32ebQYyYXjXScfWgL4+pUOM8D6iPJqxKNbfM4mzSM2TCVPWVcyCr/e0QymsIPOn
+         O/vMvGgcxib8Dd1YPCT8y7jYDyHbRkTldB85JpUu9G1qmTN8+lkkyNXYLN5CL6LORJKl
+         mJGMyRpVNwvewxp3N24mJyMiXHBbkuPeXza6otztQrvKzryN2hOI/iKly8H0y54bSiS7
+         EL8Q==
+Received: by 10.224.222.143 with SMTP id ig15mr32959338qab.25.1347949208586;
+ Mon, 17 Sep 2012 23:20:08 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Mon, 17 Sep 2012 23:19:48 -0700 (PDT)
+In-Reply-To: <vpqipbcpp69.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205793>
 
-Whenever the diff pane scrolls, highlight the corresponding file in the
-file list on the right. For a large commit with many files and long
-per-file diffs, this makes it easier to keep track of what you're looking
-at.
+Hi,
 
-This allows simplifying the prevfile and nextfile functions, because
-all they have to do is scroll the diff pane.
+Matthieu Moy wrote:
+> I can see two reasons for having the same UID for two login names:
+>
+> 1) the sysadmin really messed up, and as you say, a total stranger has
+> complete ownership of your files. Ramkumar, you should check that this
+> is not your case.
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
- gitk | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+Looks like my sysadmin really screwed up :|
 
-diff --git a/gitk b/gitk
-index d93bd99..9e3ec71 100755
---- a/gitk
-+++ b/gitk
-@@ -7947,10 +7947,9 @@ proc changediffdisp {} {
-     $ctext tag conf dresult -elide [lindex $diffelide 1]
- }
- 
--proc highlightfile {loc cline} {
--    global ctext cflist cflist_top
-+proc highlightfile {cline} {
-+    global cflist cflist_top
- 
--    $ctext yview $loc
-     $cflist tag remove highlight $cflist_top.0 "$cflist_top.0 lineend"
-     $cflist tag add highlight $cline.0 "$cline.0 lineend"
-     $cflist see $cline.0
-@@ -7962,17 +7961,15 @@ proc prevfile {} {
- 
-     if {$cmitmode eq "tree"} return
-     set prev 0.0
--    set prevline 1
-     set here [$ctext index @0,0]
-     foreach loc $difffilestart {
- 	if {[$ctext compare $loc >= $here]} {
--	    highlightfile $prev $prevline
-+	    $ctext yview $prev
- 	    return
- 	}
- 	set prev $loc
--	incr prevline
-     }
--    highlightfile $prev $prevline
-+    $ctext yview $prev
- }
- 
- proc nextfile {} {
-@@ -7980,11 +7977,9 @@ proc nextfile {} {
- 
-     if {$cmitmode eq "tree"} return
-     set here [$ctext index @0,0]
--    set line 1
-     foreach loc $difffilestart {
--	incr line
- 	if {[$ctext compare $loc > $here]} {
--	    highlightfile $loc $line
-+	    $ctext yview $loc
- 	    return
- 	}
-     }
-@@ -8138,7 +8133,17 @@ proc searchmarkvisible {doall} {
- }
- 
- proc scrolltext {f0 f1} {
--    global searchstring
-+    global searchstring cmitmode
-+    global ctext cflist cflist_top difffilestart
-+
-+    if {$cmitmode ne "tree" && [info exists difffilestart]} {
-+	set top [lindex [split [$ctext index @0,0] .] 0]
-+	if {$top < [lindex $difffilestart 0]} {
-+	    highlightfile 0
-+	} else {
-+	    highlightfile [expr {[bsearch $difffilestart $top] + 2}]
-+	}
-+    }
- 
-     .bleft.bottom.sb set $f0 $f1
-     if {$searchstring ne {}} {
--- 
-1.7.12.376.g8258bbd
+Ram
