@@ -1,81 +1,77 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: [PATCH v7 1/4] make poll available for other platforms lacking it
-Date: Tue, 18 Sep 2012 09:02:24 +0200
-Message-ID: <000301cd956b$8f29c110$ad7d4330$@schmitz-digital.de>
-References: <004b01cd9519$ba991cd0$2fcb5670$@schmitz-digital.de> <7vmx0oqner.fsf@alter.siamese.dyndns.org> <000101cd9566$df8b8d00$9ea2a700$@schmitz-digital.de> <7vehlzq0r3.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] t/test-lib: print pretty msg when git isn't built
+Date: Tue, 18 Sep 2012 12:47:42 +0530
+Message-ID: <CALkWK0kbeLtU-5_9QnmQKS1yO02SvCW3ERvami9bmCa0Vym8oQ@mail.gmail.com>
+References: <1347901579-5545-1-git-send-email-artagnon@gmail.com>
+ <1347901579-5545-2-git-send-email-artagnon@gmail.com> <7v7grstlp9.fsf@alter.siamese.dyndns.org>
+ <CALkWK0k9P9-K5R2Amipujq2DFvJTXy8T3ZyfFa31CcxeKSFL2g@mail.gmail.com> <7v627bq0gx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 09:02:50 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 09:18:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDrpZ-0003Vj-I3
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 09:02:49 +0200
+	id 1TDs4b-0003rt-1Y
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 09:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757046Ab2IRHCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 03:02:41 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:57061 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756609Ab2IRHCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 03:02:40 -0400
-Received: from DualCore (dsdf-4d0a151d.pool.mediaWays.net [77.10.21.29])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MJ0M1-1TBw164BnV-002jhi; Tue, 18 Sep 2012 09:02:39 +0200
-In-Reply-To: <7vehlzq0r3.fsf@alter.siamese.dyndns.org>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQE7S4bKL3XYacfchY9p2RUlHA0wYQMPaYwWAtZhX5cCNduA5phzYpEA
-Content-Language: de
-X-Provags-ID: V02:K0:rDYI/Q+dPpbZKnn+ZtR3vXfnZWdojnHwGZQlt1xLW4B
- rsHFoOIj0E7ryy8hOHFo+SyrOYGnfKzVWjmgCNMfUzi0uYDgjS
- x5lVESxD6ESDwXFD2iF/p3oYPGxblnO41BEwYBS5QiNTqT16De
- IuS1dAzI3g0J47hUU6d/peK4SuxpwOyI2ywyzBNzpe55aKQ0YL
- xYOUMU6/95MELWccHFR/ZEiwZOAEpkXf+V9sU70jeu1XFHdQ8E
- yX58bJUjgB4faIfYh/SiuWgYxj/COsDy7vUFoBTHGLUMZKmiKd
- QGjaPxavl7DLykw1C97Vu3Sjh35UoC4dMy4OL0eqC+fcQhdClK
- wIb898xaCCIUZD7SLREKWKQH96sO5IcgB5z9w2y1WB55MzFprz
- p173JhXsEiW2A==
+	id S1757239Ab2IRHSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 03:18:06 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:33410 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757212Ab2IRHSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 03:18:03 -0400
+Received: by qcro28 with SMTP id o28so5143633qcr.19
+        for <git@vger.kernel.org>; Tue, 18 Sep 2012 00:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XioGfnWB03mR/c+R9wcF1PKUBhOImixW7Yf6BWPBGF0=;
+        b=DoiTgHxvwHwWtWOW2tVXOKLddcfZdulO3f6R53S0LBGTS+bnT9tVYpE2hGuCp7Me3C
+         mPULTmCYOH7kqy6HlFcCDxig/W7Ef6tSJ+OCDRqQR214UIvlLn71+l8sYic8woadKs5l
+         +33L35mDLgXvMxBmQ+Rj/ZJWGzi/vrwXtp8q3NEUo4YkjrCy/hVsfMUPA2rJlA9CJAII
+         xfDNlWuXIzLi8tLb4weshb0c1jVEKCw8DOCBHZUp5u7HRec8zfzHSMaOFsqonM46x4g1
+         upPJXkS9f/eDY8KuSYMjmqWzatitrX+QaXzS2FCqSR6+RN3lbHNMrYN7B0LbyBlMdkFG
+         JLgA==
+Received: by 10.224.213.10 with SMTP id gu10mr31470541qab.10.1347952682353;
+ Tue, 18 Sep 2012 00:18:02 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Tue, 18 Sep 2012 00:17:42 -0700 (PDT)
+In-Reply-To: <7v627bq0gx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205804>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Tuesday, September 18, 2012 8:55 AM
-> To: Joachim Schmitz
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH v7 1/4] make poll available for other platforms lacking it
-> 
-> "Joachim Schmitz" <jojo@schmitz-digital.de> writes:
-> 
-> >> > @@ -1605,6 +1610,11 @@ ifdef NO_GETTEXT
-> >> >  	BASIC_CFLAGS += -DNO_GETTEXT
-> >> >  	USE_GETTEXT_SCHEME ?= fallthrough
-> >> >  endif
-> >> > +ifdef NO_POLL
-> >> > +	NO_SYS_POLL_H = YesPlease
-> >> > +	COMPAT_CFLAGS += -DNO_POLL -Icompat/poll
-> >> > +	COMPAT_OBJS += compat/poll/poll.o
-> >> > +endif
-> >>
-> >> I think my guesses above are correct, so will queue with the trivial
-> >> and obvious fixup.
-> >
-> > Well I was unde the impression that is <sys/poll.h> isn't
-> > available, there might be a <poll.h> and it that isn't available
-> > either we use compat/.../poll.[ch]. But rethinking your changed
-> > does makes perfect sense.
-> 
-> Heh, my comment was not about names between NO_POLL_H vs NO_POLL.
-> With the way you wrote the code, the symbols defined for Windows and
-> MINGW must match what controls the hunk around ll.1610, so what
-> makes perfect sense to you is indeed your code ;-)
+Hi,
 
-Yeah, I do understand myself pretty good ;-)
-Now I see my typo...
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> Hi Junio,
+>>
+>> Junio C Hamano wrote:
+>>> Is this a sufficient replacement for what you removed from 0000?
+>>> Can the BUILD-OPTIONS file exist when your build of git failed?
+>>
+>> Oops, I didn't realize that BUILD-OPTIONS would be written when the
+>> build fails.  How about something like this instead:
+>
+> Yeah, but why change it so much?  Wouldn't writing
+>
+>         "$GIT_BUILD_DIR/git" >/dev/null
+>         if test $? != 1
+>         then
+>                 : You haven't built git!
+>         fi
+>
+> just like the original in 0000 be sufficient??
+
+Because that emits an ugly
+./test-lib.sh: 54: /home/artagnon/src/git/t/../git: not found
+
+Ram
