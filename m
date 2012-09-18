@@ -1,48 +1,58 @@
-From: Georgi Chorbadzhiyski <gf@unixsol.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: Can git pull from a mercurial repository?
-Date: Tue, 18 Sep 2012 15:06:10 +0300
-Organization: Unix Solutions Ltd. (http://unixsol.org/)
-Message-ID: <505863B2.9020805@unixsol.org>
-References: <k39lir$gpm$1@ger.gmane.org>
+Date: Tue, 18 Sep 2012 14:33:55 +0200
+Message-ID: <m2txuvik7g.fsf@igel.home>
+References: <k39lir$gpm$1@ger.gmane.org> <505863B2.9020805@unixsol.org>
+	<000801cd9596$885ad6a0$991083e0$@schmitz-digital.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Joachim Schmitz <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 14:11:24 2012
+Content-Type: text/plain
+Cc: "'Georgi Chorbadzhiyski'" <gf@unixsol.org>, <git@vger.kernel.org>
+To: "Joachim Schmitz" <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Tue Sep 18 14:34:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDweB-00030c-DA
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 14:11:23 +0200
+	id 1TDx0D-0006aB-F7
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 14:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932889Ab2IRMLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 08:11:15 -0400
-Received: from ns.unixsol.org ([193.110.159.2]:48408 "EHLO ns.unixsol.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932833Ab2IRMLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 08:11:13 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Sep 2012 08:11:12 EDT
-Received: from [10.0.1.78] ([::ffff:10.0.1.78])
-  (AUTH: CRAM-MD5 gf, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by ns.unixsol.org with ESMTPSA; Tue, 18 Sep 2012 15:06:10 +0300
-  id 0000000000188666.505863B2.00006D99
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20120717 Thunderbird/14.0
-In-Reply-To: <k39lir$gpm$1@ger.gmane.org>
+	id S932923Ab2IRMd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 08:33:59 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:46303 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932495Ab2IRMd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 08:33:59 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XLkCS4ngvz4KK9t;
+	Tue, 18 Sep 2012 14:33:56 +0200 (CEST)
+X-Auth-Info: +hM02Cp7bgz35Joxg+EqSIAqUhKVoqF/YWf67XiaySk=
+Received: from igel.home (ppp-93-104-159-39.dynamic.mnet-online.de [93.104.159.39])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XLkCS4P28zbbjh;
+	Tue, 18 Sep 2012 14:33:56 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 0F73DCA2A2; Tue, 18 Sep 2012 14:33:55 +0200 (CEST)
+X-Yow: Did I do an INCORRECT THING??
+In-Reply-To: <000801cd9596$885ad6a0$991083e0$@schmitz-digital.de> (Joachim
+	Schmitz's message of "Tue, 18 Sep 2012 14:10:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205827>
 
-Around 09/18/2012 02:22 PM, Joachim Schmitz scribbled:
-> Is there an easy way to get git to clone/pull from a Mercurial repository?
+"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
 
-I'm using http://offbytwo.com/git-hg/
-It works beautifully.
+> Thanks, but that requires Mercurial to be available, installed and in PATH.
+> I want to use git exactly because I don't have Mercurial (yet?)
+
+That doesn't make sense.  If one wants to access a mercurial repository
+the best way to do that is to use the facilities provided by mercurial.
+
+Andreas.
 
 -- 
-Georgi Chorbadzhiyski
-http://georgi.unixsol.org/
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
