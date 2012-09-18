@@ -1,166 +1,83 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH 3/4] rebase -i: Teach "--edit-todo" action
-Date: Mon, 17 Sep 2012 21:28:09 -0400
-Message-ID: <1347931690-20625-4-git-send-email-andrew.kw.w@gmail.com>
-References: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
- <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 04:30:00 2012
+From: Mischa POSLAWSKY <git@shiar.nl>
+Subject: Re: [PATCH] git-jump: ignore (custom) prefix in diff mode
+Date: Tue, 18 Sep 2012 04:52:29 +0200
+Message-ID: <20120918025229.GB19986@pearl.mediadesign.nl>
+References: <1347844915-4130-1-git-send-email-git@shiar.nl>
+ <20120917030143.GA19986@pearl.mediadesign.nl>
+ <7vy5k9w7eh.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 04:52:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDnZU-0002lx-6l
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 04:29:56 +0200
+	id 1TDnvU-0005Sv-9y
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 04:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398Ab2IRC3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 22:29:41 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35308 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106Ab2IRC3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 22:29:37 -0400
-Received: by yhmm54 with SMTP id m54so1696069yhm.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 19:29:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=JH+sHnDAIFfHkFzgpnUFpmAbed6DXOoVfRrK4kANZ7E=;
-        b=UcBqMXKfU6S6pWTN7QQvgjvpYeaQE8vi8tB3o8jCzntnJkAxCFLnv4/Ufvt7lyhMrr
-         lpJKsRYdQW4y5+EZRBoEuS3o7VGnV79SVsRyje19KPw8tndsLzwkCFulB0DryxrllMIv
-         hmvFGUCOAgvzIzyZWl1BRd6eqWYcbYmwWZUTYEpcx5Zj8VoNXno6x1Cb6L8dOq5FzoRB
-         dx1/Y5Q8ARClLhmteNo01dDbA3YlhA2/9/mbq4UGCPLyTHpTefkIVwfVjP9Ttwg+40Ff
-         83YXIuGxfduLJkjFTuV8Rm6zkgFuuIZcAcPLa8BmC3XX0nJZp/dKxblfYDxbikwb4TQN
-         oLgw==
-Received: by 10.236.177.42 with SMTP id c30mr13728558yhm.37.1347935376784;
-        Mon, 17 Sep 2012 19:29:36 -0700 (PDT)
-Received: from localhost.localdomain ([69.165.255.59])
-        by mx.google.com with ESMTPS id s12sm11226868anh.2.2012.09.17.19.29.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Sep 2012 19:29:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.318.g79683ba.dirty
-In-Reply-To: <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
+	id S932167Ab2IRCwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 22:52:32 -0400
+Received: from pearl.mediadesign.nl ([195.177.242.41]:57582 "HELO
+	pearl.mediadesign.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755912Ab2IRCwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 22:52:31 -0400
+Received: (qmail 9863 invoked by uid 1007); 18 Sep 2012 04:52:29 +0200
+Content-Disposition: inline
+In-Reply-To: <7vy5k9w7eh.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt 1.5.20 + Vim 7.2 (Debian 6.0.5 GNU/Linux 2.6.32.59)
+X-URL: http://shiar.nl/
+X-Accept-Language: nl, eo, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205784>
 
-This allows users to edit the todo file while they're stopped in the
-middle of an interactive rebase. When this action is executed, all
-comments from the original todo file are stripped, and new help messages
-are appended to the end.
+Junio C Hamano skribis 2012-9-16 22:22 (-0700):
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
----
- Documentation/git-rebase.txt |  5 ++++-
- git-rebase--interactive.sh   | 17 +++++++++++++++++
- git-rebase.sh                | 13 +++++++++++--
- 3 files changed, 32 insertions(+), 3 deletions(-)
+> Mischa POSLAWSKY <git@shiar.nl> writes:
+> 
+> > Subject: [PATCH/RFC] format-patch: force default file prefixes in diff
+> >
+> > Override user configuration (eg. diff.noprefix) in patches intended for
+> > external consumption to match the default prefixes expected by git-am.
+> >
+> > Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
+> > ---
+> 
+> Not all projects expect to see a/ & b/ prefix and these are
+> configurable for a reason.  Robbing the choice that has been
+> supported for quite a long time from them is an unacceptable
+> regression.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index fd535b0..da067ec 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 	[<upstream>] [<branch>]
- 'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
- 	--root [<branch>]
--'git rebase' --continue | --skip | --abort
-+'git rebase' --continue | --skip | --abort | --edit-todo
- 
- DESCRIPTION
- -----------
-@@ -245,6 +245,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- --skip::
- 	Restart the rebasing process by skipping the current patch.
- 
-+--edit-todo::
-+	Edit the todo list during an interactive rebase.
-+
- -m::
- --merge::
- 	Use merging strategies to rebase.  When the recursive (default) merge
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 4d57e50..2b8f2a9 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -792,6 +792,23 @@ skip)
- 
- 	do_rest
- 	;;
-+edit-todo)
-+	sed -e '/^#/d' < "$todo" > "$todo".new
-+	mv -f "$todo".new "$todo"
-+	append_todo_help
-+	cat >> "$todo" << EOF
-+#
-+# You are editing the todo file of an ongoing interactive rebase.
-+# To continue rebase after editing, run:
-+#     git rebase --continue
-+#
-+EOF
-+
-+	git_sequence_editor "$todo" ||
-+		die "Could not execute editor"
-+
-+	exit
-+	;;
- esac
- 
- git var GIT_COMMITTER_IDENT >/dev/null ||
-diff --git a/git-rebase.sh b/git-rebase.sh
-index e6b43a2..b2f1c76 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -8,7 +8,7 @@ OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
- git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
--git-rebase --continue | --abort | --skip
-+git-rebase --continue | --abort | --skip | --edit-todo
- --
-  Available options are
- v,verbose!         display a diffstat of what changed upstream
-@@ -38,6 +38,7 @@ C=!                passed to 'git apply'
- continue!          continue
- abort!             abort and check out the original branch
- skip!              skip current patch and continue
-+edit-todo!         edit the todo list during an interactive rebase
- "
- . git-sh-setup
- . git-sh-i18n
-@@ -190,7 +191,7 @@ do
- 	--verify)
- 		ok_to_skip_pre_rebase=
- 		;;
--	--continue|--skip|--abort)
-+	--continue|--skip|--abort|--edit-todo)
- 		test $total_argc -eq 2 || usage
- 		action=${1##--}
- 		;;
-@@ -306,6 +307,11 @@ then
- 	fi
- fi
- 
-+if test "$action" = "edit-todo" && test "$type" != "interactive"
-+then
-+	die "$(gettext "The --edit-todo action can only be used during interactive rebase.")"
-+fi
-+
- case "$action" in
- continue)
- 	# Sanity check
-@@ -338,6 +344,9 @@ abort)
- 	rm -r "$state_dir"
- 	exit
- 	;;
-+edit-todo)
-+	run_specific_rebase
-+	;;
- esac
- 
- # Make sure no rebase is in progress
+My bad, I was assuming format-patch would mostly interact with git am.
+
+> Why did you think this may be a good idea in the first place?
+> 
+> Perhaps you had configured your diff.noprefix in a wrong
+> configuration file?  This is primarily per-project choice, and your
+> clone of git.git should not have diff.noprefix set, neither your
+> $HOME/.gitconfig unless you always work on projects that want
+> diff.noprefix.
+
+Then I'm not using it as intended.  For me it's just a personal
+preference of how I'd like to review commits (diff/show) so I can easily
+copy-paste file names (less essential since my discovery of git jump,
+but still).  It's not something I'd like to be communicated with any
+upstream project (format-patch).
+
+So it seems I'm asking for a new feature: to be able to configure local
+and inter-project diff options differently.  In this case I'd be helped
+by either format.noprefix=0 or a to be bikeshedded localdiff.noprefix=1.
+I don't know about other options though.  Does anybody actually want
+mnemonicprefix to be sent out as well?
+
+Another solution could be a single option defining behaviour exceptions:
+format.diff = normal | textconv | noconfig
+Expanding on the existing --(no-)textconv difference in format-patch.
+
 -- 
-1.7.12.318.g79683ba.dirty
+Mischa
