@@ -1,68 +1,83 @@
 From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH v3 0/4] rebase -i: Teach "--edit-todo" action
-Date: Mon, 17 Sep 2012 21:28:06 -0400
-Message-ID: <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
+Subject: [PATCH 1/4] rebase usage: subcommands can not be combined with -i
+Date: Mon, 17 Sep 2012 21:28:07 -0400
+Message-ID: <1347931690-20625-2-git-send-email-andrew.kw.w@gmail.com>
 References: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
+ <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 04:29:43 2012
+X-From: git-owner@vger.kernel.org Tue Sep 18 04:29:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDnZF-0002fD-KQ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 04:29:41 +0200
+	id 1TDnZS-0002lx-MT
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 04:29:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932295Ab2IRC3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 22:29:32 -0400
-Received: from mail-gh0-f174.google.com ([209.85.160.174]:33129 "EHLO
-	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106Ab2IRC3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 22:29:32 -0400
-Received: by ghbg15 with SMTP id g15so1696524ghb.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 19:29:31 -0700 (PDT)
+	id S932325Ab2IRC3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 22:29:35 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59766 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106Ab2IRC3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 22:29:34 -0400
+Received: by yenm15 with SMTP id m15so879156yen.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 19:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=OEKZwbznXUFKsT/MJ0WABdOZU04GkfD63NK+Cztcjqo=;
-        b=mfEP6yncP+2V4mSqN96HsgUxMnZBDDQ6+8kR9zpT540xVZZfNVcJ/5itzsjXz0ggJ7
-         jdMzJMpQf5hp/q4HOI4NI1zQ4USDMLMS2CGUE/Q85kyOxB0ru/hNOsjhNP5Zuo737z2b
-         mci8cYk8P6hcVHjZyT3GC8DnK1Zy78jxExNV92otHlwBYZqcpmBhYPhLMTxes3ok5dRH
-         b52cC0sCd2vY9uhzIrEQu2hmUEQWmFokPF9AJ08V/nJWTlaKQo+3LAfZXLnqyDINsLuH
-         Ev30e+7kpQcnPL1buJ8r086yA4L2RPFbKT8+nVuTh2BPOs5UFAAptx3wIL3GAmHmkQP/
-         HbZw==
-Received: by 10.236.177.70 with SMTP id c46mr14034170yhm.33.1347935371546;
-        Mon, 17 Sep 2012 19:29:31 -0700 (PDT)
+        bh=mk7JCXIkGYXvcXvot8B/chLSMPoMJhJeefp10H0ZNno=;
+        b=eDRIJWij8+x2SQ9ivI87jEGXxWPA4K8sSKpV5ipAKl6MPfRU8vpOF4LmI910X563rM
+         rXitFdy871KTIKuqJMzn+hGpdil6gC1841BmucvBoEJZcyCXV+mnauoFwLxHiyq71112
+         jb0l4mVrsIdcbedJXQHFXsh85Iq+4ScZPqR2GVzGcWYxEM7sLtzHi0BMl3ORYpaLQ8ZP
+         uDuzSKbZrJTNx4psideQW+lqC3J4OOOaAAjDoIH8iCGQxP3JLWZent+0haaf98jTreNj
+         iqF8fkD715+qb2XmXemIM+mr8vUvcLr3RVr3OKiOKrJycKJhddS0HHhptM7CwYObULes
+         CGXg==
+Received: by 10.101.67.2 with SMTP id u2mr4278178ank.59.1347935373475;
+        Mon, 17 Sep 2012 19:29:33 -0700 (PDT)
 Received: from localhost.localdomain ([69.165.255.59])
-        by mx.google.com with ESMTPS id s12sm11226868anh.2.2012.09.17.19.29.29
+        by mx.google.com with ESMTPS id s12sm11226868anh.2.2012.09.17.19.29.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Sep 2012 19:29:30 -0700 (PDT)
+        Mon, 17 Sep 2012 19:29:32 -0700 (PDT)
 X-Mailer: git-send-email 1.7.12.318.g79683ba.dirty
-In-Reply-To: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
+In-Reply-To: <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205780>
 
-Made the fixes as suggested by Martin.
+From: Martin von Zweigbergk <martinvonz@gmail.com>
 
-Martin: Good points. Thanks!
+Since 95135b0 (rebase: stricter check of standalone sub command,
+2011-02-06), git-rebase has not allowed to use -i together with e.g.
+--continue. Yet, when rebase started using OPTIONS_SPEC in 45e2acf
+(rebase: define options in OPTIONS_SPEC, 2011-02-28), the usage message
+included
 
-Andrew Wong (3):
-  rebase -i: Refactor help messages for todo file
-  rebase -i: Teach "--edit-todo" action
-  rebase -i: Add tests for "--edit-todo"
+	git-rebase [-i] --continue | --abort | --skip
 
-Martin von Zweigbergk (1):
-  rebase usage: subcommands can not be combined with -i
+Remove the "[-i]" from this line.
 
- Documentation/git-rebase.txt  |  5 ++++-
- git-rebase--interactive.sh    | 48 +++++++++++++++++++++++++++++++++----------
- git-rebase.sh                 | 13 ++++++++++--
- t/t3404-rebase-interactive.sh | 18 ++++++++++++++++
- 4 files changed, 70 insertions(+), 14 deletions(-)
+Signed-off-by: Martin von Zweigbergk <martinvonz@gmail.com>
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ git-rebase.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 15da926..e6b43a2 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -8,7 +8,7 @@ OPTIONS_KEEPDASHDASH=
+ OPTIONS_SPEC="\
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
+-git-rebase [-i] --continue | --abort | --skip
++git-rebase --continue | --abort | --skip
+ --
+  Available options are
+ v,verbose!         display a diffstat of what changed upstream
 -- 
 1.7.12.318.g79683ba.dirty
