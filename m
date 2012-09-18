@@ -1,72 +1,72 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: Gitweb characters not encoded/decoded properly
-Date: Tue, 18 Sep 2012 16:36:19 -0400
-Message-ID: <CAM9Z-n=KpD2nPNN4wC1Mj4Jjx1S+yxC9piYaj_JxN4s4e8er9A@mail.gmail.com>
-References: <CAMOg_eWBvkLFa7AB+cW-qTq8Z7_XmOsFWeB5KkwZHbF4d53ihg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] Doc: Improve shallow depth wording
+Date: Tue, 18 Sep 2012 13:36:25 -0700
+Message-ID: <7vmx0nkr06.fsf@alter.siamese.dyndns.org>
+References: <1347793083-4136-4-git-send-email-philipoakley@iee.org>
+ <7vlig9w6a7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Joseph Leong <josephcleong@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 22:36:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Sep 18 22:36:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE4X0-0001CK-94
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 22:36:30 +0200
+	id 1TE4X8-0001II-24
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 22:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755107Ab2IRUgW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2012 16:36:22 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:35978 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755043Ab2IRUgU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 16:36:20 -0400
-Received: by bkwj10 with SMTP id j10so151144bkw.19
-        for <git@vger.kernel.org>; Tue, 18 Sep 2012 13:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XuqfkO4TuDiGA4052FUw4/LppKMGwnl4a5F+58I3jnQ=;
-        b=DiIYFiJTn7cuKE56od5rM5DyJozKKDIWQXBuo6Nu4iEKMRinXd4Y4Q50b8bb9Q8r+H
-         40QFOcKk8u6IGKo8llZYy4wfv58km+9oHZjX0qePWCD2sLDMOuTgrI6VpDjrrR6S38Bo
-         kDXtc69iFXZ2PuxCvkIP05hlLHetf11icvO8KeMEO85V2DXRr3xzxGfiVJZ4J6/IOpcL
-         Bzr+jwN2sYjsC4y68HYYjQoD/CcbuNf91oP/HEtNaNNbdXqebYKdZF7gGeRrttewX7A9
-         Rm07exZG/1nuOlwjeZoSEJMi/3axRmwG0y/lAhnYLF/TeJ/0dXhIw1Las+cXdhORsIZv
-         M0+Q==
-Received: by 10.204.154.74 with SMTP id n10mr582457bkw.60.1348000579442; Tue,
- 18 Sep 2012 13:36:19 -0700 (PDT)
-Received: by 10.204.10.87 with HTTP; Tue, 18 Sep 2012 13:36:19 -0700 (PDT)
-In-Reply-To: <CAMOg_eWBvkLFa7AB+cW-qTq8Z7_XmOsFWeB5KkwZHbF4d53ihg@mail.gmail.com>
+	id S1755191Ab2IRUg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 16:36:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36513 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755148Ab2IRUg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 16:36:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C1718CB3;
+	Tue, 18 Sep 2012 16:36:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OtUN7AhCHlZYMIWPtDavckLjWBk=; b=BWa/oE
+	srfBvZpZvJMQWGw4V5YMUyS5MhkrFwYjIlQpGxac1WHWDW1BB/3LPIriuXaH5e/G
+	/53vd/xkq1HY+eN4QHm+tsa+7xjdTKzb1oCoEG1KZac7PxX+ipwuGq5F5xxUzTCx
+	Lul+ASYzWtXqpkNfghYtmtZQoIbfI3GjxOjHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eMwbkN/GZgntGgaTUBRIYZA3GnRGg05G
+	/XfbK3/NcNVkifQllQA/AoDF1JeGChFuPcfkwBbbki8Wff1VzYUo5QzLtcUFiGoz
+	lA/FqjQtvRp5VASCcLv8LEmWbo8S1RoRgbZ11+hnL54kCyJzUhIfqCuaZPtoXt1x
+	86hLJZkY8Zk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48E348CB2;
+	Tue, 18 Sep 2012 16:36:27 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA5BF8CB1; Tue, 18 Sep 2012
+ 16:36:26 -0400 (EDT)
+In-Reply-To: <7vlig9w6a7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 16 Sep 2012 22:46:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 84D1ED24-01D0-11E2-9CC4-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205869>
 
-On Mon, Sep 10, 2012 at 1:57 PM, Joseph Leong <josephcleong@gmail.com> =
-wrote:
-> Hi Everyone,
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Philip Oakley <philipoakley@iee.org> writes:
 >
-> I've noticed an issue in gitweb where git projects are created with
-> characters such as:
-> =E2=82=AC=E9=85=AE=D8=AE=D8=AF=E3=90=81=E1=A0=A1=EA=80=88=E0=BC=91=E3=
-=98=9A.git
+>> Avoid confusion in compound sentence about the start of the commit set
+>> and the depth measure. Use two sentences.
 >
-> But in the gitweb page content, URL section,  a git project is
-> rendered incorrectly?
+> Dropping the first ',' after "positive depth" does not seem to make
+> it any easier to read (I personally think it makes it a lot harder
+> to read).  Splitting the tail-end of the sentence into a separate
+> sentence does make it easier to read, though.
 
-> Example screenshot:
-> http://i.imgur.com/06skV.png
+Will add ',' locally and queue; no need to resend.
 
-Joseph,
-What character set is that supposed to be in? In addition, if it is
-UTF-(something), what code segment are you using?
-
---=20
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks.
