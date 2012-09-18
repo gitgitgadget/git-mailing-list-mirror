@@ -1,194 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Port to HP NonStop
-Date: Tue, 18 Sep 2012 00:56:30 -0700
-Message-ID: <7vvcfbojbl.fsf@alter.siamese.dyndns.org>
-References: <000201cd9569$d16515e0$742f41a0$@schmitz-digital.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] string_list API: document what "sorted" means.
+Date: Tue, 18 Sep 2012 09:58:35 +0200
+Message-ID: <505829AB.8000506@alum.mit.edu>
+References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu> <7vy5k8s622.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Joachim Schmitz" <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 09:56:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 09:58:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDsfi-0001LX-PY
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 09:56:43 +0200
+	id 1TDshk-0002Tt-5g
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 09:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189Ab2IRH4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 03:56:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52172 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751230Ab2IRH4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 03:56:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18ABC4D59;
-	Tue, 18 Sep 2012 03:56:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OrRlTDzOayIlqaFOV7X/gN0VrP0=; b=Eee7yw
-	yhgfIthb8/YqeKKR8gSJawqi9DVbmOXs7yH7I684KKjGSDwEO2kQfsF5tznvJtj0
-	0nIoe4cO+WeEWKlHIaOIe+n1KxCSp3IAahXuhh1sedHx56K9u4Ju7PrkwJNsK//e
-	ABfgmstaPzw8mjWDMXAjhzvJYkx/SU8HboPqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iBhvC6djzLd985ASSfTPrkWywfrRx6Vg
-	esVLcLady61jUXA/3uZ3uB8Wof9JYFrBhPq+04VkDEvGOTXLy6vYGLJM6e33UEB8
-	ygu2WwubQBto3g4dlQwgrVrbZNv6kiK6XD3serkcEnWPIQG+88XQXpVtzXirNaXW
-	3hwvCQCak9A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0636C4D58;
-	Tue, 18 Sep 2012 03:56:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 224754D57; Tue, 18 Sep 2012
- 03:56:32 -0400 (EDT)
-In-Reply-To: <000201cd9569$d16515e0$742f41a0$@schmitz-digital.de> (Joachim
- Schmitz's message of "Tue, 18 Sep 2012 08:49:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5C4E8C50-0166-11E2-882F-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753739Ab2IRH6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 03:58:40 -0400
+Received: from ALUM-MAILSEC-SCANNER-1.MIT.EDU ([18.7.68.12]:63863 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751645Ab2IRH6j (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 03:58:39 -0400
+X-AuditID: 1207440c-b7f616d00000270b-f6-505829ae5b65
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id A4.1D.09995.EA928505; Tue, 18 Sep 2012 03:58:38 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8I7war0031046
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 18 Sep 2012 03:58:37 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7vy5k8s622.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqLtOMyLA4EK7kkXXlW4mi4beK8wO
+	TB4XLyl7fN4kF8AUxW2TlFhSFpyZnqdvl8CdMe37WaaCJdIVJ39PYW9gnCDWxcjJISFgInH3
+	5kdmCFtM4sK99WxdjFwcQgKXGSV23d/OBOEcZ5I49LCJCaSKV0Bb4tWfi+wgNouAqsSqzQsY
+	QWw2AV2JRT3NYDWiAiESMy5PZoaoF5Q4OfMJC4gtIqAmMbHtEJDNwcEsIC7R/w/MFBZwljj9
+	NhakQkggV6LjxDGwTk4BM4llr2eA2cwCOhLv+h5A2fIS29/OYZ7AKDALyYJZSMpmISlbwMi8
+	ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXUC83s0QvNaV0EyMkSHl2MH5bJ3OIUYCDUYmHtyI9
+	PECINbGsuDL3EKMkB5OSKO9a9YgAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8vtJAOd6UxMqq
+	1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU7NTUgtQimKwMB4eSBO8NDaBGwaLU9NSKtMycEoQ0Ewcn
+	yHAuKZHi1LyU1KLE0pKMeFCcxhcDIxUkxQO011wTZG9xQWIuUBSi9RSjMcfsmyvuM3Lc/Qgk
+	hVjy8vNSpcR5XUE2CYCUZpTmwS2CpadXjOJAfwvzOoIM5AGmNrh5r4BWMQGtqngSBrKqJBEh
+	JdXAyJLtPpXXWHgzy3W1LvvCKUczL9keul55l+ue4+RLm3UYrMXet0tyfPOPOiX++Va8N6tg
+	3+v9t641pU4v5pwnsXDv/neOZ3YUv3jmxtl25M2va5PEjXtePdq14pB0hM3PA1xz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205808>
 
-"Joachim Schmitz" <jojo@schmitz-digital.de> writes:
+On 09/17/2012 11:17 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Junio pointed out that the sort order currently used by string_list
+>> could be considered to be an implementation detail internal to
+>> string_list.  But the sort order is already visible to the outside
+>> world (e.g., via iteration or via print_string_list()), so it
+>> shouldn't be changed willy-nilly.  Therefore, document the current
+>> sort order as part of the API's contract.
+>>
+>> (If, at some future time, somebody wants a string_list that is sorted
+>> by a different criterion, then the order should be made specifiable
+>> via a callback function specified by the user.)
+> 
+> As I said in a separate message, we do not give any documented
+> guarantee on the order the strings comes out of print_string_list(),
+> other than "if you are using the unsorted list function to insert or
+> append strings, we won't muck with the order of the items and you
+> will get your strings back in the order you gave us".  Until we add
+> a callback that the user can specify at the time of string list
+> initialization, I do not think it is wise to cast it in stone and
+> declare it as "shouldn't be changed willy-nilly", unnecessarily
+> painting us into a corner that we need to expend extra effort to get
+> out of.
+> 
+> Besides, nobody calls print_string_list() in the first place. I have
+> always considered it as a debugging aid.
 
-> Needs a different link order in Makefile: libintl before libiconv.
-> This may affect other platforms, so needs some checking.
+As you pointed out, mh/fetch-filter-refs depends on the sort order of
+the "sought" reference array matching the sort order of the linked list
+of refs received from the remote.
 
-It will, and it needs customization, not checking.
+The linked list has been sorted since 9e8e704f using mergesort based on
+strcmp().
 
-> Also I'm not really sure how to best #ifdef the #include <strings.h> 
-> and the typedef (u)intptr_t. 
+Prior to 8bee93dd2, the sought array was sorted using qsort() and an
+explicit strcmp()-based comparison function.  8bee93dd2 switched to
+sorting the "sought" array using sort_string_list(), which is also based
+on strcmp().
 
-For now, nobody needs these, so enclosing in TANDEM is fine. When
-another platform is found to need the same change, which might be
-unlikely, new symbols that NONSTOP_KERNEL and that other platform
-share can be introduced to replace these #ifdefs.
+If (after mh/fetch-filter-refs) somebody would decide to change the sort
+order of string_list, then it would break fetch.  So I see three
+possibilities:
 
-> Furthermore the -DHAVE_STRING_H=1, needed for
-> compat/fnmatch/fnmatch.c doesn't look quite right to me?
->
->  Makefile          | 54 +++++++++++++++++++++++++++++++++++++++++++++++++-----
->  git-compat-util.h | 10 +++++++++-
->  2 files changed, 58 insertions(+), 6 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 3d40860..b1d4ef5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1324,6 +1324,52 @@ ifeq ($(uname_S),Minix)
->  	NO_CURL =
->  	NO_EXPAT =
->  endif
-> +ifeq ($(uname_S),NONSTOP_KERNEL)
-> +	CC = cc -c99 # needs some C99 features, "inline" is just one of them
-> +	# INLINE='' would just replace one set of warnings with another and
-> +	# still not compile in c89 mode, for non-const array initializations
-> +	CFLAGS = -g -O0 # disable all optimization, seems to result in bad code,
-> +	# with -O1 or -O0 /usr/local/libexec/git-core/git-pack-objects
-> +	# abends on "git push"
-> +	prefix = /usr/local
-> +	# our's are in ${prefix}/bin
-> +	PERL_PATH = ${prefix}/bin/perl
-> +	PYTHON_PATH = ${prefix}/bin/python
-> +
-> +	# as detected by './configure'
-> +	#NO_CURL = YesPlease # missdetected, disabled, see below
-> +	NEEDS_SSL_WITH_CURL = YesPlease # added manually, see above
-> +	HAVE_LIBCHARSET_H=YesPlease
-> +	NEEDS_LIBICONV = YesPlease # needs libiconv first, changed further down
-> +	NO_SYS_SELECT_H=UnfortunatelyYes
-> +	NO_D_TYPE_IN_DIRENT = YesPlease
-> +	NO_HSTRERROR=YesPlease
-> +	NO_STRCASESTR=YesPlease
-> +	NO_FNMATCH_CASEFOLD = YesPlease
-> +	NO_MEMMEM = YesPlease
-> +	NO_STRLCPY = YesPlease
-> +	NO_SETENV = YesPlease
-> +	NO_UNSETENV = YesPlease
-> +	NO_MKDTEMP = YesPlease
-> +	NO_MKSTEMPS = YesPlease
-> +	OLD_ICONV=UnfortunatelyYes # currently libiconv-1.9.1
-> +	NO_REGEX=YesPlease # Why? ToDo?
-> +	NO_PTHREADS=UnfortunatelyYes # ToDo? Using PUT, maybe?
-> +	#CFLAGS += -put # not suffient? Seems the wrong fnmatch.h gets included?
-> +	#CFLAGS += -DFNM_CASEFOLD=16 # (1 << 4), to get dir.c compiled!?!
-> +	#CFLAGS += -Icompat/fnmatch # this doesn't help
-> +
-> +	# not detected (nor checked for) by './configure'
-> +	COMPAT_CFLAGS += -DSA_RESTART=0 # we don't have SA_RESTART on NonStop
-> +	COMPAT_CFLAGS += -DHAVE_STRING_H=1 # needed in compat/fnmatch/fnmatch.c
-> +	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-> +	NO_NSEC = YesPlease
-> +	NO_PREAD = YesPlease
-> +	NO_MMAP = YesPlease
-> +	NO_POLL = YesPlease
-> +	MKDIR_WO_TRAILING_SLASH = YesPlease
-> +	NO_SETITIMER = UnfortunatelyYes
-> +endif
->  ifneq (,$(findstring MINGW,$(uname_S)))
->  	pathsep = ;
->  	NO_PREAD = YesPlease
-> @@ -1555,6 +1599,11 @@ else
->  	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto
->  endif
->  endif
-> +ifndef NO_GETTEXT
-> +ifndef LIBC_CONTAINS_LIBINTL
-> +	EXTLIBS += -lintl
-> +endif
-> +endif
->  ifdef NEEDS_LIBICONV
->  	ifdef ICONVDIR
->  		BASIC_CFLAGS += -I$(ICONVDIR)/include
-> @@ -1567,11 +1616,6 @@ endif
->  ifdef NEEDS_LIBGEN
->  	EXTLIBS += -lgen
->  endif
-> -ifndef NO_GETTEXT
-> -ifndef LIBC_CONTAINS_LIBINTL
-> -	EXTLIBS += -lintl
-> -endif
-> -endif
->  ifdef NEEDS_SOCKET
->  	EXTLIBS += -lsocket
->  endif
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 24b5432..7e70361 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -74,7 +74,8 @@
->  # define _XOPEN_SOURCE 500
->  # endif
->  #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
-> -      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__)
-> +      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
-> +      !defined(__TANDEM)
->  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
->  #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
->  #endif
-> @@ -98,6 +99,9 @@
->  #include <stdlib.h>
->  #include <stdarg.h>
->  #include <string.h>
-> +#ifdef __TANDEM /* or HAVE_STRINGS_H or !NO_STRINGS_H? */
-> +#include <strings.h> /* for strcasecmp() */
-> +#endif
->  #include <errno.h>
->  #include <limits.h>
->  #include <sys/param.h>
-> @@ -141,6 +145,10 @@
->  #else
->  #include <stdint.h>
->  #endif
-> +#ifdef __TANDEM /* or NO_INTPTR_T resp. NO_UINTPTR_T? */
-> +typedef int intptr_t;
-> +typedef unsigned int uintptr_t;
-> +#endif
->  #if defined(__CYGWIN__)
->  #undef _XOPEN_SOURCE
->  #include <grp.h>
+1. Document that string_list sorts entries according to their strcmp()
+order, as proposed in this patch.  Then fetch can rely on this ordering.
+ If somebody wants a different ordering in the future, it is easy to
+make the sort order a parameter.
+
+2. Leave string_list's "default" sort order unspecified, but already
+implement a way to let string_list users specify a particular sort
+order.  Change the fetch machinery to specify a strcmp()-based ordering
+explicitly.  This approach has the advantage of letting the default sort
+order of string_list to be changed, though I don't really see how this
+would be helpful.
+
+3. Change fetch back to doing its own sorting again, rather than relying
+on sort_string_list().  This isn't a lot of work (inline the one line of
+sort_string_list(), then either make string-list.c:cmp_items() public or
+duplicate that function too).
+
+I prefer (1) because it is nearly as flexible as (2) and doesn't require
+us to do work now that might not be needed (namely, parameterizing the
+compare function), nor does it require the overhead of keeping a pointer
+to the compare function in the string_list header that might be needed
+if string_lists with non-default sort orders should be usable with the
+"functions for sorted lists only".
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
