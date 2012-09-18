@@ -1,110 +1,49 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Remove all files except a few files, using filter-branch
-Date: Wed, 19 Sep 2012 00:01:27 +0900
-Message-ID: <CAFT+Tg-4q0mzD6rdY74WBP-0OM_SaZ_wkCAn+Gz2_eDte2a4Nw@mail.gmail.com>
-References: <CAFT+Tg_ipyPgNQxx8XsXySzmA3YM3mKe1gB5GyTNqN++gdphnQ@mail.gmail.com>
-	<m24nmxkibw.fsf@igel.home>
-Reply-To: semtlenori@gmail.com
+Date: Tue, 18 Sep 2012 17:10:15 +0200
+Message-ID: <50588ED7.4090501@viscovery.net>
+References: <CAFT+Tg_ipyPgNQxx8XsXySzmA3YM3mKe1gB5GyTNqN++gdphnQ@mail.gmail.com> <m24nmxkibw.fsf@igel.home> <CAFT+Tg-4q0mzD6rdY74WBP-0OM_SaZ_wkCAn+Gz2_eDte2a4Nw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 17:01:41 2012
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: semtlenori@gmail.com
+X-From: git-owner@vger.kernel.org Tue Sep 18 17:10:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDzIw-0006hV-8Y
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 17:01:38 +0200
+	id 1TDzRW-0002vS-4Z
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 17:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933067Ab2IRPB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 11:01:28 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36481 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755036Ab2IRPB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 11:01:27 -0400
-Received: by obbuo13 with SMTP id uo13so10529340obb.19
-        for <git@vger.kernel.org>; Tue, 18 Sep 2012 08:01:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=nuaYGIcgjrsKuJT1MDowgJx9wjoDsEUA7hBIsO627ys=;
-        b=sbH0i0dRRhJT2cZFTlm2ghiNv9/Yhi9ZPXLNQ0Nt9h/3TWuUF5+Pirq0l63XSfWLap
-         IIL/LoE/V+AoaQ38ElMMU/EgN7+GSxd+PlQ7PIbIxTzVkqLPAkl/wLJGobYRdjm5CLHO
-         WxLrTomJcIBkJafLIA4mCTTDu+QwS3gUQuMziYAE8GEEc7n3SiQDc1mRbbvEfRScn+3G
-         TL9Glp82WAz2CCBfjaItyRTsEkCzQzizJln15I/KSg0jlGKv3Za22EJIn7gGhgSR+S8R
-         etjtjq60K0FFIkgr/07lkF+U47NxOzgzOAxO7ORccYM7sFzLN3fDtwUM8yIbDwKZio0/
-         oduw==
-Received: by 10.60.24.167 with SMTP id v7mr181372oef.52.1347980487427; Tue, 18
- Sep 2012 08:01:27 -0700 (PDT)
-Received: by 10.182.41.97 with HTTP; Tue, 18 Sep 2012 08:01:27 -0700 (PDT)
-In-Reply-To: <m24nmxkibw.fsf@igel.home>
+	id S1755428Ab2IRPKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 11:10:21 -0400
+Received: from lilzmailso03.liwest.at ([212.33.55.24]:12619 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754489Ab2IRPKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 11:10:20 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TDzRH-0003os-MI; Tue, 18 Sep 2012 17:10:15 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 677E31660F;
+	Tue, 18 Sep 2012 17:10:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <CAFT+Tg-4q0mzD6rdY74WBP-0OM_SaZ_wkCAn+Gz2_eDte2a4Nw@mail.gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205834>
 
-> --index-filter "git rm --cached -qr -- . && git reset -q -- filename"
+Am 9/18/2012 17:01, schrieb Yi, EungJun:
+>> --index-filter "git rm --cached -qr -- . && git reset -q -- filename"
+> 
+> Hmm... I tried as you said, but it seems to lose history.
 
-Hmm... I tried as you said, but it seems to lose history.
+I think it should be '... && git reset -q $GIT_COMMIT -- filename'
 
-In the below example, after rewriting there must be two commits for
-'b' file but only one exists.
-
-~$ git init filter-branch2
-Initialized empty Git repository in
-/home/nori/mysrc/test/git/filter-branch2/.git/
-~/filter-branch2$ cd filter-branch2
-~/filter-branch2$ echo 1 > a
-~/filter-branch2$ echo 1 > b
-~/filter-branch2$ git add a b
-~/filter-branch2$ git commit -m 'first'
-[master (root-commit) ae2b5fd] first
- 2 files changed, 2 insertions(+)
- create mode 100644 a
- create mode 100644 b
-~/filter-branch2$ echo 2 >> b
-~/filter-branch2$ git add b
-~/filter-branch2$ git commit -m 'second'
-[master a32b84e] second
- 1 file changed, 1 insertion(+)
-~/filter-branch2$ git filter-branch --index-filter "git rm --cached
--qr -- . && git reset -q -- b"
-Rewrite a32b84ed7cec5686e43a47195dfa8114f83619f3 (2/2)
-Ref 'refs/heads/master' was rewritten
-~/filter-branch2$ git log -- b
-commit 19611f9eaf412232e237afcc059d0324a862062f
-Author: Yi EungJun <semtlenori@gmail.com>
-Date:   Tue Sep 18 23:51:53 2012 +0900
-
-    first
-
-Am I doing something wrong?
-
-On Mon, Sep 17, 2012 at 2:06 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> "Yi, EungJun" <semtlenori@gmail.com> writes:
->
->> Hi, all.
->>
->> I want to remove all files except a few files, in the history of my
->> git repository.
->>
->> I tried to do that as follows:
->>
->>     git filter-branch --index-filter "git rm --cached --ignore-unmatch
->> $(git ls-files | grep -v '^filename$' | tr '\n' ' ')"
->
-> Try instead first removing all files, then restoring the files you want
-> to keep.
->
-> --index-filter "git rm --cached -qr -- . && git reset -q -- filename"
->
-> Andreas.
->
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-> "And now for something completely different."
+-- Hannes
