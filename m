@@ -1,63 +1,114 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Unable to clone GIT project
-Date: Tue, 18 Sep 2012 11:06:18 +0200
-Message-ID: <m2392fk8dx.fsf@igel.home>
-References: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFDB65@NOIX10HMNOI01.AMER.DELL.COM>
-	<20120916104651.GF32381@localhost.localdomain>
-	<CABPQNSbPF=_a7-+JnojM2DQAkkj7ZLhSnO+n-Ab=LSrHge1dnQ@mail.gmail.com>
-	<20120917202124.GC24888@sigill.intra.peff.net>
-	<0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFE5FB@NOIX10HMNOI01.AMER.DELL.COM>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] rebase -i: fix misleading error message after 'exec no-such'
+ instruction
+Date: Tue, 18 Sep 2012 13:15:26 +0200
+Message-ID: <505857CE.3050909@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <peff@peff.net>, <kusmabite@gmail.com>,
-	<flatworm@users.sourceforge.net>, <git@vger.kernel.org>
-To: <Ankush_Aggarwal@DELL.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 11:06:41 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 18 13:15:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDtlP-00069Y-Ip
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 11:06:40 +0200
+	id 1TDvmG-0007Cj-NZ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 13:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932625Ab2IRJGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 05:06:30 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:44350 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932539Ab2IRJG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 05:06:27 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XLdbw2D2pz4KKB6;
-	Tue, 18 Sep 2012 11:06:20 +0200 (CEST)
-X-Auth-Info: bk5Zcr/2vbRVGhwN7kKONQZKvPWA1aMQS9Lmm9E2FXc=
-Received: from igel.home (ppp-93-104-159-39.dynamic.mnet-online.de [93.104.159.39])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XLdbw1mwPzbbcr;
-	Tue, 18 Sep 2012 11:06:20 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 820EECA2A2; Tue, 18 Sep 2012 11:06:19 +0200 (CEST)
-X-Yow: CONGRATULATIONS!  Now should I make thinly veiled comments about
- DIGNITY, self-esteem and finding TRUE FUN in your RIGHT VENTRICLE??
-In-Reply-To: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFE5FB@NOIX10HMNOI01.AMER.DELL.COM>
-	(Ankush Aggarwal's message of "Tue, 18 Sep 2012 08:53:21 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1757953Ab2IRLPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 07:15:31 -0400
+Received: from lilzmailso03.liwest.at ([212.33.55.24]:32964 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757156Ab2IRLPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 07:15:31 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TDvm2-00052i-O9; Tue, 18 Sep 2012 13:15:27 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 7A3671660F;
+	Tue, 18 Sep 2012 13:15:26 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+X-Enigmail-Version: 1.4.4
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205818>
 
-<Ankush_Aggarwal@DELL.com> writes:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> On Linux machine
-> 	Installed libiconv-1.14 unded /usr/local/lib path.
+When the todo sheet of interactive rebase instructs to run a non-existing
+command, the operation stops with the following error:
 
-Why do you need that library?  iconv is part of glibc.  Moreover, git
-wouldn't link against libiconv anyway unless you explicitly ask for it.
+  Execution failed: no-such
+  You can fix the problem, and then run
 
-Andreas.
+          git rebase --continue
 
+  fatal: 'rebase' appears to be a git command, but we were not
+  able to execute it. Maybe git-rebase is broken?
+
+The reason is that the shell that attempted to run the command exits with
+code 127. rebase--interactive just forwards this code to the caller (the
+git wrapper). But our smart run-command infrastructure detects this
+special exit code and turns it into ENOENT, which in turn is interpreted
+by the git wrapper as if the external command that it just executed did
+not exist. This is finally translated to the misleading last two lines in
+error message cited above.
+
+Fix it by translating the error code before it is forwarded.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ An alternative fix would be to just ignore the shell's status code.
+ I decided that it is worth keeping it: better safe than sorry.
+
+ BTW, the problem existed since day 1 of the 'exec' feature.
+
+ git-rebase--interactive.sh    |  4 ++++
+ t/t3404-rebase-interactive.sh | 11 +++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a09e842..56707d7 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -544,6 +544,10 @@ do_next () {
+ 			warn
+ 			warn "	git rebase --continue"
+ 			warn
++			if test $status -eq 127		# command not found
++			then
++				status=1
++			fi
+ 			exit "$status"
+ 		elif test "$dirty" = t
+ 		then
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 7304b66..7a71760 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -118,6 +118,17 @@ test_expect_success 'rebase -i with the exec command checks tree cleanness' '
+ 	git rebase --continue
+ '
+ 
++test_expect_success 'rebase -i with exec of inexistent command' '
++	git checkout master &&
++	test_when_finished "git rebase --abort" &&
++	(
++	FAKE_LINES="exec_this-command-does-not-exist 1" &&
++	export FAKE_LINES &&
++	test_must_fail git rebase -i HEAD^ >actual 2>&1
++	) &&
++	! grep "Maybe git-rebase is broken" actual
++'
++
+ test_expect_success 'no changes are a nop' '
+ 	git checkout branch2 &&
+ 	git rebase -i F &&
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.7.12.1720.gb55457a.dirty
