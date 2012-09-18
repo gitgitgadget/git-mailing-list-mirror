@@ -1,78 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-jump: ignore (custom) prefix in diff mode
-Date: Mon, 17 Sep 2012 20:57:42 -0700
-Message-ID: <7vsjagoudl.fsf@alter.siamese.dyndns.org>
-References: <1347844915-4130-1-git-send-email-git@shiar.nl>
- <20120917030143.GA19986@pearl.mediadesign.nl>
- <7vy5k9w7eh.fsf@alter.siamese.dyndns.org>
- <20120918025229.GB19986@pearl.mediadesign.nl>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH] Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the
+ test suite for detecting heap corruption
+Date: Tue, 18 Sep 2012 06:22:01 +0200
+Message-ID: <CA+EOSBmapjFxKkfPVAxg8q=J9gkiz8Hg0B4=pxfRi0RGQ_kEwA@mail.gmail.com>
+References: <1347641662-3596-1-git-send-email-gitter.spiros@gmail.com>
+	<7v392k5w7u.fsf@alter.siamese.dyndns.org>
+	<7vligc19d1.fsf@alter.siamese.dyndns.org>
+	<CA+EOSBk0hN+v+PK8jzCCZgG0Ko7SsHOSB=cM7nnaSsrUOaJ-7Q@mail.gmail.com>
+	<7vzk4otmwb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Mischa POSLAWSKY <git@shiar.nl>
-X-From: git-owner@vger.kernel.org Tue Sep 18 05:57:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 18 06:22:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDowb-0005tn-Q9
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 05:57:54 +0200
+	id 1TDpK8-0001jB-6W
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 06:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932762Ab2IRD5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 23:57:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36985 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932728Ab2IRD5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 23:57:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4830D87A0;
-	Mon, 17 Sep 2012 23:57:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oAUyIfBz1zahuu7Wulxw7Wu19lc=; b=VUDZ2N
-	LInhQjBfnossbOTyAVcd7ju8g7J/oJefpee+4fkKD9ZGmR9rUe3LYEDocsC3rW57
-	tDTO9jHNFr/PmGl55kCPmg1Y8F0ndE+3oKous8d+wvw5njnp/FZexSCu8hr5Okx5
-	CrLVDcUH+UyvtKbRzE3nDUV6mTsRX80KBZuFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=elS+v7fUeGmg0cq7zIAFaCQak0CFqVXB
-	HCl7kz/0yNK7mw+Sla/F+Ol0Oy+4kNRwA7fUTsTMb0G64E6fYe+JvS5ZSkAQJC2G
-	yvsso859f+1a5AC6Rj7WxE1xuJLs28//mlqqegafLk51V4wTaaRQTUnigzYn/ly2
-	rPXgeYWjBpY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32699879F;
-	Mon, 17 Sep 2012 23:57:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A01D4879E; Mon, 17 Sep 2012
- 23:57:43 -0400 (EDT)
-In-Reply-To: <20120918025229.GB19986@pearl.mediadesign.nl> (Mischa
- POSLAWSKY's message of "Tue, 18 Sep 2012 04:52:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFDD5134-0144-11E2-87DB-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752078Ab2IREWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 00:22:03 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:57667 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468Ab2IREWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 00:22:02 -0400
+Received: by ieak13 with SMTP id k13so1655764iea.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 21:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=mxXOwKa/Yt9GYaoNRUE795D3QQVlbAPOgGcm/IuwZyg=;
+        b=Ajy1OoCUHiC/UjveXrIlew6BI3Pu1gj1wU6bkrVXnJ3f5s8o85DINapPQmnn+O42Jn
+         LLoNI5EL/U58TquAZsst7qx3K2VsJCXoPP56tRRP86ZRzGhSLNha5I3QRnyRZjOygPGt
+         8H0d+Lby9JmNeuTdOhdS9BAy51RKbkmh/lco+u2TFpcOHHfWRr8xDqSg/DAZtXokLEsD
+         j4dh7qGGsAaAdORhczZVrFLSnju0ZL1q879L+iNnQ3IFP1tGJ59sEk5DQT6Ff2kaSlYT
+         IFM5CLSPJ51xGOgORgFKk8EABQ9FFbe0KTlDaIlolumWhGL2kwU/wJyvqttps8hAQPku
+         Je1g==
+Received: by 10.50.236.100 with SMTP id ut4mr9023632igc.34.1347942121067; Mon,
+ 17 Sep 2012 21:22:01 -0700 (PDT)
+Received: by 10.64.82.194 with HTTP; Mon, 17 Sep 2012 21:22:01 -0700 (PDT)
+In-Reply-To: <7vzk4otmwb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205788>
 
-Mischa POSLAWSKY <git@shiar.nl> writes:
+Ok.
 
->> Perhaps you had configured your diff.noprefix in a wrong
->> configuration file?  This is primarily per-project choice, and your
->> clone of git.git should not have diff.noprefix set, neither your
->> $HOME/.gitconfig unless you always work on projects that want
->> diff.noprefix.
+Please use the patch that you have already queued in the ep integration branch.
+
+Thank you
+
+2012/9/17, Junio C Hamano <gitster@pobox.com>:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
 >
-> Then I'm not using it as intended.
+>>>  - That "165" thing I mentioned earlier.
+>>
+>> Thank you so much for the comments, that's fine. A single
+>> consideration for  MALLOC_PERTURB.
+>>
+>> You can use any value between 1..255 for MALLOC_PERTURB_
+>> That chooses the byte that glibc will use to memset all freed buffers.
+>> In general it is defined as
+>>
+>>     export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
+>>
+>> (as drepper pointed out http://udrepper.livejournal.com/11429.html)
+>
+> Drepper never recommends RANDOM there.
+>
+>> Using a random value is slightly better than using a fixed one
+>> in case your fixed value is someday just the right/wrong value to mask
+>> a problem.
+>
+> Quite the contrary.  When you use a fixed pattern, it is easy which
+> other pieces of memory has uninitailized contents.  When you use a
+> random value, you sometimes get an error and sometimes the test
+> mysteriously pass, which does not help debugging.
+>
+> openSUSE folks seem to use a fixed value for this exact reason of
+> repeatability of tests.
+>
+> http://jaegerandi.blogspot.com/2012/01/finding-subtile-malloc-bugs.html
+>
+>> So OK per the original expression?
+>
+> No.
+>
+> I am not convinced 165 is the perfect value, but I am fairly certain
+> any fixed value is better than using a random to deliberately worsen
+> repeatability of the tests.
+>
 
-I would imagine that you could do
-
-	(in ~/.gitconfig)
-	[diff] noprefix
-
-        (in ~/git.git/.git/config
-        [diff] noprefix = false
-
-or something.
+-- 
+Inviato dal mio dispositivo mobile
