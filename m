@@ -1,78 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] git-svn: use path accessor for Git::SVN objects
-Date: Tue, 18 Sep 2012 11:10:05 -0700
-Message-ID: <7v1uhznqwy.fsf@alter.siamese.dyndns.org>
-References: <20120918000931.GB17939@dcvr.yhbt.net>
- <20120918142941.GA2925@elie.Belkin>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Re: [PATCH] gitk: Synchronize highlighting in file view when scrolling
+ diff
+Date: Tue, 18 Sep 2012 20:23:49 +0200
+Message-ID: <5058BC35.6050007@arcor.de>
+References: <1347947874-38597-1-git-send-email-stefan@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	robbat2@gentoo.org, bwalton@artsci.utoronto.ca,
-	"Michael G. Schwern" <schwern@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 20:10:21 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Stefan Haller <stefan@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Tue Sep 18 20:24:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE2FY-0000vQ-Oe
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 20:10:21 +0200
+	id 1TE2So-0000IQ-K2
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 20:24:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237Ab2IRSKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 14:10:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34732 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751732Ab2IRSKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 14:10:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA8BA83A2;
-	Tue, 18 Sep 2012 14:10:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VUm2L01r78+0n0o26KI/eu0y+zo=; b=l6IowZ
-	E6j/g9VdDmtO8kYcsvBetTlDIQ8wann9UNiRgPSZu04flQptwfHnvPdgi9XRU833
-	Y2sgXhXTL5vENXIYwEpcSudiPT6mdJDPPAnVr92Hx/FNizGkLa2r7VlW0sewf/6f
-	X0f7+zpqmmyWFBYMKNTwTAdlbyWXeAMsJFCH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tn6Z4400r/zii8PRMbt761erRetFPIty
-	L/l/plzL8ABo9dKHR0OtQoCaWa/q4BkVu2kFYVAyDVz2VQB2VpE5RzTgBaBqELtH
-	Dhpw110ZztCisufyWC6aXT49YRqAhmvguyYDibpP9JC5lsw0DK0fWHU9C0Zc9O1f
-	DPQDEtz/Alk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9562883A1;
-	Tue, 18 Sep 2012 14:10:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E8D083A0; Tue, 18 Sep 2012
- 14:10:06 -0400 (EDT)
-In-Reply-To: <20120918142941.GA2925@elie.Belkin> (Jonathan Nieder's message
- of "Tue, 18 Sep 2012 07:29:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 13B8EDC2-01BC-11E2-BA83-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753561Ab2IRSXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 14:23:54 -0400
+Received: from mail-in-07.arcor-online.net ([151.189.21.47]:38557 "EHLO
+	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753133Ab2IRSXx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 14:23:53 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mx.arcor.de (Postfix) with ESMTP id 2C4ED108726;
+	Tue, 18 Sep 2012 20:23:52 +0200 (CEST)
+Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id 2725F208013;
+	Tue, 18 Sep 2012 20:23:51 +0200 (CEST)
+Received: from [10.0.0.1] (93-82-73-33.adsl.highway.telekom.at [93.82.73.33])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-02.arcor-online.net (Postfix) with ESMTPA id 2B11830491;
+	Tue, 18 Sep 2012 20:23:51 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net 2B11830491
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1347992631; bh=7X98Tg1LO+j4FB6749krbWghqyPhvH03IIS5tykhm8I=;
+	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	b=G1C0QtFmIGRDA+xw1S+NBSKJq56q/IpbEpRLimdO/ksycFReSAbuUmvuY133b9OMH
+	 WrdaBKfblIeFlMrqnJoM34X6pJSmCtUw02coNMW2iiUhs1H+KHCQ09Q/TDw041mZPZ
+	 QV4X8GknjEzJavs/GoowdyEofF4vbPNXupY+RnkY=
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <1347947874-38597-1-git-send-email-stefan@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205845>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 2012-09-18 07:57, Stefan Haller wrote:
+> Whenever the diff pane scrolls, highlight the corresponding file in the
+> file list on the right. For a large commit with many files and long
+> per-file diffs, this makes it easier to keep track of what you're looking
+> at.
 
-> Eric Wong wrote:
+Hi,
+i like this function!
+I have often lost track which file i am currently looking at.
+Especially with long files.
+
+But i noticed following minor thing:
+When selecting a new commit, for a split second the first file name is selected
+and then the "Comments" entry is selected.
+The flickering is more visible when you hold down the mouse on the up/down button
+of the "Lines of code" field.
+
+Can this flickering be avoided?
+
+Thanks,
+Greetings Peter
+
+> This allows simplifying the prevfile and nextfile functions, because
+> all they have to do is scroll the diff pane.
 >
->> The accessors should improve maintainability and enforce
->> consistent access to Git::SVN objects.
->>
->> Signed-off-by: Eric Wong <normalperson@yhbt.net>
->> ---
->>   (RFC since I could've missed something)
-> [...]
->>  git-svn.perl       | 2 +-
->>  perl/Git/SVN/Ra.pm | 2 +-
->>  2 files changed, 2 insertions(+), 2 deletions(-)
+> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+> ---
+>   gitk | 27 ++++++++++++++++-----------
+>   1 file changed, 16 insertions(+), 11 deletions(-)
 >
-> I think that's all of them, so for what it's worth,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks for helping to move things forward.
+>
