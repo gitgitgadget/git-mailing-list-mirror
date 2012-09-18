@@ -1,64 +1,86 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: Remove all files except a few files, using filter-branch
-Date: Wed, 19 Sep 2012 00:25:23 +0900
-Message-ID: <CAFT+Tg_UbG8C9o2E5P1E2a9GXgLhn2fmE8sMA4un0Kai2HrOeg@mail.gmail.com>
-References: <CAFT+Tg_ipyPgNQxx8XsXySzmA3YM3mKe1gB5GyTNqN++gdphnQ@mail.gmail.com>
-	<m24nmxkibw.fsf@igel.home>
-	<CAFT+Tg-4q0mzD6rdY74WBP-0OM_SaZ_wkCAn+Gz2_eDte2a4Nw@mail.gmail.com>
-	<50588ED7.4090501@viscovery.net>
-Reply-To: semtlenori@gmail.com
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH] Documentation/git-filter-branch: Move note about effect of
+ removing commits
+Date: Tue, 18 Sep 2012 17:55:08 +0200
+Message-ID: <m2627biaw3.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 18 17:25:33 2012
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 18 17:55:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDzg5-0002UU-1F
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 17:25:33 +0200
+	id 1TE08u-00044W-MS
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 17:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756666Ab2IRPZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 11:25:24 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:37254 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755714Ab2IRPZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 11:25:24 -0400
-Received: by oago6 with SMTP id o6so6174724oag.19
-        for <git@vger.kernel.org>; Tue, 18 Sep 2012 08:25:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=DW9s4PNzxAYG8JzvLxvH4RyznEbB8bpotxpAkkgM6Ls=;
-        b=l1x+lElSEvXBtY2KpXP9ppbEMk61t2lTf+SiOEpecloAj1RUsp0WIjV0Cf9kolp7oX
-         p0XQdLIgoaEgsiRnSqWU7POHgV0VLR5D0YDhrZ/DuI+rFEZp5pg77DhQsbgaAzTaNyg6
-         P8n6EA4pN6hrXfHu7YLzLoZKmLy5xC5YtUHB53EMhl96N+P49TPQZIlZh43YzmmiBGwq
-         T2XlMLkZmyJTjy5mPzWrrueSLj89BQB9kIT4DVs3mLXQgsHuAahfuajkppfnm8BWKMhO
-         rBqn2xPne2xDf6qyhxibjq8UbRUSw+ijDCLqzMi2hwHkjnKn6OshRn9e0Gr5alvdo2Vc
-         n5aA==
-Received: by 10.60.0.169 with SMTP id 9mr234233oef.94.1347981923368; Tue, 18
- Sep 2012 08:25:23 -0700 (PDT)
-Received: by 10.182.41.97 with HTTP; Tue, 18 Sep 2012 08:25:23 -0700 (PDT)
-In-Reply-To: <50588ED7.4090501@viscovery.net>
+	id S1757332Ab2IRPzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 11:55:12 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:37286 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757258Ab2IRPzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 11:55:10 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XLpgd15CCz3hhh5
+	for <git@vger.kernel.org>; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
+X-Auth-Info: /34mgPHG+yeRhbJjOvmPGHvAkVmudFL/StF7ke4iVhQ=
+Received: from igel.home (ppp-93-104-159-39.dynamic.mnet-online.de [93.104.159.39])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XLpgc5NY7zbbjf
+	for <git@vger.kernel.org>; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 42CD8CA2A2; Tue, 18 Sep 2012 17:55:08 +0200 (CEST)
+X-Yow: I'm having a MID-WEEK CRISIS!
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205836>
 
-> I think it should be '... && git reset -q $GIT_COMMIT -- filename'
+The note that explains that changes introduced by removed commits are
+preserved should be placed directly after the paragraph that describes
+such commits removal.  Otherwise the reference to "the commits" appears
+out of context.
 
-It works! Thanks to Hannes and Andreas!
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+---
+ Documentation/git-filter-branch.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-On Wed, Sep 19, 2012 at 12:10 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 9/18/2012 17:01, schrieb Yi, EungJun:
->>> --index-filter "git rm --cached -qr -- . && git reset -q -- filename"
->>
->> Hmm... I tried as you said, but it seems to lose history.
->
-> I think it should be '... && git reset -q $GIT_COMMIT -- filename'
->
-> -- Hannes
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 15e7ac8..6e2d9ea 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -304,6 +304,11 @@ committed a merge between P1 and P2, it will be propagated properly
+ and all children of the merge will become merge commits with P1,P2
+ as their parents instead of the merge commit.
+ 
++*NOTE* the changes introduced by the commits, and which are not reverted
++by subsequent commits, will still be in the rewritten branch. If you want
++to throw out _changes_ together with the commits, you should use the
++interactive mode of 'git rebase'.
++
+ You can rewrite the commit log messages using `--msg-filter`.  For
+ example, 'git svn-id' strings in a repository created by 'git svn' can
+ be removed this way:
+@@ -329,11 +334,6 @@ git filter-branch --msg-filter '
+ ' HEAD~10..HEAD
+ --------------------------------------------------------
+ 
+-*NOTE* the changes introduced by the commits, and which are not reverted
+-by subsequent commits, will still be in the rewritten branch. If you want
+-to throw out _changes_ together with the commits, you should use the
+-interactive mode of 'git rebase'.
+-
+ 
+ Consider this history:
+ 
+-- 
+1.7.12
+
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
