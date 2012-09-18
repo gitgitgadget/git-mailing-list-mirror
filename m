@@ -1,77 +1,94 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] grep.c: Fix a sparse warning
-Date: Tue, 18 Sep 2012 18:30:25 +0100
-Message-ID: <5058AFB1.3040600@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git installation fails in home directory on ubuntu 12.04
+Date: Tue, 18 Sep 2012 11:09:27 -0700
+Message-ID: <7v627bnqy0.fsf@alter.siamese.dyndns.org>
+References: <505859B4.2090205@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 19:32:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <stefbel@web.de>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 18 20:09:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE1ev-0004dv-5C
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 19:32:29 +0200
+	id 1TE2Et-0000WV-5X
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 20:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697Ab2IRRcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 13:32:21 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:44526 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752585Ab2IRRcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 13:32:20 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id BC35C400172;
-	Tue, 18 Sep 2012 18:32:17 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 1289040012E;	Tue, 18 Sep 2012 18:32:17 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Tue, 18 Sep 2012 18:32:15 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-X-MDF-HostID: 19
+	id S1751728Ab2IRSJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2012 14:09:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34340 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751490Ab2IRSJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2012 14:09:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E71D8374;
+	Tue, 18 Sep 2012 14:09:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PTWF3BXiX0RT98tDrhdwxQVzT3Y=; b=ydrRbO
+	knjfznElzOri/DCvhbWTWtknXlJVY23M4eZxK1s1Qjh8v8wH2LAbvFO8o2hoo+8v
+	rp2wa9eJTO7eCUlOMTIlYHlFAecq6Slf+SNiCVGgDoFYmhlNLm6Auwf7nfFKBd6X
+	FZM+vNVF8lZoXNw4jug6XA6H8eoPjwxANeJi0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Vb8D6W5HEY65RBekUAwLwExchKCWHyTm
+	uZzPTn8HD0wJ5oo5hqvUj16xb6CsC5ARsyqDlezAwIUH55IpI1ujFkwiCJU0AooP
+	d3wzrCgifKRPJLscCqKyVFT84NE3LCHSAQyXAnCUE+/9rUcK+gkMWrILuF9cH/MQ
+	EEMZb0dCEUU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A5A28373;
+	Tue, 18 Sep 2012 14:09:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 675F78371; Tue, 18 Sep 2012
+ 14:09:28 -0400 (EDT)
+In-Reply-To: <505859B4.2090205@web.de> (Stefan Beller's message of "Tue, 18
+ Sep 2012 13:23:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FCAE27D2-01BB-11E2-91BF-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205843>
 
+Stefan Beller <stefbel@web.de> writes:
 
-In particular, sparse complains that "... 'dump_grep_expression'
-was not declared. Should it be static?". In order to suppress
-the warning, since this function does not need more than file
-scope, we simply include the static modifier in it's declaration.
+> So I did
+> git fetch
+> git rebase
+> git describe
+> v1.7.12-503-g5976753
+>
+> ./configure --prefix=/home/sb
+> make
+> make install
+>     GEN perl/PM.stamp
+>     SUBDIR gitweb
+>     SUBDIR ../
+>     SUBDIR perl
+> make[1]: `perl.mak' is up to date.
+> ...
+> make[1]: Entering directory `/home/sb/OSS/git/perl'
+> make[2]: Entering directory `/home/sb/OSS/git/perl'
+> Appending installation info to /usr/local/lib/perl/5.14.2/perllocal.pod
+> mkdir /usr/local/lib/perl: Permission denied at
+> /usr/share/perl/5.14/ExtUtils/Command.pm line 288
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+I often do an equivalent of
 
-Hi Junio,
+        make prefix=/home/gitster
+        make prefix=/home/gitster install
 
-I prefer to catch these before they progress to next, but it seems
-I've not been quick enough lately! Sorry about that. :(  [I will have
-to git-fetch more frequently; at present I only fetch about 3 times
-a week.]
+and never saw this.  I do not use ./configure, and am not actively
+involved in maintaining that part of the system.
 
-I've been away for a few days, so I'm well behind ... (I'm just
-about to download 350+ emails for me to read tonight!).
-
-ATB,
-Ramsay Jones
-
- grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/grep.c b/grep.c
-index 925aa92..38c4d75 100644
---- a/grep.c
-+++ b/grep.c
-@@ -403,7 +403,7 @@ static void dump_grep_expression_1(struct grep_expr *x, int in)
- 	}
- }
- 
--void dump_grep_expression(struct grep_opt *opt)
-+static void dump_grep_expression(struct grep_opt *opt)
- {
- 	struct grep_expr *x = opt->pattern_expression;
- 
--- 
-1.7.12
+Among the people who touched configure.ac and aclocal.m4 in the past
+18 months, Stefano seems to be the most clueful with that part of
+the system, and among those who touched perl/Makefile.PL during the
+same period, I suspect Jonathan may know a thing or two about
+MakeMaker, so let's see if we can get help from these directions...
