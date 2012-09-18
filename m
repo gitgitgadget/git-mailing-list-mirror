@@ -1,144 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/test-lib: print pretty msg when git isn't built
-Date: Tue, 18 Sep 2012 13:57:50 -0700
-Message-ID: <7v627bkq0h.fsf@alter.siamese.dyndns.org>
-References: <1347901579-5545-1-git-send-email-artagnon@gmail.com>
- <1347901579-5545-2-git-send-email-artagnon@gmail.com>
- <7v7grstlp9.fsf@alter.siamese.dyndns.org>
- <CALkWK0k9P9-K5R2Amipujq2DFvJTXy8T3ZyfFa31CcxeKSFL2g@mail.gmail.com>
- <7v627bq0gx.fsf@alter.siamese.dyndns.org>
- <CALkWK0kbeLtU-5_9QnmQKS1yO02SvCW3ERvami9bmCa0Vym8oQ@mail.gmail.com>
- <7vr4pzoj5a.fsf@alter.siamese.dyndns.org>
- <CALkWK0=JY3pTyyMAmFVnQatn6gd3eC7dxiBbTh0WmVwkdLTbHQ@mail.gmail.com>
+Subject: Re: git archive --format zip utf-8 issues
+Date: Tue, 18 Sep 2012 14:12:19 -0700
+Message-ID: <7v1uhzkpcc.fsf@alter.siamese.dyndns.org>
+References: <502583F4.8030308@tu-clausthal.de>
+ <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx>
+ <5026D081.2040906@tu-clausthal.de>
+ <20120830222603.GA20289@sigill.intra.peff.net>
+ <5046634A.4020608@lsrfire.ath.cx> <7vehmh8prt.fsf@alter.siamese.dyndns.org>
+ <5047A9C0.9020200@lsrfire.ath.cx> <5058CE49.3070108@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 22:58:04 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Sep 18 23:12:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TE4rr-00044X-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 22:58:03 +0200
+	id 1TE55s-0002hN-QG
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 23:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755103Ab2IRU5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2012 16:57:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46310 "EHLO
+	id S1755100Ab2IRVMX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2012 17:12:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53749 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752185Ab2IRU5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2012 16:57:53 -0400
+	id S1752185Ab2IRVMW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2012 17:12:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D1D192F3;
-	Tue, 18 Sep 2012 16:57:52 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CC3E96E7;
+	Tue, 18 Sep 2012 17:12:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aapv2MzIOWc8jRjl3pTfqt7hNgw=; b=R1qWIi
-	z0Zng1jtpintMX4cdYO6pxr5DA+DyCNl1pBBZCmg36LGWC20XfKRFJmV695I0Hpf
-	N+b4yqXvgwBfExd5t3G+AXZwAh8OsVRdQBfi2rbqgAzd3SoVt89pADOd+5FahPd+
-	P56AefeA2/G2Kp6AFsha6PEhaWjbEvlrG8860=
+	:content-type:content-transfer-encoding; s=sasl; bh=PxTlXtI8NVbp
+	u/LKulHQzhcYfRY=; b=S0JZrhrqndZSkWW1s+qAl+7WQa46i2tlzObr36pWm7fW
+	KyljMiDnTIzlRZXU1aRx5D11uV218NjPzr5vEnD1Kfo8A/vNQ1zUnzhHMJCq++88
+	WiRRJWQtpShIGGdZpHviY9C5MbTDSy8S7tHWbpK5odvYt70CGjTxbq2AUUq1VA8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uTg3adu8IJhScu7KRrtzPMFu3kKVanB3
-	BlWXPy9r9XqFL88Wnfm8cX9nBYJieizu1ZuICcFHRgTmm6j5mG6sY/K/NCU0tE5N
-	IIRPJ0MzlgD8exNCeL6AuofF8WsO5JEz76UTn+oaIg2Ju3jkPBx7fn5zMQhyqCwR
-	xuJghCT+330=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NYyuF1
+	PjMw17KEVk4WjU1Fg6WU/N8G+eD/3K9VkQ7A0OLVY/CAURrX7nIuu9XYqKh2KQLc
+	XOncDRXExL12eI6BRs/LV258OKZUnuhiF/AKR6xdl94ryiP5vb9yLdCqCWso2MnX
+	pCUgXg1CnvIiHUuFMMLvRwsMQgP8P75F7vetc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B39392F2;
-	Tue, 18 Sep 2012 16:57:52 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A04996E6;
+	Tue, 18 Sep 2012 17:12:21 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9868192F1; Tue, 18 Sep 2012
- 16:57:51 -0400 (EDT)
-In-Reply-To: <CALkWK0=JY3pTyyMAmFVnQatn6gd3eC7dxiBbTh0WmVwkdLTbHQ@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 18 Sep 2012 13:37:57 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C58C196E5; Tue, 18 Sep 2012
+ 17:12:20 -0400 (EDT)
+In-Reply-To: <5058CE49.3070108@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Tue, 18 Sep 2012 21:40:57 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82A81EDA-01D3-11E2-9F48-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 88BB4AA2-01D5-11E2-8697-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205875>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
->>> Because that emits an ugly
->>> ./test-lib.sh: 54: /home/artagnon/src/git/t/../git: not found
->>
->> Don't you deserve it? ;-)
->>
->> The full message would read
->>
->>     ./test-lib.sh: 54: /home/artagnon/src/git/t/../git: not found
->>     error: you do not seem to have built git yet.
->>
->> which looks perfectly sensible to me.  It makes it clear where on
->> the filesystem the test script expects your "git", which is an added
->> benefit.
->
-> Fair enough- use your version then.  Let me know if you want me to
-> submit a revised patch.
+>                                          Windows    Info-ZIP unzip
+>                             7-Zip PeaZip builtin Linux msysgit Window=
+s
+> 7-Zip 9.20                      0      0      46    26      43      4=
+3
+> PeaZip 4.7.1 win64              0      0      46    26      42      4=
+2
+> Info-ZIP zip 3.0 Linux          0      0      72     0      43      4=
+3
+> Info-ZIP zip 3.0 Windows       45     45     n/a     0      43      4=
+3
+> ...
+> I wonder what 7-Zip and PeaZip do that gives them a slightly nicer
+> score with the Windows-internal unzipper.  Umlauts, Nordic characters
+> and accents are preserved by that combination.  It seems that unzip o=
+n
+> Linux fails to unpack exactly these names, so perhaps they employ a
+> dirty trick like using the local encoding in the ZIP file, which make=
+s
+> it unportable.
+> ...
 
-OK, let's do this.
+Thanks for this work.
 
--- >8 --
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Date: Mon, 17 Sep 2012 22:36:19 +0530
-Subject: [PATCH] t/test-lib: print pretty msg when git isn't built
+It is kind of surprising that "Windows builtin" has very poor score
+extracting from the output of Zip tools running on Windows (I am
+looking at 46, 46 and n/a over there).  If you tell it to create an
+archive from its disk and then extract from it, I wonder what would
+happen.
 
-When tests were run without building git, they stopped with:
-
-    .: 54: Can't open /path/to/git/source/t/../GIT-BUILD-OPTIONS
-
-Move the check that makes sure that git has already been built from
-t0000 to test-lib, so that any test will do so before it runs.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0000-basic.sh | 10 ----------
- t/test-lib.sh    |  7 +++++++
- 2 files changed, 7 insertions(+), 10 deletions(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index ccb5435..741b6b6 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -18,16 +18,6 @@ swapping compression and hashing order, the person who is making the
- modification *should* take notice and update the test vectors here.
- '
- 
--################################################################
--# It appears that people try to run tests without building...
--
--../git >/dev/null
--if test $? != 1
--then
--	echo >&2 'You do not seem to have built git yet.'
--	exit 1
--fi
--
- . ./test-lib.sh
- 
- ################################################################
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 78c4286..61930fb 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -51,6 +51,13 @@ then
- fi
- GIT_BUILD_DIR="$TEST_DIRECTORY"/..
- 
-+"$GIT_BUILD_DIR/git" >/dev/null
-+if test $? != 1
-+then
-+	echo >&2 'error: you do not seem to have built git yet.'
-+	exit 1
-+fi
-+
- . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
- export PERL_PATH SHELL_PATH
- 
--- 
-1.7.12.563.g54818e4
+Does this result mean that practically nobody uses Zip archive with
+exotic letters in paths on that platform?  I am not talking about
+developers and savvy people who know where to download third-party
+Zip archivers and how to install them.  I am imagining a grandma who
+received an archive full of photos of her grandchild in her Outlook
+Express or GMail inbox, clicked the attachment to download it, and
+is trying to view the photo inside.
