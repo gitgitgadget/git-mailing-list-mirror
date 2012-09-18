@@ -1,84 +1,68 @@
-From: =?ISO-8859-1?Q?Sebastian_D=F6rner?= 
-	<sebastian@sebastian-doerner.de>
-Subject: Gitk commit order leads to unnecessarily long lines
-Date: Tue, 18 Sep 2012 02:41:18 +0100
-Message-ID: <CA+_kBjAWM1XHVsRa4WfDZXvtf8eJGweJhi3Rz7Sfhv390hA7WA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH v3 0/4] rebase -i: Teach "--edit-todo" action
+Date: Mon, 17 Sep 2012 21:28:06 -0400
+Message-ID: <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
+References: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 03:41:29 2012
+X-From: git-owner@vger.kernel.org Tue Sep 18 04:29:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TDmoa-0003IJ-Lk
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 03:41:28 +0200
+	id 1TDnZF-0002fD-KQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Sep 2012 04:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756425Ab2IRBlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2012 21:41:20 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:54374 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755744Ab2IRBlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2012 21:41:19 -0400
-Received: by oago6 with SMTP id o6so5481428oag.19
-        for <git@vger.kernel.org>; Mon, 17 Sep 2012 18:41:18 -0700 (PDT)
+	id S932295Ab2IRC3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2012 22:29:32 -0400
+Received: from mail-gh0-f174.google.com ([209.85.160.174]:33129 "EHLO
+	mail-gh0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106Ab2IRC3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2012 22:29:32 -0400
+Received: by ghbg15 with SMTP id g15so1696524ghb.19
+        for <git@vger.kernel.org>; Mon, 17 Sep 2012 19:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=8e8hfbEQl2W7Fnou4xIfoV7RvtwmgTipLrTFZA9HNa4=;
-        b=LurAs0DLL8JeoHk8FP6FljCM96rdmjxwejFvun0UTvyf25qJTrOr8rAQ9154S6mqaL
-         3JHBJeu0nWYc0BJCxBiGFedsQtB/j6+CbF+K2QcfDrU9i/aFPh07CrWbL26P4zXBi1aM
-         +B19mmLbv5iOzlH+VPvREUC6R9kUBcktRFMAES1XA0h0A3O6MR61njcIrfFRqMpt8p72
-         tP4X7MY/TmKbDYVhgJYHBtifqnYulP8F/inV5D1kvAch9IYiRh6O3K83XoQWoC00fSQO
-         f3vP3P7A7GAxNNjaA2zbTFSARrft2Ft78mZPYu3SvaUypRvesHqsiVBlE8fJlheKWH5E
-         EIPA==
-Received: by 10.60.20.165 with SMTP id o5mr13416868oee.135.1347932478626; Mon,
- 17 Sep 2012 18:41:18 -0700 (PDT)
-Received: by 10.182.39.132 with HTTP; Mon, 17 Sep 2012 18:41:18 -0700 (PDT)
-X-Google-Sender-Auth: Sy9X0Y3E1uC7V7iEbtkEcMUa9kc
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=OEKZwbznXUFKsT/MJ0WABdOZU04GkfD63NK+Cztcjqo=;
+        b=mfEP6yncP+2V4mSqN96HsgUxMnZBDDQ6+8kR9zpT540xVZZfNVcJ/5itzsjXz0ggJ7
+         jdMzJMpQf5hp/q4HOI4NI1zQ4USDMLMS2CGUE/Q85kyOxB0ru/hNOsjhNP5Zuo737z2b
+         mci8cYk8P6hcVHjZyT3GC8DnK1Zy78jxExNV92otHlwBYZqcpmBhYPhLMTxes3ok5dRH
+         b52cC0sCd2vY9uhzIrEQu2hmUEQWmFokPF9AJ08V/nJWTlaKQo+3LAfZXLnqyDINsLuH
+         Ev30e+7kpQcnPL1buJ8r086yA4L2RPFbKT8+nVuTh2BPOs5UFAAptx3wIL3GAmHmkQP/
+         HbZw==
+Received: by 10.236.177.70 with SMTP id c46mr14034170yhm.33.1347935371546;
+        Mon, 17 Sep 2012 19:29:31 -0700 (PDT)
+Received: from localhost.localdomain ([69.165.255.59])
+        by mx.google.com with ESMTPS id s12sm11226868anh.2.2012.09.17.19.29.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 17 Sep 2012 19:29:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.318.g79683ba.dirty
+In-Reply-To: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205779>
 
-Hi,
-It seems like the order gitk uses for the commits sometimes leads to
-overly long lines. My use case is this repository (note that this
-svn-conversion is still WIP):
-http://www.sebastian-doerner.de/kompare.tgz
+Made the fixes as suggested by Martin.
 
-Looking at this with "gitk --all" looks partly like this:
-http://i.imgur.com/oewTq.png
-Almost all the commits are in one branch. Rendering the merges at the
-top much earlier would avoid this line chaos. Interestingly, if you
-just render the relevant commits, it looks fine:
-gitk 768493d381aceffc90f132b6accb1536af8a3cc3..0ef520d910208c4d53bdd915964107b5a98cdc08
-The problem for the current algorithm is probably the single non-merge
-commit before the merges.
+Martin: Good points. Thanks!
 
-Another instance in the same repo (again gitk --all) is this part:
-http://i.imgur.com/0i2fF.png
-Both the pink and right orange line merge from trunk into that kde4
-branch. However, this is not obvious from the way it is drawn. I see
-this problem is a bit "softly expressed", but I hope you see what I
-mean. I think making the merge edges shorter would also make the
-actual structure more obvious.
+Andrew Wong (3):
+  rebase -i: Refactor help messages for todo file
+  rebase -i: Teach "--edit-todo" action
+  rebase -i: Add tests for "--edit-todo"
 
-I have no good idea how to easily fix these problems, but I don't know
-that much about how it works currently. I see it might involve some
-more "intelligence" of the rendering algorithm (forward-looking of
-some sort). So never mind if you don't have a fast fix. But I still
-wanted to point out that the problem exists.
+Martin von Zweigbergk (1):
+  rebase usage: subcommands can not be combined with -i
 
-This might be related to this issue:
-http://thread.gmane.org/gmane.comp.version-control.git/18097/focus=18103
-git version 1.7.12
+ Documentation/git-rebase.txt  |  5 ++++-
+ git-rebase--interactive.sh    | 48 +++++++++++++++++++++++++++++++++----------
+ git-rebase.sh                 | 13 ++++++++++--
+ t/t3404-rebase-interactive.sh | 18 ++++++++++++++++
+ 4 files changed, 70 insertions(+), 14 deletions(-)
 
-Thank you!
-
-Regards
-
-Sebastian
+-- 
+1.7.12.318.g79683ba.dirty
