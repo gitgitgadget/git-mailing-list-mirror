@@ -1,103 +1,99 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH] Documentation/Makefile: Allow custom XMLTO binary
-Date: Wed, 19 Sep 2012 13:49:19 -0700
-Message-ID: <CAD0k6qTMm7MKLYOOMaB72cWc=Z8nJfe8qseWfyM6x_NzCorgZg@mail.gmail.com>
-References: <1348074397-29978-1-git-send-email-dborowitz@google.com> <7vehlxhp0v.fsf@alter.siamese.dyndns.org>
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] Documentation/git-blame.txt: --follow is a NO-OP
+Date: Wed, 19 Sep 2012 14:09:25 -0700
+Message-ID: <819C66A4-390B-4C29-86BD-D4CB4DB43385@sb.org>
+References: <20120906151317.GB7407@sigill.intra.peff.net>
+ <1348022905-10048-1-git-send-email-n1xim.email@gmail.com>
+ <7v627aiq47.fsf@alter.siamese.dyndns.org>
+ <20120919182715.GF11699@sigill.intra.peff.net>
+ <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
+ <20120919194213.GB21950@sigill.intra.peff.net>
+ <C07F05AC-8FBF-4F09-AF13-A291181A06D9@sb.org>
+ <20120919203738.GA24383@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 22:49:54 2012
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Drew Northup <n1xim.email@gmail.com>,
+	gitList list <git@vger.kernel.org>, Matthieu.Moy@imag.fr,
+	andy@aeruder.net, chriscool@tuxfamily.org,
+	dmellor@whistlingcat.com, dpmcgee@gmail.com, fonseca@diku.dk,
+	marius@trolltech.com, namhyung@gmail.com,
+	rene.scharfe@lsrfire.ath.cx, s-beyer@gmx.net, trast@inf.ethz.ch
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 23:10:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TERDT-0004y1-Ea
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:49:51 +0200
+	id 1TERXs-0000qb-Ve
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 23:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab2ISUtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 16:49:43 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:47297 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751697Ab2ISUtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 16:49:41 -0400
-Received: by ieak13 with SMTP id k13so2239483iea.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 13:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-system-of-record;
-        bh=uGBJITEmVSpLNRHqkgwh6MCvxnmNmI6jahCLJy0ZM6Y=;
-        b=TeGVGKAadN3NpFyaaYlFWLkWoeQfKt80+jNBm5JdB4sM8oNWvcd426shRQVgEab8QV
-         WmOO+/zTjKEC2qK12WDSBeg+UhoeCFsb7QcZUpwdoG7SGAubSnkSdCzuoMKTmi/MrwUp
-         J9t9fACyLgENUNjcHCwz1xaCgVVffSFr4aAtu4gw7ESLntieQ1k9cKz7iK9A3XVPgs1P
-         Z5Z5XhPbWNMn4isOTL8J2piwSRUrKhnXbelR1ewXJSQKt4LXKQSVAab4kwSswCMGKKTW
-         8+tW1rNE4BOcH1Ars1qdJdxPJZwf+Vd0gNMt3NeQ0+OdNOflFPDc173DVEpeOeamwh2e
-         VICQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-system-of-record:x-gm-message-state;
-        bh=uGBJITEmVSpLNRHqkgwh6MCvxnmNmI6jahCLJy0ZM6Y=;
-        b=k3xptDw3y5ebwOzTHCRyQn2Di4K4QvYLYmGND+qmyYSQ+5607PAWCC1+LAhfkFwfGY
-         HRoLhVOZeR4fCl9p4abOkoWuO++dZ3bUcXz5u0EXPB5px6e7AFMfRUZjplnBqg3j86tF
-         vczNS1ByPK9he/qwnUTeMXuwmTZRbjtG5GplV4KQ7lt7NHK4JRnF3faMbOFNH2uzs/hl
-         JW1R7pB/zqqoGs9Wkq25OsHDOpd6teaK797XTzgTnwabIo8laPW2NEGTiPGbnlUflS8Z
-         uci0Hky6a7SxoJaDv9YnO8MqGOVrN9WbVZOyzm6P5XFxOl4LIKlCbVGGYawBSVrv87MP
-         OdxQ==
-Received: by 10.50.168.66 with SMTP id zu2mr97549igb.34.1348087781344;
-        Wed, 19 Sep 2012 13:49:41 -0700 (PDT)
-Received: by 10.50.168.66 with SMTP id zu2mr97539igb.34.1348087781101; Wed, 19
- Sep 2012 13:49:41 -0700 (PDT)
-Received: by 10.231.135.1 with HTTP; Wed, 19 Sep 2012 13:49:19 -0700 (PDT)
-In-Reply-To: <7vehlxhp0v.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQnq3zfgYu2PX0uqmHaj/KrRl+Vt1MkuODLyG+ntm4YQvBf3H7LhAL9Co603ue0Ge0+dhGItF4INfhkLeRu7XHk5FxJSn/ZIsOb7yhU+s3ddYG7SJobvz4BFh9VrthWhQX8aWNOY3pNTpz8aqtbY3Nv4az5tOVmMMIs7W23HgLa3yfw27qA+QpsHtSPMwsXs0R/YZcxZ
+	id S1751947Ab2ISVKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 17:10:46 -0400
+Received: from mail-out.apple.com ([17.151.62.50]:45434 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751884Ab2ISVKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 17:10:45 -0400
+X-Greylist: delayed 1975 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Sep 2012 17:10:45 EDT
+Received: from relay14.apple.com ([17.128.113.52])
+ by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPS id <0MAM00K19847Q400@mail-out.apple.com> for git@vger.kernel.org;
+ Wed, 19 Sep 2012 14:10:45 -0700 (PDT)
+X-AuditID: 11807134-b7f8e6d000003fa4-c8-505a34873373
+Received: from kencur (kencur.apple.com [17.151.62.38])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay14.apple.com (Apple SCV relay)
+ with SMTP id A2.E7.16292.7843A505; Wed, 19 Sep 2012 14:09:27 -0700 (PDT)
+Received: from il0103a-dhcp80.apple.com
+ (il0103a-dhcp80.apple.com [17.201.37.208])
+ by kencur.apple.com (Oracle Communications Messaging Server 7u4-24.01
+ (7.0.4.24.0) 64bit (built Nov 17 2011))
+ with ESMTPSA id <0MAM00H7683PKG90@kencur.apple.com> for git@vger.kernel.org;
+ Wed, 19 Sep 2012 14:09:27 -0700 (PDT)
+In-reply-to: <20120919203738.GA24383@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1498)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOLMWRmVeSWpSXmKPExsUiON1OTfeqSVSAweZ+XouuK91MDowenzfJ
+	BTBGcdmkpOZklqUW6dslcGVsed/AWvCCs+LczNmMDYyv2bsYOTkkBEwkTq3bAWWLSVy4t56t
+	i5GLQ0ignUmi99QaFpCEkMBeJomDk8CKmAW0JNbvPM4EYvMK6Enc/rkMzBYWcJX4+2I3WA2b
+	gJLEvQlLwOKcAtYSf/oWM4PYLAKqEqeW9LCDLGAWeMQksenxIaih8hKb17xlhhhqKXFj8j5m
+	iCsmMEs83QyxWURAVuL74Y2MEKfKStx78ZttAqPALCRHzUJy1CwkcxcwMq9iFCxKzUmsNDTR
+	SywoyEnVS87P3cQICr6GQpMdjAd/8h9iFOBgVOLhNRKLChBiTSwrrsw9xCjBwawkwvtjb2SA
+	EG9KYmVValF+fFFpTmrxIUZpDhYlcV4RAaBqgfTEktTs1NSC1CKYLBMHp1QDo9PRXS05i25N
+	KfGe8/LhlScxH2+dcVLynrMuLv7jhQOK+UX+Gybda36rwajac1rRLsyy2mbVPZUfMb+zdnEL
+	XStOm9jLN3XjsSweQYbYqOpppbWPNcx9uu4/eb4myYK90+luReem30de8E87a50QftVRgXu2
+	3rzcaauUF78PWMPAfm4yG59GnRJLcUaioRZzUXEiAC1PMdw6AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206001>
 
-On Wed, Sep 19, 2012 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> dborowitz@google.com writes:
->
->> From: Dave Borowitz <dborowitz@google.com>
->>
->> Signed-off-by: Dave Borowitz <dborowitz@google.com>
->> ---
->
-> Thanks; the patch sort-of makes sense but makes me wonder what your
-> use case is.  Do you have xmlto2 program you want to use in place of
-> xmlto or you have xmlto but not on your $PATH?
+On Sep 19, 2012, at 1:37 PM, Jeff King <peff@peff.net> wrote:
 
-The latter; I can easily symlink it into my $PATH of course. But since
-I was already specifying ASCIIDOC on the make command line for the
-same reason, I was surprised to find I couldn't also specify XMLTO,
-hence the patch.
+> On Wed, Sep 19, 2012 at 01:31:50PM -0700, Kevin Ballard wrote:
+> 
+>>> I am a little lukewarm on my patch if only because of the precedent it
+>>> sets.  There are a trillion options that revision.c parses that are not
+>>> necessarily meaningful or implemented for sub-commands that piggy-back
+>>> on its option parser. I'm not sure we want to get into manually
+>>> detecting and disallowing each one in every caller.
+>> 
+>> I tend to agree with your final sentiment there. But the point that
+>> users may not realize that blame already follows is also valid. Perhaps
+>> we should catch --follow, as in your patch, but instead of saying that
+>> it's an unknown argument, just print out a helpful message saying blame
+>> already follows renames (and then continue with the blame anyway, so
+>> as to not set a precedent to abort on unknown-but-currently-accepted
+>> flags).
+> 
+> Sure, that would probably make sense. Care to roll a patch with
+> suggested wording?
 
->>  Documentation/Makefile | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index cf5916f..b045628 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -47,6 +47,7 @@ man7dir=$(mandir)/man7
->>  ASCIIDOC=asciidoc
->>  ASCIIDOC_EXTRA =
->>  MANPAGE_XSL = manpage-normal.xsl
->> +XMLTO=xmlto
->>  XMLTO_EXTRA =
->>  INSTALL?=install
->>  RM ?= rm -f
->> @@ -245,7 +246,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
->>
->>  %.1 %.5 %.7 : %.xml manpage-base-url.xsl
->>       $(QUIET_XMLTO)$(RM) $@ && \
->> -     xmlto -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
->> +     $(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
->>
->>  %.xml : %.txt
->>       $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+Sadly, no. I'm not in a position to contribute to GPL code anymore, based
+on my current job (I'd have to jump through some hoops to get the ok
+to expose myself to that potential legal liability).
+
+-Kevin
