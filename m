@@ -1,91 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/Makefile: Allow custom XMLTO binary
-Date: Wed, 19 Sep 2012 10:59:44 -0700
-Message-ID: <7vehlxhp0v.fsf@alter.siamese.dyndns.org>
-References: <1348074397-29978-1-git-send-email-dborowitz@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] make test output coloring more intuitive
+Date: Wed, 19 Sep 2012 14:05:00 -0400
+Message-ID: <20120919180500.GD11699@sigill.intra.peff.net>
+References: <20120918213617.GB2567@atlantic.linksys.moosehall>
+ <1348074915-19985-1-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: dborowitz@google.com
-X-From: git-owner@vger.kernel.org Wed Sep 19 20:00:00 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 20:05:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEOZ2-00011T-BB
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:59:56 +0200
+	id 1TEOe9-0003zr-43
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 20:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932915Ab2ISR7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 13:59:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42891 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932823Ab2ISR7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 13:59:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBEF18158;
-	Wed, 19 Sep 2012 13:59:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W9fm06yGOqrAZzsHz8gi99PSBGQ=; b=tZcI66
-	DRpPXDHWZ9tcmx7f2k69IKnDZ3dgX6FwcomvEn8xc5pAyPjSTTJxt94AKcERnZMR
-	hWwDweLTYAPsCYlf0LtZVQXTcld6pmEFzls0N1nNI5j2vd6G122bopqgpSc4eZHA
-	KlseA7E7aixRXWwSMicws9jwU6MVQ9oqI6IZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A4TwOF52ru3w0Yy3nxVQE/XF9ssWKFNf
-	R+PK1cNs/u0aFQicBGzGZ8wdombyG8yTEAxt6+19hrLvMpLbQCyAsuQT/MSUCq4M
-	Mh0NkWxsm0H1AXe4aUN5KzxXwfwsttDFm96oVg+1ZRp4Ku+muH1vWWi4JCxQkqxn
-	F+UYE+5k2Is=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9BF58157;
-	Wed, 19 Sep 2012 13:59:46 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D47E8156; Wed, 19 Sep 2012
- 13:59:46 -0400 (EDT)
-In-Reply-To: <1348074397-29978-1-git-send-email-dborowitz@google.com>
- (dborowitz@google.com's message of "Wed, 19 Sep 2012 10:06:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CC032D1C-0283-11E2-8B53-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932865Ab2ISSFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 14:05:04 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49790 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932791Ab2ISSFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 14:05:03 -0400
+Received: (qmail 2805 invoked by uid 107); 19 Sep 2012 18:05:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Sep 2012 14:05:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2012 14:05:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1348074915-19985-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205966>
 
-dborowitz@google.com writes:
+On Wed, Sep 19, 2012 at 06:15:09PM +0100, Adam Spiers wrote:
 
-> From: Dave Borowitz <dborowitz@google.com>
->
-> Signed-off-by: Dave Borowitz <dborowitz@google.com>
-> ---
+> This series of commits attempts to make test output coloring
+> more intuitive, so that:
+> 
+>   - red is _only_ used for things which have gone unexpectedly wrong:
+>     test failures, unexpected test passes, and failures with the
+>     framework,
+> 
+>   - yellow is _only_ used for known breakages and skipped tests, and
+> 
+>   - green is _only_ used for things which have gone to plan and
+>     require no further work to be done.
 
-Thanks; the patch sort-of makes sense but makes me wonder what your
-use case is.  Do you have xmlto2 program you want to use in place of
-xmlto or you have xmlto but not on your $PATH?
+Thanks, I like this much better than the original (and it's much easier
+to review broken apart like this).
 
->  Documentation/Makefile | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index cf5916f..b045628 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -47,6 +47,7 @@ man7dir=$(mandir)/man7
->  ASCIIDOC=asciidoc
->  ASCIIDOC_EXTRA =
->  MANPAGE_XSL = manpage-normal.xsl
-> +XMLTO=xmlto
->  XMLTO_EXTRA =
->  INSTALL?=install
->  RM ?= rm -f
-> @@ -245,7 +246,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
->  
->  %.1 %.5 %.7 : %.xml manpage-base-url.xsl
->  	$(QUIET_XMLTO)$(RM) $@ && \
-> -	xmlto -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
-> +	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
->  
->  %.xml : %.txt
->  	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+I raised a few minor questions in the refactoring patch, but other than
+that (and assuming your answers are what I expect, I do not care enough
+about them to block the series), it looks very good.
+
+The new "a passing expect_failure is a breakage" is a good thing. When
+it's unexpected, it will help call attention to it and let us figure out
+early what changed. And when it is expected (because you are fixing the
+breakage), it is an easy way to remind you to update the tests. :)
+
+Thanks for working on it.
+
+-Peff
