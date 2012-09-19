@@ -1,67 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/6] make test output coloring more intuitive
-Date: Wed, 19 Sep 2012 14:05:00 -0400
-Message-ID: <20120919180500.GD11699@sigill.intra.peff.net>
-References: <20120918213617.GB2567@atlantic.linksys.moosehall>
- <1348074915-19985-1-git-send-email-git@adamspiers.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: possible bug in autocompletion
+Date: Wed, 19 Sep 2012 20:16:22 +0200
+Message-ID: <CAMP44s1Xvvs7g1quUEs2b43VciK2=Nt-AntJcwG0CPf6p8Xk_A@mail.gmail.com>
+References: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
+	<20120717121232.GA32571@sigill.intra.peff.net>
+	<CAMP44s2X5-BUyLtkTqGMa6w5K6uT25YLEp+Q2TdVR_qCObOpeA@mail.gmail.com>
+	<20120919174336.GA11699@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 20:05:14 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeroen Meijer <jjgmeijer@hotmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 20:16:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEOe9-0003zr-43
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 20:05:13 +0200
+	id 1TEOpJ-0001Ko-RB
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 20:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932865Ab2ISSFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 14:05:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49790 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932791Ab2ISSFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 14:05:03 -0400
-Received: (qmail 2805 invoked by uid 107); 19 Sep 2012 18:05:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Sep 2012 14:05:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2012 14:05:00 -0400
-Content-Disposition: inline
-In-Reply-To: <1348074915-19985-1-git-send-email-git@adamspiers.org>
+	id S932892Ab2ISSQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 14:16:23 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:59117 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932868Ab2ISSQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 14:16:22 -0400
+Received: by oago6 with SMTP id o6so1360201oag.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 11:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=p6riwoxEgzcWVPF+WjyDrk8jT1NbFCjzy3i4T3wIxqE=;
+        b=05WYYhj7GFTxY9EIn9NLAl+HWgf/xRLJj4kZ0e56D56C1GDF/f8a0YhF17Ya6SA8mS
+         UK8HWmbLe8JymJt/ZUMABHQzO+jOUn0ey+d8Wxi4oT2/i25cxRtJPA7uhnmXrVO8sV+5
+         LObDbDq1RQbGZ5gEWLMiCk4qmAqixnZP1ftrIJgun7YvQWSG6hJX3PzhW4sE8ooFQdX/
+         wIYhpT2b/8vPaMWDlGgN0+U/vUuELqcM4A5OkYmVhZdgy+Qlu7NRho+tjupYhlPoYAJv
+         vN7yRq/iCxLgYSzLw+RfQ33Ui0k6S3F7upbIc07WMWontos1ddNczTrhfkl4kupfjvxO
+         /NKA==
+Received: by 10.60.11.1 with SMTP id m1mr3589107oeb.47.1348078582170; Wed, 19
+ Sep 2012 11:16:22 -0700 (PDT)
+Received: by 10.60.164.7 with HTTP; Wed, 19 Sep 2012 11:16:22 -0700 (PDT)
+In-Reply-To: <20120919174336.GA11699@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205967>
 
-On Wed, Sep 19, 2012 at 06:15:09PM +0100, Adam Spiers wrote:
+On Wed, Sep 19, 2012 at 7:43 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Sep 19, 2012 at 07:08:09PM +0200, Felipe Contreras wrote:
+>
+>> On Tue, Jul 17, 2012 at 2:12 PM, Jeff King <peff@peff.net> wrote:
+>>
+>> > --- a/contrib/completion/git-completion.bash
+>> > +++ b/contrib/completion/git-completion.bash
+>> > @@ -261,7 +261,12 @@ __gitcomp ()
+>> >  __gitcomp_nl ()
+>> >  {
+>> >         local IFS=$'\n'
+>> > -       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
+>> > +       local words=$1
+>> > +       words=${words//\\/\\\\}
+>> > +       words=${words//\$/\\\$}
+>> > +       words=${words//\'/\\\'}
+>> > +       words=${words//\"/\\\"}
+>> > +       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$words" -- "${3-$cur}"))
+>> >  }
+>>
+>> What about something like this?
+>>
+>> local words
+>> printf -v words "%q" "$w"
+>> COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$words" -- "${3-$cur}"))
+>
+> Thanks, I didn't know about bash's internal printf magic. That is a much
+> more elegant solution.
+>
+> Care to wrap it up in a patch?
 
-> This series of commits attempts to make test output coloring
-> more intuitive, so that:
-> 
->   - red is _only_ used for things which have gone unexpectedly wrong:
->     test failures, unexpected test passes, and failures with the
->     framework,
-> 
->   - yellow is _only_ used for known breakages and skipped tests, and
-> 
->   - green is _only_ used for things which have gone to plan and
->     require no further work to be done.
+I'm trying to, but unfortunately "\n" gets converted to "\\n", so it
+doesn't get separated to words. Any ideas?
 
-Thanks, I like this much better than the original (and it's much easier
-to review broken apart like this).
-
-I raised a few minor questions in the refactoring patch, but other than
-that (and assuming your answers are what I expect, I do not care enough
-about them to block the series), it looks very good.
-
-The new "a passing expect_failure is a breakage" is a good thing. When
-it's unexpected, it will help call attention to it and let us figure out
-early what changed. And when it is expected (because you are fixing the
-breakage), it is an easy way to remind you to update the tests. :)
-
-Thanks for working on it.
-
--Peff
+-- 
+Felipe Contreras
