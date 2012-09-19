@@ -1,78 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: possible bug in autocompletion
-Date: Wed, 19 Sep 2012 19:43:32 -0400
-Message-ID: <20120919234332.GB27626@sigill.intra.peff.net>
-References: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
- <20120717121232.GA32571@sigill.intra.peff.net>
- <CAMP44s2X5-BUyLtkTqGMa6w5K6uT25YLEp+Q2TdVR_qCObOpeA@mail.gmail.com>
- <20120919174336.GA11699@sigill.intra.peff.net>
- <CAMP44s1Xvvs7g1quUEs2b43VciK2=Nt-AntJcwG0CPf6p8Xk_A@mail.gmail.com>
- <CAMP44s1ZVTgBTQDyBHKvos-uSo0FeOO437MvTYH0YE0Lx-xDOA@mail.gmail.com>
- <20120919195518.GA22310@sigill.intra.peff.net>
- <CAMP44s33b7uNg6G3m3wHEACa_wYwf_5==h64CHw2b86-rJd5VQ@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH v2 2/6] Make 'not ok $count - $message' consistent with
+ 'ok $count - $message'
+Date: Thu, 20 Sep 2012 00:45:26 +0100
+Message-ID: <CAOkDyE9oYzxoKGC8q4=whGo7R0krKtRjFoGqLMQu__nJOPd4Cg@mail.gmail.com>
+References: <1348074915-19985-1-git-send-email-git@adamspiers.org>
+	<1348074915-19985-3-git-send-email-git@adamspiers.org>
+	<7vmx0leg62.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeroen Meijer <jjgmeijer@hotmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 01:43:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 20 01:45:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TETvl-0008Ai-Ke
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 01:43:45 +0200
+	id 1TETxY-0000o3-7P
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 01:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052Ab2ISXnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 19:43:35 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:50213 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752991Ab2ISXne (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 19:43:34 -0400
-Received: (qmail 8926 invoked by uid 107); 19 Sep 2012 23:43:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Sep 2012 19:43:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2012 19:43:32 -0400
-Content-Disposition: inline
-In-Reply-To: <CAMP44s33b7uNg6G3m3wHEACa_wYwf_5==h64CHw2b86-rJd5VQ@mail.gmail.com>
+	id S1752991Ab2ISXp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 19:45:28 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42814 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752821Ab2ISXp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 19:45:27 -0400
+Received: by bkwj10 with SMTP id j10so834345bkw.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 16:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=XyNsXhiT2iS1zhJSMBxFZwSexXyjytw3LehdtLhRdfo=;
+        b=yKd5rorjIVX8DaHMgP8Ht6E34vPAyuKKzvC0aDhumRqeu5UC1mvT77l47mgF2XYSnm
+         zx+7sqHQjOfAuj2Fi5YYxRG10wT8ZTUIqEz++BnOKVhcfs9WLQmAQx3GBayxklRP4lWw
+         EhOOhWTG2Bc8XavcNLM7JMgb9AIVgZ7s8DHtTkMdDEqo5A+YM5/DWzXUeAnRICZbhJbj
+         e3F+EeRm92Vk2SYtufQnfYvBZJGEDLK1Q44tAHtoY1KBYTM8vrOU4GS1k/8g/DQh+4BY
+         Z47k8kwVhT4EKh5mxyETPeiOjV2MMaE99rBRvAU/toWngdoBSODotg1qDjQOiflQ9qCh
+         dZ8Q==
+Received: by 10.204.152.207 with SMTP id h15mr58001bkw.5.1348098326161; Wed,
+ 19 Sep 2012 16:45:26 -0700 (PDT)
+Received: by 10.205.81.80 with HTTP; Wed, 19 Sep 2012 16:45:26 -0700 (PDT)
+In-Reply-To: <7vmx0leg62.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: Ch3_AKERIChu_Fs0yOuGedC_sdU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206015>
 
-On Thu, Sep 20, 2012 at 01:08:29AM +0200, Felipe Contreras wrote:
+On Thu, Sep 20, 2012 at 12:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+>
+>> Signed-off-by: Adam Spiers <git@adamspiers.org>
+>> ---
+>>  t/t0000-basic.sh | 4 ++--
+>>  t/test-lib.sh    | 2 +-
+>>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+>>  mode change 100644 => 100755 t/test-lib.sh
+>
+> Peff might have already pointed out, but this is wrong.  Will queue
+> with an obvious tweak.
 
-> On Wed, Sep 19, 2012 at 9:55 PM, Jeff King <peff@peff.net> wrote:
-> 
-> > I have no idea if that internal to bash's filename completion, or if
-> > there is some easy facility offered to programmable completions to do
-> > the same thing.  I don't think this is a high priority, but it would be
-> > nice to handle it. And moreover, I am really wondering if we are missing
-> > some solution that bash is providing to help us with the quoting issues.
-> > Surely we are not the first completion script to come up against this.
-> 
-> I found a much easier solution:
-> 
-> -       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
-> +       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$(quote "$1")"
-> -- "${3-$cur}"))
-
-Oh, nice. :)
-
-> But what about the people that don't have bash-completion?
-> 
-> BTW:
-> 
-> quote()
-> {
->     local quoted=${1//\'/\'\\\'\'}
->     printf "'%s'" "$quoted"
-> }
-
-That is short and obvious enough that we could probably just
-cut-and-paste it into our script as _git_quote (and it is basically a
-cleaner version of the thing that I posted).
-
--Peff
+Oops, good catch.  That's a bug in my emacs config, I suspect.
+Thanks for the tweak.  You guys have eagle eyes!
