@@ -1,147 +1,209 @@
-From: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Subject: [PATCH v8 14/16] Add a svnrdump-simulator replaying a dump file for testing
-Date: Wed, 19 Sep 2012 17:21:28 +0200
-Message-ID: <1348068090-31988-15-git-send-email-florian.achleitner.2.6.31@gmail.com>
-References: <1348068090-31988-1-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-2-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-3-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-4-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-5-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-6-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-7-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-8-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-9-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-10-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-11-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-12-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-13-git-send-email-florian.achleitner.2.6.31@gmail.com>
- <1348068090-31988-14-git-send-email-florian.achleitner.2.6.31@gmail.com>
-Cc: David Michael Barr <b@rr-dav.id.au>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 17:23:41 2012
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
+Date: Wed, 19 Sep 2012 18:04:53 +0200
+Message-ID: <5059ED25.9090002@web.de>
+References: <5001644F.10901@web.de> <20120715090849.GB18385@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 18:05:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEM7i-0006Jl-GX
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 17:23:34 +0200
+	id 1TEMm6-0002wY-5h
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 18:05:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160Ab2ISPXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 11:23:10 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:64575 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932114Ab2ISPXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 11:23:01 -0400
-Received: by mail-bk0-f46.google.com with SMTP id j10so596995bkw.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 08:23:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Rskdr1sHyIY10u9KTOcPDNO2pSsk79MsmxZcAlKU/zo=;
-        b=J1mZI5LgT6enEgktOK+KNtZWmnQ93UJxB9hlkaq2FjeL8BSk5hUfKTS0mo/RvuOTlw
-         kJ/p65CejZZRkrTc0geJvCnfiu2BcF8AlXVQ+/Z9Pqz/KSGxoW0zg/DUK+3oPwbmkmyh
-         hedBQTpZF1HCOIJQbNXbTEEDT7ZI2m6ZUPQTnzmhU4BfrdodCauiqEQ1Z9VJC8F/8W/a
-         Fq1HS5ApywBZZwUzSuBYNERzT2E3TGkc4xTmBUXq6CP9cK9CLXe6qDm7jSZs6n5ocCNs
-         TZibZxbyA3TW2lJgc4bo9re0TJhuBerpsIPyxN3bFbrdRU1qQzR1rB8TKR4xK2k4uELq
-         pjkA==
-Received: by 10.204.129.76 with SMTP id n12mr1464855bks.18.1348068180705;
-        Wed, 19 Sep 2012 08:23:00 -0700 (PDT)
-Received: from flobuntu.lan (91-115-94-56.adsl.highway.telekom.at. [91.115.94.56])
-        by mx.google.com with ESMTPS id d13sm1570686bkw.12.2012.09.19.08.22.58
-        (version=SSLv3 cipher=OTHER);
-        Wed, 19 Sep 2012 08:22:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <1348068090-31988-14-git-send-email-florian.achleitner.2.6.31@gmail.com>
+	id S1756563Ab2ISQFJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Sep 2012 12:05:09 -0400
+Received: from mout.web.de ([212.227.15.4]:57534 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754200Ab2ISQFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 12:05:07 -0400
+Received: from wanderer.site ([195.67.191.22]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MZUnl-1SvJHw17wj-00KyDZ; Wed, 19 Sep 2012 18:05:05
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <20120715090849.GB18385@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:tEbvEs2s++90ib47x8GTlw4ezLGzbyqH/6v424Gqh44
+ f8W6gMWCmnDn8KQ0T1hxWFjOnY20swbHX7vYwWrI9WuwtSDE6/
+ BOsrn0qkKl3kA5eYOcdQh1cVMQI90iUZ9ibsiUeYfCEoV10ewa
+ kIsu2Yyb/U8k9QadKUI8JcXkfYanX41TEOL70TlwRMQR5NsBm+
+ aDyhICwU4PhWO9ebAI1+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205944>
 
-To ease testing without depending on a reachable svn server, this
-compact python script mimics parts of svnrdumps behaviour.  It
-requires the remote url to start with sim://.
+On 07/15/2012 11:08 AM, Jeff King wrote:
+> On Sat, Jul 14, 2012 at 02:21:35PM +0200, Torsten B=C3=B6gershausen w=
+rote:
+>
+>> I saw the problem first on pu, some time ago,
+>> but it dissappeared after cloning git.git into another directory.
+>>
+>> Now it appeared on next as well, so it's time to look a little bit d=
+eeper.
+>>
+>> This test case of t1450 fails:
+>> test_expect_success 'tag pointing to something else than its type' '
+>
+> I can't reproduce this failure; I tried both pu or next, on Linux and=
+ OS
+> X (10.7).
+>
+>> Linux:
+>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, no=
+t a commit
+>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
+>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not loa=
+d tagged object
+>>
+>> Mac OS X:
+>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, =
+not a blob
+>> error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or m=
+issing
+>
+> That seems very broken. That sha1 can have only one type, so OS X is
+> actually mis-parsing the object type? Weird. I would suggest a memory
+> error or race condition, but the test is valgrind-clean, and fsck sho=
+uld
+> not be threaded at all.
+>
+> What does "git show 63499e4" show when the test has failed? If you
+> re-run "git fsck --tags", does it reproduce reliably (i.e., is it bog=
+us
+> data that something wrote to the object db, or is it good data being
+> ruined during the reading process)?
+>
+>> I reverted the last change in fsck.c (Use the streaming interface), =
+but that doesn't help
+>>
+>> Looking into the trash directory and looking at the files, we can se=
+e that the .git/index is different
+>> between Linux and Mac OS X.
+>>
+>> Is there a good way to debug the index file?
+>
+> git ls-files -s will dump the entries. But I'd expect them not to be
+> byte-equivalent, because the index will contain things like mtimes fo=
+r
+> each entry, which will vary from run to run. Plus the error message
+> above indicates something much more broken.
+>
+After some time, the problem is still there
 
-Start and end revisions are evaluated.  If the requested revision
-doesn't exist, as it is the case with incremental imports, if no new
-commit was added, it returns 1 (like svnrdump).
+When I make a fresh clone of git.git under Mac OS, 1450 passes.
+After a while, running things like "git fetch && git checkout=20
+origin/next && make clean && make test", it starts to fail.
 
-To allow using the same dump file for simulating multiple incremental
-imports, the highest revision can be limited by setting the environment
-variable SVNRMAX to that value. This simulates the situation where
-higher revs don't exist yet.
+(currently I have a couple of git repo-copies, t1450 fails in git.pu=20
+and passes in git.next.
+But that has nothing to do with next or pu)
 
-Signed-off-by: Florian Achleitner <florian.achleitner.2.6.31@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-no diff
+When I run ssh into the Mac OS X machine, the test case passes even in =
+pu.
+Very strange, but reproducable.
 
- contrib/svn-fe/svnrdump_sim.py |   53 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100755 contrib/svn-fe/svnrdump_sim.py
+Now things become more puzzled:
+I managed to re-produce it on a Linux machine as well.
+Using v1.7.12 and applying my i18.pathencoding patch,
+t1450 fails on Linux, regardless if I use ssh or sit locally at the mac=
+hine.
 
-diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-new file mode 100755
-index 0000000..1cfac4a
---- /dev/null
-+++ b/contrib/svn-fe/svnrdump_sim.py
-@@ -0,0 +1,53 @@
-+#!/usr/bin/python
-+"""
-+Simulates svnrdump by replaying an existing dump from a file, taking care
-+of the specified revision range.
-+To simulate incremental imports the environment variable SVNRMAX can be set
-+to the highest revision that should be available.
-+"""
-+import sys, os
-+
-+
-+def getrevlimit():
-+        var = 'SVNRMAX'
-+        if os.environ.has_key(var):
-+                return os.environ[var]
-+        return None
-+
-+def writedump(url, lower, upper):
-+        if url.startswith('sim://'):
-+                filename = url[6:]
-+                if filename[-1] == '/': filename = filename[:-1] #remove terminating slash
-+        else:
-+                raise ValueError('sim:// url required')
-+        f = open(filename, 'r');
-+        state = 'header'
-+        wroterev = False
-+        while(True):
-+                l = f.readline()
-+                if l == '': break
-+                if state == 'header' and l.startswith('Revision-number: '):
-+                        state = 'prefix'
-+                if state == 'prefix' and l == 'Revision-number: %s\n' % lower:
-+                        state = 'selection'
-+                if not upper == 'HEAD' and state == 'selection' and l == 'Revision-number: %s\n' % upper:
-+                        break;
-+
-+                if state == 'header' or state == 'selection':
-+                        if state == 'selection': wroterev = True
-+                        sys.stdout.write(l)
-+        return wroterev
-+
-+if __name__ == "__main__":
-+        if not (len(sys.argv) in (3, 4, 5)):
-+                print "usage: %s dump URL -rLOWER:UPPER"
-+                sys.exit(1)
-+        if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is suppported.')
-+        url = sys.argv[2]
-+        r = ('0', 'HEAD')
-+        if len(sys.argv) == 4 and sys.argv[3][0:2] == '-r':
-+                r = sys.argv[3][2:].lstrip().split(':')
-+        if not getrevlimit() is None: r[1] = getrevlimit()
-+        if writedump(url, r[0], r[1]): ret = 0
-+        else: ret = 1
-+        sys.exit(ret)
--- 
-1.7.9.5
+I make a new version of t1450-fsck.sh, called t1450-fsck2.sh
+That uses git fsck --verbose, I add the log file here.
+The short version:
+- I can re-run the "git fsck", all files on disk have the same md5.
+- The 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 has the same md5 as well
+I added lots of printouts in git code, according to my understanding=20
+63499  is checked/fsck'ed after being loaded into RAM, is that right?
+
+=46or some reasons it is classified as "is a blob, not a commit" when i=
+t=20
+passes and "is a commit, not a blob" when it fails.
+
+I want to debug when it is loaded into RAM, so that code is in=20
+read-cache.c, isn't it?
+
+Does anybody have a tool to debug the contents of the index file?
+Even offline could help, I can send a bunch of files ;-)
+
+And why doesn't fsck find the broken link?
+
+Other ideas are welcome,
+thanks everybody for reading/helping.
+/Torsten
+
+"out" after running git fsck --verbose --tags, t1450 failed
+(no broken link)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Checking HEAD link
+Checking object directory
+Checking directory .git/objects/13
+Checking directory .git/objects/15
+Checking directory .git/objects/1b
+Checking directory .git/objects/30
+Checking directory .git/objects/35
+Checking directory .git/objects/44
+Checking directory .git/objects/56
+Checking directory .git/objects/63
+Checking directory .git/objects/66
+Checking directory .git/objects/af
+Checking directory .git/objects/b6
+Checking directory .git/objects/bd
+Checking directory .git/objects/c4
+Checking directory .git/objects/c9
+Checking directory .git/objects/f7
+Checking tag 66f6581d549f70e05ca586bc2df5c15a95662c36
+Checking commit 134756353796a5439d93586be27999eea3807a34
+Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
+error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not=
+=20
+a blob
+error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or miss=
+ing
+Checking tree bd04fbdc74c1ad468ee1cc86d49860490ab3e6c7
+Checking commit c9145d6720f85544cc4bb6009a2e541660aa156b
+Checking tree c9176b0dd1a95c80ad8de21784b1eeffd3681f49
+Checking blob f719efd430d52bcfc8566a43b2eb655688d38871
+Checking cache tree
+Checking connectivity (32 objects)
+Checking 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
+Checking 66f6581d549f70e05ca586bc2df5c15a95662c36
+Checking c9145d6720f85544cc4bb6009a2e541660aa156b
+Checking c9176b0dd1a95c80ad8de21784b1eeffd3681f49
+Checking 134756353796a5439d93586be27999eea3807a34
+Checking 5626abf0f72e58d7a153368ba57db4c673c0e171
+Checking f719efd430d52bcfc8566a43b2eb655688d38871
+Checking bd04fbdc74c1ad468ee1cc86d49860490ab3e6c7
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+diff failed passed
+diff out ../../../git.next/t/trash_directory.t1450-fsck2_120912_205305/=
+out
+17a18,20
+ > Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
+ > Checking blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
+ > error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, no=
+t=20
+a commit
+18a22,23
+ > error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
+ > error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not loa=
+d=20
+tagged object
+20,22d24
+< Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
+< error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit,=20
+not a blob
+< error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or mi=
+ssing
