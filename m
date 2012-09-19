@@ -1,60 +1,97 @@
-From: Hong Xu <dev@hong.me>
-Subject: Add .editorconfig file to source repository to maintain a consistent coding style
-Date: Wed, 19 Sep 2012 00:31:39 -0700
-Message-ID: <64033A69-B5AA-461A-80B4-F143E4FC1614@hong.me>
-Mime-Version: 1.0 (Mac OS X Mail 6.0 \(1486\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 19 09:31:52 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] string_list API: document what "sorted" means.
+Date: Wed, 19 Sep 2012 09:35:55 +0200
+Message-ID: <505975DB.7070802@alum.mit.edu>
+References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu> <7vy5k8s622.fsf@alter.siamese.dyndns.org> <505829AB.8000506@alum.mit.edu> <7vmx0noi8s.fsf@alter.siamese.dyndns.org> <5058371C.8060209@alum.mit.edu> <7va9wnnt5h.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 09:36:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEElD-00062v-BI
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 09:31:51 +0200
+	id 1TEEpL-00089y-NM
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 09:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754797Ab2ISHbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 03:31:43 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:64331 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754169Ab2ISHbm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Sep 2012 03:31:42 -0400
-Received: by pbbrr13 with SMTP id rr13so1822917pbb.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 00:31:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version:x-mailer:x-gm-message-state;
-        bh=eh8x95UMfvsotcin8wlSCYSMraOaUa4+r9c1KX5RMXo=;
-        b=WOD47okwlWRUqIweGjJ05qz5D5BfsBTlFlefkejzorRpHXETWxY1qAggTZT36fs/sF
-         myTpr0jddmK2kzoNtai1aP8pGUBA3od4X90SZtazSXC7unTLGlLoRwowvLkJL74y3BcX
-         R+xlH4Kec0P8BVLCBJBHZxclPFKDcTdXxyIK68S0z+n8Suw+4hqrVKSl1/70PzSDfu3F
-         hW2bznVWR9XczGsHqUa3CImI8Il25G73nxeVJhTC6kOIvLTOS628k7VlGRPc3cU6wmn6
-         hMfMiq2LtqjricgsVto4uTDeU32rMOiap/KAVZnaRdeGIqjG1RBw2k5oYQ7azgXODzyj
-         3Guw==
-Received: by 10.68.237.38 with SMTP id uz6mr5307208pbc.23.1348039901788;
-        Wed, 19 Sep 2012 00:31:41 -0700 (PDT)
-Received: from [192.168.0.2] (cpe-76-169-182-35.socal.res.rr.com. [76.169.182.35])
-        by mx.google.com with ESMTPS id hc10sm1386540pbc.21.2012.09.19.00.31.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 19 Sep 2012 00:31:41 -0700 (PDT)
-X-Mailer: Apple Mail (2.1486)
-X-Gm-Message-State: ALoCoQkJk5t7A6msY4jmR/uo5KHhz7/J4QMnWjUeMPJyYYY2WMVMLwVJwmwQ16QujL3NdkrcP/DD
+	id S1754992Ab2ISHf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 03:35:58 -0400
+Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:47660 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754843Ab2ISHf5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Sep 2012 03:35:57 -0400
+X-AuditID: 12074412-b7f216d0000008e3-2a-505975dc2744
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id BB.FB.02275.CD579505; Wed, 19 Sep 2012 03:35:56 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8J7ZtWI026126
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 19 Sep 2012 03:35:56 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <7va9wnnt5h.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqHunNDLAYNlua4uuK91MFg29V5gd
+	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE749bVjewFV/gq3na+YmpgvMfdxcjJISFgIvF7
+	UycrhC0mceHeerYuRi4OIYHLjBJ/511mhXCOM0m03uhhAaniFdCWWLXgCjOIzSKgKjH1zGYm
+	EJtNQFdiUU8zmC0qECIx4/JkZoh6QYmTM5+A9YoIqElMbDsEZHNwMAuIS/T/AzOFBZwlTr+N
+	BakQEmhkkmhuqgWxOQXMJFrv7ADrZBbQkXjX94AZwpaX2P52DvMERoFZSBbMQlI2C0nZAkbm
+	VYxyiTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghQSq0g3H9SblDjAIcjEo8vAp3
+	IgKEWBPLiitzDzFKcjApifKqlEQGCPEl5adUZiQWZ8QXleakFh9ilOBgVhLhtc8EyvGmJFZW
+	pRblw6SkOViUxHl/Llb3ExJITyxJzU5NLUgtgsnKcHAoSfBuAxkqWJSanlqRlplTgpBm4uAE
+	Gc4lJVKcmpeSWpRYWpIRD4rT+GJgpIKkeID28paC7C0uSMwFikK0nmLU5bj7ccV9RiGWvPy8
+	VClx3gUgOwRAijJK8+BWwFLSK0ZxoI+Fea+AVPEA0xncpFdAS5iAllQ8CQNZUpKIkJJqYLRh
+	zFC6G+pX+NH0k56o1MJFXx/4XeS5vcDCJnH1gk2zA0qYM+K6dZZbWa3gyjW12flrbVnWW/2b
+	3z5u5xJenW26SZNlynP1yiTNXQKu01XeaXYGO3AvaJMSPL0q8FBcyeowBgdZjV1x 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205914>
 
-Hi all,
+On 09/18/2012 07:21 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> If another sort order is needed, then we will either have to audit
+>> existing string_list users to make sure that they don't rely on strcmp()
+>> ordering, or we will have to implement strcmp() ordering *plus* the new
+>> ordering.
+> 
+> What I was envisioning was to pass in an optional custom comparison
+> when you instantiate a string_list object.  Existing callers that
+> rely on (or can live with, because they do not care about the exact
+> order) the default order will continue to use the byte-value ordering,
+> so there is no need for auditing.  Only the new callers that want
+> different ordering would set custom comparison routine.
+> 
+> But now I wrote it down, I realize that there is no _harm_ in
+> documenting "we sort in byte-value order, so expect iterations on
+> sorted string list to give them in that order to you" at all.
+> 
+> So let's go with your documentation patch as-is.
+> 
+>> It's not that I'm unwilling to implement 2; it's just that I still don't
+>> see any advantage to doing so before there is a demonstrated need for it.
+> 
+> As I said, I have this suspicion that the lack of demonstrated need
+> is largely because the existing code that do _not_ use string-list
+> don't do so because the interface is limited, so the argument is
+> sort of self-fulfilling.
 
-EditorConfig <http://editorconfig.org> is a project that helps developers define and maintain consistent coding styles between different editors and IDEs. The EditorConfig project consists of a file format for defining coding styles and a collection of text editor plugins that enable editors to read the file format and adhere to defined styles. EditorConfig files are easily readable and they work nicely with version control systems.
+I've been looking for places in the code where string_list can be used,
+so hopefully I'll get a feeling for what new functionality will increase
+its applicability.
 
-EditorConfig has been used in many large and famous projects, such as Ruby, jQuery, etc. I think the Git community may also find it useful, since there are some inconsistent indentation in the source code. 
+Now that my string_list enhancements are in master, I will start
+trickling in patches to convert other code to using string_list when it
+seems to benefit code length and/or understandability.
 
-What do you think about this?
+Michael
 
-Best,
-Hong
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
