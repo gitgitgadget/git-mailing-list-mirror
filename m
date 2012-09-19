@@ -1,64 +1,69 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCHv6] clone --single: limit the fetch refspec to fetched branch
-Date: Wed, 19 Sep 2012 14:36:14 +0700
-Message-ID: <CACsJy8AjCC2C2dGt+G0V1FZWVJg1f=QGetTJdB4-JVEs8f4DBw@mail.gmail.com>
-References: <1347909706-22888-1-git-send-email-ralf.thielow@gmail.com> <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [RFC] Support for HP NonStop
+Date: Wed, 19 Sep 2012 10:16:15 +0200
+Message-ID: <000001cd963f$0a8421b0$1f8c6510$@schmitz-digital.de>
+References: <005501cd822d$bf844bb0$3e8ce310$@schmitz-digital.de> <7v4nnsyrp7.fsf@alter.siamese.dyndns.org> <005701cd8239$1a828300$4f878900$@schmitz-digital.de> <alpine.LNX.2.01.1209190923020.32503@nerf07.vanv.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 09:36:55 2012
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "'Jan Engelhardt'" <jengelh@inai.de>
+X-From: git-owner@vger.kernel.org Wed Sep 19 10:16:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEEq6-0008WD-Hr
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 09:36:54 +0200
+	id 1TEFST-0002PI-Ii
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 10:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab2ISHgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 03:36:45 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38401 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754694Ab2ISHgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 03:36:45 -0400
-Received: by iahk25 with SMTP id k25so553670iah.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 00:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FIKcRwP3TbzC9p7SCTrbKD/CnzlSAIh9EP4gjoUvjvg=;
-        b=pXWWNZ+b8TSCCIBIEq3KPMX+iDq04qp+30dvFFtvac8caFcddaFpZRT98SxrmoZ1b2
-         3AKyGAbwKNv1VE4FoZ7qdrHxQTcAC3oVok914OJvLSG86qIhg28AKr0kZ5qwrToNtxCe
-         fVfba/yanJtKAGqzTS2/zMzVEhhFKPkrqmWfk1UpLcsgW2g4kh+SIVh7OZYKoZCrhzrN
-         +VHxNfHRFNbP8G+4gAQDnqBE62cs6vat+44TkGoSsZyt2mJOmuKekO/aGFUEro0dLTma
-         K0a9+RGetKwrjl2H7xlc5rZRCBKYYJJsCcoTXmuLczjiQEYUyHXAE9R8yMIrW60xvcjb
-         0aqg==
-Received: by 10.50.91.162 with SMTP id cf2mr1993666igb.40.1348040204398; Wed,
- 19 Sep 2012 00:36:44 -0700 (PDT)
-Received: by 10.64.167.139 with HTTP; Wed, 19 Sep 2012 00:36:14 -0700 (PDT)
-In-Reply-To: <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com>
+	id S1754837Ab2ISIQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 04:16:23 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:57126 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752217Ab2ISIQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 04:16:19 -0400
+Received: from DualCore (dsdf-4d0a1993.pool.mediaWays.net [77.10.25.147])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MYcHS-1T1TbG3zIw-00VRwK; Wed, 19 Sep 2012 10:16:17 +0200
+In-Reply-To: <alpine.LNX.2.01.1209190923020.32503@nerf07.vanv.qr>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQJdqfapyoHz4H9Ne772bOxBhhZ91QJGkyzrAdYNcY0CB42PrJZABf+A
+Content-Language: de
+X-Provags-ID: V02:K0:B2f/EVpqwIUF2NQuFrNsvDsRK8US2gIIl5qm6JQ6UX1
+ TTrrAjqwiiyQ6PR1CvNFgi7Kp+w6GNa8Htup63GeFwonWHfkqZ
+ MDKQA22X6a6qWlb29DTZk6Txy6qv+VcI8DuOASyi8f6d1FCSH+
+ KqFecXJKbDzyRDDgZA7PhZcgDwVr6R66gvsWbdhGArbZeZjK4K
+ w7U0/erqXjSo/58Mvgpg+6aD/LYko131cr3j04lwJDcLitiIGN
+ rbfYacnEOHN6kkvwAH4PvqjA/02+BfplDHUEQjfmNdyneQ57RJ
+ sUJosOAtzkkKWeicvrfDUxwiCM52eA8+yT1M3Oa3acOEeg+DJs
+ GvfsYegDdMnRD+o3LAhkFZ+vuSq4lPt81GLXQcp9YvqJnHs6M2
+ smYECids4rnKQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205916>
 
-On Wed, Sep 19, 2012 at 2:14 AM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
-> +test_expect_success '--single-branch with explicit --branch tag' '
-> +       (
-> +               cd dir_tag && git fetch &&
-> +               git for-each-ref refs/tags >../actual
-> +       ) &&
-> +       git for-each-ref refs/tags >expect &&
-> +       test_cmp expect actual
-> +'
+> From: Jan Engelhardt [mailto:jengelh@inai.de]
+> Sent: Wednesday, September 19, 2012 9:24 AM
+> To: Joachim Schmitz
+> Cc: 'Junio C Hamano'; git@vger.kernel.org
+> Subject: RE: [RFC] Support for HP NonStop
+> 
+> 
+> On Friday 2012-08-24 22:43, Joachim Schmitz wrote:
+> >
+> >> By the way, is "int" wide enough [for intptr_t/uintptr_t],
+> >> or should they be "long"?
+> >
+> >int and long have the same size, 32-bit, here on NonStop.
+> >But we do have 64-bit types too. Not sure which to take though.
+> 
+> intptr_t is supposed to hold a void * pointer, so should be
+> at least as big.
 
-We should have added the tag right after cloning, not until the first
-git-fetch. Not that I object how you do it in this patch. Just a note
-to myself that if I'm going to do that, I'll need to update this test
-to update the change tag before fetching and verify the tag is updated
-after git-fetch.
--- 
-Duy
+OK, thanks. We are on IA64 but still use the ILP32 model (so 32bit pointers. Support for LP64 has been added recently, but isn't the
+default.
+However, long changes from 32bit to 64 bit when changing from ILP32 to LP64, so is the save bet here, right?
