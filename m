@@ -1,74 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log --oneline: put decoration at the end of the line
-Date: Wed, 19 Sep 2012 12:57:28 -0700
-Message-ID: <7vr4pxg507.fsf@alter.siamese.dyndns.org>
-References: <1348055540-13774-1-git-send-email-pclouds@gmail.com>
- <20120919182039.GE11699@sigill.intra.peff.net>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [PATCH] Make test output coloring more intuitive
+Date: Wed, 19 Sep 2012 22:02:52 +0200
+Message-ID: <505A24EC.1000203@gmail.com>
+References: <1347882637-21766-1-git-send-email-git@adamspiers.org> <20120917201119.GB24888@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 21:57:44 2012
+X-From: git-owner@vger.kernel.org Wed Sep 19 22:03:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEQOy-0000nh-57
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:57:40 +0200
+	id 1TEQUD-0003OQ-No
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:03:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338Ab2IST5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 15:57:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64495 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751074Ab2IST5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 15:57:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB75181F3;
-	Wed, 19 Sep 2012 15:57:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iFExowIgKPArewubQrVYku9vqSg=; b=furFdX
-	flTt9a4Z7yNGo+fiat1ZJe6j4ly1sqJ7czRCRSucIXlajP3zzmmEf0zm+Lqw2cjj
-	2i9uXfRtZYdSVl1tCA68dZPVXD0YRRLpuCpGGt1/sBda0UJg/6JVHN2Gr2yBSw4T
-	iPXXRrqLgaCQunbziUVTttMWK9ggVclmvx98I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aiZ3fHeAH8XmbpmBPKpFXZOEvqWXfshh
-	+PcG2nBvFj96CqMPpcFzaoQjzNyl/RTDldqPr5VXCoY86PK9B5mkG2dsN5BpeZo1
-	4ldsGnQreM9u5/39NsXlNWGzx90c4kHjU9+aMJH8lNDQdgVFXMEH6aW1zJcssdgv
-	SLP9DEpPG4o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AA8A81F2;
-	Wed, 19 Sep 2012 15:57:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BB3C81F1; Wed, 19 Sep 2012
- 15:57:30 -0400 (EDT)
-In-Reply-To: <20120919182039.GE11699@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 19 Sep 2012 14:20:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E7B544A-0294-11E2-9AB1-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751409Ab2ISUC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 16:02:57 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:41854 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297Ab2ISUC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 16:02:56 -0400
+Received: by bkwj10 with SMTP id j10so756012bkw.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 13:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=yOOBtXMhMOWYgPFAS+3OP2MYIPfkAHBNH5nuZz8bwsQ=;
+        b=kEczmj4XdxRtR65Zgf16tIC2Xh5vHergqou2Y8zPGTp2R3UI/uTwzGeUGqnKu66Us0
+         B3ipOZQqN4xUCn5jzlKKlOyYwndsRzJNHjiM5v21a/K0wQjxplfW8KctnG01RjDkIia0
+         6CJt0u6jBj8sAjOn8TepaYsaFoZ+FIf4saTYi5IBquZn5NuOII81mNrVa9/w79+Dm2cO
+         4fOBaV9gyj3Im2a/Jx6GHXye2Rhvq36MuqAMSQOBwCf0AYByClGiRaMQgxUiHIhJhLpq
+         pKexldD57P4jcU3KH6FL846XdnFILuwjA01ETQtJ9Co9yIdkPx8VghQCSS2amMRaSeL8
+         4byA==
+Received: by 10.204.157.156 with SMTP id b28mr1809803bkx.27.1348084975030;
+        Wed, 19 Sep 2012 13:02:55 -0700 (PDT)
+Received: from [192.168.178.21] (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
+        by mx.google.com with ESMTPS id m9sm2920468bkm.10.2012.09.19.13.02.53
+        (version=SSLv3 cipher=OTHER);
+        Wed, 19 Sep 2012 13:02:54 -0700 (PDT)
+In-Reply-To: <20120917201119.GB24888@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205989>
 
-Jeff King <peff@peff.net> writes:
+On 09/17/2012 10:11 PM, Jeff King wrote:
+> On Mon, Sep 17, 2012 at 12:50:37PM +0100, Adam Spiers wrote:
+> 
+>> The end result of these changes is that:
+>>
+>>   - red is _only_ used for things which have gone unexpectedly wrong:
+>>     test failures, unexpected test passes, and failures with the
+>>     framework,
+>>
+>>   - yellow is _only_ used for known breakages, and
+>>
+>>   - green is _only_ used for things which have gone to plan and
+>>     require no further work to be done.
+> 
+> Sounds reasonable, and I think the new output looks nice. I notice that
+> skipped tests are still in green. I wonder if they should be in yellow,
+> too.
+>
+What about blue instead?   This would keep the colouring scheme more
+consistent with the one used by prove:
+  <http://search.cpan.org/~ovid/Test-Harness/bin/prove>
+by autotest:
+  <http://www.gnu.org/software/autoconf/manual/autoconf.html#Using-Autotest>
+and by the Automake-generated test harness:
+  <http://www.gnu.org/software/automake/manual/automake.html#Scripts_002dbased-Testsuites>
 
-> We should also consider briefly whether anybody is relying on --oneline
-> for machine parsing. I think "log --oneline" is fair game, but I wonder
-> if people calling "rev-list --decorate --oneline" should be considered.
-> It seems kind of unlikely to me, considering that the decorate output is
-> ambiguous to parse anyway (if you see parentheses, you cannot tell if it
-> is decorate output or part of the commit subject).
-
-Yeah, I do not think it is likely.  Among the in-tree scripts,
-git-stash does use rev-list --oneline but the purpose of the call
-exactly is to grab a human readable one line summary, and it will be
-happy with any change to make --oneline more human readble.
-
-t4202 has many invocations of "log --oneline --decorate", though;
-these things do get tested.
+Just my 2 cents,
+  Stefano
