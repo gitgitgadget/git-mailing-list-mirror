@@ -1,209 +1,393 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
-Date: Wed, 19 Sep 2012 18:04:53 +0200
-Message-ID: <5059ED25.9090002@web.de>
-References: <5001644F.10901@web.de> <20120715090849.GB18385@sigill.intra.peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?q?=5BPATCHv7=5D=20clone=20--single=3A=20limit=20the=20fetch=20refspec=20to=20fetched=20branch?=
+Date: Wed, 19 Sep 2012 18:45:36 +0200
+Message-ID: <1348073136-8842-1-git-send-email-ralf.thielow@gmail.com>
+References: <7vfw6fm7xb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 18:05:19 2012
+Cc: pclouds@gmail.com, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Sep 19 18:46:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEMm6-0002wY-5h
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 18:05:18 +0200
+	id 1TENPZ-0001Mx-C5
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 18:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756563Ab2ISQFJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Sep 2012 12:05:09 -0400
-Received: from mout.web.de ([212.227.15.4]:57534 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754200Ab2ISQFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 12:05:07 -0400
-Received: from wanderer.site ([195.67.191.22]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MZUnl-1SvJHw17wj-00KyDZ; Wed, 19 Sep 2012 18:05:05
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <20120715090849.GB18385@sigill.intra.peff.net>
-X-Provags-ID: V02:K0:tEbvEs2s++90ib47x8GTlw4ezLGzbyqH/6v424Gqh44
- f8W6gMWCmnDn8KQ0T1hxWFjOnY20swbHX7vYwWrI9WuwtSDE6/
- BOsrn0qkKl3kA5eYOcdQh1cVMQI90iUZ9ibsiUeYfCEoV10ewa
- kIsu2Yyb/U8k9QadKUI8JcXkfYanX41TEOL70TlwRMQR5NsBm+
- aDyhICwU4PhWO9ebAI1+Q==
+	id S1756147Ab2ISQp4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Sep 2012 12:45:56 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:44130 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753638Ab2ISQpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 12:45:54 -0400
+Received: by bkwj10 with SMTP id j10so651889bkw.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 09:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=B+T0OzEo4+rGbxZ5CjSfNcM3ySoKblxWLSMNYpcBynY=;
+        b=ZIUqklrxK8fqHYZtbCTerGCeBU1cpMoieMep94ql1uCSl2JH8laQm3GINK/k4Ql/zb
+         T2kCPPT4rAH+bchIlHdS1cSEVRbG2/fwhizd00kFyA/zUUDpfzILSZX4I7xnAZMvCypS
+         izqkpkp9r+k2ndiG+XcnPvl40uOAyoPz4fJoa/JHDGJeiBgWDR7gZetUoSocts1zSVHg
+         VbeWXb1ZtSuwC2LlgLW1BDgbq7xXU8XgbGAcnBqJ8ZzjifvmQdsKCah4a52LmG3SvPVL
+         RGRrTD5RR+ODsZQoSa8k+xIY+ORAAGwIHfpTfqZs4QoeCK8eKm34nX/1MeLpfX5esLLS
+         k50Q==
+Received: by 10.204.4.154 with SMTP id 26mr1512596bkr.91.1348073153477;
+        Wed, 19 Sep 2012 09:45:53 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-222-138-170.pools.arcor-ip.net. [94.222.138.170])
+        by mx.google.com with ESMTPS id p2sm2521542bkw.3.2012.09.19.09.45.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Sep 2012 09:45:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.396.g7954078
+In-Reply-To: <7vfw6fm7xb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205945>
 
-On 07/15/2012 11:08 AM, Jeff King wrote:
-> On Sat, Jul 14, 2012 at 02:21:35PM +0200, Torsten B=C3=B6gershausen w=
-rote:
->
->> I saw the problem first on pu, some time ago,
->> but it dissappeared after cloning git.git into another directory.
->>
->> Now it appeared on next as well, so it's time to look a little bit d=
-eeper.
->>
->> This test case of t1450 fails:
->> test_expect_success 'tag pointing to something else than its type' '
->
-> I can't reproduce this failure; I tried both pu or next, on Linux and=
- OS
-> X (10.7).
->
->> Linux:
->> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, no=
-t a commit
->> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
->> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not loa=
-d tagged object
->>
->> Mac OS X:
->> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, =
-not a blob
->> error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or m=
-issing
->
-> That seems very broken. That sha1 can have only one type, so OS X is
-> actually mis-parsing the object type? Weird. I would suggest a memory
-> error or race condition, but the test is valgrind-clean, and fsck sho=
-uld
-> not be threaded at all.
->
-> What does "git show 63499e4" show when the test has failed? If you
-> re-run "git fsck --tags", does it reproduce reliably (i.e., is it bog=
-us
-> data that something wrote to the object db, or is it good data being
-> ruined during the reading process)?
->
->> I reverted the last change in fsck.c (Use the streaming interface), =
-but that doesn't help
->>
->> Looking into the trash directory and looking at the files, we can se=
-e that the .git/index is different
->> between Linux and Mac OS X.
->>
->> Is there a good way to debug the index file?
->
-> git ls-files -s will dump the entries. But I'd expect them not to be
-> byte-equivalent, because the index will contain things like mtimes fo=
-r
-> each entry, which will vary from run to run. Plus the error message
-> above indicates something much more broken.
->
-After some time, the problem is still there
+After running "git clone --single", the resulting repository has the
+usual default "+refs/heads/*:refs/remotes/origin/*" wildcard fetch
+refspec installed, which means that a subsequent "git fetch" will
+end up grabbing all the other branches.
 
-When I make a fresh clone of git.git under Mac OS, 1450 passes.
-After a while, running things like "git fetch && git checkout=20
-origin/next && make clean && make test", it starts to fail.
+Update the fetch refspec to cover only the singly cloned ref instead
+to correct this.
 
-(currently I have a couple of git repo-copies, t1450 fails in git.pu=20
-and passes in git.next.
-But that has nothing to do with next or pu)
+That means:
+If "--single" is used without "--branch" or "--mirror", the
+fetch refspec covers the branch on which remote's HEAD points to.
+If "--single" is used with "--branch", it'll cover only the branch
+specified in the "--branch" option.
+If "--single" is combined with "--mirror", then it'll cover all
+refs of the cloned repository.
+If "--single" is used with "--branch" that specifies a tag, then
+it'll cover only the ref for this tag.
 
-When I run ssh into the Mac OS X machine, the test case passes even in =
-pu.
-Very strange, but reproducable.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
 
-Now things become more puzzled:
-I managed to re-produce it on a Linux machine as well.
-Using v1.7.12 and applying my i18.pathencoding patch,
-t1450 fails on Linux, regardless if I use ssh or sit locally at the mac=
-hine.
+Changes in v7:
+- remove a test which has shown that after the next "git fetch"
+  the tags will be the same (was actually a bit senseless)
+- add a test to show that the initial clone with "--single" fetches tag=
+s
+- add a test to show when using "--single" with "--branch"
+  which points to a tag, then the next "git fetch" will update
+  this tag if it was updated in the cloned repository
+- update documentation of "git clone" (Thanks to Junio)
 
-I make a new version of t1450-fsck.sh, called t1450-fsck2.sh
-That uses git fsck --verbose, I add the log file here.
-The short version:
-- I can re-run the "git fsck", all files on disk have the same md5.
-- The 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 has the same md5 as well
-I added lots of printouts in git code, according to my understanding=20
-63499  is checked/fsck'ed after being loaded into RAM, is that right?
+ Documentation/git-clone.txt |  15 +++--
+ builtin/clone.c             |  66 +++++++++++++++----
+ t/t5709-clone-refspec.sh    | 155 ++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 Dateien ge=C3=A4ndert, 218 Zeilen hinzugef=C3=BCgt(+), 18 Zeilen ent=
+fernt(-)
+ create mode 100755 t/t5709-clone-refspec.sh
 
-=46or some reasons it is classified as "is a blob, not a commit" when i=
-t=20
-passes and "is a commit, not a blob" when it fails.
-
-I want to debug when it is loaded into RAM, so that code is in=20
-read-cache.c, isn't it?
-
-Does anybody have a tool to debug the contents of the index file?
-Even offline could help, I can send a bunch of files ;-)
-
-And why doesn't fsck find the broken link?
-
-Other ideas are welcome,
-thanks everybody for reading/helping.
-/Torsten
-
-"out" after running git fsck --verbose --tags, t1450 failed
-(no broken link)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Checking HEAD link
-Checking object directory
-Checking directory .git/objects/13
-Checking directory .git/objects/15
-Checking directory .git/objects/1b
-Checking directory .git/objects/30
-Checking directory .git/objects/35
-Checking directory .git/objects/44
-Checking directory .git/objects/56
-Checking directory .git/objects/63
-Checking directory .git/objects/66
-Checking directory .git/objects/af
-Checking directory .git/objects/b6
-Checking directory .git/objects/bd
-Checking directory .git/objects/c4
-Checking directory .git/objects/c9
-Checking directory .git/objects/f7
-Checking tag 66f6581d549f70e05ca586bc2df5c15a95662c36
-Checking commit 134756353796a5439d93586be27999eea3807a34
-Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
-error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit, not=
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index c1ddd4c..6d98ef3 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -29,7 +29,8 @@ currently active branch.
+ After the clone, a plain `git fetch` without arguments will update
+ all the remote-tracking branches, and a `git pull` without
+ arguments will in addition merge the remote master branch into the
+-current master branch, if any.
++current master branch, if any (this is untrue when "--single-branch"
++is given; see below).
 =20
-a blob
-error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or miss=
-ing
-Checking tree bd04fbdc74c1ad468ee1cc86d49860490ab3e6c7
-Checking commit c9145d6720f85544cc4bb6009a2e541660aa156b
-Checking tree c9176b0dd1a95c80ad8de21784b1eeffd3681f49
-Checking blob f719efd430d52bcfc8566a43b2eb655688d38871
-Checking cache tree
-Checking connectivity (32 objects)
-Checking 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
-Checking 66f6581d549f70e05ca586bc2df5c15a95662c36
-Checking c9145d6720f85544cc4bb6009a2e541660aa156b
-Checking c9176b0dd1a95c80ad8de21784b1eeffd3681f49
-Checking 134756353796a5439d93586be27999eea3807a34
-Checking 5626abf0f72e58d7a153368ba57db4c673c0e171
-Checking f719efd430d52bcfc8566a43b2eb655688d38871
-Checking bd04fbdc74c1ad468ee1cc86d49860490ab3e6c7
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-
-diff failed passed
-diff out ../../../git.next/t/trash_directory.t1450-fsck2_120912_205305/=
-out
-17a18,20
- > Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
- > Checking blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
- > error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, no=
-t=20
-a commit
-18a22,23
- > error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
- > error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not loa=
-d=20
-tagged object
-20,22d24
-< Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
-< error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit,=20
-not a blob
-< error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or mi=
-ssing
+ This default configuration is achieved by creating references to
+ the remote branch heads under `refs/remotes/origin` and
+@@ -152,9 +153,10 @@ objects from the source repository into a pack in =
+the cloned repository.
+ -b <name>::
+ 	Instead of pointing the newly created HEAD to the branch pointed
+ 	to by the cloned repository's HEAD, point to `<name>` branch
+-	instead. `--branch` can also take tags and treat them like
+-	detached HEAD. In a non-bare repository, this is the branch
+-	that will be checked out.
++	instead. In a non-bare repository, this is the branch that will
++	be checked out.
++	`--branch` can also take tags and detaches the HEAD at that commit
++	in the resulting repository.
+=20
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+@@ -193,6 +195,11 @@ objects from the source repository into a pack in =
+the cloned repository.
+ 	clone with the `--depth` option, this is the default, unless
+ 	`--no-single-branch` is given to fetch the histories near the
+ 	tips of all branches.
++	Further fetches into the resulting repository will only update the
++	remote tracking branch for the branch this option was used for the
++	initial cloning.  If the HEAD at the remote did not point at any
++	branch when `--single-branch` clone was made, no remote tracking
++	branch is created.
+=20
+ --recursive::
+ --recurse-submodules::
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5e8f3ba..431635c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -610,6 +610,55 @@ static void write_config(struct string_list *confi=
+g)
+ 	}
+ }
+=20
++static void write_refspec_config(const char* src_ref_prefix,
++		const struct ref* our_head_points_at,
++		const struct ref* remote_head_points_at, struct strbuf* branch_top)
++{
++	struct strbuf key =3D STRBUF_INIT;
++	struct strbuf value =3D STRBUF_INIT;
++
++	if (option_mirror || !option_bare) {
++		if (option_single_branch && !option_mirror) {
++			if (option_branch) {
++				if (strstr(our_head_points_at->name, "refs/tags/"))
++					strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
++						our_head_points_at->name);
++				else
++					strbuf_addf(&value, "+%s:%s%s", our_head_points_at->name,
++						branch_top->buf, option_branch);
++			} else if (remote_head_points_at) {
++				strbuf_addf(&value, "+%s:%s%s", remote_head_points_at->name,
++						branch_top->buf,
++						skip_prefix(remote_head_points_at->name, "refs/heads/"));
++			}
++			/*
++			 * otherwise, the next "git fetch" will
++			 * simply fetch from HEAD without updating
++			 * any remote tracking branch, which is what
++			 * we want.
++			 */
++		} else {
++			strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top->buf);
++		}
++		/* Configure the remote */
++		if (value.len) {
++			strbuf_reset(&key);
++			strbuf_addf(&key, "remote.%s.fetch", option_origin);
++			git_config_set_multivar(key.buf, value.buf, "^$", 0);
++			strbuf_reset(&key);
++
++			if (option_mirror) {
++				strbuf_addf(&key, "remote.%s.mirror", option_origin);
++				git_config_set(key.buf, "true");
++				strbuf_reset(&key);
++			}
++		}
++	}
++
++	strbuf_release(&key);
++	strbuf_release(&value);
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle =3D 0, is_local;
+@@ -755,20 +804,6 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 	}
+=20
+ 	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+-
+-	if (option_mirror || !option_bare) {
+-		/* Configure the remote */
+-		strbuf_addf(&key, "remote.%s.fetch", option_origin);
+-		git_config_set_multivar(key.buf, value.buf, "^$", 0);
+-		strbuf_reset(&key);
+-
+-		if (option_mirror) {
+-			strbuf_addf(&key, "remote.%s.mirror", option_origin);
+-			git_config_set(key.buf, "true");
+-			strbuf_reset(&key);
+-		}
+-	}
+-
+ 	strbuf_addf(&key, "remote.%s.url", option_origin);
+ 	git_config_set(key.buf, repo);
+ 	strbuf_reset(&key);
+@@ -853,6 +888,9 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 					      "refs/heads/master");
+ 	}
+=20
++	write_refspec_config(src_ref_prefix, our_head_points_at,
++			remote_head_points_at, &branch_top);
++
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+diff --git a/t/t5709-clone-refspec.sh b/t/t5709-clone-refspec.sh
+new file mode 100755
+index 0000000..69a0779
+--- /dev/null
++++ b/t/t5709-clone-refspec.sh
+@@ -0,0 +1,155 @@
++#!/bin/sh
++
++test_description=3D'test refspec written by clone-command'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	# Make two branches, "master" and "side"
++	echo one >file &&
++	git add file &&
++	git commit -m one &&
++	echo two >file &&
++	git commit -a -m two &&
++	git tag two &&
++	echo three >file &&
++	git commit -a -m three &&
++	git checkout -b side &&
++	echo four >file &&
++	git commit -a -m four &&
++	git checkout master &&
++
++	# default clone
++	git clone . dir_all &&
++
++	# default --single that follows HEAD=3Dmaster
++	git clone --single-branch . dir_master &&
++
++	# default --single that follows HEAD=3Dside
++	git checkout side &&
++	git clone --single-branch . dir_side &&
++
++	# explicit --single that follows side
++	git checkout master &&
++	git clone --single-branch --branch side . dir_side2 &&
++
++	# default --single with --mirror
++	git clone --single-branch --mirror . dir_mirror &&
++
++	# default --single with --branch and --mirror
++	git clone --single-branch --mirror --branch side . dir_mirror_side &&
++
++	# --single that does not know what branch to follow
++	git checkout two^ &&
++	git clone --single-branch . dir_detached &&
++
++	# explicit --single with tag
++	git clone --single-branch --branch two . dir_tag &&
++
++	# advance both "master" and "side" branches
++	git checkout side &&
++	echo five >file &&
++	git commit -a -m five &&
++	git checkout master &&
++	echo six >file &&
++	git commit -a -m six
++'
++
++test_expect_success 'by default all branches will be kept updated' '
++	(
++		cd dir_all && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# follow both master and side
++	git for-each-ref refs/heads >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch while HEAD pointing at master' '
++	(
++		cd dir_master && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow master
++	git for-each-ref refs/heads/master >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch while HEAD pointing at side' '
++	(
++		cd dir_side && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow side
++	git for-each-ref refs/heads/side >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch side' '
++	(
++		cd dir_side2 && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow side
++	git for-each-ref refs/heads/side >expect &&
++	test_cmp expect actual
++'
++
++
++test_expect_success '--single-branch fetches tags' '
++	(
++		cd dir_all &&
++		git for-each-ref refs/tags >../actual
++	) &&
++	git for-each-ref refs/tags >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch with tag f=
+etches updated tag' '
++	git tag -d two && git tag two &&
++	(
++		cd dir_tag && git fetch &&
++		git for-each-ref refs/tags >../actual
++	) &&
++	git for-each-ref refs/tags >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with --mirror' '
++	(
++		cd dir_mirror && git fetch &&
++		git for-each-ref refs > ../actual
++	) &&
++	git for-each-ref refs >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch and --mirr=
+or' '
++	(
++		cd dir_mirror_side && git fetch &&
++		git for-each-ref refs > ../actual
++	) &&
++	git for-each-ref refs >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with detached' '
++	(
++		cd dir_detached && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	)
++	# nothing
++	>expect &&
++	test_cmp expect actual
++'
++
++test_done
+--=20
+1.7.12.396.g7954078
