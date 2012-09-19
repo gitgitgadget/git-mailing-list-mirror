@@ -1,119 +1,100 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH] Document conventions on static initialization and else cuddling
-Date: Wed, 19 Sep 2012 20:00:02 +0100
-Message-ID: <1348081202-17361-1-git-send-email-git@adamspiers.org>
-References: <7v627pzsr7.fsf@alter.siamese.dyndns.org>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 21:00:22 2012
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 5/7] grep.c: mark private file-scope symbols as static
+Date: Wed, 19 Sep 2012 19:02:09 +0100
+Message-ID: <505A08A1.1080303@ramsay1.demon.co.uk>
+References: <5054AA62.2040603@ramsay1.demon.co.uk> <1347743452-2487-1-git-send-email-gitster@pobox.com> <1347743452-2487-5-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 21:10:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEPVV-0005ge-2z
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:00:22 +0200
+	id 1TEPfH-0002Rg-EA
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932867Ab2ISTAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 15:00:11 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:45054 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932315Ab2ISTAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 15:00:05 -0400
-Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 9508F2E39E
-	for <git@vger.kernel.org>; Wed, 19 Sep 2012 20:00:03 +0100 (BST)
-X-Mailer: git-send-email 1.7.12.147.g6d168f4
-In-Reply-To: <7v627pzsr7.fsf@alter.siamese.dyndns.org>
+	id S932970Ab2ISTKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 15:10:17 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:33415 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932282Ab2ISTKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 15:10:16 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 5872640026A;
+	Wed, 19 Sep 2012 20:10:14 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 80A4340024D;	Wed, 19 Sep 2012 20:10:13 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Wed, 19 Sep 2012 20:10:12 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+In-Reply-To: <1347743452-2487-5-git-send-email-gitster@pobox.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205978>
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
+Junio C Hamano wrote:
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  grep.c | 6 +++++-
+>  grep.h | 3 +--
+>  2 files changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/grep.c b/grep.c
+> index 925aa92..c7f8a47 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -3,6 +3,10 @@
+>  #include "userdiff.h"
+>  #include "xdiff-interface.h"
+>  
+> +static int grep_source_load(struct grep_source *gs);
+> +static int grep_source_is_binary(struct grep_source *gs);
+> +
+> +
+>  static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
+>  					const char *origin, int no,
+>  					enum grep_pat_token t,
+> @@ -403,7 +407,7 @@ static void dump_grep_expression_1(struct grep_expr *x, int in)
+>  	}
+>  }
+>  
+> -void dump_grep_expression(struct grep_opt *opt)
+> +static void dump_grep_expression(struct grep_opt *opt)
+>  {
+>  	struct grep_expr *x = opt->pattern_expression;
+>  
+> diff --git a/grep.h b/grep.h
+> index 00d71f7..8a28a67 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -159,11 +159,10 @@ struct grep_source {
+>  
+>  void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+>  		      const char *name, const void *identifier);
+> -int grep_source_load(struct grep_source *gs);
+>  void grep_source_clear_data(struct grep_source *gs);
+>  void grep_source_clear(struct grep_source *gs);
+>  void grep_source_load_driver(struct grep_source *gs);
+> -int grep_source_is_binary(struct grep_source *gs);
+> +
+>  
+>  int grep_source(struct grep_opt *opt, struct grep_source *gs);
 
-I have begun work on fixing existing code to adhere to these
-guidelines on braces, but there are currently a lot of violations,
-which means any patches to fix them would be large.  So before I spend
-any more time on it, I would like to check whether such patches would
-be welcomed?  And if so, should I be doing that on the master branch?
+Heh, so I obviously didn't see this before sending the patch yesterday! :-D
 
-I have also added some simple rules such as `check-brace-before-else'
-to the top-level Makefile which perform appropriate `grep -n' commands
-to detect violations and for example easily fix them via emacs' M-x
-grep.  These rules can be invoked together via a `check-style' target.
-Would this also be welcomed?  If so, should the checks all be
-introduced in a single commit, or each check along with the code which
-was fixed with its help?
+Yes, this solves the problem addressed by yesterday's patch, so please
+ignore that. However, this tickles sparse to complain as well ... ;-)
 
-BTW I briefly tried to find an existing tool out there which could
-already do the checking for us, but only found ones like uncrustify
-which rewrite code rather than warning on inconsistencies.  I also saw
-that the kernel's scripts/checkpatch.pl only worked with patches and
-was also extremely kernel-specific in the nature of its checks.
+New patch on it's way.
 
- Documentation/CodingGuidelines | 42 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 37 insertions(+), 5 deletions(-)
+[I have a funny feeling that I'm about to download an email, in response
+to yesterday's patch, that says something like: "does commit 07a7d656 not
+fix it for you ..." :-P ]
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 57da6aa..1a2851d 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -117,17 +117,49 @@ For C programs:
-    "char * string".  This makes it easier to understand code
-    like "char *string, c;".
- 
-+ - We avoid unnecessary explicit initialization of BSS-allocated vars
-+   (static and globals) to zero or NULL:
-+
-+	static int n;
-+	static char **ch;
-+
-+   rather than:
-+
-+	static int n = 0;
-+	static char **ch = NULL;
-+
-+   These are superfluous according to ISO/IEC 9899:1999 (a.k.a. C99);
-+   see item 10 in section 6.7.8 ("Initialization") of WG14 N1256 for
-+   the exact text:
-+
-+     http://open-std.org/JTC1/SC22/WG14/www/docs/n1256.pdf
-+
-  - We avoid using braces unnecessarily.  I.e.
- 
- 	if (bla) {
- 		x = 1;
- 	}
- 
--   is frowned upon.  A gray area is when the statement extends
--   over a few lines, and/or you have a lengthy comment atop of
--   it.  Also, like in the Linux kernel, if there is a long list
--   of "else if" statements, it can make sense to add braces to
--   single line blocks.
-+   is frowned upon.  A gray area is when the statement extends over a
-+   few lines, and/or you have a lengthy comment atop of it.  Also,
-+   like in the Linux kernel, it can make sense to add braces to single
-+   line blocks if there are already braces in another branch of the
-+   same conditional, and/or there is long list of "else if"
-+   statements.
-+
-+ - When braces are required, we cuddle "else" and "else if", so the
-+   preceding closing brace appears on the same line, e.g.
-+
-+	if (foo) {
-+		...;
-+	} else if (bar) {
-+		...;
-+		...;
-+	} else {
-+		...;
-+	}
-+
-+   following Linux kernel style, unless there is a good reason not to.
- 
-  - We try to avoid assignments inside if().
- 
--- 
-1.7.12.147.g6d168f4
+ATB,
+Ramsay Jones
