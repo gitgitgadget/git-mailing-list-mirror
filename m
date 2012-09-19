@@ -1,97 +1,64 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] string_list API: document what "sorted" means.
-Date: Wed, 19 Sep 2012 09:35:55 +0200
-Message-ID: <505975DB.7070802@alum.mit.edu>
-References: <1347895267-5054-1-git-send-email-mhagger@alum.mit.edu> <7vy5k8s622.fsf@alter.siamese.dyndns.org> <505829AB.8000506@alum.mit.edu> <7vmx0noi8s.fsf@alter.siamese.dyndns.org> <5058371C.8060209@alum.mit.edu> <7va9wnnt5h.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCHv6] clone --single: limit the fetch refspec to fetched branch
+Date: Wed, 19 Sep 2012 14:36:14 +0700
+Message-ID: <CACsJy8AjCC2C2dGt+G0V1FZWVJg1f=QGetTJdB4-JVEs8f4DBw@mail.gmail.com>
+References: <1347909706-22888-1-git-send-email-ralf.thielow@gmail.com> <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 09:36:09 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 09:36:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEEpL-00089y-NM
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 09:36:08 +0200
+	id 1TEEq6-0008WD-Hr
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 09:36:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754992Ab2ISHf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 03:35:58 -0400
-Received: from ALUM-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.18]:47660 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754843Ab2ISHf5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Sep 2012 03:35:57 -0400
-X-AuditID: 12074412-b7f216d0000008e3-2a-505975dc2744
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id BB.FB.02275.CD579505; Wed, 19 Sep 2012 03:35:56 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8J7ZtWI026126
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 19 Sep 2012 03:35:56 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7va9wnnt5h.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqHunNDLAYNlua4uuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE749bVjewFV/gq3na+YmpgvMfdxcjJISFgIvF7
-	UycrhC0mceHeerYuRi4OIYHLjBJ/511mhXCOM0m03uhhAaniFdCWWLXgCjOIzSKgKjH1zGYm
-	EJtNQFdiUU8zmC0qECIx4/JkZoh6QYmTM5+A9YoIqElMbDsEZHNwMAuIS/T/AzOFBZwlTr+N
-	BakQEmhkkmhuqgWxOQXMJFrv7ADrZBbQkXjX94AZwpaX2P52DvMERoFZSBbMQlI2C0nZAkbm
-	VYxyiTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghQSq0g3H9SblDjAIcjEo8vAp3
-	IgKEWBPLiitzDzFKcjApifKqlEQGCPEl5adUZiQWZ8QXleakFh9ilOBgVhLhtc8EyvGmJFZW
-	pRblw6SkOViUxHl/Llb3ExJITyxJzU5NLUgtgsnKcHAoSfBuAxkqWJSanlqRlplTgpBm4uAE
-	Gc4lJVKcmpeSWpRYWpIRD4rT+GJgpIKkeID28paC7C0uSMwFikK0nmLU5bj7ccV9RiGWvPy8
-	VClx3gUgOwRAijJK8+BWwFLSK0ZxoI+Fea+AVPEA0xncpFdAS5iAllQ8CQNZUpKIkJJqYLRh
-	zFC6G+pX+NH0k56o1MJFXx/4XeS5vcDCJnH1gk2zA0qYM+K6dZZbWa3gyjW12flrbVnWW/2b
-	3z5u5xJenW26SZNlynP1yiTNXQKu01XeaXYGO3AvaJMSPL0q8FBcyeowBgdZjV1x 
+	id S1754880Ab2ISHgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 03:36:45 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38401 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754694Ab2ISHgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 03:36:45 -0400
+Received: by iahk25 with SMTP id k25so553670iah.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 00:36:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=FIKcRwP3TbzC9p7SCTrbKD/CnzlSAIh9EP4gjoUvjvg=;
+        b=pXWWNZ+b8TSCCIBIEq3KPMX+iDq04qp+30dvFFtvac8caFcddaFpZRT98SxrmoZ1b2
+         3AKyGAbwKNv1VE4FoZ7qdrHxQTcAC3oVok914OJvLSG86qIhg28AKr0kZ5qwrToNtxCe
+         fVfba/yanJtKAGqzTS2/zMzVEhhFKPkrqmWfk1UpLcsgW2g4kh+SIVh7OZYKoZCrhzrN
+         +VHxNfHRFNbP8G+4gAQDnqBE62cs6vat+44TkGoSsZyt2mJOmuKekO/aGFUEro0dLTma
+         K0a9+RGetKwrjl2H7xlc5rZRCBKYYJJsCcoTXmuLczjiQEYUyHXAE9R8yMIrW60xvcjb
+         0aqg==
+Received: by 10.50.91.162 with SMTP id cf2mr1993666igb.40.1348040204398; Wed,
+ 19 Sep 2012 00:36:44 -0700 (PDT)
+Received: by 10.64.167.139 with HTTP; Wed, 19 Sep 2012 00:36:14 -0700 (PDT)
+In-Reply-To: <1347995660-9956-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205915>
 
-On 09/18/2012 07:21 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> If another sort order is needed, then we will either have to audit
->> existing string_list users to make sure that they don't rely on strcmp()
->> ordering, or we will have to implement strcmp() ordering *plus* the new
->> ordering.
-> 
-> What I was envisioning was to pass in an optional custom comparison
-> when you instantiate a string_list object.  Existing callers that
-> rely on (or can live with, because they do not care about the exact
-> order) the default order will continue to use the byte-value ordering,
-> so there is no need for auditing.  Only the new callers that want
-> different ordering would set custom comparison routine.
-> 
-> But now I wrote it down, I realize that there is no _harm_ in
-> documenting "we sort in byte-value order, so expect iterations on
-> sorted string list to give them in that order to you" at all.
-> 
-> So let's go with your documentation patch as-is.
-> 
->> It's not that I'm unwilling to implement 2; it's just that I still don't
->> see any advantage to doing so before there is a demonstrated need for it.
-> 
-> As I said, I have this suspicion that the lack of demonstrated need
-> is largely because the existing code that do _not_ use string-list
-> don't do so because the interface is limited, so the argument is
-> sort of self-fulfilling.
+On Wed, Sep 19, 2012 at 2:14 AM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
+> +test_expect_success '--single-branch with explicit --branch tag' '
+> +       (
+> +               cd dir_tag && git fetch &&
+> +               git for-each-ref refs/tags >../actual
+> +       ) &&
+> +       git for-each-ref refs/tags >expect &&
+> +       test_cmp expect actual
+> +'
 
-I've been looking for places in the code where string_list can be used,
-so hopefully I'll get a feeling for what new functionality will increase
-its applicability.
-
-Now that my string_list enhancements are in master, I will start
-trickling in patches to convert other code to using string_list when it
-seems to benefit code length and/or understandability.
-
-Michael
-
+We should have added the tag right after cloning, not until the first
+git-fetch. Not that I object how you do it in this patch. Just a note
+to myself that if I'm going to do that, I'll need to update this test
+to update the change tag before fetching and verify the tag is updated
+after git-fetch.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Duy
