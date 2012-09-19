@@ -1,101 +1,130 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] Documentation/git-blame.txt: --follow is a NO-OP
-Date: Wed, 19 Sep 2012 13:31:50 -0700
-Message-ID: <C07F05AC-8FBF-4F09-AF13-A291181A06D9@sb.org>
-References: <20120906151317.GB7407@sigill.intra.peff.net>
- <1348022905-10048-1-git-send-email-n1xim.email@gmail.com>
- <7v627aiq47.fsf@alter.siamese.dyndns.org>
- <20120919182715.GF11699@sigill.intra.peff.net>
- <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
- <20120919194213.GB21950@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff across submodules
+Date: Wed, 19 Sep 2012 15:31:14 -0700
+Message-ID: <7v4nmtfxvx.fsf@alter.siamese.dyndns.org>
+References: <1347937959.96154.YahooMailClassic@web39403.mail.mud.yahoo.com>
+ <5058C53B.5040401@web.de> <7vobl3m8pb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	gitList <git@vger.kernel.org>, Matthieu.Moy@imag.fr,
-	andy@aeruder.net, chriscool@tuxfamily.org,
-	dmellor@whistlingcat.com, dpmcgee@gmail.com, fonseca@diku.dk,
-	freku045@student.liu.se, marius@trolltech.com, namhyung@gmail.com,
-	rene.scharfe@lsrfire.ath.cx, s-beyer@gmx.net, trast@inf.ethz.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 23:38:06 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Kenny Simpson <theonetruekenny@yahoo.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 20 00:31:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TERy7-00010i-3D
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 23:38:03 +0200
+	id 1TESno-0000LW-6Z
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 00:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362Ab2ISVhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 17:37:54 -0400
-Received: from mail-out.apple.com ([17.151.62.50]:45593 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352Ab2ISVhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 17:37:52 -0400
-Received: from relay14.apple.com ([17.128.113.52])
- by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTPS id <0MAM00FZZ6IJU8I3@mail-out.apple.com> for git@vger.kernel.org;
- Wed, 19 Sep 2012 13:37:37 -0700 (PDT)
-X-AuditID: 11807134-b7f726d00000034c-77-505a2bb79d43
-Received: from kencur (kencur.apple.com [17.151.62.38])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay14.apple.com (Apple SCV relay)
- with SMTP id 63.C1.00844.7BB2A505; Wed, 19 Sep 2012 13:31:51 -0700 (PDT)
-Received: from il0103a-dhcp80.apple.com
- (il0103a-dhcp80.apple.com [17.201.37.208])
- by kencur.apple.com (Oracle Communications Messaging Server 7u4-24.01
- (7.0.4.24.0) 64bit (built Nov 17 2011))
- with ESMTPSA id <0MAM00KGF6D24V70@kencur.apple.com> for git@vger.kernel.org;
- Wed, 19 Sep 2012 13:31:51 -0700 (PDT)
-In-reply-to: <20120919194213.GB21950@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1498)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOLMWRmVeSWpSXmKPExsUiON1OTVdQNyrAYM59JouuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGVM2fmbveA1T8XNn2vYGhhnc3UxcnJICJhInF12jRHCFpO4cG89
-	G4gtJNDOJDH1WEgXIxeQvZdJ4siz52BFzAJaEut3HmcCsXkF9CRu/1wGZgsLuEr8fbGbHcRm
-	E1CSuDdhCVicU8Ba4vLBk2BxFgFVif1dr1hBhjIL/GCSmL/mOAvEUHmJzWveMkMMtZSYvO0d
-	C8Tm9UwSW/bfBisSEZCV+H54I9SpshL3Xvxmm8AoMAvJUbOQHDULydwFjMyrGAWLUnMSKw1N
-	9BILCnJS9ZLzczcxgoKvodBkB+PBn/yHGAU4GJV4eI3EogKEWBPLiitzDzFKcDArifD+2BsZ
-	IMSbklhZlVqUH19UmpNafIhRmoNFSZxXRACoWiA9sSQ1OzW1ILUIJsvEwSnVwDhr74YDDscP
-	/rLeznC9YoHbfpY9QQ7BN24327lzH3g4T/lS3W/v3NythW/EP5/89nlTU+WvYLMwT77rQU5v
-	DO24S/fH6a5m3x+xWe3946zFU+8fucnzJ+2R0OdJClb1Sa8Zzs8srP4rrXdmIp+62BrnOZlF
-	ExbU/Om31Iy4bWf+8G512ONv+olKLMUZiYZazEXFiQCX4dOSOgIAAA==
+	id S1752440Ab2ISWbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 18:31:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36000 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751072Ab2ISWbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 18:31:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA3BF8AFF;
+	Wed, 19 Sep 2012 18:31:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qjafZXWgJhskzrKvbYRDqHQ9YIk=; b=dfkDBR
+	LydyIbozEURbGgNMUt8OypB2TT5rpP/I36QbcNNSYpX4YTShlJbNC7uUWxki/Wbp
+	0QwEyM5XohoA9CLa1T1gaDnqsUXMLW4JTgx4HIxDOnZU/dQDGhH04hUu7nGpDP4J
+	tgAVdf+VGN2EjDmvNIxXODLYHXqgOE3tAlmzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JssEkz9lisVePhNM6OdpAKVzUbv6eWmI
+	hXq/mhF6YLLlWqOCrDy7YQIZPNzVy27GRPfdqKByoGzu/jb3nRfyVWGKI8IrGfL8
+	Tq3QEFHWrQX9JntGf5zBiXubb3P38csH+dfYkd23Rd6Z/SE83Hn/KvmQWVmJfFus
+	qgiYs9l6qa4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6A3A8AFE;
+	Wed, 19 Sep 2012 18:31:16 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B9A18AFD; Wed, 19 Sep 2012
+ 18:31:16 -0400 (EDT)
+In-Reply-To: <7vobl3m8pb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 18 Sep 2012 12:28:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B99B2B04-02A9-11E2-9559-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206005>
 
-On Sep 19, 2012, at 12:42 PM, Jeff King <peff@peff.net> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> So I am in general OK with it, but if we are to go that route, we
->> should make sure that the documentation makes it clear that blame
->> follows whole-file renames without any special instruction before
->> doing so.  Otherwise, it again will send the same wrong message to
->> people who try to use the "--follow" from their experience with
->> "log", no?
-> 
-> I guess it depends on your perspective. I can see the argument that
-> blame is already doing what --follow would ask for, and thus it is a
-> no-op. I think of it more as --follow is nonsensical for blame. But I
-> do not think either is wrong per se, and there is no reason not to help
-> people who come to git thinking the former. So yes, I think
-> documentation in either case is probably a good thing.
-> 
-> I am a little lukewarm on my patch if only because of the precedent it
-> sets.  There are a trillion options that revision.c parses that are not
-> necessarily meaningful or implemented for sub-commands that piggy-back
-> on its option parser. I'm not sure we want to get into manually
-> detecting and disallowing each one in every caller.
+> I also suspect that you do not have to change "git diff" at all to
+> show the patch recursively by using the attribute mechanism (look in
+> Documentation/gitattributes.text for a string GIT_EXTERNAL_DIFF).
+> It might be just as simple as doing this:
+>
+> 	echo >.gitattributes "/lib/frotz diff=subrecurse" 
+> 	git config diff.subrecurse.command $HOME/bin/diff-subrecurse
+>       cat >$HOME/bin/diff-subrecurse <<\-EOF
+> 	#!/bin/sh
+>       path=$1 old_hex=$3 new_hex=$6
+>       unset GIT_DIR
+>       cd "$path" || exit 1
+>       git diff "$old_hex" "$new_hex"        
+>       EOF
+>       chmod +x $HOME/bin/diff-subrecurse
+>
+> The corner cases like "new submodule", "removed submodule" are left
+> as an exercise to the reader ;-)
 
-I tend to agree with your final sentiment there. But the point that
-users may not realize that blame already follows is also valid. Perhaps
-we should catch --follow, as in your patch, but instead of saying that
-it's an unknown argument, just print out a helpful message saying blame
-already follows renames (and then continue with the blame anyway, so
-as to not set a precedent to abort on unknown-but-currently-accepted
-flags).
+It turns out that essentially the above outline I concocted in my
+MUA is usable almost as-is.
 
--Kevin
+Here is what I ended up with.
+
+ * In .git/config of the superproject, I added this:
+
+        [diff "submodule-recurse"]
+		command = src/bin/diff-submodule-recurse
+
+ * In the superproject, src/bin/diff-submodule-recurse has this
+   (this is probably whitespace damaged---the lines must be indented
+   by HT for the here document to correctly work):
+
+        #!/bin/sh
+        # $1   $2       $3      $4       $5       $6      $7
+        # path old-file old-hex old-mode new-file new-hex new-mode
+
+        case "$#,$4,$7" in
+        7,160000,160000) ;;
+        *)      echo "diff --git a/$1 b/$1"
+                echo "(punt)"
+                exit
+                ;;
+        esac
+        unset GIT_DIR
+        cd "$1" || {
+                cat <<-\EOF
+                diff --git a/$1 b/$1
+                (cannot chdir to $1)
+		-Subproject commit $3
+		+Subproject commit $6
+                EOF
+        }
+        git --no-pager diff --src-prefix="s/$1/" --dst-prefix="m/$1/" "$3" "$6"
+
+ * In .gitattributes of the superproject, I have this:
+
+        /var	diff=submodule-recurse
+
+The superproject in this case is a repository to control what I have
+in my $HOME directory (e.g. it has src/dot/Makefile that builds and
+installs the appropriate dotfiles, src/bin/Makefile that builds and
+installs to $HOME/bin, etc.), and one subdirectory, 'var', is a
+submodule that is only cloned to some but not all machines I clone
+this superproject to.
+
+With this setting, things like
+
+	$ git diff HEAD~20
+
+show differences with recursion into the var/ submodule just fine.
