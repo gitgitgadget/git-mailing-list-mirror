@@ -1,75 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/7] grep.c: mark private file-scope symbols as static
-Date: Wed, 19 Sep 2012 13:46:41 -0700
-Message-ID: <7vfw6dg2q6.fsf@alter.siamese.dyndns.org>
-References: <5054AA62.2040603@ramsay1.demon.co.uk>
- <1347743452-2487-1-git-send-email-gitster@pobox.com>
- <1347743452-2487-5-git-send-email-gitster@pobox.com>
- <505A08A1.1080303@ramsay1.demon.co.uk>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] Documentation/Makefile: Allow custom XMLTO binary
+Date: Wed, 19 Sep 2012 13:49:19 -0700
+Message-ID: <CAD0k6qTMm7MKLYOOMaB72cWc=Z8nJfe8qseWfyM6x_NzCorgZg@mail.gmail.com>
+References: <1348074397-29978-1-git-send-email-dborowitz@google.com> <7vehlxhp0v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Wed Sep 19 22:46:57 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 22:49:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TERAa-00038G-Sa
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:46:53 +0200
+	id 1TERDT-0004y1-Ea
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751793Ab2ISUqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 16:46:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54573 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751647Ab2ISUqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 16:46:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26E76904A;
-	Wed, 19 Sep 2012 16:46:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SqczS8MO3Zap5ARG9Zq4fxZRBkI=; b=DILK/F
-	Cz2iQg2ZBXe3Wg1qv5qB6o7SZujzxU6Mmq6D3c8vGm7EpqZy1dHgoNvnnXA9Ew37
-	rUWjabvwfZ05ljgrB5/DOO7nGGRGO4KxoHXOMwoTSn0vnPpJGlnuikTfkJwkV8f4
-	AgOjjdpFsm7D9aihZl9rIz1ByNCC3FvEd2738=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aNWj6z16ooUOST7NbucfiA4Vhlqsjh73
-	RDqsC/8Bts9l+N8GnxtRRf+yb9Od8zG8WGYNF50Y460aoPcMnclpDvIzFDoDoaJa
-	T+QMpinJsV+Kf/T1XLudennuT/4Nh2Pvbb/m/PVWFv+2ATZWKGxLOwCSKIgSa1g5
-	jVI7PEIiRHY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 147389049;
-	Wed, 19 Sep 2012 16:46:43 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89CEE9047; Wed, 19 Sep 2012
- 16:46:42 -0400 (EDT)
-In-Reply-To: <505A08A1.1080303@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Wed, 19 Sep 2012 19:02:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E478066-029B-11E2-8C79-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751843Ab2ISUtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 16:49:43 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:47297 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751697Ab2ISUtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 16:49:41 -0400
+Received: by ieak13 with SMTP id k13so2239483iea.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 13:49:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-system-of-record;
+        bh=uGBJITEmVSpLNRHqkgwh6MCvxnmNmI6jahCLJy0ZM6Y=;
+        b=TeGVGKAadN3NpFyaaYlFWLkWoeQfKt80+jNBm5JdB4sM8oNWvcd426shRQVgEab8QV
+         WmOO+/zTjKEC2qK12WDSBeg+UhoeCFsb7QcZUpwdoG7SGAubSnkSdCzuoMKTmi/MrwUp
+         J9t9fACyLgENUNjcHCwz1xaCgVVffSFr4aAtu4gw7ESLntieQ1k9cKz7iK9A3XVPgs1P
+         Z5Z5XhPbWNMn4isOTL8J2piwSRUrKhnXbelR1ewXJSQKt4LXKQSVAab4kwSswCMGKKTW
+         8+tW1rNE4BOcH1Ars1qdJdxPJZwf+Vd0gNMt3NeQ0+OdNOflFPDc173DVEpeOeamwh2e
+         VICQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=uGBJITEmVSpLNRHqkgwh6MCvxnmNmI6jahCLJy0ZM6Y=;
+        b=k3xptDw3y5ebwOzTHCRyQn2Di4K4QvYLYmGND+qmyYSQ+5607PAWCC1+LAhfkFwfGY
+         HRoLhVOZeR4fCl9p4abOkoWuO++dZ3bUcXz5u0EXPB5px6e7AFMfRUZjplnBqg3j86tF
+         vczNS1ByPK9he/qwnUTeMXuwmTZRbjtG5GplV4KQ7lt7NHK4JRnF3faMbOFNH2uzs/hl
+         JW1R7pB/zqqoGs9Wkq25OsHDOpd6teaK797XTzgTnwabIo8laPW2NEGTiPGbnlUflS8Z
+         uci0Hky6a7SxoJaDv9YnO8MqGOVrN9WbVZOyzm6P5XFxOl4LIKlCbVGGYawBSVrv87MP
+         OdxQ==
+Received: by 10.50.168.66 with SMTP id zu2mr97549igb.34.1348087781344;
+        Wed, 19 Sep 2012 13:49:41 -0700 (PDT)
+Received: by 10.50.168.66 with SMTP id zu2mr97539igb.34.1348087781101; Wed, 19
+ Sep 2012 13:49:41 -0700 (PDT)
+Received: by 10.231.135.1 with HTTP; Wed, 19 Sep 2012 13:49:19 -0700 (PDT)
+In-Reply-To: <7vehlxhp0v.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQnq3zfgYu2PX0uqmHaj/KrRl+Vt1MkuODLyG+ntm4YQvBf3H7LhAL9Co603ue0Ge0+dhGItF4INfhkLeRu7XHk5FxJSn/ZIsOb7yhU+s3ddYG7SJobvz4BFh9VrthWhQX8aWNOY3pNTpz8aqtbY3Nv4az5tOVmMMIs7W23HgLa3yfw27qA+QpsHtSPMwsXs0R/YZcxZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206000>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-
-> Heh, so I obviously didn't see this before sending the patch yesterday! :-D
+On Wed, Sep 19, 2012 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> dborowitz@google.com writes:
 >
-> Yes, this solves the problem addressed by yesterday's patch, so please
-> ignore that. However, this tickles sparse to complain as well ... ;-)
+>> From: Dave Borowitz <dborowitz@google.com>
+>>
+>> Signed-off-by: Dave Borowitz <dborowitz@google.com>
+>> ---
 >
-> New patch on it's way.
+> Thanks; the patch sort-of makes sense but makes me wonder what your
+> use case is.  Do you have xmlto2 program you want to use in place of
+> xmlto or you have xmlto but not on your $PATH?
 
-Are you sure the patch you are responding to really "tickles
-sparse"?
+The latter; I can easily symlink it into my $PATH of course. But since
+I was already specifying ASCIIDOC on the make command line for the
+same reason, I was surprised to find I couldn't also specify XMLTO,
+hence the patch.
 
-You have another grep.c patch timestamped two minutes after the
-message I am responding to, and as far as I can see, it is a subset
-of the patch you are responding to with the message I am responding
-to.
+>>  Documentation/Makefile | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/Makefile b/Documentation/Makefile
+>> index cf5916f..b045628 100644
+>> --- a/Documentation/Makefile
+>> +++ b/Documentation/Makefile
+>> @@ -47,6 +47,7 @@ man7dir=$(mandir)/man7
+>>  ASCIIDOC=asciidoc
+>>  ASCIIDOC_EXTRA =
+>>  MANPAGE_XSL = manpage-normal.xsl
+>> +XMLTO=xmlto
+>>  XMLTO_EXTRA =
+>>  INSTALL?=install
+>>  RM ?= rm -f
+>> @@ -245,7 +246,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+>>
+>>  %.1 %.5 %.7 : %.xml manpage-base-url.xsl
+>>       $(QUIET_XMLTO)$(RM) $@ && \
+>> -     xmlto -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+>> +     $(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+>>
+>>  %.xml : %.txt
+>>       $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
