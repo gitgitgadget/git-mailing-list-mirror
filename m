@@ -1,80 +1,133 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: possible bug in autocompletion
-Date: Thu, 20 Sep 2012 01:08:29 +0200
-Message-ID: <CAMP44s33b7uNg6G3m3wHEACa_wYwf_5==h64CHw2b86-rJd5VQ@mail.gmail.com>
-References: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
-	<20120717121232.GA32571@sigill.intra.peff.net>
-	<CAMP44s2X5-BUyLtkTqGMa6w5K6uT25YLEp+Q2TdVR_qCObOpeA@mail.gmail.com>
-	<20120919174336.GA11699@sigill.intra.peff.net>
-	<CAMP44s1Xvvs7g1quUEs2b43VciK2=Nt-AntJcwG0CPf6p8Xk_A@mail.gmail.com>
-	<CAMP44s1ZVTgBTQDyBHKvos-uSo0FeOO437MvTYH0YE0Lx-xDOA@mail.gmail.com>
-	<20120919195518.GA22310@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeroen Meijer <jjgmeijer@hotmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 20 01:09:25 2012
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Enable info/refs gzip decompression in HTTP client
+Date: Wed, 19 Sep 2012 16:12:02 -0700
+Message-ID: <1348096322-21426-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 20 01:12:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TETOT-00063I-2r
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 01:09:21 +0200
+	id 1TETRH-0007em-HY
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 01:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707Ab2ISXIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 19:08:31 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48083 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663Ab2ISXIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 19:08:30 -0400
-Received: by iahk25 with SMTP id k25so1194330iah.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 16:08:29 -0700 (PDT)
+	id S1752623Ab2ISXMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 19:12:07 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57088 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752567Ab2ISXME (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 19:12:04 -0400
+Received: by pbbrr13 with SMTP id rr13so3620896pbb.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 16:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ASZkGTyc7ND6QaUgDVq9glMfsqiFUb+qgZrF4+a6yt0=;
-        b=lMNUEx+YhmLvRTn8KA9oUFo/fW20ocxhOKGUSqS5G06Dm8QsulSxc/bLDcw8dZBM82
-         wMSHYlVeixQWDTWWG7lSkS/+Sh0axCSiCvOAYkOO3S+Qn4kn33uXws8MOv+huntfJsLm
-         rKL7wrpXHrT82SU3H+8kiFRd5w5UK6qRuEh7gctsreYr2/v8rPXiOvzGBiY811uFRqFf
-         ugPBG29kGeT1fZ5fRhT2agzfA3CFIrq+c703dqO3vwhB90NdHPueIKG/463uQ6JDJx74
-         LbJ605iAzSQbggZwviyw+0GksCMMoO3zieiPxeFbLQWT4rf/Zr7v4TG488gwKzmyrjcL
-         1++Q==
-Received: by 10.182.152.65 with SMTP id uw1mr3985051obb.91.1348096109398; Wed,
- 19 Sep 2012 16:08:29 -0700 (PDT)
-Received: by 10.60.164.7 with HTTP; Wed, 19 Sep 2012 16:08:29 -0700 (PDT)
-In-Reply-To: <20120919195518.GA22310@sigill.intra.peff.net>
+        d=spearce.org; s=google;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=ENjn9FxdfMyFEfTK5ARXdXlZo6WOjCzw6SDxhXUv8QQ=;
+        b=dYgUuD3e+Kafz1TW4d2YksosKDrQ+QHlNbu7pdpPKqB/CTHWx/odgkencK+ZMiKdK4
+         qNFtBCbjg9CZ6J+1WlMoYsurujoQ9z3O9XKDPte6c0JgojU3GDkANag4IEj2h2PCzDWz
+         6xhhg+pjnWQMYKjXf+yr9WYmFV/QywuNNh9D0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
+        bh=ENjn9FxdfMyFEfTK5ARXdXlZo6WOjCzw6SDxhXUv8QQ=;
+        b=lOZ5/5nY8TMYgtl+ISe2NJ7HpF6gHHQRlhvZefy8wMTa2de8jlYhrpK0xd0dWJQxfK
+         REuinOq9WlyJXlZiVYhrYuZgWv7F0wbm19bapHDop2boJF1pg/dmaKTni7/P0ZVxSvyx
+         a06woyGrcMLHtF7TuSlJdefvgYKRSH2unx91bE/fths7z7BEkdr6EqaAlBM1dYg3cO/a
+         SvY72ark58CI2TvaeHhcxh8hW8ZbqcNLemGQM3MhGfZOi9F6iWupMzrfh7mmZglqI+gC
+         TeQ0Y5KFMHSwd8QUUD5TKKm+tt/fstf3OObA7RPA3SejCaKuByYgA8+TaRTsvwX1SD80
+         PctA==
+Received: by 10.68.200.8 with SMTP id jo8mr1383696pbc.148.1348096324492;
+        Wed, 19 Sep 2012 16:12:04 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:be30:5bff:fed0:8744])
+        by mx.google.com with ESMTPS id pq7sm2504466pbb.25.2012.09.19.16.12.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Sep 2012 16:12:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.1.510.g5dd77d8
+X-Gm-Message-State: ALoCoQleH3ZoastjgHj7rZo3i/LqVo4Iyu49zUkGfNt06qgtrvJrieH47zUsAYBUALJRekGA4OA/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206008>
 
-On Wed, Sep 19, 2012 at 9:55 PM, Jeff King <peff@peff.net> wrote:
+From: "Shawn O. Pearce" <spearce@spearce.org>
 
-> I have no idea if that internal to bash's filename completion, or if
-> there is some easy facility offered to programmable completions to do
-> the same thing.  I don't think this is a high priority, but it would be
-> nice to handle it. And moreover, I am really wondering if we are missing
-> some solution that bash is providing to help us with the quoting issues.
-> Surely we are not the first completion script to come up against this.
+Some HTTP servers try to use gzip compression on the /info/refs
+request to save transfer bandwidth. Repositories with many tags
+may find the /info/refs request can be gzipped to be 50% of the
+original size due to the few but often repeated bytes used (hex
+SHA-1 and commonly digits in tag names).
 
-I found a much easier solution:
+For most HTTP requests enable "Accept-Encoding: gzip" ensuring
+the /info/refs payload can use this encoding format.
 
--       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
-+       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$(quote "$1")"
--- "${3-$cur}"))
+Disable the Accept-Encoding header on probe RPCs as response bodies
+are supposed to be exactly 4 bytes long, "0000". The HTTP headers
+requesting and indicating compression use more space than the data
+transferred in the body.
 
-But what about the people that don't have bash-completion?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ http.c                | 1 +
+ remote-curl.c         | 4 ++--
+ t/t5551-http-fetch.sh | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-BTW:
-
-quote()
-{
-    local quoted=${1//\'/\'\\\'\'}
-    printf "'%s'" "$quoted"
-}
-
+diff --git a/http.c b/http.c
+index 9bac1d8..345c171 100644
+--- a/http.c
++++ b/http.c
+@@ -818,6 +818,7 @@ static int http_request(const char *url, void *result, int target, int options)
+ 
+ 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
++	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
+ 
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+diff --git a/remote-curl.c b/remote-curl.c
+index 3ec474f..4a0927e 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -393,7 +393,7 @@ static int probe_rpc(struct rpc_state *rpc)
+ 	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+ 	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+-	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
++	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, NULL);
+ 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, "0000");
+ 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+@@ -449,7 +449,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+ 	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+-	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
++	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
+ 
+ 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+ 	headers = curl_slist_append(headers, rpc->hdr_accept);
+diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+index 2db5c35..380c175 100755
+--- a/t/t5551-http-fetch.sh
++++ b/t/t5551-http-fetch.sh
+@@ -32,13 +32,14 @@ setup_askpass_helper
+ cat >exp <<EOF
+ > GET /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
+ > Accept: */*
++> Accept-Encoding: gzip
+ > Pragma: no-cache
+ < HTTP/1.1 200 OK
+ < Pragma: no-cache
+ < Cache-Control: no-cache, max-age=0, must-revalidate
+ < Content-Type: application/x-git-upload-pack-advertisement
+ > POST /smart/repo.git/git-upload-pack HTTP/1.1
+-> Accept-Encoding: deflate, gzip
++> Accept-Encoding: gzip
+ > Content-Type: application/x-git-upload-pack-request
+ > Accept: application/x-git-upload-pack-result
+ > Content-Length: xxx
 -- 
-Felipe Contreras
+1.7.12.1.510.g5dd77d8
