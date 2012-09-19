@@ -1,100 +1,87 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 5/7] grep.c: mark private file-scope symbols as static
-Date: Wed, 19 Sep 2012 19:02:09 +0100
-Message-ID: <505A08A1.1080303@ramsay1.demon.co.uk>
-References: <5054AA62.2040603@ramsay1.demon.co.uk> <1347743452-2487-1-git-send-email-gitster@pobox.com> <1347743452-2487-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH] grep.c: Fix some sparse warnings
+Date: Wed, 19 Sep 2012 19:04:57 +0100
+Message-ID: <505A0949.4090006@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 21:10:28 2012
+X-From: git-owner@vger.kernel.org Wed Sep 19 21:10:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEPfH-0002Rg-EA
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:10:27 +0200
+	id 1TEPfI-0002Rg-2x
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932970Ab2ISTKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 15:10:17 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:33415 "EHLO
+	id S932984Ab2ISTKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 15:10:22 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:33425 "EHLO
 	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932282Ab2ISTKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 15:10:16 -0400
+	with ESMTP id S932969Ab2ISTKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 15:10:18 -0400
 Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 5872640026A;
-	Wed, 19 Sep 2012 20:10:14 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 80A4340024D;	Wed, 19 Sep 2012 20:10:13 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Wed, 19 Sep 2012 20:10:12 +0100 (BST)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id F274940027C;
+	Wed, 19 Sep 2012 20:10:16 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 4E44A40024D;	Wed, 19 Sep 2012 20:10:16 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta010.tch.inty.net (Postfix) with ESMTP;	Wed, 19 Sep 2012 20:10:15 +0100 (BST)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-In-Reply-To: <1347743452-2487-5-git-send-email-gitster@pobox.com>
 X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205979>
 
-Junio C Hamano wrote:
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  grep.c | 6 +++++-
->  grep.h | 3 +--
->  2 files changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/grep.c b/grep.c
-> index 925aa92..c7f8a47 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -3,6 +3,10 @@
->  #include "userdiff.h"
->  #include "xdiff-interface.h"
->  
-> +static int grep_source_load(struct grep_source *gs);
-> +static int grep_source_is_binary(struct grep_source *gs);
-> +
-> +
->  static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
->  					const char *origin, int no,
->  					enum grep_pat_token t,
-> @@ -403,7 +407,7 @@ static void dump_grep_expression_1(struct grep_expr *x, int in)
->  	}
->  }
->  
-> -void dump_grep_expression(struct grep_opt *opt)
-> +static void dump_grep_expression(struct grep_opt *opt)
->  {
->  	struct grep_expr *x = opt->pattern_expression;
->  
-> diff --git a/grep.h b/grep.h
-> index 00d71f7..8a28a67 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -159,11 +159,10 @@ struct grep_source {
->  
->  void grep_source_init(struct grep_source *gs, enum grep_source_type type,
->  		      const char *name, const void *identifier);
-> -int grep_source_load(struct grep_source *gs);
->  void grep_source_clear_data(struct grep_source *gs);
->  void grep_source_clear(struct grep_source *gs);
->  void grep_source_load_driver(struct grep_source *gs);
-> -int grep_source_is_binary(struct grep_source *gs);
-> +
->  
->  int grep_source(struct grep_opt *opt, struct grep_source *gs);
 
-Heh, so I obviously didn't see this before sending the patch yesterday! :-D
+In particular, sparse complains as follows:
 
-Yes, this solves the problem addressed by yesterday's patch, so please
-ignore that. However, this tickles sparse to complain as well ... ;-)
+        SP grep.c
+    grep.c:1472:5: warning: symbol 'grep_source_load' was not \
+        declared. Should it be static?
+    grep.c:1500:5: warning: symbol 'grep_source_is_binary' was not \
+        declared. Should it be static?
 
-New patch on it's way.
+These warnings actually illustrate a known bug in sparse. The forward
+declarations of these functions (on lines 6-7) include the static
+modifier. These forward declarations convey the file scope property to
+the later function definitions. Note that the function definition does
+not have to include the static modifier for this to take effect.
 
-[I have a funny feeling that I'm about to download an email, in response
-to yesterday's patch, that says something like: "does commit 07a7d656 not
-fix it for you ..." :-P ]
+In order to suppress the warnings, we simply include the (redundant)
+static modifier in the function definitions. Note that repeating the
+modifier, while not needed by the definition of C, does make it clear
+to the human reader, at the point of definition, that the symbol has
+file scope.
 
-ATB,
-Ramsay Jones
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index c7f8a47..898be6e 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1469,7 +1469,7 @@ static int grep_source_load_file(struct grep_source *gs)
+ 	return 0;
+ }
+ 
+-int grep_source_load(struct grep_source *gs)
++static int grep_source_load(struct grep_source *gs)
+ {
+ 	if (gs->buf)
+ 		return 0;
+@@ -1497,7 +1497,7 @@ void grep_source_load_driver(struct grep_source *gs)
+ 	grep_attr_unlock();
+ }
+ 
+-int grep_source_is_binary(struct grep_source *gs)
++static int grep_source_is_binary(struct grep_source *gs)
+ {
+ 	grep_source_load_driver(gs);
+ 	if (gs->driver->binary != -1)
+-- 
+1.7.12
