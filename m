@@ -1,73 +1,210 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v2 4/6] Refactor mechanics of testing in a sub test-lib
-Date: Wed, 19 Sep 2012 21:15:58 +0100
-Message-ID: <20120919201558.GE19246@atlantic.linksys.moosehall>
-References: <1348074915-19985-1-git-send-email-git@adamspiers.org>
- <1348074915-19985-5-git-send-email-git@adamspiers.org>
- <20120919175655.GC11699@sigill.intra.peff.net>
- <20120919184406.GC19246@atlantic.linksys.moosehall>
- <20120919193708.GA21950@sigill.intra.peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
+Date: Wed, 19 Sep 2012 22:23:59 +0200
+Message-ID: <505A29DF.6030501@web.de>
+References: <5001644F.10901@web.de> <20120715090849.GB18385@sigill.intra.peff.net> <5059ED25.9090002@web.de> <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 22:16:12 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 22:24:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEQgt-0001v9-5K
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:16:11 +0200
+	id 1TEQoh-0006oY-0S
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 22:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526Ab2ISUQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 16:16:01 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:45135 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292Ab2ISUQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 16:16:00 -0400
-Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 81E082E39E
-	for <git@vger.kernel.org>; Wed, 19 Sep 2012 21:15:59 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20120919193708.GA21950@sigill.intra.peff.net>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751626Ab2ISUYF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Sep 2012 16:24:05 -0400
+Received: from mout.web.de ([212.227.17.12]:54882 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751510Ab2ISUYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 16:24:04 -0400
+Received: from birne.lan ([195.67.191.22]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0McWnE-1Swtvc0EjY-00Hq9Q; Wed, 19 Sep 2012 22:24:00 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:9ihHD3zW5+LCH6P/9iviBmiIRfuwh+o3Clhr0bkXDA6
+ /aE+HQ5n8lX4gZ57drY3gf1tMNKWIkktFFfuWsEwmI6GJvAk13
+ j6HdEJm8iRE5MFN/JLWL4rTiAxEoVz6UA+BB/SB1/KkjLYLNt9
+ xF30cUzcZVHwWPQnHO3hEKZSpXfpfLR22IA+QxOfj3E8DcD81D
+ AXl4l1xn+xHyXIzTmCi9w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205994>
 
-On Wed, Sep 19, 2012 at 03:37:08PM -0400, Jeff King wrote:
-> Looking at it again, it is actually quite subtle what is going on. We
-> wrap the outer test_expect_* calls in double-quotes so that the inner
-> ones can use single-quotes easily. But that means that technically the
-> contents of the here-doc _are_ interpolated. But not at test run-time,
-> but rather at the call to test_expect_*. And that is why we nee to use
-> "\\" instead of "\". So I think anybody trying to tweak these tests
-> using shell metacharacters is in for a surprise either way.
+Thanks Junio,
+and all readers
+commenst and answers are inline
 
-Actually I already did that in one place:
+On 19.09.12 20:30, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>>>> Linux:
+>>>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, =
+not a commit
+>>>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken link=
+s
+>>>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not l=
+oad tagged object
+>>>>
+>>>> Mac OS X:
+>>>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit=
+, not a blob
+>>>> error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or=
+ missing
+>=20
+> Interesting difference.
+>=20
+>>> That seems very broken. That sha1 can have only one type, so OS X i=
+s
+>>> actually mis-parsing the object type? Weird. I would suggest a memo=
+ry
+>>> error or race condition, but the test is valgrind-clean, and fsck s=
+hould
+>>> not be threaded at all.
+>=20
+> "is a blob, not a commit" is likely to come from validating of the
+> tag 66f6581d that presumably point at 63499e4; it reads the tag,
+> learns the name of the object that is tagged and the type of it,
+> remembers that the object pointed at (which it hasn't and is going
+> to validate next) _must_ be a commit (because tag says so) and then
+> realizes when it reads 63499e4 it is a blob and barfs.
+>=20
+> And that is what _should_ happen in that test.  It crafts a
+> malformed tag that points at a blob and claims that it is a commit.
+> The test makes sure fsck catches that, and it does.
+>=20
+> On the other hand, "is a commit, not a blob", unless you have a tag
+> that directly points at a blob, is more likely to come from
+> validating some tree object.  It reads the tree, learns the name of
+> the object contained in the tree and infers the type of that object
+> from the mode bits in the tree (100644 or 100755 would mean the
+> object must be a blob), goes on to validate that object and realizes
+> it is a commit and barfs.
+Sorry for not knowing better and asking stupid questions.
+"Reads the tree", does it mean "read the index file" and put all object=
+s into memory
+or does it mean "scan the file system using readdir()"
+Or is both done?
 
-    test_expect_success 'pretend we have a fully passing test suite' "
-            run_sub_test_lib_test full-pass '3 passing tests' <<-\\EOF &&
-            for i in 1 2 3; do
-                    test_expect_success \"passing test #\$i\" 'true'
-            done
-            test_done
-            EOF
-    [...]
-    "
+It looks as if there is a different execution order (wild speculation)
 
-Without the \\ preceeding the EOF, it needed to be:
+>=20
+> It is veriy unusual to get, even on two different platforms, both
+> messages for the same object.
+>=20
+> Could it be that you have i18n on "Object %s is a %s, not a %s" with
+> a wrong .po file that swaps the latter two parameters in the output?
+I'm using=20
+LANG=3Den_US.UTF-8
 
-                    test_expect_success \"passing test #\\\$i\" 'true'
+>=20
+>>> What does "git show 63499e4" show when the test has failed?
+>=20
+> Was this question ever answered (I would prever "cat-file -t"
+> followed by "cat-file <type>" instead of "show" for things like
+> this)?  It should show that it is a blob whose contents is "blob\n".
 
-> I'm not sure it is worth worrying about, though, as handling it
-> would probably make the existing tests less readable.
+The question was never answered - I recently learnt that 63499e4 has be=
+en removed by this line:=20
+	test_when_finished "remove_object $sha" &&
+And when I remove that line in the modified test case, I get:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Mac OS X, failed
+--------------
+find . -name "499e4*"=20
+=2E/.git/objects/63/499e4ea8e096b831515ceb1d5a7593e4d87ae5
 
-Yeah, the for loop is perhaps slightly overkill :-)
+find . -name "499e4*" | xargs xxd
+0000000: 7801 4bca c94f 5230 6548 0252 5c00 1938  x.K..OR0eH.R\..8
+0000010: 039e                                     ..
 
-> It all looks sane to me. Thanks again.
+git show 63499e4
+blob
 
-Thanks for your (unnervingly) thorough reviews ;-)
+git cat-file -t 63499e4
+blob
+
+git cat-file blob 63499e4
+blob
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+Mac OS X passed
+---------------
+~/projects/git/git.next/t/trash_directory.t1450-fsck2_120919_214913> ..=
+/../../errors_on_master/1450/junio.sh
+find . -name "499e4*"=20
+=2E/.git/objects/63/499e4ea8e096b831515ceb1d5a7593e4d87ae5
+
+find . -name "499e4*" | xargs xxd
+0000000: 7801 4bca c94f 5230 6548 0252 5c00 1938  x.K..OR0eH.R\..8
+0000010: 039e                                     ..
+
+git show 63499e4
+blob
+
+git cat-file -t 63499e4
+blob
+
+git cat-file blob 63499e4
+blob
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Linux failed
+----------
+find . -name "499e4*"=20
+=2E/.git/objects/63/499e4ea8e096b831515ceb1d5a7593e4d87ae5
+
+find . -name "499e4*" | xargs xxd
+0000000: 7801 4bca c94f 5230 6548 0252 5c00 1938  x.K..OR0eH.R\..8
+0000010: 039e                                     ..
+
+git show 63499e4
+blob
+
+git cat-file -t 63499e4
+blob
+
+git cat-file blob 63499e4
+blob
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+So unless I'm too tired to see, there doesn't seem to be a difference
+[snip]
+>>
+>> diff failed passed
+>> diff out ../../../git.next/t/trash_directory.t1450-fsck2_120912_2053=
+05/out
+>> 17a18,20
+>>> Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
+>>> Checking blob 63499e4ea8e096b831515ceb1d5a7593e4d87ae5
+>>> error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a blob, n=
+ot a commit
+>=20
+> This is the correct behaviour.
+>=20
+>> 18a22,23
+>>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: broken links
+>>> error in tag 66f6581d549f70e05ca586bc2df5c15a95662c36: could not lo=
+ad tagged object
+>=20
+> This too.
+>=20
+>> 20,22d24
+>> < Checking blob 5626abf0f72e58d7a153368ba57db4c673c0e171
+>> < error: Object 63499e4ea8e096b831515ceb1d5a7593e4d87ae5 is a commit=
+, not a blob
+>> < error: 63499e4ea8e096b831515ceb1d5a7593e4d87ae5: object corrupt or=
+ missing
+
+OK, both are correct. But why isn't the "broken links" not detected?
+Does fsck stop in one case, but continue in the other?
+
+/Torsten
