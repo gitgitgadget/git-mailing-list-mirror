@@ -1,99 +1,81 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] Documentation/git-blame.txt: --follow is a NO-OP
-Date: Wed, 19 Sep 2012 14:09:25 -0700
-Message-ID: <819C66A4-390B-4C29-86BD-D4CB4DB43385@sb.org>
-References: <20120906151317.GB7407@sigill.intra.peff.net>
- <1348022905-10048-1-git-send-email-n1xim.email@gmail.com>
- <7v627aiq47.fsf@alter.siamese.dyndns.org>
- <20120919182715.GF11699@sigill.intra.peff.net>
- <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
- <20120919194213.GB21950@sigill.intra.peff.net>
- <C07F05AC-8FBF-4F09-AF13-A291181A06D9@sb.org>
- <20120919203738.GA24383@sigill.intra.peff.net>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: RE: [PATCH] Port to HP NonStop
+Date: Wed, 19 Sep 2012 23:11:08 +0200
+Message-ID: <001e01cd96ab$4a9d9df0$dfd8d9d0$@schmitz-digital.de>
+References: <000101cd964e$06a255d0$13e70170$@schmitz-digital.de> <alpine.LNX.2.01.1209191945160.19536@nerf07.vanv.qr> <001601cd968f$d8d91ed0$8a8b5c70$@schmitz-digital.de> <alpine.LNX.2.01.1209192232590.19536@nerf07.vanv.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <n1xim.email@gmail.com>,
-	gitList list <git@vger.kernel.org>, Matthieu.Moy@imag.fr,
-	andy@aeruder.net, chriscool@tuxfamily.org,
-	dmellor@whistlingcat.com, dpmcgee@gmail.com, fonseca@diku.dk,
-	marius@trolltech.com, namhyung@gmail.com,
-	rene.scharfe@lsrfire.ath.cx, s-beyer@gmx.net, trast@inf.ethz.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 23:10:57 2012
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "'Jan Engelhardt'" <jengelh@inai.de>
+X-From: git-owner@vger.kernel.org Wed Sep 19 23:11:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TERXs-0000qb-Ve
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 23:10:57 +0200
+	id 1TERYV-0001JI-L1
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 23:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947Ab2ISVKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 17:10:46 -0400
-Received: from mail-out.apple.com ([17.151.62.50]:45434 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884Ab2ISVKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 17:10:45 -0400
-X-Greylist: delayed 1975 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Sep 2012 17:10:45 EDT
-Received: from relay14.apple.com ([17.128.113.52])
- by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTPS id <0MAM00K19847Q400@mail-out.apple.com> for git@vger.kernel.org;
- Wed, 19 Sep 2012 14:10:45 -0700 (PDT)
-X-AuditID: 11807134-b7f8e6d000003fa4-c8-505a34873373
-Received: from kencur (kencur.apple.com [17.151.62.38])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay14.apple.com (Apple SCV relay)
- with SMTP id A2.E7.16292.7843A505; Wed, 19 Sep 2012 14:09:27 -0700 (PDT)
-Received: from il0103a-dhcp80.apple.com
- (il0103a-dhcp80.apple.com [17.201.37.208])
- by kencur.apple.com (Oracle Communications Messaging Server 7u4-24.01
- (7.0.4.24.0) 64bit (built Nov 17 2011))
- with ESMTPSA id <0MAM00H7683PKG90@kencur.apple.com> for git@vger.kernel.org;
- Wed, 19 Sep 2012 14:09:27 -0700 (PDT)
-In-reply-to: <20120919203738.GA24383@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1498)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOLMWRmVeSWpSXmKPExsUiON1OTfeqSVSAweZ+XouuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGVsed/AWvCCs+LczNmMDYyv2bsYOTkkBEwkTq3bAWWLSVy4t56t
-	i5GLQ0ignUmi99QaFpCEkMBeJomDk8CKmAW0JNbvPM4EYvMK6Enc/rkMzBYWcJX4+2I3WA2b
-	gJLEvQlLwOKcAtYSf/oWM4PYLAKqEqeW9LCDLGAWeMQksenxIaih8hKb17xlhhhqKXFj8j5m
-	iCsmMEs83QyxWURAVuL74Y2MEKfKStx78ZttAqPALCRHzUJy1CwkcxcwMq9iFCxKzUmsNDTR
-	SywoyEnVS87P3cQICr6GQpMdjAd/8h9iFOBgVOLhNRKLChBiTSwrrsw9xCjBwawkwvtjb2SA
-	EG9KYmVValF+fFFpTmrxIUZpDhYlcV4RAaBqgfTEktTs1NSC1CKYLBMHp1QDo9PRXS05i25N
-	KfGe8/LhlScxH2+dcVLynrMuLv7jhQOK+UX+Gybda36rwajac1rRLsyy2mbVPZUfMb+zdnEL
-	XStOm9jLN3XjsSweQYbYqOpppbWPNcx9uu4/eb4myYK90+luReem30de8E87a50QftVRgXu2
-	3rzcaauUF78PWMPAfm4yG59GnRJLcUaioRZzUXEiAC1PMdw6AgAA
+	id S1752021Ab2ISVL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 17:11:27 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:55098 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751942Ab2ISVL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 17:11:26 -0400
+Received: from DualCore (dsdf-4d0a1993.pool.mediaWays.net [77.10.25.147])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0LfYt7-1TqD8Y2a0v-00p1Bv; Wed, 19 Sep 2012 23:11:12 +0200
+In-Reply-To: <alpine.LNX.2.01.1209192232590.19536@nerf07.vanv.qr>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQFMdLLbfkMGN4L+ay/JCcMH3R8/WwGpV7cXASOJJNoB4e4XV5hu9gcg
+Content-Language: de
+X-Provags-ID: V02:K0:ExsX6kTZ6DEuoqWugjkJlFUGwShqR1FoDr22Cmm72pF
+ LbNp8LRevlpDn4sPNlq9Kwfj2fxtaxGDcI2Lsq/iT7Jgu4Ki9v
+ QCepkKNZHjxLaYb00PXXYUkUB4HD9zAoq6U0QstFUAAlBM4pWE
+ jLbY08zhKjz1EUeYe0nCCUVwichMBtBJQ/gNytLSCqIYElx+Gn
+ BsImNmWVnMduyF1EM7wO7vqDXLZyGZyXITuyiQTMRryJQzGyWB
+ 4hXcxcNxCZCLcUVQH42IcZkYFnS8NAz3m+nfi6nZ5xL2MGuzGD
+ 2Izx+eHLfX8TpiInbv18vOkQ22PIMG5lyRWLbjf4HixU/D7q9a
+ 5j/eKiiYkbqTojLi5gB8vg06I5a3MIAqYBa+3vZOjBj+L3JmbO
+ +aaSKDSK4jUJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206002>
 
-On Sep 19, 2012, at 1:37 PM, Jeff King <peff@peff.net> wrote:
-
-> On Wed, Sep 19, 2012 at 01:31:50PM -0700, Kevin Ballard wrote:
+> From: Jan Engelhardt [mailto:jengelh@inai.de]
+> Sent: Wednesday, September 19, 2012 10:34 PM
+> To: Joachim Schmitz
+> Cc: 'Junio C Hamano'; git@vger.kernel.org
+> Subject: RE: [PATCH] Port to HP NonStop
 > 
->>> I am a little lukewarm on my patch if only because of the precedent it
->>> sets.  There are a trillion options that revision.c parses that are not
->>> necessarily meaningful or implemented for sub-commands that piggy-back
->>> on its option parser. I'm not sure we want to get into manually
->>> detecting and disallowing each one in every caller.
->> 
->> I tend to agree with your final sentiment there. But the point that
->> users may not realize that blame already follows is also valid. Perhaps
->> we should catch --follow, as in your patch, but instead of saying that
->> it's an unknown argument, just print out a helpful message saying blame
->> already follows renames (and then continue with the blame anyway, so
->> as to not set a precedent to abort on unknown-but-currently-accepted
->> flags).
+> On Wednesday 2012-09-19 19:54, Joachim Schmitz wrote:
 > 
-> Sure, that would probably make sense. Care to roll a patch with
-> suggested wording?
+> >> From: Jan Engelhardt [mailto:jengelh@inai.de]
+> >> Sent: Wednesday, September 19, 2012 7:48 PM
+> >> To: Joachim Schmitz
+> >> Cc: 'Junio C Hamano'; git@vger.kernel.org
+> >> Subject: Re: [PATCH] Port to HP NonStop
+> >>
+> >>
+> >> On Wednesday 2012-09-19 12:03, Joachim Schmitz wrote:
+> >> >+#ifdef NO_INTPTR_T
+> >> >+/*
+> >> >+ * On I16LP32, ILP32 and LP64 "long" is the save bet, however
+> >> >+ * on LLP86, IL33LLP64 and P64 it needs to be "long long",
+> >> >+ * while on IP16 and IP16L32 it is "int" (resp. "short")
+> >> >+ * Size needs to match (or exceed) 'sizeof(void *)'.
+> >> >+ * We can't take "long long" here as not everybody has it.
+> >>
+> >> Are you trying to port git to DOS or why would you mention IP16? :-)
+> >
+> >Just for completness, nothing else ;-)
+> 
+> The problem would be that some, if not most, C environments in DOS offer
+> a P16P32 model - thanks to (near void *) and (far void *).
 
-Sadly, no. I'm not in a position to contribute to GPL code anymore, based
-on my current job (I'd have to jump through some hoops to get the ok
-to expose myself to that potential legal liability).
-
--Kevin
+No problem. "long" would be big enough for these (wasting some space though)
+Only LLP86, IL33LLP64 and P64 would need it bigger, "long long".
