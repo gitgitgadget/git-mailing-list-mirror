@@ -1,83 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git 1.7.12 installer blocked by Gatekeeper - needs signing with
- an Apple developer ID
-Date: Wed, 19 Sep 2012 10:31:58 -0700
-Message-ID: <7vr4pxhqb5.fsf@alter.siamese.dyndns.org>
-References: <954DDAEA-30AF-4203-BD49-3AB163E4EF58@telenet.be>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Wed, 19 Sep 2012 19:35:28 +0200
+Message-ID: <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
+References: <201107252233.02088.jnareb@gmail.com>
+	<201109031738.11678.jnareb@gmail.com>
+	<CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+	<201109141939.14070.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Torsten Louland <torsten.louland@telenet.be>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 19 19:32:19 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 19:35:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEO8C-0002ir-Fl
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:32:12 +0200
+	id 1TEOBW-0004Jw-Hi
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756679Ab2ISRcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 13:32:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62753 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756631Ab2ISRcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 13:32:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 659CE9946;
-	Wed, 19 Sep 2012 13:32:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=baZyMxVmcI+9Q+P2nZjVEqAMpCY=; b=xAHOX3
-	1hXewDF1/BSjhGXVxIsmqEpK5yJu3iK0pCpLn+48cwUjPSfu2Zc/XBX58Adq3pId
-	NwDerf3P8Jq/WJbvnNcNk3j35SHFRCMDaYnJtlEGOig5Qj/txCAdvhZdg9R0Upvh
-	ivOADdnE2iD+iLre6ZG/WVVHEB0SAc4nHdLxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C+jMykhQrh8udk4svlNN4gVC0RD/BFPp
-	JkdCYP+5UJweh6POvyFIF5vldqTDoyqV+2WRKRGQzN1gnS6C0QHe67KoE+PAyVGd
-	k452mGaEJLAmqUZcGA048MF8tK45JD+j3DidqyYiWiDhuz/amB61eMD49SenBTce
-	mP3EyYjlbVM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52DBC9944;
-	Wed, 19 Sep 2012 13:32:00 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA1489941; Wed, 19 Sep 2012
- 13:31:59 -0400 (EDT)
-In-Reply-To: <954DDAEA-30AF-4203-BD49-3AB163E4EF58@telenet.be> (Torsten
- Louland's message of "Wed, 19 Sep 2012 07:59:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EABF4AE6-027F-11E2-A6D4-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932765Ab2ISRfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 13:35:30 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:62739 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932687Ab2ISRf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 13:35:29 -0400
+Received: by oago6 with SMTP id o6so1317537oag.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4XF548Fu6JpojgD5wLl2xbxT4qxYOxlvBRP4KRVrlJI=;
+        b=fBGZTIIeTHI7FGeQBqNqYalzJLvjpZcOrnolR6ZWNJAA0VN0AIFMxoIMVJjfvIIz5c
+         2ikgL0j3/Vc4ZInAf04XICL8sly2oUJARtNrwZ+76Mq4dsgLEXboVvYrt/QdkeaEHY8K
+         vsQH6LrxYELbFu1mLqWjqqcMxW14NvT0hxKVhe4I8KOZiI8pUjVDk4bq+hSanjZVOKu2
+         REXrKwl/HFFWN9cH0a3gqXHiwXXLppbCgdYONhHHdGbgQD0BbEVkjOqSmzjSRB1JUjVA
+         OWxMP9tJEzci4UEY+MXu+wFj16Vi8jR3UcLMUzteIhYaHF36lHfRtfiWBbS2V/3gLmwy
+         lgHQ==
+Received: by 10.60.171.109 with SMTP id at13mr3576117oec.79.1348076128653;
+ Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
+Received: by 10.60.164.7 with HTTP; Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
+In-Reply-To: <201109141939.14070.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205957>
 
-Torsten Louland <torsten.louland@telenet.be> writes:
+Hi,
 
-> Installing latest stable git on Mac OS X Mountain Lion is blocked
-> by Gatekeeper.
->
-> Could you provide an installer for latest stable git that is
-> signed with an Apple issued developer ID so gatekeeper will let it
-> through?
+On Wed, Sep 14, 2011 at 7:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 
-I am assuming that this is about the mechanism to block installation
-or execution of binaries obtained from outside the Apple store, and
-anything built from the source are exempt.
+> P.S. Would you be interested in running the next survey?
 
-If that assumption is mistaken, please correct/educate me and
-disregard the rest of the message.
+I haven't seen any news regarding the 2012 survey. I'm interested in
+running the survey this time, but I would like to know what that
+entails :)
 
-I release only the source tarballs and no longer do any pre-built
-binaries (I used to do so only for RPM), and Torsten must be getting
-a(n unsigned) binary from somewhere; the request needs to be given
-to whoever is supplying a pre-built binary for MacOS, but I do not
-know who that entity is.
+I think the surveys should continue.
 
-Whoever you are, please speak up and help Torsten and fellow MacOS
-folks.
+Cheers.
 
-Thanks.
+-- 
+Felipe Contreras
