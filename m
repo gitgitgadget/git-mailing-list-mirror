@@ -1,89 +1,75 @@
-From: dborowitz@google.com
-Subject: [PATCH] Documentation/Makefile: Allow custom XMLTO binary
-Date: Wed, 19 Sep 2012 10:06:37 -0700
-Message-ID: <1348074397-29978-1-git-send-email-dborowitz@google.com>
-Cc: Dave Borowitz <dborowitz@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Sep 19 19:07:09 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: possible bug in autocompletion
+Date: Wed, 19 Sep 2012 19:08:09 +0200
+Message-ID: <CAMP44s2X5-BUyLtkTqGMa6w5K6uT25YLEp+Q2TdVR_qCObOpeA@mail.gmail.com>
+References: <BLU0-SMTP405CDB35308082B180185A6B4DB0@phx.gbl>
+	<20120717121232.GA32571@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeroen Meijer <jjgmeijer@hotmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 19:08:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TENjv-0005WH-Kc
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:07:08 +0200
+	id 1TENlM-0006K1-5I
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756264Ab2ISRG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 13:06:58 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:37178 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754475Ab2ISRG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 13:06:57 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr13so2934376pbb.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 10:06:57 -0700 (PDT)
+	id S932701Ab2ISRIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 13:08:22 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:45868 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932372Ab2ISRIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 13:08:10 -0400
+Received: by oago6 with SMTP id o6so1284102oag.19
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 10:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=SYWNuJgya5s69byfMJnXKk3daEKX3Glm3XtxPjNkxyY=;
-        b=DwiRm21d3GwVyd1OPPbwz8+2lAklliTd3EzxNzTDLNdfCfI7vAW9VV7Dl6+E9FNYhQ
-         YpHHvYoiT2ShIXg2Q8skr3XexphWI9wIFT7AyuEklKqZcfrJhD6uhEkMkPppbTnQv8Z9
-         z3Mz42RLi/oWVV3guP0CInkqlIpp3kLt2mKp3k3td/tAkNKhL1nEMfbgTLB7pUTe1A8t
-         ZyRyLle8eryaQTdYsMid328Cg4f4Y/92e11PFp3mh//so8YAscgLE6sUTdLZR1dQUA+S
-         V8vHDdAoFTxXWyFwQx58LRHrNPPBOWaqAG99wvi27xwGQLIDUUYlgwTIpzYy0KLRwJrP
-         DirA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:x-gm-message-state;
-        bh=SYWNuJgya5s69byfMJnXKk3daEKX3Glm3XtxPjNkxyY=;
-        b=J7I+afvS6RlxLesgFIxjEx8f0W0TmxEx6pkINlM7k1sf3IVIImy23tZD0PfosGmn0J
-         yeF8mq0RbEnD5X2doS39//0CLvRhgheJhxRGX+jaz//GVl8gZ9e2e9UN/X3bxx91dPgh
-         cqp66P4BtI/crEuEwEXx0zlpeII4VSNN09NDQAszlx3ZSaTvuKb+PNI4iUYftYH7k2qD
-         bIaWSj37c+b6AoZs8svw+sWwsYKoh64pgiawqB++EpQ6PEmeOMTD6XU1vhOYBnDCEV+b
-         7IfBqxKhZUQqS4hQWjAPseor0AL+WqpCfwq4TtKkfAzX6/NfQqswNLu03skqZaxoJ7BZ
-         ioYg==
-Received: by 10.66.73.166 with SMTP id m6mr8476477pav.1.1348074416999;
-        Wed, 19 Sep 2012 10:06:56 -0700 (PDT)
-Received: by 10.66.73.166 with SMTP id m6mr8476448pav.1.1348074416796;
-        Wed, 19 Sep 2012 10:06:56 -0700 (PDT)
-Received: from serval.mtv.corp.google.com (serval.mtv.corp.google.com [172.27.69.27])
-        by mx.google.com with ESMTPS id te6sm2129666pbc.29.2012.09.19.10.06.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 19 Sep 2012 10:06:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.1
-X-Gm-Message-State: ALoCoQk+YT/Qra2ceP8CnBSlW0H3h+kKwQC4XO+N8F6WVTEaQ9eGho2k7Uqg5UQjAvqHF67XswOfbcKWdKPu87TbSqqW/xkK9s4+On7U2bhBXdQdiovFgqEUSQwhxvigQpWR3Zb9mudtJWqcN/xJVfXG99Nrw9yE8UvjHPrXoebsQPxzPZADEF6+g+QZZD6Q7Pq9YqKgiafwM6e6Fu9j5hI2WmUO2pmBp7eMdMYMi35m+rvsUmWRTrU=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=D6/qD1HuUoqtApJA6Cjidokrws3/pldpT19f4n144G0=;
+        b=dZEv5gtytqEVwVD/+QuMBZ+L/3vyOjQxf9cTyO4wmK63FG/RwUQ6ZZjGwciis/QHVV
+         yYOo6nw5sLluvDyypcm7OHZFYorHnojRZA5htUQ9Anx2VgisOA4AX+U9RIxfJOL0Aywo
+         RZWfJdtBW5wot1qDsM4wuCLevrz0uGLFfKR/SqGNSsGUFpvQljxVeQ/5IJ/sxZvH+nNh
+         8tXXQdswfwLOKjwDdfoW0UuV5SEbTiutOpBM9PM2NKyDV1ZjuCfb2obvfaDy/B+VU6ML
+         TjyhPS2cUV+18fks6wtu0yNztVNKkmWl2FzW1hVf5iKOp3qHpH2c7YFgmvwuIHdjYBGT
+         XHng==
+Received: by 10.182.152.65 with SMTP id uw1mr3349491obb.91.1348074489646; Wed,
+ 19 Sep 2012 10:08:09 -0700 (PDT)
+Received: by 10.60.164.7 with HTTP; Wed, 19 Sep 2012 10:08:09 -0700 (PDT)
+In-Reply-To: <20120717121232.GA32571@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205947>
 
-From: Dave Borowitz <dborowitz@google.com>
+On Tue, Jul 17, 2012 at 2:12 PM, Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Dave Borowitz <dborowitz@google.com>
----
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -261,7 +261,12 @@ __gitcomp ()
+>  __gitcomp_nl ()
+>  {
+>         local IFS=$'\n'
+> -       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
+> +       local words=$1
+> +       words=${words//\\/\\\\}
+> +       words=${words//\$/\\\$}
+> +       words=${words//\'/\\\'}
+> +       words=${words//\"/\\\"}
+> +       COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$words" -- "${3-$cur}"))
+>  }
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index cf5916f..b045628 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -47,6 +47,7 @@ man7dir=$(mandir)/man7
- ASCIIDOC=asciidoc
- ASCIIDOC_EXTRA =
- MANPAGE_XSL = manpage-normal.xsl
-+XMLTO=xmlto
- XMLTO_EXTRA =
- INSTALL?=install
- RM ?= rm -f
-@@ -245,7 +246,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
- 
- %.1 %.5 %.7 : %.xml manpage-base-url.xsl
- 	$(QUIET_XMLTO)$(RM) $@ && \
--	xmlto -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
-+	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
- 
- %.xml : %.txt
- 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+What about something like this?
+
+local words
+printf -v words "%q" "$w"
+COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$words" -- "${3-$cur}"))
+
+Cheers.
+
 -- 
-1.7.12.1
+Felipe Contreras
