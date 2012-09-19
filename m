@@ -1,66 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Wed, 19 Sep 2012 19:35:28 +0200
-Message-ID: <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com>
-	<201109031738.11678.jnareb@gmail.com>
-	<CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
-	<201109141939.14070.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Add .editorconfig file to source repository to maintain a
+ consistent coding style
+Date: Wed, 19 Sep 2012 10:43:37 -0700
+Message-ID: <7vmx0lhprq.fsf@alter.siamese.dyndns.org>
+References: <64033A69-B5AA-461A-80B4-F143E4FC1614@hong.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 19:35:39 2012
+To: Hong Xu <dev@hong.me>
+X-From: git-owner@vger.kernel.org Wed Sep 19 19:43:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEOBW-0004Jw-Hi
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:35:38 +0200
+	id 1TEOJS-0008Pg-PZ
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932765Ab2ISRfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 13:35:30 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:62739 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932687Ab2ISRf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 13:35:29 -0400
-Received: by oago6 with SMTP id o6so1317537oag.19
-        for <git@vger.kernel.org>; Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4XF548Fu6JpojgD5wLl2xbxT4qxYOxlvBRP4KRVrlJI=;
-        b=fBGZTIIeTHI7FGeQBqNqYalzJLvjpZcOrnolR6ZWNJAA0VN0AIFMxoIMVJjfvIIz5c
-         2ikgL0j3/Vc4ZInAf04XICL8sly2oUJARtNrwZ+76Mq4dsgLEXboVvYrt/QdkeaEHY8K
-         vsQH6LrxYELbFu1mLqWjqqcMxW14NvT0hxKVhe4I8KOZiI8pUjVDk4bq+hSanjZVOKu2
-         REXrKwl/HFFWN9cH0a3gqXHiwXXLppbCgdYONhHHdGbgQD0BbEVkjOqSmzjSRB1JUjVA
-         OWxMP9tJEzci4UEY+MXu+wFj16Vi8jR3UcLMUzteIhYaHF36lHfRtfiWBbS2V/3gLmwy
-         lgHQ==
-Received: by 10.60.171.109 with SMTP id at13mr3576117oec.79.1348076128653;
- Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
-Received: by 10.60.164.7 with HTTP; Wed, 19 Sep 2012 10:35:28 -0700 (PDT)
-In-Reply-To: <201109141939.14070.jnareb@gmail.com>
+	id S1756786Ab2ISRnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 13:43:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35138 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756672Ab2ISRnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 13:43:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0002C9CFE;
+	Wed, 19 Sep 2012 13:43:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B0yYFFsO6+OfKaMiOb/pz9/tz9g=; b=BAF14w
+	MJzPyT5Wdf3JJBxk1rjFtWMvsx9/r2XZd1z1NQB91qZQzXdnTN54F1qkH6s8RUQz
+	nFoG4ZpbNm9diq8qBygH8I9YYcd9N47dpjWs3yWbbLzcPL5axm17e8cgw6EA2tlD
+	v8DFJmyI8/CMv+xR9IRwcBkH4dvBDUXTLQLNA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UBhwkliA0AnYFZ2QLuvKrPe3ffIsAkUv
+	ii2JacNzXbMuiJ59T3AXHLF6LwB9QXvebrFIQBs33e5Z7zrnZzE8cM/b/cKgFZoZ
+	A6yUAWPLbLjnd83f1WHbZNdmDP4emn/vhif+QwuKYCxfaVS1ntn2pFHfczKQLJDV
+	4XtZfFOM0SI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1C849CFC;
+	Wed, 19 Sep 2012 13:43:39 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C2EC9CFB; Wed, 19 Sep 2012
+ 13:43:39 -0400 (EDT)
+In-Reply-To: <64033A69-B5AA-461A-80B4-F143E4FC1614@hong.me> (Hong Xu's
+ message of "Wed, 19 Sep 2012 00:31:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8BCA2CCA-0281-11E2-9F86-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205958>
 
-Hi,
+Hong Xu <dev@hong.me> writes:
 
-On Wed, Sep 14, 2011 at 7:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> EditorConfig has been used in many large and famous projects, such
+> as Ruby, jQuery, etc.
 
-> P.S. Would you be interested in running the next survey?
+I see jQuery swallowed it and has been using it for 6 months, but
+citing Ruby as an example makes you look somewhat dishonest.  As far
+as I can see, they just added one a few days ago, which means they
+haven't had a chance to evaluate how it affects their developer's
+workflow and possibly realize that it is bad for their project and
+revert it, or find it very useful and give a raving blog about it.
 
-I haven't seen any news regarding the 2012 survey. I'm interested in
-running the survey this time, but I would like to know what that
-entails :)
+Throwing [Ruby EditorConfig] at my search engine gives mostly what
+you wrote and not much else, so it does not help me to judge the
+merit of using it objectively, either.
 
-I think the surveys should continue.
-
-Cheers.
-
--- 
-Felipe Contreras
+I dunno.
