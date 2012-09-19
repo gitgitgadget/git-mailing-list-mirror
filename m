@@ -1,96 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation/git-blame.txt: --follow is a NO-OP
-Date: Wed, 19 Sep 2012 15:42:13 -0400
-Message-ID: <20120919194213.GB21950@sigill.intra.peff.net>
-References: <20120906151317.GB7407@sigill.intra.peff.net>
- <1348022905-10048-1-git-send-email-n1xim.email@gmail.com>
- <7v627aiq47.fsf@alter.siamese.dyndns.org>
- <20120919182715.GF11699@sigill.intra.peff.net>
- <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/4] rebase -i: suggest using --edit-todo to fix an
+ unknown instruction
+Date: Wed, 19 Sep 2012 12:52:28 -0700
+Message-ID: <7vvcf9g58j.fsf@alter.siamese.dyndns.org>
+References: <CANiSa6j2zA5P6yDaR7VU416Bzes6xbWuHbU83=BGN67Wo9j_Cw@mail.gmail.com>
+ <1347931690-20625-1-git-send-email-andrew.kw.w@gmail.com>
+ <505969AA.1070509@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Drew Northup <n1xim.email@gmail.com>,
-	gitList <git@vger.kernel.org>, Matthieu.Moy@imag.fr,
-	andy@aeruder.net, chriscool@tuxfamily.org,
-	dmellor@whistlingcat.com, dpmcgee@gmail.com, fonseca@diku.dk,
-	freku045@student.liu.se, kevin@sb.org, marius@trolltech.com,
-	namhyung@gmail.com, rene.scharfe@lsrfire.ath.cx, s-beyer@gmx.net,
-	trast@inf.ethz.ch
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 21:42:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 21:52:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEQAC-0001MR-RV
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:42:25 +0200
+	id 1TEQKA-0006ae-PU
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:52:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011Ab2ISTmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 15:42:16 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49918 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750755Ab2ISTmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 15:42:15 -0400
-Received: (qmail 4504 invoked by uid 107); 19 Sep 2012 19:42:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Sep 2012 15:42:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2012 15:42:13 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
+	id S1751271Ab2ISTwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 15:52:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62175 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751014Ab2ISTwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 15:52:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC8AF806C;
+	Wed, 19 Sep 2012 15:52:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hW2Vb3SbXI+n0iOjkkaKa+WCG6s=; b=bmcmQ5
+	xn8VuLnqokEzXPp+vv+Od6wK1F6YOmKiaSJA0unho4/Ip4I78+Q63yiS22Y2JNqg
+	988zXHGHL/I9udtQuXeeYBAnvkBSZA4m/+owSMIJ3MpUYiyzE00NNdToIpyPXpZi
+	c8/hL2gfVGXpNBooU9TFo8OuSx4VkjhgMi0ss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f2575zxaZ/KFf/KSAxwHWw7/2hKehP1j
+	k3MzgLc0NUTbeorxfnwJ39NY29z5CsUU4iq7TRsny3/bf9f/xFlm5z6bjIFnW7xa
+	6jd82NTfKjGPS6f2vzJNo7LFeSAFXBzDIFbdSX9v+33AW+GsVf0iDNIocc8TizuU
+	GqfVY9uFahA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8CF5806B;
+	Wed, 19 Sep 2012 15:52:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D983806A; Wed, 19 Sep 2012
+ 15:52:30 -0400 (EDT)
+In-Reply-To: <505969AA.1070509@viscovery.net> (Johannes Sixt's message of
+ "Wed, 19 Sep 2012 08:43:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8BAC0F30-0293-11E2-97BC-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205985>
 
-On Wed, Sep 19, 2012 at 12:36:56PM -0700, Junio C Hamano wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> > Like this (totally untested) patch:
-> >
-> > diff --git a/builtin/blame.c b/builtin/blame.c
-> > index 0e102bf..412d6dd 100644
-> > --- a/builtin/blame.c
-> > +++ b/builtin/blame.c
-> > @@ -2365,6 +2365,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
-> >  			ctx.argv[0] = "--children";
-> >  			reverse = 1;
-> >  		}
-> > +		else if (!strcmp(ctx.argv[0], "--follow")) {
-> > +			error("unknown option `--follow`");
-> > +			usage_with_options(blame_opt_usage, options);
-> > +		}
-> >  		parse_revision_opt(&revs, &ctx, options, blame_opt_usage);
-> >  	}
-> >  parse_done:
-> 
-> This patch would not hurt existing users very much; blame is an
-> unlikely thing to run in scripts, and it is easy to remove the
-> misguided --follow from them.
+> From: Johannes Sixt <j6t@kdbg.org>
+>
+> We have now an explicit UI to edit the todo sheet and need not disclose
+> the name of the file.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  git-rebase--interactive.sh | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 2b8f2a9..4b2ef11 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -575,11 +575,12 @@ do_next () {
+>  		;;
+>  	*)
+>  		warn "Unknown command: $command $sha1 $rest"
+> +		fixtodo="Please fix this using 'git rebase --edit-todo'."
+>  		if git rev-parse --verify -q "$sha1" >/dev/null
+>  		then
+> -			die_with_patch $sha1 "Please fix this in the file $todo."
+> +			die_with_patch $sha1 "$fixtodo"
+>  		else
+> -			die "Please fix this in the file $todo."
+> +			die "$fixtodo"
+>  		fi
+>  		;;
+>  	esac
 
-I would not worry about such users. I am of the opinion that their
-scripts are buggy for calling a useless and undocumented option that
-just happened to not complain.
-
-> So I am in general OK with it, but if we are to go that route, we
-> should make sure that the documentation makes it clear that blame
-> follows whole-file renames without any special instruction before
-> doing so.  Otherwise, it again will send the same wrong message to
-> people who try to use the "--follow" from their experience with
-> "log", no?
-
-I guess it depends on your perspective. I can see the argument that
-blame is already doing what --follow would ask for, and thus it is a
-no-op. I think of it more as --follow is nonsensical for blame. But I
-do not think either is wrong per se, and there is no reason not to help
-people who come to git thinking the former. So yes, I think
-documentation in either case is probably a good thing.
-
-I am a little lukewarm on my patch if only because of the precedent it
-sets.  There are a trillion options that revision.c parses that are not
-necessarily meaningful or implemented for sub-commands that piggy-back
-on its option parser. I'm not sure we want to get into manually
-detecting and disallowing each one in every caller.
-
--Peff
+Good thinking. Makes sense to me.
