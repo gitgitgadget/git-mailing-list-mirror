@@ -1,181 +1,83 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 5/6] Test the test framework more thoroughly
-Date: Wed, 19 Sep 2012 18:15:14 +0100
-Message-ID: <1348074915-19985-6-git-send-email-git@adamspiers.org>
-References: <1348074915-19985-1-git-send-email-git@adamspiers.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 19:15:54 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 8/8] Doc branch: show -vv option and alternative
+Date: Wed, 19 Sep 2012 10:22:24 -0700
+Message-ID: <7vvcfagc6n.fsf@alter.siamese.dyndns.org>
+References: <1348010734-664-9-git-send-email-philipoakley@iee.org>
+ <7va9wmirud.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 19:22:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TENsM-0001zL-2B
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:15:50 +0200
+	id 1TENyv-0005hz-Gs
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 19:22:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932712Ab2ISRPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 13:15:38 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:44896 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932661Ab2ISRPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 13:15:23 -0400
-Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id AEB052E5DF;
-	Wed, 19 Sep 2012 18:15:21 +0100 (BST)
-X-Mailer: git-send-email 1.7.12.147.g6d168f4
-In-Reply-To: <1348074915-19985-1-git-send-email-git@adamspiers.org>
+	id S932424Ab2ISRW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 13:22:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58299 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932295Ab2ISRW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 13:22:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B2BA9707;
+	Wed, 19 Sep 2012 13:22:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6OobqiPHSv6/AZ9mDUW1LMJacQ8=; b=SSCCtI
+	/zVJ/OLXObqjnUPfdc9kDPLJCRpObVY4yYEuJ0h6qWc4KhAw1F40yckofDJABGzi
+	xmF/wh6K/lGW+NixN7CNt/bQv0VlHCvvY7TNi3n8kw23Bv+NCqJyPd80lvgJjv0N
+	en2DTCe+QN7uh0ep6JNUMOuxAkrvVfe4E1lM0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IiEfbd53woerok/8t6xPzL1STEHBbKaE
+	jwKVs9I9wnZf1hi06tL+9lN304xA2UqNWH+TV4ZWk1CETrTVq5HS4dGilpV0hGVX
+	10ZAm3mCAR6k81c56hRS4oArnzCbKrr5A/YJCp3B3mvgESjx2rqQMOXNn+67zwaC
+	1mHpbv0W1cc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 386ED9706;
+	Wed, 19 Sep 2012 13:22:27 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C4759705; Wed, 19 Sep 2012
+ 13:22:26 -0400 (EDT)
+In-Reply-To: <7va9wmirud.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 18 Sep 2012 21:01:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 952DBE9C-027E-11E2-A904-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205955>
 
-Add 5 new full test suite runs each with a different number of
-passing/failing/broken/fixed tests, in order to ensure that the
-correct exit code and output are generated in each case.  As before,
-these are run in a subdirectory in order to disrupt the metrics for
-the parent tests.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- t/t0000-basic.sh | 110 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 110 insertions(+)
+> Philip Oakley <philipoakley@iee.org> writes:
+>
+>> --v::
+>> +-v, -vv::
+>>  --verbose::
+>>  	When in list mode,
+>>  	show sha1 and commit subject line for each head, along with
+>>  	relationship to upstream branch (if any). If given twice, print
+>> -	the name of the upstream branch, as well.
+>> +	the name of the upstream branch, as well (see also `git remote
+>> +	show <remote>`).
+>
+> Can you try
+>
+> 	-v::
+>         -vv::
+>         --verbose::
+> 		The description...
+>
+> instead?  Cf. http://thread.gmane.org/gmane.comp.version-control.git/205184/focus=205315
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 662cd2f..644cc2c 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -77,6 +77,15 @@ run_sub_test_lib_test () {
- 	./$name.sh >out 2>err)
- }
- 
-+run_sub_test_lib_test_expecting_failures () {
-+	if run_sub_test_lib_test "$@"; then
-+		echo 'sub test-lib run should have failed'
-+		return 1
-+	else
-+		return 0
-+	fi
-+}
-+
- check_sub_test_lib_test () {
- 	name="$1" # stdin is test's expected stdout
- 	(cd $name &&
-@@ -85,6 +94,54 @@ check_sub_test_lib_test () {
- 	test_cmp expect out)
- }
- 
-+test_expect_success 'pretend we have a fully passing test suite' "
-+	run_sub_test_lib_test full-pass '3 passing tests' <<-EOF &&
-+	for i in 1 2 3; do
-+		test_expect_success \"passing test #\\\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test full-pass <<-EOF
-+	> ok 1 - passing test #1
-+	> ok 2 - passing test #2
-+	> ok 3 - passing test #3
-+	> # passed all 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'pretend we have a partially passing test suite' "
-+	run_sub_test_lib_test_expecting_failures partial-pass '2/3 tests passing' <<-EOF &&
-+	test_expect_success 'passing test #1' 'true'
-+	test_expect_success 'failing test #2' 'false'
-+	test_expect_success 'passing test #3' 'true'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test partial-pass <<-EOF
-+	> ok 1 - passing test #1
-+	> not ok 2 - failing test #2
-+	#	false
-+	> ok 3 - passing test #3
-+	> # failed 1 among 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'pretend we have a known breakage' "
-+	run_sub_test_lib_test failing-todo 'A failing TODO test' <<-EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test failing-todo <<-EOF
-+	> ok 1 - passing test
-+	> not ok 2 - pretend we have a known breakage # TODO known breakage
-+	> # still have 1 known breakage(s)
-+	> # passed all remaining 1 test(s)
-+	> 1..2
-+	EOF
-+"
-+
- test_expect_success 'pretend we have fixed a known breakage' "
- 	run_sub_test_lib_test passing-todo 'A passing TODO test' <<-EOF &&
- 	test_expect_failure 'pretend we have fixed a known breakage' 'true'
-@@ -98,6 +155,59 @@ test_expect_success 'pretend we have fixed a known breakage' "
- 	EOF
- "
- 
-+test_expect_success 'pretend we have a pass, fail, and known breakage' "
-+	run_sub_test_lib_test_expecting_failures mixed-results1 'mixed results #1' <<-EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test mixed-results1 <<-EOF
-+	> ok 1 - passing test
-+	> not ok 2 - failing test
-+	> #	false
-+	> not ok 3 - pretend we have a known breakage # TODO known breakage
-+	> # still have 1 known breakage(s)
-+	> # failed 1 among remaining 2 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'pretend we have a mix of all possible results' "
-+	run_sub_test_lib_test_expecting_failures mixed-results2 'mixed results #2' <<-EOF &&
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'passing test' 'true'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_success 'failing test' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_expect_failure 'pretend we have a known breakage' 'false'
-+	test_expect_failure 'pretend we have fixed a known breakage' 'true'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test mixed-results2 <<-EOF
-+	> ok 1 - passing test
-+	> ok 2 - passing test
-+	> ok 3 - passing test
-+	> ok 4 - passing test
-+	> not ok 5 - failing test
-+	> #	false
-+	> not ok 6 - failing test
-+	> #	false
-+	> not ok 7 - failing test
-+	> #	false
-+	> not ok 8 - pretend we have a known breakage # TODO known breakage
-+	> not ok 9 - pretend we have a known breakage # TODO known breakage
-+	> ok 10 - pretend we have fixed a known breakage # TODO known breakage
-+	> # fixed 1 known breakage(s)
-+	> # still have 2 known breakage(s)
-+	> # failed 3 among remaining 8 test(s)
-+	> 1..10
-+	EOF
-+"
-+
- test_set_prereq HAVEIT
- haveit=no
- test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
--- 
-1.7.12.147.g6d168f4
+Nah, nevermind (I was being lazy and hoping for a quick turnaround).
+
+I tried it and it formats well, so I'll squash that in and queue.
