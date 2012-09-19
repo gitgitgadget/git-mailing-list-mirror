@@ -1,114 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-blame.txt: --follow is a NO-OP
-Date: Wed, 19 Sep 2012 12:36:56 -0700
-Message-ID: <7vzk4lg5yf.fsf@alter.siamese.dyndns.org>
-References: <20120906151317.GB7407@sigill.intra.peff.net>
- <1348022905-10048-1-git-send-email-n1xim.email@gmail.com>
- <7v627aiq47.fsf@alter.siamese.dyndns.org>
- <20120919182715.GF11699@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/6] Refactor mechanics of testing in a sub test-lib
+Date: Wed, 19 Sep 2012 15:37:08 -0400
+Message-ID: <20120919193708.GA21950@sigill.intra.peff.net>
+References: <1348074915-19985-1-git-send-email-git@adamspiers.org>
+ <1348074915-19985-5-git-send-email-git@adamspiers.org>
+ <20120919175655.GC11699@sigill.intra.peff.net>
+ <20120919184406.GC19246@atlantic.linksys.moosehall>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <n1xim.email@gmail.com>,
-	gitList <git@vger.kernel.org>, Matthieu.Moy@imag.fr,
-	andy@aeruder.net, chriscool@tuxfamily.org,
-	dmellor@whistlingcat.com, dpmcgee@gmail.com, fonseca@diku.dk,
-	freku045@student.liu.se, kevin@sb.org, marius@trolltech.com,
-	namhyung@gmail.com, rene.scharfe@lsrfire.ath.cx, s-beyer@gmx.net,
-	trast@inf.ethz.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 21:37:12 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 21:37:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEQ58-0007Cv-SC
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:37:11 +0200
+	id 1TEQ5L-0007IU-DR
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Sep 2012 21:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751062Ab2ISThA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 15:37:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55323 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750852Ab2ISTg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 15:36:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 507F69CBC;
-	Wed, 19 Sep 2012 15:36:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DM9Adg71H7DwV03ytWLObmBBYjM=; b=UMVRB6
-	1EhrLKzLWlJRg2hFSPVcJ9utxsua153aRlUu09zoLcE5lfqQcPtQMniyPl99KSwK
-	mp8VY9xrW0ylWCyYuvaqXnyRd9fG+uAIjUQ3hi26s6ps5k36+gJ7k4grtuc5o08U
-	k+Rlg+7P9Vt4pfLqKn4d+iNwIhh+YCjOlkJeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l5gvw7iEna/lTarIVw4igaeXxgaVn9La
-	Sp1+xcZxu2e8na1mAlE+H0XdIEVaf/rkVrxKKD3ouroJOcM2uQe0pE+/ByoBc253
-	C6LKpFLrWOqnv+OHdDcSVC2vqMkK1UYD0iuQcUnr9cDsjaUnRZB7pVojEwb9aPir
-	3ALVBSWO2zI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A40C9CBB;
-	Wed, 19 Sep 2012 15:36:58 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B4029CBA; Wed, 19 Sep 2012
- 15:36:57 -0400 (EDT)
-In-Reply-To: <20120919182715.GF11699@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 19 Sep 2012 14:27:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5FDA033C-0291-11E2-BA8B-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751148Ab2ISThM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 15:37:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:49909 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751074Ab2ISThK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 15:37:10 -0400
+Received: (qmail 4390 invoked by uid 107); 19 Sep 2012 19:37:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 19 Sep 2012 15:37:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2012 15:37:08 -0400
+Content-Disposition: inline
+In-Reply-To: <20120919184406.GC19246@atlantic.linksys.moosehall>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/205983>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 19, 2012 at 07:44:06PM +0100, Adam Spiers wrote:
 
-> On Tue, Sep 18, 2012 at 09:38:32PM -0700, Junio C Hamano wrote:
->
->> That is a totally wrong message to send.  You failed to teach the
->> reader that there is no need to do anything special to tell the
->> command to follow per-line origin across renames.
->> 
->> So if anything, I would phrase it this way instead:
->> 
->>     --follow::
->>           This option is accepted but silently ignored.  "git blame"
->> 	  follows per-line origin across renames without any special
->> 	  options, and there is no reason to use this option.
->
-> I think that is much better than Drew's text. But I really wonder if the
-> right solution is to simply disallow --follow. It does not do anything,
-> and it is not documented. There is no special reason to think that it
-> would do anything, except by people who try it. So perhaps that is the
-> right time to say "no, this is not a valid option".
->
-> Like this (totally untested) patch:
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 0e102bf..412d6dd 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2365,6 +2365,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->  			ctx.argv[0] = "--children";
->  			reverse = 1;
->  		}
-> +		else if (!strcmp(ctx.argv[0], "--follow")) {
-> +			error("unknown option `--follow`");
-> +			usage_with_options(blame_opt_usage, options);
-> +		}
->  		parse_revision_opt(&revs, &ctx, options, blame_opt_usage);
->  	}
->  parse_done:
+> > Is it just that you are dropping the '\' in all of the here-docs because
+> > they are not needed?
+> 
+> Hmm, I think I previously misunderstood the point of the \\ due to
+> never seeing that syntax before (since my Perl background taught me to
+> write <<'EOF' instead).  I noticed that the tests all passed without
+> it, and mistakenly assumed it had become unnecessary due to the
+> refactoring.
 
-This patch would not hurt existing users very much; blame is an
-unlikely thing to run in scripts, and it is easy to remove the
-misguided --follow from them.
+OK. You can write 'EOF' in the shell, too, but we tend not to in this
+project (and you can write \EOF in perl, but I agree that it is much
+less common in perl code I have seen).
 
-So I am in general OK with it, but if we are to go that route, we
-should make sure that the documentation makes it clear that blame
-follows whole-file renames without any special instruction before
-doing so.  Otherwise, it again will send the same wrong message to
-people who try to use the "--follow" from their experience with
-"log", no?
+Looking at it again, it is actually quite subtle what is going on. We
+wrap the outer test_expect_* calls in double-quotes so that the inner
+ones can use single-quotes easily. But that means that technically the
+contents of the here-doc _are_ interpolated. But not at test run-time,
+but rather at the call to test_expect_*. And that is why we nee to use
+"\\" instead of "\". So I think anybody trying to tweak these tests
+using shell metacharacters is in for a surprise either way. I'm not sure
+it is worth worrying about, though, as handling it would probably make
+the existing tests less readable.
+
+> > Also, why is this one not converted into a check_sub... invocation?
+> 
+> Because it was much further down in that file so I didn't notice it
+> during the refactoring ;-)
+
+OK. :)
+
+> I've also noticed I can use test_must_fail instead of introducing
+> run_sub_test_lib_test_expecting_failures.
+
+Good catch. I didn't notice that, but it definitely makes sense to reuse
+it.
+
+> 
+> So I'll have to re-roll 4--6 again.  Presumably I can just reply to
+> [PATCH v2 4/6] with modified v3 versions without having to resend
+> the first three in the series, which haven't changed.
+
+It all looks sane to me. Thanks again.
+
+-Peff
