@@ -1,9 +1,11 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 05/14] Rename excluded_from_list() to is_excluded_from_list()
-Date: Thu, 20 Sep 2012 20:46:14 +0100
-Message-ID: <1348170383-15751-6-git-send-email-git@adamspiers.org>
+Subject: =?UTF-8?q?=5BPATCH=20v2=2000/14=5D=20new=20git=20check-ignore=20sub-command?=
+Date: Thu, 20 Sep 2012 20:46:09 +0100
+Message-ID: <1348170383-15751-1-git-send-email-git@adamspiers.org>
 References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
- <1348170383-15751-1-git-send-email-git@adamspiers.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
@@ -14,114 +16,91 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEmhz-0000NV-Oh
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:46:48 +0200
+	id 1TEmhz-0000NV-3b
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754834Ab2ITTqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 15:46:31 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:46183 "EHLO
+	id S1754751Ab2ITTq3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Sep 2012 15:46:29 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:46169 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754635Ab2ITTq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 15:46:29 -0400
+	with ESMTP id S1754635Ab2ITTq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 15:46:27 -0400
 Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id C9C2C2E5E9;
-	Thu, 20 Sep 2012 20:46:28 +0100 (BST)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 7FB742E5D3;
+	Thu, 20 Sep 2012 20:46:24 +0100 (BST)
 X-Mailer: git-send-email 1.7.12.147.g6d168f4
-In-Reply-To: <1348170383-15751-1-git-send-email-git@adamspiers.org>
+In-Reply-To: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206074>
 
-Continue adopting clearer names for exclude functions.  This 'is_*'
-naming pattern for functions returning booleans was discussed here:
+This is a re-vamp of my original check-ignore series, which aims to
+address all the feedback which was raised in the first round of
+reviews.  The most notable changes are the CLI options and output
+formats as suggested by Junio and Nguy=E1=BB=85n; now there are three l=
+evels
+of verbosity: --quiet, default, and --verbose.  -z also now affects
+the output and so is now compatible with the --stdin optin.
 
-http://thread.gmane.org/gmane.comp.version-control.git/204661/focus=204924
+Some commits have been broken into smaller pieces to facilitate easier
+reviews, and based on an earlier discussion, three exclude functions
+have been given an 'is_' prefix to clarify their boolean nature.  The
+helper functions extracted from these three now have more meaningful
+names rather than just a '_1' suffix.
 
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- dir.c          | 11 ++++++-----
- dir.h          |  4 ++--
- unpack-trees.c |  8 +++++---
- 3 files changed, 13 insertions(+), 10 deletions(-)
+Other minor issues, such as inconsistent coding style, have been
+fixed, and the modification to the output text in add.c has been
+scrapped.
 
-diff --git a/dir.c b/dir.c
-index dad1582..8f262f6 100644
---- a/dir.c
-+++ b/dir.c
-@@ -514,9 +514,9 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
- /* Scan the list and let the last match determine the fate.
-  * Return 1 for exclude, 0 for include and -1 for undecided.
-  */
--int excluded_from_list(const char *pathname,
--		       int pathlen, const char *basename, int *dtype,
--		       struct exclude_list *el)
-+int is_excluded_from_list(const char *pathname,
-+			  int pathlen, const char *basename, int *dtype,
-+			  struct exclude_list *el)
- {
- 	int i;
- 
-@@ -596,8 +596,9 @@ static int excluded(struct dir_struct *dir, const char *pathname, int *dtype_p)
- 
- 	prep_exclude(dir, pathname, basename-pathname);
- 	for (st = EXC_CMDL; st <= EXC_FILE; st++) {
--		switch (excluded_from_list(pathname, pathlen, basename,
--					   dtype_p, &dir->exclude_list[st])) {
-+		switch (is_excluded_from_list(pathname, pathlen,
-+					      basename, dtype_p,
-+					      &dir->exclude_list[st])) {
- 		case 0:
- 			return 0;
- 		case 1:
-diff --git a/dir.h b/dir.h
-index 41a5e32..6904a35 100644
---- a/dir.h
-+++ b/dir.h
-@@ -98,8 +98,8 @@ extern int within_depth(const char *name, int namelen, int depth, int max_depth)
- extern int fill_directory(struct dir_struct *dir, const char **pathspec);
- extern int read_directory(struct dir_struct *, const char *path, int len, const char **pathspec);
- 
--extern int excluded_from_list(const char *pathname, int pathlen, const char *basename,
--			      int *dtype, struct exclude_list *el);
-+extern int is_excluded_from_list(const char *pathname, int pathlen, const char *basename,
-+				 int *dtype, struct exclude_list *el);
- struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len);
- 
- /*
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 724f69b..56127c9 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -837,7 +837,8 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
- {
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
--	int ret = excluded_from_list(prefix, prefix_len, basename, &dtype, el);
-+	int ret = is_excluded_from_list(prefix, prefix_len,
-+					basename, &dtype, el);
- 
- 	prefix[prefix_len++] = '/';
- 
-@@ -856,7 +857,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
- 	 * with ret (iow, we know in advance the incl/excl
- 	 * decision for the entire directory), clear flag here without
- 	 * calling clear_ce_flags_1(). That function will call
--	 * the expensive excluded_from_list() on every entry.
-+	 * the expensive is_excluded_from_list() on every entry.
- 	 */
- 	return clear_ce_flags_1(cache, cache_end - cache,
- 				prefix, prefix_len,
-@@ -939,7 +940,8 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
- 
- 		/* Non-directory */
- 		dtype = ce_to_dtype(ce);
--		ret = excluded_from_list(ce->name, ce_namelen(ce), name, &dtype, el);
-+		ret = is_excluded_from_list(ce->name, ce_namelen(ce),
-+					    name, &dtype, el);
- 		if (ret < 0)
- 			ret = defval;
- 		if (ret > 0)
--- 
+It has been rebased on the latest master, and passed a full test run.
+
+Adam Spiers (14):
+  Update directory listing API doc to match code
+  Improve documentation and comments regarding directory traversal API
+  Rename cryptic 'which' variable to more consistent name
+  Rename path_excluded() to is_path_excluded()
+  Rename excluded_from_list() to is_excluded_from_list()
+  Rename excluded() to is_excluded()
+  Refactor is_excluded_from_list()
+  Refactor is_excluded()
+  Refactor is_path_excluded()
+  For each exclude pattern, store information about where it came from
+  Refactor treat_gitlinks()
+  Extract some useful pathspec handling code from builtin/add.c into a
+    library
+  Provide free_directory() for reclaiming dir_struct memory
+  Add git-check-ignore sub-command
+
+ .gitignore                                        |   1 +
+ Documentation/git-check-ignore.txt                |  85 ++++
+ Documentation/gitignore.txt                       |   6 +-
+ Documentation/technical/api-directory-listing.txt |  23 +-
+ Makefile                                          |   3 +
+ attr.c                                            |   2 +-
+ builtin.h                                         |   1 +
+ builtin/add.c                                     |  84 +---
+ builtin/check-ignore.c                            | 167 ++++++
+ builtin/clean.c                                   |   2 +-
+ builtin/ls-files.c                                |   5 +-
+ command-list.txt                                  |   1 +
+ contrib/completion/git-completion.bash            |   1 +
+ dir.c                                             | 191 +++++--
+ dir.h                                             |  47 +-
+ git.c                                             |   1 +
+ pathspec.c                                        |  97 ++++
+ pathspec.h                                        |   6 +
+ t/t0007-ignores.sh                                | 587 ++++++++++++++=
+++++++++
+ t/t9902-completion.sh                             |  24 +-
+ unpack-trees.c                                    |  10 +-
+ 21 files changed, 1182 insertions(+), 162 deletions(-)
+ create mode 100644 Documentation/git-check-ignore.txt
+ create mode 100644 builtin/check-ignore.c
+ create mode 100644 pathspec.c
+ create mode 100644 pathspec.h
+ create mode 100755 t/t0007-ignores.sh
+
+--=20
 1.7.12.147.g6d168f4
