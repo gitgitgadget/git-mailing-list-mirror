@@ -1,124 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] remote-curl: let users turn off smart http
-Date: Thu, 20 Sep 2012 16:51:07 -0400
-Message-ID: <20120920205107.GB22284@sigill.intra.peff.net>
-References: <20120920165938.GB18655@sigill.intra.peff.net>
- <20120920170517.GB18981@sigill.intra.peff.net>
- <7va9wkbmyc.fsf@alter.siamese.dyndns.org>
- <20120920181231.GA19204@sigill.intra.peff.net>
- <7vzk4ka6dp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff across submodules
+Date: Thu, 20 Sep 2012 13:52:41 -0700
+Message-ID: <7vr4pwa02u.fsf@alter.siamese.dyndns.org>
+References: <1347937959.96154.YahooMailClassic@web39403.mail.mud.yahoo.com>
+ <5058C53B.5040401@web.de> <7vobl3m8pb.fsf@alter.siamese.dyndns.org>
+ <7v4nmtfxvx.fsf@alter.siamese.dyndns.org> <505B73CE.5030009@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 22:51:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Kenny Simpson <theonetruekenny@yahoo.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 20 22:52:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEniS-000777-N9
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 22:51:21 +0200
+	id 1TEnk0-0008LV-Ea
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 22:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494Ab2ITUvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 16:51:11 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51881 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751516Ab2ITUvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 16:51:10 -0400
-Received: (qmail 23072 invoked by uid 107); 20 Sep 2012 20:51:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Sep 2012 16:51:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Sep 2012 16:51:07 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzk4ka6dp.fsf@alter.siamese.dyndns.org>
+	id S1753117Ab2ITUws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 16:52:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61006 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751516Ab2ITUwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 16:52:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6F799FAF;
+	Thu, 20 Sep 2012 16:52:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rP+m2FOMotok29O34McWgcHEjqE=; b=EPQAif
+	6I7Rq5u/igiRMpTgu99mBUJNh9weYdclHRBmmGKlP4nLGnA+XSyKtqkOqNxyq6s3
+	tMK4rxgCvapT0PEdcKaS6czY7UJ9QuzzA1OA0AWYU8DwJQ9/eg4IgEPWL79LPMyH
+	XzIyjAS/2ebpdVyqr/2dOK4CTih0l8Es5uZ+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q//qf+HJgxZaq/NrlevDPpA9NWOhSBNS
+	NSgHcLp+ljXGeLB8DqeKxExJYz/RPHbaAkKgzgHYByGV+Yjdias9Sof4DqlMLxwk
+	VcrQKqO4tJq2p3V2VS0VmWPnHOmnkCSatLAO6LG+UyobBfa3z8zq5vNrqMhgplZi
+	VWnN2EOsJ9g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A40F59FAC;
+	Thu, 20 Sep 2012 16:52:46 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C37129FA7; Thu, 20 Sep 2012
+ 16:52:45 -0400 (EDT)
+In-Reply-To: <505B73CE.5030009@web.de> (Jens Lehmann's message of "Thu, 20
+ Sep 2012 21:51:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2132B6EA-0365-11E2-8B72-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206091>
 
-On Thu, Sep 20, 2012 at 11:36:34AM -0700, Junio C Hamano wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> >> What would the user experience be when we introduce "even smarter"
-> >> http server protocol extension?  Will we add remote.foo.starterhttp?
-> >
-> > I would hope that it would actually be negotiated reliably at the
-> > protocol level so we do not have to deal with this mess again.
-> 
-> The original dumb vs smart was supposed to be "negotiated reliably
-> at the protocol level", no?  Yet we need this band-aid, so...
+> That's pretty cool! Even though diff options like --stat and --name-only
+> still won't take into account what happened inside the submodule this
+> approach makes it possible to see the diff recursively. Wouldn't it make
+> sense add this script to contrib (after teaching it new and removed
+> submodules and documenting its use in a few lines after the shebang)?
 
-I started to write much more in my original response, but deleted it as
-being too wordy. I guess I will have to rewrite it now. :)
+A few things somebody may want to work on while doing that "few
+lines of documentation" I know about are:
 
-The difference is that jumping from dumb to smart had to give context
-clues at the HTTP layer. That is, by sending a query string, the client
-sends a single bit that tells the server "I understand smart http", and
-the server responds with output that indicates it also understands. We
-had to embed this in the HTTP layer, because the previous iteration
-wasn't running any custom git code at all.
+ * From the core side, pass options that are releavant when
+   generating patch (i.e. with p) in environment variables to the
+   external diff script;
 
-Whereas if we were to enhance the protocol again, it would probably
-_still_ begin with the same type of initial query, but we would
-negotiate more at the git-protocol level. And there we are in charge of
-how the implementation responds and handles backwards compatibility.
+ * Not using "s/$1" and "m/$1" as prefix; instead, pass src/dst
+   prefix values (i.e. s/ and m/) from the core side in environment
+   variables, and make the external diff script itself aware of
+   possibly nested submodules, e.g.
 
-This has already happened to some degree. We have added new capabilities
-at the git-protocol level, and it worked without these problems. It's
-not a "new protocol", but it is a backwards-compatible enhancement. And
-it's the likely mode for new enhancements in the future.
+    SUBMODULE_PATH="${SUBMODULE_PATH}$1"
+    export SUBMODULE_PATH
+    exec git --no-pager diff -p \
+    	--src-prefix="$SRC_PREFIX/$SUBMODULE_PATH" \
+    	--dst-prefix="$DST_PREFIX/$SUBMODULE_PATH" "$3" "$6"
 
-It's possible we could have something drastically different in the
-future that does not even start with the same initial git conversation.
-But even then, I think we'd do it with a new "git-upload-pack2" service
-tag, or git:// and ssh access would be left behind.
-
-> >> Perhaps
-> >> 
-> >>     remote.$name.httpvariants = [smart] [dumb]
-> >> 
-> >> to allow users to say "smart only", "dumb only", or "smart and/or
-> >> dumb" might be more code but less burden on the users.
-> >
-> > I don't mind that format if we are going that direction, but is there
-> > anybody who actually wants to say "smart only?"
-> 
-> With 703e6e7 reverted, we take a failure from the initial smart
-> request to mean the server is simply not serving, so "smart only" to
-> fail quickly without trying dumb fallback is not needed.  "smart
-> only" to say "I wouldn't want to talk to dumb-only server---I do not
-> have infinite amount of time, and I'd rather try another server" is
-> still a possibility, but likely not worth supporting.
-
-Yes. I do still need to resurrect my fetch-a-bundle-by-http code, which
-could also be covered by such a switch. But I guess I am just not sure
-if there is any point in spending effort to implement toggles that
-nobody has actually asked for.
-
-I'm also a little iffy on it because we would be inventing new config
-syntax.  I don't think we want to split the list across multiple config
-items (which makes our usual later-config-overwrites-earlier rules
-behave badly). So what is the value format? Is it a whitespace-delimited
-case-insensitive list completely specifying the transports allowed? What
-happens if a new value is added. Do people who have said "smart" not get
-the new value, even though all they really wanted to say was "not dumb"?
-What about people who write "bundle smart" because their new
-version of git understands it, but then have old versions of git barf on
-it?
-
-Most of our current config is very toggle-oriented, and I'm not sure
-there is precedent for an option exactly like this. We can try to come
-up with answers to those questions, but I don't think doing it is as
-simple as just changing a few lines of code to support !dumb and !smart
-modes.
-
-I'm half-tempted to just drop the config entirely, leave
-GIT_SMART_HTTP=false as an escape hatch, and see if anybody even cares.
-At least then we're not promising support for a config option that we
-may want to change later.
-
-What do you want to do?
-
--Peff
+After people gain sufficient experience with it, as the next step,
+we can think about how to handle --stat and other options when we
+are run without -p (currently the attribute mechanism would not
+trigger) and then we can call the result a native "diff that
+recurses into submodules" that people can use without setting up the
+attributes based mechanism.
