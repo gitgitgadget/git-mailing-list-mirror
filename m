@@ -1,91 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Revert "retry request without query when info/refs?query
- fails"
-Date: Thu, 20 Sep 2012 12:24:56 -0400
-Message-ID: <20120920162456.GA25418@sigill.intra.peff.net>
-References: <CAJo=hJvXtSBO3QEzhZCFfhk9OF_e0B10k8tjCUWMHZvGKt599Q@mail.gmail.com>
- <1348120680-24788-1-git-send-email-spearce@spearce.org>
- <7vlig5cilt.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/2] pretty: support right alignment
+Date: Thu, 20 Sep 2012 09:40:49 -0700
+Message-ID: <7v392cd4vi.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8BP0vzWG-Po=WBVC_V5Z5_ysoCOTkU-XV3Hy_jVE4H1XQ@mail.gmail.com>
+ <1348143976-4506-1-git-send-email-pclouds@gmail.com>
+ <1348143976-4506-3-git-send-email-pclouds@gmail.com>
+ <20120920143803.GA9527@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 18:25:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 20 18:41:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEjYs-00083P-9I
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 18:25:10 +0200
+	id 1TEjoH-00037H-A5
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 18:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129Ab2ITQY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 12:24:59 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:51524 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750969Ab2ITQY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 12:24:59 -0400
-Received: (qmail 16980 invoked by uid 107); 20 Sep 2012 16:25:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Sep 2012 12:25:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Sep 2012 12:24:56 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlig5cilt.fsf@alter.siamese.dyndns.org>
+	id S1751160Ab2ITQkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 12:40:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38813 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750819Ab2ITQkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 12:40:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0E1895F8;
+	Thu, 20 Sep 2012 12:40:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Kz1JYJvlx8hKoneSQkEihqdHBqE=; b=XxZEzl
+	OLi+Jkz1oH22xgHUCm9tfCdSEoTIa0br70hvoMQAVqBq7unloCngJgNpDYzRBTiT
+	Dzr1nf67ERF56v5JoJ/JGzALKiwn/htRl7rO5Q03KmHIStkZiZQovSdkFg6ylVfo
+	O5XvIf6oduKTF6CAvFsn2pr2Bwl2Kb6rzmtX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BKRZlbr+1A6LwGbd+8EOmKbQE/QBahJA
+	B+sPNUslMdLGahKmlTUY48DlxSB+Ctxd0eIGWodkemG1Jwpdz+ExTnc9hcWWA7En
+	Np3VK1CKkH58Pd045FV7VNkiPh3fhFPi9XE970blOO7GYNm9ap5zwAOBxpv1B8jm
+	5rSPhN7Va/s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F07695F7;
+	Thu, 20 Sep 2012 12:40:51 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 077F095F6; Thu, 20 Sep 2012
+ 12:40:50 -0400 (EDT)
+In-Reply-To: <20120920143803.GA9527@lanh> (Nguyen Thai Ngoc Duy's message of
+ "Thu, 20 Sep 2012 21:38:03 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F017ED96-0341-11E2-BB5F-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206052>
 
-On Wed, Sep 19, 2012 at 11:29:34PM -0700, Junio C Hamano wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > This reverts commit 703e6e76a14825e5b0c960d525f34e607154b4f7.
-> >
-> > Retrying without the query parameter was added as a workaround
-> > for a single broken HTTP server at git.debian.org[1]. The server
-> > was misconfigured to route every request with a query parameter
-> > into gitweb.cgi. Admins fixed the server's configuration within
-> > 16 hours of the bug report to the Git mailing list, but we still
-> > patched Git with this fallback and have been paying for it since.
-> 
-> As the consequence of the above, the only two things we know about
-> the servers in the wild are (1) a misconfiguration that requires
-> this retry was once made, so it is not very unlikely others did the
-> same misconfiguration, and (2) those unknown number of servers have
-> been happily serving the current clients because the workaround
-> patch have been hiding the misconfiguration ever since.
+> And this is a for-fun patch that adds %| to right align everything
+> after that. I'm ignoring problems with line wrapping, i18n and so
+> on. "%C+%h %s%|%d" looks quite nice. I'm not sure how much useful it
+> is beyond --oneline though. It looks something like this
+> ...
+> [oneline output ellided]
+> ...
 
-The misconfiguration was pretty wild in this case. I'd be much more
-worried about stupidly non-compliant servers that will not serve
-"foo/bar" when asked for "foo/bar?key=value".
+I think this is a great feature at the conceptual level, and you
+know "but" is coming ;-).
 
-> But as long as the failure diagnosis from updated clients that
-> revert this workaround is sufficient to allow such misconfigured
-> servers, I think it is OK.  We might see a large number of small
-> people having to run around and fix the configuration as a fallout,
-> though.
+ - Shouldn't it be "everything from there until the end of the
+   current line" than "everything after that"?
 
-I think Shawn's revert is the right thing to do. But it is not complete
-without the manual workaround. I'm putting that patch together now and
-should have it out in a few minutes.
+ - How is the display width determined and is it fixed once it gets
+   computed?
 
-> > Most Git hosting services configure the smart HTTP protocol and the
-> > retry logic confuses users when there is a transient HTTP error as
-> > Git dropped the real error from the smart HTTP request. Removing the
-> > retry makes root causes easier to identify.
-> 
-> Does that hold true also for dumb only small people installations?
-> They are the ones that need more help than the large installations
-> staffed sufficiently and run smart http gateway.
+ - How does this interact with the wrapped output?  Should it?
 
-For the most part, yes. They will get a useful error out of the smart
-request if there is a transient error, the repo does not exist, etc.
-The real fallout is the people who are hitting a broken or misconfigured
-server and may get a confusing error code (in the one case we know
-about, it was a 404, but it really could be anything, depending on the
-exact nature of the misconfiguration).
+ - I am wondering if somebody ever want to do this with a follow-up
+   patch:
 
--Peff
+	Left %h%|Center %cd%|Right %ad
+
+   Is %| a sensible choice for "flush right"?  I am wondering if it
+   makes more sense to make %|, %< and %> as "multi-column
+   introducer" (the example defines output with three columns) that
+   also tells how text inside each column is flushed inside the
+   column, e.g.
+
+	%>col 1 right flushed%|col 2 centered%< col 3 left flushed
+
+   or something like that (we may want explicit "column width"
+   specifiers if we were to do this kind of thing).
