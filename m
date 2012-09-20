@@ -1,72 +1,67 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH v5 3/3] Color skipped tests bold blue
-Date: Thu, 20 Sep 2012 12:08:27 +0200
-Message-ID: <505AEB1B.7010702@gmail.com>
-References: <505AAE34.2020408@viscovery.net> <1348132118-23139-1-git-send-email-git@adamspiers.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] log --oneline: put decoration at the end of the line
+Date: Thu, 20 Sep 2012 17:43:20 +0700
+Message-ID: <CACsJy8BP0vzWG-Po=WBVC_V5Z5_ysoCOTkU-XV3Hy_jVE4H1XQ@mail.gmail.com>
+References: <1348055540-13774-1-git-send-email-pclouds@gmail.com>
+ <20120919182039.GE11699@sigill.intra.peff.net> <7vr4pxg507.fsf@alter.siamese.dyndns.org>
+ <7vr4pxegec.fsf@alter.siamese.dyndns.org> <20120919234226.GA27626@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 12:08:52 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 20 12:44:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEdge-0003gt-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 12:08:48 +0200
+	id 1TEeF8-00072E-4S
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 12:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021Ab2ITKIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 06:08:39 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:60239 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474Ab2ITKIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 06:08:38 -0400
-Received: by bkuw11 with SMTP id w11so98970bku.19
-        for <git@vger.kernel.org>; Thu, 20 Sep 2012 03:08:36 -0700 (PDT)
+	id S1753676Ab2ITKoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 06:44:13 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:62474 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753598Ab2ITKnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 06:43:51 -0400
+Received: by ieak13 with SMTP id k13so3117476iea.19
+        for <git@vger.kernel.org>; Thu, 20 Sep 2012 03:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=nYudk6nwFjR0F2HtLgVxfl+7Pvtpyh6+6E0xLZKnLX4=;
-        b=UyVLVqf4aIgPDB5PRkkoUj45FAAb/tSMdRwnTiZg5t6O46bU3hlP0ECi39cIydqg8k
-         nmThLRiwPrlPEwb+vZswrIxUg1IrWYNnTObzMYJ5YxdIBEby9DDNgWD1tO8/kn1FojSZ
-         wbrP+V90Abw1038c41BoZdzehvxtSk39kM4PNUj9fN3wG/bqG7x5Qc/rA4Wyi6WLKV/Z
-         VeBDgw61Mh+0VBu/D02ksYLecaNkjjBT6OGEL6P6qmysV+kNumTGnxJ5v+HJr/haI9QH
-         oPUP/LNdWwFmS2kMh1jAurEOFmmi0Mb3IasHmt8Tt5cyAkt1akWf7lySTvFWSfFOh70h
-         0F7Q==
-Received: by 10.204.8.84 with SMTP id g20mr339292bkg.126.1348135716810;
-        Thu, 20 Sep 2012 03:08:36 -0700 (PDT)
-Received: from [192.168.178.21] (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
-        by mx.google.com with ESMTPS id x13sm2945052bkv.16.2012.09.20.03.08.35
-        (version=SSLv3 cipher=OTHER);
-        Thu, 20 Sep 2012 03:08:35 -0700 (PDT)
-In-Reply-To: <1348132118-23139-1-git-send-email-git@adamspiers.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=oT0q+p57XnNBSp8B6R4ZB+mkxMsBKAYkn1B8v7sfrZQ=;
+        b=wvhQDhlZd0nUE4/kzX0SIfGde9TFEe9FhGMvyVVxh3a0LDKY0VUslin/P1mh6Ig8Vg
+         j1e8lba1T5Qg5q3qa4okuQJ9FfRN3AaJz8RSnjsq1KMDk6lWD/JJsuOziQgQ//QAXz+O
+         9YPBK6M0PRv+rIgKMzfg5yTO1dyfh6BbTHUXmUSnhkaYP9uMRzZFtGZwzfXW41zN2AT8
+         Jnbz6hhTlPoeZ+0z9vMBlQCzVf5abEyX9uBy6nWZzBP4Pou7OO4QGoJLyLvZWwNqtJeC
+         ruWLmshTZt295uEfySySdP4GuQB2NL5ALYCm7tKrgM+FA6Y/QYOllBMObhwoirOYe6f9
+         DWkg==
+Received: by 10.50.87.167 with SMTP id az7mr1259485igb.40.1348137830426; Thu,
+ 20 Sep 2012 03:43:50 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Thu, 20 Sep 2012 03:43:20 -0700 (PDT)
+In-Reply-To: <20120919234226.GA27626@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206045>
 
-Hi Adam.
-
-On 09/20/2012 11:08 AM, Adam Spiers wrote:
-> Skipped tests indicate incomplete test coverage.  Whilst this is
-> not a test failure or other error, it's still not complete
-> success, so according to the universal traffic lights coloring
-> scheme, yellow/brown seems more suitable than green.  However,
-> it's more informational than cautionary, so instead we use blue
-> which is a universal color for information signs.  Bold blue
-> should work better on both black and white backgrounds than
-> normal blue.
+On Thu, Sep 20, 2012 at 6:42 AM, Jeff King <peff@peff.net> wrote:
+> If you are particular about the exact format, how about using
+> --format="%h%d %s" instead?
 >
-A very minor nit (feel free to ignore it): IMHO, it should be nice
-to state explicitly in the commit message that blue is already used
-by other testsuite-related software to highlight skipped tests; you
-can report the examples of at least Automake, Autotest and prove --
-and extra kudos if you find further examples ;-)
+> Obviously Duy could do the same to achieve his format, but I think there
+> is still value in considering what the default for --oneline should be.
 
-Thanks,
-  Stefano
+Yeah I was wondering if a new default would make sense.
+
+I tried --pretty=format:"%h %s %d" but the colors were lost.
+--decorate uses more than one color so %C* does not immitate the
+colorful output we have with --decorate. Maybe I should add %Cd as
+"colored %d" and update my alias to use it.
+
+And perhaps a specifier to enable right alignment. It may help make
+better use of wide terminal screen.
+-- 
+Duy
