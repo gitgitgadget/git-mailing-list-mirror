@@ -1,7 +1,7 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 03/14] Rename cryptic 'which' variable to more consistent name
-Date: Thu, 20 Sep 2012 20:46:12 +0100
-Message-ID: <1348170383-15751-4-git-send-email-git@adamspiers.org>
+Subject: [PATCH v2 11/14] Refactor treat_gitlinks()
+Date: Thu, 20 Sep 2012 20:46:20 +0100
+Message-ID: <1348170383-15751-12-git-send-email-git@adamspiers.org>
 References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
  <1348170383-15751-1-git-send-email-git@adamspiers.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -14,95 +14,101 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEmiH-0000f4-0Z
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:47:05 +0200
+	id 1TEmiF-0000f4-6R
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755763Ab2ITTqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 15:46:45 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:46176 "EHLO
+	id S1755128Ab2ITTqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 15:46:42 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:46199 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754681Ab2ITTq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 15:46:28 -0400
+	with ESMTP id S1754906Ab2ITTqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 15:46:35 -0400
 Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 07BE42E5E7;
-	Thu, 20 Sep 2012 20:46:27 +0100 (BST)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 2426C2E5E7;
+	Thu, 20 Sep 2012 20:46:34 +0100 (BST)
 X-Mailer: git-send-email 1.7.12.147.g6d168f4
 In-Reply-To: <1348170383-15751-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206081>
 
-'el' is only *slightly* less cryptic, but is already used as the
-variable name for a struct exclude_list pointer in numerous other
-places, so this reduces the number of cryptic variable names in use by
-one :-)
+Extract the body of the for loop in treat_gitlinks() into a separate
+treat_gitlink() function so that it can be reused elsewhere.  This
+paves the way for a new check-ignore sub-command.
 
 Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
- dir.c | 10 +++++-----
- dir.h |  4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/add.c | 49 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 98d1995..91e57d9 100644
---- a/dir.c
-+++ b/dir.c
-@@ -311,7 +311,7 @@ static int no_wildcard(const char *string)
+diff --git a/builtin/add.c b/builtin/add.c
+index 075312a..b4ec5cd 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -153,31 +153,44 @@ static char *prune_directory(struct dir_struct *dir, const char **pathspec, int
+ 	return seen;
  }
  
- void add_exclude(const char *string, const char *base,
--		 int baselen, struct exclude_list *which)
-+		 int baselen, struct exclude_list *el)
+-static void treat_gitlinks(const char **pathspec)
++/*
++ * Check whether path refers to a submodule, or something inside a
++ * submodule.  If the former, returns the path with any trailing slash
++ * stripped.  If the latter, dies with an error message.
++ */
++const char *treat_gitlink(const char *path)
  {
- 	struct exclude *x;
- 	size_t len;
-@@ -346,8 +346,8 @@ void add_exclude(const char *string, const char *base,
- 	x->nowildcardlen = simple_length(string);
- 	if (*string == '*' && no_wildcard(string+1))
- 		x->flags |= EXC_FLAG_ENDSWITH;
--	ALLOC_GROW(which->excludes, which->nr + 1, which->alloc);
--	which->excludes[which->nr++] = x;
-+	ALLOC_GROW(el->excludes, el->nr + 1, el->alloc);
-+	el->excludes[el->nr++] = x;
- }
- 
- static void *read_skip_worktree_file_from_index(const char *path, size_t *size)
-@@ -389,7 +389,7 @@ int add_excludes_from_file_to_list(const char *fname,
- 				   const char *base,
- 				   int baselen,
- 				   char **buf_p,
--				   struct exclude_list *which,
-+				   struct exclude_list *el,
- 				   int check_index)
- {
- 	struct stat st;
-@@ -438,7 +438,7 @@ int add_excludes_from_file_to_list(const char *fname,
- 		if (buf[i] == '\n') {
- 			if (entry != buf + i && entry[0] != '#') {
- 				buf[i - (i && buf[i-1] == '\r')] = 0;
--				add_exclude(entry, base, baselen, which);
-+				add_exclude(entry, base, baselen, el);
+-	int i;
+-
+-	if (!pathspec || !*pathspec)
+-		return;
+-
++	int i, path_len = strlen(path);
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+ 		if (S_ISGITLINK(ce->ce_mode)) {
+-			int len = ce_namelen(ce), j;
+-			for (j = 0; pathspec[j]; j++) {
+-				int len2 = strlen(pathspec[j]);
+-				if (len2 <= len || pathspec[j][len] != '/' ||
+-				    memcmp(ce->name, pathspec[j], len))
+-					continue;
+-				if (len2 == len + 1)
+-					/* strip trailing slash */
+-					pathspec[j] = xstrndup(ce->name, len);
+-				else
+-					die (_("Path '%s' is in submodule '%.*s'"),
+-						pathspec[j], len, ce->name);
++			int ce_len = ce_namelen(ce);
++			if (path_len <= ce_len || path[ce_len] != '/' ||
++			    memcmp(ce->name, path, ce_len))
++				/* path does not refer to this
++				 * submodule or anything inside it */
++				continue;
++			if (path_len == ce_len + 1) {
++				/* path refers to submodule;
++				 * strip trailing slash */
++				return xstrndup(ce->name, ce_len);
++			} else {
++				die (_("Path '%s' is in submodule '%.*s'"),
++				     path, ce_len, ce->name);
  			}
- 			entry = buf + i + 1;
  		}
-diff --git a/dir.h b/dir.h
-index a226fbc..549a187 100644
---- a/dir.h
-+++ b/dir.h
-@@ -117,10 +117,10 @@ extern int path_excluded(struct path_exclude_check *, const char *, int namelen,
+ 	}
++	return path;
++}
++
++void treat_gitlinks(const char **pathspec)
++{
++	if (!pathspec || !*pathspec)
++		return;
++
++	int i;
++	for (i = 0; pathspec[i]; i++)
++		pathspec[i] = treat_gitlink(pathspec[i]);
+ }
  
- 
- extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
--					  char **buf_p, struct exclude_list *which, int check_index);
-+					  char **buf_p, struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fname);
- extern void add_exclude(const char *string, const char *base,
--			int baselen, struct exclude_list *which);
-+			int baselen, struct exclude_list *el);
- extern void free_excludes(struct exclude_list *el);
- extern int file_exists(const char *);
- 
+ static void refresh(int verbose, const char **pathspec)
 -- 
 1.7.12.147.g6d168f4
