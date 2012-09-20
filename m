@@ -1,102 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/14] new git check-ignore sub-command
-Date: Thu, 20 Sep 2012 14:43:53 -0700
-Message-ID: <7vsjac8j52.fsf@alter.siamese.dyndns.org>
-References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
- <1348170383-15751-1-git-send-email-git@adamspiers.org>
- <7v4nms9yja.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git archive --format zip utf-8 issues
+Date: Fri, 21 Sep 2012 00:00:09 +0200
+Message-ID: <505B91E9.7060208@lsrfire.ath.cx>
+References: <502583F4.8030308@tu-clausthal.de> <7vtxwagy9f.fsf@alter.siamese.dyndns.org> <5026C649.2090700@lsrfire.ath.cx> <5026D081.2040906@tu-clausthal.de> <20120830222603.GA20289@sigill.intra.peff.net> <5046634A.4020608@lsrfire.ath.cx> <7vehmh8prt.fsf@alter.siamese.dyndns.org> <5047A9C0.9020200@lsrfire.ath.cx> <5058CE49.3070108@lsrfire.ath.cx> <7v1uhzkpcc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 23:44:08 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 00:00:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEoXV-0004zp-Hc
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 23:44:05 +0200
+	id 1TEonb-0000oY-MK
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 00:00:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756037Ab2ITVn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 17:43:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52247 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755882Ab2ITVn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 17:43:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62B168E8F;
-	Thu, 20 Sep 2012 17:43:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EH6p+B15bfhKBaKvyslAWb/selE=; b=X7pC58
-	XjvDA+YsXgdUPRErY5xNipAlbodvx7C54zfIiAvZj6mcb9GsG+mi5d1pIOfVtyUI
-	ZtFuGgI8Jadw+aicDKubcgGj2UsQCmWzmZOCyOnUjfhkhsSdoUMgG6m/6fzye4CC
-	Zy+7Aq/J8ab2WZKjjUIRUtRweyXSdi1/f6/xA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OAyqZxdy24Idtb/wJ2nybsuN/4OlXXFi
-	kAxlKxKGKxqFFFBPQ2cQSKWpd6+WIiyDYBlMbW//i5CNgELay6iX9eHH6BsUN24S
-	q8a4ROMj2qy8mbHOX578tNZHbtCL4YD+6LS7hcotFoeWzCf69gW6+J+WscHUqDcx
-	HTeZzZzH4Sg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5083E8E8E;
-	Thu, 20 Sep 2012 17:43:55 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD16E8E82; Thu, 20 Sep 2012
- 17:43:54 -0400 (EDT)
-In-Reply-To: <7v4nms9yja.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 20 Sep 2012 14:26:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 46690796-036C-11E2-9BFA-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755134Ab2ITWAe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Sep 2012 18:00:34 -0400
+Received: from india601.server4you.de ([85.25.151.105]:43049 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752293Ab2ITWAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 18:00:33 -0400
+Received: from [192.168.2.105] (p4FFDB529.dip.t-dialin.net [79.253.181.41])
+	by india601.server4you.de (Postfix) with ESMTPSA id 59A0DEC;
+	Fri, 21 Sep 2012 00:00:31 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <7v1uhzkpcc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206099>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Adam Spiers <git@adamspiers.org> writes:
+Am 18.09.2012 23:12, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 >
->> Adam Spiers (14):
->>   Update directory listing API doc to match code
->>   Improve documentation and comments regarding directory traversal API
->>   Rename cryptic 'which' variable to more consistent name
->>   Rename path_excluded() to is_path_excluded()
->>   Rename excluded_from_list() to is_excluded_from_list()
->>   Rename excluded() to is_excluded()
->>   Refactor is_excluded_from_list()
->>   Refactor is_excluded()
->>   Refactor is_path_excluded()
->>   For each exclude pattern, store information about where it came from
->>   Refactor treat_gitlinks()
->>   Extract some useful pathspec handling code from builtin/add.c into a
->>     library
->>   Provide free_directory() for reclaiming dir_struct memory
->>   Add git-check-ignore sub-command
->
-> Please retitle these to have a short "prefix: " that names a
-> specific area the series intends to touch.  I retitled your other
-> series to share "test :" as their common prefix.
+>>                                           Windows    Info-ZIP unzip
+>>                              7-Zip PeaZip builtin Linux msysgit Wind=
+ows
+>> 7-Zip 9.20                      0      0      46    26      43      =
+43
+>> PeaZip 4.7.1 win64              0      0      46    26      42      =
+42
+>> Info-ZIP zip 3.0 Linux          0      0      72     0      43      =
+43
+>> Info-ZIP zip 3.0 Windows       45     45     n/a     0      43      =
+43
 
-Just to clarify, I think most of them can say "dir.c: ".
+> It is kind of surprising that "Windows builtin" has very poor score
+> extracting from the output of Zip tools running on Windows (I am
+> looking at 46, 46 and n/a over there).  If you tell it to create an
+> archive from its disk and then extract from it, I wonder what would
+> happen.
 
-I saw quite a few decl-after-statement in new code.  Please fix
-them.
+I didn't include it as a packer because it refused to archive the=20
+pangrams directory due to illegal characters in one of the filenames.=20
+When I just tried a bit harder, I had to delete all but 14 files with=20
+Latin script, accents etc. before I could zip the directory.  I'll=20
+include these results in the next round.
 
-As to the "who owns x->src and when is it freed" question, it may
-make sense to give el a "filename" field (command line and other
-special cases would get whatever value you deem appropriate, like
-NULL or "<command line>"), have x->src point at that field when you
-queue many x's to the el in add_exc_from_file_to_list().  Then when
-you pop an element in the exclude_stack, you can free el->filename
-to plug a potential leak.
+It uses codepage 850 on my system (MSDOS Latin 1).  I don't expect this=
+=20
+to be portable.
 
-Also I do not see why you need to have the strdup() in the caller of
-add_excludes_from_file_to_list().  If you need to keep it stable
-because you are copying it away in exclude or excludde_list,
-wouldn't it make more sense to do that at the beginning of the
-callee, i.e. add_excludes_from_file_to_list() function?
+> Does this result mean that practically nobody uses Zip archive with
+> exotic letters in paths on that platform?  I am not talking about
+> developers and savvy people who know where to download third-party
+> Zip archivers and how to install them.  I am imagining a grandma who
+> received an archive full of photos of her grandchild in her Outlook
+> Express or GMail inbox, clicked the attachment to download it, and
+> is trying to view the photo inside.
+
+Not necessarily.  Photos often have names like img_0123.jpg etc., which=
+=20
+are handled just fine.  And all family members probably use the same=20
+codepage on their computers, so they're less likely to run into this=20
+problem.
+
+By the way, I found this bug asking for codepage support in unzip:
+
+   https://bugs.launchpad.net/ubuntu/+source/unzip/+bug/580961
+
+Multiple codepages seem to be used for ZIP files in the wild, none of=20
+them are supported by unzip on Linux, which only accepts ASCII or UTF-8=
+=2E
+
+Ren=C3=A9
