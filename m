@@ -1,87 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve legibility of test_expect_code output
-Date: Thu, 20 Sep 2012 09:50:52 -0700
-Message-ID: <7vtxusbpub.fsf@alter.siamese.dyndns.org>
-References: <1348094310-11214-1-git-send-email-git@adamspiers.org>
- <7vboh1eew2.fsf@alter.siamese.dyndns.org>
- <CAOkDyE-x5NeZX2tpp3C9Kkwb1kPniHptB9ERvtpx2XODufaW=A@mail.gmail.com>
+Subject: Re: [PATCH] completion: fix shell expansion of items
+Date: Thu, 20 Sep 2012 09:52:49 -0700
+Message-ID: <7vmx0kbpr2.fsf@alter.siamese.dyndns.org>
+References: <1348107315-25095-1-git-send-email-felipe.contreras@gmail.com>
+ <20120920014608.GA27782@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 18:51:05 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 20 18:53:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEjxw-0002OP-2l
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 18:51:04 +0200
+	id 1TEjzo-0003r4-E2
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 18:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415Ab2ITQu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 12:50:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43524 "EHLO
+	id S1751526Ab2ITQww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 12:52:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44587 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751200Ab2ITQuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 12:50:54 -0400
+	id S1751322Ab2ITQwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 12:52:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B7D498A7;
-	Thu, 20 Sep 2012 12:50:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFEC9998A;
+	Thu, 20 Sep 2012 12:52:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mEnQPDXINTgfX3pCG0FEUVq4eiM=; b=ec0Qht
-	MSFR3s0eQONGCnZYphLEHKobRJqchs96n8bFLJT4j2dc8FblgAO2SPiewmGh5GKQ
-	uHLdcMTmfbOvwBOwKi+6NyNwRIgLaNTdOc0Pzi3wDEEQQj1MTpTlrNxjHLDb2LCe
-	ScDVkOrCmdOZWZm8kzt9ckOw9Jd+l9jEiHoyg=
+	:content-type; s=sasl; bh=5lRvBPBOP7+DulGItj6Srlr96i8=; b=L9XQyw
+	nkkBwhP+6UzpdZbXS6nI3zUK8jol6q6kPpG//pGAkmfSge9pA3pOSpAmQP82/mCZ
+	Fj43Czm43TKlpzZjpKG2YltZiWmaGlRXsQ6Ye6JAYcnYy4clkUxlzMORuHRm+xv6
+	M7XhtahEcFT+A+GHagdqucQZ/5P3QuaiQsFBs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XyM+h16HN1pdeQcpsj60jrJFkt/8mGhI
-	OMMgDiwDxRJrfqjIV8sqn0H0Eb9knsV9HYslV9yvio+SssfolESAs7gXTexR5QyA
-	EFiL1m47U3mJcdmhCOa15ITGGSyGComSk3dC91GhBl4Ntir1qOmj5fQ2CP11Y2Sv
-	4vwPF+MNS/I=
+	:content-type; q=dns; s=sasl; b=aVoAPARRkyAt8PdZVRZEg1ORSvn3n1OO
+	gJ3btv/Z9fPJ1Vqpg7x8MXq6c5HK52e8ETYwV8NEYpuWV5m0UTbB71Qv98lPQw2I
+	UQqDdpcQg/RYeh0nGmTGxEAxpv+aglisb3Rfr5BpBkM4V41b6rHku+zZrNHHkQo1
+	NwC5pneIg4o=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18E6898A6;
-	Thu, 20 Sep 2012 12:50:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE4229988;
+	Thu, 20 Sep 2012 12:52:50 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D7E098A5; Thu, 20 Sep 2012
- 12:50:53 -0400 (EDT)
-In-Reply-To: <CAOkDyE-x5NeZX2tpp3C9Kkwb1kPniHptB9ERvtpx2XODufaW=A@mail.gmail.com> (Adam
- Spiers's message of "Thu, 20 Sep 2012 01:25:51 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B0899987; Thu, 20 Sep 2012
+ 12:52:50 -0400 (EDT)
+In-Reply-To: <20120920014608.GA27782@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 19 Sep 2012 21:46:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 572960C2-0343-11E2-B28B-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9CDABA9E-0343-11E2-91E2-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206055>
 
-Adam Spiers <git@adamspiers.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, Sep 20, 2012 at 1:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Adam Spiers <git@adamspiers.org> writes:
->>
->>> ---
->>
->> No explanation why this is a good idea, nor sign-off?
+> On Thu, Sep 20, 2012 at 04:15:15AM +0200, Felipe Contreras wrote:
 >
-> I realised I forgot the sign-off seconds after sending :-(
+>> As reported by Jeroen Meijer[1]; the current code doesn't deal properly
+>> with items (tags, branches, etc.) that have ${} in them because they get
+>> expaned by bash while using compgen.
+>> 
+>> A simple solution is to quote the items so they get expanded properly
+>> (\$\{\}).
+>> 
+>> In order to achieve that I took bash-completion's quote() function,
+>> which is rather simple, and renamed it to __git_quote() as per Jeff
+>> King's suggestion.
+>> 
+>> Solves the original problem for me.
 >
-> Isn't it completely self-explanatory? e.g.
->
->     test_expect_code: command exited with 0, we wanted 128 git foo bar
->
-> clearly makes more sense than
->
->     test_expect_code: command exited with 0, we wanted 128 from: git foo bar
+> Me too. Thanks.
 
-test_expect_code: command exited with 0, we wanted 128: git foo bar
-
-would be shorter and equally legible, I would think.
-
-In any case, the proposed commit log message should have explained
-these differences in the first place so that I or others do not have
-to ask.
-
-Do you want this queued on top of your other series, or as an
-independent change?
+Thanks, both.  Will queue.
