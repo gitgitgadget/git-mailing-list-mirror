@@ -1,98 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] test-string-list.c: Fix some sparse warnings
-Date: Thu, 20 Sep 2012 09:13:37 +0200
-Message-ID: <505AC221.8070103@alum.mit.edu>
-References: <5054AA62.2040603@ramsay1.demon.co.uk> <5056DC28.60809@alum.mit.edu> <505A17D5.2000406@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Christopher Li <sparse@chrisli.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 20 09:13:53 2012
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH] Documentation: Document signature showing options
+Date: Thu, 20 Sep 2012 01:10:38 -0700
+Message-ID: <1348128638-26003-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 20 10:10:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEaxM-0004QG-JO
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 09:13:52 +0200
+	id 1TEbqX-0003B6-Qk
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 10:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165Ab2ITHNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 03:13:43 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:47603 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751891Ab2ITHNm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Sep 2012 03:13:42 -0400
-X-AuditID: 12074411-b7fa36d0000008cc-78-505ac225597c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 35.49.02252.522CA505; Thu, 20 Sep 2012 03:13:41 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8K7DcQn023305
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 20 Sep 2012 03:13:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <505A17D5.2000406@ramsay1.demon.co.uk>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqKt6KCrAYMtyNYuuK91MFg29V5gt
-	dk9bwGbRteYQqwOLx4pVV1g8Ll5S9ng88QSrx+dNcgEsUdw2SYklZcGZ6Xn6dgncGQ+XPWEt
-	uCZQcbj7F1sD43veLkZODgkBE4mmzVOZIWwxiQv31rN1MXJxCAlcZpSYcfEdK4RznEni4P5X
-	LF2MHBy8AtoSrRscQBpYBFQl1m6eyAZiswnoSizqaWYCsUUFQiRmXJ4MNpRXQFDi5MwnLCC2
-	CFDN4nknweLMAjUSHZO2gPUKCzhKPD+/DqxXSKBc4sOzK2BxTgFjibvXPrJB1OtIvOt7ANUr
-	L7H97RzmCYwCs5CsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE31cjNL9FJT
-	SjcxQsJZcAfjjJNyhxgFOBiVeHhNxKIChFgTy4orcw8xSnIwKYnyah8ECvEl5adUZiQWZ8QX
-	leakFh9ilOBgVhLh3TgRKMebklhZlVqUD5OS5mBREuflW6LuJySQnliSmp2aWpBaBJOV4eBQ
-	kuBdCTJUsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSp8cXAWAVJ8QDtLQFp5y0u
-	SMwFikK0nmLU5Vh7d8EDRiGWvPy8VClxXkWQIgGQoozSPLgVsOT1ilEc6GNh3nKQKh5g4oOb
-	9ApoCRPQkoonYSBLShIRUlINjKKblm7Q6D696rz//Fsvry7T596k//im3RXDnVMW8d7W3uie
-	ZbK6cpefr8a/PfVHP0/ILZS93JG2X+bPU33pG3XzXvJuEk2SME0rvpU8I6CTdfPi 
+	id S1751658Ab2ITIKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 04:10:44 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:59718 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782Ab2ITIKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 04:10:40 -0400
+Received: by pbbrr13 with SMTP id rr13so4521820pbb.19
+        for <git@vger.kernel.org>; Thu, 20 Sep 2012 01:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=SZxUiGY/8LHksmmMyZ3LNbAuBtThNZiI6+0JE2Ti5Bk=;
+        b=FjTssqQtaSvNR4XocvR73+Qo/D+Ucy47EfN/sefaE681Xtgbv1d9nG+NqeIiijfp1g
+         yAN4EEFDVgtWu42lT/CGvwAw5Yzjjl3chl+5DPQ2vuFn2hOxV5QlfmiSS/j0UDk8WRut
+         GTDnm5/2XkexNQLMznZHI9LqjkxOoWi+NrchtQNN+sTy2SzDr1Ka2c961whHS+bi63He
+         0tR4lMwRuqW7HN3sNE+Sm4B0lFcFOeRCYr2g1Y3PobEYVSupucNjfhspqYf8kIb0gzfC
+         XXlvIyHXO+zsZFJSLMR24VPuyL6AgCyGCSqL5VFYzRIJMTr5ZW7rNNWjCi+VsqKgrqPX
+         Wssg==
+Received: by 10.68.195.226 with SMTP id ih2mr4883767pbc.9.1348128640202;
+        Thu, 20 Sep 2012 01:10:40 -0700 (PDT)
+Received: from earth (cpe-98-155-61-242.san.res.rr.com. [98.155.61.242])
+        by mx.google.com with ESMTPS id ho7sm3176376pbc.3.2012.09.20.01.10.37
+        (version=SSLv3 cipher=OTHER);
+        Thu, 20 Sep 2012 01:10:39 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Thu, 20 Sep 2012 01:10:38 -0700
+X-Mailer: git-send-email 1.7.12.1.382.gb0576a6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206041>
 
-On 09/19/2012 09:07 PM, Ramsay Jones wrote:
-> Michael Haggerty wrote:
->> Is there some documentation about how to run sparse on the git codebase?
->>  I naively tried "make sparse" and ended up with zillions of errors like
->>
->> /usr/include/unistd.h:288:54: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:294:6: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:298:6: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:306:6: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:338:18: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:347:6: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:418:36: error: attribute '__leaf__': unknown attribute
->> /usr/include/unistd.h:423:50: error: attribute '__leaf__': unknown attribute
-> 
-> Yep, "make sparse" is the correct way to run sparse over git.
-> 
-> This looks like you are running sparse on a 64-bit system. I have heard that
-> it has (or *had*) problems running on 64-bit systems. Unfortunately, I am
-> currently confined to 32-bit. (I'm looking at getting a new laptop soon, before
-> Windows 8 causes boot-time problems, so I will then have the same problem!)
-> 
-> How did you obtain/build/install sparse? The current release (v0.4.4) was
-> released about Nov 2011 and I think you need a more up to date version.
-> i.e. you need to build the latest, directly from the sparse repo.
+The pretty formats for GPG signatures were introduced but never
+documented. Use the documentation from the commit that introduced them.
+Do the same for the --show-signature option added to git log and
+friends.
 
-Yes, I'm running 64-bit Ubuntu 12.04 "precise".  I installed sparse from
-the Ubuntu "multiverse" repository.  It is package version
-0.4.3+20110419-1 in Ubuntu's notation.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-Thanks very much for all the info.  I hadn't heard of sparse before and
-thought that using it might help me avoid submitting patches with
-problems like the ones you detected.  It does seem promising!  But since
-it seems a bit fiddly to get it running, and even then has some
-problems, it doesn't sound like the simple pre-submit checklist item
-that I had imagined.
+I had to google for --show-signature one too many times.
 
-Michael
+ Documentation/pretty-formats.txt | 3 +++
+ Documentation/pretty-options.txt | 4 ++++
+ 2 files changed, 7 insertions(+)
 
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index e3d8a83..d9edded 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -130,6 +130,9 @@ The placeholders are:
+ - '%b': body
+ - '%B': raw body (unwrapped subject and body)
+ - '%N': commit notes
++- '%GG': raw verification message from GPG for a signed commit
++- '%G?': show either "G" for Good or "B" for Bad for a signed commit
++- '%GS': show the name of the signer for a signed commit
+ - '%gD': reflog selector, e.g., `refs/stash@{1}`
+ - '%gd': shortened reflog selector, e.g., `stash@{1}`
+ - '%gn': reflog identity name
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 2a3dc86..5e49942 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -66,3 +66,7 @@ being displayed. Examples: "--notes=foo" will show only notes from
+ --[no-]standard-notes::
+ 	These options are deprecated. Use the above --notes/--no-notes
+ 	options instead.
++
++--show-signature::
++	Check the validity of a signed commit object by passing the signature
++	to `gpg --verify` and show the output.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.12.1.382.gb0576a6.dirty
