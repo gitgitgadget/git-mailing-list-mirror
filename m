@@ -1,64 +1,391 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH] Improve legibility of test_expect_code output
-Date: Thu, 20 Sep 2012 19:05:00 +0100
-Message-ID: <CAOkDyE-fi6y5kc9hP9q48kWN0PNmU2CSgWid0EwA9RwQd5fSiA@mail.gmail.com>
-References: <1348094310-11214-1-git-send-email-git@adamspiers.org>
-	<7vboh1eew2.fsf@alter.siamese.dyndns.org>
-	<CAOkDyE-x5NeZX2tpp3C9Kkwb1kPniHptB9ERvtpx2XODufaW=A@mail.gmail.com>
-	<7vtxusbpub.fsf@alter.siamese.dyndns.org>
-	<CAOkDyE9hvBz5wYbj+q=oYTz7zWnP2E9dqtKZ-V=6jBW-FomfbQ@mail.gmail.com>
-	<7vipb8bnbo.fsf@alter.siamese.dyndns.org>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?q?=5BPATCHv8=5D=20clone=20--single=3A=20limit=20the=20fetch=20refspec=20to=20fetched=20branch?=
+Date: Thu, 20 Sep 2012 20:04:08 +0200
+Message-ID: <1348164248-18756-1-git-send-email-ralf.thielow@gmail.com>
+References: <7vzk4legrz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 20:05:18 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: pclouds@gmail.com, git@vger.kernel.org,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 20 20:05:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEl7j-0008Bj-80
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 20:05:15 +0200
+	id 1TEl7q-0008K0-Qy
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 20:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360Ab2ITSFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 14:05:04 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:43848 "EHLO
+	id S1753362Ab2ITSFG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Sep 2012 14:05:06 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:64414 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753182Ab2ITSFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 14:05:02 -0400
-Received: by bkuw11 with SMTP id w11so394731bku.19
-        for <git@vger.kernel.org>; Thu, 20 Sep 2012 11:05:00 -0700 (PDT)
+	with ESMTP id S1753205Ab2ITSFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 14:05:03 -0400
+Received: by bkuw11 with SMTP id w11so394746bku.19
+        for <git@vger.kernel.org>; Thu, 20 Sep 2012 11:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=kYBNA/PqW6+Vt08xMMXPPo0RJtcbnQ01NdVlqjRWCUk=;
-        b=DxHlBZIcncrwUOpNf5MfI5I3JfhtjYVEtXP6KBMeA+wI3wSGRN2MukdIXSK3KEOGTJ
-         +BnRpw0SXNil6nsxBGzu1HsrQb9TWRMke8ZnRbNo9f74v0XrVjiV6+tYmtjqYXX5DmhO
-         +SU4w5yvM3/m5xdx1FAtJyrUAFU/Hp6OitNGX1mLsRXG2sIpBUGk7YT1XcpuMp0Ef+IA
-         6W8wOvaxXDIejXnjky+mMFN2nQzFVEu0Ux0HBV92lhRjDVuD9GnX94YRNHnj97dM90Y1
-         sKZqSLGPy0Y8qqBxSg5lnB4HDoR90WTi+DwVaAZch1KgwSg9BZ/wBdibNXGExuPWgYNQ
-         GwuQ==
-Received: by 10.204.152.207 with SMTP id h15mr1133132bkw.5.1348164300635; Thu,
- 20 Sep 2012 11:05:00 -0700 (PDT)
-Received: by 10.205.81.80 with HTTP; Thu, 20 Sep 2012 11:05:00 -0700 (PDT)
-In-Reply-To: <7vipb8bnbo.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: -ys9_3U_FUjBhm8osZ1ng1Hzu9I
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=EOqh+9PAAplaHmVW/ezZibz5hXNu0uNi7V8AhqZ+8tQ=;
+        b=m7DGlUDplCasIG3zT9VPJOQ0cJYoKVebByROBphspG061bJdXePz1fh8PzfRUpEwe2
+         By1vP8OLWAyzCAs7w6awS22lypkd7vKvX5+ubcb5mDA2zNQno4icAemMjoq0LGsm/5sv
+         zQ+oQNiqKgePxDEuOahSK0PjE6S0P4yYHVwXB2H1KNgysRVHipAJHrwJpgndyJCC9gsb
+         af6LEbA5Fs9qNncakmp3+rH7VjWxnF8zWJXEVEPT29ak6qiUWJuvwCKxSRGP7w9mlimz
+         rMNMDEu/ogFGHgS9tk9jfMs9Y8pSSeHyV9Pg3BL8Op3M19SNkFd9aSdhbN10r7qzyEqj
+         wMMQ==
+Received: by 10.204.154.214 with SMTP id p22mr1145167bkw.111.1348164301700;
+        Thu, 20 Sep 2012 11:05:01 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-222-138-170.pools.arcor-ip.net. [94.222.138.170])
+        by mx.google.com with ESMTPS id x13sm4234036bkv.16.2012.09.20.11.05.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Sep 2012 11:05:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.396.g7954078
+In-Reply-To: <7vzk4legrz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206065>
 
-On Thu, Sep 20, 2012 at 6:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Adam Spiers <git@adamspiers.org> writes:
->> On Thu, Sep 20, 2012 at 5:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Do you want this queued on top of your other series, or as an
->>> independent change?
->>
->> Independent please.
->
-> With a sign-off?
+After running "git clone --single", the resulting repository has the
+usual default "+refs/heads/*:refs/remotes/origin/*" wildcard fetch
+refspec installed, which means that a subsequent "git fetch" will
+end up grabbing all the other branches.
 
-Yep.
+Update the fetch refspec to cover only the singly cloned ref instead
+to correct this.
+
+That means:
+If "--single" is used without "--branch" or "--mirror", the
+fetch refspec covers the branch on which remote's HEAD points to.
+If "--single" is used with "--branch", it'll cover only the branch
+specified in the "--branch" option.
+If "--single" is combined with "--mirror", then it'll cover all
+refs of the cloned repository.
+If "--single" is used with "--branch" that specifies a tag, then
+it'll cover only the ref for this tag.
+
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+
+changes in v8:
+- remove unnecessary strbuf_reset
+- remove test from v7 which has shown that tags get fetched when clonin=
+g
+- add test to show that tags will not being updated when using simple "=
+git clone"
+- change position of the tag in the setup, not directly in the test
+
+ Documentation/git-clone.txt |  15 +++--
+ builtin/clone.c             |  65 ++++++++++++++----
+ t/t5709-clone-refspec.sh    | 156 ++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 Dateien ge=C3=A4ndert, 218 Zeilen hinzugef=C3=BCgt(+), 18 Zeilen ent=
+fernt(-)
+ create mode 100755 t/t5709-clone-refspec.sh
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index c1ddd4c..6d98ef3 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -29,7 +29,8 @@ currently active branch.
+ After the clone, a plain `git fetch` without arguments will update
+ all the remote-tracking branches, and a `git pull` without
+ arguments will in addition merge the remote master branch into the
+-current master branch, if any.
++current master branch, if any (this is untrue when "--single-branch"
++is given; see below).
+=20
+ This default configuration is achieved by creating references to
+ the remote branch heads under `refs/remotes/origin` and
+@@ -152,9 +153,10 @@ objects from the source repository into a pack in =
+the cloned repository.
+ -b <name>::
+ 	Instead of pointing the newly created HEAD to the branch pointed
+ 	to by the cloned repository's HEAD, point to `<name>` branch
+-	instead. `--branch` can also take tags and treat them like
+-	detached HEAD. In a non-bare repository, this is the branch
+-	that will be checked out.
++	instead. In a non-bare repository, this is the branch that will
++	be checked out.
++	`--branch` can also take tags and detaches the HEAD at that commit
++	in the resulting repository.
+=20
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+@@ -193,6 +195,11 @@ objects from the source repository into a pack in =
+the cloned repository.
+ 	clone with the `--depth` option, this is the default, unless
+ 	`--no-single-branch` is given to fetch the histories near the
+ 	tips of all branches.
++	Further fetches into the resulting repository will only update the
++	remote tracking branch for the branch this option was used for the
++	initial cloning.  If the HEAD at the remote did not point at any
++	branch when `--single-branch` clone was made, no remote tracking
++	branch is created.
+=20
+ --recursive::
+ --recurse-submodules::
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5e8f3ba..047239c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -610,6 +610,54 @@ static void write_config(struct string_list *confi=
+g)
+ 	}
+ }
+=20
++static void write_refspec_config(const char* src_ref_prefix,
++		const struct ref* our_head_points_at,
++		const struct ref* remote_head_points_at, struct strbuf* branch_top)
++{
++	struct strbuf key =3D STRBUF_INIT;
++	struct strbuf value =3D STRBUF_INIT;
++
++	if (option_mirror || !option_bare) {
++		if (option_single_branch && !option_mirror) {
++			if (option_branch) {
++				if (strstr(our_head_points_at->name, "refs/tags/"))
++					strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
++						our_head_points_at->name);
++				else
++					strbuf_addf(&value, "+%s:%s%s", our_head_points_at->name,
++						branch_top->buf, option_branch);
++			} else if (remote_head_points_at) {
++				strbuf_addf(&value, "+%s:%s%s", remote_head_points_at->name,
++						branch_top->buf,
++						skip_prefix(remote_head_points_at->name, "refs/heads/"));
++			}
++			/*
++			 * otherwise, the next "git fetch" will
++			 * simply fetch from HEAD without updating
++			 * any remote tracking branch, which is what
++			 * we want.
++			 */
++		} else {
++			strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top->buf);
++		}
++		/* Configure the remote */
++		if (value.len) {
++			strbuf_addf(&key, "remote.%s.fetch", option_origin);
++			git_config_set_multivar(key.buf, value.buf, "^$", 0);
++			strbuf_reset(&key);
++
++			if (option_mirror) {
++				strbuf_addf(&key, "remote.%s.mirror", option_origin);
++				git_config_set(key.buf, "true");
++				strbuf_reset(&key);
++			}
++		}
++	}
++
++	strbuf_release(&key);
++	strbuf_release(&value);
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle =3D 0, is_local;
+@@ -755,20 +803,6 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 	}
+=20
+ 	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+-
+-	if (option_mirror || !option_bare) {
+-		/* Configure the remote */
+-		strbuf_addf(&key, "remote.%s.fetch", option_origin);
+-		git_config_set_multivar(key.buf, value.buf, "^$", 0);
+-		strbuf_reset(&key);
+-
+-		if (option_mirror) {
+-			strbuf_addf(&key, "remote.%s.mirror", option_origin);
+-			git_config_set(key.buf, "true");
+-			strbuf_reset(&key);
+-		}
+-	}
+-
+ 	strbuf_addf(&key, "remote.%s.url", option_origin);
+ 	git_config_set(key.buf, repo);
+ 	strbuf_reset(&key);
+@@ -853,6 +887,9 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 					      "refs/heads/master");
+ 	}
+=20
++	write_refspec_config(src_ref_prefix, our_head_points_at,
++			remote_head_points_at, &branch_top);
++
+ 	if (is_local)
+ 		clone_local(path, git_dir);
+ 	else if (refs && complete_refs_before_fetch)
+diff --git a/t/t5709-clone-refspec.sh b/t/t5709-clone-refspec.sh
+new file mode 100755
+index 0000000..6f1ea98
+--- /dev/null
++++ b/t/t5709-clone-refspec.sh
+@@ -0,0 +1,156 @@
++#!/bin/sh
++
++test_description=3D'test refspec written by clone-command'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	# Make two branches, "master" and "side"
++	echo one >file &&
++	git add file &&
++	git commit -m one &&
++	echo two >file &&
++	git commit -a -m two &&
++	git tag two &&
++	echo three >file &&
++	git commit -a -m three &&
++	git checkout -b side &&
++	echo four >file &&
++	git commit -a -m four &&
++	git checkout master &&
++
++	# default clone
++	git clone . dir_all &&
++
++	# default --single that follows HEAD=3Dmaster
++	git clone --single-branch . dir_master &&
++
++	# default --single that follows HEAD=3Dside
++	git checkout side &&
++	git clone --single-branch . dir_side &&
++
++	# explicit --single that follows side
++	git checkout master &&
++	git clone --single-branch --branch side . dir_side2 &&
++
++	# default --single with --mirror
++	git clone --single-branch --mirror . dir_mirror &&
++
++	# default --single with --branch and --mirror
++	git clone --single-branch --mirror --branch side . dir_mirror_side &&
++
++	# --single that does not know what branch to follow
++	git checkout two^ &&
++	git clone --single-branch . dir_detached &&
++
++	# explicit --single with tag
++	git clone --single-branch --branch two . dir_tag &&
++
++	# advance both "master" and "side" branches
++	git checkout side &&
++	echo five >file &&
++	git commit -a -m five &&
++	git checkout master &&
++	echo six >file &&
++	git commit -a -m six &&
++
++	# update tag
++	git tag -d two && git tag two
++'
++
++test_expect_success 'by default all branches will be kept updated' '
++	(
++		cd dir_all && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# follow both master and side
++	git for-each-ref refs/heads >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'by default no tags will be kept updated' '
++	(
++		cd dir_all && git fetch &&
++		git for-each-ref refs/tags >../actual
++	) &&
++	git for-each-ref refs/tags >expect &&
++	test_must_fail test_cmp expect actual
++'
++
++test_expect_success '--single-branch while HEAD pointing at master' '
++	(
++		cd dir_master && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow master
++	git for-each-ref refs/heads/master >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch while HEAD pointing at side' '
++	(
++		cd dir_side && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow side
++	git for-each-ref refs/heads/side >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch side' '
++	(
++		cd dir_side2 && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	) &&
++	# only follow side
++	git for-each-ref refs/heads/side >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch with tag f=
+etches updated tag' '
++	(
++		cd dir_tag && git fetch &&
++		git for-each-ref refs/tags >../actual
++	) &&
++	git for-each-ref refs/tags >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with --mirror' '
++	(
++		cd dir_mirror && git fetch &&
++		git for-each-ref refs > ../actual
++	) &&
++	git for-each-ref refs >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with explicit --branch and --mirr=
+or' '
++	(
++		cd dir_mirror_side && git fetch &&
++		git for-each-ref refs > ../actual
++	) &&
++	git for-each-ref refs >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--single-branch with detached' '
++	(
++		cd dir_detached && git fetch &&
++		git for-each-ref refs/remotes/origin |
++		sed -e "/HEAD$/d" \
++		    -e "s|/remotes/origin/|/heads/|" >../actual
++	)
++	# nothing
++	>expect &&
++	test_cmp expect actual
++'
++
++test_done
+--=20
+1.7.12.396.g7954078
