@@ -1,68 +1,71 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: Re: [PATCH v4 3/6] Color skipped tests blue
-Date: Thu, 20 Sep 2012 10:04:36 +0100
-Message-ID: <CAOkDyE8uu4DWqKKAQTEcBCjmWXJfNueyJQuvJhAUaqnsihpkUg@mail.gmail.com>
-References: <20120919201326.GA23016@sigill.intra.peff.net>
-	<1348086263-27555-1-git-send-email-git@adamspiers.org>
-	<505AAE34.2020408@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Sep 20 11:04:48 2012
+Subject: [PATCH v5 3/3] Color skipped tests bold blue
+Date: Thu, 20 Sep 2012 10:08:38 +0100
+Message-ID: <1348132118-23139-1-git-send-email-git@adamspiers.org>
+References: <505AAE34.2020408@viscovery.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 20 11:08:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEcgi-0000Y5-BM
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 11:04:48 +0200
+	id 1TEckc-0002wB-Ri
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 11:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350Ab2ITJEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 05:04:38 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:34052 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751494Ab2ITJEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 05:04:37 -0400
-Received: by bkuw11 with SMTP id w11so61365bku.19
-        for <git@vger.kernel.org>; Thu, 20 Sep 2012 02:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=15qSZ9oyjpCGZTzBLXkYUpgimVxEFsHD+Zi3qbbCDqA=;
-        b=ALQMgditq3eruagbXrc27lUs/iyArANDDvCTZcdDMekpyVBJcnRjZs4aP/U8YZXssg
-         vKBaLmyi1IdKn7Kso//VysBKC8+8kYcLrPyYYNQvNxT+ghA/iNoodE5mnSyzeo2jG1Fe
-         cfQjpweJSLcYZTMpYuaoU3c1UNiar5eZD7uwf7MOMW619DyA9JM/kMdxZeEv/pVQGntf
-         LhuWCleszAfEVZkCz5FRhaxtB8rJHZMxKGMbV/qp1ieCD0NNWav8OvUIQ7VviTEqprcL
-         +VAqNaDVxP79jX/OGAe7OG7qIlDgEYsdgersHekMHWyf6QLpw6pLjq8417+bm1D4PvEu
-         jAgA==
-Received: by 10.204.148.86 with SMTP id o22mr315298bkv.59.1348131876135; Thu,
- 20 Sep 2012 02:04:36 -0700 (PDT)
-Received: by 10.205.81.80 with HTTP; Thu, 20 Sep 2012 02:04:36 -0700 (PDT)
+	id S1752106Ab2ITJIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 05:08:41 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:45564 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751880Ab2ITJIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 05:08:41 -0400
+Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id AEC3C2E5D3;
+	Thu, 20 Sep 2012 10:08:39 +0100 (BST)
+X-Mailer: git-send-email 1.7.12.147.g6d168f4
 In-Reply-To: <505AAE34.2020408@viscovery.net>
-X-Google-Sender-Auth: UGvhhBb4d9WAFcZAEw58aTS31qg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206043>
 
-On Thu, Sep 20, 2012 at 6:48 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 9/19/2012 22:24, schrieb Adam Spiers:
->>               skip)
->> -                     tput bold; tput setaf 2;; # bold green
->> +                     tput setaf 4;;            # blue
->
-> It's unreadable on black background. Keep it bold; that works on both
-> black and white background.
+Skipped tests indicate incomplete test coverage.  Whilst this is
+not a test failure or other error, it's still not complete
+success, so according to the universal traffic lights coloring
+scheme, yellow/brown seems more suitable than green.  However,
+it's more informational than cautionary, so instead we use blue
+which is a universal color for information signs.  Bold blue
+should work better on both black and white backgrounds than
+normal blue.
 
-Whilst my preference aligns with yours in this particular case, we are
-now on a slippery slope, since these days terminal colors are
-infinitely configurable, and some heretics even choose backgrounds
-which are neither black nor white ;-)  I don't want to trigger a long
-discussion or end up spamming the list with lots of different color
-scheme patches in an attempt to please everyone.  So bold blue will be
-my last version of this patch.
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ t/test-lib.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 5293830..5ef87d4 100755
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -182,13 +182,13 @@ then
+ 		error)
+ 			tput bold; tput setaf 1;; # bold red
+ 		skip)
+-			tput bold; tput setaf 2;; # bold green
++			tput bold; tput setaf 4;; # bold blue
+ 		warn)
+ 			tput bold; tput setaf 3;; # bold yellow
+ 		pass)
+ 			tput setaf 2;;            # green
+ 		info)
+-			tput setaf 3;;            # brown
++			tput setaf 3;;            # yellow/brown
+ 		*)
+ 			test -n "$quiet" && return;;
+ 		esac
+-- 
+1.7.12.147.g6d168f4
