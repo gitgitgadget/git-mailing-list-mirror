@@ -1,326 +1,119 @@
 From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH v2 12/14] Extract some useful pathspec handling code from builtin/add.c into a library
-Date: Thu, 20 Sep 2012 20:46:21 +0100
-Message-ID: <1348170383-15751-13-git-send-email-git@adamspiers.org>
+Subject: [PATCH v2 04/14] Rename path_excluded() to is_path_excluded()
+Date: Thu, 20 Sep 2012 20:46:13 +0100
+Message-ID: <1348170383-15751-5-git-send-email-git@adamspiers.org>
 References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
  <1348170383-15751-1-git-send-email-git@adamspiers.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 21:47:07 2012
+X-From: git-owner@vger.kernel.org Thu Sep 20 21:47:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEmiF-0000f4-Pe
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:47:04 +0200
+	id 1TEmiH-0000f4-M1
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 21:47:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755496Ab2ITTqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2012 15:46:43 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:46201 "EHLO
+	id S1755859Ab2ITTqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2012 15:46:46 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:46179 "EHLO
 	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754908Ab2ITTqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2012 15:46:36 -0400
+	with ESMTP id S1751751Ab2ITTq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2012 15:46:28 -0400
 Received: from localhost (f.8.b.2.1.5.e.f.f.f.4.f.0.4.2.0.0.0.0.0.b.1.4.6.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:641b:0:240:f4ff:fe51:2b8f])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 0B5AE2E5EB;
-	Thu, 20 Sep 2012 20:46:35 +0100 (BST)
+	by coral.adamspiers.org (Postfix) with ESMTPSA id D3F742E5E8;
+	Thu, 20 Sep 2012 20:46:27 +0100 (BST)
 X-Mailer: git-send-email 1.7.12.147.g6d168f4
 In-Reply-To: <1348170383-15751-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206079>
 
-This is in preparation for reuse by a new git check-ignore command.
+Start adopting clearer names for exclude functions.  This 'is_*'
+naming pattern for functions returning booleans was agreed here:
+
+http://thread.gmane.org/gmane.comp.version-control.git/204661/focus=204924
 
 Signed-off-by: Adam Spiers <git@adamspiers.org>
 ---
- Makefile      |  2 ++
- builtin/add.c | 95 ++-------------------------------------------------------
- pathspec.c    | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- pathspec.h    |  6 ++++
- 4 files changed, 108 insertions(+), 92 deletions(-)
- create mode 100644 pathspec.c
- create mode 100644 pathspec.h
+ builtin/add.c      | 2 +-
+ builtin/ls-files.c | 2 +-
+ dir.c              | 4 ++--
+ dir.h              | 2 +-
+ unpack-trees.c     | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a49d1db..9a4bf9e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -649,6 +649,7 @@ LIB_H += pack-revindex.h
- LIB_H += pack.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
-+LIB_H += pathspec.h
- LIB_H += pkt-line.h
- LIB_H += progress.h
- LIB_H += prompt.h
-@@ -769,6 +770,7 @@ LIB_OBJS += parse-options-cb.o
- LIB_OBJS += patch-delta.o
- LIB_OBJS += patch-ids.o
- LIB_OBJS += path.o
-+LIB_OBJS += pathspec.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
 diff --git a/builtin/add.c b/builtin/add.c
-index b4ec5cd..c3def9c 100644
+index e664100..075312a 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -6,6 +6,7 @@
- #include "cache.h"
- #include "builtin.h"
- #include "dir.h"
-+#include "pathspec.h"
- #include "exec_cmd.h"
- #include "cache-tree.h"
- #include "run-command.h"
-@@ -97,39 +98,6 @@ int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
- 	return !!data.add_errors;
+@@ -454,7 +454,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			    && !file_exists(pathspec[i])) {
+ 				if (ignore_missing) {
+ 					int dtype = DT_UNKNOWN;
+-					if (path_excluded(&check, pathspec[i], -1, &dtype))
++					if (is_path_excluded(&check, pathspec[i], -1, &dtype))
+ 						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
+ 				} else
+ 					die(_("pathspec '%s' did not match any files"),
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b5434af..d226456 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -203,7 +203,7 @@ static void show_ru_info(void)
+ static int ce_excluded(struct path_exclude_check *check, struct cache_entry *ce)
+ {
+ 	int dtype = ce_to_dtype(ce);
+-	return path_excluded(check, ce->name, ce_namelen(ce), &dtype);
++	return is_path_excluded(check, ce->name, ce_namelen(ce), &dtype);
  }
  
--static void fill_pathspec_matches(const char **pathspec, char *seen, int specs)
--{
--	int num_unmatched = 0, i;
--
--	/*
--	 * Since we are walking the index as if we were walking the directory,
--	 * we have to mark the matched pathspec as seen; otherwise we will
--	 * mistakenly think that the user gave a pathspec that did not match
--	 * anything.
--	 */
--	for (i = 0; i < specs; i++)
--		if (!seen[i])
--			num_unmatched++;
--	if (!num_unmatched)
--		return;
--	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen);
--	}
--}
--
--static char *find_used_pathspec(const char **pathspec)
--{
--	char *seen;
--	int i;
--
--	for (i = 0; pathspec[i];  i++)
--		; /* just counting */
--	seen = xcalloc(i, 1);
--	fill_pathspec_matches(pathspec, seen, i);
--	return seen;
--}
--
- static char *prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
+ static void show_files(struct dir_struct *dir)
+diff --git a/dir.c b/dir.c
+index 91e57d9..dad1582 100644
+--- a/dir.c
++++ b/dir.c
+@@ -627,8 +627,8 @@ void path_exclude_check_clear(struct path_exclude_check *check)
+  * A path to a directory known to be excluded is left in check->path to
+  * optimize for repeated checks for files in the same excluded directory.
+  */
+-int path_excluded(struct path_exclude_check *check,
+-		  const char *name, int namelen, int *dtype)
++int is_path_excluded(struct path_exclude_check *check,
++		     const char *name, int namelen, int *dtype)
  {
- 	char *seen;
-@@ -153,46 +121,6 @@ static char *prune_directory(struct dir_struct *dir, const char **pathspec, int
- 	return seen;
- }
+ 	int i;
+ 	struct strbuf *path = &check->path;
+diff --git a/dir.h b/dir.h
+index 549a187..41a5e32 100644
+--- a/dir.h
++++ b/dir.h
+@@ -113,7 +113,7 @@ struct path_exclude_check {
+ };
+ extern void path_exclude_check_init(struct path_exclude_check *, struct dir_struct *);
+ extern void path_exclude_check_clear(struct path_exclude_check *);
+-extern int path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
++extern int is_path_excluded(struct path_exclude_check *, const char *, int namelen, int *dtype);
  
--/*
-- * Check whether path refers to a submodule, or something inside a
-- * submodule.  If the former, returns the path with any trailing slash
-- * stripped.  If the latter, dies with an error message.
-- */
--const char *treat_gitlink(const char *path)
--{
--	int i, path_len = strlen(path);
--	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		if (S_ISGITLINK(ce->ce_mode)) {
--			int ce_len = ce_namelen(ce);
--			if (path_len <= ce_len || path[ce_len] != '/' ||
--			    memcmp(ce->name, path, ce_len))
--				/* path does not refer to this
--				 * submodule or anything inside it */
--				continue;
--			if (path_len == ce_len + 1) {
--				/* path refers to submodule;
--				 * strip trailing slash */
--				return xstrndup(ce->name, ce_len);
--			} else {
--				die (_("Path '%s' is in submodule '%.*s'"),
--				     path, ce_len, ce->name);
--			}
--		}
--	}
--	return path;
--}
--
--void treat_gitlinks(const char **pathspec)
--{
--	if (!pathspec || !*pathspec)
--		return;
--
--	int i;
--	for (i = 0; pathspec[i]; i++)
--		pathspec[i] = treat_gitlink(pathspec[i]);
--}
--
- static void refresh(int verbose, const char **pathspec)
- {
- 	char *seen;
-@@ -210,23 +138,6 @@ static void refresh(int verbose, const char **pathspec)
-         free(seen);
- }
  
--static const char **validate_pathspec(int argc, const char **argv, const char *prefix)
--{
--	const char **pathspec = get_pathspec(prefix, argv);
--
--	if (pathspec) {
--		const char **p;
--		for (p = pathspec; *p; p++) {
--			if (has_symlink_leading_path(*p, strlen(*p))) {
--				int len = prefix ? strlen(prefix) : 0;
--				die(_("'%s' is beyond a symbolic link"), *p + len);
--			}
--		}
--	}
--
--	return pathspec;
--}
--
- int run_add_interactive(const char *revision, const char *patch_mode,
- 			const char **pathspec)
- {
-@@ -261,7 +172,7 @@ int interactive_add(int argc, const char **argv, const char *prefix, int patch)
- 	const char **pathspec = NULL;
- 
- 	if (argc) {
--		pathspec = validate_pathspec(argc, argv, prefix);
-+		pathspec = validate_pathspec(prefix, argv);
- 		if (!pathspec)
- 			return -1;
- 	}
-@@ -428,7 +339,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 6d96366..724f69b 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1373,7 +1373,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
  		return 0;
- 	}
--	pathspec = validate_pathspec(argc, argv, prefix);
-+	pathspec = validate_pathspec(prefix, argv);
  
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
-diff --git a/pathspec.c b/pathspec.c
-new file mode 100644
-index 0000000..10f6643
---- /dev/null
-+++ b/pathspec.c
-@@ -0,0 +1,97 @@
-+#include "cache.h"
-+#include "dir.h"
-+
-+void validate_path(const char *prefix, const char *path)
-+{
-+	if (has_symlink_leading_path(path, strlen(path))) {
-+		int len = prefix ? strlen(prefix) : 0;
-+		die(_("'%s' is beyond a symbolic link"), path + len);
-+	}
-+}
-+
-+const char **validate_pathspec(const char *prefix, const char **files)
-+{
-+	const char **pathspec = get_pathspec(prefix, files);
-+
-+	if (pathspec) {
-+		const char **p;
-+		for (p = pathspec; *p; p++) {
-+			validate_path(prefix, *p);
-+		}
-+	}
-+
-+	return pathspec;
-+}
-+
-+void fill_pathspec_matches(const char **pathspec, char *seen, int specs)
-+{
-+	int num_unmatched = 0, i;
-+
-+	/*
-+	 * Since we are walking the index as if we were walking the directory,
-+	 * we have to mark the matched pathspec as seen; otherwise we will
-+	 * mistakenly think that the user gave a pathspec that did not match
-+	 * anything.
-+	 */
-+	for (i = 0; i < specs; i++)
-+		if (!seen[i])
-+			num_unmatched++;
-+	if (!num_unmatched)
-+		return;
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+		match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, seen);
-+	}
-+}
-+
-+char *find_used_pathspec(const char **pathspec)
-+{
-+	char *seen;
-+	int i;
-+
-+	for (i = 0; pathspec[i];  i++)
-+		; /* just counting */
-+	seen = xcalloc(i, 1);
-+	fill_pathspec_matches(pathspec, seen, i);
-+	return seen;
-+}
-+
-+/*
-+ * Check whether path refers to a submodule, or something inside a
-+ * submodule.  If the former, returns the path with any trailing slash
-+ * stripped.  If the latter, dies with an error message.
-+ */
-+const char *treat_gitlink(const char *path)
-+{
-+	int i, path_len = strlen(path);
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+		if (S_ISGITLINK(ce->ce_mode)) {
-+			int ce_len = ce_namelen(ce);
-+			if (path_len <= ce_len || path[ce_len] != '/' ||
-+			    memcmp(ce->name, path, ce_len))
-+				/* path does not refer to this
-+				 * submodule or anything inside it */
-+				continue;
-+			if (path_len == ce_len + 1) {
-+				/* path refers to submodule;
-+				 * strip trailing slash */
-+				return xstrndup(ce->name, ce_len);
-+			} else {
-+				die (_("Path '%s' is in submodule '%.*s'"),
-+				     path, ce_len, ce->name);
-+			}
-+		}
-+	}
-+	return path;
-+}
-+
-+void treat_gitlinks(const char **pathspec)
-+{
-+	if (!pathspec || !*pathspec)
-+		return;
-+
-+	int i;
-+	for (i = 0; pathspec[i]; i++)
-+		pathspec[i] = treat_gitlink(pathspec[i]);
-+}
-diff --git a/pathspec.h b/pathspec.h
-new file mode 100644
-index 0000000..4ed40a5
---- /dev/null
-+++ b/pathspec.h
-@@ -0,0 +1,6 @@
-+extern void validate_path(const char *prefix, const char *path);
-+extern const char **validate_pathspec(const char *prefix, const char **files);
-+extern char *find_used_pathspec(const char **pathspec);
-+extern void fill_pathspec_matches(const char **pathspec, char *seen, int specs);
-+extern const char *treat_gitlink(const char **path);
-+extern void treat_gitlinks(const char **pathspec);
+ 	if (o->dir &&
+-	    path_excluded(o->path_exclude_check, name, -1, &dtype))
++	    is_path_excluded(o->path_exclude_check, name, -1, &dtype))
+ 		/*
+ 		 * ce->name is explicitly excluded, so it is Ok to
+ 		 * overwrite it.
 -- 
 1.7.12.147.g6d168f4
