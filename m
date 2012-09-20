@@ -1,80 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve legibility of test_expect_code output
-Date: Wed, 19 Sep 2012 17:06:53 -0700
-Message-ID: <7vboh1eew2.fsf@alter.siamese.dyndns.org>
-References: <1348094310-11214-1-git-send-email-git@adamspiers.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 02:07:10 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] completion: fix shell expansion of items
+Date: Thu, 20 Sep 2012 04:15:15 +0200
+Message-ID: <1348107315-25095-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 20 02:15:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEUIK-0004F2-1s
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 02:07:04 +0200
+	id 1TEUQT-0000f4-RJ
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Sep 2012 02:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165Ab2ITAG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2012 20:06:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47551 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753051Ab2ITAGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2012 20:06:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF7648766;
-	Wed, 19 Sep 2012 20:06:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cp4bZwjV1vzsuFxXEDcfNePkmOM=; b=FMrRZd
-	oHofM2Y2BgEnCUpwhKzv62k16+rS5mtYSIaR8kC5FwerSSo49Xd6x05CvpFrfHVW
-	SikooTTjQFSMGYlXxFMX201pYGT7BBAfikL6rYyK72PBRtUFWbd8+UmLp38g0ecf
-	QVWkBCwIjt/bMQeM3QLSKeVMXvJXNysj/PGGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cMnTH/Uoq2f+ufe2si1vaxRFn5GWYx1U
-	zSKWIwZW+X6JbeVFVVQqAMRkovGF396Xn3SZIO/cIDUxgb9whTMbsjMhlzpA/ZAD
-	UzEkdZGXTIqlRjbN0s99fGnmW7DVeYc40JS6GD7AeeSOf556+l9wKLftJe78p14Y
-	6vhaAZwB/NQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD1858765;
-	Wed, 19 Sep 2012 20:06:54 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D57A8762; Wed, 19 Sep 2012
- 20:06:54 -0400 (EDT)
-In-Reply-To: <1348094310-11214-1-git-send-email-git@adamspiers.org> (Adam
- Spiers's message of "Wed, 19 Sep 2012 23:38:30 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 15E15E6C-02B7-11E2-806D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753290Ab2ITAPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2012 20:15:21 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:37253 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753238Ab2ITAPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2012 20:15:20 -0400
+Received: by wibhq12 with SMTP id hq12so40922wib.1
+        for <git@vger.kernel.org>; Wed, 19 Sep 2012 17:15:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=LFKQH4JosonLFuls6+j7A4b8bw/68jiKUXlG6SA2ZJM=;
+        b=Wlpy1psK20fxAkuULDziagHa1A1qj0lERdvFDzLnUHLZRJHTLK4td9xlH/avSKGGLj
+         ZUfLL+KfgFxCv2VYn/6GVHle6282u4Z6Em7ussWLBz93OTvegCje0B0wTCH2UFUli1Cd
+         EGpYX7nOTnXc6b8SsG618/Jc/On7x7jw2NzOnEgqkWevbP4V/eFSv0N7DvcfHRHqconx
+         dhkHnnf3E4dy0R5XVHCB7Dpx0u3/H++UqtNLAliKAjngvAXG1okyeKdQfQMwkoNWU0AF
+         lrdwfeTWkvlmIXOCZJUsq3z6Jzropc7REisGAv9blFSB2Ae8Z/c8JWpwcuVf0p+ivzYo
+         2Z0w==
+Received: by 10.180.78.40 with SMTP id y8mr449249wiw.7.1348100118754;
+        Wed, 19 Sep 2012 17:15:18 -0700 (PDT)
+Received: from localhost (ip-109-43-0-104.web.vodafone.de. [109.43.0.104])
+        by mx.google.com with ESMTPS id k2sm7690416wiz.7.2012.09.19.17.15.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 19 Sep 2012 17:15:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206019>
 
-Adam Spiers <git@adamspiers.org> writes:
+As reported by Jeroen Meijer[1]; the current code doesn't deal properly
+with items (tags, branches, etc.) that have ${} in them because they get
+expaned by bash while using compgen.
 
-> ---
+A simple solution is to quote the items so they get expanded properly
+(\$\{\}).
 
-No explanation why this is a good idea, nor sign-off?
+In order to achieve that I took bash-completion's quote() function,
+which is rather simple, and renamed it to __git_quote() as per Jeff
+King's suggestion.
 
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->  mode change 100644 => 100755 t/test-lib-functions.sh
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> old mode 100644
-> new mode 100755
-> index 8889ba5..e022e73
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -562,7 +562,7 @@ test_expect_code () {
->  		return 0
->  	fi
->  
-> -	echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
-> +	echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code from: $*"
->  	return 1
->  }
+Solves the original problem for me.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/201596
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d743e56..5a5b5a0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -225,6 +225,13 @@ _get_comp_words_by_ref ()
+ fi
+ fi
+ 
++# Quotes the argument for shell reuse
++__git_quote()
++{
++	local quoted=${1//\'/\'\\\'\'}
++	printf "'%s'" "$quoted"
++}
++
+ # Generates completion reply with compgen, appending a space to possible
+ # completion words, if necessary.
+ # It accepts 1 to 4 arguments:
+@@ -261,7 +268,7 @@ __gitcomp ()
+ __gitcomp_nl ()
+ {
+ 	local IFS=$'\n'
+-	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
++	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$(__git_quote "$1")" -- "${3-$cur}"))
+ }
+ 
+ __git_heads ()
+-- 
+1.7.10.3
