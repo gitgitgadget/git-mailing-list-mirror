@@ -1,92 +1,110 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] pretty: support placeholders %C+ and %C-
-Date: Fri, 21 Sep 2012 15:36:29 +0700
-Message-ID: <CACsJy8Azsg_EQvnm0L4AyZbnaDPcjtrr_+8u5eOAGjKFg9BBRQ@mail.gmail.com>
+Subject: Re: [PATCH 3/2] pretty: support right alignment
+Date: Fri, 21 Sep 2012 15:55:13 +0700
+Message-ID: <CACsJy8AAjxMN7MX09Eq4Dy6NJHMkyxGJZm9uZquXWTi0goAYLQ@mail.gmail.com>
 References: <CACsJy8BP0vzWG-Po=WBVC_V5Z5_ysoCOTkU-XV3Hy_jVE4H1XQ@mail.gmail.com>
  <1348143976-4506-1-git-send-email-pclouds@gmail.com> <1348143976-4506-3-git-send-email-pclouds@gmail.com>
- <7vy5k4bpzh.fsf@alter.siamese.dyndns.org> <7vehlwbn76.fsf@alter.siamese.dyndns.org>
+ <20120920143803.GA9527@lanh> <7v392cd4vi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 10:37:29 2012
+X-From: git-owner@vger.kernel.org Fri Sep 21 10:55:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEyjl-00021W-Kz
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 10:37:25 +0200
+	id 1TEz1i-0000qp-8h
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 10:55:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756965Ab2IUIhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 04:37:11 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:37164 "EHLO
+	id S932097Ab2IUIzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 04:55:49 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:48338 "EHLO
 	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755417Ab2IUIg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 04:36:59 -0400
-Received: by ieak13 with SMTP id k13so4863017iea.19
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 01:36:59 -0700 (PDT)
+	with ESMTP id S932067Ab2IUIzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 04:55:44 -0400
+Received: by ieak13 with SMTP id k13so4890156iea.19
+        for <git@vger.kernel.org>; Fri, 21 Sep 2012 01:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=e3MGdUvUfWFvIhj06WWiQkYeZEsyrRSCPfVftsh6yGM=;
-        b=ChWjcliVaU/te8WcEGhbR74/AhbCt+fdHwAFUJg9usx3MUyhziQn0bSS/LdWW/Q9QK
-         s7RDlpS1ToRUa2aaNnJuCHUAjDzBlQcpM+jt2D6lBxYY5xVQcBK3HP6KX+YkbqA4z2za
-         dihOyfNk2VdDj4gj3TuQ/FflMWhjx9aHnDehcsyqJm/grzi60GJtdZTbsjLL/XZCkFPr
-         /v7Byoaes6VX49XLiJMxg/8u8W1Qc2H3vdCYnL1wnSkK9us3AILsz+gTgfTdiooni6DT
-         CJjZadW/nUem1ZUEpZJa33mRygAQQWEGOYj+MdEwr+C+zt6Ux6OJSmLX4JOj4DgyS3Dm
-         lpjQ==
-Received: by 10.42.129.83 with SMTP id p19mr3462513ics.9.1348216619237; Fri,
- 21 Sep 2012 01:36:59 -0700 (PDT)
-Received: by 10.64.29.199 with HTTP; Fri, 21 Sep 2012 01:36:29 -0700 (PDT)
-In-Reply-To: <7vehlwbn76.fsf@alter.siamese.dyndns.org>
+        bh=9gIRpYthkjeK3Le+KO1znK4SEPF9C/QyTCwSM75TPao=;
+        b=T/nSuPK0mGnsjxTvHbX+WJUC1eoqlZgMCogmcy89Fe9dRyf8xBzozKQI/hLd5nTN9u
+         epEM02xqK5lb/Kra07TPvRBlJcwImQiFp8q5h8GX5fW9z1z4TvfTYY1NNZ0MKpKm+IDq
+         MjNy2fdrF+GYPxpI2ed4IZ1OUYR9CW980HWxZL3gQI1nqQlSXsNqUuBhZ9iTwkWwg2xP
+         sTa3agsulbfHh8RLxmP9j6aqsx7Kddb4FGzLxJelBYogIMkQW/4G2oA9GDRCYfbtBe3h
+         oX6Y+iOC2Ss3/wLFYyWDQqvtF+mo9n+e5M3JqHsVK8T8lhZqojcgHxocg3BN6LhJvk2g
+         93LA==
+Received: by 10.50.91.162 with SMTP id cf2mr1025121igb.40.1348217744202; Fri,
+ 21 Sep 2012 01:55:44 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Fri, 21 Sep 2012 01:55:13 -0700 (PDT)
+In-Reply-To: <7v392cd4vi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206116>
 
-On Fri, Sep 21, 2012 at 12:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> +- '%C+': enable coloring on the following placeholders if supported
->>> +- '%C-': disable coloring on the following placeholders
->>
->> OK, so typically you replace some format placeholder "%?" in your
->> format string with "%C+%?%C-", because you cannot get away with
->> replacing it with "%C+%? and other things in the format you do not
->> know if they support coloring%C-".
->>
->> If that is the case, does it really make sense to have %C-?
+On Thu, Sep 20, 2012 at 11:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I think this is a great feature at the conceptual level, and you
+> know "but" is coming ;-).
 
-"%C+%?" should work. if %? does not support coloring, the %C+ effect
-is simply ignored. In my use case, I don' really use %C- because I
-always want color wherever possible. Though I suspect a user might
-want to turn off coloring for certain part of the format string.
+I'm still not sure if it's useful beyond my simple example. For
+example, will it be useful in multiline log format, not just
+--oneline?
 
-Replacing every %? with %C+%?%C- is really annoying in my "always color" case..
+>  - Shouldn't it be "everything from there until the end of the
+>    current line" than "everything after that"?
 
->> It smells as if it makes more sense to make _all_ %? placeholder
->> reset the effect of %C+ after they are done (even the ones that they
->> themselves do not color their own output elements), so that you can
->> mechanically replace "%?" with "%C+%?".
+The patch does that. I wasn't specific in my patch description.
 
-.. or even "%C+%?". My format string would become "%C+%h %C+%s%C+%d",
-much harder to read.
+>  - How is the display width determined and is it fixed once it gets
+>    computed?
 
-> Thinking about this a bit more, perhaps we would want a generic
-> mechanism to give parameters to various %? placeholders. This is not
-> limited to "I can do color but there is no mechanism for the user to
-> tell me that I should do color" %H, %h and %d may want to say.  An
-> obvious and immediate example is that %h might want to be told how
-> many hexdigits it should use.
+term_columns(). But I'd rather have a (user-configurable) max limit.
+It's really hard to line up two distant text parts of a 200 char line
+without a physical ruler. In my patch I just hard code the max limit
+around 120 char or so.
 
-Yeah that'd be nice. We already use %?(..) for %C. Maybe we can generalize that.
+>  - How does this interact with the wrapped output?  Should it?
 
-Still I'd like a way to define attributes for a group of placeholders
-instead of just individuals. Continuing with the %?(...) syntax above
-for specifying attributes for a specific placeholder, %(...) may be
-used to specify global attributes that affect all following
-placeholders until another %(...) stops the effect, or %?(...)
-overrides it.
+We have to deal with it anyway when the left aligned text takes all
+the space. On one hand, I don't want to break the terminal width,
+leading to ugly output, so it'll interact. On the other hand, I don't
+really wish to turn pretty format machinery into a full feature text
+layout engine (by ripping of links/lynx?). So we have a few options:
+
+1. ellipses, line cutting means i18n issues ahead
+2. just put the right-aligned text on another line. We do something
+similar in parse-options. When the option syntax is too long, we put
+help description on the next line.
+3. bring in html/css box model for arranging text so that both
+left/right aligned texts can share the same line.
+4. tell users upfront it's not supported. don't do that
+
+I'd vote 2, or 4.
+
+>  - I am wondering if somebody ever want to do this with a follow-up
+>    patch:
+>
+>         Left %h%|Center %cd%|Right %ad
+>
+>    Is %| a sensible choice for "flush right"?  I am wondering if it
+>    makes more sense to make %|, %< and %> as "multi-column
+>    introducer" (the example defines output with three columns) that
+>    also tells how text inside each column is flushed inside the
+>    column, e.g.
+>
+>         %>col 1 right flushed%|col 2 centered%< col 3 left flushed
+>
+>    or something like that (we may want explicit "column width"
+>    specifiers if we were to do this kind of thing).
+
+Yeah that crossed my mind. But I'll need to convince myself it's
+actually useful. Once you're on that road, you may want >=4 column
+tables. We can extend column.c to do that. That hard part is
+converting pretty format to use column functions.
 -- 
 Duy
