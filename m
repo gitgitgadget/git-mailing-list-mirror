@@ -1,105 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 14/14] Add git-check-ignore sub-command
-Date: Fri, 21 Sep 2012 09:27:57 -0700
-Message-ID: <7vbogz8ho2.fsf@alter.siamese.dyndns.org>
-References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
- <1348170383-15751-1-git-send-email-git@adamspiers.org>
- <1348170383-15751-15-git-send-email-git@adamspiers.org>
- <505C15E4.7060108@alum.mit.edu>
+From: Patrick Renaud <prenaud76@gmail.com>
+Subject: Re: The GitTogether
+Date: Fri, 21 Sep 2012 12:43:44 -0400
+Message-ID: <CAC+LNER-ePWTBGb5H=R-9P_c+MmCF-tTsH+JMJDSNhVv9YHDSQ@mail.gmail.com>
+References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
+	<5059CC01.2080205@alum.mit.edu>
+	<505B662B.2040709@gmail.com>
+	<CAP8UFD0KiNzfNOAaAA_y8ha6LOjzJXQP4G2hTyYfouYAUBTD0w@mail.gmail.com>
+	<CAJo=hJtFdrFWBjg6v9ggFVSYN=_-vy6UWWW_6ay4W=E02Wqxcg@mail.gmail.com>
+	<CAP8UFD0DWe3JM20PznrR5ssyf4V-RgOKF-p4K04ptXTppc3VGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 21 18:28:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 18:43:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF65P-0002zU-Fg
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 18:28:15 +0200
+	id 1TF6KY-0008Q5-Tu
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 18:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757331Ab2IUQ2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 12:28:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65101 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755904Ab2IUQ2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 12:28:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF14E889F;
-	Fri, 21 Sep 2012 12:27:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6sAAuTh4y6nErciZrXgCjfns9k0=; b=blAmuy
-	T/0lDX6aGWk9/YzBu7saSxoPKimcb/mWZBNkG7DonI8dG2VMJS72rZptONOjXY90
-	nWngQOF7RlBupd4E1QMGOQLf8eJXEsLeejaMm0zZHhXFWZG1Uxny5I3CS5XbDD6H
-	/fLHRnWksB6Xg19A8W/wEcrTj5KXfxBxuChho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wCfQOQsT/ttoxWxdEZ/rVbd8K+ISmvM1
-	BvDEftAC4tiz0Pks9ltAdUEGGbFUlks9TWB8Giw1RpF0ovCqrWI3+Isy8rUt635K
-	XIM6Aj4KYRXSblPc5TzAEi2U20HqWUyUp2gzjb0/fYb5euPonMZN2FGSG4dl7bBI
-	BGuHR/6Sfzw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9C56889D;
-	Fri, 21 Sep 2012 12:27:59 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37DD2889A; Fri, 21 Sep 2012
- 12:27:59 -0400 (EDT)
-In-Reply-To: <505C15E4.7060108@alum.mit.edu> (Michael Haggerty's message of
- "Fri, 21 Sep 2012 09:23:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E7A1892-0409-11E2-BE39-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756525Ab2IUQnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 12:43:46 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:41663 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756407Ab2IUQnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 12:43:45 -0400
+Received: by oago6 with SMTP id o6so3529995oag.19
+        for <git@vger.kernel.org>; Fri, 21 Sep 2012 09:43:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mEInZYk7azCZYQGmkNen25J4IJN/gi7oVWPJtvc1sqs=;
+        b=SBIpvQ78lCmc4AMLRoa1BqftxZJyGqxS4HUcFtvyx8pJQ84yKtx9Fc0gfMtb/t/OrA
+         5VY3i2c4DQWX+Ex1PA+vKEuRsEUA2euxStWNHbxUKfcwO9AFkMjISEKG+PikRtUWDiyD
+         gPXfXpWeFbwbtzd/GQlASO907JijsMra7X7sycUD2smnIpXHnrx2NmjjDjgyy8mj4S7x
+         PjSKsOIbck7RXomBz8v2mqztQh2lt0/i/AjWRFz1aEva6nBy3kRrk/sxrofMGC/5zZ1b
+         E5pzXgUeChpfjux+I47XghSpVXzTMI068/EInwwKxm1YNkDuDe2tzqYqcFBbZqxrr/7r
+         io+Q==
+Received: by 10.60.7.104 with SMTP id i8mr4224865oea.31.1348245824765; Fri, 21
+ Sep 2012 09:43:44 -0700 (PDT)
+Received: by 10.182.166.1 with HTTP; Fri, 21 Sep 2012 09:43:44 -0700 (PDT)
+In-Reply-To: <CAP8UFD0DWe3JM20PznrR5ssyf4V-RgOKF-p4K04ptXTppc3VGA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206130>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Guys,
 
->> +For each pathname given via the command-line or from a file via
->> +`--stdin`, this command will list the first exclude pattern found (if
->> +any) which explicitly excludes or includes that pathname.  Note that
->> +within any given exclude file, later patterns take precedence over
->> +earlier ones, so any matching pattern which this command outputs may
->> +not be the one you would immediately expect.
+Are we still talking of having two disconnected events for Git, one
+for core devs and one for users?
+
+-Patrick
+
+On 21 September 2012 11:23, Christian Couder <christian.couder@gmail.com> wrote:
+> On Fri, Sep 21, 2012 at 4:05 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> On Fri, Sep 21, 2012 at 2:20 AM, Christian Couder
+>>
+>>> It is sad that people who know what is or what is not happening are
+>>> not taking care of letting people on this list know about it...
+>>
+>> I did not post to this mailing list about the Gerrit Code Review user
+>> summit because I did not consider it to be on-topic to this list. We
+>> do not normally discuss Gerrit Code Review here. Most users and
+>> developers on this list only work on git-core (aka git.git aka the
+>> thing Junio maintains). Gerrit... is a different animal. :-)
 >
-> Can I tell from the output of "git check-ignore" whether a file is
-> really ignored?  The way I read the paragraph above, the output doesn't
-> necessarily show the pattern that determines whether a file is *really*
-> ignored.  That makes it sound like the ignore status of the file might
-> be different than what I would infer from the output.  If I am
-> misunderstanding the situation, then perhaps the explanation in the
-> above paragraph can be improved.
+> It would have been nice if you had said earlier on this list/thread
+> that Google chose to host a Gerrit user summit instead of the
+> traditional GitTogether.
 >
-> On the other hand, if my understanding is correct, then why did you
-> choose this (seemingly strange) policy?  It would seem more useful
-> either to output the pattern that has the definitive effect on the
-> file's status, or to output all patterns that match the file.
-
-Very good point. I didn't look at this patch at all, but I would
-guess the patch hooked this into the order in which the existing
-ignore mechanism computes the match, and "the first I find" Adam
-says is written from implementation point of view.
-
-And that is a wrong way to go about it.
-
-The existing document for the ignore mechanism explains things from
-the end user perspective, i.e. within a file, the last matching
-pattern determines the fate of the path.  And this debugging aid
-should report which pattern from what source determined the fate of
-the path, so from the end user perspective, saying "first" is
-nonsense.
-
-It just happens that the implementation optimizes by scanning the
-list of patterns "backwards" and stops at the "first" hit, which is
-the last matching pattern that determines the fate of the path.
-
-The documentation of this debugging aid should use the same phrasing
-"git help ignore" uses and say "show the pattern that decides the
-outcome", and lose that confusing "Note that" that is not helping
-anybody.
+>> If you are interested in attending, it is Saturday November 10th and
+>> Sunday 11th in Mountain View, CA. The user summit is invite only, but
+>> you may request an invitation at http://goo.gl/5HYlB.
+>
+> Thanks for the information. I think it is indeed interesting to know about it.
+>
+>> I have no further information about the potential GitTogether than
+>> anyone else. IIRC there is a suggestion in this thread about hosting
+>> something in the EU sometime in early next year, with someone at
+>> GitHub acting as organizer.
+>
+> Before I posted what you wrote on the Gerrit mailing list, the only
+> information people had on this list/thread was about a GitHub proposal
+> to organize 2 different GitTogether: "the developer-centric one in
+> Berlin
+> in early October (a few weeks before the Mentor Summit this time) and
+> the user one in January or February of next year."
+>
+>> Google chose to run only a Gerrit user summit this year because of the
+>> mix of attendees at the last GitTogether. The group was about 60-70%
+>> Gerrit users/admins. We felt it was time to host something specific
+>> for that audience.
+>
+> Gerrit users/admins are probably Git users/admins too. But anyway, it
+> is ok of course for Google to organize whatever it prefers.
+> I hope GitHub will do as good a job running a GitTogether as Google did.
+>
+> Thanks,
+> Christian.
