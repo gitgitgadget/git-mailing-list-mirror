@@ -1,105 +1,92 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 13/14] Provide free_directory() for reclaiming dir_struct
- memory
-Date: Fri, 21 Sep 2012 10:03:53 +0200
-Message-ID: <505C1F69.1050508@alum.mit.edu>
-References: <7vvcfwf937.fsf@alter.siamese.dyndns.org> <1348170383-15751-1-git-send-email-git@adamspiers.org> <1348170383-15751-14-git-send-email-git@adamspiers.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] pretty: support placeholders %C+ and %C-
+Date: Fri, 21 Sep 2012 15:36:29 +0700
+Message-ID: <CACsJy8Azsg_EQvnm0L4AyZbnaDPcjtrr_+8u5eOAGjKFg9BBRQ@mail.gmail.com>
+References: <CACsJy8BP0vzWG-Po=WBVC_V5Z5_ysoCOTkU-XV3Hy_jVE4H1XQ@mail.gmail.com>
+ <1348143976-4506-1-git-send-email-pclouds@gmail.com> <1348143976-4506-3-git-send-email-pclouds@gmail.com>
+ <7vy5k4bpzh.fsf@alter.siamese.dyndns.org> <7vehlwbn76.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 10:04:18 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 10:37:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEyDh-0008IU-Vc
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 10:04:18 +0200
+	id 1TEyjl-00021W-Kz
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 10:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab2IUIEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 04:04:00 -0400
-Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:45937 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753684Ab2IUID5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Sep 2012 04:03:57 -0400
-X-AuditID: 1207440e-b7f036d0000008b5-74-505c1f6cb0e2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 78.BD.02229.C6F1C505; Fri, 21 Sep 2012 04:03:56 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8L83rk3020807
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 21 Sep 2012 04:03:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <1348170383-15751-14-git-send-email-git@adamspiers.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsUixO6iqJsjHxNgcP+tnMXPaRMZLbqudDNZ
-	NPReYbbonvKW0eJHSw+zA6vH8iWLWDx2zrrL7vGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGf8et3GWHCJv+LIpMusDYyreLoYOTkkBEwkvi9dyghhi0lcuLeerYuRi0NI4DKjxMUH
-	35ghnONMEgeOvmQGqeIV0Jb43PiSCcRmEVCVmPF8OQuIzSagK7GopxksLioQIjHj8mSoekGJ
-	kzOfgNWICKhI3Pu8hBVkKLPATkaJK7tmgq0WFoiUeHRvEtS2JYwSy1dtBJvEKeAi0XZxH1AH
-	B1CHusT6eUIgYWYBeYntb+cwT2AUmIVkxyyEqllIqhYwMq9ilEvMKc3VzU3MzClOTdYtTk7M
-	y0st0jXWy80s0UtNKd3ECAlyvh2M7etlDjEKcDAq8fBesogOEGJNLCuuzD3EKMnBpCTKKyIe
-	EyDEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhPdRDFA5b0piZVVqUT5MSpqDRUmcV22Jup+QQHpi
-	SWp2ampBahFMVoaDQ0mCd5kc0FDBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzG
-	FwOjFSTFA7S3GaSdt7ggMRcoCtF6ilGXY+3dBQ8YhVjy8vNSpcR5p4MUCYAUZZTmwa2ApbRX
-	jOJAHwvzngep4gGmQ7hJr4CWMAEteXM9CmRJSSJCSqqBcXlO24WVV1/nfgzfdDD+V37IDgeB
-	tu9d/h0ub0TNflQ/Ph/X7ZV/yc3VZVrO+/iZhXc0Zlbuio3ii7lSbrCy3OXmp/aU 
+	id S1756965Ab2IUIhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 04:37:11 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:37164 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755417Ab2IUIg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 04:36:59 -0400
+Received: by ieak13 with SMTP id k13so4863017iea.19
+        for <git@vger.kernel.org>; Fri, 21 Sep 2012 01:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=e3MGdUvUfWFvIhj06WWiQkYeZEsyrRSCPfVftsh6yGM=;
+        b=ChWjcliVaU/te8WcEGhbR74/AhbCt+fdHwAFUJg9usx3MUyhziQn0bSS/LdWW/Q9QK
+         s7RDlpS1ToRUa2aaNnJuCHUAjDzBlQcpM+jt2D6lBxYY5xVQcBK3HP6KX+YkbqA4z2za
+         dihOyfNk2VdDj4gj3TuQ/FflMWhjx9aHnDehcsyqJm/grzi60GJtdZTbsjLL/XZCkFPr
+         /v7Byoaes6VX49XLiJMxg/8u8W1Qc2H3vdCYnL1wnSkK9us3AILsz+gTgfTdiooni6DT
+         CJjZadW/nUem1ZUEpZJa33mRygAQQWEGOYj+MdEwr+C+zt6Ux6OJSmLX4JOj4DgyS3Dm
+         lpjQ==
+Received: by 10.42.129.83 with SMTP id p19mr3462513ics.9.1348216619237; Fri,
+ 21 Sep 2012 01:36:59 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Fri, 21 Sep 2012 01:36:29 -0700 (PDT)
+In-Reply-To: <7vehlwbn76.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206115>
 
-On 09/20/2012 09:46 PM, Adam Spiers wrote:
-> Signed-off-by: Adam Spiers <git@adamspiers.org>
-> ---
->  Documentation/technical/api-directory-listing.txt |  2 ++
->  dir.c                                             | 23 +++++++++++++++++++++--
->  dir.h                                             |  1 +
->  3 files changed, 24 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
-> index 944fc39..e339c18 100644
-> --- a/Documentation/technical/api-directory-listing.txt
-> +++ b/Documentation/technical/api-directory-listing.txt
-> @@ -79,4 +79,6 @@ marked. If you to exclude files, make sure you have loaded index first.
->  
->  * Use `dir.entries[]`.
->  
-> +* Call `free_directory()` when none of the contained elements are no longer in use.
-> +
->  (JC)
-> [...]
-> diff --git a/dir.h b/dir.h
-> index ebb0367..7da29da 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -128,6 +128,7 @@ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
->  extern void add_exclude(const char *string, const char *base,
->  			int baselen, struct exclude_list *el, const char *src, int srcpos);
->  extern void free_excludes(struct exclude_list *el);
-> +extern void free_directory(struct dir_struct *dir);
->  extern int file_exists(const char *);
->  
->  extern int is_inside_dir(const char *dir);
+On Fri, Sep 21, 2012 at 12:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> +- '%C+': enable coloring on the following placeholders if supported
+>>> +- '%C-': disable coloring on the following placeholders
+>>
+>> OK, so typically you replace some format placeholder "%?" in your
+>> format string with "%C+%?%C-", because you cannot get away with
+>> replacing it with "%C+%? and other things in the format you do not
+>> know if they support coloring%C-".
+>>
+>> If that is the case, does it really make sense to have %C-?
 
-With I see a function like this, the first question in my head is always
-"does it also free(dir), or does it only free the substructures, leaving
-dir empty but allocated?"  There should be a comment documenting the
-behavior.  I also find it helpful if a function that frees the top-level
-structure has "free" in the name, while a function that only empties the
-top-level structure without freeing it *not* have free in the name
-(e.g., "clear_directory()").  But maybe that's just me.
+"%C+%?" should work. if %? does not support coloring, the %C+ effect
+is simply ignored. In my use case, I don' really use %C- because I
+always want color wherever possible. Though I suspect a user might
+want to turn off coloring for certain part of the format string.
 
-Michael
+Replacing every %? with %C+%?%C- is really annoying in my "always color" case..
 
+>> It smells as if it makes more sense to make _all_ %? placeholder
+>> reset the effect of %C+ after they are done (even the ones that they
+>> themselves do not color their own output elements), so that you can
+>> mechanically replace "%?" with "%C+%?".
+
+.. or even "%C+%?". My format string would become "%C+%h %C+%s%C+%d",
+much harder to read.
+
+> Thinking about this a bit more, perhaps we would want a generic
+> mechanism to give parameters to various %? placeholders. This is not
+> limited to "I can do color but there is no mechanism for the user to
+> tell me that I should do color" %H, %h and %d may want to say.  An
+> obvious and immediate example is that %h might want to be told how
+> many hexdigits it should use.
+
+Yeah that'd be nice. We already use %?(..) for %C. Maybe we can generalize that.
+
+Still I'd like a way to define attributes for a group of placeholders
+instead of just individuals. Continuing with the %?(...) syntax above
+for specifying attributes for a specific placeholder, %(...) may be
+used to specify global attributes that affect all following
+placeholders until another %(...) stops the effect, or %?(...)
+overrides it.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Duy
