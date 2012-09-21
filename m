@@ -1,99 +1,84 @@
-From: <Ankush_Aggarwal@DELL.com>
-Subject: RE: Unable to clone GIT project
-Date: Fri, 21 Sep 2012 18:02:17 +0000
-Message-ID: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FD03E94@NOIX10HMNOI01.AMER.DELL.COM>
-References: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFDB65@NOIX10HMNOI01.AMER.DELL.COM>
-	<20120916104651.GF32381@localhost.localdomain>
-	<CABPQNSbPF=_a7-+JnojM2DQAkkj7ZLhSnO+n-Ab=LSrHge1dnQ@mail.gmail.com>
-	<20120917202124.GC24888@sigill.intra.peff.net>
-	<0D5A104FDD13FC4C9EE1E66F4FA3ABF60FCFE5FB@NOIX10HMNOI01.AMER.DELL.COM>
- <m2392fk8dx.fsf@igel.home>
- <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FD03E66@NOIX10HMNOI01.AMER.DELL.COM>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Quickly searching for a note
+Date: Fri, 21 Sep 2012 12:29:50 -0600
+Message-ID: <505CB21E.4040607@workspacewhiz.com>
+References: <505C7C80.3000700@workspacewhiz.com> <7vy5k370n7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <peff@peff.net>, <kusmabite@gmail.com>,
-	<flatworm@users.sourceforge.net>, <git@vger.kernel.org>
-To: <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 20:12:01 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 20:30:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF7hl-0003u5-Ue
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 20:11:58 +0200
+	id 1TF7zT-0000ie-C4
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 20:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298Ab2IUSLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 14:11:49 -0400
-Received: from ausxipps301.us.dell.com ([143.166.148.223]:36533 "EHLO
-	ausxipps301.us.dell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753085Ab2IUSLs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Sep 2012 14:11:48 -0400
-X-Loopcount0: from 10.170.28.39
-Thread-Topic: Unable to clone GIT project
-Thread-Index: AQHNlXzdYCaE3mC8TS6/mSjwtniZiZeVEGgggAAKRkA=
-In-Reply-To: <0D5A104FDD13FC4C9EE1E66F4FA3ABF60FD03E66@NOIX10HMNOI01.AMER.DELL.COM>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.16.82.164]
+	id S1757493Ab2IUSaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 14:30:00 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:56321 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755160Ab2IUSaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 14:30:00 -0400
+Received: (qmail 4163 invoked by uid 399); 21 Sep 2012 12:29:24 -0600
+Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@204.238.46.101)
+  by hsmail.qwknetllc.com with ESMTPAM; 21 Sep 2012 12:29:24 -0600
+X-Originating-IP: 204.238.46.101
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <7vy5k370n7.fsf@alter.siamese.dyndns.org>
+X-Antivirus: avast! (VPS 120921-0, 09/21/2012), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206146>
 
-Lovely... I found the solution. So want to share with you all.....
+----- Original Message -----
+From: Junio C Hamano
+Date: 9/21/2012 11:21 AM
+> Joshua Jensen <jjensen@workspacewhiz.com> writes:
+>
+>> Background: To tie Perforce changelists to Git commits, I add a note
+>> to a commit with the form "P4@123456".  Later, I use the note to sync
+>> down the closest Perforce changelist matching the Git commit.
+>>
+>> I search for these notes by getting a list of revisions:
+>>
+>>          git rev-list --max-count=1000
+>>
+>> I iterate those revisions and run git show and grep on each:
+>>
+>>          git show -s --format=%N%n%s --show-notes=p4notes COMMIT
+>>
+>> For short runs, this isn't so bad.  For longer runs of commits (I just
+>> walked through approximately 100), it takes a long time. Running 'git
+>> show' is costing me about 7/10 of second, presumably because I am on
+>> Windows.
+> Is there any particular reason you do that as two separate steps?
+> It would feel more natural, at least to me, to do something along
+> the lines of
+>
+> 	git log --show-notes=p4notes -1000
+>
+>
+Thanks for the reply.
 
-Solution : add /usr/local/lib to /etc/ld.so.conf and run sudo ldconfig
+I did not make clear above that I want to stop looking when I find the 
+first commit that has the note.
 
-ld.so.conf file includes ld.so.conf.d/*.conf
+In the case of 'git log --show-notes=p4notes -1000', Git will process 
+and hand me the log output for 1,000 commits.  It is rare I need to walk 
+that deep.  We saw 300 commits deep once on a long-lived branch that 
+hadn't been merged in yet, but I'd be surprised to see 1,000.
 
-so I created local-lib.conf having value /usr/local/lib and place local-lib.conf under /etc/ld.so.conf.d directory
-after that I excuted ldconfig which is under /sbin
+Still, it shows an arbitrary choice.  Really, I want to say to Git: Walk 
+up the history as far as you need to go from HEAD and return to me the 
+first commit containing the text "P4@".
 
-and problem has been resolved.
+Any other thoughts?
 
-Thanks to all.
-
-
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Aggarwal, Ankush
-Sent: Friday, September 21, 2012 10:54 PM
-To: schwab@linux-m68k.org
-Cc: peff@peff.net; kusmabite@gmail.com; flatworm@users.sourceforge.net; git@vger.kernel.org
-Subject: RE: Unable to clone GIT project
-
-I have tried with iconv by adding its path in PATH and LIBRARY Path but failed to get any solution...
-Still getting below error
-
-c:\Ankush Data\work\Test-GIT\trial_1>git clone ssh://bea@<IP>:/home/bea/GIT/sample_project
-Cloning into 'sample_project'...
-bea@.<IP>:'s password:
-git-upload-pack: error while loading shared libraries: libiconv.so.2: cannot open shared object file: No such file or directory
-fatal: The remote end hung up unexpectedly 
-
-
------Original Message-----
-From: Andreas Schwab [mailto:schwab@linux-m68k.org]
-Sent: Tuesday, September 18, 2012 2:36 PM
-To: Aggarwal, Ankush
-Cc: peff@peff.net; kusmabite@gmail.com; flatworm@users.sourceforge.net; git@vger.kernel.org
-Subject: Re: Unable to clone GIT project
-
-<Ankush_Aggarwal@DELL.com> writes:
-
-> On Linux machine
-> 	Installed libiconv-1.14 unded /usr/local/lib path.
-
-Why do you need that library?  iconv is part of glibc.  Moreover, git wouldn't link against libiconv anyway unless you explicitly ask for it.
-
-Andreas.
-
---
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5 "And now for something completely different."
---
-To unsubscribe from this list: send the line "unsubscribe git" in the body of a message to majordomo@vger.kernel.org More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Josh
