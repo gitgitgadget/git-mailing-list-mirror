@@ -1,66 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: How do I run tests under Valgrind?
-Date: Sat, 22 Sep 2012 01:28:27 +0530
-Message-ID: <CALkWK0kWvrirPjXXzBBBQxKDcwpd_+nQ2eeT6SE8gDFW5T7WFQ@mail.gmail.com>
-References: <CALkWK0m_9OsAfG_pF3hUDW+EKCyZCn9NiDKKEW6AEOMmAw=yuA@mail.gmail.com>
- <20120917172022.GA1179@sigill.intra.peff.net> <CALkWK0m378ApSwa1xiYUqEjMny5m0wt3KacqdDRU1qt=cw6k8g@mail.gmail.com>
- <20120917173531.GB1179@sigill.intra.peff.net> <CALkWK0kDPGY_3v5SLPtyf+azUwA7msvQOvA+MaCgueZ71i2yGw@mail.gmail.com>
- <20120917174439.GD1179@sigill.intra.peff.net> <CALkWK0mkBbY7dUyaZAqqKE3ZMfE_xU6em_KCOKM9nsTjUP-9pA@mail.gmail.com>
- <20120917182957.GF1179@sigill.intra.peff.net> <CALkWK0=nMxNfmAaBTmXeADQubTayC_2_ut5Nq3QXba9yfQr9yA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Quickly searching for a note
+Date: Fri, 21 Sep 2012 13:04:41 -0700
+Message-ID: <7vtxur3zxi.fsf@alter.siamese.dyndns.org>
+References: <505C7C80.3000700@workspacewhiz.com>
+ <7vy5k370n7.fsf@alter.siamese.dyndns.org>
+ <505CB21E.4040607@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 21 21:59:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 22:05:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF9NL-0000Ug-DY
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 21:58:59 +0200
+	id 1TF9T6-00051W-98
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 22:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757979Ab2IUT6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 15:58:49 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:57765 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757923Ab2IUT6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 15:58:48 -0400
-Received: by qcro28 with SMTP id o28so2897283qcr.19
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 12:58:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FfA6/MKMRUZd0JAeX0wRbtJXWgUYV7Y25UJUOhivj6g=;
-        b=w5TqRomUQi3WCcmrSQYoBjVEZs4kYuvA2zlX4VdCmDUJR2azFyaX53RkntxJrZ7fOU
-         NJEEqSvA7wcstTl3RNXdH/MrhKgAp5TUx0vTFywasBOdoGFoUUD0o4Gmk4bQeeewQRFU
-         WWgmtp8NWZ8ffgk+ay496Ce65ZJb0keCNvnxe3atPHpCAYCZZeud2I8nQv2BgcXW5C44
-         5RT18aA54DYzt28mdRO8TblkE0OxJnyiHzM3AOOaKgqPQYLwdRt+8px5Tss2AmbsEqS0
-         VXp8ewnJbtjqHfIS/Tf9f5hlVh6fYQ0MOG61OJNEDDQg+hkx+Hl4uyuG95Qb8CvLcz29
-         UG9g==
-Received: by 10.224.10.11 with SMTP id n11mr14774558qan.23.1348257528246; Fri,
- 21 Sep 2012 12:58:48 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Fri, 21 Sep 2012 12:58:27 -0700 (PDT)
-In-Reply-To: <CALkWK0=nMxNfmAaBTmXeADQubTayC_2_ut5Nq3QXba9yfQr9yA@mail.gmail.com>
+	id S1757981Ab2IUUEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 16:04:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63219 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757737Ab2IUUEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 16:04:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D22A837C;
+	Fri, 21 Sep 2012 16:04:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WQXQLxgXNhWvZ2rVJD7Ka/FWlfY=; b=Fl+Ssu
+	focAOqXoj6SKLsWKrcY4A2Q5eegjCyoNNcSHHepKhodiTx3pJQPN5+36cg3N6BrM
+	nW3iq5WIuyOREetfRFWMJRZQ5gHjVGkoSg6nUF2vati+ISVcb95Stjm+QJBINEzU
+	aRTa7VxFHF3ETovtEXM7NtU4+m82bbzdAgWZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fuDG5RmKV4tz2M5XRS7fpXi/fph33jTZ
+	5h5pP+JqF6RM3Gxr33vVbOkGYYiPlM4JawJEvFyxU6CVr6w5u4cM944R72GfaCOR
+	OfpkEXSW82QEx5klMcrBk3g0STlzDozx1/H8X7TyKhV+r8jF4U5PKCgJ4/2TBBoo
+	WwlBdKvq5Lg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B657837B;
+	Fri, 21 Sep 2012 16:04:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBDC38379; Fri, 21 Sep 2012
+ 16:04:42 -0400 (EDT)
+In-Reply-To: <505CB21E.4040607@workspacewhiz.com> (Joshua Jensen's message of
+ "Fri, 21 Sep 2012 12:29:50 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9530C038-0427-11E2-BE8B-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206156>
 
-Hi again,
+Joshua Jensen <jjensen@workspacewhiz.com> writes:
 
-Ramkumar Ramachandra wrote:
-> I was able to reproduce the problem on all my machines, and I consider
-> this very disturbing.  However, I was successfully able to corner the
-> issue. I have an overtly long $PATH that's not getting split properly
-> by `IFS=:` in one corner case -- in other words, this shell script
-> fails to execute properly when called with `--tee` (just set a really
-> long $PATH and try):
+>> Is there any particular reason you do that as two separate steps?
+>> It would feel more natural, at least to me, to do something along
+>> the lines of
+>>
+>> 	git log --show-notes=p4notes -1000
+>>
+>>
+> Thanks for the reply.
+>
+> I did not make clear above that I want to stop looking when I find the
+> first commit that has the note.
+>
+> In the case of 'git log --show-notes=p4notes -1000', Git will process
+> and hand me the log output for 1,000 commits.  It is rare I need to
+> walk that deep.
 
-Oops.  Looks like it has nothing to do with an overtly long $PATH.  It
-has something to do with $SHELL being zsh though, because other shells
-work.  Looking deeper into this.
-
-Ram
+I simply matched it with your initial "rev-list --max-count=1000".
+The "log" command pages and you can hit 'q' once you saw enough (in
+other words, you do not have to say -1000).
