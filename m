@@ -1,101 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] receive-pack: drop "n/a" on unpacker errors
-Date: Fri, 21 Sep 2012 01:38:46 -0400
-Message-ID: <20120921053846.GC9863@sigill.intra.peff.net>
-References: <20120921053057.GA9768@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 14/14] Add git-check-ignore sub-command
+Date: Fri, 21 Sep 2012 07:44:55 +0200
+Message-ID: <505BFED7.5030203@viscovery.net>
+References: <7vvcfwf937.fsf@alter.siamese.dyndns.org> <1348170383-15751-1-git-send-email-git@adamspiers.org> <1348170383-15751-15-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 21 07:39:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Fri Sep 21 07:45:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEvx3-0005d6-8W
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 07:38:57 +0200
+	id 1TEw38-0002UO-BC
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 07:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302Ab2IUFit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 01:38:49 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52312 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754063Ab2IUFis (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 01:38:48 -0400
-Received: (qmail 29537 invoked by uid 107); 21 Sep 2012 05:39:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Sep 2012 01:39:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2012 01:38:46 -0400
-Content-Disposition: inline
-In-Reply-To: <20120921053057.GA9768@sigill.intra.peff.net>
+	id S1754344Ab2IUFpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 01:45:03 -0400
+Received: from lilzmailso03.liwest.at ([212.33.55.24]:23535 "EHLO
+	so01.liwestmail.local" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754198Ab2IUFpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 01:45:02 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so01.liwestmail.local with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TEw2q-0000w8-5R; Fri, 21 Sep 2012 07:44:56 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id B89201660F;
+	Fri, 21 Sep 2012 07:44:55 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <1348170383-15751-15-git-send-email-git@adamspiers.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206109>
 
-The output from git push currently looks like this:
+Am 9/20/2012 21:46, schrieb Adam Spiers:
+>  test_expect_success 'general options plus command' '
+> -	test_completion "git --version check" "checkout " &&
+> -	test_completion "git --paginate check" "checkout " &&
+> -	test_completion "git --git-dir=foo check" "checkout " &&
+> -	test_completion "git --bare check" "checkout " &&
+> +	test_completion "git --version checko" "checkout " &&
+> +	test_completion "git --paginate checko" "checkout " &&
+> +	test_completion "git --git-dir=foo checko" "checkout " &&
+> +	test_completion "git --bare checko" "checkout " &&
+> ...
 
-  $ git push dest HEAD
-  fatal: [some message from index-pack]
-  error: unpack failed: index-pack abnormal exit
-  To dest
-   ! [remote rejected] HEAD -> master (n/a (unpacker error))
+I find this worrysome. Is check-ignore, being a debugging aid, so
+important that it must be autocompleted?
 
-That n/a is meant to be "the per-ref status is not
-available" but the nested parentheses just make it look
-ugly. Let's turn the final line into just:
-
-   ! [remote rejected] HEAD -> master (unpacker error)
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Maybe it is just me, but I have always found the "n/a" and extra
-parentheses ugly and unnecessary. But obviously others may differ.
-It doesn't really come up that often, since index-pack failing usually
-implies a git bug. But with transfer.fsckObjects turn on, it is more
-common.
-
-I don't think there should be any backwards compatibility issues with
-changing this. The "reason" field sent back by receive-pack has always
-been a free-form human-readable string.
-
-I also dislike the "index-pack abnormal exit" message. Again, when
-index-pack really crashes, it's fine, but it can die due to bogus
-objects, too, in which case it might be nice to have a more
-human-readable message.
-
- builtin/receive-pack.c          | 2 +-
- t/t5504-fetch-receive-strict.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ac679ab..ff781fe 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -695,7 +695,7 @@ static void execute_commands(struct command *commands, const char *unpacker_erro
- 
- 	if (unpacker_error) {
- 		for (cmd = commands; cmd; cmd = cmd->next)
--			cmd->error_string = "n/a (unpacker error)";
-+			cmd->error_string = "unpacker error";
- 		return;
- 	}
- 
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 35ec294..69ee13c 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -89,7 +89,7 @@ To dst
- 
- cat >exp <<EOF
- To dst
--!	refs/heads/master:refs/heads/test	[remote rejected] (n/a (unpacker error))
-+!	refs/heads/master:refs/heads/test	[remote rejected] (unpacker error)
- EOF
- 
- test_expect_success 'push with receive.fsckobjects' '
--- 
-1.7.11.7.15.g085c6bd
+-- Hannes
