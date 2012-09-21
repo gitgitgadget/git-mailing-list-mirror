@@ -1,84 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git diff-tree -r -C output inexact sometimes
-Date: Fri, 21 Sep 2012 02:03:39 -0400
-Message-ID: <20120921060339.GA9844@sigill.intra.peff.net>
-References: <2789023.yr3ihcVOhq@leto>
+Subject: Re: [PATCH v4 3/6] Color skipped tests blue
+Date: Fri, 21 Sep 2012 02:13:25 -0400
+Message-ID: <20120921061325.GA15867@sigill.intra.peff.net>
+References: <20120919201326.GA23016@sigill.intra.peff.net>
+ <1348086263-27555-1-git-send-email-git@adamspiers.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Cristian Tibirna <tibirna@kde.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 08:03:52 2012
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Stefano Lattarini <stefano.lattarini@gmail.com>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Fri Sep 21 08:13:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TEwL8-0001ea-N8
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 08:03:51 +0200
+	id 1TEwUb-0001W9-3J
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 08:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755293Ab2IUGDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 02:03:42 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52333 "EHLO
+	id S1755255Ab2IUGN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 02:13:28 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:52342 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754616Ab2IUGDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 02:03:41 -0400
-Received: (qmail 29782 invoked by uid 107); 21 Sep 2012 06:04:07 -0000
+	id S1753310Ab2IUGN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 02:13:28 -0400
+Received: (qmail 29974 invoked by uid 107); 21 Sep 2012 06:13:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Sep 2012 02:04:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2012 02:03:39 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Sep 2012 02:13:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2012 02:13:25 -0400
 Content-Disposition: inline
-In-Reply-To: <2789023.yr3ihcVOhq@leto>
+In-Reply-To: <1348086263-27555-1-git-send-email-git@adamspiers.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206111>
 
-On Thu, Sep 20, 2012 at 11:20:31PM -0400, Cristian Tibirna wrote:
+On Wed, Sep 19, 2012 at 09:24:23PM +0100, Adam Spiers wrote:
 
-> Running the script in attachment produces a git repository in which were 
-> operated a large number of file renames, in which many of the renamed files 
-> (in this particular case all) have the same content but different names.
+>  t/test-lib.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> The commit data from the renaming operation (last commit in the script-
-> generated history) is inexactly rendered by the command 
-> 
-> git diff-tree -r -C master
-> 
-> The logical result is correctly produced by the more restricted command
-> 
-> git diff-tree -r -M master
-> 
-> IMO for this particular last commit both the above commands should return the 
-> same result.
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 5293830..78c88c2 100755
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -182,13 +182,13 @@ then
+>  		error)
+>  			tput bold; tput setaf 1;; # bold red
+>  		skip)
+> -			tput bold; tput setaf 2;; # bold green
+> +			tput setaf 4;;            # blue
+>  		warn)
+>  			tput bold; tput setaf 3;; # bold yellow
+>  		pass)
+>  			tput setaf 2;;            # green
+>  		info)
+> -			tput setaf 3;;            # brown
+> +			tput setaf 3;;            # yellow/brown
 
-Interesting. I get the same results from both commands. But I did have
-to munge your script, as my "rename" command does not seem to work like
-the one you expect in your script. So I may have misinterpreted the
-intent of it.
+I happened to be running a test script with "-v" earlier today, and I
+noticed that the "expecting success..." dump of the test contents is
+also yellow. By your new rules, shouldn't it be blue?
 
-However, I would not be surprised if one could conduct a situation in
-which "-C" and "-M" produced different results. Since the content of all
-the files is the same, git has to make a guess about which files match
-up based on their filenames. The current heuristic is very stupid and
-just tries to match basenames (e.g., moving "foo/Makefile" to
-"bar/Makefile" is a better match than moving the same content to
-"bar/foo.c"). But in this case, the basenames don't match at all.
+I think it is matching the "info" type, which from the discussion should
+be blue, no?
 
-By using "-C", we will typically have more rename sources available, and
-we may therefore process the possible pairs in a different order. Since
-our name heuristic is largely useless, our results depend on that order.
+Maybe it is just my terminal. I see it is labeled as "brown" here, but
+it looks very yellow (and I am using the stock xterm colors. According
+to:
 
-I think the real solution is to improve the name heuristic. Something
-like an edit distance would make more sense (though I think it is not as
-simple as an edit distance across the whole pathname, as moving a
-basename across directories should probably be preferred to changing the
-filename inside a directory).
+  https://en.wikipedia.org/wiki/ANSI_colors
 
-Largely I think nobody has cared much because this only comes up when
-you move multiple identical files. Quite often there is a minor
-difference even between very similar files, and that is enough to come
-up with sane results.
+It looks it really is brown on some platforms. I'm not sure if it is
+worth worrying about.  I don't really want to get into configurable
+colors just for the test-suite output.
 
 -Peff
