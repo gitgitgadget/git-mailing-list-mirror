@@ -1,105 +1,106 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: The GitTogether
-Date: Fri, 21 Sep 2012 17:23:59 +0200
-Message-ID: <CAP8UFD0DWe3JM20PznrR5ssyf4V-RgOKF-p4K04ptXTppc3VGA@mail.gmail.com>
-References: <CAP2yMaJzJyw=9DqJzUXkkQjz_jcqB4pH=FfHFRiftC9=yC7dvg@mail.gmail.com>
-	<5059CC01.2080205@alum.mit.edu>
-	<505B662B.2040709@gmail.com>
-	<CAP8UFD0KiNzfNOAaAA_y8ha6LOjzJXQP4G2hTyYfouYAUBTD0w@mail.gmail.com>
-	<CAJo=hJtFdrFWBjg6v9ggFVSYN=_-vy6UWWW_6ay4W=E02Wqxcg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 13/14] Provide free_directory() for reclaiming
+ dir_struct memory
+Date: Fri, 21 Sep 2012 09:11:25 -0700
+Message-ID: <7vfw6b8ifm.fsf@alter.siamese.dyndns.org>
+References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
+ <1348170383-15751-1-git-send-email-git@adamspiers.org>
+ <1348170383-15751-14-git-send-email-git@adamspiers.org>
+ <505C1F69.1050508@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Patrick Renaud <prenaud76@gmail.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 17:24:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 21 18:11:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF55W-0008FM-9q
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 17:24:18 +0200
+	id 1TF5pM-0006Bl-Cp
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 18:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756493Ab2IUPYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 11:24:05 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:50051 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756415Ab2IUPYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 11:24:00 -0400
-Received: by wibhr14 with SMTP id hr14so2206364wib.1
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 08:23:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wqVNdO57C39rcAhXADJyYykgzJ8fyqXTZAL4yVE7uww=;
-        b=u2kiRNKwmLhQslZ9Xm06703VVhUmapI82SQAaFcxWhw2rRIDucslAevzwKlWpqejBJ
-         UnLRhhO+UzhOcQ1tP71mtVInQbUcPc+GXnftu2GSKrOfxWu2XOmy011ppFxIRMDGPuRy
-         cF1B9VftFxtQ4gb9Mx5tEnhekuoHp2TpuJX6O0fQUReCB/QfClDf/S1GlS/9boF1P3EX
-         iyfoKIynGSSAX94oEB9q7+E9qEry+ChUsyWdEV4VzSnv4/tqKRVZZjqUqE+dnj4WT4mT
-         8FkOI30dGzm+bIuuHgjtCvRC/Oe3BWL9/5d0dX7F4qlbII9TVSOErd2ep3WKPFr6HzQt
-         hByw==
-Received: by 10.180.86.3 with SMTP id l3mr5150558wiz.16.1348241039158; Fri, 21
- Sep 2012 08:23:59 -0700 (PDT)
-Received: by 10.223.200.201 with HTTP; Fri, 21 Sep 2012 08:23:59 -0700 (PDT)
-In-Reply-To: <CAJo=hJtFdrFWBjg6v9ggFVSYN=_-vy6UWWW_6ay4W=E02Wqxcg@mail.gmail.com>
+	id S1753096Ab2IUQLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 12:11:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56728 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751932Ab2IUQLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 12:11:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61BC28278;
+	Fri, 21 Sep 2012 12:11:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kFhDqsd2Xu+OcWGAWzc5AWA8H2Q=; b=N1gQLZ
+	qmQOUhKHsyV4fglh+tL6ZwR5mtEnbSi6OXijWcop/BRQoN51AXd1zvCHdNOBBRKW
+	5cw2pZeWQQxEkv1IfUkr8cOAbRJR8Z88/mhrTzeewPw+/QSSGPMA3p60E/T4wOIQ
+	5z1kCH2Vywq/pQVxyTWKxb9teGM9MM2jdQzrA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cSH4K/J/uw/3sOHZXnAw47QrDWsypS0l
+	fAe0cuITfoP+8LVq+nOSVBHvRI6V6dW6UCZgGV+QXGpSqpbJlqMZcQLSdZsuhvNB
+	MWv6lFWAFVUhO8OkbWO1iKJtEIfVMTVlbs91GhInriPKGuo8RGScLkz9ssn/9ZL2
+	zRiPMRNefuw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DF4F8277;
+	Fri, 21 Sep 2012 12:11:29 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E71E8275; Fri, 21 Sep 2012
+ 12:11:28 -0400 (EDT)
+In-Reply-To: <505C1F69.1050508@alum.mit.edu> (Michael Haggerty's message of
+ "Fri, 21 Sep 2012 10:03:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 000B93EA-0407-11E2-B196-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206128>
 
-On Fri, Sep 21, 2012 at 4:05 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> On Fri, Sep 21, 2012 at 2:20 AM, Christian Couder
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> On 09/20/2012 09:46 PM, Adam Spiers wrote:
+>> Signed-off-by: Adam Spiers <git@adamspiers.org>
+>> ---
+>>  Documentation/technical/api-directory-listing.txt |  2 ++
+>>  dir.c                                             | 23 +++++++++++++++++++++--
+>>  dir.h                                             |  1 +
+>>  3 files changed, 24 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
+>> index 944fc39..e339c18 100644
+>> --- a/Documentation/technical/api-directory-listing.txt
+>> +++ b/Documentation/technical/api-directory-listing.txt
+>> @@ -79,4 +79,6 @@ marked. If you to exclude files, make sure you have loaded index first.
+>>  
+>>  * Use `dir.entries[]`.
+>>  
+>> +* Call `free_directory()` when none of the contained elements are no longer in use.
+>> +
+>>  (JC)
+>> [...]
+>> diff --git a/dir.h b/dir.h
+>> index ebb0367..7da29da 100644
+>> --- a/dir.h
+>> +++ b/dir.h
+>> @@ -128,6 +128,7 @@ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
+>>  extern void add_exclude(const char *string, const char *base,
+>>  			int baselen, struct exclude_list *el, const char *src, int srcpos);
+>>  extern void free_excludes(struct exclude_list *el);
+>> +extern void free_directory(struct dir_struct *dir);
+>>  extern int file_exists(const char *);
+>>  
+>>  extern int is_inside_dir(const char *dir);
 >
->> It is sad that people who know what is or what is not happening are
->> not taking care of letting people on this list know about it...
->
-> I did not post to this mailing list about the Gerrit Code Review user
-> summit because I did not consider it to be on-topic to this list. We
-> do not normally discuss Gerrit Code Review here. Most users and
-> developers on this list only work on git-core (aka git.git aka the
-> thing Junio maintains). Gerrit... is a different animal. :-)
+> With I see a function like this, the first question in my head is always
+> "does it also free(dir), or does it only free the substructures, leaving
+> dir empty but allocated?"  There should be a comment documenting the
+> behavior.  I also find it helpful if a function that frees the top-level
+> structure has "free" in the name, while a function that only empties the
+> top-level structure without freeing it *not* have free in the name
+> (e.g., "clear_directory()").  But maybe that's just me.
 
-It would have been nice if you had said earlier on this list/thread
-that Google chose to host a Gerrit user summit instead of the
-traditional GitTogether.
-
-> If you are interested in attending, it is Saturday November 10th and
-> Sunday 11th in Mountain View, CA. The user summit is invite only, but
-> you may request an invitation at http://goo.gl/5HYlB.
-
-Thanks for the information. I think it is indeed interesting to know about it.
-
-> I have no further information about the potential GitTogether than
-> anyone else. IIRC there is a suggestion in this thread about hosting
-> something in the EU sometime in early next year, with someone at
-> GitHub acting as organizer.
-
-Before I posted what you wrote on the Gerrit mailing list, the only
-information people had on this list/thread was about a GitHub proposal
-to organize 2 different GitTogether: "the developer-centric one in
-Berlin
-in early October (a few weeks before the Mentor Summit this time) and
-the user one in January or February of next year."
-
-> Google chose to run only a Gerrit user summit this year because of the
-> mix of attendees at the last GitTogether. The group was about 60-70%
-> Gerrit users/admins. We felt it was time to host something specific
-> for that audience.
-
-Gerrit users/admins are probably Git users/admins too. But anyway, it
-is ok of course for Google to organize whatever it prefers.
-I hope GitHub will do as good a job running a GitTogether as Google did.
-
-Thanks,
-Christian.
+All good points, including the last one.  Thanks.
