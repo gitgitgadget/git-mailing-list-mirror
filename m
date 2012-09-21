@@ -1,80 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/test-lib.sh: do not trust $SHELL
-Date: Fri, 21 Sep 2012 15:30:28 -0700
-Message-ID: <7vhaqr3t6j.fsf@alter.siamese.dyndns.org>
-References: <505CCA55.6030609@gmail.com>
- <1348260766-25287-1-git-send-email-artagnon@gmail.com>
- <20120921205834.GC22977@sigill.intra.peff.net>
- <CALkWK0kRzN_yQZ1JqJogBs6Z1nLhofBijHzeWR5YfQYHOtpaBA@mail.gmail.com>
- <20120921211217.GA24134@sigill.intra.peff.net>
- <CALkWK0nLLEF7wnUhF0JUAZVP6GG3KHmuYSDZLPS7uGCZPfhV3w@mail.gmail.com>
- <m2k3vn9gyu.fsf@igel.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: Quickly searching for a note
+Date: Fri, 21 Sep 2012 19:37:24 -0400
+Message-ID: <20120921233723.GA29433@sigill.intra.peff.net>
+References: <505C7C80.3000700@workspacewhiz.com>
+ <7vy5k370n7.fsf@alter.siamese.dyndns.org>
+ <505CB21E.4040607@workspacewhiz.com>
+ <7vtxur3zxi.fsf@alter.siamese.dyndns.org>
+ <505CCD2A.8020003@workspacewhiz.com>
+ <505CD2FA.80200@kdbg.org>
+ <505CD7D0.2000505@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Sep 22 00:30:41 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 01:37:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFBk9-0000TD-0W
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 00:30:41 +0200
+	id 1TFCmu-0004ek-18
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 01:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755207Ab2IUWac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 18:30:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59235 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754283Ab2IUWab (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 18:30:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B585861E;
-	Fri, 21 Sep 2012 18:30:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IwdtdMZJ9VebNRIBozhDzzq5jrA=; b=BUPGKU
-	ZdJfwfT1qfSJhA9uXWyDV9XXVf97SjiNYObTaSfsmz0DN4y155E1eOWtDROxnvKn
-	fEy3Fivh7q3A2Vx3Q8dzP//n7AAom4BIr66Ojq9u/j0lZC9zQkQh3FPXUt7NdKXk
-	LUoWEtysKrC3kEJU76tQh/OopJe29XQACuGIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DfaYKwcsGA/QOS7lPCTIwnDwYyGgtOvv
-	qO1bVPghhoVmpkb4pwgaRsM6gQZsP4kjSr5o9Wih6o5ZKIw7okIIhD0I9zJkhNgk
-	DvHMzMkvwJfzkCPzyXQ3oE3zTSPr7RHsgyHKXJaGuca2yzqXBYCs8vJ+yMSWLH2L
-	Id+4Tig9K8A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED5C7861D;
-	Fri, 21 Sep 2012 18:30:30 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50DE8861C; Fri, 21 Sep 2012
- 18:30:30 -0400 (EDT)
-In-Reply-To: <m2k3vn9gyu.fsf@igel.home> (Andreas Schwab's message of "Fri, 21
- Sep 2012 23:57:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F324D3D2-043B-11E2-84F4-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753421Ab2IUXh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 19:37:27 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53863 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752541Ab2IUXh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 19:37:26 -0400
+Received: (qmail 11887 invoked by uid 107); 21 Sep 2012 23:37:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Sep 2012 19:37:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2012 19:37:24 -0400
+Content-Disposition: inline
+In-Reply-To: <505CD7D0.2000505@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206177>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Fri, Sep 21, 2012 at 03:10:40PM -0600, Joshua Jensen wrote:
 
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->
->> My SHELL_PATH is not set, and I can see SHELL_PATH ?= $(SHELL) in the
->> Makefile.  Which shell is it supposed to point to?
->
-> Inside a makefile the variable SHELL is special in that it is never
-> imported from the environment.  If not set it defaults to /bin/sh.
+> ----- Original Message -----
+> From: Johannes Sixt
+> Date: 9/21/2012 2:50 PM
+> >The trick is to pipe 'git log' output into another process that reads no
+> >more than it needs and exits. Then 'git log' dies from SIGPIPE before it
+> >processed all 1000 commits because its down-stream has gone away.
+> >
+> >For example:
+> >
+> >   git log --show-notes=p4notes -1000 |
+> >   sed -n -e '/^commit /h' -e '/P4@/{H;g;p;q}'
+> >
+> >(The pipeline keeps track of the most recent 'commit' line, and when it
+> >finds the 'P4@' it prints the most recent 'commit' line followed by the
+> >'P4@' line.)
+> >
+> Got it.  I'll try that out now.
 
-Ahh, I forgot about that.  Then the current construct is perfectly
-fine.
+I think people have provided sane techniques for doing this with a
+pipeline. But there is really no reason not to have --grep-notes, just
+as we have --grep.  It's simply that nobody has implemented it yet (and
+nobody is working on it as far as I know). It would actually be a fairly
+simple feature to add if somebody wanted to get their feet wet with git.
 
-The reference to ${SHELL-/bin/sh} in the test need to be updated to
-SHELL_PATH as Peff suggested in the other subthread.
-
-Thanks.
+-Peff
