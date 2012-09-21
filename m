@@ -1,59 +1,66 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Quickly searching for a note
-Date: Fri, 21 Sep 2012 08:41:04 -0600
-Message-ID: <505C7C80.3000700@workspacewhiz.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Quickly searching for a note
+Date: Fri, 21 Sep 2012 17:10:54 +0200
+Message-ID: <m2d31fbedd.fsf@igel.home>
+References: <505C7C80.3000700@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 16:47:59 2012
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 17:11:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF4WM-0002je-MI
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 16:47:59 +0200
+	id 1TF4sq-0005KB-3Q
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 17:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590Ab2IUOru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 10:47:50 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:34915 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755552Ab2IUOrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 10:47:49 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Sep 2012 10:47:49 EDT
-Received: (qmail 13675 invoked by uid 399); 21 Sep 2012 08:40:37 -0600
-Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@67.182.221.164)
-  by hsmail.qwknetllc.com with ESMTPAM; 21 Sep 2012 08:40:37 -0600
-X-Originating-IP: 67.182.221.164
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-X-Antivirus: avast! (VPS 120921-0, 09/21/2012), Outbound message
-X-Antivirus-Status: Clean
+	id S1756053Ab2IUPLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 11:11:00 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:41161 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab2IUPK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 11:10:59 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XNdYF2X67z4KK4C;
+	Fri, 21 Sep 2012 17:10:55 +0200 (CEST)
+X-Auth-Info: 67PhaSYq0K+pXovt3dIvMWDHVpN2L9WCNLq6qT/BDho=
+Received: from igel.home (ppp-88-217-127-217.dynamic.mnet-online.de [88.217.127.217])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XNdYC3411zc9dF;
+	Fri, 21 Sep 2012 17:10:55 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id AE449CA2A5; Fri, 21 Sep 2012 17:10:54 +0200 (CEST)
+X-Yow: You should all JUMP UP AND DOWN for TWO HOURS while I decide
+ on a NEW CAREER!!
+In-Reply-To: <505C7C80.3000700@workspacewhiz.com> (Joshua Jensen's message of
+	"Fri, 21 Sep 2012 08:41:04 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206126>
 
-Background: To tie Perforce changelists to Git commits, I add a note to 
-a commit with the form "P4@123456".  Later, I use the note to sync down 
-the closest Perforce changelist matching the Git commit.
+Joshua Jensen <jjensen@workspacewhiz.com> writes:
 
-I search for these notes by getting a list of revisions:
+> Background: To tie Perforce changelists to Git commits, I add a note to a
+> commit with the form "P4@123456".  Later, I use the note to sync down the
+> closest Perforce changelist matching the Git commit.
+>
+> I search for these notes by getting a list of revisions:
+>
+>         git rev-list --max-count=1000
+>
+> I iterate those revisions and run git show and grep on each:
+>
+>         git show -s --format=%N%n%s --show-notes=p4notes COMMIT
 
-         git rev-list --max-count=1000
+How about "git grep P4@123456 notes/p4notes"?
 
-I iterate those revisions and run git show and grep on each:
+Andreas.
 
-         git show -s --format=%N%n%s --show-notes=p4notes COMMIT
-
-For short runs, this isn't so bad.  For longer runs of commits (I just 
-walked through approximately 100), it takes a long time. Running 'git 
-show' is costing me about 7/10 of second, presumably because I am on 
-Windows.
-
-Is there a faster way to do this?
-
-Thanks.
-
-Josh
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
