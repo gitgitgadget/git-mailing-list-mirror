@@ -1,115 +1,62 @@
-From: Ryan Cumming <etaoins@gmail.com>
-Subject: [PATCH] Teach git-completion about git p4
-Date: Fri, 21 Sep 2012 14:51:11 -0700
-Message-ID: <1348264271-99395-1-git-send-email-rcumming@ea.com>
-Cc: Ryan Cumming <etaoins@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 21 23:51:55 2012
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] t/test-lib.sh: do not trust $SHELL
+Date: Fri, 21 Sep 2012 23:57:45 +0200
+Message-ID: <m2k3vn9gyu.fsf@igel.home>
+References: <505CCA55.6030609@gmail.com>
+	<1348260766-25287-1-git-send-email-artagnon@gmail.com>
+	<20120921205834.GC22977@sigill.intra.peff.net>
+	<CALkWK0kRzN_yQZ1JqJogBs6Z1nLhofBijHzeWR5YfQYHOtpaBA@mail.gmail.com>
+	<20120921211217.GA24134@sigill.intra.peff.net>
+	<CALkWK0nLLEF7wnUhF0JUAZVP6GG3KHmuYSDZLPS7uGCZPfhV3w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 23:58:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFB8c-0006f0-Kb
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 23:51:54 +0200
+	id 1TFBES-0002xR-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 23:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755505Ab2IUVvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 17:51:45 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:36458 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753804Ab2IUVvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 17:51:44 -0400
-Received: by pbbrr4 with SMTP id rr4so3485123pbb.19
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 14:51:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ShmWAS5xAgzVaClgwBcfo7x+vQRUEExYGzHUAxttie8=;
-        b=w48suO4/Iqned4Psc1vW4wmDtkz9x6xV7W9iKDn2dtZeReV7vsBdrhlJWosJcQoPr9
-         xdrMD9sufrf69XUmDAcZ7CG7S7eLTBIEPTog3r4pRioU2ees8Jk172LNjsh5qQXr+B96
-         RAqNVh86c7pgkZnlzF2UKuXRF2uK6Fl7Z+hJim6JoJeoc5L2PWHP8L6TN9xcaB9Tw4fi
-         WzXN42idVenlne5kW8p4Vkk2rBOBx0l+7zE/+TCvPaRcDu7syWE4uHgBiRF2SzchM69L
-         iRKJrHcfwWHDAwJlo3vrGx5TH9OLFXnN7PkC7sLzGpnYTqZY49gPPO/yb+7yOo70QOMv
-         mUOw==
-Received: by 10.66.75.104 with SMTP id b8mr16291985paw.21.1348264303826;
-        Fri, 21 Sep 2012 14:51:43 -0700 (PDT)
-Received: from Ready. ([74.198.151.54])
-        by mx.google.com with ESMTPS id wn1sm5665269pbc.57.2012.09.21.14.51.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Sep 2012 14:51:43 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.1
+	id S1758119Ab2IUV5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 17:57:47 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:60402 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752207Ab2IUV5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 17:57:47 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XNpZd54DVz4KKCL;
+	Fri, 21 Sep 2012 23:57:45 +0200 (CEST)
+X-Auth-Info: Ee21oSTtJToxiakw0HhnVP0Zt2yZNIRAeJ7r6N7zZx4=
+Received: from igel.home (ppp-88-217-127-217.dynamic.mnet-online.de [88.217.127.217])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XNpZd4lQyzbbkf;
+	Fri, 21 Sep 2012 23:57:45 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 2FBE0CA2A5; Fri, 21 Sep 2012 23:57:45 +0200 (CEST)
+X-Yow: My pants just went to high school in the Carlsbad Caverns!!!
+In-Reply-To: <CALkWK0nLLEF7wnUhF0JUAZVP6GG3KHmuYSDZLPS7uGCZPfhV3w@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 22 Sep 2012 03:04:50 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206173>
 
-From: Ryan Cumming <etaoins@gmail.com>
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-git p4 was moved out of contrib in 1.7.11 but it git-completion didn't
-know about it. Add git p4 completion based on the existing SVN
-completion. It covers all known subcommands and options except for the
--/ option for clone which doesn't use the standard -- prefix.
+> My SHELL_PATH is not set, and I can see SHELL_PATH ?= $(SHELL) in the
+> Makefile.  Which shell is it supposed to point to?
 
-Signed-off-by: Ryan Cumming <etaoins@gmail.com>
----
- contrib/completion/git-completion.bash | 44 ++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+Inside a makefile the variable SHELL is special in that it is never
+imported from the environment.  If not set it defaults to /bin/sh.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c48cd19..c6140be 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1459,6 +1459,50 @@ _git_notes ()
- 	esac
- }
- 
-+_git_p4 ()
-+{
-+	local subcommands="
-+		clone sync rebase submit
-+		"
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+	else
-+		local common_opts="--git-dir= --verbose"
-+		local sync_opts="
-+			--branch= --detect-branches --changes-file=
-+			--silent --detect-labels --import-labels
-+			--import-local --max-changes= --keep-path
-+			--use-client-spec $common_opts
-+			"
-+		local clone_opts="
-+			--destination= --bare $sync_opts
-+			"
-+		local submit_opts="
-+			--origin= -M --preserve-user --export-labels
-+			$common_opts
-+			"
-+
-+		case "$subcommand,$cur" in
-+		clone,--*)
-+			__gitcomp "$clone_opts"
-+			;;
-+		sync,--*)
-+			__gitcomp "$sync_opts"
-+			;;
-+		rebase,--*)
-+			__gitcomp "$common_opts --import-labels"
-+			;;
-+		submit,--*)
-+			__gitcomp "$submit_opts"
-+			;;
-+		submit,*)
-+			__gitcomp "$(__git_refs)"
-+			;;
-+		esac
-+	fi
-+}
-+
- _git_pull ()
- {
- 	__git_complete_strategy && return
+Andreas.
+
 -- 
-1.7.12.1
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
