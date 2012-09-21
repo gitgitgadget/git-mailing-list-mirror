@@ -1,59 +1,65 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Quickly searching for a note
-Date: Fri, 21 Sep 2012 15:10:40 -0600
-Message-ID: <505CD7D0.2000505@workspacewhiz.com>
-References: <505C7C80.3000700@workspacewhiz.com> <7vy5k370n7.fsf@alter.siamese.dyndns.org> <505CB21E.4040607@workspacewhiz.com> <7vtxur3zxi.fsf@alter.siamese.dyndns.org> <505CCD2A.8020003@workspacewhiz.com> <505CD2FA.80200@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t/test-lib.sh: do not trust $SHELL
+Date: Fri, 21 Sep 2012 17:12:17 -0400
+Message-ID: <20120921211217.GA24134@sigill.intra.peff.net>
+References: <505CCA55.6030609@gmail.com>
+ <1348260766-25287-1-git-send-email-artagnon@gmail.com>
+ <20120921205834.GC22977@sigill.intra.peff.net>
+ <CALkWK0kRzN_yQZ1JqJogBs6Z1nLhofBijHzeWR5YfQYHOtpaBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 23:10:59 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 23:12:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFAUy-0002mX-0m
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 23:10:56 +0200
+	id 1TFAWT-0003tV-5K
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 23:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081Ab2IUVKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 17:10:47 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:40556 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755334Ab2IUVKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2012 17:10:47 -0400
-Received: (qmail 4573 invoked by uid 399); 21 Sep 2012 15:10:15 -0600
-Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@204.238.46.101)
-  by hsmail.qwknetllc.com with ESMTPAM; 21 Sep 2012 15:10:15 -0600
-X-Originating-IP: 204.238.46.101
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <505CD2FA.80200@kdbg.org>
-X-Antivirus: avast! (VPS 120921-0, 09/21/2012), Outbound message
-X-Antivirus-Status: Clean
+	id S1758081Ab2IUVMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 17:12:21 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:53730 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758078Ab2IUVMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2012 17:12:20 -0400
+Received: (qmail 7495 invoked by uid 107); 21 Sep 2012 21:12:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Sep 2012 17:12:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2012 17:12:17 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0kRzN_yQZ1JqJogBs6Z1nLhofBijHzeWR5YfQYHOtpaBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206169>
 
------ Original Message -----
-From: Johannes Sixt
-Date: 9/21/2012 2:50 PM
-> The trick is to pipe 'git log' output into another process that reads no
-> more than it needs and exits. Then 'git log' dies from SIGPIPE before it
-> processed all 1000 commits because its down-stream has gone away.
->
-> For example:
->
->    git log --show-notes=p4notes -1000 |
->    sed -n -e '/^commit /h' -e '/P4@/{H;g;p;q}'
->
-> (The pipeline keeps track of the most recent 'commit' line, and when it
-> finds the 'P4@' it prints the most recent 'commit' line followed by the
-> 'P4@' line.)
->
-Got it.  I'll try that out now.
+On Sat, Sep 22, 2012 at 02:37:38AM +0530, Ramkumar Ramachandra wrote:
 
--Josh
+> > I don't think that is the right thing to do. The point of SHELL is to
+> > point at a bourne-compatible shell. On some systems, the main reason to
+> > set it is that /bin/sh is _broken_, and we are trying to avoid it.
+> 
+> But you're only avoiding it in the --tee/ --va* codepath.  In the
+> normal codepath, you're stuck with /bin/sh anyway.
+
+No, the #!-header is only information. When you run "make test" we
+actually invoke the shell ourselves using $SHELL_PATH.
+
+> > A bigger question is: why are you setting SHELL=zsh in the first place?
+> 
+> I use ZSH as my primary shell, so SHELL is set to zsh when I run
+> tests.  How can we trust $SHELL to be a bourne-compatible shell?
+
+Ah, my fault. I was thinking we overrode $SHELL along with $SHELL_PATH,
+but we do not.
+
+The correct patch is to stop using $SHELL, but not to switch to a manual
+/bin/sh. It should use $SHELL_PATH instead, which is how you tell git
+your path to a sane bourne shell.
+
+-Peff
