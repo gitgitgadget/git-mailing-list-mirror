@@ -1,171 +1,129 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC PATCH] add t3420-rebase-topology
-Date: Fri, 21 Sep 2012 10:06:58 -0700
-Message-ID: <CANiSa6iQsxWYHTRDGNg_h77rr3Y1cL_di-Z3zzR4gZvcRHtVqQ@mail.gmail.com>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
-	<7vzk4nojkd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add Auto-Submitted header to post-receive-email
+Date: Fri, 21 Sep 2012 10:06:56 -0700
+Message-ID: <7v392b8fv3.fsf@alter.siamese.dyndns.org>
+References: <E4715C92-2BE5-484E-A55B-273CAB5EB6B4@salk.edu>
+ <67C048AA-0DA7-4397-A257-E0BE66089A5D@salk.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 19:07:18 2012
+To: Chris Hiestand <chiestand@salk.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 21 19:07:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TF6h6-0002kG-U6
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 19:07:13 +0200
+	id 1TF6h6-0002kG-9B
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Sep 2012 19:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518Ab2IURHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2012 13:07:00 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:65381 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754009Ab2IURG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756555Ab2IURHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2012 13:07:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50027 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754974Ab2IURG7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 21 Sep 2012 13:06:59 -0400
-Received: by ieak13 with SMTP id k13so6014876iea.19
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 10:06:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=D0OzSsTCHhNcOEmG0e0x3DAnSgKwmsellfCyWoShI6E=;
-        b=qa9LEzJTB8WJQOPCX7yCeeyYEthSRlvPNCt7seHLZy5ViwM/ofLckpBIVSkPMZhnCd
-         /jePv3sHghI6K3BTv5cMTYq3nEJ/PDdosrVOyhCx5m5gH2+Udi/8RCj/gjpNZc+JsXq9
-         clm4/ofxdKM6Y1OcbIAYPQFOSQYyv25gUIQMS7yusl51P381FwQKFXHtU/sjYmOMwEqJ
-         q1mRM2v8R2c5US2Zv9ejS+v5G5WeteEDcqN4wkOJnLNlCXDiY6Zzy/oK88tM7rlrx0Yw
-         hX9dMTjGrS2T9Z7FC4L5sEPlduFrbrCbrNhUKrHQMMUR4JfKT48lKtNu4ZS3VbQIPPPl
-         7mbA==
-Received: by 10.50.154.227 with SMTP id vr3mr2248316igb.43.1348247218850; Fri,
- 21 Sep 2012 10:06:58 -0700 (PDT)
-Received: by 10.64.103.5 with HTTP; Fri, 21 Sep 2012 10:06:58 -0700 (PDT)
-In-Reply-To: <7vzk4nojkd.fsf@alter.siamese.dyndns.org>
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45AB79358;
+	Fri, 21 Sep 2012 13:06:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RuCrOyZyCP6+IRi4Hqa//wNd9Ko=; b=jvWKg9
+	fAYeL+GiljpCbsYO8Nm/qJRyDonAf0HZ1KduZ67TVaC44gPxJ5OpS6riJ9vaHDF/
+	g0U0O0+I+6huYJkC03PtMJFV1tKInC5n6lnlziQfLxoW1J9TKsszWPPFw7G4frky
+	B41Hc0K2SqrHTPawVII6CTsyg5/PVRGcXi/BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nRhH0SHZYW1WzE+whEpdPuUcSgYgUAHH
+	WDh/FuAUfZUpKOQggVFEgY6KJk+/U8+G416ZdleEQojh8Uu8LHhGPUdyqtMTaddx
+	IS2NZwAD0yP6UQPfUfS8j0WOiTdqi83EQG3jLi/ao45mo4TM/tf6Q72CtvWctWJ4
+	BWKSSjUytN4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 334F99357;
+	Fri, 21 Sep 2012 13:06:59 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 733159355; Fri, 21 Sep 2012
+ 13:06:58 -0400 (EDT)
+In-Reply-To: <67C048AA-0DA7-4397-A257-E0BE66089A5D@salk.edu> (Chris
+ Hiestand's message of "Fri, 21 Sep 2012 02:04:58 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C0C61054-040E-11E2-872C-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206137>
 
-On Tue, Sep 18, 2012 at 12:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin von Zweigbergk <martinvonz@gmail.com> writes:
+Chris Hiestand <chiestand@salk.edu> writes:
+
+> My email in April went unanswered so I'm resending it. An Auto-Submitted header
+> would be an improvement to the standard [git] post receive email.
 >
->> do you agree
->> that 'rebase --onto does not re-apply patches in onto' is desirable?
+> Thanks,
+> Chris
 >
-> This depends on how you look at --onto.  Recall the most typical and
-> the original use case of rebase:
 >
->                                A'--C' your rebased work
->                               /
->   ---o---o---o---F---B'--o---T master
->      ^            \
->      v1.7.12       A---B---C your work
+> Begin forwarded message:
 >
-> You could view "git rebase master" as a short-hand for
->
->         $ git rebase --onto $(git merge-base master HEAD) master
+>> From: Chris Hiestand <chiestand@salk.edu>
+>> Subject: [PATCH] Add Auto-Submitted header to post-receive-email
+>> Date: April 14, 2012 6:15:10 PM PDT
+>> To: git@vger.kernel.org, gitster@pobox.com
+>> 
+>> Hi,
+>> 
+>> I think the Auto-Submitted header is a useful hook mail header to include by default.
+>> 
+>> This conforms to RFC3834 and is useful in preventing e.g. vacation auto-responders
+>> from replying by default.
+>> 
+>> Perhaps you have already considered this and decided not to include it, but I found
+>> no record of such a conversation on this list.
 
-Exactly. I frequently consider it a short-hand for that. It might
-be worth pointing out that 'git pull --rebase', which might be
-one of the most frequent uses of rebase, internally often does
+I think the lack of response is generally lack of interest, and the
+primary reason for that was because the To/Cc list did not contain
+anybody who touched this particular file in the past (and no, I am
+not among them; as contrib/README says, I am often the wrong person
+to ask if a patch to contrib/ material makes sense).
 
-  git rebase --onto upstream upstream@{...} branch
+>> From 358fc3ae1ebfd7723d54e4033d3e9a9a0322c873 Mon Sep 17 00:00:00 2001
+>> From: Chris Hiestand <chiestand@salk.edu>
+>> Date: Sat, 14 Apr 2012 17:58:39 -0700
+>> Subject: [PATCH] Add Auto-Submitted header to post-receive-email
 
-where upstream@{...} is the most recent upstream that is an
-ancestor of "branch". For example, if your work is based on
-origin/pu and you send the bottom-most patch ("B" in the figure
-below) to the maintainer and and it gets applied to
-pu. Running "git pull --rebase" would then lead to
-"git rebase --onto T A". You would want this to drop B.
+These four lines should not be in the body of the e-mail message
+(see Documentation/SubmittingPatches).
 
-                               C' your rebased work
-                              /
-  ---o---o---o---F---B'--o---T origin/pu
-                  \
-                   A origin/pu@{1}
-                    \
-                     B---C your work
+>> Adds Auto-Submitted: auto-generated to post-receive-email header
+>> This conforms to RFC3834 and is useful in preventing eg
+>> vacation auto-responders from replying by default
+>> ---
+>> contrib/hooks/post-receive-email |    1 +
+>> 1 files changed, 1 insertions(+), 0 deletions(-)
 
+Even for contrib/ material, please always sign-off your patch (see
+Documentation/SubmittingPatches).
 
-> The intended use case for "--onto", however, is primarily to replay
-> a history to older base, i.e. [...] a moral equivalent of
->
->         $ git checkout v1.7.12
->         $ git cherry-pick A B C ;# or git cherry-pick master..HEAD
+>> 
+>> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+>> index 01af9df..282507c 100755
+>> --- a/contrib/hooks/post-receive-email
+>> +++ b/contrib/hooks/post-receive-email
+>> @@ -237,6 +237,7 @@ generate_email_header()
+>> 	X-Git-Reftype: $refname_type
+>> 	X-Git-Oldrev: $oldrev
+>> 	X-Git-Newrev: $newrev
+>> +	Auto-Submitted: auto-generated
+>> 
+>> 	This is an automated email from the git hooks/post-receive script. It was
+>> 	generated because a ref change was pushed to the repository containing
 
-Yes, this is the alternative way of looking it at and exactly why
-I, too, was not sure how it should behave.
+I think the choice of "auto-generated" is a sensible one, as
+responding to a 'push' is like triggered by 'cron'.
 
-> You could argue that you can compute the patch equivalence between
-> the commits in "onto..master" and commits in "master..HEAD" and
-> filter out the equivalent commits
+I'd however appreciate comments from people who either worked on
+this code or list regulars who actually use this code in the
+production.
 
-I'm not sure if you meant "master..onto" rather
-than "onto..master". Rebase (well, all flavors of rebase
-but "-m") currently drops patches from "master..HEAD" that are
-also in "HEAD..master". This is what the "rebase --onto does not
-lose patches in upstream" test is about. It is also one of the
-main problems that I try to fix in my long-stalled rebase-range
-series. I think we should drop patches in "master..HEAD" that are
-also in "HEAD..onto" (which is almost the same
-as "master..onto").
-
-> The "replay to an updated base" case (i.e. without "--onto")
-
-Or _with_ --onto as in the above example from "git pull --rebase".
-
-> On the other hand, when the user replays to an older base, she has
-> some idea what constitutes "a series" that she is replaying (i.e.
-> "$(git merge-base master HEAD)..HEAD").  It smells to go against the
-> user's world model if the command silently filtered commits by patch
-> equivalence.
-
-If it's truly about rebasing onto an older base, there can't
-possibly be any patches in "HEAD..onto", so assuming you agree
-with my reasoning above that those are the patches we should
-drop, rebasing onto older history would be safe.
-
-> Besides, the whole point of a separate "onto" is to allow the user
-> to specify a commit that does not have a straightforward ancestry
-> relationship with the bottom of the series (i.e. either "master" or
-> "F"), and computation of patch equivalence is expected to be much
-> higher.  Given that it is unlikely to find any match, it feels
-> doubly wrong to always run "git cherry" equivalent in that case.
-
-Yes, this was my only concern (apart from it possibly being
-conceptually wrong to do, depending on what the user meant by
-issuing the command).
-
->> How about 'rebase --root is not a no-op'?
->
->   ---o---o---o---F---B'--o---T master
->      ^            \
->      v1.7.12       A---B---C your work
->
-> If "git rebase F" when you are at C in the above illustration
-> (reproduced only the relevant parts) is a no-op (and I think it
-> should be), "git rebase --root" in the illustration below ought to
-> be as well, no?
->
->                  F---B'--o---T master
->                   \
->                    A---B---C your work
-
-Yeah, that's what I thought as well at first. I think my test
-case even started out as "rebase --root _is_ a no-op".
-
-When thinking about how to handle roots in general, I often
-imagine a single virtual root commit (parent of all "initial"
-commits), and that reasoning also implies that "git rebase
---root" should be a no-op. Then I saw that the test case
-failed (or perhaps I remembered how it is implemented with the
-clever fake root/initial commit) and started thinking about why
-anyone would use "git rebase --root" if it was a no-op. I could
-only think of using it to linearize history, but that doesn't
-seem like a very likely use case. So it seems like weighing
-purity/correctness against usefulness to me. I'm not sure which
-way to go.
-
-Thanks for quick and detailed feedback on an RFC patch.
-
-Martin
+Thanks.
