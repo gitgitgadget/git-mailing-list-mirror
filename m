@@ -1,92 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I run tests under Valgrind?
-Date: Sat, 22 Sep 2012 13:24:42 -0700
-Message-ID: <7vd31d3iwl.fsf@alter.siamese.dyndns.org>
-References: <20120917173531.GB1179@sigill.intra.peff.net>
- <CALkWK0kDPGY_3v5SLPtyf+azUwA7msvQOvA+MaCgueZ71i2yGw@mail.gmail.com>
- <20120917174439.GD1179@sigill.intra.peff.net>
- <CALkWK0mkBbY7dUyaZAqqKE3ZMfE_xU6em_KCOKM9nsTjUP-9pA@mail.gmail.com>
- <20120917182957.GF1179@sigill.intra.peff.net>
- <CALkWK0=nMxNfmAaBTmXeADQubTayC_2_ut5Nq3QXba9yfQr9yA@mail.gmail.com>
- <CALkWK0kWvrirPjXXzBBBQxKDcwpd_+nQ2eeT6SE8gDFW5T7WFQ@mail.gmail.com>
- <505CCA55.6030609@gmail.com> <20120921204907.GA22977@sigill.intra.peff.net>
- <505DB73E.2020108@gmail.com> <20120922174741.GA6722@sigill.intra.peff.net>
+Subject: Re: submodule: if $command was not matched, don't parse other args
+Date: Sat, 22 Sep 2012 13:31:27 -0700
+Message-ID: <7v8vc13ilc.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0npySdS7FDt=6VKdtoNS2gqQH5WaTQ4H6TEmXdP9fuF=g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 22 22:24:54 2012
+Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 22:31:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFWFx-0004Ew-TU
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 22:24:54 +0200
+	id 1TFWMX-0000Jr-Ju
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 22:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361Ab2IVUYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2012 16:24:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44573 "EHLO
+	id S1752762Ab2IVUbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2012 16:31:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47403 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753256Ab2IVUYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2012 16:24:45 -0400
+	id S1752441Ab2IVUba (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2012 16:31:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B96458498;
-	Sat, 22 Sep 2012 16:24:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13C06862C;
+	Sat, 22 Sep 2012 16:31:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MVyrpT9DFhc9eQptPS+xrAyHzT4=; b=XXui6n
-	08l/ldvpaziTyewRSvSXe4ht5sUQtw4x+e9QylQ15RKR5Ut8evcw3on58/FjIIZg
-	q4YhGIz24Mw1ajU1U6LUjh1UBjq0JEF3meTS5XeSBwdSA3O3mAjBSroOCreQ1uu9
-	ZH/qPK5VADvUSI/ziul6Zu/a//hvpadPCNQRY=
+	:content-type; s=sasl; bh=lBnnnXOmsdOB/eAp+n1NKAgWwK8=; b=t3ZKC3
+	7lqz9wUo+EOHel0rcruZfNXOVBeGeLIfLz/nqd/yvFS8mV5fX6h9FEnUdaCFtxeu
+	oo4wsT+yfUlQrcpeAUtNfTEA86NFfi2W5HqMpbbQSM+tSyRoGofBkUqorwShdyXf
+	b9lyco3gePLZSzI02DU9nPHNS2rsEjK8NKN5Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x5lq1aVf47qBCoyJlY76GfhKm+zBkHCL
-	JKq/nDijA2UZLDCVb4PbqADQgSaYDdlMWubWATCQX2Nn2SvjWRxNa176+UdPkrnF
-	OsPxO/cX5qsVnpaBvUHj/Zd3hfqU8aJ+5jqFag2aUzdCM6wT27WSAb1WEmzXXFaf
-	peYViSGyw2o=
+	:content-type; q=dns; s=sasl; b=yNQrHz1zVa3Dluug5Ue9Jhqz4kPgSGFF
+	3sBNlr/NxFPfOWjYkDzkrCdXPciImLrNAt0h3lxvoBXiLvAxtfYXGD+/lCbI35FJ
+	0tNfW6zYBoFyerY88VvDj35ZAY4H41leA02WEHrbtX4nO3q0WdnURSKcm73ehyfr
+	BxNGWUj56tI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A71B08497;
-	Sat, 22 Sep 2012 16:24:44 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00115862B;
+	Sat, 22 Sep 2012 16:31:29 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C9ED8496; Sat, 22 Sep 2012
- 16:24:43 -0400 (EDT)
-In-Reply-To: <20120922174741.GA6722@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 22 Sep 2012 13:47:42 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50EEF862A; Sat, 22 Sep 2012
+ 16:31:29 -0400 (EDT)
+In-Reply-To: <CALkWK0npySdS7FDt=6VKdtoNS2gqQH5WaTQ4H6TEmXdP9fuF=g@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Sat, 22 Sep 2012 16:57:59 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8B9F9E32-04F3-11E2-A7F3-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7D30B844-04F4-11E2-B6B0-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206214>
 
-Jeff King <peff@peff.net> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> On Sat, Sep 22, 2012 at 03:03:58PM +0200, Stefano Lattarini wrote:
+> When we try to execute 'git submodule' with an invalid subcommand, we
+> get an error like the following:
 >
->> On 09/21/2012 10:49 PM, Jeff King wrote:
->> >
->> > Oh. It sounds like setting $SHELL to zsh is really the problem, then. If
->> > it is not Bourne-compatible when called as "zsh", then it really should
->> > be called in a way that turns on compatibility mode (bash will do this
->> > when called as "sh", but you can also do it with "bash --posix").
->> >
->> AFAIK, if Zsh is called as "sh", it too will run in Bourne compatibility
->> mode; not sure how to force this compatibility from the command line though
->> (albeit I'd guess there is some way to do so).
->> [...]
+>     $ git submodule show
+>     error: pathspec 'show' did not match any file(s) known to git.
+>     Did you forget to 'git add'?
 >
-> Thanks for digging. I think this case, though, is that we were simply
-> using the wrong variable ($SHELL instead of $SHELL_PATH). Your
-> workarounds would help if somebody put zsh into $SHELL_PATH, but
-> fundamentally that is not a sane thing to be doing, so I think we can
-> just consider doing so user error and not bother working around it.
+> The cause of the problem: since $command is not matched, it is set to
+> "status", and "show" is treated as an argument to "status".  Change
+> this so that usage information is printed when an invalid subcommand
+> is tried.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  This breaks test 41 in t7400-submodule-bash -- does the test cover a
+>  real-world usecase?
 
-Yeah, 100% agreed with your assessment, including the part thanking
-Stefano.
+You know how to ask "shortlog --since=18.months --no-merges" to find
+people to list on "Cc:" line to ask that question, no?
 
-Thanks.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index a7e933e..dfec45d 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -1108,7 +1108,15 @@ do
+>  done
+>
+>  # No command word defaults to "status"
+> -test -n "$command" || command=status
+> +if test -z "$command"
+> +then
+> +    if test $# = 0
+> +    then
+> +	command=status
+> +    else
+> +	usage
+> +    fi
+> +fi
+
+I personally feel "no command means this default" is a mistake for
+"git submodule", even if there is no pathspec or other arguments,
+but I am not a heavy user of submodules, so others should discuss
+this.
