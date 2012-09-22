@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/6] Advanced --oneline layout
-Date: Sat, 22 Sep 2012 11:22:13 +0700
-Message-ID: <1348287739-12128-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/6] pretty: share code between format_decoration and show_decorations
+Date: Sat, 22 Sep 2012 11:22:14 +0700
+Message-ID: <1348287739-12128-2-git-send-email-pclouds@gmail.com>
+References: <1348287739-12128-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,87 +16,226 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFHFQ-0003ew-6D
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 06:23:20 +0200
+	id 1TFHFQ-0003ew-LL
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 06:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146Ab2IVEWl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2012 00:22:41 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:61105 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751546Ab2IVEWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2012 00:22:12 -0400
-Received: by pbbrr4 with SMTP id rr4so3905556pbb.19
-        for <git@vger.kernel.org>; Fri, 21 Sep 2012 21:22:11 -0700 (PDT)
+	id S1752219Ab2IVEWm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2012 00:22:42 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:59381 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751655Ab2IVEWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2012 00:22:18 -0400
+X-Greylist: delayed 143753 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2012 00:22:17 EDT
+Received: by padhz1 with SMTP id hz1so137078pad.19
+        for <git@vger.kernel.org>; Fri, 21 Sep 2012 21:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=eZCbIJfioR0PxpuI8jIICn7IhYnJv06uGm3uQCkR8Tw=;
-        b=jtdCGwRIpuZOy9G57znmIu/vWXhG7y8iSLU8Ezz4bqOkd2EVYNHg6IqDgldDaOxXNg
-         7J0gREvW52abqiu1GXvBc0moRpIYkdLH1XgwAexPErTdd97srGJ+fg5Z9B4A2HAcldLj
-         Z+SZxRQlHSAh/Qh8/hYipo9MyqNpP2KYeYr2biIXgiXhoQ/USUfy+gLhFl0gTA0KHtlj
-         55HrU0kMzqgxV5O0FAC2gGoJ4GwX1mk9Zv/xLw12xMVufcJGIZ7/YJTg7xPjab8I0Gpo
-         VWpF0X6SFRYGrXQltsuECmTQcmOKwaUOGIkO38tvLJImLVmMgxwH9bdJj8iOPk/1AICP
-         p/Fg==
-Received: by 10.68.234.98 with SMTP id ud2mr20181671pbc.165.1348287731668;
-        Fri, 21 Sep 2012 21:22:11 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=LPdUNRlAfZ5OpZDvfNWWEsk2InSIB3SF1Un/BLdqDSo=;
+        b=NTx70yqTne4RF+WgMxbz56jCXftamhbGhKs0+GiAvO1POdYCOiTR0Y/NNWGuzUXnIm
+         T7cPDWpVbetJhyP4AusCxStZ4fw30bVJbDH4sBG1aDwZyG71BfBU4oHlOXRz+Oa4BLIg
+         uH3gJREhhcoFGyhlpoMRulc7P1t22ziguF+K2wh3rJjG15RqMH6jQP+rdvRKinOdZ+kP
+         +4nQHshWl7NFSQf7efAajRlrV7erZpgBhuSZmw9bd4qAsbZIH4wqlUKg2cKn6kKS60Ml
+         5uiS8D9baHTUftmbEqavfEhPkMrqWw0Ha+Bj4bmnWp9ztBdak7WiakQztMMEVo5n/gpf
+         MUqg==
+Received: by 10.68.225.68 with SMTP id ri4mr15897318pbc.115.1348287737083;
+        Fri, 21 Sep 2012 21:22:17 -0700 (PDT)
 Received: from lanh ([115.74.43.144])
-        by mx.google.com with ESMTPS id st6sm6091527pbc.58.2012.09.21.21.22.08
+        by mx.google.com with ESMTPS id uh7sm6099029pbc.35.2012.09.21.21.22.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Sep 2012 21:22:11 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 22 Sep 2012 11:22:22 +0700
+        Fri, 21 Sep 2012 21:22:16 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 22 Sep 2012 11:22:27 +0700
 X-Mailer: git-send-email 1.7.12.1.384.g7b808e7
+In-Reply-To: <1348287739-12128-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206186>
 
-Still a toy series (previous discussion [1]) but it's getting close to
-something useful.
+This also adds color support to format_decoration()
 
-This introduces three placeholders %<, %> and %<> for
-left/right/center align the next placeholder. Any of them can be
-followed by '|' to make the next placeholder use up to the Nth column.
-
-It's pretty useful already. You should be able to do multi column
-layout on your wiiide terminal. It might even be useful in multi-line
-printouts (e.g. we can relayout the commit header)
-
-There are a few things we can improve:
-
- - utf8-only support does not sound nice (even though I'm
-   perfectly happy with it). At some point I think it'll be easier for
-   us to declare all internal strings be in utf8 (or ascii in certain
-   places), input/output routines are supposed to do the conversion.
-   GNOME has gone this way since 2.0.
- - ellipsis to prevent too long text breaking layout
- - specifing "30% of my screen width" would be nice, but it could get
-   complicated if users start to demand "30% width, but no less than 30
-   columns and no more than 100 columns, and if blah blah"
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/205922/focus=
-=3D206049
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
-  pretty: share code between format_decoration and show_decorations
-  pretty: split parsing %C into a separate function
-  pretty: support %C(auto[,N]) to turn on coloring on next
-    placeholder(s)
-  utf8.c: move display_mode_esc_sequence_len() for use by other
-    functions
-  utf8.c: add utf8_strnwidth() with the ability to skip ansi sequences
-  pretty: support padding placeholders, %< %> and %<>
-
- Documentation/pretty-formats.txt |   5 +
- log-tree.c                       |  59 ++++++-----
- log-tree.h                       |   3 +
- pretty.c                         | 211 +++++++++++++++++++++++++++++++=
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ log-tree.c                       | 59 ++++++++++++++++++++++++--------=
 --------
- t/t4207-log-decoration-colors.sh |   8 +-
- utf8.c                           |  48 +++++----
- utf8.h                           |   1 +
- 7 files changed, 244 insertions(+), 91 deletions(-)
+ log-tree.h                       |  3 ++
+ pretty.c                         | 19 +------------
+ t/t4207-log-decoration-colors.sh |  8 +++---
+ 4 files changed, 44 insertions(+), 45 deletions(-)
 
+diff --git a/log-tree.c b/log-tree.c
+index c894930..19c54dc 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -174,36 +174,50 @@ static void show_children(struct rev_info *opt, s=
+truct commit *commit, int abbre
+ 	}
+ }
+=20
+-void show_decorations(struct rev_info *opt, struct commit *commit)
++void format_decoration(struct strbuf *sb,
++		       const struct commit *commit,
++		       int use_color)
+ {
+-	const char *prefix;
+-	struct name_decoration *decoration;
++	const char *prefix =3D " (";
++	struct name_decoration *d;
+ 	const char *color_commit =3D
+-		diff_get_color_opt(&opt->diffopt, DIFF_COMMIT);
++		diff_get_color(use_color, DIFF_COMMIT);
+ 	const char *color_reset =3D
+-		decorate_get_color_opt(&opt->diffopt, DECORATION_NONE);
++		decorate_get_color(use_color, DECORATION_NONE);
++
++	load_ref_decorations(DECORATE_SHORT_REFS);
++	d =3D lookup_decoration(&name_decoration, &commit->object);
++	if (!d)
++		return;
++	strbuf_addstr(sb, color_commit);
++	while (d) {
++		strbuf_addstr(sb, prefix);
++		strbuf_addstr(sb, decorate_get_color(use_color, d->type));
++		if (d->type =3D=3D DECORATION_REF_TAG)
++			strbuf_addstr(sb, "tag: ");
++		strbuf_addstr(sb, d->name);
++		strbuf_addstr(sb, color_reset);
++		strbuf_addstr(sb, color_commit);
++		prefix =3D ", ";
++		d =3D d->next;
++	}
++	if (prefix[0] =3D=3D ',') {
++		strbuf_addch(sb, ')');
++		strbuf_addstr(sb, color_reset);
++	}
++}
++
++void show_decorations(struct rev_info *opt, struct commit *commit)
++{
++	struct strbuf sb =3D STRBUF_INIT;
+=20
+ 	if (opt->show_source && commit->util)
+ 		printf("\t%s", (char *) commit->util);
+ 	if (!opt->show_decorations)
+ 		return;
+-	decoration =3D lookup_decoration(&name_decoration, &commit->object);
+-	if (!decoration)
+-		return;
+-	prefix =3D " (";
+-	while (decoration) {
+-		printf("%s", prefix);
+-		fputs(decorate_get_color_opt(&opt->diffopt, decoration->type),
+-		      stdout);
+-		if (decoration->type =3D=3D DECORATION_REF_TAG)
+-			fputs("tag: ", stdout);
+-		printf("%s", decoration->name);
+-		fputs(color_reset, stdout);
+-		fputs(color_commit, stdout);
+-		prefix =3D ", ";
+-		decoration =3D decoration->next;
+-	}
+-	putchar(')');
++	format_decoration(&sb, commit, opt->diffopt.use_color);
++	fputs(sb.buf, stdout);
++	strbuf_release(&sb);
+ }
+=20
+ /*
+@@ -617,7 +631,6 @@ void show_log(struct rev_info *opt)
+ 			       find_unique_abbrev(parent->object.sha1,
+ 						  abbrev_commit));
+ 		show_decorations(opt, commit);
+-		printf("%s", diff_get_color_opt(&opt->diffopt, DIFF_RESET));
+ 		if (opt->commit_format =3D=3D CMIT_FMT_ONELINE) {
+ 			putchar(' ');
+ 		} else {
+diff --git a/log-tree.h b/log-tree.h
+index f5ac238..10c2682 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -13,6 +13,9 @@ int log_tree_diff_flush(struct rev_info *);
+ int log_tree_commit(struct rev_info *, struct commit *);
+ int log_tree_opt_parse(struct rev_info *, const char **, int);
+ void show_log(struct rev_info *opt);
++void format_decoration(struct strbuf *sb,
++		       const struct commit *commit,
++		       int use_color);
+ void show_decorations(struct rev_info *opt, struct commit *commit);
+ void log_write_email_headers(struct rev_info *opt, struct commit *comm=
+it,
+ 			     const char **subject_p,
+diff --git a/pretty.c b/pretty.c
+index 8b1ea9f..e910679 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -764,23 +764,6 @@ static void parse_commit_message(struct format_com=
+mit_context *c)
+ 	c->commit_message_parsed =3D 1;
+ }
+=20
+-static void format_decoration(struct strbuf *sb, const struct commit *=
+commit)
+-{
+-	struct name_decoration *d;
+-	const char *prefix =3D " (";
+-
+-	load_ref_decorations(DECORATE_SHORT_REFS);
+-	d =3D lookup_decoration(&name_decoration, &commit->object);
+-	while (d) {
+-		strbuf_addstr(sb, prefix);
+-		prefix =3D ", ";
+-		strbuf_addstr(sb, d->name);
+-		d =3D d->next;
+-	}
+-	if (prefix[0] =3D=3D ',')
+-		strbuf_addch(sb, ')');
+-}
+-
+ static void strbuf_wrap(struct strbuf *sb, size_t pos,
+ 			size_t width, size_t indent1, size_t indent2)
+ {
+@@ -1005,7 +988,7 @@ static size_t format_commit_one(struct strbuf *sb,=
+ const char *placeholder,
+ 		strbuf_addstr(sb, get_revision_mark(NULL, commit));
+ 		return 1;
+ 	case 'd':
+-		format_decoration(sb, commit);
++		format_decoration(sb, commit, 0);
+ 		return 1;
+ 	case 'g':		/* reflog info */
+ 		switch(placeholder[1]) {
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-=
+colors.sh
+index bbde31b..067f5aa 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -44,15 +44,15 @@ test_expect_success setup '
+ '
+=20
+ cat >expected <<EOF
+-${c_commit}COMMIT_ID (${c_HEAD}HEAD${c_reset}${c_commit},\
++${c_commit}COMMIT_ID${c_commit} (${c_HEAD}HEAD${c_reset}${c_commit},\
+  ${c_tag}tag: v1.0${c_reset}${c_commit},\
+  ${c_tag}tag: B${c_reset}${c_commit},\
+  ${c_branch}master${c_reset}${c_commit})${c_reset} B
+-${c_commit}COMMIT_ID (${c_tag}tag: A1${c_reset}${c_commit},\
++${c_commit}COMMIT_ID${c_commit} (${c_tag}tag: A1${c_reset}${c_commit},=
+\
+  ${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
+-${c_commit}COMMIT_ID (${c_stash}refs/stash${c_reset}${c_commit})${c_re=
+set}\
++${c_commit}COMMIT_ID${c_commit} (${c_stash}refs/stash${c_reset}${c_com=
+mit})${c_reset}\
+  On master: Changes to A.t
+-${c_commit}COMMIT_ID (${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++${c_commit}COMMIT_ID${c_commit} (${c_tag}tag: A${c_reset}${c_commit})$=
+{c_reset} A
+ EOF
+=20
+ # We want log to show all, but the second parent to refs/stash is irre=
+levant
 --=20
 1.7.12.1.384.g7b808e7
