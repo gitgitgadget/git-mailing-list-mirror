@@ -1,121 +1,97 @@
-From: Paul J R <me@pjr.cc>
-Subject: Re: git clone over http with basic auth bug?
-Date: Sun, 23 Sep 2012 06:43:24 +1000
-Message-ID: <505E22EC.1060208@pjr.cc>
-References: <505CFA42.9090504@pjr.cc> <20120922050935.GA4542@sigill.intra.peff.net>
+From: Sascha Cunz <sascha-ml@babbelbox.org>
+Subject: Message from 'git-rebase'; German translation
+Date: Sat, 22 Sep 2012 23:57:49 +0200
+Message-ID: <1527028.GPe6zkelBV@blacky>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 22 22:43:41 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 23 00:04:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFWY6-0008B3-2V
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 22:43:38 +0200
+	id 1TFXoX-0002cp-Jy
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 00:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244Ab2IVUnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2012 16:43:25 -0400
-Received: from pjr.cc ([173.230.145.154]:41663 "EHLO ln.pjr.cc"
+	id S1753408Ab2IVWEc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2012 18:04:32 -0400
+Received: from babbelbox.org ([83.133.105.186]:53237 "EHLO mail.babbelbox.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751825Ab2IVUnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2012 16:43:24 -0400
-Received: from iron.pjr.cc (unknown [10.10.0.2])
-	by ln.pjr.cc (Postfix) with ESMTP id 4BD941804A
-	for <git@vger.kernel.org>; Sat, 22 Sep 2012 20:43:23 +0000 (UTC)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by iron.pjr.cc (Postfix) with SMTP id B6A4330AD59
-	for <git@vger.kernel.org>; Sun, 23 Sep 2012 06:43:20 +1000 (EST)
-Received: from [10.10.0.13] (desk01.pjr.cc [10.10.0.13])
-	by iron.pjr.cc (Postfix) with ESMTP id 11CB330AD53;
-	Sun, 23 Sep 2012 06:43:18 +1000 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <20120922050935.GA4542@sigill.intra.peff.net>
-X-DSPAM-Result: Whitelisted
-X-DSPAM-Processed: Sun Sep 23 06:43:20 2012
-X-DSPAM-Confidence: 0.9955
-X-DSPAM-Probability: 0.0000
-X-DSPAM-Signature: 505e22e820672864810877
-X-DSPAM-Factors: 27,
-	git, 0.00052,
-	git, 0.00052,
-	User-Agent*x86_64, 0.00084,
-	backend, 0.00097,
-	backend, 0.00097,
-	repository, 0.00116,
-	problem?, 0.00132,
-	(but, 0.00190,
-	Subject*git, 0.00215,
-	References*sigill.intra.peff.net>, 0.00272,
-	To*Jeff, 0.00534,
-	In-Reply-To*sigill.intra.peff.net>, 0.00535,
-	Peff, 0.00546,
-	CC*git, 0.00579,
-	CC*vger.kernel.org, 0.00615,
-	repo, 0.00624,
-	repo, 0.00624,
-	refs, 0.00650,
-	To*King, 0.00655,
-	To*<peff, 0.00660,
-	To*peff.net>, 0.00660,
-	auth, 0.00686,
-	auth, 0.00686,
-	logs, 0.00737,
-	all), 0.00747,
-	User-Agent*Linux, 0.00773,
-	there), 0.00847
+	id S1752503Ab2IVWEc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2012 18:04:32 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2012 18:04:31 EDT
+Received: (qmail 14883 invoked from network); 22 Sep 2012 21:58:22 -0000
+Received: from p54aece43.dip.t-dialin.net (HELO blacky.localnet) (sascha@babbelbox.org@84.174.206.67)
+  by babbelbox.org with ESMTPA; 22 Sep 2012 21:58:22 -0000
+User-Agent: KMail/4.9.1 (Linux/3.5.3-gentoo; KDE/4.9.1; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206216>
 
-Indeed, thats correct, i should have tried a newer version really before 
-i posted cause i do pull the main git repo and it would have been 
-relatively easy.
+As I know how hard translations can be, esp. with that much technical t=
+erms=20
+inside, I'm usually expecting _not_ to yield the same result when trans=
+lating=20
+a software's translation back to English.
 
-Newer version did indeed fix the problem.
+However, git-rebase just threw these two sentences at me (And though i =
+know=20
+their meaning, i couldn't get the meaning from the message, it gave). B=
+oth are=20
+in context of starting a rebase while one is already in progress.
 
-It hadnt occured to me that git-http-backend behaves differently to the 
-"dumb" http protocol on read (though that was from reading the git 
-source so i obviously missed what was going on there). Ultimately im 
-writing a little webapp that wraps around git-http-backend for some git 
-repository management and on reads i've been just "acting like 
-webserver" but on writes i throw off to git-http-backend. But seeing it 
-do authenticated reads properly via git-http-backend im going to change 
-how it functions, cause that does work with older clients.
+first is:
 
-Thanks!
+Original:
+=2E.. and I wonder if you are in the middle of another rebase.
 
-On 22/09/12 15:09, Jeff King wrote:
-> On Sat, Sep 22, 2012 at 09:37:38AM +1000, Paul J R wrote:
->
->> Im not sure if this is a bug, or just "as implemented". But when
->> cloning from a repo sitting on a web site that uses basic auth, the
->> git client appears to forget its authentication info and ignores the
->> 401's the server is sending back. It appears to initially login and
->> get refs and HEAD ok, but after that it never authenticates again.
->> Using a .netrc file this will work (or a url of the form
->> http://user:pass@host though http://user@host wont), but i'm curious
->> if theres a way of doing this without having to expose the password
->> in some way?
->>
->> Im using git 1.7.9.5 and when i clone i get the following:
->> [...]
->  From your logs, it looks like you are using the "dumb" http protocol
-> (wherein the server does not have to understand git at all). In this
-> protocol, we end up making multiple simultaneous requests for objects
-> with different curl handles. We had a bug where not all handles are told
-> about the credential (but it doesn't always happen; it depends on the
-> exact pattern of requests).
->
-> This was fixed by dfa1725 (fix http auth with multiple curl handles,
-> 2012-04-10), which is in git v1.7.10.2 and higher.
->
-> Can you try upgrading to see if that fixes your problem?
->
-> -Peff
->
+German git translation:
+=2E.. und es w=E4re verwunderlich, wenn ein Neuaufbau bereits im Gange =
+ist.
+
+And a re-translation back to English from my understanding as native Ge=
+rman=20
+speaker:
+=2E.. and it would be astonishing (=3Di'd be surprised), if a rebase wa=
+s already=20
+in progress.
+
+And second:
+
+Original:
+I am stopping in case you still have something valuable there.
+
+German git translation:
+Es wird angehalten, falls bereits etwas N=FCtzliches vorhanden ist.
+
+I wanted to point out that "etwas N=FCtzliches" is more "something usef=
+ul" that=20
+"something valuable". But the more I thought about it, the more it star=
+ted to=20
+confuse me (even the original text) - and now I feel like I don't under=
+stand=20
+the meaning of the last sentence at all; neither in English nor in the =
+German=20
+translation:
+After removing the directory with all rebase-information inside it, WHE=
+RE=20
+should something valuable still be left over? Is it referring to my wor=
+king=20
+tree?
+
+So, for completeness, the full English message:
+
+	It seems that there is already a rebase-merge directory, and
+	I wonder if you are in the middle of another rebase.  If that is the
+	case, please try
+     	   git rebase (--continue | --abort | --skip)
+	If that is not the case, please
+	        rm -fr "/work/lg2/src/.git/rebase-merge"
+	and run me again.  I am stopping in case you still have something
+	valuable there.
+
+Sascha
