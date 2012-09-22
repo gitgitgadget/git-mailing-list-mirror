@@ -1,102 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: submodule: if $command was not matched, don't parse other args
-Date: Sat, 22 Sep 2012 13:31:27 -0700
-Message-ID: <7v8vc13ilc.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0npySdS7FDt=6VKdtoNS2gqQH5WaTQ4H6TEmXdP9fuF=g@mail.gmail.com>
+From: Paul J R <me@pjr.cc>
+Subject: Re: git clone over http with basic auth bug?
+Date: Sun, 23 Sep 2012 06:43:24 +1000
+Message-ID: <505E22EC.1060208@pjr.cc>
+References: <505CFA42.9090504@pjr.cc> <20120922050935.GA4542@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 22:31:42 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Sep 22 22:43:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFWMX-0000Jr-Ju
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 22:31:42 +0200
+	id 1TFWY6-0008B3-2V
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 22:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762Ab2IVUbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2012 16:31:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47403 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752441Ab2IVUba (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2012 16:31:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13C06862C;
-	Sat, 22 Sep 2012 16:31:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lBnnnXOmsdOB/eAp+n1NKAgWwK8=; b=t3ZKC3
-	7lqz9wUo+EOHel0rcruZfNXOVBeGeLIfLz/nqd/yvFS8mV5fX6h9FEnUdaCFtxeu
-	oo4wsT+yfUlQrcpeAUtNfTEA86NFfi2W5HqMpbbQSM+tSyRoGofBkUqorwShdyXf
-	b9lyco3gePLZSzI02DU9nPHNS2rsEjK8NKN5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yNQrHz1zVa3Dluug5Ue9Jhqz4kPgSGFF
-	3sBNlr/NxFPfOWjYkDzkrCdXPciImLrNAt0h3lxvoBXiLvAxtfYXGD+/lCbI35FJ
-	0tNfW6zYBoFyerY88VvDj35ZAY4H41leA02WEHrbtX4nO3q0WdnURSKcm73ehyfr
-	BxNGWUj56tI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00115862B;
-	Sat, 22 Sep 2012 16:31:29 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50EEF862A; Sat, 22 Sep 2012
- 16:31:29 -0400 (EDT)
-In-Reply-To: <CALkWK0npySdS7FDt=6VKdtoNS2gqQH5WaTQ4H6TEmXdP9fuF=g@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Sat, 22 Sep 2012 16:57:59 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7D30B844-04F4-11E2-B6B0-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753244Ab2IVUnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2012 16:43:25 -0400
+Received: from pjr.cc ([173.230.145.154]:41663 "EHLO ln.pjr.cc"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751825Ab2IVUnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2012 16:43:24 -0400
+Received: from iron.pjr.cc (unknown [10.10.0.2])
+	by ln.pjr.cc (Postfix) with ESMTP id 4BD941804A
+	for <git@vger.kernel.org>; Sat, 22 Sep 2012 20:43:23 +0000 (UTC)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by iron.pjr.cc (Postfix) with SMTP id B6A4330AD59
+	for <git@vger.kernel.org>; Sun, 23 Sep 2012 06:43:20 +1000 (EST)
+Received: from [10.10.0.13] (desk01.pjr.cc [10.10.0.13])
+	by iron.pjr.cc (Postfix) with ESMTP id 11CB330AD53;
+	Sun, 23 Sep 2012 06:43:18 +1000 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <20120922050935.GA4542@sigill.intra.peff.net>
+X-DSPAM-Result: Whitelisted
+X-DSPAM-Processed: Sun Sep 23 06:43:20 2012
+X-DSPAM-Confidence: 0.9955
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Signature: 505e22e820672864810877
+X-DSPAM-Factors: 27,
+	git, 0.00052,
+	git, 0.00052,
+	User-Agent*x86_64, 0.00084,
+	backend, 0.00097,
+	backend, 0.00097,
+	repository, 0.00116,
+	problem?, 0.00132,
+	(but, 0.00190,
+	Subject*git, 0.00215,
+	References*sigill.intra.peff.net>, 0.00272,
+	To*Jeff, 0.00534,
+	In-Reply-To*sigill.intra.peff.net>, 0.00535,
+	Peff, 0.00546,
+	CC*git, 0.00579,
+	CC*vger.kernel.org, 0.00615,
+	repo, 0.00624,
+	repo, 0.00624,
+	refs, 0.00650,
+	To*King, 0.00655,
+	To*<peff, 0.00660,
+	To*peff.net>, 0.00660,
+	auth, 0.00686,
+	auth, 0.00686,
+	logs, 0.00737,
+	all), 0.00747,
+	User-Agent*Linux, 0.00773,
+	there), 0.00847
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206215>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Indeed, thats correct, i should have tried a newer version really before 
+i posted cause i do pull the main git repo and it would have been 
+relatively easy.
 
-> When we try to execute 'git submodule' with an invalid subcommand, we
-> get an error like the following:
+Newer version did indeed fix the problem.
+
+It hadnt occured to me that git-http-backend behaves differently to the 
+"dumb" http protocol on read (though that was from reading the git 
+source so i obviously missed what was going on there). Ultimately im 
+writing a little webapp that wraps around git-http-backend for some git 
+repository management and on reads i've been just "acting like 
+webserver" but on writes i throw off to git-http-backend. But seeing it 
+do authenticated reads properly via git-http-backend im going to change 
+how it functions, cause that does work with older clients.
+
+Thanks!
+
+On 22/09/12 15:09, Jeff King wrote:
+> On Sat, Sep 22, 2012 at 09:37:38AM +1000, Paul J R wrote:
 >
->     $ git submodule show
->     error: pathspec 'show' did not match any file(s) known to git.
->     Did you forget to 'git add'?
+>> Im not sure if this is a bug, or just "as implemented". But when
+>> cloning from a repo sitting on a web site that uses basic auth, the
+>> git client appears to forget its authentication info and ignores the
+>> 401's the server is sending back. It appears to initially login and
+>> get refs and HEAD ok, but after that it never authenticates again.
+>> Using a .netrc file this will work (or a url of the form
+>> http://user:pass@host though http://user@host wont), but i'm curious
+>> if theres a way of doing this without having to expose the password
+>> in some way?
+>>
+>> Im using git 1.7.9.5 and when i clone i get the following:
+>> [...]
+>  From your logs, it looks like you are using the "dumb" http protocol
+> (wherein the server does not have to understand git at all). In this
+> protocol, we end up making multiple simultaneous requests for objects
+> with different curl handles. We had a bug where not all handles are told
+> about the credential (but it doesn't always happen; it depends on the
+> exact pattern of requests).
 >
-> The cause of the problem: since $command is not matched, it is set to
-> "status", and "show" is treated as an argument to "status".  Change
-> this so that usage information is printed when an invalid subcommand
-> is tried.
+> This was fixed by dfa1725 (fix http auth with multiple curl handles,
+> 2012-04-10), which is in git v1.7.10.2 and higher.
 >
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  This breaks test 41 in t7400-submodule-bash -- does the test cover a
->  real-world usecase?
-
-You know how to ask "shortlog --since=18.months --no-merges" to find
-people to list on "Cc:" line to ask that question, no?
-
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index a7e933e..dfec45d 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -1108,7 +1108,15 @@ do
->  done
+> Can you try upgrading to see if that fixes your problem?
 >
->  # No command word defaults to "status"
-> -test -n "$command" || command=status
-> +if test -z "$command"
-> +then
-> +    if test $# = 0
-> +    then
-> +	command=status
-> +    else
-> +	usage
-> +    fi
-> +fi
-
-I personally feel "no command means this default" is a mistake for
-"git submodule", even if there is no pathspec or other arguments,
-but I am not a heavy user of submodules, so others should discuss
-this.
+> -Peff
+>
