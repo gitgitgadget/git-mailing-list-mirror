@@ -1,97 +1,82 @@
-From: Sascha Cunz <sascha-ml@babbelbox.org>
-Subject: Message from 'git-rebase'; German translation
-Date: Sat, 22 Sep 2012 23:57:49 +0200
-Message-ID: <1527028.GPe6zkelBV@blacky>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Sun, 23 Sep 2012 00:45:13 +0200
+Message-ID: <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
+References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
+ <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+ <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 23 00:04:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 23 00:46:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFXoX-0002cp-Jy
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 00:04:42 +0200
+	id 1TFYSx-0003rb-5m
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 00:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753408Ab2IVWEc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2012 18:04:32 -0400
-Received: from babbelbox.org ([83.133.105.186]:53237 "EHLO mail.babbelbox.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752503Ab2IVWEc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2012 18:04:32 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2012 18:04:31 EDT
-Received: (qmail 14883 invoked from network); 22 Sep 2012 21:58:22 -0000
-Received: from p54aece43.dip.t-dialin.net (HELO blacky.localnet) (sascha@babbelbox.org@84.174.206.67)
-  by babbelbox.org with ESMTPA; 22 Sep 2012 21:58:22 -0000
-User-Agent: KMail/4.9.1 (Linux/3.5.3-gentoo; KDE/4.9.1; x86_64; ; )
+	id S1753532Ab2IVWpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2012 18:45:35 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:34027 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753519Ab2IVWpe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2012 18:45:34 -0400
+Received: by oago6 with SMTP id o6so4420082oag.19
+        for <git@vger.kernel.org>; Sat, 22 Sep 2012 15:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=AJharmhDOS8e2CenTzZCuhuO8/Z20BFUtbqrXxRuJbU=;
+        b=VHfmGjPGjuYgurwLhOOFuclITzQlGuSKCAzWCbtqWhd7dtPZKMDW5pqPIQ6qdEbyR6
+         zm4JCFZ4JTNb5qNJNYB2jJPogeH9YKzI1vdDPU17KkA2rvX8vzxdM5UV7V0LxPj83zhv
+         VWVqbPSkq32q2jDOWqAm3Sa4kU2JaI4fjBF+VUXYpYvJhd+umPHJ11hSHV53LIxYmr5u
+         FgILjSM563jTqD1w9GyKBo74FobwmWqQB/fjL2sZ5kuXNy7mrnFop9bAFOxKPce5Hnrw
+         zpMAaDmUcDWjPZGRFT6TNjEW+AUzHpQPWKkbAIWPMN7ANf/zUP6F5Aa+tQ4QvjHf10WF
+         uZ0A==
+Received: by 10.60.171.174 with SMTP id av14mr7033006oec.61.1348353933935;
+ Sat, 22 Sep 2012 15:45:33 -0700 (PDT)
+Received: by 10.76.163.98 with HTTP; Sat, 22 Sep 2012 15:45:13 -0700 (PDT)
+In-Reply-To: <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206217>
 
-As I know how hard translations can be, esp. with that much technical t=
-erms=20
-inside, I'm usually expecting _not_ to yield the same result when trans=
-lating=20
-a software's translation back to English.
+On Wed, Sep 19, 2012 at 7:35 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Hi,
+>
+> On Wed, Sep 14, 2011 at 7:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+>> P.S. Would you be interested in running the next survey?
+>
+> I haven't seen any news regarding the 2012 survey. I'm interested in
+> running the survey this time, but I would like to know what that
+> entails :)
+>
+> I think the surveys should continue.
 
-However, git-rebase just threw these two sentences at me (And though i =
-know=20
-their meaning, i couldn't get the meaning from the message, it gave). B=
-oth are=20
-in context of starting a rebase while one is already in progress.
+I have created short (well, at least shorter than previous ones)
+"Git User's Survey 2012" on Survs.com.  The test channel is
 
-first is:
+  https://www.survs.com/survey/J87I3PDBU4
 
-Original:
-=2E.. and I wonder if you are in the middle of another rebase.
+Note that all answers in this channel would be deleted.
 
-German git translation:
-=2E.. und es w=E4re verwunderlich, wenn ein Neuaufbau bereits im Gange =
-ist.
 
-And a re-translation back to English from my understanding as native Ge=
-rman=20
-speaker:
-=2E.. and it would be astonishing (=3Di'd be surprised), if a rebase wa=
-s already=20
-in progress.
+I was thinking about running this survey for about three weeks, from
+24 September to 14 October 2012.  The current premium unlimited plan,
+a gift from Survs.com admins, is valid till 26 October.  I don't know if it
+would be prolonged; it usually was.
 
-And second:
+As to what is involved in running survey: if we want and would be able to
+use Survs.com, one should register there, and I can add them to "git"
+account as a member with admin rights.
 
-Original:
-I am stopping in case you still have something valuable there.
-
-German git translation:
-Es wird angehalten, falls bereits etwas N=FCtzliches vorhanden ist.
-
-I wanted to point out that "etwas N=FCtzliches" is more "something usef=
-ul" that=20
-"something valuable". But the more I thought about it, the more it star=
-ted to=20
-confuse me (even the original text) - and now I feel like I don't under=
-stand=20
-the meaning of the last sentence at all; neither in English nor in the =
-German=20
-translation:
-After removing the directory with all rebase-information inside it, WHE=
-RE=20
-should something valuable still be left over? Is it referring to my wor=
-king=20
-tree?
-
-So, for completeness, the full English message:
-
-	It seems that there is already a rebase-merge directory, and
-	I wonder if you are in the middle of another rebase.  If that is the
-	case, please try
-     	   git rebase (--continue | --abort | --skip)
-	If that is not the case, please
-	        rm -fr "/work/lg2/src/.git/rebase-merge"
-	and run me again.  I am stopping in case you still have something
-	valuable there.
-
-Sascha
+-- 
+Jakub Narebski
