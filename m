@@ -1,81 +1,77 @@
-From: Enrico Weigelt <enrico.weigelt@vnc.biz>
-Subject: Re: The GitTogether
-Date: Sat, 22 Sep 2012 20:09:09 +0200 (CEST)
-Message-ID: <00cb8946-a93d-40cf-84fe-4524ed54fdb8@zcs>
-References: <505D8F20.8060008@drmicha.warpmail.net>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: How do I run tests under Valgrind?
+Date: Sat, 22 Sep 2012 20:20:41 +0200
+Message-ID: <505E0179.1070106@gmail.com>
+References: <20120917173531.GB1179@sigill.intra.peff.net> <CALkWK0kDPGY_3v5SLPtyf+azUwA7msvQOvA+MaCgueZ71i2yGw@mail.gmail.com> <20120917174439.GD1179@sigill.intra.peff.net> <CALkWK0mkBbY7dUyaZAqqKE3ZMfE_xU6em_KCOKM9nsTjUP-9pA@mail.gmail.com> <20120917182957.GF1179@sigill.intra.peff.net> <CALkWK0=nMxNfmAaBTmXeADQubTayC_2_ut5Nq3QXba9yfQr9yA@mail.gmail.com> <CALkWK0kWvrirPjXXzBBBQxKDcwpd_+nQ2eeT6SE8gDFW5T7WFQ@mail.gmail.com> <505CCA55.6030609@gmail.com> <20120921204907.GA22977@sigill.intra.peff.net> <505DB73E.2020108@gmail.com> <20120922174741.GA6722@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Scott Chacon <schacon@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Patrick Renaud <prenaud76@gmail.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Sep 22 20:09:24 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Sep 22 20:20:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFU8n-0005QO-Vr
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 20:09:22 +0200
+	id 1TFUK1-000502-4q
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Sep 2012 20:20:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170Ab2IVSJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2012 14:09:12 -0400
-Received: from zcs.vnc.biz ([83.144.240.118]:34530 "EHLO zcs.vnc.biz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154Ab2IVSJL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2012 14:09:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zcs.vnc.biz (Postfix) with ESMTP id E8682460003;
-	Sat, 22 Sep 2012 20:09:09 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at vnc.biz
-Received: from zcs.vnc.biz ([127.0.0.1])
-	by localhost (zcs.vnc.biz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LIl3IRcbKYtJ; Sat, 22 Sep 2012 20:09:09 +0200 (CEST)
-Received: from zcs.vnc.biz (zcs.vnc.biz [172.17.1.118])
-	by zcs.vnc.biz (Postfix) with ESMTP id 48B8F460002;
-	Sat, 22 Sep 2012 20:09:09 +0200 (CEST)
-In-Reply-To: <505D8F20.8060008@drmicha.warpmail.net>
-X-Originating-IP: [91.43.188.249]
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC18 (Linux)/7.1.3_GA_3346)
+	id S1751509Ab2IVSUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2012 14:20:48 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:44317 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407Ab2IVSUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2012 14:20:47 -0400
+Received: by bkcjk13 with SMTP id jk13so244184bkc.19
+        for <git@vger.kernel.org>; Sat, 22 Sep 2012 11:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=xoMZQZFGgon2252CmKw0F0J/qKVfEpykijQ2WtjMzdU=;
+        b=E3EVzalUS9eLoh6d3Ox7GXxeXTuM6OwgPCZWTeeLje6++oj9v1wMpY34pFUxsxxd8V
+         o0gaDK8jL0pn7RBMjklSawz8i47J//rCsNZrPBm1Jfra9rxECWaZir/00drzpB2ZUqNY
+         /YYuhkr7PQC9FMTqsZP37kqxuYeCAkB8Rs7zlFfSIeyP6PPQk0zYvcGBgGUjUpC7OTeb
+         SPx/ghspYHHM26+dDu1pymQcJY1pfxLldy2FB5BHHk86vwSj4Fx7pXrvwmxbNkRDY2kY
+         YvUxE2wSdVdV58gDABEVzHp3zCPNm8IN+5s5u6QfcocIR9W2MnJs+d9cHKpfTjR3paUu
+         Py0Q==
+Received: by 10.204.152.211 with SMTP id h19mr3460053bkw.45.1348338046198;
+        Sat, 22 Sep 2012 11:20:46 -0700 (PDT)
+Received: from [192.168.178.21] (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
+        by mx.google.com with ESMTPS id m26sm2486479bkw.11.2012.09.22.11.20.44
+        (version=SSLv3 cipher=OTHER);
+        Sat, 22 Sep 2012 11:20:45 -0700 (PDT)
+In-Reply-To: <20120922174741.GA6722@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206210>
 
-Hi,
+On 09/22/2012 07:47 PM, Jeff King wrote:
+> On Sat, Sep 22, 2012 at 03:03:58PM +0200, Stefano Lattarini wrote:
+> 
+>> On 09/21/2012 10:49 PM, Jeff King wrote:
+>>>
+>>> Oh. It sounds like setting $SHELL to zsh is really the problem, then. If
+>>> it is not Bourne-compatible when called as "zsh", then it really should
+>>> be called in a way that turns on compatibility mode (bash will do this
+>>> when called as "sh", but you can also do it with "bash --posix").
+>>>
+>> AFAIK, if Zsh is called as "sh", it too will run in Bourne compatibility
+>> mode; not sure how to force this compatibility from the command line though
+>> (albeit I'd guess there is some way to do so).
+>> [...]
+> 
+> Thanks for digging. I think this case, though, is that we were simply
+> using the wrong variable ($SHELL instead of $SHELL_PATH). Your
+> workarounds would help if somebody put zsh into $SHELL_PATH, but
+> fundamentally that is not a sane thing to be doing, so I think we can
+> just consider doing so user error and not bother working around it.
+> 
+FWIW, I agree.
 
-> Also, there are many academic institutions, and at least some might
-> be happy to host an event like this (I'm thinking especially of the Z=
-use
-> institute). I had offered to help with hooking up with them  several
-> weeks ago already. So, it's really just a matter of communication.
-
-Yep. Another option could be Fraunhofer (we've got connections there),
-or maybe Office-2.0 or Tempelhof Airport.
-
-I've already triggered our business guys, they're quite interested.
-
-
-cu
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards=20
-
-Enrico Weigelt=20
-VNC - Virtual Network Consult GmbH=20
-Head Of Development=20
-
-Pariser Platz 4a, D-10117 Berlin
-Tel.: +49 (30) 3464615-20
-=46ax: +49 (30) 3464615-59
-
-enrico.weigelt@vnc.biz; www.vnc.de=20
+Best regards,
+  Stefano
