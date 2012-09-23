@@ -1,101 +1,139 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Quickly searching for a note
-Date: Sun, 23 Sep 2012 17:07:04 +0200
-Message-ID: <505F2598.7080704@drmicha.warpmail.net>
-References: <505C7C80.3000700@workspacewhiz.com> <7vy5k370n7.fsf@alter.siamese.dyndns.org> <505CB21E.4040607@workspacewhiz.com> <7vtxur3zxi.fsf@alter.siamese.dyndns.org> <505CCD2A.8020003@workspacewhiz.com> <505CD2FA.80200@kdbg.org> <505CD7D0.2000505@workspacewhiz.com> <20120921233723.GA29433@sigill.intra.peff.net> <7v7grn3pfo.fsf@alter.siamese.dyndns.org> <505DE30B.2000805@drmicha.warpmail.net> <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
+From: knittl <knittl89@googlemail.com>
+Subject: Re: Message from 'git-rebase'; German translation
+Date: Sun, 23 Sep 2012 17:36:08 +0200
+Message-ID: <CACx-yZ25jXW482b3UQ=2LAvpFAfe+NRvnRA+QS6xmwmq6MgYvQ@mail.gmail.com>
+References: <1527028.GPe6zkelBV@blacky> <CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 17:07:27 2012
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sascha Cunz <sascha-ml@babbelbox.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 23 17:36:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFnmJ-0000N3-0n
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 17:07:27 +0200
+	id 1TFoEa-0001ev-IV
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 17:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932Ab2IWPHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2012 11:07:16 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:44996 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753602Ab2IWPHO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 11:07:14 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id BE1B02017A;
-	Sun, 23 Sep 2012 11:07:13 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute6.internal (MEProxy); Sun, 23 Sep 2012 11:07:13 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=8ZpBtQMWoQQOO+bCmMY4Ec
-	8+R/A=; b=MosqQCNQ6DVxaTOWG3t/DGnBlFQ3343zB1XNkTqVOjT9HteLXRQXMf
-	D5Xbjk80AzC4iX5/qPeJHiNDnj6AeJY2rpuQ638pyvsxG0yhTxdKVxi3/h4xFsC0
-	B3GTzoqtgD4jyKav46QdSGdQj/SEWKBSlxfTZUvNEClixTErQbSVA=
-X-Sasl-enc: 5Nl159ga2ekGlCLpoWdJNE1LA/dd7objhSvJrwVddT+7 1348412833
-Received: from localhost.localdomain (unknown [88.71.254.127])
-	by mail.messagingengine.com (Postfix) with ESMTPA id CA13E4827B2;
-	Sun, 23 Sep 2012 11:07:12 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
+	id S1754010Ab2IWPga convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2012 11:36:30 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:44526 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753980Ab2IWPg3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 11:36:29 -0400
+Received: by wgbdr13 with SMTP id dr13so2941404wgb.1
+        for <git@vger.kernel.org>; Sun, 23 Sep 2012 08:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KxuIxREIKMG9QiuWQ5vRJANreKtcWDkSwZCDaj6FdNM=;
+        b=dOX2SQVvXuU3YmFDk81yzB2SScCXY0AjwL0aZXLe+aLfEuqWCMxxQWHK93FEXJ+Uj7
+         qdRcxhoKkRO0ux93nEvoZEX3pgnsPBkc3tFvmyb9oRoDGdaIG0/QGnjY4ddudVp/I0fP
+         hds5i37tyzs2/hpp1OoZ1E4Ufi+3ckOjsx9EunhojNnahPW4oLrbmeUdPXHjFahSlqDl
+         YoDOyZPNgqxf4RqyQ1SAAcwTdtzAyNCc/CTjdQlFBP79ewnkY91ckTWToJkO2c5icVJ1
+         9VHcWcXWdzByE1dOXd18uqC0FC6QlTjbGycc/OshNl+u5X40VGDOW4HW5FdewxgffcE0
+         ZW3A==
+Received: by 10.216.143.233 with SMTP id l83mr5903947wej.167.1348414588630;
+ Sun, 23 Sep 2012 08:36:28 -0700 (PDT)
+Received: by 10.194.22.198 with HTTP; Sun, 23 Sep 2012 08:36:08 -0700 (PDT)
+In-Reply-To: <CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206242>
 
-Junio C Hamano venit, vidit, dixit 22.09.2012 22:23:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> On my mental scratch pad (yeah, that's where the bald spots are) I have
->> the following more general idea to enhance the revision parser:
+Sharing my thoughts on this one, =85
+
+
+On Sun, Sep 23, 2012 at 5:04 PM, Ralf Thielow <ralf.thielow@gmail.com> =
+wrote:
+> On Sat, Sep 22, 2012 at 11:57 PM, Sascha Cunz <sascha-ml@babbelbox.or=
+g> wrote:
+>> However, git-rebase just threw these two sentences at me (And though=
+ i know
+>> their meaning, i couldn't get the meaning from the message, it gave)=
+=2E Both are
+>> in context of starting a rebase while one is already in progress.
 >>
->> --limit-run=<script>::
->> --run=<script>:::
->> These options run the script `<script>` on each revision that is walked.
->> The script is run in an environment which has the variables
->> `GIT_<SPECIFIER>` exported, where `<SPECIFIER>` is any of the specifiers
->> for the `--format` option in the long format (the same as for 'git
->> for-each-ref').
+>> first is:
 >>
->> In the case of `--limit-run`, the return code of `<script>` decides
->> whether the commit is processed further (i.e. shown using the format in
->> effect) or ignored.
-> 
-> You could argue that the above is not an inpractical solution as
-> long as the user of --run, which spawns a new process every time we
-> need to check if a commit is worth showing in the log/rev-list
-> stream, knows what she is doing and promises not to complain that it
-> is no more performant than an external script that reads from
-> rev-list output and does the equivalent filtering.
-> 
-> I personally am not very enthused.
-> 
-> If we linked with an embeddable scripting language interpreter
-> (e.g. lua, tcl, guile, ...), it may be a more practical enhancement,
-> though.
-> 
+>> Original:
+>> ... and I wonder if you are in the middle of another rebase.
+>>
+>> German git translation:
+>> ... und es w=E4re verwunderlich, wenn ein Neuaufbau bereits im Gange=
+ ist.
+>>
+>> And a re-translation back to English from my understanding as native=
+ German
+>> speaker:
+>> ... and it would be astonishing (=3Di'd be surprised), if a rebase w=
+as already
+>> in progress.
+>>
+>
+> We try to avoid translating terms like "I wonder if.." and similar as
+> "ich wundere mich", because it's very unusual in German messages
+> of computer programs. Translators should have the freedom to reword
+> terms a bit to make a more optimal translation, but the meaning must
+> not be lost, and I can't say that this is the case.
+> Translate the term "in the middle of"  word-by-word would result in
+> "in der Mitte eines", which can be interpreted as a place somewhere
+> or that an action is in progress. To avoid a possible confusion, we
+> decided to translate this term as "im Gange sein" ("be in progress") =
+in
+> the whole translation. I also think that "in der Mitte einer Zusammen=
+f=FChrung
+> sein" doesn't sound really good. It tends to mean a place, not an act=
+ion.
 
-Yes, the idea is "extend, don't embed" the other way round, so to say. I
-still think extending "git log" so that it can call a script with commit
-info already in the environment gives a more convenient approach then
-"embedding git rev-list" into your own script. It's not more performant,
-of course.
+What about a simple "Eventuell wird bereits ein andere
+Neuaufbau/rebase ausgef=FChrt"?
 
-I just see many more requests of the type "grep notes" coming, i.e.
-limitting based on other commit info, or in a different way then already
-possible. Just image you want to find out who's responsible for those
-commits in git.git with subject lengths > 100 ;)
+And, iirc, "I wonder if" translates to "Ich frage mich, ob =85"
 
-The point is also that when you pipe rev-list into your script you have
-to do all the output formatting yourself, or call "git log -1"/"git
-show" again to have git do the output formatting after your script
-decided about the limitting.
+>> And second:
+>>
+>> Original:
+>> I am stopping in case you still have something valuable there.
+>>
+>> German git translation:
+>> Es wird angehalten, falls bereits etwas N=FCtzliches vorhanden ist.
+>>
+>> I wanted to point out that "etwas N=FCtzliches" is more "something u=
+seful" that
+>> "something valuable". But the more I thought about it, the more it s=
+tarted to
+>
+> I've been thinking about possible different translations, and the onl=
+y
+> one I have in
+> mind is "wertvoll". But translating "valuable" as "wertvoll" ("bereit=
+s
+> etwas Wertvolles
+> vorhanden") sounds a bit like "we've found a treasure", instead of
+> something which
+> has a value in the meaning of content. I think having a translation
+> which is more
+> like "useful" than "valuable" does also hit the point of the message,
+> doesn't it?
 
-Michael
+What about "wichtig"? I think that transfers the meaning pretty well.
+"Es wird angehalten, um den Verlust wichtiger Infos zu vermeiden"
+maybe?
+
+I hope the above spends some inspiration :)
+
+Cheers,
+Daniel
+
+--=20
+typed with http://neo-layout.org
