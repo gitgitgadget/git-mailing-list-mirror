@@ -1,125 +1,90 @@
-From: Sascha Cunz <sascha-ml@babbelbox.org>
-Subject: Re: Message from 'git-rebase'; German translation
-Date: Sun, 23 Sep 2012 19:57:51 +0200
-Message-ID: <1896069.nSNvK2cQtd@blacky>
-References: <1527028.GPe6zkelBV@blacky> <224751243.JXpXFWu6vV@blacky> <CAN0XMO+ySiOBpUFa5G-3_Ld1uY-qpY8s5QfqSwy2s+kEZv=ckw@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] commit: configure submodules
+Date: Sun, 23 Sep 2012 20:13:37 +0200
+Message-ID: <505F5151.2080208@web.de>
+References: <1348385867-17359-1-git-send-email-orgads@gmail.com> <7vr4pt16ep.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	Jan Engelhardt <jengelh@inai.de>, knittl89@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 19:58:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Orgad Shaneh <orgads@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 23 20:14:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFqRO-0008Bw-5n
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 19:58:02 +0200
+	id 1TFqhM-0001OY-0e
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 20:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344Ab2IWR5v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2012 13:57:51 -0400
-Received: from babbelbox.org ([83.133.105.186]:54797 "EHLO mail.babbelbox.org"
+	id S1754365Ab2IWSNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2012 14:13:40 -0400
+Received: from mout.web.de ([212.227.17.11]:65495 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754287Ab2IWR5u convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 13:57:50 -0400
-Received: (qmail 25009 invoked from network); 23 Sep 2012 17:58:22 -0000
-Received: from p54aecaae.dip.t-dialin.net (HELO blacky.localnet) (sascha@babbelbox.org@84.174.202.174)
-  by babbelbox.org with ESMTPA; 23 Sep 2012 17:58:22 -0000
-User-Agent: KMail/4.9.1 (Linux/3.5.3-gentoo; KDE/4.9.1; x86_64; ; )
-In-Reply-To: <CAN0XMO+ySiOBpUFa5G-3_Ld1uY-qpY8s5QfqSwy2s+kEZv=ckw@mail.gmail.com>
+	id S1751460Ab2IWSNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2012 14:13:39 -0400
+Received: from [192.168.178.41] ([91.3.183.9]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0LtWsC-1TfFrx3SdQ-011A9I; Sun, 23 Sep 2012 20:13:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <7vr4pt16ep.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:zPTVqrydkRIJTXwwrTbPOLTMKf+S9OdqBuKvX00tyaa
+ bdqLd8ExxWeuR9VkktmigdKDJN8226nBtsF5tHlNPNepSahi93
+ sRrMINkUzCQRtdK026DdA5dUCiXNefb9LRLjuQIV54fvH7qN9L
+ rUnAEGSXgEDYMBSGAv14cMWbX4kHdSjERRSe45CIqjU8UQkN5Y
+ N5LFwFx2IVJVLHbfy++ag==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206250>
 
-Am Sonntag, 23. September 2012, 19:34:23 schrieb Ralf Thielow:
-> On Sun, Sep 23, 2012 at 5:41 PM, Sascha Cunz <sascha-ml@babbelbox.org=
->=20
-wrote:
-> > Exactly. The meaning is more important then the exact wording. Plea=
-se
-> > consider>=20
-> > this:
-> >         Es wurden Neuaufbau- / Zusammenf=FChrungs-Informationen gef=
-unden.
->=20
-> We can't change the "... Verzeichnis *rebase-merge* ..." part of the
-> message, because "rebase-merge" is a substitution and we have to use =
-all of
-> them.
-> >         Falls ein Neuaufbau bereits im Gange ist, versuche bitte:
-> >                 git rebase (--continue | --abort | --skip)
-> >        =20
-> >         Sollte dies nicht der Fall sein, k=F6nnen die Informationen=
- durch
-> >        =20
-> >                 rm -fr "$(GIT_DIR)/rebase-merge"
-> >        =20
-> >         entfernt werden. Es wird angehalten, falls etwas Sch=FCtzen=
-swertes
-> >         gefunden werden sollte.
-> >=20
-> > It sounds way cleaner (to me at least) and transports all of the me=
-aning.
-> > Esp. for  the last sentence, it's very hard to find something in Ge=
-rman
-> > that doesn't sound 'destructive'.
->=20
-> Not sure why you change "vorhanden ist" to "gefunden werden sollte".
-> Maybe we should use a combination? See below.
+Am 23.09.2012 10:37, schrieb Junio C Hamano:
+> I see Jens added with 302ad7a (Submodules: Use "ignore" settings
+> from .gitmodules too for diff and status, 2010-08-06) the call to
+> gitmodules_config() to "git status" and "git diff" family, but I
+> suspect that was a huge mistake.  Once a submodule is initialized
+> with "submodule init", the default set of configuration should be
+> copied to the user's $GIT_DIR/config and subsequent run-time
+> invocation should read $GIT_DIR/config and $GIT_DIR/config alone, to
+> honor user's customization.
 
-Probably a result of my initial misunderstanding of the original text. =
-As I=20
-pointed out in another mail on this thread, I think the real meaning is=
-: "Es=20
-wird [jetzt] angehalten, _weil_ dort [im Rebase-Merge Verzeichnis] noch=
- etwas=20
-Sch=FCtzenswertes vorhanden sein k=F6nnte".
+Not honoring the user's customization would be a big mistake, but
+this is not what happens here. A setting in $GIT_DIR/config always
+overrides the one in .gitmodules (that's why gitmodules_config() is
+called before git_config()).
 
-> > Btw: In the past I've seen quite a few topics on translation on thi=
-s list
-> > - is this at all the right place for that kind of discussion?
->=20
-> Different translation teams use different places for discussions.
-> The German uses this list.
->=20
-> Like this, maybe.
+> Instead, I think git_commit_config() and git_status_config() should
+> call submodule_config() function to read submodule.$name.ignore not
+> from .gitmodules file but from $GIT_DIR/config.
+> 
+> Jens, what do you think?  I see no reason for anybody other than
+> "submodule init" to call gitmodules_config() that reads from the
+> in-tree .gitmodules file.
 
-Yes, that is already much better.
+I think the copying on init is not what we should do here because
+it sets the user's customization to what ever happened to be in
+.gitmodules at the time he initialized the submodule. Later changes
+from upstream to such a setting would not be honored unless the
+user copies that new setting herself (which I think is The Right
+Thing for the URL, but not for the other work tree related settings
+like 'ignore').
 
-> [PATCH] l10n: de.po: improve translation of a rebase message
->=20
-> The word "still" was translated as "bereits", change
-> it to "noch". "valuable" was translated as "n=FCtzlich"
-> which is more like "useful" than "valuable", change it
-> to "sch=FCtzenswert".
->=20
-> Noticed-by: Sascha Cunz <sascha-ml@babbelbox.org>
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->=20
-> diff --git a/po/de.po b/po/de.po
-> index 2739bc0..7fc0185 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -5756,8 +5756,8 @@ msgstr ""
->  "\t$cmd_live_rebase\n"
->  "Wenn das nicht der Fall ist, probiere bitte\n"
->  "\t$cmd_clear_stale_rebase\n"
-> -"und f=FChre dieses Kommando nochmal aus. Es wird angehalten, falls
-> bereits\n" -"etwas N=FCtzliches vorhanden ist."
-> +"und f=FChre dieses Kommando nochmal aus. Es wird angehalten, falls =
-noch\n"
-> +"etwas Sch=FCtzenswertes vorhanden ist."
->=20
->  #: git-rebase.sh:395
->  #, sh-format
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Imagine you have a submodule containing a huge media file which is
+set to be ignored for performance reasons. When upstream later
+decides it should rather use .gitattributes to just disable diffing
+that file and removes the submodule ignore so the users see changes
+to other files of the submodule again, that will just work the way
+it is done now, but won't when we copy that setting on init.
+
+So it is either "honor upstream unless the user decides otherwise"
+or "take what upstream configured at init time as the users choice
+(until he actively changes it)". And I think the former is more
+flexible as it allows upstream to change settings without user
+intervention, which is why I did it that way.
+
+And as I understand that .gitattributes follow the same principle:
+Unless the user configured something different in his
+$GIT_DIR/info/attributes file, git will use the settings from the
+.gitattributes file of the currently checked out commit.
+
+So I think Orgad's change is sane and should go in.
