@@ -1,85 +1,106 @@
-From: knittl <knittl89@googlemail.com>
+From: Sascha Cunz <sascha-ml@babbelbox.org>
 Subject: Re: Message from 'git-rebase'; German translation
-Date: Sun, 23 Sep 2012 17:36:08 +0200
-Message-ID: <CACx-yZ25jXW482b3UQ=2LAvpFAfe+NRvnRA+QS6xmwmq6MgYvQ@mail.gmail.com>
+Date: Sun, 23 Sep 2012 17:41:55 +0200
+Message-ID: <224751243.JXpXFWu6vV@blacky>
 References: <1527028.GPe6zkelBV@blacky> <CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sascha Cunz <sascha-ml@babbelbox.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Thomas Rast <trast@student.ethz.ch>,
-	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
 	Christian Stimming <stimming@tuhh.de>
 To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 17:36:43 2012
+X-From: git-owner@vger.kernel.org Sun Sep 23 17:42:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFoEa-0001ev-IV
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 17:36:40 +0200
+	id 1TFoJn-0005ED-DJ
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 17:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754010Ab2IWPga convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2012 11:36:30 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:44526 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753980Ab2IWPg3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 11:36:29 -0400
-Received: by wgbdr13 with SMTP id dr13so2941404wgb.1
-        for <git@vger.kernel.org>; Sun, 23 Sep 2012 08:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=KxuIxREIKMG9QiuWQ5vRJANreKtcWDkSwZCDaj6FdNM=;
-        b=dOX2SQVvXuU3YmFDk81yzB2SScCXY0AjwL0aZXLe+aLfEuqWCMxxQWHK93FEXJ+Uj7
-         qdRcxhoKkRO0ux93nEvoZEX3pgnsPBkc3tFvmyb9oRoDGdaIG0/QGnjY4ddudVp/I0fP
-         hds5i37tyzs2/hpp1OoZ1E4Ufi+3ckOjsx9EunhojNnahPW4oLrbmeUdPXHjFahSlqDl
-         YoDOyZPNgqxf4RqyQ1SAAcwTdtzAyNCc/CTjdQlFBP79ewnkY91ckTWToJkO2c5icVJ1
-         9VHcWcXWdzByE1dOXd18uqC0FC6QlTjbGycc/OshNl+u5X40VGDOW4HW5FdewxgffcE0
-         ZW3A==
-Received: by 10.216.143.233 with SMTP id l83mr5903947wej.167.1348414588630;
- Sun, 23 Sep 2012 08:36:28 -0700 (PDT)
-Received: by 10.194.22.198 with HTTP; Sun, 23 Sep 2012 08:36:08 -0700 (PDT)
+	id S1754183Ab2IWPlz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2012 11:41:55 -0400
+Received: from babbelbox.org ([83.133.105.186]:54596 "EHLO mail.babbelbox.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754008Ab2IWPly convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 11:41:54 -0400
+Received: (qmail 20092 invoked from network); 23 Sep 2012 15:42:27 -0000
+Received: from p54aecaae.dip.t-dialin.net (HELO blacky.localnet) (sascha@babbelbox.org@84.174.202.174)
+  by babbelbox.org with ESMTPA; 23 Sep 2012 15:42:27 -0000
+User-Agent: KMail/4.9.1 (Linux/3.5.3-gentoo; KDE/4.9.1; x86_64; ; )
 In-Reply-To: <CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206243>
 
-Sharing my thoughts on this one, =85
-
-
-On Sun, Sep 23, 2012 at 5:04 PM, Ralf Thielow <ralf.thielow@gmail.com> =
-wrote:
+Am Sonntag, 23. September 2012, 17:04:15 schrieb Ralf Thielow:
 > On Sat, Sep 22, 2012 at 11:57 PM, Sascha Cunz <sascha-ml@babbelbox.or=
-g> wrote:
->> However, git-rebase just threw these two sentences at me (And though=
- i know
->> their meaning, i couldn't get the meaning from the message, it gave)=
-=2E Both are
->> in context of starting a rebase while one is already in progress.
->>
->> first is:
->>
->> Original:
->> ... and I wonder if you are in the middle of another rebase.
->>
->> German git translation:
->> ... und es w=E4re verwunderlich, wenn ein Neuaufbau bereits im Gange=
- ist.
->>
->> And a re-translation back to English from my understanding as native=
- German
->> speaker:
->> ... and it would be astonishing (=3Di'd be surprised), if a rebase w=
-as already
->> in progress.
->>
->
+g>=20
+wrote:
+> > As I know how hard translations can be, esp. with that much technic=
+al
+> > terms
+> > inside, I'm usually expecting _not_ to yield the same result when
+> > translating a software's translation back to English.
+>=20
+> Yeah, I think the goal is not making translations which are looking n=
+early
+> the same when somebody translates them back to English in the first p=
+lace.
+
+Exactly. The meaning is more important then the exact wording. Please c=
+onsider=20
+this:
+
+	Es wurden Neuaufbau- / Zusammenf=FChrungs-Informationen gefunden.
+	Falls ein Neuaufbau bereits im Gange ist, versuche bitte:
+		git rebase (--continue | --abort | --skip)
+	Sollte dies nicht der Fall sein, k=F6nnen die Informationen durch
+		rm -fr "$(GIT_DIR)/rebase-merge"
+	entfernt werden. Es wird angehalten, falls etwas Sch=FCtzenswertes
+	gefunden werden sollte.
+
+It sounds way cleaner (to me at least) and transports all of the meanin=
+g. Esp.=20
+for  the last sentence, it's very hard to find something in German that=
+=20
+doesn't sound 'destructive'.
+
+Btw: In the past I've seen quite a few topics on translation on this li=
+st - is=20
+this at all the right place for that kind of discussion?
+
+Sascha
+
+> > However, git-rebase just threw these two sentences at me (And thoug=
+h i
+> > know
+> > their meaning, i couldn't get the meaning from the message, it gave=
+). Both
+> > are in context of starting a rebase while one is already in progres=
+s.
+> >=20
+> > first is:
+> >=20
+> > Original:
+> > ... and I wonder if you are in the middle of another rebase.
+> >=20
+> > German git translation:
+> > ... und es w=E4re verwunderlich, wenn ein Neuaufbau bereits im Gang=
+e ist.
+> >=20
+> > And a re-translation back to English from my understanding as nativ=
+e
+> > German
+> > speaker:
+> > ... and it would be astonishing (=3Di'd be surprised), if a rebase =
+was
+> > already in progress.
+>=20
 > We try to avoid translating terms like "I wonder if.." and similar as
 > "ich wundere mich", because it's very unusual in German messages
 > of computer programs. Translators should have the freedom to reword
@@ -94,25 +115,19 @@ in
 f=FChrung
 > sein" doesn't sound really good. It tends to mean a place, not an act=
 ion.
-
-What about a simple "Eventuell wird bereits ein andere
-Neuaufbau/rebase ausgef=FChrt"?
-
-And, iirc, "I wonder if" translates to "Ich frage mich, ob =85"
-
->> And second:
->>
->> Original:
->> I am stopping in case you still have something valuable there.
->>
->> German git translation:
->> Es wird angehalten, falls bereits etwas N=FCtzliches vorhanden ist.
->>
->> I wanted to point out that "etwas N=FCtzliches" is more "something u=
-seful" that
->> "something valuable". But the more I thought about it, the more it s=
-tarted to
->
+> > And second:
+> >=20
+> > Original:
+> > I am stopping in case you still have something valuable there.
+> >=20
+> > German git translation:
+> > Es wird angehalten, falls bereits etwas N=FCtzliches vorhanden ist.
+> >=20
+> > I wanted to point out that "etwas N=FCtzliches" is more "something =
+useful"
+> > that "something valuable". But the more I thought about it, the mor=
+e it
+> > started to
 > I've been thinking about possible different translations, and the onl=
 y
 > one I have in
@@ -125,15 +140,23 @@ s
 > which is more
 > like "useful" than "valuable" does also hit the point of the message,
 > doesn't it?
-
-What about "wichtig"? I think that transfers the meaning pretty well.
-"Es wird angehalten, um den Verlust wichtiger Infos zu vermeiden"
-maybe?
-
-I hope the above spends some inspiration :)
-
-Cheers,
-Daniel
-
---=20
-typed with http://neo-layout.org
+>=20
+> > confuse me (even the original text) - and now I feel like I don't
+> > understand the meaning of the last sentence at all; neither in Engl=
+ish
+> > nor in the German translation:
+> > After removing the directory with all rebase-information inside it,=
+ WHERE
+> > should something valuable still be left over? Is it referring to my
+> > working
+> > tree?
+>=20
+> Yeah, I think it means the working tree and/or the index which would =
+make
+> sense.
+>=20
+> Ralf
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
