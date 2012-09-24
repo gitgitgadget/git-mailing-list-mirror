@@ -1,80 +1,89 @@
-From: Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH] submodule: configure submodule.<name>.path on add and init
-Date: Mon, 24 Sep 2012 21:32:54 +0200
-Message-ID: <CAGHpTB+6AggmTWchcSEFDW1kmv=-Ej4u3RFuiik5KspR=D0ASQ@mail.gmail.com>
-References: <1348515040-19986-1-git-send-email-orgads@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 24 Sep 2012 21:35:11 +0200
+Message-ID: <vpqhaqnw6xc.fsf@grenoble-inp.fr>
+References: <201107252233.02088.jnareb@gmail.com>
+	<201109031738.11678.jnareb@gmail.com>
+	<CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+	<201109141939.14070.jnareb@gmail.com>
+	<CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
+	<CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
+	<vpqobkvxwhq.fsf@grenoble-inp.fr>
+	<CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
+	<vpqobkvwg1r.fsf@grenoble-inp.fr>
+	<CANQwDwew-PGq03q4VyjbzqPJxM+cB2O4J810ft67Cqn0xVwFKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Orgad Shaneh <orgads@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 21:33:05 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 21:35:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGEOu-0000Di-Q7
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 21:33:05 +0200
+	id 1TGERd-0001jl-My
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 21:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932073Ab2IXTc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 15:32:56 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:45426 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757860Ab2IXTcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 15:32:55 -0400
-Received: by wgbfm10 with SMTP id fm10so2953942wgb.1
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 12:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jEs9v7evlVFXsVnGEBqqLWSuaO/7XkWlZrRWUNgjrMI=;
-        b=tP5TsAYUGFl20Jqxml0qo71tVgozF/o/FrcOmsIHibUjCMj09O5aGrOA8hlnFcQ3uk
-         GyEDGImcD0k++P5HY/OO9mbjhDhvCg09SnxQlNyqS9sqCM7DcrEjguH9iNNpzID2b2BJ
-         kRlkVlgbEJzhhFrA0zVUO0UJw/wLT+cxWrpUO3qPF7fDJfHb39zj9AsZxuAjL6gV15sn
-         6kozTZLsUphrZGsayzm861kGvNQTmQERq0RggNQdp6lUqdTo6udQzTculrFbQX9ysGPN
-         h7Bg6XJ9F4f53Hki+CqSenO14OTDbwy4Tc21V0iR2we6b8Vv0LzncnMMQUYYPmdrOig7
-         xTtg==
-Received: by 10.216.207.73 with SMTP id m51mr8000193weo.116.1348515174127;
- Mon, 24 Sep 2012 12:32:54 -0700 (PDT)
-Received: by 10.194.54.166 with HTTP; Mon, 24 Sep 2012 12:32:54 -0700 (PDT)
-In-Reply-To: <1348515040-19986-1-git-send-email-orgads@gmail.com>
+	id S1757866Ab2IXTfo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 15:35:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35435 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757679Ab2IXTfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 15:35:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8OJU7Bq019221
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Sep 2012 21:30:07 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TGEQx-0008Tn-KN; Mon, 24 Sep 2012 21:35:11 +0200
+In-Reply-To: <CANQwDwew-PGq03q4VyjbzqPJxM+cB2O4J810ft67Cqn0xVwFKQ@mail.gmail.com>
+	("Jakub \=\?utf-8\?Q\?Nar\=C4\=99bski\=22's\?\= message of "Mon, 24 Sep 2012
+ 18:23:31 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 24 Sep 2012 21:30:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8OJU7Bq019221
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1349119808.89237@hnXuYvUvQs+CmP2oQ9p+zQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206319>
 
-On Mon, Sep 24, 2012 at 9:30 PM, Orgad Shaneh <orgads@gmail.com> wrote:
-> In order to read diff options for a submodule, its path must be configured
-> ---
->  git-submodule.sh |    2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 3e2045e..f97bb62 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -359,6 +359,7 @@ Use -f if you really want to add it." >&2
->                         esac
->                 ) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
->         fi
-> +       git config submodule."$sm_path".path "$sm_path"
->         git config submodule."$sm_path".url "$realrepo"
->
->         git add $force "$sm_path" ||
-> @@ -476,6 +477,7 @@ cmd_init()
->                                 url=$(resolve_relative_url "$url") || exit
->                                 ;;
->                         esac
-> +                       git config submodule."$name".path "$name" ||
->                         git config submodule."$name".url "$url" ||
->                         die "$(eval_gettext "Failed to register url for submodule path '\$sm_path'")"
->
-> --
-> 1.7.10.4
->
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-Oops, || should have been &&
+> On Mon, Sep 24, 2012 at 6:18 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>>
+>>> I have therefore added the following multiple-choice question:
+>>>
+>>> #19. What git workflow(s) is used by projects in which development =
+you
+>>> participate?
+>>
+>> If we want to have an idea of which workflows are the most commonly
+>> used, just a binary answer may be insufficient. We can't distinguish
+>> between "X% people use workflow W all the time", and "X% people use
+>> workflow W from time to time".
+>
+> The problem is that those workflows are used by _projects_ not _peopl=
+e_,
 
-- Orgad
+Yes, but people are usually involved in multiple projects. Someone
+involved in 10 different distributed projects and sometimes contributin=
+g
+to 1 centralized would count 1 for each.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
