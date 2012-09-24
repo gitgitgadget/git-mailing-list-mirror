@@ -1,113 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] silence git gc --auto --quiet output
-Date: Mon, 24 Sep 2012 15:53:55 -0700
-Message-ID: <7vy5jzvxq4.fsf@alter.siamese.dyndns.org>
-References: <20120924024024.GA12700@tin.tmux.org>
- <7v3927xcu1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] graph: avoid infinite loop in graph_show_commit()
+Date: Mon, 24 Sep 2012 16:36:31 -0700
+Message-ID: <7vtxunvvr4.fsf@alter.siamese.dyndns.org>
+References: <1348323880-3751-1-git-send-email-pclouds@gmail.com>
+ <loom.20120923T135253-178@post.gmane.org>
+ <CACsJy8ApYKOU8v_-HkUC5uOb8gsheugKaXKMjbm0_-ygW_4jiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tobias Ulmer <tobiasu@tmux.org>
-X-From: git-owner@vger.kernel.org Tue Sep 25 00:54:11 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	git@vger.kernel.org, adam@adamsimpkins.net
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 01:36:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGHXU-0003m1-Ox
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 00:54:09 +0200
+	id 1TGICi-0004Ft-Ho
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 01:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839Ab2IXWx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 18:53:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65066 "EHLO
+	id S1750889Ab2IXXgf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 19:36:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50694 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706Ab2IXWx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 18:53:58 -0400
+	id S1750778Ab2IXXge convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 19:36:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8D9389F4;
-	Mon, 24 Sep 2012 18:53:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D60209590;
+	Mon, 24 Sep 2012 19:36:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W6vKcXHfkaOiewBYI/1yML5DNi8=; b=E+z3+i
-	2mUGmBUjjKcEpLuVCWKQvYt7ySwF1Pq1h/qnQMVorTxW+lPS34JEh94U7JqDfNre
-	u/c9Ze/mkg2BPbY93e7mXPTWN19TJqYT/+2+SczSU+iNxKkbivV9A7tCdTHeHoM4
-	aLrigs5irTkYxtqewM2ZNRh7ifwA3JkYT8kQU=
+	:content-type:content-transfer-encoding; s=sasl; bh=Xo0Y0bPE7b+F
+	kO6a3itJOb8TXEI=; b=LYKWgFlpjRkPaMITT+R1V4ovIvRftamSzbdb+w8c35dS
+	jqDsltOZ6Y192Bf56x3Z179wUQgH/YY/lfUrLRbplgNA8s7ohasofSwoONpgAmox
+	UazF9ajuVKLbR+/dALkoBGIE99+yjYneVtph6z83toqsHcNNV6s4Vse+Q9Xgyro=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mGYP5idrK1ckPACxVN1nWWhPOHEGQbmo
-	uwfnvs5SaJjhL3Y75/uNZqRJyWHeUnyR2JVMcmI9Ivaw/2AZ2OEuj8TSThDDUtKa
-	GGHXfd3Y0eGQAC918Z0hKFh6WHSl1rGhTEDRuc6JhLLFE521xXoZSYZ6m1g+Csqg
-	AqyQw4tlZ80=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MroZR4
+	hJ8jCAF40+kqA8Vs2AcgzDDJtxgPlJl1sPKCnZLCTjFbX8S3yH1JqucmRATkN6oy
+	VOPMHbZ87QNCjBNHTZoBnqGqZ1wAIdzycOgbINLSY/1ihTVhhYhCsagMaW/RR/5J
+	PurAZC5gylwfCrgtXRoFhd+qHIH1CwhNWSsIw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B645989F3;
-	Mon, 24 Sep 2012 18:53:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C328C958F;
+	Mon, 24 Sep 2012 19:36:33 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D0EA89F2; Mon, 24 Sep 2012
- 18:53:57 -0400 (EDT)
-In-Reply-To: <7v3927xcu1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 24 Sep 2012 15:42:14 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C467958E; Mon, 24 Sep 2012
+ 19:36:33 -0400 (EDT)
+In-Reply-To: <CACsJy8ApYKOU8v_-HkUC5uOb8gsheugKaXKMjbm0_-ygW_4jiQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Sun, 23 Sep 2012 19:14:51 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8E4BDF2-069A-11E2-8AC9-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AC6D133E-06A0-11E2-823D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206334>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> Tobias Ulmer <tobiasu@tmux.org> writes:
->
->> When --quiet is requested, gc --auto should not display messages unless
->> there is an error.
+> On Sun, Sep 23, 2012 at 6:55 PM, Michal Kiedrowicz
+> <michal.kiedrowicz@gmail.com> wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds <at> gmail.com> w=
+rites:
 >>
->> Signed-off-by: Tobias Ulmer <tobiasu@tmux.org>
->> ---
->>  builtin/gc.c |    4 +---
->>  1 files changed, 1 insertions(+), 3 deletions(-)
+>>>
+>>> The loop can be triggered with "git diff-tree --graph commit" where
+>>> the commit is a non-merge. It goes like this
 >>
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> index 6d46608..6be6c8d 100644
->> --- a/builtin/gc.c
->> +++ b/builtin/gc.c
->> @@ -217,9 +217,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->>  		 */
->>  		if (!need_to_gc())
->>  			return 0;
->> -		if (quiet)
->> -			fprintf(stderr, _("Auto packing the repository for optimum performance.\n"));
->> -		else
->> +		if (!quiet)
->>  			fprintf(stderr,
->>  					_("Auto packing the repository for optimum performance. You may also\n"
->>  					"run \"git gc\" manually. See "
+>>
+>> Isn't this the same issue as in
+>> http://article.gmane.org/gmane.comp.version-control.git/123979
+>> ? (with slightly different fix)
 >
-> This patch will break t5400; the test needs to be updated in the
-> same patch to check auto-gc kicks in when it should in some other
-> way.  The test currently _relies_ on this message to see the gc is
-> triggered.
+> I don't know. I'm not familiar enough with graph.c to tell. Maybe Ada=
+m
+> can have a look?
 
-I suspect that the following may be sufficient.  The test prepares a
-stale garbage file in the repository an auto-gc is expected to
-happen, and makes sure the garbage file is removed after the
-operation that expects to trigger an auto-gc.  The detection of the
-message is more or less superfluous.
+Has either of you tried the patch with the problematic case the
+other patch tries to solve?  Michal's old patch does smell like it
+is going in the better direction in that it stops looping when we
+know we would only be showing the padding, which is a sign that we
+are done with showing the commit.
 
- t/t5400-send-pack.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git i/t/t5400-send-pack.sh w/t/t5400-send-pack.sh
-index 250c720..78ab177 100755
---- i/t/t5400-send-pack.sh
-+++ w/t/t5400-send-pack.sh
-@@ -174,8 +174,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
- 	    cd parent &&
- 	    echo "Even more text" >>file.txt &&
- 	    git commit -a -m "Third commit" &&
--	    git send-pack ../child HEAD:refs/heads/test_auto_gc >output 2>&1 &&
--	    grep "Auto packing the repository for optimum performance." output
-+	    git send-pack ../child HEAD:refs/heads/test_auto_gc
- 	) &&
- 	test ! -e child/.git/objects/tmp_test_object
- '
+But I didn't look at it too closely.  I'd prefer to see the
+assert(0) turned into die("BUG: internal error") at the end of
+graph_next_line() to catch these cases.  Also I am not sure if
+assignment of the return value from graph_next_line() to
+shown_comit_line in the loop is correct (shouldn't it be OR'ing it
+in, so that "we have shown the information on this commit" is not
+lost when the function adds things after showing the commit???)
