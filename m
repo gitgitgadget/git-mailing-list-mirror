@@ -1,108 +1,74 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC/PATCH] l10n: de.po: correct translation of a 'rebase' message
-Date: Mon, 24 Sep 2012 22:26:20 +0200
-Message-ID: <87k3vjtbf7.fsf@pctrast.inf.ethz.ch>
-References: <1348508389-2883-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: configure submodules
+Date: Mon, 24 Sep 2012 13:36:40 -0700
+Message-ID: <7vr4prxinb.fsf@alter.siamese.dyndns.org>
+References: <1348385867-17359-1-git-send-email-orgads@gmail.com>
+ <7vr4pt16ep.fsf@alter.siamese.dyndns.org> <505F5151.2080208@web.de>
+ <7vmx0g0xpm.fsf@alter.siamese.dyndns.org>
+ <7v39271j3n.fsf@alter.siamese.dyndns.org> <5060A32D.1060902@web.de>
+ <7vlifzz2vo.fsf@alter.siamese.dyndns.org>
+ <CAGHpTB+F3=mW9m3ESQe1wAkLzSBcp+5Kgw1Kb-D-rk2T1q_-iw@mail.gmail.com>
+ <7vy5jzxmts.fsf@alter.siamese.dyndns.org>
+ <CAGHpTB+0GLJJ-e1JFTXQ0Qot9An90MXxDFbP+63+pG2uA3UhmA@mail.gmail.com>
+ <5060BADB.2000505@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <trast@student.ethz.ch>, <jk@jk.gs>, <stimming@tuhh.de>,
-	<git@vger.kernel.org>, <sascha-ml@babbelbox.org>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 22:26:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Orgad Shaneh <orgads@gmail.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Sep 24 22:36:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGFEe-0001fv-R0
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 22:26:33 +0200
+	id 1TGFOf-0006ng-CJ
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 22:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757996Ab2IXU0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 16:26:24 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:41831 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757844Ab2IXU0X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 16:26:23 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 24 Sep
- 2012 22:26:20 +0200
-Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.208.245) by
- CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
- 14.2.298.4; Mon, 24 Sep 2012 22:26:20 +0200
-In-Reply-To: <1348508389-2883-1-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Mon, 24 Sep 2012 19:39:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.208.245]
+	id S1757977Ab2IXUgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 16:36:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33663 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757874Ab2IXUgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 16:36:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 938339FF8;
+	Mon, 24 Sep 2012 16:36:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t75cHhZgzJysGVBLns9tcN3fJBw=; b=afS7M6
+	B4DEMvRbe2vSeOdtfN5gRp9w+fum6EgRU8QRe3kJmHJ/p9/I3Goj++oXwBmFFGmo
+	neiirLZZZ1PD3LT4t7s58sij78qzbbZLrNgv7Bxo/ceU5W8MvLoWa/M0MIvDUypX
+	Icvs+FwU61jX6coyOEadPvjK5YIukW3n3Wvmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C7XRPs3txcYT0RWzMTqc4szacQLB4sHr
+	Ij4sG6cT/PJ+kXwTF7AiZekYdwRgretv/76O31M3sfY+KUSz4FKxNJFMrdoJMoNe
+	0dbiBBvotu2M0UPnqoOqWq3UN5kFWz/Cz9/ZrXTR91AJJhvyKduSY9NmOYQrtrq5
+	AJZWo5U4eTM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8143C9FF7;
+	Mon, 24 Sep 2012 16:36:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01F049FF5; Mon, 24 Sep 2012
+ 16:36:41 -0400 (EDT)
+In-Reply-To: <5060BADB.2000505@web.de> (Jens Lehmann's message of "Mon, 24
+ Sep 2012 21:56:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8C629AE6-0687-11E2-BA46-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206327>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> Noticed-by: Sascha Cunz <sascha-ml@babbelbox.org>
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-[...]
-> The English original is:
->
-> "It seems that there is already a $state_dir_base directory, and\n"
-> "I wonder if you are in the middle of another rebase.  If that is the=
-\n"
-> "case, please try\n"
-> "\t$cmd_live_rebase\n"
-> "If that is not the case, please\n"
-> "\t$cmd_clear_stale_rebase\n"
-> "and run me again.  I am stopping in case you still have something\n"
-> "valuable there."
-[...]
-> -"Es scheint so, als g=C3=A4be es das Verzeichnis $state_dir_base ber=
-eits, und\n"
-> -"es w=C3=A4re verwunderlich, wenn ein Neuaufbau bereits im Gange ist=
-=2E Wenn das\n"
-> -"der Fall ist, probiere bitte\n"
-> +"Es sieht so aus, als gibt es das Verzeichnis $state_dir_base bereit=
-s\n"
+> But submodule.mod.path should only be set in .gitmodules, not in
+> $GIT_DIR/config. Did you just remove the ignore setting from
+> .gitmodules or the path too?
 
-Not very elegant yet, shouldn't it say something like
+Without that in $GIT_DIR/config, how would path<->name mapping
+correctly work???
 
-  als ob es das Verzeichnis ... bereits {gibt,g=C3=A4be}
-
-?
-
-> +"und es k=C3=B6nnte ein anderer Neuaufbau im Gange sein. Wenn das de=
-r Fall ist,\n"
-> +"probiere bitte\n"
->  "\t$cmd_live_rebase\n"
->  "Wenn das nicht der Fall ist, probiere bitte\n"
->  "\t$cmd_clear_stale_rebase\n"
-> -"und f=C3=BChre dieses Kommando nochmal aus. Es wird angehalten, fal=
-ls bereits\n"
-> -"etwas N=C3=BCtzliches vorhanden ist."
-> +"und f=C3=BChre dieses Kommando nochmal aus. Es wird angehalten, fal=
-ls noch\n"
-> +"etwas Sch=C3=BCtzenswertes vorhanden ist."
-
-Thanks Ralf and Sascha.
-
-Please don't see this as a reason to fight the (i.e. Ralf's, for the
-most part) translation.  It is definitely a mistake, but not any more s=
-o
-than any other bug.  In fact, it went through review here
-
-  http://thread.gmane.org/gmane.comp.version-control.git/202784
-
-where I too (sorry) missed this, even as I pointed out several other
-things.  Then it went into the pull request
-
-  http://thread.gmane.org/gmane.comp.version-control.git/203153
-
-So for me the main take-away is that just like with code, review helps
-catch some things early but bugs still get through.  More eyeballs woul=
-d
-certainly be appreciated.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Confused...
