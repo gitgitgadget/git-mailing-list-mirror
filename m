@@ -1,90 +1,93 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] commit: configure submodules
-Date: Sun, 23 Sep 2012 20:13:37 +0200
-Message-ID: <505F5151.2080208@web.de>
-References: <1348385867-17359-1-git-send-email-orgads@gmail.com> <7vr4pt16ep.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 6/9] pretty: two phase conversion for non utf-8 commits
+Date: Mon, 24 Sep 2012 08:21:01 +0700
+Message-ID: <CACsJy8DoBwLccaGGFqDfW2F3isZ74S2FLGXW3bDOcr2X-hQc3w@mail.gmail.com>
+References: <1348391433-11300-7-git-send-email-pclouds@gmail.com> <189332269.134567.1348408475044.JavaMail.root@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Orgad Shaneh <orgads@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 20:14:33 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 03:21:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TFqhM-0001OY-0e
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Sep 2012 20:14:32 +0200
+	id 1TFxMl-00054u-Ic
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 03:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365Ab2IWSNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2012 14:13:40 -0400
-Received: from mout.web.de ([212.227.17.11]:65495 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460Ab2IWSNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2012 14:13:39 -0400
-Received: from [192.168.178.41] ([91.3.183.9]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LtWsC-1TfFrx3SdQ-011A9I; Sun, 23 Sep 2012 20:13:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <7vr4pt16ep.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:zPTVqrydkRIJTXwwrTbPOLTMKf+S9OdqBuKvX00tyaa
- bdqLd8ExxWeuR9VkktmigdKDJN8226nBtsF5tHlNPNepSahi93
- sRrMINkUzCQRtdK026DdA5dUCiXNefb9LRLjuQIV54fvH7qN9L
- rUnAEGSXgEDYMBSGAv14cMWbX4kHdSjERRSe45CIqjU8UQkN5Y
- N5LFwFx2IVJVLHbfy++ag==
+	id S1754739Ab2IXBVc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2012 21:21:32 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:44643 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754724Ab2IXBVc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2012 21:21:32 -0400
+Received: by ieak13 with SMTP id k13so9670755iea.19
+        for <git@vger.kernel.org>; Sun, 23 Sep 2012 18:21:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=r+cGy9u+b7Vn2ADOZgbhLj6D+ZdB6gze5/x27R0fSCc=;
+        b=DnmPoKWEyNhunM0/+slJpH6LesuBYu/fd05e8ACk0GOTfD3EynAiFQBXqKm6/KALTE
+         obICH558+Rc15aS1eckkuiPLCf0df5TNgxcks+W4IuSGFZv7cihT29ETxhz3KU1FjoaQ
+         T3f/EprpPiF6wcRBMtyX8LsCJxmSA4tAGqiI1oT3V0B5ZAJ1PBD3/9LglHxhu6O06J8a
+         IqIYUbGkqbz0JI0Ou+B6rs/71O1JYLrflSR5tyZL4r7xqhOYRIhv/OIja0lK1ei2WNTV
+         KeVIK2i020XvNyZ+B4/h5MiV4lQWp+bvuUE+FvrWJaciWzstRaQSrdgksBjD7va0EwN5
+         oKXw==
+Received: by 10.42.129.83 with SMTP id p19mr8649232ics.9.1348449691392; Sun,
+ 23 Sep 2012 18:21:31 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Sun, 23 Sep 2012 18:21:01 -0700 (PDT)
+In-Reply-To: <189332269.134567.1348408475044.JavaMail.root@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206251>
 
-Am 23.09.2012 10:37, schrieb Junio C Hamano:
-> I see Jens added with 302ad7a (Submodules: Use "ignore" settings
-> from .gitmodules too for diff and status, 2010-08-06) the call to
-> gitmodules_config() to "git status" and "git diff" family, but I
-> suspect that was a huge mistake.  Once a submodule is initialized
-> with "submodule init", the default set of configuration should be
-> copied to the user's $GIT_DIR/config and subsequent run-time
-> invocation should read $GIT_DIR/config and $GIT_DIR/config alone, to
-> honor user's customization.
+On Sun, Sep 23, 2012 at 8:54 PM, Robin Rosenberg
+<robin.rosenberg@dewire.com> wrote:
+>> This of course only works with encodings that are compatible with
+>> Unicode.
+> Such as? Unicode was defined to encompass all knows encodings.
 
-Not honoring the user's customization would be a big mistake, but
-this is not what happens here. A setting in $GIT_DIR/config always
-overrides the one in .gitmodules (that's why gitmodules_config() is
-called before git_config()).
+Just a precaution because I have never read Unicode standard (and it
+keeps getting updated, hence "incomplete")
 
-> Instead, I think git_commit_config() and git_status_config() should
-> call submodule_config() function to read submodule.$name.ignore not
-> from .gitmodules file but from $GIT_DIR/config.
-> 
-> Jens, what do you think?  I see no reason for anybody other than
-> "submodule init" to call gitmodules_config() that reads from the
-> in-tree .gitmodules file.
+>
+>> -static size_t format_commit_one(struct strbuf *sb, const char
+>> *placeholder,
+>> +static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+>> +                             const char *placeholder,
+>>                               void *context)
+>>  {
+>>       struct format_commit_context *c =3D context;
+>
+> Which parameter does the comment apply to? I believe most conventions
+> nowadays include parameter documentation in the comment preceding
+> the function header.
 
-I think the copying on init is not what we should do here because
-it sets the user's customization to what ever happened to be in
-.gitmodules at the time he initialized the submodule. Later changes
-from upstream to such a setting would not be honored unless the
-user copies that new setting herself (which I think is The Right
-Thing for the URL, but not for the other work tree related settings
-like 'ignore').
+Yeah. I should have followed that.
 
-Imagine you have a submodule containing a huge media file which is
-set to be ignored for performance reasons. When upstream later
-decides it should rather use .gitattributes to just disable diffing
-that file and removes the submodule ignore so the users see changes
-to other files of the submodule again, that will just work the way
-it is done now, but won't when we copy that setting on init.
+>> b/t/t6006/commit-msg.iso8859-1
+>> new file mode 100644
+>> index 0000000..f8fe808
+>> --- /dev/null
+>> +++ b/t/t6006/commit-msg.iso8859-1
+>> @@ -0,0 +1,5 @@
+>> +Test printing of complex bodies
+>> +
+>> +This commit message is much longer than the others,
+>> +and it will be encoded in iso8859-1. We should therefore
+>> +include an iso8859 character: =EF=BF=BDbueno!
+>
+> "8859-1" to be exact. Only three 8859 encoding has the
+> character.
 
-So it is either "honor upstream unless the user decides otherwise"
-or "take what upstream configured at init time as the users choice
-(until he actively changes it)". And I think the former is more
-flexible as it allows upstream to change settings without user
-intervention, which is why I did it that way.
-
-And as I understand that .gitattributes follow the same principle:
-Unless the user configured something different in his
-$GIT_DIR/info/attributes file, git will use the settings from the
-.gitattributes file of the currently checked out commit.
-
-So I think Orgad's change is sane and should go in.
+Yep. But i'll probably need a closer look at t6006. It seems there's a
+few "upside down exclamation" (not sure what it's called) in UTF-8 in
+that test. I'll fix the text too.
+--=20
+Duy
