@@ -1,95 +1,109 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Mon, 24 Sep 2012 18:11:56 +0200
-Message-ID: <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
- <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
- <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
- <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com> <vpqobkvxwhq.fsf@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: submodule: if $command was not matched, don't parse other args
+Date: Mon, 24 Sep 2012 09:17:40 -0700
+Message-ID: <7v7grj1jkr.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0npySdS7FDt=6VKdtoNS2gqQH5WaTQ4H6TEmXdP9fuF=g@mail.gmail.com>
+ <7v8vc13ilc.fsf@alter.siamese.dyndns.org> <505F489B.1000309@web.de>
+ <50607748.6000204@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:12:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:17:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGBGn-0001Sd-UB
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:12:30 +0200
+	id 1TGBM0-0004in-2k
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab2IXQMS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 12:12:18 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:60502 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754683Ab2IXQMR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 12:12:17 -0400
-Received: by obbuo13 with SMTP id uo13so4803155obb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 09:12:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ltyaoFE1PRRyVdb9nDCBJ6RAuzF9pKMtkUxkIt87qxc=;
-        b=IfrNZYtW/EIA0zDjAFpUyqvc1Vz2hLY9eltTQ8rqOKZgqOJCwlfDENIRhPHL0XT7J5
-         Nw7g7nhBMf15RmAV/WLMlwSC0PYlGh+2neWg8CMT3nTqy1cguq5fIr7RVXAhBa0I4zFX
-         VUK4EKUz6hq/Nz3ixLDHYoHQz0lEMqTabsHYPwJC/a/zxNiHScjWVZBqECNdVeWgu1VN
-         YUAvVEdlOLmoIzpeK2cpFWxK6ylsqHmB0OqUuvUWVXFz53IhlNUC8NnY0Qlsu+8BHxNQ
-         pkbd2CqufSxvtlLzG8OjJnWYRpp2C6JBTMb3TV+XhR5y/pdGE1R4saCnDatQmJYTvzla
-         TmSQ==
-Received: by 10.60.29.134 with SMTP id k6mr9974477oeh.5.1348503136715; Mon, 24
- Sep 2012 09:12:16 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 09:11:56 -0700 (PDT)
-In-Reply-To: <vpqobkvxwhq.fsf@grenoble-inp.fr>
+	id S1756449Ab2IXQRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 12:17:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43742 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753548Ab2IXQRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 12:17:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24340915A;
+	Mon, 24 Sep 2012 12:17:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mW3gd+kkmN1WIvN9CXnIiZpjPwA=; b=c+ZysZ
+	/EseqzsWgPxwpN0UlOqFvl6WFFf+Pq4sM96HDLI3LYaY7p4CjifKmuf3Vk41/A+T
+	VUqQMeUxschn1kMES4R1LeF5jnk8CVFtWC36HyEeMRU3YLjHx1Q9YnJXGjV+5qfz
+	Ac/qUUnIlVAh68CnFDCy/o8IeMD+CGQYAP0oU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tfCCAgieTlkrxkIZnujTXRzAQX4+032x
+	l5vQXwisKv8F0hOeug4I2Pcf0/iYrop0pihzlhaKFmhGEOqCQamj2K8BxzoWBnJF
+	B0KTfE3f75h8F3YhMNTysrBIZ3bNPBjVgoIt6EjSx+KyfG+Jcz8eIml+VavOYLkG
+	NDQULtt07N8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FFB69158;
+	Mon, 24 Sep 2012 12:17:42 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8128F9157; Mon, 24 Sep 2012
+ 12:17:41 -0400 (EDT)
+In-Reply-To: <50607748.6000204@xiplink.com> (Marc Branchaud's message of
+ "Mon, 24 Sep 2012 11:07:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5D8EF29C-0663-11E2-AC11-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206292>
 
-On Mon, Sep 24, 2012 at 5:37 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jakub Nar=EAbski <jnareb@gmail.com> writes:
+Marc Branchaud <mbranchaud@xiplink.com> writes:
+
+> On 12-09-23 01:36 PM, Jens Lehmann wrote:
+>> Am 22.09.2012 22:31, schrieb Junio C Hamano:
+>>> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>>> diff --git a/git-submodule.sh b/git-submodule.sh
+>>>> index a7e933e..dfec45d 100755
+>>>> --- a/git-submodule.sh
+>>>> +++ b/git-submodule.sh
+>>>> @@ -1108,7 +1108,15 @@ do
+>>>>  done
+>>>>
+>>>>  # No command word defaults to "status"
+>>>> -test -n "$command" || command=status
+>>>> +if test -z "$command"
+>>>> +then
+>>>> +    if test $# = 0
+>>>> +    then
+>>>> +	command=status
+>>>> +    else
+>>>> +	usage
+>>>> +    fi
+>>>> +fi
+>>>
+>>> I personally feel "no command means this default" is a mistake for
+>>> "git submodule", even if there is no pathspec or other arguments,
+>>> but I am not a heavy user of submodules, so others should discuss
+>>> this.
+>> 
+>> ... but I'd rather tend to not change that
+>> behavior which has been there from day one for backward compatibility
+>> reasons. But if many others see that as an improvement too I won't
+>> object against changing it the way Ramkumar proposes (but he'd have
+>> to change the documentation too ;-).
+>> 
+>> Since diff and status learned to display submodule status information
+>> (except for a submodule being uninitialized) I almost never use this
+>> option myself, so I'd be interested to hear what submodule users who
+>> do use "git submodule [status]" frequently think.
 >
->> I have created short (well, at least shorter than previous ones)
->> "Git User's Survey 2012" on Survs.com.  The test channel is
->>
->>   https://www.survs.com/survey/J87I3PDBU4
->
-> If it's still time, it would be nice to add a question on the kind of
-> workflow people use. E.g.
->
-> Which workflow do you use? (never / rarely / often / always)
->
-> Centralized workflow (everyone pushes and pulls to the same shared
-> repository).
->
-> One-repository per developer (people push to their own public
-> repository, and pull from other user's public repository)
+> I also almost never use "git submodule [status]", and I also agree that
+> git-submodule shouldn't have a default sub-command.
 
-You were not the only one to ask for question about workflows
-used; Junio also asked for something similar.
+OK, I do not think Ramkumar's patch hurts anybody, but dropping the
+"nothing on the command line defaults to 'status' action" could.  So
+let's queue the patch as-is at least for now and leave the default
+discussion to a separarte thread if needed.
 
-I have therefore added the following multiple-choice question:
-
-#19. What git workflow(s) is used by projects in which development you
-participate?
-[ ] single developer, only private repository (no interaction)
-[ ] centralized workflow (push to common repository)
-[ ] branched centralized (push to different branches in common reposito=
-ry)
-[ ] peer-to-peer workflow (all repositories roughly equal)
-[ ] integration-manager workflow (maintainer pulls/applies patches to
-"blessed" repository))
-[ ] dictator and lieutenants workflow (hierarchical workflow)
-[ ] using collaborative code review tool, e.g. Gerrit
-[ ] other workflow, please explai
-
-I was also thinking about adding merge vs rebase question, but it
-is direction orthogonal to above, so maybe as separate question...
-
---=20
-Jakub Narebski
+Thanks.
