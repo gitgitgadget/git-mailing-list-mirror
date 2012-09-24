@@ -1,86 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [BUG?] Path limiting in "git log" when run from another subdir
-Date: Mon, 24 Sep 2012 16:11:11 +0200
-Message-ID: <CALKQrgdhFCUs+gqT=PrT3w7suGzvnj7Wo8GfipHHQm6b=TZF+A@mail.gmail.com>
-References: <CALKQrged+ptCQYm-=JKRborrAeKmaNFG=rDS8BQK5CNhwqjnkQ@mail.gmail.com>
-	<CACsJy8CECnFbkD6QFWiDMxz6J4mOngrmHPwjuXvsFBUXhNc1_w@mail.gmail.com>
-	<CALKQrgfb8qbeKmCzri27iA1qk9H8R4FgyA-YsUQf_JQRWvGK4g@mail.gmail.com>
-	<CACsJy8A4-XC7AS4ZqZ1Whsoo-mztTNFvEnk810e10-rwXBkJHA@mail.gmail.com>
-	<CACsJy8AXonkSXNU_uUXh=d2wojOhAn+S1JW7eUMywxohnAOXjg@mail.gmail.com>
+From: Jean-Baptiste Quenot <jbq@caraldi.com>
+Subject: Re: [ANNOUNCE] tig-1.0
+Date: Mon, 24 Sep 2012 16:29:01 +0200
+Message-ID: <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
+References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
+ <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
+ <CAK6bCawaqEvKFf43wzv+Yz5eem5W-qi9p1i+-9+jiMFs=tZ8xA@mail.gmail.com>
+ <CAFuPQ1+6EkeVDmkQg-r0_KegDDmC0QnO4mtn0ad=4UK8G=9iCA@mail.gmail.com> <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:11:26 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:30:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TG9Nd-0007Cd-Pt
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:11:26 +0200
+	id 1TG9fc-0004ak-Qy
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755627Ab2IXOLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:11:17 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:56313 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755481Ab2IXOLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 10:11:16 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1TG9NT-0000mD-8H
-	for git@vger.kernel.org; Mon, 24 Sep 2012 16:11:15 +0200
-Received: by oago6 with SMTP id o6so5418823oag.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:11:11 -0700 (PDT)
-Received: by 10.60.170.9 with SMTP id ai9mr6802621oec.36.1348495871872; Mon,
- 24 Sep 2012 07:11:11 -0700 (PDT)
-Received: by 10.76.128.204 with HTTP; Mon, 24 Sep 2012 07:11:11 -0700 (PDT)
-In-Reply-To: <CACsJy8AXonkSXNU_uUXh=d2wojOhAn+S1JW7eUMywxohnAOXjg@mail.gmail.com>
+	id S1752508Ab2IXO3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:29:45 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:48575 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754467Ab2IXO3m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 10:29:42 -0400
+Received: by vbbff1 with SMTP id ff1so6159752vbb.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=wWGn4aFjsN/8cl4xufqkd7rQfs0dV9gPHwa4ZgMwEKw=;
+        b=s13ILfoBgtD4KL2Y602RsZSz8a0ChiuapY58V5TfMtk3+nXkdYY79w62PnUKK07jJx
+         UgfAdhMBji9CUghCWW8PaGNMgcYAiaWEVGMCwygGi6u36x0Qc3x4WxPLgWAe+4kaG7Na
+         D0nqhKk7hNi5cnL6R7J10qVY/pZTLySNHufpjI/rYc9oB42w/PhhltqC6ldd4kTWse2q
+         qUs1J2Jp8bgWNEnE+E35mbMl0zICJRHAQ0wAaAtn8x9g9BFUW/LzDTu0gwgCLbIgcy+X
+         /dj/BQ4PwwdnPEFdJhleiznOtNANYaKc6WZmD0lXuylpxN2I8j6AZfSDB5P6/dkBpE0l
+         Y1+w==
+Received: by 10.220.108.79 with SMTP id e15mr7393844vcp.26.1348496981818; Mon,
+ 24 Sep 2012 07:29:41 -0700 (PDT)
+Received: by 10.58.19.73 with HTTP; Mon, 24 Sep 2012 07:29:01 -0700 (PDT)
+In-Reply-To: <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com>
+X-Google-Sender-Auth: GkmV2hRzO-o7FiKVMYUOfWZGhBU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206274>
 
-On Mon, Sep 24, 2012 at 3:39 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Mon, Sep 24, 2012 at 8:30 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->> Any special in gitdir/worktree setting?
+There's a small glitch however: when some git command returns an error
+(for example when typing 'M' for merge in main view) the main view
+displays the tip of the current branch, instead of the list of
+revisions passed in stdin.
+
+2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
+> Yes it works great, thanks!
 >
-> What does "GIT_TRACE_SETUP=1 git log -- /Documentation" show?
-
-FWIW, this issue is resolved as far as I'm concerned. I was simply
-using the wrong syntax...
-
-Anyway, with current master:
-
-$ GIT_TRACE_SETUP=1 ../git log -1 -- /Documentation
-setup: git_dir: .git
-setup: worktree: /home/jherland/git/git
-setup: cwd: /home/jherland/git/git
-setup: prefix: t/
-fatal: '/Documentation' is outside repository
-
-With v1.7.11:
-
-$ GIT_TRACE_SETUP=1 ../git log -1 -- /Documentation
-setup: git_dir: .git
-setup: worktree: /home/jherland/git/git
-setup: cwd: /home/jherland/git/git
-setup: prefix: t/
-commit 0ce2e396ee9fb0fa07e8381b338e49859dbf03db
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Sun Jun 17 14:07:15 2012 -0700
-
-    Git 1.7.11
-
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 2012/9/16 Jonas Fonseca <fonseca@diku.dk>:
+>> On Tue, Sep 11, 2012 at 3:24 PM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
+>>> 2012/9/7 Jonas Fonseca <fonseca@diku.dk>:
+>>>> [snip] I suggest to support something like the following:
+>>>>
+>>>>     tig --no-walk --stdin < tmp-file
+>>>>
+>>>> Would that cover your use case?
+>>>
+>>> That would be great!  I would then feed tig with all commits I want to
+>>> see in the main view.
+>>
+>> When you have time, please test the main-view-with-stdin branch in
+>> git://github.com/jonas/tig.git
+>>
+>> --
+>> Jonas Fonseca
+>
+>
+>
+> --
+> Jean-Baptiste Quenot
 
 
-...Johan
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Jean-Baptiste Quenot
