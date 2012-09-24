@@ -1,99 +1,114 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Mon, 24 Sep 2012 21:43:05 +0200
-Message-ID: <CANQwDweRf1_UzRozSeRoF4p-Qh-tJq+mLYJq0GSL7dW8_umpSg@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
- <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
- <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
- <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
- <vpqobkvxwhq.fsf@grenoble-inp.fr> <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
- <vpqobkvwg1r.fsf@grenoble-inp.fr> <CANQwDwew-PGq03q4VyjbzqPJxM+cB2O4J810ft67Cqn0xVwFKQ@mail.gmail.com>
- <vpqhaqnw6xc.fsf@grenoble-inp.fr>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] commit: configure submodules
+Date: Mon, 24 Sep 2012 21:56:11 +0200
+Message-ID: <5060BADB.2000505@web.de>
+References: <1348385867-17359-1-git-send-email-orgads@gmail.com> <7vr4pt16ep.fsf@alter.siamese.dyndns.org> <505F5151.2080208@web.de> <7vmx0g0xpm.fsf@alter.siamese.dyndns.org> <7v39271j3n.fsf@alter.siamese.dyndns.org> <5060A32D.1060902@web.de> <7vlifzz2vo.fsf@alter.siamese.dyndns.org> <CAGHpTB+F3=mW9m3ESQe1wAkLzSBcp+5Kgw1Kb-D-rk2T1q_-iw@mail.gmail.com> <7vy5jzxmts.fsf@alter.siamese.dyndns.org> <CAGHpTB+0GLJJ-e1JFTXQ0Qot9An90MXxDFbP+63+pG2uA3UhmA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 24 21:43:41 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Orgad Shaneh <orgads@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 21:56:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGEZ5-0005ac-C4
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 21:43:35 +0200
+	id 1TGElY-0003Rr-Vz
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 21:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757906Ab2IXTn0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 15:43:26 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:38351 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757869Ab2IXTn0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 15:43:26 -0400
-Received: by obbuo13 with SMTP id uo13so5066637obb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 12:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XjyD4GlebGo9u3jOPmeMruJiQOsP5V1XluHN329/OM4=;
-        b=ScreI72yjcNhQ98E1oHanCcu3n9B5kgel6aqe2bOp0dePSpSInbCMOqa0JoKlov6Tn
-         JC4pecqDuJPrQ6oCXOvpxqiXlZMm2DWO2E7rscG37Tm4OD7E8D7Jp6DAQrIZGDlpIbD9
-         VXLQnRWWhyHTIMbnL6hyXKCABFClDTuIQkbGmJV09t21Qyd5xbnneSPYlnzknt6goR/v
-         iQGSVZB1DeDy1AmCcHWKSvKlGIInDJi3lt+ttinDkylaZIfoDxol4jTph4ycI4p6QSz0
-         pdWZIYnYejMfLVhVPmLf7AS8aA+xwgwFIQXQOzIsbxMKBC4dRuxKvC0aa9d0aT8wi7Fj
-         855w==
-Received: by 10.182.76.164 with SMTP id l4mr10902011obw.65.1348515805359; Mon,
- 24 Sep 2012 12:43:25 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 12:43:05 -0700 (PDT)
-In-Reply-To: <vpqhaqnw6xc.fsf@grenoble-inp.fr>
+	id S1757952Ab2IXT4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 15:56:20 -0400
+Received: from mout.web.de ([212.227.17.11]:63563 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757873Ab2IXT4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 15:56:19 -0400
+Received: from [192.168.178.41] ([91.3.184.50]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0M5fhI-1TeL9K0Gu8-00xVlM; Mon, 24 Sep 2012 21:56:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <CAGHpTB+0GLJJ-e1JFTXQ0Qot9An90MXxDFbP+63+pG2uA3UhmA@mail.gmail.com>
+X-Provags-ID: V02:K0:VoKmM7eeW/QkSnvCqzlD5UNgA1L3DC2vmiqhzgbv4/U
+ oWRKc1O0ekhP5Qo6k/gPuD9b+oJ1OtU4T80LNl2XmPnEqjPWLW
+ I1f5o5dOMh9yp9Qt2QFi2KiKOdeAZhevK6pDCY/USjgwDcDwRW
+ +7LyWREFZyawPVKZGtkMNE9810zhMZzWLKCtawSPL3epoj4rgC
+ kCvgUzR6ojD2cvbZjdoUw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206321>
 
-On Mon, Sep 24, 2012 at 9:35 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jakub Nar=EAbski <jnareb@gmail.com> writes:
->
->> On Mon, Sep 24, 2012 at 6:18 PM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> Jakub Nar=EAbski <jnareb@gmail.com> writes:
->>>
->>>> I have therefore added the following multiple-choice question:
->>>>
->>>> #19. What git workflow(s) is used by projects in which development=
- you
->>>> participate?
->>>
->>> If we want to have an idea of which workflows are the most commonly
->>> used, just a binary answer may be insufficient. We can't distinguis=
-h
->>> between "X% people use workflow W all the time", and "X% people use
->>> workflow W from time to time".
+Am 24.09.2012 21:16, schrieb Orgad Shaneh:
+> On Mon, Sep 24, 2012 at 9:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Orgad Shaneh <orgads@gmail.com> writes:
 >>
->> The problem is that those workflows are used by _projects_ not _peop=
-le_,
->
-> Yes, but people are usually involved in multiple projects. Someone
-> involved in 10 different distributed projects and sometimes contribut=
-ing
-> to 1 centralized would count 1 for each.
-,
-True.  So responses wouldn't tell us the full story.
+>>> That is not correct. git-config is ignored as well for commit.
+>>
+>> What do you mean?  As far as I can tell, if you have
+>>
+>>     [submodule "var"]
+>>         path = var
+>>         ignore = dirty
+>>
+>> in $GIT_DIR/config, a work-tree-dirty submodule "var" is not
+>> reported by "git status" and "git commit" without your patch, and
+>> your patch does not seem to break that.  The only difference your
+>> patch makes is that if you had the above three-line block in
+>> the .gitmodules file and not in $GIT_DIR/config, "git status"
+>> ignored the dirtyness in the working tree, but "git commit" did
+>> notice and report it.
+>>
+>> What am I missing?
+>>
+>>
+> 
+> I have:
+> [submodule "mod"]
+>         url = [...]
+>         ignore = dirty
+> 
+> in .git/config, and I removed the ignore part from .gitmodules to be even.
+> 
+> I made a change inside mod, git status doesn't report its dirtiness,
+> while git commit does.
+> 
+> git status:
+> # On branch master
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #       modified:   foo
+> #
+> # Changes not staged for commit:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working directory)
+> #
+> #       modified:   .gitmodules
+> #
+> 
+> git commit:
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and an empty message aborts the commit.
+> # On branch master
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #       modified:   foo
+> #
+> # Changes not staged for commit:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working directory)
+> #   (commit or discard the untracked or modified content in submodules)
+> #
+> #       modified:   .gitmodules
+> #       modified:   mod (modified content)
+> #
+> 
+> Now I get it! That's because I don't have submodule.mod.path!
+> config_name_for_path only gets initialized if path exists. Apparently
+> git submodule init doesn't configure 'path', so it stays
+> uninitialized.
 
-But first, never/rarely/sometimes/often/always doesn't fit IMHO here.
-
-Second, the situation is more complicated: one can be actively involved
-in 1 distributed project with 200+ contributors via Gerrit, often contr=
-ibute
-to 1 centralized project with 15-25 contributors, and rarely interact w=
-ith
-distributed project using "blessed" repository workflow where number
-of contributors range from few to few hundred.  Too complicated for
-survey IMHO.
-
-Third, no other in matrix form.
---=20
-Jakub Narebski
+But submodule.mod.path should only be set in .gitmodules, not in
+$GIT_DIR/config. Did you just remove the ignore setting from
+.gitmodules or the path too?
