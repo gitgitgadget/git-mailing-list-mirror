@@ -1,93 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach git-completion about git p4
-Date: Mon, 24 Sep 2012 09:12:05 -0700
-Message-ID: <7vbogv1ju2.fsf@alter.siamese.dyndns.org>
-References: <1348264271-99395-1-git-send-email-rcumming@ea.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 24 Sep 2012 18:11:56 +0200
+Message-ID: <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
+References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
+ <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+ <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
+ <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com> <vpqobkvxwhq.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ryan Cumming <etaoins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:12:21 2012
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:12:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGBGe-0001Lu-8G
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:12:20 +0200
+	id 1TGBGn-0001Sd-UB
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab2IXQMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 12:12:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41183 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755603Ab2IXQMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 12:12:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EAF98FBB;
-	Mon, 24 Sep 2012 12:12:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/d+79DZNe9QmUAgWne4R0YA+iqI=; b=MbG05U
-	EH56nGvP74ZbXx0LRVQVW6Luuslqy/gkEY67gpo/zYW1hjZo0RfdMJNFLFiEyQje
-	DplkBwx/SjB4sQ/wT5b48WkdzTDLa2FF8MMjI8lLA9E7NUa58NBufyI2ajNAldQ5
-	ciMizs3i0rrdQUH6AN1jS1/Zyl1lFBdYJEiuM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QEaIu5xAIYcmRQ02EI2IpmtggikgtASg
-	1DteJ5myRbJzkolc2lPzfJrLpvckQVK8+SuKy4XSH9OOEh2EPsqPauoxwRF3MRvU
-	L+rxihU+BIYXZTwE69HVz+8ogpX+HIgRfDT0SYEMF85clTlxDp0RxuHrEdse9GeF
-	ykA2TOifbdE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4790F8FBA;
-	Mon, 24 Sep 2012 12:12:07 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E5E48FB9; Mon, 24 Sep 2012
- 12:12:06 -0400 (EDT)
-In-Reply-To: <1348264271-99395-1-git-send-email-rcumming@ea.com> (Ryan
- Cumming's message of "Fri, 21 Sep 2012 14:51:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 95EF0C5E-0662-11E2-8C4C-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756716Ab2IXQMS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 12:12:18 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:60502 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754683Ab2IXQMR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 12:12:17 -0400
+Received: by obbuo13 with SMTP id uo13so4803155obb.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 09:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ltyaoFE1PRRyVdb9nDCBJ6RAuzF9pKMtkUxkIt87qxc=;
+        b=IfrNZYtW/EIA0zDjAFpUyqvc1Vz2hLY9eltTQ8rqOKZgqOJCwlfDENIRhPHL0XT7J5
+         Nw7g7nhBMf15RmAV/WLMlwSC0PYlGh+2neWg8CMT3nTqy1cguq5fIr7RVXAhBa0I4zFX
+         VUK4EKUz6hq/Nz3ixLDHYoHQz0lEMqTabsHYPwJC/a/zxNiHScjWVZBqECNdVeWgu1VN
+         YUAvVEdlOLmoIzpeK2cpFWxK6ylsqHmB0OqUuvUWVXFz53IhlNUC8NnY0Qlsu+8BHxNQ
+         pkbd2CqufSxvtlLzG8OjJnWYRpp2C6JBTMb3TV+XhR5y/pdGE1R4saCnDatQmJYTvzla
+         TmSQ==
+Received: by 10.60.29.134 with SMTP id k6mr9974477oeh.5.1348503136715; Mon, 24
+ Sep 2012 09:12:16 -0700 (PDT)
+Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 09:11:56 -0700 (PDT)
+In-Reply-To: <vpqobkvxwhq.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206291>
 
-Ryan Cumming <etaoins@gmail.com> writes:
-
-> From: Ryan Cumming <etaoins@gmail.com>
+On Mon, Sep 24, 2012 at 5:37 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Jakub Nar=EAbski <jnareb@gmail.com> writes:
 >
-> git p4 was moved out of contrib in 1.7.11 but it git-completion didn't
-> know about it. Add git p4 completion based on the existing SVN
-> completion. It covers all known subcommands and options except for the
-> -/ option for clone which doesn't use the standard -- prefix.
+>> I have created short (well, at least shorter than previous ones)
+>> "Git User's Survey 2012" on Survs.com.  The test channel is
+>>
+>>   https://www.survs.com/survey/J87I3PDBU4
 >
-> Signed-off-by: Ryan Cumming <etaoins@gmail.com>
-> ---
+> If it's still time, it would be nice to add a question on the kind of
+> workflow people use. E.g.
+>
+> Which workflow do you use? (never / rarely / often / always)
+>
+> Centralized workflow (everyone pushes and pulls to the same shared
+> repository).
+>
+> One-repository per developer (people push to their own public
+> repository, and pull from other user's public repository)
 
-Sounds sensible; thanks.
+You were not the only one to ask for question about workflows
+used; Junio also asked for something similar.
 
-> +_git_p4 ()
-> +{
-> +...
-> +		local submit_opts="
-> +			--origin= -M --preserve-user --export-labels
-> +			$common_opts
-> +			"
-> +
-> +		case "$subcommand,$cur" in
-> ...
-> +		submit,--*)
-> +			__gitcomp "$submit_opts"
+I have therefore added the following multiple-choice question:
 
-This is taken when $cur begins with --, but $submit_opts includes
-"-M" which doesn't begin with it.  Is that a problem?
+#19. What git workflow(s) is used by projects in which development you
+participate?
+[ ] single developer, only private repository (no interaction)
+[ ] centralized workflow (push to common repository)
+[ ] branched centralized (push to different branches in common reposito=
+ry)
+[ ] peer-to-peer workflow (all repositories roughly equal)
+[ ] integration-manager workflow (maintainer pulls/applies patches to
+"blessed" repository))
+[ ] dictator and lieutenants workflow (hierarchical workflow)
+[ ] using collaborative code review tool, e.g. Gerrit
+[ ] other workflow, please explai
 
-> +			;;
-> +		submit,*)
-> +			__gitcomp "$(__git_refs)"
-> +			;;
-> +		esac
-> +	fi
-> +}
+I was also thinking about adding merge vs rebase question, but it
+is direction orthogonal to above, so maybe as separate question...
+
+--=20
+Jakub Narebski
