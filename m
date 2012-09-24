@@ -1,108 +1,97 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: GIT_DIR vs. --git-dir
-Date: Mon, 24 Sep 2012 16:54:58 +0200
-Message-ID: <50607442.3040906@drmicha.warpmail.net>
-References: <5060097F.9050203@drmicha.warpmail.net> <20120924144929.GA10349@sigill.intra.peff.net>
+From: Jean-Baptiste Quenot <jbq@caraldi.com>
+Subject: Re: [ANNOUNCE] tig-1.0
+Date: Mon, 24 Sep 2012 16:57:00 +0200
+Message-ID: <CAK6bCazoVPSmyGtU_7qWTZpfnmVikkZa1zAz9S02OwFN0qh1dg@mail.gmail.com>
+References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
+ <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
+ <CAK6bCawaqEvKFf43wzv+Yz5eem5W-qi9p1i+-9+jiMFs=tZ8xA@mail.gmail.com>
+ <CAFuPQ1+6EkeVDmkQg-r0_KegDDmC0QnO4mtn0ad=4UK8G=9iCA@mail.gmail.com>
+ <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com> <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:55:14 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:57:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGA3z-0007vI-Sc
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:55:12 +0200
+	id 1TGA6Z-0001Y0-NK
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756147Ab2IXOzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:55:01 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:43935 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754805Ab2IXOzA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 10:55:00 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id DE5DF20976;
-	Mon, 24 Sep 2012 10:54:59 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 24 Sep 2012 10:54:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=C2xARmTIxmKCbQFrNw7u/i
-	Wele4=; b=deE8mokGfZCin6DlOvhiq++Mvm2G+9WfadblsNbKkeqUKEncQcbRng
-	R1BwtIjoXgO8s7CbEsBdEeqUpl0kEVMCEi0DS1q4+P+zGRJVnX+OGUfP2ZlDYUUp
-	lUBwBinGOP/q4EhLIbUU/g9YmnUeqQh+xr+4a3IB9SipA5oRCGahI=
-X-Sasl-enc: 8b2Rs2MunKheDlKHl2Ci6TW5OXP0A8qzXtlK7J6XzHiJ 1348498499
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4596F4827D8;
-	Mon, 24 Sep 2012 10:54:59 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <20120924144929.GA10349@sigill.intra.peff.net>
+	id S1753974Ab2IXO5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:57:43 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:56041 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753143Ab2IXO5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 10:57:42 -0400
+Received: by vbbff1 with SMTP id ff1so6200113vbb.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=LdoZXVNkMt1UtA8PMYrsyS/I9kjMIIHbjcIQk0ZhZpg=;
+        b=jhvB/vJ4vK8/GoxwP70Phd8y1byJgAcXGXBSASkuTlhbeqH2iDGwlUFH2+VNnPt6nT
+         J4qswpvu6BhqeZJrMkfm6agl18bMqc1eJafqoU6yjWa5CrT1zcLYUKLh/UpA1d98ss1o
+         PZ5Y1rNfIaolN2qiMcuw7jdY50j8drvA30VcfR9QcsSNFY2Oo8rygt5OS9+je099x8s5
+         ZlWDOme37YZBgxb7Ibwnti9V3liatC7ZoYCc9FjBOZfD68q24g0RS9qDVTv2ffPITnf4
+         qV6FmQKRoSQGpptizDSslzNebOkYRyVYCGPVEsSxxrnGhiEHGCncZ77g3fMX2Y6DZZS5
+         o28g==
+Received: by 10.221.10.81 with SMTP id oz17mr7457996vcb.67.1348498661659; Mon,
+ 24 Sep 2012 07:57:41 -0700 (PDT)
+Received: by 10.58.19.73 with HTTP; Mon, 24 Sep 2012 07:57:00 -0700 (PDT)
+In-Reply-To: <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
+X-Google-Sender-Auth: r7UtJ78T9WZQXKtIupSoM3PPYog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206281>
 
-Jeff King venit, vidit, dixit 24.09.2012 16:49:
-> On Mon, Sep 24, 2012 at 09:19:27AM +0200, Michael J Gruber wrote:
-> 
->> [mjg@localhost ~]$ GIT_DIR=~/.githome git rev-parse --show-toplevel
->> /home/mjg
->>
->> [mjg@localhost ~]$ git --git-dir=~/.githome rev-parse --show-toplevel
->> fatal: Not a git repository: '~/.githome'
->>
->> Huh? Ok, so most users probably would not try further and blame git, but:
->>
->> [mjg@localhost ~]$ git --git-dir=/home/mjg/.githome rev-parse
->> --show-toplevel
->> /home/mjg
->>
->> (All this is with core.worktree set to /home/mjg.)
->>
->> So, while I do understand that we don't expand '~' in any of these cases
->> and it's only a matter of bash tilde expansion kicking in or not, we
->> might want to do something about it. (--git-dir=$HOME/.githome gets
->> expanded, as well, and --git-dir=.githome works from the appropriate cwd
->> only).
-> 
-> Bash is even weirder than you might think. Try this:
-> 
->   $ echo ~/foo
->   /home/peff/foo
-> 
->   $ echo arg=~/foo
->   arg=/home/peff/foo
-> 
->   $ echo --arg=~/foo
->   --arg=~/foo
-> 
-> That is, it expands on the right-hand side of an "=" (which, from my
-> reading of the bash manual, means it considers it a word split), but
-> refuses to expand after an "=" that is part of a long option.
-> 
-> The first one is definitely correct. It would be convenient for your use
-> case to expand the third one, and it logically follows from the second
-> one. However, dash does not expand the second one. I'm not sure if this
-> is a bug in bash, or simply a grey area where the two shells do not
-> agree.
-> 
-> But it makes me wonder if the world would be better served by a bash
-> option to always enable tilde expansion after an "=". That would solve
-> your issue, and it would make the same feature work for every other git
-> long option, as well as for other programs.
+This actually happens everytime I run a git command with a key
+binding, be it successful or not.  The main view is restored to the
+tip of the current branch.
 
-Yes, in some sense this is working around a bash "feature". I don't
-really care too much personally.
+2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
+> There's a small glitch however: when some git command returns an error
+> (for example when typing 'M' for merge in main view) the main view
+> displays the tip of the current branch, instead of the list of
+> revisions passed in stdin.
+>
+> 2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
+>> Yes it works great, thanks!
+>>
+>> 2012/9/16 Jonas Fonseca <fonseca@diku.dk>:
+>>> On Tue, Sep 11, 2012 at 3:24 PM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
+>>>> 2012/9/7 Jonas Fonseca <fonseca@diku.dk>:
+>>>>> [snip] I suggest to support something like the following:
+>>>>>
+>>>>>     tig --no-walk --stdin < tmp-file
+>>>>>
+>>>>> Would that cover your use case?
+>>>>
+>>>> That would be great!  I would then feed tig with all commits I want to
+>>>> see in the main view.
+>>>
+>>> When you have time, please test the main-view-with-stdin branch in
+>>> git://github.com/jonas/tig.git
+>>>
+>>> --
+>>> Jonas Fonseca
+>>
+>>
+>>
+>> --
+>> Jean-Baptiste Quenot
+>
+>
+>
+> --
+> Jean-Baptiste Quenot
 
-Note that we also have "git -c "config.var=value" which, again "works"
-because we expand config vars.
 
-So, technically there are no surprises if you know the shell's expansion
-rules. But still...
 
-Michael
+-- 
+Jean-Baptiste Quenot
