@@ -1,70 +1,75 @@
-From: Semen Vadishev <semen.vadishev@tmatesoft.com>
-Subject: [Ad] SubGit 1.0 is released
-Date: Mon, 24 Sep 2012 18:24:39 +0200
-Message-ID: <50608947.8000409@tmatesoft.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 24 Sep 2012 18:18:08 +0200
+Message-ID: <vpqobkvwg1r.fsf@grenoble-inp.fr>
+References: <201107252233.02088.jnareb@gmail.com>
+	<201109031738.11678.jnareb@gmail.com>
+	<CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+	<201109141939.14070.jnareb@gmail.com>
+	<CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
+	<CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
+	<vpqobkvxwhq.fsf@grenoble-inp.fr>
+	<CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:24:53 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:25:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGBSm-0000cW-Pl
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:24:53 +0200
+	id 1TGBTG-0000uM-AA
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677Ab2IXQYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 12:24:44 -0400
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:49964 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752419Ab2IXQYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 12:24:43 -0400
-Received: by bkcjk13 with SMTP id jk13so1033791bkc.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 09:24:42 -0700 (PDT)
-Received: by 10.204.8.84 with SMTP id g20mr4810759bkg.126.1348503881992;
-        Mon, 24 Sep 2012 09:24:41 -0700 (PDT)
-Received: from vs.local (46.226.broadband11.iol.cz. [90.178.226.46])
-        by mx.google.com with ESMTPS id c18sm10928846bkv.8.2012.09.24.09.24.40
-        (version=SSLv3 cipher=OTHER);
-        Mon, 24 Sep 2012 09:24:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+	id S1756729Ab2IXQZM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 12:25:12 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56172 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752419Ab2IXQZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 12:25:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q8OGCLM8002044
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Sep 2012 18:12:21 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TGBMG-0005gS-C9; Mon, 24 Sep 2012 18:18:08 +0200
+In-Reply-To: <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
+	("Jakub \=\?utf-8\?Q\?Nar\=C4\=99bski\=22's\?\= message of "Mon, 24 Sep 2012
+ 18:11:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Sep 2012 18:12:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8OGCLM8002044
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1349107944.65491@sseyW9j2T8orbI47SoQ0yg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206295>
 
-Hello All,
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-Our team is proud and delighted to announce SubGit 1.0 release!
-New version is available for download at SubGit web site at
-http://subgit.com/
+> I have therefore added the following multiple-choice question:
+>
+> #19. What git workflow(s) is used by projects in which development yo=
+u
+> participate?
 
-SubGit is a server-side tool for a smooth, stress-free SVN to Git
-migration. SubGit lets one to set up a bidirectional Subversion to Git
-replication (writable mirror) and thus it allows users to choose
-freely between Subversion and Git version control systems.
+If we want to have an idea of which workflows are the most commonly
+used, just a binary answer may be insufficient. We can't distinguish
+between "X% people use workflow W all the time", and "X% people use
+workflow W from time to time".
 
-SubGit is a closed source Java application, which is free for use in
-Open Source and Academic projects, as well as in any repository with
-up to 10 committers. Besides, there are no limitations on the time you
-may evaluate SubGit in commercial or closed source projects.
-
-A few useful links:
-
-SubGit Web Site: http://subgit.com/
-SubGit Book: http://subgit.com/book/ - nice illustrated guide that
-would help you to install, configure and use SubGit
-SubGit Issues Tracker: http://issues.tmatesoft.com/issues/SGT
-
-We tweet at @subgit and blog at http://blog.subgit.com/
-
-With best regards,
-Semyon Vadishev,
-TMate Software,
-http://subgit.com/ - git-svn bridge!
-http://svnkit.com/ - Java [Sub]Versioning Library!
-http://hg4j.com/ - Java Mercurial Library!
-http://sqljet.com/ - Java SQLite Library!
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
