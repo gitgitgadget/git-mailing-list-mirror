@@ -1,76 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: GIT_DIR vs. --git-dir
-Date: Mon, 24 Sep 2012 16:51:25 +0200
-Message-ID: <5060736D.5020609@drmicha.warpmail.net>
-References: <5060097F.9050203@drmicha.warpmail.net> <CACsJy8DHGtktnvvziA_+Fp6a4VFsE9_=zkWKNBJU7Ro_QO+==A@mail.gmail.com> <7vipb31o9x.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] git: expand user path in --git-dir
+Date: Mon, 24 Sep 2012 10:52:08 -0400
+Message-ID: <20120924145208.GB10349@sigill.intra.peff.net>
+References: <5060588D.3080202@drmicha.warpmail.net>
+ <fdeaa78c0a520ce80e6d2cb09978dab348104eaf.1348491039.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:51:38 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:52:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGA0X-00054f-JR
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:51:37 +0200
+	id 1TGA1H-0005mN-Hs
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756124Ab2IXOv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:51:28 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:49822 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755541Ab2IXOv1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 10:51:27 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C25542088E;
-	Mon, 24 Sep 2012 10:51:26 -0400 (EDT)
-Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 24 Sep 2012 10:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=vTItd1RvNz8FI9JeZdwYLQ
-	RydJQ=; b=lcjAIO2WZNslDOFuHovnBuUkRLJqPzqVuVmfOi6YJeSslyRXxJpc/N
-	Abd/TenqegLKh+MAzC/HjF/STjcI1DxlW4POZ+eBP63Ffx1pEAQSAkeBaWdPSHj1
-	mImO6xqffbrPGyob6AXuKZKrD6TyrGrC4GsCJ/SfyKV5KLDWUg/rc=
-X-Sasl-enc: wpqIBCyF87jbBXvskc9rAwR4OZnmkvUkXUEeZLjKaeNa 1348498286
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 388ED4827CB;
-	Mon, 24 Sep 2012 10:51:26 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <7vipb31o9x.fsf@alter.siamese.dyndns.org>
+	id S1755717Ab2IXOwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:52:14 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:56970 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754031Ab2IXOwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 10:52:14 -0400
+Received: (qmail 32130 invoked by uid 107); 24 Sep 2012 14:52:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 10:52:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 10:52:08 -0400
+Content-Disposition: inline
+In-Reply-To: <fdeaa78c0a520ce80e6d2cb09978dab348104eaf.1348491039.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206279>
 
-Junio C Hamano venit, vidit, dixit 24.09.2012 16:36:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-> 
->> "~" is a shell feature. Know your shell. If we make an exception for
->> --git-dir, we might have to support --blahblah=~/somewhere.
-> 
-> Correct but not entirely true.
-> 
-> When we know --git-dir=<path> must name a path, we should be able to
-> do better.  See OPT_FILENAME in >parse-optios.h>, for inspiration.
-> 
-> MJG's patch later in this thread is conceptually OK but I do not
-> think it should introduce a "expand and then setenv" helper that
-> won't be useful unless the variable is GIT_DIR.  That pattern does
-> not appear that often, and smells like a bad API design taste.
+On Mon, Sep 24, 2012 at 02:57:20PM +0200, Michael J Gruber wrote:
 
-I can't quite parse. My little helper can be used for any path
-environment variable, not just GIT_DIR. Granted, there aren't that many
-in use.
+> Currently, all paths in the config file are subject to tilde expansion
+> for user paths while the argument to --git-dir is not expanded, and
+> neither are paths in the environment such as GIT_DIR. From the user
+> perspective, though, the two commands
+> 
+> GIT_DIR=~user/foo git command
+> git --git-dir=~user/foo command
+> 
+> currently behave differently because in the first case the shell would
+> perform tilde expansion, but not in the second. Also, one may argue that
+> specifying '--git-dir=' is like specifying a config variable (which
+> cannot exist for this purpose).
+> 
+> Thus, make arguments to '--git-dir' undergo tilde expansion.
+> ---
+> So, here's a simple patch implementing tilde expansion for --git-dir. It passes
+> all tests. It's done doing the expansion on the setting side.
+> 
+> Alternatively, one might do it on the getting side, i.e. when reading GIT_DIR,
+> so that paths passed directly through the environment undergo tilde expansion
+> as well. We don't do this for any environment variable yet, so I didn't go
+> that far.
 
-Do you suggest tilde expansion right in fix_filename() (i.e. for all
-OPT_FILE options), or some OPT_FILENAME_EXPANDED which may or may not be
-used by some config? There's git_config_pathname() already which does
-expansion, of course.
+Keep in mind that every layer of expansion you add is a layer of quoting
+somebody else must do in order to pass through certain paths.  I will
+admit that putting a "~" into a path is relatively uncommon, but this
+patch is a regression for anybody who does so with --git-dir (they will
+now need to quote the "~" against not just their shell, but against
+git). Expanding environment variables like GIT_DIR means that we would
+also need to quote things we put into GIT_DIR.
 
-Michael
+-Peff
