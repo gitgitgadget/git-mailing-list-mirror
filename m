@@ -1,132 +1,108 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] commit: configure submodules
-Date: Mon, 24 Sep 2012 22:10:55 +0200
-Message-ID: <5060BE4F.2040506@web.de>
-References: <1348385867-17359-1-git-send-email-orgads@gmail.com> <7vr4pt16ep.fsf@alter.siamese.dyndns.org> <505F5151.2080208@web.de> <7vmx0g0xpm.fsf@alter.siamese.dyndns.org> <7v39271j3n.fsf@alter.siamese.dyndns.org> <5060A32D.1060902@web.de> <7vlifzz2vo.fsf@alter.siamese.dyndns.org> <CAGHpTB+F3=mW9m3ESQe1wAkLzSBcp+5Kgw1Kb-D-rk2T1q_-iw@mail.gmail.com> <7vy5jzxmts.fsf@alter.siamese.dyndns.org> <CAGHpTB+0GLJJ-e1JFTXQ0Qot9An90MXxDFbP+63+pG2uA3UhmA@mail.gmail.com> <5060BADB.2000505@web.de> <CAGHpTBLs2tgUunDtFMhw7QMiuB2oXBtQJLKpLckhEyDp7Zr+Qg@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC/PATCH] l10n: de.po: correct translation of a 'rebase' message
+Date: Mon, 24 Sep 2012 22:26:20 +0200
+Message-ID: <87k3vjtbf7.fsf@pctrast.inf.ethz.ch>
+References: <1348508389-2883-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Orgad Shaneh <orgads@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 22:11:13 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <trast@student.ethz.ch>, <jk@jk.gs>, <stimming@tuhh.de>,
+	<git@vger.kernel.org>, <sascha-ml@babbelbox.org>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 22:26:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGEzo-0002bh-Lf
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 22:11:12 +0200
+	id 1TGFEe-0001fv-R0
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 22:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503Ab2IXULD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 16:11:03 -0400
-Received: from mout.web.de ([212.227.17.12]:55132 "EHLO mout.web.de"
+	id S1757996Ab2IXU0Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 16:26:24 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:41831 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750770Ab2IXULB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 16:11:01 -0400
-Received: from [192.168.178.41] ([91.3.184.50]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0LtWwK-1TQ27Q1BmW-011Gvh; Mon, 24 Sep 2012 22:10:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CAGHpTBLs2tgUunDtFMhw7QMiuB2oXBtQJLKpLckhEyDp7Zr+Qg@mail.gmail.com>
-X-Provags-ID: V02:K0:nX1v4lfm+1eoXS39RX6V414HUJki3zfHNvyl1YWl8JB
- GaPEvoxFsY/Uz8xuEfxCgaRDHG9MU+Ai5b18cdZ7kYFoq30Msm
- rve9CZRUZN7jMfiQvJx7POUtdyDo14gDa8cpOJ9xazfBJXsCqy
- l/sfn9VkKRhdlA72WiWWKfBWHkzW1L6IC5KpbqWvy91Td6g+21
- GEwaxweKeyS3bXkL6oWww==
+	id S1757844Ab2IXU0X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 16:26:23 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Mon, 24 Sep
+ 2012 22:26:20 +0200
+Received: from pctrast.inf.ethz.ch.ethz.ch (129.132.208.245) by
+ CAS22.d.ethz.ch (172.31.51.112) with Microsoft SMTP Server (TLS) id
+ 14.2.298.4; Mon, 24 Sep 2012 22:26:20 +0200
+In-Reply-To: <1348508389-2883-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Mon, 24 Sep 2012 19:39:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.208.245]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206326>
 
-Am 24.09.2012 21:59, schrieb Orgad Shaneh:
-> On Mon, Sep 24, 2012 at 9:56 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> Am 24.09.2012 21:16, schrieb Orgad Shaneh:
->>> On Mon, Sep 24, 2012 at 9:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Orgad Shaneh <orgads@gmail.com> writes:
->>>>
->>>>> That is not correct. git-config is ignored as well for commit.
->>>>
->>>> What do you mean?  As far as I can tell, if you have
->>>>
->>>>     [submodule "var"]
->>>>         path = var
->>>>         ignore = dirty
->>>>
->>>> in $GIT_DIR/config, a work-tree-dirty submodule "var" is not
->>>> reported by "git status" and "git commit" without your patch, and
->>>> your patch does not seem to break that.  The only difference your
->>>> patch makes is that if you had the above three-line block in
->>>> the .gitmodules file and not in $GIT_DIR/config, "git status"
->>>> ignored the dirtyness in the working tree, but "git commit" did
->>>> notice and report it.
->>>>
->>>> What am I missing?
->>>>
->>>>
->>>
->>> I have:
->>> [submodule "mod"]
->>>         url = [...]
->>>         ignore = dirty
->>>
->>> in .git/config, and I removed the ignore part from .gitmodules to be even.
->>>
->>> I made a change inside mod, git status doesn't report its dirtiness,
->>> while git commit does.
->>>
->>> git status:
->>> # On branch master
->>> # Changes to be committed:
->>> #   (use "git reset HEAD <file>..." to unstage)
->>> #
->>> #       modified:   foo
->>> #
->>> # Changes not staged for commit:
->>> #   (use "git add <file>..." to update what will be committed)
->>> #   (use "git checkout -- <file>..." to discard changes in working directory)
->>> #
->>> #       modified:   .gitmodules
->>> #
->>>
->>> git commit:
->>> # Please enter the commit message for your changes. Lines starting
->>> # with '#' will be ignored, and an empty message aborts the commit.
->>> # On branch master
->>> # Changes to be committed:
->>> #   (use "git reset HEAD <file>..." to unstage)
->>> #
->>> #       modified:   foo
->>> #
->>> # Changes not staged for commit:
->>> #   (use "git add <file>..." to update what will be committed)
->>> #   (use "git checkout -- <file>..." to discard changes in working directory)
->>> #   (commit or discard the untracked or modified content in submodules)
->>> #
->>> #       modified:   .gitmodules
->>> #       modified:   mod (modified content)
->>> #
->>>
->>> Now I get it! That's because I don't have submodule.mod.path!
->>> config_name_for_path only gets initialized if path exists. Apparently
->>> git submodule init doesn't configure 'path', so it stays
->>> uninitialized.
->>
->> But submodule.mod.path should only be set in .gitmodules, not in
->> $GIT_DIR/config. Did you just remove the ignore setting from
->> .gitmodules or the path too?
-> 
-> Just the ignore, and my patch of course.
-> 
-> If it is not set in $GIT_DIR/config, then config_name_for_path is not
-> initialized, and if it is not initialized, then
-> set_diffopt_flags_from_submodule_config does nothing
-> (handle_ignore_submodules_arg is not called). That is the main
-> problem.
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-But config_name_for_path can only be set via .gitmodules. It is set in
-parse_submodule_config_option() called by submodule_config() which is
-called from gitmodules_config() ... but only if .gitmodules doesn't
-have a merge conflict.
+> Noticed-by: Sascha Cunz <sascha-ml@babbelbox.org>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+[...]
+> The English original is:
+>
+> "It seems that there is already a $state_dir_base directory, and\n"
+> "I wonder if you are in the middle of another rebase.  If that is the=
+\n"
+> "case, please try\n"
+> "\t$cmd_live_rebase\n"
+> "If that is not the case, please\n"
+> "\t$cmd_clear_stale_rebase\n"
+> "and run me again.  I am stopping in case you still have something\n"
+> "valuable there."
+[...]
+> -"Es scheint so, als g=C3=A4be es das Verzeichnis $state_dir_base ber=
+eits, und\n"
+> -"es w=C3=A4re verwunderlich, wenn ein Neuaufbau bereits im Gange ist=
+=2E Wenn das\n"
+> -"der Fall ist, probiere bitte\n"
+> +"Es sieht so aus, als gibt es das Verzeichnis $state_dir_base bereit=
+s\n"
 
-So either your .gitmodules has a merge conflict or the logic setting
-gitmodules_is_unmerged in gitmodules_config() is buggy.
+Not very elegant yet, shouldn't it say something like
+
+  als ob es das Verzeichnis ... bereits {gibt,g=C3=A4be}
+
+?
+
+> +"und es k=C3=B6nnte ein anderer Neuaufbau im Gange sein. Wenn das de=
+r Fall ist,\n"
+> +"probiere bitte\n"
+>  "\t$cmd_live_rebase\n"
+>  "Wenn das nicht der Fall ist, probiere bitte\n"
+>  "\t$cmd_clear_stale_rebase\n"
+> -"und f=C3=BChre dieses Kommando nochmal aus. Es wird angehalten, fal=
+ls bereits\n"
+> -"etwas N=C3=BCtzliches vorhanden ist."
+> +"und f=C3=BChre dieses Kommando nochmal aus. Es wird angehalten, fal=
+ls noch\n"
+> +"etwas Sch=C3=BCtzenswertes vorhanden ist."
+
+Thanks Ralf and Sascha.
+
+Please don't see this as a reason to fight the (i.e. Ralf's, for the
+most part) translation.  It is definitely a mistake, but not any more s=
+o
+than any other bug.  In fact, it went through review here
+
+  http://thread.gmane.org/gmane.comp.version-control.git/202784
+
+where I too (sorry) missed this, even as I pointed out several other
+things.  Then it went into the pull request
+
+  http://thread.gmane.org/gmane.comp.version-control.git/203153
+
+So for me the main take-away is that just like with code, review helps
+catch some things early but bugs still get through.  More eyeballs woul=
+d
+certainly be appreciated.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
