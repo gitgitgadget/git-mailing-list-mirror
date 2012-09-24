@@ -1,90 +1,72 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Mon, 24 Sep 2012 16:31:40 +0200
-Message-ID: <CANQwDwfqv46WaPnh++ts7DYrg2R=yo7dyh2L7y+8astad9WWmA@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
- <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
- <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
- <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com> <50605EDF.4090005@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GIT_DIR vs. --git-dir
+Date: Mon, 24 Sep 2012 07:36:10 -0700
+Message-ID: <7vipb31o9x.fsf@alter.siamese.dyndns.org>
+References: <5060097F.9050203@drmicha.warpmail.net>
+ <CACsJy8DHGtktnvvziA_+Fp6a4VFsE9_=zkWKNBJU7Ro_QO+==A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:32:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:38:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TG9hl-0006Da-KG
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:32:14 +0200
+	id 1TG9ny-0002eu-0d
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab2IXOcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:32:03 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:48525 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754105Ab2IXOcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 10:32:01 -0400
-Received: by oago6 with SMTP id o6so5445442oag.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:32:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=owazeb2X2g9Zk4dIdxKy/JhiAV058U/xxPixMbjxFZI=;
-        b=DATsi/JOkn7/aXQm46A4RN/GYNzn4Q1wTn90bv32Acsb1L4N2MKNZDiO5lQ/eybNo6
-         sSRT1siTuaIeCAJloNPMV7d9ukD+X1c3R7EwMPF1Vt12EBPubiCJk+xNhUjfee36AmER
-         euRJUEAvkE0GCw+QABzZCaksrFtIIshEGdOWCfLTwbcuhwjHbG1FGQQGY9vil3inMb6z
-         +cQJU/p968UV7rwtSLCQDxukcH6rlSudS3Zw7YDJSF1lyuD+qY7p41NGyCcT7Vx09iGc
-         s3hcKzOUQAOFs2SAtXI+BXSq0e59QTIfMqwq3X1H1rFbaW1qdgCPth4Rje1fZiMMVILA
-         9EWw==
-Received: by 10.60.8.71 with SMTP id p7mr10168680oea.56.1348497121151; Mon, 24
- Sep 2012 07:32:01 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 07:31:40 -0700 (PDT)
-In-Reply-To: <50605EDF.4090005@drmicha.warpmail.net>
+	id S1755620Ab2IXOgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:36:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60409 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753519Ab2IXOgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 10:36:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C666D91C5;
+	Mon, 24 Sep 2012 10:36:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Wo+ijgbMYU97hmw6AOjv/FbyYF8=; b=paSnhx
+	nRPCIkcXVi9sYAYdxSqVR7udSYuRykE0RIRjk1vIJDdFfx05UVTLUL6don2NbYik
+	B8LsbQXGNtbVuqNerJOpPXuGO3Tk6G8araSItBKxq8+C3rfnmI96ptdG0a2NhokK
+	JVSekH1TWBiRaMI65uSrw0r+dE32gibH+iP2M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=taBUZRT5oFrDgb+sY+4bkEPUujkA8mFZ
+	9GKWjO0PKq2BNR+UK/hh833hbkfvEzzj7sIZUNNg/OR43/J8WgbdgTA8Y5uPeAAB
+	DMrK4a4/Bz0W1MpABojBrYp7KP0XlNlRlsYxuLAq/7OyCwWmDmFOQ4WdC/k3Qa5U
+	qSFzXFDDq2I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B32DE91C3;
+	Mon, 24 Sep 2012 10:36:12 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3405D91C2; Mon, 24 Sep 2012
+ 10:36:12 -0400 (EDT)
+In-Reply-To: <CACsJy8DHGtktnvvziA_+Fp6a4VFsE9_=zkWKNBJU7Ro_QO+==A@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 24 Sep 2012 14:41:28 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3005C4BC-0655-11E2-9E57-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206276>
 
-On Mon, Sep 24, 2012 at 3:23 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-[...]
-> Other version control systems:
-> I think the list needs to be sorted alphabetically, it's really long.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I have split this list in two: other centralized VCS and other distributed
-VCS; both have "other" field.
+> "~" is a shell feature. Know your shell. If we make an exception for
+> --git-dir, we might have to support --blahblah=~/somewhere.
 
-> (You could also reduce and offer a text field "other.)
+Correct but not entirely true.
 
-I tried to include all important VCS.  There is always problem with
-analyzing responses from "other" field...
+When we know --git-dir=<path> must name a path, we should be able to
+do better.  See OPT_FILENAME in >parse-optios.h>, for inspiration.
 
-> Resources:
-> I wouldn't put git-scm.com and the pro-git book into the same item.
-> git-scm.com was supposed to be "the" git community website (and also
-> "the" reference on git), and the fact that it looks like a pro-git book
-> sales platform is a different matter.
-
-Good catch. Originally there was "Git Community Book" on Git Homepage,
-and "Pro Git" had its own homepage; now they are folded together.
-
-I have slightly rewritten the description to account for this.
-
->
-> An interesting question would be: "What is the first source you consider
-> Git?", or even: "What is the Git homepage?"... Really, getting input on
-> what "the Git homepage" should be like would be nice, but not comparable
-> to previous surveys.
-
-As you can see this year survey is [almost] bereft of essay free-form
-questions.  It is because of difficulties and time needed to analyze such
-responses. So I don't think such question will be included this year.
-
-I think it is better discussion for git mailing list or something...
-
--- 
-Jakub Narebski
+MJG's patch later in this thread is conceptually OK but I do not
+think it should introduce a "expand and then setenv" helper that
+won't be useful unless the variable is GIT_DIR.  That pattern does
+not appear that often, and smells like a bad API design taste.
