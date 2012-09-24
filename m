@@ -1,97 +1,93 @@
-From: Jean-Baptiste Quenot <jbq@caraldi.com>
-Subject: Re: [ANNOUNCE] tig-1.0
-Date: Mon, 24 Sep 2012 16:57:00 +0200
-Message-ID: <CAK6bCazoVPSmyGtU_7qWTZpfnmVikkZa1zAz9S02OwFN0qh1dg@mail.gmail.com>
-References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
- <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
- <CAK6bCawaqEvKFf43wzv+Yz5eem5W-qi9p1i+-9+jiMFs=tZ8xA@mail.gmail.com>
- <CAFuPQ1+6EkeVDmkQg-r0_KegDDmC0QnO4mtn0ad=4UK8G=9iCA@mail.gmail.com>
- <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com> <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] git: expand user path in --git-dir
+Date: Mon, 24 Sep 2012 16:57:59 +0200
+Message-ID: <506074F7.2000500@drmicha.warpmail.net>
+References: <5060588D.3080202@drmicha.warpmail.net> <fdeaa78c0a520ce80e6d2cb09978dab348104eaf.1348491039.git.git@drmicha.warpmail.net> <20120924145208.GB10349@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:57:54 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:58:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGA6Z-0001Y0-NK
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:57:52 +0200
+	id 1TGA72-0001w4-T4
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974Ab2IXO5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:57:43 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:56041 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753143Ab2IXO5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 10:57:42 -0400
-Received: by vbbff1 with SMTP id ff1so6200113vbb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=LdoZXVNkMt1UtA8PMYrsyS/I9kjMIIHbjcIQk0ZhZpg=;
-        b=jhvB/vJ4vK8/GoxwP70Phd8y1byJgAcXGXBSASkuTlhbeqH2iDGwlUFH2+VNnPt6nT
-         J4qswpvu6BhqeZJrMkfm6agl18bMqc1eJafqoU6yjWa5CrT1zcLYUKLh/UpA1d98ss1o
-         PZ5Y1rNfIaolN2qiMcuw7jdY50j8drvA30VcfR9QcsSNFY2Oo8rygt5OS9+je099x8s5
-         ZlWDOme37YZBgxb7Ibwnti9V3liatC7ZoYCc9FjBOZfD68q24g0RS9qDVTv2ffPITnf4
-         qV6FmQKRoSQGpptizDSslzNebOkYRyVYCGPVEsSxxrnGhiEHGCncZ77g3fMX2Y6DZZS5
-         o28g==
-Received: by 10.221.10.81 with SMTP id oz17mr7457996vcb.67.1348498661659; Mon,
- 24 Sep 2012 07:57:41 -0700 (PDT)
-Received: by 10.58.19.73 with HTTP; Mon, 24 Sep 2012 07:57:00 -0700 (PDT)
-In-Reply-To: <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
-X-Google-Sender-Auth: r7UtJ78T9WZQXKtIupSoM3PPYog
+	id S1756189Ab2IXO6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:58:04 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45110 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756171Ab2IXO6B (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 10:58:01 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 537BF20842;
+	Mon, 24 Sep 2012 10:58:01 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 24 Sep 2012 10:58:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=BOOmzxY1FnVC0zCWnE5isp
+	27QBQ=; b=AK6u7Z7EPaNlOPfNl+hjPqas4qVDR/RSkio8Fx0ny8e4/s5drXMhEF
+	kWmgIL+jLCs7FHk5D0qV7KpJ4DQOsZ0w+n/CgpPTVfLQzssMUzORXOyddJzzqW7j
+	mqDJZcSl9HWVKEj0A90AmWVMFEw3oFXiQpxjSpD4LrUkHSYvPR2Jw=
+X-Sasl-enc: 4608js6/1kdgTxDqEb1GN3NnRLrSIZ/znsWpIySkUKGh 1348498680
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A0A7F4827AB;
+	Mon, 24 Sep 2012 10:58:00 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <20120924145208.GB10349@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206282>
 
-This actually happens everytime I run a git command with a key
-binding, be it successful or not.  The main view is restored to the
-tip of the current branch.
-
-2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
-> There's a small glitch however: when some git command returns an error
-> (for example when typing 'M' for merge in main view) the main view
-> displays the tip of the current branch, instead of the list of
-> revisions passed in stdin.
->
-> 2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
->> Yes it works great, thanks!
+Jeff King venit, vidit, dixit 24.09.2012 16:52:
+> On Mon, Sep 24, 2012 at 02:57:20PM +0200, Michael J Gruber wrote:
+> 
+>> Currently, all paths in the config file are subject to tilde expansion
+>> for user paths while the argument to --git-dir is not expanded, and
+>> neither are paths in the environment such as GIT_DIR. From the user
+>> perspective, though, the two commands
 >>
->> 2012/9/16 Jonas Fonseca <fonseca@diku.dk>:
->>> On Tue, Sep 11, 2012 at 3:24 PM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
->>>> 2012/9/7 Jonas Fonseca <fonseca@diku.dk>:
->>>>> [snip] I suggest to support something like the following:
->>>>>
->>>>>     tig --no-walk --stdin < tmp-file
->>>>>
->>>>> Would that cover your use case?
->>>>
->>>> That would be great!  I would then feed tig with all commits I want to
->>>> see in the main view.
->>>
->>> When you have time, please test the main-view-with-stdin branch in
->>> git://github.com/jonas/tig.git
->>>
->>> --
->>> Jonas Fonseca
+>> GIT_DIR=~user/foo git command
+>> git --git-dir=~user/foo command
 >>
+>> currently behave differently because in the first case the shell would
+>> perform tilde expansion, but not in the second. Also, one may argue that
+>> specifying '--git-dir=' is like specifying a config variable (which
+>> cannot exist for this purpose).
 >>
+>> Thus, make arguments to '--git-dir' undergo tilde expansion.
+>> ---
+>> So, here's a simple patch implementing tilde expansion for --git-dir. It passes
+>> all tests. It's done doing the expansion on the setting side.
 >>
->> --
->> Jean-Baptiste Quenot
->
->
->
-> --
-> Jean-Baptiste Quenot
+>> Alternatively, one might do it on the getting side, i.e. when reading GIT_DIR,
+>> so that paths passed directly through the environment undergo tilde expansion
+>> as well. We don't do this for any environment variable yet, so I didn't go
+>> that far.
+> 
+> Keep in mind that every layer of expansion you add is a layer of quoting
+> somebody else must do in order to pass through certain paths.  I will
+> admit that putting a "~" into a path is relatively uncommon, but this
+> patch is a regression for anybody who does so with --git-dir (they will
+> now need to quote the "~" against not just their shell, but against
+> git). Expanding environment variables like GIT_DIR means that we would
+> also need to quote things we put into GIT_DIR.
 
+...as far as "~" is concerned, yes. We don't do a full expansion like
+the shell does (or doesn't).
 
+Probably "--git-dir" is hidden well enough to be for the initiated only.
+As for the other path options, we can always blame bash. It's got its
+name for a reason ;)
 
--- 
-Jean-Baptiste Quenot
+Michael
