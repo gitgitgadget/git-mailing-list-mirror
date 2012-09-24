@@ -1,77 +1,70 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Mon, 24 Sep 2012 18:23:31 +0200
-Message-ID: <CANQwDwew-PGq03q4VyjbzqPJxM+cB2O4J810ft67Cqn0xVwFKQ@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
- <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
- <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
- <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
- <vpqobkvxwhq.fsf@grenoble-inp.fr> <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
- <vpqobkvwg1r.fsf@grenoble-inp.fr>
+From: Semen Vadishev <semen.vadishev@tmatesoft.com>
+Subject: [Ad] SubGit 1.0 is released
+Date: Mon, 24 Sep 2012 18:24:39 +0200
+Message-ID: <50608947.8000409@tmatesoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:24:10 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:24:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGBRy-00005j-Cq
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:24:02 +0200
+	id 1TGBSm-0000cW-Pl
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 18:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756693Ab2IXQXx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 12:23:53 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:45136 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756668Ab2IXQXw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 12:23:52 -0400
-Received: by obbuo13 with SMTP id uo13so4818458obb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 09:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SLHBwyzcnWn6vecVSlI3R8YFMmQ+ajQCFKJVwPU+sFQ=;
-        b=k+ulqSydd9pxLFFptf8DfgoPEonQ9kq5QGW49oqTnPaowTpNWJZD567d1JmNENzAWx
-         jutz9E94MWHWhNtWxZByxc4AIQYnWLR6Os4uUgaMKBOOpckz4fHuSxtTCmR+eE25KFIW
-         5aebc965DhO/iP5y1Nymm8V6asx4HlG8C+UVu9/B6iC4kVPyZ/cxTrqT2NohkbI+PHT9
-         shetM89sWAidBfRGrvtgpdglBpffEe1+J4qLVaFLlDy/hzzGeUIQPTK9XL7f39eTxGXD
-         s8+xkyQDwrDvkm1040awD4z4Bcr9FWGsxaihZ16yxKaT0tbIITTlwsvHW/PH8GXbGygy
-         BhcA==
-Received: by 10.60.171.174 with SMTP id av14mr10481237oec.61.1348503832060;
- Mon, 24 Sep 2012 09:23:52 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 09:23:31 -0700 (PDT)
-In-Reply-To: <vpqobkvwg1r.fsf@grenoble-inp.fr>
+	id S1756677Ab2IXQYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 12:24:44 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:49964 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752419Ab2IXQYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 12:24:43 -0400
+Received: by bkcjk13 with SMTP id jk13so1033791bkc.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 09:24:42 -0700 (PDT)
+Received: by 10.204.8.84 with SMTP id g20mr4810759bkg.126.1348503881992;
+        Mon, 24 Sep 2012 09:24:41 -0700 (PDT)
+Received: from vs.local (46.226.broadband11.iol.cz. [90.178.226.46])
+        by mx.google.com with ESMTPS id c18sm10928846bkv.8.2012.09.24.09.24.40
+        (version=SSLv3 cipher=OTHER);
+        Mon, 24 Sep 2012 09:24:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206294>
 
-On Mon, Sep 24, 2012 at 6:18 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->
->> I have therefore added the following multiple-choice question:
->>
->> #19. What git workflow(s) is used by projects in which development y=
-ou
->> participate?
->
-> If we want to have an idea of which workflows are the most commonly
-> used, just a binary answer may be insufficient. We can't distinguish
-> between "X% people use workflow W all the time", and "X% people use
-> workflow W from time to time".
+Hello All,
 
-The problem is that those workflows are used by _projects_ not _people_=
-,
-so never/rarely/sometimes/often would be IMHO inappropriate.
+Our team is proud and delighted to announce SubGit 1.0 release!
+New version is available for download at SubGit web site at
+http://subgit.com/
 
-Besides matrix type question cannot have (on Survs.com) "other, explain=
-"...
---=20
-Jakub Narebski
+SubGit is a server-side tool for a smooth, stress-free SVN to Git
+migration. SubGit lets one to set up a bidirectional Subversion to Git
+replication (writable mirror) and thus it allows users to choose
+freely between Subversion and Git version control systems.
+
+SubGit is a closed source Java application, which is free for use in
+Open Source and Academic projects, as well as in any repository with
+up to 10 committers. Besides, there are no limitations on the time you
+may evaluate SubGit in commercial or closed source projects.
+
+A few useful links:
+
+SubGit Web Site: http://subgit.com/
+SubGit Book: http://subgit.com/book/ - nice illustrated guide that
+would help you to install, configure and use SubGit
+SubGit Issues Tracker: http://issues.tmatesoft.com/issues/SGT
+
+We tweet at @subgit and blog at http://blog.subgit.com/
+
+With best regards,
+Semyon Vadishev,
+TMate Software,
+http://subgit.com/ - git-svn bridge!
+http://svnkit.com/ - Java [Sub]Versioning Library!
+http://hg4j.com/ - Java Mercurial Library!
+http://sqljet.com/ - Java SQLite Library!
