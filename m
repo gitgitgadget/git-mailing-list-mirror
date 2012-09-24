@@ -1,86 +1,90 @@
-From: Jean-Baptiste Quenot <jbq@caraldi.com>
-Subject: Re: [ANNOUNCE] tig-1.0
-Date: Mon, 24 Sep 2012 16:29:01 +0200
-Message-ID: <CAK6bCazQvYP8dgQzF5BY5+UNfGvm_SOcrVZoREdpszyrHOjEuQ@mail.gmail.com>
-References: <20120510134449.GA31836@diku.dk> <CAK6bCaz7yPR0QmcOwY0iUP0hyisTf-bz=c0G_1nZkjCLDWDR+A@mail.gmail.com>
- <CAFuPQ1+22erJZ11fm1381-RPs0rKZr=EZJgZWQ1Jp00r6Wc8HA@mail.gmail.com>
- <CAK6bCawaqEvKFf43wzv+Yz5eem5W-qi9p1i+-9+jiMFs=tZ8xA@mail.gmail.com>
- <CAFuPQ1+6EkeVDmkQg-r0_KegDDmC0QnO4mtn0ad=4UK8G=9iCA@mail.gmail.com> <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 24 Sep 2012 16:31:40 +0200
+Message-ID: <CANQwDwfqv46WaPnh++ts7DYrg2R=yo7dyh2L7y+8astad9WWmA@mail.gmail.com>
+References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
+ <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
+ <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
+ <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com> <50605EDF.4090005@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:30:02 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:32:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TG9fc-0004ak-Qy
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:30:01 +0200
+	id 1TG9hl-0006Da-KG
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab2IXO3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:29:45 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:48575 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab2IXO3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 10:29:42 -0400
-Received: by vbbff1 with SMTP id ff1so6159752vbb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:29:41 -0700 (PDT)
+	id S1754128Ab2IXOcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 10:32:03 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:48525 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754105Ab2IXOcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 10:32:01 -0400
+Received: by oago6 with SMTP id o6so5445442oag.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=wWGn4aFjsN/8cl4xufqkd7rQfs0dV9gPHwa4ZgMwEKw=;
-        b=s13ILfoBgtD4KL2Y602RsZSz8a0ChiuapY58V5TfMtk3+nXkdYY79w62PnUKK07jJx
-         UgfAdhMBji9CUghCWW8PaGNMgcYAiaWEVGMCwygGi6u36x0Qc3x4WxPLgWAe+4kaG7Na
-         D0nqhKk7hNi5cnL6R7J10qVY/pZTLySNHufpjI/rYc9oB42w/PhhltqC6ldd4kTWse2q
-         qUs1J2Jp8bgWNEnE+E35mbMl0zICJRHAQ0wAaAtn8x9g9BFUW/LzDTu0gwgCLbIgcy+X
-         /dj/BQ4PwwdnPEFdJhleiznOtNANYaKc6WZmD0lXuylpxN2I8j6AZfSDB5P6/dkBpE0l
-         Y1+w==
-Received: by 10.220.108.79 with SMTP id e15mr7393844vcp.26.1348496981818; Mon,
- 24 Sep 2012 07:29:41 -0700 (PDT)
-Received: by 10.58.19.73 with HTTP; Mon, 24 Sep 2012 07:29:01 -0700 (PDT)
-In-Reply-To: <CAK6bCawuaYnd=YnevU6cXKmy=X9ExQ5kKxZopHC12+VTyPp-qQ@mail.gmail.com>
-X-Google-Sender-Auth: GkmV2hRzO-o7FiKVMYUOfWZGhBU
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=owazeb2X2g9Zk4dIdxKy/JhiAV058U/xxPixMbjxFZI=;
+        b=DATsi/JOkn7/aXQm46A4RN/GYNzn4Q1wTn90bv32Acsb1L4N2MKNZDiO5lQ/eybNo6
+         sSRT1siTuaIeCAJloNPMV7d9ukD+X1c3R7EwMPF1Vt12EBPubiCJk+xNhUjfee36AmER
+         euRJUEAvkE0GCw+QABzZCaksrFtIIshEGdOWCfLTwbcuhwjHbG1FGQQGY9vil3inMb6z
+         +cQJU/p968UV7rwtSLCQDxukcH6rlSudS3Zw7YDJSF1lyuD+qY7p41NGyCcT7Vx09iGc
+         s3hcKzOUQAOFs2SAtXI+BXSq0e59QTIfMqwq3X1H1rFbaW1qdgCPth4Rje1fZiMMVILA
+         9EWw==
+Received: by 10.60.8.71 with SMTP id p7mr10168680oea.56.1348497121151; Mon, 24
+ Sep 2012 07:32:01 -0700 (PDT)
+Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 07:31:40 -0700 (PDT)
+In-Reply-To: <50605EDF.4090005@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206275>
 
-There's a small glitch however: when some git command returns an error
-(for example when typing 'M' for merge in main view) the main view
-displays the tip of the current branch, instead of the list of
-revisions passed in stdin.
+On Mon, Sep 24, 2012 at 3:23 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+[...]
+> Other version control systems:
+> I think the list needs to be sorted alphabetically, it's really long.
 
-2012/9/24 Jean-Baptiste Quenot <jbq@caraldi.com>:
-> Yes it works great, thanks!
->
-> 2012/9/16 Jonas Fonseca <fonseca@diku.dk>:
->> On Tue, Sep 11, 2012 at 3:24 PM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
->>> 2012/9/7 Jonas Fonseca <fonseca@diku.dk>:
->>>> [snip] I suggest to support something like the following:
->>>>
->>>>     tig --no-walk --stdin < tmp-file
->>>>
->>>> Would that cover your use case?
->>>
->>> That would be great!  I would then feed tig with all commits I want to
->>> see in the main view.
->>
->> When you have time, please test the main-view-with-stdin branch in
->> git://github.com/jonas/tig.git
->>
->> --
->> Jonas Fonseca
->
->
->
-> --
-> Jean-Baptiste Quenot
+I have split this list in two: other centralized VCS and other distributed
+VCS; both have "other" field.
 
+> (You could also reduce and offer a text field "other.)
 
+I tried to include all important VCS.  There is always problem with
+analyzing responses from "other" field...
+
+> Resources:
+> I wouldn't put git-scm.com and the pro-git book into the same item.
+> git-scm.com was supposed to be "the" git community website (and also
+> "the" reference on git), and the fact that it looks like a pro-git book
+> sales platform is a different matter.
+
+Good catch. Originally there was "Git Community Book" on Git Homepage,
+and "Pro Git" had its own homepage; now they are folded together.
+
+I have slightly rewritten the description to account for this.
+
+>
+> An interesting question would be: "What is the first source you consider
+> Git?", or even: "What is the Git homepage?"... Really, getting input on
+> what "the Git homepage" should be like would be nice, but not comparable
+> to previous surveys.
+
+As you can see this year survey is [almost] bereft of essay free-form
+questions.  It is because of difficulties and time needed to analyze such
+responses. So I don't think such question will be included this year.
+
+I think it is better discussion for git mailing list or something...
 
 -- 
-Jean-Baptiste Quenot
+Jakub Narebski
