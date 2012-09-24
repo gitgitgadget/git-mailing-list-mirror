@@ -1,94 +1,78 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: Message from 'git-rebase'; German translation
-Date: Mon, 24 Sep 2012 08:15:38 -0400
-Message-ID: <rmi7grjty51.fsf@fnord.ir.bbn.com>
-References: <1527028.GPe6zkelBV@blacky>
-	<CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: GIT_DIR vs. --git-dir
+Date: Mon, 24 Sep 2012 14:56:45 +0200
+Message-ID: <5060588D.3080202@drmicha.warpmail.net>
+References: <5060097F.9050203@drmicha.warpmail.net> <CACsJy8DHGtktnvvziA_+Fp6a4VFsE9_=zkWKNBJU7Ro_QO+==A@mail.gmail.com> <50601274.80506@drmicha.warpmail.net> <CACsJy8ChOd-684V8Dsbwf2nOsW8UMnYn_vo5MAZ6ixyq_QvMkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Sascha Cunz <sascha-ml@babbelbox.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 14:25:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 14:57:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TG7jG-0006ec-R0
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 14:25:39 +0200
+	id 1TG8De-0003Wz-WE
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 14:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754558Ab2IXMZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 08:25:30 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:62340 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753886Ab2IXMZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 08:25:29 -0400
-X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Sep 2012 08:25:29 EDT
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 298B5BD19; Mon, 24 Sep 2012 08:15:42 -0400 (EDT)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:120924:stimming@tuhh.de::jx6Eal5YY0OsI7R4:01cZB
-X-Hashcash: 1:20:120924:trast@student.ethz.ch::jx6Eal5YY0OsI7R4:00000000000000000000000000000000000000003C5r
-X-Hashcash: 1:20:120924:sascha-ml@babbelbox.org::jx6Eal5YY0OsI7R4:00000000000000000000000000000000000000364S
-X-Hashcash: 1:20:120924:ralf.thielow@gmail.com::jx6Eal5YY0OsI7R4:0000000000000000000000000000000000000002oQG
-X-Hashcash: 1:20:120924:git@vger.kernel.org::jx6Eal5YY0OsI7R4:000000000000000000000000000000000000000000319W
-X-Hashcash: 1:20:120924:jk@jk.gs::jx6Eal5YY0OsI7R4:000000000GSve
-In-Reply-To: <CAN0XMO+Dd9S7j9Ujudcy+O3GwwBX1CvRPQTYWxymmEu=2bg7ww@mail.gmail.com>
-	(Ralf Thielow's message of "Sun, 23 Sep 2012 17:04:15 +0200")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
+	id S1753887Ab2IXM4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 08:56:49 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58111 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753844Ab2IXM4r (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 08:56:47 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C845A209C7;
+	Mon, 24 Sep 2012 08:56:46 -0400 (EDT)
+Received: from frontend2.nyi.mail.srv.osa ([10.202.2.161])
+  by compute6.internal (MEProxy); Mon, 24 Sep 2012 08:56:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=4XD0z2btaV3j4gyne9PHaV
+	qQP8Q=; b=p9O9xMljVXGhMcJxRjk6zGSA8Z77pfpnm6gNGvFUbg67aGr693Z0dY
+	NeLVd1sBIK3fIWwHLKq1TC6c1WlpfUPc2vCM6sreP39G9TUK7818Kz3xMpXKPyNu
+	JS6MV4AfBYMPAg7yro3mFHQMRuUMsYUgvNa2CAMgnW37Z8LEy8Mbs=
+X-Sasl-enc: fhc2ZbN2Fp3kQrpz6pN5tve+fzvj1epYy4MQNkI2AVlB 1348491406
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4C1D64827CE;
+	Mon, 24 Sep 2012 08:56:46 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <CACsJy8ChOd-684V8Dsbwf2nOsW8UMnYn_vo5MAZ6ixyq_QvMkw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206264>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Nguyen Thai Ngoc Duy venit, vidit, dixit 24.09.2012 11:53:
+> On Mon, Sep 24, 2012 at 2:57 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> It might be difficult to implement, but I'm sorry I can't follow the
+>> argumentation above at all; it's not based on what we do in other places
+>> and other cases.
+> 
+> My point is, what's so special about --git-dir? what about
+> --work-tree, or "commit -F path"? It's hard to draw a line there.
 
+Sure those should follow, especially work-tree.
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+> Config files are a special case, because git is the only one that
+> reads the file. "~" expansion depends on shell setting. If users turn
+> it off, they may be surprised that "~foo" is turned to /home/foo while
+> they really mean "~foo". Warning is the only sensible thing we could
+> do.
 
-> On Sat, Sep 22, 2012 at 11:57 PM, Sascha Cunz <sascha-ml@babbelbox.org> w=
-rote:
->> Original:
->> ... and I wonder if you are in the middle of another rebase.
->>
->> German git translation:
->> ... und es w=C3=A4re verwunderlich, wenn ein Neuaufbau bereits im Gange =
-ist.
->>
->> And a re-translation back to English from my understanding as native Ger=
-man
->> speaker:
->> ... and it would be astonishing (=3Di'd be surprised), if a rebase was a=
-lready
->> in progress.
+But that argument applies to config files in exactly the same way as it
+applies to command line arguments. Git is the only one reading them. So
+why not leave it up to Git to decide about expansion?
 
-Perhaps the English wording should be made more clear; the fact that
-translation is difficult is a clue that it may be hard to understand,
-particularly for non-native-English-Speakers (albeit an ambiguous one; I
-realize translation is hard).
+On the other hand: If Git expanding arguments is surprising, why is it
+unsurprising if Git expands config values?
 
-> We try to avoid translating terms like "I wonder if.." and similar as
-> "ich wundere mich", because it's very unusual in German messages
-> of computer programs. Translators should have the freedom to reword
+You know the implementation, so there are no surprises for you. But once
+in a while we can pretend to design Git for those who just use it.
 
-It's unusual in English too :-)
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (NetBSD)
-
-iEYEARECAAYFAlBgTuoACgkQ+vesoDJhHiXs1gCbB+QeZn2oV77qVtbL5aApyG5Q
-fY4An2nNdn5GqDfrsfEOS3X0jIVxMGmG
-=OoPv
------END PGP SIGNATURE-----
---=-=-=--
+Michael
