@@ -1,68 +1,80 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [BUG?] Path limiting in "git log" when run from another subdir
-Date: Mon, 24 Sep 2012 16:04:29 +0200
-Message-ID: <CALKQrget=YpoZuH+aRdiey_S==37SPnJ+PvwiDpSM2701w602A@mail.gmail.com>
-References: <CALKQrged+ptCQYm-=JKRborrAeKmaNFG=rDS8BQK5CNhwqjnkQ@mail.gmail.com>
-	<CACsJy8CECnFbkD6QFWiDMxz6J4mOngrmHPwjuXvsFBUXhNc1_w@mail.gmail.com>
-	<CALKQrgfb8qbeKmCzri27iA1qk9H8R4FgyA-YsUQf_JQRWvGK4g@mail.gmail.com>
-	<CACsJy8A4-XC7AS4ZqZ1Whsoo-mztTNFvEnk810e10-rwXBkJHA@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: problem with setlocale trick in gettext.c
+Date: Mon, 24 Sep 2012 21:08:57 +0700
+Message-ID: <CACsJy8A+YvdGc6LM5baFqHoB91p6TAjQ9kKXuaPspvL--mfe0Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:04:45 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:09:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TG9HA-0001nY-Ma
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:04:45 +0200
+	id 1TG9Lu-0005nX-7T
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Sep 2012 16:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755602Ab2IXOEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 10:04:36 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:64989 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755551Ab2IXOEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 10:04:35 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1TG9Gz-0000a7-A8
-	for git@vger.kernel.org; Mon, 24 Sep 2012 16:04:33 +0200
-Received: by oago6 with SMTP id o6so5409611oag.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:04:29 -0700 (PDT)
-Received: by 10.182.225.5 with SMTP id rg5mr9827895obc.49.1348495469843; Mon,
- 24 Sep 2012 07:04:29 -0700 (PDT)
-Received: by 10.76.128.204 with HTTP; Mon, 24 Sep 2012 07:04:29 -0700 (PDT)
-In-Reply-To: <CACsJy8A4-XC7AS4ZqZ1Whsoo-mztTNFvEnk810e10-rwXBkJHA@mail.gmail.com>
+	id S1755647Ab2IXOJ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 10:09:29 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:54054 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755599Ab2IXOJ2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 10:09:28 -0400
+Received: by ieak13 with SMTP id k13so10904253iea.19
+        for <git@vger.kernel.org>; Mon, 24 Sep 2012 07:09:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=w7cNYy3PCMzEmDDIEUeGJr30y8gErM6pRScdgcDghSI=;
+        b=aC//6yGXbIxvvtfBAi6yvESW0hwYAdGHO+EObGneLOUwnX5dzJkLmV6FXUBet79we8
+         a8zz+JZ0KV1dQjFGvfOiYqu64EgSYymGmpfUm3nh2JbrTJf1WUbXI9dwBgdOloOeJ28V
+         +GmHcnIBruuvqE7ApouWPlAFUzplR88b8a6veM0FbuXhWTEk4kJj/dNgyoOeWySb8gzK
+         M+bhICwNuRoEfExRpd09N/eHapug6HWI39+P1Vejb7mwqoneE0pt+GJWNn0PR2Z8QMAt
+         Yhmqh5x/LZOXbXaLIaPyg/5IMYxs5ehboDPAEt8C4sBUHJB+O808S87tmlInSBCrOCXJ
+         85eg==
+Received: by 10.50.87.167 with SMTP id az7mr5378039igb.40.1348495768020; Mon,
+ 24 Sep 2012 07:09:28 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Mon, 24 Sep 2012 07:08:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206272>
 
-On Mon, Sep 24, 2012 at 3:30 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->> In any case, what is the _preferred_ way to path-limit "git log" to
->> Documentation/RelNotes, when my cwd is t/?
->
-> If you want worktree root no matter where you stand, use "git log --
-> :/Documentation/RelNotes". The idea is ":" starts some "magic" in path
-> handling, but for now there is only ":/". Or if you don't like magic,
-> `git rev-parse --git-dir` should give you worktree's root to start
-> with.
+Hi,
 
-Ah, ok, that's exactly what I wanted. Then I guess "cd t && git log --
-/Documentation" should have never worked in the first place, and I
-question about "git log -- /Documentation/RelNotes" was misguided.
+I think the setlocale() trick in init_gettext_charset() messes up
+locale support from library. Currently I get
 
-Thanks for clearing up my confusion.
+fatal: Could not switch to '/foo/': Kh?ng c? t?p tin ho?c th? m?c nh? v=
+?y
 
+The question marks are what I actually see. The point here is to call
+strerrno(), which should return a l10n string. With this patch
 
-...Johan
+diff --git a/gettext.c b/gettext.c
+index 71e9545..eeb88c5 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -115,7 +115,7 @@ static void init_gettext_charset(const char *domain=
+)
+        setlocale(LC_CTYPE, "");
+        charset =3D locale_charset();
+        bind_textdomain_codeset(domain, charset);
+-       setlocale(LC_CTYPE, "C");
++       //setlocale(LC_CTYPE, "C");
+ }
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+ void git_setup_gettext(void)
+
+I get correct output again
+
+fatal: Could not switch to '/foo/': Kh=C3=B4ng c=C3=B3 t=E1=BA=ADp tin =
+ho=E1=BA=B7c th=C6=B0 m=E1=BB=A5c nh=C6=B0 v=E1=BA=ADy
+
+Anybody knows how this happens?
+--=20
+Duy
