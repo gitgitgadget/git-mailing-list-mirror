@@ -1,93 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] graph: avoid infinite loop in graph_show_commit()
-Date: Mon, 24 Sep 2012 16:36:31 -0700
-Message-ID: <7vtxunvvr4.fsf@alter.siamese.dyndns.org>
-References: <1348323880-3751-1-git-send-email-pclouds@gmail.com>
- <loom.20120923T135253-178@post.gmane.org>
- <CACsJy8ApYKOU8v_-HkUC5uOb8gsheugKaXKMjbm0_-ygW_4jiQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 0/3] git log --pretty=lua
+Date: Mon, 24 Sep 2012 20:23:25 -0400
+Message-ID: <20120925002325.GA19560@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org, adam@adamsimpkins.net
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 01:36:46 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 25 02:24:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGICi-0004Ft-Ho
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 01:36:44 +0200
+	id 1TGIwU-0007gv-KP
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 02:24:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750889Ab2IXXgf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2012 19:36:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50694 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750778Ab2IXXge convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2012 19:36:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D60209590;
-	Mon, 24 Sep 2012 19:36:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Xo0Y0bPE7b+F
-	kO6a3itJOb8TXEI=; b=LYKWgFlpjRkPaMITT+R1V4ovIvRftamSzbdb+w8c35dS
-	jqDsltOZ6Y192Bf56x3Z179wUQgH/YY/lfUrLRbplgNA8s7ohasofSwoONpgAmox
-	UazF9ajuVKLbR+/dALkoBGIE99+yjYneVtph6z83toqsHcNNV6s4Vse+Q9Xgyro=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MroZR4
-	hJ8jCAF40+kqA8Vs2AcgzDDJtxgPlJl1sPKCnZLCTjFbX8S3yH1JqucmRATkN6oy
-	VOPMHbZ87QNCjBNHTZoBnqGqZ1wAIdzycOgbINLSY/1ihTVhhYhCsagMaW/RR/5J
-	PurAZC5gylwfCrgtXRoFhd+qHIH1CwhNWSsIw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C328C958F;
-	Mon, 24 Sep 2012 19:36:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C467958E; Mon, 24 Sep 2012
- 19:36:33 -0400 (EDT)
-In-Reply-To: <CACsJy8ApYKOU8v_-HkUC5uOb8gsheugKaXKMjbm0_-ygW_4jiQ@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Sun, 23 Sep 2012 19:14:51 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC6D133E-06A0-11E2-823D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751874Ab2IYAXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 20:23:34 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57440 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751521Ab2IYAXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 20:23:31 -0400
+Received: (qmail 7315 invoked by uid 107); 25 Sep 2012 00:23:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 20:23:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 20:23:25 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206335>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+We've talked off and on about extending the --pretty=format specifiers
+to something more flexible. There's also been talk recently of more
+flexible commit-filtering (e.g., grepping individual notes).  Rather
+than invent a new Turing-complete language, I thought I'd try building
+on somebody else's work by embedding an existing language.
 
-> On Sun, Sep 23, 2012 at 6:55 PM, Michal Kiedrowicz
-> <michal.kiedrowicz@gmail.com> wrote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds <at> gmail.com> w=
-rites:
->>
->>>
->>> The loop can be triggered with "git diff-tree --graph commit" where
->>> the commit is a non-merge. It goes like this
->>
->>
->> Isn't this the same issue as in
->> http://article.gmane.org/gmane.comp.version-control.git/123979
->> ? (with slightly different fix)
->
-> I don't know. I'm not familiar enough with graph.c to tell. Maybe Ada=
-m
-> can have a look?
+Why Lua? I don't especially like it as a language. But it's designed for
+this purpose, which makes it very lightweight and relatively simple to
+embed. Here are timing results for a few log commands (best-of-five,
+warm cache):
 
-Has either of you tried the patch with the problematic case the
-other patch tries to solve?  Michal's old patch does smell like it
-is going in the better direction in that it stops looping when we
-know we would only be showing the padding, which is a sign that we
-are done with showing the commit.
+  $ git log --oneline >/dev/null
+  real    0m1.042s
+  user    0m0.660s
+  sys     0m0.372s
 
-But I didn't look at it too closely.  I'd prefer to see the
-assert(0) turned into die("BUG: internal error") at the end of
-graph_next_line() to catch these cases.  Also I am not sure if
-assignment of the return value from graph_next_line() to
-shown_comit_line in the loop is correct (shouldn't it be OR'ing it
-in, so that "we have shown the information on this commit" is not
-lost when the function adds things after showing the commit???)
+  $ git log --tformat:"%h %s" >/dev/null
+  real    0m1.039s
+  user    0m0.624s
+  sys     0m0.396s
+
+  $ git log --pretty=lua:'return abbrev(hash()) .. " " .. subject()'
+  real    0m1.112s
+  user    0m0.716s
+  sys     0m0.388s
+
+So you can see that we're a little bit slower than the existing format,
+but not too much. There may well be some optimizations we can do, too.
+This is the first time I've ever played with embedding Lua, so I would
+not be surprised if I got something wrong or suboptimal.
+
+The syntax, on the other hand...yuck. One thing that makes Lua
+horrible for this use is that it does not have interpolated strings.
+However, there are template libraries for Lua, so maybe there's
+something there.
+
+The patches are:
+
+  [1/3]: pretty: make some commit-parsing helpers more public
+  [2/3]: add basic lua infrastructure
+  [3/3]: add a "lua" pretty format
+
+And a "4/3" patch would probably add "--lua-filter" as a revision option
+for limiting commits.
+
+The patches are very rough and not meant to be applied. For me, this was
+a bit of an experiment. I'm not sure if I like it or not. It seems like
+a cool direction to go, but to be perfectly honest, I do not generally
+feel like git's existing filtering or output are inadequate (sure, it's
+slower to pipe --pretty=raw out to a separate perl filter and then do
+fancy formatting, but it's usually fast enough, and it's very flexible).
+
+So I don't have plans to work on it more any time soon, but I thought
+I'd share in case anybody is interested. And if somebody wants to pick
+up the topic and run with it, I'd be happy to help.
+
+-Peff
