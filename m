@@ -1,99 +1,91 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [RFC] Questions for "Git User's Survey 2011"
-Date: Tue, 25 Sep 2012 08:57:48 +0200
-Message-ID: <CANQwDwcejFKoNoDOSAhyLZTZoYLGsUwH29JiAGGzna2cRwNuPw@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <201109031738.11678.jnareb@gmail.com>
- <CAMP44s2ZSKx3jDZOSX7EM2bYtuUvvEctZYw6R3wNWQEbCeX4Rw@mail.gmail.com>
- <201109141939.14070.jnareb@gmail.com> <CAMP44s31xx5qfF4-f3kGsa1uEe7TMVmqSDvB9zL=prR12xwM6g@mail.gmail.com>
- <CANQwDwfVM+besf2if-z6UT6K1QYfj7A7jXsEgfyfxJ1Ww9oBdA@mail.gmail.com>
- <vpqobkvxwhq.fsf@grenoble-inp.fr> <CANQwDwe1H3Va5T7uy6zUJ0oz_mk0=fW8hK_buky4x4hMThY9UQ@mail.gmail.com>
- <vpqobkvwg1r.fsf@grenoble-inp.fr> <CANQwDwew-PGq03q4VyjbzqPJxM+cB2O4J810ft67Cqn0xVwFKQ@mail.gmail.com>
- <vpqhaqnw6xc.fsf@grenoble-inp.fr> <CANQwDweRf1_UzRozSeRoF4p-Qh-tJq+mLYJq0GSL7dW8_umpSg@mail.gmail.com>
- <vpq8vbywrro.fsf@grenoble-inp.fr> <CANQwDweD-OSDKkA9P1FPr4jhvv2su5W86J+P8BRV8MmEBgC8BA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH 6/5] side-step a make rule that builds t3070-wildmatch
+Date: Tue, 25 Sep 2012 09:01:55 +0200
+Message-ID: <506156E3.4060508@viscovery.net>
+References: <1347710524-15404-1-git-send-email-pclouds@gmail.com> <1347809265-2457-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 25 08:58:25 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 09:02:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGP63-0000Vz-RL
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 08:58:20 +0200
+	id 1TGP9s-0002A2-5d
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 09:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893Ab2IYG6K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2012 02:58:10 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:58342 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601Ab2IYG6J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Sep 2012 02:58:09 -0400
-Received: by obbuo13 with SMTP id uo13so5522312obb.19
-        for <git@vger.kernel.org>; Mon, 24 Sep 2012 23:58:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=WN4z1P8d+ilPjCYN741geisvPKw2Rq5uN3ii0iungY0=;
-        b=ABapq17ulO3pYutpEqjECN8UKQKGEW1dZ2jo0msJdHQ312ofu4uFeO0LUxdvbWUuBT
-         2lIAxlOVFVxonLO77vv1DK7uQi6QKPkqWZzj40GN5xcK/p7fLIY0tUutNsGBO0oogdX6
-         1M0c7pm5e0+o9KFDasB09bBZIRksZxFJops8OZ2aVmXagfr4YvVOtBrPXjU/r/PztYW8
-         crGdfRLazfjdaia+t/U9Fwbrv7InWFW2dziaZtiI33mO5FN0WlCM4KLrEjHe2fFe6its
-         vw2YzbNnRMNDyKEJ94R9R6ISKcFJe6v5ntC2h5Wa06iQFeBOD5dFaEyLeQfDuQxdsvH/
-         B8+A==
-Received: by 10.182.111.74 with SMTP id ig10mr12043455obb.14.1348556288264;
- Mon, 24 Sep 2012 23:58:08 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Mon, 24 Sep 2012 23:57:48 -0700 (PDT)
-In-Reply-To: <CANQwDweD-OSDKkA9P1FPr4jhvv2su5W86J+P8BRV8MmEBgC8BA@mail.gmail.com>
+	id S1753353Ab2IYHCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 03:02:04 -0400
+Received: from lilzmailso03.liwest.at ([212.33.55.24]:29235 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753349Ab2IYHCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 03:02:03 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TGP9Y-0008OJ-Dj; Tue, 25 Sep 2012 09:01:57 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 098AC1660F;
+	Tue, 25 Sep 2012 09:01:55 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <1347809265-2457-1-git-send-email-pclouds@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206350>
 
-[I'm sorry for breaking the chain, but I have accidentally hit Reply,
-instead of Reply To All, and missed sending reply to git mailing list]
+From: Johannes Sixt <j6t@kdbg.org>
 
-On Tue, Sep 25, 2012 at 8:17 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jakub Nar=EAbski <jnareb@gmail.com> writes:
->
->> Second, the situation is more complicated: one can be actively invol=
-ved
->> in 1 distributed project with 200+ contributors via Gerrit, often co=
-ntribute
->> to 1 centralized project with 15-25 contributors, and rarely interac=
-t with
->> distributed project using "blessed" repository workflow where number
->> of contributors range from few to few hundred.
->
-> We're doing a user survey, so if a project has 200 contributors, it w=
-ill
-> statistically have 10 times more survey participants than a 20
-> contributors project. Sure, statistics don't always work, but if we
-> don't trust statistics, we shouldn't do a survey.
+Running "make t3070-wildmatch" aborts with this error:
 
-I always worry if the set of survey participants is representative...
+   $ make t3070-wildmatch
+   *** t3070-wildmatch.sh ***
+   # passed all 11 test(s)
+   1..11
+   cat t3070-wildmatch.sh >t3070-wildmatch
+   /bin/sh.exe: t3070-wildmatch: File exists
+   make: *** [t3070-wildmatch] Error 1
 
->> Third, no other in matrix form.
->
-> Well, forcing the user to chose between existing options is not
-> necessarily bad IMHO. It at least avoids free-form answers like "I'm
-> doing almost exactly option b) but I don't call it this way so I didn=
-'t
-> tick b)".
+It seems that there is a make rule that attempts to transform a *.sh file
+into a file without the extension. The rule fails because t3070-wildmatch
+is a directory. Rename it to t3070.
 
-There is another issue: there are many, many questions which
-are currently in multiple answers form (e.g. transports, or tools),
-some of them with "other, please specify", which are in the same
-boat wrt. precision / accuracy as discussed "workflow" question.
+Of course, nobody would run exactly "make t3070-wildmatch". But it is
+common (at least for me) to run "make t[3-9]*" or similar, which would
+include t3070-wildmatch. With this patch, it includes t3070, but that does
+not hurt because make just skips it with "Nothing to be done for `t3070'."
 
-So, NAK for this year survey, we can think about and discuss it
-for the next one (if there would be interest in having one).
---
-Jakub Narebski
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Feel free to squash this patch if you re-roll the series.
 
+ t/t3070-wildmatch.sh                      | 2 +-
+ t/{t3070-wildmatch => t3070}/wildtest.txt | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename t/{t3070-wildmatch => t3070}/wildtest.txt (100%)
 
---=20
-Jakub Narebski
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index 7fb63ff..c4da26c 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -6,7 +6,7 @@ test_description='wildmatch tests'
+
+ test_wildmatch() {
+     test_expect_success "wildmatch $*" "
+-	test-wildmatch $* ../t3070-wildmatch/wildtest.txt >actual &&
++	test-wildmatch $* ../t3070/wildtest.txt >actual &&
+ 	echo 'No wildmatch errors found.' >expected &&
+ 	test_cmp expected actual
+     "
+diff --git a/t/t3070-wildmatch/wildtest.txt b/t/t3070/wildtest.txt
+similarity index 100%
+rename from t/t3070-wildmatch/wildtest.txt
+rename to t/t3070/wildtest.txt
+-- 
+1.7.12.1.1626.gf25df0e
