@@ -1,7 +1,7 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 1/2] gitweb: infrastructure for tags feed
-Date: Tue, 25 Sep 2012 22:10:44 +0200
-Message-ID: <1348603845-9084-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH 2/2] gitweb: expose tags feed in appropriate places
+Date: Tue, 25 Sep 2012 22:10:45 +0200
+Message-ID: <1348603845-9084-3-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1348603845-9084-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
@@ -12,219 +12,164 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGbTG-0002IV-KY
+	id 1TGbTH-0002IV-AB
 	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 22:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755146Ab2IYUKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 16:10:49 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:46180 "EHLO
+	id S1755241Ab2IYUKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 16:10:51 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:45453 "EHLO
 	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767Ab2IYUKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 16:10:48 -0400
-Received: by wibhm2 with SMTP id hm2so1889519wib.1
-        for <git@vger.kernel.org>; Tue, 25 Sep 2012 13:10:45 -0700 (PDT)
+	with ESMTP id S1754851Ab2IYUKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 16:10:49 -0400
+Received: by wibhm2 with SMTP id hm2so1889587wib.1
+        for <git@vger.kernel.org>; Tue, 25 Sep 2012 13:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=u9IAaqwt6AfW28MVV3rrCpaYudnGm06P9SIFQH5m6to=;
-        b=Hc7p9eIfKaYcKf3QJlJcqpDjMPPpWkSs2LkgCbf6COAOjBjT1jQfVfbU8bFxmDuqYe
-         73bKxZAYc5BoFCtgrYIYOT0uMZ1o9Bll84FikZPlh+FPAlkyyzRbfR/Ah6MTlULuQGSJ
-         mG/CCRhYm4oAU+J7eXl+XZmAcFBJL+rYse650DYL87sXNRn9KVuT4DpWKLCrZDdA0dNH
-         s9B7aj3pbvsk0S35OKE0i7eVV/FrJn9VXkkMRkm9m/9buDqOT+da1FEGeCIImRlGgiEx
-         9URZeNRm0HQ2R0rSSq95Drosc3cwlrqIhTzfWuwhvuAbL65CYrhOBzBXXmbM4v/g8xBf
-         4IGQ==
-Received: by 10.216.143.71 with SMTP id k49mr9284389wej.43.1348603845390;
-        Tue, 25 Sep 2012 13:10:45 -0700 (PDT)
+        bh=4NDaL3tvjKi1UDiA7IXr5IRz4eGRoQHRWPf2hxglX1o=;
+        b=O1+7C4SJMjPeYHk54D0ZAEG1vkwm5ferXcCfQgWurOZAHA/L1gOpFNu4hAdqxZgg6x
+         lcgzxKIwxE5NTQnPBnL8E3aLUiviPs7LOh4fZv2jtFfDRNGyzm8czV7mew5j5ehWCyCU
+         Ufc56FwIHMybtOjp6ixjqPqE7xwqidEo+bPUpynHeNIAS0Qqi1TV33NFw4xzrdYwY0jJ
+         4LQE/B6D/lzB90kGKHJpwaf6ZW7nr2mvij3fhpIacEHOArZHQGnEy0AnEt0p64AS1BRH
+         yIKzTqTkKcsG6MzlcZelarsOW+EjMPu9Xl27/pwf6tMqeqdUdnpDnG9SEVGN9+lzwZ7m
+         Opkg==
+Received: by 10.180.106.130 with SMTP id gu2mr24042995wib.20.1348603848610;
+        Tue, 25 Sep 2012 13:10:48 -0700 (PDT)
 Received: from localhost ([151.74.130.142])
-        by mx.google.com with ESMTPS id ga2sm2456060wib.2.2012.09.25.13.10.43
+        by mx.google.com with ESMTPS id w7sm21728328wiz.0.2012.09.25.13.10.47
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 25 Sep 2012 13:10:44 -0700 (PDT)
+        Tue, 25 Sep 2012 13:10:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.12.1.577.gff9625d
 In-Reply-To: <1348603845-9084-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206375>
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl | 79 +++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 58 insertions(+), 21 deletions(-)
+ gitweb/gitweb.perl | 47 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 33 insertions(+), 14 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7f8c187..6cb51f7 100755
+index 6cb51f7..9ac28aa 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -3711,6 +3711,7 @@ sub git_get_tags_list {
+@@ -804,6 +804,8 @@ our %actions = (
+ 	"summary" => \&git_summary,
+ 	"tag" => \&git_tag,
+ 	"tags" => \&git_tags,
++	"tags_rss" => \&git_tags_rss,
++	"tags_atom" => \&git_tags_atom,
+ 	"tree" => \&git_tree,
+ 	"snapshot" => \&git_snapshot,
+ 	"object" => \&git_object,
+@@ -2518,7 +2520,7 @@ sub get_feed_info {
+ 	return unless (defined $project);
+ 	# some views should link to OPML, or to generic project feed,
+ 	# or don't have specific feed yet (so they should use generic)
+-	return if (!$action || $action =~ /^(?:tags|heads|forks|tag|search)$/x);
++	return if (!$action || $action =~ /^(?:heads|forks|search)$/x);
  
- 		if ($type eq "tag" || $type eq "commit") {
- 			$ref_item{'epoch'} = $epoch;
-+			$ref_item{'tz'} = $tz;
- 			if ($epoch) {
- 				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
- 			} else {
-@@ -8004,6 +8005,10 @@ sub git_shortlog {
- 
- sub git_feed {
- 	my $format = shift || 'atom';
-+
-+	# feed context: log, tags
-+	my $ctx = shift || 'log';
-+
- 	my $have_blame = gitweb_check_feature('blame');
- 
- 	# Atom: http://www.atomenabled.org/developers/syndication/
-@@ -8012,9 +8017,19 @@ sub git_feed {
- 		die_error(400, "Unknown web feed format");
+ 	my $branch;
+ 	# branches refs uses 'refs/heads/' prefix (fullname) to differentiate
+@@ -2528,8 +2530,10 @@ sub get_feed_info {
+ 		$branch = $1;
  	}
- 
-+	if ($ctx ne 'log' && $ctx ne 'tags') {
-+		die_error(400, "Unknown web feed context");
-+	}
-+	my $tags = $ctx eq 'tags' ? 1 : 0;
-+
- 	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
- 	my $head = $hash || 'HEAD';
--	my @commitlist = parse_commits($head, 150, 0, $file_name);
-+	my @commitlist;
-+	if ($tags) {
-+		@commitlist = git_get_tags_list(15);
-+	} else {
-+		@commitlist = parse_commits($head, 150, 0, $file_name);
-+	}
- 
- 	my %latest_commit;
- 	my %latest_date;
-@@ -8026,9 +8041,12 @@ sub git_feed {
- 	}
- 	if (defined($commitlist[0])) {
- 		%latest_commit = %{$commitlist[0]};
--		my $latest_epoch = $latest_commit{'committer_epoch'};
-+		my $latest_epoch = $tags ? $latest_commit{'epoch'} :
-+					   $latest_commit{'committer_epoch'};
- 		exit_if_unmodified_since($latest_epoch);
--		%latest_date = parse_date($latest_epoch, $latest_commit{'comitter_tz'});
-+		%latest_date = parse_date($latest_epoch,
-+			$tags ? $latest_commit{'tz'} :
-+				$latest_commit{'committer_tz'});
- 	}
- 	print $cgi->header(
- 		-type => $content_type,
-@@ -8043,7 +8061,9 @@ sub git_feed {
- 	# header variables
- 	my $title = "$site_name - $project/$action";
- 	my $feed_type = 'log';
--	if (defined $hash) {
-+	if ($tags) {
-+		$feed_type = 'tags';
-+	} elsif (defined $hash) {
- 		$title .= " - '$hash'";
- 		$feed_type = 'branch log';
- 		if (defined $file_name) {
-@@ -8060,6 +8080,7 @@ sub git_feed {
- 		$descr = esc_html($descr);
- 	} else {
- 		$descr = "$project " .
-+			 ($tags ? 'tags ' : '') .
- 		         ($format eq 'rss' ? 'RSS' : 'Atom') .
- 		         " feed";
- 	}
-@@ -8068,7 +8089,9 @@ sub git_feed {
- 
- 	#header
- 	my $alt_url;
+ 	# find log type for feed description (title)
+-	my $type = 'log';
 -	if (defined $file_name) {
-+	if ($tags) {
-+		$alt_url = href(-full=>1, action=>"tags");
++	my $type = "log";
++	if ($action eq 'tag' || $action eq 'tags') {
++		$type = "tags";
 +	} elsif (defined $file_name) {
- 		$alt_url = href(-full=>1, action=>"history", hash=>$hash, file_name=>$file_name);
- 	} elsif (defined $hash) {
- 		$alt_url = href(-full=>1, action=>"log", hash=>$hash);
-@@ -8132,9 +8155,15 @@ XML
- 	}
+ 		$type  = "history of $file_name";
+ 		$type .= "/" if ($action eq 'tree');
+ 		$type .= " on '$branch'" if (defined $branch);
+@@ -3907,6 +3911,7 @@ sub print_feed_meta {
+ 			$href_params{'-title'} = 'log';
+ 		}
  
- 	# contents
-+	my $co_action = $tags ? 'tag' : 'commitdiff';
- 	for (my $i = 0; $i <= $#commitlist; $i++) {
-+		my %clco; # commit info from commitlist, only used for tags
- 		my %co = %{$commitlist[$i]};
- 		my $commit = $co{'id'};
-+		if ($tags) {
-+			%clco = %co;
-+			%co = parse_tag($commit);
-+		}
- 		# we read 150, we always show 30 and the ones more recent than 48 hours
- 		if (($i >= 20) && ((time - $co{'author_epoch'}) > 48*60*60)) {
- 			last;
-@@ -8142,44 +8171,52 @@ XML
- 		my %cd = parse_date($co{'author_epoch'}, $co{'author_tz'});
++		my $tag_view = $href_params{-title} eq 'tags';
+ 		foreach my $format (qw(RSS Atom)) {
+ 			my $type = lc($format);
+ 			my %link_attr = (
+@@ -3916,7 +3921,7 @@ sub print_feed_meta {
+ 			);
  
- 		# get list of changed files
--		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--			$co{'parent'} || "--root",
--			$co{'id'}, "--", (defined $file_name ? $file_name : ())
--			or next;
--		my @difftree = map { chomp; $_ } <$fd>;
--		close $fd
--			or next;
-+		my @difftree;
-+		unless ($tags) {
-+			open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+				$co{'parent'} || "--root",
-+				$co{'id'}, "--", (defined $file_name ? $file_name : ())
-+				or next;
-+			@difftree = map { chomp; $_ } <$fd>;
-+			close $fd
-+				or next;
-+		}
-+
-+		my $co_hash = $tags ? $clco{'name'} : $commit;
-+		my $co_url = href(-full=>1, action=>$co_action, hash=>$co_hash);
-+		my $co_title = esc_html($tags ? $clco{'subject'} : $co{'title'});
+ 			$href_params{'extra_options'} = undef;
+-			$href_params{'action'} = $type;
++			$href_params{'action'} = ($tag_view ? 'tags_' : '') . $type;
+ 			$link_attr{'-href'} = href(%href_params);
+ 			print "<link ".
+ 			      "rel=\"$link_attr{'-rel'}\" ".
+@@ -3925,15 +3930,17 @@ sub print_feed_meta {
+ 			      "type=\"$link_attr{'-type'}\" ".
+ 			      "/>\n";
  
- 		# print element (entry, item)
--		my $co_url = href(-full=>1, action=>"commitdiff", hash=>$commit);
- 		if ($format eq 'rss') {
- 			print "<item>\n" .
--			      "<title>" . esc_html($co{'title'}) . "</title>\n" .
-+			      "<title>" . $co_title . "</title>\n" .
- 			      "<author>" . esc_html($co{'author'}) . "</author>\n" .
- 			      "<pubDate>$cd{'rfc2822'}</pubDate>\n" .
- 			      "<guid isPermaLink=\"true\">$co_url</guid>\n" .
- 			      "<link>$co_url</link>\n" .
--			      "<description>" . esc_html($co{'title'}) . "</description>\n" .
-+			      "<description>" . $co_title . "</description>\n" .
- 			      "<content:encoded>" .
- 			      "<![CDATA[\n";
- 		} elsif ($format eq 'atom') {
- 			print "<entry>\n" .
--			      "<title type=\"html\">" . esc_html($co{'title'}) . "</title>\n" .
-+			      "<title type=\"html\">" . $co_title . "</title>\n" .
- 			      "<updated>$cd{'iso-8601'}</updated>\n" .
- 			      "<author>\n" .
- 			      "  <name>" . esc_html($co{'author_name'}) . "</name>\n";
- 			if ($co{'author_email'}) {
- 				print "  <email>" . esc_html($co{'author_email'}) . "</email>\n";
- 			}
--			print "</author>\n" .
-+			print "</author>\n";
-+			unless ($tags) {
- 			      # use committer for contributor
--			      "<contributor>\n" .
-+			      print "<contributor>\n" .
- 			      "  <name>" . esc_html($co{'committer_name'}) . "</name>\n";
--			if ($co{'committer_email'}) {
+-			$href_params{'extra_options'} = '--no-merges';
+-			$link_attr{'-href'} = href(%href_params);
+-			$link_attr{'-title'} .= ' (no merges)';
+-			print "<link ".
+-			      "rel=\"$link_attr{'-rel'}\" ".
+-			      "title=\"$link_attr{'-title'}\" ".
+-			      "href=\"$link_attr{'-href'}\" ".
+-			      "type=\"$link_attr{'-type'}\" ".
+-			      "/>\n";
++			unless ($tag_view) {
++				$href_params{'extra_options'} = '--no-merges';
++				$link_attr{'-href'} = href(%href_params);
++				$link_attr{'-title'} .= ' (no merges)';
++				print "<link ".
++				      "rel=\"$link_attr{'-rel'}\" ".
++				      "title=\"$link_attr{'-title'}\" ".
++				      "href=\"$link_attr{'-href'}\" ".
++				      "type=\"$link_attr{'-type'}\" ".
++				      "/>\n";
 +			}
-+			if (!$tags && $co{'committer_email'}) {
- 				print "  <email>" . esc_html($co{'committer_email'}) . "</email>\n";
- 			}
--			print "</contributor>\n" .
--			      "<published>$cd{'iso-8601'}</published>\n" .
-+			print "</contributor>\n" unless $tags;
-+			print "<published>$cd{'iso-8601'}</published>\n" .
- 			      "<link rel=\"alternate\" type=\"text/html\" href=\"$co_url\" />\n" .
- 			      "<id>$co_url</id>\n" .
- 			      "<content type=\"xhtml\" xml:base=\"" . esc_url($my_url) . "\">\n" .
+ 		}
+ 
+ 	} else {
+@@ -4115,8 +4122,9 @@ sub git_footer_html {
+ 		}
+ 		$href_params{'-title'} ||= 'log';
+ 
++		my $tag_view = $href_params{-title} eq 'tags';
+ 		foreach my $format (qw(RSS Atom)) {
+-			$href_params{'action'} = lc($format);
++			$href_params{'action'} = ($tag_view ? 'tags_' : '') . lc($format);
+ 			print $cgi->a({-href => href(%href_params),
+ 			              -title => "$href_params{'-title'} $format feed",
+ 			              -class => $feed_class}, $format)."\n";
+@@ -8280,10 +8288,18 @@ sub git_rss {
+ 	git_feed('rss');
+ }
+ 
++sub git_tags_rss {
++	git_feed('rss', 'tags')
++}
++
+ sub git_atom {
+ 	git_feed('atom');
+ }
+ 
++sub git_tags_atom {
++	git_feed('atom', 'tags')
++}
++
+ sub git_opml {
+ 	my @list = git_get_projects_list($project_filter, $strict_export);
+ 	if (!@list) {
+@@ -8328,6 +8344,9 @@ XML
+ 		my $rss  = href('project' => $proj{'path'}, 'action' => 'rss', -full => 1);
+ 		my $html = href('project' => $proj{'path'}, 'action' => 'summary', -full => 1);
+ 		print "<outline type=\"rss\" text=\"$path\" title=\"$path\" xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
++		# and now the tags rss feed
++		$rss  = href('project' => $proj{'path'}, 'action' => 'tags_rss', -full => 1);
++		print "<outline type=\"rss\" text=\"$path tags\" title=\"$path tags\" xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
+ 	}
+ 	print <<XML;
+ </outline>
 -- 
 1.7.12.1.577.gff9625d
