@@ -1,68 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: problem with setlocale trick in gettext.c
-Date: Tue, 25 Sep 2012 10:31:36 -0700
-Message-ID: <7va9wevwjr.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8A+YvdGc6LM5baFqHoB91p6TAjQ9kKXuaPspvL--mfe0Q@mail.gmail.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: [PATCH] pathspec.c: Fix some sparse warnings
+Date: Tue, 25 Sep 2012 19:03:06 +0100
+Message-ID: <CAOkDyE8NGbApsF+v=UJUuaxvd9PYUfvf4yNDhNpHZ0tuqHHoBg@mail.gmail.com>
+References: <5061E6BD.2070109@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-	<avarab@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 19:31:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 25 20:03:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGYz9-0008UK-Sr
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 19:31:52 +0200
+	id 1TGZTc-0007qE-6T
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 20:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576Ab2IYRbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 13:31:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52319 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753893Ab2IYRbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 13:31:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FCCE8991;
-	Tue, 25 Sep 2012 13:31:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ANpNisLSWmsGlfItFMkzTETahxE=; b=A1zybV
-	qTvW9Zlk23DD+tTHSydCvCokgPTOLzeYlxQrftp0aRmu0nwrJZmjDx0KicLjsjC0
-	lSSmKqVx4cC4oRzgzpcmOReef6WhSpDozks4J7P9d4gzjI/MWXJe+q8QbXrCA9pa
-	9yqbY8o1/kYWmzpXqfHJPAwM5H1BxyB12FPQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G9ssBbpm6NRQFg4270rx/vQw2/RGttrO
-	T4ZQh5YQ44I6VHzc+dYIOeVvyfWdQ1+/f5fkspRgM4tjG0F4hjm0UkuhwEUR88Mf
-	kAPAc91wkvnindFCj8sDmsZnyUgMz51GUG9u3PVs3MCi6cYSZncyyKB3qvJLWhP2
-	0I017QXrbus=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D1178990;
-	Tue, 25 Sep 2012 13:31:38 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02DCD898F; Tue, 25 Sep 2012
- 13:31:37 -0400 (EDT)
-In-Reply-To: <CACsJy8A+YvdGc6LM5baFqHoB91p6TAjQ9kKXuaPspvL--mfe0Q@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 24 Sep 2012 21:08:57 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC4D0B54-0736-11E2-95C0-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751708Ab2IYSDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 14:03:10 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:58726 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750781Ab2IYSDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 14:03:08 -0400
+Received: by bkcjk13 with SMTP id jk13so1434793bkc.19
+        for <git@vger.kernel.org>; Tue, 25 Sep 2012 11:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=NboVDJCmw7yP/d/zfLpbA2ylAcQGTaqFhYtHA6Yf5A8=;
+        b=FKA3Gjjszly5CkTxO6yZxf/f9ag1+M4pxA2mz8jQgUD6HfeNfZzEkfQnuuLvwh0Zpq
+         +rEYnGoOsqSnZbNLF0V3zZp9FMUePKkuhiB3dKeHZ/IXeKhAmt05hyeE9pVj9SKVqHTt
+         a+X1zStN3/yu5Jl9F/ezLRUp6rE08vmUllOsWKQwuT26Z9erN5nsfVCaAKVrmTBrYEDw
+         NvOY7VguvlzAuw/ixewET/OAAgnoEWxOUPOdgdlzVjx+e6PHLJ3p2TU5I03E4Oiixegu
+         SBWpV+kmTr7gNYHNcNx7YtDexSA9c1yrc0aaF8KxJoLdFy+XuuvxRCBhdHzw8FgN3p68
+         mxBQ==
+Received: by 10.204.156.209 with SMTP id y17mr3981055bkw.134.1348596186809;
+ Tue, 25 Sep 2012 11:03:06 -0700 (PDT)
+Received: by 10.205.81.80 with HTTP; Tue, 25 Sep 2012 11:03:06 -0700 (PDT)
+In-Reply-To: <5061E6BD.2070109@ramsay1.demon.co.uk>
+X-Google-Sender-Auth: R9MIr7tlAiVHth-LfMONcIsaGgg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206368>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
-> I think the setlocale() trick in init_gettext_charset() messes up
-> locale support from library. Currently I get
+On Tue, Sep 25, 2012 at 6:15 PM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
 >
-> fatal: Could not switch to '/foo/': Kh?ng c? t?p tin ho?c th? m?c nh? v?y
+> Sparse issues a warning for all six external symbols defined in this
+> file. In order to suppress the warnings, we include the 'pathspec.h'
+> header file, which contains the relevant extern declarations for these
+> symbols.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>
+> Hi Adam,
+>
+> When you re-roll your 'as/check-ignore' branch could you please squash
+> this patch into commit a1080211 ("pathspec.c: move reusable code from
+> builtin/add.c", 20-09-2012).
 
-That pretty much matches what the big comment before your patch
-disables, doesn't it?  Could it be that newer/older libc differ
-in the behaviour around this code?
+Will do, thanks a lot!
