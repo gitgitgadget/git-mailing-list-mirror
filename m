@@ -1,64 +1,104 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/2] pretty: support right alignment
-Date: Mon, 24 Sep 2012 20:27:01 -0400
-Message-ID: <20120925002700.GA19586@sigill.intra.peff.net>
-References: <CACsJy8BP0vzWG-Po=WBVC_V5Z5_ysoCOTkU-XV3Hy_jVE4H1XQ@mail.gmail.com>
- <1348143976-4506-1-git-send-email-pclouds@gmail.com>
- <1348143976-4506-3-git-send-email-pclouds@gmail.com>
- <20120920143803.GA9527@lanh>
- <7v392cd4vi.fsf@alter.siamese.dyndns.org>
- <CACsJy8AAjxMN7MX09Eq4Dy6NJHMkyxGJZm9uZquXWTi0goAYLQ@mail.gmail.com>
- <7vvcf517bs.fsf@alter.siamese.dyndns.org>
+Subject: Re: Quickly searching for a note
+Date: Mon, 24 Sep 2012 20:38:55 -0400
+Message-ID: <20120925003855.GB19586@sigill.intra.peff.net>
+References: <7vy5k370n7.fsf@alter.siamese.dyndns.org>
+ <505CB21E.4040607@workspacewhiz.com>
+ <7vtxur3zxi.fsf@alter.siamese.dyndns.org>
+ <505CCD2A.8020003@workspacewhiz.com>
+ <505CD2FA.80200@kdbg.org>
+ <505CD7D0.2000505@workspacewhiz.com>
+ <20120921233723.GA29433@sigill.intra.peff.net>
+ <7v7grn3pfo.fsf@alter.siamese.dyndns.org>
+ <505DE30B.2000805@drmicha.warpmail.net>
+ <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 02:27:18 2012
+X-From: git-owner@vger.kernel.org Tue Sep 25 02:39:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGIze-0000ef-1M
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 02:27:18 +0200
+	id 1TGJBD-0005S5-Oo
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 02:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579Ab2IYA1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 20:27:08 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57455 "EHLO
+	id S1751830Ab2IYAjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 20:39:03 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57465 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238Ab2IYA1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 20:27:07 -0400
-Received: (qmail 7500 invoked by uid 107); 25 Sep 2012 00:27:34 -0000
+	id S1751570Ab2IYAjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 20:39:01 -0400
+Received: (qmail 7848 invoked by uid 107); 25 Sep 2012 00:39:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 20:27:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 20:27:01 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 20:39:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 20:38:55 -0400
 Content-Disposition: inline
-In-Reply-To: <7vvcf517bs.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206340>
 
-On Sun, Sep 23, 2012 at 01:17:43AM -0700, Junio C Hamano wrote:
+On Sat, Sep 22, 2012 at 01:23:56PM -0700, Junio C Hamano wrote:
 
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> > ... On the other hand, I don't
-> > really wish to turn pretty format machinery into a full feature text
-> > layout engine (by ripping of links/lynx?).
+> > On my mental scratch pad (yeah, that's where the bald spots are) I have
+> > the following more general idea to enhance the revision parser:
+> >
+> > --limit-run=<script>::
+> > --run=<script>:::
+> > These options run the script `<script>` on each revision that is walked.
+> > The script is run in an environment which has the variables
+> > `GIT_<SPECIFIER>` exported, where `<SPECIFIER>` is any of the specifiers
+> > for the `--format` option in the long format (the same as for 'git
+> > for-each-ref').
+> >
+> > In the case of `--limit-run`, the return code of `<script>` decides
+> > whether the commit is processed further (i.e. shown using the format in
+> > effect) or ignored.
 > 
-> That is very true.  We should restrain ourselves and avoid going
-> overboard piling shiny new toys on a not-so-useful foundation that
-> is not expressive enough.  One feature that is probably much more
-> needed on the foundation side would be some form of conditional
-> output, without which built-in output elements like --show-notes
-> cannot be emulated with --format option.
+> You could argue that the above is not an inpractical solution as
+> long as the user of --run, which spawns a new process every time we
+> need to check if a commit is worth showing in the log/rev-list
+> stream, knows what she is doing and promises not to complain that it
+> is no more performant than an external script that reads from
+> rev-list output and does the equivalent filtering.
+> 
+> I personally am not very enthused.
 
-The embedded lua patch series I just posted may interest (or horrify)
-the both of you:
+Nor me. I experimented long ago with a perl pipeline that would parse commit
+messages and allow Turing-complete grepping. I recall it was noticeably
+slow. I cannot imagine what forking for each commit would be like.
 
-  http://article.gmane.org/gmane.comp.version-control.git/206335
+Actually, wait, I can imagine it. Git has ~33K commits. Doing 'sh -c
+exit' takes on the order of .002s. That's a minute of processing to look
+at each commit in "git log", assuming the filtering itself takes 0
+seconds.
+
+> If we linked with an embeddable scripting language interpreter
+> (e.g. lua, tcl, guile, ...), it may be a more practical enhancement,
+> though.
+
+Agreed. I just posted a patch series that gives you --pretty lua
+support, though I haven't convinced myself it's all that exciting yet. I
+think it would be nicer for grepping, where the conditionals read more
+like regular code. Something like:
+
+  git log --lua-filter='
+    return
+      author().name.match("Junio") &&
+      note("p4").match("1234567")
+  '
+
+reads OK to me.
 
 -Peff
