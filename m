@@ -1,113 +1,89 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: RE: Can git pull from a mercurial repository?
-Date: Tue, 25 Sep 2012 16:42:35 +0200
-Message-ID: <002401cd9b2c$0168bcc0$043a3640$@schmitz-digital.de>
-References: <k39lir$gpm$1@ger.gmane.org> <50585F10.3080307@op5.se> <000a01cd959a$d8cd0730$8a671590$@schmitz-digital.de> <37D17798-4BDC-433D-A9B4-49F4352754D9@quendi.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 0/3] git log --pretty=lua
+Date: Tue, 25 Sep 2012 17:19:20 +0200
+Message-ID: <vpqvcf2ruyv.fsf@grenoble-inp.fr>
+References: <20120925002325.GA19560@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Andreas Ericsson'" <ae@op5.se>, <git@vger.kernel.org>
-To: "'Max Horn'" <postbox@quendi.de>
-X-From: git-owner@vger.kernel.org Tue Sep 25 16:42:59 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 25 17:19:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGWLi-0001bi-QQ
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 16:42:59 +0200
+	id 1TGWvG-0002en-60
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 17:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754852Ab2IYOmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 10:42:50 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:54335 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753603Ab2IYOmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 10:42:49 -0400
-Received: from DualCore (dsdf-4db53c2e.pool.mediaWays.net [77.181.60.46])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0La0V7-1Tjr0k0GE9-00lOgM; Tue, 25 Sep 2012 16:42:47 +0200
-In-Reply-To: <37D17798-4BDC-433D-A9B4-49F4352754D9@quendi.de>
-X-Mailer: Microsoft Outlook 14.0
-thread-index: AQGhEpNGyEwugTaQMUDb1fc5WliObQHoH3lpAwxm1UkBakq6SJfBN2Zg
-Content-Language: de
-X-Provags-ID: V02:K0:kg6ksJZNySn7ZviNPXN7rgLmn1h3NjO0BcHzJR6BZUY
- 2Qz510vyCYFEySKmCIe9nwKXlKt3Dljd1IuJMPCtJ0LPTZsQ1W
- zx9PbmKg13vH1Y7stD6IQemAd6I2p5uMqZJeeFHVC6yQKykczV
- HXWH70DDdi+u5YSB0qdr2iD3+Dd1/+bS+/78rjaXxoQl0tff7W
- v5fQT4E6NkmF40gG82uAbOaMsSJDvBKLPR3w71IotlhXF8IITJ
- hU/y8YMEk7cTwCTBMDdFT/3LDfDULwl1fMFiP0L+dAaOxS9rv5
- KWfiPPhrkQviduD7TdRWdsk6CAw1GKtKw8EieyqfquZjtaeuXF
- +N3vmZjp1pM7FO3tfam2NgcL/70pG0smXdL005/nA9B5kkenVe
- thUd2X+eje1+Q==
+	id S1754811Ab2IYPTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 11:19:32 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59511 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753870Ab2IYPTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 11:19:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q8PFEEXR017801
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 25 Sep 2012 17:14:14 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TGWuv-0001Kz-7S; Tue, 25 Sep 2012 17:19:21 +0200
+In-Reply-To: <20120925002325.GA19560@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Sep 2012 20:23:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 25 Sep 2012 17:14:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8PFEEXR017801
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1349190855.96585@vTGls9FWYOzG6ZiwOKVung
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206362>
 
-> From: Max Horn [mailto:postbox@quendi.de]
-> Sent: Tuesday, September 25, 2012 4:15 PM
-> To: Joachim Schmitz
-> Cc: 'Andreas Ericsson'; git@vger.kernel.org
-> Subject: Re: Can git pull from a mercurial repository?
-> 
-> Hi there,
-> 
-> 
-> On 18.09.2012, at 14:40, Joachim Schmitz wrote:
-> 
-> >> From: Andreas Ericsson [mailto:ae@op5.se]
-> >> Sent: Tuesday, September 18, 2012 1:46 PM
-> >> To: Joachim Schmitz
-> >> Cc: git@vger.kernel.org
-> >> Subject: Re: Can git pull from a mercurial repository?
-> >>
-> >> On 09/18/2012 01:22 PM, Joachim Schmitz wrote:
-> >>> Is there an easy way to get git to clone/pull from a Mercurial repository?
-> >>>
-> >>
-> >> Yes. Google "git remote helpers" and you'll most likely find it.
-> >
-> > Well, I found a few. No idea how to get them to work though (so far for the 'easy' part of my question)
-> 
-> I think there is a lot of demand for a "git-hg" bridge, a way to seemlessly access a Mercurial repository as if it was a git
-repository. A
-> converse to hg-git <http://hg-git.github.com/>
-> 
-> As you discovered, there are several attempts to this. A recent overview over some of them can be found here:
-> 
->   https://github.com/dubiousjim/yagh/blob/master/README.md
-> 
-> Another remark:
-> 
-> 
-> >
-> > It seems https://github.com/rfk/git-remote-hg requires Python 2.5 (and I only have 2.4), also I have no idea how to get it
-installed
-> > https://github.com/SRabbelier/git is 3 years old, apparently never made it into git, guess for a reason?
-> > Then I found https://github.com/fingolfin/git/commits/remote-hg, looks very confusing to me...
-> 
-> This is mine, and I am sorry that it causes confusion -- but in fact, my goal it is kind of a continuation of the
-> https://github.com/SRabbelier/git code. OR rather, it collects code others wrote to improve that codebase, and I just added a few
-fixes
-> that made it work for me.
-> 
-> In particular, I tried to figure out the reasons for why it never made it into git, and in the process, created this Wiki page:
-> <https://github.com/msysgit/msysgit/wiki/Guide-to-git-remote-hg>. Which attempts to document how to use this code, and what needs
-to
-> be done. My hope was that perhaps more people would be interested in this, and in helping out with it, but so far no such luck.
+Jeff King <peff@peff.net> writes:
 
-Ah, with that pages it gets much clearer! Only how should anyone know that https://github.com/fingolfin/git/commits/remote-hg is
-related in any form or shape with https://github.com/msysgit/msysgit/wiki/Guide-to-git-remote-hg?
-I'm afraid it still won't help me much though, as I guess it too requites Python 2.5 or later, as it uses the Mercuroal Python API
-(and that actually may be the reason why it never made it into git? I believe to have read somewhere that git tries to restrict
-itself to Python 2.4)
+> We've talked off and on about extending the --pretty=format specifiers
+> to something more flexible. There's also been talk recently of more
+> flexible commit-filtering (e.g., grepping individual notes).
 
-> My goals were noble, but you are the second person who considers this work to be confusing, so if that is what the majority
-thinks, I am
-> willing to remove that text again (or rather, hide it away in some private repository).
+Mercurial has a similar thing, which can be a source of inspiration:
 
-No, please don't. Rather make that clear on https://github.com/fingolfin/git/commits/remote-hg ...
+http://www.selenic.com/hg/help/revsets
 
-Bye, Jojo
+On the one hand, if find it a bit overkill to have a full language for
+this, but on the other hand, it allows expressing easily and explicitely
+boolean operators.
+
+I would find
+
+  git log 'grep(foo) or grep(bar)'
+
+very intuitive and elegant, while I never know whether
+
+  git log --grep=foo --grep=bar
+
+is a OR or a AND (there was a patch recently to clarify the doc).
+
+Note that Mercurial's version seem to really act on sets of commits, not
+just individual commits, as it allows things like
+
+  hg log -r 'sort(date("May 2008"), user)'
+
+or the equivalent of git's negative revision argument :
+
+  "x - y"
+      Changesets in x but not in y.
+
+So it would be more a new "git log --filter='some expression'", not a
+--pretty=lua.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
