@@ -1,89 +1,69 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Can git pull from a mercurial repository?
-Date: Tue, 25 Sep 2012 14:56:09 +0200
-Message-ID: <k3sepn$f1e$1@ger.gmane.org>
-References: <k39lir$gpm$1@ger.gmane.org> <50585F10.3080307@op5.se> <000a01cd959a$d8cd0730$8a671590$@schmitz-digital.de> <k3rnak$qp$1@ger.gmane.org>
+Date: Tue, 25 Sep 2012 10:39:47 -0400
+Message-ID: <CACPiFC+ZV=_7dHyfr=25JYdHi5nmZct1-N8J67893xub6EPfyA@mail.gmail.com>
+References: <k39lir$gpm$1@ger.gmane.org> <50585F10.3080307@op5.se>
+ <000a01cd959a$d8cd0730$8a671590$@schmitz-digital.de> <k3rnak$qp$1@ger.gmane.org>
+ <k3sepn$f1e$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 25 16:24:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Tue Sep 25 16:40:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGW3c-0001EC-6v
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 16:24:16 +0200
+	id 1TGWJA-0000D8-4x
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 16:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754536Ab2IYOYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 10:24:06 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40194 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754429Ab2IYOYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 10:24:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TGW3S-0001A5-Iz
-	for git@vger.kernel.org; Tue, 25 Sep 2012 16:24:06 +0200
-Received: from dsdf-4db53c2e.pool.mediaways.net ([77.181.60.46])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Sep 2012 16:24:06 +0200
-Received: from jojo by dsdf-4db53c2e.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Sep 2012 16:24:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db53c2e.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754963Ab2IYOkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 10:40:09 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:46920 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753743Ab2IYOkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 10:40:07 -0400
+Received: by pbbrr4 with SMTP id rr4so213607pbb.19
+        for <git@vger.kernel.org>; Tue, 25 Sep 2012 07:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TyTaJW4J1+nuvlHR09XWNXjzLCj4ZUsSfpw2lAv//Is=;
+        b=TtUFsSM8BGVTRD4Dvqs07YoGAXBmkVZDLBEUe98/mI4XyboxgD6YZyxysvDa2n2IUK
+         6d/cMnxxU39DQU1+KWziRshReK1igq3Sn+wrelTBFESI5kR8Je/BahCkLS8RhU710UFa
+         smjdcNi1UNGTFdu0gsy8bQ041yddm6tMsPPiwoBUzBsPbJ6bQAZ2MEi0xHndtssRSBpp
+         0wDtFedw1/Cs6jUORBcZ3QVWV2kFCJ9fyKtJWZh+4ymZw+tikzKIs+YTDQ4BsK7/eVuc
+         Y8ScP3kSQ/VLvmyp4/lM4zC4mEIPFnfyFqhN8AQ3PIEdZnq9R+Vn4f0hdYsyhAO8jVOZ
+         Bhwg==
+Received: by 10.68.189.164 with SMTP id gj4mr46528749pbc.48.1348584007484;
+ Tue, 25 Sep 2012 07:40:07 -0700 (PDT)
+Received: by 10.66.48.74 with HTTP; Tue, 25 Sep 2012 07:39:47 -0700 (PDT)
+In-Reply-To: <k3sepn$f1e$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206359>
 
-Gelonida N wrote:
-> On 09/18/2012 02:40 PM, Joachim Schmitz wrote:
->>> From: Andreas Ericsson [mailto:ae@op5.se]
->>> Sent: Tuesday, September 18, 2012 1:46 PM
->>> To: Joachim Schmitz
->>> Cc: git@vger.kernel.org
->>> Subject: Re: Can git pull from a mercurial repository?
->>>
->>> On 09/18/2012 01:22 PM, Joachim Schmitz wrote:
->>>> Is there an easy way to get git to clone/pull from a Mercurial
->>>> repository?
->>>
->>> Yes. Google "git remote helpers" and you'll most likely find it.
->>
->> Well, I found a few. No idea how to get them to work though (so far
->> for the 'easy' part of my question) It seems
->> https://github.com/rfk/git-remote-hg requires Python 2.5
->> (and I only have 2.4), also I have no idea how to get it installed
->> https://github.com/SRabbelier/git is 3 years old, apparently never
->> made it into git, guess for a reason?  Then I found
->> https://github.com/fingolfin/git/commits/remote-hg,
->> looks very confusing to me...
->
-> Install a newer python and hg
-> Are you really sure, that python 2.5 doesn't exist for your machine?
+On Tue, Sep 25, 2012 at 8:56 AM, Joachim Schmitz
+<jojo@schmitz-digital.de> wrote:
+> For this platform (HP NonStop) basically nothing is available from any
+> repository on the web but ITUGLIB (http://ituglib.connect-community.org) and
+> that's the machine I'm working on/for ;-)
 
-Yes, I am sure. Python 2.4 had been ported more than 5 years ago by a former
-workmate, otherwise we wouldn't even have that.
+Use a more modern machine as an interim point. You can do the import
+to git there, then pull from that intermediate repo from pure git.
 
-> Most non embedded devices should  offer python 2.5 or newer
-> (for some distros you just have to add 'alternative' repositories)
+hth,
 
-For this platform (HP NonStop) basically nothing is available from any
-repository on the web but ITUGLIB (http://ituglib.connect-community.org) and
-that's the machine I'm working on/for ;-)
 
-We're currently trying to port Python-2.7, but it ain't easy...
 
-Bye, Jojo
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- Software Architect - OLPC
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
