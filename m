@@ -1,93 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] git log --pretty=lua
-Date: Tue, 25 Sep 2012 09:40:39 -0700
-Message-ID: <7vhaqmvywo.fsf@alter.siamese.dyndns.org>
-References: <20120925002325.GA19560@sigill.intra.peff.net>
- <vpqvcf2ruyv.fsf@grenoble-inp.fr>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] pathspec.c: Fix some sparse warnings
+Date: Tue, 25 Sep 2012 18:15:41 +0100
+Message-ID: <5061E6BD.2070109@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Sep 25 18:41:15 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: git@adamspiers.org
+X-From: git-owner@vger.kernel.org Tue Sep 25 19:19:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGYC7-0001a1-M5
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 18:41:12 +0200
+	id 1TGYnL-0002rM-BI
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 19:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757493Ab2IYQk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 12:40:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59001 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757486Ab2IYQkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 12:40:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A64E9878;
-	Tue, 25 Sep 2012 12:40:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3jWz5bbRCwWnRhoxKMJZo4R9rqw=; b=MBRUxx
-	IVq4ApRMT6RZQIeZj1W+F9Pcro7xE4U6QlYYLEGKKvfdRoSYeUvslq2ADTv5ZrAE
-	sOv4zQNZiJDIJ/bUtQKNUaNVieKbnkcfBmWHJE0X/aaug5yHbZXeOSE99rlk69Qp
-	N1LkhjcwAk/xS6GKfHRrWzF+oTR6RHKl4NjLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nM3kC0BSn0PvcQ5ngmVi+aMUBWuKxu/n
-	CDbx8oN7TiG1fXHOXSqgaAzJGtIXoA/qdg6/rV9UZtpuIDu4CO0ON0m/r3Vy0hmZ
-	FfqdQlrAR5KMpDWmM9oZMiIXljYmaBK8D0ykJZRF5tPZE3p8cULD2/e7uD4aUgke
-	QETkHZYWe/s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBA969877;
-	Tue, 25 Sep 2012 12:40:41 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 515899876; Tue, 25 Sep 2012
- 12:40:41 -0400 (EDT)
-In-Reply-To: <vpqvcf2ruyv.fsf@grenoble-inp.fr> (Matthieu Moy's message of
- "Tue, 25 Sep 2012 17:19:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE60D8DE-072F-11E2-B024-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757484Ab2IYRT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 13:19:28 -0400
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:52103 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757247Ab2IYRT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 13:19:27 -0400
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id BC01C384081;
+	Tue, 25 Sep 2012 18:19:25 +0100 (BST)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id A1444384080;	Tue, 25 Sep 2012 18:19:25 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;	Tue, 25 Sep 2012 18:19:24 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206366>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Jeff King <peff@peff.net> writes:
->
->> We've talked off and on about extending the --pretty=format specifiers
->> to something more flexible. There's also been talk recently of more
->> flexible commit-filtering (e.g., grepping individual notes).
->
-> Mercurial has a similar thing, which can be a source of inspiration:
->
-> http://www.selenic.com/hg/help/revsets
->
-> On the one hand, if find it a bit overkill to have a full language for
-> this, but on the other hand, it allows expressing easily and explicitely
-> boolean operators.
->
-> I would find
->
->   git log 'grep(foo) or grep(bar)'
->
-> very intuitive and elegant,...
+Sparse issues a warning for all six external symbols defined in this
+file. In order to suppress the warnings, we include the 'pathspec.h'
+header file, which contains the relevant extern declarations for these
+symbols.
 
-You have to be careful with "grep", though.  It would be unclear
-what "and" there would mean if you replaced your "or" with.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Peff's earlier examples e.g.
+Hi Adam,
 
-  git log --lua-filter='
-    return
-      author().name.match("Junio") &&
-      note("p4").match("1234567")
-  '
+When you re-roll your 'as/check-ignore' branch could you please squash
+this patch into commit a1080211 ("pathspec.c: move reusable code from
+builtin/add.c", 20-09-2012).
 
-  git log --lua-filter='return subject().len > 100'
+Thanks!
 
-are clearly good ones that illustrate the power of filtering.
+ATB,
+Ramsay Jones
+
+ pathspec.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pathspec.c b/pathspec.c
+index 9525c7c..5dba000 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "dir.h"
++#include "pathspec.h"
+ 
+ void validate_path(const char *prefix, const char *path)
+ {
+-- 
+1.7.12
