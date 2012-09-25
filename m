@@ -1,9 +1,8 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Quickly searching for a note
-Date: Mon, 24 Sep 2012 20:38:55 -0400
-Message-ID: <20120925003855.GB19586@sigill.intra.peff.net>
-References: <7vy5k370n7.fsf@alter.siamese.dyndns.org>
- <505CB21E.4040607@workspacewhiz.com>
+Date: Mon, 24 Sep 2012 20:42:23 -0400
+Message-ID: <20120925004223.GC19586@sigill.intra.peff.net>
+References: <505CB21E.4040607@workspacewhiz.com>
  <7vtxur3zxi.fsf@alter.siamese.dyndns.org>
  <505CCD2A.8020003@workspacewhiz.com>
  <505CD2FA.80200@kdbg.org>
@@ -12,93 +11,69 @@ References: <7vy5k370n7.fsf@alter.siamese.dyndns.org>
  <7v7grn3pfo.fsf@alter.siamese.dyndns.org>
  <505DE30B.2000805@drmicha.warpmail.net>
  <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
+ <505F2598.7080704@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Joshua Jensen <jjensen@workspacewhiz.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 02:39:16 2012
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Sep 25 02:42:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGJBD-0005S5-Oo
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 02:39:16 +0200
+	id 1TGJEU-0006oV-GH
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Sep 2012 02:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab2IYAjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2012 20:39:03 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57465 "EHLO
+	id S1751601Ab2IYAm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2012 20:42:29 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:57479 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751570Ab2IYAjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2012 20:39:01 -0400
-Received: (qmail 7848 invoked by uid 107); 25 Sep 2012 00:39:28 -0000
+	id S1750911Ab2IYAm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2012 20:42:29 -0400
+Received: (qmail 7971 invoked by uid 107); 25 Sep 2012 00:42:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 20:39:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 20:38:55 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Sep 2012 20:42:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2012 20:42:23 -0400
 Content-Disposition: inline
-In-Reply-To: <7vk3vl3ixv.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <505F2598.7080704@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206341>
 
-On Sat, Sep 22, 2012 at 01:23:56PM -0700, Junio C Hamano wrote:
+On Sun, Sep 23, 2012 at 05:07:04PM +0200, Michael J Gruber wrote:
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> > If we linked with an embeddable scripting language interpreter
+> > (e.g. lua, tcl, guile, ...), it may be a more practical enhancement,
+> > though.
+> > 
 > 
-> > On my mental scratch pad (yeah, that's where the bald spots are) I have
-> > the following more general idea to enhance the revision parser:
-> >
-> > --limit-run=<script>::
-> > --run=<script>:::
-> > These options run the script `<script>` on each revision that is walked.
-> > The script is run in an environment which has the variables
-> > `GIT_<SPECIFIER>` exported, where `<SPECIFIER>` is any of the specifiers
-> > for the `--format` option in the long format (the same as for 'git
-> > for-each-ref').
-> >
-> > In the case of `--limit-run`, the return code of `<script>` decides
-> > whether the commit is processed further (i.e. shown using the format in
-> > effect) or ignored.
-> 
-> You could argue that the above is not an inpractical solution as
-> long as the user of --run, which spawns a new process every time we
-> need to check if a commit is worth showing in the log/rev-list
-> stream, knows what she is doing and promises not to complain that it
-> is no more performant than an external script that reads from
-> rev-list output and does the equivalent filtering.
-> 
-> I personally am not very enthused.
+> Yes, the idea is "extend, don't embed" the other way round, so to say. I
+> still think extending "git log" so that it can call a script with commit
+> info already in the environment gives a more convenient approach then
+> "embedding git rev-list" into your own script. It's not more performant,
+> of course.
 
-Nor me. I experimented long ago with a perl pipeline that would parse commit
-messages and allow Turing-complete grepping. I recall it was noticeably
-slow. I cannot imagine what forking for each commit would be like.
+I think Junio is going the other way than you think. That is, you still
+run rev-list, but rather than call a sub-program, you call a snippet of
+an embeddable script. Which is the same idea as yours, but theoretically
+way faster.
 
-Actually, wait, I can imagine it. Git has ~33K commits. Doing 'sh -c
-exit' takes on the order of .002s. That's a minute of processing to look
-at each commit in "git log", assuming the filtering itself takes 0
-seconds.
+> I just see many more requests of the type "grep notes" coming, i.e.
+> limitting based on other commit info, or in a different way then already
+> possible. Just image you want to find out who's responsible for those
+> commits in git.git with subject lengths > 100 ;)
 
-> If we linked with an embeddable scripting language interpreter
-> (e.g. lua, tcl, guile, ...), it may be a more practical enhancement,
-> though.
+Like this:
 
-Agreed. I just posted a patch series that gives you --pretty lua
-support, though I haven't convinced myself it's all that exciting yet. I
-think it would be nicer for grepping, where the conditionals read more
-like regular code. Something like:
+  git log --lua-filter='return subject().len > 100'
 
-  git log --lua-filter='
-    return
-      author().name.match("Junio") &&
-      note("p4").match("1234567")
-  '
-
-reads OK to me.
+? :)
 
 -Peff
