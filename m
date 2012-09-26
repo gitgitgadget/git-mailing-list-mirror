@@ -1,116 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] t/test-lib.sh: do not trust $SHELL
-Date: Wed, 26 Sep 2012 09:19:36 +0530
-Message-ID: <CALkWK0=1Bep0gBJAQQefDiZ7LMkXqXt91jPkgYkac0QkMBgOGw@mail.gmail.com>
-References: <505CCA55.6030609@gmail.com> <1348260766-25287-1-git-send-email-artagnon@gmail.com>
- <20120921205834.GC22977@sigill.intra.peff.net> <CALkWK0kRzN_yQZ1JqJogBs6Z1nLhofBijHzeWR5YfQYHOtpaBA@mail.gmail.com>
- <20120921211217.GA24134@sigill.intra.peff.net> <CALkWK0nLLEF7wnUhF0JUAZVP6GG3KHmuYSDZLPS7uGCZPfhV3w@mail.gmail.com>
- <m2k3vn9gyu.fsf@igel.home> <7vhaqr3t6j.fsf@alter.siamese.dyndns.org>
- <CALkWK0kxmD_HJtnV0ShSdpgSjoLQHtv0=b4s=utG52zFLb2Bjg@mail.gmail.com>
- <7vwqzm3bhf.fsf@alter.siamese.dyndns.org> <CALkWK0nTWQ3g75fN5wQLwgeW986vAzGdXajSGCY5SdpK8W=0aA@mail.gmail.com>
- <CALkWK0kWJ3ndEMGzyGGMEa+ko3BTShC7_o-HVsXzFCGwRem5Jw@mail.gmail.com> <7vobkx3j9i.fsf@alter.siamese.dyndns.org>
+From: Jonathan Johnson <me@jondavidjohn.com>
+Subject: Bug in Submodule add
+Date: Tue, 25 Sep 2012 22:18:05 -0600
+Message-ID: <BC634E06939C44239106E7A8DD229130@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Andreas Schwab <schwab@linux-m68k.org>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 05:50:08 2012
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 26 06:18:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGidU-0006ZB-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 05:50:08 +0200
+	id 1TGj4z-00019e-NO
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 06:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790Ab2IZDt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2012 23:49:58 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:44577 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107Ab2IZDt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2012 23:49:57 -0400
-Received: by qcro28 with SMTP id o28so127629qcr.19
-        for <git@vger.kernel.org>; Tue, 25 Sep 2012 20:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0SUCt+2hwk3IP0EsUZqxDR7PFHtzYG7xb4G6u7WHcn8=;
-        b=pofKA5LRLTaXUJmRoTj1sNf0tRbjMSSRwuDWcGIVTmorXnuSWITxxCERzVL76iYpDk
-         DGz/+PgAbvADfgqG5F49HK4nhZZ3EtSrNdr7TVPRrEKaUl5zgnUpec5QpecCwlbraAF7
-         yB0SQDHCwfTa6nXpXY3xrr9QPTOgITiqImofqFH/NWK3CrGUAWMdCYEaDQUHMk3/LGV/
-         ySa61A93A1X8a3Oe/vHjRyacdANIblQlFeAsixI0Cl5fCGBduUE1fTnncDKABwnNEj/C
-         +HiQPKrLrpAqrSngfJckRCBjItCo+cU8rYs6h9x34ZRVZuawH1m/ODZCqdM0UG4v7UAz
-         0cTA==
-Received: by 10.224.58.147 with SMTP id g19mr44828777qah.77.1348631397119;
- Tue, 25 Sep 2012 20:49:57 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Tue, 25 Sep 2012 20:49:36 -0700 (PDT)
-In-Reply-To: <7vobkx3j9i.fsf@alter.siamese.dyndns.org>
+	id S1750995Ab2IZESM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 00:18:12 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:57407 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750843Ab2IZESL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 00:18:11 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1226085pbb.19
+        for <git@vger.kernel.org>; Tue, 25 Sep 2012 21:18:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:message-id:subject:x-mailer:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-gm-message-state;
+        bh=+XU3KWelurwjk7189dtQL1ToEtr8O5GW4GeUTLI7bp4=;
+        b=VTrY/3s8aq01ORKxqh3388rY7L5Hri5/3Y3/hVMRar9rDAAgbxstFCQU+APobeMpci
+         eD6aokq1HkuLixs7m9GnMRviGWVCHh1Wwtkwr6PL/ozLUUFSL6MtVou8NSAqzkLHnLO+
+         L9I4dQ8jfOczielYXFKiXCn4T4yKV3e047Sq9t0wCqKXRItBpg4Rn6WDlM/kzoZ86dNc
+         DYdHtD7yFFqGeiIBrk0pu5MWARru8I/vAhL7puc03eAD90+JfXokqQS5FdK2OV6I04Px
+         /IOQF8ui0ffQTYB75OHqFoZIkyt/LDw7gKR3eB4kQTsTf7Y52PF9Vcx6/+lR6vnLp4+1
+         OJrQ==
+Received: by 10.68.242.231 with SMTP id wt7mr51081370pbc.99.1348633090936;
+        Tue, 25 Sep 2012 21:18:10 -0700 (PDT)
+Received: from [192.168.168.102] (c-71-237-124-199.hsd1.co.comcast.net. [71.237.124.199])
+        by mx.google.com with ESMTPS id j9sm1228136pav.15.2012.09.25.21.18.07
+        (version=SSLv3 cipher=OTHER);
+        Tue, 25 Sep 2012 21:18:09 -0700 (PDT)
+X-Mailer: sparrow 1.6.3 (build 1172)
+Content-Disposition: inline
+X-Gm-Message-State: ALoCoQnC94EzlqLOEMUNW7D1ynM3BBS5sUUbAaD6odgxi/QES3nX2QeHo5IquqbxVhrcToc8N/Y4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206393>
 
-Hi Junio,
+I believe I have found an issue with the way `submodule add` detects a submodule that already exists in the repository. 
 
-Junio C Hamano wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->
->> Here's a patch.
->>
->> -- 8< --
->> From: Ramkumar Ramachandra <artagnon@gmail.com>
->> Date: Sat, 22 Sep 2012 10:25:10 +0530
->> Subject: [PATCH] test-lib: do not trust $SHELL
->>
->> Do not trust $SHELL to be a bourne-compatible shell.  Instead, use the
->> Makefile variable $SHELL_PATH.  This fixes a bug: when a test was run
->> with --tee and $SHELL was set to ZSH, $PATH on line 479 was not
->> getting split due to ZSH not respecting $IFS.
->>
->> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
->> ---
->
-> The part that this starts letting run, which the original "Re-run
-> the command under tee as early as possible" wanted to avoid running,
-> does not affect anything that would affect how we run that tee magic
-> (e.g. "mkdir -p test-results" will still create it directly inside
-> the directory the test script was started in), so I think this patch
-> is safe _for now_.
->
-> However, it forces people who need to update earlier parts of this
-> script to be extra careful; it has been true before the patch, and
-> the patch makes it even more so.
->
-> I am not opposed to queuing this as an interim solution, but I
-> wonder if we can get rid of that double-launch altogether.
+To reproduce
 
-I see you've queued it in `pu` after rewriting the commit message.
+1) add a git submodule in a specific location (we'll say it's at `./submodule/location`)
+2) go through the normal steps of removing a submodule, as listed here - https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
+3) Now the submodule is completely removed and there is no reference to it in .gitmodules or .git/config
+4) Re-add a different repository at the same location (`./submodule/location`)
 
-> Instead of re-launching the script with its output piped to "tee",
-> can't we do the same by redirecting our standard output to the file
-> in the file, and spawn a "tail -f" that reads from the file and
-> outputs to our original output?  Something along the lines of:
->
->         mkdir -p test-results
->         tee_base=test-results/$(basename "$0" .sh)
->
->         # empty the file and start "tail -f" on it ...
->         : >"$tee_base.out"
->         ( tail -f "$tee_base.out" ) &
->         tee_pid=$!
->         trap 'kill $tee_pid; exit' 0 1 2 3
->         # ... and then redirect our output to it
->         exec >"$tee_base.out"
->
-> and wrap it in a shell helper function that is called from where the
-> parsing of the command line arguments for "--tee" happens, and don't
-> forget to kill $tee_pid when we exit.
->
-> Hrm?
+Expected - The new submodule repository will be set up at ./submodule/location and have the new repository as its origin
 
-Good idea.  I'll write a patch to do this once the interim solution
-graduates to `master`.
+What Actually Happens - The new submodule uses the existing `$gitdir` (old repository) as the actual backing repository to the submodule, but the new repository is reflected in .gitmodules and .git/config.
 
-Ram
+So to recap, the result is that `git remote show origin`  in the submodule shows a different origin than is in .gitmodules and .git/config
+
+One simple step to remedy this would be to add the deletion of the backing repository from the .git/modules directory, but again, I think an actual command to take care of all of these steps is in order anyways.  Not sure you want to encourage people poking around in the .git directory.
+
+If this is already resolved in the newest versions, please disregard
+
+Thanks!
+
+Jonathan Johnson
+
+http://jondavidjohn.com | me@jondavidjohn.com
