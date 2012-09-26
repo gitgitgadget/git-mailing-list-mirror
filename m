@@ -1,67 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problem completing remotes when .git/remotes exits
-Date: Tue, 25 Sep 2012 16:43:59 -0700
-Message-ID: <7vbogtvfb4.fsf@alter.siamese.dyndns.org>
-References: <505A2330.9040800@kdbg.org> <20120925230045.GA13266@goldbirke>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: /* in .gitignore
+Date: Tue, 25 Sep 2012 17:03:22 -0700
+Message-ID: <CAE1pOi2kU0dAqZVDwJAG9frG4Oq4rswtE85AL2Mk9eNCjRHhGg@mail.gmail.com>
+References: <CAE1pOi1vEGVcg5wn9VjkSVmMO_hparmYP0hn86XwpSpMmB=Peg@mail.gmail.com>
+ <7vobktvgq8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 01:44:21 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 02:04:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGenX-0006YJ-Sw
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 01:44:16 +0200
+	id 1TGf7H-0006bz-Jz
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 02:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392Ab2IYXoF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2012 19:44:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39484 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750920Ab2IYXoD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Sep 2012 19:44:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 567838769;
-	Tue, 25 Sep 2012 19:44:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5uYESg4H15Ze
-	LvL9VDaC9C3lzD8=; b=DFe1vQrDcvxQP9z12cUL1Emt8bJDy8E9XWWjnWsthUJq
-	o3tttdAn92KMzSsSa4dLmbpKFJG7W0mu+lEA7hZQXIKxefSWVb6XUDA6CdrBXhB1
-	bz9bQwQ5pseJIbk6qmIGh7Z593sMRYWCPRGwN7L6ObBn61LOsRZYEgdtCbxukeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=p/LtTc
-	FtwZCvNOGPpT74MUsFlvS05vsJDosJwrgBSimngdwo51+GUFPD7a47v6C75jGzWj
-	WpkGvJ2suOFxWzQjZaxqusjqPTGgKhnJJy/OkHB8H+Fm/XTJ+2rOtY93jIOWPeDN
-	KGkr4suVz7vXrxY/LX0rhOn9amlfA2atD10eU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 110718766;
-	Tue, 25 Sep 2012 19:44:02 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 845998764; Tue, 25 Sep 2012
- 19:44:01 -0400 (EDT)
-In-Reply-To: <20120925230045.GA13266@goldbirke> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of "Wed, 26 Sep 2012 01:00:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E21531F4-076A-11E2-97A6-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751468Ab2IZADo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2012 20:03:44 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:33614 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120Ab2IZADo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2012 20:03:44 -0400
+Received: by bkcjk13 with SMTP id jk13so5793bkc.19
+        for <git@vger.kernel.org>; Tue, 25 Sep 2012 17:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SQJLxn7S87XxfZoeSVentOTxHf6mNUCtFOfLM88YPDk=;
+        b=B/cJ9ue6ZdSxvby20Kl3vXcEOmCmcNx/5KZD4rdhYHzY0RjyMBPG9I3KP+MtgdHgFk
+         +TeNsoqTwX7A6dPStrBjJ0F+ekXbQFnz/ytwrsNkBzsraaU9uSGbcPTtE/bWiAblN9ND
+         JcMnQAGz87VgajKbynLkfNFhYjnpTWuumOGePSnFtQwgROQEkMxwWXqY/6cRak9/QfeJ
+         uBLUzCjMHJOWZcRYzZ/h+ErUqq0DsycIuwsrhw1IAcR4H1r8Q7HrskfpOTeiFBkaRxBm
+         az5m2a5FHJOrjfcOIn8/ZZ3tq+bzP48du2ZHjXf7EtBC4/D1BOIve87X2yfRxgo2806p
+         w7Kw==
+Received: by 10.204.130.152 with SMTP id t24mr452005bks.138.1348617822603;
+ Tue, 25 Sep 2012 17:03:42 -0700 (PDT)
+Received: by 10.205.32.15 with HTTP; Tue, 25 Sep 2012 17:03:22 -0700 (PDT)
+In-Reply-To: <7vobktvgq8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206387>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On 25 September 2012 16:13, Junio C Hamano <gitster@pobox.com> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>
+>> Naturally, this behaviour makes perfect sense: "/*" means everything.
+>> Still, I was wondering whether it might be a good idea to make an
+>> exception for '.gitignore' itself? Then if somebody *really* wanted to
+>> ignore '.gitignore' they could add "/.gitignore" to '.gitignore'?
+>
+> If somebody is sick enough to ignore "everything", he can add "/*"
+> to the .gitignore file and in order to make sure he knows what he is
+> doing and he is doing what he thinks is doing, he would check with
+> "git diff --stat HEAD" etc. before committing, and double check with
+> "git show --stat" etc. after committing.
 
-> -	test -d "$d/remotes" && ls -1 "$d/remotes"
-> +	test -d "$d/remotes" && command ls -1 "$d/remotes"
+Ignoring everything is not quite so "sick". :-) My use case is
+Eclipse's .metadata directory. This directory is *huge* but only
+.metadata/.plugins/org.eclipse.core.runtime/.settings/*.prefs is
+really of interest (and not even all of those files). The subset of
+*.prefs that we are interested in will allow us to share Eclipse
+configuration settings (things like formatting settings and which
+warnings we care about). So I have several '.gitignore' files with
+"/*" + "!/some-dir/". [To make things even more interesting, the
+".settings" directory should be ignored in all other places (so it's
+in our top level '.gitignore').]
 
-Yuck.  For normal scripts, nobody sane would define "alias" for
-non-interactive environments, but because these things work in an
-interactive environment, we have to protect ourselves from user
-aliases.  Not just "ls", but "test" we see above may misbehave X-<.
+I would be very happy to find out better ways to handle this
+particular scenario. I had quite a struggle getting it to work.
+
+> ".gitignore" (or ".gitattributes" for that matter) shouldn't be any
+> different from your ordinary tracked contents.  If you have "*.o" in
+> the ignored pattern list, you would need an extra care to defeat the
+> pattern to add vendor-supplied binary-only object file with "add -f"
+> and live with the fact that a new vendor-supplied binary-only object
+> file not appearing on untracked list.  It is exactly the same deal.
+
+I do not entirely agree. I think '.gitignore' *is* different. This
+file is special and affects Git's behaviour. And it does so *before*
+it has been committed. Or even added. The fact that '.gitignore'
+itself is not listed in the output of, e.g., "git status" is easy to
+miss.
+
+I have not really used '.gitattributes' but I assume the same applies.
+
+> Having said that, I guess you could add "!.git*" to your
+> $GIT_DIR/info/exclude and see if it gives an improved user
+> experience.
+
+Mmm, that does not seem to help. I did
+
+git init && touch file.txt && echo '/*'>.gitignore && echo
+'!.gitignore' >>.git/info/exclude && git status
+
+it lists nothing (Git 1.7.12). I had expected to see '.gitignore'. Did
+I misunderstand you?
+
+Even so, this would only improve *my* user experience, wouldn't it?
+This would not get pushed to the central repository so it would not
+help anyone else.
