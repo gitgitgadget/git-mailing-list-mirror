@@ -1,65 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] revision: add --reflog-message=<pattern> to grep reflog messages
-Date: Wed, 26 Sep 2012 21:15:43 +0700
-Message-ID: <CACsJy8D=OPtbuygjSFx+Wcwo=hgq2RsumgeNzpNk-4QGH1CVdg@mail.gmail.com>
-References: <1348661565-30484-1-git-send-email-pclouds@gmail.com> <7vpq58ubbx.fsf@alter.siamese.dyndns.org>
+From: Simon Oosthoek <soosthoek@nieuwland.nl>
+Subject: bash completion with colour hints
+Date: Wed, 26 Sep 2012 17:00:21 +0200
+Message-ID: <50631885.8090604@nieuwland.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed;
+ boundary="------------000401000607070601090505"
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 16:16:25 2012
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 26 17:07:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGsPY-0006D5-2O
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 16:16:24 +0200
+	id 1TGtCt-0001HX-Hw
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 17:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754539Ab2IZOQO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Sep 2012 10:16:14 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:59330 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753519Ab2IZOQN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Sep 2012 10:16:13 -0400
-Received: by ieak13 with SMTP id k13so1489741iea.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 07:16:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/QPtoDOt//8vTs/9ZEMQQ4E8ne+qejNE9ZDZdylwvC4=;
-        b=Hnn5d+7hAkslJ6u7rVQvDlu3moMy8AUX/RdD97e7tIM9BL33KmIvU+yy0TT2hlpRlF
-         M9IOPW/Ft/epJEfb6q5i+SWFFdmaTngR1rMwU28wCMtpAFqXLww8P9vHWwg0MyD6ZpeB
-         B0z6CK28dQFRHKzpk4DUe+KY8hLJM6vlSet3y8cXy8Q6eE6tHrjXCYMYtgnfMC9mVldw
-         TT6PhDgDvW6BbgTtR9x7DewtJ6f2uYsC1nKaXucNnGA/LcgTIMM3twhNQGKaWVY7vRT8
-         p+bz/grsH3yEcc82VHqy+vCWmohaUjz2xcq7b6KIocdIGNttAWXs//ickfpAmf+8l8zn
-         5aqQ==
-Received: by 10.42.129.83 with SMTP id p19mr543714ics.9.1348668973203; Wed, 26
- Sep 2012 07:16:13 -0700 (PDT)
-Received: by 10.64.29.199 with HTTP; Wed, 26 Sep 2012 07:15:43 -0700 (PDT)
-In-Reply-To: <7vpq58ubbx.fsf@alter.siamese.dyndns.org>
+	id S1756642Ab2IZPHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 11:07:12 -0400
+Received: from mail.nieuwland.nl ([87.251.35.136]:49422 "HELO nieuwland.nl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1752879Ab2IZPHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 11:07:10 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Sep 2012 11:07:10 EDT
+Received: (qmail 5176 invoked by uid 453); 26 Sep 2012 15:00:23 -0000
+X-Virus-Checked: Checked by ClamAV on nieuwland.nl
+Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
+  (smtp-auth username soosthoek, mechanism plain)
+  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Wed, 26 Sep 2012 17:00:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206419>
 
-On Wed, Sep 26, 2012 at 9:07 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Both "git log" and "git reflog show" recognize this option.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->
-> How well does it interact with --grep and/or --all-match?
+This is a multi-part message in MIME format.
+--------------000401000607070601090505
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Good point. It currently works like and operator. But people might
-expect to combine them in different ways.
---=20
-Duy
+Hi Shawn
+
+I only recently found the __git_ps1 function, but it wasn't directly 
+able to replace my own contraption. I've modified the version I found 
+after installing bash-completion in debian 6.
+
+The patch is attached, it contains an escape character, so it is hard to 
+include in plain text. I've gzipped it for convenience...
+
+This is only a first step, I had a hard time figuring out what exactly 
+the one-letter variables were doing (and still a bit unclear), so I'm 
+sure this can be improved!
+
+Anyway, the functionality of this patch is to show the output in green 
+if the repo is up to date and red or other colours if it isn't.
+
+Cheers
+
+Simon
+
+--------------000401000607070601090505
+Content-Type: application/gzip;
+ name="bash_git_completion_colour.patch.gz"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="bash_git_completion_colour.patch.gz"
+
+H4sICIQWY1AAA2Jhc2hfZ2l0X2NvbXBsZXRpb25fY29sb3VyLnBhdGNoAI1T0W6bMBR9Dr+w
+lzvK1HbUKYQmUzJVitSHtdK0TmunPVQTMmCCVcdGtlmEovz7bJOkJevWWQjCPT7H595DEEKw
+oBoJSRcow4+DURSPUDRFownEk1kynV18GEa7BWE0iiIvDENHyrCqcrGsGdFU8APqOJqN/6TO
+54DG07MJhOY+hfncgyPoVk0kkqQWimohWzDiVEHWgiJaU74AXRFbrIaqEqvvtdKS4CXkgpd0
+8aTyC0uKM0aGpuSFu+pNCa1oYCUaVgCjjwQwB1wU1BrHDCrKNVBu1JhopP3V2mctTXf6ScZY
+gU839+nXuzi9u779cXX7+fbb9c2Xe9ACMHDBidnfGhOsIUO4aqQkXLP2ScE20R2iAEsCFZZF
+LgpS2DMtWDY8t6aGQ9eB6etegGqyJdVQY51XRM0sYAeZRCMzwzCJxmfJ2M1yYFaammzSWsWp
+HVTabCflwJLah7kjLxyYa8BEbtrPU0mKy+M3D0m8PH5ebgljYuWQpI+wzLRogfgsuehDC0kI
+d5xRH6gbab4Vh4z7SN7ijjE5qDOCpQWi5/VamrjKtBRyifWlH6zjGYKTd+p043uh3UZLeADE
+wUAvxoU2Pvz8aOfN7fZuvx+sfHh7Cf77PQgOHRyet20x6NWDrVvfcQhT5K9sM+x/cU08e1Ou
+Cdp3O6BOpcsmoK+Q1QFZObKL71Vuc8BtHLeL8WXyVsJ+ZV1WpaFYk8qIeWg3DeiFZt7yYJ0d
+HUlSqvOK4EKdb4J1OQshKDeBDGp3BMkrAcHJXqE3wv8ROTW27D9g44H3G9fdo/T5BAAA
+--------------000401000607070601090505--
