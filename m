@@ -1,129 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/7] Add join_paths() to safely concatenate paths.
-Date: Wed, 26 Sep 2012 13:51:22 -0700
-Message-ID: <20120926205122.GA29906@elie.Belkin>
-References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
- <1343468312-72024-5-git-send-email-schwern@pobox.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Bug in Submodule add
+Date: Wed, 26 Sep 2012 22:56:32 +0200
+Message-ID: <50636C00.6080906@web.de>
+References: <BC634E06939C44239106E7A8DD229130@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Wed Sep 26 22:51:55 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jonathan Johnson <me@jondavidjohn.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 22:56:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGyaD-0001vd-B1
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 22:51:49 +0200
+	id 1TGyf0-0004H7-Rc
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 22:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378Ab2IZUvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 16:51:39 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:45833 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751318Ab2IZUvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 16:51:38 -0400
-Received: by pbbrr4 with SMTP id rr4so2470958pbb.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 13:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=SlbgtKjoWAp5rpf+Ga6GsonJZ6pQ8x/0/9yTDBYbugA=;
-        b=eihrs/1elj1k3Xq11oHqXx/vyAH8IY1GMazxpc1ppn1mlupiy8epdBqKYv7w2F9Ngx
-         tRNFQEpIiNSuw8n2ZzeFa8Da9T4jeQqZj79KcF4/9xacH/TAPo6X+qNwMqNMh1QtVQJh
-         d2mBB8ltWR7bXsRN0g162MQhFl4uMuODcq9qkwdsR3ZkVYbv+CsHr4V478fXVbFFUzta
-         LDJsOXv1oXyX8o88YSh8YntJP9WHmrUaiWB3Mpfm2QLuAfYJG0lQXpee6g4xb7gX38yB
-         j7SLKFtKQkjz/Xe4/x6OhbwX1e6TR2LAK37M0GUL02KQPFwCx0bN6GQmU0LP4hRJx6A0
-         /fJQ==
-Received: by 10.68.138.133 with SMTP id qq5mr5696441pbb.86.1348692698175;
-        Wed, 26 Sep 2012 13:51:38 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id s10sm2458058paz.11.2012.09.26.13.51.33
-        (version=SSLv3 cipher=OTHER);
-        Wed, 26 Sep 2012 13:51:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1343468312-72024-5-git-send-email-schwern@pobox.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1751790Ab2IZU4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 16:56:39 -0400
+Received: from mout.web.de ([212.227.15.4]:55284 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751627Ab2IZU4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 16:56:37 -0400
+Received: from [192.168.178.41] ([91.3.167.99]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0MOAjQ-1TMURL34Cq-00687w; Wed, 26 Sep 2012 22:56:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <BC634E06939C44239106E7A8DD229130@gmail.com>
+X-Provags-ID: V02:K0:LeUIar2PMfjZFjDx5VnwwK9/kNwTLVH0VQESnAZLRSq
+ ZOv7KIenKy0I9Uj0tfghri/1zh1StU9W8E/z3yx9jk1yuG8Byf
+ xz/nbTzRT/X41uDDSD4er5T0FOBI9RDO6XB32ywUTYqCw0W8d+
+ fkAoRhja0ZubAXDlMjUGKnVnyyp067zebnf50dNyRYVxmNpITZ
+ mxR8kddY+AGhXYVqWSvIQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206445>
 
-Hi,
+Am 26.09.2012 06:18, schrieb Jonathan Johnson:
+> I believe I have found an issue with the way `submodule add` detects a submodule that already exists in the repository. 
 
-Michael G. Schwern wrote:
+Yes, this is an issue and thanks for the detailed report.
 
-> Otherwise you might wind up with things like...
->
->     my $path1 = undef;
->     my $path2 = 'foo';
->     my $path = $path1 . '/' . $path2;
->
-> creating '/foo'.  Or this...
->
->     my $path1 = 'foo/';
->     my $path2 = 'bar';
->     my $path = $path1 . '/' . $path2;
->
-> creating 'foo//bar'.
+> To reproduce
+> 
+> 1) add a git submodule in a specific location (we'll say it's at `./submodule/location`)
+> 2) go through the normal steps of removing a submodule, as listed here - https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
+> 3) Now the submodule is completely removed and there is no reference to it in .gitmodules or .git/config
+> 4) Re-add a different repository at the same location (`./submodule/location`)
+> 
+> Expected - The new submodule repository will be set up at ./submodule/location and have the new repository as its origin
+> 
+> What Actually Happens - The new submodule uses the existing `$gitdir` (old repository) as the actual backing repository to the submodule, but the new repository is reflected in .gitmodules and .git/config.
+> 
+> So to recap, the result is that `git remote show origin`  in the submodule shows a different origin than is in .gitmodules and .git/config
+> 
+> One simple step to remedy this would be to add the deletion of the backing repository from the .git/modules directory, but again, I think an actual command to take care of all of these steps is in order anyways.  Not sure you want to encourage people poking around in the .git directory.
 
-I'm still puzzled by this one, too.  I don't understand the
-motivation.  Is this to make joining paths less fragile, by preserving
-the property that join_paths($a, $b) names the directory you would get
-to by first chdir-ing into $a and then into $b?
+Unfortunately just throwing away the old repository under .git/modules,
+whether manually or by a git command, is no real solution here: it would
+make it impossible to go back to a commit which records the old submodule
+and check that out again.
 
-It would be easier to understand as two patches: first, one that
-extracts join_paths without any functional change, and then one that
-changes its implementation with an explanation for what positive
-functional effect that would have.
+The reason for this issue is that the submodule path is used as its name
+by "git submodule add". While we could check this type of conflict locally,
+we can't really avoid it due to the distributed nature of git (somebody
+else could add a different repo under the same path - and thus the same
+name - in another clone of the repo).
 
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-[...]
-> @@ -1275,7 +1276,7 @@ sub get_svnprops {
->  	$path = $cmd_dir_prefix . $path;
->  	fatal("No such file or directory: $path") unless -e $path;
->  	my $is_dir = -d $path ? 1 : 0;
-> -	$path = $gs->{path} . '/' . $path;
-> +	$path = join_paths($gs->{path}, $path);
->  
->  	# canonicalize the path (otherwise libsvn will abort or fail to
->  	# find the file)
-
-This can't be for the //-collapsing effect since the path is about
-to be canonicalized.  It can't be for the initial-/ effect since
-that is stripped away by canonicalization, too.
-
-So no functional effect here, good or bad.
-
-[...]
-> --- a/perl/Git/SVN.pm
-> +++ b/perl/Git/SVN.pm
-[...]
-> @@ -316,9 +320,7 @@ sub init_remote_config {
->  			}
->  			my $old_path = $self->path;
->  			$url =~ s!^\Q$min_url\E(/|$)!!;
-> -			if (length $old_path) {
-> -				$url .= "/$old_path";
-> -			}
-> +			$url = join_paths($url, $old_path);
->  			$self->path($url);
-
-This is probably not for the normal //-collapsing effect because
-$url already has its trailing / stripped off.  Maybe it is for
-cases where $old_path has leading slashes or $min_url has multiple
-trailing ones?
-
-In the end it shouldn't make a difference, once a later patch teaches
-Git::SVN->path to canonicalize.
-
-Is the functional change in this patch for aesthetic reasons, or is
-there some other component (perhaps in a later patch) that relies on
-it?
-
-Thanks again for your help,
-Jonathan
+The only long term solution I can think of is to use some kind of UUID for
+the name, so that the names of newly added submodules won't have a chance
+to clash anymore. For the short term aborting "git submodule add" when a
+submodule of that name already exists in .git/modules of the superproject
+together with the ability to provide a custom name might at least solve
+the local clashes.
