@@ -1,189 +1,130 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] revision: add --reflog-message=<pattern> to grep reflog messages
-Date: Wed, 26 Sep 2012 19:12:45 +0700
-Message-ID: <1348661565-30484-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 14/14] Add git-check-ignore sub-command
+Date: Wed, 26 Sep 2012 07:03:35 -0700
+Message-ID: <7vy5jwubig.fsf@alter.siamese.dyndns.org>
+References: <7vvcfwf937.fsf@alter.siamese.dyndns.org>
+ <1348170383-15751-1-git-send-email-git@adamspiers.org>
+ <1348170383-15751-15-git-send-email-git@adamspiers.org>
+ <505BFED7.5030203@viscovery.net> <7vk3vhvg5b.fsf@alter.siamese.dyndns.org>
+ <50629765.2060107@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 26 14:19:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Spiers <git@adamspiers.org>, git list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Sep 26 16:03:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGqae-0001B5-NU
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 14:19:45 +0200
+	id 1TGsDO-0007z4-3D
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 16:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754588Ab2IZMTe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Sep 2012 08:19:34 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:63394 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753549Ab2IZMTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 08:19:33 -0400
-Received: by dady13 with SMTP id y13so121474dad.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 05:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=InionRIhxVa7ISYe0pfHW4QE4CQCQHbS29sBZohhx9U=;
-        b=MtWnv9hS+rSLhoTYeyPC3CgmROL3v3qNb5Y6ZBWj/CukZoctcDu5O5Jjsl/jtXQNn4
-         a28kkZoq7g0ulqw0RGGOQ5G281a+n66oHtNGNTTXK0coJdBLpMONyodMGucutTJhfYt6
-         cNM+8Xi5X9gOmgriw0qehQax+S/yMYDbatYrDsxNFyeDjFZL5Gt1wXBtHjHpXAGFKv84
-         G8FuX28Cr3toaxUuQtKt7d5hHQEGq6mlFTL1NG9cX1UcJdFQr4N6PGb8MSn6oYZMTU4X
-         tiSX2wuC2ieBtm20oHOVEnIYBQTwFGVp2YzFQcs4NLPMmEqDaD/b5P4CUPlaJBl5dRfw
-         IW1w==
-Received: by 10.66.85.8 with SMTP id d8mr789103paz.30.1348661973316;
-        Wed, 26 Sep 2012 05:19:33 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.51.2])
-        by mx.google.com with ESMTPS id iv7sm1984006pbc.68.2012.09.26.05.19.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 26 Sep 2012 05:19:32 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 26 Sep 2012 19:12:46 +0700
-X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
+	id S1756088Ab2IZODk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 10:03:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59455 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753039Ab2IZODi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 10:03:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECB68648C;
+	Wed, 26 Sep 2012 10:03:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1XX2pqqxReCUV9l3C4sLXGVXJpQ=; b=APtzze
+	kO4OrdqzjBRZNAUPGvN8ylsH7IcRWQNXq2i710D0FgJsgMRx9sz5IaPCSjJy7CVY
+	2XFdS4iJcThVokypOHeizREdnoSoFJMd6qXyYx9QxgdmLbAPqMy/IzRECZ1oeVNA
+	in6cdwl6uM4/HVQoz3VG06m4KWVTjkCg6oSzY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LeQw7Ds+sGPXJ4CMaim/3wCbYcwoJYfd
+	1GGOiJ8276OpVv94G3vtDEBNGzEWrT67Ij6qk1Yyb0WmA+zNtjBUYo4u2vriTWgE
+	duWb/beEbxtseB4ASSwd0I9fcslEzPAEdAtmbq+YRRKkNCKGX4cHXT4iWye6/fnX
+	LZLooc5qUoY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8A64648B;
+	Wed, 26 Sep 2012 10:03:37 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05F11648A; Wed, 26 Sep 2012
+ 10:03:36 -0400 (EDT)
+In-Reply-To: <50629765.2060107@viscovery.net> (Johannes Sixt's message of
+ "Wed, 26 Sep 2012 07:49:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F7778A88-07E2-11E2-BEB5-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206414>
 
-Both "git log" and "git reflog show" recognize this option.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Itch: how to show reflogs for checkout operation only?
+>> These days, we do not add random subcommands willy-nilly (I still
+>> doubt if check-ignore needs to be a separate debugging command, or a
+>> new mode of operation of ls-files or something), so the approach to
+>> use a blacklist makes more sense.  "help -a" is designed to show
+>> whatever the users throw in their ~/bin (assuming that is on $PATH)
+>> under git-whatever name, and we _do_ want to complete "git wh<TAB>"
+>> to that custom command, so a whitelist-based solution is unwieldy to
+>> construct.
+>
+> We already have 'git check-attr', but it is obviously not among the
+> autocompleted commands, otherwise the above test would not have passed.
+> IMO, 'git check-ignore' falls into the same category as 'git check-attr'
+> with regard to completion.
 
- Instead of ignoring when -g is not given, we might want to imply -g.
+Exactly.
 
- Still itch: grep highlight! For all applicable areas: commit headers
- including reflog messages, commit body, diff.
+Actually I think what happened was that the submitter didn't have
+change to contrib/completion/ in earlier private versions, saw the
+test fail and updated t9902 without thinking.  The patch posted has
+addition to contrib/completion/ that blacklists check-ignore the
+same way as check-attr, which made the change to t9902 unnecessary
+but because the update was done without thinking, it wasn't even
+realized that the test would have passed without the patch to it.
 
- Documentation/rev-list-options.txt |  5 +++++
- revision.c                         | 30 ++++++++++++++++++++++++++++++
- revision.h                         |  1 +
- 3 files changed, 36 insertions(+)
+Reverting the part that touches t9902 should still pass, I would
+think.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-lis=
-t-options.txt
-index 1fc2a18..aeaa58c 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -51,6 +51,11 @@ endif::git-rev-list[]
- 	commits whose author matches any of the given patterns are
- 	chosen (similarly for multiple `--committer=3D<pattern>`).
-=20
-+--reflog-message=3D<pattern>::
-+	Limit the commits output to ones with reflog messages that
-+	match the specified pattern (regular expression). Ignored unless
-+	--walk-reflogs is given.
-+
- --grep=3D<pattern>::
-=20
- 	Limit the commits output to ones with log message that
-diff --git a/revision.c b/revision.c
-index ae12e11..ee55bb2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1053,6 +1053,11 @@ void init_revisions(struct rev_info *revs, const=
- char *prefix)
- 	revs->grep_filter.header_tail =3D &(revs->grep_filter.header_list);
- 	revs->grep_filter.regflags =3D REG_NEWLINE;
-=20
-+	revs->reflog_filter.status_only =3D 1;
-+	revs->reflog_filter.pattern_tail =3D &(revs->reflog_filter.pattern_li=
-st);
-+	revs->reflog_filter.header_tail =3D &(revs->reflog_filter.header_list=
-);
-+	revs->reflog_filter.regflags =3D REG_NEWLINE;
-+
- 	diff_setup(&revs->diffopt);
- 	if (prefix && !revs->diffopt.prefix) {
- 		revs->diffopt.prefix =3D prefix;
-@@ -1298,6 +1303,12 @@ static void add_message_grep(struct rev_info *re=
-vs, const char *pattern)
- 	add_grep(revs, pattern, GREP_PATTERN_BODY);
- }
-=20
-+static void add_reflog_grep(struct rev_info *revs, const char *ptn)
-+{
-+	append_grep_pattern(&revs->reflog_filter, ptn,
-+			    "command line", 0, GREP_PATTERN);
-+}
-+
- static int handle_revision_opt(struct rev_info *revs, int argc, const =
-char **argv,
- 			       int *unkc, const char **unkv)
- {
-@@ -1600,15 +1611,23 @@ static int handle_revision_opt(struct rev_info =
-*revs, int argc, const char **arg
- 		return argcount;
- 	} else if (!strcmp(arg, "--grep-debug")) {
- 		revs->grep_filter.debug =3D 1;
-+	} else if ((argcount =3D parse_long_opt("reflog-message",
-+					      argv, &optarg))) {
-+		add_reflog_grep(revs, optarg);
-+		return argcount;
- 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
- 		revs->grep_filter.regflags |=3D REG_EXTENDED;
-+		revs->reflog_filter.regflags |=3D REG_EXTENDED;
- 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")=
-) {
- 		revs->grep_filter.regflags |=3D REG_ICASE;
-+		revs->reflog_filter.regflags |=3D REG_ICASE;
- 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
- 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
- 		revs->grep_filter.fixed =3D 1;
-+		revs->reflog_filter.fixed =3D 1;
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match =3D 1;
-+		revs->reflog_filter.all_match =3D 1;
- 	} else if ((argcount =3D parse_long_opt("encoding", argv, &optarg))) =
-{
- 		if (strcmp(optarg, "none"))
- 			git_log_output_encoding =3D xstrdup(optarg);
-@@ -1891,6 +1910,7 @@ int setup_revisions(int argc, const char **argv, =
-struct rev_info *revs, struct s
- 	diff_setup_done(&revs->diffopt);
-=20
- 	compile_grep_patterns(&revs->grep_filter);
-+	compile_grep_patterns(&revs->reflog_filter);
-=20
- 	if (revs->reverse && revs->reflog_info)
- 		die("cannot combine --reverse with --walk-reflogs");
-@@ -2242,6 +2262,16 @@ enum commit_action get_commit_action(struct rev_=
-info *revs, struct commit *commi
- 		    ((revs->max_parents >=3D 0) && (n > revs->max_parents)))
- 			return commit_ignore;
- 	}
-+	if (revs->reflog_info &&
-+	    revs->reflog_filter.pattern_list) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+		int ignore;
-+		get_reflog_message(&sb, revs->reflog_info);
-+		ignore =3D !grep_buffer(&revs->reflog_filter, sb.buf, sb.len);
-+		strbuf_release(&sb);
-+		if (ignore)
-+			return commit_ignore;
-+	}
- 	if (!commit_match(commit, revs))
- 		return commit_ignore;
- 	if (revs->prune && revs->dense) {
-diff --git a/revision.h b/revision.h
-index a95bd0b..0ebe34b 100644
---- a/revision.h
-+++ b/revision.h
-@@ -145,6 +145,7 @@ struct rev_info {
-=20
- 	/* Filter by commit log message */
- 	struct grep_opt	grep_filter;
-+	struct grep_opt	reflog_filter;
-=20
- 	/* Display history graph */
- 	struct git_graph *graph;
---=20
-1.7.12.1.406.g6ab07c4
+ t/t9902-completion.sh | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git c/t/t9902-completion.sh w/t/t9902-completion.sh
+index cce51ac..92d7eb4 100755
+--- c/t/t9902-completion.sh
++++ w/t/t9902-completion.sh
+@@ -213,19 +213,19 @@ test_expect_success 'general options' '
+ '
+ 
+ test_expect_success 'general options plus command' '
+-	test_completion "git --version checko" "checkout " &&
+-	test_completion "git --paginate checko" "checkout " &&
+-	test_completion "git --git-dir=foo checko" "checkout " &&
+-	test_completion "git --bare checko" "checkout " &&
++	test_completion "git --version check" "checkout " &&
++	test_completion "git --paginate check" "checkout " &&
++	test_completion "git --git-dir=foo check" "checkout " &&
++	test_completion "git --bare check" "checkout " &&
+ 	test_completion "git --help des" "describe " &&
+-	test_completion "git --exec-path=foo checko" "checkout " &&
+-	test_completion "git --html-path checko" "checkout " &&
+-	test_completion "git --no-pager checko" "checkout " &&
+-	test_completion "git --work-tree=foo checko" "checkout " &&
+-	test_completion "git --namespace=foo checko" "checkout " &&
+-	test_completion "git --paginate checko" "checkout " &&
+-	test_completion "git --info-path checko" "checkout " &&
+-	test_completion "git --no-replace-objects checko" "checkout "
++	test_completion "git --exec-path=foo check" "checkout " &&
++	test_completion "git --html-path check" "checkout " &&
++	test_completion "git --no-pager check" "checkout " &&
++	test_completion "git --work-tree=foo check" "checkout " &&
++	test_completion "git --namespace=foo check" "checkout " &&
++	test_completion "git --paginate check" "checkout " &&
++	test_completion "git --info-path check" "checkout " &&
++	test_completion "git --no-replace-objects check" "checkout "
+ '
+ 
+ test_done
