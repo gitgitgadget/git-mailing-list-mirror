@@ -1,75 +1,84 @@
-From: Jonathan Johnson <me@jondavidjohn.com>
-Subject: Bug in Submodule add
-Date: Tue, 25 Sep 2012 22:18:05 -0600
-Message-ID: <BC634E06939C44239106E7A8DD229130@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: DWIM .git repository discovery
+Date: Tue, 25 Sep 2012 21:21:57 -0700
+Message-ID: <7v7grhv2fu.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8DOtPWgkq=KSHCb=J3qg4o1aPaLo4aj7U5f_qa+kCCipQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 26 06:18:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 06:22:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGj4z-00019e-NO
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 06:18:34 +0200
+	id 1TGj8Y-0002al-Kq
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 06:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995Ab2IZESM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 00:18:12 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:57407 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843Ab2IZESL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 00:18:11 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so1226085pbb.19
-        for <git@vger.kernel.org>; Tue, 25 Sep 2012 21:18:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:message-id:subject:x-mailer:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-gm-message-state;
-        bh=+XU3KWelurwjk7189dtQL1ToEtr8O5GW4GeUTLI7bp4=;
-        b=VTrY/3s8aq01ORKxqh3388rY7L5Hri5/3Y3/hVMRar9rDAAgbxstFCQU+APobeMpci
-         eD6aokq1HkuLixs7m9GnMRviGWVCHh1Wwtkwr6PL/ozLUUFSL6MtVou8NSAqzkLHnLO+
-         L9I4dQ8jfOczielYXFKiXCn4T4yKV3e047Sq9t0wCqKXRItBpg4Rn6WDlM/kzoZ86dNc
-         DYdHtD7yFFqGeiIBrk0pu5MWARru8I/vAhL7puc03eAD90+JfXokqQS5FdK2OV6I04Px
-         /IOQF8ui0ffQTYB75OHqFoZIkyt/LDw7gKR3eB4kQTsTf7Y52PF9Vcx6/+lR6vnLp4+1
-         OJrQ==
-Received: by 10.68.242.231 with SMTP id wt7mr51081370pbc.99.1348633090936;
-        Tue, 25 Sep 2012 21:18:10 -0700 (PDT)
-Received: from [192.168.168.102] (c-71-237-124-199.hsd1.co.comcast.net. [71.237.124.199])
-        by mx.google.com with ESMTPS id j9sm1228136pav.15.2012.09.25.21.18.07
-        (version=SSLv3 cipher=OTHER);
-        Tue, 25 Sep 2012 21:18:09 -0700 (PDT)
-X-Mailer: sparrow 1.6.3 (build 1172)
-Content-Disposition: inline
-X-Gm-Message-State: ALoCoQnC94EzlqLOEMUNW7D1ynM3BBS5sUUbAaD6odgxi/QES3nX2QeHo5IquqbxVhrcToc8N/Y4
+	id S1751134Ab2IZEWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 00:22:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59725 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750843Ab2IZEWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 00:22:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3D0A6120;
+	Wed, 26 Sep 2012 00:22:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sYYKzjHmI9sC/fUK23GcTahhBMQ=; b=YZbgsq
+	c/8dpxpGr7PYxehwzrDeZYGy1FGZS7hrinqLA2uJxLeQWzjIU0nDQT1gZVaeEiJh
+	g+TSnzdOZn1lKYlCeVuBFPaOxJihYINmaO2U8+GUB12qI0du/qupjW9H2U0Xp0Zq
+	d3H7+V0uPFM7Iry93J7/Fb6Iywec2QEgOejJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I2+rjwxfeVpaoxivwR2S4FpQm+GmVVW3
+	w6UQ+3EdtRrNmBpnOjUyUxDuAZaOSq5W1lmmPmdrIdPxUgZOu+ixpvrlMs2KI4HE
+	geRlqD3uv1XxuHWTj1HEbPBxWTtfRyr1oN4gZRflKMopR8d5tVDogy3wa6tMGnYb
+	1jb2wudRwqM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91AB0611F;
+	Wed, 26 Sep 2012 00:22:01 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3B7D611D; Wed, 26 Sep 2012
+ 00:21:59 -0400 (EDT)
+In-Reply-To: <CACsJy8DOtPWgkq=KSHCb=J3qg4o1aPaLo4aj7U5f_qa+kCCipQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 26 Sep 2012 08:49:42 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B72D7EC0-0791-11E2-AB37-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206394>
 
-I believe I have found an issue with the way `submodule add` detects a submodule that already exists in the repository. 
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-To reproduce
+> I often find myself attempting to examine another repository,
+> especially in projects that are closely related but put in different
+> git repos. It's usually just a diff or log command
+>
+> git log --patch ../path/to/another/repo/path/to/file.c
 
-1) add a git submodule in a specific location (we'll say it's at `./submodule/location`)
-2) go through the normal steps of removing a submodule, as listed here - https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
-3) Now the submodule is completely removed and there is no reference to it in .gitmodules or .git/config
-4) Re-add a different repository at the same location (`./submodule/location`)
+I personally do not think it is _too_ bad to internally do
 
-Expected - The new submodule repository will be set up at ./submodule/location and have the new repository as its origin
+	(cd ../path/to/another/repo/path/to &&
+	 git log --patch file.c)
 
-What Actually Happens - The new submodule uses the existing `$gitdir` (old repository) as the actual backing repository to the submodule, but the new repository is reflected in .gitmodules and .git/config.
+but I doubt it is worth the numerous implications (I am not talking
+about implementation complexity at all, but the conceptual burden).
 
-So to recap, the result is that `git remote show origin`  in the submodule shows a different origin than is in .gitmodules and .git/config
+For example, where in the working tree of the other project should
+the command run?  The output from "log -p" happens to be always
+relative to the top of the working tree, but that does not
+necessarily hold true for other subcommands.
 
-One simple step to remedy this would be to add the deletion of the backing repository from the .git/modules directory, but again, I think an actual command to take care of all of these steps is in order anyways.  Not sure you want to encourage people poking around in the .git directory.
+A worse thing is that there is an oddball case "diff[ --no-index]"
+that changes behaviour depending on the pathspec points at inside or
+outside the repository.
 
-If this is already resolved in the newest versions, please disregard
-
-Thanks!
-
-Jonathan Johnson
-
-http://jondavidjohn.com | me@jondavidjohn.com
+I think that this is a road to insanity; anybody who thinks along
+this line is already on the other side of the line, I would have to
+say ;-).
