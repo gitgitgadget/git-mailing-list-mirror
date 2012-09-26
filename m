@@ -1,89 +1,79 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [ANNOUNCE] Git User's Survey 2012
-Date: Wed, 26 Sep 2012 10:34:45 +0200
-Message-ID: <CANQwDwdW8136ko55BxjtVsZGtozEm+3T4wedTvqikon7rinvag@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: CRLF, LF ... CR ?
+Date: Wed, 26 Sep 2012 01:42:02 -0700
+Message-ID: <CAJDDKr7Y5iXVxDHPJ+HQ86T43YBccnsEsebFje9pZzEBgh3=9A@mail.gmail.com>
+References: <20120913170943725232.01d717ef@gpio.dk>
+	<CAJDDKr5-ze2bhTkT+jzcS1iZipJO6kEr2qAf73GRn4QQ-rS1dQ@mail.gmail.com>
+	<7vtxv18ax2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 26 10:35:28 2012
+Cc: Jens Bauer <jens-lists@gpio.dk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 10:42:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGn5Y-00032U-Ja
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 10:35:24 +0200
+	id 1TGnCD-0006OG-NS
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 10:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752943Ab2IZIfJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Sep 2012 04:35:09 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:40648 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175Ab2IZIfG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Sep 2012 04:35:06 -0400
-Received: by obbuo13 with SMTP id uo13so300030obb.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 01:35:05 -0700 (PDT)
+	id S1753611Ab2IZImH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 04:42:07 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:61270 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752910Ab2IZImE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 04:42:04 -0400
+Received: by vbbff1 with SMTP id ff1so333072vbb.19
+        for <git@vger.kernel.org>; Wed, 26 Sep 2012 01:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=HxhUlQ6kbvtvgjeLsASiL+eKsnaDoBVgWZMVD+yIILk=;
-        b=Kj6QildQAQcCemn+fz1HOwe7P6K5lSUovn5fLnvSR271boFKTtSXfUm1ieI9dCM8Qw
-         orMZeUpAmNRp8QewEh0P5jq6TIoOV0j7EhFQOk/kdQzH/zlXjXfeL2QgVW+7t82xrxgn
-         3B7vN+6c9GtpFqpJpCSv72IiWbvm6V8bgBmZ1vktYfniA/WrQLAfrkDwGT2Mhl5Mx9ff
-         ONUCS8mDWi2wjoRVqJwltu94F10j654sg3qL53PmybTe6pqaTmAk0eOpavR4PaWrtoQ8
-         kpd16U/CObnTTmAjWJDPUdp+tUr10cZuTAmFcLD4Rl0SSzLqVU5WSsfB004L7RNfxLc3
-         Bi3Q==
-Received: by 10.182.111.74 with SMTP id ig10mr14994561obb.14.1348648505342;
- Wed, 26 Sep 2012 01:35:05 -0700 (PDT)
-Received: by 10.76.163.98 with HTTP; Wed, 26 Sep 2012 01:34:45 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MkWbxodTfcyKdwsoWmllhw7g/WU0OTXY8XpW09fr6dA=;
+        b=CnipKp7LFFSvF6e7YFWKPlxWkm58GwYqY3BRA7942Sto+4JyisZ6xk0qFeYhrXVdyk
+         23dTn/5jbFYDFRe3Owbmpw1fE4KT9mlVJJOCHuvLsntRL2J/d7bw+82joSlWDIBZ6YPc
+         KeOo2EQEtP15YgNS4ViaFQQOTzQVd97wnfM5enqLlPpgn33sGQERRiBxiooTNSdAgKLd
+         ygBX7ZJYwYQWiAxP8fbu0soSemqZ2MYgy7ZnHKR5q+mfWpi+dAvKn4jmZDJ+9xBXEF7l
+         8AjVA31dVBraPC7iMK42BBIvUSMnnuVsjop0cfP04i9QJQrhPivdmJMiAdBfZGgqMYls
+         BVNQ==
+Received: by 10.58.69.38 with SMTP id b6mr10970209veu.30.1348648923051; Wed,
+ 26 Sep 2012 01:42:03 -0700 (PDT)
+Received: by 10.58.180.39 with HTTP; Wed, 26 Sep 2012 01:42:02 -0700 (PDT)
+In-Reply-To: <7vtxv18ax2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206399>
 
-Hello all,
+On Thu, Sep 13, 2012 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
+>
+>> git doesn't really even support LF.
+>
+> At the storage level that is correct, but the above is a bit of
+> stretch.  It may not be "support", but git _does_ rely on LF when
+> running many text oriented operations (a rough rule of thumb is
+> "does 'a line' in a file matter to the operation?").  Think about
+> "git diff" and "git blame".
 
-We would like to ask you a few questions about your use of the Git
-version control system. This survey is mainly to understand who is
-using Git, how and why.
+Thanks for the thorough explanation.  You're 100% correct, as always.
 
-The results will be published to the Git wiki on the GitSurvey2012
-page (https://git.wiki.kernel.org/index.php/GitSurvey2012) and
-discussed on the git mailing list.
+I'll be honest: I had a small bias when responding.
+I didn't want anyone to think a "autocr" feature would be useful,
+so I played the "git is really simple" angle hoping it would
+put a kabosh on the idea.  That was a little silly of me.
 
+That said, perhaps the "autocrlf" code is simple enough that it
+could be easily tweaked to also handle this special case, but
+I am not familiar with the code enough to say.  My gut feeling
+was that it was too narrow a use case.  I guess if someone[*]
+wanted to whip up a patch then it would be a different story,
+but it doesn't seem to be the itch of anyone around here so far.
 
-The survey would be open from 26 September till 15 October 2012.
+[*] Jens, that could be you ;-)
 
-
-Please devote a few minutes of your time to fill this simple
-questionnaire, it will help a lot the git community to understand your
-needs, what you like of Git, and of course what you don't like of it.
-
-The survey can be found here:
-  http://tinyurl.com/GitSurvey2012
-  https://www.survs.com/survey/QC8HVCPBGM
-
-There is also alternate version which does not require cookies,
-but it doesn't allow one to go back to response and edit it.
-  http://tinyurl.com/GitSurvey2012-anon
-  https://www.survs.com/survey/ZO2EF5XB5D
-
-
-P.S. At request I can open a separate channel in survey, with a separat=
-e
-survey URL, so that responses from particular site or organization coul=
-d
-be separated out.
-
-Please send me a email with name of channel, and I will return with
-a separate survey URL to use.
-
-P.P.S. Different announcements use different URLs (different channels)
-to better track where one got information about this survey.
-
---=20
-Jakub Nar=C4=99bski
-on behalf of
-Git Development Community
+cheers,
+-- 
+David
