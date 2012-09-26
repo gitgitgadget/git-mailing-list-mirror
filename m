@@ -1,60 +1,72 @@
-From: Georgi Chorbadzhiyski <gf@unixsol.org>
-Subject: Re: Can git pull from a mercurial repository?
-Date: Wed, 26 Sep 2012 12:46:49 +0300
-Organization: Unix Solutions Ltd. (http://unixsol.org/)
-Message-ID: <5062CF09.2090703@unixsol.org>
-References: <k39lir$gpm$1@ger.gmane.org> <50585F10.3080307@op5.se> <000a01cd959a$d8cd0730$8a671590$@schmitz-digital.de> <37D17798-4BDC-433D-A9B4-49F4352754D9@quendi.de> <5062B0F6.1040906@unixsol.org> <7F5A6E53-4F7C-462F-8B04-09934BAB88DB@quendi.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] mergetool--lib: Allow custom commands to override built-ins
+Date: Wed, 26 Sep 2012 15:33:18 +0530
+Message-ID: <CALkWK0naJt840LfMNBM7EtdyLE5nmJeAsxG-Wttj8c84O5X7jA@mail.gmail.com>
+References: <1348559291-71739-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Joachim Schmitz <jojo@schmitz-digital.de>,
-	'Andreas Ericsson' <ae@op5.se>, git@vger.kernel.org,
-	cosmin@offbytwo.com
-To: Max Horn <postbox@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 11:47:07 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sylvain Rabot <srabot@steek.com>,
+	K Gateway <kowloongateway1@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Mike Schuld <mike.schuld@foundant.com>,
+	Stefan Kendall <stefankendall@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 12:03:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGoCr-0001jP-DI
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 11:47:01 +0200
+	id 1TGoT8-0000ri-SP
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 12:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754027Ab2IZJqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 05:46:52 -0400
-Received: from ns.unixsol.org ([193.110.159.2]:47194 "EHLO ns.unixsol.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753358Ab2IZJqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 05:46:51 -0400
-Received: from [10.0.1.78] ([::ffff:10.0.1.78])
-  (AUTH: CRAM-MD5 gf, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by ns.unixsol.org with ESMTPSA; Wed, 26 Sep 2012 12:46:50 +0300
-  id 000000000018866A.5062CF0A.00004BB3
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:14.0) Gecko/20120717 Thunderbird/14.0
-In-Reply-To: <7F5A6E53-4F7C-462F-8B04-09934BAB88DB@quendi.de>
+	id S1752991Ab2IZKDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 06:03:40 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:50869 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752417Ab2IZKDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 06:03:39 -0400
+Received: by qcmv28 with SMTP id v28so355097qcm.11
+        for <git@vger.kernel.org>; Wed, 26 Sep 2012 03:03:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lX/bXZXJ86Jo8UwMcsMK5bEBlMh9M5NHPa2dyFbc7Lk=;
+        b=I/uIIhqfdNx5DXePEdrt+1pETlniy+QwwV8nGdK2ZVFCh4qd/jCIDu5XHfHWpZPYOu
+         TkBZ9H5lumfCLtJKUoJPwkJS0LbGOsfg6lnFO1csMVXX1Y7WcSQSMRbVmSuu/hgtKMh8
+         QbyNn/18Lu1k+XJ+W1u23g780dyPv0T5VzI1ZOdfgXN3hXvCTtCOzwauvSzmdZx6Hs8T
+         1Bm+U7t3JwQvX+soGNYuRxGE1evh016ARjWKGmKwO2+1MYmazY0qyOiedQI2X/wIVNAx
+         PscDJ5A62U3fWUZfaIQr9vOL40hdHHLtiYVAzQNu8K3ftTe1ZzUSJlmw3H1YZNENNxgl
+         WFRA==
+Received: by 10.224.213.10 with SMTP id gu10mr932861qab.10.1348653818863; Wed,
+ 26 Sep 2012 03:03:38 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Wed, 26 Sep 2012 03:03:18 -0700 (PDT)
+In-Reply-To: <1348559291-71739-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206402>
 
-Around 09/26/2012 11:46 AM, Max Horn scribbled:
-> On 26.09.2012, at 09:38, Georgi Chorbadzhiyski wrote:
->> Around 09/25/2012 05:15 PM, Max Horn scribbled:
->>> I think there is a lot of demand for a "git-hg" bridge, a way to seemlessly access a Mercurial repository as if it was a git repository. A converse to hg-git <http://hg-git.github.com/>
->>
->> I've already mentioned this, but such a tool already exists and it
->> is working very well (IMHO): http://offbytwo.com/git-hg/
-> 
-> I guess this is a matter of perspective. It doesn't work at all for me because it does not really support pushing. (It does have a "push" command, but at least last time I looked, it was utterly broken; see also <https://github.com/dubiousjim/yagh/blob/master/Backends.md> for a discussion (not written by me!). I'd be happy to learn that has changed, though I just looked, and it still uses "hg convert", so I don't see how it possibly could work...
+Hi David,
 
-I have not tested push (I'm using git-hg to sync hg repo and develop
-using git, no pushing back to hg, just sending patches).
+David Aguilar wrote:
+>  diff_cmd () {
+> -       merge_tool_cmd="$(get_merge_tool_cmd "$1")"
+> -       if test -z "$merge_tool_cmd"
+> -       then
+> -               status=1
+> -               break
+> -       fi
+> -       ( eval $merge_tool_cmd )
+> -       status=$?
+> +       status=1
+>         return $status
+>  }
 
-According to git-hg README "Push supported added as well although it
-is still experimental". You should report the "push" bugs to the
-author(s) they may be able to fix them.
+Nit: Why not return 1, instead of setting $status and returning it?
 
--- 
-Georgi Chorbadzhiyski
-http://georgi.unixsol.org/
+Ram
