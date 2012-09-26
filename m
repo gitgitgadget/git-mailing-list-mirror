@@ -1,216 +1,188 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC PATCH] add t3420-rebase-topology
-Date: Wed, 26 Sep 2012 10:07:57 -0700
-Message-ID: <CANiSa6i+A6fkWpkPMXiBRdT48LaSfPe2yki+AmWFAKYg02p=+g@mail.gmail.com>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
-	<50582873.603@viscovery.net>
+From: Ronan Bignaux <r.bignaux@scourge.biz>
+Subject: Discussion around a --bindtodev option for git-daemon
+Date: Wed, 26 Sep 2012 18:36:37 +0200
+Message-ID: <50632F15.1030908@scourge.biz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Chris Webb <chris@arachsys.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Sep 26 19:08:15 2012
+Content-Type: multipart/mixed;
+ boundary="------------020402010902020401000802"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 26 19:57:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGv5l-000111-Gn
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 19:08:10 +0200
+	id 1TGvrh-0003jt-Ev
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 19:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757275Ab2IZRH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 13:07:59 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:56734 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756512Ab2IZRH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 13:07:58 -0400
-Received: by ieak13 with SMTP id k13so2024645iea.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 10:07:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zvI8BfBYPI/yKCpnrBEbGdEZLbqlDHBdiWm+G05eRwk=;
-        b=KjdCwVymG/Lw/AD8xWSycU1ADFzW3vAptufDXIIqGNm9W+O5g7fEKKxiGsnCX2TuRZ
-         WblV5UtRVh64fGEbNsEGv7WmGN82k5GaIlT8j3iUllLcc434Jp4PFmx62lh/dQHR9DH4
-         ooRiXNeMx5z8y77DasuXrk8KVeU+/KK31qscNcEy70bVOcRU929Q9Kv/SYioNRF3Mzb6
-         HHLEmEwsjG6iWuVHqkH5liLMs5RbOdXjYbNp7FM8anFYkoPJvjIphGDN+hDIf/sRPL+G
-         HJeyKyWiK+JHhLTu2tHlNh4Q6NZCt6rqtTtij5wPq9IQcnVrI2ayy84M0qisqO5ntQTP
-         dBQA==
-Received: by 10.50.7.212 with SMTP id l20mr1093476iga.43.1348679277398; Wed,
- 26 Sep 2012 10:07:57 -0700 (PDT)
-Received: by 10.64.103.5 with HTTP; Wed, 26 Sep 2012 10:07:57 -0700 (PDT)
-In-Reply-To: <50582873.603@viscovery.net>
+	id S1757748Ab2IZR5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 13:57:31 -0400
+Received: from 9.mo3.mail-out.ovh.net ([87.98.184.141]:48617 "EHLO
+	mo3.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757192Ab2IZR5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 13:57:30 -0400
+X-Greylist: delayed 4584 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Sep 2012 13:57:29 EDT
+Received: from mail607.ha.ovh.net (b7.ovh.net [213.186.33.57])
+	by mo3.mail-out.ovh.net (Postfix) with SMTP id 48384FFB82B
+	for <git@vger.kernel.org>; Wed, 26 Sep 2012 18:49:34 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 26 Sep 2012 18:41:03 +0200
+Received: from lya14-1-82-67-101-94.fbx.proxad.net (HELO ?192.168.1.35?) (r.bignaux@scourge.biz@82.67.101.94)
+  by ns0.ovh.net with SMTP; 26 Sep 2012 18:41:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:13.0) Gecko/20120612 Thunderbird/13.0
+X-Ovh-Mailout: 178.32.228.3 (mo3.mail-out.ovh.net)
+X-Enigmail-Version: 1.5pre
+X-Ovh-Tracer-Id: 3466927289239796190
+X-Ovh-Remote: 82.67.101.94 (lya14-1-82-67-101-94.fbx.proxad.net)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehtddrledtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpeftohhnrghnuceuihhgnhgruhiguceorhdrsghighhnrghugiesshgtohhurhhgvgdrsghiiieqnecujfgurhepkfffhfgfggfvufgtsehmtdgrrgdtfedu
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeehtddrledtucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecunecuhfhrohhmpeftohhnrghnuceuihhgnhgruhiguceorhdrsghighhnrghugiesshgtohhurhhgvgdrsghiiieqnecujfgurhepkfffhfgfggfvufgtsehmtdgrrgdtfedu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206424>
 
-[+Chris Webb regarding "git rebase --root"]
+This is a multi-part message in MIME format.
+--------------020402010902020401000802
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
 
-First of all, thanks for a meticulous review!
+I wrote this little patch to add a restrict option to bind only to a
+specific network interface.
 
-On Tue, Sep 18, 2012 at 12:53 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 9/18/2012 8:31, schrieb Martin von Zweigbergk:
->
-> Since here and in the following tests the test cases and test descriptions
-> vary in the same way, wouldn't it make sense to factor the description out
-> as well?
+I'd not deal with --inetd since there are some bugs in xinetd with ipv6
+( and no more maintener ) , systemd/upstart are also Linux centric and
+subject to controversy...
 
-Definitely. I just couldn't think of a good way of doing it, so thanks
-for great and concrete suggestions!
+"listen" option was not more useful in my case because it need ip as
+parameter (you need fix ip or custom script for example).
 
-> (Watch your quoting, though.)
+It's not ready for inclusion but ready for discussion.
 
-Switched to putting the test body in double quotes as you suggested in
-your examples and used single quotes for strings within the test body.
+PROS :
+* Do the job
 
->> +run () {
->> +echo '
->> +     reset &&
->> +     git rebase '"$@"' --keep-empty p h &&
->> +     test_range p.. "f g h"
->> +'
->> +}
->> +test_expect_success 'rebase --keep-empty keeps empty even if already in upstream' "$(run)"
->> +test_expect_failure 'rebase -m --keep-empty keeps empty even if already in upstream' "$(run -m)"
->> +test_expect_failure 'rebase -i --keep-empty keeps empty even if already in upstream' "$(run -i)"
->> +test_expect_failure 'rebase -p --keep-empty keeps empty even if already in upstream' "$(run -p)"
->
-> "is in upstream" is decided by the patch text. If an empty commit is
-> already in upstream, this adds another one with the same or a different
-> commit message and authorship information. Dubious, but since it is
-> opt-in, it should be OK.
+CONS :
+* Linux only
+* root only
 
-Yes, it is a little dubious. See
-http://thread.gmane.org/gmane.comp.version-control.git/203097/focus=203159
-and Junio's answer, which I think makes sense.
+What do you think about such option/implementation ?
+-- 
+Ronan Bignaux
+Entrepreneur indépendant
+Consultant informatique
 
->> +run () {
->> +echo '
->> +     reset &&
->> +     git rebase '"$@"' j w &&
->> +     test_range j.. "E n H" || test_range j.. "n H E"
->> +'
->
-> Chaining tests with || is dangerous: you do not know whether the first
-> failed because the condition is not satisfied or because of some other
-> failure.
+ScourGE SARL
+136 rue Branville
+14000 CAEN
+06.47.75.44.81
 
-Good point. Thanks.
 
-> Why is this needed in the first place? Shouldn't the history be
-> deterministic, provided that the commit timestamps are all distinct?
+--------------020402010902020401000802
+Content-Type: text/x-patch;
+ name="0001-add-option-to-bind-to-a-specific-interface.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename*0="0001-add-option-to-bind-to-a-specific-interface.patch"
 
-It may be deterministic, but it's not specified, I think, so I didn't
-want to depend on the order. Thinking more about it, though, I think
-it's good to protect the current behavior from patches that change the
-order of the parents. Although it may not be incorrect to change the
-order, it would at least protect against accidental changes.
+>From bfebe7fc838f83065fea04cf27613fe89e962a3a Mon Sep 17 00:00:00 2001
+From: Bignaux Ronan <ronan@aimao.org>
+Date: Thu, 20 Sep 2012 15:09:31 +0200
+Subject: [PATCH] add option to bind to a specific interface
 
-It turns out that "rebase -i" goes through the commits in
---topo-order, while the others use default order, I think. Which
-flavor should pass the test case and which should fail (and be fixed)?
-I would personally prefer to say that "rebase -i" is correct in using
---topo-order and that the others should be fixed. Again, it's not
-specified, but I would hate to have them behave differently.
 
->> +run () {
->> +echo '
->> +     reset &&
->> +     git rebase '"$@"' --root c &&
->> +     ! same_revision HEAD c &&
->> +     test_range c "a b c"
->> +'
->> +}
->> +test_expect_success 'rebase --root is not a no-op' "$(run)"
->> +test_expect_success 'rebase -m --root is not a no-op' "$(run -m)"
->> +test_expect_success 'rebase -i --root is not a no-op' "$(run -i)"
->> +test_expect_success 'rebase -p --root is not a no-op' "$(run -p)"
->
-> Why? Is it more like "--root implies --force"?
+Signed-off-by: Bignaux Ronan <ronan@aimao.org>
+---
+ daemon.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-It doesn't currently exactly imply --force, but the effect is the
-same. Also see my reply to Junio's email in this thread.
+diff --git a/daemon.c b/daemon.c
+index 4602b46..755fbd3 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -5,6 +5,10 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ 
++#ifdef SO_BINDTODEVICE
++#include <net/if.h>
++#endif
++
+ #ifndef HOST_NAME_MAX
+ #define HOST_NAME_MAX 256
+ #endif
+@@ -31,7 +35,7 @@ static const char daemon_usage[] =
+ "           [--reuseaddr] [--pid-file=<file>]\n"
+ "           [--(enable|disable|allow-override|forbid-override)=<service>]\n"
+ "           [--access-hook=<path>]\n"
+-"           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>]\n"
++"           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>] [--bindtodev=<interface>]\n"
+ "                      [--detach] [--user=<user> [--group=<group>]]\n"
+ "           [<directory>...]";
+ 
+@@ -64,6 +68,7 @@ static char *hostname;
+ static char *canon_hostname;
+ static char *ip_address;
+ static char *tcp_port;
++static struct ifreq ifr;
+ 
+ static void logreport(int priority, const char *err, va_list params)
+ {
+@@ -875,6 +880,15 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+ 			continue;
+ 		}
+ 
++		if (ifr.ifr_name) {
++			if (setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, (void *) &ifr,
++					sizeof(ifr)) < 0) {
++				logerror("Could not set SO_BINDTODEVICE: %s", strerror(errno));
++				close(sockfd);
++				continue;
++			}
++		}
++
+ #ifdef IPV6_V6ONLY
+ 		if (ai->ai_family == AF_INET6) {
+ 			int on = 1;
+@@ -1194,6 +1208,11 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
+ 		}
++		if (!prefixcmp(arg, "--bindtodev=")) {
++			memset(&ifr, 0, sizeof(ifr));
++			strncpy (ifr.ifr_name, arg + 12 ,IFNAMSIZ);
++			continue;
++		}
+ 		if (!strcmp(arg, "--serve")) {
+ 			serve_mode = 1;
+ 			continue;
+-- 
+1.7.12
 
-Maybe Chris has some thoughts on this?
 
->> +run () {
->> +echo '
->> +     reset &&
->> +     git rebase '"$@"' --root --onto e y &&
->> +     test_range e.. "x y"
->> +'
->> +}
->> +test_expect_success 'rebase --root --onto' "$(run)"
->> +test_expect_failure 'rebase -m --root --onto' "$(run -m)"
->> +test_expect_success 'rebase -i --root --onto' "$(run -i)"
->> +test_expect_success 'rebase -p --root --onto' "$(run -p)"
->
-> Where does this rebase start? Ah, --root stands in for the "upstream"
-> argument, hence, y is the tip to rebase. Right? Then it makes sense.
+--------------020402010902020401000802
+Content-Type: text/x-vcard; charset=utf-8;
+ name="r_bignaux.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="r_bignaux.vcf"
 
-Thanks for pointing that out. I changed the order to "git rebase
---onto e --root y". I hope that makes it clearer.
+begin:vcard
+fn:Ronan Bignaux
+n:Bignaux;Ronan
+org:ScourGE SARL
+adr;dom:;;136 rue Branville ;CAEN ;;14000 
+email;internet:r.bignaux@scourge.biz
+title;quoted-printable:Entrepreneur ind=C3=A9pendant ,Consultant informatique
+tel;cell:06.47.75.44.81
+version:2.1
+end:vcard
 
->> +test_expect_success 'rebase -p re-creates merge from upstream' '
->> +     reset &&
->> +     git rebase -p k w &&
->> +     same_revision HEAD^ H &&
->> +     same_revision HEAD^2 k
->> +'
->
-> IMO, this tests the wrong thing. You have this history:
->
->  ---j-------E---k
->      \       \
->       n---H---w
->
-> where E is the second parent of w. What does it mean to rebase w onto k?
-> IMO, it is a meaningless operation, and the outcome is irrelevant.
->
-> It would make sense to test that this history results after the upstream
-> at H moved forward:
->
->  ---j-------E---k
->      \       \
->       n---H   \
->            \   \
->             z---w'
->
-> That is, w began a topic by mergeing the sidebranch E; then upstream
-> advanced to z, and now you rebase the topic to the new upstream.
 
-Fair enough. Changed accordingly.
-
->> +test_expect_success 'rebase -p re-creates internal merge' '
->> +     reset &&
->> +     git rebase -p c w &&
->> +     test_revisions "f j n E H w" HEAD~4 HEAD~3 HEAD~2 HEAD^2 HEAD^ HEAD
->
-> You must also test for c; otherwise the test would succeed if rebase did
-> nothing at all.
->
-> This comment applies to all other tests as well, even the "regular" rebase
-> tests above. (But I noticed only when I read this test.)
-
-I did this only in one or two places thinking that that would be
-enough to make sure that rebase is not normally a no-op. But I think
-you are right that we should check it most of the time. It turns out
-that doing this caught a case where the rebase did do something and
-the right patches were in "c.." (or whatever it was; I forgot which
-test case), but the new base was not "c".
-
-> After this plethora of tests, can we get rid of some or many from other
-> test scripts? (t34* tests are the ones that take the longest on Windows to
-> run.)
-
-I was afraid that this file would be the slowest of all and it might
-very well be :-(. But, yes, it does replace a few test cases. I will
-send out an updated version of the patch later. That version should
-delete a few existing test cases as well.
-
-I am having trouble finding enough time to get the patch into shape,
-but I didn't want to put off this reply for any longer.
-
-Martin
+--------------020402010902020401000802--
