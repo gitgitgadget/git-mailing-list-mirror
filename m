@@ -1,105 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] t9902: add a few basic completion tests
-Date: Wed, 26 Sep 2012 17:47:51 -0400
-Message-ID: <20120926214750.GA18653@sigill.intra.peff.net>
+Subject: [PATCH 2/3] t9902: add completion tests for "odd" filenames
+Date: Wed, 26 Sep 2012 17:51:06 -0400
+Message-ID: <20120926215106.GB18653@sigill.intra.peff.net>
 References: <20120926214653.GA18628@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
 To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 23:48:03 2012
+X-From: git-owner@vger.kernel.org Wed Sep 26 23:51:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGzSc-0004sP-4Y
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 23:48:02 +0200
+	id 1TGzVm-00074D-I7
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 23:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab2IZVrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 17:47:53 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59353 "EHLO
+	id S1752090Ab2IZVvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 17:51:09 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:59361 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751116Ab2IZVrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 17:47:53 -0400
-Received: (qmail 28005 invoked by uid 107); 26 Sep 2012 21:48:21 -0000
+	id S1751513Ab2IZVvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 17:51:08 -0400
+Received: (qmail 28061 invoked by uid 107); 26 Sep 2012 21:51:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Sep 2012 17:48:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Sep 2012 17:47:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Sep 2012 17:51:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Sep 2012 17:51:06 -0400
 Content-Disposition: inline
 In-Reply-To: <20120926214653.GA18628@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206450>
 
-We were not testing ref or tree completion at all. Let's
-give them even basic sanity checks to avoid regressions.
+We correctly handle completion items with spaces just fine,
+since we pass the lists around with newline delimiters.
+However, we do not handle filenames with shell
+metacharacters, as "compgen -W" performs expansion on the
+list we give it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This would have caught the recent breakage, and also paves the way for
-testing the new fix.
+Actually, these vectors are not strictly correct, as I think ultimately
+we would like to return
 
- t/t9902-completion.sh | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+  'name with spaces'
+
+with quotes.  But this lets us test that at least the basics work, and
+we can update the test vectors later.
+
+It would be nice to test completion on a file with an embedded newline
+(which will also not work), but I'm not even sure what the result is
+supposed to look like, so I couldn't write a sane test case. Since I
+don't plan on fixing that anytime soon anyway, I think it's sane to just
+leave it until later if somebody actually cares.
+
+ t/t9902-completion.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 92d7eb4..2fc833a 100755
+index 2fc833a..cbd0fb6 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -61,6 +61,15 @@ test_completion ()
- 	test_cmp expected out
- }
- 
-+# Like test_completion, but reads expectation from stdin,
-+# which is convenient when it is multiline. We also process "_" into
-+# spaces to make test vectors more readable.
-+test_completion_long ()
-+{
-+	tr _ " " >expected &&
-+	test_completion "$1"
-+}
-+
- newline=$'\n'
- 
- test_expect_success '__gitcomp - trailing space - options' '
-@@ -228,4 +237,36 @@ test_expect_success 'general options plus command' '
- 	test_completion "git --no-replace-objects check" "checkout "
+@@ -269,4 +269,23 @@ test_expect_success '<ref>: completes paths' '
+ 	EOF
  '
  
-+test_expect_success 'setup for ref completion' '
-+	echo content >file1 &&
-+	echo more >file2 &&
++test_expect_success 'complete tree filename with spaces' '
++	echo content >"name with spaces" &&
 +	git add . &&
-+	git commit -m one &&
-+	git branch mybranch &&
-+	git tag mytag
-+'
-+
-+test_expect_success 'checkout completes ref names' '
-+	test_completion_long "git checkout m" <<-\EOF
-+	master_
-+	mybranch_
-+	mytag_
++	git commit -m spaces &&
++	test_completion_long "git show HEAD:nam" <<-\EOF
++	name with spaces_
 +	EOF
 +'
 +
-+test_expect_success 'show completes all refs' '
-+	test_completion_long "git show m" <<-\EOF
-+	master_
-+	mybranch_
-+	mytag_
-+	EOF
-+'
-+
-+test_expect_success '<ref>: completes paths' '
-+	test_completion_long "git show mytag:f" <<-\EOF
-+	file1_
-+	file2_
++test_expect_failure 'complete tree filename with metacharacters' '
++	echo content >"name with \${meta}" &&
++	git add . &&
++	git commit -m meta &&
++	test_completion_long "git show HEAD:nam" <<-\EOF
++	name with ${meta}_
++	name with spaces_
 +	EOF
 +'
 +
