@@ -1,100 +1,129 @@
-From: Cosmin Stejerean <cosmin@offbytwo.com>
-Subject: Re: Can git pull from a mercurial repository?
-Date: Wed, 26 Sep 2012 15:21:57 -0500
-Message-ID: <CAF+fDw6eUdW_pmLsMzXgfhm46S8ey07kdo=vxJ=jP=SWjzR5RQ@mail.gmail.com>
-References: <k39lir$gpm$1@ger.gmane.org> <50585F10.3080307@op5.se>
- <000a01cd959a$d8cd0730$8a671590$@schmitz-digital.de> <37D17798-4BDC-433D-A9B4-49F4352754D9@quendi.de>
- <5062B0F6.1040906@unixsol.org> <7F5A6E53-4F7C-462F-8B04-09934BAB88DB@quendi.de>
- <5062CF09.2090703@unixsol.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/7] Add join_paths() to safely concatenate paths.
+Date: Wed, 26 Sep 2012 13:51:22 -0700
+Message-ID: <20120926205122.GA29906@elie.Belkin>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+ <1343468312-72024-5-git-send-email-schwern@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Max Horn <postbox@quendi.de>,
-	Joachim Schmitz <jojo@schmitz-digital.de>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Georgi Chorbadzhiyski <gf@unixsol.org>
-X-From: git-owner@vger.kernel.org Wed Sep 26 22:22:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Wed Sep 26 22:51:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGy7p-0004j9-GM
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 22:22:29 +0200
+	id 1TGyaD-0001vd-B1
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 22:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754445Ab2IZUWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 16:22:20 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:63636 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750945Ab2IZUWT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Sep 2012 16:22:19 -0400
-Received: by wibhq12 with SMTP id hq12so5409660wib.1
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 13:22:17 -0700 (PDT)
+	id S1751378Ab2IZUvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 16:51:39 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:45833 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751318Ab2IZUvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 16:51:38 -0400
+Received: by pbbrr4 with SMTP id rr4so2470958pbb.19
+        for <git@vger.kernel.org>; Wed, 26 Sep 2012 13:51:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=offbytwo.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=onBzXEtadTo3LLOQGGvDRza4I8V/NBfvJJJpydCPdfg=;
-        b=inA364gOjaZJjBNSfycn1ylFEx/nwJdbmOdB32ZcHLUwf8rBVNYCpdiva3XSp/mw93
-         937xusJst8GQUE6Nh70b0QIMzCzWz+NwifvlKqfmWIiyeYFqI9KDcG6M51wfAHGI3KlJ
-         X/q30UxaLow0R+NcF8qsZ+WLygu76GDCAJ1RU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=onBzXEtadTo3LLOQGGvDRza4I8V/NBfvJJJpydCPdfg=;
-        b=bRXAUiQJEzQWi/hZVfo0se0/MeTy1t/zR+2f01hxSXTCLAlNh2r+eUm+WNNKAV9H/e
-         J+gwG7ODPTy/WqUfrZyo821heGE/8aUHCXTuQWl+big1GkpD7bkln4ERiwTnMiDd3u0p
-         Q9ufctwg10Fa+Dyw9+yX01iaclhsxFJhh3dkg3kPFdCIkthjdepEAKZ2jVy3ndlHW2sX
-         z1/ZMukWbgVwMhxf5EsqGsYOaT4MZDloJEP3uiE16s9fd3Vq2If+/xELzyF8XPmVl4qi
-         Og9F5dNGqMslZrolVlKaqdNpzVyaXoMNyGs+DRwZwB8jOPm64GeCr7bjeg/vDpJLh0GA
-         U6TA==
-Received: by 10.180.104.200 with SMTP id gg8mr3575763wib.14.1348690937638;
- Wed, 26 Sep 2012 13:22:17 -0700 (PDT)
-Received: by 10.194.16.106 with HTTP; Wed, 26 Sep 2012 13:21:57 -0700 (PDT)
-In-Reply-To: <5062CF09.2090703@unixsol.org>
-X-Gm-Message-State: ALoCoQmv4euDGanjutyTYo5NQZGAp/AD8NX9r04xwNSbPTYAJbuYbq+0pEk1O/1QyvQHdgFiqq5j
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SlbgtKjoWAp5rpf+Ga6GsonJZ6pQ8x/0/9yTDBYbugA=;
+        b=eihrs/1elj1k3Xq11oHqXx/vyAH8IY1GMazxpc1ppn1mlupiy8epdBqKYv7w2F9Ngx
+         tRNFQEpIiNSuw8n2ZzeFa8Da9T4jeQqZj79KcF4/9xacH/TAPo6X+qNwMqNMh1QtVQJh
+         d2mBB8ltWR7bXsRN0g162MQhFl4uMuODcq9qkwdsR3ZkVYbv+CsHr4V478fXVbFFUzta
+         LDJsOXv1oXyX8o88YSh8YntJP9WHmrUaiWB3Mpfm2QLuAfYJG0lQXpee6g4xb7gX38yB
+         j7SLKFtKQkjz/Xe4/x6OhbwX1e6TR2LAK37M0GUL02KQPFwCx0bN6GQmU0LP4hRJx6A0
+         /fJQ==
+Received: by 10.68.138.133 with SMTP id qq5mr5696441pbb.86.1348692698175;
+        Wed, 26 Sep 2012 13:51:38 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id s10sm2458058paz.11.2012.09.26.13.51.33
+        (version=SSLv3 cipher=OTHER);
+        Wed, 26 Sep 2012 13:51:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1343468312-72024-5-git-send-email-schwern@pobox.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206444>
 
-I definitely wrote git-hg for the purpose of checking out a mercurial
-repo so I can develop locally against it with git and then submit
-patches. Getting push support was never really a priority for me.
-Someone did eventually contribute some mechanism for pushing things
-back in a pull request, so I merged it in. I occasionally get pull
-requests for minor things around push, so it seems like at least a few
-people are using it.
+Hi,
 
-The way to get proper push support would be to use the hg-git
-extension. The git-hg-again project uses that, and if I had some time
-I'd love to move git-hg over to that approach as well. Patches
-welcome. Alternatively, you can always https://www.gittip.com/cosmin/
-:)
+Michael G. Schwern wrote:
 
-
-- Cosmin
-
-On Wed, Sep 26, 2012 at 4:46 AM, Georgi Chorbadzhiyski <gf@unixsol.org> wrote:
-> Around 09/26/2012 11:46 AM, Max Horn scribbled:
->> On 26.09.2012, at 09:38, Georgi Chorbadzhiyski wrote:
->>> Around 09/25/2012 05:15 PM, Max Horn scribbled:
->>>> I think there is a lot of demand for a "git-hg" bridge, a way to seemlessly access a Mercurial repository as if it was a git repository. A converse to hg-git <http://hg-git.github.com/>
->>>
->>> I've already mentioned this, but such a tool already exists and it
->>> is working very well (IMHO): http://offbytwo.com/git-hg/
->>
->> I guess this is a matter of perspective. It doesn't work at all for me because it does not really support pushing. (It does have a "push" command, but at least last time I looked, it was utterly broken; see also <https://github.com/dubiousjim/yagh/blob/master/Backends.md> for a discussion (not written by me!). I'd be happy to learn that has changed, though I just looked, and it still uses "hg convert", so I don't see how it possibly could work...
+> Otherwise you might wind up with things like...
 >
-> I have not tested push (I'm using git-hg to sync hg repo and develop
-> using git, no pushing back to hg, just sending patches).
+>     my $path1 = undef;
+>     my $path2 = 'foo';
+>     my $path = $path1 . '/' . $path2;
 >
-> According to git-hg README "Push supported added as well although it
-> is still experimental". You should report the "push" bugs to the
-> author(s) they may be able to fix them.
+> creating '/foo'.  Or this...
 >
-> --
-> Georgi Chorbadzhiyski
-> http://georgi.unixsol.org/
+>     my $path1 = 'foo/';
+>     my $path2 = 'bar';
+>     my $path = $path1 . '/' . $path2;
+>
+> creating 'foo//bar'.
+
+I'm still puzzled by this one, too.  I don't understand the
+motivation.  Is this to make joining paths less fragile, by preserving
+the property that join_paths($a, $b) names the directory you would get
+to by first chdir-ing into $a and then into $b?
+
+It would be easier to understand as two patches: first, one that
+extracts join_paths without any functional change, and then one that
+changes its implementation with an explanation for what positive
+functional effect that would have.
+
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+[...]
+> @@ -1275,7 +1276,7 @@ sub get_svnprops {
+>  	$path = $cmd_dir_prefix . $path;
+>  	fatal("No such file or directory: $path") unless -e $path;
+>  	my $is_dir = -d $path ? 1 : 0;
+> -	$path = $gs->{path} . '/' . $path;
+> +	$path = join_paths($gs->{path}, $path);
+>  
+>  	# canonicalize the path (otherwise libsvn will abort or fail to
+>  	# find the file)
+
+This can't be for the //-collapsing effect since the path is about
+to be canonicalized.  It can't be for the initial-/ effect since
+that is stripped away by canonicalization, too.
+
+So no functional effect here, good or bad.
+
+[...]
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+[...]
+> @@ -316,9 +320,7 @@ sub init_remote_config {
+>  			}
+>  			my $old_path = $self->path;
+>  			$url =~ s!^\Q$min_url\E(/|$)!!;
+> -			if (length $old_path) {
+> -				$url .= "/$old_path";
+> -			}
+> +			$url = join_paths($url, $old_path);
+>  			$self->path($url);
+
+This is probably not for the normal //-collapsing effect because
+$url already has its trailing / stripped off.  Maybe it is for
+cases where $old_path has leading slashes or $min_url has multiple
+trailing ones?
+
+In the end it shouldn't make a difference, once a later patch teaches
+Git::SVN->path to canonicalize.
+
+Is the functional change in this patch for aesthetic reasons, or is
+there some other component (perhaps in a later patch) that relies on
+it?
+
+Thanks again for your help,
+Jonathan
