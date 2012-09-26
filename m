@@ -1,69 +1,129 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: git die message written to stdout?
-Date: Wed, 26 Sep 2012 21:11:33 +0200
-Message-ID: <op.wk9bljau0aolir@keputer>
-References: <CAHtLG6T5nHw-47GdRHsXNCeArKy5X5XUmHxLnj50osKoUQa+dQ@mail.gmail.com>
+From: Simon Oosthoek <soosthoek@nieuwland.nl>
+Subject: Re: bash completion with colour hints
+Date: Wed, 26 Sep 2012 21:25:30 +0200
+Message-ID: <506356AA.3050005@nieuwland.nl>
+References: <50631885.8090604@nieuwland.nl> <CALkWK0=9KKZvvNFoLUNRKWkfrqR7+RByYaWP9XXg7Pd3ym7CUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 21:11:48 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 21:26:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGx1O-0000YB-MO
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 21:11:47 +0200
+	id 1TGxFw-0000Bm-MM
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 21:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758209Ab2IZTLi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Sep 2012 15:11:38 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:61201 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758186Ab2IZTLh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Sep 2012 15:11:37 -0400
-Received: by wgbdr13 with SMTP id dr13so757500wgb.1
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 12:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:to:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=dOUTEIybCFdl/YzY4USvxxvKQl1Bn/LwqDDDO6/wnY0=;
-        b=ZdyOmgBHQU6lgNJW1RamhjoKQWCIj4VzXFu0v/xPhfG30n9pS2ve5Vf8RgsNuFwC/Y
-         nbVQFuYLWImwQziweWeCvaSEvhy9FMtVxeYa1x/uvd8e0uAfSC1EVXOkrPcQ2cNonYDr
-         bdnWJQRanVg4Se+mtCRpRzyfHHuTA+TLzBv/bdMQ5rnUSNmKAagTLRbiz/oa/cNlB7z2
-         dPTFbeh9vPeZ1yu9Ae8skahn6a6Nv4q7giW+bMhp0x8oh/qBS72Uw9gnW4ydMJHuyeaV
-         bcp6WOcLBvNTx0q3idiWiHhV/LcHGG48eiYZULa5+fTrXG/n+2oRuptnKb0ovjSzAn+G
-         PDTw==
-Received: by 10.180.8.41 with SMTP id o9mr3375022wia.3.1348686696151;
-        Wed, 26 Sep 2012 12:11:36 -0700 (PDT)
-Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id ga2sm8585146wib.2.2012.09.26.12.11.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 26 Sep 2012 12:11:35 -0700 (PDT)
-In-Reply-To: <CAHtLG6T5nHw-47GdRHsXNCeArKy5X5XUmHxLnj50osKoUQa+dQ@mail.gmail.com>
-User-Agent: Opera Mail/12.00 (Linux)
+	id S1757366Ab2IZT0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 15:26:37 -0400
+Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:3582 "EHLO
+	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754626Ab2IZT0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 15:26:37 -0400
+Received: from [192.168.178.21] (simaj.xs4all.nl [83.160.71.26])
+	(authenticated bits=0)
+	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id q8QJPUwg040871
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 26 Sep 2012 21:25:32 +0200 (CEST)
+	(envelope-from soosthoek@nieuwland.nl)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <CALkWK0=9KKZvvNFoLUNRKWkfrqR7+RByYaWP9XXg7Pd3ym7CUQ@mail.gmail.com>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206430>
 
-On Wed, 26 Sep 2012 18:01:39 +0200, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3coo=
-li@gmail.com> wrote:
+On 26/09/12 17:24, Ramkumar Ramachandra wrote:
+> Hi Simon,
+> 
+> Could you follow the guidelines in Documentation/SubmittingPatches, so
+> that the patch can be considered for inclusion?
 
-> Is git die() messages written to stdout?
-> Should it be written to stderr?
+Hi Ram, thanks for your feedback.
 
-As far as I know git die() routines write their output to stderr. Do yo=
-u =20
-have an indication that that might not be the case?
+I gather now that this file is part of the entire git tree ;-)
 
-=46rans
+this is my first time to submit a patch to git and frankly I coded this
+up very quickly and did only a small test.
+
+I read the guide and now I have some questions:
+
+- It suggests to use the oldest commit that contains the "bug" and can
+support the fix. This would be the very first mention of __git_ps1
+function I think commit d3d717a4ad0c8d7329e79f7d0313baec57c6b585
+However, I guess that although I have been using something similar since
+about 2009, I should at least base it on the relatively new
+git-prompt.sh file, is this a correct interpretation of the guide?
+(BTW, I wonder how this will affect ultimately the current master?)
+
+- I read that git-prompt.sh is meant to support bash and zsh, I have
+only tested it on bash. Should I attempt to test it on zsh or is there a
+kind person with zsh as his/her shell to test it for me?
+
+My instinct is to just apply my patch to the current master, but I'm
+open to starting from a different base, but I'm too new to the tree to
+know which one, any suggestions?
 
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+> 
+>> --- git-orig-bak	2012-09-26 16:39:47.000000000 +0200
+>> +++ git-bashcompletion	2012-09-26 16:50:57.000000000 +0200
+>> @@ -59,6 +59,9 @@
+>>  #       per-repository basis by setting the bash.showUpstream config
+>>  #       variable.
+>>  #
+>> +#       If you would like an additional hint in colour in your prompt
+>> +#       set GIT_PS1_SHOWCOLORHINT to a nonempty value. Currently
+>> +#       the colours are hardcoded in the function...
+> 
+> Nit: I think it's spelt "color" everywhere else in git.
+> 
+
+I can adapt ;-)
+
+>> +		local c_red=' [31m'
+>> +		local c_yellow=' [33m'
+>> +		local c_lblue=' [1,34m'
+>> +		local c_green=' [32m'
+>> +		local c_purple=' [35m'
+>> +		local c_cyan=' [36m'
+>> +		local c_clear=' [0m'
+>> +		local printf_format="${1:- (%s)}"
+>> +
+>> +		if [ -n "${GIT_PS1_SHOWCOLORHINT-}" ]; then
+>> +			if [ "$w" != "*" ]; then
+>> +				printf_format="$c_green$printf_format$c_clear"
+>> +			else
+>> +				printf_format="$c_red$printf_format$c_clear"
+>> +			fi
+>> +			if [ -n "$i" ]; then
+>> +				i="$c_yellow$i$c_clear"
+>> +			fi
+>> +			if [ -n "$s" ]; then
+>> +				s="$c_lblue$i$c_clear"
+>> +			fi
+>> +			if [ -n "$u" ]; then
+>> +				u="$c_purple$i$c_clear"
+>> +			fi
+>> +		fi
+>> +			
+>>  		local f="$w$i$s$u"
+>> -		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r$p"
+>> +		echo $(printf "$printf_format" "$c${b##refs/heads/}${f:+ $f}$r$p")
+
+I'm still in some doubt over this last line, including the color codes
+is confusing me...
+
+I'll go ahead and try some more polishing and whatever more comes as
+suggestions. Is it ok to bother the list with intermediate stuff in this
+thread?
+
+Cheers
+
+Simon
