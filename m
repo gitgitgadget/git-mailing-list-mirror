@@ -1,86 +1,69 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetool--lib: Allow custom commands to override built-ins
-Date: Wed, 26 Sep 2012 11:31:45 -0700
-Message-ID: <CAJDDKr4OkvAvRQFjp0NuzYkE2DSdvXh1vvTdKeaCq+bvQA4kuQ@mail.gmail.com>
-References: <1348559291-71739-1-git-send-email-davvid@gmail.com>
-	<CALkWK0naJt840LfMNBM7EtdyLE5nmJeAsxG-Wttj8c84O5X7jA@mail.gmail.com>
-	<7vtxukubds.fsf@alter.siamese.dyndns.org>
+Subject: Re: Configuring the location of ~/.gitconfig
+Date: Wed, 26 Sep 2012 11:34:05 -0700
+Message-ID: <CAJDDKr6q1k+nM9VTukLvze2E6wRBrMOHeZRAoAbKp0MbGv4cQQ@mail.gmail.com>
+References: <CALkWK0nEP2gf4fYL=hjHg_U3X67M4PF1aupV+VJb9T6eBEo0MQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Sylvain Rabot <srabot@steek.com>,
-	K Gateway <kowloongateway1@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Mike Schuld <mike.schuld@foundant.com>,
-	Stefan Kendall <stefankendall@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 20:31:57 2012
+Cc: Git List <git@vger.kernel.org>,
+	Anurag Priyam <anurag08priyam@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 20:34:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TGwOq-0004dP-Ox
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 20:31:57 +0200
+	id 1TGwR6-0005lS-Tk
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Sep 2012 20:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756887Ab2IZSbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2012 14:31:47 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:36784 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755624Ab2IZSbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2012 14:31:46 -0400
-Received: by vbbff1 with SMTP id ff1so997118vbb.19
-        for <git@vger.kernel.org>; Wed, 26 Sep 2012 11:31:46 -0700 (PDT)
+	id S1757268Ab2IZSeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2012 14:34:07 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:63206 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756975Ab2IZSeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2012 14:34:06 -0400
+Received: by vcbfo13 with SMTP id fo13so1052594vcb.19
+        for <git@vger.kernel.org>; Wed, 26 Sep 2012 11:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=MyYRo8dpdl85Xkrkj/dL7m4z93tCbsJtvSwz9lSkWKs=;
-        b=RJ1qRL2gcDRSrbcXv7s59CDot9vPmv+D4fzpTIlKV88UuQTXpK/PgpU/7d36dJNTpO
-         Vr+dIqJK6dLs6P+OOFiFps1hKAeY4zDdX/ctFKkYhrFm40vv4uet969jntHFcu/n/4jN
-         Zj+aCYCTunB7bOQGTUH2G3vYIjezSre9rJ1HGxpJBYqgL7KicBQQCbzyRuWkv6vLRSd8
-         YLQ/F3WiCc5SQPEeadymy1rSYjieZMgOr0cLbJ4riKyfL+v2zONYzUA1htAOQmGm4wc/
-         JZcaXQmdrULf7C/sTjtlCzkKVgAAu8DcbhpNI9MRomJaDVO8hri9/RxFBnSG+vr6+HHc
-         HJYQ==
-Received: by 10.52.68.199 with SMTP id y7mr625447vdt.80.1348684305769; Wed, 26
- Sep 2012 11:31:45 -0700 (PDT)
-Received: by 10.58.180.39 with HTTP; Wed, 26 Sep 2012 11:31:45 -0700 (PDT)
-In-Reply-To: <7vtxukubds.fsf@alter.siamese.dyndns.org>
+        bh=dqEY7QpyhzsvkDEIJeeQQoSDCdAygwb7IiGXrSL4dyc=;
+        b=kxtxVA0YN0pljlBD/v+OK4MrnsvOc8WmubDLZTvEzoeMpsvwb6soouOKU9jiguUUtw
+         Z8GkHLjcDR/s6UIn3zEneFeyPEoAfeNYjnpvx5EomW2cysyyf2EHqrlwCW8OlwCxDrCC
+         UhFnvBPxjee45w6rbNoHUco+fQP8/49WqgccVwf+e3Lw7DMK1iTHLta40gwDW+QX3VRr
+         +YpnG5hW8ZYpUbH1Ze6UBMjtswzy6aVjPzeN2E4c+uHX7yxTJSZC5/OWwEMgfzxkiSqk
+         elqE1QOxkjeY04k8JDkimIUVlSb4CLPW0riz/IGjGM0l+VZXs19GWtOYEBmE5Xto+MF1
+         EJFQ==
+Received: by 10.58.240.15 with SMTP id vw15mr789501vec.36.1348684445819; Wed,
+ 26 Sep 2012 11:34:05 -0700 (PDT)
+Received: by 10.58.180.39 with HTTP; Wed, 26 Sep 2012 11:34:05 -0700 (PDT)
+In-Reply-To: <CALkWK0nEP2gf4fYL=hjHg_U3X67M4PF1aupV+VJb9T6eBEo0MQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206427>
 
-On Wed, Sep 26, 2012 at 7:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Wed, Sep 26, 2012 at 7:14 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Hi,
 >
->> Hi David,
->>
->> David Aguilar wrote:
->>>  diff_cmd () {
->>> -       merge_tool_cmd="$(get_merge_tool_cmd "$1")"
->>> -       if test -z "$merge_tool_cmd"
->>> -       then
->>> -               status=1
->>> -               break
->>> -       fi
->>> -       ( eval $merge_tool_cmd )
->>> -       status=$?
->>> +       status=1
->>>         return $status
->>>  }
->>
->> Nit: Why not return 1, instead of setting $status and returning it?
+> I'd like to configure the location of ~/.gitconfig through an
+> environment variable.  My usecase is a simple enough: I have a
+> repository with all my dotfiles, and I don't want to symlink
+> ~/dotfiles/.gitconfig from $HOME after cloning it.  Does anyone else
+> think the feature will be useful?
 >
-> Perhaps because the caller "run_merge_tool" pays attention to
-> $status that is a global variable?
->
-> Have you traced the call chain?
+> A couple of similar examples:
+> 1. The git templates directory is configurable via the
+> GIT_TEMPLATE_DIR variable.
+> 2. The location of ~/.zshrc, ~/.zlogin etc is configurable via the
+> ZDOTDIR variable in ZSH.
 
-Exactly.  I would like to eliminate globals whenever possible,
-but this particular topic involved refactoring which aimed to keep
-existing behavior w.r.t these variables unchanged.
+There was some work recently to teach git about the XDG_CONFIG_HOME variable.
+
+Would that help, or are the XDG variables too global for your usage?
 -- 
 David
