@@ -1,70 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: CRLF, LF ... CR ?
-Date: Wed, 26 Sep 2012 23:16:38 -0700
-Message-ID: <7vvcf0rnw9.fsf@alter.siamese.dyndns.org>
-References: <20120913170943725232.01d717ef@gpio.dk>
- <CAJDDKr5-ze2bhTkT+jzcS1iZipJO6kEr2qAf73GRn4QQ-rS1dQ@mail.gmail.com>
- <7vtxv18ax2.fsf@alter.siamese.dyndns.org>
- <CAJDDKr7Y5iXVxDHPJ+HQ86T43YBccnsEsebFje9pZzEBgh3=9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] completion: improve shell expansion of items
+Date: Thu, 27 Sep 2012 02:28:55 -0400
+Message-ID: <20120927062855.GA22890@sigill.intra.peff.net>
+References: <20120926214653.GA18628@sigill.intra.peff.net>
+ <20120926215119.GC18653@sigill.intra.peff.net>
+ <20120927003751.GI10144@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Bauer <jens-lists@gpio.dk>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 08:16:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Sep 27 08:29:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TH7P0-0003DJ-UY
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 08:16:51 +0200
+	id 1TH7at-0000GC-TG
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 08:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756116Ab2I0GQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 02:16:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56881 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755882Ab2I0GQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 02:16:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64F486C7E;
-	Thu, 27 Sep 2012 02:16:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RgOn0Bo+vTjOfuJTkFtzgtcL0IM=; b=bjf3hF
-	b442t7w+s52zNSkxyoOk1x01SD+VO5HhfcBoOLmw4pjqORpXhyKUMEEaXiXusWpy
-	icnF+Cz+jV1plCO58MKAsdyJsIypSzGyNCtfnjDTFM+ZIrMa3wDiR09tMZLGq4At
-	40UJSHpQ09HOga6I5C7YvfYwijfVyo8EZ/7GA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rA3wHdtSRsrpwuCUNqsKX81awO8VnxZL
-	m+GTciERm8zzm++6OopMz+xO42HFEC7hemqJ8VBkkVSs1rlh72AoK5PNwbF6unc9
-	NyeG7SYrE87P2VRriatIt0mcoMFFGquTlD3tdhaJbEce3KG/6PGjg485F7LtPCHs
-	fnEYHZ3ZVuA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52F5C6C74;
-	Thu, 27 Sep 2012 02:16:40 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BADD26C73; Thu, 27 Sep 2012
- 02:16:39 -0400 (EDT)
-In-Reply-To: <CAJDDKr7Y5iXVxDHPJ+HQ86T43YBccnsEsebFje9pZzEBgh3=9A@mail.gmail.com> (David
- Aguilar's message of "Wed, 26 Sep 2012 01:42:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E64A7E18-086A-11E2-B5EB-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754815Ab2I0G26 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Sep 2012 02:28:58 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:60732 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823Ab2I0G25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 02:28:57 -0400
+Received: (qmail 31476 invoked by uid 107); 27 Sep 2012 06:29:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Sep 2012 02:29:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Sep 2012 02:28:55 -0400
+Content-Disposition: inline
+In-Reply-To: <20120927003751.GI10144@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206462>
 
-David Aguilar <davvid@gmail.com> writes:
+On Thu, Sep 27, 2012 at 02:37:51AM +0200, SZEDER G=C3=A1bor wrote:
 
-> That said, perhaps the "autocrlf" code is simple enough that it
-> could be easily tweaked to also handle this special case,...
+> > +# Quotes each element of an IFS-delimited list for shell reuse
+> > +__git_quote()
+> > +{
+> > +	local i
+> > +	local delim
+> > +	for i in $1; do
+> > +		local quoted=3D${i//\'/\'\\\'\'}
+> > +		printf "${delim:+$IFS}'%s'" "$quoted"
+> > +		delim=3Dt
+> > +	done
+> > +}
+> [...]
+>
+> Iterating through all possible completion words undermines the main
+> reason for __gitcomp_nl()'s existence: to handle potentially large
+> number of possible completion words faster than the old __gitcomp().
+> If we really have to iterate in a subshell, then it would perhaps be
+> better to drop __gitcomp_nl(), go back to using __gitcomp(), and
+> modify that instead.
 
-I wouldn't be surprised if it is quite simple.
+Thanks for reminding me to time. I noticed your a31e626 while digging i=
+n
+the history, but forgot that I wanted to do a timing test. Sadly, the
+results are very discouraging. Doing a similar test to your 10,000-refs=
+,
+I get:
 
-We (actually Linus, IIRC) simply declared from the get-go that it is
-not worth spending any line of code only to worry about pre OSX
-Macintosh when we did the end-of-line stuff, and nobody so far
-showed any need.
+  $ refs=3D$(seq 1 10000)
+
+  $ . git-completion.bash.old
+  $ time __gitcomp_nl "$refs"
+  real    0m0.065s
+  user    0m0.064s
+  sys     0m0.004s
+
+  $ . git-completion.bash.new
+  $ time __gitcomp_nl "$refs"
+  real    0m1.799s
+  user    0m1.828s
+  sys     0m0.036s
+
+So, a 2700% slowdown. Yuck.
+
+I also tried running it through sed instead of iterating in bash. I kno=
+w
+that some people will not like the fork, but curiously enough, it was
+not that much faster. Which makes me wonder if part of the slowdown is
+actually bash unquoting the result in compgen.
+
+> After all, anyone could drop a file called git-cmd-${meta} on his
+> $PATH, and then get cmd- offered, because completion of git commands
+> still goes through __gitcomp().
+
+Yeah. I wasn't sure if __gitcomp() actually got used on any arbitrary
+data, but that's a good example.
+
+I'm not sure where to go next. I guess we could try pre-quoting via git
+when generating the list of refs (or files, or whatever) and hope that
+is faster.
+
+With this patch as it is, I'm not sure the slowdown is worth it. Yes,
+it's more correct in the face of metacharacters, but those are the
+uncommon case by a large margin. I'd hate to have a performance
+regression in the common case just for that.
+
+-Peff
