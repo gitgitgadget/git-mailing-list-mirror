@@ -1,86 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Using bitmaps to accelerate fetch and clone
-Date: Thu, 27 Sep 2012 14:52:29 -0400
-Message-ID: <20120927185229.GD2519@sigill.intra.peff.net>
-References: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
- <CACsJy8D0vkyEArNChXE0igUkanH6PwjmPitq22a9sudfmWF4kA@mail.gmail.com>
- <20120927172037.GB1547@sigill.intra.peff.net>
- <CAJo=hJuXCYa=MKSqCRsxmwFdFYZamK_94zc3fE0tmvwUAVA2Ow@mail.gmail.com>
- <20120927182233.GA2519@sigill.intra.peff.net>
- <CAJo=hJs4NXatb2vsZWWCamLGLmi+FoWkTaf3Ky-nereXkHEptA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-web--browse: Fix open HTML help pages from iTerm
+Date: Thu, 27 Sep 2012 12:11:36 -0700
+Message-ID: <7v3923qo0n.fsf@alter.siamese.dyndns.org>
+References: <1348597003-28403-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>,
-	David Barr <barr@github.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Sep 27 20:52:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:11:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THJCS-0001DU-Oc
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 20:52:41 +0200
+	id 1THJUz-0003UO-4M
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025Ab2I0Swb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 14:52:31 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33009 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753560Ab2I0Swb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 14:52:31 -0400
-Received: (qmail 4690 invoked by uid 107); 27 Sep 2012 18:52:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Sep 2012 14:52:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Sep 2012 14:52:29 -0400
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJs4NXatb2vsZWWCamLGLmi+FoWkTaf3Ky-nereXkHEptA@mail.gmail.com>
+	id S1753044Ab2I0TLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 15:11:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33791 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752697Ab2I0TLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 15:11:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28A0B944C;
+	Thu, 27 Sep 2012 15:11:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nkUZ7WLk8cB+is/GDuIS9FXHNKM=; b=gU8D7z
+	IS1M2l0U+26hEAnDBalUA6qlksDyykzZdtXQVxh1ams7SjbVvcQgAlIooCNBfr56
+	22gUQJ+hiXtdwWDHt56iTlC6Xuos1dOlfkSovlMgVSldG4QeCTxjgVzcEzCtdfWK
+	fJl9DMCIGAsYlAeqIm8Sk070Fpg7elTwNrJPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LHLm20RcQuY7y/4KM/UglQVcY82SNKzD
+	jG2Vh0JO03iErCm4eU0CRlUp6VQHt/uZK4Rcql55z7EekXxFMj16owTzbhOM7IqF
+	mu5Kjyupx7D4vb2NgCR2QTstiNwzHKGkas6gYhawb3P62rtpRPG/uopPP/VsXuUW
+	ARAx+80HWLs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15AB2944B;
+	Thu, 27 Sep 2012 15:11:38 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E8D7944A; Thu, 27 Sep 2012
+ 15:11:37 -0400 (EDT)
+In-Reply-To: <1348597003-28403-1-git-send-email-prohaska@zib.de> (Steffen
+ Prohaska's message of "Tue, 25 Sep 2012 20:16:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 29128544-08D7-11E2-AB80-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206509>
 
-On Thu, Sep 27, 2012 at 11:36:19AM -0700, Shawn O. Pearce wrote:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> > Interesting. I would have assumed it depended on order in the index.
-> 
-> No. We tried that. Assigning bits by order in index (aka order of
-> SHA-1s sorted) results in horrible compression of the bitmap itself
-> because of the uniform distribution of SHA-1. Encoding instead by pack
-> order gets us really good bitmap compression, because object graph
-> traversal order tends to take reachability into account. So we see
-> long contiguous runs of 1s and get good compression. Sorting by SHA-1
-> just makes the space into swiss cheese.
+> iTerm is an alternative to the default terminal emulation program on Mac
+> OS X.  git-web--browse wasn't aware of iTerm and failed to open HTML
+> help pages when used in a shell session running in iTerm, reporting "No
+> known browser available."  Now it works as expected.
+>
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
+>  git-web--browse.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-web--browse.sh b/git-web--browse.sh
+> index 1e82726..95ecf65 100755
+> --- a/git-web--browse.sh
+> +++ b/git-web--browse.sh
+> @@ -120,7 +120,8 @@ if test -z "$browser" ; then
+>  	fi
+>  	# SECURITYSESSIONID indicates an OS X GUI login session
+>  	if test -n "$SECURITYSESSIONID" \
+> -		-o "$TERM_PROGRAM" = "Apple_Terminal" ; then
+> +		-o "$TERM_PROGRAM" = "Apple_Terminal" \
+> +		-o "$TERM_PROGRAM" = "iTerm.app" ; then
+>  		browser_candidates="open $browser_candidates"
+>  	fi
 
-Right, that makes a lot of sense.
-
-> > I think you are still OK, though, because
-> > the filename comes from the sha1 over the index file, which in turn
-> > includes the sha1 over the packfile. Thus any change in the packfile
-> > would give you a new pack and index name.
-> 
-> No. The pack file name is composed from the SHA-1 of the sorted SHA-1s
-> in the pack. Any change in compression settings or delta windows or
-> even just random scheduling variations when repacking can cause
-> offsets to slide, even if the set of objects being repacked has not
-> differed. The resulting pack and index will have the same file names
-> (as its the same set of objects), but the offset information and
-> ordering is now different.
-
-Are you sure? The trailer is computed over the sha1 of the actual pack
-data (ordering, delta choices, and all), and is computed and written to
-the packfile via sha1close (see pack-objects.c, ll. 753-763). That
-trailer sha1 is fed into finish_tmp_packfile (l. 793).  That function
-feeds it to write_idx_file, which starts a new sha1 computation that
-includes the sorted sha1 list and other index info. But before we
-sha1close that computation, we write the _original_ trailer sha1, adding
-it to the new sha1 calculation. See pack-write.c, ll. 178-180.
-
-And then that sha1 gets returned to finish_tmp_packfile, which uses it
-to name the resulting files.
-
-Am I reading the code wrong?
-
--Peff
+I do not have anything against iTerm, but could we have a solution
+that does not force us to keep adding 47 different terminal program
+names to the list over the longer term (no pun intended)?  For
+example, "If on OS-X (which by the way does not seem to be checked
+with the current logic) and environment TERM_PROGRAM is set to any
+value", or something.
