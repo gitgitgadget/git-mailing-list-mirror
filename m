@@ -1,118 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] completion: improve shell expansion of items
-Date: Thu, 27 Sep 2012 15:48:56 -0400
-Message-ID: <20120927194856.GA10673@sigill.intra.peff.net>
-References: <20120926214653.GA18628@sigill.intra.peff.net>
- <20120926215119.GC18653@sigill.intra.peff.net>
- <20120927003751.GI10144@goldbirke>
- <20120927062855.GA22890@sigill.intra.peff.net>
- <20120927064338.GA4789@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override
+ ~/.gitconfig
+Date: Thu, 27 Sep 2012 12:57:13 -0700
+Message-ID: <7vtxujp7c6.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
+ <1348757171-3223-1-git-send-email-artagnon@gmail.com>
+ <20120927173532.GD1547@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:49:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>,
+	Anurag Priyam <anurag08priyam@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:57:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THK57-0008UH-Jz
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:49:09 +0200
+	id 1THKD9-0004jk-ER
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:57:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148Ab2I0Ts7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 15:48:59 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33076 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753287Ab2I0Ts6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 15:48:58 -0400
-Received: (qmail 5316 invoked by uid 107); 27 Sep 2012 19:49:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Sep 2012 15:49:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Sep 2012 15:48:56 -0400
-Content-Disposition: inline
-In-Reply-To: <20120927064338.GA4789@sigill.intra.peff.net>
+	id S1754505Ab2I0T5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 15:57:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56772 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752578Ab2I0T5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 15:57:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92A289EF5;
+	Thu, 27 Sep 2012 15:57:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iixwauJNz//MmT7ddSFdU8THE5M=; b=c0PlSX
+	WjgyB0t7VOcK1esD/7pe8yAoueCP5qVHphTquTSsrrkHKhvwM+zi0/y1Yxh+YTv0
+	F7iXBD6Vw9J+wL1Dz3Wlogr5jFxJEfF9beAZDBDy1dT2O8paMEG6KKDNgiYW63sY
+	p2NHSXQMJ7UhREs68MNPisYV3dmBu0EpdIZ0Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iLphmucgujkWYaUOt1leMoT4zZ2Al0E/
+	mVTTcmm0V3LgTexRXEKsUOj8/UQfweYuUPksNuhhHHuSNUt+2kgayQ9edtbqjxEp
+	gtmWoEoxLWXMRsUHYSPCUBdi1sOe/K+9f/0+JIIf7LjhRK4CLhx17YeSYqTu4aQp
+	t+OTW3GyIoE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F6559EF3;
+	Thu, 27 Sep 2012 15:57:15 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 041F39EF2; Thu, 27 Sep 2012
+ 15:57:14 -0400 (EDT)
+In-Reply-To: <20120927173532.GD1547@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 27 Sep 2012 13:35:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 88CDF76A-08DD-11E2-8E3C-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206515>
 
-On Thu, Sep 27, 2012 at 02:43:38AM -0400, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> Ah. The problem is that most of the load comes from my patch 4/3, which
-> does a separate iteration. Here are the numbers after just patch 3:
-> 
->   $ time __gitcomp_nl "$refs"
->   real    0m0.344s
->   user    0m0.392s
->   sys     0m0.040s
-> 
-> Slower, but not nearly as painful. Here are the numbers using sed[1]
-> instead:
-> 
->   $ time __gitcomp_nl "$refs"
->   real    0m0.100s
->   user    0m0.084s
->   sys     0m0.016s
-> 
-> So a little slower, but probably acceptable. We could maybe do the same
-> trick on the output side (although it is a little trickier there,
-> because we need it in a bash array). Of course, this is Linux; the fork
-> for sed is way more expensive on some systems.
+> Also, have you considered using a config include? Like:
+>
+>   $ echo '[include]path = ~/my-dotfiles/gitconfig' >~/.gitconfig
 
-So something like the patch below does the quoting correctly (try
-committing a file like "name with spaces" and doing "git show
-HEAD:<TAB>"), and isn't too much slower:
+Very good suggestion.
 
-  real    0m0.114s
-  user    0m0.108s
-  sys     0m0.004s
+> ... you have to bootstrap
+> somehow (e.g., you're going to have to copy a .profile or similar to get
+> the GIT_GLOBAL_CONFIG variable set).
 
-That's almost double the time without handling quoting, but keep in mind
-this is on 10,000 entries (and the real sluggishness we are trying to
-avoid is an order of magnitude). So it might be acceptable.
-
-This is just a proof-of-concept patch. We'd probably want to replace the
-perl below with a more complicated sed invocation  for portability (the
-trickiness is that the output is shown to the user, so we very much
-don't want to quote anything that does not have to be).
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index be800e0..20c09ef 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -225,6 +225,17 @@ fi
- fi
- fi
- 
-+# Quotes each element of a newline-delimited list for shell reuse
-+__git_quote()
-+{
-+	echo "$1" |
-+	sed "
-+	  s/'/'\\\\''/g
-+	  s/^/'/
-+	  s/$/'/
-+	"
-+}
-+
- # Generates completion reply with compgen, appending a space to possible
- # completion words, if necessary.
- # It accepts 1 to 4 arguments:
-@@ -261,7 +272,10 @@ __gitcomp_nl ()
- __gitcomp_nl ()
- {
- 	local IFS=$'\n'
--	COMPREPLY=($(compgen -P "${2-}" -S "${4- }" -W "$1" -- "${3-$cur}"))
-+	COMPREPLY=($(
-+	  compgen -P "${2-}" -S "${4- }" -W "$(__git_quote "$1")" -- "${3-$cur}" |
-+	  perl -lne '/(.*?)( ?)$/; print quotemeta($1), $2'
-+	))
- }
- 
- __git_heads ()
-
--Peff
+Exactly my thought ;-)
