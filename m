@@ -1,64 +1,126 @@
-From: Laszlo Papp <lpapp@kde.org>
-Subject: Option for git bisect run to automatically clean up
-Date: Thu, 27 Sep 2012 17:55:30 +0100
-Message-ID: <CAOMwXhOv7oGXhtWu0apmDD7x+Vnh0jkc2QrnSPmc-=KCQQ08Yg@mail.gmail.com>
-References: <CAOMwXhN=SpwGPaSr1p8K_y4yinuWA0hhynwpqi=5+xT-ZMVbYQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override ~/.gitconfig
+Date: Thu, 27 Sep 2012 18:57:35 +0200
+Message-ID: <vpq626zjtds.fsf@grenoble-inp.fr>
+References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
+	<1348757171-3223-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 27 18:55:41 2012
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>,
+	Anurag Priyam <anurag08priyam@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 18:58:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THHNE-0001xI-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 18:55:40 +0200
+	id 1THHPV-0003Ae-Bw
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 18:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777Ab2I0Qzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 12:55:31 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:33614 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751140Ab2I0Qza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 12:55:30 -0400
-Received: by ieak13 with SMTP id k13so4998187iea.19
-        for <git@vger.kernel.org>; Thu, 27 Sep 2012 09:55:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=wyIF/Jrp4HBbJeA70lw5QyEnymdHOC/kzjimt9i+nDo=;
-        b=K/0pSj9wqFtCbyo8ic/SAxGsBTupoiGGIoZ/0gdGi1YaW3D7JwZ8/JtACSJZzyW4Nx
-         h32FL3mJ7eFuxIWxQwkJ5r+aZz349ISziSCShtrJz5gZZOjn2cU+9u0Ugw+XH0t9W7Md
-         ggphOhOKndZArIcgKKICmatpfDgiMpnYYtNy+nj+6GbYcsH708OdxB3PtgnW3aIjSHRX
-         lVR75YprMgg0Xx7VlihAwIqDc3BwKB7KnO2eCphW0d7E1smB7t36OKWVUUeYuRRjoFhV
-         hlWcKK1+DYO575rFcAjPJsY2y1BQz6cTNxBY1UsTeX1LFVtiFq0s7J4iEdcFhbO6VUa3
-         +4vg==
-Received: by 10.43.45.200 with SMTP id ul8mr3477708icb.36.1348764930402; Thu,
- 27 Sep 2012 09:55:30 -0700 (PDT)
-Received: by 10.64.129.70 with HTTP; Thu, 27 Sep 2012 09:55:30 -0700 (PDT)
-In-Reply-To: <CAOMwXhN=SpwGPaSr1p8K_y4yinuWA0hhynwpqi=5+xT-ZMVbYQ@mail.gmail.com>
-X-Google-Sender-Auth: prSEFTTFTDmUYlDfFFYdR-sXz98
-X-Gm-Message-State: ALoCoQllsV7A0w5xPtJec9MgOBPNni//znSQRhIwdUtACsycU7cE8X3vTuOjHVtUluBITvlbq+74
+	id S1751340Ab2I0Q5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 12:57:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37910 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888Ab2I0Q5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 12:57:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q8RGpcZA013711
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 27 Sep 2012 18:51:38 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1THHP6-0005tz-72; Thu, 27 Sep 2012 18:57:36 +0200
+In-Reply-To: <1348757171-3223-1-git-send-email-artagnon@gmail.com> (Ramkumar
+	Ramachandra's message of "Thu, 27 Sep 2012 20:16:11 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Sep 2012 18:51:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q8RGpcZA013711
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1349369501.37144@/E4XlPzmghB0rQp/w5DgDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206488>
 
-Hi everybody,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-I have just run into a problem when I had to issue an explicit cleanup for
-tracked files after a configure run in the Qt5 project. I have tried to
-suggest to the people to bring up this idea on the mailing list in order to
-get this further on. Unfortunately I did not have time to do so, especially
-for the follow-up. I have also been told it is not a good way of asking on
-IRC which surprised me a bit, but I am now bringing this up, and I try to
-also make the follow-up. Hope it is ok.
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index eaea079..c8db03f 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -205,6 +205,9 @@ $GIT_DIR/config::
+>  	User-specific configuration file. Also called "global"
+>  	configuration file.
+>  
+> +$GIT_GLOBAL_CONFIG::
+> +	Overrides the path of the global configuration file.
+> +
 
-Unfortunately my time is limited so I cannot contribute with that patch
-myself, but I think it would be a cool convenience feature. Help is
-appreciated. Thank you in advance!
+I'm not particularly in favor of introducing another environment
+variable, but if you are to introduce it, why just override the
+configuration file, and not $HOME completely (e.g. to override
+$HOME/.git-credentials too).
 
-Laszlo
+There was a patch proposing that here ($GIT_HOME to override $HOME):
+
+  http://thread.gmane.org/gmane.comp.version-control.git/135447/focus=135494
+
+I don't remember exactly what happened to the patch, I can't find an
+explicit reason to reject it in the thread, but it seems it didn't make
+its way to git.git.
+
+> index cbbdf7d..9b09cee 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -131,10 +131,15 @@ char *git_path(const char *fmt, ...)
+>  
+>  void home_config_paths(char **global, char **xdg, char *file)
+>  {
+> +	char *global_config = getenv("GIT_GLOBAL_CONFIG");
+>  	char *xdg_home = getenv("XDG_CONFIG_HOME");
+>  	char *home = getenv("HOME");
+>  	char *to_free = NULL;
+>  
+> +	if (global_config) {
+> +		*global = mkpathdup("%s", global_config);
+> +		return;
+> +	}
+
+If you return here, haven't you completely broken the XDG stuff, since
+*xdg is set a few lines below in the function?
+
+Also, I guess home_config_paths(..., "ignore") will return the path to
+the configuration file instead of the ignore file?
+
+> --- a/t/t1306-xdg-files.sh
+> +++ b/t/t1306-xdg-files.sh
+> @@ -28,6 +28,14 @@ test_expect_success 'read config: xdg file exists and ~/.gitconfig exists' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'read config: $GIT_GLOBAL_CONFIG is set and ~/.gitconfig exists' '
+> +	>.gitconfig &&
+> +	echo "[alias]" >.gittestconfig &&
+> +	echo "	myalias = !echo in_gitconfig" >>.gittestconfig &&
+> +	echo in_gitconfig >expected &&
+> +	GIT_GLOBAL_CONFIG=~/.gittestconfig git myalias >actual &&
+> +	test_cmp expected actual
+> +'
+
+You should check that "git config --set" works too, as the codepath for
+writing to configuration is relatively different from the one to read.
+For example, I *think* that "git config --global" will write to
+$GIT_GLOBAL_CONFIG and "git config" without --global will ignore it, but
+a test would be welcome.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
