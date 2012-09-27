@@ -1,85 +1,104 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] git-web--browse: Fix open HTML help pages from iTerm
-Date: Thu, 27 Sep 2012 21:31:51 +0200
-Message-ID: <0D4FA057-D2C1-4235-961F-166FD9DCA4F4@zib.de>
-References: <1348597003-28403-1-git-send-email-prohaska@zib.de> <7v3923qo0n.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/8] Fix GIT_CEILING_DIRECTORIES that contain symlinks
+Date: Thu, 27 Sep 2012 12:42:16 -0700
+Message-ID: <7vy5jvp813.fsf@alter.siamese.dyndns.org>
+References: <50406C82.2070005@alum.mit.edu>
+ <1348688090-13648-1-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:32:51 2012
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:42:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THJpF-00073a-Du
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:32:45 +0200
+	id 1THJyf-0004TX-9x
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715Ab2I0TcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 15:32:23 -0400
-Received: from mailer.zib.de ([130.73.108.11]:48188 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751977Ab2I0TcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 15:32:22 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id q8RJVwJw023831;
-	Thu, 27 Sep 2012 21:32:03 +0200 (CEST)
-Received: from [192.168.0.10] (91-64-48-32-dynip.superkabel.de [91.64.48.32])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id q8RJVuf6000537
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 27 Sep 2012 21:31:57 +0200 (MEST)
-In-Reply-To: <7v3923qo0n.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1084)
+	id S1753011Ab2I0TmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 15:42:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49510 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751704Ab2I0TmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 15:42:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C4BC9B8E;
+	Thu, 27 Sep 2012 15:42:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PldGN/LfV8DK7BmESkEK7cxfu6U=; b=MWMSJe
+	joiPvHF2Kzy11qCx1e8zg7OhuWGm5UVgZL5/TO91XErYcT5+e3598VOA+Q6PlWwj
+	4yC9la/pk4MSbct8EOmvhXUtoxot3FXvID+yRJ9KIn0SbGLDF6LJf8ctJrwWCFh1
+	StbUETZLHUl8xASXf2FmidIwFYgWrYH2vowVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OE9YNw4O1SM4zZlcaPGKkOmToxA2XJR3
+	8DjlZs7/rXmp9Gfud0B6wGL0oCzTzJAGBslIDXmu0wX9Q2Bcy46pom+ayPUJ+xxh
+	dS3JQCcLSG+qxWrNPLr3WaUETxLl+h1AzalVHxd6xWZrpHB66Aq8tPV5ym4CnQiq
+	s7X9/AAcotg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59E8D9B8D;
+	Thu, 27 Sep 2012 15:42:18 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B013A9B8C; Thu, 27 Sep 2012
+ 15:42:17 -0400 (EDT)
+In-Reply-To: <1348688090-13648-1-git-send-email-mhagger@alum.mit.edu>
+ (Michael Haggerty's message of "Wed, 26 Sep 2012 21:34:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 71F5350A-08DB-11E2-B28D-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206512>
 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-On Sep 27, 2012, at 9:11 PM, Junio C Hamano wrote:
+> This series fixes longest_ancestor_length() so that it works even if
+> prefix_list contains entries that involve symlinks.  The basic goal of
+> the series is to call real_path() on each of the entries so that a
+> textual comparison of the potential prefix to the front of path
+> correctly decides whether the path is located inside of the entry.
+> But along the way some other things had to be changed:
+>
+> * real_path() die()s if the path passed to it is invalid, whereas it
+>   is allowed for GIT_CEILING_DIRECTORIES to contain invalid paths.  So
+>   create a new function real_path_if_valid() that returns NULL for
+>   invalid paths.
+>
+> * Changing longest_ancestor_length() to call real_path_if_valid()
+>   would make the former very difficult to test (because the tests
+>   would depend on the contents of the whole filesystem).  Therefore,
+>   rewrite longest_ancestor_length() in terms of functions
+>   string_list_split(), string_list_longest_prefix(), and
+>   real_path_if_valid() which are tested individually.
+>
+> The net results of these changes are that:
+>
+> 1. t1504 used to have to canonicalize TRASH_DIRECTORY to make itself
+>    work even if the --root directory contains symlinks.  This
+>    canonicalization is no longer necessary (and has been removed).
+>
+> 2. t4035, which used to fail if the --root directory contained
+>    symlinks, now works correctly in that situation.
+>
+> After this change, all tests pass if the --root directory does *not*
+> contain symlinks, but t9903 still fails if the --root directory
+> contains symlinks.  I haven't analyzed the cause of t9903's failure,
+> but it does not appear to be related to the GIT_CEILING_DIRECTORIES
+> feature.
 
-> Steffen Prohaska <prohaska@zib.de> writes:
-> 
->> iTerm is an alternative to the default terminal emulation program on Mac
->> OS X.  git-web--browse wasn't aware of iTerm and failed to open HTML
->> help pages when used in a shell session running in iTerm, reporting "No
->> known browser available."  Now it works as expected.
->> 
->> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
->> ---
->> git-web--browse.sh | 3 ++-
->> 1 file changed, 2 insertions(+), 1 deletion(-)
->> 
->> diff --git a/git-web--browse.sh b/git-web--browse.sh
->> index 1e82726..95ecf65 100755
->> --- a/git-web--browse.sh
->> +++ b/git-web--browse.sh
->> @@ -120,7 +120,8 @@ if test -z "$browser" ; then
->> 	fi
->> 	# SECURITYSESSIONID indicates an OS X GUI login session
->> 	if test -n "$SECURITYSESSIONID" \
->> -		-o "$TERM_PROGRAM" = "Apple_Terminal" ; then
->> +		-o "$TERM_PROGRAM" = "Apple_Terminal" \
->> +		-o "$TERM_PROGRAM" = "iTerm.app" ; then
->> 		browser_candidates="open $browser_candidates"
->> 	fi
-> 
-> I do not have anything against iTerm, but could we have a solution
-> that does not force us to keep adding 47 different terminal program
-> names to the list over the longer term (no pun intended)?  For
-> example, "If on OS-X (which by the way does not seem to be checked
-> with the current logic) and environment TERM_PROGRAM is set to any
-> value", or something.
+I haven't read the actual patches yet, but the all of the above
+sounds sensible.
 
-I googled a bit and it seems that TERM_PROGRAM is specific to OS X.
-So simply testing whether TERM_PROGRAM is set to any value (without
-additional check for OS X) might be good enough.
+> On the mailing list I suggested *purposely* inserting symlinks into
+> the "trash directory.*" paths to test symlink handling more
+> systematically.  This patch series does *NOT* make that change.
 
-I am wondering whether anyone knows if TERM_PROGRAM is used on other
-operating systems besides OS X.
+And that may be a sensible follow-up step once the dust settles.
 
-	Steffen
+Thanks.
