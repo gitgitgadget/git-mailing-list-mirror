@@ -1,94 +1,95 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Commit cache to speed up rev-list and merge
-Date: Thu, 27 Sep 2012 10:45:32 -0700
-Message-ID: <CAJo=hJtus46UGyTcnfTDArp=RkK-P24wO8pjhEY7qAmssyxgVA@mail.gmail.com>
-References: <CAJo=hJtoqYEL5YiKawCt_SsSUqfCeYEQzY8Ntyb91cNfNS1w_Q@mail.gmail.com>
- <20120927173932.GE1547@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override
+ ~/.gitconfig
+Date: Thu, 27 Sep 2012 10:50:34 -0700
+Message-ID: <7vk3vfqrrp.fsf@alter.siamese.dyndns.org>
+References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
+ <1348757171-3223-1-git-send-email-artagnon@gmail.com>
+ <vpq626zjtds.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 27 19:46:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>,
+	Anurag Priyam <anurag08priyam@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 27 19:50:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THI9z-0000ZA-KO
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 19:46:03 +0200
+	id 1THIEa-00038w-Pv
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 19:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600Ab2I0Rpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 13:45:54 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:42721 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753343Ab2I0Rpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 13:45:53 -0400
-Received: by qadc26 with SMTP id c26so4063782qad.19
-        for <git@vger.kernel.org>; Thu, 27 Sep 2012 10:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1FJpYOs5JF7c6N8BnDrRPVdO6ebYKdiDmFL7AdYyDPI=;
-        b=XIyDqMMohzUWummENQuFSw4tp+tWlO32zMllpvdLsfo3lGYnPxaOBWLSceDWzrWEE7
-         h48atLBAd7sZGzM1qrR8Ej28RoLDlV2DEXj1xopJl5KXpVwTZDkN/Ymg7Eb9rgjWGROe
-         PRkiQHw34hI8m1wpOB0NpY4xQKnfeIGL+mJGQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=1FJpYOs5JF7c6N8BnDrRPVdO6ebYKdiDmFL7AdYyDPI=;
-        b=TPPpUT+/U+c3TtEv+UkFDoHfDn83Z9CXqas8COZwOR1YBFpkl6Wk8XuRLVDmIxv/0l
-         NmHrmbPkHfDRQP0pBQyOr/gpKkS39ELI71d45OLUk64hH0ZVvUtvsPZj51xslyUg4wt5
-         c7y1PI3gz3V1BCzBkgzcwqHrTD8zgm7e9FP84GIoATFA8WrJf/fOs/LvesHKk+DJK0dq
-         u5FhToQYtLW0uZminkWANurMd7fPgyoKqPXgmTX/Mk1cs8y/V2xqYqb+owSrp4lvzO1n
-         qQUBritR4g4rZRmbl3BEUiSNKl4wIP7AiMtFu7mAowR0Qq75T/ArnIrBnby70g3Oo8iC
-         kXMw==
-Received: by 10.224.175.204 with SMTP id bb12mr11171211qab.14.1348767952340;
- Thu, 27 Sep 2012 10:45:52 -0700 (PDT)
-Received: by 10.49.35.75 with HTTP; Thu, 27 Sep 2012 10:45:32 -0700 (PDT)
-In-Reply-To: <20120927173932.GE1547@sigill.intra.peff.net>
-X-Gm-Message-State: ALoCoQm6Noho8zzZymjekyNfE3pYN2qDUGKSxYSu8KL8C2KGWuOhBCz1c9YxnUnLc7IHgUnBe2hK
+	id S1753680Ab2I0Rui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 13:50:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58161 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753330Ab2I0Rug (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 13:50:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AAD99EF3;
+	Thu, 27 Sep 2012 13:50:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jtvVQ5OQIl9AVzM11zypJkxj2zQ=; b=J5L28+
+	Tm7H6iDdBBxsX3J57BXXjNQqPjT18+3Vp04QPVbu2tyrOeeSEM+3ZFYk/K4HdCg2
+	sRqoWOAyLNK811w8jGgvxc45oziEakN+QXn4ULRDxYH8KC8nO+Ua77+dI/yXzVXr
+	TvbWU9mnidBs3/416JuyljuHbxhh0Y8SxmxHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RRTizXuggBfmrcV/bMWD8yJwcQ+l0CtG
+	gwUF1gwUmKA72pB4om9OsptLDmnaLAbEM3bMY957EQ0o6GKPkX+Pw4Xy5uKKkLQ9
+	HJBWn6cDngOrn8ju+NK83BDtSuAVizJKqpqR2nUSEsvE7H8XyjRWtyqqX+FSCUbR
+	ErO7WxKuNR0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57CA89EF2;
+	Thu, 27 Sep 2012 13:50:36 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5A239EF0; Thu, 27 Sep 2012
+ 13:50:35 -0400 (EDT)
+In-Reply-To: <vpq626zjtds.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+ "Thu, 27 Sep 2012 18:57:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D7403294-08CB-11E2-B7C8-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206499>
 
-On Thu, Sep 27, 2012 at 10:39 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 27, 2012 at 08:51:51AM -0700, Shawn O. Pearce wrote:
->> On Thu, Sep 27, 2012 at 5:17 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->> > I'd like to see some sort of extension mechanism like in
->> > $GIT_DIR/index, so that we don't have to increase pack index version
->> > often. What I have in mind is optional commit cache to speed up
->> > rev-list and merge, which could be stored in pack index too.
->>
->> Can you share some of your ideas?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
-> Some of it is here:
+>> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+>> index eaea079..c8db03f 100644
+>> --- a/Documentation/git-config.txt
+>> +++ b/Documentation/git-config.txt
+>> @@ -205,6 +205,9 @@ $GIT_DIR/config::
+>>  	User-specific configuration file. Also called "global"
+>>  	configuration file.
+>>  
+>> +$GIT_GLOBAL_CONFIG::
+>> +	Overrides the path of the global configuration file.
+>> +
 >
->   http://article.gmane.org/gmane.comp.version-control.git/203308
+> I'm not particularly in favor of introducing another environment
+> variable, but if you are to introduce it, why just override the
+> configuration file, and not $HOME completely (e.g. to override
+> $HOME/.git-credentials too).
+>
+> There was a patch proposing that here ($GIT_HOME to override $HOME):
 
-Quoting from that patch:
+I think both of these are at the entrance of slippery slope to
+insanity I'd rather not to venture into.
 
-On  2012-08-12 Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Long term we might gain slight lookup speedup if we know object type
-> as search region is made smaller. But for that to happen, we need to
-> propagate object type hint down to find_pack_entry_one() and friends.
-> Possible thing to do, I think.
+If somebody hates ~/.dotmanyfiles so much, why not do HOME=~/dots/,
+instead of having to set GIT_HOME to move ~/.gitconfig, FROTZ_HOME
+to move ~/.frotzconfig, MAIL_HOME to move ~/.mailrc, etc.?
 
-I'm not sure reclustering the index by object type is going to make a
-worthwhile difference. Of 2.2m objects in the Linux tree, 320k are
-commits. The difference between doing the binary search through all
-objects vs. just commits is only 2 iterations more of binary search if
-we assume the per-type ranges have their own fan-out tables.
-
-> The main reason to group objects by type is to make it possible to
-> create another sha1->something mapping for a particular object type,
-> without wasting space for storing sha-1 keys again. For example, we
-> can store commit caches, tree caches... at the end of the index as
-> extensions.
-
-Using ordinal position in the pack also works, and doesn't require
-clustering objects by type.
+I wouldn't be surprised if some _other_ things break with your HOME
+pointing at a directory inside your home directory, but then it may
+be better to fix that other thing instead.
