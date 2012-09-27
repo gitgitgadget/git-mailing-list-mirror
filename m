@@ -1,82 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Configuring the location of ~/.gitconfig
-Date: Thu, 27 Sep 2012 10:16:10 -0700
-Message-ID: <7vzk4bqtd1.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0nEP2gf4fYL=hjHg_U3X67M4PF1aupV+VJb9T6eBEo0MQ@mail.gmail.com>
- <7v6270t2tb.fsf@alter.siamese.dyndns.org>
- <CAD1m08Wz7WqP8Yxgc6xuhBSntQ0PS6hGOzHWrcd0VAbARmkuUA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Using bitmaps to accelerate fetch and clone
+Date: Thu, 27 Sep 2012 13:20:37 -0400
+Message-ID: <20120927172037.GB1547@sigill.intra.peff.net>
+References: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
+ <CACsJy8D0vkyEArNChXE0igUkanH6PwjmPitq22a9sudfmWF4kA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Anurag Priyam <anurag08priyam@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 19:16:31 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>,
+	Colby Ranger <cranger@google.com>, David Barr <barr@github.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 19:20:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THHhI-0007Ne-GV
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 19:16:24 +0200
+	id 1THHla-0001TB-1Y
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 19:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613Ab2I0RQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 13:16:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42035 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751134Ab2I0RQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 13:16:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFF8D9658;
-	Thu, 27 Sep 2012 13:16:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=//QURlsJTe6JdGmfNAEJYKQfxGs=; b=hfnxU4
-	5amSL1ke3dJPnXvyH5CO4PCgEfaz8apbiC5MqtElAp4ciodu2aGSYpgZvDxo53kV
-	wjwAPL0l/oamNsuhWw0raEydUMFqpsKxxA8QF1R62Bl0fMjjS7MsvPS9Up/fNf7p
-	0YvQyfPMdSwyR0ftVoSRSvkzmKPyx1DlrxCVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BVfe1MFltx3SR0BEKHE3ldeQ1iH3As6o
-	YfyKLle1R6D9xeeAfwnd40WjjzIynVFS9JDWgQReYLjlIxs2BwtkjcSa+gUUEaKh
-	eTmTn7GfAHDq5x62s6qntT4ZF+ZZMe5tao9nVwOX3toG5JNSFppRDkTvGNUq3lD9
-	5mJ7y9uWTM4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D1979657;
-	Thu, 27 Sep 2012 13:16:14 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E05709656; Thu, 27 Sep 2012
- 13:16:11 -0400 (EDT)
-In-Reply-To: <CAD1m08Wz7WqP8Yxgc6xuhBSntQ0PS6hGOzHWrcd0VAbARmkuUA@mail.gmail.com> (Anurag
- Priyam's message of "Thu, 27 Sep 2012 12:10:01 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0921D934-08C7-11E2-AB51-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751677Ab2I0RUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 13:20:40 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:32901 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751376Ab2I0RUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 13:20:39 -0400
+Received: (qmail 3288 invoked by uid 107); 27 Sep 2012 17:21:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Sep 2012 13:21:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Sep 2012 13:20:37 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8D0vkyEArNChXE0igUkanH6PwjmPitq22a9sudfmWF4kA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206491>
 
-Anurag Priyam <anurag08priyam@gmail.com> writes:
+On Thu, Sep 27, 2012 at 07:17:42PM +0700, Nguyen Thai Ngoc Duy wrote:
 
->> Not me. For that particular use case, my approach (long before I
->> switched the vcs that controls my dotfiles to git) have always been
->> to have ~/src that is version controlled, with a Makefile that
->> builds/adjusts dotfiles appropriately for each box and installs them
->> in the proper place.
->
-> Makefile is what I wanted to avoid when I suggested Ram that maybe Git
-> could _optionally_ read the location of global gitconfig from an
-> environment variable that can be exported in zshenv or bash_profile.
+> > Operation                   Index V2               Index VE003
+> > Clone                       37530ms (524.06 MiB)     82ms (524.06 MiB)
+> > Fetch (1 commit back)          75ms                 107ms
+> > Fetch (10 commits back)       456ms (269.51 KiB)    341ms (265.19 KiB)
+> > Fetch (100 commits back)      449ms (269.91 KiB)    337ms (267.28 KiB)
+> > Fetch (1000 commits back)    2229ms ( 14.75 MiB)    189ms ( 14.42 MiB)
+> > Fetch (10000 commits back)   2177ms ( 16.30 MiB)    254ms ( 15.88 MiB)
+> > Fetch (100000 commits back) 14340ms (185.83 MiB)   1655ms (189.39 MiB)
+> 
+> Beautiful. And curious, why do 100->1000 and 10000->10000 have such
+> big leaps in time (V2)?
 
-Where exactly do the "zshenv" and "bash_profile" you mention reside,
-and how are their contents kept up to date?  I am guessing it is
-/net/srv1/home/ram/.bash_profile on machines that mount user home
-directories from srv1 NFS server and it is to have a string like
-"export GITCONFIG_FILE=/net/srv1/home/ram/dot/gitconfig" or on those
-machines.  The contents of ~ram/dot/gitconfig may be able to stay
-the same across boxes, but how is ~ram/.bash_profile is set up?
-Manually?
+Agreed. I'm very excited about these numbers.
 
-Again, I am not personally interested; I think aversion of Make is
-the root cause of the disease.
+> >   Defines the new E003 index format and the bit set
+> >   implementation logic.
+> [...]
+> It seems the bitmap data follows directly after regular index content.
+> I'd like to see some sort of extension mechanism like in
+> $GIT_DIR/index, so that we don't have to increase pack index version
+> often. What I have in mind is optional commit cache to speed up
+> rev-list and merge, which could be stored in pack index too.
+
+As I understand it, both the bitmaps and a commit cache are
+theoretically optional. That is, git can do the job without them, but
+they speed things up. If that is the case, do we need to bump the index
+version at all? Why not store a plain v2 index, and then store an
+additional file "pack-XXX.reachable" that contains the bitmaps and an
+independent version number.
+
+The sha1 in the filename makes sure that the reachability file is always
+in sync with the actual pack data and index.  Old readers won't know
+about the new file, and will ignore it. For new readers, if the file is
+there they can use it; if it's missing (or its version is not
+understood), they can fall back to the regular index.
+
+I haven't looked at the details of the format change yet. If it is
+purely an extra chunk of data at the end, this Just Works. If there are
+changes to the earlier parts of the pack (e.g., I seem to recall the
+commit cache idea wanted separate indices for each object type), we may
+still need a v3. But it would be nice if we could make those changes
+generic (e.g., just the separate indices, which might support many
+different enhancements), and then let the actual feature work happen in
+the separate files.
+
+> Definitely :-). I have shown my interest in this topic before. So I
+> should probably say that I'm going to work on this on C Git, but
+> sllloooowwwly. As this benefits the server side greatly, perhaps a
+> GitHubber ;-) might want to work on this on C Git, for GitHub itself
+> of course, and, as a side effect, make the rest of us happy?
+
+Yeah, GitHub is definitely interested in this. I may take a shot at it,
+but I know David Barr (cc'd) is also interested in such things.
+
+-Peff
