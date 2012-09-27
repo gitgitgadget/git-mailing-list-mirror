@@ -1,90 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Introduce new static function real_path_internal()
-Date: Thu, 27 Sep 2012 14:27:03 -0700
-Message-ID: <7vk3vfp36g.fsf@alter.siamese.dyndns.org>
-References: <1348688090-13648-1-git-send-email-mhagger@alum.mit.edu>
- <1348688090-13648-2-git-send-email-mhagger@alum.mit.edu>
+Subject: Re: Using bitmaps to accelerate fetch and clone
+Date: Thu, 27 Sep 2012 14:33:01 -0700
+Message-ID: <7vfw63p2wi.fsf@alter.siamese.dyndns.org>
+References: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
+ <CACsJy8D0vkyEArNChXE0igUkanH6PwjmPitq22a9sudfmWF4kA@mail.gmail.com>
+ <20120927172037.GB1547@sigill.intra.peff.net>
+ <CAJo=hJuXCYa=MKSqCRsxmwFdFYZamK_94zc3fE0tmvwUAVA2Ow@mail.gmail.com>
+ <20120927182233.GA2519@sigill.intra.peff.net>
+ <CAJo=hJs4NXatb2vsZWWCamLGLmi+FoWkTaf3Ky-nereXkHEptA@mail.gmail.com>
+ <20120927185229.GD2519@sigill.intra.peff.net>
+ <20120927201809.GA11772@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Sep 27 23:27:18 2012
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>,
+	David Barr <barr@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 27 23:33:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THLc5-0004ft-I1
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 23:27:17 +0200
+	id 1THLhs-0007yP-1B
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 23:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760Ab2I0V1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 17:27:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36472 "EHLO
+	id S1755491Ab2I0VdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 17:33:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39140 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752697Ab2I0V1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 17:27:06 -0400
+	id S1754815Ab2I0VdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 17:33:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B77D99B4;
-	Thu, 27 Sep 2012 17:27:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 767079B2C;
+	Thu, 27 Sep 2012 17:33:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c+ymUDRor6Bvg6F/4UO2YZRbXqE=; b=crb6R7
-	zcKPzYojFoAus3SlJIcPD1SvbA1Yrb/m4F2rN/GyabT5Mdz8qjKF49px08jTSTo9
-	gTEo46iiSPQiWWlBjb3SilOWzZaPh9l8BmJIb5Q3zsi78CQnlBHmWl51cpWb5OIH
-	s+N+YhZSfNNwB9S8J21fAs0o2Bq1Twn+QTZcY=
+	:content-type; s=sasl; bh=G1BJIgR93vJ7jqN9x9LbsQ9V93Y=; b=xt1tmZ
+	+klvf0Rci/ohittFYV0xBe752POTs6C4xO4+YexgvIwdpP30OamC87R+X7HF3lJV
+	Oh7a7vgXW4yiLpRNiRPXS4+EMlYZQt8dEw8kzqUEfun6jyioxPJ/Mig3Nfe6fI+4
+	yeQxC+pE+Xu1Xl6aYn+z2bcgT52CBdKg9TBfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I4C92+OAp1wSeSjH5NH9TIYHrAOfFSLp
-	enpkUs7AygRAEC1vlTp5oHBRp4h+sO7/P4N2F8TAWidNXPTg62SIT2wCFamogjUg
-	6aXt4DudAg65e1KD+PAALBqTR012DxLAzPbTpmaEuPY3AWklL6K7Zfbm/FNsp2RX
-	7zVHNNC5lUs=
+	:content-type; q=dns; s=sasl; b=WpL9Z3k9kyc4sf3Nux5SPBcLdi3yXGB8
+	S8h6xjz3l0Do+JuzcdWvLFNi3CNCMa82MtUrH6VzsWn8y0sZb8pPreRELNbMbcwl
+	Lb84sEAY5j6EYc3/pkdk/dHyBI+k/cze32icAp2ngPY7kIDkhzgOBOWi0g7PmZBV
+	RM71IlNFmr4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7896C99B3;
-	Thu, 27 Sep 2012 17:27:05 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 637599B2B;
+	Thu, 27 Sep 2012 17:33:03 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD41C99B2; Thu, 27 Sep 2012
- 17:27:04 -0400 (EDT)
-In-Reply-To: <1348688090-13648-2-git-send-email-mhagger@alum.mit.edu>
- (Michael Haggerty's message of "Wed, 26 Sep 2012 21:34:43 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6BA59B2A; Thu, 27 Sep 2012
+ 17:33:02 -0400 (EDT)
+In-Reply-To: <20120927201809.GA11772@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 27 Sep 2012 16:18:09 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1569867E-08EA-11E2-99E3-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EAC80688-08EA-11E2-8F8E-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206521>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Jeff King <peff@peff.net> writes:
 
-> @@ -54,20 +73,36 @@ const char *real_path(const char *path)
->  		}
->  
->  		if (*buf) {
-> -			if (!*cwd && !getcwd(cwd, sizeof(cwd)))
-> -				die_errno ("Could not get current working directory");
-> +			if (!*cwd && !getcwd(cwd, sizeof(cwd))) {
-> +				if (die_on_error)
-> +					die_errno("Could not get current working directory");
-> +				else
-> +					goto error_out;
-> +			}
->  
-> -			if (chdir(buf))
-> -				die_errno ("Could not switch to '%s'", buf);
-> +			if (chdir(buf)) {
-> +				if (die_on_error)
-> +					die_errno("Could not switch to '%s'", buf);
-> +				else
-> +					goto error_out;
-> +			}
-> +		}
+> So yeah, we would want to put the pack trailer sha1 into the
+> supplementary index file, and check that it matches when we open it.
+> It's a slight annoyance, but it's O(1).
 
-The patch makes sense, but while you are touching this code, I have
-to wonder if there is an easy way to tell, before entering the loop,
-if we have to chdir() around in the loop.  That would allow us to
-hoist the getcwd() that is done only so that we can come back to
-where we started outside the loop, making it clear why the call is
-there, instead of cryptic "if (!*cwd &&" to ensure we do getcwd()
-once and before doing any chdir().
+Yes.  If I am not mistaken, that is exactly how an .idx file makes
+sure that it describes the matching .pack file (it has packfile
+checksum in its trailer).  Otherwise you can repack the same set of
+objects into a new .pack file and make existing .idx very confused.
