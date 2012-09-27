@@ -1,126 +1,178 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override ~/.gitconfig
-Date: Thu, 27 Sep 2012 18:57:35 +0200
-Message-ID: <vpq626zjtds.fsf@grenoble-inp.fr>
-References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
-	<1348757171-3223-1-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: add --reflog-message to grep reflog messages
+Date: Thu, 27 Sep 2012 10:09:28 -0700
+Message-ID: <7v4nmjs88n.fsf@alter.siamese.dyndns.org>
+References: <7va9wctwg4.fsf@alter.siamese.dyndns.org>
+ <1348745786-27197-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>,
-	Anurag Priyam <anurag08priyam@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 18:58:01 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 19:09:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THHPV-0003Ae-Bw
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 18:58:01 +0200
+	id 1THHap-0003cM-Um
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 19:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340Ab2I0Q5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 12:57:52 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37910 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888Ab2I0Q5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 12:57:51 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q8RGpcZA013711
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 27 Sep 2012 18:51:38 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1THHP6-0005tz-72; Thu, 27 Sep 2012 18:57:36 +0200
-In-Reply-To: <1348757171-3223-1-git-send-email-artagnon@gmail.com> (Ramkumar
-	Ramachandra's message of "Thu, 27 Sep 2012 20:16:11 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Sep 2012 18:51:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q8RGpcZA013711
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1349369501.37144@/E4XlPzmghB0rQp/w5DgDA
+	id S1751729Ab2I0RJc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Sep 2012 13:09:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38611 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751430Ab2I0RJb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2012 13:09:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFE5C94C4;
+	Thu, 27 Sep 2012 13:09:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=SS9F9TRGbx1h
+	/2On+Va1X37ZQdQ=; b=AQOkrBqQ1hW6b3Az1js9SlGZME/cL87D+tlMMjLFRPMU
+	m5nJJQWJn4+yym37LVz0OvY/BdFIJlH5aT7Um7bMeWBWLdnoExOeW8SYv/fZP7f7
+	Tyui5MPT+Odvqq4lNCUxcrW+/7im3MZHFXuIuzFt0gw6qRF5N/i0ZvUvJSdZ7Vk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LEqaXB
+	5nPgdi79X+32J+RmFgRCFLEhOfToz2pLrpEgmS25V/tWf6qsPSXYuoMRQrTrxm0Y
+	pAopkJ460vJkpEqgzgDCv+AJOV8XD72eyKR2Yx6LFCrNhoSYmOCiCF+cQVAGzGKS
+	O2ib6RljN9UBQBEfCzxYyTf7lZcDp0myaCqss=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBA0694C3;
+	Thu, 27 Sep 2012 13:09:30 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00D7394C0; Thu, 27 Sep 2012
+ 13:09:29 -0400 (EDT)
+In-Reply-To: <1348745786-27197-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 27 Sep
+ 2012 18:36:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 199289B8-08C6-11E2-936B-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206489>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index eaea079..c8db03f 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -205,6 +205,9 @@ $GIT_DIR/config::
->  	User-specific configuration file. Also called "global"
->  	configuration file.
->  
-> +$GIT_GLOBAL_CONFIG::
-> +	Overrides the path of the global configuration file.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+
+Plase explain yourself in the space above.
+
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-l=
+ist-options.txt
+> index 1fc2a18..aeaa58c 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -51,6 +51,11 @@ endif::git-rev-list[]
+>  	commits whose author matches any of the given patterns are
+>  	chosen (similarly for multiple `--committer=3D<pattern>`).
+> =20
+> +--reflog-message=3D<pattern>::
+> +	Limit the commits output to ones with reflog entries that
+> +	match the specified pattern (regular expression). Ignored unless
+> +	--walk-reflogs is given.
 > +
 
-I'm not particularly in favor of introducing another environment
-variable, but if you are to introduce it, why just override the
-configuration file, and not $HOME completely (e.g. to override
-$HOME/.git-credentials too).
+I am debating myself if it is sane for this option to have no hint
+that it is about "limiting" in its name.  "--author/--committer"
+don't and it is clear from the context of the command that they are
+not about setting author/committer, so "--reflog-message" may be
+interpreted the same, perhaps.
 
-There was a patch proposing that here ($GIT_HOME to override $HOME):
+The entry in the context above talks about multiple occurrence of
+that option. Shouldn't this new one also say what happens when it is
+given twice?
 
-  http://thread.gmane.org/gmane.comp.version-control.git/135447/focus=135494
+> diff --git a/grep.c b/grep.c
+> index 898be6e..72ac1bf 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -697,6 +697,7 @@ static struct {
+>  } header_field[] =3D {
+>  	{ "author ", 7 },
+>  	{ "committer ", 10 },
+> +	{ "reflog ", 7 },
+>  };
+> =20
+>  static int match_one_pattern(struct grep_pat *p, char *bol, char *eo=
+l,
+> diff --git a/grep.h b/grep.h
+> index 8a28a67..1416ad7 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -29,9 +29,10 @@ enum grep_context {
+> =20
+>  enum grep_header_field {
+>  	GREP_HEADER_AUTHOR =3D 0,
+> -	GREP_HEADER_COMMITTER
+> +	GREP_HEADER_COMMITTER,
+> +	GREP_HEADER_REFLOG,
+> +	GREP_HEADER_FIELD_MAX
+>  };
+> -#define GREP_HEADER_FIELD_MAX (GREP_HEADER_COMMITTER + 1)
 
-I don't remember exactly what happened to the patch, I can't find an
-explicit reason to reject it in the thread, but it seems it didn't make
-its way to git.git.
+Please add comment to ensure that FIELD_MAX stays at the end; if you
+ensure that, the result is much better than the original "we know
+committer is at the end so add one".
 
-> index cbbdf7d..9b09cee 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -131,10 +131,15 @@ char *git_path(const char *fmt, ...)
->  
->  void home_config_paths(char **global, char **xdg, char *file)
+I think I wrote prep_header_patterns() and compile_grep_patterns()
+carefully enough not to assume the headers are only the author and
+committer names, so the various combinations i.e. all-match,
+author(s), committer(s), grep(s), and reflog-message(s), should work
+out of the box, but have you actually tested them?
+
+I do not know offhand the matching side is prepared to take random
+garbage fields.  IIRC, we strip the trailing timestamp from committer
+and author header lines when we match, and a new code needs to be
+added to control when that stripping should / should not kick in
+depending on the header.
+
+> diff --git a/revision.c b/revision.c
+> index ae12e11..837051c 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1595,6 +1595,9 @@ static int handle_revision_opt(struct rev_info =
+*revs, int argc, const char **arg
+>  	} else if ((argcount =3D parse_long_opt("committer", argv, &optarg)=
+)) {
+>  		add_header_grep(revs, GREP_HEADER_COMMITTER, optarg);
+>  		return argcount;
+> +	} else if ((argcount =3D parse_long_opt("reflog-message", argv, &op=
+targ))) {
+> +		add_header_grep(revs, GREP_HEADER_REFLOG, optarg);
+> +		return argcount;
+>  	} else if ((argcount =3D parse_long_opt("grep", argv, &optarg))) {
+>  		add_message_grep(revs, optarg);
+>  		return argcount;
+> @@ -2212,8 +2215,20 @@ static int commit_match(struct commit *commit,=
+ struct rev_info *opt)
 >  {
-> +	char *global_config = getenv("GIT_GLOBAL_CONFIG");
->  	char *xdg_home = getenv("XDG_CONFIG_HOME");
->  	char *home = getenv("HOME");
->  	char *to_free = NULL;
->  
-> +	if (global_config) {
-> +		*global = mkpathdup("%s", global_config);
-> +		return;
+>  	if (!opt->grep_filter.pattern_list && !opt->grep_filter.header_list=
+)
+>  		return 1;
+> -	return grep_buffer(&opt->grep_filter,
+> -			   commit->buffer, strlen(commit->buffer));
+> +	if (opt->reflog_info) {
+> +		int retval;
+> +		struct strbuf buf =3D STRBUF_INIT;
+> +		strbuf_addstr(&buf, "reflog ");
+> +		get_reflog_message(&buf, opt->reflog_info);
+> +		strbuf_addch(&buf, '\n');
+> +		strbuf_addstr(&buf, commit->buffer);
+> +		retval =3D grep_buffer(&opt->grep_filter, buf.buf, buf.len);
+> +		strbuf_release(&buf);
+> +		return retval;
+> +	} else {
+> +		return grep_buffer(&opt->grep_filter,
+> +				   commit->buffer, strlen(commit->buffer));
 > +	}
+>  }
 
-If you return here, haven't you completely broken the XDG stuff, since
-*xdg is set a few lines below in the function?
-
-Also, I guess home_config_paths(..., "ignore") will return the path to
-the configuration file instead of the ignore file?
-
-> --- a/t/t1306-xdg-files.sh
-> +++ b/t/t1306-xdg-files.sh
-> @@ -28,6 +28,14 @@ test_expect_success 'read config: xdg file exists and ~/.gitconfig exists' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'read config: $GIT_GLOBAL_CONFIG is set and ~/.gitconfig exists' '
-> +	>.gitconfig &&
-> +	echo "[alias]" >.gittestconfig &&
-> +	echo "	myalias = !echo in_gitconfig" >>.gittestconfig &&
-> +	echo in_gitconfig >expected &&
-> +	GIT_GLOBAL_CONFIG=~/.gittestconfig git myalias >actual &&
-> +	test_cmp expected actual
-> +'
-
-You should check that "git config --set" works too, as the codepath for
-writing to configuration is relatively different from the one to read.
-For example, I *think* that "git config --global" will write to
-$GIT_GLOBAL_CONFIG and "git config" without --global will ignore it, but
-a test would be welcome.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+This part looks familiar and smells sane ;-)
