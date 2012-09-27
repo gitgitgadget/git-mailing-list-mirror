@@ -1,75 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override
- ~/.gitconfig
-Date: Thu, 27 Sep 2012 12:57:13 -0700
-Message-ID: <7vtxujp7c6.fsf@alter.siamese.dyndns.org>
-References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
- <1348757171-3223-1-git-send-email-artagnon@gmail.com>
- <20120927173532.GD1547@sigill.intra.peff.net>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Showing all stashed changes in one go
+Date: Thu, 27 Sep 2012 22:00:06 +0200
+Message-ID: <20120927200006.GD6493@home.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>,
-	Anurag Priyam <anurag08priyam@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:57:30 2012
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 27 22:00:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THKD9-0004jk-ER
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 21:57:27 +0200
+	id 1THKG2-0006b2-2R
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 22:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505Ab2I0T5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 15:57:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56772 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752578Ab2I0T5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 15:57:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92A289EF5;
-	Thu, 27 Sep 2012 15:57:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iixwauJNz//MmT7ddSFdU8THE5M=; b=c0PlSX
-	WjgyB0t7VOcK1esD/7pe8yAoueCP5qVHphTquTSsrrkHKhvwM+zi0/y1Yxh+YTv0
-	F7iXBD6Vw9J+wL1Dz3Wlogr5jFxJEfF9beAZDBDy1dT2O8paMEG6KKDNgiYW63sY
-	p2NHSXQMJ7UhREs68MNPisYV3dmBu0EpdIZ0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iLphmucgujkWYaUOt1leMoT4zZ2Al0E/
-	mVTTcmm0V3LgTexRXEKsUOj8/UQfweYuUPksNuhhHHuSNUt+2kgayQ9edtbqjxEp
-	gtmWoEoxLWXMRsUHYSPCUBdi1sOe/K+9f/0+JIIf7LjhRK4CLhx17YeSYqTu4aQp
-	t+OTW3GyIoE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F6559EF3;
-	Thu, 27 Sep 2012 15:57:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 041F39EF2; Thu, 27 Sep 2012
- 15:57:14 -0400 (EDT)
-In-Reply-To: <20120927173532.GD1547@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 27 Sep 2012 13:35:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 88CDF76A-08DD-11E2-8E3C-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754617Ab2I0UAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 16:00:14 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:51788 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754082Ab2I0UAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 16:00:13 -0400
+X-Greylist: delayed 6247 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Sep 2012 16:00:12 EDT
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 7FC2CD48044
+	for <git@vger.kernel.org>; Thu, 27 Sep 2012 22:00:07 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.80)
+	(envelope-from <ydirson@free.fr>)
+	id 1THKFi-0000fU-8P
+	for git@vger.kernel.org; Thu, 27 Sep 2012 22:00:06 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206516>
 
-Jeff King <peff@peff.net> writes:
+When I have a couple of stashed changes, it gets annoying to
+repeatedly call "git stash show -p stash@{N}" until finding the
+correct one.
 
-> Also, have you considered using a config include? Like:
->
->   $ echo '[include]path = ~/my-dotfiles/gitconfig' >~/.gitconfig
+Since "git reflog show stash" already does part of the job, I thought
+that adding "-p" there to see the patch would help (at least it would
+show the not-yet-staged parts, which would already be a good start).
 
-Very good suggestion.
+But the output is then really strange: does it really print the delta
+between every two reflog entries ?  I can't think of a situation where
+it would be was we want - but then, my imagination is known to be
+deficient when I hit a situation that does not do what I was expecting
+at first :)
 
-> ... you have to bootstrap
-> somehow (e.g., you're going to have to copy a .profile or similar to get
-> the GIT_GLOBAL_CONFIG variable set).
-
-Exactly my thought ;-)
+Is there another way I missed to get all those stash contents listed,
+besides scriptically iterating ?
