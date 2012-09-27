@@ -1,113 +1,236 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] config: introduce GIT_GLOBAL_CONFIG to override ~/.gitconfig
-Date: Thu, 27 Sep 2012 20:16:11 +0530
-Message-ID: <1348757171-3223-1-git-send-email-artagnon@gmail.com>
-References: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
-Cc: David Aguilar <davvid@gmail.com>,
-	Anurag Priyam <anurag08priyam@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 27 16:46:34 2012
+From: Jeff Muizelaar <jmuizelaar@mozilla.com>
+Subject: [PATCH] diff: diff.context configuration gives default to -U
+Date: Thu, 27 Sep 2012 11:04:44 -0400
+Message-ID: <C4993A4E-E443-4DB4-9DCA-20128CADDC6E@mozilla.com>
+References: <A74D9034-E5BA-4CD5-B621-1C388EF4CE2B@mozilla.com> <7vobl82u26.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 17:04:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THFMF-0005D1-63
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 16:46:31 +0200
+	id 1THFe5-00041X-1v
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 17:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342Ab2I0OqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 10:46:21 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:59894 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003Ab2I0OqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 10:46:20 -0400
-Received: by padhz1 with SMTP id hz1so1404759pad.19
-        for <git@vger.kernel.org>; Thu, 27 Sep 2012 07:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=bYzgRcDlKuXYEgykz9OOMMxH9O64m4yQMjUa14CTjjk=;
-        b=wHiSKjP9/eMWnI9jWssOlmlJ8w0b5b+QRaPVhQtjdA7nJnkP09kFSkAHRI81K2rQoz
-         VxDn3yg5ZDzTL3BW07ZT8HxtZOnRyrhyZGLscR21kC9Xm8i/ZvMkeFurZe3yLwqC4Adx
-         Gs5sL/HhuNcL57x5no6ZsE29Zn5nhricCbg8vwzDOoh44aUgWAlMK0dopia4AvOz+n2x
-         EhdNL3PfHCt6UYX6IG+wNsDBnD2kRARgwyH8FRZlQSjAwQze14sKzZf3eVzamFgK2bvU
-         AWRKuTt4RLz9jok4d0Q5sdzDgeCJ5EPYdo5oEbrS/ajaMR85zpQWG62sE9EbhJxXjpQy
-         ztxg==
-Received: by 10.68.136.138 with SMTP id qa10mr12153092pbb.142.1348757180307;
-        Thu, 27 Sep 2012 07:46:20 -0700 (PDT)
-Received: from fran.broadband.vsnl.com ([59.164.64.166])
-        by mx.google.com with ESMTPS id ky6sm3938270pbc.18.2012.09.27.07.46.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 27 Sep 2012 07:46:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.8.1.362.g5d6df.dirty
-In-Reply-To: <CALkWK0nYnyaoOsH_x8U96ADZT7VuP-pR36+RRcjTw39Kp1qCnw@mail.gmail.com>
+	id S1754477Ab2I0PEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 11:04:47 -0400
+Received: from mx1.corp.phx1.mozilla.com ([63.245.216.69]:59264 "EHLO
+	smtp.mozilla.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754440Ab2I0PEq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2012 11:04:46 -0400
+Received: from [192.168.0.198] (CPE001f5be79d0f-CM0017ee62f8b0.cpe.net.cable.rogers.com [99.231.249.39])
+	(Authenticated sender: jmuizelaar@mozilla.com)
+	by mx1.mail.corp.phx1.mozilla.com (Postfix) with ESMTPSA id 5CBD6F2453;
+	Thu, 27 Sep 2012 08:04:45 -0700 (PDT)
+In-Reply-To: <7vobl82u26.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206484>
 
+Introduce a configuration variable diff.context that tells
+Porcelain commands to use a non-default number of context
+lines instead of 3 (the default).  With this variable, users
+do not have to keep repeating "git log -U8" from the command
+line; instead, it becomes sufficient to say "git config
+diff.context 8" just once.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Signed-off-by: Jeff Muizelaar <jmuizelaar@mozilla.com>
 ---
- Documentation/git-config.txt |    3 +++
- path.c                       |    5 +++++
- t/t1306-xdg-files.sh         |    8 ++++++++
- 3 files changed, 16 insertions(+), 0 deletions(-)
+ Documentation/diff-config.txt |    4 +
+ diff.c                        |    9 +++-
+ t/t4060-diff-context.sh       |  127 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 139 insertions(+), 1 deletions(-)
+ create mode 100755 t/t4060-diff-context.sh
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index eaea079..c8db03f 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -205,6 +205,9 @@ $GIT_DIR/config::
- 	User-specific configuration file. Also called "global"
- 	configuration file.
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 67a90a8..75ab8a5 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -56,6 +56,10 @@ diff.statGraphWidth::
+ 	Limit the width of the graph part in --stat output. If set, applies
+ 	to all commands generating --stat output except format-patch.
  
-+$GIT_GLOBAL_CONFIG::
-+	Overrides the path of the global configuration file.
++diff.context::
++	Generate diffs with <n> lines of context instead of the default of
++	3. This value is overridden by the -U option.
 +
- $XDG_CONFIG_HOME/git/config::
- 	Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
- 	or empty, $HOME/.config/git/config will be used. Any single-valued
-diff --git a/path.c b/path.c
-index cbbdf7d..9b09cee 100644
---- a/path.c
-+++ b/path.c
-@@ -131,10 +131,15 @@ char *git_path(const char *fmt, ...)
- 
- void home_config_paths(char **global, char **xdg, char *file)
- {
-+	char *global_config = getenv("GIT_GLOBAL_CONFIG");
- 	char *xdg_home = getenv("XDG_CONFIG_HOME");
- 	char *home = getenv("HOME");
- 	char *to_free = NULL;
- 
-+	if (global_config) {
-+		*global = mkpathdup("%s", global_config);
-+		return;
+ diff.external::
+ 	If this config variable is set, diff generation is not
+ 	performed using the internal diff machinery, but using the
+diff --git a/diff.c b/diff.c
+index 35d3f07..86e5f2a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -26,6 +26,7 @@ static int diff_detect_rename_default;
+ static int diff_rename_limit_default = 400;
+ static int diff_suppress_blank_empty;
+ static int diff_use_color_default = -1;
++static int diff_context_default = 3;
+ static const char *diff_word_regex_cfg;
+ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index = 1;
+@@ -141,6 +142,12 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		diff_use_color_default = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.context")) {
++		diff_context_default = git_config_int(var, value);
++		if (diff_context_default < 0)
++			return -1;
++		return 0;
 +	}
- 	if (!home) {
- 		if (global)
- 			*global = NULL;
-diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-index 8b14ab1..5b0e08e 100755
---- a/t/t1306-xdg-files.sh
-+++ b/t/t1306-xdg-files.sh
-@@ -28,6 +28,14 @@ test_expect_success 'read config: xdg file exists and ~/.gitconfig exists' '
- 	test_cmp expected actual
- '
+ 	if (!strcmp(var, "diff.renames")) {
+ 		diff_detect_rename_default = git_config_rename(var, value);
+ 		return 0;
+@@ -3170,7 +3177,7 @@ void diff_setup(struct diff_options *options)
+ 	options->break_opt = -1;
+ 	options->rename_limit = -1;
+ 	options->dirstat_permille = diff_dirstat_permille_default;
+-	options->context = 3;
++	options->context = diff_context_default;
+ 	DIFF_OPT_SET(options, RENAME_EMPTY);
  
-+test_expect_success 'read config: $GIT_GLOBAL_CONFIG is set and ~/.gitconfig exists' '
-+	>.gitconfig &&
-+	echo "[alias]" >.gittestconfig &&
-+	echo "	myalias = !echo in_gitconfig" >>.gittestconfig &&
-+	echo in_gitconfig >expected &&
-+	GIT_GLOBAL_CONFIG=~/.gittestconfig git myalias >actual &&
-+	test_cmp expected actual
+ 	options->change = diff_change;
+diff --git a/t/t4060-diff-context.sh b/t/t4060-diff-context.sh
+new file mode 100755
+index 0000000..76fa3c3
+--- /dev/null
++++ b/t/t4060-diff-context.sh
+@@ -0,0 +1,127 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Mozilla Foundation
++#
++
++test_description='diff.context configuration'
++
++. ./test-lib.sh
++
++cat << EOF > x
++firstline
++b
++c
++d
++e
++f
++preline
++postline
++i
++j
++k
++l
++m
++n
++EOF
++test_expect_success 'initial add' '
++	git update-index --add x &&
++	git commit -m initial
 +'
- 
- test_expect_success 'read with --get: xdg file exists and ~/.gitconfig doesn'\''t' '
- 	rm .gitconfig &&
++
++cat << EOF > x
++firstline
++b
++c
++d
++e
++f
++preline
++1
++postline
++i
++j
++k
++l
++m
++n
++EOF
++
++test_expect_success 'next commit' '
++	git update-index --add x &&
++	git commit -m next
++'
++cat << EOF > x
++firstline
++b
++c
++d
++e
++f
++preline
++2
++postline
++i
++j
++k
++l
++m
++n
++EOF
++
++
++
++
++test_expect_success 'diff.context affects log' '
++	git log -1 -p | grep -q -v firstline
++	git config diff.context 8 &&
++	git log -1 -p | grep -q firstline
++'
++test_expect_success 'different -U value' '
++	git config diff.context 8 &&
++	git log -U4 -1 | grep -q -v firstline
++'
++
++test_expect_success 'diff.context affects diff' '
++	git config diff.context 8 &&
++	git diff | grep -q firstline
++'
++
++test_expect_success 'plumbing not affected' '
++	git config diff.context 8 &&
++	git diff-files -p | grep -q -v firstline
++'
++
++cat > .git/config << EOF
++[diff]
++	context = no
++EOF
++test_expect_success 'config parsing' '
++	git diff 2>&1 | grep -q "bad config value"
++'
++
++cat > .git/config << EOF
++[diff]
++	context = 0
++EOF
++test_expect_success 'config parsing' '
++	git diff | grep -v preline
++'
++
++cat > .git/config << EOF
++[diff]
++	context = -1
++EOF
++test_expect_success 'config parsing' '
++	git diff 2>&1 | grep -q "bad config file"
++'
++
++cat > .git/config << EOF
++[diff]
++	context = 8
++EOF
++test_expect_success 'config parsing' '
++	git diff 2>&1 | grep "postline"
++'
++
++
++test_done
 -- 
-1.7.8.1.362.g5d6df.dirty
+1.7.4.4
