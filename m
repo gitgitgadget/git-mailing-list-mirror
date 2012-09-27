@@ -1,71 +1,74 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Commit cache to speed up rev-list and merge
-Date: Thu, 27 Sep 2012 08:51:51 -0700
-Message-ID: <CAJo=hJtoqYEL5YiKawCt_SsSUqfCeYEQzY8Ntyb91cNfNS1w_Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Teach rm to remove submodules unless they contain a
+ git directory
+Date: Thu, 27 Sep 2012 09:53:33 -0700
+Message-ID: <7v8vbvs8z6.fsf@alter.siamese.dyndns.org>
+References: <50634799.7090807@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 17:52:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?TWljaGHFgiBHw7Ny?= =?utf-8?B?bnk=?= <mgorny@gentoo.org>,
+	Phil Hord <phil.hord@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 27 18:53:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THGO0-0003n3-6d
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 17:52:24 +0200
+	id 1THHLP-0000yi-Cc
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Sep 2012 18:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434Ab2I0PwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 11:52:14 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:64145 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752945Ab2I0PwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 11:52:13 -0400
-Received: by qchd3 with SMTP id d3so1146595qch.19
-        for <git@vger.kernel.org>; Thu, 27 Sep 2012 08:52:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=QPbFRoCg/J30MGMPoUboDJfiE5DnSQLYzyJsRvSFYlM=;
-        b=AnV6yHIJTfd2oNUqPUxV1e+5CtJT5Xx7KBtQ75J78DABnZqkKrs8NJYbwD/9Xaw+TJ
-         UvMLlGZ8evjiAQVLZ2TENdfIUMPravTCy92DYRSGUby91wPJAubHMRa+KlmkHFU5QVnZ
-         qIlZPfMLlVJcY9f5Ur1lJ/rVY2oJ/PGcT0YnY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :x-gm-message-state;
-        bh=QPbFRoCg/J30MGMPoUboDJfiE5DnSQLYzyJsRvSFYlM=;
-        b=A60jX/UmnWqVrTIOd/LU+Q6cPyx6Za563d8hM+eCK47bm+F6c0UFpRn0SvZg62umSW
-         1eAvxFKZitYIirwbleyE8LOQY9XvUCkFaBPMoJMlXlQgX06MeaZvD7/CbWof0XxNhBhL
-         U0EBg9JQ0ALODJJcrUbAIQeNMdc2oU3wqsfNi8/5dZE1BPWPjNYZrQpxOE1kgmMlBpES
-         PqJEaQTNZz32HBvdef7a862UpiLf4K3PJqWGbS3kEP3eEu9KqucrU+zgzyDmrB3iYF1p
-         R2yYHznmkr/JmIwD9BCWECQ9S2LDs8IoMFh/pUYtEBKWen+tBwbS36eNzjXgT8yRcYwR
-         e14Q==
-Received: by 10.224.78.197 with SMTP id m5mr10534494qak.36.1348761132203; Thu,
- 27 Sep 2012 08:52:12 -0700 (PDT)
-Received: by 10.49.35.75 with HTTP; Thu, 27 Sep 2012 08:51:51 -0700 (PDT)
-X-Gm-Message-State: ALoCoQl3Jbik+ueA8u1KTJ6tvbfFukYXNOfjT1oIbC3jgRF+bxEBetiQoZ3R4Esrc2SVPPf/kYfg
+	id S1751442Ab2I0Qxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 12:53:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63174 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751140Ab2I0Qxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 12:53:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7FDC904C;
+	Thu, 27 Sep 2012 12:53:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mkj/SHuNnx6b3KU9e1idNgSEgwo=; b=KHeYjL
+	//1DfPAdL6rtL4EUJQoi1o8XDe+noiD6OVB06jui6i6rMR69MaMu2pK2XDtX+B3n
+	M6Vn2RFYdYy3hgvY+ZVJ1RaC0efUOHB6egVRB838EGmLg8DOflEhcFHx9J7X8IeV
+	BGgLod6v+jdpur195KSiFUWh0OJDQtG7Hs9nE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C8YCcGX1ksALE0zR3UzjX1F+jp3MILXS
+	lolw5l9jTMMxFIbJshk0Z/35d3LeoJuCVu3yVGARRcicGUGkjaLyXFjopNuSz4J3
+	9b9T49Bf0OvfBXjbDZeC3RaPLbQfjvSz4YdXo+wp7gIjmfdroxY06a8S/dXj3iwn
+	xCMJ43CMjLM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95B1A904B;
+	Thu, 27 Sep 2012 12:53:36 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13E01904A; Thu, 27 Sep 2012
+ 12:53:35 -0400 (EDT)
+In-Reply-To: <50634799.7090807@web.de> (Jens Lehmann's message of "Wed, 26
+ Sep 2012 20:21:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0FDA418-08C3-11E2-8A62-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206486>
 
-On Thu, Sep 27, 2012 at 5:17 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> I'd like to see some sort of extension mechanism like in
-> $GIT_DIR/index, so that we don't have to increase pack index version
-> often. What I have in mind is optional commit cache to speed up
-> rev-list and merge, which could be stored in pack index too.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Can you share some of your ideas?
+> Changes since v3:
+> - Added get_ours_cache_pos() helper to only check stage 2 of a conflict
+> - Added tests for modified submodules in the conflict case
 
-In Linus' Linux kernel tree there are currently about 323,178 commits.
-If we store just the pre-parsed commit time as an int32 field this is
-an additional 1.2 MiB of data in the pack-*.idx file, assuming we can
-use additional data like pack offset position to correlate commit to
-the parsed int. If we stored parent pointers in a similar way you
-probably need at least 3.6 MiB of additional disk space on the index.
-For example, use 12 bytes for each commit to store enough of the
-parsed commit time to sort commits, and up to 2 parent pointers per
-commit.... with a reserved magic value for octopus merges to mean the
-commit itself has to be parsed to get the graph structure correct.
+Thanks.
+
+> +			/*
+> +			 * Skip unmerged entries except for populated submodules
+> +			 * that could loose history when removed.
+> +			 */
+
+s/loose/lose/, I think.
