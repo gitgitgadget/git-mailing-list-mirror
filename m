@@ -1,141 +1,84 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 08/21] git p4 test: translate windows paths for cygwin
-Date: Fri, 28 Sep 2012 08:04:12 -0400
-Message-ID: <1348833865-6093-9-git-send-email-pw@padd.com>
+Subject: [PATCH 09/21] git p4: remove unreachable windows \r\n conversion code
+Date: Fri, 28 Sep 2012 08:04:13 -0400
+Message-ID: <1348833865-6093-10-git-send-email-pw@padd.com>
 References: <1348833865-6093-1-git-send-email-pw@padd.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 28 14:07:25 2012
+X-From: git-owner@vger.kernel.org Fri Sep 28 14:07:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THZLo-0002Kq-Sm
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 14:07:25 +0200
+	id 1THZM3-0002UN-DU
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 14:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757506Ab2I1MHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 08:07:10 -0400
-Received: from honk.padd.com ([74.3.171.149]:34967 "EHLO honk.padd.com"
+	id S1756686Ab2I1MHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 08:07:30 -0400
+Received: from honk.padd.com ([74.3.171.149]:34972 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754505Ab2I1MHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 08:07:09 -0400
+	id S1754505Ab2I1MH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 08:07:29 -0400
 Received: from arf.padd.com (unknown [50.55.148.232])
-	by honk.padd.com (Postfix) with ESMTPSA id 562AE5AF2;
-	Fri, 28 Sep 2012 05:07:09 -0700 (PDT)
+	by honk.padd.com (Postfix) with ESMTPSA id 1E940637E;
+	Fri, 28 Sep 2012 05:07:29 -0700 (PDT)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id B6FDA31413; Fri, 28 Sep 2012 08:07:06 -0400 (EDT)
+	id CD1CA31413; Fri, 28 Sep 2012 08:07:26 -0400 (EDT)
 X-Mailer: git-send-email 1.7.12.1.457.g468b3ef
 In-Reply-To: <1348833865-6093-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206566>
 
-Native windows binaries do not understand posix-like
-path mapping offered by cygwin.  Convert paths to native
-using "cygpath --windows" before presenting them to p4d.
+Replacing \r\n with \n on windows was added in c1f9197 (Replace
+\r\n with \n when importing from p4 on Windows, 2007-05-24), to
+work around an oddity with "p4 print" on windows.  Text files
+are printed with "\r\r\n" endings, regardless of whether they
+were created on unix or windows, and regardless of the client
+LineEnd setting.
 
-This is done using the AltRoots mechanism of p4.  Both the
-posix and windows forms are put in the client specification,
-allowing p4 to find its location by native path even though
-the environment reports a different PWD.
+As of d2c6dd3 (use p4CmdList() to get file contents in Python
+dicts. This is more robust., 2007-05-23), git-p4 uses "p4 -G
+print", which generates files in a raw format.  As the native
+line ending format if p4 is \n, there will be no \r\n in the
+raw text.
 
-Shell operations in tests will use the normal form of $cli,
-which will look like a posix path in cygwin, while p4 will
-use AltRoots to match against the windows form of the working
-directory.
+Actually, it is possible to generate a text file so that the
+p4 representation includes embedded \r\n, even though this is not
+normal on either windows or unix.  In that case the code would
+have mistakenly stripped them out, but now they will be left
+intact.
 
-Thanks-to: Sebastian Schuberth <sschuberth@gmail.com>
-Thanks-to: Johannes Sixt <j6t@kdbg.org>
+More information on how p4 deals with line endings is here:
+
+    http://kb.perforce.com/article/63
+
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- t/lib-git-p4.sh | 24 ++++++++++++++++++++++--
- t/test-lib.sh   |  3 +++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ git-p4.py | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index 402d736..e2941ac 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -8,7 +8,8 @@ TEST_NO_CREATE_REPO=NoThanks
+diff --git a/git-p4.py b/git-p4.py
+index d7ee4b4..b773b09 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2064,15 +2064,6 @@ class P4Sync(Command, P4UserMap):
+             print "\nIgnoring apple filetype file %s" % file['depotFile']
+             return
  
- . ./test-lib.sh
- 
--if ! test_have_prereq PYTHON; then
-+if ! test_have_prereq PYTHON
-+then
- 	skip_all='skipping git p4 tests; python not available'
- 	test_done
- fi
-@@ -17,6 +18,24 @@ fi
- 	test_done
- }
- 
-+# On cygwin, the NT version of Perforce can be used.  When giving
-+# it paths, either on the command-line or in client specifications,
-+# be sure to use the native windows form.
-+#
-+# Older versions of perforce were available compiled natively for
-+# cygwin.  Those do not accept native windows paths, so make sure
-+# not to convert for them.
-+native_path() {
-+	path="$1" &&
-+	if test_have_prereq CYGWIN && ! p4 -V | grep -q CYGWIN
-+	then
-+		path=$(cygpath --windows "$path")
-+	else
-+		path=$(test-path-utils real_path "$path")
-+	fi &&
-+	echo "$path"
-+}
-+
- # Try to pick a unique port: guess a large number, then hope
- # no more than one of each test is running.
- #
-@@ -32,7 +51,7 @@ P4EDITOR=:
- export P4PORT P4CLIENT P4EDITOR
- 
- db="$TRASH_DIRECTORY/db"
--cli=$(test-path-utils real_path "$TRASH_DIRECTORY/cli")
-+cli="$TRASH_DIRECTORY/cli"
- git="$TRASH_DIRECTORY/git"
- pidfile="$TRASH_DIRECTORY/p4d.pid"
- 
-@@ -122,6 +141,7 @@ client_view() {
- 		Client: $P4CLIENT
- 		Description: $P4CLIENT
- 		Root: $cli
-+		AltRoots: $(native_path "$cli")
- 		View:
- 		EOF
- 		for arg ; do
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f8e3733..fd04870 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -624,12 +624,14 @@ case $(uname -s) in
- 	# backslashes in pathspec are converted to '/'
- 	# exec does not inherit the PID
- 	test_set_prereq MINGW
-+	test_set_prereq NOT_CYGWIN
- 	test_set_prereq SED_STRIPS_CR
- 	;;
- *CYGWIN*)
- 	test_set_prereq POSIXPERM
- 	test_set_prereq EXECKEEPSPID
- 	test_set_prereq NOT_MINGW
-+	test_set_prereq CYGWIN
- 	test_set_prereq SED_STRIPS_CR
- 	;;
- *)
-@@ -637,6 +639,7 @@ case $(uname -s) in
- 	test_set_prereq BSLASHPSPEC
- 	test_set_prereq EXECKEEPSPID
- 	test_set_prereq NOT_MINGW
-+	test_set_prereq NOT_CYGWIN
- 	;;
- esac
- 
+-        # Perhaps windows wants unicode, utf16 newlines translated too;
+-        # but this is not doing it.
+-        if self.isWindows and type_base == "text":
+-            mangled = []
+-            for data in contents:
+-                data = data.replace("\r\n", "\n")
+-                mangled.append(data)
+-            contents = mangled
+-
+         # Note that we do not try to de-mangle keywords on utf16 files,
+         # even though in theory somebody may want that.
+         pattern = p4_keywords_regexp_for_type(type_base, type_mods)
 -- 
 1.7.12.1.403.g28165e1
