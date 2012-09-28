@@ -1,107 +1,126 @@
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [RFC PATCH] add t3420-rebase-topology
-Date: Fri, 28 Sep 2012 11:03:19 -0700
-Message-ID: <CANiSa6hvs2253yb4s0PpaAfG=hoBK2psP896GMFWT-UjiPZDwA@mail.gmail.com>
-References: <1347949878-12578-1-git-send-email-martinvonz@gmail.com>
-	<50582873.603@viscovery.net>
-	<CANiSa6i+A6fkWpkPMXiBRdT48LaSfPe2yki+AmWFAKYg02p=+g@mail.gmail.com>
-	<20120927122035.GL16059@arachsys.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] completion: fix args of run_completion() test helper
+Date: Fri, 28 Sep 2012 11:04:05 -0700
+Message-ID: <7vehlmm3ca.fsf@alter.siamese.dyndns.org>
+References: <20120928100530.GL10144@goldbirke>
+ <1348826975-2225-1-git-send-email-szeder@ira.uka.de>
+ <1348826975-2225-2-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 20:03:32 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Sep 28 20:04:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THeuQ-0007U0-Fg
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 20:03:30 +0200
+	id 1THevD-0007xC-0Z
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 20:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758673Ab2I1SDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 14:03:21 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:57192 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754952Ab2I1SDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 14:03:20 -0400
-Received: by qchd3 with SMTP id d3so2143725qch.19
-        for <git@vger.kernel.org>; Fri, 28 Sep 2012 11:03:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=sMgOCeUcW08ctS9aeX6gCxRfAjKNE/KCYcZOXj2j+HI=;
-        b=XYKz1iyBEIb4VPf7ML+QslMhYjuf3UkEku0ym/LfbSlJ2/hqtvtTV7c9jGZfqyyBhp
-         S+IPUmHPOMI+jm30NNB8WPSMteBSn9oj5ADggCdsRY78hsSLtRSTeS2HHcmfC8Ndq7EC
-         vhBS4lZ8VFzg0NEKdGu5zrOlAsPMCC2z/n4LYGbfP2LNKSHEnRhRJsIcOAaoILCUAVVA
-         m/uOxy4R5wS5f7+1jP0rdJ8b6Zj+yHJlzwROTgoaladJoKmMH+4I1aRUAmwPg/XotupF
-         vQXeuEOJ0PfFaXSK1pGAYF8kv0TuHCCw+H4xelxIvO3opR2kD+1RJj0fjfvxr3TOgwpE
-         VAaQ==
-Received: by 10.224.52.139 with SMTP id i11mr18837012qag.11.1348855400069;
- Fri, 28 Sep 2012 11:03:20 -0700 (PDT)
-Received: by 10.49.1.44 with HTTP; Fri, 28 Sep 2012 11:03:19 -0700 (PDT)
-In-Reply-To: <20120927122035.GL16059@arachsys.com>
+	id S1758695Ab2I1SEJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2012 14:04:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63329 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754952Ab2I1SEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2012 14:04:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 901D38E8F;
+	Fri, 28 Sep 2012 14:04:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+rs1aJV3mOq4
+	Ai6Go46k7HZbxU4=; b=l5659xoSab2vmzJ9UVNEdBtHpTbp3Dgz56xTrZUJH/wi
+	DRBcJNI1iOvx9ZPrwqZhlwnj7JJPdurQPpc1/fOemupCaQbDK7F1Eyd0xdoeBnkO
+	BFf1ZAsOrVK7auS5hCFIqXXfr203/yN+mRHpqbNBffqEcjAwhZQ6brq6u9nxisA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gnpiyq
+	yXseg47P/kp5fc34MGMTK9SqEcVna/UAw98obumfAklGHcZMlsO1782+gFmTERe7
+	cQgpIQBbjUKznsQ0n5HcqIHNiAs0zvzHyz5YOLSXqQLaK25nzOcMk3YTh1ku+wo0
+	RqeiOiHVocWA7njyyXeXfHfKHRDJv0fG0gy1Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B1EB8E8E;
+	Fri, 28 Sep 2012 14:04:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9AAD8E84; Fri, 28 Sep 2012
+ 14:04:06 -0400 (EDT)
+In-Reply-To: <1348826975-2225-2-git-send-email-szeder@ira.uka.de> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 28 Sep 2012 12:09:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E51FD06A-0996-11E2-8C7A-18772E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206592>
 
-On Thu, Sep 27, 2012 at 5:20 AM, Chris Webb <chris@arachsys.com> wrote:
-> You're right that rebase --root without --onto always creates a brand new
-> root as a result of the implementation using a sentinel commit. Clearly this
-> is what's wanted with --interactive
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-That's not as clear as one might first think. "git rebase -i" actually
-honors --force; if one marks a commit for "edit", but then --continue
-without making any changes, the next commit(s) will be fast-forwarded.
-See the first few lines of pick_one (or pick_one_preserving_merges).
-
-> but rebase --root with neither --onto
-> nor --interactive is a slightly odd combination for which I struggle to
-> imagine a natural use. Perhaps you're right that for consistency it should
-> be a no-op unless --force-rebase is given?
+> To simulate the the user hit 'git <TAB>, one of the completion tests
+> sets up the rather strange command line
 >
-> If we did this, this combination would be a no-op unconditionally as by
-> definition we're always descended from the root of our current commit.
+>   git ""
+>
+> i.e. the second word on the command line consists of two double
+> quotes.  However, this is not what happens for real, because after
+> 'git <TAB>' the second word on the command line is just an empty
+> string.  Luckily, the test works nevertheless.
+>
+> Fix this by passing the command line to run_completion() as separate
+> words.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+> ---
+>  t/t9902-completion.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index e7657537..f5e68834 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -49,7 +49,7 @@ run_completion ()
+>  {
+>  	local -a COMPREPLY _words
+>  	local _cword
+> -	_words=3D( $1 )
+> +	_words=3D( "$@" )
+>  	(( _cword =3D ${#_words[@]} - 1 ))
+>  	__git_wrap__git_main && print_comp
+>  }
+> @@ -57,7 +57,7 @@ run_completion ()
+>  test_completion ()
+>  {
+>  	test $# -gt 1 && echo "$2" > expected
+> -	run_completion "$@" &&
+> +	run_completion $1 &&
+>  	test_cmp expected out
+>  }
 
-For consistency, it seems like "git rebase -p --root" should always be
-a no-op, while "git rebase [-i/-m] --root" should be no-op if the
-history has no merges. Also, since "git rebase -i" tries to
-fast-forward through existing commits, it seems like "git rebase -i
---root" should ideally not create a sentinel commit, but instead stop
-at the first commit marked for editing.
+I can understand the other three hunks, but this one is fishy.
+Shouldn't "$1" be inside a pair of dq?  I.e.
 
-If, OTOH, --force-rebase is given, we should rewrite history from the
-first commit, which in the case of --root would mean creating a
-sentinel commit.
+	+	run_completion "$1" &&
 
-So, in short, I have a feeling that the sentinel commit should be
-created if and only if both --root and --force-rebase (but not --onto)
-are given.
-
-> However, given the not-very-useful behaviour, I suspect that rebase --root
-> is much more likely to be a mistyped version of rebase -i --root than rebase
-> --root --force-rebase. (Unless I'm missing a reasonable use for this?
-> History linearisation perhaps?)
-
-Yes, the "not-very-useful"-ness of this is the clear argument against
-making them no-ops. But I have to say I was slightly surprised when I
-tried "git rebase --root" for the first time and it created completely
-new history for me. As you say, "git rebase --root" is probably often
-a mistyped "git rebase -i --root", and if that is the case, it seems
-nicer (in addition to being more consistent) if we don't do anything
-rather than rewriting the history. The history rewriting might even go
-unnoticed and come as an unpleasant surprise later.
-
-When working on a new project, "git rebase -i --root" might even be a
-convenient replacement for "git rebase -i <initial commit>" even when
-one does not want to rewrite the initial commit itself, and in such a
-case, the user would clearly not want a sentinel commit either.
-
-So I'm getting more and more convinced that the sentinel commit should
-only be created if --force-rebase was given. Let me know if I'm
-missing something.
-
-Martin
+> =20
+> @@ -147,7 +147,7 @@ test_expect_success '__gitcomp - suffix' '
+>  '
+> =20
+>  test_expect_success 'basic' '
+> -	run_completion "git \"\"" &&
+> +	run_completion git "" &&
+>  	# built-in
+>  	grep -q "^add \$" out &&
+>  	# script
+> @@ -155,7 +155,7 @@ test_expect_success 'basic' '
+>  	# plumbing
+>  	! grep -q "^ls-files \$" out &&
+> =20
+> -	run_completion "git f" &&
+> +	run_completion git f &&
+>  	! grep -q -v "^f" out
+>  '
