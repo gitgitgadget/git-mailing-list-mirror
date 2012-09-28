@@ -1,79 +1,81 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 4/3] completion: quote completions we find
-Date: Fri, 28 Sep 2012 00:58:09 +0200
-Message-ID: <20120927225809.GK10144@goldbirke>
-References: <20120926214653.GA18628@sigill.intra.peff.net>
- <20120926215119.GC18653@sigill.intra.peff.net>
- <20120926215700.GB18628@sigill.intra.peff.net>
- <20120927214046.GJ10144@goldbirke>
- <7vy5jvnln5.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Fwd: Please pull git-l10n updates on maint branch
+Date: Fri, 28 Sep 2012 09:13:32 +0800
+Message-ID: <CANYiYbFhVo7PC+etHHhai-+waz8MOz9OU-v2Y3oNgZqbmm9MSQ@mail.gmail.com>
+References: <CANYiYbHWwfuFOyNPPTkMo5QLsBuq_jaqG_zSRuy1dryk4pKyNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 00:58:32 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 28 03:13:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THN2M-0004bE-J4
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 00:58:30 +0200
+	id 1THP9D-00039X-Mx
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 03:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132Ab2I0W6U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Sep 2012 18:58:20 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:52337 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755882Ab2I0W6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 18:58:20 -0400
-Received: from localhost6.localdomain6 (p5B1309F9.dip0.t-ipconnect.de [91.19.9.249])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MgHFG-1T3XPg13Q6-00Nl1Y; Fri, 28 Sep 2012 00:58:10 +0200
-Content-Disposition: inline
-In-Reply-To: <7vy5jvnln5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:e01SnLYWDj2GiGSi0qEpRrvkHhUPDHvyCySYQV2luAA
- WU2ClehFTGdFQ+kRvRJp8V1JEQxZe6fyl/t+zsFkviChfZwC6l
- xwjmYnZ9Qmnco0sgYCd2Iaz6GwNSzjt47RfimsHAAPV+z1zWJN
- 8ICA2TjMXRZVapWMr6NAlE/eFcuMzsx4N/V7Bn5kpY9XKvtX11
- y8Umjjq6f6VO8AhcLpSf7j4C+GYMEOcvGDheSlvrV8sgB3bCmm
- rClfGeDXRKVfTTrwbpUNi1Cbjyt6d2bP40fHTrkTHkjbHxxaSN
- BRPp6pXzpWDNbOKGKxGZQulim6/YV9eNf2h1SFDRuOjAYNPToN
- vczv+fiI8B454EXrQqX8aFmRKiX+YBOAg0KapmUZj
+	id S1755819Ab2I1BNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 21:13:33 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:62616 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386Ab2I1BNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 21:13:33 -0400
+Received: by ieak13 with SMTP id k13so6113702iea.19
+        for <git@vger.kernel.org>; Thu, 27 Sep 2012 18:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=b9lANYSKC3UCwXJyIuGHuF7ABnJTRj2K/Eqg3VX6MUo=;
+        b=aqo2Sw3n6FnaHbBGP/KcsNfrtX5sSi33Lt4zsEwO05vbOfhbtmbwWDIKaiCrDzjWNL
+         ElCfqv/IuIYLfca1eqcRc6rpVAONhAvwlr53b0mdt3omfQ15qrxUgXHfKv1JMckCAxUl
+         jjev6RuvLdPEt5569dhl4AXMCnUxBYqT4AtWsOLc3f0P9BgQXZQO8UD/aHcNjZ+ti1z/
+         SJqi1+2pz4qvR/RH/0Q8S0j78HtlbkPzfn2oscJv3XgPSi1dPfhSbovPQl7gbd2CxTgJ
+         7ak86YM3hPK0PYPj9t3hwJS3vHW1KrQdnzISzgzYwa8kp9SmVneijo9SVmGzzK4Wfxfo
+         YO1w==
+Received: by 10.50.219.229 with SMTP id pr5mr167910igc.59.1348794812524; Thu,
+ 27 Sep 2012 18:13:32 -0700 (PDT)
+Received: by 10.50.42.230 with HTTP; Thu, 27 Sep 2012 18:13:32 -0700 (PDT)
+In-Reply-To: <CANYiYbHWwfuFOyNPPTkMo5QLsBuq_jaqG_zSRuy1dryk4pKyNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206530>
 
-On Thu, Sep 27, 2012 at 03:31:10PM -0700, Junio C Hamano wrote:
-> SZEDER G=E1bor <szeder@ira.uka.de> writes:
->=20
-> > On Wed, Sep 26, 2012 at 05:57:00PM -0400, Jeff King wrote:
-> >> +		COMPREPLY[$i]=3D"${COMPREPLY[$i]}$stripped"
-> >
-> > This reminded me to a mini-series collecting dust in my git repo,
-> > which converts a few similar var=3D$var$something constructs to use=
- the
-> > +=3D append operator instead.
->=20
-> Is the benefit of rewriting it to var+=3D$something large enough to
-> worry about the below?
+Hi, Junio
 
-That way we can get rid of a subshell in __gitcomp(), which means one
-less fork() during every command or option completion for Windows
-folks.  We can also get rid of two subshells during loading the
-completion script.
+The following changes since commit e70d1632bdaf25a9ee528e78133cab319083eade:
 
-And I would spare myself from a couple of merge conflicts, too ;)
+  Further merging in preparation for 1.7.12.1 (2012-09-12 14:12:48 -0700)
 
+are available in the git repository at:
 
-> > Now, Bash supports this +=3D append operator since v3.1
-> > (bash-3.1-alpha1, to be exact), which is around since July 2005, if=
- I
-> > can trust the mtime at ftp://ftp.cwru.edu/pub/bash/.  MSysgit ships
-> > v3.1 so it already supports this, too.  So, what is the oldest Bash
-> > version we care about for completion?
+  git://github.com/git-l10n/git-po maint
+
+for you to fetch changes up to 5b3ba7193f2f99fa1c23c1952f3e0f880e101ae2:
+
+  Merge branch 'l10n-thynson' of git://github.com/thynson/git-po-zh_CN
+into maint (2012-09-28 06:49:08 +0800)
+
+----------------------------------------------------------------
+
+Jiang Xin (2):
+      Merge branch 'maint' of https://github.com/ralfth/git-po-de into maint
+      Merge branch 'l10n-thynson' of
+git://github.com/thynson/git-po-zh_CN into maint
+
+Ralf Thielow (1):
+      l10n: de.po: correct translation of a 'rebase' message
+
+Thynson (2):
+      l10n: Unify the translation for '(un)expected'
+      l10n: Improve many translation for zh_CN
+
+ po/de.po    |   10 +++++-----
+ po/zh_CN.po |   46 +++++++++++++++++++++++-----------------------
+ 2 files changed, 28 insertions(+), 28 deletions(-)
+
+--
+Jiang Xin
