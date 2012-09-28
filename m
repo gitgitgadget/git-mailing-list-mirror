@@ -1,105 +1,84 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 3/3] completion: improve shell expansion of items
-Date: Fri, 28 Sep 2012 12:05:30 +0200
-Message-ID: <20120928100530.GL10144@goldbirke>
-References: <20120926214653.GA18628@sigill.intra.peff.net>
- <20120926215119.GC18653@sigill.intra.peff.net>
- <20120927003751.GI10144@goldbirke>
- <20120927062855.GA22890@sigill.intra.peff.net>
- <20120927064338.GA4789@sigill.intra.peff.net>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 1/5] completion: fix non-critical bugs in __gitcomp() tests
+Date: Fri, 28 Sep 2012 12:09:31 +0200
+Message-ID: <1348826975-2225-1-git-send-email-szeder@ira.uka.de>
+References: <20120928100530.GL10144@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 28 12:06:00 2012
+X-From: git-owner@vger.kernel.org Fri Sep 28 12:10:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THXSK-0003PG-9v
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 12:06:00 +0200
+	id 1THXWI-0005Tt-MN
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 12:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756922Ab2I1KFu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2012 06:05:50 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:62568 "EHLO
+	id S1757221Ab2I1KJ5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2012 06:09:57 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:49552 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751138Ab2I1KFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 06:05:49 -0400
+	with ESMTP id S1751138Ab2I1KJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 06:09:56 -0400
 Received: from localhost6.localdomain6 (p5B130716.dip0.t-ipconnect.de [91.19.7.22])
 	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0Led14-1To4hx2Zsk-00px3d; Fri, 28 Sep 2012 12:05:32 +0200
-Content-Disposition: inline
-In-Reply-To: <20120927064338.GA4789@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:aGCXvyDUqUwemwSrBGo18hrrekM5hCo8gDKmjvG52YI
- FWTZz5zZXQdBR94uGmdljSP/7V4aXtrd/pfIXau3DIQI2NFSAD
- 7c69/q1S/2QacCIgBVyVBe4WMt5dlB4nI9ouSDiT+m/duvWIDg
- HMrd6Z0XBiwoRdzFyVsZkS/wsqPHiQRF6j6q+iNC22zYmdNuIZ
- E79r+Z7u7jMtGsTeOE4qFoONaCdhWXi+2cgdU6SXTleIFMkzsN
- L6sMBZtevLmZVgFixMv5NHCEVv5obmMZTJoYVFRxVpd6fIqwNQ
- hnLEU3K5AOrhorYUpfCRaKhrKIy+puICdAZNmVw+6ELZAB7+wg
- ch096jxsNWrSOtnejSylYOLNsa+ZA46PNfOZUHiFY
+	id 0Lsz0c-1TT86z0iPi-011zkZ; Fri, 28 Sep 2012 12:09:55 +0200
+X-Mailer: git-send-email 1.7.12.1.438.g7dfa67b
+In-Reply-To: <20120928100530.GL10144@goldbirke>
+X-Provags-ID: V02:K0:BQMMb4oTvcm5baEMqtFTlXWFhouFKijQama+J4+9ab+
+ GcrsA4e9XF3orrrEkczeBAXPPrBCYgHrZVtbYBVMOYO0SghAQH
+ GeSCFrMnhbeIUk/l+X47qgTW5qY+J3B4TWiImxE5iCSsiqtg7W
+ qbNFFqBSDud2hjlQWxJETR6Qex1He2O9MliDFa33XuxrPz7SH8
+ enLOZV5xW1bTRCALCEMeufIlDVHRFO9I6RoNNqZKtVPozwbLJo
+ Cu53w0Xc544mWTeOMKOT90FA6sszXCk9OeIAwBUyBn3v6bDsbC
+ JSH+ruINyx4DLB6qSJSJO2MNHN4CQGgEZIJTKJdHWCURSCMqbR
+ EUdohO+Q/Oe5yfmtBfdfoJ6VCidvqnCYN/UJd6Mycsb4DfM502
+ XxMYQWdXmAsvQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206549>
 
-On Thu, Sep 27, 2012 at 02:43:38AM -0400, Jeff King wrote:
-> Here are the numbers using sed[1]
-> instead:
-=20
-> -# Quotes each element of an IFS-delimited list for shell reuse
-> +# Quotes each element of a newline-delimited list for shell reuse
->  __git_quote()
->  {
-> -	local i
-> -	local delim
-> -	for i in $1; do
-> -		local quoted=3D${i//\'/\'\\\'\'}
-> -		printf "${delim:+$IFS}'%s'" "$quoted"
-> -		delim=3Dt
-> -	done
-> +	echo "$1" |
-> +	sed "
-> +	  s/'/'\\\\''/g
-> +	  s/^/'/
-> +	  s/$/'/
-> +	"
->  }
-> =20
->  # Generates completion reply with compgen, appending a space to poss=
-ible
+When invoking __gitcomp() the $cur variable should hold the word to be
+completed, but two tests (checking the handling of prefix and suffix)
+set it to a bogus value.
 
-Your usage of sed got me thinking and come up with this.
+Luckily the bogus values haven't influenced the tests' correctness,
+because these two tests pass the word-to-be-matched as argument to
+__gitcomp(), which overrides $cur anyway.
 
-The first two fix benign bugs in completion tests, and the third adds
-tests for __gitcomp_nl().  These are good to go.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ t/t9902-completion.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The fourth adds __gitcomp() and __gitcomp_nl() tests for this
-expansion breakage.  The expected results might need some adjustments,
-because they contain special characters unquoted, but I'm tempted to
-say that a branch called $foo is so rare in practice, that we
-shouldn't bother.
-
-The final one is a proof of concept for inspiration.  It gets rid of
-compgen and its crazy additional expansion replacing it with a small
-sed script.  It needs further work to handle words with whitespaces
-and special characters.
-
-
-SZEDER G=E1bor (5):
-  completion: fix non-critical bugs in __gitcomp() tests
-  completion: fix args of run_completion() test helper
-  completion: add tests for the __gitcomp_nl() completion helper
-    function
-  completion: test __gitcomp() and __gitcomp_nl() with expandable words
-  completion: avoid compgen to fix expansion issues in __gitcomp_nl()
-
- contrib/completion/git-completion.bash |  6 ++-
- t/t9902-completion.sh                  | 91 ++++++++++++++++++++++++++=
-+++++---
- 2 files changed, 90 insertions(+), 7 deletions(-)
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 92d7eb47..e7657537 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -121,7 +121,7 @@ test_expect_success '__gitcomp - prefix' '
+ 	EOF
+ 	(
+ 		local -a COMPREPLY &&
+-		cur=3D"branch.me" &&
++		cur=3D"branch.maint.me" &&
+ 		__gitcomp "remote merge mergeoptions rebase
+ 			" "branch.maint." "me" &&
+ 		IFS=3D"$newline" &&
+@@ -137,7 +137,7 @@ test_expect_success '__gitcomp - suffix' '
+ 	EOF
+ 	(
+ 		local -a COMPREPLY &&
+-		cur=3D"branch.me" &&
++		cur=3D"branch.ma" &&
+ 		__gitcomp "master maint next pu
+ 			" "branch." "ma" "." &&
+ 		IFS=3D"$newline" &&
+--=20
+1.7.12.1.438.g7dfa67b
