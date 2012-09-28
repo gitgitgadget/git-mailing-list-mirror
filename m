@@ -1,76 +1,94 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Using bitmaps to accelerate fetch and clone
-Date: Fri, 28 Sep 2012 19:00:28 +0700
-Message-ID: <CACsJy8AUdRyjSrAgM+ABzWet2NKz7N7M4re2QVoRPrrA=zfvvg@mail.gmail.com>
-References: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Sep 28 14:01:09 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH 00/21] git p4: work on cygwin
+Date: Fri, 28 Sep 2012 08:04:04 -0400
+Message-ID: <1348833865-6093-1-git-send-email-pw@padd.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 28 14:04:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THZFl-0007SN-3u
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 14:01:09 +0200
+	id 1THZJ9-0000rW-Hh
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 14:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374Ab2I1MBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 08:01:00 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:55527 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab2I1MA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 08:00:59 -0400
-Received: by ieak13 with SMTP id k13so7044986iea.19
-        for <git@vger.kernel.org>; Fri, 28 Sep 2012 05:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8WF/yOl2Q/Y8O70mn8j/6StCggUqcO/C2P/hR593VQI=;
-        b=Lf6wiDuUwkO5N4LTEPpN29mBP53VhKL6vNBIkPzrzpopgQyzLvdeWAo6GRFolinVH7
-         INgFi6ueM5/JLr9SoyhLetTQ0IN1i+AZU7dZsirQ5hjf6WxGVOoXSge3bQ/H0iT1i7Sr
-         JaK0KZYGMhdpKozxKVqnD/soqoU2RUxfZ0kMUkbWAycnw7BJ2JwHJMgrz12TS65QnnB3
-         IdNY+IWg0y9UvDQwp6U88k+vsBUxOKNc6ul0Eo0ysGdCdQeAyGHFeX4J7UglHMmXJW16
-         sCNWjsLLS5d0lny8Mju9Kw+XSBsZPwnLire702Zn1VFiPiZHRXfuhbo7y43rjasN/B+b
-         v7PA==
-Received: by 10.50.53.199 with SMTP id d7mr1354711igp.47.1348833658825; Fri,
- 28 Sep 2012 05:00:58 -0700 (PDT)
-Received: by 10.64.29.199 with HTTP; Fri, 28 Sep 2012 05:00:28 -0700 (PDT)
-In-Reply-To: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
+	id S1753517Ab2I1MEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 08:04:30 -0400
+Received: from honk.padd.com ([74.3.171.149]:34951 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751222Ab2I1ME3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 08:04:29 -0400
+Received: from arf.padd.com (unknown [50.55.148.232])
+	by honk.padd.com (Postfix) with ESMTPSA id E307E5AF2;
+	Fri, 28 Sep 2012 05:04:28 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id F187E31413; Fri, 28 Sep 2012 08:04:25 -0400 (EDT)
+X-Mailer: git-send-email 1.7.12.1.457.g468b3ef
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206557>
 
-On Thu, Sep 27, 2012 at 7:47 AM, Shawn Pearce <spearce@spearce.org> wrote:
-> * https://git.eclipse.org/r/7939
->
->   Defines the new E003 index format and the bit set
->   implementation logic.
+This series fixes problems in git-p4, and its tests, so that
+git-p4 works on the cygwin platform.
 
-Quote from the patch's message:
+See the wiki for info on how to get started on cygwin:
 
-"Currently, the new index format can only be used with pack files that
-contain a complete closure of the object graph e.g. the result of a
-garbage collection."
+    https://git.wiki.kernel.org/index.php/GitP4
 
-You mentioned this before in your idea mail a while back. I wonder if
-it's worth storing bitmaps for all packs, not just the self contained
-ones. We could have one leaf bitmap per pack to mark all leaves where
-we'll need to traverse outside the pack. Commit leaves are the best as
-we can potentially reuse commit bitmaps from other packs. Tree leaves
-will be followed in the normal/slow way.
+Testing by people who use cygwin would be appreciated.  It would
+be good to support cygwin more regularly.  Anyone who had time
+to contribute to testing on cygwin, and reporting problems, would
+be welcome.
 
-For connectivity check, fewer trees/commits to deflate/parse means
-less time. And connectivity check is done on every git-fetch (I
-suspect the other end of a push also has the same check). It's not
-unusual for me to fetch some repos once every few months so these
-incomplete packs could be quite big and it'll take some time for gc
---auto to kick in (of course we could adjust gc --auto to start based
-on the number of non-bitmapped objects, in additional to number of
-packs).
+There's more work requried to support msysgit.  Those patches
+are not in good enough shape to ship out yet, but a lot of what
+is in this series is required for msysgit too.
+
+These patches:
+
+    - fix bugs in git-p4 related to issues found on cygwin
+    - cleanup some ugly code in git-p4 observed in error paths while
+      getting tests to work on cygwin
+    - simplify and refactor code and tests to make cygwin changes easier
+    - handle newline and path issues for cygwin platform
+    - speed up some aspects of git-p4 by removing extra shell invocations
+
+Pete Wyckoff (21):
+  git p4: temp branch name should use / even on windows
+  git p4: remove unused imports
+  git p4: generate better error message for bad depot path
+  git p4: fix error message when "describe -s" fails
+  git p4 test: use client_view to build the initial client
+  git p4 test: use client_view in t9806
+  git p4 test: start p4d inside its db dir
+  git p4 test: translate windows paths for cygwin
+  git p4: remove unreachable windows \r\n conversion code
+  git p4: scrub crlf for utf16 files on windows
+  git p4 test: newline handling
+  git p4 test: use LineEnd unix in windows tests too
+  git p4 test: avoid wildcard * in windows
+  git p4: cygwin p4 client does not mark read-only
+  git p4 test: disable chmod test for cygwin
+  git p4: disable read-only attribute before deleting
+  git p4: avoid shell when mapping users
+  git p4: avoid shell when invoking git rev-list
+  git p4: avoid shell when invoking git config --get-all
+  git p4: avoid shell when calling git config
+  git p4: introduce gitConfigBool
+
+ git-p4.py                     | 122 ++++++++++++++++++++++++++++--------------
+ t/lib-git-p4.sh               |  60 +++++++++++++++------
+ t/t9800-git-p4-basic.sh       |   5 ++
+ t/t9802-git-p4-filetype.sh    | 117 ++++++++++++++++++++++++++++++++++++++++
+ t/t9806-git-p4-options.sh     |  50 ++++++++---------
+ t/t9807-git-p4-submit.sh      |  14 ++++-
+ t/t9809-git-p4-client-view.sh |  14 +++--
+ t/t9812-git-p4-wildcards.sh   |  37 ++++++++++---
+ t/t9815-git-p4-submit-fail.sh |   4 +-
+ t/test-lib.sh                 |   3 ++
+ 10 files changed, 330 insertions(+), 96 deletions(-)
+
 -- 
-Duy
+1.7.12.1.403.g28165e1
