@@ -1,90 +1,80 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Please pull git-l10n updates on master branch
-Date: Fri, 28 Sep 2012 09:17:57 +0800
-Message-ID: <CANYiYbF87qr0NHoiwKHEsTqG9mnANkp92t_AN7eUg-QB8cK=WQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Using bitmaps to accelerate fetch and clone
+Date: Fri, 28 Sep 2012 08:37:09 +0700
+Message-ID: <CACsJy8AbVi-uR2-5Ndz3cTAzz_=xahOSpTBGOsB2XdYTsYtG6w@mail.gmail.com>
+References: <CAJo=hJstK1tGrWhtBt3s+R1a6C0ge3wMtJnoo43Fjfg5A57eVw@mail.gmail.com>
+ <CACsJy8D0vkyEArNChXE0igUkanH6PwjmPitq22a9sudfmWF4kA@mail.gmail.com> <CAJo=hJt0PdpDT5ROUSfZ80Zh2ep=r5Sg1BS=v7Ve-djydHhp-w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>, lanxingcan@gmail.com
-X-From: git-owner@vger.kernel.org Fri Sep 28 03:18:11 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>,
+	Jeff King <peff@peff.net>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Sep 28 03:37:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THPDT-0005nl-Cw
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 03:18:07 +0200
+	id 1THPWY-0007CI-Ow
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 03:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208Ab2I1BR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2012 21:17:58 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:43843 "EHLO
+	id S1755124Ab2I1Bhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2012 21:37:41 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:59405 "EHLO
 	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753569Ab2I1BR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2012 21:17:58 -0400
-Received: by ieak13 with SMTP id k13so6120252iea.19
-        for <git@vger.kernel.org>; Thu, 27 Sep 2012 18:17:57 -0700 (PDT)
+	with ESMTP id S1754936Ab2I1Bhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2012 21:37:40 -0400
+Received: by ieak13 with SMTP id k13so6150540iea.19
+        for <git@vger.kernel.org>; Thu, 27 Sep 2012 18:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=SLD0TTGbUG2K8tAUcN8telneRR2WE2EVEOdpL0Cidfs=;
-        b=jGUVuOZknfcP6grrm3bdi8YaYbWBOscTBTX6GrXiPwmEiOZy6jYzNIFsT14xeFu6sR
-         BYClwbP1B1ZkVzFWWYIMq97bOgJPmrB/RvwgR1GDN2tGSS4jj9c/ouhmfS4UNI9bQkxB
-         xtNSLQePUssIijo0APWmqKlN1AieT4nnGh2JdbvqOYftra11qI2fTKrJ3PJDxV/Sg2lq
-         nHG6wtf62yUkD+Hs+2EH5NqD8cyhKr4gzGHzn+K9KWEuJwDxdOAqhEJgq+Q5+gPHCWZ7
-         58XG9qyNiFK2SdEE47Kr5QP9ti9rIgeopZ/rsQ5ixJ2uT+zLcJlI3ZSRFmL7uKFtBqk8
-         lfrg==
-Received: by 10.43.12.137 with SMTP id pi9mr4443832icb.26.1348795077521; Thu,
- 27 Sep 2012 18:17:57 -0700 (PDT)
-Received: by 10.50.42.230 with HTTP; Thu, 27 Sep 2012 18:17:57 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TIiayo9pftX6lKD3ppNwtSSIOfAwu1CbysjtUxlzoDM=;
+        b=vhf+bwaZc5Rb62beDqju7oh2i5psBGIzr1ArTLpFG2wCEENGpc8o+HwI+5xYGXd8or
+         28h3oHcD7p5cxg0FlIwsz1prpIpEKAcH9OQL6xWwguCQNPc63vCptMt1ImFEAAkek9EQ
+         r8we0ReBcU1v15Q7c3kzsijG/MythNJnGV9B25c9KJqNkmrwlQUYeza06Z/wnYNk0LeC
+         aU7n0ITJ6wJmMtzRO4oey4JmkRtA+WanJSt0IUgK1Jy2QB124Zek7t24mYG1fr3YHNyA
+         Ded5z6nMUriDzyJ0k0zMkB9+L9zhwlnXTHwzT6wFCD2TxOxr1FR0jNyD6JrbKwxSuo9z
+         CjJA==
+Received: by 10.42.129.83 with SMTP id p19mr4528750ics.9.1348796259883; Thu,
+ 27 Sep 2012 18:37:39 -0700 (PDT)
+Received: by 10.64.29.199 with HTTP; Thu, 27 Sep 2012 18:37:09 -0700 (PDT)
+In-Reply-To: <CAJo=hJt0PdpDT5ROUSfZ80Zh2ep=r5Sg1BS=v7Ve-djydHhp-w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206532>
 
-Hi, Junio
+On Thu, Sep 27, 2012 at 9:33 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> I'd like to see some sort of extension mechanism like in
+>> $GIT_DIR/index, so that we don't have to increase pack index version
+>> often.
+>
+> This might be worthwhile. I dislike the way $GIT_DIR/index encodes
+> extensions. Forcing an extension to fully materialize itself to
+> determine its length so the length can be placed before the data is
+> painful to work with when writing the file out to disk. I would prefer
+> writing an index catalog at the trailer of the file. We already
+> require random access to the index file, so its possible for a reader
+> to read a fixed size trailer record that has the 2 SHA-1s we normally
+> end an index with, and an extension catalog footer that has a length
+> and CRC-32 of the catalog. The catalog would immediately appear before
+> the footer, so a reader can find the start of the extension catalog by
+> subtracting from the end of the file the catalog length and the file
+> footer and catalog footer lengths. The catalog can then supply a
+> starting offset for each extension section, and writers don't need to
+> predict in advance how much data they need to store. Readers trying to
+> use extensions aren't really hurt, Git already randomly seeks to read
+> the tail of an index file to compare the pack SHA-1 before assuming
+> the index is valid.
 
-The following changes since commit 1084f3b844d80d84d2d318bc562b78514cd78028:
-
-  The sixth batch for 1.8.0 (2012-09-14 12:34:11 -0700)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po master
-
-for you to fetch changes up to b2f4b6cec2c5c1e2f802ac4b4bd12d5b26461069:
-
-  Merge git://github.com/gotgit/git-po-zh_CN (2012-09-28 07:03:43 +0800)
-
-----------------------------------------------------------------
-
-Jiang Xin (6):
-      l10n: Update git.pot (825 new, 24 removed messages)
-      l10n: zh.CN.po: msgmerge git.pot (1142t195f630u)
-      Merge branch 'maint' of https://github.com/ralfth/git-po-de into maint
-      Merge branch 'l10n-thynson' of
-git://github.com/thynson/git-po-zh_CN into maint
-      Merge branch 'maint'
-      Merge git://github.com/gotgit/git-po-zh_CN
-
-Peter Krefting (2):
-      Update Swedish translation (1967t0f0u)
-      l10n: Fixes to Swedish translation
-
-Ralf Thielow (1):
-      l10n: de.po: correct translation of a 'rebase' message
-
-Thynson (2):
-      l10n: Unify the translation for '(un)expected'
-      l10n: Improve many translation for zh_CN
-
- po/de.po    |   10 +-
- po/git.pot  | 6908 +++++++++++++++++++++++++++++++++++++++++++----------------
- po/sv.po    | 4433 +++++++++++++++++++++++++++++++++-----
- po/zh_CN.po | 4687 +++++++++++++++++++++++++++++++++++-----
- 4 files changed, 13108 insertions(+), 2930 deletions(-)
-
---
-Jiang Xin
+Yeah, that's exactly what I had in mind. But perhaps a separate file
+(or files?) may be better. On that point, should all extensions be in
+one new extra file, or one extension per file? I prefer all extensions
+in one file, so we only need a single additional stat() for extension
+check instead of probing for the entire pack-XXX.* range. In that
+case, the catalog trailer idea still applies.
+-- 
+Duy
