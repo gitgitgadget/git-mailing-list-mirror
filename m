@@ -1,70 +1,66 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 15/21] git p4 test: disable chmod test for cygwin
-Date: Fri, 28 Sep 2012 21:33:36 +0200
-Message-ID: <5065FB90.2070602@kdbg.org>
-References: <1348833865-6093-1-git-send-email-pw@padd.com> <1348833865-6093-16-git-send-email-pw@padd.com>
+From: Ben Smith-Mannschott <bsmith.occs@gmail.com>
+Subject: Re: git gui does not open bare repositories
+Date: Fri, 28 Sep 2012 21:43:03 +0200
+Message-ID: <CAJ_tm-S5kF2R-saQq6ER6669g6ND5k9ymuA0g_d+Ze3x_N3HaQ@mail.gmail.com>
+References: <CAB9Jk9CA+e8xR9sz7cW+5+990FmTeYN3pjxs4ZKFpkzb6OL35Q@mail.gmail.com>
+	<CAH6sp9N1cFH7orPNmfbhgHq6oUNtQNe=-5f5jkYNXzr+6Xp_pQ@mail.gmail.com>
+	<CAB9Jk9BivVrH7daMR=u5Y6Ut=pZGRBcgKNZ_afZ53XFxhFBnZw@mail.gmail.com>
+	<CAH6sp9ME0og0E-=oW6MBFMBv8hD0y8PpmdpyaV4qqr7Mb7c5VA@mail.gmail.com>
+	<50656388.3050400@atlas-elektronik.com>
+	<CAB9Jk9C=ndfO37YWS5mg4anu91N4O__iA_msmxU+X2_Nakv-tQ@mail.gmail.com>
+	<CAJ_tm-Q2=ZpUQVHG1om5cfhqoLpCwo2fNoqcWOa-n00-h0raOQ@mail.gmail.com>
+	<CAB9Jk9AN39+RaNWX+DDEq9wVzJJBV-bjcDnUz6Ofy+baveU-8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 21:33:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>,
+	Frans Klaver <fransklaver@gmail.com>, git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 21:43:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THgJx-0007EC-4b
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:33:57 +0200
+	id 1THgT1-0003k6-Ap
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031084Ab2I1Tdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 15:33:44 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:57026 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1030602Ab2I1Tdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 15:33:42 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9538A130052;
-	Fri, 28 Sep 2012 21:33:38 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B76C519F374;
-	Fri, 28 Sep 2012 21:33:37 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <1348833865-6093-16-git-send-email-pw@padd.com>
+	id S1030993Ab2I1TnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 15:43:08 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:35771 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030411Ab2I1TnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 15:43:04 -0400
+Received: by lbon3 with SMTP id n3so2340700lbo.19
+        for <git@vger.kernel.org>; Fri, 28 Sep 2012 12:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4BaYQu7/KkVasXTnViytKvUJ/dQogCl+rc5qXCvnRno=;
+        b=N2S4Yo4YzHGpR6lfYoZvRR34Eoh6ENNxU3+A5B318CL/lRV2JhXTTEM85XmmGYksks
+         UN2XJZw1FCFyz7MMaIGHCwavOazLa0pRX3wT9ePSXNHhrd7CHHboSQz+//s37p5ze84v
+         kyC2eN6b/CuJ8ptvEYdLjTj78UAIYTThAYbAPZSqX0kcRFPV/LznziU6a8gkgsLQiCZs
+         aYhdw9vbvDrhQNkex4ML7oM+LzgoxA+/TnH1wV95dpS2mfraFExdxcImHrKbT2xsvTwV
+         AGa/M99Oz1Mt4Ahl131UvBBSK3m2aAu8qk++OtWZEctimKxz4ywAxu2ExVT+4RQ/wyuc
+         BEBg==
+Received: by 10.152.108.206 with SMTP id hm14mr6575612lab.53.1348861383155;
+ Fri, 28 Sep 2012 12:43:03 -0700 (PDT)
+Received: by 10.112.25.105 with HTTP; Fri, 28 Sep 2012 12:43:03 -0700 (PDT)
+In-Reply-To: <CAB9Jk9AN39+RaNWX+DDEq9wVzJJBV-bjcDnUz6Ofy+baveU-8w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206604>
 
-Am 28.09.2012 14:04, schrieb Pete Wyckoff:
-> It does not notice chmod +x or -x; there is nothing
-> for this test to do.
-> 
-> Signed-off-by: Pete Wyckoff <pw@padd.com>
-> ---
->  t/t9815-git-p4-submit-fail.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t9815-git-p4-submit-fail.sh b/t/t9815-git-p4-submit-fail.sh
-> index d2b7b3d..2db1bf1 100755
-> --- a/t/t9815-git-p4-submit-fail.sh
-> +++ b/t/t9815-git-p4-submit-fail.sh
-> @@ -400,7 +400,9 @@ test_expect_success 'cleanup rename after submit cancel' '
->  	)
->  '
->  
-> -test_expect_success 'cleanup chmod after submit cancel' '
-> +# chmods are not recognized in cygwin; git has nothing
-> +# to commit
-> +test_expect_success NOT_CYGWIN 'cleanup chmod after submit cancel' '
->  	test_when_finished cleanup_git &&
->  	git p4 clone --dest="$git" //depot &&
->  	(
-> 
+On Fri, Sep 28, 2012 at 6:46 PM, Angelo Borsotti
+<angelo.borsotti@gmail.com> wrote:
+> Hi Ben,
+>
+> I am running git gui on Windows 7. Are you running it on Linux?
+>
+> -Angelo
 
-In the git part, you could use test_chmod to change the executable bit.
-But if you cannot test it in the p4 part later on, it is probably not
-worth it.
+Mac OS X
 
--- Hannes
+// Ben
