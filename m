@@ -1,117 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/5] completion: fix args of run_completion() test helper
-Date: Fri, 28 Sep 2012 15:55:31 -0400
-Message-ID: <20120928195531.GB3912@sigill.intra.peff.net>
-References: <20120928100530.GL10144@goldbirke>
- <1348826975-2225-1-git-send-email-szeder@ira.uka.de>
- <1348826975-2225-2-git-send-email-szeder@ira.uka.de>
- <7vehlmm3ca.fsf@alter.siamese.dyndns.org>
- <20120928183840.GB10719@goldbirke>
- <7vzk4aj6ik.fsf@alter.siamese.dyndns.org>
- <20120928193008.GA3912@sigill.intra.peff.net>
- <7vvceyj5bu.fsf@alter.siamese.dyndns.org>
+From: Scott Batchelor <scott.batchelor@gmail.com>
+Subject: Git diff-file bug?
+Date: Fri, 28 Sep 2012 19:55:10 +0100
+Message-ID: <CAEkqydxRy3ukSWyQ53Tiosq+DMWWLG=AVuZk+Jm79Y5SaRmeDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 21:55:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 28 22:04:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THgf9-00021x-GJ
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:55:51 +0200
+	id 1THgnV-00079c-Ek
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 22:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031771Ab2I1Tzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 15:55:38 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33838 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031293Ab2I1Tze (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 15:55:34 -0400
-Received: (qmail 19217 invoked by uid 107); 28 Sep 2012 19:56:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Sep 2012 15:56:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Sep 2012 15:55:31 -0400
-Content-Disposition: inline
-In-Reply-To: <7vvceyj5bu.fsf@alter.siamese.dyndns.org>
+	id S1031828Ab2I1UEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 16:04:07 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:41899 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758885Ab2I1SzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 14:55:11 -0400
+Received: by ieak13 with SMTP id k13so8112088iea.19
+        for <git@vger.kernel.org>; Fri, 28 Sep 2012 11:55:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=nA2C0bfMc3P2fh9+Zm/qs6XXOWEa3+zIVm/9u73inQo=;
+        b=ZZS18iwHPeAKvOtmhk2U8FchOeqrTHCTJm9axSilYOD65iq/zvaGSUe/emRyfn/5fu
+         sAbkzQi3htyKDf/7Cyw/bdvmz5iS/Yu34cNeLU+oT7cE2fZk8+NFQRXQgJTPDHdAoxTN
+         d/jgv+Xyzc9qaz4/N0LsjPgC6apsTrT9PLfEW4IIGF2tJTU+RzYIShuDEhqjR+fZTyHj
+         hlplUuJR8xjTSCsBQglkkZN4dmUDw6ixd2Z8d5aQ4SjyNM/g8tuyU96LkKPnMbmC6Nd8
+         WOUBzULPPF//duyxl47nS8k1v/c5mE7zD1n/iDqh4RueHTMDZeHqzXr2+PkU1DtpHT9f
+         NXsw==
+Received: by 10.50.7.135 with SMTP id j7mr2513080iga.34.1348858510972; Fri, 28
+ Sep 2012 11:55:10 -0700 (PDT)
+Received: by 10.50.22.68 with HTTP; Fri, 28 Sep 2012 11:55:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206607>
 
-On Fri, Sep 28, 2012 at 12:49:25PM -0700, Junio C Hamano wrote:
+Hello.
+I'm fairly new to git and am witnessing some strange behavior with git
+that I suspect may be a bug. Can anyone set my mind at rest.
 
-> >> And these "words" can be split at $IFS boundaries without any
-> >> issues?  IOW, nobody would ever want to make words array in the
-> >> run_completion function to ['git' 'foo bar' 'baz']?
-> >
-> > It might be simpler to just convert test_completion into the
-> > test_completion_long I added in my series; the latter takes the expected
-> > output on stdin, leaving the actual arguments free to represent the real
-> > command-line. E.g., your example would become:
-> >
-> >   test_completion git "foo bar" baz <<-\EOF
-> >   ... expected output ...
-> >   EOF
-> 
-> I realize that the way my question was stated was misleading.  It
-> was not meant as a rhetorical "You would never be able to pass
-> ['git' 'foo bar' 'baz'] with that interface, and the patch sucks."
-> but was meant as a pure question "Do we want to pass such word
-> list?".  "test_completion is almost always used to test completion
-> with inputs without any $IFS letters in it, so not being able to
-> test such an input via this interface is fine. If needed, we can
-> give another less often used interface to let you pass such an
-> input" is perfectly fine by me.
+Every so often (I've not quite figured out the exact set of
+circumstances yet)  "git diff-files" shows that every file in my repo
+is modified, when I expect none to be. If I type "git status" (which
+shows what I expect - no files modified) and then "git diff-files"
+again, git now shows that no files have been modified (which is what I
+expect). It's like "git status" is resetting something that "git
+diff-files" uses.
 
-I think we may eventually want to pass arguments with IFS into the
-function, just to make sure it works (the tests I added checked for IFS
-in the completion list rather than the input, but we should probably
-check both).
+I'm trying to figure out what the problem with "git diff-files" is
+because gitk uses it under the hood, and I think that gitk is
+reporting  erroneous changes (which are also reset by performing a
+"git status" in the repo) in the "patch" files list.
 
-I'm OK if it needs to be an alternate interface (right now you could do
-it by calling run_completion yourself).
+Any thoughts? I'm using git 1.7.11.4 on SLES 10.3.
 
-> But I suspect that the real reason test_completion requires the
-> caller to express the list of inputs to run_completion as $IFS
-> separate list is because it needs to also get expected from the
-> command line:
-
-Right, that's why I suggested bumping that to stdin for the function.
-
-> >> >  test_completion ()
-> >> >  {
-> >> >  	test $# -gt 1 && echo "$2" > expected
-> >> > -	run_completion "$@" &&
-> >> > +	run_completion $1 &&
-> >> >  	test_cmp expected out
-> >> >  }
-> 
-> I wonder if doing something like this would be a far simpler
-> solution:
-> 
-> 	test_completion ()
->         {
-> 		case "$1" in
->                 '')
-> 			;;
-> 		*)
-> 			echo "$1" >expect &&
-> 	                shift
->                         ;;
-> 		esac &&
->                 run_completion "$@" &&
->                 test_cmp expect output
-> 	}
-
-That would also work. I mainly suggested the stdin thing because we need
-it anyway for output that generates multiple answers (well, you don't
-_need_ it; you can call run_completion yourself, but it saves a few
-lines at each call site).
-
--Peff
+Thanks,
+Scott.
