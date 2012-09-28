@@ -1,112 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/21] git p4: work on cygwin
-Date: Fri, 28 Sep 2012 12:17:40 -0700
-Message-ID: <7vr4pmkld7.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 06/21] git p4 test: use client_view in t9806
+Date: Fri, 28 Sep 2012 12:11:05 -0700
+Message-ID: <7v4nmiklbt.fsf@alter.siamese.dyndns.org>
 References: <1348833865-6093-1-git-send-email-pw@padd.com>
+ <1348833865-6093-7-git-send-email-pw@padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 21:18:02 2012
+X-From: git-owner@vger.kernel.org Fri Sep 28 21:18:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THg4Y-000752-5z
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:18:02 +0200
+	id 1THg5H-0007aE-PO
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030718Ab2I1TRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 15:17:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65326 "EHLO
+	id S1031076Ab2I1TSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 15:18:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32846 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030690Ab2I1TRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 15:17:44 -0400
+	id S1031074Ab2I1TSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 15:18:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ADEA8127;
-	Fri, 28 Sep 2012 15:17:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C98EB815D;
+	Fri, 28 Sep 2012 15:18:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X5HOrGLvkPs7RKVfGCHouCjiQzQ=; b=v35JKy
-	rUUZw2nYAIIayAB5FCh9QsXSqy805MfSMKhqXt/dTngD2eTeD8vsOmtHx9Y6BqSG
-	wFkFB93vvGmKqmhAU4Hh5MFzW8lUDfXwNmuejfu/QhpsqicNX9ojUOi0e3sxncCk
-	4Qzs4A1KJInnWqPj4bxn97qfdfWCFbL71R7AM=
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=f4PMbyOdI4RTZmHaD4KKA65aKWk=; b=jT0Mglqb7sHP9HxUTfDa
+	+2NGU/V/oPFVsqx8OZdyYUA8/b9cwMZVfwcUsvtlPUKgPF4fecghtlg7RnbaNtgt
+	cV9BlSVPvcwQ68WUlujuLr+X0Q2NVd49KbBfszaOYdkdDm8ytbag+RqjuhqKBEPK
+	h7RMrnPTGpTnSGkK8r1jnUM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gO/w5H6JsDKP/gxnvs+/molaMrAZdazn
-	8sJtrg5GUfDVv2djfrq1WCKZHzAFOESDbV7jCbEydYVqLa+wBVX2PAKucM6Tih63
-	J7pICTucnJxEumuIZkZ4hrsct1lCxbcW+3I4A6OZaPYWVw1qB2PMR205omceozTn
-	mw7SKfihbS8=
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=L52VMDog/Gvp0bfLDur0exsQTrSZoPyXsgNByCGwKLHgkl
+	5/0wQdIxv4DFYtJ0xMQ1SeoxKrhZGzyVHsKJPlpzHLc8aHO8Z0En53du6tXgjJU+
+	h9QTHyRT32kUds1SNqQpZq9370fpU3+8Jzh9zoy8apFBOfXq8sICt6Qnmgekg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB9938126;
-	Fri, 28 Sep 2012 15:17:42 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B76AB815C;
+	Fri, 28 Sep 2012 15:18:32 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C5A88125; Fri, 28 Sep 2012
- 15:17:42 -0400 (EDT)
-In-Reply-To: <1348833865-6093-1-git-send-email-pw@padd.com> (Pete Wyckoff's
- message of "Fri, 28 Sep 2012 08:04:04 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19CE4815A; Fri, 28 Sep 2012
+ 15:18:32 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2CF562EC-09A1-11E2-B7F1-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4AA31B2C-09A1-11E2-BF4F-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206597>
 
 Pete Wyckoff <pw@padd.com> writes:
 
-> This series fixes problems in git-p4, and its tests, so that
-> git-p4 works on the cygwin platform.
+> Use the standard client_view function from lib-git-p4.sh
+> instead of building one by hand.  This requires a bit of
+> rework, using the current value of $P4CLIENT for the client
+> name.  It also reorganizes the test to isolate changes to
+> $P4CLIENT and $cli in a subshell.
 >
-> See the wiki for info on how to get started on cygwin:
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> ---
+>  t/lib-git-p4.sh           |  4 ++--
+>  t/t9806-git-p4-options.sh | 50 ++++++++++++++++++++++-------------------------
+>  2 files changed, 25 insertions(+), 29 deletions(-)
 >
->     https://git.wiki.kernel.org/index.php/GitP4
->
-> Testing by people who use cygwin would be appreciated.  It would
-> be good to support cygwin more regularly.  Anyone who had time
-> to contribute to testing on cygwin, and reporting problems, would
-> be welcome.
->
-> There's more work requried to support msysgit.  Those patches
-> are not in good enough shape to ship out yet, but a lot of what
-> is in this series is required for msysgit too.
->
-> These patches:
->
->     - fix bugs in git-p4 related to issues found on cygwin
->     - cleanup some ugly code in git-p4 observed in error paths while
->       getting tests to work on cygwin
->     - simplify and refactor code and tests to make cygwin changes easier
->     - handle newline and path issues for cygwin platform
->     - speed up some aspects of git-p4 by removing extra shell invocations
->
-> Pete Wyckoff (21):
->   git p4: temp branch name should use / even on windows
->   git p4: remove unused imports
->   git p4: generate better error message for bad depot path
->   git p4: fix error message when "describe -s" fails
->   git p4 test: use client_view to build the initial client
->   git p4 test: use client_view in t9806
->   git p4 test: start p4d inside its db dir
->   git p4 test: translate windows paths for cygwin
->   git p4: remove unreachable windows \r\n conversion code
->   git p4: scrub crlf for utf16 files on windows
->   git p4 test: newline handling
->   git p4 test: use LineEnd unix in windows tests too
->   git p4 test: avoid wildcard * in windows
->   git p4: cygwin p4 client does not mark read-only
->   git p4 test: disable chmod test for cygwin
->   git p4: disable read-only attribute before deleting
->   git p4: avoid shell when mapping users
->   git p4: avoid shell when invoking git rev-list
->   git p4: avoid shell when invoking git config --get-all
->   git p4: avoid shell when calling git config
->   git p4: introduce gitConfigBool
+> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+> index 890ee60..d558dd0 100644
+> --- a/t/lib-git-p4.sh
+> +++ b/t/lib-git-p4.sh
+> @@ -116,8 +116,8 @@ marshal_dump() {
+>  client_view() {
+>  	(
+>  		cat <<-EOF &&
+> -		Client: client
+> -		Description: client
+> +		Client: $P4CLIENT
+> +		Description: $P4CLIENT
+>  		Root: $cli
+>  		View:
+>  		EOF
+> diff --git a/t/t9806-git-p4-options.sh b/t/t9806-git-p4-options.sh
+> index fa40cc8..37ca30a 100755
+> --- a/t/t9806-git-p4-options.sh
+> +++ b/t/t9806-git-p4-options.sh
+> @@ -126,37 +126,33 @@ test_expect_success 'clone --use-client-spec' '
+>  		exec >/dev/null &&
+>  		test_must_fail git p4 clone --dest="$git" --use-client-spec
+>  	) &&
+> -	cli2=$(test-path-utils real_path "$TRASH_DIRECTORY/cli2") &&
+> +	# build a different client
+> +	cli2="$TRASH_DIRECTORY/cli2" &&
+>  	mkdir -p "$cli2" &&
+>  	test_when_finished "rmdir \"$cli2\"" &&
+>  	test_when_finished cleanup_git &&
+> ...
+> -	# same thing again, this time with variable instead of option
+>  	(
+> ...
+> +		# group P4CLIENT and cli changes in a sub-shell
+> +		P4CLIENT=client2 &&
+> +		cli="$cli2" &&
+> +		client_view "//depot/sub/... //client2/bus/..." &&
+> +		git p4 clone --dest="$git" --use-client-spec //depot/... &&
+> +		(
+> +			cd "$git" &&
+> +			test_path_is_file bus/dir/f4 &&
+> +			test_path_is_missing file1
+> +		) &&
+> +		cleanup_git &&
 
-Very nicely done.  I was impressed how easy to understand what the
-problem each patch attempts to solve is and how it should be solved
-only from the description and the changes apparently matched the
-description.
+Hmm, the use of "test-path-utils real_path" to form cli2 in the
+original was not necessary at all?
 
-I wish patches from everybody looked like these.
+> +		# same thing again, this time with variable instead of option
+> +		(
+> +			cd "$git" &&
+> +			git init &&
+> +			git config git-p4.useClientSpec true &&
+> +			git p4 sync //depot/... &&
+> +			git checkout -b master p4/master &&
+> +			test_path_is_file bus/dir/f4 &&
+> +			test_path_is_missing file1
+> +		)
+
+Do you need a separate sub-shell inside a sub-shell we are already
+in that you called client_view in?
+
+>  	)
+>  '
