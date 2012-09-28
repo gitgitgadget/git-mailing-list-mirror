@@ -1,78 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/5] completion: fix args of run_completion() test helper
-Date: Fri, 28 Sep 2012 15:30:08 -0400
-Message-ID: <20120928193008.GA3912@sigill.intra.peff.net>
-References: <20120928100530.GL10144@goldbirke>
- <1348826975-2225-1-git-send-email-szeder@ira.uka.de>
- <1348826975-2225-2-git-send-email-szeder@ira.uka.de>
- <7vehlmm3ca.fsf@alter.siamese.dyndns.org>
- <20120928183840.GB10719@goldbirke>
- <7vzk4aj6ik.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 15/21] git p4 test: disable chmod test for cygwin
+Date: Fri, 28 Sep 2012 21:33:36 +0200
+Message-ID: <5065FB90.2070602@kdbg.org>
+References: <1348833865-6093-1-git-send-email-pw@padd.com> <1348833865-6093-16-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 21:30:27 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 21:33:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THgGW-0005Dm-Cf
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:30:24 +0200
+	id 1THgJx-0007EC-4b
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Sep 2012 21:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031257Ab2I1TaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2012 15:30:12 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:33819 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030245Ab2I1TaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2012 15:30:10 -0400
-Received: (qmail 17861 invoked by uid 107); 28 Sep 2012 19:30:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Sep 2012 15:30:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Sep 2012 15:30:08 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzk4aj6ik.fsf@alter.siamese.dyndns.org>
+	id S1031084Ab2I1Tdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2012 15:33:44 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:57026 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1030602Ab2I1Tdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2012 15:33:42 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9538A130052;
+	Fri, 28 Sep 2012 21:33:38 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B76C519F374;
+	Fri, 28 Sep 2012 21:33:37 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <1348833865-6093-16-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206603>
 
-On Fri, Sep 28, 2012 at 12:23:47PM -0700, Junio C Hamano wrote:
-
-> >> > @@ -57,7 +57,7 @@ run_completion ()
-> >> >  test_completion ()
-> >> >  {
-> >> >  	test $# -gt 1 && echo "$2" > expected
-> >> > -	run_completion "$@" &&
-> >> > +	run_completion $1 &&
-> >> >  	test_cmp expected out
-> >> >  }
-> >> 
-> >> I can understand the other three hunks, but this one is fishy.
-> >> Shouldn't "$1" be inside a pair of dq?  I.e.
-> >> 
-> >> 	+	run_completion "$1" &&
-> >
-> > No.  $1 holds all words on the command line.  If it was between a pair
-> > of dq, then the whole command line would be passed to the completion
-> > script as a single word.
+Am 28.09.2012 14:04, schrieb Pete Wyckoff:
+> It does not notice chmod +x or -x; there is nothing
+> for this test to do.
 > 
-> And these "words" can be split at $IFS boundaries without any
-> issues?  IOW, nobody would ever want to make words array in the
-> run_completion function to ['git' 'foo bar' 'baz']?
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> ---
+>  t/t9815-git-p4-submit-fail.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t9815-git-p4-submit-fail.sh b/t/t9815-git-p4-submit-fail.sh
+> index d2b7b3d..2db1bf1 100755
+> --- a/t/t9815-git-p4-submit-fail.sh
+> +++ b/t/t9815-git-p4-submit-fail.sh
+> @@ -400,7 +400,9 @@ test_expect_success 'cleanup rename after submit cancel' '
+>  	)
+>  '
+>  
+> -test_expect_success 'cleanup chmod after submit cancel' '
+> +# chmods are not recognized in cygwin; git has nothing
+> +# to commit
+> +test_expect_success NOT_CYGWIN 'cleanup chmod after submit cancel' '
+>  	test_when_finished cleanup_git &&
+>  	git p4 clone --dest="$git" //depot &&
+>  	(
+> 
 
-It might be simpler to just convert test_completion into the
-test_completion_long I added in my series; the latter takes the expected
-output on stdin, leaving the actual arguments free to represent the real
-command-line. E.g., your example would become:
+In the git part, you could use test_chmod to change the executable bit.
+But if you cannot test it in the p4 part later on, it is probably not
+worth it.
 
-  test_completion git "foo bar" baz <<-\EOF
-  ... expected output ...
-  EOF
-
--Peff
+-- Hannes
