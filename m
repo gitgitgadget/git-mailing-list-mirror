@@ -1,98 +1,85 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] revision: add --grep-reflog to filter commits by
- reflog messages
-Date: Sat, 29 Sep 2012 13:13:32 +0700
-Message-ID: <CACsJy8A1UroqCezJFjqOqBQg+puX=jc1Q-CMSB4f=CHULY=OyA@mail.gmail.com>
-References: <7vr4pmm3qz.fsf@alter.siamese.dyndns.org> <1348893689-20240-1-git-send-email-pclouds@gmail.com>
- <1348893689-20240-3-git-send-email-pclouds@gmail.com> <20120929053013.GB3330@sigill.intra.peff.net>
- <7vpq55idbe.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 0/9] Fix GIT_CEILING_DIRECTORIES that contain symlinks
+Date: Sat, 29 Sep 2012 08:15:53 +0200
+Message-ID: <1348899362-4057-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 08:15:08 2012
+X-From: git-owner@vger.kernel.org Sat Sep 29 08:16:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THqKR-0001id-CZ
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 08:15:07 +0200
+	id 1THqLg-0002L7-Qr
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 08:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072Ab2I2GOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2012 02:14:05 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:50699 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556Ab2I2GOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2012 02:14:03 -0400
-Received: by ieak13 with SMTP id k13so8978370iea.19
-        for <git@vger.kernel.org>; Fri, 28 Sep 2012 23:14:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=InnTeJvJ7illfMoFyrROuiFUXHmSln4JKJp/4rEi8ig=;
-        b=Z+WmgDAyrnrQUHRGA1/ncD/dzdhcFOaZIY+3nEFqBu7VaiL48qOwv3onyx3OoH2J7R
-         txuk24GFWomfZeSwqsM7eXjlzBjEFaw58/qoYUkWj0bWyFNOflIKmENH877/OrLF6A9O
-         JzLU/dUOYT0PYChzzgN+oiVC326lDloeqxnLVH4FrS97vSmv4Zid8HVeBWCFhRe1oo46
-         MUE3VZZZYyRAeLxirfuTkvGuXIPWVKT8KTgawOxQ5M/WorskeYdNe66Y40ZRZmbjsIoU
-         sKrmx4cUvKEX6cklCuYoVcPn5bhPtjaIupgyltCZwzIhOrdUwzMbEEvpLAvqG06r/x7e
-         WCuQ==
-Received: by 10.50.154.225 with SMTP id vr1mr697430igb.26.1348899242648; Fri,
- 28 Sep 2012 23:14:02 -0700 (PDT)
-Received: by 10.64.29.199 with HTTP; Fri, 28 Sep 2012 23:13:32 -0700 (PDT)
-In-Reply-To: <7vpq55idbe.fsf@alter.siamese.dyndns.org>
+	id S1753555Ab2I2GQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 02:16:15 -0400
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:62395 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752587Ab2I2GQO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2012 02:16:14 -0400
+X-AuditID: 12074413-b7f786d0000008bb-e8-5066922d22e3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id C9.49.02235.D2296605; Sat, 29 Sep 2012 02:16:13 -0400 (EDT)
+Received: from michael.fritz.box (p57A246BE.dip.t-dialin.net [87.162.70.190])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8T6G73v026219
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 29 Sep 2012 02:16:12 -0400
+X-Mailer: git-send-email 1.7.11.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsUixO6iqKs7KS3AYPJTbYuuK91MFg29V5gt
+	jp6ysLi9Yj6zxfp3V5kdWD3+vv/A5LFz1l12j4uXlD0+b5ILYInitklKLCkLzkzP07dL4M7Y
+	0f+dqeAxV8Wdtw4NjFc4uhg5OSQETCSevzjPDmGLSVy4t56ti5GLQ0jgMqPEw2Or2CGcs0wS
+	M24+ZgOpYhPQlVjU08wEYosIqElMbDvEAlLELDCJUaJnwwOgDg4OYQFPie8/U0FqWARUJb6e
+	+MQMYvMKOEvceXmIFWKbosSP72uYJzByL2BkWMUol5hTmqubm5iZU5yarFucnJiXl1qka66X
+	m1mil5pSuokREhbCOxh3nZQ7xCjAwajEw6t9PDVAiDWxrLgy9xCjJAeTkihvzsS0ACG+pPyU
+	yozE4oz4otKc1OJDjBIczEoivBnFQOW8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWp
+	RTBZGQ4OJQleQ5ChgkWp6akVaZk5JQhpJg5OEMEFsoEHaEMNSCFvcUFibnFmOkTRKUZFKXHe
+	RJCEAEgiozQPbgAsgl8xigP9I8wbCFLFA4x+uO5XQIOZgAYv3ZQEMrgkESEl1cDop/eP65/G
+	JiONmw6HbPVVJ4lIeujET318ZV/wa0a+xu/rDJdGsIffmGfgKpIZwB+5lEct5VVCcPiv0H+v
+	xGa8U71wSvS70fpNtxe6O+W2eaypP1DwvLazdM8sj3VnXL62TuFUcV+ZoFC46vCeV4r9xS7f
+	Fr10av+uoRT2qL9De9Gm/ULpFzuVWIozEg21mIuKEwF1hhHUuwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206633>
 
-On Sat, Sep 29, 2012 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I like how callers not doing a reflog walk do not have to pay the price
->> to do the extra allocating. We could further limit it to only when
->> --grep-reflog is in effect, but I guess that would mean wading through
->> grep_filter's patterns, since it could be buried amidst ANDs and ORs?
->>
->> One alternative would be to set a bit in the grep_opt when we call
->> append_header_grep_pattern. It feels a bit like a layering violation,
->> though. I guess the bit could also go into rev_info. It may not even be
->> a measurable slowdown, though. Premature optimization and all that.
->
-> I do not think it is a layering violation.  compile_grep_exp()
-> should be aware of the short-cut possibilities and your "our
-> expression is interested in reflog so we need to read it" is very
-> similar in spirit to the existing opt->extended bit.
->
-> It will obviously allow us to avoid reading reflog information
-> unnecessarily here.  I think it makes perfect sense.
+v2 of the series, with the following changes from v1:
 
-reflog, in terms of both the number of commits and message length, is
-usually short enough that slowdown does not really show, especially
-when used with git-log, an interactive command.
+Patch 2/9 is new.
 
-Without the changes:
+Patch 4/9: remove an unnecessary memcpy().  (This change doesn't
+affect the tip of the branch because the memcpy() was removed anyway
+in the second-to-last patch.)
 
-$ time git log -g --grep . >/dev/null
+Patch 8/9: remove a superfluous "len++", and improve the excuses in
+the commit message for removing the tests of
+longest_ancestor_length().
 
-real    0m0.480s
-user    0m0.451s
-sys     0m0.025s
+Thanks to Junio for his helpful comments.
 
-With the changes:
+Michael Haggerty (9):
+  Introduce new static function real_path_internal()
+  real_path_internal(): add comment explaining use of cwd
+  Introduce new function real_path_if_valid()
+  longest_ancestor_length(): use string_list_split()
+  longest_ancestor_length(): explicitly filter list before loop
+  longest_ancestor_length(): always add a slash to the end of prefixes
+  longest_ancestor_length(): use string_list_longest_prefix()
+  longest_ancestor_length(): resolve symlinks before comparing paths
+  t1504: stop resolving symlinks in GIT_CEILING_DIRECTORIES
 
-$ time ./git log -g --grep . >/dev/null
+ abspath.c               | 105 ++++++++++++++++++++++++++++++++++++++----------
+ cache.h                 |   1 +
+ path.c                  |  54 +++++++++++++++----------
+ t/t0060-path-utils.sh   |  64 -----------------------------
+ t/t1504-ceiling-dirs.sh |  67 +++++++++++++++---------------
+ 5 files changed, 151 insertions(+), 140 deletions(-)
 
-real    0m0.490s
-user    0m0.471s
-sys     0m0.018s
-
-> We may also want to flag the use of the --grep-reflog option when
-> the --walk-reflogs option is not in effect in setup_revisions() as
-> an error, or something.
-
-That's why I put "Ignored unless --walk-reflogs is given" in the
-document. But an error would be fine too. I suppose an error is
-preferable in case users do not read document carefully?
 -- 
-Duy
+1.7.11.3
