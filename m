@@ -1,66 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: use abbreviated sha1 in 'status' output
-Date: Sat, 29 Sep 2012 17:05:29 +0200
-Message-ID: <50670E39.8080101@web.de>
-References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <1348926195-4788-2-git-send-email-artagnon@gmail.com> <50670655.3030600@web.de> <CALkWK0kzZvPv9jFBF=ibMzcNt-jxq4RFjy7pL173+Y4_S0jhWA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
+Date: Sat, 29 Sep 2012 20:37:33 +0530
+Message-ID: <CALkWK0nCahg7165_JuJSj7u0UfYRGZgFjJ6O-o=HCwdsPwU-xg@mail.gmail.com>
+References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <50670A94.2070504@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 17:05:48 2012
+Cc: Git List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Sep 29 17:08:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THybu-0000KM-1t
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 17:05:42 +0200
+	id 1THyeC-00019i-2T
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 17:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755592Ab2I2PFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2012 11:05:32 -0400
-Received: from mout.web.de ([212.227.15.3]:55259 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755450Ab2I2PFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2012 11:05:31 -0400
-Received: from [192.168.178.41] ([91.3.175.36]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0LopMx-1Tx5uc1LLv-00gfVk; Sat, 29 Sep 2012 17:05:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CALkWK0kzZvPv9jFBF=ibMzcNt-jxq4RFjy7pL173+Y4_S0jhWA@mail.gmail.com>
-X-Provags-ID: V02:K0:il2orYYy24G1l7nKOxRWQiZ0PFypQqeiKVysDFEPEl2
- DZZpQAAjWjPZZq30KI6P/XwQZUeuaM+l2rVzde9qmy4AxxZJj9
- vI0KplyqRqrx9938bxi3d3g5gQZ6HtvqVT3WB+PZc+sj/CHOLx
- NUrYOSDN7uTadrtGv9qrthC+GfI+xDvfjUPyr/iNFxWZDTsQ2l
- iTTJ6ambLRXzespgPt6OQ==
+	id S1755738Ab2I2PHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 11:07:55 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:54308 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755660Ab2I2PHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2012 11:07:54 -0400
+Received: by qchd3 with SMTP id d3so2656439qch.19
+        for <git@vger.kernel.org>; Sat, 29 Sep 2012 08:07:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2gfMhkH0niI4heZtptlkBo1eSYIvAyWVZYgkpIskFy8=;
+        b=MVfMlJ8elGnLEL7kSuCrqj+nHIDyP0/qpwdyYGCWDqiRLfxl1s//rSQB4kafbbKSxq
+         oKrQjYI/CTh+eaabFX8p8UEL4lPj0yaL9ZOS8+IzcdnIYnOmjjidzdoN2UudpO7zDVgt
+         PAe00zaE5B8jOxeOV1uJTPOOuTCMPq8dxxDKWVcgBnj+EbNn2ari0SSZZ4aj/l9z4jjK
+         sKxFGq5W1ruq/aOpLsnz5TvJMvS2LTq9uFAFp9Owd89rhP+gvkxahC8liRyUdMM0sA3S
+         U0rGQUzyrhI1Y5zvVScacCMyxpEYtcy0z/V2bDJimFMqhji8eNCnmIbdCObMBl69xsnz
+         IzZA==
+Received: by 10.229.134.206 with SMTP id k14mr6731804qct.25.1348931273820;
+ Sat, 29 Sep 2012 08:07:53 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Sat, 29 Sep 2012 08:07:33 -0700 (PDT)
+In-Reply-To: <50670A94.2070504@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206653>
 
-Am 29.09.2012 16:45, schrieb Ramkumar Ramachandra:
-> Jens Lehmann wrote:
->> I'm not against the change per se, but do we really want to risk breaking
->> scripts which parse the output of "git submodule status" without even
->> providing a commit message explaining why we did that?
-> 
-> Oh, I didn't realize that there might be such scripts.  What
-> justification do I give in the commit message apart from
-> prettification?
+Hi Jens,
 
-Is a prettification justification enough to break backwards compatibility
-and to risk breaking scripts and user expectations? I think we must have
-a really good reasons to do that, and just making stuff prettier doesn't
-count for me unless we have a strong user demand for that.
+Jens Lehmann wrote:
+> Am 29.09.2012 15:43, schrieb Ramkumar Ramachandra:
+>> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+>> ---
+>>  Like 'git remote show', 'git stash show'.
+>
+> I understand the analogy to "git stash show" (as that also displays
+> a diff similar to what " git submodule summary" does). But "git
+> remote show" just displays a list of configured remotes, which is
+> something different. And the other command with a "show" option is
+> "git notes show", which causes it to display a note. So I think we
+> are pretty inconsistent here and I see no advantage of adding such
+> an alias for "git submodule summary". What am I missing?
 
-I suspect you got the idea for this patch from Marc's recent comment:
+I used submodules for the first time, and expected 'git submodule
+show' to work.  It may not be 100% consistent with the other commands,
+but I think the 'summary' is a good match.  Either way, I don't feel
+strongly about the patch, so feel free to drop it if you think it's
+inappropriate.
 
-Am 24.09.2012 17:07, schrieb Marc Branchaud:
-> (Honestly, submodule's status sub-command has always felt more like plumbing
-> to me than something a user would work with directly.  Maybe it's just the
-> full-length SHA's that put me off...)
-
-That is just a single user so far indicating your patch /could/ be an
-improvement. I think we need quite some more votes on that before we
-should do a change like this.
+Ram
