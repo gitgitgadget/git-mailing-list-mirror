@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] revision: add --grep-reflog to filter commits by reflog messages
-Date: Sat, 29 Sep 2012 11:41:26 +0700
-Message-ID: <1348893689-20240-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/3] grep: prepare for new header field filter
+Date: Sat, 29 Sep 2012 11:41:27 +0700
+Message-ID: <1348893689-20240-2-git-send-email-pclouds@gmail.com>
 References: <7vr4pmm3qz.fsf@alter.siamese.dyndns.org>
+ <1348893689-20240-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,87 +12,128 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 29 06:49:17 2012
+X-From: git-owner@vger.kernel.org Sat Sep 29 06:49:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THozJ-0007XM-NJ
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 06:49:14 +0200
+	id 1THozT-0007bo-6V
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 06:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535Ab2I2EsW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Sep 2012 00:48:22 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:38785 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751483Ab2I2EsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2012 00:48:20 -0400
-Received: by padhz1 with SMTP id hz1so2808444pad.19
-        for <git@vger.kernel.org>; Fri, 28 Sep 2012 21:48:20 -0700 (PDT)
+	id S1751899Ab2I2EtG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Sep 2012 00:49:06 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:38637 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751556Ab2I2Es0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2012 00:48:26 -0400
+Received: by pbbrr4 with SMTP id rr4so5926981pbb.19
+        for <git@vger.kernel.org>; Fri, 28 Sep 2012 21:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=9Ta1g+kuRaNReGsMgB4Aosl/IHl1ZYxBuJCmaz4FTtk=;
-        b=j/38+tpNabsoV9jFxXujdRhIZJFH1JdEqThOa7pixd2QNatatGRHEtFDrzxq5HnPXP
-         C2sowmW2AwadM2DV4oKQp6d1GtbxN7VKmljLadZz/BA1tRsv6gFPCqhKMO+5D99Ja6TI
-         0bkmQdSgs07Bknl2hsCz7HL1/C9UwBGgWoqQu2EdtpTqleHLiyU/wNrrJRPGx+dI4Gdu
-         JoynS5yAD+cSAG7kBqE+JTsQ6YmehN807h6iCaBPp/4d5YoGGb9nwfMHSJSnYsvOODpY
-         Pqn6wD8WbVy3HO1em+UEzdMW16VVCsVhPx4QW508xXHU/n8mBgMDA8+wIEO4XaBUWhOF
-         To2w==
-Received: by 10.68.203.195 with SMTP id ks3mr25415273pbc.79.1348894100250;
-        Fri, 28 Sep 2012 21:48:20 -0700 (PDT)
+        bh=8NqZ7FnXZiYU3Au3rs9nwm19jbDldPZe1w6XQBOKCV8=;
+        b=omrYhgKOOfNtAyJyKu957o2q9tGcIuj1rxqHrpcUujZJqdq2O3sHAKYE8o15dKrM98
+         ubKQ2LD3BTJkQjz6g9yh3oucFMiJfQFX3fa1Z82tQgHDOB8ataYdHErLHPVo4sFeKPHY
+         z/1AczwDNNPHDzKCi2UCZtp/5CfZKLbNbmf5CHznkymcsg8z0idXFxR8210/i+fW2/MO
+         hdqbSzclE1xN1aCswyQetxZjCE9TYeIhRMityl9eZUBegfxXdPh0z9g2ypwoSkfBXow9
+         HNG1mYYol6gyj9qcPvET6FRWwkqnKLerX9jDGK8z5cBVetU7wxtgZEnVdYB09hb/2cnp
+         X9lg==
+Received: by 10.68.189.70 with SMTP id gg6mr25640301pbc.125.1348894106083;
+        Fri, 28 Sep 2012 21:48:26 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.74.51.2])
-        by mx.google.com with ESMTPS id rz10sm6670857pbc.32.2012.09.28.21.48.16
+        by mx.google.com with ESMTPS id d9sm6602387paw.35.2012.09.28.21.48.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 28 Sep 2012 21:48:19 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 29 Sep 2012 11:41:31 +0700
+        Fri, 28 Sep 2012 21:48:25 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 29 Sep 2012 11:41:37 +0700
 X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
-In-Reply-To: <7vr4pmm3qz.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1348893689-20240-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206620>
 
-On Sat, Sep 29, 2012 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> For that to happen, the code _must_ know what kind of headers we
-> would support; discarding the existing enum is going in a wrong
-> direction.
+grep supports only author and committer headers, which have the same
+special treatment that later headers may or may not have. Check for
+field type and only strip_timestamp() when the field is either author
+or committer.
 
-Or what kind of manipulation is required for a header. The caller can
-decide if it wants such manipulation or not. Somebody might want to
-grep committer's date, for example.
+GREP_HEADER_FIELD_MAX is put in the grep_header_field enum to be
+calculated automatically, correctly, as long as it's at the end of the
+enum.
 
-> When we introduce "git log --header=3Dfrotz:xyzzy" option that looks
-> for a generic "frotz " header and tries to see if "xyzzy" textually
-> appears in the field, we may want to add a generic "this is not a
-> header that we have special treatment for" enum to the mix.  But for
-> known kinds of headers, we would need a list of what each header is
-> and what semantics it wants.
->
-> So please reconsider undoing [1/3], and rerolling [2/3] that depends
-> on it.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ grep.c          |  9 ++++++++-
+ grep.h          |  6 ++++--
+ t/t7810-grep.sh | 12 ++++++++++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-Done. The enum is kept. I added a few tests about grepping timestamp
-in 1/3 to keep people (or myself) from making the same mistake I did.
-
-3/3 is reposted for completeness, I don't care much about notes (so
-far). It's up to you to take or drop it.
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-  grep: prepare for new header field filter
-  revision: add --grep-reflog to filter commits by reflog messages
-  revision: make --grep search in notes too if shown
-
- Documentation/rev-list-options.txt |  8 ++++++++
- grep.c                             | 10 +++++++++-
- grep.h                             |  7 +++++--
- revision.c                         | 26 ++++++++++++++++++++++++--
- t/t7810-grep.sh                    | 38 ++++++++++++++++++++++++++++++=
-++++++++
- 5 files changed, 84 insertions(+), 5 deletions(-)
-
+diff --git a/grep.c b/grep.c
+index 898be6e..8d73995 100644
+--- a/grep.c
++++ b/grep.c
+@@ -720,7 +720,14 @@ static int match_one_pattern(struct grep_pat *p, c=
+har *bol, char *eol,
+ 		if (strncmp(bol, field, len))
+ 			return 0;
+ 		bol +=3D len;
+-		saved_ch =3D strip_timestamp(bol, &eol);
++		switch (p->field) {
++		case GREP_HEADER_AUTHOR:
++		case GREP_HEADER_COMMITTER:
++			saved_ch =3D strip_timestamp(bol, &eol);
++			break;
++		default:
++			break;
++		}
+ 	}
+=20
+  again:
+diff --git a/grep.h b/grep.h
+index 8a28a67..d54adbe 100644
+--- a/grep.h
++++ b/grep.h
+@@ -29,9 +29,11 @@ enum grep_context {
+=20
+ enum grep_header_field {
+ 	GREP_HEADER_AUTHOR =3D 0,
+-	GREP_HEADER_COMMITTER
++	GREP_HEADER_COMMITTER,
++
++	/* Must be at the end of the enum */
++	GREP_HEADER_FIELD_MAX
+ };
+-#define GREP_HEADER_FIELD_MAX (GREP_HEADER_COMMITTER + 1)
+=20
+ struct grep_pat {
+ 	struct grep_pat *next;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 91db352..30eaa9a 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -628,6 +628,18 @@ test_expect_success 'log --all-match --grep --grep=
+ --author takes intersection'
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'log --author does not search in timestamp' '
++	: >expect &&
++	git log --author=3D"$GIT_AUTHOR_DATE" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --committer does not search in timestamp' '
++	: >expect &&
++	git log --committer=3D"$GIT_COMMITTER_DATE" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'grep with CE_VALID file' '
+ 	git update-index --assume-unchanged t/t &&
+ 	rm t/t &&
 --=20
 1.7.12.1.406.g6ab07c4
