@@ -1,57 +1,91 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4] Teach rm to remove submodules unless they contain
- a git directory
-Date: Sat, 29 Sep 2012 16:23:39 +0200
-Message-ID: <5067046B.9040109@web.de>
-References: <50634799.7090807@web.de> <7v8vbvs8z6.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] submodule: use abbreviated sha1 in 'status' output
+Date: Sat, 29 Sep 2012 16:31:49 +0200
+Message-ID: <50670655.3030600@web.de>
+References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <1348926195-4788-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-	Phil Hord <phil.hord@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 16:24:05 2012
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 29 16:32:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THxxb-0001dc-3R
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 16:24:03 +0200
+	id 1THy5R-0005NK-NZ
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 16:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347Ab2I2OXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2012 10:23:53 -0400
-Received: from mout.web.de ([212.227.15.4]:56175 "EHLO mout.web.de"
+	id S1753521Ab2I2Ob7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 10:31:59 -0400
+Received: from mout.web.de ([212.227.15.3]:61947 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751341Ab2I2OXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2012 10:23:52 -0400
+	id S1754574Ab2I2Ob7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2012 10:31:59 -0400
 Received: from [192.168.178.41] ([91.3.175.36]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0M1o86-1TbQqp2B6w-00t3x8; Sat, 29 Sep 2012 16:23:46 +0200
+ ESMTPA (Nemesis) id 0MA5qv-1TB8b23rxZ-00C2xF; Sat, 29 Sep 2012 16:31:57 +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <7v8vbvs8z6.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:NCa3/CWKqSf28YSmDAuojnLZT5uRVyhiW8yieLkOcfS
- 29mOXKohnMJIeZ9hFK6kX3bVnOd3gaGMUK66XStj6mHuFkxze9
- oRt0cmkBe+jsx/0GioC2HIXf3KqCkF426db0ToPrqfB3OTDPHJ
- c47qX3kNCWJDME+yKRSm30lPRly4Zv+e9zMnT8Iby1uNWfxjGe
- MWIYynd1bR+Ibt1+2He2A==
+In-Reply-To: <1348926195-4788-2-git-send-email-artagnon@gmail.com>
+X-Provags-ID: V02:K0:hLQ0SOkaAc4R9mQT5Dyl5jGC1k0+gq2prUOp3LMpx9z
+ Fn3oi5d0Eg2GExScoaOVGXwGu6EvoGipSZwJ2nKDpVQug7PDuc
+ IhGuT1EKITZxnrYJZnoUpI8tx3awnPYnounjcoQREgZrmuYb2/
+ T3tgvDKHpYraJ2IZaAJR+rgjcbvp8ilt56GN8XcIYWKGHvx6G4
+ 0KGYs48ZmDcliqiGavxJA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206649>
 
-Am 27.09.2012 18:53, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->> +			/*
->> +			 * Skip unmerged entries except for populated submodules
->> +			 * that could loose history when removed.
->> +			 */
+I'm not against the change per se, but do we really want to risk breaking
+scripts which parse the output of "git submodule status" without even
+providing a commit message explaining why we did that?
+
+Am 29.09.2012 15:43, schrieb Ramkumar Ramachandra:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  git-submodule.sh |   15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
 > 
-> s/loose/lose/, I think.
-
-Thanks for squashing that one in!
-
-I also used "loose" in the commit message where "lose" would have been
-correct. I can resend a new version correcting both if you want.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 1d61ebd..f8efc52 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -942,27 +942,28 @@ cmd_status()
+>  		name=$(module_name "$sm_path") || exit
+>  		url=$(git config submodule."$name".url)
+>  		displaypath="$prefix$sm_path"
+> +		sha1_abbr=$(git rev-parse --short "$sha1")
+>  		if test "$stage" = U
+>  		then
+> -			say "U$sha1 $displaypath"
+> +			say "U$sha1_abbr $displaypath"
+>  			continue
+>  		fi
+>  		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+>  		then
+> -			say "-$sha1 $displaypath"
+> +			say "-$sha1_abbr $displaypath"
+>  			continue;
+>  		fi
+> -		set_name_rev "$sm_path" "$sha1"
+> +		set_name_rev "$sm_path" "$sha1_abbr"
+>  		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
+>  		then
+> -			say " $sha1 $displaypath$revname"
+> +			say " $sha1_abbr $displaypath$revname"
+>  		else
+>  			if test -z "$cached"
+>  			then
+> -				sha1=$(clear_local_git_env; cd "$sm_path" && git rev-parse --verify HEAD)
+> -				set_name_rev "$sm_path" "$sha1"
+> +				sha1_abbr=$(clear_local_git_env; cd "$sm_path" && git rev-parse --short --verify HEAD)
+> +				set_name_rev "$sm_path" "$sha1_abbr"
+>  			fi
+> -			say "+$sha1 $displaypath$revname"
+> +			say "+$sha1_abbr $displaypath$revname"
+>  		fi
+>  
+>  		if test -n "$recursive"
+> 
