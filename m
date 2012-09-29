@@ -1,84 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] revision: add --grep-reflog to filter commits by
- reflog messages
-Date: Fri, 28 Sep 2012 22:35:56 -0700
-Message-ID: <7v4nmhjsqr.fsf@alter.siamese.dyndns.org>
-References: <7vr4pmm3qz.fsf@alter.siamese.dyndns.org>
- <1348893689-20240-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 1/8] Introduce new static function real_path_internal()
+Date: Fri, 28 Sep 2012 22:40:42 -0700
+Message-ID: <7vy5jtidyd.fsf@alter.siamese.dyndns.org>
+References: <1348688090-13648-1-git-send-email-mhagger@alum.mit.edu>
+ <1348688090-13648-2-git-send-email-mhagger@alum.mit.edu>
+ <7vk3vfp36g.fsf@alter.siamese.dyndns.org> <50667F7E.7040903@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 07:36:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Sep 29 07:40:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THpj9-0002NJ-Jg
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 07:36:35 +0200
+	id 1THpnK-0004O5-FB
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 07:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752950Ab2I2FgB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Sep 2012 01:36:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57256 "EHLO
+	id S1753155Ab2I2Fkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 01:40:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58888 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752737Ab2I2Ff7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2012 01:35:59 -0400
+	id S1752968Ab2I2Fko (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2012 01:40:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17E1192B2;
-	Sat, 29 Sep 2012 01:35:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5382F9335;
+	Sat, 29 Sep 2012 01:40:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pOO8oGEoGbTJ
-	OBC5q2J23NtaDMo=; b=syvLh7BFxMhYBQRyWdN2S+t0K4E0fFwpeGXDNz72yoS8
-	MvacS6gL1PuqCdMa3wSKqTZou76kKh3oLZwJFN0z6qqiBbk4zCp1Maqi/9bVlxmg
-	IJj/FjOUS6DO3FeZF/ypZeyE9aDtpceRwawuPEkx9BfdnltmfA4C/FWPKmLCZeg=
+	:content-type; s=sasl; bh=FUomP/juOGFgUJ2Nz7mCdFpQ7Sk=; b=jRRmuk
+	BiGXF+gI31qUrW4kxbR1EmoaO/DD0g6fSgIvS9TDVyZVzGeRrxyWmF51KI3r9obL
+	gAsMao8CJY9Z67/jtkvWmUISHz2h14RJIPF2ay3QzbhsSVeMfE3+45kE+A7DEGU3
+	skW67u2eicqEt2wANfUJ6lAIQLZ8ILggqTNIc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WuYhM7
-	SBFE1pNyCKStHMUv9ovWFK7iNYiSMWFeJjRlI1qLZp/WQxzoJPWmWuMfInZIemY4
-	rdyJMxRbcD/sgAx2IouTsXpc/3btAvZCi4/73aVeVzFDR8V3gMl8y3Vp3WYHvOkq
-	lFYSAjJ4xrj8G1GpIUorCMdEP+BPjQex1cKm0=
+	:content-type; q=dns; s=sasl; b=AyWAvfla5jNsNHshe+1N4eqyWXtQv9S0
+	tuQM/T0H+FY1o811PI6nqXJaA3PeV/qLXRXJaKoUciOK9Ye7OJzZBVLf15evq7FS
+	YHWrPtVSqBq73twCne3Cfu5wOtDwhDHVP/mWLvINZRA0gW7fQDCopFH2BNQm68Xp
+	E4PSETsuwlk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0557792B1;
-	Sat, 29 Sep 2012 01:35:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41A319333;
+	Sat, 29 Sep 2012 01:40:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7642D92B0; Sat, 29 Sep 2012
- 01:35:58 -0400 (EDT)
-In-Reply-To: <1348893689-20240-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 29 Sep
- 2012 11:41:26 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97E319332; Sat, 29 Sep 2012
+ 01:40:43 -0400 (EDT)
+In-Reply-To: <50667F7E.7040903@alum.mit.edu> (Michael Haggerty's message of
+ "Sat, 29 Sep 2012 06:56:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C002032-09F7-11E2-AD50-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 35F4C124-09F8-11E2-BCF3-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206628>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Sat, Sep 29, 2012 at 12:55 AM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->> For that to happen, the code _must_ know what kind of headers we
->> would support; discarding the existing enum is going in a wrong
->> direction.
+>> The patch makes sense, but while you are touching this code, I have
+>> to wonder if there is an easy way to tell, before entering the loop,
+>> if we have to chdir() around in the loop.  That would allow us to
+>> hoist the getcwd() that is done only so that we can come back to
+>> where we started outside the loop, making it clear why the call is
+>> there, instead of cryptic "if (!*cwd &&" to ensure we do getcwd()
+>> once and before doing any chdir().
 >
-> Or what kind of manipulation is required for a header. The caller can
-> decide if it wants such manipulation or not. Somebody might want to
-> grep committer's date, for example.
+> I don't see an easy way to predict, before entering the loop, whether
+> chdir() will be needed.  For example, compare
+>
+>     touch filename
+>     ln -s filename foo
+>     ./test-path-utils real_path foo
+>
+> with
+>
+>     touch filename
+>     ln -s $(pwd)/filename foo
+>     ./test-path-utils real_path foo
+>
+> In the first case no chdir() is needed, whereas in the second case a
+> chdir() is needed but only on the second loop iteration.
 
-Yes, if we wanted to filter log outputs to commits authored only on
-Thursdays, we would introduce --author-date=3D"<some expression that
-yields true only on Thursdays, given the timestmap" option, add
-GREP_HEADER_AUTHOR_TIMESTAMP_EXPRESSION=3D2 to enum grep_header_field,
-and add a new element { "author ", 7 } to grep.c::header_field[2]
-(the index 2 matches GREP_HEADER_AUTHOR_TIMESTAMP_EXPRESSION), and
-implement the evaluator for <some expression that yields true only
-on Thursdays, given the timestamp> language in the GREP_PATTERN_HEAD
-part of match_one_pattern() and use the p->field to select that
-logic.  At that point, we may be better off introducing a helper
-function to split the more complex logic for GREP_PATTERN_HEAD out
-of the match_one_pattern() function.
+Thanks for an example, and it is perfectly OK if we really have to
+have that "only fires once and only if needed" logic in the loop.
+
+> All I can offer you is a palliative like the one below.
+
+I think that is an improvement; or we could rename it not cwd[] but
+some other name that includes the word "original" in it.
+
+Thanks.
+
+> Michael
+>
+> diff --git a/abspath.c b/abspath.c
+> index 5748b91..40cdc46 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -35,7 +35,14 @@ static const char *real_path_internal(const char
+> *path, int die_on_error)
+>  {
+>         static char bufs[2][PATH_MAX + 1], *buf = bufs[0], *next_buf =
+> bufs[1];
+>         char *retval = NULL;
+> +
+> +       /*
+> +        * If we have to temporarily chdir(), store the original CWD
+> +        * here so that we can chdir() back to it at the end of the
+> +        * function:
+> +        */
+>         char cwd[1024] = "";
+> +
+>         int buf_index = 1;
+>
+>         int depth = MAXDEPTH;
