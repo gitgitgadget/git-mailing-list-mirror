@@ -1,58 +1,52 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] submodule: use abbreviated sha1 in 'status' output
-Date: Sat, 29 Sep 2012 20:15:42 +0530
-Message-ID: <CALkWK0kzZvPv9jFBF=ibMzcNt-jxq4RFjy7pL173+Y4_S0jhWA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
+Date: Sat, 29 Sep 2012 16:49:56 +0200
+Message-ID: <50670A94.2070504@web.de>
 References: <1348926195-4788-1-git-send-email-artagnon@gmail.com>
- <1348926195-4788-2-git-send-email-artagnon@gmail.com> <50670655.3030600@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: Git List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sat Sep 29 16:46:58 2012
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 29 16:50:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THyJk-0002Jp-Je
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 16:46:56 +0200
+	id 1THyMt-0003Mh-S2
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 16:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754262Ab2I2OqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2012 10:46:05 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:58129 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753494Ab2I2OqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2012 10:46:03 -0400
-Received: by mail-qa0-f46.google.com with SMTP id c26so605594qad.19
-        for <git@vger.kernel.org>; Sat, 29 Sep 2012 07:46:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=le655zJdS0uf4zO337g+9RyKioVgq4f0dHcvhS5j83I=;
-        b=jxBnyKYRNl0UGBEE4N7TxP93ZlYeE+btchyZPgiOVfRzUM9KLuLDGbYdbQ0XLQwLQ8
-         YWKspfBIvKLwizhSEyvlFY3lF+CEnT9pqcQfutz7C6NIFP289mPQgW+mCA2p/ztxHKBE
-         osTWDm1yxDWVKvgpWXZuDaDcwT9e/sG6NPX/pIOrfYADg2XSuZOYxHSFJrTIQy0n8KnR
-         +Sa9LQ5CKaqix/w8rL5U5dnp3nFh32wdh8u9cPwKeWdr5wvqNHV6Co+bmw2at3ll75KE
-         0XGMNWGA1KjxrLsGCl/7KAQLZlUPsS3UpAw4JxwCUkFR/dThYNRgpjb2Hg+m4SHEqIyP
-         SMrw==
-Received: by 10.229.111.70 with SMTP id r6mr6745075qcp.120.1348929962402; Sat,
- 29 Sep 2012 07:46:02 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Sat, 29 Sep 2012 07:45:42 -0700 (PDT)
-In-Reply-To: <50670655.3030600@web.de>
+	id S1755359Ab2I2OuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 10:50:00 -0400
+Received: from mout.web.de ([212.227.17.12]:62752 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755298Ab2I2OuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2012 10:50:00 -0400
+Received: from [192.168.178.41] ([91.3.175.36]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0M8iH2-1TAIrx0WqK-00Cm3N; Sat, 29 Sep 2012 16:49:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <1348926195-4788-1-git-send-email-artagnon@gmail.com>
+X-Provags-ID: V02:K0:B5CR+52q2lEA9mpaSM73WJ2nqVOEwt5YfAsYaGJ5fPP
+ WzjX8e69wmVQo+RC1VEJZfuTvmB1LWFl5fI3WtH22fGIDVqjew
+ ASQG2Nz6nDdjjphhm1BeFegZI6PWGtkILN8wJjYTBR6QHJE8xl
+ 6gb07eQ9O7cdvL/oDrDiHZ5AIGiohXSU98SF8Lynh6xfC5CMK+
+ zgwJQjwnAgB8Tj5lJKAWg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206651>
 
-Jens Lehmann wrote:
-> I'm not against the change per se, but do we really want to risk breaking
-> scripts which parse the output of "git submodule status" without even
-> providing a commit message explaining why we did that?
+Am 29.09.2012 15:43, schrieb Ramkumar Ramachandra:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Like 'git remote show', 'git stash show'.
 
-Oh, I didn't realize that there might be such scripts.  What
-justification do I give in the commit message apart from
-prettification?
-
-Ram
+I understand the analogy to "git stash show" (as that also displays
+a diff similar to what " git submodule summary" does). But "git
+remote show" just displays a list of configured remotes, which is
+something different. And the other command with a "show" option is
+"git notes show", which causes it to display a note. So I think we
+are pretty inconsistent here and I see no advantage of adding such
+an alias for "git submodule summary". What am I missing?
