@@ -1,211 +1,95 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 8/9] longest_ancestor_length(): resolve symlinks before comparing paths
-Date: Sat, 29 Sep 2012 08:16:01 +0200
-Message-ID: <1348899362-4057-9-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 7/9] longest_ancestor_length(): use string_list_longest_prefix()
+Date: Sat, 29 Sep 2012 08:16:00 +0200
+Message-ID: <1348899362-4057-8-git-send-email-mhagger@alum.mit.edu>
 References: <1348899362-4057-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jiang Xin <worldhello.net@gmail.com>,
 	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 08:16:58 2012
+X-From: git-owner@vger.kernel.org Sat Sep 29 08:16:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1THqMB-0002Xr-Ko
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 08:16:55 +0200
+	id 1THqMC-0002Xr-4j
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Sep 2012 08:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758660Ab2I2GQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2012 02:16:40 -0400
-Received: from ALUM-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.17]:48200 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758315Ab2I2GQh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2012 02:16:37 -0400
-X-AuditID: 12074411-b7fa36d0000008cc-18-50669244a845
+	id S1758682Ab2I2GQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2012 02:16:41 -0400
+Received: from ALUM-MAILSEC-SCANNER-4.MIT.EDU ([18.7.68.15]:61932 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758418Ab2I2GQf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2012 02:16:35 -0400
+X-AuditID: 1207440f-b7fde6d00000095c-1a-506692426108
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id D0.F2.02252.44296605; Sat, 29 Sep 2012 02:16:36 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 05.2B.02396.24296605; Sat, 29 Sep 2012 02:16:34 -0400 (EDT)
 Received: from michael.fritz.box (p57A246BE.dip.t-dialin.net [87.162.70.190])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8T6G745026219
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q8T6G744026219
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 29 Sep 2012 02:16:35 -0400
+	Sat, 29 Sep 2012 02:16:33 -0400
 X-Mailer: git-send-email 1.7.11.3
 In-Reply-To: <1348899362-4057-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEIsWRmVeSWpSXmKPExsUixO6iqOsyKS3A4PJaK4uuK91MFg29V5gt
-	jp6ysLi9Yj6zxfp3V5kdWD3+vv/A5LFz1l12j4uXlD0+b5ILYInitklKLCkLzkzP07dL4M54
-	cX0BW8EnjYrvU9+yNTBuVuxi5OSQEDCR6F3ynRXCFpO4cG89WxcjF4eQwGVGiZunFjBBOGeZ
-	JC50fGEEqWIT0JVY1NPMBGKLCKhJTGw7xAJSxCwwiVGiZ8MDdpCEsECUxKNlR9lAbBYBVYml
-	a2awgNi8As4SF2Z1MkKsU5T48X0NM4jNKeAi8btnOtgZQkA1j/beYZ3AyLuAkWEVo1xiTmmu
-	bm5iZk5xarJucXJiXl5qka6pXm5miV5qSukmRkgoCe5gnHFS7hCjAAejEg+v1vHUACHWxLLi
-	ytxDjJIcTEqivJ8npAUI8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuHNKAYq501JrKxKLcqHSUlz
-	sCiJ8/ItUfcTEkhPLEnNTk0tSC2CycpwcChJ8BpOBBoqWJSanlqRlplTgpBm4uAEEVwgG3iA
-	NtiCFPIWFyTmFmemQxSdYlSUEucVAUkIgCQySvPgBsCi/hWjONA/wryBIFU8wIQB1/0KaDAT
-	0OClm5JABpckIqSkGhj91A7sMdr8rePHmZI+Le/z8Tc/3n2bKPTRpFV04xMZtacTU54dMeQ4
-	Yn1QKub6iazJ9dxCv9tFWb34xOKXfVO7M/vyr80rNa5YuXJc+a2jlnM/m83JqWLhzGNfWY9O
-	u5Q/02CbEbeP65cubX374rAbW4zS+E/e35mwcH9HT+G/dzptywt5st8rsRRnJBpq 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrPIsWRmVeSWpSXmKPExsUixO6iqOs0KS3AoKlN36LrSjeTRUPvFWaL
+	o6csLG6vmM9ssf7dVWYHVo+/7z8weeycdZfd4+IlZY/Pm+QCWKK4bZISS8qCM9Pz9O0SuDP2
+	t5xmKmjlquh59IqpgXESRxcjB4eEgInEhm6fLkZOIFNM4sK99WxdjFwcQgKXGSWWrLvHDuGc
+	ZZK4ueIJG0gVm4CuxKKeZiYQW0RATWJi2yEWkCJmgUmMEj0bHrCDJIQFgiVO9Z5kBNnAIqAq
+	seGEG4jJK+As0XnIBWKZosSP72uYQWxOAReJ3z3TWUFsIaCSR3vvsE5g5F3AyLCKUS4xpzRX
+	NzcxM6c4NVm3ODkxLy+1SNdELzezRC81pXQTIySI+Hcwdq2XOcQowMGoxMOrdTw1QIg1say4
+	MvcQoyQHk5Iob87EtAAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwZxUDlvCmJlVWpRfkwKWkO
+	FiVxXvUl6n5CAumJJanZqakFqUUwWRkODiUJ3hKQoYJFqempFWmZOSUIaSYOThDBBbKBB2hD
+	DUghb3FBYm5xZjpE0SlGRSlx3kSQhABIIqM0D24ALN5fMYoD/SPMGwhSxQNMFXDdr4AGMwEN
+	XropCWRwSSJCSqqBkfXxCe09T3fLR/yNlHv4QaqvImxfnfE/49XzanPXOhtdqHD/632UI679
+	1kLuKRo5bj3fn27a2La4KX89X/KeL8zpLoueFXPe/rrw9ZbYw2y3LrC7RFuKqW304pjmt+3N
+	/0PyNuE5zzvl9ffX/fZWzvbXXZbVU8p9jvetyILMKymu21c6rfYQVGIpzkg01GIu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206643>
 
-longest_ancestor_length() relies on a textual comparison of directory
-parts to find the part of path that overlaps with one of the paths in
-prefix_list.  But this doesn't work if any of the prefixes involves a
-symbolic link, because the directories will look different even though
-they might logically refer to the same directory.  So canonicalize the
-paths listed in prefix_list using real_path_if_valid() before trying
-to find matches.
-
-path is already in canonical form, so doesn't need to be canonicalized
-again.
-
-This fixes some problems with using GIT_CEILING_DIRECTORIES that
-contains paths involving symlinks, including t4035 if run with --root
-set to a path involving symlinks.
-
-Remove a number of tests of longest_ancestor_length().  It is awkward
-to test longest_ancestor_length() now, because its new path
-normalization behavior depends on the contents of the whole
-filesystem.  On the other hand:
-
-* longest_ancestor_length() is now built of reusable components that
-  are themselves tested separately (string_list_split(),
-  string_list_longest_prefix(), and real_path_if_valid()), so it
-  contains less code that can go wrong.
-
-* longest_ancestor_length() gets some testing (albeit not systematic)
-  via the GIT_CEILING_DIRECTORIES tests.
-
-Therefore the work of updating these tests exceeds any expected
-benefits.
+Use string_list_longest_prefix() in the implementation of
+longest_ancestor_length(), instead of an equivalent loop.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- path.c                | 18 +++++++++------
- t/t0060-path-utils.sh | 64 ---------------------------------------------------
- 2 files changed, 11 insertions(+), 71 deletions(-)
+ path.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/path.c b/path.c
-index b20f2fb..40d7360 100644
+index a56c64a..b20f2fb 100644
 --- a/path.c
 +++ b/path.c
-@@ -570,21 +570,25 @@ int normalize_path_copy(char *dst, const char *src)
- 
- static int normalize_path_callback(struct string_list_item *item, void *cb_data)
+@@ -604,23 +604,16 @@ static int normalize_path_callback(struct string_list_item *item, void *cb_data)
+ int longest_ancestor_length(const char *path, const char *prefix_list)
  {
--	char buf[PATH_MAX+2];
-+	char *buf;
- 	const char *ceil = item->string;
--	int len = strlen(ceil);
-+	const char *realpath;
-+	int len;
+ 	struct string_list prefixes = STRING_LIST_INIT_DUP;
+-	int i, max_len = -1;
++	int max_len;
++	const char *longest_prefix;
  
--	if (len == 0 || len > PATH_MAX || !is_absolute_path(ceil))
-+	if (!*ceil || !is_absolute_path(ceil))
- 		return 0;
--	if (normalize_path_copy(buf, ceil) < 0)
-+	realpath = real_path_if_valid(ceil);
-+	if (!realpath)
- 		return 0;
--	len = strlen(buf);
-+	len = strlen(realpath);
-+	buf = xmalloc(len + 2); /* Leave space for possible trailing slash */
-+	strcpy(buf, realpath);
- 	if (len == 0 || buf[len-1] != '/') {
- 		buf[len++] = '/';
--		buf[len++] = '\0';
-+		buf[len] = '\0';
- 	}
- 	free(item->string);
--	item->string = xstrdup(buf);
-+	item->string = buf;
- 	return 1;
- }
+ 	if (prefix_list == NULL || !strcmp(path, "/"))
+ 		return -1;
  
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 4ef2345..c97bbf2 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -12,28 +12,6 @@ norm_path() {
- 	"test \"\$(test-path-utils normalize_path_copy '$1')\" = '$2'"
- }
- 
--# On Windows, we are using MSYS's bash, which mangles the paths.
--# Absolute paths are anchored at the MSYS installation directory,
--# which means that the path / accounts for this many characters:
--rootoff=$(test-path-utils normalize_path_copy / | wc -c)
--# Account for the trailing LF:
--if test $rootoff = 2; then
--	rootoff=	# we are on Unix
--else
--	rootoff=$(($rootoff-1))
--fi
+ 	string_list_split(&prefixes, prefix_list, PATH_SEP, -1);
+ 	filter_string_list(&prefixes, 0, normalize_path_callback, NULL);
 -
--ancestor() {
--	# We do some math with the expected ancestor length.
--	expected=$3
--	if test -n "$rootoff" && test "x$expected" != x-1; then
--		expected=$(($expected+$rootoff))
--	fi
--	test_expect_success "longest ancestor: $1 $2 => $expected" \
--	"actual=\$(test-path-utils longest_ancestor_length '$1' '$2') &&
--	 test \"\$actual\" = '$expected'"
--}
+-	for (i = 0; i < prefixes.nr; i++) {
+-		const char *ceil = prefixes.items[i].string;
+-		int len = strlen(ceil);
 -
- # Absolute path tests must be skipped on Windows because due to path mangling
- # the test program never sees a POSIX-style absolute path
- case $(uname -s) in
-@@ -93,48 +71,6 @@ norm_path /d1/s1//../s2/../../d2 /d2 POSIX
- norm_path /d1/.../d2 /d1/.../d2 POSIX
- norm_path /d1/..././../d2 /d1/d2 POSIX
+-		if (!strncmp(path, ceil, len) &&
+-		    len - 1 > max_len) {
+-			max_len = len - 1;
+-		}
+-	}
++	longest_prefix = string_list_longest_prefix(&prefixes, path);
++	max_len = longest_prefix ? strlen(longest_prefix) - 1 : -1;
  
--ancestor / "" -1
--ancestor / / -1
--ancestor /foo "" -1
--ancestor /foo : -1
--ancestor /foo ::. -1
--ancestor /foo ::..:: -1
--ancestor /foo / 0
--ancestor /foo /fo -1
--ancestor /foo /foo -1
--ancestor /foo /foo/ -1
--ancestor /foo /bar -1
--ancestor /foo /bar/ -1
--ancestor /foo /foo/bar -1
--ancestor /foo /foo:/bar/ -1
--ancestor /foo /foo/:/bar/ -1
--ancestor /foo /foo::/bar/ -1
--ancestor /foo /:/foo:/bar/ 0
--ancestor /foo /foo:/:/bar/ 0
--ancestor /foo /:/bar/:/foo 0
--ancestor /foo/bar "" -1
--ancestor /foo/bar / 0
--ancestor /foo/bar /fo -1
--ancestor /foo/bar foo -1
--ancestor /foo/bar /foo 4
--ancestor /foo/bar /foo/ 4
--ancestor /foo/bar /foo/ba -1
--ancestor /foo/bar /:/fo 0
--ancestor /foo/bar /foo:/foo/ba 4
--ancestor /foo/bar /bar -1
--ancestor /foo/bar /bar/ -1
--ancestor /foo/bar /fo: -1
--ancestor /foo/bar :/fo -1
--ancestor /foo/bar /foo:/bar/ 4
--ancestor /foo/bar /:/foo:/bar/ 4
--ancestor /foo/bar /foo:/:/bar/ 4
--ancestor /foo/bar /:/bar/:/fo 0
--ancestor /foo/bar /:/bar/ 0
--ancestor /foo/bar .:/foo/. 4
--ancestor /foo/bar .:/foo/.:.: 4
--ancestor /foo/bar /foo/./:.:/bar 4
--ancestor /foo/bar .:/bar -1
--
- test_expect_success 'strip_path_suffix' '
- 	test c:/msysgit = $(test-path-utils strip_path_suffix \
- 		c:/msysgit/libexec//git-core libexec/git-core)
+ 	string_list_clear(&prefixes, 0);
+ 	return max_len;
 -- 
 1.7.11.3
