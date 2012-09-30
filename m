@@ -1,56 +1,77 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: gitk: can't reload commits with new key binding
-Date: Sun, 30 Sep 2012 12:19:32 +0200
-Message-ID: <20120930101932.GA15672@goldbirke>
+From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
+Subject: git smart-http do not authent to allow git ls-remote to be called anonymously
+Date: Sun, 30 Sep 2012 22:35:35 +0800
+Message-ID: <CAHtLG6Q+XO=LhnKw4hhwtOe2ROeDN1Kg=JN5GTQqdvYjk-Sv4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Paul Mackerras <paulus@samba.org>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 30 12:19:48 2012
+X-From: git-owner@vger.kernel.org Sun Sep 30 16:35:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIGcl-0007eE-9Q
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Sep 2012 12:19:47 +0200
+	id 1TIKcV-00044B-Q7
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Sep 2012 16:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805Ab2I3KTi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Sep 2012 06:19:38 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:50830 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724Ab2I3KTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2012 06:19:37 -0400
-Received: from localhost6.localdomain6 (p5B1309E4.dip0.t-ipconnect.de [91.19.9.228])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MQd8X-1Sr8Rt3lS1-00U4aO; Sun, 30 Sep 2012 12:19:33 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:Q1QrlICEzlBctukp6eEpnL0tDBFc8rb2OVrhqLJg+ur
- MrgIshA+qpEU/NLEMiKefCp7GulpNomNo4Fs9pQNO/w3rOyWOG
- SowYKeVo05MnSeZp6Vx0iIzynPbJBdTd4W1eY5Z6IGvpVNTrS0
- BK8D7pAdzugv0UkQ6l+d1sHDKelMBX4CjycLzZ73b4Ld2UlgMB
- i0hmb9fRcGA9t0nBEnDpaEauCQlRW4KGOI4ca3zJeuBN4GNfeA
- vFDa+05xYRJsvuGFqE8QpjO4PRd3khWtFWD3Z1D0B7hUw+pHjw
- 7+ehBaXBolknmxbSLyOA5uN2S4ox73thj7tFJ16N8SnWWHMot7
- xvQW9pUZe0y9V32r8g3qQFSokz4sjjHiEHVS8gJIT
+	id S1751225Ab2I3Ofh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2012 10:35:37 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:45395 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750797Ab2I3Ofh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2012 10:35:37 -0400
+Received: by lbon3 with SMTP id n3so3319683lbo.19
+        for <git@vger.kernel.org>; Sun, 30 Sep 2012 07:35:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=rVH0CKI28EMekYBbQhbUqb1/Ol9b4JwAF7eGUQet1x4=;
+        b=oYkGANLzbt/1At2fb7+mjcDUoVl/utW6TPKqEqgJuBr4YWHnE1E2PtwCJsKQI+JREL
+         vhvK8S9ItmhaxRfnQCuS/hMYVGZSq4S/qMeBOWY0p+cu7c5yS+djbBwfqtF/PxJa4tZv
+         XG0m69BWWMPDA027tjuLUiSroUVlCTKgSFfmdovEF8zMUxk+Rj7jifY2jNkw8NcZWHCX
+         h1tzSnZy7y38kX1WGcqpP88F3a33DzBute80lTF8aRzJTS2W4uC6qlCvN/D+Fg3v6q5J
+         efCHCoQmXQfD3eKtzb0tOGyt/IK71K/AdiHXia6xxfxMNDVC9Hf6cTC2gBZVTOVto9XI
+         0JQw==
+Received: by 10.112.82.103 with SMTP id h7mr334612lby.50.1349015735612; Sun,
+ 30 Sep 2012 07:35:35 -0700 (PDT)
+Received: by 10.112.19.35 with HTTP; Sun, 30 Sep 2012 07:35:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206687>
 
 Hi,
 
-a135f214 (gitk: Avoid Meta1-F5, 2012-04-07) changed the key binding
-for reloading commits to shift-F5, but this new key binding doesn't
-seem to be working here, because it doesn't call reloadcommits().
-Choosing the reload menu item works.  Shift-F5 works properly in other
-applications.
+I use smart-http on Apache.
+If nothing to be pushed / pulled, I do not want password to be
+supplied. And allow git ls-remote to run without password
 
-Any ideas?
+*.git/info/refs?service=git-upload-pack
+*.git/info/refs?service=git-receive-pack
 
-Thanks,
-G=E1bor
+I only need authentication on
+
+*.git/git-upload-pack
+*.git/git-receive-pack
+
+/etc/apache/httpd.conf
+
+<LocationMatch "^/git/.*/git-(upload|receive)-pack$">
+    AuthType Basic
+    AuthName "staff only"
+    AuthUserFile /etc/apache/apache.pwd
+    Require valid-user
+</LocationMatch>
+
+However this does not work. It does not ask for password at all.
+
+I use Ubuntu 10.04, Apache 2.2.14, Git 1.7.11.3.
+
+Directory structure: any depth (more than 1 subdir) of path from /git
+to .git folders
+
+Could you advise how to configure this? Is this a bug?
+
+Regards,
+ch3cooli
