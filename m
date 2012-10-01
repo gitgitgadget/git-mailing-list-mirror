@@ -1,87 +1,66 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: Test failure: Test #3 in t1304-default-acl
-Date: Mon, 1 Oct 2012 10:08:23 +0200
-Message-ID: <k4bj1v$pav$1@ger.gmane.org>
-References: <CALkWK0n0bH3xPLarv35Th_agnhKCkRjgcKTJR7Xy=B_NkBHkOg@mail.gmail.com> <vpqy5k8raig.fsf@grenoble-inp.fr> <CALkWK0=h6iU_J=X6MFgLXPfo0rh236cTuVaU3nNSnAaikjKH5w@mail.gmail.com> <vpqd31kr7v4.fsf@grenoble-inp.fr> <CALkWK0=ROz8fxXgnqt-+AthU-hgq_mzFg0GhBQCrAshH_mRBPQ@mail.gmail.com> <vpqvcfcps2z.fsf@grenoble-inp.fr> <7v4nmwwqox.fsf@alter.siamese.dyndns.org> <vpqipbcpp69.fsf@grenoble-inp.fr> <7vvcfctmka.fsf@alter.siamese.dyndns.org> <CALkWK0m9tkRXFZw-d_XADR9LXqxa0j_82bhhrd0FoEoHsO6yPg@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [BUG] gitk: clicking on a connecting line produces can't read "cflist_top"
+Date: Mon, 01 Oct 2012 10:40:01 +0200
+Message-ID: <506956E1.1080303@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 01 10:09:16 2012
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Haller <stefan@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Mon Oct 01 10:40:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIb3v-00034P-Hz
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 10:09:11 +0200
+	id 1TIbY3-00054v-9M
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 10:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752237Ab2JAII4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 04:08:56 -0400
-Received: from plane.gmane.org ([80.91.229.3]:56072 "EHLO plane.gmane.org"
+	id S1752007Ab2JAIkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 04:40:08 -0400
+Received: from so.liwest.at ([212.33.55.24]:34259 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752125Ab2JAIIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 04:08:51 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TIb3b-0002QI-TP
-	for git@vger.kernel.org; Mon, 01 Oct 2012 10:08:51 +0200
-Received: from dsdf-4d0a1cfd.pool.mediaways.net ([77.10.28.253])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2012 10:08:51 +0200
-Received: from jojo by dsdf-4d0a1cfd.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2012 10:08:51 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4d0a1cfd.pool.mediaways.net
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751968Ab2JAIkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 04:40:06 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TIbXl-0000pe-LR; Mon, 01 Oct 2012 10:40:01 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 6416B1660F;
+	Mon,  1 Oct 2012 10:40:01 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+X-Enigmail-Version: 1.4.4
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206726>
 
-Ramkumar Ramachandra wrote:
-> Hi Junio,
->
-> Junio C Hamano wrote:
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> I haven't been paying attention, but does that mean on that system,
->>>> a total stranger kseygold can write, modify, and remove whatever
->>>> Ram owns?  I am hoping that is not the case.
->>>
->>> I can see two reasons for having the same UID for two login names:
->>>
->>> 1) the sysadmin really messed up, and as you say, a total stranger
->>> has complete ownership of your files. Ramkumar, you should check
->>> that this is not your case.
->>>
->>> 2) the sysadmin explicitely gave two login names to the same
->>> physical person, as kinds of aliases for the same UID (e.g. the
->>> person got married, changed her name and login, but expects
->>> ~oldlogin to continue working). I'm not sure how common this is,
->>> and to which extend we want to support this in our test scripts.
->>
->> I've only been assuming (1), but (2) feels like a legitimate (if
->> confusing) way to configure your system.
->>
->> It is a separate issue if it is worth bending backwards to support
->> it in the test, though.
->
-> For what it's worth, `sudo` is "broken" on my system.
+Clicking on a line that connects commit nodes produces this error:
 
-sudo can't deal properly with multiple users sharing a UID, as it uses 
-getpwuid(getuid()) in places.
-On my system I've replaced that with getgwnam(getlogin()). which seems to 
-work fine here.
+can't read "cflist_top": no such variable
+can't read "cflist_top": no such variable
+    while executing
+"$cflist tag remove highlight $cflist_top.0 "$cflist_top.0 lineend""
+    (procedure "highlightfile" line 4)
+    invoked from within
+"highlightfile 0"
+    (procedure "highlightfile_for_scrollpos" line 8)
+    invoked from within
+"highlightfile_for_scrollpos $topidx"
+    (procedure "scrolltext" line 9)
+    invoked from within
+"scrolltext 0.0 1.0"
+    (vertical scrolling command executed by text)
 
-Bye, Jojo 
+
+Bisection points to b967135d (Synchronize highlighting in file view when
+scrolling diff).
+
+gitk remains responsive after the error window is closed, so it is not
+urgent. A fix would be appreciated nevertheless.
+
+-- Hannes
