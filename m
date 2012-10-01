@@ -1,59 +1,70 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: use abbreviated sha1 in 'status' output
-Date: Mon, 01 Oct 2012 19:22:34 +0200
-Message-ID: <5069D15A.6010105@web.de>
-References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <1348926195-4788-2-git-send-email-artagnon@gmail.com> <50670655.3030600@web.de> <CALkWK0kzZvPv9jFBF=ibMzcNt-jxq4RFjy7pL173+Y4_S0jhWA@mail.gmail.com> <50670E39.8080101@web.de> <CALkWK0mqkWvveA6NX36R0L5tQE_wnRwyFu0LncLY6ORXRK-KYA@mail.gmail.com>
+Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
+Date: Mon, 01 Oct 2012 19:26:34 +0200
+Message-ID: <5069D24A.6060101@web.de>
+References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <50670A94.2070504@web.de> <CALkWK0nCahg7165_JuJSj7u0UfYRGZgFjJ6O-o=HCwdsPwU-xg@mail.gmail.com> <50671364.5030205@web.de> <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>
+Cc: Git List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 19:32:06 2012
+X-From: git-owner@vger.kernel.org Mon Oct 01 19:32:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIjhi-0000qA-AS
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:22:50 +0200
+	id 1TIjlo-00059J-VN
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751162Ab2JARWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 13:22:39 -0400
-Received: from mout.web.de ([212.227.17.11]:56318 "EHLO mout.web.de"
+	id S1750952Ab2JAR0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 13:26:48 -0400
+Received: from mout.web.de ([212.227.17.12]:60351 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888Ab2JARWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 13:22:39 -0400
-Received: from [192.168.178.41] ([91.3.164.110]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0Laky4-1TgqBP1jb6-00kxoz; Mon, 01 Oct 2012 19:22:35
+	id S1751169Ab2JAR0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 13:26:36 -0400
+Received: from [192.168.178.41] ([91.3.164.110]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0Lud4y-1TRMhG4AzI-0104eA; Mon, 01 Oct 2012 19:26:35
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CALkWK0mqkWvveA6NX36R0L5tQE_wnRwyFu0LncLY6ORXRK-KYA@mail.gmail.com>
-X-Provags-ID: V02:K0:WXL42ZccfSQMqF9GeJQXHhoNTgYi0580mCr0cnY6SLr
- jAVA8U6C48DjvyLHjilwe3a5efSS1jalQMo+Cwb2/GEKmF0hiB
- CXh9mCpohrW+ueGQixO8HHSbL6F/pBRLpX+EYhw8DB7fE27+Pn
- lA4R/tK1S/q/hctNYLb6rZ33kyazulpRohfpsLzarO7FY9DpKW
- v8yWXuevWZrJLqZXKDNnA==
+In-Reply-To: <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com>
+X-Provags-ID: V02:K0:zofjAx4q0WfJAadXnzJElQZL3yuL4/7ztLvvyLzf7QL
+ gLx0mPeXqYHtv7d0khskVSRYWEEuflvBznv6Sp+o9PB/aIdK5J
+ SPslspQcilA0D2JVlH69flZovcy6U2VfVnblf/gK+pN8t9zyQx
+ nRbC2xqhoZtVtCRiVAVD0vxK1YKgzlyTU4rOCTi+4+oP3sIxTf
+ pOuvYCm6cWlIACS708+Ag==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206745>
 
-Am 01.10.2012 08:42, schrieb Ramkumar Ramachandra:
+Am 01.10.2012 08:45, schrieb Ramkumar Ramachandra:
 > Jens Lehmann wrote:
->> That is just a single user so far indicating your patch /could/ be an
->> improvement. I think we need quite some more votes on that before we
->> should do a change like this.
+>> I'm very interested in your feedback as a first time submodule user,
+>> what you wrote above makes sense and explains why you did that patch
+>> (and it would have been nice to read some of it in the commit message
+>> ;-). What information did you expect to get from a "git submodule
+>> show" which isn't already provided by "git status" and "git diff"
+>> (especially as they give you some information the "git submodule"
+>> commands don't)?
 > 
-> I thought it's a porcelain command like 'git status'- we don't need
-> votes to change the output format of 'git status', do we?
+> I expected 'git submodule show' to list all the submodules, and show
+> changes to specific submodules like the 'git submodule summary'
+> output.
 
-Sure, we are free to change porcelain output. But that doesn't mean
-we shouldn't have a good reason to do so, no? And I'm not sure yet
-that it's worth risking to break scripts and user expectations.
+Ok, but "git submodule summary" doesn't list all the submodules,
+only those with changes. Maybe "git submodule status" is closer
+to what you expect (except for the missing changes)?
 
-And Marc's comment also implies that the status command might not
-be heavily used (surely I never use it), so maybe we are just
-wasting our time here trying to improve it. And if real users show
-interest in shortening the hashes, I won't object that change.
+And - apart from the list of all submodules - the changes to them
+are given by "git status" and "git diff --submodule" too, right?
+(sometimes I forget that "--submodule" is not enabled by default,
+as I'm a heavy "git gui" user, and that option is used there. We
+might need a config option to turn that on) Or is there something
+you are missing from their output?
+
+Me too would expect a show command to show me a list of all the
+submodules and maybe some extra information (is it populated or
+not, does it have its .git directory embedded, does it contain
+changes). So maybe "show" should be a slightly pimped "status"?
