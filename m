@@ -1,97 +1,108 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: [PATCH] Add __git_ps1_pc to use as PROMPT_COMMAND
-Date: Mon, 01 Oct 2012 22:56:06 +0200
-Message-ID: <506A0366.6030009@xs4all.nl>
-References: <5064140E.50007@drmicha.warpmail.net> <50658C9B.6030809@nieuwland.nl> <7vipaym3ks.fsf@alter.siamese.dyndns.org> <50695ECE.5010101@nieuwland.nl> <7v626udse6.fsf@alter.siamese.dyndns.org> <7v4nmec8fi.fsf@alter.siamese.dyndns.org> <5069EE8D.6050200@nieuwland.nl> <7vr4piaryi.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Deletion of remote branches
+Date: Mon, 01 Oct 2012 13:42:38 -0700
+Message-ID: <7vhaqdc4ap.fsf@alter.siamese.dyndns.org>
+References: <CC8F65C7.E79%jens.hausherr@xing.com>
+ <7v1uhids5a.fsf@alter.siamese.dyndns.org>
+ <583784AD1BE54FD582B1D58FE7F4CADA@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Simon Oosthoek <soosthoek@nieuwland.nl>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	schwab@linux-m68k.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 22:58:24 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jens Hausherr" <Jens.Hausherr@xing.com>, <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Oct 01 23:00:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIn3t-0007zw-OU
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 22:57:58 +0200
+	id 1TIn60-0004Fo-LK
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 23:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932340Ab2JAU5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 16:57:49 -0400
-Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:1125 "EHLO
-	smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757218Ab2JAU5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 16:57:47 -0400
-Received: from [192.168.178.21] (simaj.xs4all.nl [83.160.71.26])
-	(authenticated bits=0)
-	by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id q91Ku67k029663
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Oct 2012 22:56:07 +0200 (CEST)
-	(envelope-from s.oosthoek@xs4all.nl)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <7vr4piaryi.fsf@alter.siamese.dyndns.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1755096Ab2JAUnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 16:43:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58393 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755333Ab2JAUmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 16:42:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 699BD9FA6;
+	Mon,  1 Oct 2012 16:42:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k85TisNG2yUpzWdL6diy5YzoOu8=; b=uiNOQM
+	+SUYPxUcsQo4yfjFWfy4Dn5tiU2LD3t2K17QZgZOeqciqGZKKvrGsnMlid/4TMtY
+	KuL3PyjgI3TpxjbiKRX6IwgTndtivb0RCZNhhTpp90N2+KOWaVa+7HKjCU/5r885
+	MDd8rV7KL8JEKG6wxEq52u4RmiH6gJDRd2pvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LOAppLl9mqdbEJIdqd9AzivckuezHNSt
+	AKK1nQ6o5u0TxjcSBVY4ybW14d7fGUYZYEzTnKoNWD1XEOyIlfbMWL20USUYLkBC
+	2xTZg96NTmWhkR0dzEyKlifbzVuW33uZ/4Zym7VLaehLA/ZMB2DI6PvazzkqcZy0
+	hPniVZCEU1A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 575759FA5;
+	Mon,  1 Oct 2012 16:42:41 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF85C9FA4; Mon,  1 Oct 2012
+ 16:42:40 -0400 (EDT)
+In-Reply-To: <583784AD1BE54FD582B1D58FE7F4CADA@PhilipOakley> (Philip Oakley's
+ message of "Mon, 1 Oct 2012 21:12:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B15BEDA-0C08-11E2-8F30-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206767>
 
-On 01/10/12 21:54, Junio C Hamano wrote:
-> Now you lost me.  The documentation of PROMPT_COMMAND in "man bash"
-> says this:
-> 
->        PROMPT_COMMAND
->               If set, the value is executed as a command prior to
->               issuing each primary prompt.
-> 
-> So yes, if you say "PROMPT_COMMAND='whatever'", you will get output
-> from 'whatever' followed by what $PS1 would normally give you.  
-> If you do not want to see PS1 after 'whatever' gives you, you have
-> to set it to an empty string.
-> 
-> On the other hand, they way people have been using __git_ps1 is (as
-> described in the prompt script) to do something like this:
-> 
-> 	PS1='...cruft... $(__git_ps1 "%s") ...cruft...'
-> 
-> To keep supporting them, __git_ps1 has to be a function that writes
-> the prompt string to its standard output.  The external interface of
-> PROMPT_COMMAND also is that it wants a command that emits the string
-> desired for the prompt to its standard output.  I do not see any
-> "when it is used like this, X, but when it is used like that, Y"
-> kind of issue around it, either.
-> 
-> So what is the problem????
-> 
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-Well, I hadn't thought about that way of using it. It works in a way...
+>> All of the above are expected and working as designed.  Remote
+>> tracking branches are local _copies_ of what you have over there at
+>> the remote repository. The latter is the authoritative version, and
+>> you asked "ls-remote" to go over the network to view them.
+>>
+> Is there a definitive naming convention for the two types of 'remote 
+> branch'?
+>
+> IIRC (somewhere) the 'tracking' term was to be deprecated, though it is 
+> still in common use. It is usually only the context that clarifies if it 
+> is the local or the distant copy/repo.
 
-But PS1 is set and interpreted in a special way by bash (I gather from
-examples, I'm kind of confused by it).
+That is somewhat different from what I recall:
 
-It's possible to set PS1 to nothing and print a string from
-PROMPT_COMMAND, but then you miss out on all the features of the PS1
-interpretation by bash and compared to the use of __git_ps1 at the
-moment, it has to put out quite a different string. Because if you like
-to see user@host+workdir (git-status)[$#]
-the current users of __git_ps1 say PS1="\u@host+\w $(__git_ps1 "%s")\$
-", but all __git+ps1 has to put out is "(branch)" or "(branch *)", etc.
+ - "refs/remotes/$there/$that" is a copy of $that branch at the
+   remote $there; we call that a "remote tracking branch".
 
-If it has to print the same prompt in PC mode, it has to add all the
-user/host/workdir/[$#] data as well, withouth being able to use the bash
-internal interpretation (because that is only working when PS1 is set).
+   When people say "remote branch", they often mean $that branch at
+   the remote $there, not your local copy of it.
 
-The example(s) I found when googling for a solution were to set PS1
-inside the PC function, in a way that it was possible to add color
-encodings, without messing up the wrapping. This is _impossible_ using
-command substitution, because then bash doesn't interpret the \[ and \]
-around the color codes, and that messes up the accounting of how long
-the prompt string is.
+   When you say "remote tracking branch", you are talking about
+   something you locally have to track the corresponding "remote
+   branch".  This use is not deprecated at all.  That is the only
+   sane way to clarify which one of the two you are talking about.
 
-/Simon
+ - If your branch "foo" always integrates with branch "bar" at the
+   remote "xyzzy", you would often run
+
+	git pull xyzzy bar
+        git pull --rebase xyzzy bar
+
+   after running "git chekcout foo".  You may even have this in your
+   per-repository configuration:
+
+	[branch "foo"]
+		remote = xyzzy
+                merge = refs/heads/bar
+
+   In such a situation, some people (used to) say that "foo tracks
+   bar from xyzzy".  While such a colloquial use is perfectly fine
+   when it is clear that "foo" being discussed is your local branch,
+   the verb "track" in that sentence is used to mean an entirely
+   different kind of relationship between your "remotes/xyzzy/bar"
+   and the branch "bar" at remote "xyzzy", where the former is the
+   "remote tracking branch" for the latter, leading to confusion.
+   This use of 'track' is what is discouraged these days.
+
+I think we call the latter @{upstream} of "foo" these days.
