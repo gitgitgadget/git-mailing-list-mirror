@@ -1,106 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git-add: -s flag added (silently ignore files)
-Date: Mon, 01 Oct 2012 10:59:24 -0700
-Message-ID: <7vipaucbur.fsf@alter.siamese.dyndns.org>
-References: <1349075700-26334-1-git-send-email-olaf.klischat@gmail.com>
- <1349075700-26334-2-git-send-email-olaf.klischat@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
+Subject: Re: no diffstat for 'git request-pull' (was Re: [GIT PATCH] char/misc changes for 3.7-rc1)
+Date: Mon, 1 Oct 2012 18:03:47 +0000
+Message-ID: <201210011803.48211.arnd@arndb.de>
+References: <20121001175433.GA10092@kroah.com> <20121001175711.GB10092@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, olaf@sofd.de
-To: Olaf Klischat <olaf.klischat@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 20:00:06 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Greg KH <gregkh@linuxfoundation.org>
+X-From: linux-kernel-owner@vger.kernel.org Mon Oct 01 20:07:19 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIkHK-0005Zf-P1
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:59:39 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1TIkOg-00014p-KW
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 01 Oct 2012 20:07:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748Ab2JAR72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 13:59:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54001 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751192Ab2JAR71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 13:59:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 911C69907;
-	Mon,  1 Oct 2012 13:59:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=occXRowlX1OpYMqtB1xk+fUyQk0=; b=dwLJLq
-	PWjeH720xPGfJqJsb5nUfX7l96z8yXduOhiCnY+VeWFMbMrDLGLtOUpgQ61coV/7
-	6gKhlPJ9k7V/YRnvwS7lAydlMJFDHyjcSHSL2E+UIkaHBFmVdAsS77QTaZCg4dk0
-	diZCraeW4V1QVJ9EY25gIMemvfn8mGbYAqWvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sfd0IrQCtq7WbgDcyRyvEC9+80LosX9V
-	L78S2vFXx0zDiaFXPNTtcIpcwpNWQexX7q4ZFtjx9qeODko/YzYWe+I6lT9x+Asq
-	QLZoZ9E4pJDlZvRvlRDGQNzZPOnn55EBLhys+s548hpVK3jgFn97GHkM70Oss7eW
-	0Sw4v2OPctg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EE879906;
-	Mon,  1 Oct 2012 13:59:26 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB3579905; Mon,  1 Oct 2012
- 13:59:25 -0400 (EDT)
-In-Reply-To: <1349075700-26334-2-git-send-email-olaf.klischat@gmail.com>
- (Olaf Klischat's message of "Mon, 1 Oct 2012 09:14:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BCEAAAFE-0BF1-11E2-B477-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1753407Ab2JASEE (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 1 Oct 2012 14:04:04 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:61070 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004Ab2JASDv (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 1 Oct 2012 14:03:51 -0400
+Received: from klappe2.localnet (HSI-KBW-149-172-5-253.hsi13.kabel-badenwuerttemberg.de [149.172.5.253])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0MWtPb-1SulBu1AxH-00Xvow; Mon, 01 Oct 2012 20:03:49 +0200
+User-Agent: KMail/1.12.2 (Linux/3.5.0; KDE/4.3.2; x86_64; ; )
+In-Reply-To: <20121001175711.GB10092@kroah.com>
+X-Provags-ID: V02:K0:j1psAPb6rVcEOsL5AuyAeBxt3M3iQvlwwlQV9PRDIKF
+ uf9dFoGkhDgA6dATdKNqE1UbeL3XT5UV9oTukgd3lxfDodXEed
+ RJaf0mai9lJKZ7cdkuMvH92FoUWsZ02PDBhqW2lcJyvF11MTS/
+ aMkUEXOUH6ONS5crgAot+lw4tI8n6/hIF1fLip/MtLtEGv1Z4R
+ abG8VgY5bvM7xaaQqbj3CAtq90aQp9g/ei6jZQf3vVCGbmxeKY
+ mYaYKH9xyE/4U2zHtHZsLJwd+q2ISyHRzHMIP4kYBtHLIuvfh9
+ 9FxJZbq+DRi/jF8U3KKXIFhXxLRjw5sJstPld2fdJcNtX3tIyj
+ QuX2bMC2ARrEYVA6IU4I=
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206751>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206752>
 
-Olaf Klischat <olaf.klischat@gmail.com> writes:
+On Monday 01 October 2012, Greg KH wrote:
+> Wait, what happened to the diffstat?  Does the latest version of git not
+> send out the diffstat for 'git request-pull'?  It used to on older
+> versions, I just updated the version on my machine that generated this
+> to
+>         git version 1.7.12.2.421.g261b511
+> 
+> Do I have to give a new option to request-pull to have the diffstat show
+> up?  I'm using
+>         git request-pull master git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git/ char-misc-3.6
+> 
+> For this specific request pull.
 
-> Signed-off-by: Olaf Klischat <olaf.klischat@gmail.com>
-> ---
+It looks more like you just sent an empty pull request from v3.6-rc3 to 
+v3.6-rc3 (fea7a08acb135).
 
-I am personally not sympathetic to the reasoning stated in the
-proposed commit log message above your signed-off-by line; the
-change is not justified at all.
-
-But I'll comment on the code changes anyway.
-
->  builtin/add.c  |   14 +++++++++++---
->  t/t3700-add.sh |   17 ++++++++++++++++-
->  2 files changed, 27 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/add.c b/builtin/add.c
-> index e664100..61bb9ce 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -313,7 +313,7 @@ static const char ignore_error[] =
->  N_("The following paths are ignored by one of your .gitignore files:\n");
->  
->  static int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
-> -static int ignore_add_errors, addremove, intent_to_add, ignore_missing = 0;
-> +static int ignore_add_errors, addremove, intent_to_add, ignore_missing, silent_ignores = 0;
->  
->  static struct option builtin_add_options[] = {
->  	OPT__DRY_RUN(&show_only, N_("dry run")),
-> @@ -329,6 +329,7 @@ static struct option builtin_add_options[] = {
->  	OPT_BOOLEAN( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
->  	OPT_BOOLEAN( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
->  	OPT_BOOLEAN( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
-> +	OPT_BOOLEAN('s', "silent-ignores", &silent_ignores, N_("don't fail when ignored files are specified on the command line (ignore them silently)")),
-
-I'd prefer not to see a new option whose worth hasn't been proven in
-the field to squat on any short-and-sweet single letter option
-name and would suggest replacing that 's' with 0, at least for now.
-
-> @@ -339,6 +340,11 @@ static int add_config(const char *var, const char *value, void *cb)
->  		ignore_add_errors = git_config_bool(var, value);
->  		return 0;
->  	}
-> +	if (!strcmp(var, "add.silentignores") ||
-> +	    !strcmp(var, "add.silent-ignores")) {
-
-The second variant is unwarranted.  We may have a variable or two
-that are accepted with '-' or '_' in their names, but they are
-backward compatibility measures, only to cover previous mistakes
-that named them in these letters in the first place.
+	Arnd
