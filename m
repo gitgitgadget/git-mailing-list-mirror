@@ -1,65 +1,71 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
-Date: Mon, 1 Oct 2012 12:15:14 +0530
-Message-ID: <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com>
-References: <1348926195-4788-1-git-send-email-artagnon@gmail.com>
- <50670A94.2070504@web.de> <CALkWK0nCahg7165_JuJSj7u0UfYRGZgFjJ6O-o=HCwdsPwU-xg@mail.gmail.com>
- <50671364.5030205@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Oct 01 08:45:50 2012
+From: Olaf Klischat <olaf.klischat@gmail.com>
+Subject: [PATCH 0/2] git-add: -s flag (silently ignore files)
+Date: Mon,  1 Oct 2012 09:14:58 +0200
+Message-ID: <1349075700-26334-1-git-send-email-olaf.klischat@gmail.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org, olaf@sofd.de
+X-From: git-owner@vger.kernel.org Mon Oct 01 09:15:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIZlA-0007TF-S7
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 08:45:45 +0200
+	id 1TIaDv-0002UX-OD
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 09:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964Ab2JAGpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 02:45:35 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:52671 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416Ab2JAGpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 02:45:35 -0400
-Received: by qaas11 with SMTP id s11so1272297qaa.19
-        for <git@vger.kernel.org>; Sun, 30 Sep 2012 23:45:34 -0700 (PDT)
+	id S1751932Ab2JAHPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 03:15:14 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:39603 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751551Ab2JAHPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 03:15:13 -0400
+Received: by bkcjk13 with SMTP id jk13so4702522bkc.19
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 00:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=u9G5D4CNoRiYFb+sVjOxmb3B9+8rNnmFxhp+WFsKDkc=;
-        b=sN3Rb837lCHs6s+HoBHLnOf7mVz46d0dQsOopzJa80FzBDDGXGhYA4nweft0gmHwgK
-         Vu7rXpe4v0Ywq+7koSL/jyInWP/UPcYI28U//DLibvFQrbt03zHmhJSzskb+LrEIKqop
-         1midYEEmnZOeazzEURGbmlJrnlcy6iSIDJa7jnovCM5jeSf54dST97f1zWUEfSiY7tX2
-         Ek09/RR5E83rVDIFdINTYILUie1y2dU5j5zsqgPsCQAnQu2aqKTd0rWrXENOykDW+Oq1
-         Z6IqzGzpX976n7PFrORRKm4hwYGD/ghYzJj7REuZ/yniFm5pHFc3/BEq6gE31evu3EWT
-         lZhw==
-Received: by 10.224.192.66 with SMTP id dp2mr34625672qab.95.1349073934451;
- Sun, 30 Sep 2012 23:45:34 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Sun, 30 Sep 2012 23:45:14 -0700 (PDT)
-In-Reply-To: <50671364.5030205@web.de>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=5DxwRarhuo4TeBaOpO5IQ+nIimsYSIW6ZciTQg1XPL8=;
+        b=C9QFgRacD8bOxiPL7UlUE3UXt0wUDEI730Cukxg3UihjdeCeUihqNIV9Py4JGyZKVd
+         fhHlVHiY94ldlA+NF0j9dW3o3HFeNkEfHJr9nIOGRytDE9/QySNzoPcKpd+1HqDeaubK
+         tFJiKAFxphJW8GC13V5jFPjmv//0uTXFG7JOyCpIqa5CDXTUYS74PhwK+hpaDywPDhvY
+         IkpcTC69txrwc6vP8FgiybNUouaWKA4BGiY9DIO+duZz+Uwl22Gx2NuKfQ2gzsx/ZOQG
+         zy5NAhB0Z4MC+dJ85evXtXm4TBiu+F1XU4eZWURnXRdW1wb7mAeoUbIEKLtZQESHPKjt
+         1Kyg==
+Received: by 10.204.4.141 with SMTP id 13mr5736424bkr.82.1349075711939;
+        Mon, 01 Oct 2012 00:15:11 -0700 (PDT)
+Received: from tack.home.local. (e178068083.adsl.alicedsl.de. [85.178.68.83])
+        by mx.google.com with ESMTPS id e13sm5851880bkw.12.2012.10.01.00.15.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 01 Oct 2012 00:15:11 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206720>
 
-Hi Jens,
+This adds an -s|--silent-ignore option to git-add, which causes
+ignored files that were specified explicitly on the command line to be
+silently ignored, rather than abandoning the command. I found this
+useful for scenarios where you want to feed the file list into git add
+via find or other external commands (`find .... | xargs git add'),
+which you wouldn't want to carefully tune so they don't output any
+ignored files. git ls-files doesn't have find's filtering
+capabilities, and using it in place of find would kind of violate "one
+job one tool" anyway. I'm not really a git guru, so maybe I'm missing
+something, and I'm unsure how useful this new option is for a general
+audience. OTOH the patch is trivial. Check it out.
 
-Jens Lehmann wrote:
-> I'm very interested in your feedback as a first time submodule user,
-> what you wrote above makes sense and explains why you did that patch
-> (and it would have been nice to read some of it in the commit message
-> ;-). What information did you expect to get from a "git submodule
-> show" which isn't already provided by "git status" and "git diff"
-> (especially as they give you some information the "git submodule"
-> commands don't)?
+The update applies on top of "master" (261b5119).
 
-I expected 'git submodule show' to list all the submodules, and show
-changes to specific submodules like the 'git submodule summary'
-output.
+Olaf Klischat (2):
+  git-add: -s flag added (silently ignore files)
+  git-add: -s flag: documentation added
 
-Ram
+ Documentation/git-add.txt |   15 +++++++++++----
+ builtin/add.c             |   14 +++++++++++---
+ t/t3700-add.sh            |   17 ++++++++++++++++-
+ 3 files changed, 38 insertions(+), 8 deletions(-)
+
+-- 
+1.7.10.4
