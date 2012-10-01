@@ -1,87 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 8/9] longest_ancestor_length(): resolve symlinks
- before comparing paths
-Date: Sun, 30 Sep 2012 22:30:41 -0700
-Message-ID: <7vipauep32.fsf@alter.siamese.dyndns.org>
-References: <1348899362-4057-1-git-send-email-mhagger@alum.mit.edu>
- <1348899362-4057-9-git-send-email-mhagger@alum.mit.edu>
- <7vd314gcti.fsf@alter.siamese.dyndns.org> <50692150.8080504@alum.mit.edu>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: git gui does not open bare repositories
+Date: Mon, 01 Oct 2012 08:22:21 +0200
+Message-ID: <5069369D.40402@atlas-elektronik.com>
+References: <CAB9Jk9CA+e8xR9sz7cW+5+990FmTeYN3pjxs4ZKFpkzb6OL35Q@mail.gmail.com> <CAH6sp9N1cFH7orPNmfbhgHq6oUNtQNe=-5f5jkYNXzr+6Xp_pQ@mail.gmail.com> <CAB9Jk9BivVrH7daMR=u5Y6Ut=pZGRBcgKNZ_afZ53XFxhFBnZw@mail.gmail.com> <CAH6sp9ME0og0E-=oW6MBFMBv8hD0y8PpmdpyaV4qqr7Mb7c5VA@mail.gmail.com> <50656388.3050400@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Lea Wiemann <lewiemann@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Oct 01 07:31:39 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	git <git@vger.kernel.org>
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 08:23:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIYbO-0006br-La
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 07:31:34 +0200
+	id 1TIZPT-0005Pc-SQ
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 08:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab2JAFap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 01:30:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34247 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750822Ab2JAFap (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 01:30:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32C0A926C;
-	Mon,  1 Oct 2012 01:30:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RytjQVcr8EA66qtXVGkCTSioPLc=; b=t11xQ0
-	KgYf+ldmNsem2MgVRabvzNYJ7ZAfDKz99HFLn2daGBPL9IdfnN/Rx2z90ddQckr1
-	g6+vAIQ3Ju6/Ze5AurF+Tg7k6ZHNNDgZv6Tbyv6PG2WQH8rBgcNFcfCtKIdD1w1J
-	tO0Qke+uAyP29ciwAUOMWG5z1qGsJL5J6jx0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QwP19hk9wwRIC1nhMCCytyL706jh1wYD
-	duEyhUV7h9PUcFY+7HQWXbroyucz4WoNyLxb+xYZ91ueiyKD5KuC4+ZO0JNn9nNr
-	POZ+j68ipGRhJNjKWjXrmZOeV4mRRL8adlkwneLUlNfNDA5kM+75Iv7ZRg+TaI3I
-	Eeq1rxoT+oA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18C21926B;
-	Mon,  1 Oct 2012 01:30:44 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 693FB9269; Mon,  1 Oct 2012
- 01:30:43 -0400 (EDT)
-In-Reply-To: <50692150.8080504@alum.mit.edu> (Michael Haggerty's message of
- "Mon, 01 Oct 2012 06:51:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 250A56FC-0B89-11E2-ADAA-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751132Ab2JAGWZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2012 02:22:25 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:33483 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750822Ab2JAGWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 02:22:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id 8718A100F0;
+	Mon,  1 Oct 2012 08:22:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10124)
+	with ESMTP id wvF0_zc6l2E2; Mon,  1 Oct 2012 08:22:22 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Mon,  1 Oct 2012 08:22:22 +0200 (CEST)
+Received: from [141.200.59.243] (pcndmc01.atlas.de [141.200.59.243])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id BEBCF2716A;
+	Mon,  1 Oct 2012 08:22:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <50656388.3050400@atlas-elektronik.com>
+X-Enigmail-Version: 1.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206716>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Am 28.09.2012 10:44, schrieb Stefan N=C3=A4we:
 
-> I think I would advocate that the prefix has to match the front of
-> the path exactly (including any trailing slashes) and either
->
->     strlen(prefix) == 0
->     or the prefix ended with a '/'
->     or the prefix and path are identical
->     or the character in path following the matching part is a '/'
->
-> This would allow the "is path its own prefix" policy to be decided by
-> the caller by either including or omitting a trailing slash on the
-> prefix argument.
+> I get "Not a Git repository: remote.git" as well, when I run
+> git gui "somewhere" (i.e. not in "remote.git")=20
 
-I think that is sensible thing to do.
+i.e.:
 
-The primary thing I found questionable was that the function, given
-"/net/wink/project/frotz" to check against "/pub:/s" (or "/pub/:/s/"
-if you like), will report that "/net/wink/project" directory is the
-longest ancestor, when "/s" is a symlink that happens to point at
-"/net/wink/project".  It is very counter-intuitive when you view its
-two input strings as strings.  By making its sole caller expand the
-symbolic links, it would be a lot clearer what is going on to
-anybody who follow the codepath.  We have one path obtained from
-getcwd() and a set of paths all of which are real paths without
-symbolic aliasing, and we check if one among the latter cover
-an earlier part of the former.
+  $ cd /not/a/repo
+  $ git gui
+
+> and the select "Open Existing Repository".
+>=20
+> I get "Cannot use bare repository: .../remote.git" when I run git gui
+> from inside the "remote.git" directory.
+
+i.e.:
+
+  $ cd /path/to/bare-repo.git
+  $ git gui
+
+> Both on WinXP with msysGit.
+
+And the same on Linux with Git v1.7.12
+
+Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: Press any key to continue or any other key to quit...
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
