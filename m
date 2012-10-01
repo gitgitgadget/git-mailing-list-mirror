@@ -1,68 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Howard Miller <howardsmiller@gmail.com>
 Subject: Re: "submodule" mistake and a problem
-Date: Mon, 01 Oct 2012 13:42:57 +0200
-Message-ID: <506981C1.3030504@viscovery.net>
+Date: Mon, 1 Oct 2012 13:05:57 +0100
+Message-ID: <CAHVO_93d92Ert35z1popk+X8HAAHX_jwTVdRCjrhNHrhTsvx2Q@mail.gmail.com>
 References: <CAHVO_92=5u-i+-d__5k7Uoq5pF4iACq9GuBSj4U5MepbKV_jdA@mail.gmail.com>
+	<506981C1.3030504@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Howard Miller <howardsmiller@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 13:43:18 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 01 14:06:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIeP4-0006bb-QY
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 13:43:15 +0200
+	id 1TIelE-0007uB-9w
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 14:06:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195Ab2JALnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 07:43:04 -0400
-Received: from so.liwest.at ([212.33.55.24]:50475 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751536Ab2JALnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 07:43:02 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.77)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1TIeOo-0001WP-NP; Mon, 01 Oct 2012 13:42:58 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7847F1660F;
-	Mon,  1 Oct 2012 13:42:58 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CAHVO_92=5u-i+-d__5k7Uoq5pF4iACq9GuBSj4U5MepbKV_jdA@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1752487Ab2JAMF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 08:05:58 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:64142 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991Ab2JAMF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 08:05:57 -0400
+Received: by ieak13 with SMTP id k13so11849954iea.19
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 05:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=P0/pSzJ2mmpDfJY/HPPBTN9upkjzjjQfTvPkgoYs8vc=;
+        b=NqUovLiQ/LJ7mgbP1HDQFuDNekhRGY+jlhKpstfma4OihWNYpvX2xdRJsEAOkpDWRU
+         WKa4T4EGHfZ7LExVi/C6zp5FpmOjxJOzdEL8KIlFCmee7cICPZMZmi5RnHskoEKsc855
+         vF9K6+9PWOaKoI8pkxbNDCTP8b5ZyTn1SsOKdWrjOtqub/ENOtzvNX28lzq5g6tfLRiW
+         JI1fW8AjOjdmKutVochQ0BozWBPQaJW62g1Cap8UYRawhN3FUiQHky3eVA6Vosi9Jyvq
+         5ZDYSLz/asc1OI/O3RZcSk4aGd6/+1d7Edaa6VrXhbaP1+fdiLq6fJqq/QnUmGInKZv5
+         KfXg==
+Received: by 10.50.237.98 with SMTP id vb2mr1752964igc.6.1349093157387; Mon,
+ 01 Oct 2012 05:05:57 -0700 (PDT)
+Received: by 10.64.13.110 with HTTP; Mon, 1 Oct 2012 05:05:57 -0700 (PDT)
+In-Reply-To: <506981C1.3030504@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206730>
 
-Am 10/1/2012 12:41, schrieb Howard Miller:
-> - I have an existing (long standing) project in git with an upstream in github
-> - I added a subdirectory which I had forgotten was itself a git
-> project (i.e. it has its own .git directory)
-> - I committed the subdirectory (git add /path/to/subdir;  git commit -m ....)
-> - I pushed the latest version upstream
-> 
-> .....at this point I realised that only the directory name had been pushed. SO...
-> 
-> - git rm /path/to/subdir resulted in fatal: pathspec
-> '/path/to/subdir/' did not match any files
-> - so I deleted it manually, re-copied the directory and removed its
-> ..git directory
-> 
-> ....I now cannot add or commit the directory. Git just ignores it. I
-> have grepped and searched and kind find no reference to this directory
-> anywhere. I am completely stumped.
-> 
-> Can anybody help? I don't want this to be a git subdirectory, I just
-> want to be able to add the files (without the .git directory)
+>
+> Perhaps:
+>
+>   git rm -f --cached path/to/subdir   # remove from index, keep files
+>   git add path/to/subdir
+>
+> -- Hannes
 
-Perhaps:
+Fantastic.... worked perfectly.  I'll write that down somewhere for
+the next time I do it :)
 
-  git rm -f --cached path/to/subdir   # remove from index, keep files
-  git add path/to/subdir
+Is there a better way of handling sub-modules like that? I've looked
+at git submodules but just got into more of a mess. It would be nice
+to push a project complete with a (git) submodule upstream but it
+seems tricky or impossible.
 
--- Hannes
+Thanks :)
