@@ -1,133 +1,103 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: mailinfo: don't require "text" mime type for attachments
-Date: Sun, 30 Sep 2012 15:10:48 -0700 (PDT)
-Message-ID: <alpine.LFD.2.02.1209301458540.11079@i5.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] submodule add: Fail when .git/modules/<name>
+ already exists unless forced
+Date: Sun, 30 Sep 2012 17:06:58 -0700
+Message-ID: <7v7grbf42l.fsf@alter.siamese.dyndns.org>
+References: <BC634E06939C44239106E7A8DD229130@gmail.com>
+ <50636C00.6080906@web.de> <50677E76.1050204@web.de>
+ <7vtxugglqy.fsf@alter.siamese.dyndns.org> <50689B5F.3060308@web.de>
+ <5068B329.7040302@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Don Zickus <dzickus@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 01 00:12:06 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Johnson <me@jondavidjohn.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 01 02:07:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIRk1-0002BP-Tq
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 00:12:02 +0200
+	id 1TITYC-0000z9-7e
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 02:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751584Ab2I3WLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2012 18:11:09 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:56275 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487Ab2I3WLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2012 18:11:08 -0400
-Received: by padhz1 with SMTP id hz1so3671901pad.19
-        for <git@vger.kernel.org>; Sun, 30 Sep 2012 15:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:x-x-sender:to:cc:subject:message-id:user-agent
-         :mime-version:content-type;
-        bh=Ay0Fp6e0m3lUKHCiIgJAvARsH3yjPMaHZCNGZ9O8g8A=;
-        b=s2UoaVFRVp4O6IzBl9W+YFwUQLvCIfpokYiTZl08AsrRnKQCNA8/iacT+L5G4KLsEA
-         exKI6BzFGoVE/lg8MzziVYYl661KraKcsKj2MRZvawlBKDwtRwEa2HB3QkKXoGIIOs51
-         P6BMMH9siBdOayd5RIINQ1iL/Juo/v0TZun00MxA12WWd9FsFtQrxzKFEJ1mi7FarkIp
-         A8GoZ2C/QUkX5sEaQCuX92Y05YUd/cfeZibGPulykxYikXywogKAgcvjaZI63cvynllJ
-         dpf4XIzNScKWV94wEsxAI73DjlRsJKBHnxSjSk9fTAjENjgzypxcmHP33lWWhrEW/vUR
-         57Xg==
-Received: by 10.66.73.166 with SMTP id m6mr32248848pav.1.1349043066472;
-        Sun, 30 Sep 2012 15:11:06 -0700 (PDT)
-Received: from [192.168.1.87] (c-24-22-13-12.hsd1.or.comcast.net. [24.22.13.12])
-        by mx.google.com with ESMTPS id gv1sm9204637pbc.38.2012.09.30.15.11.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 30 Sep 2012 15:11:05 -0700 (PDT)
-X-X-Sender: torvalds@i5.linux-foundation.org
-User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+	id S1751442Ab2JAAHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2012 20:07:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56340 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751425Ab2JAAHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2012 20:07:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D463B9E3E;
+	Sun, 30 Sep 2012 20:07:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=raOrKqdgVrBWSQ1LFbaGUzPyjcc=; b=e5aDSE
+	W7/PnQ1jvNdY5k4BPc8I/vNcPd5glr2V1g0kqfLiHHuapjU6397PDn7pI6T1q5/p
+	DmoHhe+PdsOgy2dBkb7rOZrwR41HUmWGjJwyMGxUsltN2fubQOTy23vQmqrsS/KM
+	lSTUI0SIBr4CGVxgG4F0jqFI0lGx0KJnbNpvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mBvjrSK8xtPA6zgSideQIXuG4QrKLLlb
+	0pD/R7smQyipDskKDkSY3yX4SORMl7Dy/459RXTQ0yQOzCMD4u0uuoMxVIVOMz3Q
+	cZZG1opZZH/aChQHXZmRuljE9GDaq3kjkDJhXcaaBAFNrUOQuLLOoo36eckmu8uR
+	iklI7Jip2PU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9D6F9E3D;
+	Sun, 30 Sep 2012 20:07:04 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96C979E3C; Sun, 30 Sep 2012
+ 20:07:03 -0400 (EDT)
+In-Reply-To: <5068B329.7040302@web.de> (Jens Lehmann's message of "Sun, 30
+ Sep 2012 23:01:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EDEDF89A-0B5B-11E2-94FF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206700>
 
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Currently "git am" does insane things if the mbox it is given contains 
-attachments with a MIME type that aren't "text/*".
+>> Good point! I will add a more detailed error message (including
+>> the url of the default remote which is configured for the already
+>> present submodule repo) and teach --force to skip the test and
+>> resurrect that submodule repo.
+>
+> The message when "git submodule add" finds .git/modules/<name> is:
+>
+> A git directory for '<name>' is found locally with remote(s):
+>   origin	<url(s) from .git/modules/<name>>
+> If you want to reuse this local git directory instead of cloning again from
+>   <url given on command line>
+> use the '--force' option. If the local git directory is not the correct repo
+> or you are unsure what this means choose another name with the '--name' option.
+>
+> When run with the --force option the following message is printed:
+>
+> Reactivating local git directory for submodule '<name>'.
 
-In particular, it will still decode them, and pass them "one line at a 
-time" to the mail body filter, but because it has determined that they 
-aren't text (without actually looking at the contents, just at the mime 
-type) the "line" will be the encoding line (eg 'base64') rather than a 
-line of *content*.
+Thanks, will re-queue.
 
-Which then will cause the text filtering to fail, because we won't 
-correctly notice when the attachment text switches from the commit message 
-to the actual patch. Resulting in a patch failure, even if patch may be a 
-perfectly well-formed attachment, it's just that the message type may be 
-(for example) "application/octet-stream" instead of "text/plain".
+The approach "submodule rm" takes when removing a project is to
+treat the removed submodule as not necessary for the current commit
+in the superproject, but it is considered necessary elsewhere in the
+history of the superproject, and that is why we stash away the
+repository in $GIT_DIR/modules of the superproject.
 
-Just remove all the bogus games with the message_type. The only difference 
-that code creates is how the data is passed to the filter function 
-(chunked per-pred-code line or per post-decode line), and that difference 
-is *wrong*, since chunking things per pre-decode line can never be a 
-sensible operation, and cannot possibly matter for binary data anyway.
+We may however want to think about another mode of user error where
+the user runs "submodule add $path" for a wrong repository, realizes
+the mistake _before_ making any commit and try to repoint the $path
+to a correct repository.  The behaviour of "submodule add" in this
+patch, and the behaviour of existing "submodule rm", assumes that
+the user is not stupid and won't make such a mistake, but to recover,
+the user may need a way to really nuke the submodule repository that
+was added by the earlier misteake (which is not needed anywhere in
+the history of the superproject) and $GIT_DIR/module/$name really
+replaced with the updated one.
 
-This code goes all the way back to March of 2007, in commit 87ab79923463 
-("builtin-mailinfo.c infrastrcture changes"), and apparently Don used to 
-pass random mbox contents to git. However, the pre-decode vs post-decode 
-logic really shouldn't matter even for that case, and more importantly, "I 
-fed git am crap" is not a valid reason to break *real* patch attachments.
-
-If somebody really cares, and determines that some attachment is binary 
-data (by looking at the data, not the MIME-type), the whole attachment 
-should be dismissed, rather than fed in random-sized chunks to 
-"handle_filter()".
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Don Zickus <dzickus@redhat.com>
----
- builtin/mailinfo.c | 11 -----------
- 1 file changed, 11 deletions(-)
-
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 2b3f4d955eaa..da231400b327 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -19,9 +19,6 @@ static struct strbuf email = STRBUF_INIT;
- static enum  {
- 	TE_DONTCARE, TE_QP, TE_BASE64
- } transfer_encoding;
--static enum  {
--	TYPE_TEXT, TYPE_OTHER
--} message_type;
- 
- static struct strbuf charset = STRBUF_INIT;
- static int patch_lines;
-@@ -184,8 +181,6 @@ static void handle_content_type(struct strbuf *line)
- 	struct strbuf *boundary = xmalloc(sizeof(struct strbuf));
- 	strbuf_init(boundary, line->len);
- 
--	if (!strcasestr(line->buf, "text/"))
--		 message_type = TYPE_OTHER;
- 	if (slurp_attr(line->buf, "boundary=", boundary)) {
- 		strbuf_insert(boundary, 0, "--", 2);
- 		if (++content_top > &content[MAX_BOUNDARIES]) {
-@@ -657,7 +652,6 @@ again:
- 	/* set some defaults */
- 	transfer_encoding = TE_DONTCARE;
- 	strbuf_reset(&charset);
--	message_type = TYPE_TEXT;
- 
- 	/* slurp in this section's info */
- 	while (read_one_header_line(&line, fin))
-@@ -871,11 +865,6 @@ static void handle_body(void)
- 			strbuf_insert(&line, 0, prev.buf, prev.len);
- 			strbuf_reset(&prev);
- 
--			/* binary data most likely doesn't have newlines */
--			if (message_type != TYPE_TEXT) {
--				handle_filter(&line);
--				break;
--			}
- 			/*
- 			 * This is a decoded line that may contain
- 			 * multiple new lines.  Pass only one chunk
+I don't know how important to support a recovery procedure from such
+mistakes, though.
