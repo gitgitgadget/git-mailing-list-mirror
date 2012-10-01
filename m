@@ -1,94 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add __git_ps1_pc to use as PROMPT_COMMAND
-Date: Mon, 01 Oct 2012 14:09:31 -0700
-Message-ID: <7va9w5c31w.fsf@alter.siamese.dyndns.org>
-References: <5064140E.50007@drmicha.warpmail.net>
- <50658C9B.6030809@nieuwland.nl> <7vipaym3ks.fsf@alter.siamese.dyndns.org>
- <50695ECE.5010101@nieuwland.nl> <7v626udse6.fsf@alter.siamese.dyndns.org>
- <7v4nmec8fi.fsf@alter.siamese.dyndns.org> <5069EE8D.6050200@nieuwland.nl>
- <7vr4piaryi.fsf@alter.siamese.dyndns.org> <506A0366.6030009@xs4all.nl>
+From: Howard Miller <howardsmiller@gmail.com>
+Subject: Re: "submodule" mistake and a problem
+Date: Mon, 1 Oct 2012 22:16:18 +0100
+Message-ID: <CAHVO_90pLFWb87mFfDpC1ZDQR=jm2YYFj597=kwVPTEv4AA+yg@mail.gmail.com>
+References: <CAHVO_92=5u-i+-d__5k7Uoq5pF4iACq9GuBSj4U5MepbKV_jdA@mail.gmail.com>
+	<506981C1.3030504@viscovery.net>
+	<CAHVO_93d92Ert35z1popk+X8HAAHX_jwTVdRCjrhNHrhTsvx2Q@mail.gmail.com>
+	<5069C760.2020603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Simon Oosthoek <soosthoek@nieuwland.nl>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	schwab@linux-m68k.org
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Oct 01 23:10:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 01 23:16:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TInG8-0003Jz-8D
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 23:10:36 +0200
+	id 1TInLv-0003Er-Ka
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 23:16:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225Ab2JAVJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 17:09:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37168 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932136Ab2JAVJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 17:09:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 559DD86BC;
-	Mon,  1 Oct 2012 17:09:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pJ7oTwwAAy+042E1Lg1uUoLO6EE=; b=b77Jl+
-	b59s9OdEZne0a+m/sX9AeQZqjzIzkxeES/clEBkDH9UJ/n0NYTMq8V3DRew4kdpp
-	t3UdujVc3bWBnIPaThIg6TbQ4qkF3NMBcMgMzbZG5T0n34r0Ap6dc1Oy7uvdJSqS
-	bG41WAg2xUUpuHEt7bw2CqzmTchiOxkrkZEyo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jK63PgCCekWKmUqMVQGVI+9BETAzTVm1
-	lFrshImoWgo046/peUOARV++ougqsXNpLVDD8d5mo645WxXks8QsrloCEFsbIM0R
-	vnqkCumWf1KA/YDpVoEVf10WZiwhitw5+tBUalIei9oydUIW8muHjGueOM1sDnqd
-	Jg9nfR8orgs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4340986BB;
-	Mon,  1 Oct 2012 17:09:33 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A03E686BA; Mon,  1 Oct 2012
- 17:09:32 -0400 (EDT)
-In-Reply-To: <506A0366.6030009@xs4all.nl> (Simon Oosthoek's message of "Mon,
- 01 Oct 2012 22:56:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BE03156-0C0C-11E2-AFA6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757456Ab2JAVQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 17:16:21 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:50668 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756777Ab2JAVQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 17:16:19 -0400
+Received: by ieak13 with SMTP id k13so13259175iea.19
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 14:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ykqyz2KZkmR9xyYzJ/rB2ovsKr6gvKFQYurEt8UfbSE=;
+        b=MDW88JILZCusbWnIbJL60vJEEfJkrBYWJrvPmpEbKGk18nsCHZmofKSZP9atHa3LqE
+         G04afzcS0PzEloNYbyQNG0H1ML+Er4KogKI4EtO4dTEB7GBrZd05CBcFqzeTr9XrtEgS
+         TBuWUGlQV75wLY1MpLZ2ij1sSEt8pm0Y9tCAFfA0QHc6Cdk9XgOxvSJLqOHohLZCMKyZ
+         8MF9HxWu/sRWL5i9u7raGr/zmRPrDGsJ7CH8jEphEC1W+3Cepf3LPfagqkNgJJr5XVDW
+         QzADEAT45TEmgUgnB1K6Qg+wxU6i45sbmFktjcq5EON8uBjXPSPVmWw1OdYaLOh/Uxzj
+         s6uQ==
+Received: by 10.50.185.230 with SMTP id ff6mr7692145igc.0.1349126178583; Mon,
+ 01 Oct 2012 14:16:18 -0700 (PDT)
+Received: by 10.64.13.110 with HTTP; Mon, 1 Oct 2012 14:16:18 -0700 (PDT)
+In-Reply-To: <5069C760.2020603@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206769>
 
-Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
+I was not aware of git subtree. I'll go and do some reading. Thanks
+for the pointer!
 
-> It's possible to set PS1 to nothing and print a string from
-> PROMPT_COMMAND, but then you miss out on all the features of the PS1
-> interpretation by bash and compared to the use of __git_ps1 at the
-> moment, it has to put out quite a different string. Because if you like
-> to see user@host+workdir (git-status)[$#]
-> the current users of __git_ps1 say PS1="\u@host+\w $(__git_ps1 "%s")\$
-> ", but all __git+ps1 has to put out is "(branch)" or "(branch *)", etc.
+On 1 October 2012 17:40, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 >
-> If it has to print the same prompt in PC mode, it has to add all the
-> user/host/workdir/[$#] data as well, withouth being able to use the bash
-> internal interpretation (because that is only working when PS1 is set).
-
-The longer I read your explanation, the less useful the "PC mode"
-sounds like, at least to me.  So why does an user even want to use
-such a mechanism, instead of PS1?  And even if the user wants to use
-it by doing \w, \u etc. himself, she can do that with
-
-	PROMPT_COMMAND='
-		PS1=$(printf "\u \h \w %s$ " $(__git_ps1 "%s"))
-        '
-
-just fine, no?
-
-So I still do not see the problem, even taking your "Set PS1 in the
-command, without spitting anything out of the command" use case into
-account.
-
-Confused....
+> Am 01.10.2012 14:05, schrieb Howard Miller:
+> >>
+> >> Perhaps:
+> >>
+> >>   git rm -f --cached path/to/subdir   # remove from index, keep files
+> >>   git add path/to/subdir
+> >>
+> >> -- Hannes
+> >
+> > Fantastic.... worked perfectly.  I'll write that down somewhere for
+> > the next time I do it :)
+> >
+> > Is there a better way of handling sub-modules like that? I've looked
+> > at git submodules but just got into more of a mess. It would be nice
+> > to push a project complete with a (git) submodule upstream but it
+> > seems tricky or impossible.
+>
+> Git submodules are distinct repositories by design, so you'd have to
+> create an upstream repository for the submodule too to make that work.
+> But I have the impression that you want to import another repository
+> into a directory of your repo, so maybe git subtree is what you want.
