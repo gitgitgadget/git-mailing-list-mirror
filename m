@@ -1,70 +1,82 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
-Date: Mon, 01 Oct 2012 19:26:34 +0200
-Message-ID: <5069D24A.6060101@web.de>
-References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <50670A94.2070504@web.de> <CALkWK0nCahg7165_JuJSj7u0UfYRGZgFjJ6O-o=HCwdsPwU-xg@mail.gmail.com> <50671364.5030205@web.de> <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Deletion of remote branches
+Date: Mon, 01 Oct 2012 10:22:09 -0700
+Message-ID: <7v1uhids5a.fsf@alter.siamese.dyndns.org>
+References: <CC8F65C7.E79%jens.hausherr@xing.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 19:32:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jens Hausherr <Jens.Hausherr@xing.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 19:32:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIjlo-00059J-VN
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:27:05 +0200
+	id 1TIjhH-00085z-VZ
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952Ab2JAR0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 13:26:48 -0400
-Received: from mout.web.de ([212.227.17.12]:60351 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169Ab2JAR0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 13:26:36 -0400
-Received: from [192.168.178.41] ([91.3.164.110]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0Lud4y-1TRMhG4AzI-0104eA; Mon, 01 Oct 2012 19:26:35
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com>
-X-Provags-ID: V02:K0:zofjAx4q0WfJAadXnzJElQZL3yuL4/7ztLvvyLzf7QL
- gLx0mPeXqYHtv7d0khskVSRYWEEuflvBznv6Sp+o9PB/aIdK5J
- SPslspQcilA0D2JVlH69flZovcy6U2VfVnblf/gK+pN8t9zyQx
- nRbC2xqhoZtVtCRiVAVD0vxK1YKgzlyTU4rOCTi+4+oP3sIxTf
- pOuvYCm6cWlIACS708+Ag==
+	id S1751119Ab2JARWN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2012 13:22:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37998 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750856Ab2JARWM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Oct 2012 13:22:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D46B69011;
+	Mon,  1 Oct 2012 13:22:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=k56LUoIyt5X+
+	cPDD0FUDqkL/ksk=; b=sS15bCJvMjRPXfN0VIo+XM3T40vVdAqZu8A+A8PnbO1M
+	WVn2kYyYy5hX/FpG9sDHBX7FN+Yii7pRuHIvdC6FEJAlj2V/B6Q9JX+vPUuqIDYa
+	Ckz9UnFq05NwwwrES1s0g1sP7SFCP3ra5MKG4RjZU3dbn890phH21M9FzAjIr0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NLfqgr
+	aue6wEds7xBFH2nsqlPeqXdw+W/2ww+YbpaysHvXSNyJeOQ3lctcItRt67haagNk
+	HoCZql3aeJ/+SCR8KdwaOvOQeArabi99zwnXnA3R/p/7SciOH+D8bv8eoXhtQoeL
+	PpwsZwkYmfcLOuX0G+VFWQFxwq4PrR42A4xjE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0F11900E;
+	Mon,  1 Oct 2012 13:22:11 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27E67900A; Mon,  1 Oct 2012
+ 13:22:11 -0400 (EDT)
+In-Reply-To: <CC8F65C7.E79%jens.hausherr@xing.com> (Jens Hausherr's message
+ of "Mon, 1 Oct 2012 13:22:44 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 88E93C8E-0BEC-11E2-957F-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206746>
 
-Am 01.10.2012 08:45, schrieb Ramkumar Ramachandra:
-> Jens Lehmann wrote:
->> I'm very interested in your feedback as a first time submodule user,
->> what you wrote above makes sense and explains why you did that patch
->> (and it would have been nice to read some of it in the commit message
->> ;-). What information did you expect to get from a "git submodule
->> show" which isn't already provided by "git status" and "git diff"
->> (especially as they give you some information the "git submodule"
->> commands don't)?
-> 
-> I expected 'git submodule show' to list all the submodules, and show
-> changes to specific submodules like the 'git submodule summary'
-> output.
+Jens Hausherr <Jens.Hausherr@xing.com> writes:
 
-Ok, but "git submodule summary" doesn't list all the submodules,
-only those with changes. Maybe "git submodule status" is closer
-to what you expect (except for the missing changes)?
+> I came across an issue with deleting remote branches: When deleting a
+> branch using "git branch =C2=ADr =C2=ADd <branch>" the branch is dele=
+ted and no
+> longer shown by "git branch =C2=ADr".
+>
+> "git ls-remote --heads" on the other hand still lists the ref for the=
+ last
+> branch commit.
+>
+> If I delete the branch using "git push origin :<branch>" the branch i=
+s
+> removed completely (i.e. git ls-remote  no longer returns a ref).
 
-And - apart from the list of all submodules - the changes to them
-are given by "git status" and "git diff --submodule" too, right?
-(sometimes I forget that "--submodule" is not enabled by default,
-as I'm a heavy "git gui" user, and that option is used there. We
-might need a config option to turn that on) Or is there something
-you are missing from their output?
+All of the above are expected and working as designed.  Remote
+tracking branches are local _copies_ of what you have over there at
+the remote repository. The latter is the authoritative version, and
+you asked "ls-remote" to go over the network to view them.
 
-Me too would expect a show command to show me a list of all the
-submodules and maybe some extra information (is it populated or
-not, does it have its .git directory embedded, does it contain
-changes). So maybe "show" should be a slightly pimped "status"?
+If you are trying to remove the branches you show to others and
+yourself who are observing that remote repository from your local
+workstation, you can first "git push origin :<branch>" to remove it
+in the remote repository. You can run your next fetch with "--prune"
+to get rid of remotes/origin/<branch>, I think.
