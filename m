@@ -1,122 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] more meaningful error message in gitk when git binary is
- not available
-Date: Mon, 01 Oct 2012 10:11:05 -0700
-Message-ID: <7va9w6dsnq.fsf@alter.siamese.dyndns.org>
-References: <50694380.4090108@josefassad.com>
+Subject: Re: [PATCH] Add __git_ps1_pc to use as PROMPT_COMMAND
+Date: Mon, 01 Oct 2012 10:16:49 -0700
+Message-ID: <7v626udse6.fsf@alter.siamese.dyndns.org>
+References: <5064140E.50007@drmicha.warpmail.net>
+ <50658C9B.6030809@nieuwland.nl> <7vipaym3ks.fsf@alter.siamese.dyndns.org>
+ <50695ECE.5010101@nieuwland.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Josef Assad <josef@josefassad.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 19:21:42 2012
+Cc: git@vger.kernel.org, s.oosthoek@xs4all.nl,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	schwab@linux-m68k.org
+To: Simon Oosthoek <soosthoek@nieuwland.nl>
+X-From: git-owner@vger.kernel.org Mon Oct 01 19:26:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIjYR-0007Ig-9w
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:13:15 +0200
+	id 1TIjc7-00010b-Ei
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 19:17:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913Ab2JARLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 13:11:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33331 "EHLO
+	id S1751071Ab2JARQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 13:16:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35697 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750856Ab2JARLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 13:11:08 -0400
+	id S1750927Ab2JARQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 13:16:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F4AD8D44;
-	Mon,  1 Oct 2012 13:11:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4FDC8EA6;
+	Mon,  1 Oct 2012 13:16:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M1DO3jzSP3UBOcWxAoad3VbzsyE=; b=TtM7Pp
-	OBoAofMTQgV+BVvXG1qfDyvmRJv8EP6AUv3aqQ/lP21jNtVNTTxWlBYisdcxdhuX
-	xXkqRKKnRnwd80wweIsg9WajndiHeIgeNGDgtnB/W22/vSaUO9VmN81nVpD+GflU
-	e9LvGobi/RrKa2H+FEKntmU4XTcixl8dOdQag=
+	:content-type; s=sasl; bh=JKqii+1QNh7y5rAR1/TVEbqWm18=; b=xivPT7
+	1EWsvbljisfv/mmPo8pHo3+mF7Qtn4Wwxbwoqdha55/NDdJ7yblO0T4gDyOAYplE
+	y367oprxQ9PU7ecrN+3ZWS9XgLffPCMfUh3kuyo9sQEwYNohump3qVAACbtGCKne
+	1k3qOQa9zIPV/CjvNAQJ2Di3RedI1cEDGHnKs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dk0OhMgeqL/xFIolYxPAX9IDWsy6ID/F
-	3G0PiepzY9UmTf/qsx/x5bUtzPLCdJwXVnUNnC6rrcPdgAivtz8PTqsxZaZsEwtH
-	nCFeUoOPKq9kvMqocmV/DAuonSQQB+uOf1A3II79F7TTGRiu3ur5Py7AmJd8smpU
-	f7A8GpcIDaM=
+	:content-type; q=dns; s=sasl; b=oaOaJ96HS6LjoaBeRtlKAPJPIyvUX3+R
+	qwFzBsbwUzkOv1h4WCyyL1yy0/HdhfVfioK6AMHIKYu6BlNCoO5DezkdFqjpIDZV
+	PnnK3RM8hecq1CBeK81D5OFCLvu+5D6O4vs5zmOG5mZ0xseV+Nv1uOpXxKTBmIfU
+	8G7e1Wi5HL8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C66E8D43;
-	Mon,  1 Oct 2012 13:11:07 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9254D8EA5;
+	Mon,  1 Oct 2012 13:16:51 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D42058D41; Mon,  1 Oct 2012
- 13:11:06 -0400 (EDT)
-In-Reply-To: <50694380.4090108@josefassad.com> (Josef Assad's message of
- "Mon, 01 Oct 2012 09:17:20 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3D188EA4; Mon,  1 Oct 2012
+ 13:16:50 -0400 (EDT)
+In-Reply-To: <50695ECE.5010101@nieuwland.nl> (Simon Oosthoek's message of
+ "Mon, 01 Oct 2012 11:13:50 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FCF5FE48-0BEA-11E2-A972-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CA0EAECA-0BEB-11E2-8CB1-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206742>
 
-Josef Assad <josef@josefassad.com> writes:
+Simon Oosthoek <soosthoek@nieuwland.nl> writes:
 
-> Signed-off-by: Josef Assad <josef@josefassad.com>
-> ---
->  gitk-git/gitk |    6 ++++++
->  1 files changed, 6 insertions(+), 0 deletions(-)
-
-Thanks.
-
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index d93bd99..7e2e0a7 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -11680,6 +11680,12 @@ setui $uicolor
+> On 09/28/2012 07:58 PM, Junio C Hamano wrote:
+>> Simon Oosthoek <soosthoek@nieuwland.nl> writes:
+>>
+>>> +# __git_ps1_pc accepts 0 arguments (for now)
+>>> +# It is meant to be used as PROMPT_COMMAND, it sets PS1
+>>> +__git_ps1_pc ()
+>>> +{
+>>> +	local g="$(__gitdir)"
+>>> +	if [ -n "$g" ]; then
+>>> +...
+>>> +	fi
+>>> +}
+>>
+>> This looks awfully similar to the existing code in __git_ps1
+>> function.  Without refactoring to share the logic between them, it
+>> won't be maintainable.
+>>
 >
->  setoptions
+> I agree that it's ugly. How about the following:
 >
-> +# check that the git executables are available for use
-> +if [catch {set gitexists [exec which git]}] {
-> +    show_error {} . [mc "Cannot find a suitable git executable."]
-> +    exit 1
-> +}
-> +
->  # check that we can find a .git directory somewhere...
->  if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
->      show_error {} . [mc "Cannot find a git repository here."]
+> I modified __git_ps1 to work both in PROMPT_COMMAND mode and in that
+> mode support color hints.
+>
+> This way there's one function, so no overlap.
 
-It is somewhat a stupid solution to add an extra fork that will only
-waste cycles in the normal non-error case, especially when we
-already have an error codepath that acts on lack of the "git"
-command anyway, isn't it?
+I think the logical progression would be
 
-The "rev-parse" you see in the post-context will fail when we are
-not in a git repository, but it will also fail when we do not have
-git.
+ - there are parts of __git_ps1 you want to reuse for your
+   __git_ps1_pc; separate that part out as a helper function,
+   and make __git_ps1 call it, without changing what __git_ps1
+   does (i.e. no colors, etc.)
 
-You can add the new check to if {[catch {... git rev-parse }]} block;
-before unconditionally saying "cannot find a git repo", you check if
-"git" even exists, and give an appropriate error message.  That way,
-you do not punish normal use case with an extra useless fork.
+ - add __git_ps1_pc that uses the helper function you separated
+   out.
 
-Something like this, I presume.
-
-
- gitk | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/gitk b/gitk
-index d93bd99..60794a7 100755
---- a/gitk
-+++ b/gitk
-@@ -11682,7 +11682,12 @@ setoptions
- 
- # check that we can find a .git directory somewhere...
- if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
--    show_error {} . [mc "Cannot find a git repository here."]
-+    # we could have failed because there is no git to begin with
-+    if {[catch {exec git version}]} {
-+        show_error {} . [mc "You do not seem to have 'git' command."]
-+    } else {
-+        show_error {} . [mc "Cannot find a git repository here."]
-+    }
-     exit 1
- }
- 
+ - add whatever bells and whistles that are useful for users of
+   either __git_ps1 or __git_ps1_pc to that helper function.
