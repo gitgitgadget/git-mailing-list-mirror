@@ -1,103 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] submodule add: Fail when .git/modules/<name>
- already exists unless forced
-Date: Sun, 30 Sep 2012 17:06:58 -0700
-Message-ID: <7v7grbf42l.fsf@alter.siamese.dyndns.org>
-References: <BC634E06939C44239106E7A8DD229130@gmail.com>
- <50636C00.6080906@web.de> <50677E76.1050204@web.de>
- <7vtxugglqy.fsf@alter.siamese.dyndns.org> <50689B5F.3060308@web.de>
- <5068B329.7040302@web.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git smart-http do not authent to allow git ls-remote to be called anonymously
+Date: Sun, 30 Sep 2012 17:53:40 -0700
+Message-ID: <CAJo=hJuBHCMBv5FTh6dSkvGR=XCtKn2BRgWgTJwt6kDs49-iEg@mail.gmail.com>
+References: <CAHtLG6Q+XO=LhnKw4hhwtOe2ROeDN1Kg=JN5GTQqdvYjk-Sv4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Johnson <me@jondavidjohn.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Oct 01 02:07:56 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 02:54:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TITYC-0000z9-7e
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 02:07:56 +0200
+	id 1TIUHh-0000Hf-Ri
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 02:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442Ab2JAAHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2012 20:07:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56340 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751425Ab2JAAHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2012 20:07:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D463B9E3E;
-	Sun, 30 Sep 2012 20:07:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=raOrKqdgVrBWSQ1LFbaGUzPyjcc=; b=e5aDSE
-	W7/PnQ1jvNdY5k4BPc8I/vNcPd5glr2V1g0kqfLiHHuapjU6397PDn7pI6T1q5/p
-	DmoHhe+PdsOgy2dBkb7rOZrwR41HUmWGjJwyMGxUsltN2fubQOTy23vQmqrsS/KM
-	lSTUI0SIBr4CGVxgG4F0jqFI0lGx0KJnbNpvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mBvjrSK8xtPA6zgSideQIXuG4QrKLLlb
-	0pD/R7smQyipDskKDkSY3yX4SORMl7Dy/459RXTQ0yQOzCMD4u0uuoMxVIVOMz3Q
-	cZZG1opZZH/aChQHXZmRuljE9GDaq3kjkDJhXcaaBAFNrUOQuLLOoo36eckmu8uR
-	iklI7Jip2PU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9D6F9E3D;
-	Sun, 30 Sep 2012 20:07:04 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96C979E3C; Sun, 30 Sep 2012
- 20:07:03 -0400 (EDT)
-In-Reply-To: <5068B329.7040302@web.de> (Jens Lehmann's message of "Sun, 30
- Sep 2012 23:01:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDEDF89A-0B5B-11E2-94FF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751425Ab2JAAyD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Sep 2012 20:54:03 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:37379 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214Ab2JAAyB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Sep 2012 20:54:01 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so1201874qad.19
+        for <git@vger.kernel.org>; Sun, 30 Sep 2012 17:54:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oLTed+xQ5P9712XXHoPjS6k8dJbPNx/OZkBnZ13HjsQ=;
+        b=CxCq3VJTA/CLj0FJobt3MB2zoJ7P5TDRX3jSHzpWZ2EqIh/OcmDRFSLfeeGLyECte0
+         bLw3IGGdWHDSIaj9qshshomqWu9w0rHde5bKx2Xq/yFEVw3q/1HHzgeX+2Mgva6f/t4a
+         5UdU+86/EoioIynUSKwWaJVNsDN4f5gTDFj/k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=oLTed+xQ5P9712XXHoPjS6k8dJbPNx/OZkBnZ13HjsQ=;
+        b=VUl1hIpyYEp8Cv1sZFBDkEO4MWcIZSVgVLN/vUpZ67gSVwo0m6ycFx4JXQ+QhK/gCT
+         Q7yoOl7iLk1yH1Q5GDRbxGqNvZLW1kymTNIgoBAyDxXYrXZMTYupiqrKThKZohLCSmea
+         zdxLv8MLXEGDXQ2ySHltj6NVjqD6ln7INbqB0uhOv4+hEV27+MagHNz/XT4O/9UY2HUH
+         ysxyjH6W9BxhcT9xCo+26x+pDfGxTffFwrhMUfMmiaOpNZebwp+Gl5LCaScmui0MxxQ4
+         SlW2KVG3mjFWhSStNethoNPFRTdE5/FbpNFdfDQQ+I3HzWjE7oZup2eZ2+tu3Luea2wq
+         o+7w==
+Received: by 10.224.213.198 with SMTP id gx6mr33805452qab.9.1349052840476;
+ Sun, 30 Sep 2012 17:54:00 -0700 (PDT)
+Received: by 10.49.35.75 with HTTP; Sun, 30 Sep 2012 17:53:40 -0700 (PDT)
+In-Reply-To: <CAHtLG6Q+XO=LhnKw4hhwtOe2ROeDN1Kg=JN5GTQqdvYjk-Sv4g@mail.gmail.com>
+X-Gm-Message-State: ALoCoQlaosaBiy9yr6WncP513iJIhxXCaiielexBnmtiJXeHs4115JMYYIYe99MJ2GZkUuYCcbd3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206701>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
->> Good point! I will add a more detailed error message (including
->> the url of the default remote which is configured for the already
->> present submodule repo) and teach --force to skip the test and
->> resurrect that submodule repo.
+On Sun, Sep 30, 2012 at 7:35 AM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@=
+gmail.com> wrote:
+> I use smart-http on Apache.
+> If nothing to be pushed / pulled, I do not want password to be
+> supplied. And allow git ls-remote to run without password
 >
-> The message when "git submodule add" finds .git/modules/<name> is:
+> *.git/info/refs?service=3Dgit-upload-pack
+> *.git/info/refs?service=3Dgit-receive-pack
 >
-> A git directory for '<name>' is found locally with remote(s):
->   origin	<url(s) from .git/modules/<name>>
-> If you want to reuse this local git directory instead of cloning again from
->   <url given on command line>
-> use the '--force' option. If the local git directory is not the correct repo
-> or you are unsure what this means choose another name with the '--name' option.
+> I only need authentication on
 >
-> When run with the --force option the following message is printed:
+> *.git/git-upload-pack
+> *.git/git-receive-pack
 >
-> Reactivating local git directory for submodule '<name>'.
+> /etc/apache/httpd.conf
+>
+> <LocationMatch "^/git/.*/git-(upload|receive)-pack$">
+>     AuthType Basic
+>     AuthName "staff only"
+>     AuthUserFile /etc/apache/apache.pwd
+>     Require valid-user
+> </LocationMatch>
+>
+> However this does not work. It does not ask for password at all.
 
-Thanks, will re-queue.
+This sounds like a bug in your Apache configuration. I would verify it
+prompts for a password as expected before worrying about the Git
+client:
 
-The approach "submodule rm" takes when removing a project is to
-treat the removed submodule as not necessary for the current commit
-in the superproject, but it is considered necessary elsewhere in the
-history of the superproject, and that is why we stash away the
-repository in $GIT_DIR/modules of the superproject.
+  curl -v http://localhost/git/blah/git-upload-pack
 
-We may however want to think about another mode of user error where
-the user runs "submodule add $path" for a wrong repository, realizes
-the mistake _before_ making any commit and try to repoint the $path
-to a correct repository.  The behaviour of "submodule add" in this
-patch, and the behaviour of existing "submodule rm", assumes that
-the user is not stupid and won't make such a mistake, but to recover,
-the user may need a way to really nuke the submodule repository that
-was added by the earlier misteake (which is not needed anywhere in
-the history of the superproject) and $GIT_DIR/module/$name really
-replaced with the updated one.
-
-I don't know how important to support a recovery procedure from such
-mistakes, though.
+should fail with a 401 requesting access to "staff only". Once this is
+working, git will present authorization as necessary during the
+/git-upload-pack|git-receive-pack calls.
