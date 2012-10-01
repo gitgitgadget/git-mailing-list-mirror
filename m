@@ -1,67 +1,90 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: mailinfo: don't require "text" mime type for attachments
-Date: Mon, 1 Oct 2012 09:27:46 -0400
-Message-ID: <20121001132746.GV1969@redhat.com>
-References: <alpine.LFD.2.02.1209301458540.11079@i5.linux-foundation.org>
+From: "Joachim Schmitz" <jojo@schmitz-digital.de>
+Subject: Re: [PATCH] more meaningful error message in gitk when git binary is not available
+Date: Mon, 1 Oct 2012 15:39:28 +0200
+Message-ID: <k4c6en$qq$1@ger.gmane.org>
+References: <50694380.4090108@josefassad.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Oct 01 15:23:31 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 01 15:40:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIfxx-0004xB-BA
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 15:23:21 +0200
+	id 1TIgEG-00016V-TA
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 15:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753445Ab2JANXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 09:23:08 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:48477 "EHLO mx1.redhat.com"
+	id S1751361Ab2JANkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 09:40:00 -0400
+Received: from plane.gmane.org ([80.91.229.3]:50670 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753076Ab2JANXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 09:23:06 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q91DN3Vu016143
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 1 Oct 2012 09:23:04 -0400
-Received: from redhat.com (dhcp-185-103.bos.redhat.com [10.16.185.103])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id q91DN1Mu026681;
-	Mon, 1 Oct 2012 09:23:02 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.02.1209301458540.11079@i5.linux-foundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1751281Ab2JANj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 09:39:59 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TIgE3-0008Rx-FL
+	for git@vger.kernel.org; Mon, 01 Oct 2012 15:39:59 +0200
+Received: from dsdf-4d0a1cfd.pool.mediaways.net ([77.10.28.253])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 15:39:59 +0200
+Received: from jojo by dsdf-4d0a1cfd.pool.mediaways.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 15:39:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsdf-4d0a1cfd.pool.mediaways.net
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206734>
 
-On Sun, Sep 30, 2012 at 03:10:48PM -0700, Linus Torvalds wrote:
-> This code goes all the way back to March of 2007, in commit 87ab79923463 
-> ("builtin-mailinfo.c infrastrcture changes"), and apparently Don used to 
-> pass random mbox contents to git. However, the pre-decode vs post-decode 
-> logic really shouldn't matter even for that case, and more importantly, "I 
-> fed git am crap" is not a valid reason to break *real* patch attachments.
+Josef Assad wrote:
+> Hi. I ran across what is a decidedly trivial little issue in gitk. The
+> TCL/Tk looked simple enough so I am giving you a patch anyhow in case
+> you want to fix it.
 > 
-> If somebody really cares, and determines that some attachment is binary 
-> data (by looking at the data, not the MIME-type), the whole attachment 
-> should be dismissed, rather than fed in random-sized chunks to 
-> "handle_filter()".
+> When for whatever reason the git binary is unavailable, gitk would
+> complain about missing git repository instead, so this patch adds a
+> check for git binary availability.
+> 
+> In case anyone is curious, I found this issue here:
+> 
+> http://stackoverflow.com/q/11967110/53936
+> 
+> 
+> 
+> Signed-off-by: Josef Assad <josef@josefassad.com>
+> ---
+> gitk-git/gitk |    6 ++++++
+> 1 files changed, 6 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index d93bd99..7e2e0a7 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -11680,6 +11680,12 @@ setui $uicolor
+> 
+> setoptions
+> 
+> +# check that the git executables are available for use
+> +if [catch {set gitexists [exec which git]}] {
 
-Heh.  Years ago when I tried using git as a patch-control-management
-system instead of a traditional SCM,  I fed my custom git-am script an
-internal kernel-mail-archives list to help process the meta data for
-patches (acks, nacks, needinfo, bugzillas, etc).  It served its purpose
-until we switched to a fork'd copy of patch-work.
+I believe 'which' is not portable, you could use 'type' instead.
 
-So I haven't done 'insane' stuff in years.  :-)  I'm sure this patch is
-right, but it doesn't affect me anymore.
-
-Sorry for any problems that arose..
-
-Cheers,
-Don
+> +    show_error {} . [mc "Cannot find a suitable git executable."]
+> +    exit 1
+> +}
+> +
+> # check that we can find a .git directory somewhere...
+> if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
+>     show_error {} . [mc "Cannot find a git repository here."]
