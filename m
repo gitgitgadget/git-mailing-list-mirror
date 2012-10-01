@@ -1,90 +1,60 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH] more meaningful error message in gitk when git binary is not available
-Date: Mon, 1 Oct 2012 15:39:28 +0200
-Message-ID: <k4c6en$qq$1@ger.gmane.org>
-References: <50694380.4090108@josefassad.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH] gitk: Add workaround for system where Shift-F5 mapped to Shift-XF86_Switch_VT_5
+Date: Mon,  1 Oct 2012 11:16:03 -0400
+Message-ID: <1349104564-30812-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: szeder@ira.uka.de, paulus@samba.org,
+	Andrew Wong <andrew.kw.w@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 01 15:40:20 2012
+X-From: git-owner@vger.kernel.org Mon Oct 01 17:17:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIgEG-00016V-TA
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 15:40:13 +0200
+	id 1TIhjt-0001An-27
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 17:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361Ab2JANkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 09:40:00 -0400
-Received: from plane.gmane.org ([80.91.229.3]:50670 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751281Ab2JANj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 09:39:59 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TIgE3-0008Rx-FL
-	for git@vger.kernel.org; Mon, 01 Oct 2012 15:39:59 +0200
-Received: from dsdf-4d0a1cfd.pool.mediaways.net ([77.10.28.253])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2012 15:39:59 +0200
-Received: from jojo by dsdf-4d0a1cfd.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2012 15:39:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4d0a1cfd.pool.mediaways.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751679Ab2JAPQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 11:16:46 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:56190 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751206Ab2JAPQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 11:16:46 -0400
+Received: by ieak13 with SMTP id k13so12350834iea.19
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 08:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=/Clt0Cz1FeDx1gCNPRrI72ky/5CYKCHwzBFsNJbp6Lk=;
+        b=wCZTgDXLzJ3ZXaivy7uj+F9/cbWFras3PrILRbNSQe0Ngtu2ErvXkguIk22/gyMVC7
+         x30OllDaqBOSgqYvFB2DbdbAFElcy4uNSMUsy6AUojPJXzVPFtB2p9ZKwDp2i14SxBhy
+         mu9lXt7E1BfyjI8aXLvhDHWPMn5rNc3vqpKBZwaE6oS9/jS212NwxDQ/OYT3evjyfqeE
+         UOuA1HwQtn/gNz69twy4mp4BicjW6deIE7zNojyIkZ5fx/Y425FqhHwm1VQBDm0VjuGz
+         6FTPplT+pdnUZ+cgn00eLxXVFVtSACSFQI80QSB9Hyml3eoTiYDvX/HGPc+v17Ha6g9+
+         QrZw==
+Received: by 10.50.190.234 with SMTP id gt10mr6041127igc.20.1349104604190;
+        Mon, 01 Oct 2012 08:16:44 -0700 (PDT)
+Received: from nigel.sohovfx.com ([66.207.196.114])
+        by mx.google.com with ESMTPS id uj6sm7184834igb.4.2012.10.01.08.16.39
+        (version=SSLv3 cipher=OTHER);
+        Mon, 01 Oct 2012 08:16:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.1.382.gb0576a6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206735>
 
-Josef Assad wrote:
-> Hi. I ran across what is a decidedly trivial little issue in gitk. The
-> TCL/Tk looked simple enough so I am giving you a patch anyhow in case
-> you want to fix it.
-> 
-> When for whatever reason the git binary is unavailable, gitk would
-> complain about missing git repository instead, so this patch adds a
-> check for git binary availability.
-> 
-> In case anyone is curious, I found this issue here:
-> 
-> http://stackoverflow.com/q/11967110/53936
-> 
-> 
-> 
-> Signed-off-by: Josef Assad <josef@josefassad.com>
-> ---
-> gitk-git/gitk |    6 ++++++
-> 1 files changed, 6 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index d93bd99..7e2e0a7 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -11680,6 +11680,12 @@ setui $uicolor
-> 
-> setoptions
-> 
-> +# check that the git executables are available for use
-> +if [catch {set gitexists [exec which git]}] {
+I was running into the same issue too. It turns out that on some machines
+Shift-F5 is mapped to Shift-XF86_Switch_VT_5. My patch includes a workaround.
+The same workaround was used for Shift-F4.
 
-I believe 'which' is not portable, you could use 'type' instead.
+Andrew Wong (1):
+  gitk: Add workaround for system where Shift-F5 mapped to
+    Shift-XF86_Switch_VT_5
 
-> +    show_error {} . [mc "Cannot find a suitable git executable."]
-> +    exit 1
-> +}
-> +
-> # check that we can find a .git directory somewhere...
-> if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
->     show_error {} . [mc "Cannot find a git repository here."]
+ gitk-git/gitk | 1 +
+ 1 file changed, 1 insertion(+)
+
+-- 
+1.7.12.1.382.gb0576a6
