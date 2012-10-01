@@ -1,91 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: make 'show' an alias for 'summary'
-Date: Mon, 01 Oct 2012 21:31:54 +0200
-Message-ID: <5069EFAA.4090305@web.de>
-References: <1348926195-4788-1-git-send-email-artagnon@gmail.com> <50670A94.2070504@web.de> <CALkWK0nCahg7165_JuJSj7u0UfYRGZgFjJ6O-o=HCwdsPwU-xg@mail.gmail.com> <50671364.5030205@web.de> <CALkWK0nRKopT4fm36UVyR4Jy1gfeSY4zGy+-nzxm=H=NGcR=DQ@mail.gmail.com> <5069D24A.6060101@web.de> <CALkWK0mQMe1zfbPNf5prjgTwFtPKJuK=uwxqAqN_Q2=76e-=mA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove the hard coded length limit on variable names in
+ config files
+Date: Mon, 01 Oct 2012 12:33:02 -0700
+Message-ID: <7vvceuasy9.fsf@alter.siamese.dyndns.org>
+References: <CAP30j15wKa7wbLyaLo8omHcAh5u7O=Yt8Tjy4bD3V_0nT1zJPQ@mail.gmail.com>
+ <1349034276-10690-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 21:32:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: hagger@alum.mit.edu, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 21:34:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIliq-0006hf-NZ
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 21:32:09 +0200
+	id 1TIll1-00018W-SB
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 21:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520Ab2JATb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 15:31:58 -0400
-Received: from mout.web.de ([212.227.15.4]:60915 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374Ab2JATb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 15:31:57 -0400
-Received: from [192.168.178.41] ([91.3.164.110]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LcgVn-1TkMUn1w3D-00jTBN; Mon, 01 Oct 2012 21:31:54
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CALkWK0mQMe1zfbPNf5prjgTwFtPKJuK=uwxqAqN_Q2=76e-=mA@mail.gmail.com>
-X-Provags-ID: V02:K0:mFmmqUpOSa6vIzZ6e8+bR0oaIMFtRKgK5L0f1/kp9Zq
- v+5KEXU3obw7H7NCVks88ALdOQRcE5eP0HMgxM+uv8NqEVUl49
- Nx1b18OycPbK71Um3b+EfMnaRm0tuUyVEs9vsthpVrZXULoFoi
- +ndyFRI6Xq01iVS6bpwpcrQRwe161ANky3ARLNOA30yoSBPQBt
- 0RE+VXMMGoFnT2hK5Cc+A==
+	id S1754238Ab2JATdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 15:33:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61960 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754208Ab2JATdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 15:33:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FFB68F3C;
+	Mon,  1 Oct 2012 15:33:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9r1bVStUkjWo7XTTDv1QdzYnzEg=; b=TX/0gG
+	F6/Zv3PoM7q1G22To0WV3zhC/XChyrN3twM3FvwyaDecZP49HoW1jb9IHZTIv2cY
+	49BlFsOpNCDDv1gpKLzwbSGss7tN7XFhQiq1FEJnxhTBkWyPyUR7wN4bACBhRDcl
+	uleT6WCbYVqv5Q7w5odGzEXmLhRGR41GMa9EY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nXERypSCeMBaglu6XBQpcFV9Jmz5PixG
+	IYjeHx39w5UcXIP8lRK/c25kUnpKjZs0iikQd+jtjVpvVrzg2qXCHlusJg4SfQtO
+	82OlFMxDRZ6WRIPrwnAU9zWT5nPKqbLEgN23rdfc04DyGOaGbmfkUrP9k640s25d
+	H6PY5bqhkbY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DF958F3B;
+	Mon,  1 Oct 2012 15:33:04 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3B978F3A; Mon,  1 Oct 2012
+ 15:33:03 -0400 (EDT)
+In-Reply-To: <1349034276-10690-1-git-send-email-bdwalton@gmail.com> (Ben
+ Walton's message of "Sun, 30 Sep 2012 20:44:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D168BC52-0BFE-11E2-8111-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206760>
 
-Am 01.10.2012 19:33, schrieb Ramkumar Ramachandra:
-> Jens Lehmann wrote:
->> Am 01.10.2012 08:45, schrieb Ramkumar Ramachandra:
->>> Jens Lehmann wrote:
->>>> I'm very interested in your feedback as a first time submodule user,
->>>> what you wrote above makes sense and explains why you did that patch
->>>> (and it would have been nice to read some of it in the commit message
->>>> ;-). What information did you expect to get from a "git submodule
->>>> show" which isn't already provided by "git status" and "git diff"
->>>> (especially as they give you some information the "git submodule"
->>>> commands don't)?
->>>
->>> I expected 'git submodule show' to list all the submodules, and show
->>> changes to specific submodules like the 'git submodule summary'
->>> output.
->>
->> Ok, but "git submodule summary" doesn't list all the submodules,
->> only those with changes. Maybe "git submodule status" is closer
->> to what you expect (except for the missing changes)?
-> 
-> Yes, "git submodule status" with "git submodule summary"-style change output.
+Ben Walton <bdwalton@gmail.com> writes:
 
-So just aliasing "show" to "summary" would not have done the trick,
-right? ;-)
+> Previously while reading the variable names in config files, there was
+> a 256 character limit with at most 128 of those characters being used
+> by the section header portion of the variable name.  This limitation
+> was only enforced while reading the config files.  It was possible to
+> write a config file that was not subsequently readable.
+>
+> Instead of enforcing this limitation for both reading and writing,
+> remove it entirely by changing the var member of the config_file
+> struct to a strbuf instead of a fixed length buffer.  Update all of
+> the parsing functions in config.c to use the strbuf instead of the
+> static buffer.
+>
+> The parsing functions that returned the base length of the variable
+> name now return simply 0 for success and -1 for failure.  The base
+> length information is obtained through the strbuf's len member.
+>
+> We now send the buf member of the strbuf to external callback
+> functions to preserve the external api.  None of the external callers
+> rely on the old size limitation for sizing their own buffers so
+> removing the limit should have no externally visible effect.
+>
+> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+> ---
+>  config.c |   59 +++++++++++++++++++++++++++++------------------------------
+>  1 file changed, 29 insertions(+), 30 deletions(-)
 
->> And - apart from the list of all submodules - the changes to them
->> are given by "git status" and "git diff --submodule" too, right?
-> 
-> Oh, I didn't know about "git diff --submodule" at all.
-> 
->> (sometimes I forget that "--submodule" is not enabled by default,
->> as I'm a heavy "git gui" user, and that option is used there. We
->> might need a config option to turn that on)
-> 
-> That's a good idea.  I'll write a patch tomorrow.
+Makes sense, and I found the patch very readable.
 
-Cool! I suspect showing the difference in shortlog style is much
-more useful than seeing the hashes.
-
->> Me too would expect a show command to show me a list of all the
->> submodules and maybe some extra information (is it populated or
->> not, does it have its .git directory embedded, does it contain
->> changes). So maybe "show" should be a slightly pimped "status"?
-> 
-> Sure.  Do we want to create a new subcommand though?  Aren't "status"
-> and "summary" enough already?
-
-Yes, I don't think we need a new command. Maybe someday we will
-change "git submodule status" to contain less hash and maybe some
-other infos, but we're not there yet.
+Thanks, both.
