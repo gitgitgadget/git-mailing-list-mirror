@@ -1,94 +1,78 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Commit cache to speed up rev-list and merge
-Date: Sun, 30 Sep 2012 19:27:56 -0700
-Message-ID: <CAJo=hJsGptu8c04XQh0xLmMhz+mxYKAOQfhbjaNK887dY-jAMA@mail.gmail.com>
-References: <CAJo=hJtoqYEL5YiKawCt_SsSUqfCeYEQzY8Ntyb91cNfNS1w_Q@mail.gmail.com>
- <CACsJy8APNsDrTH+hUxgcB=MY0eECCGktm6P1feEEpz2427OQqg@mail.gmail.com>
- <CAJo=hJtweVTOUT84U1=ONnjQXz5Rt_sDYD2BjUP9tOQ4HDj6Kg@mail.gmail.com> <CACsJy8BY2DFhgqdwQdm58+rCuwDj8-7xtqUV9S5cbErU36+zPQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] Remove the hard coded length limit on variable names
+ in config files
+Date: Mon, 01 Oct 2012 05:16:56 +0200
+Message-ID: <50690B28.5030408@alum.mit.edu>
+References: <7vpq5yzkf3.fsf@alter.siamese.dyndns.org> <1348913979-27431-1-git-send-email-bdwalton@gmail.com> <5067C51F.6020908@alum.mit.edu> <CAP30j15wKa7wbLyaLo8omHcAh5u7O=Yt8Tjy4bD3V_0nT1zJPQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Colby Ranger <cranger@google.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 04:28:32 2012
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 05:17:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIVkA-0006Hz-Ty
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 04:28:27 +0200
+	id 1TIWVd-00079F-Q2
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 05:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906Ab2JAC2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2012 22:28:17 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:37384 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709Ab2JAC2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2012 22:28:17 -0400
-Received: by qchd3 with SMTP id d3so3319069qch.19
-        for <git@vger.kernel.org>; Sun, 30 Sep 2012 19:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Ci6qvc7jncHflJYUFUzFB/hargrXaFIPZC9ortqC1IQ=;
-        b=PZ6YUy8O2TY4H3mMR9oAwJuIhi75sDabqH84/bXeURc8AsXPn3++PBJPTKH81jEaKg
-         PIBYAO57IWLLROKnRMg6JfrSGyMmKorLfbf6LctzhiDSVb1Znn3wRE1OhXIpNi2ux0Ex
-         GWNswfF4m/vxC0IfQzyfgG6pxSzkN5O6wPQEc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-gm-message-state;
-        bh=Ci6qvc7jncHflJYUFUzFB/hargrXaFIPZC9ortqC1IQ=;
-        b=V027Pw/b5iJhXCz7QwkA95B0BJz5djXh8GGhL7q4nOcFemshhNVyYm595cXRrlOrVq
-         nUDAioEY9Bo7ynmDpz7Q2AXQTNZg6eyNVVNduyVFDsCku+mkzioam4sBELd4qoGGLX2z
-         toWjXDcY7TKFQZQKZg2myoa3Jxo0C8GOjk8fZU5fve7V9yFm8qToQO49NfynXVy5zC0N
-         UUoQRi1F+gmEZtuGUCaA1OVcmtpU/IKQhYv1U/Yz2yvqQxHaCVF5i+KTRGao00R+f+x1
-         fF3k8oCHxeQUKcvesHFJtokjY2/ExIxzqiRowKDVXe2SnpMveUIhopiiljAQT2pbyUEC
-         O9XQ==
-Received: by 10.229.135.143 with SMTP id n15mr9330619qct.77.1349058496164;
- Sun, 30 Sep 2012 19:28:16 -0700 (PDT)
-Received: by 10.49.35.75 with HTTP; Sun, 30 Sep 2012 19:27:56 -0700 (PDT)
-In-Reply-To: <CACsJy8BY2DFhgqdwQdm58+rCuwDj8-7xtqUV9S5cbErU36+zPQ@mail.gmail.com>
-X-Gm-Message-State: ALoCoQnBoE/PcZ4DyBtg72JDxKsfqP3tRLvpZLuaWFkN7SHraGYVdcCrNcLQeJDXe0Yy8/sOm8M7
+	id S1751930Ab2JADRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2012 23:17:18 -0400
+Received: from ALUM-MAILSEC-SCANNER-3.MIT.EDU ([18.7.68.14]:64610 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751902Ab2JADRA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Sep 2012 23:17:00 -0400
+X-AuditID: 1207440e-b7f036d0000008b5-68-50690b2b80a6
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id CE.13.02229.B2B09605; Sun, 30 Sep 2012 23:16:59 -0400 (EDT)
+Received: from [192.168.69.140] (p57A25472.dip.t-dialin.net [87.162.84.114])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q913GvSF032489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 30 Sep 2012 23:16:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <CAP30j15wKa7wbLyaLo8omHcAh5u7O=Yt8Tjy4bD3V_0nT1zJPQ@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqKvNnRlgcPasssWH2c0sFl1Xupks
+	GnqvMDswe+ycdZfd4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDNet6YVfGSrOHxiImsD4y7W
+	LkZODgkBE4meaZfZIGwxiQv31gPZXBxCApcZJc5tOswM4Zxhkng9fzJYB6+AtkT3/vtMIDaL
+	gKrEwnU3GUFsNgFdiUU9zWBxUYEQiRmXJzND1AtKnJz5hAXEFhFQlrh76A87iM0soCWxrqUX
+	bLOwQLTE0tYjLBDLLjJKzFq/BmwZp0CgxLV566AadCTe9T1ghrDlJba/ncM8gVFgFpIds5CU
+	zUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrrFebmaJXmpK6SZGSPDy7WBsXy9ziFGA
+	g1GJh3fR5YwAIdbEsuLK3EOMkhxMSqK8LeyZAUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeDln
+	AJXzpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4ZbiAhgoWpaanVqRl
+	5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDYjW+GBitICkeoL1nOYHaeYsLEnOBohCtpxh1Odbe
+	XfCAUYglLz8vVUqc1xxkhwBIUUZpHtwKWKp6xSgO9LEwLz9IFQ8wzcFNegW0hAloSdWqNJAl
+	JYkIKakGRoFjL92N8xgfbZjAwK6yY6P0l1+5ZiL/LvQdfLB+U/m6O992it2PyxJ4tG/211uP
+	c0TSX+tudGTZsXNWHufDpeFsn568OfhQrjdqfTfD7DW2H3hDfS2MJZ9lCr6bpf// 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206709>
 
-On Sun, Sep 30, 2012 at 7:05 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Mon, Oct 1, 2012 at 8:49 AM, Shawn Pearce <spearce@spearce.org> wrote:
->> On Thu, Sep 27, 2012 at 7:14 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->>> On Thu, Sep 27, 2012 at 10:51 PM, Shawn Pearce <spearce@spearce.org> wrote:
->>>> In Linus' Linux kernel tree there are currently about 323,178 commits.
->>>> If we store just the pre-parsed commit time as an int32 field this is
->>>> an additional 1.2 MiB of data in the pack-*.idx file, assuming we can
->>>> use additional data like pack offset position to correlate commit to
->>>> the parsed int. If we stored parent pointers in a similar way you
->>>> probably need at least 3.6 MiB of additional disk space on the index.
->>>> For example, use 12 bytes for each commit to store enough of the
->>>> parsed commit time to sort commits, and up to 2 parent pointers per
->>>> commit.... with a reserved magic value for octopus merges to mean the
->>>> commit itself has to be parsed to get the graph structure correct.
->>>
->>> This is much better than my naive approach (storing sha-1 and
->>> timestamps). We could use less space by storing parent pointer of
->>> non-merge commits only. Merge commits linux-2.6 is 6% the number of
->>> commits. git.git has higher percentage, 21%. I bet many projects do
->>> not merge as much and the number of merge commits is less than 5%.
->>
->> Some projects merge quite often. Android's frameworks/base repository
->> has a very large number of merges. Out of 79905 commits reachable from
->> the master branch, 65.3% are merges. So actually there are more merge
->> commits in the Android history than there are code commits. A cache of
->> only non-merges may be worthless on such a history.
->
-> The good thing about these cache is it's configurable. Merge-preferred
-> projects can choose to cache the first two parents. Non-merge projects
-> can choose to cache just the first parent. We don't need a fixed
-> format for both.
+On 09/30/2012 08:20 PM, Ben Walton wrote:
+>> The patch doesn't apply to the current master; it appears to have been
+>> built against master 883a2a3504 (2012-02-23) or older.  It will have to
+>> be rebased to the current master.
+> 
+> Junio had asked that it be based on maint so that's what I (thought
+> I?) did.  I'm happy to redo it against master if that's better though.
 
-Git has enough magic switches. It doesn't need yet another magic
-switch that one group of users needs to set, and another can safely
-ignore because their project's usage just happens to align with Linus
-Torvald's current world view.
+That explains it.  Sorry, I hadn't seen that conversation.  (In the
+future, if a patch applies against something other than master, please
+add a note in the cover letter or in the patch comment after the "--".)
+
+It is OK with me to leave the patch against maint, if that is what Junio
+wanted.  It would help, though, if you rebase it to the latest maint
+(the conflict seems easy to fix).
+
+Thanks,
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
