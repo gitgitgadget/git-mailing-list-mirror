@@ -1,89 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] git-add: -s flag (silently ignore files)
-Date: Mon, 01 Oct 2012 11:32:03 -0700
-Message-ID: <7v8vbqcacc.fsf@alter.siamese.dyndns.org>
-References: <1349075700-26334-1-git-send-email-olaf.klischat@gmail.com>
+From: Alexey Spiridonov <snarkmaster@gmail.com>
+Subject: "git am" crash (builtin/apply.c:2108) + small repro
+Date: Mon, 1 Oct 2012 11:33:42 -0700
+Message-ID: <CAOKKMFG4JsNyMY7=SB6EuR8_GnpAu-ysH02J5pwD1cNzUgaieQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, olaf@sofd.de
-To: Olaf Klischat <olaf.klischat@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 20:32:29 2012
+Content-Type: multipart/mixed; boundary=20cf303b3eb31eb0ae04cb03a536
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 01 20:34:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIkmz-0002Ly-4z
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 20:32:21 +0200
+	id 1TIkoV-0002xf-Ha
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Oct 2012 20:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507Ab2JAScJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2012 14:32:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35495 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753471Ab2JAScH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2012 14:32:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7914D80C1;
-	Mon,  1 Oct 2012 14:32:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mCnCS52QG5Ig7l1s4r8YIdC4jSo=; b=Dxwnte
-	GKMpLcdaBfY9pFtz1RPO2teS/Q8VLUh9kDNrvdyxfHFjm+I8pBlLTTxoaXdHnLTS
-	HN/pAC18EalZK+Q92BpM6gSFsZR4l2PweH2C2wkrbMqKGC97i5nI7ohEMmtSH4Yo
-	TE3dxr5V2i/DA7PAlFrrRsTD97sc3UnmbF07g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QxC4XbSBGooU9MNbOmI4luAvYaFTks8t
-	zFIsMmUEfCh/6RR+kpjn4YFqlBgLt4P6mtzwq0IkK503JLVtb680EqIIW7apqTBw
-	Xq4F44OaVNdLwFsHqRpUIWbMpSyKO0QvjydoC8Fi6rMBjhb5Guw4fDiu2Ac3qbcH
-	GSpTcmIaHSY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57E2780C0;
-	Mon,  1 Oct 2012 14:32:05 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A526380BD; Mon,  1 Oct 2012
- 14:32:04 -0400 (EDT)
-In-Reply-To: <1349075700-26334-1-git-send-email-olaf.klischat@gmail.com>
- (Olaf Klischat's message of "Mon, 1 Oct 2012 09:14:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4C7098D8-0BF6-11E2-9B44-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751705Ab2JASdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2012 14:33:44 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:62640 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab2JASdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2012 14:33:43 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so118962qad.19
+        for <git@vger.kernel.org>; Mon, 01 Oct 2012 11:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=CZtJcSICS+Yn47Gv2p9IiMpPCrbzj0y7d8+sGLM/lmc=;
+        b=gOUORILM8WTTFl31RpHvjGRwLS9PekHI15Oq6YK8K+MHnd7foXAhGuaTWwEbMq3hyc
+         N0bFi6y0VXVUlnhwqDyYbKkX2bJbubkCZioCV8Cr0dvBbkIRHUc2qwCic4KRkopcwYr/
+         ypDeyHY5S/ImEDb9X6axG3eaVCzm/t34vsMnz70b0QzoHUBg94CPel91Eq1vST29HBTV
+         2SauSNK6sUXgNCk7999rYkiPZumW7wPo0qx6JpWRDUgUmH9NThuLcffF5okDFY2ARX/y
+         UXWYObaPmVVZ7dnY8uC7seAJDwX+ONZSY4RvG/bMCvQ+9C6PY3ns0mT0PUZpNjhC4otW
+         xRGw==
+Received: by 10.224.181.198 with SMTP id bz6mr37263714qab.97.1349116422434;
+ Mon, 01 Oct 2012 11:33:42 -0700 (PDT)
+Received: by 10.49.95.225 with HTTP; Mon, 1 Oct 2012 11:33:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206756>
 
-Olaf Klischat <olaf.klischat@gmail.com> writes:
+--20cf303b3eb31eb0ae04cb03a536
+Content-Type: text/plain; charset=ISO-8859-1
 
-> ... scenarios where you want to feed the file list into git add
-> via find or other external commands (`find .... | xargs git add'),
-> which you wouldn't want to carefully tune...
+This reproduces in trunk, 1.7.8.4, and 1.7.9.5.
 
-Can you explain this kind of thing in the actual commit log message
-when you reroll (if you will do so)?
+I suspect this has to do with a whitespace + no trailing newline
+issues. The patch was generated by 1.7.9.5. I mangled it by hand to
+get it to be small, but the initial crash happened on a large,
+real-world output of "git format-patch".
 
-I also cannot help but find that `scenario` an artificially made-up
-one.  The description did not feel convincing enough, even if it
-were in the proposed commit log message, to justify such an option.
+Error messages:
 
-A few questions.
+~/GIT-AM-CRASH$ ../git/git am crashy.patch
+Applying: Git crash bug
+git: builtin/apply.c:2108: update_pre_post_images: Assertion
+`fixed_preimage.nr == preimage->nr' failed.
+/home/lesha/GIT-AM-CRASH/../git/git-am: line 811: 23819 Aborted
+         git apply --index "$dotest/patch"
+Patch failed at 0001 Git crash bug
+The copy of the patch that failed is found in:
+   /home/lesha/GIT-AM-CRASH/.git/rebase-apply/patch
+When you have resolved this problem, run "git am --resolved".
+If you prefer to skip this patch, run "git am --skip" instead.
+To restore the original branch and stop patching, run "git am --abort".
 
- - What were the kind of patterns useful in the above `find` in your
-   real life example?
+Repro steps:
 
- - The use of `find` means giving pathspecs from the command line,
-   e.g. "git add foo/ \*.rb", wouldn't have been sufficient. Are
-   there something we could improve this in more direct way?
+mkdir GIT-AM-CRASH
+cd GIT-AM-CRASH
+# download files into this directory
+git init .
+mkdir -p meep/spork
+mv __init__.py meep/spork
+git add meep/spork/__init__.py
+git ci -am 'moo'
+git am crashy.patch
 
- - Why was it too cumbersome to add the idiomatic
+Hope this helps!
 
-	\( -name '*.o' -o -name '*~' \) -prune -o
+Alexey
 
-   or something like that in front of whatever patterns were used?
+--20cf303b3eb31eb0ae04cb03a536
+Content-Type: application/octet-stream; name="crashy.patch"
+Content-Disposition: attachment; filename="crashy.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_h7rwv4yf0
 
- - Perhaps a filter that takes a list of paths and emits only the
-   ignored paths (or only the unignored paths) would be a more
-   generic approach?  You could feed the output from `find` to such
-   a filter, and then drive not just "git add" but other commands
-   that take paths if you solved it that way.
+RnJvbSBhYjM3NmExZDc2YjE2MDU0NDNiNGQ3ZWI5MTk3YmUzMzNiMDM3ZjE2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBsZXNoYSA8c25hcmttYXN0ZXJAZ21haWwuY29tPgpEYXRlOiBX
+ZWQsIDI2IFNlcCAyMDEyIDEwOjU4OjQzIC0wNzAwClN1YmplY3Q6IEdpdCBjcmFzaCBidWcKCi0t
+LQoKZGlmZiAtLWdpdCBhL21lZXAvc3BvcmsvX19pbml0X18ucHkgYi9tZWVwL3Nwb3JrL19faW5p
+dF9fLnB5CmluZGV4IDlkODY5YzkuLmVmMTIwYzcgMTAwNjQ0Ci0tLSBhL21lZXAvc3BvcmsvX19p
+bml0X18ucHkKKysrIGIvbWVlcC9zcG9yay9fX2luaXRfXy5weQpAQCAtMSw3ICsxLDkgQEAKIGZy
+b20gX19mdXR1cmVfXyBpbXBvcnQgYWJzb2x1dGVfaW1wb3J0CiAKK2Zyb20gYmFyIGltcG9ydCBC
+b28KKwogZnJvbSAuYmF6IGltcG9ydCBCb3JrCiAKLUJvby5tb29Gb29Db3coQm9yaykKK0Jvby5t
+b29Db3coQm9yaykKICAgCiAgIApcIE5vIG5ld2xpbmUgYXQgZW5kIG9mIGZpbGUK
+--20cf303b3eb31eb0ae04cb03a536
+Content-Type: application/octet-stream; name="__init__.py"
+Content-Disposition: attachment; filename="__init__.py"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_h7rwv97p1
+
+ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhYnNvbHV0ZV9pbXBvcnQKCmZyb20gLmJheiBpbXBvcnQg
+Qm9yawoKQm9vLm1vb0Zvb0NvdyhCb3JrKQoK
+--20cf303b3eb31eb0ae04cb03a536--
