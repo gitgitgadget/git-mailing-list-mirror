@@ -1,76 +1,54 @@
-From: Jens Hausherr <Jens.Hausherr@xing.com>
-Subject: Re: Deletion of remote branches
-Date: Tue, 2 Oct 2012 06:57:21 +0000
-Message-ID: <CC905CB7.E8B%jens.hausherr@xing.com>
-References: <7vhaqdc4ap.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [ENHANCEMENT] Allow '**' pattern in .gitignore
+Date: Tue, 2 Oct 2012 12:51:49 +0530
+Message-ID: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 09:05:46 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 09:23:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIwY2-0004gV-9N
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:05:42 +0200
+	id 1TIwo9-0005vO-1B
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab2JBHFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 03:05:32 -0400
-Received: from mx2-2.xing.com ([109.233.156.97]:60402 "EHLO mx2-2.xing.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751431Ab2JBHFb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Oct 2012 03:05:31 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Oct 2012 03:05:31 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mx2-2.xing.com (Postfix) with ESMTP id 01C641B68;
-	Tue,  2 Oct 2012 08:57:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
-	mime-version:content-transfer-encoding:content-id:content-type
-	:content-type:user-agent:content-language:accept-language
-	:in-reply-to:message-id:date:date:subject:subject:from:from
-	:received:received:received; s=main; t=1349161043; bh=0R8/p5ItQY
-	Rh0uaNF384RU3DIdKXzfmiS+dUOwiMadg=; b=mkMw+FRszZ9GOtiklnZs7JB5zx
-	NoPYcfckow4TDWj9z3YKwDWT+w2qS/YPpLh1Z7GpvvooQ66ez8HogRs/qmGJ1Isf
-	vDyxKm+fVpOs2tMkfNT4NWAx/JpWvUnGLzlGGoGaYv2zKkPlYrC2TJ5DodRzGMMm
-	3X0vtmT+krpmONKbQ=
-X-Virus-Scanned: Debian amavisd-new at mx2-2.mail.fra2.xing.com
-Received: from mx2-2.xing.com ([127.0.0.1])
-	by localhost (mx2-2.mail.fra2.xing.com [127.0.0.1]) (amavisd-new, port 10030)
-	with ESMTP id o44yQXAAbP6A; Tue,  2 Oct 2012 08:57:23 +0200 (CEST)
-Received: from XING-EXCHSVR01.xing.hh (unknown [172.20.1.16])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mx2-2.xing.com (Postfix) with ESMTPS id ACCFE3F9F;
-	Tue,  2 Oct 2012 08:57:22 +0200 (CEST)
-Received: from XING-EXCHSVR02.xing.hh ([fe80::c94c:f7e0:c93d:de5f]) by
- XING-EXCHSVR01.xing.hh ([fe80::4110:9584:97c1:27a9%22]) with mapi id
- 14.02.0298.004; Tue, 2 Oct 2012 08:57:22 +0200
-Thread-Topic: Deletion of remote branches
-Thread-Index: AQHNn9fX2dpkrvRfQk201KJe1aLYK5ektPgIgAAxDaSAAATthIAAq76A
-In-Reply-To: <7vhaqdc4ap.fsf@alter.siamese.dyndns.org>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.2.4.120824
-x-originating-ip: [172.29.0.21]
-Content-ID: <3927D45187661E40AC802BA2424D5477@xing.com>
+	id S1752707Ab2JBHWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 03:22:11 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:43555 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752564Ab2JBHWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 03:22:09 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so305847qad.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 00:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=TZq7SzlK2I5RX2NAAUpkCC6un8UNJ/D1+qYKnbQlZ7Y=;
+        b=PNC9ZTMzjypjRoNXT/WM+vM2v2y6QQtz3UHrGKto3EVgERHHKqH/nEMoEsulsIQUjp
+         QOXJoSIQLGK3Yku4rXxGTXvWtWV1CG7un9ynqdlBfOIcImO10g6KC48rnuKAFXICzaxN
+         W+AsIisvkykDkcSb6cN2MAZWhY5BU0t4yv5X2M0TSVli/o07Ji+4O8poQMS3w58KaEjd
+         P7UxtAB0RJERnOIB46vCfov+Z8Q1/LJZgumExz2oa4LipsIo1hixff9bCebPqcuM/T1e
+         O1Gyhj6R421xZb3bP93J6CjHYo/gZ5wCBGGwfz3H89tK6V/9qHbbalFgJYuACaf6/djt
+         wDdQ==
+Received: by 10.49.48.111 with SMTP id k15mr3332758qen.28.1349162529259; Tue,
+ 02 Oct 2012 00:22:09 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Tue, 2 Oct 2012 00:21:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206785>
 
-Ok, thanks for clarifying this.
+Hi,
 
+I've often found the '**' (extended) shell glob useful for matching
+any string crossing directory boundaries: it's especially useful if
+you only have a toplevel .gitignore, as opposed to a per-directory
+.gitignore.  Unfortunately, .gitignore currently uses fnmatch(3), and
+doesn't recognize '**'.  Would extending the .gitignore format to
+accept this be a useful feature?  Would it involve re-implementing and
+extending fnmatch, or is there some other way?
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
->All of the above are expected and working as designed.  Remote
->tracking branches are local _copies_ of what you have over there at
->the remote repository. The latter is the authoritative version, and
->you asked "ls-remote" to go over the network to view them.
+Ram
