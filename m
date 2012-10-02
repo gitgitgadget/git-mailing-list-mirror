@@ -1,70 +1,83 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH v2 2/2] gitk: Use bindshiftfunctionkey to bind Shift-F5
-Date: Tue,  2 Oct 2012 11:04:45 -0400
-Message-ID: <1349190285-7788-3-git-send-email-andrew.kw.w@gmail.com>
-References: <7vwqzacdb7.fsf@alter.siamese.dyndns.org>
- <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: gitster@pobox.com, szeder@ira.uka.de, paulus@samba.org,
-	Andrew Wong <andrew.kw.w@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 17:05:44 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: push.default documented in "man git-push"?
+Date: Tue, 2 Oct 2012 20:39:11 +0530
+Message-ID: <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: David Glasser <glasser@davidglasser.net>
+X-From: git-owner@vger.kernel.org Tue Oct 02 17:09:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJ425-0006xZ-Tv
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 17:05:14 +0200
+	id 1TJ46R-0007VE-By
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 17:09:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658Ab2JBPE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 11:04:59 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:64255 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751562Ab2JBPE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 11:04:58 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so14848778iea.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 08:04:57 -0700 (PDT)
+	id S1753581Ab2JBPJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 11:09:33 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:39205 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753222Ab2JBPJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 11:09:32 -0400
+Received: by qaas11 with SMTP id s11so584341qaa.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 08:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=pxlHqt0KGKpijumadI7/+graQ3Fz8wU99e0+h5jdCTA=;
-        b=K5bZriiXXQ/176y9wM/j5I6qApBs0LI/FYF5ukuSNx+RHlcX9hl6691QV+aS/xl9qU
-         7SCIt/t2LpD6ikZOO3zs8R0gUEUmfEuUWaDw3tSFHUtO4PaO5vqkhT0t4tLMDZ3lQBXz
-         9M1i3bKXDUTz3ixd7XkCbSSWhYo1ubXSMPOLQ9vsE3TjBNWHS/g4hE4sL3s7DbZLD28t
-         hmqAfME+QNa6YyOeaK5Pv2yrGfQ87UIYNGa7BhQOV9jeBUe+aVfbWoKXQxBvIgU9B/8d
-         JW/65UswCAiZGTQLWks1/xS44xyyYoDPPX8C5/vG/Gq/6kvlbsFSH/KBc2s8zjiYX6Zy
-         sVBQ==
-Received: by 10.42.43.1 with SMTP id v1mr14065126ice.23.1349190297366;
-        Tue, 02 Oct 2012 08:04:57 -0700 (PDT)
-Received: from nigel.sohovfx.com ([66.207.196.114])
-        by mx.google.com with ESMTPS id t4sm8973635igt.1.2012.10.02.08.04.55
-        (version=SSLv3 cipher=OTHER);
-        Tue, 02 Oct 2012 08:04:56 -0700 (PDT)
-X-Mailer: git-send-email 1.7.12.1.382.gb0576a6
-In-Reply-To: <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mwNjBa2nNRuCHQzhRZSGjxqW7OBGmajLJDYYw86g8+M=;
+        b=WFsak3IUyYOmR8/onLbCCzc4kFubqCH+x4Sq6zz+LOjov0ZelT4L8C+nCSrwDD4w4I
+         yNFukwqC4poHWJObjAD/546Kjx39ZPO7nsDFLlUAPJjd+5ep655MLJZSx+peepEBPu8g
+         Tp/oemAxsNsRAN2t65E9c1y6N+lN+0OAUg1ffbEMTFpYZMkH7ezjsgk+US5uvaF/dsfC
+         OaHcHfCE2B1nSdjdCbIGekg0RKphuOWmrrNzAFi0ngbvqEqaY9HK0d1Tkb2BRuWyecuC
+         qH3yqdLUixK3l9JKplM1n2oZsbCNh4c6Dx566kIOLeiL/luzS6S2eS8C9RJw4jfOvHJE
+         yAQw==
+Received: by 10.224.213.10 with SMTP id gu10mr2762695qab.10.1349190572161;
+ Tue, 02 Oct 2012 08:09:32 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Tue, 2 Oct 2012 08:09:11 -0700 (PDT)
+In-Reply-To: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206804>
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+David Glasser wrote:
+> Is the newish push.default documented in the "git push" manpage
+> anywhere? I don't see it mentioned (and there are several references
+> to the "default" behavior), but maybe I'm missing something. Is it
+> left out on purpose (ie, config values aren't supposed to be mentioned
+> in command manpages)?
+
+You're right.  It's documented in `man git-config`, but we should
+probably mention it in the `git-push` manpage.
+
+--8<--
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Date: Tue, 2 Oct 2012 20:37:13 +0530
+Subject: [PATCH] Documentation: mention `push.default` in git-push.txt
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- gitk | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-push.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/gitk b/gitk
-index f8f89a5..d53fdb2 100755
---- a/gitk
-+++ b/gitk
-@@ -2501,7 +2501,7 @@ proc makewindow {} {
-     bindkey ? {dofind -1 1}
-     bindkey f nextfile
-     bind . <F5> updatecommits
--    bind . <Shift-F5> reloadcommits
-+    bindmodfunctionkey Shift 5 reloadcommits
-     bind . <F2> showrefs
-     bindmodfunctionkey Shift 4 {newview 0}
-     bind . <F4> edit_or_newview
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index cb97cc1..8751b38 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -37,7 +37,8 @@ OPTIONS[[OPTIONS]]
+        `+`, followed by the source ref <src>, followed
+        by a colon `:`, followed by the destination ref <dst>.
+        It is used to specify with what <src> object the <dst> ref
+-       in the remote repository is to be updated.
++       in the remote repository is to be updated.  If not specified,
++       the configuration variable `push.default` is used.
+ +
+ The <src> is often the name of the branch you would want to push, but
+ it can be any arbitrary "SHA-1 expression", such as `master~4` or
 -- 
-1.7.12.1.382.gb0576a6
+1.7.12.1.428.g652398a.dirty
