@@ -1,128 +1,68 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: erratic behavior commit --allow-empty
-Date: Tue, 2 Oct 2012 09:51:56 +0200
-Message-ID: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: Re: [ENHANCEMENT] Allow '**' pattern in .gitignore
+Date: Tue, 02 Oct 2012 09:58:30 +0200
+Message-ID: <506A9EA6.9010303@gmail.com>
+References: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 09:52:17 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 09:59:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIxGx-0002D6-SY
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:52:08 +0200
+	id 1TIxNT-0004O3-BI
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475Ab2JBHv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 03:51:58 -0400
-Received: from mail-vb0-f46.google.com ([209.85.212.46]:50812 "EHLO
-	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753382Ab2JBHv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 03:51:57 -0400
-Received: by vbbff1 with SMTP id ff1so6270974vbb.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 00:51:56 -0700 (PDT)
+	id S1753461Ab2JBH6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 03:58:41 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42839 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753389Ab2JBH6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 03:58:41 -0400
+Received: by bkcjk13 with SMTP id jk13so5299606bkc.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 00:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=VXh10pKnWqj/J88lkbhDxtw5Qqx7cL64OM5jgKnN0SM=;
-        b=vHu6KA9CNLXbWUPm1Y+kUiP8rR3sZFSF0iu3VkSSLlhAkNXyN3yaiBF0NyW3z5eLkm
-         JOykdis2yXBn2FImuuDETz8AK6Gzzojou4GN9XQmnsYJmbQlxpYK67M18Cb+T7iqhQ1N
-         huwcoXJLjKBNdGuVssWq3Y7hrN5nW+XOd5XdL5cHIbcJPCn0MvPn+yYYiXJQp20yZWvU
-         +Mxumu6M3VmqYrr9xolxcvOn6i5DhzjoIU4oGfKqu52QEEgxjt+6G0IK9qEIwKK9bLNO
-         EyIhFVpH5QtNalwUtyZ6A2xLmqqDSqFK9cUvgeC4NIsEfxl5VtN+8XcARiGTEeSGc1v2
-         VKPA==
-Received: by 10.58.94.44 with SMTP id cz12mr10139080veb.34.1349164316685; Tue,
- 02 Oct 2012 00:51:56 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Tue, 2 Oct 2012 00:51:56 -0700 (PDT)
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=2Yl3vohqELrZQbKMnNa/nNA3DKLrWrnJRUQOKFJdufE=;
+        b=FEHDYn9pH3JHH3G6G31aZWHlZrhiLdbg98IOfL86lPVmniSZKNxoCD3qSOYCaN2phL
+         TOFSzFs4nbJozbzeg1pf60Diw0UZpq6utvF1/B8LUX4wQ15sbUW04cFe96PSyDVvaYS4
+         nCbO+r04OVJ2WNk9SXLEizosT/qCqDzn7+fgTBdn6iIjnBJRqTYHiDvn2giZzVrJG2KW
+         RKBaHkjLqNVTHCUIqaLIio4p/aVexQmPf/BKBdQ9yLTmFsUahPsY4ljKPNrD4tcWt7ex
+         5rAnA3WqKS/lMiWD5AhoRLNHCtqMCK3afkhh4j94JjLhKSSfTEhof8o1EGDS6/gT5c+E
+         x1EQ==
+Received: by 10.204.3.214 with SMTP id 22mr6400505bko.108.1349164719662;
+        Tue, 02 Oct 2012 00:58:39 -0700 (PDT)
+Received: from [192.168.178.21] (host194-94-dynamic.2-87-r.retail.telecomitalia.it. [87.2.94.194])
+        by mx.google.com with ESMTPS id k21sm246023bkv.1.2012.10.02.00.58.38
+        (version=SSLv3 cipher=OTHER);
+        Tue, 02 Oct 2012 00:58:38 -0700 (PDT)
+In-Reply-To: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206789>
 
-Hi
+On 10/02/2012 09:21 AM, Ramkumar Ramachandra wrote:
+> Hi,
+> 
+> I've often found the '**' (extended) shell glob useful for matching
+> any string crossing directory boundaries: it's especially useful if
+> you only have a toplevel .gitignore, as opposed to a per-directory
+> .gitignore.  Unfortunately, .gitignore currently uses fnmatch(3), and
+> doesn't recognize '**'.  Would extending the .gitignore format to
+> accept this be a useful feature?  Would it involve re-implementing and
+> extending fnmatch, or is there some other way?
+>
+I think there is a topic in flight about this:
 
-I have noticed an erratic behavior of git commit --allow-empty: sometimes
-it creates a new commit, but sometimes not.
-I have executed two times the following script, emptycommit:
+    <http://thread.gmane.org/gmane.comp.version-control.git/206406>
 
-#!/bin/bash
-set -x
-rm -rf local
-mkdir local
-cd local
-git init
-echo "aaa" >f1
-git add f1
-git commit -m A
-git checkout --orphan feature
-git commit -m A --allow-empty
-git rev-list --all --pretty=oneline
-
-This is the log of the first execution:
-
-$ emptycommit
-+ rm -rf local
-+ mkdir local
-+ cd local
-+ git init
-Initialized empty Git repository in d:/gtest/local/.git/
-+ echo aaa
-+ git add f1
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
-+ git commit -m A
-[master (root-commit) 07e7d37] A
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
- 1 file changed, 1 insertion(+)
- create mode 100644 f1
-+ git checkout --orphan feature
-Switched to a new branch 'feature'
-+ git commit -m A --allow-empty
-[feature (root-commit) 2297c4e] A
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
- 1 file changed, 1 insertion(+)
- create mode 100644 f1
-+ git rev-list --all --pretty=oneline
-2297c4e34ec27f3cdeca8c0dcdcd61b4a079f411 A
-07e7d379c2339ed375ed4903f6196d627367b7bf A
-
->>>>> note that git commit -m A --allow-empty creates a commit
-
-This is the log of the second execution:
-
-$ emptycommit
-+ rm -rf local
-+ mkdir local
-+ cd local
-+ git init
-Initialized empty Git repository in d:/gtest/local/.git/
-+ echo aaa
-+ git add f1
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
-+ git commit -m A
-[master (root-commit) 1b86218] A
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
- 1 file changed, 1 insertion(+)
- create mode 100644 f1
-+ git checkout --orphan feature
-Switched to a new branch 'feature'
-+ git commit -m A --allow-empty
-[feature (root-commit) 1b86218] A
-warning: LF will be replaced by CRLF in f1.
-The file will have its original line endings in your working directory.
- 1 file changed, 1 insertion(+)
- create mode 100644 f1
-+ git rev-list --all --pretty=oneline
-1b8621851f6ae2943347da655661e9d5dc978208 A
-
->>>>> note that git commit -m A --allow-empty DOES NOT create a commit
-
-The script has been run on Windows 7 with git version 1.7.11.msysgit.1
-
--Angelo
+HTH,
+  Stefano
