@@ -1,83 +1,101 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: The ciabot hook code in contrib/ is obsolete - delete it
-Date: Tue, 2 Oct 2012 19:39:35 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20121002233934.GA21819@thyrsus.com>
-References: <20120928024045.E0D6F42F19@snark.thyrsus.com>
- <7vr4pg5vn4.fsf@alter.siamese.dyndns.org>
-Reply-To: esr@thyrsus.com
+From: Jeremy Morton <admin@game-point.net>
+Subject: Fixing the p4merge launch shell script
+Date: Wed, 03 Oct 2012 00:38:35 +0100
+Message-ID: <506B7AFB.1070700@game-point.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 01:40:38 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 02:02:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJC4Z-0002N0-JS
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 01:40:19 +0200
+	id 1TJCQB-0000LO-Ad
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 02:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756724Ab2JBXkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 19:40:06 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:54321
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753702Ab2JBXkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 19:40:05 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 171C642F19; Tue,  2 Oct 2012 19:39:35 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vr4pg5vn4.fsf@alter.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932771Ab2JCAC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 20:02:29 -0400
+Received: from ip.game-point.net ([208.100.1.149]:52177 "EHLO
+	ip.game-point.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932747Ab2JCAC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 20:02:28 -0400
+X-Greylist: delayed 1525 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Oct 2012 20:02:28 EDT
+Received: from 87-194-212-214.bethere.co.uk ([87.194.212.214]:3265 helo=[192.168.0.101])
+	by ip.game-point.net with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.77)
+	(envelope-from <admin@game-point.net>)
+	id 1TJC1S-0006Se-57
+	for git@vger.kernel.org; Wed, 03 Oct 2012 00:37:06 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - ip.game-point.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - game-point.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206853>
 
-Junio C Hamano <gitster@pobox.com>:
-> Seeing the above without a signed-off patch and then this on cia.vc
-> 
->     We intend to have the CIA.VC Site running soon then bring the
->     service back at a later date!  We currently do not have an ETA for
->     the Service but hope to have it functioning soon!
-> 
-> I am not sure what the right course of action at this moment.
+Hi,
 
-Then leave things as they are and we'll await developments.
+I've noticed that the p4merge shell script could do with some 
+improvement when it comes to merging.  Because p4merge throws up an 
+error when one of the files it's given to diff is "/dev/null", git needs 
+to create a temporary empty file and pass that to p4merge when diffing a 
+file that has been created/deleted (eg. create file, git add ., git diff 
+--cached).
 
-Yes, Ilkotech is expressing a hope to revive CIA.  For various reasons
-both technical and political I am near certain the effort will go
-nowhere.  From #cia:
+At the moment, the hack I'm using, which works, is to create a 
+c:/blank.txt file which is an empty file, and modify 
+"libexec/git-core/mergetools/p4merge" to start with this:
 
-[17:19]	Talad	Hi
-[17:19]	Talad	the CIA bot in our channel is gone
-[17:20]	Talad	how to restore it ?
-[17:20]	shadowm	/topic
-[17:20]	shadowm	(Old news at this point, really.)
-[17:21]	Talad	what is the problem?
-[17:21]	AI0867	the server was deleted
-[17:21]	AI0867	the version running on it was never checked into version control, nor was it backed up
-[17:22]	AI0867	in short, CIA is *gone*
-[17:22]	AI0867	for a replacement, see #irker or http://www.catb.org/~esr/irker/
-[17:25]	The_Tick	BearPerson: do we know if there was a backup of the database holding all the configs?
-[17:26]	BearPerson	There might be one on a hard drive somewhere in my apartment, but it'd be at least 2 years old at this point
-[17:26]	BearPerson	haven't gotten around to digging up that box yet
-[17:26]	The_Tick	might be worth pulling the emails out and shooting everyone an email explaining the situation
-[17:27]	The_Tick	so they stop coming in here asking about it
-[17:30]	Talad	"the server was deleted" <- by the owner?
-[17:32]	Talad	maybe CIA was discussed/agreed with freenode staff
-[17:32]	Talad	and they have a copy of it?
-[17:32]	The_Tick	doubt it
-[17:33]	Talad	I guess they are careful about widespread bots like CIA
-[17:33]	shadowm	No, freenode had nothing to do with running CIA.vc.
-[17:34]	shadowm	And the server was deleted by the hosting company, while the current owners did not have a backup plan at all.
-[17:36]	Talad	I see
-[17:36]	Talad	ok, thanks
+diff_cmd () {
+	if [ ! -f "$LOCAL" ]
+	then
+		LOCAL="C:/blank.txt"
+	fi
+	if [ ! -f "$REMOTE" ]
+	then
+		REMOTE="C:/blank.txt"
+	fi
+	"$merge_tool_path" "$LOCAL" "$REMOTE"
+}
 
-On the other hand contrib/ciabot isn't taking up a lot of space in
-your tree, either, so there's little harm in leaving it in place.
+Obviously, this isn't good enough because c:/blank.txt probably won't 
+exist on the system.  It would be nice for the temporary blank file to 
+have the same extension as the one that's been added, so we could diff 
+(say) c:/users/jez/Temp/abc123_newFile.foo 
+c:/development/bar/newfile.foo.  However, I can't see a way to do this 
+purely from within the shell script (even `mktemp` doesn't exist on all 
+systems so that isn't good enough).  I believe git needs to create this 
+temporary blank file itself, much like it creates a temporary file for 
+the previous version of a file that's been modified when it's being 
+diff'd.  It then needs to expose the location of this temporary file as 
+a variable; say $LOCALBLANK.  So, we would be able to modify the shell 
+script to this:
+
+
+diff_cmd () {
+	if [ ! -f "$LOCAL" ]
+	then
+		LOCAL=$LOCALBLANK
+	fi
+	if [ ! -f "$REMOTE" ]
+	then
+		REMOTE=$REMOTEBLANK
+	fi
+	"$merge_tool_path" "$LOCAL" "$REMOTE"
+}
+
+Thoughts?  Is there an easier way to do this?
+
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Best regards,
+Jeremy Morton (Jez)
