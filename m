@@ -1,89 +1,157 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] run-command: don't try to execute directories
-Date: Tue, 2 Oct 2012 17:26:45 -0400
-Message-ID: <20121002212645.GA26789@sigill.intra.peff.net>
-References: <1349189193-25497-1-git-send-email-cmn@elego.de>
- <7vvces93qj.fsf@alter.siamese.dyndns.org>
- <87bogkisas.fsf@centaur.cmartin.tk>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Tue, 2 Oct 2012 23:56:14 +0200
+Message-ID: <CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+	<506AA51E.9010209@viscovery.net>
+	<7vzk449449.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Oct 02 23:27:55 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 23:57:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJA01-0000ub-IP
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 23:27:29 +0200
+	id 1TJASA-0004fq-NC
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 23:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416Ab2JBV0y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2012 17:26:54 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:38497 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932402Ab2JBV0x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 17:26:53 -0400
-Received: (qmail 32141 invoked by uid 107); 2 Oct 2012 21:27:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Oct 2012 17:27:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2012 17:26:45 -0400
-Content-Disposition: inline
-In-Reply-To: <87bogkisas.fsf@centaur.cmartin.tk>
+	id S1756645Ab2JBV4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 17:56:15 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:38228 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753585Ab2JBV4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 17:56:15 -0400
+Received: by vbbff1 with SMTP id ff1so7162349vbb.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 14:56:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=o+biETLlBWIwlulAudCKQ7fPIGa6ej3O5BWS7CUkWsY=;
+        b=OD+J4PvvQato7vW9AJAuC6YW6imO4EclNZ2hoHFV66aX16/HP1LPPsRqphFkvmQlMn
+         fwUpjwjqg+QilUCsM/GoKrCTCOWB2gPF5tyxxQ4IE1R90wAZkCJHw38EWDjKwmsxSblt
+         rT/6I8y2ZuEh8mq+5Brz5PTh8jJmG8uhy6T3iu+TlAiTdnLHKE3kmWKI+DrAsrogSM9n
+         zrqi/oIAwFtB4VPtEDYl40js/59aVuqAVYijaw95vVk9l2b8Z/2ZIbMyDyR7D9Hc1UCm
+         iY+zB4ZfvDRvR+1ZCM1iA3X/sxoxPheqrUPw6C6+wbq17WOlIYAQoSPxAKpXaEH7AnrM
+         Djtw==
+Received: by 10.58.94.44 with SMTP id cz12mr51898veb.34.1349214974115; Tue, 02
+ Oct 2012 14:56:14 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Tue, 2 Oct 2012 14:56:14 -0700 (PDT)
+In-Reply-To: <7vhaqc7in6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206848>
 
-On Tue, Oct 02, 2012 at 09:32:11PM +0200, Carlos Mart=C3=ADn Nieto wrot=
-e:
+Hi Junio,
 
-> >> @@ -101,8 +102,9 @@ static char *locate_in_PATH(const char *file)
-> >>  		}
-> >>  		strbuf_addstr(&buf, file);
-> >> =20
-> >> -		if (!access(buf.buf, F_OK))
-> >> +		if (!stat(buf.buf, &st) && !S_ISDIR(st.st_mode)) {
-> >>  			return strbuf_detach(&buf, NULL);
-> >> +		}
-> >
-> > So we used to say "if it exists and accessible, return that".  Now
-> > we say "if it exists and is not a directory, return that".
-> >
-> > I have to wonder what would happen if it exists as a non-directory
-> > but we cannot access it.  Is that a regression?
->=20
-> I guess it would be, yeah. Would this be related to tha situation whe=
-re
-> the user isn't allowed to access something in their PATH?
+> It does create one; it just is the same one you already happen to have,
+> when you record the same state on top of the same history as the
+> same person at the same time.
+>
 
-This code path is related to correcting EACCES errors into ENOENT. But
-it does not bother checking permissions itself.  We know there is some
-permission problem, because execvp told us EACCES, so we are only
-checking whether such a file actually exists at all in the PATH. And
-that is why we are using F_OK with access, and not X_OK.
+No, it does not create one: as you can see from the trace of the execution
+of my script, the sha of the commit is the same as that of the other,
+which means
+that in the .git/objects there is only one such commit object, and not two with
+the same sha. The meaning of the word "create" is to bring into being something
+that did not exist before. There is no "creation" if the object already exists.
 
-So any reason for which stat() would fail would presumably cause
-access(F_OK) to fail, too (mostly things like leading directories not
-being readable), and I think converting the access into a stat is OK.
+>
+> And how would it help what to insert a sleep for 1 second (or 1 year
+> for that matter)?  As you said, it reads from the system clock, and
+> there are millions of systems in the world that have Git installed.
+> You may record the same state on top of the same history as the same
+> person on two different machines 5 minutes in wallclock time in
+> between doing so.  These two machines may end up creating the same
+> commit because one of them had a clock skewed by 5 minutes.
 
-Adding the !ISDIR on top of it makes sense if you want to consider the
-directory in your PATH to be a harmless thing to be ignored. However, I
-am not sure that is a good idea. The intent of ignoring the original
-EACCES is that it could be caused by totally uninteresting crap, like a=
-n
-inaccessible directory in your PATH.
+I understood that the command does not create a new commit if all its data, i.e.
+tree, committer, ... and date are the same, representing the date with 1 second
+precision. Sleeping for 1 second guarantees that there is no commit in the repo
+that has the same time as the time after the sleep, i.e. that the
+command creates
+a (new) commit.
 
-Whereas in this case, the error really is that we found "git-foo", but
-it is somehow broken. And it almost certainly is a configuration error
-on the part of the user (why would they put a git-foo directory in thei=
-r
-PATH? Presumably they meant to put its contents into the PATH).
+>
+> What problem are you really trying to solve?  You mentioned
+> importing from the foreign SCM,
 
-So I think your implementation is fine, but I'm a little dubious of the
-value of ignoring such an error.
+I quoted a piece of the man page of git commit, that states that
+--allow-empty bypasses
+the safety check that prevents to make a new commit. That piece
+incidentally states
+that it is "primarily" used by foreign SCM interface scripts. But of
+course it can be used
+in any script that needs to build a commit on top of another.
 
--Peff
+>
+> You also did not seem to have read what I wrote, or deliberately
+> ignored it (in which case I am wasting even more time writing this,
+> so I'll stop).
+
+I did not deliberately ignore what you wrote. I might have missed some
+point though.
+
+> This does not have anything to do with "--allow-empty"; removing
+> "the option" would not help anything, either.
+
+I am reporting a problem with --allow-empty, so why you say that this
+does not have
+anything to do with it?
+Removing the option removes a behavior that is not predictable.
+Often it is better to remove a feature that turns out to be
+inconsistent than to leave it
+in the software. Of course a much better avenue is to make it consistent.
+
+> Run the following on a fast-enough machine.
+>
+ I did, and obtained most of the times "I was quick enough" and
+sometimes "I was not quick enough", which is the same kind of behavior
+of my script.
+
+The problem I am trying to solve is to push to a remote server the
+source files only,
+while keeping in the local repo both sources and binaries. To do it, I
+keep an orphan
+branch, say "sources". When I make a commit on the master branch, I make also a
+commit on the sources one after having un-staged (git rm --cached) the binaries.
+The script that does this must cope also with the particular case in
+which in the commit
+on the master branch there are no sources. Basically the script does:
+
+# this is the commit on the master branch
+git init
+echo "aaa" >f1
+git add f1
+git commit -m A
+
+# this is the piece of the script that builds the sources branch
+git checkout --orphan sources
+# git rm --cached ...   remove binaries, if any"
+git commit -m A --allow-empty
+git rev-list --all --pretty=oneline
+
+When there are binaries in the commit A, they are removed, and the
+tree for the second
+git commit is then different, and the commit is actually created.
+When there are no binaries (as in the script above, in which the
+removal is commented out),
+the second git commit would not create any new commit, and I would not
+have an orphan
+branch. Thence the --allow-empty to force it to create a new commit.
+Unfortunately, it creates a new commit only if the system clock
+changes the seconds of
+the system time between the two git commits.
+If you insert a "sleep 1" before the second git commit, the commit is
+really created.
+
+I spent many hours to spot this time-dependent error ....
+
+-Angelo
