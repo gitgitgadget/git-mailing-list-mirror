@@ -1,107 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 3/5] diff: acknowledge --submodule=short command-line
- option
-Date: Tue, 02 Oct 2012 21:24:36 +0200
-Message-ID: <506B3F74.3020208@web.de>
-References: <1349196670-2844-1-git-send-email-artagnon@gmail.com> <1349196670-2844-4-git-send-email-artagnon@gmail.com>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Tue, 2 Oct 2012 21:34:56 +0200
+Message-ID: <CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+	<506AA51E.9010209@viscovery.net>
+	<7vzk449449.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 21:25:20 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 21:35:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJ85L-0005dN-J3
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 21:24:51 +0200
+	id 1TJ8FJ-00016z-Kd
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 21:35:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628Ab2JBTYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 15:24:41 -0400
-Received: from mout.web.de ([212.227.17.11]:53526 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751311Ab2JBTYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 15:24:41 -0400
-Received: from [192.168.178.41] ([91.3.177.137]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0M0R25-1TZXuE1sSr-00uVY6; Tue, 02 Oct 2012 21:24:39
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <1349196670-2844-4-git-send-email-artagnon@gmail.com>
-X-Provags-ID: V02:K0:LeREzbU4DMOI7bT/rvUBBNV3MOpbAzv0ZlRaVej8lbt
- 2cisqVVqOc55LOrAfwVFNQ/IDMzhr1EXSHRv3l7ibyfI0pCGda
- 5roedst9hxabLnblYXBnmfxKAUISwAawKyhw5/CAmkww/V+9Gt
- GYDqEUI5gtuQjPefnqD8/mW3QtgFf1MDFT+/rJiP0AYg5v5VcS
- LskGxlpLGLd0lM5D8UIEg==
+	id S1754144Ab2JBTe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 15:34:58 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:54583 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754029Ab2JBTe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 15:34:57 -0400
+Received: by vbbff1 with SMTP id ff1so7010640vbb.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 12:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=p69IJOMsFiyxvwWiAr2K2jdosROS7RveB/vbBVnhf20=;
+        b=DSI/rE3jzd8dCOI7CZdvELJUMQJRLfJYE9THeHAFBBs9RmwDOT8N6cJaorkDH6JNYP
+         XsPAUPQGjSWqmXYvhf4PIDmNEXuL9O7xRAFKkfpL0Mf8us24MXQi+c4AA9Q8/k0v2ZKV
+         NpRY1K89MGnYK2HcQkb+irQF1304tYzeTN3mNxgT0M6is3NJqpiwcA7f26QbEugppGvT
+         TGrV9DeG5ImEIk+RZi/4cx1Hhyf/bgjPMYBS4WSgoieYCcqa7E2loyaeByTsgjuE9dBd
+         j2ltT0nMXJbXe7dwmwlbdiTg0lr1z8+AoMRJP3PAqogwfyGUScBq4FfPsA3GratjNnuT
+         adAw==
+Received: by 10.52.72.164 with SMTP id e4mr8696082vdv.103.1349206496422; Tue,
+ 02 Oct 2012 12:34:56 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Tue, 2 Oct 2012 12:34:56 -0700 (PDT)
+In-Reply-To: <7vzk449449.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206838>
 
-Am 02.10.2012 18:51, schrieb Ramkumar Ramachandra:
-> Currently, the diff code does not differentiate between an explicit
-> '--submodule=short' being passed, and no submodule option being passed
-> on the command line.  Making this differentiation will be important
-> when the command-line option can be used to override a
-> "diff.submoduleFormat" configuration variable introduced in the next
-> patch.
+Hi Junio,
 
-Wouldn't it be sufficient here to simply reset the log flag by using
-"DIFF_OPT_CLR(options, SUBMODULE_LOG)"? This would avoid having to
-use the last bit of the diffopt flags. And if I read the code correctly,
-diff_opt_parse() is called by setup_revisions() which is called after
-git_config(), so that should be safe. (And "textconv" uses the same
-approach)
+if I put on my head the implementor's hat, I would agree with you: that command
+after all behaves as implemented.
+However, if I put the user's hat I would reason differently. What I
+need are predictable
+commands, and that by all means is not. This because the time at which a command
+is executed is not predictable (more precisely, the statement in it
+that reads the system
+calendar). So, even if an implementor thinks that this behavior is
+reliable, a user
+thinks that it is not predictable. Actually, I called that command
+from within a script,
+and thus I could not count on it being executed within 1 second from
+the last commit.
+Read also the paragraph in the man page that describes it:
 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  diff.c |    4 +++-
->  diff.h |   17 +++++++++--------
->  2 files changed, 12 insertions(+), 9 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index 35d3f07..8ea40f9 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3647,7 +3647,9 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
->  	} else if (!strcmp(arg, "--submodule"))
->  		DIFF_OPT_SET(options, SUBMODULE_LOG);
->  	else if (!prefixcmp(arg, "--submodule=")) {
-> -		if (!strcmp(arg + 12, "log"))
-> +		if (!strcmp(arg + 12, "short"))
-> +			DIFF_OPT_SET(options, SUBMODULE_SHORT);
-> +		else if (!strcmp(arg + 12, "log"))
->  			DIFF_OPT_SET(options, SUBMODULE_LOG);
->  	}
->  
-> diff --git a/diff.h b/diff.h
-> index a658f85..4115b49 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -77,14 +77,15 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
->  #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
->  #define DIFF_OPT_ALLOW_TEXTCONV      (1 << 21)
->  #define DIFF_OPT_DIFF_FROM_CONTENTS  (1 << 22)
-> -#define DIFF_OPT_SUBMODULE_LOG       (1 << 23)
-> -#define DIFF_OPT_DIRTY_SUBMODULES    (1 << 24)
-> -#define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 25)
-> -#define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
-> -#define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
-> -#define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
-> -#define DIFF_OPT_FUNCCONTEXT         (1 << 29)
-> -#define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
-> +#define DIFF_OPT_SUBMODULE_SHORT     (1 << 23)
-> +#define DIFF_OPT_SUBMODULE_LOG       (1 << 24)
-> +#define DIFF_OPT_DIRTY_SUBMODULES    (1 << 25)
-> +#define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 26)
-> +#define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 27)
-> +#define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 28)
-> +#define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 29)
-> +#define DIFF_OPT_FUNCCONTEXT         (1 << 30)
-> +#define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 31)
->  
->  #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
->  #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
-> 
+"Usually recording a commit that has the exact same tree as its sole
+parent commit is a mistake, and the command prevents you from making
+such a commit. This option bypasses the safety, and is primarily for
+use by foreign SCM interface scripts."
+
+I cannot find any clue in it that lets me know that is does not create
+a commit if the time is
+within the same second as the other commit.
+
+My suggestion is either to include a sleep in the command so as to
+guarantee that a commit
+is created, or to remove the option.
+
+-Angelo
