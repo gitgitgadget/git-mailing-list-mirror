@@ -1,67 +1,80 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [ENHANCEMENT] Allow '**' pattern in .gitignore
-Date: Tue, 2 Oct 2012 13:54:42 +0530
-Message-ID: <CALkWK0=X5nJ6Shwa0+6Jk2cgvvo25j=mKLRs4v=eQY7x9+XvFw@mail.gmail.com>
-References: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
- <506A9EA6.9010303@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Tue, 02 Oct 2012 10:26:06 +0200
+Message-ID: <506AA51E.9010209@viscovery.net>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 10:26:22 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 10:26:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIxnW-0001SS-63
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 10:25:46 +0200
+	id 1TIxo9-0005Dg-K5
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 10:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380Ab2JBIZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 04:25:08 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:48025 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754181Ab2JBIZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 04:25:03 -0400
-Received: by qchd3 with SMTP id d3so4389477qch.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 01:25:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=rbClATGsry4EDchi08sDuytpcyBDvtVBkTEtGwurxD8=;
-        b=ji0NgCKX+YqljVEkUT25MDfM+tif+pwflnhzBI2edcbfSPfkE35lqu5mneK4SRw2zR
-         29/25KA5B5DSozdH2GhqgWkyV/1aLsedoPO1ic79Mwadl6dUXr6HsbhWymufyOUc5I3m
-         Dv/qRY59wGUNgejdMj0es02FwzvQ9Ty2uGYlCKjq0/H2xn0PtWFEg3IkvzDdohMiCA1e
-         hJ9kaQLGWQKc04xA3C4eH0lR2tATOWXc67BC1Wuj7OUL8KMF/EnmqpDtDWonmT8dmT9y
-         keMsvF4nH8m0c7Z7jiLFfa2ZU9IGVXiXpqTN19EtILKMszyACu9yhyGGuGgpQI2dQkY1
-         FHXg==
-Received: by 10.224.192.66 with SMTP id dp2mr1102160qab.95.1349166302533; Tue,
- 02 Oct 2012 01:25:02 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Tue, 2 Oct 2012 01:24:42 -0700 (PDT)
-In-Reply-To: <506A9EA6.9010303@gmail.com>
+	id S1754611Ab2JBI0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 04:26:12 -0400
+Received: from so.liwest.at ([212.33.55.24]:25859 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754511Ab2JBI0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 04:26:11 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TIxnq-0000is-SC; Tue, 02 Oct 2012 10:26:06 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 988751660F;
+	Tue,  2 Oct 2012 10:26:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206792>
 
-Stefano Lattarini wrote:
-> On 10/02/2012 09:21 AM, Ramkumar Ramachandra wrote:
->> Hi,
->>
->> I've often found the '**' (extended) shell glob useful for matching
->> any string crossing directory boundaries: it's especially useful if
->> you only have a toplevel .gitignore, as opposed to a per-directory
->> .gitignore.  Unfortunately, .gitignore currently uses fnmatch(3), and
->> doesn't recognize '**'.  Would extending the .gitignore format to
->> accept this be a useful feature?  Would it involve re-implementing and
->> extending fnmatch, or is there some other way?
->>
-> I think there is a topic in flight about this:
->
->     <http://thread.gmane.org/gmane.comp.version-control.git/206406>
+Am 10/2/2012 9:51, schrieb Angelo Borsotti:
+> This is the log of the second execution:
+> 
+> $ emptycommit
+> + rm -rf local
+> + mkdir local
+> + cd local
+> + git init
+> Initialized empty Git repository in d:/gtest/local/.git/
+> + echo aaa
+> + git add f1
+> warning: LF will be replaced by CRLF in f1.
+> The file will have its original line endings in your working directory.
+> + git commit -m A
+> [master (root-commit) 1b86218] A
+> warning: LF will be replaced by CRLF in f1.
+> The file will have its original line endings in your working directory.
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 f1
+> + git checkout --orphan feature
+> Switched to a new branch 'feature'
+> + git commit -m A --allow-empty
+> [feature (root-commit) 1b86218] A
+> warning: LF will be replaced by CRLF in f1.
+> The file will have its original line endings in your working directory.
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 f1
+> + git rev-list --all --pretty=oneline
+> 1b8621851f6ae2943347da655661e9d5dc978208 A
+> 
+>>>>>> note that git commit -m A --allow-empty DOES NOT create a commit
 
-Ah, yes.  Thanks.
+Note that git commit -m A --allow-empty *DID* create a commit. Only, that
+it received the same name (SHA1) as the commit you created before it
+because it had the exact same contents (files, parents, author, committer,
+and timestamps). Obviously, your script was executed sufficiently fast
+that the two commits happend in the same second.
 
-Ram
+-- Hannes
