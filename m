@@ -1,98 +1,79 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
-Date: Tue, 02 Oct 2012 18:06:35 +0200
-Message-ID: <506B110B.2050802@web.de>
-References: <5001644F.10901@web.de> <20120715090849.GB18385@sigill.intra.peff.net> <5059ED25.9090002@web.de> <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 18:07:26 2012
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH 2/2] git-gui: Don't prepend the prefix if value looks like a full path
+Date: Tue,  2 Oct 2012 12:25:15 -0400
+Message-ID: <1349195115-15494-3-git-send-email-andrew.kw.w@gmail.com>
+References: <1349195115-15494-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 02 18:25:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJ4zt-00065A-41
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 18:07:01 +0200
+	id 1TJ5I1-0007C8-7i
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 18:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754825Ab2JBQGv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2012 12:06:51 -0400
-Received: from mout.web.de ([212.227.15.3]:56209 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838Ab2JBQGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 12:06:50 -0400
-Received: from wanderer.site ([195.67.191.22]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0M6DuI-1TcWqg0rne-00yDC9; Tue, 02 Oct 2012 18:06:48
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120825 Thunderbird/15.0
-In-Reply-To: <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:p/duBmm3Aq6X1gkIf+R8bC6aYWd/0hnq/gHnpU8HRZ3
- QvhxID7hStpgm6I2zSG3lafFvW243N3+YFIQNEdyzSqIfSq5/Y
- j38TyoVhAjMOKoiDt8KYanpXcrGx8bU/UqdTSCkgLvSle0tn2Q
- 2JW5IV5YzvinT9fAkW0FD81AJvdo5xVk/hAc0gKBcSwdAMjcOt
- j8MetfDvu1XiPOFRj3SkA==
+	id S1755015Ab2JBQZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 12:25:31 -0400
+Received: from mail-ia0-f174.google.com ([209.85.210.174]:36993 "EHLO
+	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754985Ab2JBQZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 12:25:30 -0400
+Received: by mail-ia0-f174.google.com with SMTP id y32so753414iag.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 09:25:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=kzynbs0Nl+RN5bElWqMnepWDfwEqrBIrui12aeZn5jk=;
+        b=r1gvJOd0N2KL+DGCNcpV/tpfd3TpwJFYTI3KaA0lqjeHviDc7tKdnFm/C4f48dmHNP
+         jH056QLYaFJOZxuFhGoUkJUQjPyfkieULaG6YGsnyvpc+WoMSm0JeeMQUPcQk2/eaBm2
+         vs260EwopB76xvmuhssiJC3d8eTT0NqGR4HuIYdO5An2tM7Q4Gg/5h1gvfsKG0n4f+MV
+         4WuOEMhG9Vsg7YluH8uUTJfGVgqgYB0RHaIFEo3FO+d10j2W0tRYk4PKGDrLASeeuST6
+         0HTKnrJcm0dwSyXqSZW+KmHuzohd0MT1nz2LvMwL7NhgQcN4E7lj0jHt0GgpPo17lL5r
+         9EGg==
+Received: by 10.42.33.69 with SMTP id h5mr13489045icd.54.1349195130419;
+        Tue, 02 Oct 2012 09:25:30 -0700 (PDT)
+Received: from nigel.sohovfx.com ([66.207.196.114])
+        by mx.google.com with ESMTPS id d19sm9109210igp.6.2012.10.02.09.25.27
+        (version=SSLv3 cipher=OTHER);
+        Tue, 02 Oct 2012 09:25:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.1.382.gb0576a6
+In-Reply-To: <1349195115-15494-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206810>
 
-On 09/19/2012 08:30 PM, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
-> "is a blob, not a commit" is likely to come from validating of the
-> tag 66f6581d that presumably point at 63499e4; it reads the tag,
-> learns the name of the object that is tagged and the type of it,
-> remembers that the object pointed at (which it hasn't and is going
-> to validate next) _must_ be a commit (because tag says so) and then
-> realizes when it reads 63499e4 it is a blob and barfs.
->
-> And that is what _should_ happen in that test.  It crafts a
-> malformed tag that points at a blob and claims that it is a commit.
-> The test makes sure fsck catches that, and it does.
->
-> On the other hand, "is a commit, not a blob", unless you have a tag
-> that directly points at a blob, is more likely to come from
-> validating some tree object.  It reads the tree, learns the name of
-> the object contained in the tree and infers the type of that object
-> from the mode bits in the tree (100644 or 100755 would mean the
-> object must be a blob), goes on to validate that object and realizes
-> it is a commit and barfs.
->
+When argument parsing fails to detect a file name, "git-gui" will try to
+use the previously detected "head" as the file name. We should avoid
+prepending the prefix if "head" looks like a full path.
 
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ git-gui.sh | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-The good news:
-With help of Junio's comments I probably found the reason why the test=20
-behaves differently:
-
-The objects are checked in a certain order, based on the inode number.
-
-Which seems to be the same on most machines: when files are created
-in a certain order, then the inode numbers are in the same order.
-
-When the inode numbering changes for reasons known to the file system,=20
-the order changes and fsck takes a different code path.
-
-To provoke the error, the following helped at my Linux box:
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index a710227..bba8082 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -373,7 +373,7 @@ static struct {
-
-  static int ino_compare(const void *_a, const void *_b)
-  {
--       const struct sha1_entry *a =3D _a, *b =3D _b;
-+       const struct sha1_entry *a =3D _b, *b =3D _a;
-         unsigned long ino1 =3D a->ino, ino2 =3D b->ino;
-         return ino1 < ino2 ? -1 : ino1 > ino2 ? 1 : 0;
-  }
-
-The bad news: I haven't found the time to prepare a fix.
-
-/Torsten
+diff --git a/git-gui.sh b/git-gui.sh
+index 5d7894b..89f636f 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3037,8 +3037,13 @@ blame {
+ 	unset is_path
+ 
+ 	if {$head ne {} && $path eq {}} {
+-		set path [normalize_relpath $_prefix$head]
+-		set head {}
++		if {[string index $head 0] eq {/}} {
++			set path [normalize_relpath $head]
++			set head {}
++		} else {
++			set path [normalize_relpath $_prefix$head]
++			set head {}
++		}
+ 	}
+ 
+ 	if {$head eq {}} {
+-- 
+1.7.12.1.382.gb0576a6
