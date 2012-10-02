@@ -1,54 +1,86 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [ENHANCEMENT] Allow '**' pattern in .gitignore
-Date: Tue, 2 Oct 2012 12:51:49 +0530
-Message-ID: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH] l10n: Fix to Swedish translation
+Date: Tue, 2 Oct 2012 08:25:32 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1210020821390.30557@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 09:23:48 2012
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 09:26:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TIwo9-0005vO-1B
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:22:21 +0200
+	id 1TIwrX-0005tx-KI
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 09:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707Ab2JBHWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 03:22:11 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:43555 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752564Ab2JBHWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 03:22:09 -0400
-Received: by mail-qa0-f46.google.com with SMTP id c26so305847qad.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 00:22:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=TZq7SzlK2I5RX2NAAUpkCC6un8UNJ/D1+qYKnbQlZ7Y=;
-        b=PNC9ZTMzjypjRoNXT/WM+vM2v2y6QQtz3UHrGKto3EVgERHHKqH/nEMoEsulsIQUjp
-         QOXJoSIQLGK3Yku4rXxGTXvWtWV1CG7un9ynqdlBfOIcImO10g6KC48rnuKAFXICzaxN
-         W+AsIisvkykDkcSb6cN2MAZWhY5BU0t4yv5X2M0TSVli/o07Ji+4O8poQMS3w58KaEjd
-         P7UxtAB0RJERnOIB46vCfov+Z8Q1/LJZgumExz2oa4LipsIo1hixff9bCebPqcuM/T1e
-         O1Gyhj6R421xZb3bP93J6CjHYo/gZ5wCBGGwfz3H89tK6V/9qHbbalFgJYuACaf6/djt
-         wDdQ==
-Received: by 10.49.48.111 with SMTP id k15mr3332758qen.28.1349162529259; Tue,
- 02 Oct 2012 00:22:09 -0700 (PDT)
-Received: by 10.49.84.105 with HTTP; Tue, 2 Oct 2012 00:21:49 -0700 (PDT)
+	id S1752871Ab2JBHZl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2012 03:25:41 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:47102 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752725Ab2JBHZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 03:25:40 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id q927PXR5030851
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 2 Oct 2012 09:25:33 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q927PWA6030848;
+	Tue, 2 Oct 2012 09:25:32 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Tue, 02 Oct 2012 09:25:33 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206786>
 
-Hi,
+=46ix bad translation of "Receiving objects".
 
-I've often found the '**' (extended) shell glob useful for matching
-any string crossing directory boundaries: it's especially useful if
-you only have a toplevel .gitignore, as opposed to a per-directory
-.gitignore.  Unfortunately, .gitignore currently uses fnmatch(3), and
-doesn't recognize '**'.  Would extending the .gitignore format to
-accept this be a useful feature?  Would it involve re-implementing and
-extending fnmatch, or is there some other way?
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+  po/sv.po | 4 ++--
+  1 fil =E4ndrad, 2 till=E4gg(+), 2 borttagningar(-)
 
-Ram
+Dear Junio,
+
+could you please apply this patch to the 1.7.12 maintenance branch, if=20
+you intend to do more releases past 1.17.12.2 from there? It contains=20
+a fix for the most embarrasing typo in the Swedish translation=20
+("Receiveing" became "Deleting"). The fix is already in the big=20
+pull-request slated for the next feature release, but I would appreciat=
+e=20
+if a 1.17.12.3 did contain this...
+
+diff --git a/po/sv.po b/po/sv.po
+index b327a0e..141b8d5 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -8,7 +8,7 @@
+  "Project-Id-Version: git 1.7.12\n"
+  "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+  "POT-Creation-Date: 2012-08-06 23:47+0800\n"
+-"PO-Revision-Date: 2012-08-14 09:58+0100\n"
++"PO-Revision-Date: 2012-10-02 08:15+0100\n"
+  "Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
+  "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+  "Language: sv\n"
+@@ -3381,7 +3381,7 @@
+
+  #: builtin/index-pack.c:986
+  msgid "Receiving objects"
+-msgstr "Tar bort objekt"
++msgstr "Tar emot objekt"
+
+  #: builtin/index-pack.c:986
+  msgid "Indexing objects"
+--=20
+1.7.12.439.g1414786
