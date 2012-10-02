@@ -1,100 +1,76 @@
-From: David Glasser <glasser@davidglasser.net>
-Subject: Re: push.default documented in "man git-push"?
-Date: Tue, 2 Oct 2012 08:18:04 -0700
-Message-ID: <CAN7QDoJ=PKt_1zW58648tcaT7MP1MTVJo9E4PW5g93K_tO91Jw@mail.gmail.com>
-References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
- <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Submodule design
+Date: Tue, 2 Oct 2012 20:53:28 +0530
+Message-ID: <CALkWK0kYh3tKXRqRO9SFMHkrytmhXFkR3yHwmiTpw6KocuLzZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 17:18:48 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 17:24:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJ4F0-0007c1-QB
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 17:18:35 +0200
+	id 1TJ4KF-00043z-Ac
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 17:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030Ab2JBPS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 11:18:27 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:61989 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751562Ab2JBPSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 11:18:25 -0400
-Received: by vcbfo13 with SMTP id fo13so7053411vcb.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 08:18:24 -0700 (PDT)
+	id S1754716Ab2JBPXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2012 11:23:49 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:37906 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754714Ab2JBPXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 11:23:48 -0400
+Received: by mail-qa0-f46.google.com with SMTP id c26so640738qad.19
+        for <git@vger.kernel.org>; Tue, 02 Oct 2012 08:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=BzsAp/ZePMBw1QYaRfw//OCqoj3qq8bFUWvOkBo8E6o=;
-        b=lZveEV2g4d7dH4kvTxtdzH1fPWNzFrF+XnX1Hs4Lu0XYuci/O6D/GgJT46TTCoI3nj
-         ImqhjCf/5Uin9xsUYShvyuFa9VfDswA/D7YdAGPnlX1I7dTcYzsuVLifL4pF2LDGjL+C
-         8b/qqIyFA8kCdfTfNkg/3+4sTLbFAvAi1qYkqmlSdbvUJWpSTKLj3olUXty1YShI5xjV
-         x24myaVj1YwhD3TcwOvMQm4b/G5N0Z5iUm5azMnfhii/ecnHQhFffUI/5+7sdV7D8dfQ
-         XFW7qhSIDgN1TM4bowYybtHKvH7Rb6rkbaLSrBoPmcmB1WUAUASFz2YYer1TKpgTkicP
-         ZIZg==
-Received: by 10.52.69.132 with SMTP id e4mr8449924vdu.2.1349191104486; Tue, 02
- Oct 2012 08:18:24 -0700 (PDT)
-Received: by 10.58.69.100 with HTTP; Tue, 2 Oct 2012 08:18:04 -0700 (PDT)
-In-Reply-To: <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
-X-Google-Sender-Auth: XGxqZSGdxeT-6J2EihgV_8-YovQ
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=bAQ6vmBw25khWlps8Yb050k/4xuClJaW97xfJn79jyA=;
+        b=T3K9qh7DTVAWAiy766WzLiO6thm+hTWmiHaLdb/5DTQ8YoZ8xNn8HSCWHi5eH17Eqw
+         UvRg51cdUVWG7Sx5Uf/ghLZ8pECdifTBX/XzDJ716AQV83y9ppLwqtCsgy83/uB6OgZ3
+         jdRL5BB2U5EtPxCpqrTTEhBzocXNNCODmvwwriJswNkuXpofUnK9ctASjec2zWZgtRyi
+         6J28DxEn57Hr7eH6g6Rwpq477WoJjxJqf0laIb10EqcH8YmRmQ8k2pxF1TdBf4BAd6E/
+         mF9zVdsJvbUgb9ffNACb/jCoB693WSvDow6xnvl62Hz1AKnaZcMGIOniH9eFuIGQ9CVJ
+         MjoA==
+Received: by 10.229.135.193 with SMTP id o1mr12032750qct.100.1349191428325;
+ Tue, 02 Oct 2012 08:23:48 -0700 (PDT)
+Received: by 10.49.84.105 with HTTP; Tue, 2 Oct 2012 08:23:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206806>
 
-Thanks Rankumar! There's also the reference in the "git push origin"
-example and the "This is the default operation mode if no explicit
-refspec is found".
+Hi,
 
-(I would have sent my own patch but I can't figure out where the
-syntax for the manpages is documented.)
+Today I learnt that a gitlink is a commit object embedded in a tree.
+However, I can't seem to be able to cat it.
 
---dave
+    $ git ls-tree HEAD
+    100644 blob 5a91f388f3648b98ae34a19ec42ba9acc7852ef4    .gitmodules
+    160000 commit 8daa12004db8862b22f6c7dd244a88ac6108b194  dotfiles
+    $ git cat-file 8daa12004db8862b22f6c7dd244a88ac6108b194
+    fatal: git cat-file 8daa12004db8862b22f6c7dd244a88ac6108b194: bad file
 
-On Tue, Oct 2, 2012 at 8:09 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> David Glasser wrote:
->> Is the newish push.default documented in the "git push" manpage
->> anywhere? I don't see it mentioned (and there are several references
->> to the "default" behavior), but maybe I'm missing something. Is it
->> left out on purpose (ie, config values aren't supposed to be mentioned
->> in command manpages)?
->
-> You're right.  It's documented in `man git-config`, but we should
-> probably mention it in the `git-push` manpage.
->
-> --8<--
-> From: Ramkumar Ramachandra <artagnon@gmail.com>
-> Date: Tue, 2 Oct 2012 20:37:13 +0530
-> Subject: [PATCH] Documentation: mention `push.default` in git-push.txt
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Documentation/git-push.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index cb97cc1..8751b38 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -37,7 +37,8 @@ OPTIONS[[OPTIONS]]
->         `+`, followed by the source ref <src>, followed
->         by a colon `:`, followed by the destination ref <dst>.
->         It is used to specify with what <src> object the <dst> ref
-> -       in the remote repository is to be updated.
-> +       in the remote repository is to be updated.  If not specified,
-> +       the configuration variable `push.default` is used.
->  +
->  The <src> is often the name of the branch you would want to push, but
->  it can be any arbitrary "SHA-1 expression", such as `master~4` or
-> --
-> 1.7.12.1.428.g652398a.dirty
+Why is this?  Does the object not exist in the object store at all?
+Then how was it embedded in the toplevel tree object in the first
+place?  Also, why (how) does 'git diff' give me the impression that
+it's a blob?
 
+    $ git diff
+    diff --git a/dotfiles b/dotfiles
+    index 8daa120..ff61f40 160000
+    --- a/dotfiles
+    +++ b/dotfiles
+    @@ -1 +1 @@
+    -Subproject commit 8daa12004db8862b22f6c7dd244a88ac6108b194
+    +Subproject commit ff61f40e0938024aa3b748eb733a974b17082ec2
 
+If it is really a blob, I should be able to stage and unstage it
+normally, but the following command is a no-op:
 
--- 
-glasser@davidglasser.net | langtonlabs.org | flickr.com/photos/glasser/
+    $ git checkout -- dotfiles
+
+What is going on?  Shouldn't we get rid of these ugly inconsistencies?
+
+Ram
