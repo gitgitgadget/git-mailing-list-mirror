@@ -1,97 +1,98 @@
-From: Sascha Cunz <sascha@babbelbox.org>
-Subject: Re: Submodule design
-Date: Tue, 02 Oct 2012 17:38:31 +0200
-Message-ID: <2324506.6kHImzYEks@blacky>
-References: <CALkWK0kYh3tKXRqRO9SFMHkrytmhXFkR3yHwmiTpw6KocuLzZw@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: t1450-fsck (sometimes/often) failes on Mac OS X
+Date: Tue, 02 Oct 2012 18:06:35 +0200
+Message-ID: <506B110B.2050802@web.de>
+References: <5001644F.10901@web.de> <20120715090849.GB18385@sigill.intra.peff.net> <5059ED25.9090002@web.de> <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 17:39:09 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 18:07:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJ4YU-00036j-4I
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 17:38:42 +0200
+	id 1TJ4zt-00065A-41
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Oct 2012 18:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598Ab2JBPic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 11:38:32 -0400
-Received: from babbelbox.org ([83.133.105.186]:43385 "EHLO mail.babbelbox.org"
+	id S1754825Ab2JBQGv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2012 12:06:51 -0400
+Received: from mout.web.de ([212.227.15.3]:56209 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754545Ab2JBPib (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 11:38:31 -0400
-Received: (qmail 17747 invoked from network); 2 Oct 2012 15:39:06 -0000
-Received: from p54aec2e3.dip.t-dialin.net (HELO blacky.localnet) (sascha@babbelbox.org@84.174.194.227)
-  by babbelbox.org with ESMTPA; 2 Oct 2012 15:39:06 -0000
-User-Agent: KMail/4.9.1 (Linux/3.5.3-gentoo; KDE/4.9.1; x86_64; ; )
-In-Reply-To: <CALkWK0kYh3tKXRqRO9SFMHkrytmhXFkR3yHwmiTpw6KocuLzZw@mail.gmail.com>
+	id S1752838Ab2JBQGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2012 12:06:50 -0400
+Received: from wanderer.site ([195.67.191.22]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0M6DuI-1TcWqg0rne-00yDC9; Tue, 02 Oct 2012 18:06:48
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <7va9wlhnl3.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:p/duBmm3Aq6X1gkIf+R8bC6aYWd/0hnq/gHnpU8HRZ3
+ QvhxID7hStpgm6I2zSG3lafFvW243N3+YFIQNEdyzSqIfSq5/Y
+ j38TyoVhAjMOKoiDt8KYanpXcrGx8bU/UqdTSCkgLvSle0tn2Q
+ 2JW5IV5YzvinT9fAkW0FD81AJvdo5xVk/hAc0gKBcSwdAMjcOt
+ j8MetfDvu1XiPOFRj3SkA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206809>
 
-Am Dienstag, 2. Oktober 2012, 20:53:28 schrieben Sie:
-> Hi,
-> 
-> Today I learnt that a gitlink is a commit object embedded in a tree.
-> However, I can't seem to be able to cat it.
-> 
->     $ git ls-tree HEAD
->     100644 blob 5a91f388f3648b98ae34a19ec42ba9acc7852ef4    .gitmodules
->     160000 commit 8daa12004db8862b22f6c7dd244a88ac6108b194  dotfiles
->     $ git cat-file 8daa12004db8862b22f6c7dd244a88ac6108b194
->     fatal: git cat-file 8daa12004db8862b22f6c7dd244a88ac6108b194: bad file
-> 
-> Why is this?  Does the object not exist in the object store at all?
+On 09/19/2012 08:30 PM, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+> "is a blob, not a commit" is likely to come from validating of the
+> tag 66f6581d that presumably point at 63499e4; it reads the tag,
+> learns the name of the object that is tagged and the type of it,
+> remembers that the object pointed at (which it hasn't and is going
+> to validate next) _must_ be a commit (because tag says so) and then
+> realizes when it reads 63499e4 it is a blob and barfs.
+>
+> And that is what _should_ happen in that test.  It crafts a
+> malformed tag that points at a blob and claims that it is a commit.
+> The test makes sure fsck catches that, and it does.
+>
+> On the other hand, "is a commit, not a blob", unless you have a tag
+> that directly points at a blob, is more likely to come from
+> validating some tree object.  It reads the tree, learns the name of
+> the object contained in the tree and infers the type of that object
+> from the mode bits in the tree (100644 or 100755 would mean the
+> object must be a blob), goes on to validate that object and realizes
+> it is a commit and barfs.
+>
 
-Correct. The tree entry is a pointer to the commit inside your submodule that 
-shall be checked out. Obviously the submodule's commit is not part of the 
-superproject. 
-IOW: There are are actually 2 object stores: the superproject's and the 
-submodule's. This tree entry makes a (perstiable) connection between the two.
 
-> Then how was it embedded in the toplevel tree object in the first
-> place?
-The .gitlink for submodules has quite some special handling associated to it. 
-You can commit (and diff) it like any other blob. 
+The good news:
+With help of Junio's comments I probably found the reason why the test=20
+behaves differently:
 
-> Also, why (how) does 'git diff' give me the impression that
-> it's a blob?
+The objects are checked in a certain order, based on the inode number.
 
->     $ git diff
->     diff --git a/dotfiles b/dotfiles
->     index 8daa120..ff61f40 160000
->     --- a/dotfiles
->     +++ b/dotfiles
->     @@ -1 +1 @@
->     -Subproject commit 8daa12004db8862b22f6c7dd244a88ac6108b194
->     +Subproject commit ff61f40e0938024aa3b748eb733a974b17082ec2
+Which seems to be the same on most machines: when files are created
+in a certain order, then the inode numbers are in the same order.
 
-See above. Git smartly converts the "state" of the submodule into a one line 
-text, allowing you to "diff 2 states of the submodule"
+When the inode numbering changes for reasons known to the file system,=20
+the order changes and fsck takes a different code path.
 
-cd dotfiles
-git pull # pulls some updates
-cd ..
-git add dotfiles && git commit -m"Update dot files to Version xxx"
-git push
+To provoke the error, the following helped at my Linux box:
 
-This will record the dotfiles submodule's new HEAD SHA1 as the current one 
-inside the superproject. When you now checkout the superproject to another 
-location and do: a "git submodule update --init" it will clone the dotfiles 
-submodule and checkout the exact same version that you just commited with the 
-above commit.
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index a710227..bba8082 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -373,7 +373,7 @@ static struct {
 
-> If it is really a blob, I should be able to stage and unstage it
-> normally, but the following command is a no-op:
-> 
->     $ git checkout -- dotfiles
-> 
-> What is going on?  Shouldn't we get rid of these ugly inconsistencies?
+  static int ino_compare(const void *_a, const void *_b)
+  {
+-       const struct sha1_entry *a =3D _a, *b =3D _b;
++       const struct sha1_entry *a =3D _b, *b =3D _a;
+         unsigned long ino1 =3D a->ino, ino2 =3D b->ino;
+         return ino1 < ino2 ? -1 : ino1 > ino2 ? 1 : 0;
+  }
 
-HTH,
-Sascha
+The bad news: I haven't found the time to prepare a fix.
+
+/Torsten
