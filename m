@@ -1,73 +1,71 @@
-From: Tomas Carnecky <tomas.carnecky@gmail.com>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 03 Oct 2012 12:25:46 +0000
-Message-ID: <1349267146-ner-5314@calvin>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
-	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-	<vpq626s6kwu.fsf@grenoble-inp.fr>
-	<CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: upload-pack is slow with lots of refs
+Date: Wed, 3 Oct 2012 14:36:00 +0200
+Message-ID: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 03 14:27:49 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 14:36:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJO2o-00043M-KY
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 14:27:18 +0200
+	id 1TJOBx-000729-53
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 14:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605Ab2JCM1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 08:27:06 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:48864 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753312Ab2JCM1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 08:27:05 -0400
-Received: by wibhr7 with SMTP id hr7so2329488wib.1
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 05:27:03 -0700 (PDT)
+	id S1754698Ab2JCMgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 08:36:23 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:54836 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753898Ab2JCMgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 08:36:22 -0400
+Received: by oagh16 with SMTP id h16so7310097oag.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 05:36:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:subject:to:cc:references:in-reply-to:mime-version:date
-         :message-id:content-type;
-        bh=MplaqoyFEmPn1JoqcBXvaxHj5aibRPW8PBfo/JdtsqA=;
-        b=x+UWqWsk+f9W7wxYuHl/DWG5634nvrCdSrNqxDO0PXcnxEj65ub5fUIGzY/XYs1wYG
-         ZzxSQopZjxKXQ/JGPcSOwtMnYwwfBcPbGmKiwySzKjkJCYL9RUqy/c3IzebagPh/fFsg
-         GFIiz/9xie8dWZqIhP2Lec3djZu8sBbvfvEcMfeZlsF4v1QzC+BC4aaaIedn853OpqiV
-         I0Ix3Lj+Hltcc9yzcmgDrXPfUyqLtrlXHGYqHN8foReLTNSKUdz6iNJ8L2Y6bx1DvyaS
-         MvuJPmv6zTXCQnj2ymzMTonCnSAqScPz2wyD2vwKA+VuH60BpOjf8bBR6aPuQNtway2H
-         iHdQ==
-Received: by 10.180.93.106 with SMTP id ct10mr4667464wib.8.1349267223012;
-        Wed, 03 Oct 2012 05:27:03 -0700 (PDT)
-Received: from calvin.caurea.org (cust.static.46-14-151-191.swisscomdata.ch. [46.14.151.191])
-        by mx.google.com with ESMTPS id l6sm26682929wiz.4.2012.10.03.05.27.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 03 Oct 2012 05:27:02 -0700 (PDT)
-Received: by calvin.caurea.org (Postfix, from userid 3301)
-	id B7162D1ED1; Wed,  3 Oct 2012 12:25:46 +0000 (UTC)
-In-Reply-To: <CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=HOctR3Op4yHGqejl4YFlcgT17JHhTBUSmTCbmC83hHc=;
+        b=bQcboCaXXCs2OtivZhwtEaA4hQqlxW/LzPpJvfoaqS47ttupfFaH+2g6ZJRYZl8MjG
+         RDE8byE9GVBLETXsQCCMEkqR5xRnsKp2vmlW8gvVjX93EvcXb++qxT3D62RLOlVACPBF
+         1m6u8jGanFIueCwsJAyDl5mO0eOYGF5oCvYnXBv5B7rg7gFPBzZH5vLBXInPtnOmjk6M
+         RfhXHck2G4Z3blOn56SAltYkotL5eiVMNzRAPFJjEhSAujQNQIEHEODsPNaKX8cvP0m7
+         HB6MCGJvF1J26pKXLsZ8aYBZ8i5p9FmP1PO8tp+wm/dg9RHTybB7KkYXpf6s64/2FoD+
+         G8jw==
+Received: by 10.60.13.41 with SMTP id e9mr1436772oec.15.1349267781269; Wed, 03
+ Oct 2012 05:36:21 -0700 (PDT)
+Received: by 10.60.94.225 with HTTP; Wed, 3 Oct 2012 05:36:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206886>
 
-On Wed, 03 Oct 2012 10:24:00 +0200, Angelo Borsotti <angelo.borsotti@gmail.com> wrote:
-> create a new one. To force it to create a brand new one I added
-> --allow-empty to it
-> because the man page stated that it would bypass the check that prevents to make
-> a new one. The I discovered that sometimes --allow-empty does not behave as
-> expected.
+I'm creating a system where a lot of remotes constantly fetch from a
+central repository for deployment purposes, but I've noticed that even
+with a remote.$name.fetch configuration to only get certain refs a
+"git fetch" will still call git-upload pack which will provide a list
+of all references.
 
-The documentation only states that it will skip the 'same tree as parent'
-check, not that it will *always* create a new commit.
+This is being done against a repository with tens of thousands of refs
+(it has a tag for each deployment), so it ends up burning a lot of CPU
+time on the uploader/receiver side.
+
+Has there been any work on extending the protocol so that the client
+tells the server what refs it's interested in?
+
+I've been looking at turning this into a push mechanism instead of a
+poll mechanism, but I've also noted that even when you one tag you
+still end up listing all refs on the remote side:
+
+    $ GIT_TRACE=1 git push origin my-new-tag -n
+    trace: built-in: git 'push' 'origin' 'my-new-tag' '-n'
+    trace: run_command: 'ssh' 'avar@git.example.com' 'git-receive-pack
+'\''/gitroot/example.git'\'''
+    nohup: redirecting stderr to stdout
+    To ssh://avar@git.example.com/gitroot/example.git
+     * [new tag]         my-new-tag -> my-new-tag
+
+Which seems like a lot of superfluous work when it presumably only
+needs to check if there's a remote "my-new-tag" tag which conflicts
+with what you're pushing..
