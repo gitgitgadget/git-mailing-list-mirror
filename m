@@ -1,82 +1,78 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: erratic behavior commit --allow-empty
-Date: Tue, 2 Oct 2012 19:10:01 -0700
-Message-ID: <CAJsNXTm9ADZv4SbabAR_WzGrZO8wDjvk+9Lsis0STHGo1EhqwQ@mail.gmail.com>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+Date: Wed, 03 Oct 2012 07:37:29 +0200
+Message-ID: <506BCF19.7020800@viscovery.net>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com> <506AA51E.9010209@viscovery.net> <7vzk449449.fsf@alter.siamese.dyndns.org> <CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com> <7vhaqc7in6.fsf@alter.siamese.dyndns.org> <CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 04:10:53 2012
+X-From: git-owner@vger.kernel.org Wed Oct 03 07:38:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJEPj-0000Uw-1X
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 04:10:19 +0200
+	id 1TJHez-0000IW-B6
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 07:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab2JCCKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2012 22:10:05 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:47410 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153Ab2JCCKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2012 22:10:03 -0400
-Received: by lbon3 with SMTP id n3so5757454lbo.19
-        for <git@vger.kernel.org>; Tue, 02 Oct 2012 19:10:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=oPN7IYApZO5yQScgXAlRMBepq7EfKZ2iq+KExNosdlo=;
-        b=dm010bzVUxjrn+fkgu56NmSvtmLZ/1LfxkIWvq9GSrYrQZOp3WDzpKpeEqigZETChr
-         VFD/zey0Gd7ecpxo7MQoZYXQQfsSv1YYmRnYFS6Ek0sXwVB+SK7bGapPL9FOIHAc524a
-         WlfNRkcEOehBkNXR5J/mPMz32MrpGbyQ/XqpHkUvc3A2wHoCGmQhIqq0AfNcUEJAni9T
-         06kjRjtpsu09t2sSUkEFfJgRiXzVx8DevjwxXZ1eANj+nRZwto7ON3W+hxZiOIS9QVK7
-         6m7ZhLfW8W+ZbXHUG07HCDeLjHSYovJlmeheRs8mzSfzVXoK/aliuayBhJCn40dqXv7f
-         MYEQ==
-Received: by 10.152.148.162 with SMTP id tt2mr485104lab.10.1349230201813; Tue,
- 02 Oct 2012 19:10:01 -0700 (PDT)
-Received: by 10.112.87.6 with HTTP; Tue, 2 Oct 2012 19:10:01 -0700 (PDT)
+	id S1752785Ab2JCFhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 01:37:35 -0400
+Received: from so.liwest.at ([212.33.55.24]:57869 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750905Ab2JCFhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 01:37:35 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TJHeD-0008Gn-VR; Wed, 03 Oct 2012 07:37:30 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A3CE01660F;
+	Wed,  3 Oct 2012 07:37:29 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
 In-Reply-To: <CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-X-Google-Sender-Auth: nsYNwvzNygYFswkd3Ir2cL2VuS4
+X-Enigmail-Version: 1.4.4
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206857>
 
-On Tue, Oct 2, 2012 at 2:56 PM, Angelo Borsotti
-<angelo.borsotti@gmail.com> wrote:
-> Hi Junio,
->
->> It does create one; it just is the same one you already happen to have,
->> when you record the same state on top of the same history as the
->> same person at the same time.
->>
->
-> No, it does not create one: as you can see from the trace of the execution
-> of my script, the sha of the commit is the same as that of the other,
-> which means
-> that in the .git/objects there is only one such commit object, and not two with
-> the same sha. The meaning of the word "create" is to bring into being something
-> that did not exist before. There is no "creation" if the object already exists.
+Am 10/2/2012 23:56, schrieb Angelo Borsotti:
+> The problem I am trying to solve is to push to a remote server the
+> source files only,
+> while keeping in the local repo both sources and binaries. To do it, I
+> keep an orphan
+> branch, [...] 
+> 
+> # this is the commit on the master branch
+> git init
+> echo "aaa" >f1
+> git add f1
+> git commit -m A
+> 
+> # this is the piece of the script that builds the sources branch
+> git checkout --orphan sources
+> # git rm --cached ...   remove binaries, if any"
+> git commit -m A --allow-empty
+> git rev-list --all --pretty=oneline
+> 
+> When there are binaries in the commit A, they are removed, and the
+> tree for the second
+> git commit is then different, and the commit is actually created.
+> When there are no binaries (as in the script above, in which the
+> removal is commented out),
+> the second git commit would not create any new commit, and I would not
+> have an orphan
+> branch. Thence the --allow-empty to force it to create a new commit.
+> Unfortunately, it creates a new commit only if the system clock
+> changes the seconds of
+> the system time between the two git commits.
 
-It's also impossible to create two identical files in Git.  If you
-try, you'll find that they both have the same SHA1, and thus are
-represented by the same object in .git/objects.
+But the existing-and-not-created-commit has exactly the content that you
+wanted. What's the point in insisting that it is different from any other
+commit?
 
-You have a script that creates two commits that are identical in every
-way.  What practical difference does it make whether they're
-represented by one object or two?
-
--PJ
-
-Gehm's Corollary to Clark's Law: Any technology distinguishable from
-magic is insufficiently advanced.
+-- Hannes
