@@ -1,71 +1,109 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: upload-pack is slow with lots of refs
-Date: Wed, 3 Oct 2012 14:36:00 +0200
-Message-ID: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Merging/joining two repos (repo2 should be a subdirectory of
+ repo1)
+Date: Wed, 03 Oct 2012 14:52:03 +0200
+Message-ID: <506C34F3.8090709@dirk.my1.cc>
+References: <506862A1.8000508@dirk.my1.cc> <1349018675-ner-5178@calvin> <50686605.6020909@dirk.my1.cc> <CAJDDKr4sXp7qqhzHN2_5sJeqaV23Z_uDiFsU_eFJrT5ApuWiTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 14:36:54 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tomas Carnecky <tomas.carnecky@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 14:52:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJOBx-000729-53
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 14:36:45 +0200
+	id 1TJOR4-0004m5-5d
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 14:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698Ab2JCMgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 08:36:23 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:54836 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898Ab2JCMgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 08:36:22 -0400
-Received: by oagh16 with SMTP id h16so7310097oag.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 05:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=HOctR3Op4yHGqejl4YFlcgT17JHhTBUSmTCbmC83hHc=;
-        b=bQcboCaXXCs2OtivZhwtEaA4hQqlxW/LzPpJvfoaqS47ttupfFaH+2g6ZJRYZl8MjG
-         RDE8byE9GVBLETXsQCCMEkqR5xRnsKp2vmlW8gvVjX93EvcXb++qxT3D62RLOlVACPBF
-         1m6u8jGanFIueCwsJAyDl5mO0eOYGF5oCvYnXBv5B7rg7gFPBzZH5vLBXInPtnOmjk6M
-         RfhXHck2G4Z3blOn56SAltYkotL5eiVMNzRAPFJjEhSAujQNQIEHEODsPNaKX8cvP0m7
-         HB6MCGJvF1J26pKXLsZ8aYBZ8i5p9FmP1PO8tp+wm/dg9RHTybB7KkYXpf6s64/2FoD+
-         G8jw==
-Received: by 10.60.13.41 with SMTP id e9mr1436772oec.15.1349267781269; Wed, 03
- Oct 2012 05:36:21 -0700 (PDT)
-Received: by 10.60.94.225 with HTTP; Wed, 3 Oct 2012 05:36:00 -0700 (PDT)
+	id S1754814Ab2JCMwJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 08:52:09 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.41]:39058 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754794Ab2JCMwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 08:52:08 -0400
+Received: from [84.176.20.199] (helo=[192.168.2.100])
+	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1TJOQl-0006jo-Nn; Wed, 03 Oct 2012 14:52:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <CAJDDKr4sXp7qqhzHN2_5sJeqaV23Z_uDiFsU_eFJrT5ApuWiTQ@mail.gmail.com>
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206887>
 
-I'm creating a system where a lot of remotes constantly fetch from a
-central repository for deployment purposes, but I've noticed that even
-with a remote.$name.fetch configuration to only get certain refs a
-"git fetch" will still call git-upload pack which will provide a list
-of all references.
+Am 30.09.2012 22:44 schrieb David Aguilar:
+> On Sun, Sep 30, 2012 at 8:32 AM, Dirk S=C3=BCsserott <newsletter@dirk=
+=2Emy1.cc> wrote:
+>> Am 30.09.2012 17:24 schrieb Tomas Carnecky:
+>>> On Sun, 30 Sep 2012 17:17:53 +0200, Dirk S=C3=83=C5=92sserott <news=
+letter@dirk.my1.cc> wrote:
+>>>> Hi!
+>>>>
+>>>> I have repo1 with ~4 years of history and another repo2 with ~1 ye=
+ar of
+>>>> history, both of which I don't want to loose. Now I want to join t=
+hem so
+>>>> that repo2 becomes a subdirectory whithin repo1, including all the
+>>>> history of repo2.
+>>>>
+>>>> A simple git-merge won't do because both repos have some same file=
+s (at
+>>>> least e.g. .gitignore) in their root directories. Of course I coul=
+d
+>>>> resolve the conflicts, but I don't want that.
+>>>>
+>>>> My naive approach is "move everything in $repo2 one directory belo=
+w" and
+>>>> then "merge $repo2 into $repo1". Actually I wouldn' call that a "m=
+erge"
+>>>> but an "import".
+>>>>
+>>>> I know of "git filter-branch --subdirectory-filter foodir" but tha=
+t's
+>>>> just the opposite of what I need.
+>>>>
+>>>> Is there a nifty trick to get this? Or will I have to do "git
+>>>> filter-branch --tree-filter 'mkdir subdir && git mv * subdir' --al=
+l" on
+>>>> $repo2 and then "git merge $repo2" in $repo1?
+>>>
+>>> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-s=
+ubtree.html
+>>>
+>>>
+>>
+>> Wow! Thanks for that quick and *very* helpful answer! :-)
+>=20
+> Hi Dirk,
+>=20
+> You should also take a look at contrib/subtree/ in the git source tre=
+e.
+>=20
+> "git subtree" does pretty much exactly what you're looking to do,
+> and it is a bit more user-friendly than the plumbing commands.
+>=20
+> https://github.com/git/git/blob/master/contrib/subtree/git-subtree.tx=
+t
+>=20
 
-This is being done against a repository with tens of thousands of refs
-(it has a tag for each deployment), so it ends up burning a lot of CPU
-time on the uploader/receiver side.
+Hi David,
 
-Has there been any work on extending the protocol so that the client
-tells the server what refs it's interested in?
+thanks for the pointer. I know of subtree and like it. But for my case
+I'll stick to the plumbing commands because I really want to *import*
+$repo2 into $repo1 and then delete $repo2. One shot.
 
-I've been looking at turning this into a push mechanism instead of a
-poll mechanism, but I've also noted that even when you one tag you
-still end up listing all refs on the remote side:
+(Actually I re-wrote a part of our project just for fun and didn't do i=
+t
+in the main project's repo in a separate branch (as I normally do) but
+in a totaly separate repo. And now it turned out that my rewritten part
+is really cool and we want to include it in the main $repo1 and drop my
+private $repo2.)
 
-    $ GIT_TRACE=1 git push origin my-new-tag -n
-    trace: built-in: git 'push' 'origin' 'my-new-tag' '-n'
-    trace: run_command: 'ssh' 'avar@git.example.com' 'git-receive-pack
-'\''/gitroot/example.git'\'''
-    nohup: redirecting stderr to stdout
-    To ssh://avar@git.example.com/gitroot/example.git
-     * [new tag]         my-new-tag -> my-new-tag
-
-Which seems like a lot of superfluous work when it presumably only
-needs to check if there's a remote "my-new-tag" tag which conflicts
-with what you're pushing..
+Dirk
