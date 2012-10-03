@@ -1,90 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: upload-pack is slow with lots of refs
-Date: Wed, 3 Oct 2012 19:21:15 -0400
-Message-ID: <20121003232115.GB11618@sigill.intra.peff.net>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net>
- <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:03:02 2012
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: [PATCH 1/2] git-send-email: introduce compose-encoding
+Date: Thu,  4 Oct 2012 00:05:30 +0200
+Message-ID: <1349301931-11912-1-git-send-email-krzysiek@podlesie.net>
+Cc: Krzysztof Mazur <krzysiek@podlesie.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:03:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtLq-0001DP-KK
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:53:02 +0200
+	id 1TJtKs-0001DP-PL
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:52:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932723Ab2JCXVS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 19:21:18 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39575 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932583Ab2JCXVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 19:21:17 -0400
-Received: (qmail 14104 invoked by uid 107); 3 Oct 2012 23:21:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Oct 2012 19:21:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2012 19:21:15 -0400
-Content-Disposition: inline
-In-Reply-To: <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
+	id S1756021Ab2JCWOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 18:14:48 -0400
+Received: from shrek-modem2.podlesie.net ([83.13.132.46]:38131 "EHLO
+	shrek.podlesie.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754416Ab2JCWOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 18:14:47 -0400
+Received: from geronimo.kostuchna.emnet (localhost [127.0.0.1])
+	by shrek.podlesie.net (Postfix) with ESMTP id 53AB198;
+	Thu,  4 Oct 2012 00:07:05 +0200 (CEST)
+X-Mailer: git-send-email 1.7.12.2.2.g1c3c581
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206957>
 
-On Thu, Oct 04, 2012 at 12:32:35AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+The introduction email (--compose option) have encoding hardcoded to
+UTF-8, but invoked editor may not use UTF-8 encoding.
+The encoding used by patches can be changed by the "8bit-encoding"
+option, but this option does not have effect on introduction email
+and equivalent for introduction email is missing.
 
-> On Wed, Oct 3, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
-> > What version of git are you using?  In the past year or so, I've ma=
-de
-> > several tweaks to speed up large numbers of refs, including:
-> >
-> >   - cff38a5 (receive-pack: eliminate duplicate .have refs, v1.7.6);=
- note
-> >     that this only helps if they are being pulled in by an alternat=
-es
-> >     repo. And even then, it only helps if they are mostly duplicate=
-s;
-> >     distinct ones are still O(n^2).
-> >
-> >   - 7db8d53 (fetch-pack: avoid quadratic behavior in remove_duplica=
-tes)
-> >     a0de288 (fetch-pack: avoid quadratic loop in filter_refs)
-> >     Both in v1.7.11. I think there is still a potential quadratic l=
-oop
-> >     in mark_complete()
-> >
-> >   - 90108a2 (upload-pack: avoid parsing tag destinations)
-> >     926f1dd (upload-pack: avoid parsing objects during ref advertis=
-ement)
-> >     Both in v1.7.10. Note that tag objects are more expensive to
-> >     advertise than commits, because we have to load and peel them.
-> >
-> > Even with those patches, though, I found that it was something like=
- ~2s
-> > to advertise 100,000 refs.
->=20
-> FWIW I bisected between 1.7.9 and 1.7.10 and found that the point at
-> which it went from 1.5/s to 2.5/s upload-pack runs on the pathologica=
-l
-> git.git repository was none of those, but:
->=20
->     ccdc6037fe - parse_object: try internal cache before reading obje=
-ct db
+Added compose-encoding command line option and sendemail.composeencoding
+configuration option specify encoding of introduction email.
 
-Ah, yeah, I forgot about that one. That implies that you have a lot of
-refs pointing to the same objects (since the benefit of that commit is
-to avoid reading from disk when we have already seen it).
+Signed-off-by: Krzysztof Mazur <krzysiek@podlesie.net>
+---
+ Documentation/git-send-email.txt | 5 +++++
+ git-send-email.perl              | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-Out of curiosity, what does your repo contain? I saw a lot of speedup
-with that commit because my repos are big object stores, where we have
-the same duplicated tag refs for every fork of the repo.
-
--Peff
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 3241170..9f09e92 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -126,6 +126,11 @@ The --to option must be repeated for each user you want on the to list.
+ +
+ Note that no attempts whatsoever are made to validate the encoding.
+ 
++--compose-encoding=<encoding>::
++	Specify encoding of compose message. Default is the value of the
++	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
+++
++
+ 
+ Sending
+ ~~~~~~~
+diff --git a/git-send-email.perl b/git-send-email.perl
+index aea66a0..107e814 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -56,6 +56,7 @@ git send-email [options] <file | directory | rev-list options >
+     --in-reply-to           <str>  * Email "In-Reply-To:"
+     --annotate                     * Review each patch that will be sent in an editor.
+     --compose                      * Open an editor for introduction.
++    --compose-encoding      <str>  * Encoding to assume for introduction.
+     --8bit-encoding         <str>  * Encoding to assume 8bit mails if undeclared
+ 
+   Sending:
+@@ -198,6 +199,7 @@ my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
+ my ($validate, $confirm);
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
++my ($compose_encoding);
+ 
+ my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
+ 
+@@ -231,6 +233,7 @@ my %config_settings = (
+     "confirm"   => \$confirm,
+     "from" => \$sender,
+     "assume8bitencoding" => \$auto_8bit_encoding,
++    "composeencoding" => \$compose_encoding,
+ );
+ 
+ my %config_path_settings = (
+@@ -315,6 +318,7 @@ my $rc = GetOptions("h" => \$help,
+ 		    "validate!" => \$validate,
+ 		    "format-patch!" => \$format_patch,
+ 		    "8bit-encoding=s" => \$auto_8bit_encoding,
++		    "compose-encoding=s" => \$compose_encoding,
+ 		    "force" => \$force,
+ 	 );
+ 
+@@ -638,10 +642,13 @@ EOT
+ 			$summary_empty = 0 unless (/^\n$/);
+ 		} elsif (/^\n$/) {
+ 			$in_body = 1;
++			if (!defined $compose_encoding) {
++				$compose_encoding = "UTF-8";
++			}
+ 			if ($need_8bit_cte) {
+ 				print $c2 "MIME-Version: 1.0\n",
+ 					 "Content-Type: text/plain; ",
+-					   "charset=UTF-8\n",
++					   "charset=$compose_encoding\n",
+ 					 "Content-Transfer-Encoding: 8bit\n";
+ 			}
+ 		} elsif (/^MIME-Version:/i) {
+-- 
+1.7.12.2.2.g1c3c581
