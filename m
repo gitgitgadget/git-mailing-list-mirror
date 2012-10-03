@@ -1,67 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 03 Oct 2012 12:12:01 +0200
-Message-ID: <m2fw5vooem.fsf@linux-m68k.org>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
-	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: push.default documented in "man git-push"?
+Date: Wed, 3 Oct 2012 17:18:24 +0700
+Message-ID: <CACsJy8APN-CdBZgLzuNWAa5ArR2gkcStY4GZ=79fU7sGT9pOMw@mail.gmail.com>
+References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
+ <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+ <CACsJy8B7Z4kVYax4igYQ-d8q6e+GrPL3UwzhHSYbJ5Qo0TiL-w@mail.gmail.com>
+ <CALkWK0kKzt8ii-+O0zRM1JLenP+XKh-2Wv_v6zXkkcvTGQ2MQg@mail.gmail.com>
+ <CACsJy8BB4WM1Lqz4yCGnGN2DV1Xsip3Qzh86ibBXwt2BnaNENA@mail.gmail.com> <CALkWK0=N0OwTyu1KDAKzM48ioevGtmMNgy5gfK2J78zSPx7CVA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 12:12:45 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 12:19:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJLwN-0003Db-AU
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 12:12:31 +0200
+	id 1TJM2j-0004VF-4w
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 12:19:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871Ab2JCKMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 06:12:18 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:47117 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755004Ab2JCKMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 06:12:09 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XWtLr1sycz4KK2l;
-	Wed,  3 Oct 2012 12:12:04 +0200 (CEST)
-X-Auth-Info: I42KgbW1yWCdodWsceMHJ7AamBySzRtnjOCWjBlFwO0=
-Received: from linux.local (ppp-93-104-158-56.dynamic.mnet-online.de [93.104.158.56])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XWtLr1GY6zbbhy;
-	Wed,  3 Oct 2012 12:12:04 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 262DD1E595A; Wed,  3 Oct 2012 12:12:01 +0200 (CEST)
-X-Yow: On the other hand, life can be an endless parade of TRANSSEXUAL
- QUILTING BEES aboard a cruise ship to DISNEYWORLD
- if only we let it!!
-In-Reply-To: <CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-	(Angelo Borsotti's message of "Wed, 3 Oct 2012 09:45:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1754606Ab2JCKSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 06:18:55 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:64795 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752973Ab2JCKSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 06:18:54 -0400
+Received: by qchd3 with SMTP id d3so5396392qch.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 03:18:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=h5Qgk+pjABaJQh4iDVZC+qqnpuX+NUgiJ3Z308qD+Nk=;
+        b=i9O+5LWRgUxFeqLe9Wo/HfSPgs+YoLScC6NNhXoXiUXQSq9wAN9ndAv8PoxHr01tT9
+         HcaY8CDNClO1JgU295xLPyLS5+Lb8jr3pFT12mOe3iDZ/izFdti6FIsRW5nj5EzuyX1+
+         t9yQTcDnIix+BhaxCpLUBASFkVjukAF/6TWPHn21yh76+8M0n3AZ8ez3fg5I2aravckQ
+         dl0QsmMdR5ANl5imnUHA/IquH3aYpGcwHE1DLNiSSLdztyz5t0VW1SrcJG7LcClyZ5Ju
+         m1jYFPCRQ8s6t2yXmC0J328wRXYDjectIiCD8qmJLdMDXPcQne3161qFAcVZs64Hreq5
+         Rf+w==
+Received: by 10.224.58.147 with SMTP id g19mr6461014qah.77.1349259534319; Wed,
+ 03 Oct 2012 03:18:54 -0700 (PDT)
+Received: by 10.49.72.201 with HTTP; Wed, 3 Oct 2012 03:18:24 -0700 (PDT)
+In-Reply-To: <CALkWK0=N0OwTyu1KDAKzM48ioevGtmMNgy5gfK2J78zSPx7CVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206877>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+On Wed, Oct 3, 2012 at 3:46 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> On second thought, it might not be such a good idea.  There are *lots*
+> of variables that control the operation of each command, and it's hard
+> to decide which ones to list and which ones to omit.  I've listed all
+> the relevant variables for git-push, except the advice.* variables- I
+> don't know how useful such a long list might be.
 
-> The user adds --allow-empty to have a different & unique commit
-
-Where does the manual say that --allow-empty implies a different and
-unique commit?
-
-Andreas.
-
+I think listing receive.* and advice.* (and maybe even
+remove.<name>.*) is still ok. The goal is to give users a clue.
+They'll need to look up in config.txt anyway for explanation. If we
+name the config keys (and groups) well then users should be able to
+guess what those keys may be for before deciding whether to look into
+details.
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Duy
