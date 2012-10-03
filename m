@@ -1,58 +1,67 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 4/5] diff: introduce diff.submoduleFormat configuration
- variable
-Date: Wed, 03 Oct 2012 15:45:05 +0200
-Message-ID: <506C4161.3040201@web.de>
-References: <1349196670-2844-1-git-send-email-artagnon@gmail.com> <1349196670-2844-5-git-send-email-artagnon@gmail.com> <506B4418.2050700@web.de>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Wed, 03 Oct 2012 15:44:37 +0200
+Message-ID: <m2r4pf1xh6.fsf@igel.home>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+	<506AA51E.9010209@viscovery.net>
+	<7vzk449449.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
+	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
+	<m2fw5vooem.fsf@linux-m68k.org>
+	<CAB9Jk9Dqoom-hBQPG5iqe2JyiJtVoFWZ9-5W9ktUsa9F9mbXRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 15:45:57 2012
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 15:46:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJPGM-0001d9-HP
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 15:45:22 +0200
+	id 1TJPFv-0006iX-3L
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 15:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755773Ab2JCNpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 09:45:08 -0400
-Received: from mout.web.de ([212.227.17.12]:60622 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755706Ab2JCNpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 09:45:07 -0400
-Received: from [192.168.178.41] ([91.3.173.123]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MOB3E-1TMjBN1988-005gbW; Wed, 03 Oct 2012 15:45:05
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <506B4418.2050700@web.de>
-X-Provags-ID: V02:K0:EEG2zlzGm9ttaIeiOSYX/3O0nnIav8UDDYABFQknpQI
- bn6eIRwxxVvubjH80eP1U57jAjsQQ8rOqS6gCokB3NqDPynrnS
- lGrjYlcdS0QOaj+y++NTL9SzV/+CnikJGgy2asWtBJHG4wQdjg
- nZSeasezaoNMymZsnan/xMAheiKk/Rvoi0pg/gC51DlXzU7NKt
- 7EQ5G4X3Pup8dKdn6TrLg==
+	id S1755680Ab2JCNoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 09:44:44 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:41945 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755538Ab2JCNon (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 09:44:43 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XWz463tf2z3hhY2;
+	Wed,  3 Oct 2012 15:44:38 +0200 (CEST)
+X-Auth-Info: 4mFyFJpPy626RkNIxfuWy1FezSbxlUimObwJK7yn6hI=
+Received: from igel.home (ppp-93-104-158-56.dynamic.mnet-online.de [93.104.158.56])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XWz463Q7qzbbj5;
+	Wed,  3 Oct 2012 15:44:38 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 13291CA2B8; Wed,  3 Oct 2012 15:44:38 +0200 (CEST)
+X-Yow: These PRESERVES should be FORCE-FED to PENTAGON OFFICIALS!!
+In-Reply-To: <CAB9Jk9Dqoom-hBQPG5iqe2JyiJtVoFWZ9-5W9ktUsa9F9mbXRQ@mail.gmail.com>
+	(Angelo Borsotti's message of "Wed, 3 Oct 2012 13:37:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206895>
 
-Am 02.10.2012 21:44, schrieb Jens Lehmann:
-> Am 02.10.2012 18:51, schrieb Ramkumar Ramachandra:
->> Introduce a diff.submoduleFormat configuration variable corresponding
->> to the '--submodule' command-line option of 'git diff'.
-> 
-> Nice. Maybe a better name would be "diff.submodule", as this sets the
-> default for the "--submodule" option of diff?
-> 
-> And I think you should also test in t4041 that "--submodule=short"
-> overrides the config setting.
+Angelo Borsotti <angelo.borsotti@gmail.com> writes:
 
-We also need tests which show that setting that config to "log" does
-not break one of the many users of "git diff" ("stash", "rebase" and
-"format-patch" come to mind, most probably I missed some others). I
-suspect we'll have to add "--submodule=short" options to some call
-sites to keep them working with submodule changes.
+> By reading: "the command prevents" I understand that a new commit is
+> not created, and "This option bypasses" that it is instead created.
+
+But where does it say "different and unique"?
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
