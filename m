@@ -1,106 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 03 Oct 2012 13:07:39 +0200
-Message-ID: <vpqvcer4xvo.fsf@grenoble-inp.fr>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
-	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-	<vpq626s6kwu.fsf@grenoble-inp.fr>
-	<CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: "git am" crash (builtin/apply.c:2108) + small repro
+Date: Wed, 3 Oct 2012 18:27:07 +0700
+Message-ID: <CACsJy8B9NDmGnopoFEAA0T4mgG+54npYnbb_d4tihRNB=xrGnw@mail.gmail.com>
+References: <CAOKKMFG4JsNyMY7=SB6EuR8_GnpAu-ysH02J5pwD1cNzUgaieQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 13:08:18 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Alexey Spiridonov <snarkmaster@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 13:28:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJMo0-0000l1-Nz
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 13:07:57 +0200
+	id 1TJN7G-00049H-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 13:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537Ab2JCLHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 07:07:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36878 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752386Ab2JCLHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 07:07:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q93B2AC4025783
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Oct 2012 13:02:10 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TJMnk-0000mu-4U; Wed, 03 Oct 2012 13:07:40 +0200
-In-Reply-To: <CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
-	(Angelo Borsotti's message of "Wed, 3 Oct 2012 10:24:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Oct 2012 13:02:11 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q93B2AC4025783
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1349866931.75764@9kiDFbyS5XdgJdjiFqNz6w
+	id S1753850Ab2JCL1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 07:27:40 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:42980 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753542Ab2JCL1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 07:27:39 -0400
+Received: by qaas11 with SMTP id s11so1360919qaa.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 04:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=30tt9JG4XTFYcFY6tVnZz3ZMyW1x7vWWm9EpPqfEzn0=;
+        b=D91vQrS//kzw28x87+Keno1XhCOXFIYyBk/FGVcTx8uaFp5d3mwaZ8KEZcuCm/bp2E
+         i1l5tKws8LmD8fExkuGfO54JpxJQPDikmWFXO8jo03kJ4+OIF5xbjQkhcGNAz4reMbSI
+         FvBREIGryXpCU4FB8TKZ6Z4eJ68G6UisUc2H++hPpu/ZvBQg46w7Vgs7Elj3pa7ZeSaE
+         /lhdICk+A4tTrEo4PkIuCprJbINdooakZaD783AZc04N/gPfUmoVlGKQoZ+qib0zi+dz
+         jYekxafX696zIoLOdD0FvQ4ZwNhMquRKbMk6trSBJM506Ptd3RrKPSmb4R3/Rga3CHVY
+         Aang==
+Received: by 10.224.78.70 with SMTP id j6mr6734549qak.21.1349263658792; Wed,
+ 03 Oct 2012 04:27:38 -0700 (PDT)
+Received: by 10.49.72.201 with HTTP; Wed, 3 Oct 2012 04:27:07 -0700 (PDT)
+In-Reply-To: <CAOKKMFG4JsNyMY7=SB6EuR8_GnpAu-ysH02J5pwD1cNzUgaieQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206879>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+On Tue, Oct 2, 2012 at 1:33 AM, Alexey Spiridonov <snarkmaster@gmail.com> wrote:
+> This reproduces in trunk, 1.7.8.4, and 1.7.9.5.
 
->> You still didn't tell us where the problem was.
+fwiw, I cannot reproduce it (git-apply does not crash). I tried both
+versions and 1.8.0-rc1. Just in case the attached files are somehow
+corrupted, this is sha1sum from my side:
+
+3d4711cd15d9617e0d3a52bbcd7def898c12c328  crashy.patch
+fd63cc32338823f216a6684ce5118a69113968c8  meep/spork/__init__.py
+
+> I suspect this has to do with a whitespace + no trailing newline
+> issues. The patch was generated by 1.7.9.5. I mangled it by hand to
+> get it to be small, but the initial crash happened on a large,
+> real-world output of "git format-patch".
 >
-> I described it few mails above. I wanted to create an orphan branch.
-
-And you did. The branch happens to point to the same commit as another
-existing commit, but this is a very common situation. Try this:
-
-# do arbitrary hacking and commit on branch master
-git checkout -b new-branch
-gitk
-
-You will see branches "master" and "new-branch" pointing to the same
-commit (but you HEAD points to new-branch, as "git branch" will tell
-you).
-
-You still did not describe a _problem_. Up to now, the only "problem" I
-see is that you have twice the same sha1 showing up, but you did not
-describe somethine concrete that you wanted to do and did not work.
-
-> However, the branch is not actually created until a commit is done on
-> it.
-
-Right, but the definition of "done" in your sentence includes "reusing
-an object in the object database".
-
-I just tried this:
-
-rm -fr test
-git init test
-cd test
-date > foo.txt
-git add .
-git commit --allow-empty -m foo
-git checkout --orphan new-branch
-git commit --allow-empty -m foo
-
-I ended up with a branch "master" and a branch "new-branch", both
-pointing to the same commit. The new branch _is_ created.
-
-(BTW, --allow-empty is useless here as you have no parent)
-
+> Error messages:
+>
+> ~/GIT-AM-CRASH$ ../git/git am crashy.patch
+> Applying: Git crash bug
+> git: builtin/apply.c:2108: update_pre_post_images: Assertion
+> `fixed_preimage.nr == preimage->nr' failed.
+> /home/lesha/GIT-AM-CRASH/../git/git-am: line 811: 23819 Aborted
+>          git apply --index "$dotest/patch"
+> Patch failed at 0001 Git crash bug
+> The copy of the patch that failed is found in:
+>    /home/lesha/GIT-AM-CRASH/.git/rebase-apply/patch
+> When you have resolved this problem, run "git am --resolved".
+> If you prefer to skip this patch, run "git am --skip" instead.
+> To restore the original branch and stop patching, run "git am --abort".
+>
+> Repro steps:
+>
+> mkdir GIT-AM-CRASH
+> cd GIT-AM-CRASH
+> # download files into this directory
+> git init .
+> mkdir -p meep/spork
+> mv __init__.py meep/spork
+> git add meep/spork/__init__.py
+> git ci -am 'moo'
+> git am crashy.patch
+>
+> Hope this helps!
+>
+> Alexey
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
