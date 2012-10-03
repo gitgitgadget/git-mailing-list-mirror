@@ -1,131 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/6] log: pass rev_info to git_log_config()
-Date: Wed,  3 Oct 2012 18:33:38 -0700
-Message-ID: <1349314419-8397-6-git-send-email-gitster@pobox.com>
-References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
- <1349314419-8397-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:06:00 2012
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Thu, 4 Oct 2012 00:32:35 +0200
+Message-ID: <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
+ <20121003180324.GB27446@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:06:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtN2-0001DP-C0
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:54:16 +0200
+	id 1TJtLB-0001DP-1x
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab2JDBd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 21:33:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52932 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755143Ab2JDBdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 21:33:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F240807C
-	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=inGo
-	aO5JuVyYQD/pPmGzbzpgRzo=; b=htXLcpiyfd4qHAolUHO763dHkMrAHW927PIy
-	GCkKVcGal346ShGfstfPK1u+T59RXR5948n6XAPSmorwiHXV+sZSx/SBHd/YhF1Z
-	+gp+Y9P8E02OhTNiRy7TkG32XUAT8a91Lum9gz/khvP3Yc7uh4pqBO8N+SJTFQzc
-	YjCtqpk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=LpR9Tr
-	uGPU7w3Ce6+gQdOifHDFxd/Bmy5wnwlfEBU/D/4cjwsPt+ONUECdtliJK1NgTfuw
-	Jm2rlT5sjOrgOkrI3I4mEiSCjfr+Btjw3KdD6zFQvNsvvD/D8LlrfUw3tZvraQ9P
-	JOtrXClLE2qyzqenzKSufz1a9OFsnrmBX458k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D3E1807B
-	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:52 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AFB98070 for
- <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:50 -0400 (EDT)
-X-Mailer: git-send-email 1.8.0.rc0.57.g712528f
-In-Reply-To: <1349314419-8397-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8CACA9E0-0DC3-11E2-B1FE-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756680Ab2JCWc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 18:32:57 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:53087 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475Ab2JCWc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 18:32:56 -0400
+Received: by obbuo13 with SMTP id uo13so7875030obb.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 15:32:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LycUkFuxUK0PFU8Q53EJeVBJRF0hpi1JAi7vhad4Clo=;
+        b=Oajki0i9Q1WKYzF7fc2i6IpVLQPQCI92qJCt3KcztYk4YlTJiHP1yzsM1wKz87cMjB
+         e5zu7hhDDkmfM72oGzsWmViUB7mJjuHMiv5rs0LUE2q+827IUfhcQsUUJnc4xGEhkY4f
+         Ey8DLVvvAK+xsY1HkVXvljzbHvqZmxRK5X+rVUflVd4OMTawOVZUJtVx84xznJa9ZSY7
+         g9QAmESuVvk1KSH1ruz3wkTs9cUjcEFOZzYAJA0fDQbMuwRhJd4JOWKO9ydT317zf+dU
+         DMMjwfg9+9BQqYSvOLkHh4wfEgfV6jbysZR/59eBM+tI/gE13vy/R5dzwtNT9NAPKcyY
+         7lgg==
+Received: by 10.60.24.69 with SMTP id s5mr2837084oef.45.1349303575503; Wed, 03
+ Oct 2012 15:32:55 -0700 (PDT)
+Received: by 10.60.94.225 with HTTP; Wed, 3 Oct 2012 15:32:35 -0700 (PDT)
+In-Reply-To: <20121003180324.GB27446@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206964>
 
-Call init_revisions() first to prepare the revision traversal
-parameters and pass it to git_log_config(), so that necessary bits
-in the traversal parameters can be tweaked before we call the
-command line parsing infrastructure setup_revisions() from
-the cmd_log_init_finish() function.
+On Wed, Oct 3, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
+> What version of git are you using?  In the past year or so, I've made
+> several tweaks to speed up large numbers of refs, including:
+>
+>   - cff38a5 (receive-pack: eliminate duplicate .have refs, v1.7.6); note
+>     that this only helps if they are being pulled in by an alternates
+>     repo. And even then, it only helps if they are mostly duplicates;
+>     distinct ones are still O(n^2).
+>
+>   - 7db8d53 (fetch-pack: avoid quadratic behavior in remove_duplicates)
+>     a0de288 (fetch-pack: avoid quadratic loop in filter_refs)
+>     Both in v1.7.11. I think there is still a potential quadratic loop
+>     in mark_complete()
+>
+>   - 90108a2 (upload-pack: avoid parsing tag destinations)
+>     926f1dd (upload-pack: avoid parsing objects during ref advertisement)
+>     Both in v1.7.10. Note that tag objects are more expensive to
+>     advertise than commits, because we have to load and peel them.
+>
+> Even with those patches, though, I found that it was something like ~2s
+> to advertise 100,000 refs.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+FWIW I bisected between 1.7.9 and 1.7.10 and found that the point at
+which it went from 1.5/s to 2.5/s upload-pack runs on the pathological
+git.git repository was none of those, but:
 
- * This is made separate from the next one that touches the contents
-   of "rev" to make sure the existing code does not depend on the
-   current initialization order.  I do not think it does but better
-   be careful to keep the history easier to bisect, than be sorry
-   when an issue does appear.
-
- builtin/log.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 09cf43e..07a0078 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -360,9 +360,8 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
--	git_config(git_log_config, NULL);
--
- 	init_revisions(&rev, prefix);
-+	git_config(git_log_config, &rev);
- 	rev.diff = 1;
- 	rev.simplify_history = 0;
- 	memset(&opt, 0, sizeof(opt));
-@@ -450,10 +449,9 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	struct pathspec match_all;
- 	int i, count, ret = 0;
- 
--	git_config(git_log_config, NULL);
--
- 	init_pathspec(&match_all, NULL);
- 	init_revisions(&rev, prefix);
-+	git_config(git_log_config, &rev);
- 	rev.diff = 1;
- 	rev.always_show_header = 1;
- 	rev.no_walk = REVISION_WALK_NO_WALK_SORTED;
-@@ -530,9 +528,8 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
--	git_config(git_log_config, NULL);
--
- 	init_revisions(&rev, prefix);
-+	git_config(git_log_config, &rev);
- 	init_reflog_walk(&rev.reflog_info);
- 	rev.verbose_header = 1;
- 	memset(&opt, 0, sizeof(opt));
-@@ -552,9 +549,8 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
- 
--	git_config(git_log_config, NULL);
--
- 	init_revisions(&rev, prefix);
-+	git_config(git_log_config, &rev);
- 	rev.always_show_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
-@@ -1121,8 +1117,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	extra_hdr.strdup_strings = 1;
- 	extra_to.strdup_strings = 1;
- 	extra_cc.strdup_strings = 1;
--	git_config(git_format_config, NULL);
- 	init_revisions(&rev, prefix);
-+	git_config(git_format_config, &rev);
- 	rev.commit_format = CMIT_FMT_EMAIL;
- 	rev.verbose_header = 1;
- 	rev.diff = 1;
--- 
-1.8.0.rc0.57.g712528f
+    ccdc6037fe - parse_object: try internal cache before reading object db
