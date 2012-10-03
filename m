@@ -1,83 +1,78 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 3 Oct 2012 21:11:22 +0200
-Message-ID: <CAB9Jk9De4h=X3A8ypW6FG6L3B8katmTxhaPY9zhQ+UP1WJd6gg@mail.gmail.com>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
-	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-	<m2fw5vooem.fsf@linux-m68k.org>
-	<CAB9Jk9Dqoom-hBQPG5iqe2JyiJtVoFWZ9-5W9ktUsa9F9mbXRQ@mail.gmail.com>
-	<m2r4pf1xh6.fsf@igel.home>
-	<CAB9Jk9Bqq=fs4v-oAj_TiaSw5WOiQQFsm_WEZP_ECyPW1L_DHg@mail.gmail.com>
-	<m2fw5va4jc.fsf@igel.home>
-	<CAB9Jk9Aa4d4H5q1euCJ4hdc_K9iBrfiJFnyAYQ+BRNX3D023gg@mail.gmail.com>
-	<m2iparnztj.fsf@igel.home>
+From: Alexander Kostikov <alex.kostikov@gmail.com>
+Subject: Rebase doesn't restore branch pointer back on out of memory
+Date: Wed, 3 Oct 2012 12:47:47 -0700
+Message-ID: <CAGAhT3kofdaQEye9QHnvFhAAzoQqZtR7d5UzbxU+zEdkAHVfuQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:52:34 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:52:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtIQ-0001DP-MO
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:49:30 +0200
+	id 1TJtIo-0001DP-3f
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215Ab2JCTLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 15:11:24 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:40865 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805Ab2JCTLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 15:11:23 -0400
-Received: by vcbfo13 with SMTP id fo13so8714705vcb.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 12:11:23 -0700 (PDT)
+	id S1752664Ab2JCTrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 15:47:49 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:41481 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752554Ab2JCTrs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2012 15:47:48 -0400
+Received: by qaas11 with SMTP id s11so1848767qaa.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 12:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WfKF+Rj4dDVmMkDo6QRTQ/AflIx7OfA3I0uQIoSI1PY=;
-        b=jsCXi5KlOcIRSzDsYzel0wpdMI3MJo4f+4AYz616N0O033hpvJEbTzlwk+EqJi0/fs
-         SqMwcWR9cJDCgbH4RGnv1IYNQEMm11uyDaAFX8DEAIpxeJnhg5U4EoJjCRzQp1O84F+9
-         umUcWZ33VauCMHKSuMxG4mVPrcFxItCNd9UkU5nLGQya3Ivumoa1iA72GhPNA24uxjvK
-         xriOOtKV9poFqK46+aDd8oU2cyb1aIuBYZvs7GiroForB2aZ7PDB8BavvQv7YSJi9vW/
-         BXujVVdqX0NPkjH+/BfFkQ+YUmhwdyP+uukMBhljtBn5k+qzRKd+OnKqZaT8axE6Q23L
-         fxlQ==
-Received: by 10.220.152.11 with SMTP id e11mr1644206vcw.61.1349291482955; Wed,
- 03 Oct 2012 12:11:22 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Wed, 3 Oct 2012 12:11:22 -0700 (PDT)
-In-Reply-To: <m2iparnztj.fsf@igel.home>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=a4LciyNMCDP9FiaiA0SOCBIOXnQEINFIuJKLBGE1cjU=;
+        b=GFjnW2HdZolS3A8n6Tcc1/eYFrNwF0SLRyQkFKKgpt06djA3gs7Bsor4/PIeCqVQlh
+         81NmltyYOzKdBdrT6N1oeHMOioT4tsBD49buxxlVFmy6Vc+HyAz2BDpszyrjG8rl0I+N
+         6uckpGRRvc+M0hxTL+bqUGJ+plYh9OAqDFJ0Jpnvs7z3vIqZ8zk2UxP6Y9i2ob7qKW+y
+         BBJ8KRmAFOrQ/KI9dspQ/2zfGQlj5GK5q3i8VgCJ+3PK824hKuffwIOG7/DPGwyGhqrr
+         OY9ZIW+9KpfuR75U0mjPZxC/z0hFbuH115uAnUhvi1yB8qtybvFLHtfQ3vOHo4U0Utyt
+         WrZQ==
+Received: by 10.224.192.66 with SMTP id dp2mr8979515qab.95.1349293667728; Wed,
+ 03 Oct 2012 12:47:47 -0700 (PDT)
+Received: by 10.49.108.161 with HTTP; Wed, 3 Oct 2012 12:47:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206935>
 
-Hi Andreas,
+Hi,
 
-as a user, and owner of a repository I do care about the objects that are in it.
-I do not care about the way they are names, be it numbers or sha's, but for
-sure about their existence.
-So, for me it is important if a command creates a new commit or not.
+I'd like to report a bug in git (observed on git version 1.7.11.msysgit=
+=2E1).
+When you do a rebase and it fails due to out of memory exception,
+rebased branch pointer is changed but commits are not rebased. That
+makes commits that you are rebasing unreachable (except via reflog):
 
-> The commit is _always_ created, with a name depending on the parent,
-> message, author and date.
+=BB git lg
+* 4c60761 - (origin/master, origin/HEAD, master) ...
 
-I do not understand this: I have produced several examples that show that
-it is not created, i.e. that the very same objects are present in the repository
-after the command execution as they were before it.
-It is possible, though, that you use the word "create"  with a
-different meaning.
-Most dictionaries state: "to cause to come into existence", i.e. before creation
-the thing does not exist, and after creation it does.
+=BB git rebase master sql_script
+=46irst, rewinding head to replay your work on top of it...
+fatal: Out of memory? mmap failed: No error
 
+=BB git lg
+* 4c60761 - (HEAD, origin/master, origin/HEAD, sql_script, master) ...
 
--Angelo
+=BB git reflog sql_script
+4c60761 sql_script@{0}: rebase finished: refs/heads/sql_script onto
+4c60761303fccbb0860b28e8094ad17ae8b01d07
+13555ed sql_script@{1}: branch: Reset to sql_script@{1}
+
+Expected behaviour:
+- restore branch to pre-rebase location on out of memory exception
+- not to fall with out of memory in the first place. But for our
+repository that could be fixed only after either:
+--- a) msysgit would have x64 binary (currently it's not available)
+--- b) rebase -m option could be used by default somehow (currently
+it's not possible so specify default -m)
+
+--
+Alexander Kostikov
