@@ -1,68 +1,97 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 03 Oct 2012 21:05:48 +0200
-Message-ID: <m2ehlfnzoz.fsf@igel.home>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<CABURp0pbX4Fk4sNWCicfF7Gm52-KTMBrasdi_XHnjtE2zmSBFg@mail.gmail.com>
-	<CAB9Jk9CdYXZzPcM=YiwOUyKNQ=4uKpfs+HY7WpWBmqgQRw4SyA@mail.gmail.com>
-	<CAJsNXTm5uhWYB+oiz=3WQQKFQ=i=+oO0L6cgGBB+2cm5BgfFCg@mail.gmail.com>
-	<CAB9Jk9D5c-7QKkUFtur4rxBfiaPFzGaMi-+m=Owje_Aaoc6XJQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Wed, 3 Oct 2012 16:13:16 -0400
+Message-ID: <20121003201316.GA4484@sigill.intra.peff.net>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
+ <20121003180324.GB27446@sigill.intra.peff.net>
+ <7vobkj4cb4.fsf@alter.siamese.dyndns.org>
+ <20121003185542.GA3635@sigill.intra.peff.net>
+ <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: PJ Weisberg <pj@irregularexpressions.net>,
-	Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:50:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:51:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtIL-0001DP-Qg
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:49:26 +0200
+	id 1TJtJ4-0001DP-SU
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348Ab2JCTFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 15:05:53 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:47050 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab2JCTFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 15:05:52 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XX6Bh6Js2z3hhVy;
-	Wed,  3 Oct 2012 21:05:48 +0200 (CEST)
-X-Auth-Info: wvBYQIOPwbbhSlsEy3h+H8nKdfOZQLOJzHZRi7NZlHc=
-Received: from igel.home (ppp-93-104-158-56.dynamic.mnet-online.de [93.104.158.56])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XX6Bh5tzCzbbg3;
-	Wed,  3 Oct 2012 21:05:48 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 8A7CFCA2B8; Wed,  3 Oct 2012 21:05:48 +0200 (CEST)
-X-Yow: I Know A Joke
-In-Reply-To: <CAB9Jk9D5c-7QKkUFtur4rxBfiaPFzGaMi-+m=Owje_Aaoc6XJQ@mail.gmail.com>
-	(Angelo Borsotti's message of "Wed, 3 Oct 2012 19:34:16 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753159Ab2JCUNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 16:13:20 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39414 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753025Ab2JCUNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 16:13:19 -0400
+Received: (qmail 12278 invoked by uid 107); 3 Oct 2012 20:13:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Oct 2012 16:13:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2012 16:13:16 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206928>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+On Wed, Oct 03, 2012 at 12:41:38PM -0700, Shawn O. Pearce wrote:
 
-> Take then a git commit --allow-empty: if the trees are equal it may
-> create a commit or not depending on the parent, message, author and
-> date; if the trees are different it creates a commit.
+> > Out of curiosity, how are you thinking about triggering such a new
+> > behavior in a backwards-compatible way? Invoke git-upload-pack2, and
+> > fall back to reconnecting to start git-upload-pack if it fails?
+> 
+> Basically, yes. New clients connect for git-upload-pack2. Over git://
+> the remote peer will just close the TCP socket with no messages. The
+> client can fallback to git-upload-pack and try again. Over SSH a
+> similar thing will happen in the sense there is no data output from
+> the remote side, so the client can try again. This has the downside of
+> authentication twice over SSH, which may prompt for a password twice.
+> But the user can get out of this by setting remote.NAME.uploadpack =
+> git-upload-pack and thus force the Git client to use the current
+> protocol if they have a new client and must continue to work over SSH
+> with an old server, and don't use an ssh-agent.
 
-The commit is _always_ created, with a name depending on the parent,
-message, author and date.
+It's a shame that we have to reestablish the TCP or ssh connection to do
+the retry. The password thing is annoying, but also it just wastes a
+round-trip. It means we'd probably want to default the v2 probe to off
+(and let the user turn it on for a specific remote) until v2 is much
+more common than v1. Otherwise everyone pays the price.
 
-Andreas.
+It may also be worth designing v2 to handle more graceful capability
+negotiation so this doesn't come up again.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Another alternative would be to tweak git-daemon to allow more graceful
+fallback. That wouldn't help us now, but it would if we ever wanted a
+v3. For stock ssh, you could send:
+
+  sh -c 'git upload-pack2; test $? = 127 && git-upload-pack'
+
+which would work if you have an unrestricted shell on the other side.
+But it would break for a restricted shell or other "fake" ssh
+environment. It's probably too ugly to have restricted shells recognize
+that as a magic token (well, I could maybe even live with the ugliness,
+but it is not strictly backwards compatible).
+
+I was hoping we could do something like "git upload-pack --v2", but I'm
+pretty sure current git-daemon would reject that.
+
+> Over HTTP we can request ?service=git-upload-pack2 and retry just like
+> git:// would, or be a bit smarter and say
+> ?service=git-upload-pack&v=2, and determine the protocol support of
+> the remote peer based on the response we get. If we see an immediate
+> advertisement its still the "v1" protocol, if we get back the "yes I
+> speak v2" response like git:// would see, we can continue the
+> conversation from there.
+
+Yeah, I would think "&v=2" would be better simply to avoid the
+round-trip if we fail. It should be safe to turn the new protocol on by
+default for http, then.
+
+-Peff
