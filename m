@@ -1,100 +1,134 @@
-From: PJ Weisberg <pj@irregularexpressions.net>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 3 Oct 2012 09:06:25 -0700
-Message-ID: <CAJsNXTm5uhWYB+oiz=3WQQKFQ=i=+oO0L6cgGBB+2cm5BgfFCg@mail.gmail.com>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<CABURp0pbX4Fk4sNWCicfF7Gm52-KTMBrasdi_XHnjtE2zmSBFg@mail.gmail.com>
-	<CAB9Jk9CdYXZzPcM=YiwOUyKNQ=4uKpfs+HY7WpWBmqgQRw4SyA@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Proposal: create meaningful aliases for git reset's hard/soft/mixed
+Date: Wed, 3 Oct 2012 12:23:42 -0400
+Message-ID: <CABURp0rho3KvzHRNXj9EA9C2OnbTc_dcmiBiW6JZ-VHu4g2m0Q@mail.gmail.com>
+References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
+ <7vlir6brjw.fsf@alter.siamese.dyndns.org> <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
+ <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com>
+ <CAGK7Mr7zdstbm7QsrYq9a6m9ui_r8Ak8XtyWADLQ0n-mXiov4w@mail.gmail.com>
+ <CABURp0pmnsgE1ywW-W2+QFNci=3Lm=JKj9Y3U8zjh8+Cg_NA6Q@mail.gmail.com> <CAGK7Mr7+_n4opf=uQARxA7iSUMFNn9GCFGD5TrhCgarwGhEySA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Phil Hord <phil.hord@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 18:07:02 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Philippe Vaucher <philippe.vaucher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 18:25:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJRT6-0004kc-3C
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 18:06:40 +0200
+	id 1TJRlA-0000e3-1K
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 18:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932905Ab2JCQG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 12:06:27 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:64732 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932747Ab2JCQG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 12:06:27 -0400
-Received: by lagh6 with SMTP id h6so3070990lag.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 09:06:25 -0700 (PDT)
+	id S965340Ab2JCQYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 12:24:08 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:33370 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964820Ab2JCQYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 12:24:05 -0400
+Received: by lbon3 with SMTP id n3so6374568lbo.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 09:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=JtFpCawaBV9Nsa0o4CXtHSslf7Xb2JPhICeLX0Q17k4=;
-        b=PaWvAe3oSvtDXtCiDyFJRNZCmXIvvhBBKracC8nf3JzLg/dvoEQo/hsMNKMMb8ShnG
-         D+pheFM+8pKYxv0z7tPGokJ9aD/qi8mO0Xujqy5u6ZqkJvxwCND8l1sXnNyoF0K2Pgc1
-         b36rd9u1DfZrgk3Mx951S6FNRnUA8r/MBHsaLs/b58iL4xXlN5EWfE0bng10AR6NS6Av
-         DMYwtp8MqXNueKdAnHL7MsaqdUrrpF5pCCY7ie/tKB351h6bS7+AgoK7dPrflt2ftS/1
-         e5nE78YZnqUQxvqsJ/JYbnWP4zTG/eJ3yZpLFI2/KJgrLRPEPyHIYaqz4M3BLL5ZK7W8
-         VQnA==
-Received: by 10.112.83.196 with SMTP id s4mr1833016lby.29.1349280385453; Wed,
- 03 Oct 2012 09:06:25 -0700 (PDT)
-Received: by 10.112.57.161 with HTTP; Wed, 3 Oct 2012 09:06:25 -0700 (PDT)
-In-Reply-To: <CAB9Jk9CdYXZzPcM=YiwOUyKNQ=4uKpfs+HY7WpWBmqgQRw4SyA@mail.gmail.com>
-X-Google-Sender-Auth: uCwUYpP0ZkmQKpp9gi_p-LpLOsE
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=My/4RiWhczdAZO0+iaU45QxH9uX6qGJnrIPDUyfFQMg=;
+        b=GzxHLxjWg2phSXElqRZehQK40B6kprgeHMnrswqZ0shmD0q0GZAWfIlB0Smh2IH1TM
+         qq7hi7ZebSlT1CDKSvgUTWD3TBZvdKW5g1PXIsnuaLsSg5f858bG/4YpwsC6+ft1Dgr7
+         LOaFPOv/4+iPeJsQFQ4/vvZb0118+UQyYUSlwh/AQZYgXE4fNqyd5fqADuItNoeVrfa1
+         bJgy1KJEJVlmmXbxbmVnY+znzCBfrHa2+ctnz1xSFQ1cVMG+Evn9vCtXsTQMBoV8K8Qq
+         jQY2MAekWIT+CAFDXe+ZNkS1b46mCyKMdPN9w12fyjfpChoWj0PKM5SaFBFEiSU/ij8L
+         IXDw==
+Received: by 10.152.47.97 with SMTP id c1mr2061801lan.37.1349281444060; Wed,
+ 03 Oct 2012 09:24:04 -0700 (PDT)
+Received: by 10.114.17.225 with HTTP; Wed, 3 Oct 2012 09:23:42 -0700 (PDT)
+In-Reply-To: <CAGK7Mr7+_n4opf=uQARxA7iSUMFNn9GCFGD5TrhCgarwGhEySA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206910>
 
-On Wed, Oct 3, 2012 at 7:25 AM, Angelo Borsotti
-<angelo.borsotti@gmail.com> wrote:
-> Hi Phil,
+On Tue, Dec 6, 2011 at 2:34 AM, Philippe Vaucher
+<philippe.vaucher@gmail.com> wrote:
+>> Think about why you need to use git-reset.  Why do new users need to
+>> use git-reset?  What is it they are after?
 >
->> Perhaps the confusion arises from the the meaning of "the safety".  In
->> this case, the safety mechanism in place is to prevent you from
->> creating a child commit which has the same "tree" contents (working
->> directory) as the parent commit.  It will not be the same commit
->> because it has different parent(s) than its parent commit; but the
->> tree (working directory) is the same and git normally prevents you
->> from doing this because normally this is an accident, a mistake.
->>
->> --allow-empty tells git you intend to do this and so it should bypass
->> this "no changed files" safety mechanism.  It is not a safety to
->> prevent you creating a new commit with the exact same sha1; the safety
->> is concerned only with the exact same "working directory" file
->> contents.
->>
->> Can you suggest a rewrite of this description which would make it more clear?
->
-> Instead of:
->
-> "Usually recording a commit that has the exact same tree as its sole
-> parent commit is a mistake, and the command prevents you from making
-> such a commit. This option bypasses the safety, and is primarily for
-> use by foreign SCM interface scripts."
->
-> I would suggest:
->
-> "Usually recording a commit that has the exact same tree as its sole
-> parent commit is not allowed, and the command prevents you from making
-> such a commit. This option allows to disregard this condition, thereby
-> making a commit even when the trees are the same. Note that when the
-> tree, author, parents, message and date (with the precision of one
-> second) are the same as those of an existing commit object, no new
-> commit object is created, and the identity of the existing one is
-> returned."
+> Ok, so let's forget about git reset and let's focus on the features
+> instead. If I got it right you suggested the features that people
+> wants most often are uncommit, unadd/undelete and undo. Here's a new
+> proposal (based on your input):
 
-But that's true of 'git commit' generally; it has nothing to do with
---allow-empty.
+I flagged this for followup in my MUA, but I failed to follow-up after
+the holidays. I apologize for that, and I really regret it because I
+liked where this was going.  I only remembered it today when it came
+up again in another thread.
 
--PJ
+> uncommit: git jump <commit> (currently "git reset --soft <commit>")
+> unadd/undelete: git unstage file (currently "git reset --mixed file"
+> (with "git checkout file" for deleted files)
+> undo: git checkout --force --clean <commit> (currently "git reset
+> --hard <commit> && git clean -fd")
+>
+> So, let's try out some scenarios:
+>
+> 1) Newbie user clones/pulls a repository from somewhere. He hacks
+> around and then things go bad, and he decides to scratch away
+> everything he did to make sure things are like they're supposed to be.
+> He'd then type "git checkout --force --clean master". If he didn't
+> introduce new files, he would simply type "git checkout --force
+> master"
 
-Gehm's Corollary to Clark's Law: Any technology distinguishable from
-magic is insufficiently advanced.
+I like this just fine.  I think we can explicitly say that HEAD is the
+implied default refspec, yes?  "git checkout --force --clean"
+
+> 2) Newbie adds some file to the index, then realise he added one too
+> many. He wants to remove it from being added. He'd then type "git
+> unstage file".
+
+I'm afraid of the word "stage" because of previous discussions about
+its i18n abilities.  How about "unadd" and "unrm"?  Or maybe "git undo
+add", "git undo rm" and "git undo commit".
+
+The fact that "git undo rm $FILE" works the same as "git checkout HEAD
+-- $FILE" and does not truly "undo" the delete operation may make this
+a non-starter.  And I admit I have other qualms about using "undo"
+even though I keep on introducing it into the discussion.  For
+example, this hypothetical sequence will do what I expect when I read
+it:
+
+   cp bar foo
+   git add foo
+   echo "more info" >> foo
+   git add foo
+   git unstage foo   # now index:foo == HEAD:foo
+
+But if I use "git undo add", it will not
+
+   cp bar foo
+   git add foo
+   echo "more info" >> foo
+   git add foo
+   git undo add foo   # index:foo == HEAD:foo, not index:foo == bar
+
+Dang.
+
+Well, I personally am ok with 'unstage' but I expect others will not be.
+
+> 3) Average user creates a commit and suddenly realise he actually
+> wanted to split that commit in two (he cannot use --amend, and he's
+> not a rebase -i guru yet). Or he did a "temp" commit because he don't
+> know about "git stash" yet and wants to discard it. He wants to simply
+> go back to the previous state while keeping his changes in the index
+> and the worktree. He'd then type "git jump HEAD^1".
+
+I fear the HEAD^1 concept is too much for the newbie.  What about "git
+uncommit [$REF]" instead?  It would work like "git reset --soft
+$REF^", I think, but maybe it should fail if $REF has multiple
+parents.
+
+If the user really wants to uncommit a merge commit, she may need to
+use "git unmerge".
+
+Phil
