@@ -1,74 +1,68 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git reset respect remote repo (make git idiot proof)
-Date: Wed, 03 Oct 2012 18:52:24 +0200
-Message-ID: <m2bogja46v.fsf@igel.home>
-References: <k4hj91$4tt$4@ger.gmane.org>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Wed, 3 Oct 2012 19:34:16 +0200
+Message-ID: <CAB9Jk9D5c-7QKkUFtur4rxBfiaPFzGaMi-+m=Owje_Aaoc6XJQ@mail.gmail.com>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+	<506AA51E.9010209@viscovery.net>
+	<7vzk449449.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+	<CABURp0pbX4Fk4sNWCicfF7Gm52-KTMBrasdi_XHnjtE2zmSBFg@mail.gmail.com>
+	<CAB9Jk9CdYXZzPcM=YiwOUyKNQ=4uKpfs+HY7WpWBmqgQRw4SyA@mail.gmail.com>
+	<CAJsNXTm5uhWYB+oiz=3WQQKFQ=i=+oO0L6cgGBB+2cm5BgfFCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Geoffrey De Smet <ge0ffrey.spam@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 18:52:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Phil Hord <phil.hord@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: PJ Weisberg <pj@irregularexpressions.net>
+X-From: git-owner@vger.kernel.org Wed Oct 03 19:35:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJSBc-0008Tk-GB
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 18:52:40 +0200
+	id 1TJSq6-000798-NG
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 19:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965108Ab2JCQw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 12:52:26 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:53542 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965019Ab2JCQw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 12:52:26 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XX3Dn2m90z4KK5w;
-	Wed,  3 Oct 2012 18:52:25 +0200 (CEST)
-X-Auth-Info: GDYA1yYQqCXKJgo8QVodb9A7jNcIeEqsg+9bymV/W70=
-Received: from igel.home (ppp-93-104-158-56.dynamic.mnet-online.de [93.104.158.56])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XX3Dn2RHNzbbfm;
-	Wed,  3 Oct 2012 18:52:25 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 0C4E0CA2B8; Wed,  3 Oct 2012 18:52:24 +0200 (CEST)
-X-Yow: Yow!  Maybe I should have asked for my Neutron Bomb in PAISLEY--
-In-Reply-To: <k4hj91$4tt$4@ger.gmane.org> (Geoffrey De Smet's message of "Wed,
-	03 Oct 2012 16:49:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S932802Ab2JCReS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 13:34:18 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:54152 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932767Ab2JCReS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 13:34:18 -0400
+Received: by vcbfo13 with SMTP id fo13so8587831vcb.19
+        for <git@vger.kernel.org>; Wed, 03 Oct 2012 10:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oT3IkLL6iFrrRrEyf2HskSXMPy1ur/irrH4+sPfTTRo=;
+        b=Bqk2mS8XPu2UgZV3X00Wb39xJ/j9ze9tCcUkpFif2kZnVqm5pSZqq9uWRLFheekUKl
+         3A0Ml4WHIsGP1xJjdzUGSA+ux0otgCJeYcEQXk+8NRu9jSuAGMsPYnSd8JW9+8GI6smb
+         Z7Bs+KuHlAC7pXC+2zUUZ+8hH4hZivs9nnE/xi07IZr1jnQZJKCbOSS1zEevj0VbNO5+
+         qh/GFED3rbZBgCvQ5tKMvkr/ndSYjrEJyyPbQx5wAjEeW1802wX6bcutVlRu31vCBYLE
+         ej5lVExyJCK+RlXyfn2iq3sWE4DIiRmjQJZDAtU2B62tNxI7r9OyfVsHhYs8lsIUDXsm
+         NKlQ==
+Received: by 10.52.90.147 with SMTP id bw19mr1011828vdb.17.1349285656173; Wed,
+ 03 Oct 2012 10:34:16 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Wed, 3 Oct 2012 10:34:16 -0700 (PDT)
+In-Reply-To: <CAJsNXTm5uhWYB+oiz=3WQQKFQ=i=+oO0L6cgGBB+2cm5BgfFCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206914>
 
-Geoffrey De Smet <ge0ffrey.spam@gmail.com> writes:
+HI PJ,
 
-> Suppose this case:
->
-> git clone .../blessedRepo.git
-> // do changes
-> git commit -m"bad1"
-> // do changes
-> git commit -m"bad2"
-> git reset --hard HEAD^4 // Why does it let me do this?
+take a git commit without --allow-empty: if the trees are equal, it
+creates no commit,
+and if the trees are different it creates one.
+Take then a git commit --allow-empty: if the trees are equal it may
+create a commit or
+not depending on the parent, message, author and date; if the trees
+are different it
+creates a commit.
+So, the statement does not apply to commits in general.
 
-Because there is nothing wrong with that.
-
-> // I just "broke" my local repository, because if I continue
-
-No you didn't.
-
-> // do changes
-> git commit -m"good1"
-> git push origin master // fails because the history disrespects the remote
-> repo's history
-
-You may just as well want to push it to a different branch (or even a
-different repository).
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-Angelo
