@@ -1,80 +1,80 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 03 Oct 2012 22:30:53 +0200
-Message-ID: <m2a9w3nvr6.fsf@igel.home>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
-	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-	<m2fw5vooem.fsf@linux-m68k.org>
-	<CAB9Jk9Dqoom-hBQPG5iqe2JyiJtVoFWZ9-5W9ktUsa9F9mbXRQ@mail.gmail.com>
-	<m2r4pf1xh6.fsf@igel.home>
-	<CAB9Jk9Bqq=fs4v-oAj_TiaSw5WOiQQFsm_WEZP_ECyPW1L_DHg@mail.gmail.com>
-	<m2fw5va4jc.fsf@igel.home>
-	<CAB9Jk9Aa4d4H5q1euCJ4hdc_K9iBrfiJFnyAYQ+BRNX3D023gg@mail.gmail.com>
-	<m2iparnztj.fsf@igel.home>
-	<CAB9Jk9De4h=X3A8ypW6FG6L3B8katmTxhaPY9zhQ+UP1WJd6gg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: grep.patternType (was: Re: [ANNOUNCE] Git v1.8.0-rc0)
+Date: Wed, 03 Oct 2012 13:18:56 -0700
+Message-ID: <7v626r48cv.fsf@alter.siamese.dyndns.org>
+References: <7vwqz9ak2f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Angelo Borsotti <angelo.borsotti@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:52:46 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	J Smith <dark.panda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:53:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtJI-0001DP-DY
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:24 +0200
+	id 1TJtJC-0001DP-Nx
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675Ab2JCUbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 16:31:03 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:58904 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753025Ab2JCUbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 16:31:01 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3XX84t4hQcz3hhb0;
-	Wed,  3 Oct 2012 22:30:54 +0200 (CEST)
-X-Auth-Info: aQN5lbRJk4YvwqS3ILgjrmXseTV04j9Vfh85HL3Pq0k=
-Received: from igel.home (ppp-93-104-158-56.dynamic.mnet-online.de [93.104.158.56])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 3XX84t48MkzbbhB;
-	Wed,  3 Oct 2012 22:30:54 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 18E22CA2B8; Wed,  3 Oct 2012 22:30:54 +0200 (CEST)
-X-Yow: Just to have MORE FUN, I'll pretend I am JAMES CAGNEY and I am having
- a tense, UP-TIGHT EXPERIENCE!!
-In-Reply-To: <CAB9Jk9De4h=X3A8ypW6FG6L3B8katmTxhaPY9zhQ+UP1WJd6gg@mail.gmail.com>
-	(Angelo Borsotti's message of "Wed, 3 Oct 2012 21:11:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1753822Ab2JCUTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 16:19:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37463 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753801Ab2JCUS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 16:18:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0977F8E13;
+	Wed,  3 Oct 2012 16:18:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FNYU1E86HAvXoVoNMVV9JnJQe3w=; b=wpYXPu
+	059aR86F1q/2YUIsopgY3XNdEs1XBDdQ+p7gv4NPhnF0OkRBMdszj3g8mty+w59l
+	GB1rmjKKCUbouAkh9JkI/rohnBrXGnQPLbj51DG0sVxBZ+lkKdgeRvsCKyQAKJwM
+	4bDcCzF2UYaL0wxDd0f87AAiNJZ7Tf/6+Iyoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=n7LLS8JdVUxY0QZaz25t/cFBZb4emUlj
+	7nHRke/yQI8coR3Mxk28XRRbHP1Y5BNzAE1D0HNYKU25j8nLKElLVWeNGil120DR
+	Y54/O7Nd8vpffhrlxeQpklQjAmpShFpj6KhvKMBMlvoFy7M45pKxhxpNu77iEVAH
+	vY6UkkHvhOY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBEBB8E12;
+	Wed,  3 Oct 2012 16:18:58 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AF968E11; Wed,  3 Oct 2012
+ 16:18:58 -0400 (EDT)
+In-Reply-To: <7vwqz9ak2f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 01 Oct 2012 15:44:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9020661A-0D97-11E2-ADAF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206937>
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> as a user, and owner of a repository I do care about the objects that are in it.
+>  * "git grep" learned to use a non-standard pattern type by default if
+>    a configuration variable tells it to.
 
-There is no need to care.
+This addition makes
 
-> I do not understand this: I have produced several examples that show that
-> it is not created, i.e. that the very same objects are present in the repository
-> after the command execution as they were before it.
+    git grep -e "(integer|buffer)"
 
-That is just an implementation detail.  All you need to know is that a
-ref has been created or modified.
+work as expected, when grep.patternType is set to "extended".
 
-Andreas.
+Should this
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+    git log --grep="(integer|buffer)"
+
+also honor the same configuration variable?  If not, why not?
+
+One more thing.  Currently you can say
+
+    git log -E --grep="(integer|buffer)"
+
+to ask for the ERE.  Should we also support -P to ask for pcre?  If
+not, why not?
