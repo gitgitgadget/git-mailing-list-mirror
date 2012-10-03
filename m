@@ -1,97 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: upload-pack is slow with lots of refs
-Date: Wed, 3 Oct 2012 16:13:16 -0400
-Message-ID: <20121003201316.GA4484@sigill.intra.peff.net>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net>
- <7vobkj4cb4.fsf@alter.siamese.dyndns.org>
- <20121003185542.GA3635@sigill.intra.peff.net>
- <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Wed, 03 Oct 2012 13:49:23 -0700
+Message-ID: <7vvcer2sdo.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+ <506AA51E.9010209@viscovery.net> <7vzk449449.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+ <7vhaqc7in6.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+ <506BCF19.7020800@viscovery.net>
+ <CAB9Jk9DH4Gx-8oJzb8H=ytohhZnMbA92pwj5P25AehmZ3PMmcg@mail.gmail.com>
+ <506BDADE.4010803@viscovery.net>
+ <CAB9Jk9AgtNQfWDr31CWbXf2ag=11du-aruu-0+nOZ3KaaG9=og@mail.gmail.com>
+ <506BE577.900@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:51:29 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:51:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtJ4-0001DP-SU
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:11 +0200
+	id 1TJtJT-0001DP-DI
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753159Ab2JCUNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 16:13:20 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39414 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753025Ab2JCUNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 16:13:19 -0400
-Received: (qmail 12278 invoked by uid 107); 3 Oct 2012 20:13:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Oct 2012 16:13:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2012 16:13:16 -0400
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com>
+	id S1754396Ab2JCUt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 16:49:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52722 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754312Ab2JCUtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 16:49:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0558897D9;
+	Wed,  3 Oct 2012 16:49:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m9yTz6oB7kJhvFsptVlmoo9OTAc=; b=DIRymL
+	srMtUqJho80kLiHvWUKn71C914QjwHQ5ouVzD2pPTe6OtU3fVJ7fnu0JaqAwrvKZ
+	PkHTcvssqySgOY3m11idTCbdb5ks4VqdgyYlyqK+tFg5MDMZjuqm/2sJoB9vEd/k
+	rU7JGmCVbCvMtymupU0GCIoERcLz/Ecdtm/4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r+lTNU2EwIjlZSzjI0ojfqzzuOj3NA/h
+	TS1M0Jw+5UCHBt8Z8+MffhGxKvKc5zkYekEi6e4Bq03hxLv0Wqq/j/RdTkWyCXm5
+	kmAC5Smwlf5MufrEiY7tCmZdEcyvXJKbi+e15+z+wLfv9LKFRaKicghUN399E41W
+	KeCvGhbM2Kw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E57D597D8;
+	Wed,  3 Oct 2012 16:49:24 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61E3697D7; Wed,  3 Oct 2012
+ 16:49:24 -0400 (EDT)
+In-Reply-To: <506BE577.900@viscovery.net> (Johannes Sixt's message of "Wed,
+ 03 Oct 2012 09:12:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D0863F96-0D9B-11E2-B473-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206929>
 
-On Wed, Oct 03, 2012 at 12:41:38PM -0700, Shawn O. Pearce wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> > Out of curiosity, how are you thinking about triggering such a new
-> > behavior in a backwards-compatible way? Invoke git-upload-pack2, and
-> > fall back to reconnecting to start git-upload-pack if it fails?
-> 
-> Basically, yes. New clients connect for git-upload-pack2. Over git://
-> the remote peer will just close the TCP socket with no messages. The
-> client can fallback to git-upload-pack and try again. Over SSH a
-> similar thing will happen in the sense there is no data output from
-> the remote side, so the client can try again. This has the downside of
-> authentication twice over SSH, which may prompt for a password twice.
-> But the user can get out of this by setting remote.NAME.uploadpack =
-> git-upload-pack and thus force the Git client to use the current
-> protocol if they have a new client and must continue to work over SSH
-> with an old server, and don't use an ssh-agent.
+> Why don't you use a different commit message to ensure that there is a
+> difference between the commits?
 
-It's a shame that we have to reestablish the TCP or ssh connection to do
-the retry. The password thing is annoying, but also it just wastes a
-round-trip. It means we'd probably want to default the v2 probe to off
-(and let the user turn it on for a specific remote) until v2 is much
-more common than v1. Otherwise everyone pays the price.
+That sounds like a workaround, and unnecessary one at that, as it is
+entirely unclear why there _needs_ to be a different commit.
 
-It may also be worth designing v2 to handle more graceful capability
-negotiation so this doesn't come up again.
+Perhaps OP fears that the orphan branch "foo" in his example,
+because it happens to point at the same commit object as the
+"master", will not stay the same and follow along the advancement of
+"master" if some new commits are added to it, and that is the reason
+he wants a different commit?
 
-Another alternative would be to tweak git-daemon to allow more graceful
-fallback. That wouldn't help us now, but it would if we ever wanted a
-v3. For stock ssh, you could send:
-
-  sh -c 'git upload-pack2; test $? = 127 && git-upload-pack'
-
-which would work if you have an unrestricted shell on the other side.
-But it would break for a restricted shell or other "fake" ssh
-environment. It's probably too ugly to have restricted shells recognize
-that as a magic token (well, I could maybe even live with the ugliness,
-but it is not strictly backwards compatible).
-
-I was hoping we could do something like "git upload-pack --v2", but I'm
-pretty sure current git-daemon would reject that.
-
-> Over HTTP we can request ?service=git-upload-pack2 and retry just like
-> git:// would, or be a bit smarter and say
-> ?service=git-upload-pack&v=2, and determine the protocol support of
-> the remote peer based on the response we get. If we see an immediate
-> advertisement its still the "v1" protocol, if we get back the "yes I
-> speak v2" response like git:// would see, we can continue the
-> conversation from there.
-
-Yeah, I would think "&v=2" would be better simply to avoid the
-round-trip if we fail. It should be safe to turn the new protocol on by
-default for http, then.
-
--Peff
+Of course, starting from "master" and "foo" pointing at the same
+commit (or different commit, for that matter), "foo" won't change if
+you commit on "master", so that fear is unnecessary.
