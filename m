@@ -1,93 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Proposal: create meaningful aliases for git reset's
- hard/soft/mixed
-Date: Wed, 03 Oct 2012 11:41:08 -0700
-Message-ID: <7v391v5rgb.fsf@alter.siamese.dyndns.org>
-References: <CAGK7Mr4GZq5eXn4OB+B0ZborX-OVoXiWU8Lo1XM5LRZDuRe1YA@mail.gmail.com>
- <7vlir6brjw.fsf@alter.siamese.dyndns.org>
- <CAGK7Mr5nQoubAw11KDj4WKwQnXrfgteKbMj2=AR-HhsGKi52wQ@mail.gmail.com>
- <CABURp0rtCUbJXLHtXv_1g6GRKL3mX-T+3vN1=QO4CUibqXdEMg@mail.gmail.com>
- <CAGK7Mr7zdstbm7QsrYq9a6m9ui_r8Ak8XtyWADLQ0n-mXiov4w@mail.gmail.com>
- <CABURp0pmnsgE1ywW-W2+QFNci=3Lm=JKj9Y3U8zjh8+Cg_NA6Q@mail.gmail.com>
- <CAGK7Mr7+_n4opf=uQARxA7iSUMFNn9GCFGD5TrhCgarwGhEySA@mail.gmail.com>
- <CABURp0rho3KvzHRNXj9EA9C2OnbTc_dcmiBiW6JZ-VHu4g2m0Q@mail.gmail.com>
+Subject: Re: push.default documented in "man git-push"?
+Date: Wed, 03 Oct 2012 11:49:41 -0700
+Message-ID: <7vvcer4chm.fsf@alter.siamese.dyndns.org>
+References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
+ <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+ <CACsJy8B7Z4kVYax4igYQ-d8q6e+GrPL3UwzhHSYbJ5Qo0TiL-w@mail.gmail.com>
+ <CALkWK0kKzt8ii-+O0zRM1JLenP+XKh-2Wv_v6zXkkcvTGQ2MQg@mail.gmail.com>
+ <CACsJy8BB4WM1Lqz4yCGnGN2DV1Xsip3Qzh86ibBXwt2BnaNENA@mail.gmail.com>
+ <CALkWK0=N0OwTyu1KDAKzM48ioevGtmMNgy5gfK2J78zSPx7CVA@mail.gmail.com>
+ <CACsJy8APN-CdBZgLzuNWAa5ArR2gkcStY4GZ=79fU7sGT9pOMw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 20:41:35 2012
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 20:51:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJTss-00086P-9L
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 20:41:26 +0200
+	id 1TJU16-0003Wz-0u
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 20:49:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964818Ab2JCSlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 14:41:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56354 "EHLO
+	id S1756534Ab2JCStq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 14:49:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61133 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755669Ab2JCSlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 14:41:11 -0400
+	id S1756529Ab2JCSto (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 14:49:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA6F9903C;
-	Wed,  3 Oct 2012 14:41:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21E43933F;
+	Wed,  3 Oct 2012 14:49:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=63qO5fCrSYeOjscDgGJq2HK02EE=; b=WcH33s
-	DpDBMJ85WZpGFbgaRpC+G8TjOs/s4ExuUyoXeB52VCsvKzrPjoaJb/fIHt0j7ACZ
-	9vACeaNvh+Eih9cfYiDSnTDjSOKu2sHWhEBDFFviRV6CQekiHToDFVeTg7vbffbm
-	uaWgd9dWaVFfIN/G1W88R0zRlVcKV5eFWBKi0=
+	:content-type; s=sasl; bh=osmLokqLqMQ9Eh7nKvzSHn2GJpg=; b=vZqZV4
+	RK76aiI4V9CsMkeV/PLepupSeS2ymVSvbUajpdWTVlkgU1XeNqEgIxXR0OS2la2a
+	erP3oYSGpp4FMzrPzCtwshU434B5sVhOg8JFrfUU9zjMhpiyj3CI6VoGbPmD+Zf8
+	ROSEYQDHOd7jp8Uh03ue3ZZn/soiUb1End9Vs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F5LWrtlIsO3S24qUiE5UhXv78gWMl8yc
-	9+HAyCcJkm9c7xAwOdZrNyrmaRYcPtX0XDCJDnXxkWb2hQcSTljEyIU7YYPiOPTF
-	z01EgTRfU+Pe4q4FFvwkqJ/F8by5bouuB5xD3nmRaKz2tsLIcsIOxeAr1YT8doix
-	8Z8jpvcI2t0=
+	:content-type; q=dns; s=sasl; b=PBV13H5ukWlVFfDEYK08JYzzdsM5cDEr
+	W8mN8im4P0F33xc/AFUtqp/YGRtxizJ7jm7Xg+3GufFlGp3h5X7mthPNYf4qR+Sb
+	vu/b9r0J7TwGUWKWHMeb8qsVQOOrhFee3nAxNIRl1INMQejulTGcsEYVzMU5wWcE
+	cWBT2LlUXWA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A802A903B;
-	Wed,  3 Oct 2012 14:41:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E191933E;
+	Wed,  3 Oct 2012 14:49:44 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0AF0A903A; Wed,  3 Oct 2012
- 14:41:09 -0400 (EDT)
-In-Reply-To: <CABURp0rho3KvzHRNXj9EA9C2OnbTc_dcmiBiW6JZ-VHu4g2m0Q@mail.gmail.com> (Phil
- Hord's message of "Wed, 3 Oct 2012 12:23:42 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CE89933C; Wed,  3 Oct 2012
+ 14:49:43 -0400 (EDT)
+In-Reply-To: <CACsJy8APN-CdBZgLzuNWAa5ArR2gkcStY4GZ=79fU7sGT9pOMw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 3 Oct 2012 17:18:24 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E654BFBC-0D89-11E2-9FC8-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 184D9CFE-0D8B-11E2-99B3-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206921>
 
-Phil Hord <phil.hord@gmail.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> I flagged this for followup in my MUA, but I failed to follow-up after
-> the holidays. I apologize for that, and I really regret it because I
-> liked where this was going.
-
-I really regret to see you remembered it, actually.
-
->> 1) Newbie user clones/pulls a repository from somewhere. He hacks
->> around and then things go bad, and he decides to scratch away
->> everything he did to make sure things are like they're supposed to be.
->> He'd then type "git checkout --force --clean master". If he didn't
->> introduce new files, he would simply type "git checkout --force
->> master"
+> On Wed, Oct 3, 2012 at 3:46 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+>> On second thought, it might not be such a good idea.  There are *lots*
+>> of variables that control the operation of each command, and it's hard
+>> to decide which ones to list and which ones to omit.  I've listed all
+>> the relevant variables for git-push, except the advice.* variables- I
+>> don't know how useful such a long list might be.
 >
-> I like this just fine.  I think we can explicitly say that HEAD is the
-> implied default refspec, yes?  "git checkout --force --clean"
+> I think listing receive.* and advice.* (and maybe even
+> remove.<name>.*) is still ok. The goal is to give users a clue.
+> They'll need to look up in config.txt anyway for explanation. If we
+> name the config keys (and groups) well then users should be able to
+> guess what those keys may be for before deciding whether to look into
+> details.
 
-That depends on what the "hacks around" involved.  Where is he now,
-what damage did he cause, and what can you depend on to take him to
-a "clean" state, where the definition of "clean" happens to match
-this hypothetical "Newbie user"?  Did he do "git checkout" of
-another branch?  Did he commit?  Did he "reset" to other commit
-while on the 'master' branch?  Is he still on "master" branch when
-he says "git checkout --force --clean <master>"?  Can he say "git
-checkout --force --clean master~4" and what does that even mean?  Is
-he trying to go into the detached HEAD state, or is he somehow
-trying to rewind master?
+I would recommend against listing any advice.* in the command manual
+pages.  They are meant to give an advice in cases that are often
+confusing to new people and are supposed to advise how to turn it
+off in the message.  We want users to see them and understand the
+situation, and more importantly, we want to strongly discourage
+users to decline them until seeing them and understand what they
+advise for or against.
