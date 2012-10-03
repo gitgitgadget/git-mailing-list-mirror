@@ -1,71 +1,63 @@
-From: Angelo Borsotti <angelo.borsotti@gmail.com>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Wed, 3 Oct 2012 09:45:36 +0200
-Message-ID: <CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
-	<506AA51E.9010209@viscovery.net>
-	<7vzk449449.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
-	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
-	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
-	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: push.default documented in "man git-push"?
+Date: Wed, 03 Oct 2012 09:54:40 +0200
+Message-ID: <vpqhaqc6ldr.fsf@grenoble-inp.fr>
+References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
+	<CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+	<CAN7QDoJ=PKt_1zW58648tcaT7MP1MTVJo9E4PW5g93K_tO91Jw@mail.gmail.com>
+	<CALkWK0nQu_vvLGu=j2CDkGcKtp-T401kDyhD5_iMqQrkGk9K8Q@mail.gmail.com>
+	<7vbogk90zk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 09:46:31 2012
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 09:55:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJJeS-0004hE-Jj
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 09:45:52 +0200
+	id 1TJJnU-0007Fo-Mt
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 09:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab2JCHpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 03:45:38 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:36557 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751385Ab2JCHph (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 03:45:37 -0400
-Received: by vcbfo13 with SMTP id fo13so7909455vcb.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 00:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Jw7xLFhm/gFE6EWYmCS3WTFTjSwFrFz3DgmAm7mzzeA=;
-        b=O2BN/xbMUu20M1jtMdEH+guezoATlaZdqGhFe0NJR/Y7eE/p+pxjAqUyd8pUniXcJt
-         IF3uy7IE8QKVxJ50nzCA+sUk+Oqzz2go5h/jUj7ysfJUmoYXja2dK4OiabBi2nfu8o7U
-         dolIWodB6mkpjHxPYVoi1dvFS2Q2t21vOo4/q4DIenFghhk8e+jGmGR57agi1f6wXdI7
-         k6SyeELpR8aTOQZ2/RZOwlm053zbM6ZlFq+ca8j08cj9g2K4qUGpnEQ6h0HI+DUypXWn
-         QS5azKR0qmKJy8vV+kS0I704OSOPxc6jqKYXqlRu2fVOTVH82FuwKpEuNFoVlQXNLmhO
-         B15Q==
-Received: by 10.52.90.2 with SMTP id bs2mr560977vdb.23.1349250336575; Wed, 03
- Oct 2012 00:45:36 -0700 (PDT)
-Received: by 10.58.68.40 with HTTP; Wed, 3 Oct 2012 00:45:36 -0700 (PDT)
-In-Reply-To: <90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
+	id S1755468Ab2JCHyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 03:54:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60520 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754891Ab2JCHyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 03:54:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q937nCri017451
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 3 Oct 2012 09:49:12 +0200
+Received: from anie.imag.fr ([129.88.7.32] helo=anie)
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1TJJmz-0004pl-9l; Wed, 03 Oct 2012 09:54:41 +0200
+In-Reply-To: <7vbogk90zk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 02 Oct 2012 11:34:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Oct 2012 09:49:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q937nCri017451
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1349855357.11256@Rh3wwOXLivAtrcRERcd70A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206866>
 
-In reply to Philip,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I understand what the implementation does, but I am stating that it is
-not what the
-user (by reading the man page) expects.
-The user adds --allow-empty to have a different & unique commit, such seems to
-be the purpose of the option.
-Unfortunately, it gets that only sometimes, depending on the exact
-instant in time
-the command is executed, which is out of his/her control.
-I think that you would agree with me that this is not a nice
-behaviour. How could a user
-ever use a command that is not predictable?
-If it is not possible to change the implementation, at least warn the
-user in the man page.
+> I'll queue this instead.  Thanks.
 
--Angelo
+Even better, perfect!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
