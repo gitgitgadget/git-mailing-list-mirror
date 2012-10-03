@@ -1,101 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/6] log --grep: use the same helper to set -E/-F options as
- "git grep"
-Date: Wed,  3 Oct 2012 18:33:36 -0700
-Message-ID: <1349314419-8397-4-git-send-email-gitster@pobox.com>
-References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
- <1349314419-8397-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:03:04 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Wed, 3 Oct 2012 19:21:15 -0400
+Message-ID: <20121003232115.GB11618@sigill.intra.peff.net>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
+ <20121003180324.GB27446@sigill.intra.peff.net>
+ <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:03:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtN1-0001DP-B5
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:54:15 +0200
+	id 1TJtLq-0001DP-KK
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754976Ab2JDBds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 21:33:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52883 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753855Ab2JDBdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 21:33:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 518F88065
-	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=fLzp
-	2Nb/06VnnUi+LDPFXOxNapQ=; b=QJRCMrGFM7SrQPdGrWK8ulTQX+F6pW8W6GbX
-	phJGwtEFQiwm4zMhAF9kyV7S04ccqhKo0SD+z621UWqoAjaI1UFCTHt3p+v3TJfO
-	gfCl9pPDnbA/eSki0JtSesSZyPBmnJ53rwR0I2hflk5RyGrTgxwV/3NcwSpZyu4X
-	pEUO7PM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=v7Iy4O
-	V4vCtUMTLVWX5yolfWRcRENhqvA3A15O6wQmdEfemb94vIGCtIRsoi3JQ4suS85c
-	DoB1T7ILtAdLJVIDcmuVurY3XSfcFtRf/CIO30q38woXbZYgZMjOzoDBW6aFEhy2
-	C81fdz3/Jmw/t5mTrRp5PZfZg39jLBMvkCdGk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F6B58064
-	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:47 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9D028061 for
- <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:46 -0400 (EDT)
-X-Mailer: git-send-email 1.8.0.rc0.57.g712528f
-In-Reply-To: <1349314419-8397-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8A7B9ECE-0DC3-11E2-8826-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932723Ab2JCXVS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 19:21:18 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39575 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932583Ab2JCXVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 19:21:17 -0400
+Received: (qmail 14104 invoked by uid 107); 3 Oct 2012 23:21:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Oct 2012 19:21:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2012 19:21:15 -0400
+Content-Disposition: inline
+In-Reply-To: <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206956>
 
-The command line option parser for "git log -F -E --grep='<ere>'"
-did not flip the "fixed" bit, violating the general "last option
-wins" principle among conflicting options.
+On Thu, Oct 04, 2012 at 12:32:35AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- revision.c     | 4 ++--
- t/t4202-log.sh | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+> On Wed, Oct 3, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
+> > What version of git are you using?  In the past year or so, I've ma=
+de
+> > several tweaks to speed up large numbers of refs, including:
+> >
+> >   - cff38a5 (receive-pack: eliminate duplicate .have refs, v1.7.6);=
+ note
+> >     that this only helps if they are being pulled in by an alternat=
+es
+> >     repo. And even then, it only helps if they are mostly duplicate=
+s;
+> >     distinct ones are still O(n^2).
+> >
+> >   - 7db8d53 (fetch-pack: avoid quadratic behavior in remove_duplica=
+tes)
+> >     a0de288 (fetch-pack: avoid quadratic loop in filter_refs)
+> >     Both in v1.7.11. I think there is still a potential quadratic l=
+oop
+> >     in mark_complete()
+> >
+> >   - 90108a2 (upload-pack: avoid parsing tag destinations)
+> >     926f1dd (upload-pack: avoid parsing objects during ref advertis=
+ement)
+> >     Both in v1.7.10. Note that tag objects are more expensive to
+> >     advertise than commits, because we have to load and peel them.
+> >
+> > Even with those patches, though, I found that it was something like=
+ ~2s
+> > to advertise 100,000 refs.
+>=20
+> FWIW I bisected between 1.7.9 and 1.7.10 and found that the point at
+> which it went from 1.5/s to 2.5/s upload-pack runs on the pathologica=
+l
+> git.git repository was none of those, but:
+>=20
+>     ccdc6037fe - parse_object: try internal cache before reading obje=
+ct db
 
-diff --git a/revision.c b/revision.c
-index a09e60b..7f5e53b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1604,12 +1604,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--grep-debug")) {
- 		revs->grep_filter.debug = 1;
- 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
--		revs->grep_filter.regflags |= REG_EXTENDED;
-+		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, &revs->grep_filter);
- 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
- 		revs->grep_filter.regflags |= REG_ICASE;
- 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
- 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
--		revs->grep_filter.fixed = 1;
-+		grep_set_pattern_type_option(GREP_PATTERN_TYPE_FIXED, &revs->grep_filter);
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match = 1;
- 	} else if ((argcount = parse_long_opt("encoding", argv, &optarg))) {
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 924ba53..e6537ab 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -230,6 +230,12 @@ test_expect_success 'log --grep -i' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log -F -E --grep=<ere> uses ere' '
-+	echo second >expect &&
-+	git log -1 --pretty="tformat:%s" -F -E --grep=s.c.nd >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
--- 
-1.8.0.rc0.57.g712528f
+Ah, yeah, I forgot about that one. That implies that you have a lot of
+refs pointing to the same objects (since the benefit of that commit is
+to avoid reading from disk when we have already seen it).
+
+Out of curiosity, what does your repo contain? I saw a lot of speedup
+with that commit because my repos are big object stores, where we have
+the same duplicated tag refs for every fork of the repo.
+
+-Peff
