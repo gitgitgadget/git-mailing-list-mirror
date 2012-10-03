@@ -1,149 +1,87 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: upload-pack is slow with lots of refs
-Date: Wed, 3 Oct 2012 22:16:56 +0200
-Message-ID: <CACBZZX4Grya=FbL9XEh_EK6KVsFZYWCuHveV2QevcBwr+iYTMQ@mail.gmail.com>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: push.default documented in "man git-push"?
+Date: Wed, 3 Oct 2012 17:40:51 -0400
+Message-ID: <20121003214051.GD4484@sigill.intra.peff.net>
+References: <CAN7QDoK4WCuRMu+KV6ACo9miR9_eFEE510J5PDiPk+BXLyQG9Q@mail.gmail.com>
+ <CALkWK0mxLQNOE8kZUJrxYQMWXpzZW0uS+N2iGXxdRmCXTzYcBQ@mail.gmail.com>
+ <CACsJy8B7Z4kVYax4igYQ-d8q6e+GrPL3UwzhHSYbJ5Qo0TiL-w@mail.gmail.com>
+ <CALkWK0kKzt8ii-+O0zRM1JLenP+XKh-2Wv_v6zXkkcvTGQ2MQg@mail.gmail.com>
+ <CACsJy8BB4WM1Lqz4yCGnGN2DV1Xsip3Qzh86ibBXwt2BnaNENA@mail.gmail.com>
+ <CALkWK0=N0OwTyu1KDAKzM48ioevGtmMNgy5gfK2J78zSPx7CVA@mail.gmail.com>
+ <CACsJy8APN-CdBZgLzuNWAa5ArR2gkcStY4GZ=79fU7sGT9pOMw@mail.gmail.com>
+ <7v7gr75s40.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:53:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:54:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtJB-0001DP-8b
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:50:17 +0200
+	id 1TJtKG-0001DP-S0
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab2JCURT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 16:17:19 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:49291 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753440Ab2JCURS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2012 16:17:18 -0400
-Received: by obbuo13 with SMTP id uo13so7746260obb.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 13:17:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dmgh2zfc/IC8iFJSLSr3NLFQuPBgA6MRYM5K7LexYvA=;
-        b=gQocrH5RNCSBVfzuKgd1THinhkMC1WbJK3LE5GJQL+Mg+Tvc5iQ1xZ8IId7Aw+t03g
-         h+vCBuKS8xLZ62/2tXfjGnUENjYD1kFmWA9wMAHL+ZuktnvFXBThE7sCensryWl/Brgd
-         +SbBV/VPa7dV6hD02SCtzvsx7cc6ytmf/bQ0fVAoq2Qo4aYrgwEUAWHTyx8qXeD4BU5q
-         wS+jT+wGA0fw5eHWvyO/teULp+obOuHPIb6SQy8V5SLcfjzDfZ+VLgCTwZjYB+PcoPsV
-         vCr0sZCN9aaM8fIk+AMTeD8uOOFUFKbko93hHDoO6RFzSU7wEVwxOxbcq9nBNmEe1Mw0
-         MqeA==
-Received: by 10.182.207.6 with SMTP id ls6mr2532433obc.36.1349295437321; Wed,
- 03 Oct 2012 13:17:17 -0700 (PDT)
-Received: by 10.60.94.225 with HTTP; Wed, 3 Oct 2012 13:16:56 -0700 (PDT)
-In-Reply-To: <20121003180324.GB27446@sigill.intra.peff.net>
+	id S1756425Ab2JCVky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 17:40:54 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:39487 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756347Ab2JCVkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 17:40:53 -0400
+Received: (qmail 13049 invoked by uid 107); 3 Oct 2012 21:41:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Oct 2012 17:41:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2012 17:40:51 -0400
+Content-Disposition: inline
+In-Reply-To: <7v7gr75s40.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206939>
 
-On Wed, Oct 3, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Oct 03, 2012 at 02:36:00PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
+On Wed, Oct 03, 2012 at 11:26:55AM -0700, Junio C Hamano wrote:
+
+> Please do not label the list as "These variables affect this
+> command" to give a false impression that it is the complete list if
+> it isn't.
+> 
+> Unless somebody promises to keep an up-to-date complete list there
+> (or even better, come up with a mechanism to help us keep that
+> promise automatically, perhaps by annotating pieces with structured
+> comments in config.txt and automatically appending such a section to
+> manual pages of relevant commands), that is.
 >
->> I'm creating a system where a lot of remotes constantly fetch from a
->> central repository for deployment purposes, but I've noticed that ev=
-en
->> with a remote.$name.fetch configuration to only get certain refs a
->> "git fetch" will still call git-upload pack which will provide a lis=
-t
->> of all references.
->>
->> This is being done against a repository with tens of thousands of re=
-fs
->> (it has a tag for each deployment), so it ends up burning a lot of C=
-PU
->> time on the uploader/receiver side.
->
-> Where is the CPU being burned? Are your refs packed (that's a huge
-> savings)? What are the refs like? Are they .have refs from an alterna=
-tes
-> repository, or real refs? Are they pointing to commits or tag objects=
-?
->
-> What version of git are you using?  In the past year or so, I've made
-> several tweaks to speed up large numbers of refs, including:
->
->   - cff38a5 (receive-pack: eliminate duplicate .have refs, v1.7.6); n=
-ote
->     that this only helps if they are being pulled in by an alternates
->     repo. And even then, it only helps if they are mostly duplicates;
->     distinct ones are still O(n^2).
->
->   - 7db8d53 (fetch-pack: avoid quadratic behavior in remove_duplicate=
-s)
->     a0de288 (fetch-pack: avoid quadratic loop in filter_refs)
->     Both in v1.7.11. I think there is still a potential quadratic loo=
-p
->     in mark_complete()
->
->   - 90108a2 (upload-pack: avoid parsing tag destinations)
->     926f1dd (upload-pack: avoid parsing objects during ref advertisem=
-ent)
->     Both in v1.7.10. Note that tag objects are more expensive to
->     advertise than commits, because we have to load and peel them.
->
-> Even with those patches, though, I found that it was something like ~=
-2s
-> to advertise 100,000 refs.
+> With a weaker phrase, e.g. "These configuration variables may be of
+> interest", such a list may not hurt readers, but personally I do not
+> think it adds much value to have a list of variables without even a
+> single line description of what each is used for.
 
-I can't provide all the details now (not with access to that machine
-now), but briefly:
+We talked a while ago about actually moving the config options into the
+individual manpages, and generating config.txt to simply contain an
+index of keys and where their definitions may be found. That also has
+the "list without description" characteristic. But presumably you would
+be looking for keys in the manual of the command you want to affect, and
+the master list would mostly be for redirecting you to the right
+manpage.
 
- * The git client/server version is 1.7.8
+It does break down a little when you have keys that could go in multiple
+pages. In many cases, this can be solved by a canonical location that
+describes the shared concepts. For example, `diff.*` should probably go
+into a `gitdiff(7)` that talks about the various diff options and
+formats.
 
- * The repository has around 50k refs, they're "real" refs, almost all
-   of them (say all but 0.5k-1k) are annotated tags, the rest are
-   branches.
+Of course, that only works if you think pulling out the shared diff bits
+from git-diff*, git-log, etc into a separate manpage is a good idea. I
+do, because I think it makes it more clear to the reader how the
+concepts connect (as opposed to simply including shared bits inline in
+the manpages, as we do now, with no indication that the same content is
+going to apply in many places). But it does have a downside that
+individual manpages are not as easily searchable via the pager, as you
+may have to follow a cross-reference to find what you want.
 
- * >99% of them are packed, there's a weekly cronjob that packs them
-   all up, there were a few newly pushed branches and tags outside of
-   the
-
- * I tried "echo -n | git upload-pack <repo>" on both that 50k
-   repository and a repository with <100 refs, the former took around
-   ~1-2s to run on a 24 core box and the latter ~500ms.
-
- * When I ran git-upload-pack with GNU parallel I managed around 20/s
-   packs on the 24 core box on the 50k ref one, 40/s on the 100 ref
-   one.
-
- * A co-worker who was working on this today tried it on 1.7.12 and
-   claimed that it had the same performance characteristics.
-
- * I tried to profile it under gcc -pg && echo -n | ./git-upload-pack
-   <repo> but it doesn't produce a profile like that, presumably
-   because the process exits unsuccessfully.
-
-   Maybe someone here knows offhand what mock data I could feed
-   git-upload-pack to make it happy to just list the refs, or better
-   yet do a bit more work which it would do if it were actually doing
-   the fetch (I suppose I could just do a fetch, but I wanted to do
-   this from a locally compiled checkout).
-
->> Has there been any work on extending the protocol so that the client
->> tells the server what refs it's interested in?
->
-> I don't think so. It would be hard to do in a backwards-compatible wa=
-y,
-> because the advertisement is the first thing the server says, before =
-it
-> has negotiated any capabilities with the client at all.
-
-I suppose at least for the ssh protocol we could just do:
-
-    ssh server "(git upload-pack <repo> --refs=3D* || git upload-pack <=
-repo>)"
-
-And something similar with HTTP headers, but that of course leaves the
-git:// protocol.
+-Peff
