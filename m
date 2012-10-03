@@ -1,63 +1,58 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [ENHANCEMENT] Allow '**' pattern in .gitignore
-Date: Wed, 3 Oct 2012 20:42:29 +0700
-Message-ID: <CACsJy8DRxbjcRpbO30vOCo9D+TK_dDX_oiocZSOtnGAR2jAOFw@mail.gmail.com>
-References: <CALkWK0nXfeAnFfdFtdDNdEwtk0mMPtpYbg8sPzfrEXUpXsGQOA@mail.gmail.com>
- <506A9EA6.9010303@gmail.com> <CALkWK0=X5nJ6Shwa0+6Jk2cgvvo25j=mKLRs4v=eQY7x9+XvFw@mail.gmail.com>
- <CACsJy8CUK0g4FhuJxzJqN7qS2apoO2zYdg_SGvWzEN5dGcHhaA@mail.gmail.com> <506C3F23.9000009@web.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 4/5] diff: introduce diff.submoduleFormat configuration
+ variable
+Date: Wed, 03 Oct 2012 15:45:05 +0200
+Message-ID: <506C4161.3040201@web.de>
+References: <1349196670-2844-1-git-send-email-artagnon@gmail.com> <1349196670-2844-5-git-send-email-artagnon@gmail.com> <506B4418.2050700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 15:44:02 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 15:45:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJPEY-0006kk-Qg
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 15:43:31 +0200
+	id 1TJPGM-0001d9-HP
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Oct 2012 15:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951Ab2JCNnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2012 09:43:01 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:51363 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755913Ab2JCNnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2012 09:43:00 -0400
-Received: by qaas11 with SMTP id s11so1477975qaa.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 06:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BFabEn/7GRj2KW5SvyL290xolxRZO7Y5mxOI4fSd3jo=;
-        b=WdhHnsDNkBvrUhjP9RorjSYt96NyO1dFOyLqwxhMh14wfobJLX63A3+qclnOLd+h+F
-         kDnSouafr9HBkhEID5smge06rj57htyvTJHec5stbTwtL6lUuffMBhzmxkzXADRRPKyI
-         A2eoRdaodYt04/5wYjwkxR5N+zBJpYur8LHNocMBEc582vlinWeiAu7IsQakTPQoGaix
-         KrxzLkndiVU87bbqaY4Zaop6cxZVNV4p4B+nHRvVO2aqL0+N9GfZQvkTg9PL84HEKCHq
-         AcIrbq6+DegL6EiLPT0jiH02ESe5Vn3aUCp0t1NdBWa7GedPP2u1XzgdVHjDXz2Iw6GR
-         OJLQ==
-Received: by 10.49.51.7 with SMTP id g7mr11791135qeo.34.1349271779715; Wed, 03
- Oct 2012 06:42:59 -0700 (PDT)
-Received: by 10.49.72.201 with HTTP; Wed, 3 Oct 2012 06:42:29 -0700 (PDT)
-In-Reply-To: <506C3F23.9000009@web.de>
+	id S1755773Ab2JCNpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 09:45:08 -0400
+Received: from mout.web.de ([212.227.17.12]:60622 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755706Ab2JCNpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 09:45:07 -0400
+Received: from [192.168.178.41] ([91.3.173.123]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MOB3E-1TMjBN1988-005gbW; Wed, 03 Oct 2012 15:45:05
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <506B4418.2050700@web.de>
+X-Provags-ID: V02:K0:EEG2zlzGm9ttaIeiOSYX/3O0nnIav8UDDYABFQknpQI
+ bn6eIRwxxVvubjH80eP1U57jAjsQQ8rOqS6gCokB3NqDPynrnS
+ lGrjYlcdS0QOaj+y++NTL9SzV/+CnikJGgy2asWtBJHG4wQdjg
+ nZSeasezaoNMymZsnan/xMAheiKk/Rvoi0pg/gC51DlXzU7NKt
+ 7EQ5G4X3Pup8dKdn6TrLg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206894>
 
-On Wed, Oct 3, 2012 at 8:35 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> */foo/bar
-> */*/foo/bar
-> */*/*/foo/bar
->
-> Using "**/foo/bar" instead would be a great improvement
+Am 02.10.2012 21:44, schrieb Jens Lehmann:
+> Am 02.10.2012 18:51, schrieb Ramkumar Ramachandra:
+>> Introduce a diff.submoduleFormat configuration variable corresponding
+>> to the '--submodule' command-line option of 'git diff'.
+> 
+> Nice. Maybe a better name would be "diff.submodule", as this sets the
+> default for the "--submodule" option of diff?
+> 
+> And I think you should also test in t4041 that "--submodule=short"
+> overrides the config setting.
 
-If this "**/foo/bar" (i.e. no wildcards except one ** at the
-beginning) is popular, we could optimize this case, turning fmatch()
-into strncmp(), just like what we do for "foobar*"
--- 
-Duy
+We also need tests which show that setting that config to "log" does
+not break one of the many users of "git diff" ("stash", "rebase" and
+"format-patch" come to mind, most probably I missed some others). I
+suspect we'll have to add "--submodule=short" options to some call
+sites to keep them working with submodule changes.
