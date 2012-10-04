@@ -1,62 +1,94 @@
-From: Andrew Wong <andrew.kw.w.lists@gmail.com>
-Subject: Re: Bug report
-Date: Thu, 04 Oct 2012 11:21:54 -0400
-Message-ID: <506DA992.7090904@gmail.com>
-References: <506D122E.2050404@emsoftware.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 3/4] peel_ref: check object type before loading
+Date: Thu, 4 Oct 2012 04:02:53 -0400
+Message-ID: <20121004080253.GC31325@sigill.intra.peff.net>
+References: <20121004075609.GA1355@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Whitney <jjw@emsoftware.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:28:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:28:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtaW-0001w8-R7
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:08:13 +0200
+	id 1TJtUg-0001w8-Vr
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422768Ab2JDPWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 11:22:05 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:55739 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422747Ab2JDPWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 11:22:00 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so231813iag.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 08:21:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NT+KFDI1Ik9E/XIj2hvtPjMVDXBMdr96letgTsmOCdU=;
-        b=QpySMWnpstM0e0XEcIjg6smUr1fxnqaxzzT9+lMb8E7J1E4q2uf5mbdmgh7kuk8Afj
-         xJ0P+AeueJn+L8jAlI/rfGsdaLIzUoennCOjSlZpxapLrGqFUGFbfsiwbGwXdW2qaOGK
-         RBkx/3rMb0Ycl4LpeYfHsZSU9nX6J/h1WH1hc5LDJRIMTV7v1P9EEWf473m3GP0YPeDx
-         WCqdm3dy7pAh4QtRqOk1x/bJYF84EiArN8R35ZRl15PNz/zzz/4XERzCufIVtndPYyuU
-         zpI4rHjq8MHhORnR8DAgw6/tYvWN7sA0d/yFY8IY1lyd6BGekuGctQywAh1rjljBfuNr
-         Qrrw==
-Received: by 10.50.163.39 with SMTP id yf7mr5580899igb.30.1349364119017;
-        Thu, 04 Oct 2012 08:21:59 -0700 (PDT)
-Received: from [192.168.1.112] ([66.207.196.114])
-        by mx.google.com with ESMTPS id ex1sm13658381igc.4.2012.10.04.08.21.54
-        (version=SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 08:21:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <506D122E.2050404@emsoftware.com>
+	id S932563Ab2JDIC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 04:02:58 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40484 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932089Ab2JDIC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 04:02:56 -0400
+Received: (qmail 17779 invoked by uid 107); 4 Oct 2012 08:03:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 04:03:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 04:02:53 -0400
+Content-Disposition: inline
+In-Reply-To: <20121004075609.GA1355@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207004>
 
-On 10/04/2012 12:35 AM, John Whitney wrote:
-> I just ran into a problem that I'm pretty sure is a bug in git. Just 
-> read and run this (fairly trivial) shell script to replicate.
-I tried your steps on a Mac, but I wasn't able to produce the issue. 
-Perhaps I don't have the right CRLF configs to trigger the issue. I've 
-tried it on v1.7.9.6, which came with Xcode, and v1.7.7. What git 
-version are you using? And, if any, what are your configs for 
-"core.eol", "core.safecrlf", and "core.autocrlf" ?
+The point of peel_ref is to dereference tags; if the base
+object is not a tag, then we can return early without even
+loading the object into memory.
 
-What Phil said also makes sense though.
+This patch accomplishes that by checking sha1_object_info
+for the type. For a packed object, we can get away with just
+looking in the pack index. For a loose object, we only need
+to inflate the first couple of header bytes.
+
+This is a bit of a gamble; if we do find a tag object, then
+we will end up loading the content anyway, and the extra
+lookup will have been wasteful. However, if it is not a tag
+object, then we save loading the object entirely. Depending
+on the ratio of non-tags to tags in the input, this can be a
+minor win or minor loss.
+
+However, it does give us one potential major win: if a ref
+points to a large blob (e.g., via an unannotated tag), then
+we can avoid looking at it entirely.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This optimization is the one that gave me the most pause. While
+upload-pack does call peel_ref on everything, the other callers all
+constrain themselves to refs/tags/. So for many projects, we will be
+calling it mostly on annotated tags, and it may be a very small net
+loss. But in practice, it will not matter for most projects with a sane
+number of normal tags, and saving even one accidental giant blob load
+can have a huge impact.
+
+ refs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index f672ad9..02e47b1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1225,8 +1225,15 @@ fallback:
+ 	}
+ 
+ fallback:
+-	o = parse_object(base);
+-	if (o && o->type == OBJ_TAG) {
++	o = lookup_unknown_object(base);
++	if (o->type == OBJ_NONE) {
++		int type = sha1_object_info(base, NULL);
++		if (type < 0)
++			return -1;
++		o->type = type;
++	}
++
++	if (o->type == OBJ_TAG) {
+ 		o = deref_tag_noverify(o);
+ 		if (o) {
+ 			hashcpy(sha1, o->sha1);
+-- 
+1.8.0.rc0.10.g8dd2a92
