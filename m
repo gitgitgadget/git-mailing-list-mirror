@@ -1,84 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/4] optimizing upload-pack ref peeling
-Date: Thu, 4 Oct 2012 03:56:09 -0400
-Message-ID: <20121004075609.GA1355@sigill.intra.peff.net>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net>
- <CACBZZX4Grya=FbL9XEh_EK6KVsFZYWCuHveV2QevcBwr+iYTMQ@mail.gmail.com>
- <20121003212007.GC4484@sigill.intra.peff.net>
- <CACBZZX6yMfeOx6x4iy8beq5niy9HvPq0c8ND5jZkoiJWAgVjfw@mail.gmail.com>
- <20121003231529.GA11618@sigill.intra.peff.net>
- <CACBZZX5Sm++Wjyoue-qk7TjwxUM3QihXfWGtEHhOq=VtkgvNbQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] log: pass rev_info to git_log_config()
+Date: Thu, 04 Oct 2012 00:05:29 -0700
+Message-ID: <7v1uhe3efa.fsf@alter.siamese.dyndns.org>
+References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
+ <1349314419-8397-1-git-send-email-gitster@pobox.com>
+ <1349314419-8397-6-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:30:26 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:31:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUV-0001w8-LE
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:00 +0200
+	id 1TJtTg-0001w8-Ju
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340Ab2JDH4N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 03:56:13 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40470 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755034Ab2JDH4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 03:56:12 -0400
-Received: (qmail 17603 invoked by uid 107); 4 Oct 2012 07:56:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 03:56:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 03:56:09 -0400
-Content-Disposition: inline
-In-Reply-To: <CACBZZX5Sm++Wjyoue-qk7TjwxUM3QihXfWGtEHhOq=VtkgvNbQ@mail.gmail.com>
+	id S932197Ab2JDHFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 03:05:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47747 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755563Ab2JDHFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 03:05:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D0FD6BF9;
+	Thu,  4 Oct 2012 03:05:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nMmHZTwtI6VaidZMs8yBSgRE7Kk=; b=FMPJTX
+	fCGI4IXQUEhe/lBRurxoNwiC7Q8dFc0SWGWoxutZf7iUxPpu9///aiDghqO7orAZ
+	ilEXsMNruPcIEMBPRpXQzj3ihNQ7S9f8bDGq3sGY6fd+iovBxoOWwmuCfIg7e0MF
+	fJgoxpBYMp91Q+TUf5ciHU4OCq8ti36gCR9Wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Sa1PPydnAiRl88yDj7syKfNy2+xN+o7S
+	wwyeLNMn1LdxkvMxsMSo/O6s84g3ObAvQKOcJiKkzYu5w4iKvZvMukEw+VktfEtN
+	AHxGLResY6tLf3GEvFriD41FitfJKPdiGcL/E6NO32AmApAdrvBlierrTOJ5dDwK
+	932PlfHvlYk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 364DE6BF8;
+	Thu,  4 Oct 2012 03:05:35 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B967A6BF7; Thu,  4 Oct 2012
+ 03:05:33 -0400 (EDT)
+In-Reply-To: <1349314419-8397-6-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Wed, 3 Oct 2012 18:33:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E3FA910C-0DF1-11E2-A15B-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207007>
 
-On Thu, Oct 04, 2012 at 01:54:47AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > Hmm. It seems like we should not need to open the tags at all. The =
-main
-> > reason is to produce the "peeled" advertisement just after it. But =
-for a
-> > packed ref with a modern version of git that supports the "peeled"
-> > extension, we should already have that information.
->=20
-> B.t.w. do you plan to submit this as a non-hack, I'd like to have it
-> in git.git, so if you're not going to I could pick it up and clean it
-> up a bit. But I think it would be better coming from you.
+> Call init_revisions() first to prepare the revision traversal
+> parameters and pass it to git_log_config(), so that necessary bits
+> in the traversal parameters can be tweaked before we call the
+> command line parsing infrastructure setup_revisions() from
+> the cmd_log_init_finish() function.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * This is made separate from the next one that touches the contents
+>    of "rev" to make sure the existing code does not depend on the
+>    current initialization order.  I do not think it does but better
+>    be careful to keep the history easier to bisect, than be sorry
+>    when an issue does appear.
 
-Here's a cleaned-up version. I realized that peel_ref actually is quite
-close to what we want; the key thing is that when you are calling it
-from a for_each_ref loop it will not only use peeled information from
-packed-refs (if available), but it will also short-circuit the ref
-lookup for non-packed refs. So it really does what we want.
+And I was right X-<.  This does break the assumption the recent
+diff.context series makes.
 
-I put some timings into the final patch. The results are very satisfyin=
-g
-from a pure numbers standpoint. However, I'm not 100% sure this is all
-that useful a benchmark. The repos where you get a noticeable benefit
-are quite big, so I suspect the time to send the advertisements out ove=
-r
-the wire will dominate. Still, a CPU second saved is a CPU second
-earned.
+What happens is that
 
-And the series actually ends up making the code cleaner and shares some
-of the optimizations I put into upload-pack with other users of
-peel_ref. So I think I'd be inclined to use it, even if the speedup
-doesn't help that much in practice. We'll see what others think.
+    - init_revisions() initializes revs->grep_filter; that is why this
+      patch wanted to call it first, so that it can futz with it
+      from git_config().
 
-  [1/4]: peel_ref: use faster deref_tag_noverify
-  [2/4]: peel_ref: do not return a null sha1
-  [3/4]: peel_ref: check object type before loading
-  [4/4]: upload-pack: use peel_ref for ref advertisements
+    - however, init_revisions() also calls diff_setup(), and the
+      diff machinery initializes revs->diffopt->context from
+      diff_context_default.  Compiled in default of this value is 3,
+      but the diff.context series wants to update this variable with
+      the configuration before this call happens.
 
--Peff
+So we would need to do something like:
+
+    - call git_log_config() first to let diff_context_default
+      updated from the configuration as before.  find the values of
+      grep.* defaults at the same time, but stash it away in a
+      separate "struct grep_opt" (yuck);
+
+    - call init_revisions() and let it initialize revs->grep_filter
+      and revs->diffopt as before;
+
+    - copy the grep.* defaults we learned during git_log_config() to
+      revs->grep_filter.
+
+which is a bit yucky, but survivable.
+
+I'll fix these two patches up later.
