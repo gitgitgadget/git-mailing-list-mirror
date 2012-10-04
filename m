@@ -1,115 +1,108 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] pretty.c: Fix a compiler warning
-Date: Thu, 04 Oct 2012 19:06:37 +0100
-Message-ID: <506DD02D.2060809@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
+Date: Thu, 04 Oct 2012 09:39:02 -0700
+Message-ID: <7vobki19ax.fsf@alter.siamese.dyndns.org>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com>
+ <7vbogj5sji.fsf@alter.siamese.dyndns.org> <506D5837.6020708@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:35:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:38:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtez-00033L-2N
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:12:49 +0200
+	id 1TJtdg-00033L-6F
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355Ab2JDSHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 14:07:40 -0400
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:34607 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750811Ab2JDSHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 14:07:39 -0400
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 3E65718C449;
-	Thu,  4 Oct 2012 19:07:37 +0100 (BST)
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 4DD3F18C436;	Thu,  4 Oct 2012 19:07:36 +0100 (BST)
-Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tch.inty.net (Postfix) with ESMTP;	Thu,  4 Oct 2012 19:07:33 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
-X-MDF-HostID: 18
+	id S933445Ab2JDQjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 12:39:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54226 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933434Ab2JDQjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 12:39:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90CEA88AE;
+	Thu,  4 Oct 2012 12:39:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ahPZdUmTqG1DU/4s4y1zkY6tzIg=; b=Mf407D
+	HcQ3b/Vrt37wz4P6VDx0FWU/2ZpWeb49xXnTFQuftrjDSlKN4w2FLEjEjP2MOLZa
+	G1t/HF9HCBOhC07ZflxN6WgD2oIdemaVcBgmNBzcDFyzDXTQ238eo8lxz20dIcnt
+	uA/bFKdIXBHslmZOq20XhoclQBy2Q0jHjFrxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BdcMHNdMKXfFV2CwWUGPgtqW+ofBt7OP
+	95/nE1o6joDkg5RYYhBfEbhw6x1LMqsJaY0iIDxAVJhxDhBQA+eaMuahTzZ04lDV
+	bk8yROxG3XWsY9FI0BXYCrPA081pqzj7Q7PqNAYZcGUfq5CRVXs+RZpkf/jvavP6
+	N92N9r86sdg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77BF588AC;
+	Thu,  4 Oct 2012 12:39:04 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEC5488A8; Thu,  4 Oct 2012
+ 12:39:03 -0400 (EDT)
+In-Reply-To: <506D5837.6020708@alum.mit.edu> (Michael Haggerty's message of
+ "Thu, 04 Oct 2012 11:34:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 01FD5586-0E42-11E2-AE6A-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207013>
+
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> On 10/03/2012 08:17 PM, Junio C Hamano wrote:
+>> 
+>> What is the semantics of ** in the first place?  Is it described to
+>> a reasonable level of detail in the documentation updates?  For
+>> example does "**foo" match "afoo", "a/b/foo", "a/bfoo", "a/foo/b",
+>> "a/bfoo/c"?  Does "x**y" match "xy", "xay", "xa/by", "x/a/y"?
+>> 
+>> I am guessing that the only sensible definition is that "**"
+>> requires anything that comes before it (if exists) is at a proper
+>> hierarchy boundary, and anything matches it is also at a proper
+>> hierarchy boundary, so "x**y" matches "x/a/y" and not "xy", "xay",
+>> nor "xa/by" in the above example.  If "x**y" can match "xy" or "xay"
+>> (or "**foo" can match "afoo"), it would be unreasonable to say it
+>> implies the pattern is anchored at any level, no?
+>
+> Given that there is no obvious interpretation for what a construct like
+> "x**y" would mean, and many plausible guesses (most of which sound
+> rather useless), I suggest that we forbid it.  This will make the
+> feature easier to explain and make .gitignore files that use it easier
+> to understand.
+>
+> I think that 98% of the usefulness of "**" would be in constructs where
+> it replaces a proper part of the pathname, like "**/SOMETHING" or
+> "SOMETHING/**/SOMETHING"...
+
+I think it is a good way to go in the longer term, if we all agree
+that "**" matching anything does not give us a useful semantics
+[*1*].
+
+Is it something we can easily get by simple patch into the wildmatch
+code?  I'd hate to see us parsing the input and validating it before
+passing it to the library, as we will surely botch the quoting or
+something while doing so.
+
+When we require "x/**/y", I think we still want it to match "x/y".
+Do people agree, or are there good reasons to require at least one
+level between x and y for such a pattern?  Assuming that we do want
+to match "x/y" with "x/**/y", I suspect that "'**' matches anything
+including a slash" would not give us that semantics. Is it something
+we can easily fix in the wildmatch code?
 
 
-In particular, gcc complains thus:
+[Footnote]
 
-        CC pretty.o
-    pretty.c: In function 'format_commit_item':
-    pretty.c:1282: warning: 'offset' might be used uninitialized in \
-        this function
-
-In order to suppress the warning we simply initialize the 'offset'
-variable in it's declarartion.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Nguyen,
-
-If you need to re-roll your 'nd/pretty-placeholder-with-color-option'
-branch, could you please squash this (or something like it) into the
-relevant commit. [commit f1da75df ("pretty: support padding placeholders,
-%< %> and %><", 23-09-2012). NOTE: this patch is on top of pu@a78f4186]
-
-An alternative solution looks like (this will probably break git-am):
-
---- >8 ---
-diff --git a/pretty.c b/pretty.c
-index deeacf2..25d8eb2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1292,6 +1292,8 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 			break;
- 		case flush_left_and_steal:
- 		case no_flush: /* to make gcc happy */
-+		default:
-+			offset = 0;
- 			break;
- 		}
- 		/*
---- 8< ---
-
-... but this disables the "enumeration value 'no_flush' not handled in switch"
-type warnings.
-
-[Actually, I would not bother with a switch at all; I find this:
-
-	} else {
-		int sb_len = sb->len, offset = 0;
-		if (c->flush_type == flush_left)
-			offset = padding - len;
-		else if (c->flush_type == flush_both)
-			offset = (padding - len) / 2;
-		...
-
-... much more readable. But that's just me ... :-D ]
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- pretty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/pretty.c b/pretty.c
-index deeacf2..d26428b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1279,7 +1279,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 		}
- 		strbuf_addstr(sb, local_sb.buf);
- 	} else {
--		int sb_len = sb->len, offset;
-+		int sb_len = sb->len, offset = 0;
- 		switch (c->flush_type) {
- 		case flush_left:
- 			offset = padding - len;
--- 
-1.7.12
+*1* The message you are responding to was written in a somewhat
+provocative way on purpose so that people who like the way rsync
+matches "**" can vocally object. I would like to see arguments from
+the both sides to see if it makes sense.
