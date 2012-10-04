@@ -1,79 +1,92 @@
-From: Markus Trippelsdorf <markus@trippelsdorf.de>
-Subject: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Thu, 4 Oct 2012 16:14:54 +0200
-Message-ID: <20121004141454.GA246@x4>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: fa/remote-svn (Re: What's cooking in git.git (Oct 2012, #01;
+ Tue, 2))
+Date: Thu, 4 Oct 2012 01:30:01 -0700
+Message-ID: <20121004083001.GA9745@elie.Belkin>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+ <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:25:40 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: David Michael Barr <b@rr-dav.id.au>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:25:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtZJ-0001w8-My
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:06:58 +0200
+	id 1TJtV5-0001w8-RN
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964925Ab2JDOO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 10:14:57 -0400
-Received: from ud10.udmedia.de ([194.117.254.50]:42968 "EHLO
-	mail.ud10.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964793Ab2JDOO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 10:14:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud10.udmedia.de; h=
-	date:from:to:subject:message-id:mime-version:content-type; s=
-	beta; bh=/nBUbUz9FzVrtMC0wit4tDrogmJj6CR4XYP84hNdzC0=; b=HGDzpQz
-	z8a49K0nSm/Z4tKK4N2e++m4OQzrk/qJOQYxsy2J+ClqiJmjvbb+DqnxIUG+GzGQ
-	hpUQGD9n5vNALErsrl59iLcyf2PkG+NaBeZ06FINgdFxD1UZnekkft6yb1FWbx15
-	gwsPmn4bfmkR3M31unkUxUQ2681ZUDaSBqsQ=
-Received: (qmail 26289 invoked from network); 4 Oct 2012 16:14:54 +0200
-Received: from unknown (HELO x4) (ud10?360p3@91.65.91.246)
-  by mail.ud10.udmedia.de with ESMTPSA (DHE-RSA-AES256-SHA encrypted, authenticated); 4 Oct 2012 16:14:54 +0200
+	id S965482Ab2JDIaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 04:30:14 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:51208 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964998Ab2JDIaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 04:30:12 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so366806pbb.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 01:30:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=RBP1BbIahpCSdLMFV/2QI7K419bKJQu9cdV/L2EzYrU=;
+        b=fyrbVXJZMGx5y9LvNhk2AcG4HgzTYgE0PnYOf826MDNVl2MiV8/IkrR0zqKfh0yzRW
+         aJCaQFqKaehl451IqwoU/M9vuoQT1JueAAfBBhg/jVaHUUUXC2Gsh+kv8MxdgRqKhZAY
+         kdRlPLdaH/i8FhFETnxCafHMCuWmDMYhjCG8LSF7iGHbpop0qi0o1oUOoBh1TRU1mGm0
+         e/apJwfEWvaB1nJOAP/NaA0oAsQ24uIIJe4woeHQV+Tp4cKpjdNMGelL7FH11K4dJNiN
+         +1KlrS5XIA3BmXQjfgMyNXPFpNy9fZTkX9PEs6kaSZlCjyzwoNhNiGLGwVxhon0ZDUB7
+         JzGA==
+Received: by 10.68.224.138 with SMTP id rc10mr19923144pbc.34.1349339411633;
+        Thu, 04 Oct 2012 01:30:11 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id qb2sm4007449pbb.15.2012.10.04.01.30.09
+        (version=SSLv3 cipher=OTHER);
+        Thu, 04 Oct 2012 01:30:10 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207000>
 
-Hi,
+David Michael Barr wrote:
+> On Wednesday, 3 October 2012 at 9:20 AM, Junio C Hamano wrote: 
 
-with current trunk I get the following on an up-to-date Linux tree:
+>> * fa/remote-svn (2012-09-19) 16 commits
+>> - Add a test script for remote-svn
+>> - remote-svn: add marks-file regeneration
+>> - Add a svnrdump-simulator replaying a dump file for testing
+>> - remote-svn: add incremental import
+>> - remote-svn: Activate import/export-marks for fast-import
+>> - Create a note for every imported commit containing svn metadata
+>> - vcs-svn: add fast_export_note to create notes
+>> - Allow reading svn dumps from files via file:// urls
+>> - remote-svn, vcs-svn: Enable fetching to private refs
+>> - When debug==1, start fast-import with "--stats" instead of "--quiet"
+>> - Add documentation for the 'bidi-import' capability of remote-helpers
+>> - Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability
+>> - Add argv_array_detach and argv_array_free_detached
+>> - Add svndump_init_fd to allow reading dumps from arbitrary FDs
+>> - Add git-remote-testsvn to Makefile
+>> - Implement a remote helper for svn in C
+>> (this branch is used by fa/vcs-svn.)
+>>
+>> A GSoC project.
+>> Waiting for comments from mentors and stakeholders.
+>
+> I have reviewed this topic and am happy with the design and implementation.
+> I support this topic for inclusion.
 
-markus@x4 linux % time git pull
-Already up-to-date.
-git pull  7.84s user 0.26s system 92% cpu 8.743 total
+Thanks!  I'll try moving the tests to the first patch and trying it
+and hopefully send out a branch to pull tomorrow.
 
-git version 1.7.12 is much quicker:
+If I don't send anything tomorrow, that's probably a sign that I never
+will, so since I like the goal of the series I guess it would be a
+kind of implied ack.
 
-markus@x4 linux % time git pull
-Already up-to-date.
-git pull  0.10s user 0.02s system 16% cpu 0.740 total
-
-perf shows for trunk:
-
-    22.11%  git-merge  libz.so.1.2.7          [.] 0x00000000000073bc           
-    22.03%        git  libz.so.1.2.7          [.] 0x0000000000007338           
-    14.18%        git  libz.so.1.2.7          [.] inflate                      
-    13.70%  git-merge  libz.so.1.2.7          [.] inflate                      
-     9.18%        git  git                    [.] 0x00000000000ea391           
-     8.56%  git-merge  git-merge              [.] 0x00000000000f0598           
-     1.58%  git-merge  libz.so.1.2.7          [.] adler32                      
-     1.52%        git  libz.so.1.2.7          [.] adler32                      
-     0.59%        git  [kernel.kallsyms]      [k] clear_page_c
-
-and for 1.7.12:
-
-    39.29%        git  git                    [.] 0x00000000000b9fa8           
-    12.16%        git  libz.so.1.2.7          [.] inflate                      
-     8.67%        git  libz.so.1.2.7          [.] 0x000000000000a18e           
-     8.49%  git-merge  git-merge              [.] 0x00000000000efa15           
-     4.96%        git  libc-2.16.90.so        [.] memcpy@@GLIBC_2.14           
-     2.63%        git  libc-2.16.90.so        [.] _int_malloc                  
-     2.61%  git-merge  [kernel.kallsyms]      [k] clear_page_c                 
-     2.32%        git  [kernel.kallsyms]      [k] clear_page_c                 
-     2.04%        git  [kernel.kallsyms]      [k] filemap_fault                
-     1.87%  git-merge  libc-2.16.90.so        [.] memcpy@@GLIBC_2.14  
-
--- 
-Markus
+Jonathan
