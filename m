@@ -1,61 +1,70 @@
-From: Stefan Haller <stefan@haller-berlin.de>
-Subject: [PATCH 1/2] gitk: Fix error message when clicking on a connecting line
-Date: Thu,  4 Oct 2012 22:50:16 +0200
-Message-ID: <1349383817-14457-2-git-send-email-stefan@haller-berlin.de>
-References: <506956E1.1080303@viscovery.net>
- <1349383817-14457-1-git-send-email-stefan@haller-berlin.de>
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:41:49 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Super long branch names corrupt `.git/config`
+Date: Thu, 04 Oct 2012 12:28:39 -0700
+Message-ID: <7v391uyr2w.fsf@alter.siamese.dyndns.org>
+References: <CAAmo=1BU5N8nbonEb1aZEx=-e8VexwsE74pjm_56dXmCDK+K6g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ben Walton <bdwalton@gmail.com>
+To: Ben Olive <sionide21@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:42:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJti3-00033L-Ak
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:59 +0200
+	id 1TJtgQ-00033L-Na
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:14:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757303Ab2JDUvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 16:51:00 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:45020 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757271Ab2JDUu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 16:50:59 -0400
-Received: from localhost.localdomain (dslb-088-073-094-229.pools.arcor-ip.net [88.73.94.229])
-	by server90.greatnet.de (Postfix) with ESMTPA id EE4872C4074;
-	Thu,  4 Oct 2012 22:50:57 +0200 (CEST)
-X-Mailer: git-send-email 1.8.0.rc0.36.gef0f079
-In-Reply-To: <1349383817-14457-1-git-send-email-stefan@haller-berlin.de>
+	id S1756463Ab2JDT2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 15:28:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41969 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756400Ab2JDT2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 15:28:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CF149F92;
+	Thu,  4 Oct 2012 15:28:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x8z/Cn9f+mzeafdTi00WAyy0h9c=; b=gMj8i8
+	w2OJLVC84gQhHgvEgG0XqxWD9FlAXVu+C04AJEdfoGUX3kAZBQSfNJ/+bMYO6FE8
+	tKPTINwBqaIbr9DgKSEo++FIiZwRMSYWaNWN9WY7JnYGTqJmv96aFMFSAiwHSY+q
+	BPVrQHGhNzkIGj7Qc/jMri6j4c2rXBARX+F50=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MEqJlK5j+x5rX6ziE2fXIWHy/Ys7neoA
+	7HdF/7hwIQh7RqI3rZ+h1gCBEDJq4BFExQS+PmtAHkvcJ3h/iAp6rp4g6AO+wM5Z
+	mje13s9Nt/MaSmrboB/cHl8jp4j/Fqm+0eE0uAMSAEfkfjl1dVuUN/BosdmRMIKV
+	5v7lcE2wUuo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A4859F91;
+	Thu,  4 Oct 2012 15:28:41 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 986409F90; Thu,  4 Oct 2012
+ 15:28:40 -0400 (EDT)
+In-Reply-To: <CAAmo=1BU5N8nbonEb1aZEx=-e8VexwsE74pjm_56dXmCDK+K6g@mail.gmail.com> (Ben
+ Olive's message of "Thu, 4 Oct 2012 13:15:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B3D25BAA-0E59-11E2-8C24-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207018>
 
-When clicking on the line that connects two commit nodes, gitk
-would bring up an error dialog saying "can't read "cflist_top":
-no such variable".
+Ben Olive <sionide21@gmail.com> writes:
 
-This fixes a regression that was introduced with b967135 ("gitk:
-Synchronize highlighting in file view when scrolling diff").
+> My `.git/config` can be corrupted if I try to get a local branch with
+> an extremely long name to track a remote branch.
+>
+> Here is a (contrived) example to reproduce the issue:
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
- gitk | 2 ++
- 1 file changed, 2 insertions(+)
+Don't do that, then ;-)
 
-diff --git a/gitk b/gitk
-index 379582a..8935284 100755
---- a/gitk
-+++ b/gitk
-@@ -7958,6 +7958,8 @@ proc changediffdisp {} {
- proc highlightfile {cline} {
-     global cflist cflist_top
- 
-+    if {![info exists cflist_top]} return
-+
-     $cflist tag remove highlight $cflist_top.0 "$cflist_top.0 lineend"
-     $cflist tag add highlight $cline.0 "$cline.0 lineend"
-     $cflist see $cline.0
--- 
-1.8.0.rc0.36.gef0f079
+I think we have a change that is already cooking.
+
+Ben (Walton), want to add a test for your 0971e99 (Remove the hard
+coded length limit on variable names in config files, 2012-09-30)
+before it hits 'next', perhaps?
