@@ -1,230 +1,73 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/6] attr: more matching optimizations from .gitignore
-Date: Thu,  4 Oct 2012 14:39:50 +0700
-Message-ID: <1349336392-1772-5-git-send-email-pclouds@gmail.com>
-References: <7v626q3hen.fsf@alter.siamese.dyndns.org>
- <1349336392-1772-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: fa/remote-svn (Re: What's cooking in git.git (Oct 2012, #01;
+ Tue, 2))
+Date: Thu, 04 Oct 2012 09:30:40 -0700
+Message-ID: <7vsj9u19ov.fsf@alter.siamese.dyndns.org>
+References: <1550217065.62365.1349356580255.JavaMail.root@genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:13:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:13:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUK-0001w8-CJ
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:01:48 +0200
+	id 1TJtbT-00033L-AW
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932327Ab2JDHkj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 03:40:39 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:45932 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932256Ab2JDHkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 03:40:37 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so327784pbb.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 00:40:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=pABfiTBBRFlWF5eU8NOUCINZIlZt/tK7ovoHaq+LpWc=;
-        b=cTIkjZYUUHGSuR1LzBA1G5WtRbZ35MQY51Frdt3KvDOCV+k+g8wxuhMUlN6K3dRnBH
-         ejREbWsC1TrjkoPHIyx8o1oCzvRBls6t3ZYDeLbTb6qDE/sGJXn7/FhdYWxPVuI+Zb1o
-         2kxaQ6DlM5CL+fgOIJwHzrOsVhW2GU3eJmg9iTbfSjVSTZeGs0xDRzF8NcweBcocH2zb
-         4OMjY+1avV/h/SAAtEICVm98vXvaRQeKfRBiQG/CTJitYD7Inl5Wy/HrDBfbhrpGcqJN
-         R6QJTEaHCF381EluRHqMtc7qK3H9mkexxtAt2GBYHr28Nv5s54ZPQt88hi99kacqMzSN
-         jVoA==
-Received: by 10.68.135.39 with SMTP id pp7mr19486380pbb.127.1349336436850;
-        Thu, 04 Oct 2012 00:40:36 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id g1sm3839733paz.18.2012.10.04.00.40.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 00:40:35 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 04 Oct 2012 14:40:24 +0700
-X-Mailer: git-send-email 1.7.12.1.405.gb727dc9
-In-Reply-To: <1349336392-1772-1-git-send-email-pclouds@gmail.com>
+	id S1422729Ab2JDQap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 12:30:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50518 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932177Ab2JDQao (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 12:30:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8A51862C;
+	Thu,  4 Oct 2012 12:30:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fXBYHcTiR3Z6XVWrHHp95V8XNyg=; b=EvWWOe
+	leiXvZ8ZLw4lG4Camh1+Gkr559rEnwLUXA8xrgZHxSNWKBOlOq1Y17+8arZU77vF
+	YoXodZqfdXhwAsfgKXQr1XP69vZlrXrw1AN34/aALrVNTKNnmhBFIr3KkooOxvDY
+	1GppBv398BcwWV61JevVZtWPkrwabaxaX4Qko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oJPAgXhnKBn+i//sSaqRHiam/gioqQTH
+	tEoLjNwTXzr/LlDNr57aPHV7RCvweq0RV3T0bqKV3Zz2rLzYXmXmDxMFhjMLLKQ5
+	jIYw7DDbNyGzIZhOLf/4rGqovgMcfclvvFGNlU4f6T7aERVKlr+4p5KYzcwSjE0G
+	ilTmlY1gMjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A14E1862B;
+	Thu,  4 Oct 2012 12:30:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14E1C862A; Thu,  4 Oct 2012
+ 12:30:42 -0400 (EDT)
+In-Reply-To: <1550217065.62365.1349356580255.JavaMail.root@genarts.com>
+ (Stephen Bash's message of "Thu, 4 Oct 2012 09:16:20 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D783A252-0E40-11E2-8904-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206978>
 
-=2Egitattributes and .gitignore share the same pattern syntax but has
-separate matching implementation. Over the years, ignore's
-implementation accumulates more optimizations while attr's stays the
-same.
+Stephen Bash <bash@genarts.com> writes:
 
-This patch adds those optimizations to .gitattributes. Basically it
-tries to avoid fnmatch/wildmatch in favor of strncmp as much as
-possible.
+> I seemed to have missed the GSoC wrap up conversation... (links happily
+> accepted).
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- attr.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----=
------
- dir.c  |  4 ++--
- dir.h  |  2 ++
- 3 files changed, 57 insertions(+), 12 deletions(-)
+I also seem to have missed such conversation, if anything like that
+happened.  It certainly would have been nice for the mentors and the
+student for each project to give us a two-to-three-paragraphs
+summary.
 
-diff --git a/attr.c b/attr.c
-index eb576ac..3fde9fa 100644
---- a/attr.c
-+++ b/attr.c
-@@ -116,6 +116,13 @@ struct attr_state {
- 	const char *setto;
- };
-=20
-+struct pattern {
-+	const char *pattern;
-+	int patternlen;
-+	int nowildcardlen;
-+	int flags;		/* EXC_FLAG_* */
-+};
-+
- /*
-  * One rule, as from a .gitattributes file.
-  *
-@@ -131,7 +138,7 @@ struct attr_state {
-  * listed as they appear in the file (macros unexpanded).
-  */
- struct match_attr {
--	const char *pattern;
-+	struct pattern pat;
- 	struct git_attr *attr;
- 	char is_macro;
- 	unsigned num_attr;
-@@ -243,7 +250,13 @@ static struct match_attr *parse_attr_line(const ch=
-ar *line, const char *src,
- 		char *p =3D (char *)&(res->state[num_attr]);
- 		memcpy(p, name, namelen);
- 		p[namelen] =3D 0;
--		res->pattern =3D p;
-+		res->pat.pattern =3D p;
-+		res->pat.patternlen =3D strlen(p);
-+		res->pat.nowildcardlen =3D simple_length(p);
-+		if (!strchr(p, '/'))
-+			res->pat.flags |=3D EXC_FLAG_NODIR;
-+		if (*p =3D=3D '*' && no_wildcard(p+1))
-+			res->pat.flags |=3D EXC_FLAG_ENDSWITH;
- 	}
- 	res->is_macro =3D is_macro;
- 	res->num_attr =3D num_attr;
-@@ -645,26 +658,56 @@ static void prepare_attr_stack(const char *path)
-=20
- static int path_matches(const char *pathname, int pathlen,
- 			const char *basename,
--			const char *pattern,
-+			const struct pattern *pat,
- 			const char *base, int baselen)
- {
--	if (!strchr(pattern, '/')) {
-+	const char *pattern =3D pat->pattern;
-+	int prefix =3D pat->nowildcardlen;
-+	const char *name;
-+	int namelen;
-+
-+	if (pat->flags & EXC_FLAG_NODIR) {
-+		if (prefix =3D=3D pat->patternlen &&
-+		    !strcmp_icase(pattern, basename))
-+			return 1;
-+
-+		if (pat->flags & EXC_FLAG_ENDSWITH &&
-+		    pat->patternlen - 1 <=3D pathlen &&
-+		    !strcmp_icase(pattern + 1, pathname +
-+				  pathlen - pat->patternlen + 1))
-+			return 1;
-+
- 		return (fnmatch_icase(pattern, basename, 0) =3D=3D 0);
- 	}
- 	/*
- 	 * match with FNM_PATHNAME; the pattern has base implicitly
- 	 * in front of it.
- 	 */
--	if (*pattern =3D=3D '/')
-+	if (*pattern =3D=3D '/') {
- 		pattern++;
-+		prefix--;
-+	}
-+
-+	/*
-+	 * note: unlike excluded_from_list, baselen here does not
-+	 * contain the trailing slash
-+	 */
-+
- 	if (pathlen < baselen ||
- 	    (baselen && pathname[baselen] !=3D '/') ||
- 	    strncmp(pathname, base, baselen))
- 		return 0;
--	if (baselen !=3D 0)
--		baselen++;
--	return (ignore_case && iwildmatch(pattern, pathname + baselen)) ||
--		(!ignore_case && wildmatch(pattern, pathname + baselen));
-+
-+	namelen =3D baselen ? pathlen - baselen - 1 : pathlen;
-+	name =3D pathname + pathlen - namelen;
-+
-+	/* if the non-wildcard part is longer than the remaining
-+	   pathname, surely it cannot match */
-+	if (!namelen || prefix > namelen)
-+		return 0;
-+
-+	return (ignore_case && iwildmatch(pattern, name)) ||
-+		(!ignore_case && wildmatch(pattern, name));
- }
-=20
- static int macroexpand_one(int attr_nr, int rem);
-@@ -702,7 +745,7 @@ static int fill(const char *path, int pathlen, cons=
-t char *basename,
- 		if (a->is_macro)
- 			continue;
- 		if (path_matches(path, pathlen, basename,
--				 a->pattern, base, stk->originlen))
-+				 &a->pat, base, stk->originlen))
- 			rem =3D fill_one("fill", a, rem);
- 	}
- 	return rem;
-diff --git a/dir.c b/dir.c
-index 92cda82..fd49336 100644
---- a/dir.c
-+++ b/dir.c
-@@ -292,7 +292,7 @@ int match_pathspec_depth(const struct pathspec *ps,
- /*
-  * Return the length of the "simple" part of a path match limiter.
-  */
--static int simple_length(const char *match)
-+int simple_length(const char *match)
- {
- 	int len =3D -1;
-=20
-@@ -304,7 +304,7 @@ static int simple_length(const char *match)
- 	}
- }
-=20
--static int no_wildcard(const char *string)
-+int no_wildcard(const char *string)
- {
- 	return string[simple_length(string)] =3D=3D '\0';
- }
-diff --git a/dir.h b/dir.h
-index 893465a..7ea8678 100644
---- a/dir.h
-+++ b/dir.h
-@@ -101,6 +101,8 @@ extern void add_exclude(const char *string, const c=
-har *base,
- 			int baselen, struct exclude_list *which);
- extern void free_excludes(struct exclude_list *el);
- extern int file_exists(const char *);
-+extern int simple_length(const char *match);
-+extern int no_wildcard(const char *string);
-=20
- extern int is_inside_dir(const char *dir);
- extern int dir_inside_of(const char *subdir, const char *dir);
---=20
-1.7.12.1.405.gb727dc9
+As GSoC is a Google event and not the Git community one, I wouldn't
+*demand* a concluding write-up, but it still took considerable
+community resource, so...
