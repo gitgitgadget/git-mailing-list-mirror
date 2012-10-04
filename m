@@ -1,79 +1,96 @@
-From: John Whitney <jjw@emsoftware.com>
-Subject: Re: Bug report
-Date: Thu, 04 Oct 2012 11:10:40 -0500
-Message-ID: <506DB500.4010803@emsoftware.com>
-References: <506D122E.2050404@emsoftware.com> <CABURp0rhHTSqQFiXEb12iKLAAjMW3+Jn-ubMy-9jNWc5068toA@mail.gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: fa/remote-svn (Re: What's cooking in git.git (Oct 2012, #01;
+ Tue, 2))
+Date: Thu, 4 Oct 2012 09:16:20 -0400 (EDT)
+Message-ID: <1550217065.62365.1349356580255.JavaMail.root@genarts.com>
+References: <20121004083001.GA9745@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:11:07 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	David Michael Barr <b@rr-dav.id.au>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:11:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtb9-00033L-US
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:08:52 +0200
+	id 1TJtYB-0001w8-Fq
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757090Ab2JDQKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 12:10:48 -0400
-Received: from mail.emsoftware.com ([76.75.201.49]:52174 "EHLO emsoftware.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757077Ab2JDQKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 12:10:47 -0400
-Received: from Johns-MacBook-Pro.local (ppp-70-253-75-224.dsl.austtx.swbell.net [70.253.75.224])
-	by emsoftware.com (Postfix) with ESMTP id B66321AF5256;
-	Thu,  4 Oct 2012 12:14:16 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
-In-Reply-To: <CABURp0rhHTSqQFiXEb12iKLAAjMW3+Jn-ubMy-9jNWc5068toA@mail.gmail.com>
+	id S1756731Ab2JDNQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 09:16:27 -0400
+Received: from hq.genarts.com ([173.9.65.1]:26496 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756729Ab2JDNQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 09:16:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id EAE19BE1754;
+	Thu,  4 Oct 2012 09:16:25 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id J+Ug6M97JDUA; Thu,  4 Oct 2012 09:16:20 -0400 (EDT)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 4DC31BE15D5;
+	Thu,  4 Oct 2012 09:16:20 -0400 (EDT)
+In-Reply-To: <20121004083001.GA9745@elie.Belkin>
+X-Mailer: Zimbra 7.2.0_GA_2669 (ZimbraWebClient - GC22 (Mac)/7.2.0_GA_2669)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206974>
 
-Phil,
+----- Original Message -----
+> From: "Jonathan Nieder" <jrnieder@gmail.com>
+> Sent: Thursday, October 4, 2012 4:30:01 AM
+> Subject: Re: fa/remote-svn (Re: What's cooking in git.git (Oct 2012, #01; Tue, 2))
+> 
+> > > * fa/remote-svn (2012-09-19) 16 commits
+> > > - Add a test script for remote-svn
+> > > - remote-svn: add marks-file regeneration
+> > > - Add a svnrdump-simulator replaying a dump file for testing
+> > > - remote-svn: add incremental import
+> > > - remote-svn: Activate import/export-marks for fast-import
+> > > - Create a note for every imported commit containing svn metadata
+> > > - vcs-svn: add fast_export_note to create notes
+> > > - Allow reading svn dumps from files via file:// urls
+> > > - remote-svn, vcs-svn: Enable fetching to private refs
+> > > - When debug==1, start fast-import with "--stats" instead of
+> > > "--quiet"
+> > > - Add documentation for the 'bidi-import' capability of
+> > > remote-helpers
+> > > - Connect fast-import to the remote-helper via pipe, adding
+> > > 'bidi-import' capability
+> > > - Add argv_array_detach and argv_array_free_detached
+> > > - Add svndump_init_fd to allow reading dumps from arbitrary FDs
+> > > - Add git-remote-testsvn to Makefile
+> > > - Implement a remote helper for svn in C
+> > > (this branch is used by fa/vcs-svn.)
+> > >
+> > > A GSoC project.
+> > > Waiting for comments from mentors and stakeholders.
+> >
+> > I have reviewed this topic and am happy with the design and
+> > implementation.  I support this topic for inclusion.
+> 
+> Thanks!  I'll try moving the tests to the first patch and trying it
+> and hopefully send out a branch to pull tomorrow.
+> 
+> If I don't send anything tomorrow, that's probably a sign that I never
+> will, so since I like the goal of the series I guess it would be a
+> kind of implied ack.
 
-Thank you for your response. I do see the dilemma, but having
-no possible "unmodified" state is extremely inconvenient and,
-as shown, breaks basic git operations.
+I seemed to have missed the GSoC wrap up conversation... (links happily
+accepted)  Looking at the big picture (as much as I can remember) it
+seems to me the missing pieces now are branch mapping (lots of hard
+work), and possibly parts (all?) of the "push to SVN" functionality?
 
-I guess my thought is that if git doesn't allow CRs to be checked
-in, then it should strip the CRs when checking the file out, and
-consider that form (or both forms) as "unmodified". It just
-doesn't make sense to me that files are considered modified
-immediately after checkout.
+Thoughts?
 
-Any thoughts as to why this would not work?
-
-    ---John
-
-On 10/4/12 9:19 AM, Phil Hord wrote:
-> On Thu, Oct 4, 2012 at 12:35 AM, John Whitney <jjw@emsoftware.com> wrote:
->> I just ran into a problem that I'm pretty sure is a bug in git. Just read
->> and run this (fairly trivial) shell script to replicate.
-> When you added "* text=auto" in the .gitattributes file, you changed
-> what git considers to be the checked-in file content state for
-> test.txt.  The file contents in your working directory do not match
-> what git expects to check in.  Therefore, the file appears to be
-> different.  If you commit the file "changes" the problem goes away.
->
-> This is more of a workaround than an a satisfying explanation.  If you
-> then checkout the original HEAD commit (but with .gitattributes
-> present) you will see the problem appear again.  But in a sense,
-> adding .gitattributes this way is an act of foot-shooting.   The best
-> way forward may be to normalize your repository by removing all CR's
-> from files in history.  If you do not have this freedom, your best bet
-> may be to normalize the repo in the current commit and move on.
->
-> Others with more intimate insight into the CRLF journey in git's past
-> may have better advice.
->
-> Phil
->
-
-
--- 
-Great support for great users! Please visit http://emsoftware.com/support/ for our support policies, instructions and FAQs.
+Thanks,
+Stephen
