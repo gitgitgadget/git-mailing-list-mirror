@@ -1,84 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] log --grep: honor grep.patterntype etc.
- configuration variables
-Date: Thu, 04 Oct 2012 12:09:47 -0700
-Message-ID: <7v7gr6yryc.fsf@alter.siamese.dyndns.org>
-References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
- <1349314419-8397-1-git-send-email-gitster@pobox.com>
- <1349314419-8397-7-git-send-email-gitster@pobox.com>
- <20121004081732.GD31305@sigill.intra.peff.net>
- <7vehle18y5.fsf@alter.siamese.dyndns.org>
- <20121004180122.GB2623@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] pretty.c: Fix a compiler warning
+Date: Thu, 04 Oct 2012 19:06:37 +0100
+Message-ID: <506DD02D.2060809@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:35:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:35:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtgC-00033L-4m
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:14:04 +0200
+	id 1TJtez-00033L-2N
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755911Ab2JDTJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 15:09:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33088 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755781Ab2JDTJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 15:09:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF0AC9977;
-	Thu,  4 Oct 2012 15:09:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vz6bkVi4zadnVHx6Y8vswG9QZ/E=; b=OOxEic
-	t0D7fopWtxTb4Xw+KcNig2saxddSkjfs9eh5n/h1zOO4FEd/NWkt7B5bc+B1YgWT
-	rKUHMK0JNu8HfxT1IonFP1XndIKNOkcpAemHiNKOE6XhJ/3m2l+D0PEtmdHjtJ/O
-	/XdZnMkXFr8+vc1NucE+AO6we2l1U8MDtkJ68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fsP3H8uN0zplMn6Iyij0AJM4yYlGjYGq
-	iALKKa3Bq++scgUqjSOyd+1s9DcjFm7eXSr1lQG65YGs694i5vaNPpAbO5qS4qif
-	EeWIOVK91Oxv/Gk1Ff9Ft1k8h/Dph/CZ/AezPUMOd1zRW/rOsx0bEk1h+MPzVt5p
-	8YJymXkooTI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC5DE9976;
-	Thu,  4 Oct 2012 15:09:49 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2918D9973; Thu,  4 Oct 2012
- 15:09:49 -0400 (EDT)
-In-Reply-To: <20121004180122.GB2623@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 4 Oct 2012 14:01:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 116C1574-0E57-11E2-86FA-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751355Ab2JDSHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 14:07:40 -0400
+Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:34607 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750811Ab2JDSHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 14:07:39 -0400
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 3E65718C449;
+	Thu,  4 Oct 2012 19:07:37 +0100 (BST)
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 4DD3F18C436;	Thu,  4 Oct 2012 19:07:36 +0100 (BST)
+Received: from [193.237.126.196] (unknown [193.237.126.196])	by mdfmta005.tch.inty.net (Postfix) with ESMTP;	Thu,  4 Oct 2012 19:07:33 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20120713 Thunderbird/14.0
+X-MDF-HostID: 18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207012>
 
-Jeff King <peff@peff.net> writes:
 
-> On Thu, Oct 04, 2012 at 09:46:42AM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > Hmm. So I think this is a nice feature for some people, but I wonder if
->> > we would run into any plumbing compatibility issues. People do tend to
->> > use "log" as plumbing (since rev-list is not as capable). On the other
->> > hand, I'd think most internal uses of "log --grep" would be passing
->> > something along from the user, and the user would be happy to have it
->> > interpreted by their chosen set of rules.
->> 
->> This does make "rev-list --grep" aware of the configuration but at
->> the same time --basic-regexp and friends are also available to it.
->
-> Does it?
+In particular, gcc complains thus:
 
-Ah, it doesn't.
+        CC pretty.o
+    pretty.c: In function 'format_commit_item':
+    pretty.c:1282: warning: 'offset' might be used uninitialized in \
+        this function
 
-You can still say "rev-list --perl-regexp --grep=pcre" but that is
-not what 6/6 does.
+In order to suppress the warning we simply initialize the 'offset'
+variable in it's declarartion.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Nguyen,
+
+If you need to re-roll your 'nd/pretty-placeholder-with-color-option'
+branch, could you please squash this (or something like it) into the
+relevant commit. [commit f1da75df ("pretty: support padding placeholders,
+%< %> and %><", 23-09-2012). NOTE: this patch is on top of pu@a78f4186]
+
+An alternative solution looks like (this will probably break git-am):
+
+--- >8 ---
+diff --git a/pretty.c b/pretty.c
+index deeacf2..25d8eb2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1292,6 +1292,8 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 			break;
+ 		case flush_left_and_steal:
+ 		case no_flush: /* to make gcc happy */
++		default:
++			offset = 0;
+ 			break;
+ 		}
+ 		/*
+--- 8< ---
+
+... but this disables the "enumeration value 'no_flush' not handled in switch"
+type warnings.
+
+[Actually, I would not bother with a switch at all; I find this:
+
+	} else {
+		int sb_len = sb->len, offset = 0;
+		if (c->flush_type == flush_left)
+			offset = padding - len;
+		else if (c->flush_type == flush_both)
+			offset = (padding - len) / 2;
+		...
+
+... much more readable. But that's just me ... :-D ]
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ pretty.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pretty.c b/pretty.c
+index deeacf2..d26428b 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1279,7 +1279,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 		}
+ 		strbuf_addstr(sb, local_sb.buf);
+ 	} else {
+-		int sb_len = sb->len, offset;
++		int sb_len = sb->len, offset = 0;
+ 		switch (c->flush_type) {
+ 		case flush_left:
+ 			offset = padding - len;
+-- 
+1.7.12
