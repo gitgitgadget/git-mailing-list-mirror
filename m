@@ -1,94 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] peel_ref: check object type before loading
-Date: Thu, 4 Oct 2012 04:02:53 -0400
-Message-ID: <20121004080253.GC31325@sigill.intra.peff.net>
-References: <20121004075609.GA1355@sigill.intra.peff.net>
+From: =?UTF-8?Q?Romain_Vimont_=28=C2=AEom=29?= <rom@rom1v.com>
+Subject: Re: git commit --amen
+Date: Thu, 04 Oct 2012 16:38:22 +0200
+Message-ID: <ace0aa63d5e822c6cdd5d9a3d20bd675@rom1v.com>
+References: <0d559e3191a392841124d96870a67735@rom1v.com>
+ <CABURp0rbNZSOC_Jtxfjp+j3SQR=+r0pU6vOXvc0Jnth0UU9mDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:28:56 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:29:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUg-0001w8-Vr
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:11 +0200
+	id 1TJtZo-0001w8-FL
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932563Ab2JDIC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 04:02:58 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40484 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932089Ab2JDIC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 04:02:56 -0400
-Received: (qmail 17779 invoked by uid 107); 4 Oct 2012 08:03:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 04:03:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 04:02:53 -0400
-Content-Disposition: inline
-In-Reply-To: <20121004075609.GA1355@sigill.intra.peff.net>
+	id S965289Ab2JDOh4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 10:37:56 -0400
+Received: from rom1v.com ([78.236.177.60]:42990 "EHLO rom1v.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965229Ab2JDOhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 10:37:54 -0400
+Received: by rom1v.com (Postfix, from userid 33)
+	id 346511193; Thu,  4 Oct 2012 16:38:22 +0200 (CEST)
+X-PHP-Originating-Script: 1000:main.inc
+In-Reply-To: <CABURp0rbNZSOC_Jtxfjp+j3SQR=+r0pU6vOXvc0Jnth0UU9mDA@mail.gmail.com>
+X-Sender: rom@rom1v.com
+User-Agent: Roundcube Webmail/0.8.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207005>
 
-The point of peel_ref is to dereference tags; if the base
-object is not a tag, then we can return early without even
-loading the object into memory.
+Great !
+Thank you for your answer ;-)
 
-This patch accomplishes that by checking sha1_object_info
-for the type. For a packed object, we can get away with just
-looking in the pack index. For a loose object, we only need
-to inflate the first couple of header bytes.
+It does not seem to work with git diff:
+git diff --cache     #missing d
+git diff --cumulativ #missing e
 
-This is a bit of a gamble; if we do find a tag object, then
-we will end up loading the content anyway, and the extra
-lookup will have been wasteful. However, if it is not a tag
-object, then we save loading the object entirely. Depending
-on the ratio of non-tags to tags in the input, this can be a
-minor win or minor loss.
+=C2=AEom
 
-However, it does give us one potential major win: if a ref
-points to a large blob (e.g., via an unannotated tag), then
-we can avoid looking at it entirely.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-This optimization is the one that gave me the most pause. While
-upload-pack does call peel_ref on everything, the other callers all
-constrain themselves to refs/tags/. So for many projects, we will be
-calling it mostly on annotated tags, and it may be a very small net
-loss. But in practice, it will not matter for most projects with a sane
-number of normal tags, and saving even one accidental giant blob load
-can have a huge impact.
-
- refs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index f672ad9..02e47b1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1225,8 +1225,15 @@ fallback:
- 	}
- 
- fallback:
--	o = parse_object(base);
--	if (o && o->type == OBJ_TAG) {
-+	o = lookup_unknown_object(base);
-+	if (o->type == OBJ_NONE) {
-+		int type = sha1_object_info(base, NULL);
-+		if (type < 0)
-+			return -1;
-+		o->type = type;
-+	}
-+
-+	if (o->type == OBJ_TAG) {
- 		o = deref_tag_noverify(o);
- 		if (o) {
- 			hashcpy(sha1, o->sha1);
--- 
-1.8.0.rc0.10.g8dd2a92
+Le 2012-10-04 16:25, Phil Hord a =C3=A9crit=C2=A0:
+>> Is it normal that "git commit --amen" actually works ?
+>> (it does like --amend)
+>>
+>> version 1.7.10.4
+>
+> Yes.  From Documentation/technical/api-parse-options.txt:
+>
+>     * Long options may be 'abbreviated', as long as the abbreviation
+>       is unambiguous.
+>
+> Apparently since 2008-06-22.
+>
+> So 'git commit --am' also works.  But it should probably be avoided
+> because of its similarity to 'git commit -am'.
+>
+> Phil
