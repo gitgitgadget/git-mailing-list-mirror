@@ -1,102 +1,79 @@
-From: David Michael Barr <b@rr-dav.id.au>
-Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
-Date: Thu, 4 Oct 2012 18:17:52 +1000
-Message-ID: <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au>
-References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+From: Markus Trippelsdorf <markus@trippelsdorf.de>
+Subject: git pull takes ~8 seconds on up-to-date Linux git tree
+Date: Thu, 4 Oct 2012 16:14:54 +0200
+Message-ID: <20121004141454.GA246@x4>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:25:20 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:25:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUw-0001w8-QH
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:27 +0200
+	id 1TJtZJ-0001w8-My
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:06:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965325Ab2JDISA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 04:18:00 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:47665 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932554Ab2JDIR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 04:17:58 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so130564dak.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 01:17:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject:x-mailer
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-gm-message-state;
-        bh=mFgssH0uGdCPa1fxiijRpEME6K/f+JRSDgTIUA2CsyA=;
-        b=Y0WkHxAdecass8idalQgDTVWLhZSOIoyA/vUAYzOPw0F4UbT1Ynsqhu2oMZtaMmrs+
-         JzMy4TJtOkqiqbkyBRyX8k2E72J4HnPDL2vp87vSevNWfocW1AvycJOs7Vokzx5dPVl1
-         KiPw/6waWdMQgQhXKX8ddK4tCQ53ECM+xntF1ngUni1QsiGPw1QxaMFnJ0is4u7vy2Qv
-         lWqR2IKRc0zYS+G7xVDWOqIoNQeODYdHs5idp27eeh+4Oj9IFJC+PhJqazmI9inr+e4w
-         Uoq5o1/lrzWD66sGFdNhH8ix2A5ZKCtReyKgTgwcQr8wt8T9ZnUahCSCpWdFvKSAF/vX
-         yVxg==
-Received: by 10.66.72.132 with SMTP id d4mr11390731pav.61.1349338678308;
-        Thu, 04 Oct 2012 01:17:58 -0700 (PDT)
-Received: from [192.168.0.12] (c122-107-58-35.blktn5.nsw.optusnet.com.au. [122.107.58.35])
-        by mx.google.com with ESMTPS id wn1sm3981689pbc.57.2012.10.04.01.17.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 01:17:57 -0700 (PDT)
-In-Reply-To: <7vmx045umh.fsf@alter.siamese.dyndns.org>
-X-Mailer: sparrow 1.6.4 (build 1176)
+	id S964925Ab2JDOO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 10:14:57 -0400
+Received: from ud10.udmedia.de ([194.117.254.50]:42968 "EHLO
+	mail.ud10.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964793Ab2JDOO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 10:14:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud10.udmedia.de; h=
+	date:from:to:subject:message-id:mime-version:content-type; s=
+	beta; bh=/nBUbUz9FzVrtMC0wit4tDrogmJj6CR4XYP84hNdzC0=; b=HGDzpQz
+	z8a49K0nSm/Z4tKK4N2e++m4OQzrk/qJOQYxsy2J+ClqiJmjvbb+DqnxIUG+GzGQ
+	hpUQGD9n5vNALErsrl59iLcyf2PkG+NaBeZ06FINgdFxD1UZnekkft6yb1FWbx15
+	gwsPmn4bfmkR3M31unkUxUQ2681ZUDaSBqsQ=
+Received: (qmail 26289 invoked from network); 4 Oct 2012 16:14:54 +0200
+Received: from unknown (HELO x4) (ud10?360p3@91.65.91.246)
+  by mail.ud10.udmedia.de with ESMTPSA (DHE-RSA-AES256-SHA encrypted, authenticated); 4 Oct 2012 16:14:54 +0200
 Content-Disposition: inline
-X-Gm-Message-State: ALoCoQl7Y6pCQWNj4DycdXHWlid9q+EbyRfqCiJVVtCjtQWuGozeMql4Y3hECBr2/6eveKV9J+Ue
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206999>
 
+Hi,
 
-On Wednesday, 3 October 2012 at 9:20 AM, Junio C Hamano wrote: 
-> 
-> * fa/remote-svn (2012-09-19) 16 commits
-> - Add a test script for remote-svn
-> - remote-svn: add marks-file regeneration
-> - Add a svnrdump-simulator replaying a dump file for testing
-> - remote-svn: add incremental import
-> - remote-svn: Activate import/export-marks for fast-import
-> - Create a note for every imported commit containing svn metadata
-> - vcs-svn: add fast_export_note to create notes
-> - Allow reading svn dumps from files via file:// urls
-> - remote-svn, vcs-svn: Enable fetching to private refs
-> - When debug==1, start fast-import with "--stats" instead of "--quiet"
-> - Add documentation for the 'bidi-import' capability of remote-helpers
-> - Connect fast-import to the remote-helper via pipe, adding 'bidi-import' capability
-> - Add argv_array_detach and argv_array_free_detached
-> - Add svndump_init_fd to allow reading dumps from arbitrary FDs
-> - Add git-remote-testsvn to Makefile
-> - Implement a remote helper for svn in C
-> (this branch is used by fa/vcs-svn.)
-> 
-> A GSoC project.
-> Waiting for comments from mentors and stakeholders.
+with current trunk I get the following on an up-to-date Linux tree:
 
-I have reviewed this topic and am happy with the design and implementation.
-I support this topic for inclusion.
+markus@x4 linux % time git pull
+Already up-to-date.
+git pull  7.84s user 0.26s system 92% cpu 8.743 total
 
-Acked-by: David Michael Barr <b@rr-dav.id.au>
-> 
-> * fa/vcs-svn (2012-09-19) 4 commits
-> - vcs-svn: remove repo_tree
-> - vcs-svn/svndump: rewrite handle_node(), begin|end_revision()
-> - vcs-svn/svndump: restructure node_ctx, rev_ctx handling
-> - svndump: move struct definitions to .h
-> (this branch uses fa/remote-svn.)
-> 
-> A GSoC project.
-> Waiting for comments from mentors and stakeholders.
+git version 1.7.12 is much quicker:
 
-This follow-on topic I'm not so sure on, some of the design decisions make me uncomfortable and I need some convincing before I can get behind this topic. 
+markus@x4 linux % time git pull
+Already up-to-date.
+git pull  0.10s user 0.02s system 16% cpu 0.740 total
 
---
-David Michael Barr
+perf shows for trunk:
+
+    22.11%  git-merge  libz.so.1.2.7          [.] 0x00000000000073bc           
+    22.03%        git  libz.so.1.2.7          [.] 0x0000000000007338           
+    14.18%        git  libz.so.1.2.7          [.] inflate                      
+    13.70%  git-merge  libz.so.1.2.7          [.] inflate                      
+     9.18%        git  git                    [.] 0x00000000000ea391           
+     8.56%  git-merge  git-merge              [.] 0x00000000000f0598           
+     1.58%  git-merge  libz.so.1.2.7          [.] adler32                      
+     1.52%        git  libz.so.1.2.7          [.] adler32                      
+     0.59%        git  [kernel.kallsyms]      [k] clear_page_c
+
+and for 1.7.12:
+
+    39.29%        git  git                    [.] 0x00000000000b9fa8           
+    12.16%        git  libz.so.1.2.7          [.] inflate                      
+     8.67%        git  libz.so.1.2.7          [.] 0x000000000000a18e           
+     8.49%  git-merge  git-merge              [.] 0x00000000000efa15           
+     4.96%        git  libc-2.16.90.so        [.] memcpy@@GLIBC_2.14           
+     2.63%        git  libc-2.16.90.so        [.] _int_malloc                  
+     2.61%  git-merge  [kernel.kallsyms]      [k] clear_page_c                 
+     2.32%        git  [kernel.kallsyms]      [k] clear_page_c                 
+     2.04%        git  [kernel.kallsyms]      [k] filemap_fault                
+     1.87%  git-merge  libc-2.16.90.so        [.] memcpy@@GLIBC_2.14  
+
+-- 
+Markus
