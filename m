@@ -1,99 +1,83 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 0/6] wildmatch part 2
-Date: Thu,  4 Oct 2012 14:39:46 +0700
-Message-ID: <1349336392-1772-1-git-send-email-pclouds@gmail.com>
-References: <7v626q3hen.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
+Date: Thu, 04 Oct 2012 17:17:56 +0200
+Message-ID: <506DA8A4.5080105@alum.mit.edu>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org> <CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com> <7vbogj5sji.fsf@alter.siamese.dyndns.org> <506D5837.6020708@alum.mit.edu> <CACsJy8DUmjwrkDTePr_8zAU_gcm1kh11J4NVWANMXKsqA6Pb1A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:23:54 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:23:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUH-0001w8-96
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:01:45 +0200
+	id 1TJtaC-0001w8-OD
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:07:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410Ab2JDHkH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 03:40:07 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:37406 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754053Ab2JDHkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 03:40:05 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so327364pbb.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 00:40:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=X/VeSJd6QPsin8VrIJKjNvx3JBefs9yy8v746peoy88=;
-        b=YaQOCOLhyl6FkY3ieII99BX3zD+SUwBeFTWFz60ctiBL2iLn6UYH1Zvje2ikhYf7T4
-         ROY5nWRqIGpFJUwL7TrkMjxkG5bmjdoo1PVrSQfVTz+2JCP96B+1C2fILGwoIkX0kYDh
-         VvpwGXn3L+5xyyykGyXWys+Ui0jtJFs3mBwwHF3N6dLOyO7sJjzVcBBodi7eFolZgwUw
-         8/0k1aHdMqUmIIi9+Kwlm1Gw6AGUHnlsGNSUvxRNOqielzdXyRSQC5rAyyX38oYfb1bJ
-         ZZNiAP16pwWGhYSilO0Gcckkgbo2ey5oZUWFtF3pvig+TaGY8wIZypi/UQYPGNih2q0J
-         J6/w==
-Received: by 10.66.80.104 with SMTP id q8mr11207993pax.47.1349336405497;
-        Thu, 04 Oct 2012 00:40:05 -0700 (PDT)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id qb2sm3943461pbb.15.2012.10.04.00.40.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 00:40:04 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 04 Oct 2012 14:39:52 +0700
-X-Mailer: git-send-email 1.7.12.1.405.gb727dc9
-In-Reply-To: <7v626q3hen.fsf@alter.siamese.dyndns.org>
+	id S965624Ab2JDPSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 11:18:00 -0400
+Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:53688 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965609Ab2JDPR7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2012 11:17:59 -0400
+X-AuditID: 12074413-b7f786d0000008bb-16-506da8a6136c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EC.19.02235.6A8AD605; Thu,  4 Oct 2012 11:17:58 -0400 (EDT)
+Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q94FHuFD017005
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 4 Oct 2012 11:17:57 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
+In-Reply-To: <CACsJy8DUmjwrkDTePr_8zAU_gcm1kh11J4NVWANMXKsqA6Pb1A@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqLtsRW6AwZsOIYuuK91MFg29V5gt
+	uqe8ZXRg9tg56y67x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGf0fp3NWHCRvWLWhmmsDYzt
+	bF2MnBwSAiYS83pvMkLYYhIX7q0HinNxCAlcZpR42HGCGcI5xiTR2naavYuRg4NXQFuiZyIv
+	SAOLgKrEv2uPwZrZBHQlFvU0M4HYogIhEjMuT2YGsXkFBCVOznzCAmKLCOhInLxzBayeWcBa
+	YsXrw2D1wgJ2El9OvGKB2NXJJHF99mRWkASnQKDEzvO3mUD2MguoS6yfJwTRKy+x/e0c5gmM
+	ArOQrJiFUDULSdUCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCGBK7yD
+	cddJuUOMAhyMSjy82i05AUKsiWXFlbmHGCU5mJREeUOW5QYI8SXlp1RmJBZnxBeV5qQWH2KU
+	4GBWEuH1zgXK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeJmAESok
+	WJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rT+GJgpIKkeID2vlsOsre4IDEXKArR
+	eorRmOPEv7kPGTk+Ns57yCjEkpeflyolzvsGpFQApDSjNA9uESxlvWIUB/pbmFcE5B4eYLqD
+	m/cKaBUT0KriSLBVJYkIKakGxvkZondbeqxszlQnf+c25Jv3K6D0/bTaef+EZh350HD9acxB
+	1iTJi97GuTNcbVv3CZZOrKpskru8O7BgxX+xo/oKegyuD8sz45rTF8XxmDQsWXW3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206995>
 
-On Thu, Oct 4, 2012 at 1:01 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Perhaps the wildmatch code may not be what we want X-<.
+On 10/04/2012 01:46 PM, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Oct 4, 2012 at 4:34 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> As for the implementation, it is quite easy to textually convert a glob
+>> pattern, including "**" parts, into a regexp.
+> 
+> Or we could introduce regexp syntax as an alternative and let users
+> choose (and pay associated price).
 
-When I imported wildmatch I was hoping to make minimum changes to it.
-But wildmatch is probably the only practical way to support "**" even
-if we later need to change it the way we want. Other options are base
-our work on top of compat/fnmatch.c, which is an #ifdef spaghetti
-mess, or write a new fnmatch()-compatible function. Both unattractive
-to me.
+It seems like overkill to me.  For filenames, globs are usually adequate.
 
-Anyway, this is on top of nd/wildmatch, which makes "ab**cd" match
-full pathname.
+>> _filename_char_pattern = r'[^/]'
+>> _glob_patterns = [
+>>     ('?', _filename_char_pattern),
+>>     ('/**', r'(/.+)?'),
+>>     ('**/', r'(.+/)?'),
+>>     ('*', _filename_char_pattern + r'*'),
+>>     ]
+> 
+> I don't fully understand the rest (never been a big fan of python) but
+> what about bracket expressions like [!abc] and [:alnum:]?
 
-attr patches port .gitignore optimizations over. In long term, we
-should probably have a shared matching implementation instead. I tried
-that road once and failed so I won't attempt again any time soon. If
-we drop wildmatch, I can split these attr patches out as a separate
-series. It's a good thing to do anyway.
+You're right; I forgot that the code that I posted doesn't support brackets.
 
-The last patch just reflects that current "**" is not exactly what we
-want. I'm not sure if I could look into wildmatch.c and change it.
-Anybody is welcome to step up, of course.
+Michael
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
-  attr: remove the union in struct match_attr
-  attr: avoid strlen() on every match
-  attr: avoid searching for basename on every match
-  attr: more matching optimizations from .gitignore
-  gitignore: do not do basename match with patterns that have '**'
-  t3001: note about expected "**" behavior
-
- Documentation/gitignore.txt        |  10 ++--
- attr.c                             | 101 +++++++++++++++++++++++++++--=
---------
- dir.c                              |   6 +--
- dir.h                              |   2 +
- t/t0003-attributes.sh              |  16 ++++++
- t/t3001-ls-files-others-exclude.sh |  18 +++++++
- 6 files changed, 118 insertions(+), 35 deletions(-)
-
---=20
-1.7.12.1.405.gb727dc9
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
