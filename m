@@ -1,69 +1,77 @@
-From: Markus Trippelsdorf <markus@trippelsdorf.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Thu, 4 Oct 2012 21:26:21 +0200
-Message-ID: <20121004192621.GA244@x4>
+Date: Thu, 04 Oct 2012 13:44:06 -0700
+Message-ID: <7v8vbmx90p.fsf@alter.siamese.dyndns.org>
 References: <20121004141454.GA246@x4>
  <20121004184314.GA15389@sigill.intra.peff.net>
+ <7vhaqaxawh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:44:59 2012
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:45:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtgP-00033L-7d
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:14:17 +0200
+	id 1TJthr-00033L-7i
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756187Ab2JDT0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 15:26:24 -0400
-Received: from ud10.udmedia.de ([194.117.254.50]:39011 "EHLO
-	mail.ud10.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756105Ab2JDT0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 15:26:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud10.udmedia.de; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=beta; bh=XKcYF6IzRZM1+PRr1vs4cweNkW
-	JY3J529jLy+HfM5i0=; b=cm6fCyq+IYb7H60uW7T9zMLwoKLf95td/vTWS8+31K
-	rdiEifuFGNbkoddJcHp8QroSpJF+7U5UItWIr3zMtkgwZznB78TmN3+SKTZjaGTh
-	oupq6SXRiRdDQQIgkHjedKJFqnO5wWOC4ZDFGih9M4lAcYwLXlFRmO1FiiDJU7RF
-	E=
-Received: (qmail 12804 invoked from network); 4 Oct 2012 21:26:21 +0200
-Received: from unknown (HELO x4) (ud10?360p3@91.65.91.246)
-  by mail.ud10.udmedia.de with ESMTPSA (DHE-RSA-AES256-SHA encrypted, authenticated); 4 Oct 2012 21:26:21 +0200
-Content-Disposition: inline
-In-Reply-To: <20121004184314.GA15389@sigill.intra.peff.net>
+	id S1755669Ab2JDUoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 16:44:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48154 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754156Ab2JDUoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 16:44:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D21FF96EF;
+	Thu,  4 Oct 2012 16:44:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dVvcGsD9hElzuVwyQOG9MRuhXsw=; b=vNuta6
+	lbzLBWX3cO+p6OIftF5JRzs7MzWhNU53CjS4Yw/NMKok0B4Q0G2HwHTF7la4HvAD
+	Fgp9oZphyOnizmQVOPkuBrWxop4Bd593LxlVUU6ZJgNxwjiXqKUIqYXYvHMDsMFa
+	JMGuSuRXY8ggEbhPoo8zygT//1yAbY2MtvMW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qT64QOMvHOSt5fDZ3nTuR0UwYH+Gnquu
+	qQYmWtpPMxDwQI2La/p720lscuvdtFRTihRJ6eKc3xWm5Kmk8jSjypw/Thyf7voL
+	5JtzSzCPj0gP3ljziFq+P+bwOrzYFJuFaoddBpmpM/1dXx8oj08hH+6f60v4Leth
+	ZI0MGUZmu9E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD7CE96ED;
+	Thu,  4 Oct 2012 16:44:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35C0896EB; Thu,  4 Oct 2012
+ 16:44:08 -0400 (EDT)
+In-Reply-To: <7vhaqaxawh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 04 Oct 2012 13:03:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3E7AB91E-0E64-11E2-B7B4-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207023>
 
-On 2012.10.04 at 14:43 -0400, Jeff King wrote:
-> On Thu, Oct 04, 2012 at 04:14:54PM +0200, Markus Trippelsdorf wrote:
-> 
-> > with current trunk I get the following on an up-to-date Linux tree:
-> > 
-> > markus@x4 linux % time git pull
-> > Already up-to-date.
-> > git pull  7.84s user 0.26s system 92% cpu 8.743 total
-> > 
-> > git version 1.7.12 is much quicker:
-> > 
-> > markus@x4 linux % time git pull
-> > Already up-to-date.
-> > git pull  0.10s user 0.02s system 16% cpu 0.740 total
-> 
-> Yikes. I can easily reproduce here. Bisecting between master and
-> v1.7.12 gives a curious result: the slowdown first occurs with the merge
-> commit 34f5130 (Merge branch 'jc/merge-bases', 2012-09-11). But neither
-> of its parents is slow. I don't see anything obviously suspect in the
-> merge, though.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Actually commit f37d3c75 is responsible for this. When I revert it, the
-problem goes away.
+> It gets more curious, though.
+> ...
+> However.
+>
+> If I revert 5802f81 that updated the implementation of fmt-merge-msg
+> on top of 'master', *without* reverting 34f5130^2, I get ~4.5 seconds.
+> As we are doing an "Already up-to-date" pull, I thought there is no
+> need to call fmt-merge-msg in the first place?
+>
+> Which may indicate that "git merge" has been broken for a long time
+> and making unnecessary calls.
+>
+> Hrmmm...
 
--- 
-Markus
+Actually there is nothing curious about this.  "git pull" prepares
+the merge message before it calls "git rebase" or "git merge", and
+there is no fast-path that detects "Already up-to-date" in it.
