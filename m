@@ -1,83 +1,151 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
-Date: Thu, 04 Oct 2012 17:17:56 +0200
-Message-ID: <506DA8A4.5080105@alum.mit.edu>
-References: <7vmx045umh.fsf@alter.siamese.dyndns.org> <CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com> <7vbogj5sji.fsf@alter.siamese.dyndns.org> <506D5837.6020708@alum.mit.edu> <CACsJy8DUmjwrkDTePr_8zAU_gcm1kh11J4NVWANMXKsqA6Pb1A@mail.gmail.com>
+From: Angelo Borsotti <angelo.borsotti@gmail.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Thu, 4 Oct 2012 09:07:47 +0200
+Message-ID: <CAB9Jk9C4Y2LSzZW5Nkz=4f===8_gk4uAG4EKDxT17kUHu4VX1A@mail.gmail.com>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+	<506AA51E.9010209@viscovery.net>
+	<7vzk449449.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+	<7vhaqc7in6.fsf@alter.siamese.dyndns.org>
+	<CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+	<90464C79DA97415C9D66846A77ECAA4A@PhilipOakley>
+	<CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
+	<vpq626s6kwu.fsf@grenoble-inp.fr>
+	<CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
+	<vpqvcer4xvo.fsf@grenoble-inp.fr>
+	<CAB9Jk9BTCaV7RDx6_K+MKOeJTdOQPOwvnGM0UNxg9S8KMo4D4Q@mail.gmail.com>
+	<A75F75C4DE3C47C7AF43D39355C873F7@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:23:55 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:24:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtaC-0001w8-OD
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:07:53 +0200
+	id 1TJtTh-0001w8-C5
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965624Ab2JDPSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 11:18:00 -0400
-Received: from ALUM-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.19]:53688 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965609Ab2JDPR7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2012 11:17:59 -0400
-X-AuditID: 12074413-b7f786d0000008bb-16-506da8a6136c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EC.19.02235.6A8AD605; Thu,  4 Oct 2012 11:17:58 -0400 (EDT)
-Received: from [192.168.101.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id q94FHuFD017005
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 4 Oct 2012 11:17:57 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120827 Thunderbird/15.0
-In-Reply-To: <CACsJy8DUmjwrkDTePr_8zAU_gcm1kh11J4NVWANMXKsqA6Pb1A@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqLtsRW6AwZsOIYuuK91MFg29V5gt
-	uqe8ZXRg9tg56y67x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGf0fp3NWHCRvWLWhmmsDYzt
-	bF2MnBwSAiYS83pvMkLYYhIX7q0HinNxCAlcZpR42HGCGcI5xiTR2naavYuRg4NXQFuiZyIv
-	SAOLgKrEv2uPwZrZBHQlFvU0M4HYogIhEjMuT2YGsXkFBCVOznzCAmKLCOhInLxzBayeWcBa
-	YsXrw2D1wgJ2El9OvGKB2NXJJHF99mRWkASnQKDEzvO3mUD2MguoS6yfJwTRKy+x/e0c5gmM
-	ArOQrJiFUDULSdUCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCGBK7yD
-	cddJuUOMAhyMSjy82i05AUKsiWXFlbmHGCU5mJREeUOW5QYI8SXlp1RmJBZnxBeV5qQWH2KU
-	4GBWEuH1zgXK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeJmAESok
-	WJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rT+GJgpIKkeID2vlsOsre4IDEXKArR
-	eorRmOPEv7kPGTk+Ns57yCjEkpeflyolzvsGpFQApDSjNA9uESxlvWIUB/pbmFcE5B4eYLqD
-	m/cKaBUT0KriSLBVJYkIKakGxvkZondbeqxszlQnf+c25Jv3K6D0/bTaef+EZh350HD9acxB
-	1iTJi97GuTNcbVv3CZZOrKpskru8O7BgxX+xo/oKegyuD8sz45rTF8XxmDQsWXW3 
+	id S932317Ab2JDHHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 03:07:49 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:41779 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932094Ab2JDHHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 03:07:48 -0400
+Received: by mail-vc0-f174.google.com with SMTP id fo13so174247vcb.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 00:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=20cvlcsr+zTKEapJ/Dms0tsy2DwFEc8q/KN0wSNxctw=;
+        b=fty0oXLhnoxASIWK60Ri0wfnVE83ZuzAB5X1IuAfIR7NUC5QOpR2nsfoZAg1TYc3js
+         eloHWur4WwuzJHdNJiwHGZ5M1KppNK/kQK5bWY3bOJNI4J6U9el6SI6xJnphZfM9iqU1
+         X67Sve4DcAKf+zXPJ7m7Uk1vCBO95WwBbMPqtGg78+WWU4aMezEuM9GzxFRGJApBmCql
+         84fZS1kfunGRNJW2uZ0LYc1D3KqISxY5EOenCuLr4NhmsriqqljHvmEBHAGzCJBoNUP3
+         3+UPX7nWNhs0EcBxfBvXA1L2bOhW/ImBzm18wnXml2l35Q9v/cE+hjQURLSYZ6RxsShS
+         BzfQ==
+Received: by 10.52.90.147 with SMTP id bw19mr1886655vdb.17.1349334467397; Thu,
+ 04 Oct 2012 00:07:47 -0700 (PDT)
+Received: by 10.58.68.40 with HTTP; Thu, 4 Oct 2012 00:07:47 -0700 (PDT)
+In-Reply-To: <A75F75C4DE3C47C7AF43D39355C873F7@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206996>
 
-On 10/04/2012 01:46 PM, Nguyen Thai Ngoc Duy wrote:
-> On Thu, Oct 4, 2012 at 4:34 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> As for the implementation, it is quite easy to textually convert a glob
->> pattern, including "**" parts, into a regexp.
-> 
-> Or we could introduce regexp syntax as an alternative and let users
-> choose (and pay associated price).
+Hi Philip and all,
 
-It seems like overkill to me.  For filenames, globs are usually adequate.
+let me explain in full what is the problem that I tried to solve, and
+how along the way I stumbled in something that seems to me a git bug
+(at least a documentation one).
 
->> _filename_char_pattern = r'[^/]'
->> _glob_patterns = [
->>     ('?', _filename_char_pattern),
->>     ('/**', r'(/.+)?'),
->>     ('**/', r'(.+/)?'),
->>     ('*', _filename_char_pattern + r'*'),
->>     ]
-> 
-> I don't fully understand the rest (never been a big fan of python) but
-> what about bracket expressions like [!abc] and [:alnum:]?
+There is an R&D team developing software using a workflow that is
+similar to the integerator-manager one (the one described by Scott
+Chacon in chapter 5 of ProGit).
+Developers implement features using a local repository hosted on their
+workstations, and when finished push on a server; integrators pull
+from it and put all the contributions together.
+Since integrators rebuild always the software after merging all
+contribution, there is no need for the developers to push the
+binaries. Not pushing them speeds up uploading.
+In order to make life simpler and safer, scripts are provided to
+perform the pushing, pulling, etc. operations. So, most of the git
+commands shown below are actually run from within scripts.
+The development of each feature is done in a dedicated topic branch,
+and the commits done in it contain both the sources and the binaries
+(to allow to recover fully a previous snapshot when a later change
+broke a previous one). When pushing, there are these needs:
 
-You're right; I forgot that the code that I posted doesn't support brackets.
+      1. push the sources only
+      2. push only the last commit of the topic branch (not the whole history)
 
-Michael
+A note on point 2: the integrators are not interested in seeing all
+the commits that developers did while implementing their features.
+Having all the history makes their repositories cluttered.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+In order to avoid pushing all the history, orphan branches are used to
+parallel the topic ones.
+When pushing, first a commit is done on the topic branch, and then a
+snapshot is created in the parallel branch with the same files,
+binaries removed. The general case is:
+
+     source branch                              D'
+                                                        :
+     topic branch        A----B----C---D
+
+In the picture, the developer made 4 commits, and pushed the sources
+of the last one, D.
+A D' is created on the source branch (the relationship with D is
+indicated with a dotted line).
+The push script must cope with all the cases that may occur:
+
+     1.  the general one (the one in the previous figure)
+     2.  none of the commits in the topic branch with binaries (i.e. D
+and D' with the same tree)
+     3.  push done immediately after the first commit (A)
+     4.  a push done after another
+
+The script:
+
+     1.  creates the source branch if it does not exist yet (git
+checkout --orphan),
+          otherwise makes HEAD point to it
+     2.  sets a .git/info/exclude file that excludes the binaries
+     3.  removes the binaries from the index (git rm)
+     4.  creates a commit on the source branch
+     5.  pushes it
+     6.  restores the HEAD and index as they were before
+
+The operation that caused problems was nr. 4. In all the cases
+enlisted above, a git commit creates a brand new and unique commit
+because either it has a parent that is different from that of any
+other commit, or because its tree is different. All, except case nr 3
+when there are no binaries:
+
+     source branch         A'
+                                   :
+     topic branch        A
+
+In this case the parent is the same as that of A, i.e. none, and also
+the tree is the same. In order to try to force the creation of a brand
+new and unique commit even when the trees are the same --allow-empty
+has been used, but this did not avail because git commit creates a
+brand new one only when the seconds of the system clock have ticked
+before it.
+
+Some of you have suggested to create an A' that is not orphan in such
+a case, which is a workaround, and some others to change the message
+in it, and this is another. I choose the latter because it allows to
+keep the source branch orphan in all cases. So, there are workarounds,
+and the script has eventually been implemented and tested, but the
+unexpected, time-dependent behavior of git commit is there and someone
+could stumble on it sooner or later.
+
+-Angelo
