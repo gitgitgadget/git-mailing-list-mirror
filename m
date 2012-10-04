@@ -1,41 +1,58 @@
-From: Stefan Haller <stefan@haller-berlin.de>
-Subject: Re: [BUG] gitk: clicking on a connecting line produces can't read "cflist_top"
-Date: Thu,  4 Oct 2012 22:50:15 +0200
-Message-ID: <1349383817-14457-1-git-send-email-stefan@haller-berlin.de>
-References: <506956E1.1080303@viscovery.net>
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 01:06:10 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
+Date: Thu, 4 Oct 2012 14:43:14 -0400
+Message-ID: <20121004184314.GA15389@sigill.intra.peff.net>
+References: <20121004141454.GA246@x4>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Markus Trippelsdorf <markus@trippelsdorf.de>
+X-From: git-owner@vger.kernel.org Fri Oct 05 01:09:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJti2-00033L-Rd
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:59 +0200
+	id 1TJtft-00033L-So
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757197Ab2JDUur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 16:50:47 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:45011 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755856Ab2JDUuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 16:50:46 -0400
-Received: from localhost.localdomain (dslb-088-073-094-229.pools.arcor-ip.net [88.73.94.229])
-	by server90.greatnet.de (Postfix) with ESMTPA id 4056C2C4074;
-	Thu,  4 Oct 2012 22:50:45 +0200 (CEST)
-X-Mailer: git-send-email 1.8.0.rc0.36.gef0f079
-In-Reply-To: <506956E1.1080303@viscovery.net>
+	id S1753816Ab2JDSnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 14:43:17 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40886 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753783Ab2JDSnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 14:43:16 -0400
+Received: (qmail 23174 invoked by uid 107); 4 Oct 2012 18:43:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 14:43:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 14:43:14 -0400
+Content-Disposition: inline
+In-Reply-To: <20121004141454.GA246@x4>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207046>
 
-Sorry, I didn't realize that there is a display mode where the
-list of files is empty, not even showing a "Comments" entry.
+On Thu, Oct 04, 2012 at 04:14:54PM +0200, Markus Trippelsdorf wrote:
 
-Here's a patch that fixes it, plus another patch that is only related
-in so far as the bug that it fixes was introduced by the same commit.
+> with current trunk I get the following on an up-to-date Linux tree:
+> 
+> markus@x4 linux % time git pull
+> Already up-to-date.
+> git pull  7.84s user 0.26s system 92% cpu 8.743 total
+> 
+> git version 1.7.12 is much quicker:
+> 
+> markus@x4 linux % time git pull
+> Already up-to-date.
+> git pull  0.10s user 0.02s system 16% cpu 0.740 total
 
-[PATCH 1/2] gitk: Fix error message when clicking on a connecting line
-[PATCH 2/2] gitk: When searching, only highlight files when in Patch mode
+Yikes. I can easily reproduce here. Bisecting between master and
+v1.7.12 gives a curious result: the slowdown first occurs with the merge
+commit 34f5130 (Merge branch 'jc/merge-bases', 2012-09-11). But neither
+of its parents is slow. I don't see anything obviously suspect in the
+merge, though.
+
+-Peff
