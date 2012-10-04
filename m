@@ -1,57 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] optimizing upload-pack ref peeling
-Date: Thu, 4 Oct 2012 04:04:38 -0400
-Message-ID: <20121004080438.GA31305@sigill.intra.peff.net>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net>
- <CACBZZX4Grya=FbL9XEh_EK6KVsFZYWCuHveV2QevcBwr+iYTMQ@mail.gmail.com>
- <20121003212007.GC4484@sigill.intra.peff.net>
- <CACBZZX6yMfeOx6x4iy8beq5niy9HvPq0c8ND5jZkoiJWAgVjfw@mail.gmail.com>
- <20121003231529.GA11618@sigill.intra.peff.net>
- <CACBZZX5Sm++Wjyoue-qk7TjwxUM3QihXfWGtEHhOq=VtkgvNbQ@mail.gmail.com>
- <20121004075609.GA1355@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
+Date: Thu, 04 Oct 2012 09:27:05 -0700
+Message-ID: <7vwqz619uu.fsf@alter.siamese.dyndns.org>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+ <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:14:50 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: David Michael Barr <b@rr-dav.id.au>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:16:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtUk-0001w8-Qu
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:02:15 +0200
+	id 1TJtbN-00033L-D0
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571Ab2JDIEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 04:04:42 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40492 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932089Ab2JDIEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 04:04:41 -0400
-Received: (qmail 17844 invoked by uid 107); 4 Oct 2012 08:05:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 04:05:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 04:04:38 -0400
-Content-Disposition: inline
-In-Reply-To: <20121004075609.GA1355@sigill.intra.peff.net>
+	id S933427Ab2JDQ1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 12:27:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48797 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933406Ab2JDQ1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 12:27:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CC2B8521;
+	Thu,  4 Oct 2012 12:27:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DNAL15UdIWzf+0licFA5tRdWjXo=; b=em5VUY
+	RKicLX7eA1yTb/88Q9d4fkQZUM98V7JdUda+ujvx6HDfTmYepfNUPYhWZed5/tA3
+	wvpDMDo1v9qqdlHVuau50T3XNPMptFaTLibSFaMVOpoO29p1sx9SX4Bs7eDZIR3K
+	MKVUoCK3cB8He7+hnVfQRCaYIbLt3f5AnxEdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YlHWl4yNmMBK+yzwIAXC6d00/3x7u8xw
+	zLcvR7t70AekfXMAkkjAZ/HxylUlGUU52bj3UE/dJ03SueIGgohUABrD4RuwQpVu
+	S4SQbjVjlZ29OYcK7nL1d9pgrUulR5khO8i5/YO+MPzeMf4h7iIL7f+Y+x6TvYGN
+	O74PscGHPyY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDE598520;
+	Thu,  4 Oct 2012 12:27:07 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63F80851F; Thu,  4 Oct 2012
+ 12:27:07 -0400 (EDT)
+In-Reply-To: <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au> (David Michael
+ Barr's message of "Thu, 4 Oct 2012 18:17:52 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 56F9B6DA-0E40-11E2-85F6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206984>
 
-On Thu, Oct 04, 2012 at 03:56:09AM -0400, Jeff King wrote:
+David Michael Barr <b@rr-dav.id.au> writes:
 
->   [1/4]: peel_ref: use faster deref_tag_noverify
->   [2/4]: peel_ref: do not return a null sha1
->   [3/4]: peel_ref: check object type before loading
->   [4/4]: upload-pack: use peel_ref for ref advertisements
+> On Wednesday, 3 October 2012 at 9:20 AM, Junio C Hamano wrote: 
+>> 
+>> * fa/remote-svn (2012-09-19) 16 commits
+>> ...
+>> 
+>> A GSoC project.
+>> Waiting for comments from mentors and stakeholders.
+>
+> I have reviewed this topic and am happy with the design and implementation.
+> I support this topic for inclusion.
+>
+> Acked-by: David Michael Barr <b@rr-dav.id.au>
+>> 
+>> * fa/vcs-svn (2012-09-19) 4 commits
+>> ...
+>
+> This follow-on topic I'm not so sure on, some of the design
+> decisions make me uncomfortable and I need some convincing before
+> I can get behind this topic.
 
-I included my own timings in the final one, but my "pathological" case
-at the end is a somewhat made-up attempt to emulate what you described.
-Can you double-check that this series still has a nice impact on your
-real-world repository?
-
--Peff
+Thanks for a feedback.
