@@ -1,82 +1,126 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Ignore on commit
-Date: Thu, 04 Oct 2012 22:06:40 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <506DEC50.7090402@obry.net>
-References: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
-Reply-To: pascal@obry.net
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git commit --amen
+Date: Thu, 04 Oct 2012 10:13:49 -0700
+Message-ID: <7v1uhe17oy.fsf@alter.siamese.dyndns.org>
+References: <0d559e3191a392841124d96870a67735@rom1v.com>
+ <CABURp0rbNZSOC_Jtxfjp+j3SQR=+r0pU6vOXvc0Jnth0UU9mDA@mail.gmail.com>
+ <7va9w218ou.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marco Craveiro <marco.craveiro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:50:37 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Romain_Vimont_=28=C2=AEom=29?= <rom@rom1v.com>,
+	git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:51:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJthK-00033L-DL
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:14 +0200
+	id 1TJte6-00033L-3n
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641Ab2JDUGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 16:06:45 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:48924 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883Ab2JDUGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 16:06:45 -0400
-Received: by mail-we0-f174.google.com with SMTP id t9so577142wey.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 13:06:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:reply-to:organization:user-agent:mime-version
-         :to:cc:subject:references:in-reply-to:x-enigmail-version
-         :content-type:content-transfer-encoding:x-gm-message-state;
-        bh=ExOqn3Zsw0ydwok8+LCX93DY3Us1Z2Wm011d+IYGAkc=;
-        b=MEyNvgKOvlkfcJqCX5zSVXIUOk+Cq8gar1dDGRLfHDBw+H4tHFT31EH66dt9gGIR6j
-         JMJHu4s73UHeDS0HLt3+af6uXyyUYiou20uIUCO50Wq9F/xOATaqO2zIJdms7L0wDeyj
-         NjD2OpUIZbLcQCJdbKUH8qi/un6U7bkDv3QDz2UaeNB7dxPi6c6YnA6h9e7V5ZLatf4i
-         aAF0sUvjKKhW4zsiRO4XwF4+B8lyX7jkTShV9vbwjHi2PAR1I9j2TWHf3tM7jEOYrNJ4
-         uccwR6WmZ38Qbt6ZAPVDBdCZ6lRpb8kEY7EOyody2pVobsQJZmsdZw3lkfaop/jF1QNx
-         ecSA==
-Received: by 10.216.71.82 with SMTP id q60mr4166529wed.64.1349381203687;
-        Thu, 04 Oct 2012 13:06:43 -0700 (PDT)
-Received: from [192.168.0.100] (APuteaux-651-1-239-26.w82-120.abo.wanadoo.fr. [82.120.66.26])
-        by mx.google.com with ESMTPS id v3sm34067558wiw.7.2012.10.04.13.06.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 13:06:42 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
-X-Enigmail-Version: 1.4
-X-Gm-Message-State: ALoCoQnDytzAmarIN4p995YPX55nc2HOu6gULIEiz60CpPRxe6SXyx+YvMHQLoBuC3tg+0MmlzD/
+	id S1753689Ab2JDRNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 13:13:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39154 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752971Ab2JDRNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 13:13:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1A1932E;
+	Thu,  4 Oct 2012 13:13:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+NRJXSQaj18B4XLa4jdHBFOsP8E=; b=Pnn8YH
+	ABOE3gPelVOqShoMFI1+IPn0IAl2bmSbeq6uAavv3bXmraZ+s8gJMj+TyNRCJhQf
+	SeDbqgN5vMxyQ6L1uQV6yliDyocORGG0ppRmgECY15c0LEOLN+yFi94hC7v3g32p
+	tyWNBFrwI0zKCF3oulLgW4S3DKPTiJDknxR4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WAQBgKpC+9zk2FmrwLfUuCWKm4fHhSJs
+	ygr3UVcsTbxjG6500MuR+6TYQPzPSsS+GquOOojm9/IreYMHrOPZFZI9pT5LSKoJ
+	dTl8AIbbYQPM4yXN3aEqhQQuD1UtEo9+8N9DTd1fWBOcm1FoVxlT5ObtsLmu//vE
+	LZwZIVCXoo0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AD99932C;
+	Thu,  4 Oct 2012 13:13:51 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73F019328; Thu,  4 Oct 2012
+ 13:13:50 -0400 (EDT)
+In-Reply-To: <7va9w218ou.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 04 Oct 2012 09:52:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DDB78A98-0E46-11E2-BD7D-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207030>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm not sure to follow everything... But looks like:
+> Phil Hord <phil.hord@gmail.com> writes:
+>
+>>> Is it normal that "git commit --amen" actually works ?
+>>> (it does like --amend)
+>>>
+>>> version 1.7.10.4
+>>
+>> Yes.  From Documentation/technical/api-parse-options.txt:
+>>
+>>     * Long options may be 'abbreviated', as long as the abbreviation
+>>       is unambiguous.
+>>
+>> Apparently since 2008-06-22.
+>
+> Notice "technical/api-" part; that is a _wrong_ documentation page
+> to quote to end users.
+>
+> Instead quote from "git help cli".
+>
+>        From the git 1.5.4 series and further, many git commands (not
+>        all of them at the time of the writing though) come with an
+>        enhanced option parser.
+>
+>> So 'git commit --am' also works.  But it should probably be avoided
+>> because of its similarity to 'git commit -am'.
+>
+> Yes, in general, you should avoid relying on shortened form
+> working.  Git 2.4 may add an option "--amen" that has totally
+> different meaning.
 
-   $ git add -p
+Perhaps a patch along this line might not hurt.
 
-or
+ Documentation/gitcli.txt | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-   $ git add -i
-
-should do what you want, no?
-
-You select the hunks to commit, let over the "hacks" and then
-
-   $ git commit
-
--- 
-
-  Pascal Obry /  Magny Les Hameaux (78)
-
-  The best way to travel is by means of imagination
-
-  http://v2p.fr.eu.org
-  http://www.obry.net
-
-  gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+diff --git i/Documentation/gitcli.txt w/Documentation/gitcli.txt
+index f6ba90c..3bc1500 100644
+--- i/Documentation/gitcli.txt
++++ w/Documentation/gitcli.txt
+@@ -93,7 +93,7 @@ ENHANCED OPTION PARSER
+ From the git 1.5.4 series and further, many git commands (not all of them at the
+ time of the writing though) come with an enhanced option parser.
+ 
+-Here is an exhaustive list of the facilities provided by this option parser.
++Here is a list of the facilities provided by this option parser.
+ 
+ 
+ Magic Options
+@@ -137,6 +137,16 @@ options. This means that you can for example use `git rm -rf` or
+ `git clean -fdx`.
+ 
+ 
++Abbreviating long options
++~~~~~~~~~~~~~~~~~~~~~~~~~
++Commands that support the enhanced option parser accepts unique
++prefix of a long option as if it is fully spelled out, but use this
++with a caution.  For example, `git commit --amen` behaves as if you
++typed `git commit --amend`, but that is true only until a later version
++of Git introduces another option that shares the same prefix,
++e.g `git commit --amenity" option.
++
++
+ Separating argument from the option
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ You can write the mandatory option parameter to an option as a separate
