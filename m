@@ -1,106 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] peel_ref: do not return a null sha1
-Date: Thu, 04 Oct 2012 11:32:13 -0700
-Message-ID: <7vfw5uytoy.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] peel_ref: check object type before loading
+Date: Thu, 4 Oct 2012 17:59:33 -0400
+Message-ID: <20121004215933.GA17358@sigill.intra.peff.net>
 References: <20121004075609.GA1355@sigill.intra.peff.net>
- <20121004080019.GB31325@sigill.intra.peff.net>
+ <20121004080253.GC31325@sigill.intra.peff.net>
+ <7vbogiys47.fsf@alter.siamese.dyndns.org>
+ <20121004194150.GA13955@sigill.intra.peff.net>
+ <7vd30yx94r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:58:55 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:59:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtfp-00033L-7W
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:13:41 +0200
+	id 1TJtjz-0005yD-MN
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483Ab2JDScS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 14:32:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47621 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750828Ab2JDScR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 14:32:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CECB8E4F;
-	Thu,  4 Oct 2012 14:32:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MkrnEKRCA/RpHjqEugLqOqHwYT0=; b=CBKZOP
-	aYoVYV64MjnfwXOheHGVJuVO7oT87OIU7il+QC0KYATqgQbnpPMcvqGYJ7AyNvYT
-	y0nxYWu36MgI1Q9UF316NlagGm9hjzzCsNXL8iQe8/XNnjRY9P9pK9P3uruus/0l
-	f04HAoZwBCsJj0B+MqwvUeCC8ajNB8Ds/i9vU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EgzsUIxZwqLX0jBtmX5/qYH7NDUtLCp1
-	dtuHQQVO2kJPEOdYitxi3gUsoEPMHESbXMguQqiPqIUsGI2WkWaray3yBlbDfFi7
-	n5zMKu/ENTR6A46IfxYNtW3yq8nRLb8TpP3c8MVb/LQipobmmpxi/Vwu2jfeQpMJ
-	4/UoYa/cMl0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29CA58E4E;
-	Thu,  4 Oct 2012 14:32:16 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B13F68E4D; Thu,  4 Oct 2012
- 14:32:14 -0400 (EDT)
-In-Reply-To: <20121004080019.GB31325@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 4 Oct 2012 04:00:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D1AB47FC-0E51-11E2-8EA6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753047Ab2JDV7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 17:59:37 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:41028 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752672Ab2JDV7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 17:59:35 -0400
+Received: (qmail 25335 invoked by uid 107); 4 Oct 2012 22:00:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 18:00:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 17:59:33 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd30yx94r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207040>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Oct 04, 2012 at 01:41:40PM -0700, Junio C Hamano wrote:
 
-> The idea of the peel_ref function is to dereference tag
-> objects recursively until we hit a non-tag, and return the
-> sha1. Conceptually, it should return 0 if it is successful
-> (and fill in the sha1), or -1 if there was nothing to peel.
->
-> However, the current behavior is much more confusing. For a
-> regular loose ref, the behavior is as described above. But
-> there is an optimization to reuse the peeled-ref value for a
-> ref that came from a packed-refs file. If we have such a
-> ref, we return its peeled value, even if that peeled value
-> is null (indicating that we know the ref definitely does
-> _not_ peel).
->
-> It might seem like such information is useful to the caller,
-> who would then know not to bother loading and trying to peel
-> the object. Except that they should not bother loading and
-> trying to peel the object _anyway_, because that fallback is
-> already handled by peel_ref. In other words, the whole point
-> of calling this function is that it handles those details
-> internally, and you either get a sha1, or you know that it
-> is not peel-able.
->
-> This patch catches the null sha1 case internally and
-> converts it into a -1 return value (i.e., there is nothing
-> to peel). This simplifies callers, which do not need to
-> bother checking themselves.
->
-> Two callers are worth noting:
->
->   - in pack-objects, a comment indicates that there is a
->     difference between non-peelable tags and unannotated
->     tags. But that is not the case (before or after this
->     patch). Whether you get a null sha1 has to do with
->     internal details of how peel_ref operated.
+> Jeff King <peff@peff.net> writes:
+> 
+> > [1] One thing I've been toying is with "external alternates"; dumping
+> >     your large objects in some realtively slow data store (e.g., a
+> >     RESTful HTTP service). You could cache and cheaply query a list of
+> >     "sha1 / size / type" for each object from the store, but getting the
+> >     actual objects would be much more expensive. But again, it would
+> >     depend on whether you would actually have such a store directly
+> >     accessible by a ref.
+> 
+> Yeah, that actually has been another thing we were discussing
+> locally, without coming to something concrete enough to present to
+> the list.
+> 
+> The basic idea is to mark such paths with attributes, and use a
+> variant of smudge/clean filter that is _not_ a filter (as we do not
+> want to have the interface to this external helper to be "we feed
+> the whole big blob to you").  Instead, these smudgex/cleanx things
+> work on a pathname.
 
-Yeah, this is what I was wondering while reviewing [1/4].
+There are a few ways that smudge/clean filters are not up to the task
+currently. One is definitely the efficiency of the interface.
 
-We traditionally said both HEAD^0 and HEAD^0^0 peel to HEAD, but
-this at least at the internal API level redefines them to "these do
-not peel at all and is a failure".  In other words, peel_ref(ref,
-sha1) that returns 0 is a way to see if ref points at a real tag
-object, and if the function returns non-zero, the caller cannot tell
-if the failure is because it was a valid commit or a corrupt object.
+Another is that this distinction is not "canonical in-repo versus
+working tree representation".  Yes, part of it is about what you store
+in the repo versus what you checkout. But you may also want to diff or
+merge these large items. Almost certainly not with the internal text
+tools, but you might want to feed the _real_ blobs (not the fake
+surrogates) to external tools, and smudge and clean are not a natural
+fit for that. If you teach the external tools to dereference the
+surrogates, it would work. I think you could also get around it by
+giving these smudgex/cleanx filters slightly different semantics.
 
-The check !is_null_sha1(peeled) always looked fishy to me.  Good
-riddance.
+But the thing I most dislike about a solution like this is that the
+representation pollutes git's data model. That is, git stores a blob
+representing the surrogate, and that is the official sha1 that goes into
+the tree. That means your surrogate decisions are locked into history
+forever, which has a few implications:
+
+  1. If I store a surrogate and you store the real blob, we do not get
+     the same tree (and in fact get conflicts).
+
+  2. Once I store a blob, I can never revise my decision not to store
+     that blob in every subsequent clone without rewriting history. I
+     can convert it into a surrogate, but old versions of that blob will
+     always be required for object connectivity.
+
+  3. If your surrogate contains more than just the sha1 (e.g., if it
+     points to http://cdn.example.com), your history is forever tied to
+     that (and you are stuck with configuring run-time redirects if your
+     URL changes).
+
+My thinking was to make it all happen below the git object level, at the
+same level as packs and loose objects. This is more invasive to git, but
+much more flexible.
+
+The basic implementation is pretty straightforward. You configure one or
+more helpers which have two operations: provide a list of sha1s, and
+fetch a single sha1. Whenever an object lookup fails in the packs and
+loose objects, we check the helper lists.  We can cache the lists in
+some mmap'able format similar to a pack index, so we can do quick checks
+for object existence, type, and size. And if the lookup actually needs
+the object, we fetch and cache (where the caching policy would all be
+determined by the external script).
+
+The real challenges are:
+
+  1. It is expensive to meet normal reachability guarantees. So you
+     would not want a remote to delta against a blob that you _could_
+     get, but do not have.
+
+  2. You need to tell remotes that you can access some objects in a
+     different way, and not to send them as part of an object transfer.
+
+  3. Many commands need to be taught not to load objects carelessly. For
+     the most part, we do well with this because it's already expensive
+     to load large objects from disk. I think we've got most of them on
+     the diff code path, but I wouldn't be surprised if one or two more
+     crop up. Fsck would need to learn to handle these objects
+     differently.
+
+Item (3) is really just about trying it and seeing where the problems
+come up. For items (1) and (2), we'd need a protocol extension.
+
+Having the receiver send something like "I have these blobs from my external
+source, don't send them" is a nice idea, but it doesn't scale well (you
+have to advertise the whole list for each transfer, because the receiver
+doesn't know which ones are actually referenced).
+
+Having the receiver say "I have access to external database $FOO, go check
+the list of objects there and don't send anything it has" unnecessarily
+ties the sender to the external database (i.e., they have to implement
+$FOO for it to work).
+
+Something simple like "do not send blobs larger than N bytes, nor make
+deltas against such blobs" would work. It does mean that your value of N
+really needs to match up with what goes into your external database, but
+I don't think that will be a huge problem in practice (after the
+transfer you can do a consistency check that between the fetched objects
+and the external db, you have everything).
+
+> [details on smudgex/cleanx]
+
+All of what you wrote seems very sane; I think the real question is
+whether this should be "above" or "below" git's user-visible data model
+layer.
+
+-Peff
