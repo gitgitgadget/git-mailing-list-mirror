@@ -1,66 +1,94 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Ignore on commit
-Date: Fri, 5 Oct 2012 11:00:01 +1000
-Message-ID: <CAH5451mpJw4+noUF+FkZJS+Y2oq2ThFeG7wSOCdbVaMQPNgUJA@mail.gmail.com>
-References: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
- <506DEC50.7090402@obry.net> <CAKRNd4wbT_boRyFOOL_95FBW4ws8Zzz2ubVCfXuRSevzPdhW9g@mail.gmail.com>
+From: Geoffrey De Smet <ge0ffrey.spam@gmail.com>
+Subject: Re: git reset respect remote repo (make git idiot proof)
+Date: Thu, 04 Oct 2012 10:56:04 +0200
+Message-ID: <k4jiv4$5k9$1@ger.gmane.org>
+References: <k4hj91$4tt$4@ger.gmane.org> <m2bogja46v.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: pascal@obry.net, git@vger.kernel.org
-To: Marco Craveiro <marco.craveiro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 03:06:27 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 03:31:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJwN0-00037c-Mj
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 03:06:27 +0200
+	id 1TJwkI-0001Jn-85
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 03:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400Ab2JEBAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 21:00:23 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:46555 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751887Ab2JEBAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 21:00:23 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hq12so5122375wib.1
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 18:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kcdb/fb+RjC+s/nR5son2XpBpsSSbKjSPneSJljML08=;
-        b=mANKM+Vds2EtdVpdeR+/xZsGD5fGNm2fVDinPAglGOF5TJZNxp3A7XSrtIEPRrNmQE
-         oDpf8VUja+E20ZjG4hTHVCw+dx+GJltxP3+QY+6fSQmGglLLgpKMAfYd1yK2hOK+dEFo
-         ilavcB/cT8l7ZtQn4Uj/WnEMFaG9U/gezrOOYnsh4xsy7dQFbljD+Jv44e/ot0XEfOZP
-         MhEM+bocr70wwB9EjLZf0h8e+H/vopotcFTuBFK0RnMc6gXK+m3/foXqb9CMrWxTyuyw
-         P1vHv1wFLTfQcE68A979UpeFM5BIgu+c5E/1uJVMIKldFhYMzT34y/0PM32quIlOkwVw
-         181A==
-Received: by 10.216.201.156 with SMTP id b28mr4414728weo.4.1349398821706; Thu,
- 04 Oct 2012 18:00:21 -0700 (PDT)
-Received: by 10.216.231.169 with HTTP; Thu, 4 Oct 2012 18:00:01 -0700 (PDT)
-In-Reply-To: <CAKRNd4wbT_boRyFOOL_95FBW4ws8Zzz2ubVCfXuRSevzPdhW9g@mail.gmail.com>
+	id S1755994Ab2JEBaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 21:30:17 -0400
+Received: from plane.gmane.org ([80.91.229.3]:41155 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755671Ab2JEBaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 21:30:16 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1TJwjw-0000xo-32
+	for git@vger.kernel.org; Fri, 05 Oct 2012 03:30:08 +0200
+Received: from 99.1-241-81.adsl-dyn.isp.belgacom.be ([81.241.1.99])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 03:30:07 +0200
+Received: from ge0ffrey.spam by 99.1-241-81.adsl-dyn.isp.belgacom.be with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 03:30:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 99.1-241-81.adsl-dyn.isp.belgacom.be
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
+In-Reply-To: <m2bogja46v.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207061>
 
-On 5 October 2012 07:20, Marco Craveiro <marco.craveiro@gmail.com> wrote:
-> ...
-> Similar but not quite; the idea is that you know that there is some
-> code (I'm just talking about files here, so lets ignore hunks for the
-> moment) which is normally checked in but for a period of time you want
-> it ignored. So you don't want it git ignored but at the same time you
-> don't want to see these files in the list of modified files.
 
-What is the reason git ignore is no good in this case? Is it simply
-that you can't see the ignored files in git status, or is it that
-adding and removing entries to .gitignore is too cumbersome? If it's
-the latter you could probably put together a simple shell wrapper to
-automate the task, as otherwise it seems like git ignore does what you
-need.
+Op 03-10-12 18:52, Andreas Schwab schreef:
+> Geoffrey De Smet <ge0ffrey.spam@gmail.com> writes:
+>
+>> Suppose this case:
+>>
+>> git clone .../blessedRepo.git
+>> // do changes
+>> git commit -m"bad1"
+>> // do changes
+>> git commit -m"bad2"
+>> git reset --hard HEAD^4 // Why does it let me do this?
+> Because there is nothing wrong with that.
+>
+>> // I just "broke" my local repository, because if I continue
+> No you didn't.
+>
+>> // do changes
+>> git commit -m"good1"
+>> git push origin master // fails because the history disrespects the remote
+>> repo's history
+> You may just as well want to push it to a different branch (or even a
+> different repository).
+In most cases (probably more than 90%?), the developer will want to get 
+his changes into the remote branch where it came from.
 
-Regards,
+What do you think of the -respectRepository flag idea? If you want to 
+push to different branches/repo's you can not use it, turn it off or 
+-force those commands.
 
-Andrew Ardill
+A remote repository can be optionally flagged with -respectRepository.
+That means that git should prevent the user from making local changes in 
+the history that will prevent a normal push to that remote repository.
+
+If a remote repository is flagged as such, git keeps track of a 
+"pointOfNoReset" commit:
+Every time a branch merges or rebases with a remote repository, it's 
+flags the last commit of that remote repository as the pointOfNoReset 
+commit.
+If local branches merge or rebase with a local branch, the 
+pointOfNoReset commit is transitively applied (only the last one wins).
+git reset will fail to reset beyond the pointOfNoReset commit, unless 
+forced.
+git rebase and other git commands will also fail accordingly, unless forced.
+
+>
+> Andreas.
+>
