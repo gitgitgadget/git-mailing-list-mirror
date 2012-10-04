@@ -1,135 +1,82 @@
-From: Alexander Kostikov <alex.kostikov@gmail.com>
-Subject: Re: Rebase doesn't restore branch pointer back on out of memory
-Date: Thu, 4 Oct 2012 14:09:03 -0700
-Message-ID: <CAGAhT3k=T0SGngMQkbXHqNfh-=LUb71C7CSrWXP2wsAgc8Tb8A@mail.gmail.com>
-References: <CAGAhT3kofdaQEye9QHnvFhAAzoQqZtR7d5UzbxU+zEdkAHVfuQ@mail.gmail.com>
-	<506CB3B5.808@gmail.com>
-	<CAGAhT3mVn-W5P-n_YeafZ_7bntkJGArJ3o6+dA5GO_H44=KHFg@mail.gmail.com>
-	<506DA7AE.50005@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
+Date: Thu, 04 Oct 2012 12:36:38 -0700
+Message-ID: <7vy5jmxc55.fsf@alter.siamese.dyndns.org>
+References: <20121004141454.GA246@x4>
+ <20121004184314.GA15389@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Andrew Wong <andrew.kw.w.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:54:46 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:55:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtiC-00033L-5r
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:16:08 +0200
+	id 1TJtgS-00033L-6d
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576Ab2JDVJG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 17:09:06 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:38966 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757543Ab2JDVJE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2012 17:09:04 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so998930oag.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 14:09:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=iCKFcSE8ndfw7Rw3c5XmZCvJnWmYqihzcYjF4IwUWR0=;
-        b=bOt7K5oOh7aZ9DsmvR9dA6Hwmy8Xx6WLtCVt6SLQJZxqP9C6aJss3C5nVcTAUwSRT5
-         S+SvGNTJ/CJZzdV1+f/HLSEldw7k/E6dXBi79YQ3eQmWtouxgBNdY+a8hwoGLXjnoBv7
-         6/IqL+vdc4DYYOmpa70cI2CwKssxxOAzzzVcB+mMEoH6kEaDikVXe3JtnT14wVn7bnPA
-         Ua9+DE9BqbSQgA2uJUR5U5VHq6BEAl1nrpEvMfWD/vLQSooZyzG1r7VhwvDwgFIKyeQ8
-         8kPcVp2m/KtmDEiQGQcz0sLYNee+MTUmQsaDHexkrTik6Kqtq8ro4M7fDPEyYFHkhidb
-         uT+g==
-Received: by 10.60.11.67 with SMTP id o3mr5639643oeb.43.1349384943331; Thu, 04
- Oct 2012 14:09:03 -0700 (PDT)
-Received: by 10.182.86.164 with HTTP; Thu, 4 Oct 2012 14:09:03 -0700 (PDT)
-In-Reply-To: <506DA7AE.50005@gmail.com>
+	id S1756617Ab2JDTgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 15:36:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46292 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756432Ab2JDTgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 15:36:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A3BD8306;
+	Thu,  4 Oct 2012 15:36:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kIXzsxLbtrr8S9TVZI/Iiey2/e0=; b=dmaUlD
+	VcFOJ+PzUfI9jwh4rTTBYkg/bzDKWnjYmn92287QhYy3y0brjQ/XBC7cY/20ZDJU
+	QVqjfuX368Nlutg98+Yjiv1WiFj4yxOF6o6mQg61g5WNxULqUpBx4XoIdFAV5ohx
+	5UkvDZjxfW8+i4Lwkd9Mrf0E1/B9UbIr1zkj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PBa4hiTPH9vp3NHybUCNR/OdlU6tSbO2
+	lJdir2sKgpjpYPFil7pR3ObEzdwU468gGvzWLxPa6BC0E8jEcsoQOTRRTK26dgXw
+	rGHP/cT4nih23LzHgBwy44QL108rmAN25d3q8rEWO9gIm/0fr8+AdZ4KcYfQ4UtI
+	eLqF9bR/5AU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5378D8305;
+	Thu,  4 Oct 2012 15:36:41 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C076E8303; Thu,  4 Oct 2012
+ 15:36:40 -0400 (EDT)
+In-Reply-To: <20121004184314.GA15389@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 4 Oct 2012 14:43:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D2058678-0E5A-11E2-B5FD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207032>
 
-> Having the
-> last page of that output should give us enough context as to where it=
-'s
-> failing.
-=46ull script is uploaded to
-https://dl.dropbox.com/u/10828740/rebase.log Here is the last page:
+Jeff King <peff@peff.net> writes:
 
------------------------------------[code]
-if test -s "$dotest"/rewritten; then
-    git notes copy --for-rewrite=3Drebase < "$dotest"/rewritten
-    if test -x "$GIT_DIR"/hooks/post-rewrite; then
-        "$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
-    fi
-fi
-
-rm -fr "$dotest"
-git gc --auto
-git rev-parse HEAD
-
-ret=3D$?
-test 0 !=3D $ret -a -d "$state_dir" && write_basic_state
-exit $ret
------------------------------------[/code]
-
-
-> It'd also be interesting to see if "rebase -i" will also workaround t=
-he
-> issue.
-
-rebase -i fails with different error:
-
-=BB git rebase -i master rebase_debug
-fatal: Out of memory, malloc failed (tried to allocate 458753 bytes)
-
-Do you need verbose log for it as well?
-
--- Alexander
-
-
-On Thu, Oct 4, 2012 at 8:13 AM, Andrew Wong <andrew.kw.w.lists@gmail.co=
-m> wrote:
-> On 10/03/2012 06:35 PM, Alexander Kostikov wrote:
->>>
->>> That allows you can go back to the pre-rebase state by
->>> "rebase --abort".
->>
->> rebase --abort command were not available. I guess rebase file was n=
-ot
->> created.
+> On Thu, Oct 04, 2012 at 04:14:54PM +0200, Markus Trippelsdorf wrote:
 >
-> I meant "rebase --abort" would be available *if* the error was caught=
- by
-> "rebase". But in your case, "rebase" is probably dying somewhere and =
-the
-> error was not caught, causing "rebase" to think that everything compl=
-eted
-> successfully, and go ahead to update the branch.
+>> with current trunk I get the following on an up-to-date Linux tree:
+>> 
+>> markus@x4 linux % time git pull
+>> Already up-to-date.
+>> git pull  7.84s user 0.26s system 92% cpu 8.743 total
+>> 
+>> git version 1.7.12 is much quicker:
+>> 
+>> markus@x4 linux % time git pull
+>> Already up-to-date.
+>> git pull  0.10s user 0.02s system 16% cpu 0.740 total
 >
->
->> Is there a way to include some log verbose mode to detect where
->> exactly error happens?
->
-> There isn't any built-in to git itself. But one way to get more info =
-is
-> running the rebase command this way:
->     env SHELLOPTS=3D"verbose" git rebase <your arguments>
->
-> That should print out every shell command that rebase executes. Havin=
-g the
-> last page of that output should give us enough context as to where it=
-'s
-> failing.
->
-> Just a wild guess: rebase is probably failing at the "format-patch" c=
-ommand.
-> It'd also be interesting to see if "rebase -i" will also workaround t=
-he
-> issue. But like you said, there's no way set "-i" or "-m" as the defa=
-ult.
+> Yikes. I can easily reproduce here. Bisecting between master and
+> v1.7.12 gives a curious result: the slowdown first occurs with the merge
+> commit 34f5130 (Merge branch 'jc/merge-bases', 2012-09-11). But neither
+> of its parents is slow. I don't see anything obviously suspect in the
+> merge, though.
 
-
-
---=20
-Alexander Kostikov
+Thanks; we probably should revert the merge before the final and
+handle the fallout later, unless we know why the integrated whole is
+slower than its parts.
