@@ -1,80 +1,84 @@
-From: Marco Craveiro <marco.craveiro@gmail.com>
-Subject: Ignore on commit
-Date: Thu, 4 Oct 2012 17:45:50 +0100
-Message-ID: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] log --grep: honor grep.patterntype etc.
+ configuration variables
+Date: Thu, 04 Oct 2012 12:09:47 -0700
+Message-ID: <7v7gr6yryc.fsf@alter.siamese.dyndns.org>
+References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
+ <1349314419-8397-1-git-send-email-gitster@pobox.com>
+ <1349314419-8397-7-git-send-email-gitster@pobox.com>
+ <20121004081732.GD31305@sigill.intra.peff.net>
+ <7vehle18y5.fsf@alter.siamese.dyndns.org>
+ <20121004180122.GB2623@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:35:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:35:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtdj-00033L-92
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:11:31 +0200
+	id 1TJtgC-00033L-4m
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:14:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454Ab2JDQpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 12:45:51 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:36103 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932263Ab2JDQpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 12:45:50 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so681196oag.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 09:45:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=oh7scFGvtO6C9dXPketE6uHgVt+KKFrizh8Z+mwd39A=;
-        b=fX5snJ7HZtuC96HQUShIuaCf2NaCQW65AG28RiV6/n8XpObzubsa0eWvXL7FZRAvxg
-         /Ct79RcUIf3qu+FsMHfce8BnAU7AuiMLVPpnyl5GJ8vRdb3Z7IeLPiYMCv6lvfnEDguK
-         3TiPw4mi6oU0jm8t+QWnVehhgpWDi+uTgDRIFXfIyUL560mba1ucOzghBViOwizf2WUA
-         wz4Znrv8mnrl8nHoF6Dqi+tLQUg/U2AUNG5/wX0+ihrh9rvNgT9BQeSBzzJuYTxixMpK
-         MYHX8jCBJzGhslCsFX4MNEUvZmOMs0mxOwaMybmmHZpsEDlTIhxiqjoURrhhO9BcIPos
-         PBww==
-Received: by 10.182.218.37 with SMTP id pd5mr4856918obc.24.1349369150120; Thu,
- 04 Oct 2012 09:45:50 -0700 (PDT)
-Received: by 10.76.102.20 with HTTP; Thu, 4 Oct 2012 09:45:50 -0700 (PDT)
+	id S1755911Ab2JDTJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 15:09:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33088 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755781Ab2JDTJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 15:09:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF0AC9977;
+	Thu,  4 Oct 2012 15:09:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vz6bkVi4zadnVHx6Y8vswG9QZ/E=; b=OOxEic
+	t0D7fopWtxTb4Xw+KcNig2saxddSkjfs9eh5n/h1zOO4FEd/NWkt7B5bc+B1YgWT
+	rKUHMK0JNu8HfxT1IonFP1XndIKNOkcpAemHiNKOE6XhJ/3m2l+D0PEtmdHjtJ/O
+	/XdZnMkXFr8+vc1NucE+AO6we2l1U8MDtkJ68=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fsP3H8uN0zplMn6Iyij0AJM4yYlGjYGq
+	iALKKa3Bq++scgUqjSOyd+1s9DcjFm7eXSr1lQG65YGs694i5vaNPpAbO5qS4qif
+	EeWIOVK91Oxv/Gk1Ff9Ft1k8h/Dph/CZ/AezPUMOd1zRW/rOsx0bEk1h+MPzVt5p
+	8YJymXkooTI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC5DE9976;
+	Thu,  4 Oct 2012 15:09:49 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2918D9973; Thu,  4 Oct 2012
+ 15:09:49 -0400 (EDT)
+In-Reply-To: <20121004180122.GB2623@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 4 Oct 2012 14:01:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 116C1574-0E57-11E2-86FA-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207011>
 
-Hello gitters,
+Jeff King <peff@peff.net> writes:
 
-One of the very (very) few features I miss in svn is "ignore on
-commit" (or, more generally, changelists). I'm not sure if this has
-been discussed in the past - google failed me a bit due to spurious
-matches - but I personally find it quite useful. The feature is
-described here [1] (and graphically, here [2]).
+> On Thu, Oct 04, 2012 at 09:46:42AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > Hmm. So I think this is a nice feature for some people, but I wonder if
+>> > we would run into any plumbing compatibility issues. People do tend to
+>> > use "log" as plumbing (since rev-list is not as capable). On the other
+>> > hand, I'd think most internal uses of "log --grep" would be passing
+>> > something along from the user, and the user would be happy to have it
+>> > interpreted by their chosen set of rules.
+>> 
+>> This does make "rev-list --grep" aware of the configuration but at
+>> the same time --basic-regexp and friends are also available to it.
+>
+> Does it?
 
-The gist of it is, one can mark certain files as "ignore on commit"
-and they get placed on a "special list" which shows up on status.
-These lists are effectively a sub-division of modified (but not
-staged). Up till now I have found the staging area to be quite
-sufficient, but recently I hit a use case where I was modifying a
-large number of files; some modifications were hacks required to get
-the build to work but were not meant to ever get checked in, most
-other files had real work. In cases like this its really useful to
-mark the hacked files as "ignore on commit", so that a) we don't lose
-track of them (as one would with git ignore, or with [4]) but b) we
-won't check them in by mistake.
+Ah, it doesn't.
 
-I found some tips on how to survive without change lists ([3], [4])
-but they are a bit more cumbersome. Has this feature been discussed?
-
-Thanks a lot for an amazing piece of software, and thanks for your time.
-
-Cheers
-
-Marco
--- 
-So young, and already so unknown -- Pauli
-
-blog: http://mcraveiro.blogspot.com
-
-[1] http://svnbook.red-bean.com/en/1.6/svn.ref.svn.c.changelist.html
-[2] http://blog.baljeetsingh.net/2009/02/tips-tricks-svn-ignore-on-commit.html
-[3] http://stackoverflow.com/questions/10606809/git-equivalence-of-svn-changelist
-[4] http://gitready.com/intermediate/2009/02/18/temporarily-ignoring-files.html
+You can still say "rev-list --perl-regexp --grep=pcre" but that is
+not what 6/6 does.
