@@ -1,126 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git commit --amen
-Date: Thu, 04 Oct 2012 10:13:49 -0700
-Message-ID: <7v1uhe17oy.fsf@alter.siamese.dyndns.org>
-References: <0d559e3191a392841124d96870a67735@rom1v.com>
- <CABURp0rbNZSOC_Jtxfjp+j3SQR=+r0pU6vOXvc0Jnth0UU9mDA@mail.gmail.com>
- <7va9w218ou.fsf@alter.siamese.dyndns.org>
+From: Alexander Kostikov <alex.kostikov@gmail.com>
+Subject: Re: Rebase doesn't restore branch pointer back on out of memory
+Date: Thu, 4 Oct 2012 14:09:03 -0700
+Message-ID: <CAGAhT3k=T0SGngMQkbXHqNfh-=LUb71C7CSrWXP2wsAgc8Tb8A@mail.gmail.com>
+References: <CAGAhT3kofdaQEye9QHnvFhAAzoQqZtR7d5UzbxU+zEdkAHVfuQ@mail.gmail.com>
+	<506CB3B5.808@gmail.com>
+	<CAGAhT3mVn-W5P-n_YeafZ_7bntkJGArJ3o6+dA5GO_H44=KHFg@mail.gmail.com>
+	<506DA7AE.50005@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Romain_Vimont_=28=C2=AEom=29?= <rom@rom1v.com>,
-	git@vger.kernel.org
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:51:21 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Andrew Wong <andrew.kw.w.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:54:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJte6-00033L-3n
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:11:54 +0200
+	id 1TJtiC-00033L-5r
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689Ab2JDRNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 13:13:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39154 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752971Ab2JDRNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 13:13:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D1A1932E;
-	Thu,  4 Oct 2012 13:13:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+NRJXSQaj18B4XLa4jdHBFOsP8E=; b=Pnn8YH
-	ABOE3gPelVOqShoMFI1+IPn0IAl2bmSbeq6uAavv3bXmraZ+s8gJMj+TyNRCJhQf
-	SeDbqgN5vMxyQ6L1uQV6yliDyocORGG0ppRmgECY15c0LEOLN+yFi94hC7v3g32p
-	tyWNBFrwI0zKCF3oulLgW4S3DKPTiJDknxR4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WAQBgKpC+9zk2FmrwLfUuCWKm4fHhSJs
-	ygr3UVcsTbxjG6500MuR+6TYQPzPSsS+GquOOojm9/IreYMHrOPZFZI9pT5LSKoJ
-	dTl8AIbbYQPM4yXN3aEqhQQuD1UtEo9+8N9DTd1fWBOcm1FoVxlT5ObtsLmu//vE
-	LZwZIVCXoo0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AD99932C;
-	Thu,  4 Oct 2012 13:13:51 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73F019328; Thu,  4 Oct 2012
- 13:13:50 -0400 (EDT)
-In-Reply-To: <7va9w218ou.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 04 Oct 2012 09:52:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DDB78A98-0E46-11E2-BD7D-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757576Ab2JDVJG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 17:09:06 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:38966 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757543Ab2JDVJE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2012 17:09:04 -0400
+Received: by mail-oa0-f46.google.com with SMTP id h16so998930oag.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 14:09:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=iCKFcSE8ndfw7Rw3c5XmZCvJnWmYqihzcYjF4IwUWR0=;
+        b=bOt7K5oOh7aZ9DsmvR9dA6Hwmy8Xx6WLtCVt6SLQJZxqP9C6aJss3C5nVcTAUwSRT5
+         S+SvGNTJ/CJZzdV1+f/HLSEldw7k/E6dXBi79YQ3eQmWtouxgBNdY+a8hwoGLXjnoBv7
+         6/IqL+vdc4DYYOmpa70cI2CwKssxxOAzzzVcB+mMEoH6kEaDikVXe3JtnT14wVn7bnPA
+         Ua9+DE9BqbSQgA2uJUR5U5VHq6BEAl1nrpEvMfWD/vLQSooZyzG1r7VhwvDwgFIKyeQ8
+         8kPcVp2m/KtmDEiQGQcz0sLYNee+MTUmQsaDHexkrTik6Kqtq8ro4M7fDPEyYFHkhidb
+         uT+g==
+Received: by 10.60.11.67 with SMTP id o3mr5639643oeb.43.1349384943331; Thu, 04
+ Oct 2012 14:09:03 -0700 (PDT)
+Received: by 10.182.86.164 with HTTP; Thu, 4 Oct 2012 14:09:03 -0700 (PDT)
+In-Reply-To: <506DA7AE.50005@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207031>
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Having the
+> last page of that output should give us enough context as to where it=
+'s
+> failing.
+=46ull script is uploaded to
+https://dl.dropbox.com/u/10828740/rebase.log Here is the last page:
 
-> Phil Hord <phil.hord@gmail.com> writes:
->
->>> Is it normal that "git commit --amen" actually works ?
->>> (it does like --amend)
+-----------------------------------[code]
+if test -s "$dotest"/rewritten; then
+    git notes copy --for-rewrite=3Drebase < "$dotest"/rewritten
+    if test -x "$GIT_DIR"/hooks/post-rewrite; then
+        "$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
+    fi
+fi
+
+rm -fr "$dotest"
+git gc --auto
+git rev-parse HEAD
+
+ret=3D$?
+test 0 !=3D $ret -a -d "$state_dir" && write_basic_state
+exit $ret
+-----------------------------------[/code]
+
+
+> It'd also be interesting to see if "rebase -i" will also workaround t=
+he
+> issue.
+
+rebase -i fails with different error:
+
+=BB git rebase -i master rebase_debug
+fatal: Out of memory, malloc failed (tried to allocate 458753 bytes)
+
+Do you need verbose log for it as well?
+
+-- Alexander
+
+
+On Thu, Oct 4, 2012 at 8:13 AM, Andrew Wong <andrew.kw.w.lists@gmail.co=
+m> wrote:
+> On 10/03/2012 06:35 PM, Alexander Kostikov wrote:
 >>>
->>> version 1.7.10.4
+>>> That allows you can go back to the pre-rebase state by
+>>> "rebase --abort".
 >>
->> Yes.  From Documentation/technical/api-parse-options.txt:
->>
->>     * Long options may be 'abbreviated', as long as the abbreviation
->>       is unambiguous.
->>
->> Apparently since 2008-06-22.
+>> rebase --abort command were not available. I guess rebase file was n=
+ot
+>> created.
 >
-> Notice "technical/api-" part; that is a _wrong_ documentation page
-> to quote to end users.
+> I meant "rebase --abort" would be available *if* the error was caught=
+ by
+> "rebase". But in your case, "rebase" is probably dying somewhere and =
+the
+> error was not caught, causing "rebase" to think that everything compl=
+eted
+> successfully, and go ahead to update the branch.
 >
-> Instead quote from "git help cli".
 >
->        From the git 1.5.4 series and further, many git commands (not
->        all of them at the time of the writing though) come with an
->        enhanced option parser.
+>> Is there a way to include some log verbose mode to detect where
+>> exactly error happens?
 >
->> So 'git commit --am' also works.  But it should probably be avoided
->> because of its similarity to 'git commit -am'.
+> There isn't any built-in to git itself. But one way to get more info =
+is
+> running the rebase command this way:
+>     env SHELLOPTS=3D"verbose" git rebase <your arguments>
 >
-> Yes, in general, you should avoid relying on shortened form
-> working.  Git 2.4 may add an option "--amen" that has totally
-> different meaning.
+> That should print out every shell command that rebase executes. Havin=
+g the
+> last page of that output should give us enough context as to where it=
+'s
+> failing.
+>
+> Just a wild guess: rebase is probably failing at the "format-patch" c=
+ommand.
+> It'd also be interesting to see if "rebase -i" will also workaround t=
+he
+> issue. But like you said, there's no way set "-i" or "-m" as the defa=
+ult.
 
-Perhaps a patch along this line might not hurt.
 
- Documentation/gitcli.txt | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git i/Documentation/gitcli.txt w/Documentation/gitcli.txt
-index f6ba90c..3bc1500 100644
---- i/Documentation/gitcli.txt
-+++ w/Documentation/gitcli.txt
-@@ -93,7 +93,7 @@ ENHANCED OPTION PARSER
- From the git 1.5.4 series and further, many git commands (not all of them at the
- time of the writing though) come with an enhanced option parser.
- 
--Here is an exhaustive list of the facilities provided by this option parser.
-+Here is a list of the facilities provided by this option parser.
- 
- 
- Magic Options
-@@ -137,6 +137,16 @@ options. This means that you can for example use `git rm -rf` or
- `git clean -fdx`.
- 
- 
-+Abbreviating long options
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+Commands that support the enhanced option parser accepts unique
-+prefix of a long option as if it is fully spelled out, but use this
-+with a caution.  For example, `git commit --amen` behaves as if you
-+typed `git commit --amend`, but that is true only until a later version
-+of Git introduces another option that shares the same prefix,
-+e.g `git commit --amenity" option.
-+
-+
- Separating argument from the option
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- You can write the mandatory option parameter to an option as a separate
+--=20
+Alexander Kostikov
