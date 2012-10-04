@@ -1,85 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Thu, 04 Oct 2012 14:28:11 -0700
-Message-ID: <7vvceqvses.fsf@alter.siamese.dyndns.org>
-References: <20121004141454.GA246@x4>
- <20121004184314.GA15389@sigill.intra.peff.net>
- <7v391ux7im.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Super long branch names corrupt `.git/config`
+Date: Thu, 4 Oct 2012 14:29:46 -0400
+Message-ID: <20121004182946.GC2623@sigill.intra.peff.net>
+References: <CAAmo=1BU5N8nbonEb1aZEx=-e8VexwsE74pjm_56dXmCDK+K6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:55:38 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org
+To: Ben Olive <sionide21@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:56:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtj5-00033L-8A
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:17:03 +0200
+	id 1TJtfn-00033L-Ml
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946471Ab2JDV2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 17:28:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38432 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946409Ab2JDV2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 17:28:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF6A78310;
-	Thu,  4 Oct 2012 17:28:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6y2pVFQqDg/HLH6U7NDhaXCJ7M8=; b=mqHEev
-	G/RAoMGRbAFGsEM6QS5b5kcE7KyTOD+LRXCHK1+xYbScjt2HMlJ5nrAmEA31+0BO
-	LEUBtcB2cgH1qXaag6JrJFyYgFMMz/UBqnH5BSmhxwZTww0d7953PPd77KunG25X
-	gQenXDZ5ofs1TrT3dtq1qApgoxUkQm3j+LGJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mVkXiITY8/lR128fDr5I+sNHeLthYB8s
-	cGlTG020vyfMjLFBqR2UCrjcbDs448EO5vsPCpztGnbFje5I196mieOMqieBsgGl
-	8KRHg7ZjVHC4pToHy+IEjZ435G/94/uJCRJKQd26AtLTihZQMhlkq0eymZdPSNEU
-	yvVgnvuJSrQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB05F830F;
-	Thu,  4 Oct 2012 17:28:13 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27044830E; Thu,  4 Oct 2012
- 17:28:13 -0400 (EDT)
-In-Reply-To: <7v391ux7im.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 04 Oct 2012 14:16:33 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 66FC76C4-0E6A-11E2-B080-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751943Ab2JDS3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 14:29:49 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:40871 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750828Ab2JDS3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 14:29:48 -0400
+Received: (qmail 22893 invoked by uid 107); 4 Oct 2012 18:30:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Oct 2012 14:30:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2012 14:29:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CAAmo=1BU5N8nbonEb1aZEx=-e8VexwsE74pjm_56dXmCDK+K6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207037>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Oct 04, 2012 at 01:15:25PM -0400, Ben Olive wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->> On Thu, Oct 04, 2012 at 04:14:54PM +0200, Markus Trippelsdorf wrote:
->>
->>> with current trunk I get the following on an up-to-date Linux tree:
->>> 
->>> markus@x4 linux % time git pull
->>> Already up-to-date.
->>> git pull  7.84s user 0.26s system 92% cpu 8.743 total
->>> 
->>> git version 1.7.12 is much quicker:
->>> 
->>> markus@x4 linux % time git pull
->>> Already up-to-date.
->>> git pull  0.10s user 0.02s system 16% cpu 0.740 total
->>
->> Yikes. I can easily reproduce here. Bisecting between master and
->> v1.7.12 gives a curious result: the slowdown first occurs with the merge
->> commit 34f5130 (Merge branch 'jc/merge-bases', 2012-09-11). But neither
->> of its parents is slow. I don't see anything obviously suspect in the
->> merge, though.
->
-> I think the following is likely to be the correct solution to this.
+> My `.git/config` can be corrupted if I try to get a local branch with
+> an extremely long name to track a remote branch.
+> 
+> Here is a (contrived) example to reproduce the issue:
+> 
+> 
+>     $ cd /tmp
+>     $ mkdir buggyrepo otherrepo
+>     $ cd buggyrepo/ && git init && cd -
+>     $ cd otherrepo/ && git init && cd -
+>     $ cd buggyrepo/
+>     $ echo foo > MYFILE
+>     $ git add MYFILE && git commit -m "Initial"
+>     $ git remote add otherrepo ../otherrepo/
+>     $ git checkout -b `ruby -e "puts 'a'*200"`
+>     $ git push -u otherrepo `ruby -e "puts 'a'*200"`
+>     fatal: bad config file line 11 in .git/config
+>     $ git status
+>     fatal: bad config file line 11 in .git/config
+> 
+> Workaround available: Just delete the offending entry.
+> 
+> I tested this with 1.7.12.2
 
-No, it is not.  Sorry for the noise.
+This is fixed by Ben Walton's 0971e99 (Remove the hard coded length
+limit on variable names in config files, 2012-09-30). Not sure yet
+whether it will make it into v1.8.0 or not.
+
+However, note that the tracking config is only one limit to branch name
+length. On many filesystems, you are limited to 256 bytes (or some other
+number) per path component, and writing to "refs/heads/aaa{256}.lock"
+will fail.
+
+-Peff
