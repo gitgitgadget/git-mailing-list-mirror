@@ -1,78 +1,131 @@
-From: John Whitney <jjw@emsoftware.com>
-Subject: Bug report
-Date: Wed, 03 Oct 2012 23:35:58 -0500
-Message-ID: <506D122E.2050404@emsoftware.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010400030205080904010502"
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 5/6] log: pass rev_info to git_log_config()
+Date: Wed,  3 Oct 2012 18:33:38 -0700
+Message-ID: <1349314419-8397-6-git-send-email-gitster@pobox.com>
+References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
+ <1349314419-8397-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:05:46 2012
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:06:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtOW-0001DP-Ll
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:55:49 +0200
+	id 1TJtN2-0001DP-C0
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:54:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970Ab2JDEy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 00:54:28 -0400
-Received: from mail.emsoftware.com ([76.75.201.49]:51010 "EHLO emsoftware.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752813Ab2JDEy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 00:54:28 -0400
-X-Greylist: delayed 1103 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Oct 2012 00:54:27 EDT
-Received: from Johns-MacBook-Pro.local (ppp-70-253-75-224.dsl.austtx.swbell.net [70.253.75.224])
-	by emsoftware.com (Postfix) with ESMTP id D10FA1AF4A3C;
-	Thu,  4 Oct 2012 00:39:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+	id S1755382Ab2JDBd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 21:33:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52932 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755143Ab2JDBdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 21:33:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F240807C
+	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=inGo
+	aO5JuVyYQD/pPmGzbzpgRzo=; b=htXLcpiyfd4qHAolUHO763dHkMrAHW927PIy
+	GCkKVcGal346ShGfstfPK1u+T59RXR5948n6XAPSmorwiHXV+sZSx/SBHd/YhF1Z
+	+gp+Y9P8E02OhTNiRy7TkG32XUAT8a91Lum9gz/khvP3Yc7uh4pqBO8N+SJTFQzc
+	YjCtqpk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=LpR9Tr
+	uGPU7w3Ce6+gQdOifHDFxd/Bmy5wnwlfEBU/D/4cjwsPt+ONUECdtliJK1NgTfuw
+	Jm2rlT5sjOrgOkrI3I4mEiSCjfr+Btjw3KdD6zFQvNsvvD/D8LlrfUw3tZvraQ9P
+	JOtrXClLE2qyzqenzKSufz1a9OFsnrmBX458k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D3E1807B
+	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:52 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AFB98070 for
+ <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:50 -0400 (EDT)
+X-Mailer: git-send-email 1.8.0.rc0.57.g712528f
+In-Reply-To: <1349314419-8397-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 8CACA9E0-0DC3-11E2-B1FE-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206963>
 
-This is a multi-part message in MIME format.
---------------010400030205080904010502
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Call init_revisions() first to prepare the revision traversal
+parameters and pass it to git_log_config(), so that necessary bits
+in the traversal parameters can be tweaked before we call the
+command line parsing infrastructure setup_revisions() from
+the cmd_log_init_finish() function.
 
-Hi all!
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-I just ran into a problem that I'm pretty sure is a bug in git. Just 
-read and run this (fairly trivial) shell script to replicate.
+ * This is made separate from the next one that touches the contents
+   of "rev" to make sure the existing code does not depend on the
+   current initialization order.  I do not think it does but better
+   be careful to keep the history easier to bisect, than be sorry
+   when an issue does appear.
 
-Thanks!
-    ---John Whitney
+ builtin/log.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-
---------------010400030205080904010502
-Content-Type: application/x-sh;
- name="git_failure.sh"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="git_failure.sh"
-
-IyBJbml0aWFsaXplIHJlcG9zaXRvcnkKZ2l0IGluaXQgc2ltcGxlUmVwb3NpdG9yeQpjZCBz
-aW1wbGVSZXBvc2l0b3J5CgojIENvbW1pdCBzaW1wbGUgZmlsZSB0aGF0IGNvbnRhaW5zIGEg
-RG9zL1dpbmRvd3Mtc3R5bGUgcmV0dXJuCmVjaG8gIg0iID4gdGVzdC50eHQKZ2l0IGFkZCB0
-ZXN0LnR4dApnaXQgY29tbWl0IC1tICJBZGQgZmlsZSB3aXRoIHJldHVybiBjaGFyYWN0ZXIi
-CgojIERlbGV0ZSB0aGUgZmlsZSBpbiBhbm90aGVyIGNvbW1pdCAoQW5kIG1ha2UgYnJhbmNo
-IGZvciBlYXN5IHJlZmVyZW5jZSkKZ2l0IGNoZWNrb3V0IC1iIGFicmFuY2gKZ2l0IHJtIHRl
-c3QudHh0CmdpdCBjb21taXQgLW0gIlJlbW92ZSBmaWxlIHdpdGggcmV0dXJuIGNoYXJhY3Rl
-ciIKCiMgR28gYmFjayB0byBvcmlnaW5hbCBjb21taXQgYW5kIHR1cm4gb24gYXV0b21hdGlj
-IGVuZC1vZi1saW5lIG5vcm1hbGl6YXRpb24KZ2l0IGNoZWNrb3V0IG1hc3RlcgplY2hvICIq
-IHRleHQ9YXV0byIgPiAuZ2l0YXR0cmlidXRlcwoKIyBDaGVycnktcGljayBmYWlscyB3aXRo
-OgojIGVycm9yOiBZb3VyIGxvY2FsIGNoYW5nZXMgdG8gdGhlIGZvbGxvd2luZyBmaWxlcyB3
-b3VsZCBiZSBvdmVyd3JpdHRlbi4uLgpnaXQgY2hlcnJ5LXBpY2sgYWJyYW5jaAoKIyBUaGUg
-ZmFpbGVkIGNoZXJyeS1waWNrIGhhcyBjYXVzZWQgdGhlIGZpbGUgdG8gYmUgbWFya2VkIGFz
-ICJtb2RpZmllZCIKCiMgQnV0IHRoaXMgcmVzZXQgb3BlcmF0aW9uIHdpbGwgbm90IGNsZWFy
-IHRoZSBzdGF0dXMKZ2l0IHJlc2V0IC0taGFyZAoKIyBUaGlzIHN0YXNoIG9wZXJhdGlvbiBz
-dWNjZWVkcywgYnV0IHRlc3QudHh0IHN0aWxsIGlzIG1hcmtlZCBhcyAibW9kaWZpZWQiCmdp
-dCBzdGFzaAoKIyBJdCBkb2VzIG5vdCBzZWVtIHRvIGJlIHBvc3NpYmxlIHRvIGVkaXQgdGVz
-dC50eHQgaW4gCiMgYSB3YXkgdGhhdCB3aWxsIGNhdXNlIGdpdCB0byBtYXJrIGl0IGFzICJ1
-bm1vZGlmaWVkIgoKIyBDb21taXR0aW5nIHRlc3QudHh0IG9yIGNsZWFyaW5nIC5naXRhdHRy
-aWJ1dGVzIGRvZXMgY2xlYXIKIyB0aGUgIm1vZGlmaWVkIiBzdGF0dXMsIGJ1dCB0aG9zZSBv
-cHRpb25zIGFyZSB1bmRlc2lyYWJsZQoKIyBVbmNvbW1lbnQgdGhlc2UgbGluZXMgaWYgeW91
-IHdhbnQgdG8gY2xlYW4gdXAKIyBjZCAuLgojIHJtIC1SZiBzaW1wbGVSZXBvc2l0b3J5Cg==
---------------010400030205080904010502--
+diff --git a/builtin/log.c b/builtin/log.c
+index 09cf43e..07a0078 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -360,9 +360,8 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
+ 
+-	git_config(git_log_config, NULL);
+-
+ 	init_revisions(&rev, prefix);
++	git_config(git_log_config, &rev);
+ 	rev.diff = 1;
+ 	rev.simplify_history = 0;
+ 	memset(&opt, 0, sizeof(opt));
+@@ -450,10 +449,9 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	struct pathspec match_all;
+ 	int i, count, ret = 0;
+ 
+-	git_config(git_log_config, NULL);
+-
+ 	init_pathspec(&match_all, NULL);
+ 	init_revisions(&rev, prefix);
++	git_config(git_log_config, &rev);
+ 	rev.diff = 1;
+ 	rev.always_show_header = 1;
+ 	rev.no_walk = REVISION_WALK_NO_WALK_SORTED;
+@@ -530,9 +528,8 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
+ 
+-	git_config(git_log_config, NULL);
+-
+ 	init_revisions(&rev, prefix);
++	git_config(git_log_config, &rev);
+ 	init_reflog_walk(&rev.reflog_info);
+ 	rev.verbose_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+@@ -552,9 +549,8 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
+ 
+-	git_config(git_log_config, NULL);
+-
+ 	init_revisions(&rev, prefix);
++	git_config(git_log_config, &rev);
+ 	rev.always_show_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
+@@ -1121,8 +1117,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	extra_hdr.strdup_strings = 1;
+ 	extra_to.strdup_strings = 1;
+ 	extra_cc.strdup_strings = 1;
+-	git_config(git_format_config, NULL);
+ 	init_revisions(&rev, prefix);
++	git_config(git_format_config, &rev);
+ 	rev.commit_format = CMIT_FMT_EMAIL;
+ 	rev.verbose_header = 1;
+ 	rev.diff = 1;
+-- 
+1.8.0.rc0.57.g712528f
