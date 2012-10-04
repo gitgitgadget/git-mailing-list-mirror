@@ -1,83 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
-Date: Thu, 04 Oct 2012 09:27:05 -0700
-Message-ID: <7vwqz619uu.fsf@alter.siamese.dyndns.org>
-References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
- <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: erratic behavior commit --allow-empty
+Date: Thu, 4 Oct 2012 09:24:19 -0400
+Message-ID: <CABURp0pgE=J9yCa+nUa7J0MZ-O-6bUHrj58zLQZ9mToh6YcOFw@mail.gmail.com>
+References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com>
+ <506AA51E.9010209@viscovery.net> <7vzk449449.fsf@alter.siamese.dyndns.org>
+ <CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com>
+ <7vhaqc7in6.fsf@alter.siamese.dyndns.org> <CAB9Jk9D-eJ8goYx7LWqGcWcLgRDS8+qLZVUsvvJ+QOtryP9-zg@mail.gmail.com>
+ <90464C79DA97415C9D66846A77ECAA4A@PhilipOakley> <CAB9Jk9ARWnE-cWVjqMUFiua21QjqGEX3VhYjKQMBSotVYXXK1Q@mail.gmail.com>
+ <vpq626s6kwu.fsf@grenoble-inp.fr> <CAB9Jk9DFb2s4s00yCNUytxFdrOQKPEKZGsXpKzwZDo5WAOdXaQ@mail.gmail.com>
+ <vpqvcer4xvo.fsf@grenoble-inp.fr> <CAB9Jk9BTCaV7RDx6_K+MKOeJTdOQPOwvnGM0UNxg9S8KMo4D4Q@mail.gmail.com>
+ <A75F75C4DE3C47C7AF43D39355C873F7@PhilipOakley> <CAB9Jk9C4Y2LSzZW5Nkz=4f===8_gk4uAG4EKDxT17kUHu4VX1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: David Michael Barr <b@rr-dav.id.au>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:16:29 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Angelo Borsotti <angelo.borsotti@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:18:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtbN-00033L-D0
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:09:05 +0200
+	id 1TJtYH-0001w8-Pj
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933427Ab2JDQ1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 12:27:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48797 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933406Ab2JDQ1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 12:27:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CC2B8521;
-	Thu,  4 Oct 2012 12:27:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DNAL15UdIWzf+0licFA5tRdWjXo=; b=em5VUY
-	RKicLX7eA1yTb/88Q9d4fkQZUM98V7JdUda+ujvx6HDfTmYepfNUPYhWZed5/tA3
-	wvpDMDo1v9qqdlHVuau50T3XNPMptFaTLibSFaMVOpoO29p1sx9SX4Bs7eDZIR3K
-	MKVUoCK3cB8He7+hnVfQRCaYIbLt3f5AnxEdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YlHWl4yNmMBK+yzwIAXC6d00/3x7u8xw
-	zLcvR7t70AekfXMAkkjAZ/HxylUlGUU52bj3UE/dJ03SueIGgohUABrD4RuwQpVu
-	S4SQbjVjlZ29OYcK7nL1d9pgrUulR5khO8i5/YO+MPzeMf4h7iIL7f+Y+x6TvYGN
-	O74PscGHPyY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDE598520;
-	Thu,  4 Oct 2012 12:27:07 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63F80851F; Thu,  4 Oct 2012
- 12:27:07 -0400 (EDT)
-In-Reply-To: <A4A111D1488E49FFA4D71D85DD6B87A4@rr-dav.id.au> (David Michael
- Barr's message of "Thu, 4 Oct 2012 18:17:52 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 56F9B6DA-0E40-11E2-85F6-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932740Ab2JDNYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 09:24:43 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:42225 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932305Ab2JDNYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 09:24:40 -0400
+Received: by mail-la0-f46.google.com with SMTP id h6so213702lag.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 06:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6T8WKzH4+gyAI1UIZdt47aFyp/dx2NS4/DoZBpShxWs=;
+        b=frszBl85Wju8POJhB1ppdybMlWHccQZZH7dBIIbB4N+ds8IpuN/+jsktbrtsiP4I2o
+         agmPofR0P0yvsjI8lPYITK5xoqXfFSVJAcjV1REUDQyoTnCwOAfUon1crKBmFBR8msbz
+         3+L/91dyucVuCJ9Rb/ySCn1AQD4gBMIzhyDE6feeOsyz2GDNxWlSDShPskN4qRL8Ft54
+         lZsewh6Sp0U8HrpjaNw+3vCGQ54ft2oNtWrciCs/TBUBs7mJZHWEUpiXyuEPF/31yejf
+         8LCHu9FIVhb8AC03gVVTagb9Ybv0pQXNQtPtrwhTmADAjOHd1DTfAttSrhlSlKk+iBIM
+         DCEA==
+Received: by 10.152.110.229 with SMTP id id5mr4111171lab.36.1349357079197;
+ Thu, 04 Oct 2012 06:24:39 -0700 (PDT)
+Received: by 10.114.17.225 with HTTP; Thu, 4 Oct 2012 06:24:19 -0700 (PDT)
+In-Reply-To: <CAB9Jk9C4Y2LSzZW5Nkz=4f===8_gk4uAG4EKDxT17kUHu4VX1A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206985>
 
-David Michael Barr <b@rr-dav.id.au> writes:
+On Thu, Oct 4, 2012 at 3:07 AM, Angelo Borsotti
+<angelo.borsotti@gmail.com> wrote:
+...
+> The operation that caused problems was nr. 4. In all the cases
+> enlisted above, a git commit creates a brand new and unique commit
+> because either it has a parent that is different from that of any
+> other commit, or because its tree is different. All, except case nr 3
+> when there are no binaries:
+>
+>      source branch         A'
+>                                    :
+>      topic branch        A
+>
+> In this case the parent is the same as that of A, i.e. none, and also
+> the tree is the same.
 
-> On Wednesday, 3 October 2012 at 9:20 AM, Junio C Hamano wrote: 
->> 
->> * fa/remote-svn (2012-09-19) 16 commits
->> ...
->> 
->> A GSoC project.
->> Waiting for comments from mentors and stakeholders.
->
-> I have reviewed this topic and am happy with the design and implementation.
-> I support this topic for inclusion.
->
-> Acked-by: David Michael Barr <b@rr-dav.id.au>
->> 
->> * fa/vcs-svn (2012-09-19) 4 commits
->> ...
->
-> This follow-on topic I'm not so sure on, some of the design
-> decisions make me uncomfortable and I need some convincing before
-> I can get behind this topic.
+And why is this a problem?
 
-Thanks for a feedback.
+Is there a process or person watching the server for a new commit?
+
+Is it not enough to notice that the pushed-to branch has a new HEAD?
+
+Phil
