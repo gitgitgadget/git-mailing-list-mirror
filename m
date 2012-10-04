@@ -1,62 +1,82 @@
-From: Andrew Wong <andrew.kw.w.lists@gmail.com>
-Subject: Re: Bug report
-Date: Thu, 04 Oct 2012 13:01:52 -0400
-Message-ID: <506DC100.5060307@gmail.com>
-References: <506D122E.2050404@emsoftware.com> <506DA992.7090904@gmail.com> <506DB655.8020504@emsoftware.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Ignore on commit
+Date: Thu, 04 Oct 2012 22:06:40 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <506DEC50.7090402@obry.net>
+References: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: John Whitney <jjw@emsoftware.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:49:24 2012
+To: Marco Craveiro <marco.craveiro@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:50:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtdz-00033L-Sk
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:11:48 +0200
+	id 1TJthK-00033L-DL
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933455Ab2JDRBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 13:01:55 -0400
-Received: from mail-ia0-f174.google.com ([209.85.210.174]:62340 "EHLO
-	mail-ia0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932873Ab2JDRBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 13:01:54 -0400
-Received: by mail-ia0-f174.google.com with SMTP id y32so280155iag.19
-        for <git@vger.kernel.org>; Thu, 04 Oct 2012 10:01:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=+Ozua9sNCpjY21tHh2+30Ynif6IXjnqrDoUnjxvqsJc=;
-        b=v7w7CwHOcCP+jSicosR2526FISIGX5DmTFkHCy8TZeTaCtUfS7do73IdM3/WXtt0HX
-         CcCyXAU9xYKvm3KBcjEuQMLwoH5ZDnBNEq9XK+6S/KvAzoLPlLg1pmRuG469l4pdgoCA
-         L/YtGqD3NGyJ7joayw5PC88SL9k0mtM2SQQhjbXMMOFM/PhKjufFwxGphJpqs8y/xr3O
-         2o8rCCzQTA3d64blWtwQJW5wF4Js+JK8SCdNdMOeY/wTMq38cPMD8TvOSWOhJj0jJDV1
-         WnHIMXpxAQrGnDGL+9BPcgSB+EdQSv8rG3vy7nVMM9txx5HOPe1HuKBMUUGlLsKcCP/y
-         1fwQ==
-Received: by 10.50.7.232 with SMTP id m8mr5918353iga.48.1349370114177;
-        Thu, 04 Oct 2012 10:01:54 -0700 (PDT)
-Received: from [192.168.1.112] ([66.207.196.114])
-        by mx.google.com with ESMTPS id in10sm6177750igc.14.2012.10.04.10.01.53
-        (version=SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 10:01:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20120421 Thunderbird/12.0
-In-Reply-To: <506DB655.8020504@emsoftware.com>
+	id S1751641Ab2JDUGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 16:06:45 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:48924 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750883Ab2JDUGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 16:06:45 -0400
+Received: by mail-we0-f174.google.com with SMTP id t9so577142wey.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 13:06:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:reply-to:organization:user-agent:mime-version
+         :to:cc:subject:references:in-reply-to:x-enigmail-version
+         :content-type:content-transfer-encoding:x-gm-message-state;
+        bh=ExOqn3Zsw0ydwok8+LCX93DY3Us1Z2Wm011d+IYGAkc=;
+        b=MEyNvgKOvlkfcJqCX5zSVXIUOk+Cq8gar1dDGRLfHDBw+H4tHFT31EH66dt9gGIR6j
+         JMJHu4s73UHeDS0HLt3+af6uXyyUYiou20uIUCO50Wq9F/xOATaqO2zIJdms7L0wDeyj
+         NjD2OpUIZbLcQCJdbKUH8qi/un6U7bkDv3QDz2UaeNB7dxPi6c6YnA6h9e7V5ZLatf4i
+         aAF0sUvjKKhW4zsiRO4XwF4+B8lyX7jkTShV9vbwjHi2PAR1I9j2TWHf3tM7jEOYrNJ4
+         uccwR6WmZ38Qbt6ZAPVDBdCZ6lRpb8kEY7EOyody2pVobsQJZmsdZw3lkfaop/jF1QNx
+         ecSA==
+Received: by 10.216.71.82 with SMTP id q60mr4166529wed.64.1349381203687;
+        Thu, 04 Oct 2012 13:06:43 -0700 (PDT)
+Received: from [192.168.0.100] (APuteaux-651-1-239-26.w82-120.abo.wanadoo.fr. [82.120.66.26])
+        by mx.google.com with ESMTPS id v3sm34067558wiw.7.2012.10.04.13.06.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 04 Oct 2012 13:06:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
+X-Enigmail-Version: 1.4
+X-Gm-Message-State: ALoCoQnDytzAmarIN4p995YPX55nc2HOu6gULIEiz60CpPRxe6SXyx+YvMHQLoBuC3tg+0MmlzD/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207029>
 
-On 10/04/2012 12:16 PM, John Whitney wrote:
-> This problem occurs on Mac, Windows, and Linux, and
-> with multiple versions of git. Note that in my script a CR
-> is appended to test.txt. On the Mac, you can generate this
-> in Terminal by pressing Ctrl-V Ctrl-M. Or, alternatively,
-> just download and run the script like this: "sh git_failure.sh"
-Ah, yes. I can reproduce the problem. I was pasting the lines from your 
-script. And I saw a new line in the shell when I pasted, so I thought 
-the ^M was kept properly. But somewhere during the pasting, the ^M must 
-have got translated to a \n automatically. Silly me.
+
+I'm not sure to follow everything... But looks like:
+
+   $ git add -p
+
+or
+
+   $ git add -i
+
+should do what you want, no?
+
+You select the hunks to commit, let over the "hacks" and then
+
+   $ git commit
+
+-- 
+
+  Pascal Obry /  Magny Les Hameaux (78)
+
+  The best way to travel is by means of imagination
+
+  http://v2p.fr.eu.org
+  http://www.obry.net
+
+  gpg --keyserver keys.gnupg.net --recv-key F949BD3B
