@@ -1,102 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Thu, 04 Oct 2012 13:03:26 -0700
-Message-ID: <7vhaqaxawh.fsf@alter.siamese.dyndns.org>
-References: <20121004141454.GA246@x4>
- <20121004184314.GA15389@sigill.intra.peff.net>
+Subject: Re: [PATCH 6/6] t3001: note about expected "**" behavior
+Date: Thu, 04 Oct 2012 11:04:06 -0700
+Message-ID: <7vobkiyuzt.fsf@alter.siamese.dyndns.org>
+References: <7v626q3hen.fsf@alter.siamese.dyndns.org>
+ <1349336392-1772-1-git-send-email-pclouds@gmail.com>
+ <1349336392-1772-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 01:09:48 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 01:12:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJthJ-00033L-Tf
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:14 +0200
+	id 1TJtey-00033L-IS
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab2JDUDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 16:03:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58195 "EHLO
+	id S1751154Ab2JDSEK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 14:04:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33502 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750883Ab2JDUD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 16:03:29 -0400
+	id S1750811Ab2JDSEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2012 14:04:08 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 351C48AB5;
-	Thu,  4 Oct 2012 16:03:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DEC78516;
+	Thu,  4 Oct 2012 14:04:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=JWjc9ZHKYF+xgLkIuny1lGEii6E=; b=juICFT9RDJ5fWRQwjgKv
-	k8EpszHvFRJfswtqXlf+5W4j28LwI2NqR2L76HJv2iXBs74lC5FzoxmgsBRLRCfF
-	cXGCRTEGKNx2hXmWL7i8aPLAxD4ydfXEVecYcRJWGawmlsJ4i8i22nJ3ZTL+6NaY
-	9sRM+JbnBqePBz7eOlenWRM=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XFJKyTVop+ab
+	yYhrd/vvDVfWCBY=; b=AiJ5VtJ8SgdsDe8sMueIQO1CFZWmas5+N65u4rlJAceM
+	yCF0COrjy9zBYb0kQtf0SIhqGEwof/cCJXVvwbuLYsPO6S++YvBEccH4EsgQNNWE
+	Kob97Q2mqPiFt+H1nzGQyWlTHJTJUZr1ydZvaf+2w1L24pequ6dQXxtrHM2PaDg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=f98qwrgn2OGPwnrMEbII+CaMvOEWu383fi3VrRoB7hCy7m
-	bRloM+TcvpRWWs4e17soYO1my6iJdjJTeAmNKkm7Gwt3tCyagwrYYrSj7rbI825m
-	AX0IAKHMrnYC3HYTUqeSvysgArxunsD3FxUWvPMxvXXiRZhv/nBNRwQa0WszU=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=R4sOqp
+	Mj9ADRO6excoy3lG87KlxNN2j620saqjxyYoNIcfBDl9/bcf27Gxb1r9zW8UxALu
+	yshanrwV+iKJn/Php2LFk1ObnudtD0zMfv95DCB/U9FIH8IJ2mzuOOT70P82FZ6G
+	rrWRTY/ChoO2rAte9QBon49m+PhWkKhHvd5u0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 218DF8AB4;
-	Thu,  4 Oct 2012 16:03:29 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B4C38514;
+	Thu,  4 Oct 2012 14:04:08 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 722988AAF; Thu,  4 Oct 2012
- 16:03:28 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBC5F8512; Thu,  4 Oct 2012
+ 14:04:07 -0400 (EDT)
+In-Reply-To: <1349336392-1772-7-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 4 Oct
+ 2012 14:39:52 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9046034E-0E5E-11E2-A451-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E43E136C-0E4D-11E2-A366-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207048>
 
-Jeff King <peff@peff.net> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> On Thu, Oct 04, 2012 at 04:14:54PM +0200, Markus Trippelsdorf wrote:
->
->> with current trunk I get the following on an up-to-date Linux tree:
->> 
->> markus@x4 linux % time git pull
->> Already up-to-date.
->> git pull  7.84s user 0.26s system 92% cpu 8.743 total
->> 
->> git version 1.7.12 is much quicker:
->> 
->> markus@x4 linux % time git pull
->> Already up-to-date.
->> git pull  0.10s user 0.02s system 16% cpu 0.740 total
->
-> Yikes. I can easily reproduce here. Bisecting between master and
-> v1.7.12 gives a curious result: the slowdown first occurs with the merge
-> commit 34f5130 (Merge branch 'jc/merge-bases', 2012-09-11). But neither
-> of its parents is slow. I don't see anything obviously suspect in the
-> merge, though.
+> "**" currently matches any characters including slashes. It's probabl=
+y
+> too powerful. A more sensible definition may be match any characters
+> that the but the whole match must be wrapped by slashes. So "**" can
+> match none, "/", "/aaa/", "/aa/bb/" and so on but not "aa/bb".
 
-There is one extra call site of reduce_heads() added by that merge
-relative to 34f5130.  It is likely that the updated reduce_heads()
-is totally broken from performance point of view, or at least it is
-not optimized for the usage pattern at the new call site, in which
-case it would be very plausible that both parents of the merge
-perform well while the merge result is sucky.
+I do not think this is something we want to retroactively change
+after releasing it to the public, especially when we _know_ it is a
+problem from the get-go (unlike the case we did not notice it had a
+problem, release it to the public and then realize it and have to
+scramble to devise a fix to bring more sanity in a backward
+compatible way).
 
-It gets more curious, though.
-
-I am getting ~9 seconds with the tip of master and ~0.4 seconds with
-1.7.12.
-
-When 34f5130^2 is reverted at the tip of master, I get ~0.35
-seconds.  That matches Markus's observation.
-
-However.
-
-If I revert 5802f81 that updated the implementation of fmt-merge-msg
-on top of 'master', *without* reverting 34f5130^2, I get ~4.5 seconds.
-As we are doing an "Already up-to-date" pull, I thought there is no
-need to call fmt-merge-msg in the first place?
-
-Which may indicate that "git merge" has been broken for a long time
-and making unnecessary calls.
-
-Hrmmm...
+We must either declare that "**" that matches any characters is the
+sane semantics and promise we will never change it, or have "**"
+that matches \(/[^/]*\)*/ (sorry for a line noise^W^W^Wregexp) from
+the beginning.
