@@ -1,74 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] peel_ref: use faster deref_tag_noverify
-Date: Thu, 04 Oct 2012 11:24:43 -0700
-Message-ID: <7vk3v6yu1g.fsf@alter.siamese.dyndns.org>
-References: <20121004075609.GA1355@sigill.intra.peff.net>
- <20121004075815.GA31325@sigill.intra.peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20l10n=3A=20de=2Epo=3A=20fix=20a=20few=20minor=20typos?=
+Date: Thu,  4 Oct 2012 19:50:10 +0200
+Message-ID: <1349373010-6499-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 01:04:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: simon@ruderich.org, trast@student.ethz.ch, jk@jk.gs,
+	stimming@tuhh.de, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 01:04:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtfk-00033L-74
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:13:36 +0200
+	id 1TJtei-00033L-Ln
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752191Ab2JDSYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 14:24:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43804 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751899Ab2JDSYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 14:24:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F1E18BDD;
-	Thu,  4 Oct 2012 14:24:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/Z8YiOOOd3escrp7XdnSUeu0Tio=; b=MNpC+g
-	LA3+WwRqsCWUQqytqBPYOwyZ+ytFGDJfhJjJYQh70WS5JBkMECX8Rov3xKuh2BnA
-	3tcMqmvuL2MjNI3C6hsTHS1gOecxEdlYqNB9DUkGa94QM3FtiRXFobNuupcYDNEA
-	Rd78ytP2tiGorcKnYbkTklScfG4DevDVXEYWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e+80OYy4Qu3kEHWuDq3k+WOqYOGZ7Bau
-	LipCPfTUXHVWDWTx+MQbZl77ZZYGB2B/7/GmrtPN9cx83H75XnA5jbb9ZOZO/2Ox
-	4XZMNk2SSPmxx02oWguUrN7tclc/rFwhcH15xJXfwiLfuz47LLz/Rnc+xk/fH8Vz
-	3DcB2ayzFp4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D50E8BDB;
-	Thu,  4 Oct 2012 14:24:45 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EA928BD9; Thu,  4 Oct 2012
- 14:24:44 -0400 (EDT)
-In-Reply-To: <20121004075815.GA31325@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 4 Oct 2012 03:58:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5A5BACE-0E50-11E2-96A9-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1945961Ab2JDRu1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2012 13:50:27 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:55853 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756196Ab2JDRuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 13:50:25 -0400
+Received: by mail-wg0-f42.google.com with SMTP id fm10so2177965wgb.1
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 10:50:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=/gs3bf9Um1WUBnzIiA5A88NPp8ZUT0JDe1CJ+qGxbtI=;
+        b=a13W85BU82zjXJBvT4rYEKekdxy4g4EEH4ZHnMJQDm7+QaOdZkqZoP4WVmwWM8hBbR
+         PcmR1CTCPlK/Mx9TSW0Z1Hx0tOTdATsFrEuAGOpvM0y1zTfhBYxxMhNDi4uPOIB37BeR
+         hLMA4dUnuk9T7vnRTywQsrtxPACthd+DQtOdFti6QQun2SqzaoyZG/m9Ex5DEr9Fr4BZ
+         nYibKpvfPUVpngZ42djAYbA6Ep7hGHr8BDWnE9VywxJTHsQmQ+coRbzWXxLtBi9EzoRW
+         iKqUgm/cRm/tun3tl9Om5zmRF/xjaztTEPKHFKcdnKR2batIf66T9QSCHuHhrFKAV57y
+         d0Pw==
+Received: by 10.180.24.4 with SMTP id q4mr39680589wif.19.1349373024123;
+        Thu, 04 Oct 2012 10:50:24 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-222-138-170.pools.arcor-ip.net. [94.222.138.170])
+        by mx.google.com with ESMTPS id ct3sm33467630wib.5.2012.10.04.10.50.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 04 Oct 2012 10:50:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.12.440.g924b2e8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207044>
 
-Jeff King <peff@peff.net> writes:
+=46rom: Simon Ruderich <simon@ruderich.org>
 
-> When we are asked to peel a ref to a sha1, we internally call
-> deref_tag, which will recursively parse each tagged object
-> until we reach a non-tag. This has the benefit that we will
-> verify our ability to load and parse the pointed-to object.
->
-> However, there is a performance downside: we may not need to
-> load that object at all (e.g., if we are listing peeled
-> simply listing peeled refs),...
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 14 +++++++-------
+ 1 Datei ge=C3=A4ndert, 7 Zeilen hinzugef=C3=BCgt(+), 7 Zeilen entfernt=
+(-)
 
-Both correct.
-
-I checked the existing callsites and nobody seems to assume that it
-can use the pointed-to object without checking because peel_ref has
-already checked, so it makes sense.
+diff --git a/po/de.po b/po/de.po
+index a3cf695..9e9f2da 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -55,7 +55,7 @@ msgstr "Konnte '%s' nicht =C3=B6ffnen"
+=20
+ #: bundle.c:140
+ msgid "Repository lacks these prerequisite commits:"
+-msgstr "Dem Projektarchiv fehlen folgende vorrausgesetzte Versionen:"
++msgstr "Dem Projektarchiv fehlen folgende vorausgesetzte Versionen:"
+=20
+ #: bundle.c:164 sequencer.c:550 sequencer.c:982 builtin/log.c:290
+ #: builtin/log.c:726 builtin/log.c:1316 builtin/log.c:1535 builtin/mer=
+ge.c:347
+@@ -1758,7 +1758,7 @@ msgstr "Anzahl"
+ #: builtin/apply.c:4291
+ msgid "remove <num> leading slashes from traditional diff paths"
+ msgstr ""
+-"entfernt <Anzahl> vorrangestellte Schr=C3=A4gstriche von herk=C3=B6mm=
+lichen "
++"entfernt <Anzahl> vorangestellte Schr=C3=A4gstriche von herk=C3=B6mml=
+ichen "
+ "Differenzpfaden"
+=20
+ #: builtin/apply.c:4294
+@@ -2065,7 +2065,7 @@ msgstr "Konnte einige Referenzen nicht lesen"
+ #: builtin/branch.c:613
+ msgid "cannot rename the current branch while not on any."
+ msgstr ""
+-"Kann aktuellen Zweig nicht umbennen, solange du dich auf keinem befin=
+dest."
++"Kann aktuellen Zweig nicht umbenennen, solange du dich auf keinem bef=
+indest."
+=20
+ #: builtin/branch.c:623
+ #, c-format
+@@ -2353,7 +2353,7 @@ msgid ""
+ "git checkout: --ours/--theirs, --force and --merge are incompatible w=
+hen\n"
+ "checking out of the index."
+ msgstr ""
+-"git checkout: --ours/--theirs, --force and --merge sind inkompatibel =
+wenn\n"
++"git checkout: --ours/--theirs, --force und --merge sind inkompatibel =
+wenn\n"
+ "du aus der Bereitstellung auscheckst."
+=20
+ #: builtin/checkout.c:1093
+@@ -3666,7 +3666,7 @@ msgstr "Konnte %s nicht nach %s verschieben"
+ #: builtin/init-db.c:363
+ #, c-format
+ msgid "Could not create git link %s"
+-msgstr "Konnte git-Verkn=C3=BCfung %s nicht erstellen"
++msgstr "Konnte git-Verkn=C3=BCpfung %s nicht erstellen"
+=20
+ #.
+ #. * TRANSLATORS: The first '%s' is either "Reinitialized
+@@ -3778,11 +3778,11 @@ msgstr "unechte Einreicher-Informationen %s"
+=20
+ #: builtin/log.c:1205
+ msgid "-n and -k are mutually exclusive."
+-msgstr "-n und -k schliessen sich gegenseitig aus"
++msgstr "-n und -k schlie=C3=9Fen sich gegenseitig aus"
+=20
+ #: builtin/log.c:1207
+ msgid "--subject-prefix and -k are mutually exclusive."
+-msgstr "--subject-prefix und -k schliessen sich gegenseitig aus"
++msgstr "--subject-prefix und -k schlie=C3=9Fen sich gegenseitig aus"
+=20
+ #: builtin/log.c:1215
+ msgid "--name-only does not make sense"
+--=20
+1.7.12.440.g924b2e8
