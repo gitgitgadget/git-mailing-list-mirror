@@ -1,114 +1,237 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: upload-pack is slow with lots of refs
-Date: Thu, 4 Oct 2012 01:47:00 +0200
-Message-ID: <CACBZZX764OOH82CiLYPr+_qNU65U4Zxuod_7G5ef8yAtHApXog@mail.gmail.com>
-References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com>
- <20121003180324.GB27446@sigill.intra.peff.net> <CACBZZX4Fb0OCkh5kwKvLC+_0xb7q-UB7LH2_WY=dFN5SYUeezQ@mail.gmail.com>
- <20121003232115.GB11618@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:07:07 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/6] grep: move configuration support to top-level grep.[ch]
+Date: Wed,  3 Oct 2012 18:33:34 -0700
+Message-ID: <1349314419-8397-2-git-send-email-gitster@pobox.com>
+References: <7v626r48cv.fsf@alter.siamese.dyndns.org>
+ <1349314419-8397-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:07:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJtM3-0001DP-QF
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:53:16 +0200
+	id 1TJtN0-0001DP-26
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Oct 2012 23:54:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932907Ab2JCXrW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2012 19:47:22 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:59517 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932788Ab2JCXrV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2012 19:47:21 -0400
-Received: by obbuo13 with SMTP id uo13so7916566obb.19
-        for <git@vger.kernel.org>; Wed, 03 Oct 2012 16:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=0KXOHyezXQUdq4aEbyQ2HEzEU4ewyfgckf9WR1qDW+g=;
-        b=G1Eg8p84lRRP3YVpvLPq+AgwT31E06goNgzmV+WoMrt9jWNDvXT4fHaYRhwvvzFexr
-         Qj1L36vBXCs8C+OmpaGOQMX+B+++Vm6Rxx08c/sr0f3rPrbAtW6wAMl5v6giaYjnIa4u
-         O5FHlBIzYriEl6sXKyLaH7+wYsxScX1PglsX2KrgzNJqRWR0erz2pYkXFteLradChs+C
-         q+RC9pl4MhGfDiYqsNzp5gS4hRvoMC6G7774orscpbHuUbnlScQtDAr1IrhjQ/Jrn4/7
-         E3dxvyeM2k1lxqjpFP7wiiksXukGbm0+XxcUdWY4nXrGFzKczfHH0OM/ZOZ0qm4OOwuk
-         pclA==
-Received: by 10.60.24.69 with SMTP id s5mr2951093oef.45.1349308040937; Wed, 03
- Oct 2012 16:47:20 -0700 (PDT)
-Received: by 10.60.94.225 with HTTP; Wed, 3 Oct 2012 16:47:00 -0700 (PDT)
-In-Reply-To: <20121003232115.GB11618@sigill.intra.peff.net>
+	id S1754617Ab2JDBdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2012 21:33:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52835 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753786Ab2JDBdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2012 21:33:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60146805D
+	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HlUp
+	EYJTI8+AeW3BnRT0ylr2Exw=; b=tZN3cDLsW+f5simDrieovIdBtPQlvlzuDf46
+	lS7r4t0NcfcEMp+WEuX2DN9GyN8Zddixex6KcWYP+jXy4i97pO64Ohh55VpU9Lis
+	ksb7y/nu3syQHAIGINpcuhdkgvylgwy22kBlsxX5Z4Tx2S36f09CM85z9c3p+xpg
+	V3PtDRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=o0IzMJ
+	gycUcYtlZClPG3Gk/CrCNIAWNGU4eI/pE8rCnKaaHUbv9iWaCQvnnXSvz0ztufy7
+	g046K10P/r0nhNXcKHmX7QKthcyOXQA6WuKN4BQX1nRlKlan0d7E9jkTwL9c44vc
+	+I8r0IqyoFzc1kYJvwK+GpiFZRvcjMJQ+Qy+M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E818805C
+	for <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C69D805B for
+ <git@vger.kernel.org>; Wed,  3 Oct 2012 21:33:42 -0400 (EDT)
+X-Mailer: git-send-email 1.8.0.rc0.57.g712528f
+In-Reply-To: <1349314419-8397-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 87FCE2F2-0DC3-11E2-BD03-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/206967>
 
-On Thu, Oct 4, 2012 at 1:21 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 04, 2012 at 12:32:35AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> On Wed, Oct 3, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
->> > What version of git are you using?  In the past year or so, I've m=
-ade
->> > several tweaks to speed up large numbers of refs, including:
->> >
->> >   - cff38a5 (receive-pack: eliminate duplicate .have refs, v1.7.6)=
-; note
->> >     that this only helps if they are being pulled in by an alterna=
-tes
->> >     repo. And even then, it only helps if they are mostly duplicat=
-es;
->> >     distinct ones are still O(n^2).
->> >
->> >   - 7db8d53 (fetch-pack: avoid quadratic behavior in remove_duplic=
-ates)
->> >     a0de288 (fetch-pack: avoid quadratic loop in filter_refs)
->> >     Both in v1.7.11. I think there is still a potential quadratic =
-loop
->> >     in mark_complete()
->> >
->> >   - 90108a2 (upload-pack: avoid parsing tag destinations)
->> >     926f1dd (upload-pack: avoid parsing objects during ref adverti=
-sement)
->> >     Both in v1.7.10. Note that tag objects are more expensive to
->> >     advertise than commits, because we have to load and peel them.
->> >
->> > Even with those patches, though, I found that it was something lik=
-e ~2s
->> > to advertise 100,000 refs.
->>
->> FWIW I bisected between 1.7.9 and 1.7.10 and found that the point at
->> which it went from 1.5/s to 2.5/s upload-pack runs on the pathologic=
-al
->> git.git repository was none of those, but:
->>
->>     ccdc6037fe - parse_object: try internal cache before reading obj=
-ect db
->
-> Ah, yeah, I forgot about that one. That implies that you have a lot o=
-f
-> refs pointing to the same objects (since the benefit of that commit i=
-s
-> to avoid reading from disk when we have already seen it).
->
-> Out of curiosity, what does your repo contain? I saw a lot of speedup
-> with that commit because my repos are big object stores, where we hav=
-e
-> the same duplicated tag refs for every fork of the repo.
+As "git grep" will not stay to be the only command that will know
+about the grep machinery, move these to a more appropriate place.
 
-Things are much faster with your monkeypatch, got up to around 10
-runs/s.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/grep.c | 67 ----------------------------------------------------------
+ grep.c         | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ grep.h         |  2 ++
+ 3 files changed, 69 insertions(+), 67 deletions(-)
 
-The repository mainly contains a lot of git-deploy[1] generated tags
-which are added for every rollout to several subsystems.
-
-Of the ~50k references in the repo 75% point to a commit that no other
-reference points to. Around 98% of the references are annotated tags,
-the rest are branches.
-
-1. https://github.com/git-deploy/git-deploy
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 82530a6..ce379d5 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -261,21 +261,6 @@ static int wait_all(void)
+ }
+ #endif
+ 
+-static int parse_pattern_type_arg(const char *opt, const char *arg)
+-{
+-	if (!strcmp(arg, "default"))
+-		return GREP_PATTERN_TYPE_UNSPECIFIED;
+-	else if (!strcmp(arg, "basic"))
+-		return GREP_PATTERN_TYPE_BRE;
+-	else if (!strcmp(arg, "extended"))
+-		return GREP_PATTERN_TYPE_ERE;
+-	else if (!strcmp(arg, "fixed"))
+-		return GREP_PATTERN_TYPE_FIXED;
+-	else if (!strcmp(arg, "perl"))
+-		return GREP_PATTERN_TYPE_PCRE;
+-	die("bad %s argument: %s", opt, arg);
+-}
+-
+ static void grep_pattern_type_options(const int pattern_type, struct grep_opt *opt)
+ {
+ 	switch (pattern_type) {
+@@ -308,58 +293,6 @@ static void grep_pattern_type_options(const int pattern_type, struct grep_opt *o
+ 	}
+ }
+ 
+-static int grep_config(const char *var, const char *value, void *cb)
+-{
+-	struct grep_opt *opt = cb;
+-	char *color = NULL;
+-
+-	if (userdiff_config(var, value) < 0)
+-		return -1;
+-
+-	if (!strcmp(var, "grep.extendedregexp")) {
+-		if (git_config_bool(var, value))
+-			opt->extended_regexp_option = 1;
+-		else
+-			opt->extended_regexp_option = 0;
+-		return 0;
+-	}
+-
+-	if (!strcmp(var, "grep.patterntype")) {
+-		opt->pattern_type_option = parse_pattern_type_arg(var, value);
+-		return 0;
+-  }
+-
+-	if (!strcmp(var, "grep.linenumber")) {
+-		opt->linenum = git_config_bool(var, value);
+-		return 0;
+-	}
+-
+-	if (!strcmp(var, "color.grep"))
+-		opt->color = git_config_colorbool(var, value);
+-	else if (!strcmp(var, "color.grep.context"))
+-		color = opt->color_context;
+-	else if (!strcmp(var, "color.grep.filename"))
+-		color = opt->color_filename;
+-	else if (!strcmp(var, "color.grep.function"))
+-		color = opt->color_function;
+-	else if (!strcmp(var, "color.grep.linenumber"))
+-		color = opt->color_lineno;
+-	else if (!strcmp(var, "color.grep.match"))
+-		color = opt->color_match;
+-	else if (!strcmp(var, "color.grep.selected"))
+-		color = opt->color_selected;
+-	else if (!strcmp(var, "color.grep.separator"))
+-		color = opt->color_sep;
+-	else
+-		return git_color_default_config(var, value, cb);
+-	if (color) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		color_parse(value, var, color);
+-	}
+-	return 0;
+-}
+-
+ static void *lock_and_read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
+ {
+ 	void *data;
+diff --git a/grep.c b/grep.c
+index edc7776..551a2ed 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1518,3 +1518,70 @@ static int grep_source_is_binary(struct grep_source *gs)
+ 
+ 	return 0;
+ }
++
++static int parse_pattern_type_arg(const char *opt, const char *arg)
++{
++	if (!strcmp(arg, "default"))
++		return GREP_PATTERN_TYPE_UNSPECIFIED;
++	else if (!strcmp(arg, "basic"))
++		return GREP_PATTERN_TYPE_BRE;
++	else if (!strcmp(arg, "extended"))
++		return GREP_PATTERN_TYPE_ERE;
++	else if (!strcmp(arg, "fixed"))
++		return GREP_PATTERN_TYPE_FIXED;
++	else if (!strcmp(arg, "perl"))
++		return GREP_PATTERN_TYPE_PCRE;
++	die("bad %s argument: %s", opt, arg);
++}
++
++int grep_config(const char *var, const char *value, void *cb)
++{
++	struct grep_opt *opt = cb;
++	char *color = NULL;
++
++	if (userdiff_config(var, value) < 0)
++		return -1;
++
++	if (!strcmp(var, "grep.extendedregexp")) {
++		if (git_config_bool(var, value))
++			opt->extended_regexp_option = 1;
++		else
++			opt->extended_regexp_option = 0;
++		return 0;
++	}
++
++	if (!strcmp(var, "grep.patterntype")) {
++		opt->pattern_type_option = parse_pattern_type_arg(var, value);
++		return 0;
++	}
++
++	if (!strcmp(var, "grep.linenumber")) {
++		opt->linenum = git_config_bool(var, value);
++		return 0;
++	}
++
++	if (!strcmp(var, "color.grep"))
++		opt->color = git_config_colorbool(var, value);
++	else if (!strcmp(var, "color.grep.context"))
++		color = opt->color_context;
++	else if (!strcmp(var, "color.grep.filename"))
++		color = opt->color_filename;
++	else if (!strcmp(var, "color.grep.function"))
++		color = opt->color_function;
++	else if (!strcmp(var, "color.grep.linenumber"))
++		color = opt->color_lineno;
++	else if (!strcmp(var, "color.grep.match"))
++		color = opt->color_match;
++	else if (!strcmp(var, "color.grep.selected"))
++		color = opt->color_selected;
++	else if (!strcmp(var, "color.grep.separator"))
++		color = opt->color_sep;
++	else
++		return git_color_default_config(var, value, cb);
++	if (color) {
++		if (!value)
++			return config_error_nonbool(var);
++		color_parse(value, var, color);
++	}
++	return 0;
++}
+diff --git a/grep.h b/grep.h
+index c256ac6..5381adc 100644
+--- a/grep.h
++++ b/grep.h
+@@ -145,6 +145,8 @@ extern void compile_grep_patterns(struct grep_opt *opt);
+ extern void free_grep_patterns(struct grep_opt *opt);
+ extern int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
+ 
++int grep_config(const char *var, const char *value, void *cb);
++
+ struct grep_source {
+ 	char *name;
+ 
+-- 
+1.8.0.rc0.57.g712528f
