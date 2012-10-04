@@ -1,77 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Thu, 04 Oct 2012 13:44:06 -0700
-Message-ID: <7v8vbmx90p.fsf@alter.siamese.dyndns.org>
-References: <20121004141454.GA246@x4>
- <20121004184314.GA15389@sigill.intra.peff.net>
- <7vhaqaxawh.fsf@alter.siamese.dyndns.org>
+From: Marco Craveiro <marco.craveiro@gmail.com>
+Subject: Re: Ignore on commit
+Date: Thu, 4 Oct 2012 22:20:53 +0100
+Message-ID: <CAKRNd4wbT_boRyFOOL_95FBW4ws8Zzz2ubVCfXuRSevzPdhW9g@mail.gmail.com>
+References: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
+	<506DEC50.7090402@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 00:45:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: pascal@obry.net
+X-From: git-owner@vger.kernel.org Fri Oct 05 00:46:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TJthr-00033L-7i
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:15:47 +0200
+	id 1TJtk6-0005yD-Op
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 00:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755669Ab2JDUoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2012 16:44:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48154 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754156Ab2JDUoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2012 16:44:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D21FF96EF;
-	Thu,  4 Oct 2012 16:44:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dVvcGsD9hElzuVwyQOG9MRuhXsw=; b=vNuta6
-	lbzLBWX3cO+p6OIftF5JRzs7MzWhNU53CjS4Yw/NMKok0B4Q0G2HwHTF7la4HvAD
-	Fgp9oZphyOnizmQVOPkuBrWxop4Bd593LxlVUU6ZJgNxwjiXqKUIqYXYvHMDsMFa
-	JMGuSuRXY8ggEbhPoo8zygT//1yAbY2MtvMW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qT64QOMvHOSt5fDZ3nTuR0UwYH+Gnquu
-	qQYmWtpPMxDwQI2La/p720lscuvdtFRTihRJ6eKc3xWm5Kmk8jSjypw/Thyf7voL
-	5JtzSzCPj0gP3ljziFq+P+bwOrzYFJuFaoddBpmpM/1dXx8oj08hH+6f60v4Leth
-	ZI0MGUZmu9E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD7CE96ED;
-	Thu,  4 Oct 2012 16:44:08 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35C0896EB; Thu,  4 Oct 2012
- 16:44:08 -0400 (EDT)
-In-Reply-To: <7vhaqaxawh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 04 Oct 2012 13:03:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E7AB91E-0E64-11E2-B7B4-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753881Ab2JDWCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2012 18:02:47 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:61740 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933719Ab2JDVUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2012 17:20:54 -0400
+Received: by mail-ob0-f174.google.com with SMTP id uo13so989201obb.19
+        for <git@vger.kernel.org>; Thu, 04 Oct 2012 14:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OeaOoOZjTRlzUrF1WFBlAEY8EoqfiTRk4bZ2uQ+LWsc=;
+        b=e0wS6Zt8mWYbR+b9oRileQTSX1zN0pORn+7EHdm5VDcYHixhJ66//O7nnr3wu+gl8Q
+         vNBv+YDyySPAvKQI9SFWn42WwuAy8mTF8+pl0VCJbQ1Nh32p6gUQAUFGFcjWw0m6V/z+
+         fheIsHcjdLyc/OIYXhpE8ZIJe8vZFz7JKr8mEF1G6xpmYR79owQ/ZsBW+Djy097BqMtt
+         X3LGLboYfyLqDM7sBdOikxTyEsWO0KB87LDwrv79N35wmeCGiD+dz+InMJAyaP49Oe+h
+         iLGsJplLDJTsV0xMBBPypF94F0T7g1t9ZvyRCFF4K5he3TWnTvBQxwPvzqB+xsX9bHZ4
+         cuVA==
+Received: by 10.182.86.165 with SMTP id q5mr5561094obz.23.1349385653990; Thu,
+ 04 Oct 2012 14:20:53 -0700 (PDT)
+Received: by 10.76.102.20 with HTTP; Thu, 4 Oct 2012 14:20:53 -0700 (PDT)
+In-Reply-To: <506DEC50.7090402@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207024>
 
-Junio C Hamano <gitster@pobox.com> writes:
+<ignore on commit>
+> I'm not sure to follow everything... But looks like:
+>
+>    $ git add -p
+>
+> or
+>
+>    $ git add -i
+>
+> should do what you want, no?
+>
+> You select the hunks to commit, let over the "hacks" and then
+>
+>    $ git commit
 
-> It gets more curious, though.
-> ...
-> However.
->
-> If I revert 5802f81 that updated the implementation of fmt-merge-msg
-> on top of 'master', *without* reverting 34f5130^2, I get ~4.5 seconds.
-> As we are doing an "Already up-to-date" pull, I thought there is no
-> need to call fmt-merge-msg in the first place?
->
-> Which may indicate that "git merge" has been broken for a long time
-> and making unnecessary calls.
->
-> Hrmmm...
+Similar but not quite; the idea is that you know that there is some
+code (I'm just talking about files here, so lets ignore hunks for the
+moment) which is normally checked in but for a period of time you want
+it ignored. So you don't want it git ignored but at the same time you
+don't want to see these files in the list of modified files. The
+changelist concept allows you to "move" the files out of the way from
+the main modified section until you are ready to commit them. Perhaps
+an imaginary git status would help:
 
-Actually there is nothing curious about this.  "git pull" prepares
-the merge message before it calls "git rebase" or "git merge", and
-there is no fast-path that detects "Already up-to-date" in it.
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   some_staged_file.h
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   some_modified_file.h
+#
+# Changes ignored on commit:
+#
+#	modified:   some_other_modified_file.h
+
+Such that if you now did a git add -A, some_modified_file.h would then
+be staged but some_other_modified_file.h would stay put. Of course the
+name "ignored on commit" makes little sense in git terms, but I'm
+using it here as its the svn term. Its a "modified but temporarily
+ignored" or something.
+
+Cheers
+
+Marco
+-- 
+So young, and already so unknown -- Pauli
+
+blog: http://mcraveiro.blogspot.com
