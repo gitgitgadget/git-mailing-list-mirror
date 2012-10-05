@@ -1,88 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git 1.8.0.rc0.18.gf84667d trouble with "git commit -p file"
-Date: Fri, 5 Oct 2012 18:57:58 -0400
-Message-ID: <20121005225758.GA1202@sigill.intra.peff.net>
-References: <201210051420.q95EKjj3008300@netbook1.inf.utfsm.cl>
- <op.wlp1lws70aolir@keputer>
- <7vsj9ssgcp.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: keep leading slash when canonicalizing paths
+ (fallback case)
+Date: Fri, 5 Oct 2012 23:12:07 +0000
+Message-ID: <20121005231207.GA22903@dcvr.yhbt.net>
+References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
+ <1343468312-72024-7-git-send-email-schwern@pobox.com>
+ <20120728135502.GC9715@burratino>
+ <5014387C.50903@pobox.com>
+ <20121005070430.GA23572@elie.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Frans Klaver <fransklaver@gmail.com>, git@vger.kernel.org,
-	"Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
-	Conrad Irwin <conrad.irwin@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 06 00:58:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
+	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 01:12:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKGqT-00038x-OX
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 00:58:14 +0200
+	id 1TKH47-0001gb-9y
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 01:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136Ab2JEW6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 18:58:04 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42320 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752254Ab2JEW6C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 18:58:02 -0400
-Received: (qmail 2386 invoked by uid 107); 5 Oct 2012 22:58:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Oct 2012 18:58:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2012 18:57:58 -0400
+	id S1752810Ab2JEXMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2012 19:12:09 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33002 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752635Ab2JEXMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 19:12:08 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 370BA3F89D;
+	Fri,  5 Oct 2012 23:12:07 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vsj9ssgcp.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20121005070430.GA23572@elie.Belkin>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207126>
 
-On Fri, Oct 05, 2012 at 03:29:10PM -0700, Junio C Hamano wrote:
-
-> Assuming that the last step of what Horst did was "git commit -pm",
-> I think Git is wrong in this case.  When you tell "git commit" what
-> to commit, unless you give "-i" (aka "also") option, the command
-> makes a commit to record changes only from what you tell "git
-> commit" to commit, regardless of what you earlier did to the index.
-
-Yeah. Defaulting to "-o" would match the rest of git-commit's behavior
-much better.
-
-> This is one of the times I wish I said "No, you cannot have a pony".
-> The change was done without thinking things through, and reviewers
-> including me did not realize this particular downside.
-> [...]
-> Cf. 
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Noticed by forcing the fallback on and running tests.  Without this
+> patch, t9101.4 fails:
 > 
->   http://thread.gmane.org/gmane.comp.version-control.git/173033/focus=173246
+>  Bad URL passed to RA layer: Unable to open an ra_local session to \
+>  URL: Local URL 'file://homejrnsrcgit-scratch/t/trash%20directory.\
+>  t9101-git-svn-props/svnrepo' contains unsupported hostname at \
+>  /home/jrn/src/git-scratch/perl/blib/lib/Git/SVN.pm line 148
+> 
+> With it, the git-svn tests pass again.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Actually, I am not sure that thread or feature is to blame. Certainly it
-would have been an opportune time to notice the problem. But this issue
-goes back much further for "git commit --interactive", which has always
-assumed "-i" rather than "-o". This even predates the switch from shell
-to C; you can see the same behavior from 6cbf07e (git-commit: add a
---interactive option, 2007-03-05).
-
-I guess you could argue that "--interactive" and "--patch" should have
-different defaults, but I'm not sure I agree. They should both match
-what "git commit foo" does by default.
-
-> I think the right thing to do is to fix "git commit -p" so that it
-> starts from the HEAD (on a temporary index), just like how partial
-> commits are made with "git commit file1 file2".   Or just forbid it
-> when the index does not match HEAD.
-
-Agreed. I am inclined to call this a bugfix, though it does worry me
-slightly that we would be changing a behavior that has existed for so
-many years.
-
-We should probably also support explicit "-i -p" and "-o -p" options, as
-well (the former would give people who really want the existing behavior
-a way to get it). And the same for "--interactive". I can't say I'm
-excited about making all that work, though. Like you, I think it is more
-sane to use existing tools to inspect and tweak the index to your
-liking, and then commit.
-
--Peff
+Thanks for noticing this.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+and pushed to my master at git://bogomips.org/git-svn
