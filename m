@@ -1,87 +1,74 @@
-From: Marco Craveiro <marco.craveiro@gmail.com>
-Subject: Re: Ignore on commit
-Date: Fri, 5 Oct 2012 07:09:05 +0100
-Message-ID: <CAKRNd4w1LPEBxhfRNzSwwFDQen_Sif+EYQXcAxnJPP6GU-Q5nw@mail.gmail.com>
-References: <CAKRNd4w4Z-LS9O5ffkbTSZ0Guv4KCmWR=AtW3EpxQ2sSgazG=Q@mail.gmail.com>
-	<506DEC50.7090402@obry.net>
-	<CAKRNd4wbT_boRyFOOL_95FBW4ws8Zzz2ubVCfXuRSevzPdhW9g@mail.gmail.com>
-	<CAH5451mpJw4+noUF+FkZJS+Y2oq2ThFeG7wSOCdbVaMQPNgUJA@mail.gmail.com>
-	<CANgJU+XSYWObCsGVnWwaaSB9iZQnfU_y095uzEm5-YXMaUoU_w@mail.gmail.com>
-	<CAMK1S_jfdW3BepELgPPoUf3qWwmU-o3o8OpMVimdfkERUJkymQ@mail.gmail.com>
-	<CAH5451ki_JFntWZwxcUqvWKwZn62Vfg=MkF3xwiX1p3ARULQfA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 5/6] gitignore: do not do basename match with patterns
+ that have '**'
+Date: Fri, 05 Oct 2012 09:01:19 +0200
+Message-ID: <506E85BF.8010302@viscovery.net>
+References: <7v626q3hen.fsf@alter.siamese.dyndns.org> <1349336392-1772-1-git-send-email-pclouds@gmail.com> <1349336392-1772-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	demerphq <demerphq@gmail.com>, pascal@obry.net,
-	git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 09:01:32 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 09:01:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK1uc-0002NU-1w
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 09:01:30 +0200
+	id 1TK1uj-0002Ul-7t
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 09:01:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848Ab2JEHBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 03:01:20 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:39684 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751672Ab2JEHBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 03:01:19 -0400
-Received: by mail-oa0-f46.google.com with SMTP id h16so1406110oag.19
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 00:01:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Vgmgr7/yjM5Ga4EOrQM8uho/DFkX8RGQ0XySEQFbCjU=;
-        b=074aY7quoyDtW6F9EXkDE1iwSeUaOiG1HXMIOuntg3gCgNe3CAZjoq0o0x1bFzbd42
-         vtylY2qkPMMfE/5hR9/7tm1Pf0fUShEmfvHaWMNq3GkpXIStkW67Nlu8KZUZ/cGI26R7
-         u2+zI3W2UihaDDr8gS9+5SQqfqolr88NEEGZnLU4qNQBgpULtmBDIFiDz6P4omVRF01f
-         J57v81iIjzqqw8CAl3ca0/Gl4ElTeKb4WtyWe9psEdEYO0ThqOdbgzykJLnNRTvnxgp+
-         jgsEt0ncN7hruWRXXrNNwfo6NeJrdsvDyMH8hbKhkheT+5xMogAF1fuEs70zvGAuyP9x
-         4H7A==
-Received: by 10.60.12.42 with SMTP id v10mr6150323oeb.131.1349417345776; Thu,
- 04 Oct 2012 23:09:05 -0700 (PDT)
-Received: by 10.76.102.20 with HTTP; Thu, 4 Oct 2012 23:09:05 -0700 (PDT)
-In-Reply-To: <CAH5451ki_JFntWZwxcUqvWKwZn62Vfg=MkF3xwiX1p3ARULQfA@mail.gmail.com>
+	id S1752011Ab2JEHBZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 03:01:25 -0400
+Received: from so.liwest.at ([212.33.55.24]:30972 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751738Ab2JEHBY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2012 03:01:24 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.77)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1TK1uR-0004zk-Kz; Fri, 05 Oct 2012 09:01:19 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 58A5F1660F;
+	Fri,  5 Oct 2012 09:01:19 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <1349336392-1772-6-git-send-email-pclouds@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207078>
 
-<git update-index --assume-unchanged>
-> From the help page:
->
-> --assume-unchanged, --no-assume-unchanged
->     ...
->
->     This option can be also used as a coarse file-level mechanism to
-> ignore uncommitted changes in tracked files (akin to what .gitignore
->     does for untracked files).
->
-> Seems like it does everything required. I tested and it correctly
-> hides changes that I want hidden. The only thing I can't see how to do
-> is get git status to show files with the assume unchanged  bit set. I
-> think there is no way currently, but that might be a nice addition to
-> make the initial request feature complete. It could show either all
-> files with the bit set, or files with the bit set that have been
-> changed (or this could be configurable).
+Am 10/4/2012 9:39, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> - - If the pattern does not contain a slash '/', git treats it as
+> -   a shell glob pattern and checks for a match against the
+> -   pathname relative to the location of the `.gitignore` file
+> -   (relative to the toplevel of the work tree if not from a
+> -   `.gitignore` file).
+> + - If the pattern does not contain a slash '/' nor '**', git
+> +   treats it as a shell glob pattern and checks for a match
+> +   against the pathname relative to the location of the
+> +   `.gitignore` file (relative to the toplevel of the work tree
+> +   if not from a `.gitignore` file).
 
-This is indeed the solution outlined in [4] on my original post:
+> +test_expect_success '"**" with no slashes test' '
+> +	echo "a**f foo=3Dbar" >.gitattributes &&
+> +	cat <<\EOF >expect &&
+> +f: foo: unspecified
+> +a/f: foo: bar
+> +a/b/f: foo: bar
+> +a/b/c/f: foo: bar
+> +EOF
 
-http://gitready.com/intermediate/2009/02/18/temporarily-ignoring-files.html
+Should the above .gitattributes match nested paths, such as b/a/c/f?
 
-The presence in git status is quite important or else one has to
-change the regular workflow with a second status command.
+I think it should, because the user can easily say "/a**f" that nested
+paths should not be matched.
 
-Cheers
+But if it does not match, as your documentation update implies, which
+options does the user have to match nested paths? Only to add more
+patterns for each nested directory, such as "b/a**f".
 
-Marco
--- 
-So young, and already so unknown -- Pauli
-
-blog: http://mcraveiro.blogspot.com
+-- Hannes
