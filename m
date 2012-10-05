@@ -1,69 +1,71 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: erratic behavior commit --allow-empty
-Date: Fri, 5 Oct 2012 08:15:12 +0000 (UTC)
-Message-ID: <loom.20121004T190952-797@post.gmane.org>
-References: <CAB9Jk9BynCunFHRFhGKoyDA-qof1iu6w952sAgSs2_JWb8+U3A@mail.gmail.com> <506AA51E.9010209@viscovery.net> <7vzk449449.fsf@alter.siamese.dyndns.org> <CAB9Jk9CSW0ObJtgsfSwjf+k438=V8i7dP0p+YUehqdh2Z0k6tA@mail.gmail.com> <CABURp0pbX4Fk4sNWCicfF7Gm52-KTMBrasdi_XHnjtE2zmSBFg@mail.gmail.com> <CAB9Jk9CdYXZzPcM=YiwOUyKNQ=4uKpfs+HY7WpWBmqgQRw4SyA@mail.gmail.com> <CAJsNXTm5uhWYB+oiz=3WQQKFQ=i=+oO0L6cgGBB+2cm5BgfFCg@mail.gmail.com> <CAB9Jk9D5c-7QKkUFtur4rxBfiaPFzGaMi-+m=Owje_Aaoc6XJQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: =?koi8-r?B?7dXLz9fOycvP1yDtycjBycw=?= <m.mukovnikov@gmail.com>
+Subject: Bug report
+Date: Fri, 5 Oct 2012 14:13:49 +0400
+Message-ID: <61FEBCE8-8206-498C-B3D4-ECD6AF192EE0@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.1 \(1498\))
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 11:40:20 2012
+X-From: git-owner@vger.kernel.org Fri Oct 05 12:14:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK4OI-0005FF-H4
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 11:40:18 +0200
+	id 1TK4uz-0002K6-RN
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 12:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab2JEJkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 05:40:06 -0400
-Received: from plane.gmane.org ([80.91.229.3]:50203 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755058Ab2JEJkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 05:40:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TK4O4-00053v-27
-	for git@vger.kernel.org; Fri, 05 Oct 2012 11:40:04 +0200
-Received: from host-188-174-201-193.customer.m-online.net ([188.174.201.193])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 11:40:03 +0200
-Received: from lars by host-188-174-201-193.customer.m-online.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 11:40:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.174.201.193 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11)
+	id S1755165Ab2JEKN4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 06:13:56 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:49318 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754647Ab2JEKNz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2012 06:13:55 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n3so1202855lbo.19
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 03:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version:x-mailer;
+        bh=N21Pz/U7kWWzSwmHChQ1SggDqzFlpg+zrPJ/nOUTtTs=;
+        b=NLEQQKgkrT/nphgZ4gJwrHPLWILBKBXBqDM5FvzaXQ45QYl5ViZhTTbrEQa9EojyJr
+         bE8EhuPsbJTkUzoVRG0h9ndzpv/4Df2NjcctNH7ylbNEekrUDslnAwuymKSVJDqAGSTP
+         dCAKxmsFRB14y12KcPdSTAGW6kSULunlF7Y5hlolbjeghtDri+aub3t5xy7Y7PCK6EKu
+         Cf2ccIb1u/LWex34IHvasGMXn55XYR/41Qo2Ep21JAy2/d6si+olg4ZITyXYUdL73NHQ
+         mrlNV3FfT5wGDl5nPBHxQC7KbSu2n7wdMcf2Rm0oi6TuigHL/Ahj1UZsn7ggSeuK9ePa
+         AH0Q==
+Received: by 10.112.103.71 with SMTP id fu7mr3544165lbb.21.1349432033671;
+        Fri, 05 Oct 2012 03:13:53 -0700 (PDT)
+Received: from 192.168.215.200 ([213.232.243.233])
+        by mx.google.com with ESMTPS id fj1sm3015728lbb.8.2012.10.05.03.13.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Oct 2012 03:13:52 -0700 (PDT)
+X-Mailer: Apple Mail (2.1498)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207093>
 
-Angelo Borsotti <angelo.borsotti <at> gmail.com> writes:
-> take a git commit without --allow-empty: if the trees are equal, it
-> creates no commit,
-> and if the trees are different it creates one.
-> Take then a git commit --allow-empty: if the trees are equal it may
-> create a commit or
-> not depending on the parent, message, author and date; if the trees
-> are different it
-> creates a commit.
-> So, the statement does not apply to commits in general.
+There's a problem using git with files having cyrillic '=CA' in their n=
+ame, git just can't track them.
 
-It does (as already shown to you). The ID of a commit object depends on
-the author, the time, the tree, and the commit message (did I forget
-something?). If all these are equal, no new physical object will be
-created.
+uname: Darwin 12.2.0 Darwin Kernel Version 12.2.0: Sat Aug 25 00:48:52 =
+PDT 2012; root:xnu-2050.18.24~1/RELEASE_X86_64 x86_64
+git version: 1.7.12.1 (from macports)
 
-Independent of this: If you are on a branch "foo" pointing to a commit A
-and successfully do a commit (with --allow-empty or not), "foo" will
-afterwards point to a commit B different from A. So, a successful
-"git commit (--allow-empty)" will always add a commit to the branch
-you are on.
+Steps to reproduce:
+- git init
+- touch test_=CA
+- git status (should be "untracked files present")
+- git add test_=CA
+- git status
 
-  -- Lars.
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	"test_\320\270\314\206"
+nothing added to commit but untracked files present (use "git add" to t=
+rack)
+
+Could this be helped somehow?
