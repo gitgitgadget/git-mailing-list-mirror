@@ -1,96 +1,77 @@
-From: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
-Subject: Re: Fw: How do I git-push to an FTP server?
-Date: Fri, 5 Oct 2012 21:38:10 +0400
-Message-ID: <20121005213810.28199bf3504fd64b87d0bf6e@domain007.com>
-References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
-	<CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/10] attr: more matching optimizations from .gitignore
+Date: Fri, 05 Oct 2012 11:48:54 -0700
+Message-ID: <7vy5jku549.fsf@alter.siamese.dyndns.org>
+References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
+ <1349412069-627-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-        git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, August Karlstrom
- <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-To: Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-X-From: git-users+bncBCWKX34CSUCBBBVWXSBQKGQEHJG5BZQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Oct 05 19:38:21 2012
-Return-path: <git-users+bncBCWKX34CSUCBBBVWXSBQKGQEHJG5BZQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-wi0-f186.google.com ([209.85.212.186])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 20:49:11 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBCWKX34CSUCBBBVWXSBQKGQEHJG5BZQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1TKBqv-00010C-HA
-	for gcggu-git-users@m.gmane.org; Fri, 05 Oct 2012 19:38:21 +0200
-Received: by mail-wi0-f186.google.com with SMTP id hm2sf276933wib.3
-        for <gcggu-git-users@m.gmane.org>; Fri, 05 Oct 2012 10:38:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :in-reply-to:references:x-mailer:mime-version:x-original-sender
-         :x-original-authentication-results:reply-to:precedence:mailing-list
-         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=+DpoLvtHIoOq1UG3UH5/k0dyv+Oc2+YVHtZckqLxVEs=;
-        b=v/6ctHquYuajG6lwsq6QANmrVO/cLshUx2vTfehVpnZs/82uJ/X89ilcEDx4LIsE5d
-         e5R3ajnKMddb0SYIAp0CWRj1ZZv3hCWSat4AL5iNgP8HoUu0q+VEJGgRgQxuh43t0wKg
-         yxFZ66fCcye+vNXSOTc5nxB1DFMsB7dwbYifHBxgtKbtw8FyUFravv8sTmSW50l1ZV5o
-         1ppLF3V3IktCqhz2/AzEwcM9MHANmxHpDF+RGA/WSLCVwE5Tq36jxoGd0KUOOyeGcT2n
-         sj/L61Zu8nEFRxMcpQUnDUKquLQZ0A9y2ZROMPVP31vM+pf5Za1rKD3fs9XtSD3UhXmq
-         
-Received: by 10.204.129.220 with SMTP id p28mr921864bks.1.1349458695458;
-        Fri, 05 Oct 2012 10:38:15 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.204.129.197 with SMTP id p5ls4870706bks.9.gmail; Fri, 05 Oct
- 2012 10:38:14 -0700 (PDT)
-Received: by 10.204.4.211 with SMTP id 19mr663121bks.5.1349458694489;
-        Fri, 05 Oct 2012 10:38:14 -0700 (PDT)
-Received: by 10.204.4.211 with SMTP id 19mr663120bks.5.1349458694475;
-        Fri, 05 Oct 2012 10:38:14 -0700 (PDT)
-Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
-        by gmr-mx.google.com with ESMTPS id k7si1053709bks.2.2012.10.05.10.38.14
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Oct 2012 10:38:14 -0700 (PDT)
-Received-SPF: neutral (google.com: 84.204.203.130 is neither permitted nor denied by best guess record for domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) client-ip=84.204.203.130;
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id q95HcAtj011073;
-	Fri, 5 Oct 2012 21:38:11 +0400
-In-Reply-To: <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-Mailer: Sylpheed 3.2.0 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Original-Sender: flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
- 84.204.203.130 is neither permitted nor denied by best guess record for
- domain of flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org) smtp.mail=flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207113>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TKCxQ-0000eH-GT
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 20:49:08 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932759Ab2JESs6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 14:48:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35414 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932101Ab2JESs5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2012 14:48:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CB488E56;
+	Fri,  5 Oct 2012 14:48:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=NjZyyC+MZ9Jg
+	HY8oNl1wIOYsM8A=; b=b3nzuFHSxHt9ReTe0i1T7eIuu22fZ8y7ArTiS5e84wdp
+	2bcu6eUFzvQEwuy5wGq1gEI/DV9x4HA5rvoeQlXYhXPwG5iUrRNqHpzhbsS85p7n
+	Zq/nrSpflOaXeiQ5QSe0MA8bQe8THLXye/q97OvjrnV3FmWnQgRwwekc402jr5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=R4YrJh
+	4Y3NH4vx/ppHRUwVwA5CuKJrr1m0BKQHhNtZWZqirkt1GuaDhNWF3vEEXCsSn9Hv
+	SB4/Nx1L4yGWv9blXz7Sd/mRLJpdvbtatFYEg0mq5Y0kyf6ORSMubn2C1hvV7e7H
+	yMjCn6FEf07KBIhxP9Oyd3OzgjwxECw8sjCrQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AE4E8E55;
+	Fri,  5 Oct 2012 14:48:56 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05F358E54; Fri,  5 Oct 2012
+ 14:48:55 -0400 (EDT)
+In-Reply-To: <1349412069-627-5-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpCU5n4buNYw==?= Duy"'s message of "Fri, 5 Oct
+ 2012 11:41:03 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 50E70FC6-0F1D-11E2-8EAD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207114>
 
-On Fri, 5 Oct 2012 15:46:33 +0200
-Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> > On the git-users mailing list we're trying someone to help with
-> > running `git push` over FTP.  That person is runnig Git 1.7.9.5
-> > on Ubuntu 12.04.
-> 
-> I don't think vanilla git supports pushing over ftp.
-> 
-> There are plugins like https://github.com/resmo/git-ftp tho.
+> +Unlike `.gitignore`, negative patterns are not supported.
+> +Patterns that match directories are also not supported.
 
-git-ftp's functionality is completely orthogonal to `git push` -- this
-script allows to sync a tree referenced by the specified Git commit
-with a remote directory accessible via FTP, transferring only
-new and modified files and deleting disappeared files and directories.
-IOW, git-ftp is a (very handy) Git-powered *deployment* tool, not a
-backend for `git push` or something like that.
+Is "are not supported" the right phrasing?
 
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+I think it makes perfect sense not to forbid "!path attr1", because
+it is unclear what it means (e.g. "path -attr1" vs "path !attr1").
+So I would say "Negative patterns are forbidden as they do not make
+any sense".
+
+But for the latter, I think it makes a lot more sense to just accept
+"path/ attr1" and doing nothing.  The user requests to set an
+attribute to "path" that has to be a directory, and there is nothing
+wrong in such a request in itself.  But nothing in git asks for
+attributes for directories (because we do not track directories),
+and such a request happens to be a no-op.
