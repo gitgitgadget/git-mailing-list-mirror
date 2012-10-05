@@ -1,57 +1,78 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: Fw: [git-users] How do I git-push to an FTP server?
-Date: Fri, 5 Oct 2012 15:46:33 +0200
-Message-ID: <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
-References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
+Date: Fri, 05 Oct 2012 16:15:39 +0200
+Message-ID: <m2y5jlyph0.fsf@igel.home>
+References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
+	<CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com>
+	<7vbogj5sji.fsf@alter.siamese.dyndns.org>
+	<506D5837.6020708@alum.mit.edu>
+	<7vobki19ax.fsf@alter.siamese.dyndns.org> <m2391t1589.fsf@igel.home>
+	<vpqpq4x14ox.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, git-users@googlegroups.com,
-	August Karlstrom <fusionfile@gmail.com>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Oct 05 15:47:20 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Oct 05 16:15:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK8FL-0007Il-7A
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 15:47:19 +0200
+	id 1TK8h0-0002Eg-2f
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 16:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699Ab2JENrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 09:47:07 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:60932 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751317Ab2JENrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 09:47:06 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so3787131iea.19
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 06:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=55f4SKVgXfXcsY4DeeDr5+rnlCiHQSx30RgXL7YR5GA=;
-        b=y/rRxSTBYXTEU3Ll82d8q+LIX5Vw8r2GtVdGECIpIcGdw9XyP1nESOLdA7vA334pJX
-         FuZlpO64UTomKtzWp+Bgr2FCF2ES/iElB62bNAAZXtsxxrMUsIRMbIw6bEvA0J3ohib6
-         TfA3EJGgctRB+o8aPUHmAGuHI6rO88fiUKXoBYTGZhugFko1FC1CJV+HzBcm4epAf4hI
-         6aVD/jd/TL8/X4p2oAb7IL9h79ylUP0EBdXQQF4M3TT+FOq9aMbAla1hnP2Wuvz2Hm7E
-         J36G1J+06LeewzKdmoT7vkBWkzzFwxP73STxqCiAjtiTo9KM4qiWBAKnakRCzCzTTmuP
-         R/mQ==
-Received: by 10.42.61.196 with SMTP id v4mr7129835ich.24.1349444823927; Fri,
- 05 Oct 2012 06:47:03 -0700 (PDT)
-Received: by 10.50.46.198 with HTTP; Fri, 5 Oct 2012 06:46:33 -0700 (PDT)
-In-Reply-To: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
+	id S1755995Ab2JEOPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2012 10:15:43 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:40975 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754012Ab2JEOPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 10:15:42 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3XYCg02wmHz4KK3f;
+	Fri,  5 Oct 2012 16:15:40 +0200 (CEST)
+X-Auth-Info: XX9STeoMe7BedSwPIg90NiUfZDPCkvMuZOjTHPxVGkk=
+Received: from igel.home (ppp-93-104-156-246.dynamic.mnet-online.de [93.104.156.246])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3XYCg01cl5zbbhK;
+	Fri,  5 Oct 2012 16:15:40 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id DE237CA2B7; Fri,  5 Oct 2012 16:15:39 +0200 (CEST)
+X-Yow: After THIS, let's go to PHILADELPHIA and have TRIPLETS!!
+In-Reply-To: <vpqpq4x14ox.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Fri, 05 Oct 2012 14:30:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207107>
 
-> On the git-users mailing list we're trying someone to help with
-> running `git push` over FTP.  That person is runnig Git 1.7.9.5
-> on Ubuntu 12.04.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-I don't think vanilla git supports pushing over ftp.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> When we require "x/**/y", I think we still want it to match "x/y".
+>>
+>> FWIW, in bash (+extglob), ksh and zsh it doesn't.
+>
+> You're right about bash, but I see the opposite for zsh and ksh:
+>
+> zsh$ echo x/**/y
+> x/y x/z/y
+>
+> ksh$ echo x/**/y
+> x/y x/z/y
 
-There are plugins like https://github.com/resmo/git-ftp tho.
+Looks like this is different between filename expansion and case pattern
+matching (I only tested the latter).
 
-Philippe
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
