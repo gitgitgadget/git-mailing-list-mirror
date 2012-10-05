@@ -1,126 +1,111 @@
-From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-Subject: Re: Fw: How do I git-push to an FTP server?
-Date: Fri, 05 Oct 2012 14:48:40 -0700
-Message-ID: <7vwqz4si87.fsf@alter.siamese.dyndns.org>
-References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
- <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
- <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git 1.8.0.rc0.18.gf84667d trouble with "git commit -p file"
+Date: Fri, 05 Oct 2012 15:29:10 -0700
+Message-ID: <7vsj9ssgcp.fsf@alter.siamese.dyndns.org>
+References: <201210051420.q95EKjj3008300@netbook1.inf.utfsm.cl>
+ <op.wlp1lws70aolir@keputer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Konstantin Khomoutov
- <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, 
- git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,  August Karlstrom <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
- Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Sverre Rabbelier
- <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-To: Thomas Ferris Nicolaisen <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-X-From: git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Oct 05 23:48:51 2012
-Return-path: <git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-qa0-f58.google.com ([209.85.216.58])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
+	Jeff King <peff@peff.net>,
+	Conrad Irwin <conrad.irwin@gmail.com>
+To: "Frans Klaver" <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 00:29:26 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1TKFlK-0001Vu-Sw
-	for gcggu-git-users@m.gmane.org; Fri, 05 Oct 2012 23:48:51 +0200
-Received: by mail-qa0-f58.google.com with SMTP id n12sf810640qat.3
-        for <gcggu-git-users@m.gmane.org>; Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=x-beenthere:received-spf:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
-         :x-original-sender:x-original-authentication-results:reply-to
-         :precedence:mailing-list:list-id:x-google-group-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type;
-        bh=y4tG3jPwXiaUQZJXNIrennkvP3dT7bsQ1M64XVb3ndQ=;
-        b=Z7tIuXB3Mezz7iKBh0vPEbyfatkaw1j4K/VA5szIciX7NdXoByJgpcjlSIVgBObffa
-         1x3k/BfM5r35czj+yIxCBt9B6SpilVM09GzxxVvpvoJ06bRNuPvffseMv2X1C5RRis/o
-         AbCCs01G6pn4/QCuMlKPH8PQ5bXDWsMtXz3Jc3VLiBR2G1+D7bZNSPhAtBjQw7dAaI8i
-         BeeSSQQ7l/R65Tf9EVkPWkLSO/9RC8pd1XHqc+QhHz8928drKPgQinK2WDvjp3XVqtKU
-         DhIq0i2zryh2WGTSTeZiS8/gJriKgb1j+2T2kDBAA8yVUdxX 
-Received: by 10.224.10.82 with SMTP id o18mr3262169qao.2.1349473724712;
-        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.224.180.143 with SMTP id bu15ls7452424qab.4.gmail; Fri, 05 Oct
- 2012 14:48:44 -0700 (PDT)
-Received: by 10.224.78.209 with SMTP id m17mr8310618qak.3.1349473724256;
-        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
-Received: by 10.224.78.209 with SMTP id m17mr8310617qak.3.1349473724245;
-        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ek33si2398355qcb.0.2012.10.05.14.48.44;
-        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1TKGOa-0005lI-4s
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 00:29:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932727Ab2JEW3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2012 18:29:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33006 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757513Ab2JEW3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 18:29:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C548979C;
-	Fri,  5 Oct 2012 17:48:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D8D38084;
+	Fri,  5 Oct 2012 18:29:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oDONEWKLfo9ZTPLgZMMB9tcEfxY=; b=Kn34TT
+	vX7KjTkWMc5vAJ/1Suwuiiy+vlYchsSmBmOiIWik0b2T+t15WPX3q4pAQ3CkA6/m
+	7QJn/Lr2uZ2dXc5Qmk7sWJNzWWsjecs/K0GLG8i7CNVR4hu/HeHlXQQY9NCdI83Z
+	6BtjgJzgQlgTtJHGd3xvj8sQ28X7aOWi994wA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eeVtGqMXWaV28L3okGmzADDck77ZuNA2
+	GcIqC6X4MQQ2RtBsRDRn0OYfqj3UTTNg5HhNMpWGR7QLZpbVmJcu1MCLZnKxItN1
+	JM+XQvNgr4n1YnT+2lVx59pqMSA0eUmzrP3V2XCj/aMLgU9ZOboWMGsXT1ZOFx/i
+	WVp3guMymvI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87D82979B;
-	Fri,  5 Oct 2012 17:48:43 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AC9D8081;
+	Fri,  5 Oct 2012 18:29:12 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDE259799; Fri,  5 Oct 2012
- 17:48:41 -0400 (EDT)
-In-Reply-To: <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org> (Thomas
- Ferris Nicolaisen's message of "Fri, 5 Oct 2012 17:21:26 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1F598080; Fri,  5 Oct 2012
+ 18:29:11 -0400 (EDT)
+In-Reply-To: <op.wlp1lws70aolir@keputer> (Frans Klaver's message of "Fri, 05
+ Oct 2012 21:55:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6DD83722-0F36-11E2-9948-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates
- 208.72.237.35 as permitted sender) smtp.mail=junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org;
- dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
- <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207123>
+X-Pobox-Relay-ID: 161DAB7E-0F3C-11E2-90BD-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207124>
 
-Thomas Ferris Nicolaisen <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> writes:
+"Frans Klaver" <fransklaver@gmail.com> writes:
 
-> On Fri, Oct 5, 2012 at 3:46 PM, Philippe Vaucher
-> <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
->>
->> > On the git-users mailing list we're trying someone to help with
->> > running `git push` over FTP.  That person is runnig Git 1.7.9.5
->> > on Ubuntu 12.04.
->>
->> I don't think vanilla git supports pushing over ftp.
->>
+> On Fri, 05 Oct 2012 16:20:45 +0200, Horst H. von Brand
+> <vonbrand@inf.utfsm.cl> wrote:
 >
-> At least according to the documentation[1], "Git natively supports [...] ftp".
+>> What I did:
+>>
+>> - New file images/coins.asy ~~-> 'git add images/coins.asy'
+>> - Started adding new stuff to fg.tex
+>> - Noticed a old bug in fg.tex, fixed that one
+>> - Did 'git -pm "Some message"' and selected just the bugfix
+>>
+>> But git created a commit _including_ the new file. Tried to go back:
 >
-> This could need some clarification if pushing over ftp is not supported.
+> Exactly what's supposed to happen. "git add" tells git you want to add
+> the file to the index. The index is what you're going to commit later
+> on.
 
-The commit 5ce4f4e (Documentation/urls: Rewrite to accomodate
-<transport>::<address>, 2010-04-06) that came from
+Assuming that the last step of what Horst did was "git commit -pm",
+I think Git is wrong in this case.  When you tell "git commit" what
+to commit, unless you give "-i" (aka "also") option, the command
+makes a commit to record changes only from what you tell "git
+commit" to commit, regardless of what you earlier did to the index.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/145196/focus=145205
+And choosing what to add via the interactive interface is in the
+same spirit as telling what to commit to "git commit", so it should
+behave the same.
 
-was supposed to be just a clarification of the document, but it
-added ftp to the list without justification.  Its earlier round is
-this
+This is one of the times I wish I said "No, you cannot have a pony".
+The change was done without thinking things through, and reviewers
+including me did not realize this particular downside.  My accepting
+this misfeature (or a poorly implemented feature that has a
+potential to be useful) was essentially me saying:
 
-    http://thread.gmane.org/gmane.comp.version-control.git/143499
+    When making a commit that does not match my working tree state,
+    I always check with "diff --cached" to make sure what I think I
+    am committing matches what I am committing, so I won't use such
+    a lazy option myself.  I am not excited to think things through
+    to see what possible pitfalls the feature may have for you; I'll
+    let you guys hang yourself with that long rope.
 
-and it did not mention ftp; I wonder why we missed this addition
-during the review process.
+And we are seeing a backfire from that "not bothering to think
+things thorough".
 
-The ftp transport might have worked for fetching in the distant past
-for "dumb and slow" commit walking fetches, but it was never
-supposed to work with any kind of pushes as far as I know.  I
-wouldn't be surprised if the dumb and slow commit walking fetch no
-longer works with ftp.
+I think the right thing to do is to fix "git commit -p" so that it
+starts from the HEAD (on a temporary index), just like how partial
+commits are made with "git commit file1 file2".   Or just forbid it
+when the index does not match HEAD.
 
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
+Cf. 
+
+  http://thread.gmane.org/gmane.comp.version-control.git/173033/focus=173246
