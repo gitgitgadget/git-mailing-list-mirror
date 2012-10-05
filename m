@@ -1,70 +1,94 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: git 1.8.0.rc0.18.gf84667d trouble with "git commit -p file"
-Date: Fri, 05 Oct 2012 11:20:45 -0300
-Message-ID: <201210051420.q95EKjj3008300@netbook1.inf.utfsm.cl>
+From: Thomas Ferris Nicolaisen <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Fw: How do I git-push to an FTP server?
+Date: Fri, 5 Oct 2012 17:21:26 +0200
+Message-ID: <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
+References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
+	<CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 16:31:04 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Konstantin Khomoutov <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, 
+	git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, August Karlstrom <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBCUYJD4C7IMBB5XVXOBQKGQEHDSNGRI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Oct 05 17:21:35 2012
+Return-path: <git-users+bncBCUYJD4C7IMBB5XVXOBQKGQEHDSNGRI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-vb0-f58.google.com ([209.85.212.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK8va-0004lb-1K
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 16:30:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756048Ab2JEOas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 10:30:48 -0400
-Received: from zimbra.inf.utfsm.cl ([200.1.19.17]:33004 "EHLO
-	zimbra.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754709Ab2JEOar (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 10:30:47 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2012 10:30:47 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.inf.utfsm.cl (Postfix) with ESMTP id 4A4B01813A9;
-	Fri,  5 Oct 2012 11:20:46 -0300 (CLST)
-X-Virus-Scanned: amavisd-new at zimbra.inf.utfsm.cl
-Received: from zimbra.inf.utfsm.cl ([127.0.0.1])
-	by localhost (zimbra.inf.utfsm.cl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ptqf8JmfLg7s; Fri,  5 Oct 2012 11:20:46 -0300 (CLST)
-Received: from quelen.inf.utfsm.cl (unknown [IPv6:2800:270:c:0:201:29ff:fefc:bb25])
-	by zimbra.inf.utfsm.cl (Postfix) with ESMTPS id 3833118138C;
-	Fri,  5 Oct 2012 11:20:46 -0300 (CLST)
-Received: from netbook1.inf.utfsm.cl (ip64.4.priv.inf.utfsm.cl [10.10.4.64])
-	by quelen.inf.utfsm.cl (8.14.5/8.14.5) with ESMTP id q95EKjJp026888;
-	Fri, 5 Oct 2012 11:20:45 -0300
-Received: from netbook1.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by netbook1.inf.utfsm.cl (8.14.5/8.14.5) with ESMTP id q95EKjj3008300;
-	Fri, 5 Oct 2012 11:20:45 -0300
-Content-ID: <8298.1349446845.1@netbook1.inf.utfsm.cl>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207108>
+	(envelope-from <git-users+bncBCUYJD4C7IMBB5XVXOBQKGQEHDSNGRI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1TK9iX-0007Rx-PH
+	for gcggu-git-users@m.gmane.org; Fri, 05 Oct 2012 17:21:33 +0200
+Received: by mail-vb0-f58.google.com with SMTP id p1sf1500769vbi.3
+        for <gcggu-git-users@m.gmane.org>; Fri, 05 Oct 2012 08:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=wmPRS1/tVhEd+MXjQN3o92ArdAYJAzRZYAUN4mHLeZQ=;
+        b=UMGd1g+x3yfBMg5qD4IPAiTZave7qby5KQJBNoZX2mGa6du6xgA6f0wNAEuFqBM8vg
+         B8Ntkj22cYxKHSJVG8Psav18Fuk6XqlMAHJwDogQ6u1XsdJ7wikaLLoI0sVbOjoe+wnj
+         XvUxSU5b4CjgrdE1trizAO+4U2FwSxI4BeKuIHd98N5WhpMbkH1mmLhc3gxYwcn3N8DP
+         vsIkU/iKR8GyKguv6kSLMf9bSROEZsBN+RBSutuNniQedsf8M8VWPGVuBdm4H/MDePrk
+         uTc4JsIlJ09YXzVN6ESNu5AL8RyQn9E/HG70mlR6zZ2QmCyDCi8kNJ1AEq2znDt0lEDL
+         A2SA==
+Received: by 10.50.217.164 with SMTP id oz4mr657893igc.6.1349450487169;
+        Fri, 05 Oct 2012 08:21:27 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.50.197.170 with SMTP id iv10ls956705igc.4.gmail; Fri, 05 Oct
+ 2012 08:21:26 -0700 (PDT)
+Received: by 10.42.19.199 with SMTP id d7mr5394599icb.11.1349450486468;
+        Fri, 05 Oct 2012 08:21:26 -0700 (PDT)
+Received: by 10.42.19.199 with SMTP id d7mr5394598icb.11.1349450486458;
+        Fri, 05 Oct 2012 08:21:26 -0700 (PDT)
+Received: from mail-oa0-f44.google.com (mail-oa0-f44.google.com [209.85.219.44])
+        by gmr-mx.google.com with ESMTPS id dd6si203595igc.0.2012.10.05.08.21.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Oct 2012 08:21:26 -0700 (PDT)
+Received-SPF: pass (google.com: domain of tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.219.44 as permitted sender) client-ip=209.85.219.44;
+Received: by mail-oa0-f44.google.com with SMTP id n5so2256406oag.31
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 05 Oct 2012 08:21:26 -0700 (PDT)
+Received: by 10.182.179.100 with SMTP id df4mr7426324obc.59.1349450486304;
+ Fri, 05 Oct 2012 08:21:26 -0700 (PDT)
+Received: by 10.60.21.226 with HTTP; Fri, 5 Oct 2012 08:21:26 -0700 (PDT)
+In-Reply-To: <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-Original-Sender: tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.219.44 as permitted sender)
+ smtp.mail=tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass header.i=@gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207109>
 
-What I did:
+On Fri, Oct 5, 2012 at 3:46 PM, Philippe Vaucher
+<philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>
+> > On the git-users mailing list we're trying someone to help with
+> > running `git push` over FTP.  That person is runnig Git 1.7.9.5
+> > on Ubuntu 12.04.
+>
+> I don't think vanilla git supports pushing over ftp.
+>
 
-- New file images/coins.asy ~~-> 'git add images/coins.asy'
-- Started adding new stuff to fg.tex
-- Noticed a old bug in fg.tex, fixed that one
-- Did 'git -pm "Some message"' and selected just the bugfix
+At least according to the documentation[1], "Git natively supports [...] ftp".
 
-But git created a commit _including_ the new file. Tried to go back:
+This could need some clarification if pushing over ftp is not supported.
 
-- 'git reset HEAD^'
+[1] http://www.kernel.org/pub/software/scm/git/docs/git-push.html#URLS
 
-Now the new file isn't staged anymore
-
-
-What I expected to happen:
-
-- Only the explicitly selected chunks commited
-- No "losing staged changes"
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile 2340000       Fax:  +56 32 2797513
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
