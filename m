@@ -1,58 +1,93 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: keep leading slash when canonicalizing paths
- (fallback case)
-Date: Fri, 5 Oct 2012 23:12:07 +0000
-Message-ID: <20121005231207.GA22903@dcvr.yhbt.net>
-References: <1343468312-72024-1-git-send-email-schwern@pobox.com>
- <1343468312-72024-7-git-send-email-schwern@pobox.com>
- <20120728135502.GC9715@burratino>
- <5014387C.50903@pobox.com>
- <20121005070430.GA23572@elie.Belkin>
+From: Jeff King <peff@peff.net>
+Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
+Date: Fri, 5 Oct 2012 19:21:08 -0400
+Message-ID: <20121005232108.GA7996@sigill.intra.peff.net>
+References: <20121004141454.GA246@x4>
+ <20121004184314.GA15389@sigill.intra.peff.net>
+ <7v391ux7im.fsf@alter.siamese.dyndns.org>
+ <7vvceqvses.fsf@alter.siamese.dyndns.org>
+ <7vmx01x3s4.fsf@alter.siamese.dyndns.org>
+ <7vehlcu091.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael G Schwern <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 06 01:12:19 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 01:21:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKH47-0001gb-9y
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 01:12:19 +0200
+	id 1TKHCw-0006Ei-I1
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 01:21:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810Ab2JEXMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 19:12:09 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33002 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752635Ab2JEXMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 19:12:08 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 370BA3F89D;
-	Fri,  5 Oct 2012 23:12:07 +0000 (UTC)
+	id S1753042Ab2JEXVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2012 19:21:12 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42344 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752548Ab2JEXVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 19:21:11 -0400
+Received: (qmail 2566 invoked by uid 107); 5 Oct 2012 23:21:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Oct 2012 19:21:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2012 19:21:08 -0400
 Content-Disposition: inline
-In-Reply-To: <20121005070430.GA23572@elie.Belkin>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vehlcu091.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207127>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Noticed by forcing the fallback on and running tests.  Without this
-> patch, t9101.4 fails:
-> 
->  Bad URL passed to RA layer: Unable to open an ra_local session to \
->  URL: Local URL 'file://homejrnsrcgit-scratch/t/trash%20directory.\
->  t9101-git-svn-props/svnrepo' contains unsupported hostname at \
->  /home/jrn/src/git-scratch/perl/blib/lib/Git/SVN.pm line 148
-> 
-> With it, the git-svn tests pass again.
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+On Fri, Oct 05, 2012 at 01:34:02PM -0700, Junio C Hamano wrote:
 
-Thanks for noticing this.
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
-and pushed to my master at git://bogomips.org/git-svn
+> OK, I think I am convinced myself that this patch is the right fix.
+> 
+> The performance regression Markus saw is in fmt-merge-message, and
+> it is caused by the updated remove_redundant() that is used by
+> get_merge_bases_many() and reduce_heads().  On the topic branch, all
+> callers of reduce_heads() were passing commits that are already
+> parsed, but before the topic was merged to 'master', we added one
+> more caller to reduce_heads() on the 'master' front that passed an
+> unparsed commit, which is why the problem surfaced at that merge.
+
+Thanks for tracking it down. That makes a lot of sense with the results
+we are seeing.
+
+> It might make sense to assert or die in commit_list_insert_by_date()
+> when a caller mistakenly pass an unparsed commit object to prevent
+> this kind of breakages in the future.
+
+I wonder if it would be too much to just have commit_list_insert_by_date
+call parse_commit. It is, after all, the exact moment when we need to
+have the date valid (and by waiting until the last minute, we can
+potentially avoid parses that would not otherwise need to happen). The
+overhead in the common case should basically be the same as an assert:
+checking that commit->object.parsed is true (we can always inline that
+bit of parse_commit if we have to).
+
+Of course, in this case it is not just commit_list_insert_by_date that
+cares. paint_down_to_common also want commit->parents to be valid; I'm
+surprised that dealing with unparsed commits did not also reveal an
+error there.
+
+In an object-oriented world, we would always get the attributes of a
+commit through accessors that made sure the object was parsed. That
+would be nicer, but it would also mean paying for the "if (parsed)"
+conditional a lot more frequently.
+
+> > @@ -617,6 +618,8 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
+> >  
+> >  	one->object.flags |= PARENT1;
+> >  	commit_list_insert_by_date(one, &list);
+> > +	if (!n)
+> > +		return list;
+> >  	for (i = 0; i < n; i++) {
+> >  		twos[i]->object.flags |= PARENT2;
+> >  		commit_list_insert_by_date(twos[i], &list);
+
+This seems like an obvious optimization, but does it really have
+anything to do with the patch at hand?
+
+-Peff
