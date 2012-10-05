@@ -1,78 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: What's cooking in git.git (Oct 2012, #01; Tue, 2)
-Date: Fri, 05 Oct 2012 14:30:54 +0200
-Message-ID: <vpqpq4x14ox.fsf@grenoble-inp.fr>
+Date: Fri, 5 Oct 2012 20:21:32 +0700
+Message-ID: <20121005132132.GA13591@do>
 References: <7vmx045umh.fsf@alter.siamese.dyndns.org>
-	<CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com>
-	<7vbogj5sji.fsf@alter.siamese.dyndns.org>
-	<506D5837.6020708@alum.mit.edu>
-	<7vobki19ax.fsf@alter.siamese.dyndns.org> <m2391t1589.fsf@igel.home>
+ <CACsJy8BGuoW6K_9vEgGrb2XC2bNtR=0jNRU3JQhsv7_diGQpbA@mail.gmail.com>
+ <7vbogj5sji.fsf@alter.siamese.dyndns.org>
+ <506D5837.6020708@alum.mit.edu>
+ <7vobki19ax.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 14:31:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 15:28:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK73o-0004hZ-Vf
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 14:31:21 +0200
+	id 1TK7xK-0002qz-PO
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 15:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932458Ab2JEMbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 08:31:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40972 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932431Ab2JEMbK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 08:31:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q95COUZC006041
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 5 Oct 2012 14:24:30 +0200
-Received: from anie.imag.fr ([129.88.7.32] helo=anie)
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1TK73O-0004yb-KU; Fri, 05 Oct 2012 14:30:54 +0200
-In-Reply-To: <m2391t1589.fsf@igel.home> (Andreas Schwab's message of "Fri, 05
-	Oct 2012 14:19:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 05 Oct 2012 14:24:31 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q95COUZC006041
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1350044673.37183@y/5v/fGP4stwrbzOBMUmww
+	id S932569Ab2JEN2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2012 09:28:32 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:63067 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216Ab2JEN2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 09:28:30 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rr4so1820167pbb.19
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 06:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=sD7rzTSiL+CGnZSFJPsl/Tl9ofmWpdTcQ5VVcKCsKUM=;
+        b=tF4JY+/2iL5MXan98gWTa19AwkuAAmgpvTZF9ouefDgixyATN+PitdURN/IdubrQ2e
+         md9eT66jN8nsbHKVsEX9G74DnJFj0MoEjp2tFEF8XpcVjxjnegpsVi8ZETx/Mff9GEbO
+         E84VevL/3GMnQTUNNuLsNMpiw23KN2FlMyJQN7911/0lMfoINnWkOnlrF5+ojhe5xJMj
+         xdZbOY2GvoKiTcUWNW1q/FleOZaY2jGTHBYrC8B0/ewlbzc870I2yLBp6j/r7UxFpmPR
+         Ox1tqX0EhhBgbejBzeNQXSC/1zzGhDLPhLukA4DaMfXfRyzCWYPc7xet0tF5tRE7ZK/s
+         xGCg==
+Received: by 10.66.78.195 with SMTP id d3mr21696421pax.17.1349443709657;
+        Fri, 05 Oct 2012 06:28:29 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.74.54.82])
+        by mx.google.com with ESMTPS id pi1sm6079369pbb.7.2012.10.05.06.28.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Oct 2012 06:28:28 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 05 Oct 2012 20:21:32 +0700
+Content-Disposition: inline
+In-Reply-To: <7vobki19ax.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207103>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Thu, Oct 04, 2012 at 09:39:02AM -0700, Junio C Hamano wrote:
+> Assuming that we do want to match "x/y" with "x/**/y", I suspect
+> that "'**' matches anything including a slash" would not give us
+> that semantics. Is it something we can easily fix in the wildmatch
+> code?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> When we require "x/**/y", I think we still want it to match "x/y".
->
-> FWIW, in bash (+extglob), ksh and zsh it doesn't.
+Something like this may suffice. Lightly tested with "git add -n".
+Reading the code, I think we can even distinguish "match zero or more
+directories" and "match one or more directories" with "/**/" and maybe
+"/***/". Right now **, ***, ****... are the same. So are /**/, /***/,
+/****/...
 
-You're right about bash, but I see the opposite for zsh and ksh:
-
-zsh$ echo x/**/y
-x/y x/z/y
-
-ksh$ echo x/**/y
-x/y x/z/y
-
-(didn't check the doc so see whether this was configurable, but I've set
-HOME=/ when launching the shell to disable my own configuration)
-
+-- 8< --
+diff --git a/wildmatch.c b/wildmatch.c
+index f153f8a..81eadc8 100644
+--- a/wildmatch.c
++++ b/wildmatch.c
+@@ -98,8 +98,12 @@ static int dowild(const uchar *p, const uchar *text,
+ 	    continue;
+ 	  case '*':
+ 	    if (*++p == '*') {
++		int slashstarstar = p[-2] == '/';
+ 		while (*++p == '*') {}
+ 		special = TRUE;
++		if (slashstarstar && *p == '/' &&
++		    dowild(p + 1, text, a, force_lower_case) == TRUE)
++		    return TRUE;
+ 	    } else
+ 		special = FALSE;
+ 	    if (*p == '\0') {
+-- 8< --
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
