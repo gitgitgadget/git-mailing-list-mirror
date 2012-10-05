@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/10] gitignore: make pattern parsing code a separate function
-Date: Fri,  5 Oct 2012 11:41:00 +0700
-Message-ID: <1349412069-627-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 04/10] attr: more matching optimizations from .gitignore
+Date: Fri,  5 Oct 2012 11:41:03 +0700
+Message-ID: <1349412069-627-5-git-send-email-pclouds@gmail.com>
 References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,186 +12,245 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 09:36:24 2012
+X-From: git-owner@vger.kernel.org Fri Oct 05 09:37:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TK2SN-0001OW-8j
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 09:36:23 +0200
+	id 1TK2Tb-0002Gn-3o
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 09:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723Ab2JEHgL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 03:36:11 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:46160 "EHLO
+	id S1752726Ab2JEHh3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 03:37:29 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:53952 "EHLO
 	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300Ab2JEHgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 03:36:09 -0400
-Received: by mail-pa0-f46.google.com with SMTP id hz1so1401381pad.19
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 00:36:09 -0700 (PDT)
+	with ESMTP id S1752300Ab2JEHh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2012 03:37:28 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so1402675pad.19
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 00:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=10vibbMPK6SguzwgbJYdV6xON6m+a6g+a4afQvUDsfk=;
-        b=GBofHbwoEAXt2MhzcMBvwlZLzpglDrl8XSd97xpgqjVKh407+HRKiIq/9NtYV+0CpA
-         xRq9ZYxFfrdNOcLVHgJs926xwXvEDzNWxzJWR9GLwW7jRjDh6L5c9gT/dMUb2gL68LUR
-         iRS+YMpKHkcW4ag2J/71lEzhz2E89i+ric+BwfCfW5bHOJrCYxQYzlE+Yb+GSXU9deEK
-         vTmIQo3IK7GNrniktKgeFstg3MPD9SmGEc6uap6vMWREwG3p2dVR9hWeRKoSjWhX76sz
-         rgAd419mvdBje8PoNOwyyBscybJlXa28xin4fQIGW9XLQ0yPldDKNq67OXJVGsdbztIy
-         PZGg==
-Received: by 10.68.242.69 with SMTP id wo5mr27288384pbc.47.1349412067815;
-        Thu, 04 Oct 2012 21:41:07 -0700 (PDT)
+        bh=Zu0uOcNB2IoltQenGsFFyITzBX84G9j1DmHIjNIhzUc=;
+        b=Y+xVC/Af4ZKom36ef2w64fi6ho3Sq1vb3gVdKxJYVsW4VFdskqs7Rk8BGq1xGzf4lh
+         bz86ZO1f5lUVBeiDO8083vSuVJiWXXDynWvK7UeV6TPgshrdV/0M7GVso5y28JyjRoRR
+         knmSO+n66aTq8+KxKSe0SmE4yzOP6nz16H8czxKzotWv8aKZzjULoWo2zYVe0IJgKwSp
+         CdmoPquS841D5iujy4hk0Iy12TM+KJtkRL4LYyEc10YOz7yRfYksG2AxaT4fgnFkWSX5
+         gx60CQyrJk6FT/FuZ6vwP2OdzE20sPX4T88EVNR1VI18IxzJawilC8Zz8E3EoqdmuV4v
+         mXzA==
+Received: by 10.68.225.5 with SMTP id rg5mr27272678pbc.73.1349412085443;
+        Thu, 04 Oct 2012 21:41:25 -0700 (PDT)
 Received: from tre ([115.74.45.10])
-        by mx.google.com with ESMTPS id qf4sm5440105pbc.1.2012.10.04.21.41.04
+        by mx.google.com with ESMTPS id iq3sm5438749pbc.5.2012.10.04.21.41.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2012 21:41:07 -0700 (PDT)
-Received: by tre (sSMTP sendmail emulation); Fri, 05 Oct 2012 11:41:16 +0700
+        Thu, 04 Oct 2012 21:41:24 -0700 (PDT)
+Received: by tre (sSMTP sendmail emulation); Fri, 05 Oct 2012 11:41:33 +0700
 X-Mailer: git-send-email 1.7.10.1.641.g9354186
 In-Reply-To: <1349412069-627-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207088>
 
-This function can later be reused by attr.c. Also turn to_exclude
-field into a flag.
+=2Egitattributes and .gitignore share the same pattern syntax but has
+separate matching implementation. Over the years, ignore's
+implementation accumulates more optimizations while attr's stays the
+same.
+
+This patch adds those optimizations to .gitattributes. Basically it
+tries to avoid fnmatch/wildmatch in favor of strncmp as much as
+possible.
+
+There are two syntaxes that .gitignore supports but .gitattributes
+does not: negative patterns and directory matching. They have never
+worked and whether they will is up for future discussion. Meanwhile
+make a note in the document and reject such patterns.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- If we go with glob->regex conversion way, this is where we could
- rewrite the pattern (and set EXC_FLAG_REGEX).
+ Documentation/gitattributes.txt |  2 ++
+ attr.c                          | 68 +++++++++++++++++++++++++++++++++=
++-------
+ dir.c                           |  8 ++---
+ dir.h                           |  1 +
+ 4 files changed, 64 insertions(+), 15 deletions(-)
 
- dir.c | 71 ++++++++++++++++++++++++++++++++++++++++++++++-------------=
---------
- dir.h |  2 +-
- 2 files changed, 50 insertions(+), 23 deletions(-)
-
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
+tes.txt
+index e16f3e1..702b8c1 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -56,6 +56,8 @@ When more than one pattern matches the path, a later =
+line
+ overrides an earlier line.  This overriding is done per
+ attribute.  The rules how the pattern matches paths are the
+ same as in `.gitignore` files; see linkgit:gitignore[5].
++Unlike `.gitignore`, negative patterns are not supported.
++Patterns that match directories are also not supported.
+=20
+ When deciding what attributes are assigned to a path, git
+ consults `$GIT_DIR/info/attributes` file (which has the highest
+diff --git a/attr.c b/attr.c
+index aeac564..1aa058e 100644
+--- a/attr.c
++++ b/attr.c
+@@ -115,6 +115,13 @@ struct attr_state {
+ 	const char *setto;
+ };
+=20
++struct pattern {
++	const char *pattern;
++	int patternlen;
++	int nowildcardlen;
++	int flags;		/* EXC_FLAG_* */
++};
++
+ /*
+  * One rule, as from a .gitattributes file.
+  *
+@@ -131,7 +138,7 @@ struct attr_state {
+  */
+ struct match_attr {
+ 	union {
+-		char *pattern;
++		struct pattern pat;
+ 		struct git_attr *attr;
+ 	} u;
+ 	char is_macro;
+@@ -241,9 +248,18 @@ static struct match_attr *parse_attr_line(const ch=
+ar *line, const char *src,
+ 	if (is_macro)
+ 		res->u.attr =3D git_attr_internal(name, namelen);
+ 	else {
+-		res->u.pattern =3D (char *)&(res->state[num_attr]);
+-		memcpy(res->u.pattern, name, namelen);
+-		res->u.pattern[namelen] =3D 0;
++		char *p =3D (char *)&(res->state[num_attr]);
++		memcpy(p, name, namelen);
++		p[namelen] =3D 0;
++		res->u.pat.pattern =3D p;
++		parse_exclude_pattern(&res->u.pat.pattern,
++				      &res->u.pat.patternlen,
++				      &res->u.pat.flags,
++				      &res->u.pat.nowildcardlen);
++		if (res->u.pat.flags & EXC_FLAG_NEGATIVE)
++			die(_("Negative patterns are not supported in git attributes"));
++		if (res->u.pat.flags & EXC_FLAG_MUSTBEDIR)
++			die(_("Directory patterns are not supported in git attributes"));
+ 	}
+ 	res->is_macro =3D is_macro;
+ 	res->num_attr =3D num_attr;
+@@ -645,25 +661,55 @@ static void prepare_attr_stack(const char *path)
+=20
+ static int path_matches(const char *pathname, int pathlen,
+ 			const char *basename,
+-			const char *pattern,
++			const struct pattern *pat,
+ 			const char *base, int baselen)
+ {
+-	if (!strchr(pattern, '/')) {
++	const char *pattern =3D pat->pattern;
++	int prefix =3D pat->nowildcardlen;
++	const char *name;
++	int namelen;
++
++	if (pat->flags & EXC_FLAG_NODIR) {
++		if (prefix =3D=3D pat->patternlen &&
++		    !strcmp_icase(pattern, basename))
++			return 1;
++
++		if (pat->flags & EXC_FLAG_ENDSWITH &&
++		    pat->patternlen - 1 <=3D pathlen &&
++		    !strcmp_icase(pattern + 1, pathname +
++				  pathlen - pat->patternlen + 1))
++			return 1;
++
+ 		return (fnmatch_icase(pattern, basename, 0) =3D=3D 0);
+ 	}
+ 	/*
+ 	 * match with FNM_PATHNAME; the pattern has base implicitly
+ 	 * in front of it.
+ 	 */
+-	if (*pattern =3D=3D '/')
++	if (*pattern =3D=3D '/') {
+ 		pattern++;
++		prefix--;
++	}
++
++	/*
++	 * note: unlike excluded_from_list, baselen here does not
++	 * contain the trailing slash
++	 */
++
+ 	if (pathlen < baselen ||
+ 	    (baselen && pathname[baselen] !=3D '/') ||
+ 	    strncmp(pathname, base, baselen))
+ 		return 0;
+-	if (baselen !=3D 0)
+-		baselen++;
+-	return fnmatch_icase(pattern, pathname + baselen, FNM_PATHNAME) =3D=3D=
+ 0;
++
++	namelen =3D baselen ? pathlen - baselen - 1 : pathlen;
++	name =3D pathname + pathlen - namelen;
++
++	/* if the non-wildcard part is longer than the remaining
++	   pathname, surely it cannot match */
++	if (!namelen || prefix > namelen)
++		return 0;
++
++	return fnmatch_icase(pattern, name, FNM_PATHNAME) =3D=3D 0;
+ }
+=20
+ static int macroexpand_one(int attr_nr, int rem);
+@@ -701,7 +747,7 @@ static int fill(const char *path, int pathlen, cons=
+t char *basename,
+ 		if (a->is_macro)
+ 			continue;
+ 		if (path_matches(path, pathlen, basename,
+-				 a->u.pattern, base, stk->originlen))
++				 &a->u.pat, base, stk->originlen))
+ 			rem =3D fill_one("fill", a, rem);
+ 	}
+ 	return rem;
 diff --git a/dir.c b/dir.c
-index 240bf0c..cd13920 100644
+index cd13920..c6a0275 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -308,42 +308,69 @@ static int no_wildcard(const char *string)
+@@ -308,10 +308,10 @@ static int no_wildcard(const char *string)
  	return string[simple_length(string)] =3D=3D '\0';
  }
 =20
-+static void parse_exclude_pattern(const char **pattern,
-+				  int *patternlen,
-+				  int *flags,
-+				  int *nowildcardlen)
-+{
-+	const char *p =3D *pattern;
-+	size_t i, len;
-+
-+	*flags =3D 0;
-+	if (*p =3D=3D '!') {
-+		*flags |=3D EXC_FLAG_NEGATIVE;
-+		p++;
-+	}
-+	len =3D strlen(p);
-+	if (len && p[len - 1] =3D=3D '/') {
-+		len--;
-+		*flags |=3D EXC_FLAG_MUSTBEDIR;
-+	}
-+	for (i =3D 0; i < len; i++) {
-+		if (p[i] =3D=3D '/')
-+			break;
-+	}
-+	if (i =3D=3D len)
-+		*flags |=3D EXC_FLAG_NODIR;
-+	*nowildcardlen =3D simple_length(p);
-+	/*
-+	 * we should have excluded the trailing slash from 'p' too,
-+	 * but that's one more allocation. Instead just make sure
-+	 * nowildcardlen does not exceed real patternlen
-+	 */
-+	if (*nowildcardlen > len)
-+		*nowildcardlen =3D len;
-+	if (*p =3D=3D '*' && no_wildcard(p + 1))
-+		*flags |=3D EXC_FLAG_ENDSWITH;
-+	*pattern =3D p;
-+	*patternlen =3D len;
-+}
-+
- void add_exclude(const char *string, const char *base,
- 		 int baselen, struct exclude_list *which)
+-static void parse_exclude_pattern(const char **pattern,
+-				  int *patternlen,
+-				  int *flags,
+-				  int *nowildcardlen)
++void parse_exclude_pattern(const char **pattern,
++			   int *patternlen,
++			   int *flags,
++			   int *nowildcardlen)
  {
- 	struct exclude *x;
--	size_t len;
--	int to_exclude =3D 1;
--	int flags =3D 0;
-+	int patternlen;
-+	int flags;
-+	int nowildcardlen;
-=20
--	if (*string =3D=3D '!') {
--		to_exclude =3D 0;
--		string++;
--	}
--	len =3D strlen(string);
--	if (len && string[len - 1] =3D=3D '/') {
-+	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
-+	if (flags & EXC_FLAG_MUSTBEDIR) {
- 		char *s;
--		x =3D xmalloc(sizeof(*x) + len);
-+		x =3D xmalloc(sizeof(*x) + patternlen + 1);
- 		s =3D (char *)(x+1);
--		memcpy(s, string, len - 1);
--		s[len - 1] =3D '\0';
--		string =3D s;
-+		memcpy(s, string, patternlen);
-+		s[patternlen] =3D '\0';
- 		x->pattern =3D s;
--		flags =3D EXC_FLAG_MUSTBEDIR;
- 	} else {
- 		x =3D xmalloc(sizeof(*x));
- 		x->pattern =3D string;
- 	}
--	x->to_exclude =3D to_exclude;
--	x->patternlen =3D strlen(string);
-+	x->patternlen =3D patternlen;
-+	x->nowildcardlen =3D nowildcardlen;
- 	x->base =3D base;
- 	x->baselen =3D baselen;
- 	x->flags =3D flags;
--	if (!strchr(string, '/'))
--		x->flags |=3D EXC_FLAG_NODIR;
--	x->nowildcardlen =3D simple_length(string);
--	if (*string =3D=3D '*' && no_wildcard(string+1))
--		x->flags |=3D EXC_FLAG_ENDSWITH;
- 	ALLOC_GROW(which->excludes, which->nr + 1, which->alloc);
- 	which->excludes[which->nr++] =3D x;
- }
-@@ -518,7 +545,7 @@ int excluded_from_list(const char *pathname,
- 	for (i =3D el->nr - 1; 0 <=3D i; i--) {
- 		struct exclude *x =3D el->excludes[i];
- 		const char *name, *exclude =3D x->pattern;
--		int to_exclude =3D x->to_exclude;
-+		int to_exclude =3D x->flags & EXC_FLAG_NEGATIVE ? 0 : 1;
- 		int namelen, prefix =3D x->nowildcardlen;
-=20
- 		if (x->flags & EXC_FLAG_MUSTBEDIR) {
+ 	const char *p =3D *pattern;
+ 	size_t i, len;
 diff --git a/dir.h b/dir.h
-index 893465a..41ea32d 100644
+index 41ea32d..fd5c2aa 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -11,6 +11,7 @@ struct dir_entry {
- #define EXC_FLAG_NODIR 1
- #define EXC_FLAG_ENDSWITH 4
- #define EXC_FLAG_MUSTBEDIR 8
-+#define EXC_FLAG_NEGATIVE 16
-=20
- struct exclude_list {
- 	int nr;
-@@ -21,7 +22,6 @@ struct exclude_list {
- 		int nowildcardlen;
- 		const char *base;
- 		int baselen;
--		int to_exclude;
- 		int flags;
- 	} **excludes;
- };
+@@ -97,6 +97,7 @@ extern int path_excluded(struct path_exclude_check *,=
+ const char *, int namelen,
+ extern int add_excludes_from_file_to_list(const char *fname, const cha=
+r *base, int baselen,
+ 					  char **buf_p, struct exclude_list *which, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fn=
+ame);
++extern void parse_exclude_pattern(const char **string, int *patternlen=
+, int *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *which);
+ extern void free_excludes(struct exclude_list *el);
 --=20
 1.7.12.1.405.gb727dc9
