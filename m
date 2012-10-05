@@ -1,127 +1,126 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH 08/10] Integrate wildmatch to git
-Date: Fri, 5 Oct 2012 18:20:02 -0300
-Message-ID: <CACnwZYeob34c6hbMX-CNvJ67Qu5b+v7J8SbfcBOgZv6Qu+aqFg@mail.gmail.com>
-References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
-	<1349412069-627-9-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+Subject: Re: Fw: How do I git-push to an FTP server?
+Date: Fri, 05 Oct 2012 14:48:40 -0700
+Message-ID: <7vwqz4si87.fsf@alter.siamese.dyndns.org>
+References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
+ <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
+ <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 23:20:16 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philippe Vaucher <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Konstantin Khomoutov
+ <flatworm-Rn4VEauK+AKRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, 
+ git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org,  August Karlstrom <fusionfile-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
+ Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Sverre Rabbelier
+ <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Ramkumar Ramachandra <artagnon-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Thomas Ferris Nicolaisen <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Oct 05 23:48:51 2012
+Return-path: <git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-qa0-f58.google.com ([209.85.216.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKFJf-0003Q6-Gl
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Oct 2012 23:20:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932801Ab2JEVUF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2012 17:20:05 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:55030 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932725Ab2JEVUE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2012 17:20:04 -0400
-Received: by mail-wg0-f44.google.com with SMTP id dr13so1837525wgb.1
-        for <git@vger.kernel.org>; Fri, 05 Oct 2012 14:20:03 -0700 (PDT)
+	(envelope-from <git-users+bncBCG77UMM3EJRBPFLXWBQKGQEKO5CQNQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1TKFlK-0001Vu-Sw
+	for gcggu-git-users@m.gmane.org; Fri, 05 Oct 2012 23:48:51 +0200
+Received: by mail-qa0-f58.google.com with SMTP id n12sf810640qat.3
+        for <gcggu-git-users@m.gmane.org>; Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=07/4+aOEymHNmrn80WvB2Jnw1nVLZ9FlG7LCex4kvdY=;
-        b=LkBlbBIw7nLccw3svnvAfXU8rCJJX7R5uldMUMYJ8rWXA5PodEE02ufzpmbO8L6Zou
-         KM6regGQogg+dfIMUbwmVn4NE3a7lhmNQMEVNpU0dzT2HbxNzLAHKwwKr1uA2Mlc6sE2
-         fQj8pOnzShUEejtmtNpRjE5UaYsnb/Zzyf8P7OO0GNQHT6+Xxi6Bxmq6RzqJnfBXzQeI
-         pfnGntJ+gEFKF3cHXbjP6joTgIjefByzNf9wfsRM+x8y33OhV0w6D+ZHPKIrZRCBT+wE
-         07x2PlbnbLbYIeGAuZbbbwmt8UgLUMqagkfHycm3w9ueoiNIMflIzmQq2PiE67owAoIM
-         28lQ==
-Received: by 10.180.84.202 with SMTP id b10mr5752325wiz.13.1349472002976; Fri,
- 05 Oct 2012 14:20:02 -0700 (PDT)
-Received: by 10.194.19.166 with HTTP; Fri, 5 Oct 2012 14:20:02 -0700 (PDT)
-In-Reply-To: <1349412069-627-9-git-send-email-pclouds@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207122>
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:received-spf:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version:x-pobox-relay-id
+         :x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
+         :content-type;
+        bh=y4tG3jPwXiaUQZJXNIrennkvP3dT7bsQ1M64XVb3ndQ=;
+        b=Z7tIuXB3Mezz7iKBh0vPEbyfatkaw1j4K/VA5szIciX7NdXoByJgpcjlSIVgBObffa
+         1x3k/BfM5r35czj+yIxCBt9B6SpilVM09GzxxVvpvoJ06bRNuPvffseMv2X1C5RRis/o
+         AbCCs01G6pn4/QCuMlKPH8PQ5bXDWsMtXz3Jc3VLiBR2G1+D7bZNSPhAtBjQw7dAaI8i
+         BeeSSQQ7l/R65Tf9EVkPWkLSO/9RC8pd1XHqc+QhHz8928drKPgQinK2WDvjp3XVqtKU
+         DhIq0i2zryh2WGTSTeZiS8/gJriKgb1j+2T2kDBAA8yVUdxX 
+Received: by 10.224.10.82 with SMTP id o18mr3262169qao.2.1349473724712;
+        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.224.180.143 with SMTP id bu15ls7452424qab.4.gmail; Fri, 05 Oct
+ 2012 14:48:44 -0700 (PDT)
+Received: by 10.224.78.209 with SMTP id m17mr8310618qak.3.1349473724256;
+        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
+Received: by 10.224.78.209 with SMTP id m17mr8310617qak.3.1349473724245;
+        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ek33si2398355qcb.0.2012.10.05.14.48.44;
+        Fri, 05 Oct 2012 14:48:44 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C548979C;
+	Fri,  5 Oct 2012 17:48:43 -0400 (EDT)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87D82979B;
+	Fri,  5 Oct 2012 17:48:43 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDE259799; Fri,  5 Oct 2012
+ 17:48:41 -0400 (EDT)
+In-Reply-To: <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org> (Thomas
+ Ferris Nicolaisen's message of "Fri, 5 Oct 2012 17:21:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6DD83722-0F36-11E2-9948-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ best guess record for domain of junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org designates
+ 208.72.237.35 as permitted sender) smtp.mail=junio-hrAtEEWgPAZD4dQB+ktFXD1X8v8AiJow@public.gmane.org;
+ dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post?hl=en_US>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users?hl=en_US>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe?hl=en_US>,
+ <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207123>
 
-On Fri, Oct 5, 2012 at 1:41 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> This makes wildmatch.c part of libgit.a and builds test-wildmatch; th=
-e
-> dependency on libpopt in the original has been replaced with the use
-> of our parse-options. Global variables in test-wildmatch are marked
-> static to avoid sparse warnings.
+Thomas Ferris Nicolaisen <tfnico-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> writes:
+
+> On Fri, Oct 5, 2012 at 3:46 PM, Philippe Vaucher
+> <philippe.vaucher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+>>
+>> > On the git-users mailing list we're trying someone to help with
+>> > running `git push` over FTP.  That person is runnig Git 1.7.9.5
+>> > on Ubuntu 12.04.
+>>
+>> I don't think vanilla git supports pushing over ftp.
+>>
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  .gitignore           |  1 +
->  Makefile             |  3 ++
->  t/t3070-wildmatch.sh | 27 ++++++++++++++++
->  test-wildmatch.c     | 88 ++++++++++++++++++++++--------------------=
-----------
->  wildmatch.c          | 26 +++++-----------
->  5 files changed, 75 insertions(+), 70 deletions(-)
->  create mode 100755 t/t3070-wildmatch.sh
+> At least according to the documentation[1], "Git natively supports [...] ftp".
 >
-> diff --git a/test-wildmatch.c b/test-wildmatch.c
-> index 88585c2..bb726c8 100644
-> --- a/test-wildmatch.c
-> +++ b/test-wildmatch.c
-> @@ -19,34 +19,38 @@
->
->  /*#define COMPARE_WITH_FNMATCH*/
->
-> -#define WILD_TEST_ITERATIONS
-> -#include "lib/wildmatch.c"
-> +#include "cache.h"
-> +#include "parse-options.h"
-> +#include "wildmatch.h"
->
-> -#include <popt.h>
-> +#ifndef MAXPATHLEN
-> +#define MAXPATHLEN 1024
-> +#endif
-> +#ifdef NO_STRLCPY
-> +#include "compat/strlcpy.c"
-> +#define strlcpy gitstrlcpy
-> +#endif
->
->  #ifdef COMPARE_WITH_FNMATCH
->  #include <fnmatch.h>
->
-> -int fnmatch_errors =3D 0;
-> +static int fnmatch_errors =3D 0;
->  #endif
->
-> -int wildmatch_errors =3D 0;
-> -char number_separator =3D ',';
-> +static int wildmatch_errors =3D 0;
->
->  typedef char bool;
->
-> -int output_iterations =3D 0;
-> -int explode_mod =3D 0;
-> -int empties_mod =3D 0;
-> -int empty_at_start =3D 0;
-> -int empty_at_end =3D 0;
-> -
-> -static struct poptOption long_options[] =3D {
-> -  /* longName, shortName, argInfo, argPtr, value, descrip, argDesc *=
-/
-> -  {"iterations",     'i', POPT_ARG_NONE,   &output_iterations, 0, 0,=
- 0},
-> -  {"empties",        'e', POPT_ARG_STRING, 0, 'e', 0, 0},
-> -  {"explode",        'x', POPT_ARG_INT,    &explode_mod, 0, 0, 0},
-> -  {0,0,0,0, 0, 0, 0}
-> +static int explode_mod =3D 0;
-Isn't static variables like this initialized to zero by default? There
-is a high chance that I might be wrong though.
+> This could need some clarification if pushing over ftp is not supported.
+
+The commit 5ce4f4e (Documentation/urls: Rewrite to accomodate
+<transport>::<address>, 2010-04-06) that came from
+
+  http://thread.gmane.org/gmane.comp.version-control.git/145196/focus=145205
+
+was supposed to be just a clarification of the document, but it
+added ftp to the list without justification.  Its earlier round is
+this
+
+    http://thread.gmane.org/gmane.comp.version-control.git/143499
+
+and it did not mention ftp; I wonder why we missed this addition
+during the review process.
+
+The ftp transport might have worked for fetching in the distant past
+for "dumb and slow" commit walking fetches, but it was never
+supposed to work with any kind of pushes as far as I know.  I
+wouldn't be surprised if the dumb and slow commit walking fetch no
+longer works with ftp.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To post to this group, send email to git-users-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+To unsubscribe from this group, send email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit this group at http://groups.google.com/group/git-users?hl=en.
