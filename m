@@ -1,143 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Patch 1/5] Fix some asciidoc layout problems
-Date: Sat, 06 Oct 2012 11:39:13 -0700
-Message-ID: <7vfw5rqwby.fsf@alter.siamese.dyndns.org>
-References: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
- <244418682.269701.1349538839518.JavaMail.ngmail@webmail08.arcor-online.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [Patch 2/5] Create html documents for all files in Documentation/technical
+Date: Sat, 6 Oct 2012 19:45:11 +0100
+Organization: OPDS
+Message-ID: <3662216A9D714C08B8522340D420AEEA@PhilipOakley>
+References: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net> <652323221.269712.1349538906380.JavaMail.ngmail@webmail08.arcor-online.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker66@arcor.de>
-X-From: git-owner@vger.kernel.org Sat Oct 06 20:39:32 2012
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Thomas Ackermann" <th.acker66@arcor.de>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 06 20:45:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKZHe-0004og-SA
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 20:39:31 +0200
+	id 1TKZNS-0007O9-Np
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 20:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502Ab2JFSjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2012 14:39:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59180 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751968Ab2JFSjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 14:39:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB2129239;
-	Sat,  6 Oct 2012 14:39:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rvlz7BGe8ejJjbzpTjEHUfvVxAI=; b=l4lfOn
-	QyMcTvTqJguT8IqEB31V9d7LkKdruor4RDcuRfH68pRcs0+YlUmhFP5JGRVA2p6o
-	s0IVNg5AOwHOEA9x7Q1NIDt033s32hVZKWsS4AS3VDmPzbNpyu35S2rRA/IEZVFK
-	pABT23dJtf4sddHv1+WQIyEVztrCFSKr2KQTk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NJp7GiSElaVHPLrN7LWRCatmYmOiR7wj
-	pBHM8qbqYMF9anTuUiwqhGPPuS3cRv3wSqwLjxEepql/2NiIYgdmfhSne4GiGpy7
-	8C301ZSC3P+36lys4bFPYjX2TtqMkKo3kj3tQToHctJWllXpuNlM0Cc3kEy7fGs6
-	SZmzc6GlWK8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D947F9238;
-	Sat,  6 Oct 2012 14:39:15 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F7449237; Sat,  6 Oct 2012
- 14:39:14 -0400 (EDT)
-In-Reply-To: <244418682.269701.1349538839518.JavaMail.ngmail@webmail08.arcor-online.net>
- (Thomas Ackermann's message of "Sat, 6 Oct 2012 17:53:59 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 21091812-0FE5-11E2-9F07-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754110Ab2JFSpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2012 14:45:21 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:27359 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753801Ab2JFSpU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2012 14:45:20 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AiwOAAJ8cFBcGnKf/2dsb2JhbABFi1ChdZBPAQKBC4EJghsFAQEFCAEBLh4BASwCAwUCAQMOBwwlFAEEGgYHFwYBEggCAQIDAYdiAxOvMgWJXIppgUoCd4NTYAOII4VGiRePGYJu
+X-IronPort-AV: E=Sophos;i="4.80,545,1344207600"; 
+   d="scan'208";a="400778046"
+Received: from host-92-26-114-159.as13285.net (HELO PhilipOakley) ([92.26.114.159])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 06 Oct 2012 19:45:06 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207165>
 
-Thomas Ackermann <th.acker66@arcor.de> writes:
-
+From: "Thomas Ackermann" <th.acker66@arcor.de>
+>- add missing files
+> - fix some asciidoc layout problems
+>
 > Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 > ---
->  Documentation/git-bisect-lk2009.txt | 12 ++++++------
->  Documentation/git-fetch-pack.txt    |  5 ++++-
->  2 files changed, 10 insertions(+), 7 deletions(-)
-
-You didn't say what "layout problem" you are fixing, or what the
-approach you took to "fix" it.  From the patch, I can guess that the
-latter is to lengthen the lines that surround the displayed examples,
-but as far as I know and can tell, the existing ones are long enough
-so I cannot tell why you needed such a change to the source in the
-first place.
-
-A better explanation, please?
-
-The synopsis section of git-fetch-pack manual is a long single line
-which is unsightly.  A fix to that issue is indeed needed.  Please
-make a separate patch only for that issue.  Is git-fetch-pack the
-only one whose synopsis section is overlong, by the way?
-
-Thanks.
-
+> Documentation/Makefile                    | 12 ++++++++++-
+> Documentation/technical/index-format.txt  |  2 +-
+> Documentation/technical/pack-format.txt   |  8 +++----
+> Documentation/technical/pack-protocol.txt |  7 +++---
+> Documentation/technical/shallow.txt       |  8 ++++++-
+> Documentation/technical/trivial-merge.txt | 36 
+> +++++++++++++++----------------
+> 6 files changed, 45 insertions(+), 28 deletions(-)
 >
-> diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
-> index 8a2ba37..99bdb46 100644
-> --- a/Documentation/git-bisect-lk2009.txt
-> +++ b/Documentation/git-bisect-lk2009.txt
-> @@ -248,7 +248,7 @@ Bisecting: 5480 revisions left to test after this (roughly 13 steps)
->  And after a few more steps like that, "git bisect" will eventually
->  find a first bad commit:
->  
-> --------------
-> +------------------------------------------------------------------------------------------------------------
->  $ git bisect bad
->  2ddcca36c8bcfa251724fe342c8327451988be0d is the first bad commit
->  commit 2ddcca36c8bcfa251724fe342c8327451988be0d
-> @@ -257,8 +257,8 @@ Date:   Sat May 3 11:59:44 2008 -0700
->  
->      Linux 2.6.26-rc1
->  
-> -:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-> --------------
-> +:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M  Makefile
-> +------------------------------------------------------------------------------------------------------------
->  
->  At this point we can see what the commit does, check it out (if it's
->  not already checked out) or tinker with it, for example:
-> @@ -305,7 +305,7 @@ to launch a script or command at each bisection step to know if the
->  current commit is "good" or "bad". To do that, we use the "git bisect
->  run" command. For example:
->  
-> --------------
-> +------------------------------------------------------------------------------------------------------------
->  $ git bisect start v2.6.27 v2.6.25
->  Bisecting: 10928 revisions left to test after this (roughly 14 steps)
->  [2ec65f8b89ea003c27ff7723525a2ee335a2b393] x86: clean up using max_low_pfn on 32-bit
-> @@ -331,9 +331,9 @@ Date:   Sat May 3 11:59:44 2008 -0700
->  
->      Linux 2.6.26-rc1
->  
-> -:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-> +:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M  Makefile
->  bisect run success
-> --------------
-> +------------------------------------------------------------------------------------------------------------
->  
->  In this example, we passed "grep '^SUBLEVEL = 25' Makefile" as
->  parameter to "git bisect run". This means that at each step, the grep
-> diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-> index 474fa30..12cd8a2 100644
-> --- a/Documentation/git-fetch-pack.txt
-> +++ b/Documentation/git-fetch-pack.txt
-> @@ -9,7 +9,10 @@ git-fetch-pack - Receive missing objects from another repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] [--no-progress] [-v] [<host>:]<directory> [<refs>...]
-> +'git fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--include-tag] 
-> +				[--upload-pack=<git-upload-pack>] 
-> +				[--depth=<n>] [--no-progress] 
-> +				[-v] [<host>:]<directory> [<refs>...]
->  
->  DESCRIPTION
->  -----------
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 267dfe1..86594f6 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -25,6 +25,16 @@ SP_ARTICLES += howto/revert-branch-rebase
+> SP_ARTICLES += howto/using-merge-subtree
+> SP_ARTICLES += howto/using-signed-tag-in-pull-request
+> API_DOCS = $(patsubst %.txt,%,$(filter-out 
+> technical/api-index-skel.txt technical/api-index.txt, $(wildcard 
+> technical/api-*.txt)))
+> +API_DOCS += technical/index-format
+
+Would it not be better to create a separate TECH_DOCS list, rather than 
+confuse the API_DOCS list?
+
+> +API_DOCS += technical/pack-format
+> +API_DOCS += technical/pack-heuristics
+> +API_DOCS += technical/pack-protocol
+> +API_DOCS += technical/protocol-capabilities
+> +API_DOCS += technical/protocol-common
+> +API_DOCS += technical/racy-git
+> +API_DOCS += technical/send-pack-pipeline
+> +API_DOCS += technical/shallow
+> +API_DOCS += technical/trivial-merge
+> SP_ARTICLES += $(API_DOCS)
+> SP_ARTICLES += technical/api-index
+>
+> @@ -231,7 +241,7 @@ clean:
+>  $(RM) *.texi *.texi+ *.texi++ git.info gitman.info
+>  $(RM) *.pdf
+>  $(RM) howto-index.txt howto/*.html doc.dep
+> - $(RM) technical/api-*.html technical/api-index.txt
+> + $(RM) technical/*.html technical/api-index.txt
+>  $(RM) $(cmds_txt) *.made
+>  $(RM) manpage-base-url.xsl
+>
+> diff --git a/Documentation/technical/index-format.txt 
+> b/Documentation/technical/index-format.txt
+> index 9d25b30..57d6f91 100644
+> --- a/Documentation/technical/index-format.txt
+> +++ b/Documentation/technical/index-format.txt
+> @@ -1,7 +1,7 @@
+> GIT index format
+> ================
+>
+> -= The git index file has the following format
+> +== The git index file has the following format
+>
+<snip> 
