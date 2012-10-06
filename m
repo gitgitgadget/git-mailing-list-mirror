@@ -1,99 +1,80 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2] gitignore.txt: suggestions how to get literal # or ! at the beginning
-Date: Sat,  6 Oct 2012 20:51:24 +0700
-Message-ID: <1349531484-5938-1-git-send-email-pclouds@gmail.com>
-References: <20121006132127.GC11712@sigill.intra.peff.net>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Sat, 06 Oct 2012 17:18:16 +0200
+Message-ID: <50704BB8.1020603@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de> <7v39c41keo.fsf@alter.siamese.dyndns.org> <7vpqf8z8a6.fsf@alter.siamese.dyndns.org> <4F00B7F3.1060105@tu-clausthal.de> <7vzke4ve
+ bl.fsf@alter.siamese.dyndns.org> <4F038E49.9080809@tu-clausthal.de> <7vy5toqqab.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 06 15:58:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 17:36:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKUtu-0007wk-1i
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 15:58:42 +0200
+	id 1TKWQr-0004Px-W2
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 17:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821Ab2JFN6c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Oct 2012 09:58:32 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:39191 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719Ab2JFN6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 09:58:30 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so2775571pbb.19
-        for <git@vger.kernel.org>; Sat, 06 Oct 2012 06:58:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=pT8vzTQAO71IhhS1mL+aelJXt8wc6hxVLVfQqI8S2Wk=;
-        b=cfNknqDQZvqZcYfuIXRdDpFt/wjmr6RjaWTPcBK7VSLWCbqAfDQleKMZQjOSfovtCF
-         4RBOEH0KoHYQzcWnWCY0XK7Dzd9UUkrH5+5dkY0IYGWWKlqQHjOxkmvo7vtdyOkaKJWh
-         A4WFo4pnGAiIhC2B0jTBPtnNlDwiiScZCrIWjIEaBE2OSDeyYIF7DgMVRUS2IEqZr5Tm
-         TTVKCSy2jwkOINzXZAbRDd6osvIUjLUQXMhC0oc8gyWLrzNqTUrT25TAj9WHU/M1R336
-         yyLEP42ue/Q1nX3xHsebbUk+MHqTonO9yKg6E7BFROynNvY8D04MFq0HCFqw0bjPC/0z
-         iySQ==
-Received: by 10.68.213.138 with SMTP id ns10mr38613537pbc.157.1349531910234;
-        Sat, 06 Oct 2012 06:58:30 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.74.54.82])
-        by mx.google.com with ESMTPS id vf8sm7699227pbc.27.2012.10.06.06.58.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 06 Oct 2012 06:58:29 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 06 Oct 2012 20:51:31 +0700
-X-Mailer: git-send-email 1.7.12.1.406.g6ab07c4
-In-Reply-To: <20121006132127.GC11712@sigill.intra.peff.net>
+	id S1756203Ab2JFPgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2012 11:36:37 -0400
+Received: from mailrelay1.rz.tu-clausthal.de ([139.174.2.42]:55550 "EHLO
+	mailrelay1.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755013Ab2JFPgD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2012 11:36:03 -0400
+X-Greylist: delayed 1064 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Oct 2012 11:36:03 EDT
+Received: from hades.rz.tu-clausthal.de (mailrelay1.rz.tu-clausthal.de [139.174.2.42])
+	by mailrelay1.rz.tu-clausthal.de (Postfix) with ESMTP id A500442D9EE;
+	Sat,  6 Oct 2012 17:18:16 +0200 (CEST)
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 78154422118;
+	Sat,  6 Oct 2012 17:18:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=0i2qnNclk7juS9TEUXAPEylxp9U=; b=dl/6ymIhq7VKA9rjjLcJ4fc0iR2t
+	Zxf3nhzT+kd4N18ywo4ChIw9BywME7IUBo5AC2r+gEUtDpm4Ju6yok35cYqJUSMd
+	xL1x+FJOVM+gAYveI+6nTqenEXFgE7OiWm8VSHDZ4CmA6HtfcrycDPEXyQrLCNil
+	rLmnsapWKvN3P4M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=fL8b9wERgPiEipIo9iVBUaYci1M44sApZIvmtA1zC5bV5KsZB1Ju3LQ
+	qNgLOgUPSdvxx4ryro4kQBQRe/6w4T90BJ9vfcEGoQjjyRvi0rAhvj6TAZbUfmAe
+	r10UExULacKT3J1fMWse9mTpiAz4uiSorW3XtQ1ft7P74p963CS8=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id DB2F3422051;
+	Sat,  6 Oct 2012 17:18:15 +0200 (CEST)
+Received: from [139.174.5.71] (account sstri@tu-clausthal.de [139.174.5.71] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.7)
+  with ESMTPSA id 38541985; Sat, 06 Oct 2012 17:18:15 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <7vy5toqqab.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.4.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+X-Spam-Level: (8%, '
+ MULTIPLE_RCPTS 0.1, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_400_499 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, DKIM_SIGNATURE 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_FROM 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __USER_AGENT 0')
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207149>
 
-We support backslash escape, but we hide the details behind the phrase
-"a shell glob suitable for consumption by fnmatch(3)". So it may not
-be obvious how one can get literal # or ! at the beginning of pattern.
-Add a few lines on how to work around the magic characters.
+Am 04.01.2012 01:12 schrieb Junio C Hamano:
+> Now "prompt" is no longer a method but is merely a helper function, so
+> I've queued this (and 1/2 rewrite we discussed in a separate thread) to
+> 'pu' after rewording the commit log message.
+> 
+> Thanks.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Sat, Oct 6, 2012 at 8:21 PM, Jeff King <peff@peff.net> wrote:
- > It works fine for me with asciidoc 8.6.7. <sigh>
+Is there a reason why these changes did not get merged? The issues are
+still there.
 
- 8.6.5 works. I don't care deeply as I read .txt anyway. Here it goes
- again with examples.
-
- Documentation/gitignore.txt | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 96639e0..0bcf079 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -73,12 +73,16 @@ PATTERN FORMAT
-  - A blank line matches no files, so it can serve as a separator
-    for readability.
-=20
-- - A line starting with # serves as a comment.
-+ - A line starting with "`#`" serves as a comment.
-+   Use "`\#`" instead for patterns that begin with "`#`",
-+   for example, "`\#backup#.txt`".
-=20
-- - An optional prefix '!' which negates the pattern; any
-+ - An optional prefix "`!`" which negates the pattern; any
-    matching file excluded by a previous pattern will become
-    included again.  If a negated pattern matches, this will
-    override lower precedence patterns sources.
-+   Use "`\!`" instead for patterns that begin with "`!`",
-+   for example, "`\!important!.txt`".
-=20
-  - If the pattern ends with a slash, it is removed for the
-    purpose of the following description, but it would only find
---=20
-1.7.12.1.406.g6ab07c4
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
