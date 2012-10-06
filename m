@@ -1,148 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC] test: work around SVN 1.7 mishandling of svn:special
- changes
-Date: Sat, 6 Oct 2012 12:24:56 -0700
-Message-ID: <20121006192455.GA14969@elie.Belkin>
-References: <1343468872-72133-1-git-send-email-schwern@pobox.com>
- <1343468872-72133-8-git-send-email-schwern@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Patch 0/5] Create single PDF for all HTML files
+Date: Sat, 6 Oct 2012 15:32:05 -0400
+Message-ID: <20121006193205.GD3644@sigill.intra.peff.net>
+References: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael G. Schwern" <schwern@pobox.com>, git@vger.kernel.org,
-	gitster@pobox.com, robbat2@gentoo.org, bwalton@artsci.utoronto.ca
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Oct 06 21:25:21 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker66@arcor.de>
+X-From: git-owner@vger.kernel.org Sat Oct 06 21:32:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKa00-0007yV-Qg
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 21:25:21 +0200
+	id 1TKa7O-0002J4-8l
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 21:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215Ab2JFTZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2012 15:25:11 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:44114 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752507Ab2JFTZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 15:25:09 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rr4so2904368pbb.19
-        for <git@vger.kernel.org>; Sat, 06 Oct 2012 12:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=l6V/SD+4QHJ1m3MBeIaYepPXPbLIRJ8KsYZPAEOfe/8=;
-        b=YwSLpzEMUsSftIsJ9ScZdxRjp1/9vd1m9Qvm7DLPzeaFTKEOLgPPn3xnXQCbWyWE1l
-         GU1QDlMANHcHPZXoMGHeWPZpdyRgZw9HAjSyGtcQJVWzvlaXNtl4lt/ZFdXNUaCWVesx
-         4hvus4ItWmkE+KGTirU28pWyg6ufo2hUy5eJd5VtpdZSAeeScywjXNXb6r404IyPUjpT
-         bUpqx/2o2eWgxItlxHDRJQce65M9fg2cF1C+6Waj7Wv3RGqLHSrz1VQThGKcz+laLNDv
-         D029zS9rn8D2mErb3R+Wk3SKq1+e6Y6eAUJKT3K2ENlq1b6KQqyB6cF/NcYMbXOyCNS7
-         41fA==
-Received: by 10.68.138.133 with SMTP id qq5mr40775206pbb.86.1349551509069;
-        Sat, 06 Oct 2012 12:25:09 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id vi9sm8028522pbc.41.2012.10.06.12.25.06
-        (version=SSLv3 cipher=OTHER);
-        Sat, 06 Oct 2012 12:25:07 -0700 (PDT)
+	id S1753300Ab2JFTcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2012 15:32:11 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43187 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752563Ab2JFTcJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2012 15:32:09 -0400
+Received: (qmail 10236 invoked by uid 107); 6 Oct 2012 19:32:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Oct 2012 15:32:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Oct 2012 15:32:05 -0400
 Content-Disposition: inline
-In-Reply-To: <1343468872-72133-8-git-send-email-schwern@pobox.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207173>
 
-Subversion represents symlinks as ordinary files with content
-starting with "link " and the svn:special property set to "*".  Thus a
-file can switch between being a symlink and a non-symlink simply by
-toggling its svn:special property, and new checkouts will
-automatically write a file of the appropriate type.  Likewise, in
-subversion 1.6 and older, running "svn update" would notice changes
-in filetype and update the working copy appropriately.
+On Sat, Oct 06, 2012 at 05:51:15PM +0200, Thomas Ackermann wrote:
 
-Unfortunately, starting in subversion 1.7 ,changes to the svn:special
-property trip an assertion instead:
+> I wanted to have a single PDF file which contains the complete Git documentation 
+> (except user-manual) for easier reading on my tablet. The simplest way to do 
+> this was by using wkhtmltopdf which can combine a set of HTML files into a sinlge 
+> PDF file and also apply some reformatting. To this end HTML files for all the missing 
+> files in Documentation/technical and Documentation/howto and also for all the 
+> release notes in Documentation/RelNotes were created. 
 
-	$ svn up svn-tree
-	Updating 'svn-tree':
-	svn: E235000: In file 'subversion/libsvn_wc/update_editor.c' \
-	line 1583: assertion failed (action == svn_wc_conflict_action_edit \
-	|| action == svn_wc_conflict_action_delete || action == \
-	svn_wc_conflict_action_replace)
+It seems like a reasonable goal. I do not have a strong opinion on the
+approach or how the final output looks, but I wasn't able to actually
+get output at all after applying your patches. Running "make fullpdf"
+(after installing dblatex) got me:
 
-This is a known bug in "svn update" (Subversion issue 4091) and for
-the sake of old repositories it will need to be fixed some day.
+  The switch --book, is not support using unpatched qt, and will be
+  ignored.The switch --footer-html, is not support using unpatched qt,
+  and will be ignored.The switch --disable-external-links, is not
+  support using unpatched qt, and will be ignored.
 
-Revisions prepared with ordinary svn commands ("svn add" and not "svn
-propset") don't trip this because they represent filetype changes
-using a replace operation, which is approximately equivalent to
-removal followed by adding a new file and works fine.  Perhaps "git
-svn" should mimic that, but for now let's teach the test suite to
-recover from the bug by testing the content of HEAD with a new
-checkout.
+after which wkhtmltopdf began pegging my CPU. I let it run for 10
+minutes before giving up.
 
-After this change, tests t9100.11-13 pass again.
+Another way of doing this would be to format the individual troff
+manpages into dvi or postscript, convert that into pdf, and then
+concatenate that. Something like:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Hi Eric,
+  for i in *.[157]; do
+    man -Tdvi -l "$i" >"$i.dvi"
+    dvipdfm "$i"
+  done
+  pdftk *.[157].pdf cat output full.pdf
 
-Michael G. Schwern wrote:
+works for me, though obviously that does not handle some of the non-man
+items you included. No idea on how the output compares to yours, but
+it's something you may want to look at.
 
-> At this point SVN 1.7 passes except for 3 tests in
-> t9100-git-svn-basic.sh that look like an SVN bug to do with
-> symlinks.
-
-How about this patch?
-
-I didn't add a new xfail test for "svn up" working because I'm not yet
-sure what good git-svn behavior would be.  Probably it would be better
-to track down that svn bug and get a fix backported to the 1.7.x
-branch.
-
-Reference: http://subversion.tigris.org/issues/show_bug.cgi?id=4160
-
- t/t9100-git-svn-basic.sh |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 749b75e8..34d3485f 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -19,6 +19,15 @@ case "$GIT_SVN_LC_ALL" in
- 	;;
- esac
- 
-+svn_up_avoiding_issue4091 () {
-+	if ! svn_cmd_up "$SVN_TREE"
-+	then
-+		# work around Subversion issue 4091
-+		rm -r "$SVN_TREE" &&
-+		svn_cmd checkout "$svnrepo" "$SVN_TREE"
-+	fi
-+}
-+
- test_expect_success \
-     'initialize git svn' '
- 	mkdir import &&
-@@ -148,7 +157,7 @@ test_expect_success "$name" '
- 	git commit -m "$name" &&
- 	git svn set-tree --find-copies-harder --rmdir \
- 		${remotes_git_svn}..mybranch5 &&
--	svn_cmd up "$SVN_TREE" &&
-+	svn_up_avoiding_issue4091 &&
- 	test -h "$SVN_TREE"/exec.sh'
- 
- name='new symlink is added to a file that was also just made executable'
-@@ -173,7 +182,7 @@ test_expect_success "$name" '
- 	git commit -m "$name" &&
- 	git svn set-tree --find-copies-harder --rmdir \
- 		${remotes_git_svn}..mybranch5 &&
--	svn_cmd up "$SVN_TREE" &&
-+	svn_up_avoiding_issue4091 &&
- 	test -f "$SVN_TREE"/exec-2.sh &&
- 	test ! -h "$SVN_TREE"/exec-2.sh &&
- 	test_cmp help "$SVN_TREE"/exec-2.sh'
--- 
-1.7.10.4
+-Peff
