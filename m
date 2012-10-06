@@ -1,79 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] gitignore.txt: suggestions how to get literal # or !
- at the beginning
-Date: Sat, 06 Oct 2012 11:25:16 -0700
-Message-ID: <7vr4pbqwz7.fsf@alter.siamese.dyndns.org>
-References: <20121006132127.GC11712@sigill.intra.peff.net>
- <1349531484-5938-1-git-send-email-pclouds@gmail.com>
- <20121006154036.GA14119@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Sat, 06 Oct 2012 11:28:10 -0700
+Message-ID: <7vmwzzqwud.fsf@alter.siamese.dyndns.org>
+References: <4EC52508.9070907@tu-clausthal.de>
+ <4EC65DE4.90005@tu-clausthal.de>
+ <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
+ <4ED0CE8B.70205@tu-clausthal.de>
+ <20111130064401.GC5317@sigill.intra.peff.net>
+ <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
+ <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de>
+ <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org>
+ <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de>
+ <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de>
+ <7v39c41keo.fsf@alter.siamese.dyndns.org>
+ <7vpqf8z8a6.fsf@alter.siamese.dyndns.org> <4F00B7F3.1060105@tu-clausthal.de>
+ <4F038E49.9080809@tu-clausthal.de> <7vy5toqqab.fsf@alter.siamese.dyndns.org>
+ <50704BB8.1020603@tu-clausthal.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 06 20:25:34 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Sat Oct 06 20:28:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKZ45-00070O-Q8
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 20:25:30 +0200
+	id 1TKZ6t-00088K-BO
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 20:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882Ab2JFSZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2012 14:25:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54502 "EHLO
+	id S1753222Ab2JFS2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2012 14:28:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55632 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132Ab2JFSZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 14:25:19 -0400
+	id S1751676Ab2JFS2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2012 14:28:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 087B29033;
-	Sat,  6 Oct 2012 14:25:19 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 760AE90B5;
+	Sat,  6 Oct 2012 14:28:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=67jDyKqm+U3c28nKuwa/dQUpIvU=; b=lTvvqG
-	flKPTq1X2IJJLnP2q6Sf4ucGopGXgFbEO8KSvm2B5lqdg907xi9ogWjC0xcsld5a
-	6/bb6KsymLdg7gAXxhjNGv6XufZ9aB2uu7cH/Geapq7uXHWpHmVDIT+hEvaJZmUl
-	YD4/82nKj5HdwmfZOd+jbK+ilXLbQnBM8inSg=
+	:content-type; s=sasl; bh=aSaKsmAI7vEIRd3yZANMegaAVBA=; b=SxMqWk
+	SRYroVpP8qeSx4Py23TV0JrisAakv8sDojN6Cfkz2zzLrLWt02DBHeEReezX2Qon
+	GaJLk1ZK5j8n8OgA5MwJE1nKt/3ya/Sq6xvk+Lg9ZmLiVRckx4LDxzeG6s7BXxW0
+	9JWK7rCg2CmmGaasitlxP7o7di01T2KCapFKg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S0tfe4X4EQAa5HFp4vB/dXcrwEF6vmy+
-	zM+0zMMZJd/pYu3ufz+GR73NAxYrnu5VlM6IG3TUep2n3JoSy3nranXEenLicQmH
-	YwDNSNuR6XJngs/6mx+p7O7ES4V2DoReZZjPZT07N02TZs42NgrBQtwBdaoxj5oN
-	hosOKUB0pGA=
+	:content-type; q=dns; s=sasl; b=pRjlZwz93c68ZEd1nfguzNp5cxLzVzws
+	F68Wsws0W9ZW+p+0jBAbEqW7QKQ4gi71zY4/bnfCM1PuhGh78N5+6DYBZ6WawoRk
+	1kfSGAyunzb+4FXNYDDDVmhlFGK5AL1GgGA4tbdcE39wpvKw6A/k37U4FJCUxeGp
+	o/s9pYwHnLM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EADCB9032;
-	Sat,  6 Oct 2012 14:25:18 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62DA490B4;
+	Sat,  6 Oct 2012 14:28:12 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 672D09031; Sat,  6 Oct 2012
- 14:25:18 -0400 (EDT)
-In-Reply-To: <20121006154036.GA14119@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 6 Oct 2012 11:40:36 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D55E790B3; Sat,  6 Oct 2012
+ 14:28:11 -0400 (EDT)
+In-Reply-To: <50704BB8.1020603@tu-clausthal.de> (Sven Strickroth's message of
+ "Sat, 06 Oct 2012 17:18:16 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E5C0760-0FE3-11E2-925A-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 95BE634E-0FE3-11E2-8077-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207161>
 
-Jeff King <peff@peff.net> writes:
+Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-> I'd be slightly worried that we are hurting other people who do care and
-> are on older versions of asciidoc. It would be nice if we actually knew
-> the cause of the different behaviors we saw and if there was a way to
-> work around it (it might not even be old asciidoc, but rather old
-> docbook).
+> Am 04.01.2012 01:12 schrieb Junio C Hamano:
+>> Now "prompt" is no longer a method but is merely a helper function, so
+>> I've queued this (and 1/2 rewrite we discussed in a separate thread) to
+>> 'pu' after rewording the commit log message.
+>> 
+>> Thanks.
 >
-> Part of me wants to just take the change and see if anybody complains.
-> But that is probably the wrong thing to do, and just my general
-> frustration with our doc toolchain talking.
+> Is there a reason why these changes did not get merged? The issues are
+> still there.
 
-Yeah, I do not think we would want to introduce such a regression
-especially when the proposed update is not the only (or best) way to
-give us the intended benefit.  I think the "spell the character name
-out" approach you showed in the other message was far more readable
-anyway.
-
-Thanks.
+It is either that it was simply forgotten, or after I wrote the part
+you quoted early in January there were discussions later that showed
+the patch was not desirable for some reason. I do not recall which.
