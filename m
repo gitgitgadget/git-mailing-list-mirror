@@ -1,93 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git pull takes ~8 seconds on up-to-date Linux git tree
-Date: Fri, 5 Oct 2012 19:21:08 -0400
-Message-ID: <20121005232108.GA7996@sigill.intra.peff.net>
-References: <20121004141454.GA246@x4>
- <20121004184314.GA15389@sigill.intra.peff.net>
- <7v391ux7im.fsf@alter.siamese.dyndns.org>
- <7vvceqvses.fsf@alter.siamese.dyndns.org>
- <7vmx01x3s4.fsf@alter.siamese.dyndns.org>
- <7vehlcu091.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 04/10] attr: more matching optimizations from .gitignore
+Date: Sat, 6 Oct 2012 12:02:17 +0700
+Message-ID: <CACsJy8BWJg0sr-6iG4LwJjkSM46=CBgddDac4dDR2o3HZ8_25g@mail.gmail.com>
+References: <1349412069-627-1-git-send-email-pclouds@gmail.com>
+ <1349412069-627-5-git-send-email-pclouds@gmail.com> <7vy5jku549.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 06 01:21:30 2012
+X-From: git-owner@vger.kernel.org Sat Oct 06 07:03:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKHCw-0006Ei-I1
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 01:21:26 +0200
+	id 1TKMXc-0003yp-3d
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 07:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab2JEXVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2012 19:21:12 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:42344 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752548Ab2JEXVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2012 19:21:11 -0400
-Received: (qmail 2566 invoked by uid 107); 5 Oct 2012 23:21:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Oct 2012 19:21:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2012 19:21:08 -0400
-Content-Disposition: inline
-In-Reply-To: <7vehlcu091.fsf@alter.siamese.dyndns.org>
+	id S1750975Ab2JFFCt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Oct 2012 01:02:49 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:43598 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750835Ab2JFFCt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2012 01:02:49 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so5619603iea.19
+        for <git@vger.kernel.org>; Fri, 05 Oct 2012 22:02:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2CiDbHGqvA8GhbjsKK5yyX+11fWSaHHIopg7bII+DJg=;
+        b=EUTwR+XXPOBURYbUtFWcSccLaFcChquiHM2ltnPgHAQn86w4vD5oBZ6hDwJJ5rwzWD
+         e8It4inpgvbl+p9PSqATOCfP+mnPrNkThlYisKmYLxOYygfF0rSMZFRt82larNzGhhCt
+         kL2a3vky6GsV6NjgZpws04rENky3I3Z2/NU+vfRR4zqbZybmvb2xPgvU4K8uLUBe4wRb
+         rBwhgtvxPhN4l1bxsao5mCBpTSoMD+mAggCwZep5B5k0UCgEoTV7PdqmlZuo0wLFLJTH
+         9ue4WloN1MxIE4J8rRS/e57sEKv/2KRiNiAmWBq4ESccOisEfYRFGDhQltOcplr79o4N
+         Z/8A==
+Received: by 10.50.153.130 with SMTP id vg2mr836759igb.26.1349499768118; Fri,
+ 05 Oct 2012 22:02:48 -0700 (PDT)
+Received: by 10.64.143.168 with HTTP; Fri, 5 Oct 2012 22:02:17 -0700 (PDT)
+In-Reply-To: <7vy5jku549.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207128>
 
-On Fri, Oct 05, 2012 at 01:34:02PM -0700, Junio C Hamano wrote:
+On Sat, Oct 6, 2012 at 1:48 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+>
+>> +Unlike `.gitignore`, negative patterns are not supported.
+>> +Patterns that match directories are also not supported.
+>
+> Is "are not supported" the right phrasing?
+>
+> I think it makes perfect sense not to forbid "!path attr1", because
+> it is unclear what it means (e.g. "path -attr1" vs "path !attr1").
+> So I would say "Negative patterns are forbidden as they do not make
+> any sense".
 
-> OK, I think I am convinced myself that this patch is the right fix.
-> 
-> The performance regression Markus saw is in fmt-merge-message, and
-> it is caused by the updated remove_redundant() that is used by
-> get_merge_bases_many() and reduce_heads().  On the topic branch, all
-> callers of reduce_heads() were passing commits that are already
-> parsed, but before the topic was merged to 'master', we added one
-> more caller to reduce_heads() on the 'master' front that passed an
-> unparsed commit, which is why the problem surfaced at that merge.
+OK
 
-Thanks for tracking it down. That makes a lot of sense with the results
-we are seeing.
+> But for the latter, I think it makes a lot more sense to just accept
+> "path/ attr1" and doing nothing.  The user requests to set an
+> attribute to "path" that has to be a directory, and there is nothing
+> wrong in such a request in itself.  But nothing in git asks for
+> attributes for directories (because we do not track directories),
+> and such a request happens to be a no-op.
 
-> It might make sense to assert or die in commit_list_insert_by_date()
-> when a caller mistakenly pass an unparsed commit object to prevent
-> this kind of breakages in the future.
-
-I wonder if it would be too much to just have commit_list_insert_by_date
-call parse_commit. It is, after all, the exact moment when we need to
-have the date valid (and by waiting until the last minute, we can
-potentially avoid parses that would not otherwise need to happen). The
-overhead in the common case should basically be the same as an assert:
-checking that commit->object.parsed is true (we can always inline that
-bit of parse_commit if we have to).
-
-Of course, in this case it is not just commit_list_insert_by_date that
-cares. paint_down_to_common also want commit->parents to be valid; I'm
-surprised that dealing with unparsed commits did not also reveal an
-error there.
-
-In an object-oriented world, we would always get the attributes of a
-commit through accessors that made sure the object was parsed. That
-would be nicer, but it would also mean paying for the "if (parsed)"
-conditional a lot more frequently.
-
-> > @@ -617,6 +618,8 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
-> >  
-> >  	one->object.flags |= PARENT1;
-> >  	commit_list_insert_by_date(one, &list);
-> > +	if (!n)
-> > +		return list;
-> >  	for (i = 0; i < n; i++) {
-> >  		twos[i]->object.flags |= PARENT2;
-> >  		commit_list_insert_by_date(twos[i], &list);
-
-This seems like an obvious optimization, but does it really have
-anything to do with the patch at hand?
-
--Peff
+Or the user might think "path/ attr1" sets attr1 for all files under
+"path/" because it does not make sense to attach attributes to a
+directory in git.
+--=20
+Duy
