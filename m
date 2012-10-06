@@ -1,152 +1,97 @@
-From: "Joachim Schmitz" <jojo@schmitz-digital.de>
-Subject: Re: [PATCH 08/10] Integrate wildmatch to git
-Date: Sat, 6 Oct 2012 11:25:35 +0200
-Message-ID: <k4otes$jll$1@ger.gmane.org>
-References: <1349412069-627-1-git-send-email-pclouds@gmail.com><1349412069-627-9-git-send-email-pclouds@gmail.com> <CACnwZYeob34c6hbMX-CNvJ67Qu5b+v7J8SbfcBOgZv6Qu+aqFg@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] gitignore.txt: suggestions how to get literal # or ! at the beginning
+Date: Sat, 6 Oct 2012 12:33:14 +0100
+Organization: OPDS
+Message-ID: <01ADED0717024E6F93B7FBADB1AEAE6B@PhilipOakley>
+References: <1349512701-29729-1-git-send-email-pclouds@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
 	format=flowed	reply-type=original
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 06 11:31:21 2012
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 06 13:33:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKQjA-0007Bu-R5
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 11:31:21 +0200
+	id 1TKSdK-00069X-Ez
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 13:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419Ab2JFJ0K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Oct 2012 05:26:10 -0400
-Received: from plane.gmane.org ([80.91.229.3]:35878 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751566Ab2JFJ0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 05:26:08 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1TKQe8-0004kD-Lu
-	for git@vger.kernel.org; Sat, 06 Oct 2012 11:26:08 +0200
-Received: from dsdf-4db51ce0.pool.mediaways.net ([77.181.28.224])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 06 Oct 2012 11:26:08 +0200
-Received: from jojo by dsdf-4db51ce0.pool.mediaways.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 06 Oct 2012 11:26:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsdf-4db51ce0.pool.mediaways.net
+	id S1752234Ab2JFLdL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Oct 2012 07:33:11 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:47915 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750765Ab2JFLdI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2012 07:33:08 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgMFAGEWcFBcGnKf/2dsb2JhbABFhhGFP7NQgQmCGwUBAQQBCAEBGQ8BBR4BASELAgMFAgEDFQUCBSECAhQBBAgSBgcXBgESCAIBAgMBh2IDCQqmfIhoDYlUgSGJNoVkMmADjWmGLYx4hQuCbg
+X-IronPort-AV: E=Sophos;i="4.80,543,1344207600"; 
+   d="scan'208";a="405441260"
+Received: from host-92-26-114-159.as13285.net (HELO PhilipOakley) ([92.26.114.159])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 06 Oct 2012 12:33:05 +0100
+X-Priority: 3
 X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207141>
 
-Thiago Farina wrote:
-> On Fri, Oct 5, 2012 at 1:41 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy
-> <pclouds@gmail.com> wrote:
->> This makes wildmatch.c part of libgit.a and builds test-wildmatch;
->> the dependency on libpopt in the original has been replaced with the
->> use
->> of our parse-options. Global variables in test-wildmatch are marked
->> static to avoid sparse warnings.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  .gitignore           |  1 +
->>  Makefile             |  3 ++
->>  t/t3070-wildmatch.sh | 27 ++++++++++++++++
->>  test-wildmatch.c     | 88
->>  ++++++++++++++++++++++------------------------------ wildmatch.c
->>  | 26 +++++----------- 5 files changed, 75 insertions(+), 70
->>  deletions(-) create mode 100755 t/t3070-wildmatch.sh
->>
->> diff --git a/test-wildmatch.c b/test-wildmatch.c
->> index 88585c2..bb726c8 100644
->> --- a/test-wildmatch.c
->> +++ b/test-wildmatch.c
->> @@ -19,34 +19,38 @@
->>
->>  /*#define COMPARE_WITH_FNMATCH*/
->>
->> -#define WILD_TEST_ITERATIONS
->> -#include "lib/wildmatch.c"
->> +#include "cache.h"
->> +#include "parse-options.h"
->> +#include "wildmatch.h"
->>
->> -#include <popt.h>
->> +#ifndef MAXPATHLEN
->> +#define MAXPATHLEN 1024
->> +#endif
->> +#ifdef NO_STRLCPY
->> +#include "compat/strlcpy.c"
->> +#define strlcpy gitstrlcpy
->> +#endif
->>
->>  #ifdef COMPARE_WITH_FNMATCH
->>  #include <fnmatch.h>
->>
->> -int fnmatch_errors =3D 0;
->> +static int fnmatch_errors =3D 0;
->>  #endif
->>
->> -int wildmatch_errors =3D 0;
->> -char number_separator =3D ',';
->> +static int wildmatch_errors =3D 0;
->>
->>  typedef char bool;
->>
->> -int output_iterations =3D 0;
->> -int explode_mod =3D 0;
->> -int empties_mod =3D 0;
->> -int empty_at_start =3D 0;
->> -int empty_at_end =3D 0;
->> -
->> -static struct poptOption long_options[] =3D {
->> -  /* longName, shortName, argInfo, argPtr, value, descrip, argDesc
->> */
->> -  {"iterations",     'i', POPT_ARG_NONE,   &output_iterations, 0,
->> 0, 0},
->> -  {"empties",        'e', POPT_ARG_STRING, 0, 'e', 0, 0},
->> -  {"explode",        'x', POPT_ARG_INT,    &explode_mod, 0, 0, 0},
->> -  {0,0,0,0, 0, 0, 0}
->> +static int explode_mod =3D 0;
-> Isn't static variables like this initialized to zero by default? Ther=
+=46rom: "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" <pclouds@gmail.com>
+> We support backslash escape, but we hide the details behind the phras=
 e
-> is a high chance that I might be wrong though.
+> "a shell glob suitable for consumption by fnmatch(3)". So it may not
+> be obvious how one can get literal # or ! at the beginning of a=20
+> pattern.
+> Add a few lines on how to work around the magic characters.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> Asciidoc 8.2.6 does not like me writing
+> "Put \# if you need a literal #.." so I go with "backslash" and
+> "hash" instead. `\!` displays fine both in man page and html format.
+> '!' changed to `!` because it looks clearer in monospace.
 
-C99,
-5.1.2.1: All objects with static storage duration shall be initialized =
-(set=20
-to their initial values) before program startup.
-6.2.4.2: An object whose identifier is declared with external or intern=
-al=20
-linkage, or with the storage-class specifier static has static storage=20
-duration. Its lifetime is the entire execution of the program and its s=
-tored=20
-value is initialized only once, prior to program startup.
-6.7.8.10: If an object that has automatic storage duration is not=20
-initialized explicitly, its value is indeterminate. If an object that h=
-as=20
-static storage duration is not initialized explicitly, then:
-=E2=80=94 if it has pointer type, it is initialized to a null pointer;
-=E2=80=94 if it has arithmetic type, it is initialized to (positive or =
-unsigned)=20
-zero;
-=E2=80=94 if it is an aggregate, every member is initialized (recursive=
-ly) according=20
-to these rules;
-=E2=80=94 if it is a union, the first named member is initialized (recu=
-rsively)=20
-according to these rules.
+Why not put the backslash-hash in back quotes as well to give the same=20
+look/feel consistency?
 
-So seems you're right ;-)=20
+>
+> Documentation/gitignore.txt | 7 +++++--
+> 1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.tx=
+t
+> index 96639e0..8c03ed4 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -74,11 +74,14 @@ PATTERN FORMAT
+>    for readability.
+>
+>  - A line starting with # serves as a comment.
+
++  A line starting with `#` serves as a comment.
+
+> +   Put a backslash in front of the first hash for the patterns
+> +   that start with a hash.
+>
++   Use `\#` if you need a literal `#` at the beginning of the pattern.
+
+> - - An optional prefix '!' which negates the pattern; any
+> + - An optional prefix `!` which negates the pattern; any
+>    matching file excluded by a previous pattern will become
+>    included again.  If a negated pattern matches, this will
+> -   override lower precedence patterns sources.
+> +   override lower precedence patterns sources. Use `\!` if
+> +   you need a literal `!` at the beginning of the pattern.
+>
+>  - If the pattern ends with a slash, it is removed for the
+>    purpose of the following description, but it would only find
+> --=20
+> 1.7.12.1.406.g6ab07c4
