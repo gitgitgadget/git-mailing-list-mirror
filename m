@@ -1,67 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [Patch 1/5] Fix some asciidoc layout problems
-Date: Sat, 6 Oct 2012 15:10:09 -0400
-Message-ID: <20121006191009.GB3644@sigill.intra.peff.net>
+Subject: Re: [Patch 5/5] Create pdf from all html files
+Date: Sat, 6 Oct 2012 15:11:52 -0400
+Message-ID: <20121006191152.GC3644@sigill.intra.peff.net>
 References: <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
- <244418682.269701.1349538839518.JavaMail.ngmail@webmail08.arcor-online.net>
- <7vfw5rqwby.fsf@alter.siamese.dyndns.org>
+ <1206625172.269796.1349539081024.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Thomas Ackermann <th.acker66@arcor.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 06 21:10:30 2012
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker66@arcor.de>
+X-From: git-owner@vger.kernel.org Sat Oct 06 21:12:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKZla-0000xB-0w
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 21:10:26 +0200
+	id 1TKZnC-0001l0-JL
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Oct 2012 21:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755607Ab2JFTKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2012 15:10:15 -0400
-Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43160 "EHLO
+	id S1756228Ab2JFTL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2012 15:11:57 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43164 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755463Ab2JFTKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2012 15:10:14 -0400
-Received: (qmail 10043 invoked by uid 107); 6 Oct 2012 19:10:46 -0000
+	id S1755463Ab2JFTL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2012 15:11:56 -0400
+Received: (qmail 10073 invoked by uid 107); 6 Oct 2012 19:12:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Oct 2012 15:10:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Oct 2012 15:10:09 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Oct 2012 15:12:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Oct 2012 15:11:52 -0400
 Content-Disposition: inline
-In-Reply-To: <7vfw5rqwby.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1206625172.269796.1349539081024.JavaMail.ngmail@webmail08.arcor-online.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207169>
 
-On Sat, Oct 06, 2012 at 11:39:13AM -0700, Junio C Hamano wrote:
+On Sat, Oct 06, 2012 at 05:58:01PM +0200, Thomas Ackermann wrote:
 
-> Thomas Ackermann <th.acker66@arcor.de> writes:
+> - use wkhtmltopdf to combine all html files into a single pdf file "git-doc.pdf"
+> - provide make target "fullpdf" to create "git-doc.pdf"
 > 
-> > Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> > ---
-> >  Documentation/git-bisect-lk2009.txt | 12 ++++++------
-> >  Documentation/git-fetch-pack.txt    |  5 ++++-
-> >  2 files changed, 10 insertions(+), 7 deletions(-)
-> 
-> You didn't say what "layout problem" you are fixing, or what the
-> approach you took to "fix" it.  From the patch, I can guess that the
-> latter is to lengthen the lines that surround the displayed examples,
-> but as far as I know and can tell, the existing ones are long enough
-> so I cannot tell why you needed such a change to the source in the
-> first place.
-> 
-> A better explanation, please?
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/.gitignore      |  1 +
+>  Documentation/Makefile        |  9 +++++++++
+>  Documentation/footerend.txt   |  4 ++++
+>  Documentation/footerstart.txt |  7 +++++++
+>  Documentation/makedocpdf.sh   | 25 +++++++++++++++++++++++++
+>  Makefile                      |  6 ++++++
+>  6 files changed, 52 insertions(+)
+>  create mode 100644 Documentation/footerend.txt
+>  create mode 100644 Documentation/footerstart.txt
+>  create mode 100644 Documentation/makedocpdf.sh
 
-I had the same question. Also, some of the lines convert tabs in literal
-output into spaces, which is actively wrong (or maybe they were
-converted already to spaces in the current code, but they should at
-least align with 8-space tabstops):
+The makedocpdf script has no execute bit, but...
 
-> > -:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-> > +:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M  Makefile
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index abd27b5..c4c2a30 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -189,6 +189,9 @@ info: git.info gitman.info
+>  
+>  pdf: user-manual.pdf
+>  
+> +fullpdf: pdf all
+> +	./makedocpdf.sh
+
+Here we try to run it.
 
 -Peff
