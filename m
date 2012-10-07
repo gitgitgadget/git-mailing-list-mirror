@@ -1,106 +1,114 @@
 From: Thomas Ackermann <th.acker66@arcor.de>
-Subject: Aw: Re: [Patch 1/5] Fix some asciidoc layout problems
-Date: Sun, 7 Oct 2012 10:01:00 +0200 (CEST)
-Message-ID: <1013292233.101229.1349596860911.JavaMail.ngmail@webmail23.arcor-online.net>
-References: <20121006191009.GB3644@sigill.intra.peff.net> <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
- <244418682.269701.1349538839518.JavaMail.ngmail@webmail08.arcor-online.net>
- <7vfw5rqwby.fsf@alter.siamese.dyndns.org>
+Subject: Aw: Re: [Patch 0/5] Create single PDF for all HTML files
+Date: Sun, 7 Oct 2012 10:14:28 +0200 (CEST)
+Message-ID: <1770841099.101310.1349597668191.JavaMail.ngmail@webmail23.arcor-online.net>
+References: <20121006193205.GD3644@sigill.intra.peff.net> <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: th.acker66@arcor.de, git@vger.kernel.org
-To: peff@peff.net, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Oct 07 10:01:22 2012
+Cc: git@vger.kernel.org
+To: peff@peff.net, th.acker66@arcor.de
+X-From: git-owner@vger.kernel.org Sun Oct 07 10:16:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKlnc-0007L8-M2
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 10:01:20 +0200
+	id 1TKm2L-0003Xs-Uf
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 10:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086Ab2JGIBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 04:01:07 -0400
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:36123 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752008Ab2JGIBF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2012 04:01:05 -0400
-Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mx.arcor.de (Postfix) with ESMTP id 0B56C2D6935;
-	Sun,  7 Oct 2012 10:01:01 +0200 (CEST)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id E1F7328A40E;
-	Sun,  7 Oct 2012 10:01:00 +0200 (CEST)
+	id S1752094Ab2JGIOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 04:14:33 -0400
+Received: from mail-in-13.arcor-online.net ([151.189.21.53]:49625 "EHLO
+	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751975Ab2JGIO3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2012 04:14:29 -0400
+Received: from mail-in-16-z2.arcor-online.net (mail-in-16-z2.arcor-online.net [151.189.8.33])
+	by mx.arcor.de (Postfix) with ESMTP id 35F7821246D;
+	Sun,  7 Oct 2012 10:14:28 +0200 (CEST)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-16-z2.arcor-online.net (Postfix) with ESMTP id 30ED63FEEF4;
+	Sun,  7 Oct 2012 10:14:28 +0200 (CEST)
 Received: from webmail23.arcor-online.net (webmail23.arcor-online.net [151.189.8.121])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id DE448107B10;
-	Sun,  7 Oct 2012 10:01:00 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net DE448107B10
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 2F1113AED37;
+	Sun,  7 Oct 2012 10:14:28 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-08.arcor-online.net 2F1113AED37
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349596860; bh=ucOSGC3FVElRe5Q/WtJrDeqfgVrynn9zUYgXaJg/rnA=;
+	t=1349597668; bh=msDQe8oGela3zBVTbk3paN3wQk9Xi+aOMsf4fd6LlTo=;
 	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=O6a/Mr9alGmKKK3Nnsq0MB37nioN/bZeprS2G1OMzKrWVZopNnOCCuRs6+wTQV0vH
-	 AghaEiwRLn1Uh+2F3dIgLp+YHdDVw6/Sq42pPIqdTGvyMf22pwjHSbsw+ZlCXkakyE
-	 p7ePyf0MOSiQ5wgEMgg9VcnfN8bnJ0fjMQCm8kE8=
-Received: from [188.98.225.100] by webmail23.arcor-online.net (151.189.8.121) with HTTP (Arcor Webmail); Sun, 7 Oct 2012 10:01:00 +0200 (CEST)
-In-Reply-To: <20121006191009.GB3644@sigill.intra.peff.net>
+	b=rEeiHEckBsGpa8F0i5dEVd4mxfYjBu9x4btFAzgnl9LFcN1Ijgf4sPc4rHUW2yZop
+	 iHu6Z7ziGImmrHHCfzbaEsEW2dTttVAfACQfNLjBEsDHejk+YNctqtDiU1UQrPaqOB
+	 Ju6vXNQ2yZS7dUh539VCr32oxJAv6llURMxqNNhU=
+Received: from [188.98.225.100] by webmail23.arcor-online.net (151.189.8.121) with HTTP (Arcor Webmail); Sun, 7 Oct 2012 10:14:27 +0200 (CEST)
+In-Reply-To: <20121006193205.GD3644@sigill.intra.peff.net>
 X-ngMessageSubType: MessageSubType_MAIL
 X-WebmailclientIP: 188.98.225.100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207178>
 
- 
-Making the dashed lines longer was unnecessary and I will remove this.
 
-There were in general the following "layout problems" I encountered while trying to create git-doc.pdf:
+There are "patched QT" and "unpatched QT" versions of wkhtmltopdf
+(see http://code.google.com/p/wkhtmltopdf/). I am using V0.9.9 for Windows
+which is "patched QT".
 
-- Wrong sectioning syntax (e.g. "===" instead of "---")
-- Left-over shell scripting commands (in some release notes files)
-- Over-long lines which caused very wide right margins in the resulting pdf
+There is one drawback with wkhtmltopdf: At least on my Netbook (Win7 64bit,
+Pentium 1.5GHz) it is very slow. It takes more than 3 hrs to create git-doc.pdf.
 
-The later is the case here and I tried to fix this by either splitting the offending line in several lines
-or removing as much spaces as possible.
-
-I will be more specific about these things in my commit messages.
+If you want to have a quick look on the resulting pdf just clone 
+https://github.com/tacker66/git-docpdf.git. This repo contains
+a current version of user.manual.pdf and git-doc.pdf 
 
 
 ----- Original Nachricht ----
 Von:     Jeff King <peff@peff.net>
-An:      Junio C Hamano <gitster@pobox.com>
-Datum:   06.10.2012 21:10
-Betreff: Re: [Patch 1/5] Fix some asciidoc layout problems
+An:      Thomas Ackermann <th.acker66@arcor.de>
+Datum:   06.10.2012 21:32
+Betreff: Re: [Patch 0/5] Create single PDF for all HTML files
 
-> On Sat, Oct 06, 2012 at 11:39:13AM -0700, Junio C Hamano wrote:
+> On Sat, Oct 06, 2012 at 05:51:15PM +0200, Thomas Ackermann wrote:
 > 
-> > Thomas Ackermann <th.acker66@arcor.de> writes:
-> > 
-> > > Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> > > ---
-> > >  Documentation/git-bisect-lk2009.txt | 12 ++++++------
-> > >  Documentation/git-fetch-pack.txt    |  5 ++++-
-> > >  2 files changed, 10 insertions(+), 7 deletions(-)
-> > 
-> > You didn't say what "layout problem" you are fixing, or what the
-> > approach you took to "fix" it.  From the patch, I can guess that the
-> > latter is to lengthen the lines that surround the displayed examples,
-> > but as far as I know and can tell, the existing ones are long enough
-> > so I cannot tell why you needed such a change to the source in the
-> > first place.
-> > 
-> > A better explanation, please?
+> > I wanted to have a single PDF file which contains the complete Git
+> documentation 
+> > (except user-manual) for easier reading on my tablet. The simplest way to
+> do 
+> > this was by using wkhtmltopdf which can combine a set of HTML files into a
+> sinlge 
+> > PDF file and also apply some reformatting. To this end HTML files for all
+> the missing 
+> > files in Documentation/technical and Documentation/howto and also for all
+> the 
+> > release notes in Documentation/RelNotes were created. 
 > 
-> I had the same question. Also, some of the lines convert tabs in literal
-> output into spaces, which is actively wrong (or maybe they were
-> converted already to spaces in the current code, but they should at
-> least align with 8-space tabstops):
+> It seems like a reasonable goal. I do not have a strong opinion on the
+> approach or how the final output looks, but I wasn't able to actually
+> get output at all after applying your patches. Running "make fullpdf"
+> (after installing dblatex) got me:
 > 
-> > > -:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57
-> 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M      Makefile
-> > > +:100644 100644 5cf8258195331a4dbdddff08b8d68642638eea57
-> 4492984efc09ab72ff6219a7bc21fb6a957c4cd5 M  Makefile
+>   The switch --book, is not support using unpatched qt, and will be
+>   ignored.The switch --footer-html, is not support using unpatched qt,
+>   and will be ignored.The switch --disable-external-links, is not
+>   support using unpatched qt, and will be ignored.
+> 
+> after which wkhtmltopdf began pegging my CPU. I let it run for 10
+> minutes before giving up.
+> 
+> Another way of doing this would be to format the individual troff
+> manpages into dvi or postscript, convert that into pdf, and then
+> concatenate that. Something like:
+> 
+>   for i in *.[157]; do
+>     man -Tdvi -l "$i" >"$i.dvi"
+>     dvipdfm "$i"
+>   done
+>   pdftk *.[157].pdf cat output full.pdf
+> 
+> works for me, though obviously that does not handle some of the non-man
+> items you included. No idea on how the output compares to yours, but
+> it's something you may want to look at.
 > 
 > -Peff
 > 
