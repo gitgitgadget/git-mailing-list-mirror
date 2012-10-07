@@ -1,85 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fw: [git-users] How do I git-push to an FTP server?
-Date: Sun, 7 Oct 2012 10:27:54 -0700
-Message-ID: <20121007172754.GA29560@elie.Belkin>
-References: <20121005173833.e96c4fcfed0cce5b78911b0b@domain007.com>
- <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
- <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
- <7vwqz4si87.fsf@alter.siamese.dyndns.org>
- <CALkWK0kXH-U0mTeFtiMq7tqCOpNJT1A7Z==GxOphe-sGdmxRRg@mail.gmail.com>
+From: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
+Subject: Applying git technology to fix the locate command
+Date: Sun, 7 Oct 2012 14:39:57 -0400
+Message-ID: <CAKON4OzyAt-e0Ygj=7+Ze7ywU+RNTsi-Nn5huCnEWy8o=a-EUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	git@vger.kernel.org, git-users@googlegroups.com,
-	August Karlstrom <fusionfile@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 07 19:28:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 07 20:40:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKueM-0000qv-9o
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 19:28:22 +0200
+	id 1TKvlz-0001sz-Ok
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 20:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609Ab2JGR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 13:28:11 -0400
-Received: from mail-da0-f46.google.com ([209.85.210.46]:58092 "EHLO
-	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752335Ab2JGR2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2012 13:28:09 -0400
-Received: by mail-da0-f46.google.com with SMTP id n41so1148747dak.19
-        for <git@vger.kernel.org>; Sun, 07 Oct 2012 10:28:08 -0700 (PDT)
+	id S1754377Ab2JGSkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 14:40:07 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:48520 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754367Ab2JGSj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 14:39:58 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so7619590iea.19
+        for <git@vger.kernel.org>; Sun, 07 Oct 2012 11:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9FBSnYj7WaktjUOPKPwZh5W/tCvAaIBRCY9PggbkO4Q=;
-        b=f2ZOnAu60694d2xWP4Wc3ScSPyDQU7b0JpZdqO8Y9ELhNFoQay10tH0R7corggdYQV
-         w4s+Qk9eWjQDLxJWFrxCnrlbbHT5f5DPXVlAr6YKp5R22jV5CYjUvDRIdKodeXL9e0U7
-         wH0kBYXB/1GGtVTGMis8scfLSP81SFh/wLwtjEEkItAVLGLc8cGQvy9rddl8qf3XFSCw
-         p5l5kbLfZvb07dREGQvU7qWRpb1nQG5IzHHrs4jJMzXOe/Sc7kwo91T18v+NZtwRj1TD
-         5S3Tlyi0X1xj2IM50KQNMZ4UJZ30L+Z6r1OVrQBVwsWKs0QFCvutgIfR80N4CA5+UxlE
-         jWEQ==
-Received: by 10.66.88.3 with SMTP id bc3mr36889880pab.51.1349630888710;
-        Sun, 07 Oct 2012 10:28:08 -0700 (PDT)
-Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
-        by mx.google.com with ESMTPS id kp3sm9352983pbc.64.2012.10.07.10.28.07
-        (version=SSLv3 cipher=OTHER);
-        Sun, 07 Oct 2012 10:28:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kXH-U0mTeFtiMq7tqCOpNJT1A7Z==GxOphe-sGdmxRRg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jFxBNCgqLwJVeby0Ps6j3AHAQVLV7u6rimjIkwWpq/8=;
+        b=TGlklqFjZl+doRb6AuUXmvUvlJZC6kd8YZvytrrCEB3uwDq6hi3UyT0H4s93iY+zK1
+         GHCGXBJkyPJSVZkUTz1W8YvUFi8+PwETxVMywb+V2tQ12Bkh8g/9PkhRpomynp37wp6m
+         BntNdT6brCCsis6ZtL/aCcNCt84OuFIeWGtsS9JVg0EDbsZ9ycimPl7j8iQ3PWonxFxe
+         WsbCkKcgdAl5+qO4FXH/oQImF7b9JYE8ljzFoIh8u52kADG4Y8i+YnrDQk4L0jqY40F4
+         xG8gwZkX4bOjjXyFgxBHa2QzBJ9dkYd1oLF8dS5vVUNngrwvueWIOrlMxaXAB49rqzmG
+         CrfQ==
+Received: by 10.50.13.133 with SMTP id h5mr6261522igc.2.1349635197952; Sun, 07
+ Oct 2012 11:39:57 -0700 (PDT)
+Received: by 10.64.55.234 with HTTP; Sun, 7 Oct 2012 11:39:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207186>
 
-Ramkumar Ramachandra wrote:
->> Thomas Ferris Nicolaisen <tfnico@gmail.com> writes:
+I've been using the Dash HUD in Ubuntu and it's performance is
+terrible to the point of being unusable. So I started top and noticed
+that it was forking 'locate' and locate was pegging my CPU at 100%
+while I tried typing into their incremental search.
 
->>> At least according to the documentation[1], "Git natively supports [...] ftp".
->>>
->>> This could need some clarification if pushing over ftp is not supported.
-[...]
-> -Git natively supports ssh, git, http, https, ftp, ftps, and rsync
-> -protocols. The following syntaxes may be used with them:
-> +Git natively supports ssh, git, http, https, and rsync protocols. The
-> +following syntaxes may be used with them:
+Next I looked at the mlocate database. It is 350MB on my desktop and
+indexing 10,388,379 files. Not quite sure why I have 10M files on my
+desktop - probably because links are making files appear multiple
+times.
 
-Perhaps the initial list should not be exhaustive, in which case we
-could say:
+Typing a non-existent string into locate takes over 10s to respond and
+that's with the db cached in RAM.
 
-	Git natively supports ssh, git, http, and https protocols.  The
-	following syntaxes may be used with them:
+jonsmirl@terra:/$ time locate lelelekddmd
+real	0m10.645s
+user	0m10.537s
+sys	0m0.064s
 
-	...
+Git has to deal with similar path compression and it responds pretty
+much instantly. I'm wondering if any of you git gurus could apply some
+knowledge from git and use it to fix locate?
 
-	Git also has (less efficient) support for fetching and pushing
-	over rsync protocol and fetching over ftp or ftps, using the
-	same "protocol://host/path/to/repo.git/" syntax.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
