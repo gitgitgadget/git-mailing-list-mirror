@@ -1,107 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Allow generating a non-default set of documentation
-Date: Sun, 07 Oct 2012 15:40:19 -0700
-Message-ID: <7vwqz1oqi4.fsf@alter.siamese.dyndns.org>
+Date: Sun, 07 Oct 2012 15:45:52 -0700
+Message-ID: <7vsj9poq8v.fsf@alter.siamese.dyndns.org>
 References: <7vzk3yow3f.fsf@alter.siamese.dyndns.org>
  <20121007214855.GB1743@sigill.intra.peff.net>
+ <7v626lq5g4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 08 00:40:33 2012
+X-From: git-owner@vger.kernel.org Mon Oct 08 00:46:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKzWS-0001SJ-Cf
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 00:40:32 +0200
+	id 1TKzbq-0003ks-94
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 00:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981Ab2JGWkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 18:40:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56270 "EHLO
+	id S1751937Ab2JGWp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 18:45:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58263 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751497Ab2JGWkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2012 18:40:21 -0400
+	id S1751491Ab2JGWpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 18:45:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E5798EB7;
-	Sun,  7 Oct 2012 18:40:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92DA39022;
+	Sun,  7 Oct 2012 18:45:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Zn3zQZY7c7fTQtHe/rjG9G1e1mc=; b=bmQfie
-	CNUvZKq0qx0FB8Rfg5Mf2hCQs+jqCKn7vWqtO+2qJhQcvAwPrvKZSPBqySTQZZRN
-	YJwWjAtz5w8W8BK3znAMwjIdoyoE9EcmuHp4geZL0L8sUo1JMKdfvTbanGDMoDa/
-	m4iXE+XYGfA095J+snCsYycdhQEadyUfoLs/o=
+	:content-type; s=sasl; bh=X5Cflwr/7Gn925UYF38ojRCWxCo=; b=ApTveW
+	0QEkqHn/xzTpvTrGLmDPlmO371ulDd8E94bHcs1/EHiIzb1BscOPBpsLIKei5ezg
+	dqMOfmTThzsJjqWChp25fUNNQ65x5oBATbt1T6bYfm4iWhmzC91YSBc073IXtD47
+	1nkBVIjsEWxBH3FicCoOn5zubf1MkRUvODo78=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z+UQAhKUUagToO//uIdXGhRsCDXD2aVV
-	oihB2Aivt1O8vIAMvMYopUf2gdK4cGbYyTNkae8khRY4PMSuy+2ZX5PRlc2C4E4E
-	mJ/Az+GbqYQeszB47z2hTuCHrxkhs6vPURjfQ59cc6hP7HUyhv4kow3APbob9HQY
-	yLMn5GEKXzI=
+	:content-type; q=dns; s=sasl; b=XDCyRgatRBjnzf5MiytWdrFFKz6z4Mf3
+	yWpHZv6xPqpQyHzQejs5Fdao7v4/m+nBOgmclf6zVyXAU2aeWnYyXgTMMbbGKjyo
+	+Y+bryRmx/CzHO8QtUivabUWCzO7+Hgz0tWrPFkUzGqDwoSC8bbzxXlELQCcX/Eu
+	/f2LccX1DOk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D39D8EB6;
-	Sun,  7 Oct 2012 18:40:21 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 804F89020;
+	Sun,  7 Oct 2012 18:45:54 -0400 (EDT)
 Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC5128EB4; Sun,  7 Oct 2012
- 18:40:20 -0400 (EDT)
-In-Reply-To: <20121007214855.GB1743@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 7 Oct 2012 17:48:56 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB69E901F; Sun,  7 Oct 2012
+ 18:45:53 -0400 (EDT)
+In-Reply-To: <7v626lq5g4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 07 Oct 2012 15:32:11 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9AE99C2-10CF-11E2-BB4E-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C033EFB6-10D0-11E2-88EE-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207210>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sun, Oct 07, 2012 at 01:39:32PM -0700, Junio C Hamano wrote:
-> ...
->> but it is not so far-fetched to imagine that Windows users may want to
->> omit manpages with
->> 
->>     $ DEFAULT_DOC_TARGET=html make doc
+> Jeff King <peff@peff.net> writes:
 >
-> That use case makes a lot more sense to me (or more likely setting it in
-> config.mak).
+>> Why not do it like this:
+>>
+>> diff --git a/Documentation/Makefile b/Documentation/Makefile
+>> index 267dfe1..ca10313 100644
+>> --- a/Documentation/Makefile
+>> +++ b/Documentation/Makefile
+>> @@ -152,7 +152,8 @@ endif
+>>  endif
+>>  endif
+>>  
+>> -all: html man
+>> +DEFAULT_DOC_TARGET ?= html man
+>> +all: $(DEFAULT_DOC_TARGET)
+>>  
+>>  html: $(DOC_HTML)
+>>  
+>>
+>> which covers both cases? That is also how we handle DEFAULT_TEST_TARGET.
+>
+> Surely, and thanks.
 
-I actually had "ifeq ($(uname_S),Windows)" at the top-level in mind,
-not config.mak.  I think that is far more important use case than
-going down to Documentation yourself and run make there (which is
-not a workflow I deeply care about in the first place).
+So here is a proposed update based on your idea, to be squashed on
+top (i.e. the change to the top-level Makefile in the posted patch
+is not reverted).
 
->>  Makefile | 12 ++++++++++--
->>  1 file changed, 10 insertions(+), 2 deletions(-)
->
-> No change to Documentation/Makefile? So this will work:
->
->   $ echo DEFAULT_DOC_TARGET=html >config.mak
->   $ make doc
->
-> but this will not:
->
->   $ cd Documentation
->   $ make
->
-> Why not do it like this:
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 267dfe1..ca10313 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -152,7 +152,8 @@ endif
->  endif
->  endif
->  
-> -all: html man
-> +DEFAULT_DOC_TARGET ?= html man
-> +all: $(DEFAULT_DOC_TARGET)
->  
->  html: $(DOC_HTML)
->  
->
-> which covers both cases? That is also how we handle DEFAULT_TEST_TARGET.
->
-> -Peff
+Does it make sense?
+
+
+ Documentation/Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git c/Documentation/Makefile w/Documentation/Makefile
+index 063fa69..0f8fdf8 100644
+--- c/Documentation/Makefile
++++ w/Documentation/Makefile
+@@ -1,3 +1,6 @@
++# The default target of this Makefile is...
++all::
++
+ MAN1_TXT= \
+ 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt)) \
+@@ -65,6 +68,8 @@ endif
+ -include ../config.mak.autogen
+ -include ../config.mak
+ 
++DEFAULT_DOC_TARGET ?= html man
++
+ #
+ # For docbook-xsl ...
+ #	-1.68.1,	no extra settings are needed?
+@@ -151,7 +156,7 @@ ifndef V
+ endif
+ endif
+ 
+-all: html man
++all:: $(DEFAULT_DOC_TARGET)
+ 
+ html: $(DOC_HTML)
+ 
