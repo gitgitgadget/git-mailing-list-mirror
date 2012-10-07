@@ -1,55 +1,91 @@
-From: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
-Subject: Re: Applying git technology to fix the locate command
-Date: Sun, 7 Oct 2012 15:18:07 -0400
-Message-ID: <CAKON4OwRuEhaHhCkv6oS+wL1NEp-3DyWcYbRqq5=RKuqgs8f0g@mail.gmail.com>
-References: <CAKON4OzyAt-e0Ygj=7+Ze7ywU+RNTsi-Nn5huCnEWy8o=a-EUA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 3/5] diff: acknowledge --submodule=short command-line
+ option
+Date: Sun, 07 Oct 2012 21:49:28 +0200
+Message-ID: <5071DCC8.50004@web.de>
+References: <1349196670-2844-1-git-send-email-artagnon@gmail.com> <1349196670-2844-4-git-send-email-artagnon@gmail.com> <506B3F74.3020208@web.de> <CALkWK0mbQZjYUR73rdFP2BtOzdL9gQqxnC5fjtsCYq2F29=8qg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 07 21:18:23 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 07 21:49:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKwMm-0000Ec-BS
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 21:18:20 +0200
+	id 1TKwrB-0002zb-3K
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 21:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656Ab2JGTSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 15:18:10 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:57270 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296Ab2JGTSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2012 15:18:08 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so7658556iea.19
-        for <git@vger.kernel.org>; Sun, 07 Oct 2012 12:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=oXOx10co9/k4UZzHxLhX+vYye3oteb4Xqry+5DW4kmo=;
-        b=gAYqEJxjUXb4ejzT+7gaph7AXAz32mGDtjc7hbiw4W393NxCTY1ZI+Vn/HvVZ5dq+w
-         WWlwiNwn3ENT8z/5h/hoPx6ZREaU5Hfkfq8FR0lRzX3EMenuCtz69DIcx4vMd48MWfJe
-         olEHwz3fSNd2Hiy35p3v+kNJR0dZeGQJ+fv1ob4XvCaKFyPw2C6xmsqjwcojJGxpEDXq
-         l1J1gNJ931TOewQbfKiG61UrCeYD/KyKg9I9NM83sCfBIdS1lsVTTJwn7HvfvAZ8efqR
-         38CnkSK3WllBCQ+y/ozEs1ksCJqKB9KiLF/JsjAhyv/L7rnKU/kzDHMK9+0D25ik6XsC
-         5IFA==
-Received: by 10.50.222.233 with SMTP id qp9mr6245169igc.61.1349637487975; Sun,
- 07 Oct 2012 12:18:07 -0700 (PDT)
-Received: by 10.64.55.234 with HTTP; Sun, 7 Oct 2012 12:18:07 -0700 (PDT)
-In-Reply-To: <CAKON4OzyAt-e0Ygj=7+Ze7ywU+RNTsi-Nn5huCnEWy8o=a-EUA@mail.gmail.com>
+	id S1752807Ab2JGTte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 15:49:34 -0400
+Received: from mout.web.de ([212.227.15.3]:53647 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752644Ab2JGTtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 15:49:33 -0400
+Received: from [192.168.178.41] ([91.3.178.130]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0M8zOD-1TFCEQ1OzF-00D9Iw; Sun, 07 Oct 2012 21:49:31
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:15.0) Gecko/20120907 Thunderbird/15.0.1
+In-Reply-To: <CALkWK0mbQZjYUR73rdFP2BtOzdL9gQqxnC5fjtsCYq2F29=8qg@mail.gmail.com>
+X-Provags-ID: V02:K0:1kdxjbfrXorHeFO/z+AgFmzxuXCf3rulj/kpKMIQfSU
+ afkFiHtyd/mXmRmo7THwHHPqyArhMU1ejui4QSbTWOTBEL9wRJ
+ xxsAbSVIiNN9aWJ9PDmT2bdV3hxaUbkf8VCnjjD6GV2LTacf/1
+ eEsy/1P/buLkNxdw4alXhmMvKr0j72VaiRsOBBy8l3ecYP/QzJ
+ DwKbIF6MCAatLBjcY2PIA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207188>
 
-I played around with updatedb.conf to exclude .git files and my
-/exports directory. I got the db down to 136MB and 4.5s for a null
-search.  This command still needs help.  Given that I have the entire
-db file cached it should be able to respond instantly on a null
-search.
+Am 07.10.2012 17:22, schrieb Ramkumar Ramachandra:
+> Jens Lehmann wrote:
+>> Am 02.10.2012 18:51, schrieb Ramkumar Ramachandra:
+>>> Currently, the diff code does not differentiate between an explicit
+>>> '--submodule=short' being passed, and no submodule option being passed
+>>> on the command line.  Making this differentiation will be important
+>>> when the command-line option can be used to override a
+>>> "diff.submoduleFormat" configuration variable introduced in the next
+>>> patch.
+>>
+>> Wouldn't it be sufficient here to simply reset the log flag by using
+>> "DIFF_OPT_CLR(options, SUBMODULE_LOG)"? This would avoid having to
+>> use the last bit of the diffopt flags. And if I read the code correctly,
+>> diff_opt_parse() is called by setup_revisions() which is called after
+>> git_config(), so that should be safe. (And "textconv" uses the same
+>> approach)
+> 
+> How is it sufficient?  In git_diff_ui_config(), I set
+> submodule_format_cfg, which has nothing to do with SUBMODULE_LOG.  In
+> builtin_diff(), I'll have to check SUBMODULE_LOG and
+> submodule_format_cfg.  The tricky bit is that I should check
+> submodule_format_cfg if and only if "--submodule=short" was NOT passed
+> on the command line-  now, that's not the same thing is checking if
+> SUBMODULE_LOG is unset, because SUBMODULE_LOG is unset (or cleared) if
+> no argument was passed or if "--submodule=short" is passed.
+> Therefore, I need a SUBMODULE_SHORT to differentiate between the two
+> cases.
+> 
+> What am I missing?
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+I forgot to mention that testing submodule_format_cfg would have to
+happen in cmd_diff() (between reading the config and parsing the
+command line options) instead of builtin_diff(). Something like this
+should do the trick (untested):
+
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 9650be2..180bf44 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -297,6 +297,9 @@ int cmd_diff(int argc, const char **argv, const char *prefix
+        DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
+        DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
+
++       if (submodule_format_cfg && !strcmp(submodule_format_cfg, "log"))
++               DIFF_OPT_SET(options, SUBMODULE_LOG);
++
+        if (nongit)
+                die(_("Not a git repository"));
+        argc = setup_revisions(argc, argv, &rev, NULL);
