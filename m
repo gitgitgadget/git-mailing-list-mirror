@@ -1,75 +1,97 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: [PATCH] git-gui: Few issues with using full path name
-Date: Sun, 07 Oct 2012 17:25:20 -0400
-Message-ID: <5071F340.6030206@gmail.com>
-References: <1349195115-15494-1-git-send-email-andrew.kw.w@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Allow generating a non-default set of documentation
+Date: Sun, 7 Oct 2012 17:48:56 -0400
+Message-ID: <20121007214855.GB1743@sigill.intra.peff.net>
+References: <7vzk3yow3f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 07 23:25:35 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 07 23:49:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKyLu-0001Ee-T7
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 23:25:35 +0200
+	id 1TKyij-0000Dx-Hy
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 23:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751562Ab2JGVZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 17:25:25 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:45465 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089Ab2JGVZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2012 17:25:24 -0400
-Received: by mail-ie0-f174.google.com with SMTP id k13so7783435iea.19
-        for <git@vger.kernel.org>; Sun, 07 Oct 2012 14:25:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NK7lvJ07DUgK5K9BQDr9o6y9XyBF1BUrqYV2nmmTW6Y=;
-        b=buK1j71CbkR6eCLzNgp/Um5Ida3YILcpRUiIkoPis2yAO/p1W3Owjn0oPZi6iM6L0r
-         cyTOd/S5weOrhPhDQosbOG4pTHsqr3I9ddvkbpsDWNTfA/higWmbuWppSbSclZVijxPR
-         Wlu0vwQ7qZ++3V+gawPBUZzjKSoQMK7d2TDBjQqwlVbT8GNE20RVmKwSST7CIpOLnBNJ
-         7DEmrPDP8QUE28mQ72s/SZGrTf4xx1aO6CG4bYnX6stpqu3a2TunkB2aKvZtepMfP/H7
-         gtI59gya2AxlDtbfc6yTR7YLYGIlf/05tUysZZTKUJEvum6uPi8KXnqoiXekPNKOJwcj
-         0wLA==
-Received: by 10.42.57.10 with SMTP id b10mr6917706ich.54.1349645123621;
-        Sun, 07 Oct 2012 14:25:23 -0700 (PDT)
-Received: from [192.168.1.3] ([69.165.255.59])
-        by mx.google.com with ESMTPS id 7sm5672405igh.0.2012.10.07.14.25.21
-        (version=SSLv3 cipher=OTHER);
-        Sun, 07 Oct 2012 14:25:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20121007 Thunderbird/10.0.7
-In-Reply-To: <1349195115-15494-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1751975Ab2JGVs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 17:48:59 -0400
+Received: from 75-15-5-89.uvs.iplsin.sbcglobal.net ([75.15.5.89]:43990 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751679Ab2JGVs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 17:48:58 -0400
+Received: (qmail 18348 invoked by uid 107); 7 Oct 2012 21:49:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 07 Oct 2012 17:49:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Oct 2012 17:48:56 -0400
+Content-Disposition: inline
+In-Reply-To: <7vzk3yow3f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207201>
 
-Could we look into getting these two patches into git/git-gui?
+On Sun, Oct 07, 2012 at 01:39:32PM -0700, Junio C Hamano wrote:
 
-On 10/02/12 12:25, Andrew Wong wrote:
-> I ran into a file name parsing issue in git-gui. If I'm in a subfolder and try
-> to pass a full path to "git-gui blame", then "git-gui" will fail to detect the
-> argument as a valid path. The first patch will handle this scenario.
->
-> The second patch just another issue that I noticed when "git-gui" fails to
-> detect the file name. It'll then try to use the previously detected "head" as
-> the file name, while prepending it with "prefix". This is incorrect if "head"
-> is actually a full path.
->
-> There is also an issue when using a full path along with a rev argument, but I
-> don't have time to look it right now. I'll try to get to that issue another
-> time.
->
-> Andrew Wong (2):
->   git-gui: Detect full path when parsing arguments
->   git-gui: Don't prepend the prefix if value looks like a full path
->
->  git-gui.sh | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
->
+> By default, "make doc" generates the manpages and htmldocs in the
+> Documentation directory, but you may want to change this depending
+> on the target environment, e.g. to include 'pdf'.  Introduce a new
+> Makefile variable DEFAULT_DOC_TARGET to allow customizing this.
+
+Makes sense (we have DEFAULT_TEST_TARGET for similar reasons).
+
+> The primary motivation is to let us check documentation patches with
+> 
+>     $ DEFAULT_DOC_TARGET=git-push.1 make doc
+
+Wouldn't it be just as easy to say:
+
+  $ make -C Documentation git-push.1
+
+?
+
+> but it is not so far-fetched to imagine that Windows users may want to
+> omit manpages with
+> 
+>     $ DEFAULT_DOC_TARGET=html make doc
+
+That use case makes a lot more sense to me (or more likely setting it in
+config.mak).
+
+>  Makefile | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+
+No change to Documentation/Makefile? So this will work:
+
+  $ echo DEFAULT_DOC_TARGET=html >config.mak
+  $ make doc
+
+but this will not:
+
+  $ cd Documentation
+  $ make
+
+Why not do it like this:
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 267dfe1..ca10313 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -152,7 +152,8 @@ endif
+ endif
+ endif
+ 
+-all: html man
++DEFAULT_DOC_TARGET ?= html man
++all: $(DEFAULT_DOC_TARGET)
+ 
+ html: $(DOC_HTML)
+ 
+
+which covers both cases? That is also how we handle DEFAULT_TEST_TARGET.
+
+-Peff
