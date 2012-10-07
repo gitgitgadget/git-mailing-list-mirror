@@ -1,86 +1,65 @@
-From: Marcus Karlsson <mk@acc.umu.se>
-Subject: [PATCH] gitk: Fix crash when not using themed widgets
-Date: Sun,  7 Oct 2012 23:21:14 +0200
-Message-ID: <1349644874-22988-1-git-send-email-mk@acc.umu.se>
-Cc: git@vger.kernel.org, Marcus Karlsson <mk@acc.umu.se>
-To: Paul Mackerras <paulus@samba.org>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH v2 0/2] Re: gitk: can't reload commits with new key binding
+Date: Sun, 07 Oct 2012 17:18:27 -0400
+Message-ID: <5071F1A3.5070502@gmail.com>
+References: <7vwqzacdb7.fsf@alter.siamese.dyndns.org> <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, szeder@ira.uka.de,
+	paulus@samba.org
+To: Andrew Wong <andrew.kw.w@gmail.com>
 X-From: git-owner@vger.kernel.org Sun Oct 07 23:23:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKyJV-0000PJ-Ni
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 23:23:06 +0200
+	id 1TKyJV-0000PJ-8i
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 23:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555Ab2JGVVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2012 17:21:45 -0400
-Received: from mail.acc.umu.se ([130.239.18.156]:49375 "EHLO mail.acc.umu.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750963Ab2JGVVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2012 17:21:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by amavisd-new (Postfix) with ESMTP id 7A507C3D;
-	Sun,  7 Oct 2012 23:21:42 +0200 (MEST)
-X-Virus-Scanned: amavisd-new at acc.umu.se
-Received: by mail.acc.umu.se (Postfix, from userid 24678)
-	id 53359C3B; Sun,  7 Oct 2012 23:21:41 +0200 (MEST)
-X-Mailer: git-send-email 1.7.10
+	id S1751290Ab2JGVSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 17:18:32 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:50124 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750887Ab2JGVSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 17:18:31 -0400
+Received: by mail-ie0-f174.google.com with SMTP id k13so7776999iea.19
+        for <git@vger.kernel.org>; Sun, 07 Oct 2012 14:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=4JQejly5u/dcfFVdyn6TEB1tSt1k+m4ADIAzXrLAbZw=;
+        b=YtgsRDaz+C3YnGz4KKJDNpoxrkgwSPTZbc9SQeDmEzt2Nth+DprFlBkRuaybx9MkNS
+         cLXczuWwY7ZYJasNiJxeWMH/rZPnVYMp8TSxXEmDMe0aINHj8Eai3gDXnqe05DRoJHpp
+         tC0RDArTpzCwkGBnXc6T9UmW62F8vKcienFWSeO/xHKnUtzFCR5FCnM+LIiFNyTqCHD2
+         7SSwJnvrJo9jNgrKEuZwwAF7/gTnDXC1xHqKjKsdpmyQ5wdJGzlFPR31sQOm6HfSupvX
+         omBqBuFjMDtSlU44kXHm/BZreHhjAuZu3xRZszCCvRaVtFtR6xhRTM3UupPz8PqwGezd
+         bm2g==
+Received: by 10.50.183.200 with SMTP id eo8mr4287702igc.54.1349644710994;
+        Sun, 07 Oct 2012 14:18:30 -0700 (PDT)
+Received: from [192.168.1.3] ([69.165.255.59])
+        by mx.google.com with ESMTPS id uj11sm318172igb.15.2012.10.07.14.18.28
+        (version=SSLv3 cipher=OTHER);
+        Sun, 07 Oct 2012 14:18:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.7) Gecko/20121007 Thunderbird/10.0.7
+In-Reply-To: <1349190285-7788-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207199>
 
-When configured not to use themed widgets gitk may crash on launch with
-a message that says that the image "bm-left disabled bm-left-gray"
-doesn't exist. This happens when the left and right arrow buttons are
-created.
+Could we look into getting this patch into git/gitk?
 
-The crash can be avoided by configuring the buttons differently
-depending on whether or not themed widgets are used. If themed widgets
-are not used then only set the images to bm-left and bm-right
-respectively, and keep the old behavior when themed widgets are used.
-
-The previous behaviour was added in f062e50f to work around a bug in Tk
-on OS X where the disabled state did not display properly. The buttons
-may still not display correctly, however the workaround added in
-f062e50f will still apply if gitk is used with themed widgets.
-
-Make gitk not crash on launch when not using themed widgets.
-
-Signed-off-by: Marcus Karlsson <mk@acc.umu.se>
----
- gitk |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/gitk b/gitk
-index 379582a..02ffd9b 100755
---- a/gitk
-+++ b/gitk
-@@ -2182,11 +2182,19 @@ proc makewindow {} {
-     image create bitmap bm-right -data $bm_right_data
-     image create bitmap bm-right-gray -data $bm_right_data -foreground "#999"
- 
--    ${NS}::button .tf.bar.leftbut -image [list bm-left disabled bm-left-gray] \
--	-command goback -state disabled -width 26
-+    ${NS}::button .tf.bar.leftbut -command goback -state disabled -width 26
-+    if {$use_ttk} {
-+	.tf.bar.leftbut configure -image [list bm-left disabled bm-left-gray]
-+    } else {
-+	.tf.bar.leftbut configure -image bm-left
-+    }
-     pack .tf.bar.leftbut -side left -fill y
--    ${NS}::button .tf.bar.rightbut -image [list bm-right disabled bm-right-gray] \
--	-command goforw -state disabled -width 26
-+    ${NS}::button .tf.bar.rightbut -command goforw -state disabled -width 26
-+    if {$use_ttk} {
-+	.tf.bar.rightbut configure -image [list bm-right disabled bm-right-gray]
-+    } else {
-+	.tf.bar.rightbut configure -image bm-right
-+    }
-     pack .tf.bar.rightbut -side left -fill y
- 
-     ${NS}::label .tf.bar.rowlabel -text [mc "Row"]
--- 
-1.7.10.4
+On 10/02/12 11:04, Andrew Wong wrote:
+> Refactored the code for binding modified function keys as Junio suggested.
+>
+> Andrew Wong (2):
+>   gitk: Refactor code for binding modified function keys
+>   gitk: Use bindshiftfunctionkey to bind Shift-F5
+>
+>  gitk | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
