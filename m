@@ -1,85 +1,113 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Is anyone working on a next-gen Git protocol?
-Date: Sun, 7 Oct 2012 23:22:20 +0300
-Message-ID: <20121007202220.GA16115@LK-Perkele-VI.localdomain>
-References: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Allow generating a non-default set of documentation
+Date: Sun, 07 Oct 2012 13:39:32 -0700
+Message-ID: <7vzk3yow3f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, spearce@spearce.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 07 22:28:53 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 07 22:39:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TKxT1-0008AW-Ur
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 22:28:52 +0200
+	id 1TKxdc-0003Nn-1o
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Oct 2012 22:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967Ab2JGU2d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2012 16:28:33 -0400
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:48138 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750867Ab2JGU2c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2012 16:28:32 -0400
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Oct 2012 16:28:32 EDT
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh02.mail.saunalahti.fi (Postfix) with SMTP id 51A1D81817;
-	Sun,  7 Oct 2012 23:22:27 +0300 (EEST)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A05C8650617; Sun, 07 Oct 2012 23:22:27 +0300
-Received: from LK-Perkele-VI (a88-112-55-20.elisa-laajakaista.fi [88.112.55.20])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id A1A64188774;
-	Sun,  7 Oct 2012 23:22:22 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <CACBZZX6b+3P8M+z+X13k9Pq3tvVUfs_k1=foQVreX8K801=efQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Antivirus: VAMS
+	id S1750867Ab2JGUjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2012 16:39:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41776 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750740Ab2JGUjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2012 16:39:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFF3E936E;
+	Sun,  7 Oct 2012 16:39:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
+	8anqKg5UBcae69qYNxGMiVmJbA=; b=EtOPRSHgbNqRq99shHM5sIHMhfBJlSS0e
+	CmFHSx34kNAkZu7jIANzrpb7+Vi6mR9fNZhiVMWZQF1T34bhngP1s1Oi1nOkELCB
+	W9PSNnwTOOzYM9ztOi3JBcLj+9RuC0RJvt86ERwv50rifZ80gNALUR4vUrWpB7FR
+	QO8hTcLG0Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=i83
+	cvpa/KNCras7E7ngmo5isOgdODHZ2O5ygPBpYbAL+c85J+wFQwxQzIOifzTzLRBv
+	N9oyLDfr8VX2mp1hRsVbo/2tqqhxwKErlyljzNpTCEJQTZFn8U34JO1Gv5uqbqEy
+	qlSxbSjcoz7Dw9SailaFbCdJ8yDd8TAK9zkjNdmo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD415936D;
+	Sun,  7 Oct 2012 16:39:34 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0897C936C; Sun,  7 Oct 2012
+ 16:39:33 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1A4ABDAC-10BF-11E2-BB4C-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207193>
 
-On Sun, Oct 07, 2012 at 09:57:56PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->=20
-> Has anyone started working on a next-gen Git protocol as a result of
-> this discussion? If not I thought I'd give it a shot if/when I have
-> time.
+By default, "make doc" generates the manpages and htmldocs in the
+Documentation directory, but you may want to change this depending
+on the target environment, e.g. to include 'pdf'.  Introduce a new
+Makefile variable DEFAULT_DOC_TARGET to allow customizing this.
 
-Unfortunately, client signaling the version is nasty to do in ways that
-wouldn't cause current servers to hang up or do other undesirable thing=
-s.
+The primary motivation is to let us check documentation patches with
 
-git://: Git-daemon will hang up[1] if it receives command it won't
-understand (and one can't add arguments either).
+    $ DEFAULT_DOC_TARGET=git-push.1 make doc
 
-ssh://: Commands are NAKed in non-standard ways (e.g. Gitolite vs. shel=
-l)
-and one can't add arguments.
+but it is not so far-fetched to imagine that Windows users may want to
+omit manpages with
 
-file://: That's easy.
+    $ DEFAULT_DOC_TARGET=html make doc
 
-CONNECT: The helper needs to be told that v2 is supported (helper doing
-the rest).
+or somesuch; this lets interested people to enhance the install-doc
+target in a similar way.
 
-Maybe with git://, one could hack the stuff in similar way as virtual
-hosting was added. But that won't work with SSH (nor one can use enviro=
-nment
-with SSH).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-:-/
+ Makefile | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-[1] And there is no guarantee that the server end of git:// is git-daem=
-on.
-There's at least one git:// server implemetation that responds to unkno=
-wn
-commands by ERR packet followed by hangup.=20
-
--Ilari
+diff --git c/Makefile w/Makefile
+index 8413606..250b87a 100644
+--- c/Makefile
++++ w/Makefile
+@@ -299,6 +299,12 @@ all::
+ #   DEFAULT_EDITOR='$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork'
+ #
++# You can define DEFAULT_DOC_TARGET to something other than "all" to change it
++# from the built-in default of generating manpages and htmldocs.  e.g.
++#
++#   DEFAULT_DOC_TARGET='man html info pdf'
++#   DEFAULT_DOC_TARGET='html'
++#
+ # Define COMPUTE_HEADER_DEPENDENCIES to "yes" if you want dependencies on
+ # header files to be automatically computed, to avoid rebuilding objects when
+ # an unrelated header file changes.  Define it to "no" to use the hard-coded
+@@ -1496,6 +1502,8 @@ ifneq (,$(SOCKLEN_T))
+ 	BASIC_CFLAGS += -Dsocklen_t=$(SOCKLEN_T)
+ endif
+ 
++DEFAULT_DOC_TARGET ?= all
++
+ ifeq ($(uname_S),Darwin)
+ 	ifndef NO_FINK
+ 		ifeq ($(shell test -d /sw/lib && echo y),y)
+@@ -2468,10 +2476,10 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
+ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
+ 
+-export DEFAULT_EDITOR DEFAULT_PAGER
++export DEFAULT_EDITOR DEFAULT_PAGER DEFAULT_DOC_TARGET
+ 
+ doc:
+-	$(MAKE) -C Documentation all
++	$(MAKE) -C Documentation $(DEFAULT_DOC_TARGET)
+ 
+ man:
+ 	$(MAKE) -C Documentation man
