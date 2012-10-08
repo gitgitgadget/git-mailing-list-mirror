@@ -1,155 +1,110 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Re: [Patch 0/5] Create single PDF for all HTML files
-Date: Mon, 8 Oct 2012 23:53:18 +0100
-Organization: OPDS
-Message-ID: <4F18F2E9D9ED4F8C94701472A190D01E@PhilipOakley>
-References: <20121006193205.GD3644@sigill.intra.peff.net> <505841759.269631.1349538675925.JavaMail.ngmail@webmail08.arcor-online.net> <1770841099.101310.1349597668191.JavaMail.ngmail@webmail23.arcor-online.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fetch documentation problem or bug
+Date: Mon, 08 Oct 2012 16:33:05 -0700
+Message-ID: <7vpq4silou.fsf@alter.siamese.dyndns.org>
+References: <CAB9Jk9Ac06sfFMGizRq6Ztqd2tKS7BBqGOC891=z4615J3f4hA@mail.gmail.com>
+ <7vfw5olqp9.fsf@alter.siamese.dyndns.org>
+ <7vbogclqm6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Thomas Ackermann" <th.acker66@arcor.de>, <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 00:53:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Angelo Borsotti <angelo.borsotti@gmail.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 01:33:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLMC9-0007uY-LL
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 00:53:06 +0200
+	id 1TLMpQ-0002lR-DB
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Oct 2012 01:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755199Ab2JHWwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 18:52:53 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:64565 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755191Ab2JHWwv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2012 18:52:51 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq0MAOVYc1BcGnKf/2dsb2JhbABFi1CyVAECgQmBCYIbBQEBBQgBAQ4gEQUIAQEhCwIDBQIBAw4GAQMJJRQBBBgCBgcXBgEHCwgCAQIDAQwEh1IDEwewUwWJXIphZgprgQqBO4F5YAOII4VGiRePGYJgDg
-X-IronPort-AV: E=Sophos;i="4.80,556,1344207600"; 
-   d="scan'208";a="406047167"
-Received: from host-92-26-114-159.as13285.net (HELO PhilipOakley) ([92.26.114.159])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 08 Oct 2012 23:52:49 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751291Ab2JHXdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 19:33:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42739 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750891Ab2JHXdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 19:33:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33EB38B07;
+	Mon,  8 Oct 2012 19:33:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=j0n9OHfUFbPx2Ipuj/E2fIRRvnE=; b=EOJJue
+	V3SbOS02AmPfnUc2t+nfu1QDu9D5fHRGPAqIQrtDRG87kUCq0JjFOvToiHUs51gB
+	GIA4ijPDgKkuZvFDXD/Rh3WxnDNncsqyeBIvqfe0JkA9BiQ6iVl0Sqd1dF5Bclju
+	ZfFzQ0mwB+4CvZIIislo1cdDqHvoFUfs7B7Vk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KUqreRc/jU4iXB8ErD9SdKyYgmmXeuno
+	XGYqaCZXeYgmK2bx0lxyosVaHeW3fcgnx4qdVC9GTuPqgiR15LK0fRJF0vWPiJ3c
+	ABI77ux3kUFJF9EaB/yXVmm1fUVeA3dE/d8qmOpa7jwz6OBiEy0JeGSNa2h4v+9a
+	Cf1u8wPt9D8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 217878B06;
+	Mon,  8 Oct 2012 19:33:08 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 743838B05; Mon,  8 Oct 2012
+ 19:33:07 -0400 (EDT)
+In-Reply-To: <7vbogclqm6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 08 Oct 2012 12:18:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 839968F8-11A0-11E2-83FF-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207280>
 
-From: "Thomas Ackermann" <th.acker66@arcor.de>
->
-> There are "patched QT" and "unpatched QT" versions of wkhtmltopdf
-> (see http://code.google.com/p/wkhtmltopdf/). I am using V0.9.9 for 
-> Windows
-> which is "patched QT".
->
-> There is one drawback with wkhtmltopdf: At least on my Netbook (Win7 
-> 64bit,
-> Pentium 1.5GHz) it is very slow. It takes more than 3 hrs to create 
-> git-doc.pdf.
->
-> If you want to have a quick look on the resulting pdf just clone
-> https://github.com/tacker66/git-docpdf.git. This repo contains
-> a current version of user.manual.pdf and git-doc.pdf
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-Even as a 'draft' I found it to be useful to see all the documentation 
-collated together in one place/pdf. All 763 pages!
-
-Even just reading through the contents list (34 pages) showed the scale 
-of the git documentation, and areas of documentation I wasn't aware of.
-
-Putting the Tutorials, Everyday GIT and workflows at the beginning 
-looked good.
-
-For a polished version it would be good if the major breaks (e.g. 
-between ToC, gittutorial, git-add [should start with git(1)], 
-gitattributes, GIT Howto, API, Git Index Format, ReleaseNotes) could 
-start on a new page.
-
-A few minor nits: I wasn't sure if the 'fighting regressions with git 
-bisect', and 'a short git tools survey' were in the right place. There 
-appear to be two 'git-send-pack' titles, though they are different. And 
-the HowTo section would need some beefed up headings to give them enough 
-prominence in the ToC once it all hangs together.
-
+> In other words, you can do this from the command line if you want
+> to do the update.
 >
-> ----- Original Nachricht ----
-> Von:     Jeff King <peff@peff.net>
-> An:      Thomas Ackermann <th.acker66@arcor.de>
-> Datum:   06.10.2012 21:32
-> Betreff: Re: [Patch 0/5] Create single PDF for all HTML files
->
->> On Sat, Oct 06, 2012 at 05:51:15PM +0200, Thomas Ackermann wrote:
->>
->> > I wanted to have a single PDF file which contains the complete Git
->> documentation
->> > (except user-manual) for easier reading on my tablet. The simplest 
->> > way to
->> do
->> > this was by using wkhtmltopdf which can combine a set of HTML files 
->> > into a
->> sinlge
->> > PDF file and also apply some reformatting. To this end HTML files 
->> > for all
->> the missing
->> > files in Documentation/technical and Documentation/howto and also 
->> > for all
->> the
->> > release notes in Documentation/RelNotes were created.
->>
->> It seems like a reasonable goal. I do not have a strong opinion on 
->> the
->> approach or how the final output looks, but I wasn't able to actually
->> get output at all after applying your patches. Running "make fullpdf"
->> (after installing dblatex) got me:
->>
->>   The switch --book, is not support using unpatched qt, and will be
->>   ignored.The switch --footer-html, is not support using unpatched 
->> qt,
->>   and will be ignored.The switch --disable-external-links, is not
->>   support using unpatched qt, and will be ignored.
->>
->> after which wkhtmltopdf began pegging my CPU. I let it run for 10
->> minutes before giving up.
->>
->> Another way of doing this would be to format the individual troff
->> manpages into dvi or postscript, convert that into pdf, and then
->> concatenate that. Something like:
->>
->>   for i in *.[157]; do
->>     man -Tdvi -l "$i" >"$i.dvi"
->>     dvipdfm "$i"
->>   done
->>   pdftk *.[157].pdf cat output full.pdf
->>
->> works for me, though obviously that does not handle some of the 
->> non-man
->> items you included. No idea on how the output compares to yours, but
->> it's something you may want to look at.
->>
->> -Peff
->>
->
-> ---
-> Thomas
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
-> -----
-> No virus found in this message.
-> Checked by AVG - www.avg.com
-> Version: 2013.0.2677 / Virus Database: 2591/5813 - Release Date: 
-> 10/06/12
-> 
+>   $ git fetch origin master:refs/remotes/origin/master
+
+Now having said all that, we should probably revisit this and
+possibly other issues and for the ones we can reach concensus, start
+coding after 1.8.0 final.
+
+A good place to start may be $gmane/167149, where I listed (among
+other things that turned out to be undesirable, which are omitted in
+this copy):
+
+ * "git branch --set-upstream <name>" should not be about setting the
+   upstream of <name> to the current branch.
+
+   This has happened during 1.8.0 cycle [CMN].
+
+ * "git push" default semantics will be "upstream" (renamed from
+   "tracking"), not "matching".
+
+   1.8.0 has the first step toward this [MM].
+
+ * "git merge" without "what to merge" default to @{upstream}
+
+   This is not acceptable for the default, but the users can ask for
+   it with merge.defaultToUpstream since 1.7.5 era [JC]
+
+ * Unify pathspec semantics
+
+   This has happened and commands that used to take only path prefix
+   style pathspecs now take globs as well [ND]
+
+ * "git fetch $from $branch..." to update tracking branches
+
+   This is the topic in this thread.
+
+I personally do not think the downside of breaking backward
+compatibility is too bad.  If we do this only when we already are
+configured to keep remote tracking branch for branch $branch from
+remote $from (it has to be given as a nickname, not URL that happens
+to have an entry in the configuration), then a promiscuous fetch
+that grabs from a URL (or a nickname that is configured not to keep
+tracking branches) will not change any behaviour, and when you want
+to keep your remote tracking branch intact while doing one-shot
+fetch for whatever reason, you can say "git fetch $from $branch:" to
+explicitly decline copying.
