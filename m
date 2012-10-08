@@ -1,307 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Mon, 08 Oct 2012 13:08:38 -0700
-Message-ID: <7vbogck9l8.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Fw: [git-users] How do I git-push to an FTP server?
+Date: Mon, 8 Oct 2012 13:18:16 -0700
+Message-ID: <20121008201816.GB7698@elie.Belkin>
+References: <CAGK7Mr4L0Us3ykLUoWBdyR2zJUNa_HNguwb-=dEq_h_yXThPPA@mail.gmail.com>
+ <CAEcj5uW4aw19MgNi8vJk5TWoL6SEad=s2jthS-h1jLTtuPq7AQ@mail.gmail.com>
+ <7vwqz4si87.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kXH-U0mTeFtiMq7tqCOpNJT1A7Z==GxOphe-sGdmxRRg@mail.gmail.com>
+ <20121007172754.GA29560@elie.Belkin>
+ <7vvcemovrh.fsf@alter.siamese.dyndns.org>
+ <CALkWK0nSxBsiE5_BZ67dPrwDRQSipL0LBR9Pf252iqL21HwZBA@mail.gmail.com>
+ <20121008080208.GC19733@elie.Belkin>
+ <7v7gr1nfby.fsf@alter.siamese.dyndns.org>
+ <7vzk3wlvs2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 08 22:12:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	git@vger.kernel.org, git-users@googlegroups.com,
+	August Karlstrom <fusionfile@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 22:18:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLJgS-00029n-8T
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 22:12:12 +0200
+	id 1TLJmm-0005OF-An
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 22:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741Ab2JHULy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2012 16:11:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59739 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753266Ab2JHULf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2012 16:11:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8457A94ED;
-	Mon,  8 Oct 2012 16:11:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=4nxAyNuXv9Mfwqf2vT8nCMuBL
-	kM=; b=qACPUwerkcL/pcDkvznqAbPiZQraUAEUDY2rVU2/kPyuevCyJJeR4O/dB
-	rAhhdY5gqhOobHpPibiy2vf6f1KJxfsSfJ6zEBvywjEVjN5C0Rm265lf+/t0gXPO
-	+N2tCPaz+iCbHF4gQZa4ZXzwR6Dmxr3OMp47aJTtnh34Uam9s4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=E31LZyMW09fjKD2GdUj
-	j7NOjIxAW0rdDqQIpEULK0R8YVr/iIt4z9lz1ifGZMbYDCOUtP7g4BcIh3Tt1ARr
-	8yXtqIDShREYAjxrQtL9GACfOblrp1Gs2bHiRx+v6BxEtZ4w+tswfXcE4b/6Eexl
-	0iq4z6EljkPAJlsaFOqvVN5s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7238094EB;
-	Mon,  8 Oct 2012 16:11:34 -0400 (EDT)
-Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76D1B94E6; Mon,  8 Oct 2012
- 16:11:32 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A6C53B2-1184-11E2-A33B-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754686Ab2JHUSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 16:18:34 -0400
+Received: from mail-da0-f46.google.com ([209.85.210.46]:58168 "EHLO
+	mail-da0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753535Ab2JHUSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 16:18:33 -0400
+Received: by mail-da0-f46.google.com with SMTP id n41so1729392dak.19
+        for <git@vger.kernel.org>; Mon, 08 Oct 2012 13:18:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ubbDRBWpA0G+/qbEnYvV+CKRXTxUVfKWwAVDOllP1ug=;
+        b=cCLnnLLdJH5CikIbF6yIHAFC7j78ot/Vk1rxUU5G2q4UK89090gQxiE5oa9Kg0v7FH
+         lTNqsdsqvWzpBhouAdZWWZ4rh6Tco6147gREVMyDltjjTEox3qSWdjgVeOgAZC7/eVBb
+         UzkmuCLeg0CZOxcUFMVw9OAJu5SWz9MNKnqqQz0fPaTtV0DyOoJBEsxgMg+sDXt4oftv
+         zhWZTz/sVXTON6t2SUCMzh60euVeCw7fAvIvUUM8QLV5qOBcTgFWkwDYrNKI0WK5Soxr
+         tfov4gRYwLJgM7tV3xHKdASMkUfh+Ujm6Au+TXKbxZCYXCsbvY2jVPdPHvFofaUs/tAX
+         pk3Q==
+Received: by 10.68.242.164 with SMTP id wr4mr56618708pbc.41.1349727512813;
+        Mon, 08 Oct 2012 13:18:32 -0700 (PDT)
+Received: from elie.Belkin (c-67-180-61-129.hsd1.ca.comcast.net. [67.180.61.129])
+        by mx.google.com with ESMTPS id y2sm11323275pax.29.2012.10.08.13.18.26
+        (version=SSLv3 cipher=OTHER);
+        Mon, 08 Oct 2012 13:18:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vzk3wlvs2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207269>
 
-Welcome to the Git development community.
+Junio C Hamano wrote:
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+> Let's do this, then.
 
-* Mailing list and the community
+I think it would be nicer to start with the important info (git
+supports ssh, git, http, https) and deal with less important parts
+like rsync support later in the document, but this looks like a good
+minimal fix.  Thanks for pushing it to completion.
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
-
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
-
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise is a sign that people involved don't have
-enough mental/time bandwidth to process them right at the moment, and
-it often helps to wait until the list traffic becomes calmer before
-sending such a reminder.
-
-The list archive is available at a few public sites:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-=46or those who prefer to read it over NNTP (including the maintainer):
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as gmane
-newsgroup to "jump to" the article.
-
-Some members of the development community can sometimes also be found
-on the #git IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.org/irclogger/irclogger_log/git
-
-* Reporting bugs
-
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
-
-Please remember to always state
-
- - what you wanted to achieve;
-
- - what you did (the version of git and the command sequence to reprodu=
-ce
-   the behavior);
-
- - what you saw happen (X above);
-
- - what you expected to see (Y above); and
-
- - how the last two are different.
-
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.
-
-* Repositories, branches and documentation.
-
-My public git.git repositories are at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://github.com/git/git/
-	https://code.google.com/p/git-core/
-	git://git.sourceforge.jp/gitroot/git-core/git.git/
-	git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-
-A few gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-        git://repo.or.cz/git-{htmldocs,manpages}.git/
-        https://code.google.com/p/git-{htmldocs,manpages}.git/
-        https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-You can browse the HTML manual pages at:
-
-	http://git-htmldocs.googlecode.com/git/git.html
-
-There are four branches in git.git repository that track the source tre=
-e
-of git: "master", "maint", "next", and "pu".
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a "featu=
-re
-release" is cut from the tip of this branch and they typically are name=
-d
-with three dotted decimal digits.  The last such release was 1.7.12 don=
-e on
-Aug 19, 2012. You can expect that the tip of the "master" branch is alw=
-ays
-more stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious, safe and urgent fixes after a feature
-release are applied to this branch and maintenance releases are cut fro=
-m
-it.  The maintenance releases are named with four dotted decimal, named
-after the feature release they are updates to; the last such release wa=
-s
-1.7.12.3.  New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" and your patches are queued
-there, and kept out of "master" while people test it out. The quality o=
-f
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. =
-In
-general, the "next" branch always contains the tip of "master".  It mig=
-ht
-not be quite rock-solid, but is expected to work more or less without m=
-ajor
-breakage. The "next" branch is where new and exciting things take place=
-=2E A
-topic that is in "next" is expected to be polished to perfection before=
- it
-is merged to "master".
-
-The "pu" (proposed updates) branch bundles all the remaining topic
-branches. The topics on the branch are not complete, well tested, nor w=
-ell
-documented and need further work. When a topic that was in "pu" proves =
-to
-be in testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..pu" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns ou=
-t
-to be not so good and the topic can be dropped from "pu" in such a case=
-=2E
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have th=
-eir
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://git.kernel.org/pub/scm/gitk/gitk.git
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-I would like to thank everybody who helped to raise git into the curren=
-t
-shape.  Especially I would like to thank the git list regulars whose he=
-lp
-I have relied on and expect to continue relying on heavily:
-
- - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
-es
-   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy,
-   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast for helping w=
-ith general
-   design and implementation issues and reviews on the mailing list.
-
- - Shawn and Nicolas Pitre for helping with packfile design and
-   implementation issues.
-
- - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason for
-   cvsserver and cvsimport.
-
- - Paul Mackerras for gitk.
-
- - Eric Wong, David D. Kilzer and Sam Vilain for git-svn.
-
- - Simon Hausmann, Pete Wyckoff and Luke Diamond for git-p4.
-
- - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe
-   Bilotta for maintaining and enhancing gitweb.
-
- - =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason for kicking off the i18n effo=
-rt, and Jiang
-   Xin for volunteering to be the l10n coordinator.
-
- - Jens Lehmann, Heiko Voigt and Lars Hjemli for submodule related
-   Porcelains.
-
- - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast f=
-or
-   documentation (and countless others for proofreading and fixing).
-
- - Alexandre Julliard for Emacs integration.
-
- - David Aguilar and Charles Bailey for taking good care of git-mergeto=
-ol
-   (and Theodore Ts'o for creating it in the first place) and git-difft=
-ool.
-
- - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund, Pat Thoyts and o=
-thers
-   for their effort to move things forward on the Windows front.
-
- - People on non-Linux platforms for keeping their eyes on portability;
-   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
-zmann,
-   Brandon Casey, Jeff King, Alex Riesen and countless others.
+For what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
