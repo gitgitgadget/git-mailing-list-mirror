@@ -1,85 +1,121 @@
-From: Simon Oosthoek <soosthoek@nieuwland.nl>
-Subject: Re: [PATCH] Add __git_ps1_pc to use as PROMPT_COMMAND
-Date: Mon, 08 Oct 2012 17:00:39 +0200
-Message-ID: <5072EA97.3060503@nieuwland.nl>
-References: <5064140E.50007@drmicha.warpmail.net> <50658C9B.6030809@nieuwland.nl> <7vipaym3ks.fsf@alter.siamese.dyndns.org> <50695ECE.5010101@nieuwland.nl> <7v626udse6.fsf@alter.siamese.dyndns.org> <7v4nmec8fi.fsf@alter.siamese.dyndns.org> <5069EE8D.6050200@nieuwland.nl> <7vr4piaryi.fsf@alter.siamese.dyndns.org> <506A0366.6030009@xs4all.nl> <7va9w5c31w.fsf@alter.siamese.dyndns.org> <506A99DE.7080503@drmicha.warpmail.net> <7vhaqcajvt.fsf@alter.siamese.dyndns.org> <506B4598.1020206@xs4all.nl> <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: upload-pack is slow with lots of refs
+Date: Mon, 08 Oct 2012 17:05:53 +0200
+Message-ID: <5072EBD1.40500@kdbg.org>
+References: <CACBZZX70NTic2WtrXooTg+yBbiFFDAEX_Y-b=W=rAkcYKJ3T2g@mail.gmail.com> <20121003180324.GB27446@sigill.intra.peff.net> <7vobkj4cb4.fsf@alter.siamese.dyndns.org> <20121003185542.GA3635@sigill.intra.peff.net> <CAJo=hJtZ_8H6+kXPpZcRCbJi3LPuuF7M1U8YsjAp-iWvut9oMw@mail.gmail.com> <506E7D01.8080509@viscovery.net> <CAJo=hJsYVdWeG0ZyqexEXNfOq_k1XDR_gGP+fy_z==LvdnWJTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	schwab@linux-m68k.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 17:01:11 2012
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Oct 08 17:06:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLEpQ-0003HR-G3
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 17:01:08 +0200
+	id 1TLEuJ-0005pk-6V
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 17:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506Ab2JHPA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 11:00:59 -0400
-Received: from mail.nieuwland.nl ([87.251.35.136]:34946 "HELO nieuwland.nl"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1750841Ab2JHPA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2012 11:00:57 -0400
-Received: (qmail 15347 invoked by uid 453); 8 Oct 2012 15:00:49 -0000
-X-Virus-Checked: Checked by ClamAV on nieuwland.nl
-Received: from Unknown (HELO [192.168.216.232]) (192.168.216.232)
-  (smtp-auth username soosthoek, mechanism plain)
-  by nieuwland.nl (qpsmtpd/0.83) with (AES256-SHA encrypted) ESMTPSA; Mon, 08 Oct 2012 17:00:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120912 Thunderbird/15.0.1
-In-Reply-To: <7v8vbo7hmd.fsf@alter.siamese.dyndns.org>
+	id S1753532Ab2JHPGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 11:06:00 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:44019 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752079Ab2JHPF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 11:05:59 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id EED5F10012;
+	Mon,  8 Oct 2012 17:05:54 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 137AF19F3EC;
+	Mon,  8 Oct 2012 17:05:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:15.0) Gecko/20120825 Thunderbird/15.0
+In-Reply-To: <CAJo=hJsYVdWeG0ZyqexEXNfOq_k1XDR_gGP+fy_z==LvdnWJTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207231>
 
-Hi Junio
+Am 05.10.2012 18:57, schrieb Shawn Pearce:
+> On Thu, Oct 4, 2012 at 11:24 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Upload-pack can just start
+>> advertising refs in the "v1" way and announce a "v2" capability and listen
+>> for response in parallel. A v2 capable client can start sending "wants" or
+>> some other signal as soon as it sees the "v2" capability. Upload-pack,
+>> which was listening for responses in parallel, can interrupt its
+>> advertisements and continue with v2 protocol from here.
+>>
+>> This sounds so simple (not the implementation, of course) - I must be
+>> missing something.
+> 
+> Smart HTTP is not bidirectional. The client can't cut off the server.
 
-I hope you found my patches, if not, I'll try to send them out again. 
-(Unfortunately my current mail setup is a mess and I need time to figure 
-out what to fix...)
+Smart HTTP does not need it: you already posted a better solution (I'm
+refering to "&v=2").
 
-As for the zsh support, I found out a little bit more.
-ZSH doesn't have a variable like PROMPT_COMMAND in bash. The precmd name 
-is a function the user has to define herself to have it called before 
-the prompt is shown. Functionally this is almost, but not quite, the 
-same as PROMPT_COMMAND. The subtle difference is that with 
-PROMPT_COMMAND you can use parameters to customize the prompt, so in 
-bash you can say:
+> Its also more complex to code the server to listen for a stop command
+> from the client at the same time the server is blasting out useless
+> references to the client.
 
-PROMPT_COMMAND="__git_ps1 '\u@\[\e[1;34m\]\h\[\e[0m\]:\w' '\\\$ '"
+At least the server side does not seem to be that complex. See below.
+Of course, the server blasted out some refs, but I'm confident that in
+practice the client will be able to signal v2 capability after a few packets
+of advertisements. You can switch on TCP_NODELAY for the first line with
+the capabilities to ensure it goes out on the wire ASAP.
 
-where in zsh, if you want the status in the prompt, you can either use 
-$(__git_ps1 "(%s)") or something like it in setting the PS1 (and forget 
-about the color hints!) or you can copy the __git_ps1 function and 
-modify and rename it as precmd to set PS1 via that function. Obviously 
-it is probably even more complicated, but I'd have to try it to be certain.
-
-An alternative way might be to set special variables from __git_set_vars 
-function which may be used in a custom precmd to set the prompt.
-
-e.g. say __git_set_vars sets __GIT_VAR_STATE=dirty|stage|clean
-
-in precmd you could do
-case $__GIT_VAR_STATE in
-(dirty) PS1="$PS1 files modified in __GIT_VAR_BRANCHNAME"
-;;
-(stage) PS1="$PS1 files staged in __GIT_VAR_BRANCHNAME"
-;;
-(clean) PS1="$PS1 __GIT_VAR_BRANCHNAME clean"
-;;
-esac
-
-(more or less of course)..
-
-In that way it would be possible to add the colors relatively easily 
-based on the state of the tree in a custom precmd function of zsh.
-
-/Simon
+diff --git a/upload-pack.c b/upload-pack.c
+index 2e90ccb..c29ae04 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -720,11 +720,20 @@ static void receive_needs(void)
+ 	free(shallows.objects);
+ }
+ 
++static int client_spoke(void)
++{
++	struct pollfd pfd;
++	pfd.fd = 0;
++	pfd.events = POLLIN;
++	return poll(&pfd, 1, 0) > 0 &&
++		(pfd.revents & (POLLIN|POLLHUP));
++}
++
+ static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+-		" include-tag multi_ack_detailed";
++		" include-tag multi_ack_detailed version2";
+ 	struct object *o = lookup_unknown_object(sha1);
+ 	const char *refname_nons = strip_namespace(refname);
+ 
+@@ -752,7 +761,8 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 		if (o)
+ 			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
+ 	}
+-	return 0;
++
++	return client_spoke();
+ }
+ 
+ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+@@ -771,8 +781,14 @@ static void upload_pack(void)
+ {
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
+-		head_ref_namespaced(send_ref, NULL);
+-		for_each_namespaced_ref(send_ref, NULL);
++		if (head_ref_namespaced(send_ref, NULL) ||
++		    for_each_namespaced_ref(send_ref, NULL)) {
++			/*
++			 * TODO: continue with protocol version 2
++			 * optimization: do not send refs
++			 * that were already sent
++			 */
++		}
+ 		packet_flush(1);
+ 	} else {
+ 		head_ref_namespaced(mark_our_ref, NULL);
