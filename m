@@ -1,104 +1,76 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Ignoring boring lines(that do not contain information) in git diff
-Date: Mon, 08 Oct 2012 18:44:12 +0200
-Message-ID: <507302DC.4030207@arcor.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: sharedRepository derived from file permissions
+Date: Mon, 08 Oct 2012 09:46:43 -0700
+Message-ID: <7vhaq4nc7g.fsf@alter.siamese.dyndns.org>
+References: <1210080955590.12283@wes.ijneb.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000602030003040701070205"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 08 18:44:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Hills <mark@pogo.org.uk>
+X-From: git-owner@vger.kernel.org Mon Oct 08 18:46:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1TLGRN-0007c6-TI
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 18:44:26 +0200
+	id 1TLGTo-0000Wz-RL
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Oct 2012 18:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab2JHQoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2012 12:44:16 -0400
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:47112 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751823Ab2JHQoO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2012 12:44:14 -0400
-Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mx.arcor.de (Postfix) with ESMTP id 9B84FA9D9C
-	for <git@vger.kernel.org>; Mon,  8 Oct 2012 18:44:13 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 943DE28A4EB
-	for <git@vger.kernel.org>; Mon,  8 Oct 2012 18:44:13 +0200 (CEST)
-Received: from [10.0.0.3] (178-190-166-221.adsl.highway.telekom.at [178.190.166.221])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-02.arcor-online.net (Postfix) with ESMTPA id 68EB71198A2
-	for <git@vger.kernel.org>; Mon,  8 Oct 2012 18:44:13 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-02.arcor-online.net 68EB71198A2
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1349714653; bh=lH3T6JXsC78aFpckvPV3PbXOmkvbpnyR7X8rAuk199Q=;
-	h=Message-ID:Date:From:MIME-Version:To:Subject:Content-Type;
-	b=eIoWCyyIyBbC2920hNkryBTCfSFZ2IoAzEyjb1gY4soEbi5NshgssQKbKi8ACwwX4
-	 IyPWjyFJELLnwdpuN4sJbqFlogr4h8mqyKn4I+NjBZunf/CF1UEGNxECsAipP1/WNI
-	 x6kDhYqxRZmZL0ld7Jr0WHHl59NVwTaOzkWs+a6c=
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:15.0) Gecko/20120827 Thunderbird/15.0
+	id S1754094Ab2JHQqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2012 12:46:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37707 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751823Ab2JHQqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2012 12:46:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90F97986A;
+	Mon,  8 Oct 2012 12:46:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e5BdDU+HBI0KP+h4BgDNCoyGGJE=; b=sFuqdA
+	dCqkDHOuJFNmHxr8EEp2axt/cIFgE7waiW13U9PWF9iFcAwepFljKjN+rNDdZX5E
+	U+zkwUNb3WXMIRmzIF4AWoY9ypO3tndYpYZltAb/aTv9teOfvUUfcUUqllgkD1cw
+	GT8e+50/JG2E0V0UBXJyEH4Q/V5TEDvaFz3Do=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iODalm74IBfIwY3GHZAnEJKfULvBvwLr
+	+VV4pcsJy5whVxmaW1tG+xMfKOqrb9ZzLO6T5TZC16qIxWwXv1PYDdr1WcpnDBPr
+	gboRLcjPnPrfAdHJCGq+ONlYp3D2Qbuo34+b/Wm3g02shCgh9BrOdn28iySzAQy9
+	Csvdbdg+0qU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DD6F9869;
+	Mon,  8 Oct 2012 12:46:45 -0400 (EDT)
+Received: from pobox.com (unknown [98.234.214.94]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED94E9868; Mon,  8 Oct 2012
+ 12:46:44 -0400 (EDT)
+In-Reply-To: <1210080955590.12283@wes.ijneb.com> (Mark Hills's message of
+ "Mon, 8 Oct 2012 10:07:30 +0100 (BST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BE7EA44E-1167-11E2-9D63-BB652E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/207240>
 
-This is a multi-part message in MIME format.
---------------000602030003040701070205
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Mark Hills <mark@pogo.org.uk> writes:
 
-Hi,
+> We make extensive use of unix permissions and core.sharedRepository -- 
+> multiple developers push to the same repo.
+>
+> I have often wondered why core.sharedRepository is needed at all as a 
+> separate configuration?
+>
+> It looks like it might be easier (and less confusing to users) to derive 
+> this attribute from the top-level .git directory?
 
-is there a way to tell git diff about lines that are uninteresting?
-I mean lines which do not contain a lot of information and
-appear several times in pre and post image.
+Hrm, clever ;-)
 
-For example whitespace or language dependent stuff like.
-{
-}
-END_IF;
-END_FOR;
-end sub
+> Is there a reason why Git doesn't just follow (and echo) the top-level 
+> permissions?
 
-I have seen diffs that containing 2 interesting hunks splitted by such 
-boring lines.
-(I have attached a anonymized version of a real world example where this 
-happens)
-
-I think the diff would be clearer when this boring line was added to the 
-surrounding hunks.
-I already tried patience diff but in my test case it changed nothing.
-I am using git 1.7.10.
-
-Thanks,
-Greetings Peter
-
-
-
---------------000602030003040701070205
-Content-Type: text/x-diff;
- name="example_diff_boring_split.diff"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="example_diff_boring_split.diff"
-
-ZGlmZiAtLWdpdCBhL1NvdXJjZS9Gcm9iYmxlL0JsYWJiZXIudHh0IGIvU291cmNlL0Zyb2Ji
-bGUvQmxhYmJlci50eHQKaW5kZXggODdjY2RkYi4uNjI3YmMzZSAxMDA2NDQKLS0tIGEvU291
-cmNlL0Zyb2JibGUvQmxhYmJlci50eHQKKysrIGIvU291cmNlL0Zyb2JibGUvQmxhYmJlci50
-eHQKQEAgLTEzOCw3MyArMTM4LDc0IEBAIEVORF9WQVIKLSAgICAgICAgIC8vZnJvYmJsZSBp
-bW1lZGlhdGVseSBpZiBpbW1lZGlhdGVseSBmbGFnIGlzIHNldAotICAgICAgICAgSUYgYklt
-bWVkaWF0ZWx5IEFORCBOT1QgQXJyYXlbaV0uYkRpc2FibGVkIFRIRU4KLSAgICAgICAgICAg
-IGFGcm9iYmxlKGksIEVudHJ5KTsKKyAgICAgICAgIElGIEVudHJ5LmJCbGFoIFRIRU4KKyAg
-ICAgICAgICAgICAgIEFsYXJtLkFsYXJtICA6PSBTb21lQWxhcm07CisgICAgICAgICBFTFNF
-CisgICAgICAgICAgICAgICBBbGFybSA6PSBFbnRyeTsKICAgICAgICAgIEVORF9JRjsKICAg
-ICAgICAgIAotICAgICAgICAgLy8gc2lnbmFsIGlmIGZyb2JibGUgY291bnQgaGFzIGNoYW5n
-ZWQKLSAgICAgICAgIGlDaGFuZ2VkIDo9IGlDaGFuZ2VkICsgMTsKLSAgICAgICAgIEVYSVQ7
-CisgICAgICAgICBJRiBBcnJheVtpXS5BbGFybSA9IEFsYXJtIFRIRU4KKyAgICAgICAgICAg
-IC8vZG8gbm90IGJyYWJibGUgaWYgYWxhcm0gaXMgZ29iYmxlZAorICAgICAgICAgICAgICAg
-RVhJVDsKKyAgICAgICAgIEVORF9JRjsKICAgICAgIEVORF9JRjsKLSAgIEVORF9GT1I7Ci1F
-TFNFCi0gICBhRXhhbXBsZShOYW1lIDo9ICdhYWEnLAotICAgICAgICAgICAgSUQxIDo9IDEp
-OwotRU5EX0lGOworICAgRUxTRQorICAgICAgLy9lbnRyeSBub3QgZm91bmQsIGFkZGluZw==
---------------000602030003040701070205--
+Other than "we did not trust that all the end users are capable of
+doing the right 'chmod 2775 .git && chgrp project .git", with a
+little bit of "we didn't think of that when we wrote the system", I
+do not recall any.
